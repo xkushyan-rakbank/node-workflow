@@ -97,8 +97,7 @@ jobs:
           scannerMode: 'CLI'
           configMode: 'file'
 
-      - task: SonarQubeAnalyze@4
-
       - task: SonarQubePublish@4
+        condition: false
         inputs:
           pollingTimeoutSec: '300'
