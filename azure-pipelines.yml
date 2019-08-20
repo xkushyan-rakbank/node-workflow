@@ -38,14 +38,14 @@ jobs:
         displayName: 'Install Dependencies'
 
       - bash: |
-          cd packages/web
+          cd Onboarding/web
           yarn build
         displayName: 'Build Web'
 
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:
-          SourceFolder: packages/web/build/
+          SourceFolder: Onboarding/web/build/
           TargetFolder: '$(build.artifactstagingdirectory)/web'
 
       - task: ArchiveFiles@2
