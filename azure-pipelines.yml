@@ -1,0 +1,103 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+name: $(BuildID)_$(Date:yyyyMMdd)$(Rev:.rr)
+
+pr:
+  branches:
+    include:
+      - develop
+      - releases/*
+  paths:
+    exclude:
+    - /*.md
+    - /**/*.md
+trigger:
+  - develop
+  - releases/*
+jobs:
+  
+  - job: Web
+    timeoutInMinutes: 120
+    dependsOn: Testing
+    pool:
+      name: Hosted macOS
+    steps:
+      - task: NodeTool@0
+        displayName: 'Use Node 10.x'
+        inputs:
+          versionSpec: 10.x
+
+      - bash: |
+          yarn reset
+          yarn
+          yarn lerna bootstrap --no-hoist
+          yarn global add create-react-app
+        displayName: 'Install Dependencies'
+
+      - bash: |
+          cd packages/web
+          yarn build
+        displayName: 'Build Web'
+
+      - task: CopyFiles@2
+        displayName: 'Stage Artifacts'
+        inputs:
+          SourceFolder: packages/web/build/
+          TargetFolder: '$(build.artifactstagingdirectory)/web'
+
+      - task: ArchiveFiles@2
+        displayName: 'Archive web'
+        inputs:
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/web/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/web/web.zip'
+
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: Jfrog
+          fileSpec: |
+            {
+              "files": [
+                {
+                  "pattern": "$(Build.ArtifactStagingDirectory)/web/*.zip",
+                  "target": "digital2/$(Build.BuildNumber)/web/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: Jfrog
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/web'
+          ArtifactName: web
+
+
+  - job: SonarQube
+    dependsOn:
+      - Web
+    condition:
+      and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
+    pool:
+      name: Hosted macOS
+    steps:
+      - task: SonarQubePrepare@4
+        displayName: 'Prepare analysis on SonarQube'
+        inputs:
+          SonarQube: 'sonarqube'
+          scannerMode: 'CLI'
+          configMode: 'file'
+
+      - task: SonarQubeAnalyze@4
+
+      - task: SonarQubePublish@4
+        inputs:
+          pollingTimeoutSec: '300'
