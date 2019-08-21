@@ -1,0 +1,255 @@
+{
+	"info": {
+		"_postman_id": "5e53f602-7264-4206-b1c0-7b9a112b215d",
+		"name": "webapply",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generate OTP - successfully sent SMS",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"prospectId\": \"COSME001\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"0123456789\",\r\n  \"action\": \"generate\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BackOfficeLogin - successfully login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"COSME0007\",\r\n  \"password\": \"COSME@2019\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/users/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"users",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate OTP - successfully Verified",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"prospectId\": \"COSME001\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"0123456789\",\r\n  \"email\": \"sc_otp@email.com\",\r\n  \"action\": \"generate\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate OTP - successfully sent Email",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"prospectId\": \"COSME002\",\r\n  \"countryCode\": \"+971\",\r\n  \"email\": \"otp@email.com\",\r\n  \"action\": \"generate\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate OTP - Unable to Sent OTP SMS",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"prospectId\": \"COSME003\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"9876543210\",\r\n  \"action\": \"generate\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate OTP - Unable to Sent OTP SMS and Email",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"prospectId\": \"COSME004\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"9876543210\",\r\n  \"email\": \"otp@email.com\",\r\n  \"action\": \"generate\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate OTP - Invalid",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"prospectId\": \"COSME005\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"9876543211\",\r\n  \"email\": \"no_otp1@email.com\",\r\n  \"action\": \"generate\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"otp"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
