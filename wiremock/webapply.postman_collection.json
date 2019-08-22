@@ -41,6 +41,41 @@
 			"response": []
 		},
 		{
+			"name": "Initial state",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/webapply/api/state",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"webapply",
+						"api",
+						"state"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "BackOfficeLogin - successfully login",
 			"request": {
 				"method": "POST",
@@ -436,44 +471,6 @@
 						"corporate",
 						"prospects",
 						"search"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UpdateSMEPropsal  Copy Copy",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"prospectId\": \"COSME008\"}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/COSME009",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"usertypes",
-						"sme",
-						"prospects",
-						"COSME009"
 					]
 				}
 			},
