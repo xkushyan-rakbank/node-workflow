@@ -32,15 +32,12 @@ jobs:
         displayName: 'Use Node 10.x'
         inputs:
           versionSpec: 10.x
-#      - task: Npm@1
-#        displayName: 'Build Web'
-#        inputs:
-#          command: 'install'
-#          command: 'publish'
-#          workingDir: '$(System.DefaultWorkingDirectory)/webapply'
-      - bash: |
-          npm install && npm run build
-        displayName: 'Buildling webapply Application'  
+      - task: Npm@1
+        displayName: 'Buildling webapply Application'
+        inputs:
+          command: 'install && run build'
+          workingDir: '$(System.DefaultWorkingDirectory)/webapply'
+
 #      - task: PublishBuildArtifacts@1
 #        displayName: 'Publish Artifacts'
 #        inputs:
