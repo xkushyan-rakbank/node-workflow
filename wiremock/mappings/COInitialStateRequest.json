@@ -1,0 +1,10 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/webapply/api/state"
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "COInitialStateResponse.json"
+    }
+}
