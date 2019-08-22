@@ -1,0 +1,5 @@
+{
+	"mode": "sms",
+	"otpTokenValidityInSec": 300,
+	"otpTokenValidUntil": ""
+}
