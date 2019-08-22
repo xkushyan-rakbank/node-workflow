@@ -37,7 +37,7 @@ jobs:
           cd webapply
           npm install
           npm run build
-        displayName: 'Buildling'
+        displayName: 'Buildling webapply Application'
         enabled: true
 
 #      - task: Npm@1
