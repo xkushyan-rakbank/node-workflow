@@ -38,10 +38,16 @@ jobs:
           command: 'install'
           workingDir: '$(System.DefaultWorkingDirectory)/webapply'
 
+#      - task: PublishBuildArtifacts@1
+#        displayName: 'Publish Artifacts'
+#        inputs:
+#         PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
+#          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
+#          ArtifactName: $(Build.BuildNumber)
+#          enabled: true
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Artifacts'
         inputs:
-#         PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
-          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
-          ArtifactName: $(Build.BuildNumber)
-          enabled: true
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply/build'
+          ArtifactName: 'webapply'
+          publishLocation: 'Container'
