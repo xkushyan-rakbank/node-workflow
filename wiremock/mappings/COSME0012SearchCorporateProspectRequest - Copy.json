@@ -1,0 +1,15 @@
+{
+	"request": {
+		"method": "POST",
+		"url": "/api/customer-onboarding/v1/banks/RAK/usertypes/corporate/prospects/search",
+		"bodyPatterns": [
+			{
+				"matchesJsonPath": "$[?(@.fname == 'COSME0010')]"
+			}
+		]
+	},
+	"response": {
+		"status": 200,
+		"bodyFileName": "COSME0010SearchSMEProspectResponse.json"
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"request": {
+		"method": "POST",
+		"url": "/api/customer-onboarding/v1/banks/RAK/otp",
+		"bodyPatterns": [
+			{
+				"matchesJsonPath": "$[?(@.mobileNo == '9876543210')]"
+			}
+		]
+	},
+	"response": {
+		"status": 400,
+		"bodyFileName": "COSME0003GenerateOTPResponse.json"
+	}
+}

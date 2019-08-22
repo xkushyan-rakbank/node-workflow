@@ -1,0 +1,15 @@
+{
+	"request": {
+		"method": "POST",
+		"url": "/api/customer-onboarding/v1/banks/RAK/otp",
+		"bodyPatterns": [
+			{
+				"matchesJsonPath": "$[?(@.email == 'no_otp1@email.com')]"
+			}
+		]
+	},
+	"response": {
+		"status": 500,
+		"bodyFileName": "COSME0005GenerateOTPResponse.json"
+	}
+}
