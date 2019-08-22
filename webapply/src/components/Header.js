@@ -18,6 +18,10 @@ const styles = {
     "& img": {
       width: "120px"
     },
+    "& a": {
+      display: "inline-block",
+      verticalAlign: "middle"
+    },
     "& span": {
       opacity: " 0.5",
       fontFamily: "Open Sans",
@@ -37,7 +41,7 @@ const styles = {
         width: " 28px",
         height: " 1px",
         opacity: " 0.44",
-        border: " solid 1px #9b9b9b"
+        backgroundColor: "#9b9b9b"
       }
     }
   }

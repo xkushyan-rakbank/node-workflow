@@ -24,8 +24,8 @@ const style = {
 };
 
 const Input = props => {
-  const [values, setValue] = useState({ name: "" }); // remove it
-  const [error, setErrors] = useState(""); // remove it
+  // const [values, setValue] = useState({ name: "" }); // remove it
+  // const [error, setErrors] = useState(""); // remove it
 
   const {
     field,
@@ -38,15 +38,15 @@ const Input = props => {
     ...rest
   } = props;
 
-  // remove it
-  const validation = event => {
-    const { name, value } = event.target;
-    setValue({ [name]: value });
+  // // remove it
+  // const validation = event => {
+  //   const { name, value } = event.target;
+  //   setValue({ [name]: value });
 
-    const errors = validate(event);
-    setErrors(errors);
-  };
-  // remove it
+  //   const errors = validate(event);
+  //   setErrors(errors);
+  // };
+  // // remove it
 
   return (
     <FormControl className="formControl">
@@ -60,14 +60,9 @@ const Input = props => {
         label={label}
         variant="outlined"
         className={classes.textField}
-        value={values.name} // remove it
-        error={!!error}
-        onChange={event => validation(event)} // remove it
       />
 
       {!!infoTitle && <InfoTitle title={infoTitle} />}
-
-      {!!error && <ErrorMessage error={error} />}
     </FormControl>
   );
 };

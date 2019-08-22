@@ -32,8 +32,8 @@ const style = {
   },
   styledCheckbox: {
     display: "inline-block",
-    width: "24px",
-    height: "24px",
+    width: "20px",
+    height: "20px",
     border: "solid 2px #16216a",
     borderRadius: "8px",
     transition: "all 150ms",
@@ -42,7 +42,6 @@ const style = {
       position: "absolute",
       top: "-2px",
       left: "-2px",
-      right: "",
       bottom: "0"
     }
   },

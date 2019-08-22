@@ -4,8 +4,10 @@ import { withStyles } from "@material-ui/core";
 import ContainedButton from "./ContainedButton";
 
 const styles = {
+  buttonWrap: {
+    margin: "42px 0 0 "
+  },
   nextButton: {
-    margin: "42px 0 0 ",
     fontWeight: 600,
     letterSpacing: "normal",
     "&:disabled": {
@@ -17,7 +19,13 @@ const styles = {
 const SubmitButton = props => {
   const { disabled = false, classes } = props;
   return (
-    <Grid container direction="row" justify="flex-end" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justify="flex-end"
+      alignItems="center"
+      className={classes.buttonWrap}
+    >
       <ContainedButton
         type="submit"
         disabled={disabled}
