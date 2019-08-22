@@ -41,8 +41,8 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Artifacts'
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
-          ArtifactName: webapply_$(Build.BuildNumber)
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
+          ArtifactName: $(Build.BuildNumber)
         enabled: true
 #      - bash: |
 #          cd Onboarding/web
