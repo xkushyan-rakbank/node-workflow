@@ -1,0 +1,165 @@
+/*
+* ====== Base ======
+*/
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  min-height: 100%;
+}
+
+.formLayout {
+  display: flex;
+  padding-left: 10vw;
+  height: 100%;
+  @media only screen and (max-width: 1100px) {
+    padding-left: 5vw;
+  }
+}
+
+.formDescription {
+  font-size: 20px;
+  color: #373737;
+  margin: 80px 0 40px;
+  b {
+    font-weight: 600;
+  }
+}
+
+.MuiTypography-body1 {
+  @media only screen and (max-width: 991px) {
+    font-size: 14px !important;
+  }
+}
+
+.formControl {
+  width: 100%;
+  margin: 12px 0 24px !important;
+  display: flex !important;
+  position: relative;
+  > div {
+    margin: 0;
+  }
+}
+
+.selectCombined {
+  flex-direction: row !important;
+  align-items: baseline;
+  margin: 12px 0 24px !important;
+  > div {
+    margin: 0 !important;
+    &:first-child {
+      fieldset {
+        border-right: 0;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-left-radius: 8px !important;
+        border-bottom-left-radius: 8px !important;
+      }
+    }
+    &:last-child {
+      flex: 1;
+      fieldset {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+      }
+    }
+  }
+}
+
+form .MuiGrid-root {
+  > .MuiGrid-item {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.form {
+  &Inner {
+    max-width: 800px;
+    overflow-y: scroll;
+    padding-bottom: 30px;
+    .nextButton {
+      margin: 42px 0 0 !important;
+    }
+  }
+  &Wrapper {
+    flex: 1 1 auto;
+    padding: 147px 15px 0 0;
+    overflow-y: auto;
+    min-height: 0px;
+    h2 {
+      font-size: 46px;
+      font-weight: 600;
+      color: #373737;
+      @media only screen and (max-width: 1100px) {
+        font-size: 27px;
+      }
+    }
+  }
+}
+
+.MuiFormLabel-root {
+  max-width: calc(100% - 84px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &.MuiInputLabel-shrink {
+    max-width: unset;
+  }
+}
+
+.flexContainerForButton {
+  display: flex;
+  margin-top: 42px;
+  > * {
+    width: auto;
+    flex: 1;
+    margin: 0;
+    align-items: center;
+  }
+  button {
+    margin: 0;
+  }
+  > span {
+    font-size: 16px;
+    color: #517085;
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-left: 9px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #fff;
+}
+
+.flexAlignCenter {
+  display: flex;
+  align-items: center;
+}
+
+.MuiFormLabel-root.Mui-error {
+  color: inherit !important;
+}
+
+a {
+  &:hover {
+    text-decoration: none;
+  }
+}

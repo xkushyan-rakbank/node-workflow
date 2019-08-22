@@ -1,0 +1,17 @@
+[ignore]
+.*/node_modules/.*
+
+[include]
+
+[libs]
+.*/flow-typed/npm/.*
+
+[lints]
+
+[options]
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.scss
+module.file_ext=.json
+
+[strict]
