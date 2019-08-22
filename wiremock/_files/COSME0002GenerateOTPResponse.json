@@ -1,0 +1,5 @@
+{
+	"mode": "email",
+	"otpTokenValidityInSec": 300,
+	"otpTokenValidUntil": ""
+}

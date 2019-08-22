@@ -1,0 +1,375 @@
+{
+  "applicantInfo": {
+    "fullNname": "COSME008",
+    "email": "user@example.com",
+    "countryCode": "+971",
+    "mobileNo": "1234567890"
+  },
+  "generalInfo": {
+    "prospectId": "COSME008",
+    "_links": {
+      "self": {
+        "href": ""
+      }
+    },
+    "cifId": 0,
+    "customerType": "SME",
+    "dsaId": "DSAID",
+    "groupId": "GID",
+    "groupName": "GNAME",
+    "rmCode": "RMCODE",
+    "accountManagerId": "AMID",
+    "isPoliticallyExposed": "N"
+  },
+  "applicationInfo": {
+    "viewId": "01",
+    "leadNumber": "LN01",
+    "riskScore": "10",
+    "srNumber": "12345678",
+    "channelId": "Bank to confirm on the LOVs",
+    "channelType": "Mobile",
+    "createdDate": "2019-08-18",
+    "lastModifiedDate": "2019-08-18",
+    "createdBy": "CR_TEST",
+    "lastModifiedBy": "2019-08-20",
+    "actionType": "Save",
+    "saveType": "auto",
+    "tncAgreed": false,
+    "declaration": true
+  },
+  "accountInfo": [
+    {
+      "branchId": "LOVs will be fetched from datalist API",
+      "accountType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
+      "accountSubType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
+      "accountCurrencies": "AED",
+      "accountPurpose": "Bank to confirm on the LOVs",
+      "debitCardApplied": true,
+      "chequeBookApplied": true,
+      "eStatements": true,
+      "mailStatements": false,
+      "receiveInterest": true,
+      "deliverByCourier": true
+    }
+  ],
+  "organizationInfo": {
+    "screeningInfo": {
+      "statusOverAll": "proceed",
+      "screeningResults": [
+        {
+          "screeningType": "dedupe",
+          "screeningStatus": "Active",
+          "screeningFlag": "SCFlag",
+          "screeningNotes": "SCNotes",
+          "screeningReason": "SCReason",
+          "reasonNotes": "reasonNote",
+          "reasonCode": "ReasonCode",
+          "reasonStatus": "Blocked"
+        }
+      ]
+    },
+    "branchCity": "LOVs to be confirmed by Bank",
+    "branchID": "LOVs to be confirmed by Bank",
+    "countryOfIncorporation": "AE",
+    "companyName": "COMPANYXXXX",
+    "shortName": "CX",
+    "dateOfIncorporation": "2019-08-21",
+    "numberOfEmployees": 0,
+    "licenseType": "Trade License",
+    "licenseTypeOther": "na",
+    "licenseIssuingAuthority": "LOVs to be confirmed by Bank",
+    "licenseNumber": "1234567890ABC",
+    "licenseIssueDate": "2019-08-21",
+    "licenseExpiryDate": "2019-08-21",
+    "vatRegistrationNumber": "abcdefghijkl",
+    "addressInfo": [
+      {
+        "typeOfAddress": "Registered Address/Head office",
+        "officeAddressDifferent": "No",
+        "addressDetails": [
+          {
+            "addressFieldDesc": "Registered Address/Head office",
+            "preferredAddress": "Yes",
+            "addressLine1": "Address Line #1",
+            "addressLine2": "Address line @2",
+            "addressLine3": "Address line 3",
+            "addressLine4": "",
+            "poBox": "123456",
+            "emirateCity": "EMCity",
+            "country": "UAE",
+            "typeOfSpaceOccupied": {
+              "spaceType": "Office",
+              "others": "na"
+            }
+          }
+        ]
+      }
+    ],
+    "contactDetails": {
+      "primaryMobileNo": "1234567890",
+      "primaryMobCountryCode": "+971",
+      "primaryEmail": "user@example.com",
+      "primaryPhoneNo": "2234567890",
+      "primaryPhoneCountryCode": "+971",
+      "fax": "123456",
+      "faxCountryCode": "+971",
+      "secondaryPhoneNo": "9876543210",
+      "secondaryPhoneCountryCode": "+971",
+      "secondaryMobileNo": "0123456789",
+      "secondaryMobileCountryCode": "+971",
+      "secondaryEmail": "user@example.com",
+      "website": "www.website.com"
+    },
+    "contactDetailsForTxnReconfirming": [
+      {
+        "primaryMobileNo": "0987654321",
+        "primaryMobCountryCode": "+971",
+        "primaryPhoneNo": "1234567890",
+        "primaryPhoneCountryCode": "_971"
+      }
+    ]
+  },
+  "orgKYCDetails": {
+    "businessUnit": "PBD",
+    "constitutionType": "Proprietorship",
+    "companyCategory": "Charitable Trust",
+    "annualFinTurnoverAmtInAED": "",
+    "yearsInBusiness": 0,
+    "topCustomers": [
+      {
+        "name": "KYC TOP CUNAME",
+        "country": "LOVs to be fetched from datalist API"
+      }
+    ],
+    "topSuppliers": [
+      {
+        "name": "TOP Suppliers",
+        "country": "LOVs to be fetched from datalist API"
+      }
+    ],
+    "topOriginGoodsCountries": [
+      "LOVs to be fetched from datalist API"
+    ],
+    "industryMultiSelect": [
+      {
+        "industry": [
+          "LOVs to be shared by Bank"
+        ],
+        "subCategory": [
+          "LOVs to be shared by Bank"
+        ]
+      }
+    ],
+    "anticipatedTransactionsDetails": {
+      "totalMonthlyCashCreditsAED": {
+        "amountInFigures": "10000.00",
+        "inPercent": 20
+      },
+      "totalMonthlyNonCashCreditsAED": {
+        "amountInFigures": "3000.00",
+        "inPercent": 30
+      },
+      "totalMonthlyCreditsAED": "5000.00",
+      "maxAmtSingleTxnCashAED": "1000.00",
+      "maxAmtSingleTxnNonCashAED": "1000.00"
+    },
+    "otherBankingRelationshipsInfo": {
+      "otherBankingRelationshipsExist": false,
+      "otherBankDetails": [
+        {
+          "bankName": "BANKXX"
+        }
+      ]
+    },
+    "otherEntitiesInUAE": false,
+    "entitiesInUAE": [
+      {
+        "companyName": "COMPANYXXXX",
+        "emirate": "LOVs to be fetched from data list API",
+        "tradeLicenseNo": "1234567890ABC"
+      }
+    ],
+    "otherEntitiesOutsideUAE": false,
+    "entitiesOutsideUAE": [
+      {
+        "companyName": "1234567890AAA",
+        "country": "LOVs to be fetched from data list API"
+      }
+    ],
+    "isShareholderACompany": false
+  },
+  "signatoryInfo": [
+    {
+      "screeningInfo": {
+        "statusOverAll": "proceed",
+        "screeningResults": [
+          {
+            "screeningType": "blacklist",
+            "screeningStatus": "blocked",
+            "screeningFlag": "SCFlag",
+            "screeningNotes": "SCNote",
+            "screeningReason": "SCReason",
+            "reasonNotes": "Blacklist ReasonNotes",
+            "reasonCode": "black",
+            "reasonStatus": "blocked"
+          }
+        ]
+      },
+      "salutation": "Mr.",
+      "firstName": "COSME008",
+      "middleName": "COSME008 Middle",
+      "lastName": "COSME008 last",
+      "shortName": "COSME008 Short",
+      "fullName": "COSME full",
+      "gender": "Male",
+      "maritalStatus": "Married",
+      "maritalStatusOthers": "YES",
+      "occupation": "SOFTWARE Engineer",
+      "mothersMaidenName": "MMNAME",
+      "numberOfDependants": 2,
+      "highestEducationAttained": "XXXX",
+      "employmentStatus": "ACTIVE",
+      "kycVerified": false,
+      "kycDetails": {
+        "salutation": "Mr.",
+        "shareholderPOASignatoryName": "POASign",
+        "isSignatory": false,
+        "isShareholder": false,
+        "shareHoldingPercentage": 0,
+        "dateOfBirth": "2019-08-21",
+        "nationality": "UAE",
+        "dualCitizenship": false,
+        "dualCitizenshipCountry": [
+          "LOVs to be fetched from datalist API"
+        ],
+        "residenceCountry": "AE",
+        "isUAEResident": false,
+        "passportDetails": [
+          {
+            "passportNumber": "PSNO1234",
+            "passportExpiryDate": "2019-08-21",
+            "diplomatPassport": false
+          }
+        ],
+        "emirateIdDetails": {
+          "eidNumber": "EIDNO",
+          "eidExpiryDt": "2019-08-21"
+        },
+        "selfGovtPosition": "Currently hold",
+        "relativeGovtPosition": "Currently hold",
+        "qualification": "Under Graduate",
+        "experienceInYrs": "XX",
+        "sourceOfWealth": {
+          "wealthType": "Personal Savings",
+          "others": "na"
+        }
+      },
+      "contactDetails": {
+        "primaryMobileNo": "1234567890",
+        "primaryMobCountryCode": "+971",
+        "primaryEmail": "user@example.com",
+        "primaryPhoneNo": "1234567890",
+        "primaryPhoneCountryCode": "+971",
+        "fax": "123456",
+        "faxCountryCode": "+971",
+        "secondaryPhoneNo": "0987654321",
+        "secondaryPhoneCountryCode": "+971",
+        "secondaryMobileNo": "0987654322",
+        "secondaryMobileCountryCode": "+971",
+        "secondaryEmail": "user@example.com",
+        "website": "www.website.com"
+      },
+      "employmentDetails": {
+        "employmentType": "Salaried",
+        "otherEmploymentType": "na",
+        "designation": "MD",
+        "empNo": "123456",
+        "department": "SE",
+        "employerName": "EMPNAME",
+        "occupation": "SE",
+        "totalExperienceYrs": 0,
+        "employmentStartDate": "2019-08-21"
+      },
+      "sameAsCompanyAddress": false,
+      "addressInfo": [
+        {
+          "typeOfAddress": "Residence Address",
+          "addressDetails": [
+            {
+              "addressFieldDesc": "Residence Address",
+              "preferredAddress": "Yes",
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "",
+              "poBox": "123456",
+              "emirateCity": "EMI-City",
+              "country": "UAE"
+            }
+          ]
+        }
+      ],
+      "accountSigningInfo": {
+        "accountSigningType": "Any of us",
+        "accountSigningInstn": "SIGNINSTN",
+        "authorityType": "SP - Sole Proprietor"
+      },
+      "debitCardInfo": {
+        "issueDebitCard": true,
+        "authSignatoryDetails": {
+          "fullNameOnPassport": "FNPASSPORT",
+          "nameOnDebitCard": "VISA"
+        }
+      }
+    }
+  ],
+  "channelServicesInfo": {
+    "mobileInstructions": false,
+    "marketingSMS": false,
+    "doNotDisturbHours": "10",
+    "weeklyBalanceNotification": "Sunday",
+    "monthlyBalanceNotification": 0
+  },
+  "documents": [
+    {
+      "documentType": "Passport",
+      "documentTitle": "DC TITTLE",
+      "fileName": "file.txt",
+      "filePath": "/file.txt",
+      "url": "",
+      "fileData": "filedata",
+      "fileFormat": "application/pdf",
+      "fileSize": 0,
+      "fileDescription": "filedec",
+      "submittedBy": "submittedbyxxx",
+      "submittedDt": "2019-08-18",
+      "updatedBy": "updatebyxxx",
+      "updatedDt": "2019-08-19",
+      "avsCheckDt": "",
+      "avsCheck": false,
+      "verified": false,
+      "verifiedBy": "verifiedxxxx",
+      "isEncrypted": false,
+      "encryptionDetails": "na",
+      "uploadStatus": "Uploaded"
+    }
+  ],
+  "prospectStatusInfo": {
+    "statusType": "ACTIVE",
+    "statusCode": "AC001",
+    "statusFlag": "SFLAG",
+    "statusNotes": "SNOTE",
+    "statusReason": "SReason",
+    "statusOverAll": "Active",
+    "reasonNotes": "ReasonNote",
+    "reasonCode": "RC001",
+    "reasonStatus": "ACTIVE"
+  },
+  "freeFieldsInfo": {
+    "freeField1": "FF1",
+    "freeField2": "FF2",
+    "freeField3": "FF3",
+    "freeField4": "FF4",
+    "freeField5": "FF5"
+  }
+}

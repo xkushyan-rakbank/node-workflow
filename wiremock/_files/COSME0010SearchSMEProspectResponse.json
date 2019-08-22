@@ -1,0 +1,29 @@
+{
+  "searchResult": [
+    {
+      "prospectId": "COSME0010",
+      "_links": {
+        "self": {
+          "href": "/banks/RAK/usertypes/sme/prospects/COSME0008"
+        }
+      },
+      "status": {
+        "statusType": "Active",
+        "statusCode": "200",
+        "statusFlag": "ABC",
+        "statusNotes": "SNote XXXXX",
+        "statusReason": "SReason YYYYY",
+        "statusOverAll": "SOver ZZZZZ",
+        "reasonNotes": "RNote available",
+        "reasonCode": "123",
+        "reasonStatus": "RStatus XXXXX"
+      },
+      "applicantInfo": {
+        "fullNname": "FN COSME0010",
+        "email": "search@email.com",
+        "countryCode": "+971",
+        "mobileNo": "1234567890"
+      }
+    }
+  ]
+}

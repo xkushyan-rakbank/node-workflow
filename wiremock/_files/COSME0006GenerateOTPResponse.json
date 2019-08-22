@@ -1,0 +1,17 @@
+{
+  "verified": true,
+  "prospects": [
+    {
+      "_links": {
+        "self": {
+          "href": "​/banks​/RAK​/usertypes​/sme​/prospects​/COSME007"
+        }
+      },
+      "prospectId": "COSME006",
+      "fullNname": "CUSTOMER ONBOARDING",
+      "email": "sc_otp@email.com",
+      "countryCode": "+971",
+      "mobileNo": "9876543210"
+    }
+  ]
+}
