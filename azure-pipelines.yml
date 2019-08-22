@@ -17,11 +17,11 @@ jobs:
     - job: Webapply
       timeoutInMinutes: 120
       pool:
-      name: Hosted macOS
+       name: Hosted macOS
 #      demands:
 #        - java
 #        - JDK
-    steps:
+      steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
         inputs:
