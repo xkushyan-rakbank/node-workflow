@@ -16,7 +16,7 @@ trigger: none
 jobs:
     - job: Webapply
       timeoutInMinutes: 120
-    pool:
+      pool:
       name: Hosted macOS
 #      demands:
 #        - java
