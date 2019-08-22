@@ -49,5 +49,5 @@ jobs:
         displayName: 'Publish Artifacts'
         inputs:
           PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
-          ArtifactName: 'webapply'
-          publishLocation: 'Container'
+          ArtifactName: 'webapply_$(Build.BuildNumber)'
+#          publishLocation: 'Container'
