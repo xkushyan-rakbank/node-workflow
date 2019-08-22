@@ -48,6 +48,6 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Artifacts'
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply/build'
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
           ArtifactName: 'webapply'
           publishLocation: 'Container'
