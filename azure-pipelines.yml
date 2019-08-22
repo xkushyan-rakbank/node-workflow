@@ -41,7 +41,8 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Artifacts'
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
+#          PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
+          PathtoPublish: '(System.DefaultWorkingDirectory)'
           ArtifactName: $(Build.BuildNumber)
         enabled: true
 #      - bash: |
