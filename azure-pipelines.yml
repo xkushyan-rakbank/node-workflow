@@ -9,45 +9,68 @@ pr:
   branches:
     include:
       - develop
-    #  - releases/*
-  #paths:
-  # exclude:
-  #  - /*.md
-  #  - /**/*.md
 trigger: none
 #trigger:
 #  - develop
 #  - releases/*
 jobs:
-  
-  - job: Webaply
-    timeoutInMinutes: 120
-    pool:
-      name: Hosted macOS
+    - job: Webapply
+      timeoutInMinutes: 120
+      pool:
+       name: Hosted macOS
 #      demands:
 #        - java
 #        - JDK
-    steps:
+      steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
         inputs:
           versionSpec: 10.x
-      - task: Npm@1
-        displayName: 'Build Web'
-        inputs:
-          command: 'install'
-          workingDir: '$(System.DefaultWorkingDirectory)/webapply'
 
-#      - task: PublishBuildArtifacts@1
-#        displayName: 'Publish Artifacts'
-#        inputs:
-#         PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
-#          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
-#          ArtifactName: $(Build.BuildNumber)
-#          enabled: true
+      - bash : |
+          cd webapply
+          npm install
+          npm run build
+        displayName: 'Buildling webapply Application'
+        enabled: true
+
       - task: PublishBuildArtifacts@1
-        displayName: 'Publish Artifacts'
+        displayName: 'Publish Build Artifacts'
         inputs:
           PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
-          ArtifactName: 'webapply'
-          publishLocation: 'Container'
+          ArtifactName: 'webapply_$(Build.BuildNumber)'
+# below is used for the publishing the artifacts to the jfrog artifactory 
+#      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+#        displayName: 'Artifactory Generic Upload'
+#        inputs:
+#          artifactoryService: Jfrog
+#          fileSpec: |
+#            {
+#              "files": [
+#                {
+#                  "pattern": "$(Build.ArtifactStagingDirectory)/webapply/build/*.zip",
+#                  "target": "digital2/$(Build.BuildNumber)/CO_Webapply/"
+#                }
+#              ]
+#            }
+#          collectBuildInfo: true
+         
+#      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+#        displayName: 'Publish Build Info to Artifactory'
+#        inputs:
+#          artifactoryService: Jfrog
+    - job: SonarQube
+      dependsOn:
+       - Webapply
+      condition:
+       and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
+      pool:
+       name: Hosted macOS
+      steps:
+      - task: SonarQubePrepare@4
+        displayName: 'Prepare analysis on SonarQube'
+        inputs:
+          SonarQube: 'sonarqube'
+          scannerMode: 'CLI'
+          configMode: 'file'
+        enabled: false
