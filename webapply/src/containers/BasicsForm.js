@@ -5,6 +5,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "../components/InputField/Input";
 import SelectCombined from "../components/InputField/SelectCombined";
+import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import CustomCheckbox from "../components/InputField/Checkbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import { codes } from "./../constants";
@@ -12,6 +13,11 @@ import { codes } from "./../constants";
 const styles = {
   baseForm: {
     maxWidth: "612px"
+  },
+  reCaptchaContainer: {
+    display: "flex",
+    paddingTop: "10px",
+    justifyContent: "flex-end"
   }
 };
 
@@ -26,6 +32,10 @@ const initialValues = {
 };
 
 const BasicsForm = ({ classes }) => {
+  const verifyCallback = token => {
+    console.log("RECAPTCHA VERIFY TOKEN", token);
+  };
+
   const handleSubmit = values => {
     console.log("values", JSON.stringify(values, null, 2));
   };
@@ -89,6 +99,11 @@ const BasicsForm = ({ classes }) => {
               label="I am applying on behalf of someone’s company "
               component={CustomCheckbox}
             />
+
+            <div className={classes.reCaptchaContainer}>
+              <ReCaptcha verifyCallback={verifyCallback} />
+            </div>
+
             <Link to="/confirm">
               <SubmitButton />
             </Link>
