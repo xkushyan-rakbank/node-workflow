@@ -33,7 +33,7 @@ jobs:
           versionSpec: 10.x
 
       - bash: |
-          rm -rf node_modules && npm install
+          npm install
         displayName: 'Build webapply'
 
 #      - bash: |
