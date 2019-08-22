@@ -42,7 +42,7 @@ jobs:
         displayName: 'Publish Artifacts'
         inputs:
 #          PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
-          PathtoPublish: '(System.DefaultWorkingDirectory)'
+          PathtoPublish: '(System.WorkingDirectory)'
           ArtifactName: $(Build.BuildNumber)
         enabled: true
 #      - bash: |
