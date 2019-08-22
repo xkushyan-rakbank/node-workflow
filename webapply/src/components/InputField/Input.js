@@ -24,9 +24,6 @@ const style = {
 };
 
 const Input = props => {
-  // const [values, setValue] = useState({ name: "" }); // remove it
-  // const [error, setErrors] = useState(""); // remove it
-
   const {
     field,
     type,
@@ -37,16 +34,6 @@ const Input = props => {
     required = false,
     ...rest
   } = props;
-
-  // // remove it
-  // const validation = event => {
-  //   const { name, value } = event.target;
-  //   setValue({ [name]: value });
-
-  //   const errors = validate(event);
-  //   setErrors(errors);
-  // };
-  // // remove it
 
   return (
     <FormControl className="formControl">

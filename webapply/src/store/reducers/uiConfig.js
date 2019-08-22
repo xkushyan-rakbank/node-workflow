@@ -1,28 +1,25 @@
 import {
-  UPLOAD_FILE,
-  UPLOAD_FILE_SUCCESS,
-  UPLOAD_FILE_FAIL
-} from "../actions/uploadFile";
+  RECEIVE_UICONFIG,
+  RECEIVE_UICONFIG_SUCCESS,
+  RECEIVE_UICONFIG_FAIL
+} from "../actions/uiConfig";
 
-const initialState = {
-  loading: false,
-  error: ""
-};
+const initialState = {};
 
-const uploadFile = (state = initialState, action) => {
+const uiConfigReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPLOAD_FILE:
+    case RECEIVE_UICONFIG:
       return {
         ...state,
         loading: true,
         error: ""
       };
-    case UPLOAD_FILE_SUCCESS:
+    case RECEIVE_UICONFIG_SUCCESS:
       return {
         ...state,
         loading: false
       };
-    case UPLOAD_FILE_FAIL:
+    case RECEIVE_UICONFIG_FAIL:
       return {
         ...state,
         loading: false,
@@ -33,4 +30,4 @@ const uploadFile = (state = initialState, action) => {
   }
 };
 
-export default uploadFile;
+export default uiConfigReducer;

@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { compose } from "recompose";
 import { Formik, Field, Form } from "formik";
 import FormGroup from "@material-ui/core/FormGroup";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "../components/InputField/Input";
 import SelectCombined from "../components/InputField/SelectCombined";
+import SelectCombined2 from "../components/InputField/SelectCombined.v2";
 import CustomCheckbox from "../components/InputField/Checkbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import { reciveUiConfig } from "./../store/actions/uiConfig";
 import { codes } from "./../constants";
 
 const styles = {
@@ -25,7 +29,13 @@ const initialValues = {
   date: null
 };
 
-const BasicsForm = ({ classes }) => {
+const BasicsForm = props => {
+  const { classes } = props;
+  useEffect(() => {
+    console.log(props);
+    props.reciveUiConfig();
+  });
+
   const handleSubmit = values => {
     console.log("values", JSON.stringify(values, null, 2));
   };
@@ -68,21 +78,15 @@ const BasicsForm = ({ classes }) => {
               component={Input}
             />
 
-            <FormGroup className="selectCombined">
-              <Field
-                name="phoneCode2"
-                options={codes}
-                component={SelectCombined}
-              />
-              <Field
-                required
-                type="tel"
-                name="phone"
-                label="Your phone"
-                placeholder="Your Mobile Number*"
-                component={Input}
-              />
-            </FormGroup>
+            <Field
+              name="phoneCode2"
+              options={codes}
+              component={SelectCombined2}
+              inputType="text"
+              inputName="phone"
+              inputPlaceholder="Your Mobile Number"
+              inputLabel="Your Phone"
+            />
 
             <Field
               name="apply"
@@ -99,4 +103,16 @@ const BasicsForm = ({ classes }) => {
   );
 };
 
-export default withStyles(styles)(BasicsForm);
+const mapStateToProps = state => {};
+
+const mapDispatchToProps = {
+  reciveUiConfig
+};
+
+export default compose(
+  withStyles(styles),
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(BasicsForm);
