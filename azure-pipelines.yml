@@ -41,6 +41,6 @@ jobs:
         displayName: 'Publish Artifacts'
         inputs:
 #         PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
-          PathtoPublish: '$(System.DefaultWorkingDirectory)'
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
           ArtifactName: $(Build.BuildNumber)
           enabled: true
