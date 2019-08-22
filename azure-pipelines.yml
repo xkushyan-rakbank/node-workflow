@@ -32,7 +32,7 @@ jobs:
         inputs:
           versionSpec: 10.x
 
-      - bash: |
+      - script:
           npm install
         displayName: 'Build webapply'
 
