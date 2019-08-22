@@ -9,18 +9,12 @@ pr:
   branches:
     include:
       - develop
-    #  - releases/*
-  #paths:
-  # exclude:
-  #  - /*.md
-  #  - /**/*.md
 trigger: none
 #trigger:
 #  - develop
 #  - releases/*
 jobs:
-  
-  - job: Webaply
+    - job: Webaply
     timeoutInMinutes: 120
     pool:
       name: Hosted macOS
@@ -40,22 +34,8 @@ jobs:
         displayName: 'Buildling webapply Application'
         enabled: true
 
-#      - task: Npm@1
-#        displayName: 'Buildling webapply Application'
-#        inputs:
-#          command: 'install && run build'
-#          workingDir: '$(System.DefaultWorkingDirectory)/webapply'
-
-#      - task: PublishBuildArtifacts@1
-#        displayName: 'Publish Artifacts'
-#        inputs:
-#         PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
-#          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
-#          ArtifactName: $(Build.BuildNumber)
-#          enabled: true
-
       - task: PublishBuildArtifacts@1
-        displayName: 'Publish Artifacts'
+        displayName: 'Publish Build Artifacts'
         inputs:
           PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
           ArtifactName: 'webapply_$(Build.BuildNumber)'
