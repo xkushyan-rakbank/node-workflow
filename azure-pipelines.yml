@@ -36,6 +36,7 @@ jobs:
           cd webapply
           npm install
         displayName: 'Build webapply'
+        
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Build'
           inputs:
