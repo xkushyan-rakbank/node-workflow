@@ -35,6 +35,7 @@ jobs:
       - script:
           cd webapply
           npm install
+          npm run build
         displayName: 'Build webapply'
 #      - bash: |
 #          cd Onboarding/web
