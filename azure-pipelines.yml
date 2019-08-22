@@ -33,6 +33,7 @@ jobs:
           versionSpec: 10.x
 
       - script:
+          cd webapply
           npm install
         displayName: 'Build webapply'
 
