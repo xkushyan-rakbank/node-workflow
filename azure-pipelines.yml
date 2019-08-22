@@ -14,8 +14,9 @@ pr:
   # exclude:
   #  - /*.md
   #  - /**/*.md
-trigger:
-  - develop
+trigger: none
+#trigger:
+#  - develop
 #  - releases/*
 jobs:
   
