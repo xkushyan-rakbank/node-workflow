@@ -29,8 +29,8 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
-			"placeholder": "",
+			"label": "Your Name",
+			"placeholder": "Your Name",
 			"path": "$.prospect.applicantInfo.fullNname",
 			"name": "prospect.applicantInfo.fullNname",
 			"required": true,
@@ -62,8 +62,8 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
-			"placeholder": "",
+			"label": "Your e-Mail Address",
+			"placeholder": "Your e-Mail Address",
 			"path": "$.prospect.applicantInfo.email",
 			"name": "prospect.applicantInfo.email",
 			"required": true,
