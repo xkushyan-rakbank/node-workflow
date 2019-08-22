@@ -9,21 +9,23 @@ pr:
   branches:
     include:
       - develop
-      - releases/*
-  paths:
-    exclude:
-    - /*.md
-    - /**/*.md
+    #  - releases/*
+  #paths:
+  # exclude:
+  #  - /*.md
+  #  - /**/*.md
 trigger:
   - develop
-  - releases/*
+#  - releases/*
 jobs:
   
-  - job: Web
+  - job: Webaply
     timeoutInMinutes: 120
-    dependsOn: Testing
     pool:
       name: Hosted macOS
+#      demands:
+#        - java
+#        - JDK
     steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -31,73 +33,70 @@ jobs:
           versionSpec: 10.x
 
       - bash: |
-          yarn reset
-          yarn
-          yarn lerna bootstrap --no-hoist
-          yarn global add create-react-app
-        displayName: 'Install Dependencies'
+          rm -rf node_modules && npm install
+        displayName: 'Build webapply'
 
-      - bash: |
-          cd Onboarding/web
-          yarn build
-        displayName: 'Build Web'
+#      - bash: |
+#          cd Onboarding/web
+#          yarn build
+#        displayName: 'Build Web'
 
-      - task: CopyFiles@2
-        displayName: 'Stage Artifacts'
-        inputs:
-          SourceFolder: Onboarding/web/build/
-          TargetFolder: '$(build.artifactstagingdirectory)/web'
+#      - task: CopyFiles@2
+#        displayName: 'Stage Artifacts'
+#        inputs:
+#          SourceFolder: Onboarding/web/build/
+#          TargetFolder: '$(build.artifactstagingdirectory)/web'
 
-      - task: ArchiveFiles@2
-        displayName: 'Archive web'
-        inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/web/'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/web/web.zip'
+#      - task: ArchiveFiles@2
+#        displayName: 'Archive web'
+#        inputs:
+#          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/web/'
+#          archiveFile: '$(Build.ArtifactStagingDirectory)/web/web.zip'
 
-      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
-        inputs:
-          artifactoryService: Jfrog
-          fileSpec: |
-            {
-              "files": [
-                {
-                  "pattern": "$(Build.ArtifactStagingDirectory)/web/*.zip",
-                  "target": "digital2/$(Build.BuildNumber)/web/"
-                }
-              ]
-            }
-          collectBuildInfo: true
+#      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+#        displayName: 'Artifactory Generic Upload'
+#        inputs:
+#          artifactoryService: Jfrog
+#          fileSpec: |
+#            {
+#              "files": [
+#                {
+#                  "pattern": "$(Build.ArtifactStagingDirectory)/web/*.zip",
+#                  "target": "digital2/$(Build.BuildNumber)/web/"
+#                }
+#              ]
+#            }
+#          collectBuildInfo: true
 
-      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
-        displayName: 'Publish Build Info to Artifactory'
-        inputs:
-          artifactoryService: Jfrog
+#      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+#        displayName: 'Publish Build Info to Artifactory'
+#        inputs:
+#          artifactoryService: Jfrog
 
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish Artifacts'
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/web'
-          ArtifactName: web
+#      - task: PublishBuildArtifacts@1
+#        displayName: 'Publish Artifacts'
+#        inputs:
+#          PathtoPublish: '$(Build.ArtifactStagingDirectory)/web'
+#          ArtifactName: web
 
 
-  - job: SonarQube
-    dependsOn:
-      - Web
-    condition:
-      and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
-    pool:
-      name: Hosted macOS
-    steps:
-      - task: SonarQubePrepare@4
-        condition: false
-        displayName: 'Prepare analysis on SonarQube'
-        inputs:
-          SonarQube: 'sonarqube'
-          scannerMode: 'CLI'
-          configMode: 'file'
+#  - job: SonarQube
+#    dependsOn:
+#      - Webapply
+#    condition:
+#      and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
+#    pool:
+#      name: Hosted macOS
+#    steps:
+#      - task: SonarQubePrepare@4
+#        condition: false
+#        displayName: 'Prepare analysis on SonarQube'
+#        inputs:
+#          SonarQube: 'sonarqube'
+#          scannerMode: 'CLI'
+#          configMode: 'file'
 
-      - task: SonarQubePublish@4
-        condition: false
-        inputs:
-          pollingTimeoutSec: '300'
+#      - task: SonarQubePublish@4
+#        condition: false
+#        inputs:
+#          pollingTimeoutSec: '300'
