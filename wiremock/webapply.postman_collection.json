@@ -250,6 +250,234 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "SMEPropsal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"prospectId\": \"COSME008\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/COSME008",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"usertypes",
+						"sme",
+						"prospects",
+						"COSME008"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateSMEPropsal ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"prospectId\": \"COSME008\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/COSME009",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"usertypes",
+						"sme",
+						"prospects",
+						"COSME009"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchSMEPropsal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userType\":\"sme\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"usertypes",
+						"sme",
+						"prospects",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchRetailPropsal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userType\":\"sme\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"usertypes",
+						"sme",
+						"prospects",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchCorporatePropsal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userType\":\"sme\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/corporate/prospects/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"usertypes",
+						"corporate",
+						"prospects",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateSMEPropsal  Copy Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"prospectId\": \"COSME008\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/COSME009",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"usertypes",
+						"sme",
+						"prospects",
+						"COSME009"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
