@@ -37,6 +37,13 @@ jobs:
           npm install
           npm run build
         displayName: 'Build webapply'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
+          ArtifactName: webapply_$(Build.BuildNumber)
+        enabled: true
 #      - bash: |
 #          cd Onboarding/web
 #          yarn build
