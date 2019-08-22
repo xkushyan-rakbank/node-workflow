@@ -31,17 +31,16 @@ jobs:
         displayName: 'Use Node 10.x'
         inputs:
           versionSpec: 10.x
+      - task: Npm@1
+        displayName: 'Build Web'
+        inputs:
+          command: 'install'
+          workingDir: '$(System.DefaultWorkingDirectory)/webapply'
 
-  - task: Npm@1
-    displayName: 'Build Web'
-     inputs:
-      command: 'install'
-      workingDir: '$(System.DefaultWorkingDirectory)/webapply'
-
-- task: PublishBuildArtifacts@1
-   displayName: 'Publish Artifacts'
-     inputs:
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifacts'
+        inputs:
 #         PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
           PathtoPublish: '$(System.DefaultWorkingDirectory)'
           ArtifactName: $(Build.BuildNumber)
-        enabled: true
+          enabled: true
