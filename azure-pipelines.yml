@@ -32,17 +32,16 @@ jobs:
         inputs:
           versionSpec: 10.x
 
-      - script:
-          cd webapply
-          npm install
-          npm run build
-        displayName: 'Build webapply'
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: '$(System.DefaultWorkingDirectory)/webapply'
 
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Artifacts'
         inputs:
 #          PathtoPublish: '$(Build.ArtifactStagingDirectory)/'
-          PathtoPublish: '(System.WorkingDirectory)'
+          PathtoPublish: '$(System.DefaultWorkingDirectory)'
           ArtifactName: $(Build.BuildNumber)
         enabled: true
 #      - bash: |
