@@ -14,7 +14,7 @@ trigger: none
 #  - develop
 #  - releases/*
 jobs:
-    - job: Webaply
+    - job: Webapply
     timeoutInMinutes: 120
     pool:
       name: Hosted macOS
@@ -59,3 +59,18 @@ jobs:
 #        displayName: 'Publish Build Info to Artifactory'
 #        inputs:
 #          artifactoryService: Jfrog
+  - job: SonarQube
+    dependsOn:
+      - Webapply
+    condition:
+      and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
+    pool:
+      name: Hosted macOS
+    steps:
+      - task: SonarQubePrepare@4
+        displayName: 'Prepare analysis on SonarQube'
+        inputs:
+          SonarQube: 'sonarqube'
+          scannerMode: 'CLI'
+          configMode: 'file'
+    enabled: false
