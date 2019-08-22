@@ -35,6 +35,7 @@ jobs:
       - task: Npm@1
         displayName: 'Build Web'
         inputs:
+          command: 'install'
           command: 'run build'
           workingDir: '$(System.DefaultWorkingDirectory)/webapply'
 
