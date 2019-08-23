@@ -36,7 +36,9 @@ const initialValues = {
   date: null
 };
 
-const BasicsForm = ({ classes }) => {
+const BasicsForm = props => {
+  const { classes } = props;
+
   const [token, setToken] = useState("");
 
   const handleRecaptchaVerify = token => {
