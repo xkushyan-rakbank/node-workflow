@@ -6,13 +6,13 @@
     "response": {
         "status": 200,
         "headers": {
-                header("Content-Type": "application/json"),
-                header("Access-Control-Allow-Origin": "*"),
-                header("Access-Control-Allow-Methods": "*"),
-                header("Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding"),
-                header("X-Content-Type-Options": "nosniff"),
-                header("x-frame-options": "DENY"),
-                header("x-xss-protection": "1; mode=block")
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Methods" : "*",
+            "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding, X-Requested-With, X-Authorization",
+            "X-Content-Type-Options" : "nosniff",
+            "x-frame-options" : "DENY",
+            "x-xss-protection" : "1; mode=block"
         },
         "bodyFileName": "COInitialStateResponse.json"
     }
