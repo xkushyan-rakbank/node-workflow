@@ -31,7 +31,7 @@ function MultiSelect({ id, indexes, reducerActionType, divClass }) {
   const { state, dispatch } = useContext(AppContext);
   console.log(state);
 
-  const field = state.uiConfig[id];
+  const field = state.appConfig[id];
   const newId = (indexes !== null && indexes !== undefined) ? id + '_' + indexes : id;
   let newPath = field.path;
   if (indexes !== undefined) {

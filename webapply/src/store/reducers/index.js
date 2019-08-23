@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
-import uiConfig from "./uiConfig";
 import { connectRouter } from "connected-react-router";
+import appConfig from "./appConfig";
 
 const reducers = history =>
   combineReducers({
     router: connectRouter(history),
-    uiConfig
+    appConfig
   });
 
 export default reducers;

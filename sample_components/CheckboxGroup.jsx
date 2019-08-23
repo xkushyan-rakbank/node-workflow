@@ -20,7 +20,7 @@ function renderHelpBlock(field) {
 function renderOptions(field, attr, selectedOptions) {
   let rdDivClass = field.horizontal ? "form-check form-check-inline" : "form-check";
   if (field.hasOwnProperty('datalist') && field.datalist !== '') {
-    let optionItems = field.datalist.map((item) => 
+    let optionItems = field.datalist.map((item) =>
       <div className={rdDivClass} key={item.value} >
         <input className="form-check-input" key={item.value} type="checkbox" id={item.value} value={item.value} {...attr} checked={selectedOptions.includes(item.value)}></input>
         <label className="form-check-label" htmlFor={item.value}>{item.label}</label>
@@ -35,7 +35,7 @@ function CheckboxGroup({ id, indexes, reducerActionType, divClass }) {
   const { state, dispatch } = useContext(AppContext);
   console.log(state);
 
-  const field = state.uiConfig[id];
+  const field = state.appConfig[id];
   const newId = (indexes !== null && indexes !== undefined) ? id + '_' + indexes : id;
   let newPath = field.path;
   if (indexes !== undefined) {

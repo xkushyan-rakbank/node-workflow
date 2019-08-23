@@ -18,7 +18,7 @@ function renderHelpBlock(field) {
 }
 
 function renderOptions(field, attr) {
- 
+
   let rdDivClass = field.horizontal?"form-check form-check-inline":"form-check";
   if (field.hasOwnProperty('datalist') && field.datalist !== '') {
     let optionItems = field.datalist.map((item) =>
@@ -36,7 +36,7 @@ function RadioGroup({ id, indexes, reducerActionType, divClass }) {
   const { state, dispatch } = useContext(AppContext);
   console.log(state);
 
-  const field = state.uiConfig[id];
+  const field = state.appConfig[id];
   const newId = (indexes !== null && indexes !== undefined) ? id + '_' + indexes : id;
   let newPath = field.path;
   if (indexes !== undefined) {
@@ -54,7 +54,7 @@ function RadioGroup({ id, indexes, reducerActionType, divClass }) {
     if (reducerActionType !== null && reducerActionType !== undefined) {
       dispatch({ type: reducerActionType, event });
     } else {
-     
+
       var selectedOption = event.target.value;
 
       let newState = { ...state };

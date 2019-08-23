@@ -1,5 +1,5 @@
 import client from "./axiosConfig";
 
-export const getUiConfig = () => {
+export const getAppConfig = () => {
   return client.get("/webapply/api/state");
 };

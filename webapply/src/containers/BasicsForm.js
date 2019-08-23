@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import { compose } from "recompose";
 import { Formik, Field, Form } from "formik";
-import FormGroup from "@material-ui/core/FormGroup";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "../components/InputField/Input";
-import SelectCombined from "../components/InputField/SelectCombined";
+import TextInput from "../components/InputField/TextInput";
 import SelectCombined2 from "../components/InputField/SelectCombined.v2";
 import CustomCheckbox from "../components/InputField/Checkbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import { reciveUiConfig } from "./../store/actions/uiConfig";
 import { codes } from "./../constants";
 
 const styles = {
@@ -31,10 +28,6 @@ const initialValues = {
 
 const BasicsForm = props => {
   const { classes } = props;
-  useEffect(() => {
-    console.log(props);
-    props.reciveUiConfig();
-  });
 
   const handleSubmit = values => {
     console.log("values", JSON.stringify(values, null, 2));
@@ -53,6 +46,8 @@ const BasicsForm = props => {
       Just for this screen Formik is used -  https://jaredpalmer.com/formik/docs/overview
       aproach to validate inputs with formik - https://jaredpalmer.com/formik/docs/guides/validation#docsNav
       */}
+      <TextInput id="UI0001" />
+
       <Formik
         validateOnBlur
         initialValues={initialValues}
@@ -103,16 +98,4 @@ const BasicsForm = props => {
   );
 };
 
-const mapStateToProps = state => {};
-
-const mapDispatchToProps = {
-  reciveUiConfig
-};
-
-export default compose(
-  withStyles(styles),
-  connect(
-    null,
-    mapDispatchToProps
-  )
-)(BasicsForm);
+export default compose(withStyles(styles))(BasicsForm);
