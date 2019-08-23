@@ -33,7 +33,7 @@ const ReCaptchaNotRobot = ({
     });
 
     return () => {
-      grecaptcha.reset(false);
+      grecaptcha.reset(id);
     };
   }, [grecaptcha]);
 
