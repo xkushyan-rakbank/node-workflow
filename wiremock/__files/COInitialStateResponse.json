@@ -1,9 +1,11 @@
 {
-	"appConfig": {
-		"DEH_API_HOST": "http://localhost:3001",
-		"DOC_UPLOADER_API_HOST": "http://localhost:3001",
-		"DEH_CLIENT_ID": "",
-		"DOC_UPLOADER_CLIENT_ID": ""
+	"endpoints": {
+		"dev":{
+			"appStateAPI":{
+          		"url_pattern": "/webapply/api/state",
+          		"host": "http://localhost:8080"
+			}
+		}
 	},
 	"uiConfig": {
 		"UI0001": {
