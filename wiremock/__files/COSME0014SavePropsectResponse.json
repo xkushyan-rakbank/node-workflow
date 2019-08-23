@@ -1,0 +1,24 @@
+{
+    "accountNo": "",
+    "prospectId": "COSME0000000000000001",
+    "_links": {
+      "self": {
+        "href": "/banks/RAK/usertypes/sme/prospects/COSME0000000000000001"
+      }
+    },
+    "preScreening": {
+      "statusOverAll": "proceed",
+      "screeningResults": [
+        {
+          "screeningType": "",
+          "screeningStatus": "",
+          "screeningFlag": "",
+          "screeningNotes": "",
+          "screeningReason": "",
+          "reasonNotes": "",
+          "reasonCode": "",
+          "reasonStatus": ""
+        }
+      ]
+    }
+  }
