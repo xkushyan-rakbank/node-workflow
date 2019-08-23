@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Field, Form } from "formik";
 import FormGroup from "@material-ui/core/FormGroup";
 import { withStyles } from "@material-ui/core/styles";
+import ErrorBoundary from "../components/ErrorBoundary";
 import Input from "../components/InputField/Input";
 import SelectCombined from "../components/InputField/SelectCombined";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
@@ -32,9 +33,19 @@ const initialValues = {
 };
 
 const BasicsForm = ({ classes }) => {
-  const verifyCallback = token => {
-    console.log("RECAPTCHA VERIFY TOKEN", token);
+  const [token, setToken] = useState("");
+
+  const handleRecaptchaVerify = token => {
+    setToken(token);
   };
+
+  const handleRecaptchaExpired = () => {
+    setToken("");
+  };
+
+  useEffect(() => {
+    console.log("RECaptcha verify token:", token);
+  }, [token]);
 
   const handleSubmit = values => {
     console.log("values", JSON.stringify(values, null, 2));
@@ -100,9 +111,13 @@ const BasicsForm = ({ classes }) => {
               component={CustomCheckbox}
             />
 
-            <div className={classes.reCaptchaContainer}>
-              <ReCaptcha verifyCallback={verifyCallback} />
-            </div>
+            <ErrorBoundary className={classes.reCaptchaContainer}>
+              <ReCaptcha
+                onVerify={handleRecaptchaVerify}
+                onExpired={handleRecaptchaExpired}
+                onError={handleRecaptchaExpired}
+              />
+            </ErrorBoundary>
 
             <Link to="/confirm">
               <SubmitButton />

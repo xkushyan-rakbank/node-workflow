@@ -1,33 +1,49 @@
 import React, { useEffect, useRef } from "react";
 
-const PUB_KEY = process.env.REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY;
+const PUB_KEY = process.env.REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY || " ";
 
 /**
- * @param {Function} verifyCallback
+ * @param {Function} onVerify
+ * @param {Function} onExpired
+ * @param {Function} onError
  * @param {Object} grecaptcha
  * @param {Function} grecaptcha.render
- * @param {Object} rest
+ * @param {Function} grecaptcha.reset
+ * @param {Function} grecaptcha.getResponse
+ * @param {Object} rest - proxy props
  * @return {Node}
  * @constructor
  */
-const ReCaptchaNotRobot = ({ verifyCallback, grecaptcha, ...rest }) => {
+const ReCaptchaNotRobot = ({
+  onVerify,
+  onExpired,
+  onError,
+  grecaptcha,
+  ...rest
+}) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    grecaptcha.render(ref.current, {
+    const id = grecaptcha.render(ref.current, {
       sitekey: PUB_KEY,
-      callback: verifyCallback
+      size: "normal",
+      callback: onVerify,
+      "expired-callback": onExpired,
+      "error-callback": onError
     });
+
+    return () => {
+      grecaptcha.reset(false);
+    };
   }, [grecaptcha]);
 
   return <div {...rest} ref={ref} className="g-recaptcha" />;
 };
 
 ReCaptchaNotRobot.defualtProps = {
-  verifyCallback: () => {},
-  grecaptcha: {
-    render: () => {}
-  }
+  onVerify: () => {},
+  onExpired: () => {},
+  onError: () => {}
 };
 
 export default ReCaptchaNotRobot;
