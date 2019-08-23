@@ -1,7 +1,7 @@
 {
 	"endpoints": {
 		"dev":{
-			"appStateAPI":{
+			"appConfigAPI":{
           		"url_pattern": "/webapply/api/state",
           		"host": "http://localhost:8080"
 			}
