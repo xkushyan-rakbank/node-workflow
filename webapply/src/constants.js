@@ -1,7 +1,9 @@
-import React from "react";
 import PersonalInformation from "./components/StepForms/PersonalInformation";
 import SignatoryRights from "./components/StepForms/SignatoryRights";
 import Shareholding from "./components/StepForms/Shareholding";
+import Nationality from "./components/StepForms/Nationality";
+import CountryOfResidence from "./components/StepForms/CountryOfResidence";
+import PublicPosition from "./components/StepForms/PublicPosition";
 
 export const stakeHoldersSteps = [
   {
@@ -15,21 +17,16 @@ export const stakeHoldersSteps = [
     component: SignatoryRights
   },
   { step: 3, title: "Shareholding", component: Shareholding },
-  { step: 4, title: "Nationality", component: () => <div>Nationality</div> },
+  { step: 4, title: "Nationality", component: Nationality },
   {
     step: 5,
     title: "Country of residence",
-    component: () => <div>Country of residence</div>
+    component: CountryOfResidence
   },
   {
     step: 6,
-    title: "Employment details",
-    component: () => <div>Employment details</div>
-  },
-  {
-    step: 7,
-    title: "Preferred contact information",
-    component: () => <div>Preferred contact information</div>
+    title: "Public position",
+    component: PublicPosition
   }
 ];
 
@@ -51,6 +48,21 @@ export const personSignatory = [
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
   { value: "AuthorityType2", label: "AuthorityType2" }
+];
+
+export const nationality = [
+  { value: "Nationality1", label: "Nationality1" },
+  { value: "Nationality2", label: "Nationality2" }
+];
+
+export const countryOfResidence = [
+  { value: "Country Of Residence1", label: "Country Of Residence1" },
+  { value: "Country Of Residence2", label: "Country Of Residence2" }
+];
+
+export const publicPositions = [
+  { value: "Never held", label: "Never held" },
+  { value: "Yes", label: "Yes" }
 ];
 
 export const codes = [

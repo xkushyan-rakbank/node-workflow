@@ -55,22 +55,25 @@ const style = {
   }
 };
 
-const CustomCheckbox = ({ classes, checked, field, label, ...props }) => (
-  <label className={classes.checkboxWrapper}>
-    <div className={classes.checkboxContainer}>
-      <input
-        {...field}
-        {...props}
-        type="checkbox"
-        checked={field.value}
-        className={classes.hiddenCheckbox}
-      />
-      <div className={classes.styledCheckbox}>
-        {field.value && <img src={Check} alt="" />}
+const CustomCheckbox = ({ classes, checked, field, label, ...props }) => {
+  const value = field ? field.value : props.value;
+  return (
+    <label className={classes.checkboxWrapper}>
+      <div className={classes.checkboxContainer}>
+        <input
+          {...field}
+          {...props}
+          type="checkbox"
+          checked={value}
+          className={classes.hiddenCheckbox}
+        />
+        <div className={classes.styledCheckbox}>
+          {value && <img src={Check} alt="" />}
+        </div>
       </div>
-    </div>
-    <span className={classes.label}>{label}</span>
-  </label>
-);
+      <span className={classes.label}>{label}</span>
+    </label>
+  );
+};
 
 export default withStyles(style)(CustomCheckbox);
