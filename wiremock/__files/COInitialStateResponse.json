@@ -1,10 +1,8 @@
 {
 	"endpoints": {
-		"dev":{
-			"appConfigAPI":{
-          		"url_pattern": "/webapply/api/state",
-          		"host": "http://localhost:8080"
-			}
+		"appConfigAPI":{
+          	"path": "/webapply/api/state",
+          	"host": "http://localhost:8080"
 		}
 	},
 	"uiConfig": {
