@@ -8,3 +8,5 @@ Getting Started
 2. Refer "WiremockScenarios.xlsx" for different scenarios and request details
 
 3. Import "webapply.postman_collection.json" into postman to test the wiremock responses.
+
+4. CORS issue, refer https://github.com/tomakehurst/wiremock/issues/721
