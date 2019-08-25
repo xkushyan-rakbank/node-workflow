@@ -38,7 +38,7 @@ jobs:
         displayName: 'Publish Build Artifacts'
         inputs:
           PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
-          ArtifactName: 'webapply_$(Build.BuildNumber)'
+          ArtifactName: 'Webapply'
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload'
