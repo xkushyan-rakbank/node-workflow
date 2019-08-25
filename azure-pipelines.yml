@@ -49,7 +49,7 @@ jobs:
               "files": [
                 {
                   "pattern": "$(Build.ArtifactStagingDirectory)/webapply/build/*.zip",
-                  "target": "digital2/$(Build.BuildNumber)/CO_Webapply/"
+                  "target": "onboarding/$(Build.BuildNumber)/Webapply/"
                 }
               ]
             }
