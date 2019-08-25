@@ -537,6 +537,50 @@
         }
       }
     },
+    "/banks/RAK/legal/documents/{documentName}": {
+      "get": {
+        "summary": "get terms and conditions document",
+        "operationId": "getTermsAndConditionsDocument",
+        "tags": [
+          "Get T&C Document"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "documentName",
+            "in": "path",
+            "required": true,
+            "description": "name of the document",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return document",
+            "schema": {
+              "$ref": "#/definitions/ProspectDocument"
+            }
+          },
+          "400": {
+            "description": "Invalid document name",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "500 is the generic REST API error response.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/banks/RAK/otp": {
       "post": {
         "summary": "API for validating Auth Mode",
@@ -578,6 +622,52 @@
             "description": "400 is the generic client-side error status. Errors can be like malformed request syntax, invalid request message parameters etc.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "500 is the generic REST API error response.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/banks/RAK/recaptcha/verify": {
+      "post": {
+        "summary": "Verify reCaptcha token",
+        "operationId": "verifyCaptcha",
+        "tags": [
+          "reCaptcha"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "OTPRequest object to send or verify the OTP",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReCaptchaRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OTP verified",
+            "schema": {
+              "$ref": "#/definitions/ReCaptchaResponse"
+            }
+          },
+          "400": {
+            "description": "400 is the generic client-side error status. Errors can be like malformed request syntax, invalid request message parameters etc.",
+            "schema": {
+              "$ref": "#/definitions/ReCaptchaResponse"
             }
           },
           "500": {
@@ -739,7 +829,7 @@
               "prospectId": {
                 "type": "string"
               },
-              "fullNname": {
+              "fullName": {
                 "type": "string",
                 "description": "name of the applicant",
                 "maxLength": 240,
@@ -822,7 +912,7 @@
               "applicantInfo": {
                 "type": "object",
                 "properties": {
-                  "fullNname": {
+                  "fullName": {
                     "type": "string",
                     "description": "name of the applicant",
                     "maxLength": 240,
@@ -1422,6 +1512,35 @@
         }
       }
     },
+    "ReCaptchaRequest": {
+      "type": "object",
+      "properties": {
+        "recaptchaToken": {
+          "type": "string"
+        }
+      }
+    },
+    "ReCaptchaResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "challengeTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "errorCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "OTPRequest": {
       "type": "object",
       "required": [
@@ -1517,13 +1636,13 @@
         "applicantInfo": {
           "type": "object",
           "required": [
-            "fullNname",
+            "fullName",
             "email",
             "countryCode",
             "mobileNo"
           ],
           "properties": {
-            "fullNname": {
+            "fullName": {
               "type": "string",
               "description": "name of the applicant",
               "maxLength": 240,
