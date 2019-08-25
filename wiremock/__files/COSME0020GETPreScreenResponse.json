@@ -1,0 +1,15 @@
+{
+  "statusOverAll": "proceed",
+  "screeningResults": [
+    {
+      "screeningType": "",
+      "screeningStatus": "",
+      "screeningFlag": "",
+      "screeningNotes": "",
+      "screeningReason": "",
+      "reasonNotes": "",
+      "reasonCode": "",
+      "reasonStatus": ""
+    }
+  ]
+}
