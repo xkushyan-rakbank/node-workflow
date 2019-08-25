@@ -64,12 +64,18 @@ jobs:
       pool:
        name: Hosted macOS
       steps:
+      #prepare the Sonarqube for executing the sonar 
       - task: SonarQubePrepare@4
         inputs:
           SonarQube: 'sonarqube'
           scannerMode: 'CLI'
           configMode: 'file'
+      #execute the sonar qube analyze in order to run the analyzes of the source code
       - task: SonarQubeAnalyze@4
+      # publish the sonar report
+      - task: SonarQubePublish@4
+        inputs:
+          pollingTimeoutSec: '300'
       - task: PowerShell@2
         displayName: 'Check Sonar Quality Gate'
         inputs:
