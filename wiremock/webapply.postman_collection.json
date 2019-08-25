@@ -325,6 +325,43 @@
 			"response": []
 		},
 		{
+			"name": "OnboardSMECustomer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"prospectId\": \"COSME0013\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"usertypes",
+						"sme",
+						"prospects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "UpdateSMEPropsal ",
 			"request": {
 				"method": "POST",
@@ -452,7 +489,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"userType\":\"sme\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
+					"raw": "{\r\n  \"userType\":\"corporate\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/corporate/prospects/search",
@@ -471,6 +508,196 @@
 						"corporate",
 						"prospects",
 						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Propspect document upload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"documentType\": \"Passport\",\r\n  \"documentTitle\": \"COSME0017\",\r\n  \"fileName\": \"\",\r\n  \"filePath\": \"\",\r\n  \"url\": \"\",\r\n  \"fileData\": \"\",\r\n  \"fileFormat\": \"application/pdf\",\r\n  \"fileSize\": 0,\r\n  \"fileDescription\": \"\",\r\n  \"submittedBy\": \"\",\r\n  \"submittedDt\": \"\",\r\n  \"updatedBy\": \"\",\r\n  \"updatedDt\": \"\",\r\n  \"avsCheckDt\": \"\",\r\n  \"avsCheck\": false,\r\n  \"verified\": false,\r\n  \"verifiedBy\": \"\",\r\n  \"isEncrypted\": false,\r\n  \"encryptionDetails\": \"\",\r\n  \"uploadStatus\": \"Uploaded\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0017/documents",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"prospects",
+						"COSME0017",
+						"documents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUTReuploadDocument",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"prospectId\": \"COSME0019\",\r\n  \"documentType\": \"Passport\",\r\n  \"documentTitle\": \"hello\",\r\n  \"fileName\": \"\",\r\n  \"filePath\": \"\",\r\n  \"url\": \"\",\r\n  \"fileData\": \"\",\r\n  \"fileFormat\": \"application/pdf\",\r\n  \"fileSize\": 0,\r\n  \"fileDescription\": \"\",\r\n  \"submittedBy\": \"\",\r\n  \"submittedDt\": \"\",\r\n  \"updatedBy\": \"\",\r\n  \"updatedDt\": \"\",\r\n  \"avsCheckDt\": \"\",\r\n  \"avsCheck\": false,\r\n  \"verified\": false,\r\n  \"verifiedBy\": \"\",\r\n  \"isEncrypted\": false,\r\n  \"encryptionDetails\": \"\",\r\n  \"uploadStatus\": \"Uploaded\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0019/documents",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"prospects",
+						"COSME0019",
+						"documents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETSMEDatalist",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/webapply/api/state",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"webapply",
+						"api",
+						"state"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETSMEPrescreening",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{prospectId: \"COSME0020\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0020/screening",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"prospects",
+						"COSME0020",
+						"screening"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETDocumentByID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{prospectId:\"COSME0018\",\r\ndocumentId:\"1234\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0018/documents/1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer-onboarding",
+						"v1",
+						"banks",
+						"RAK",
+						"prospects",
+						"COSME0018",
+						"documents",
+						"1234"
 					]
 				}
 			},
