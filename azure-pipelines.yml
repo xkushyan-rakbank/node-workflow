@@ -68,10 +68,8 @@ jobs:
         inputs:
           SonarQube: 'sonarqube'
           scannerMode: 'CLI'
-          configMode: 'manual'
-          cliProjectKey: 'onboarding_webapply'
-          cliProjectName: 'onboarding_webapply'
-          cliSources: '.Onboarding/webapply'
+          configMode: 'file'
+      - task: SonarQubeAnalyze@4
       - task: PowerShell@2
         displayName: 'Check Sonar Quality Gate'
         inputs:
