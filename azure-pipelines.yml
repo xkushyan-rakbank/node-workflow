@@ -73,4 +73,4 @@ jobs:
           SonarQube: 'sonarqube'
           scannerMode: 'CLI'
           configMode: 'file'
-        enabled: false
+        enabled: true
