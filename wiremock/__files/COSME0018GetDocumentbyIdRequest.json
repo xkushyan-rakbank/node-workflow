@@ -1,0 +1,15 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/api/customer-onboarding/v1/banks/RAK/prospects/COSME0018/documents/1234",
+		"bodyPatterns": [
+			{
+				"matchesJsonPath": "$[?(@.prospectId == 'COSME0018')]"
+			}
+		]
+	},
+	"response": {
+		"status": 200,
+		"bodyFileName": "COSME0018GetDocumentbyidResponse.json"
+	}
+}
