@@ -70,7 +70,7 @@ jobs:
           SonarQube: 'sonarqube'
           scannerMode: 'CLI'
           configMode: 'file'
-        enabled: false
+        enabled: true
       - task: PowerShell@2
         displayName: 'Check Sonar Quality Gate'
         inputs:
