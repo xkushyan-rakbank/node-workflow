@@ -4,7 +4,7 @@
         "url": "/banks/RAK/usertypes/sme/prospects/",
         "bodyPatterns": [
 			{
-				"matchesJsonPath": "$.applicantInfo[?(@.fullName == 'HappyPath')]"
+				"matchesJsonPath": "$.generalInfo[?(@.fullName == 'HappyPath')]"
 			}
 		]
     },
