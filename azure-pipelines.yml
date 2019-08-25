@@ -65,12 +65,13 @@ jobs:
        name: Hosted macOS
       steps:
       - task: SonarQubePrepare@4
-        displayName: 'Prepare analysis on SonarQube'
         inputs:
           SonarQube: 'sonarqube'
           scannerMode: 'CLI'
-          configMode: 'file'
-        enabled: true
+          configMode: 'manual'
+          cliProjectKey: 'onboarding_webapply'
+          cliProjectName: 'onboarding_webapply'
+          cliSources: '.Onboarding/webapply'
       - task: PowerShell@2
         displayName: 'Check Sonar Quality Gate'
         inputs:
