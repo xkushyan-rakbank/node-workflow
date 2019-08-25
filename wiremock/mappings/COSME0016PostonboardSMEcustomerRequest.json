@@ -1,0 +1,15 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects",
+		"bodyPatterns": [
+			{
+				"matchesJsonPath": "$[?(@.prospectId == 'COSME0016')]"
+			}
+		]
+	},
+	"response": {
+		"status": 200,	
+		"bodyFileName": "COSME0016PostonboardSMEcustomerResponse.json"
+	}
+}

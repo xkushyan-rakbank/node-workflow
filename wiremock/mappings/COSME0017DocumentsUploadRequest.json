@@ -1,0 +1,15 @@
+{
+	"request": {
+		"method": "POST",
+		"url": "/api/customer-onboarding/v1/banks/RAK/prospects/COSME0017/documents",
+		"bodyPatterns": [
+			{
+				"matchesJsonPath": "$[?(@.documentTitle == 'COSME0017')]"
+			}
+		]
+	},
+	"response": {
+		"status": 200,
+		"bodyFileName": "COSME0017DocumentsUploadResponse.json"
+	}
+}
