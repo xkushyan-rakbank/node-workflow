@@ -34,6 +34,17 @@ jobs:
         displayName: 'Buildling webapply Application'
         enabled: true
 
+      - task: CopyFiles@2
+        displayName: 'Stage Artifacts'
+        inputs:
+          SourceFolder: webapply/build/
+          TargetFolder: '$(build.artifactstagingdirectory)/webapply'
+      - task: ArchiveFiles@2
+        displayName: 'Archive web'
+        inputs:
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/webapply/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/webapply/webapply.zip'
+
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload'
@@ -43,8 +54,8 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "$(System.DefaultWorkingDirectory)/webapply/build/*.zip",
-                    "target": "onboarding/$(Build.BuildNumber)/webapply/build/"
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
+                    "target": "onboarding/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
@@ -56,7 +67,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Build Artifacts'
         inputs:
-          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
           ArtifactName: 'Webapply'
     
     - job: SonarQube
