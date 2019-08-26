@@ -55,7 +55,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/webapply/"
+                    "target": "onboarding/$(Build.BuildNumber)/"
                 }
               ]
             }
