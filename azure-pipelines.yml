@@ -54,7 +54,7 @@ jobs:
               ]
             }
           collectBuildInfo: true
-        enabled: false
+        enabled: true
 
     - job: SonarQube
       dependsOn:
