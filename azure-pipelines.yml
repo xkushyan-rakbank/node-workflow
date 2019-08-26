@@ -34,13 +34,7 @@ jobs:
         displayName: 'Buildling webapply Application'
         enabled: true
 
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish Build Artifacts'
-        inputs:
-          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
-          ArtifactName: 'Webapply'
 # below is used for the publishing the artifacts to the jfrog artifactory 
-
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload'
         inputs:
@@ -58,8 +52,13 @@ jobs:
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
         displayName: 'Publish Build Info to Artifactory'
         inputs:
-          artifactoryService: Jfrog       
-     
+          artifactoryService: 'Jfrog'
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Build Artifacts'
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
+          ArtifactName: 'Webapply'
+    
     - job: SonarQube
       dependsOn:
        - Webapply
