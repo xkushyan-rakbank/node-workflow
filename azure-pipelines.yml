@@ -51,7 +51,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(System.DefaultWorkingDirectory)/webapply/build/*.zip",
-                    "target": "onboarding/$(Build.BuildNumber)/Webapply/"
+                    "target": "digital2/$(Build.BuildNumber)/Webapply/"
             
                 }
               ]
