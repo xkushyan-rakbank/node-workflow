@@ -55,7 +55,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/$(Build.BuildNumber)/webapply/"
+                    "target": "onboarding/webapply/"
                 }
               ]
             }
@@ -64,6 +64,7 @@ jobs:
         displayName: 'Publish Build Info to Artifactory'
         inputs:
           artifactoryService: 'Jfrog'
+
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Build Artifacts'
         inputs:
