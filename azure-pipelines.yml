@@ -54,7 +54,11 @@ jobs:
                 }
               ]
             }
-          collectBuildInfo: true 
+          collectBuildInfo: true
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: Jfrog       
      
     - job: SonarQube
       dependsOn:
