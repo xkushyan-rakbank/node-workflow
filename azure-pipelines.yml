@@ -40,6 +40,23 @@ jobs:
           PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
           ArtifactName: 'Webapply'
 # below is used for the publishing the artifacts to the jfrog artifactory 
+
+      - task: ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: 'Jfrog'
+          specSource: 'taskConfiguration'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(System.DefaultWorkingDirectory)/webapply/build/*.zip",
+                    "target": "onboarding/$(Build.BuildNumber)/Webapply/"
+            
+                }
+              ]
+            }
+          failNoOp: true 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload'
         inputs:
@@ -48,13 +65,11 @@ jobs:
             {
               "files": [
                 {
-                  "pattern": "$(System.DefaultWorkingDirectory)/webapply/build/*.zip",
-                  "target": "onboarding/$(Build.BuildNumber)/Webapply/"
-                }
+               }
               ]
             }
           collectBuildInfo: true
-        enabled: true
+        enabled: false
 
     - job: SonarQube
       dependsOn:
