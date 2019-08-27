@@ -1,13 +1,16 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "5e53f602-7264-4206-b1c0-7b9a112b215d",
 		"name": "webapply",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "bc84347e-db7f-034a-f59b-b0ace276209f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Generate OTP - successfully sent SMS",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
 				"method": "POST",
 				"header": [
 					{
@@ -21,722 +24,589 @@
 					"mode": "raw",
 					"raw": "{\r\n  \"prospectId\": \"COSME001\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"0123456789\",\r\n  \"action\": \"generate\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"otp"
-					]
-				}
+				"description": ""
 			},
-			"response": []
+			"response": [
+				{
+					"id": "ec7955d3-d8f3-493c-a5b2-5f3b94938e28",
+					"name": "Generate OTP - successfully sent SMS",
+					"originalRequest": {
+						"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"prospectId\": \"COSME001\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"0123456789\",\r\n  \"action\": \"generate\"\r\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "access-control-allow-headers",
+							"key": "access-control-allow-headers",
+							"value": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding, X-Requested-With, X-Authorization",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"name": "access-control-allow-methods",
+							"key": "access-control-allow-methods",
+							"value": "*",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"name": "access-control-allow-origin",
+							"key": "access-control-allow-origin",
+							"value": "*",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"name": "content-encoding",
+							"key": "content-encoding",
+							"value": "gzip",
+							"description": "The type of encoding used on the data."
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "matched-stub-id",
+							"key": "matched-stub-id",
+							"value": "bf4ad83d-4fbd-4812-996e-dfc283f289d0",
+							"description": "Custom header"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Jetty(9.2.z-SNAPSHOT)",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "vary",
+							"key": "vary",
+							"value": "Accept-Encoding, User-Agent",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						},
+						{
+							"name": "x-content-type-options",
+							"key": "x-content-type-options",
+							"value": "nosniff",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"name": "x-frame-options",
+							"key": "x-frame-options",
+							"value": "DENY",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"name": "x-xss-protection",
+							"key": "x-xss-protection",
+							"value": "1; mode=block",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [],
+					"responseTime": 192,
+					"body": "{\r\n\t\"mode\": \"sms\",\r\n\t\"otpTokenValidityInSec\": 300,\r\n\t\"otpTokenValidUntil\": \"\"\r\n}\r\n"
+				}
+			]
 		},
 		{
 			"name": "Initial state",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
+				"url": "http://localhost:8080/webapply/api/state",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://localhost:8080/webapply/api/state",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"webapply",
-						"api",
-						"state"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "BackOfficeLogin - successfully login",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/users/authenticate",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"username\": \"COSME0007\",\r\n  \"password\": \"COSME@2019\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/users/authenticate",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"users",
-						"authenticate"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "Generate OTP - successfully Verified",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"prospectId\": \"COSME001\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"0123456789\",\r\n  \"email\": \"sc_otp@email.com\",\r\n  \"action\": \"generate\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"otp"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "Generate OTP - successfully sent Email",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"prospectId\": \"COSME002\",\r\n  \"countryCode\": \"+971\",\r\n  \"email\": \"otp@email.com\",\r\n  \"action\": \"generate\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"otp"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "Generate OTP - Unable to Sent OTP SMS",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"prospectId\": \"COSME003\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"9876543210\",\r\n  \"action\": \"generate\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"otp"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "Generate OTP - Unable to Sent OTP SMS and Email",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"prospectId\": \"COSME004\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"9876543210\",\r\n  \"email\": \"otp@email.com\",\r\n  \"action\": \"generate\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"otp"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "Generate OTP - Invalid",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"prospectId\": \"COSME005\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"9876543211\",\r\n  \"email\": \"no_otp1@email.com\",\r\n  \"action\": \"generate\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/otp",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"otp"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "SMEPropsal",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/COSME008",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\"prospectId\": \"COSME008\"}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/COSME008",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"usertypes",
-						"sme",
-						"prospects",
-						"COSME008"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "SME Prospect Invalid",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n\t\"prospectId\": \"COSME0013\",\r\n  \"applicantInfo\": {\r\n    \"fullNname\": \"HappyPath\",\r\n    \"email\": \"user@example.com\",\r\n    \"countryCode\": \"\",\r\n    \"mobileNo\": \"\"\r\n  },\r\n  \"generalInfo\": {\r\n    \"prospectId\": \"COSME0013\",\r\n    \"_links\": {\r\n      \"self\": {\r\n        \"href\": \"\"\r\n      }\r\n    },\r\n    \"cifId\": 0,\r\n    \"customerType\": \"\",\r\n    \"dsaId\": \"\",\r\n    \"groupId\": \"\",\r\n    \"groupName\": \"\",\r\n    \"rmCode\": \"\",\r\n    \"accountManagerId\": \"\",\r\n    \"isPoliticallyExposed\": \"N\"\r\n  },\r\n  \"applicationInfo\": {\r\n    \"viewId\": \"\",\r\n    \"leadNumber\": \"\",\r\n    \"riskScore\": \"\",\r\n    \"srNumber\": \"\",\r\n    \"channelId\": \"Bank to confirm on the LOVs\",\r\n    \"channelType\": \"Mobile\",\r\n    \"createdDate\": \"\",\r\n    \"lastModifiedDate\": \"\",\r\n    \"createdBy\": \"\",\r\n    \"lastModifiedBy\": \"\",\r\n    \"actionType\": \"Save\",\r\n    \"saveType\": \"auto\",\r\n    \"tncAgreed\": false,\r\n    \"declaration\": true\r\n  },\r\n  \"accountInfo\": [\r\n    {\r\n      \"branchId\": \"LOVs will be fetched from datalist API\",\r\n      \"accountType\": \"Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary\",\r\n      \"accountSubType\": \"Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary\",\r\n      \"accountCurrencies\": \"AED\",\r\n      \"accountPurpose\": \"Bank to confirm on the LOVs\",\r\n      \"debitCardApplied\": true,\r\n      \"chequeBookApplied\": true,\r\n      \"eStatements\": true,\r\n      \"mailStatements\": false,\r\n      \"receiveInterest\": true,\r\n      \"deliverByCourier\": true\r\n    }\r\n  ],\r\n  \"organizationInfo\": {\r\n    \"screeningInfo\": {\r\n      \"statusOverAll\": \"proceed\",\r\n      \"screeningResults\": [\r\n        {\r\n          \"screeningType\": \"\",\r\n          \"screeningStatus\": \"\",\r\n          \"screeningFlag\": \"\",\r\n          \"screeningNotes\": \"\",\r\n          \"screeningReason\": \"\",\r\n          \"reasonNotes\": \"\",\r\n          \"reasonCode\": \"\",\r\n          \"reasonStatus\": \"\"\r\n        }\r\n      ]\r\n    },\r\n    \"branchCity\": \"LOVs to be confirmed by Bank\",\r\n    \"branchID\": \"LOVs to be confirmed by Bank\",\r\n    \"countryOfIncorporation\": \"AE\",\r\n    \"companyName\": \"\",\r\n    \"shortName\": \"\",\r\n    \"dateOfIncorporation\": \"2019-08-22\",\r\n    \"numberOfEmployees\": 0,\r\n    \"licenseType\": \"Trade License\",\r\n    \"licenseTypeOther\": \"\",\r\n    \"licenseIssuingAuthority\": \"LOVs to be confirmed by Bank\",\r\n    \"licenseNumber\": \"\",\r\n    \"licenseIssueDate\": \"2019-08-22\",\r\n    \"licenseExpiryDate\": \"2019-08-22\",\r\n    \"vatRegistrationNumber\": \"\",\r\n    \"addressInfo\": [\r\n      {\r\n        \"typeOfAddress\": \"Registered Address/Head office\",\r\n        \"officeAddressDifferent\": \"No\",\r\n        \"addressDetails\": [\r\n          {\r\n            \"addressFieldDesc\": \"Registered Address/Head office\",\r\n            \"preferredAddress\": \"Yes\",\r\n            \"addressLine1\": \"\",\r\n            \"addressLine2\": \"\",\r\n            \"addressLine3\": \"\",\r\n            \"addressLine4\": \"\",\r\n            \"poBox\": \"\",\r\n            \"emirateCity\": \"\",\r\n            \"country\": \"\",\r\n            \"typeOfSpaceOccupied\": {\r\n              \"spaceType\": \"Office\",\r\n              \"others\": \"\"\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"contactDetails\": {\r\n      \"primaryMobileNo\": \"\",\r\n      \"primaryMobCountryCode\": \"\",\r\n      \"primaryEmail\": \"user@example.com\",\r\n      \"primaryPhoneNo\": \"\",\r\n      \"primaryPhoneCountryCode\": \"\",\r\n      \"fax\": \"\",\r\n      \"faxCountryCode\": \"\",\r\n      \"secondaryPhoneNo\": \"\",\r\n      \"secondaryPhoneCountryCode\": \"\",\r\n      \"secondaryMobileNo\": \"\",\r\n      \"secondaryMobileCountryCode\": \"\",\r\n      \"secondaryEmail\": \"user@example.com\",\r\n      \"website\": \"\"\r\n    },\r\n    \"contactDetailsForTxnReconfirming\": [\r\n      {\r\n        \"primaryMobileNo\": \"\",\r\n        \"primaryMobCountryCode\": \"\",\r\n        \"primaryPhoneNo\": \"\",\r\n        \"primaryPhoneCountryCode\": \"\"\r\n      }\r\n    ]\r\n  },\r\n  \"orgKYCDetails\": {\r\n    \"businessUnit\": \"PBD\",\r\n    \"constitutionType\": \"Proprietorship\",\r\n    \"companyCategory\": \"Charitable Trust\",\r\n    \"annualFinTurnoverAmtInAED\": \"\",\r\n    \"yearsInBusiness\": 0,\r\n    \"topCustomers\": [\r\n      {\r\n        \"name\": \"\",\r\n        \"country\": \"LOVs to be fetched from datalist API\"\r\n      }\r\n    ],\r\n    \"topSuppliers\": [\r\n      {\r\n        \"name\": \"\",\r\n        \"country\": \"LOVs to be fetched from datalist API\"\r\n      }\r\n    ],\r\n    \"topOriginGoodsCountries\": [\r\n      \"LOVs to be fetched from datalist API\"\r\n    ],\r\n    \"industryMultiSelect\": [\r\n      {\r\n        \"industry\": [\r\n          \"LOVs to be shared by Bank\"\r\n        ],\r\n        \"subCategory\": [\r\n          \"LOVs to be shared by Bank\"\r\n        ]\r\n      }\r\n    ],\r\n    \"anticipatedTransactionsDetails\": {\r\n      \"totalMonthlyCashCreditsAED\": {\r\n        \"amountInFigures\": \"\",\r\n        \"inPercent\": 0\r\n      },\r\n      \"totalMonthlyNonCashCreditsAED\": {\r\n        \"amountInFigures\": \"\",\r\n        \"inPercent\": 0\r\n      },\r\n      \"totalMonthlyCreditsAED\": \"\",\r\n      \"maxAmtSingleTxnCashAED\": \"\",\r\n      \"maxAmtSingleTxnNonCashAED\": \"\"\r\n    },\r\n    \"otherBankingRelationshipsInfo\": {\r\n      \"otherBankingRelationshipsExist\": false,\r\n      \"otherBankDetails\": [\r\n        {\r\n          \"bankName\": \"\"\r\n        }\r\n      ]\r\n    },\r\n    \"otherEntitiesInUAE\": false,\r\n    \"entitiesInUAE\": [\r\n      {\r\n        \"companyName\": \"\",\r\n        \"emirate\": \"LOVs to be fetched from data list API\",\r\n        \"tradeLicenseNo\": \"\"\r\n      }\r\n    ],\r\n    \"otherEntitiesOutsideUAE\": false,\r\n    \"entitiesOutsideUAE\": [\r\n      {\r\n        \"companyName\": \"\",\r\n        \"country\": \"LOVs to be fetched from data list API\"\r\n      }\r\n    ],\r\n    \"isShareholderACompany\": false\r\n  },\r\n  \"signatoryInfo\": [\r\n    {\r\n      \"screeningInfo\": {\r\n        \"statusOverAll\": \"proceed\",\r\n        \"screeningResults\": [\r\n          {\r\n            \"screeningType\": \"\",\r\n            \"screeningStatus\": \"\",\r\n            \"screeningFlag\": \"\",\r\n            \"screeningNotes\": \"\",\r\n            \"screeningReason\": \"\",\r\n            \"reasonNotes\": \"\",\r\n            \"reasonCode\": \"\",\r\n            \"reasonStatus\": \"\"\r\n          }\r\n        ]\r\n      },\r\n      \"salutation\": \"Mr.\",\r\n      \"firstName\": \"\",\r\n      \"middleName\": \"\",\r\n      \"lastName\": \"\",\r\n      \"shortName\": \"\",\r\n      \"fullName\": \"\",\r\n      \"gender\": \"Male\",\r\n      \"maritalStatus\": \"Married\",\r\n      \"maritalStatusOthers\": \"\",\r\n      \"occupation\": \"\",\r\n      \"mothersMaidenName\": \"\",\r\n      \"numberOfDependants\": 0,\r\n      \"highestEducationAttained\": \"\",\r\n      \"employmentStatus\": \"\",\r\n      \"kycVerified\": false,\r\n      \"kycDetails\": {\r\n        \"salutation\": \"Mr.\",\r\n        \"shareholderPOASignatoryName\": \"\",\r\n        \"isSignatory\": false,\r\n        \"isShareholder\": false,\r\n        \"shareHoldingPercentage\": 0,\r\n        \"dateOfBirth\": \"2019-08-22\",\r\n        \"nationality\": \"\",\r\n        \"dualCitizenship\": false,\r\n        \"dualCitizenshipCountry\": [\r\n          \"LOVs to be fetched from datalist API\"\r\n        ],\r\n        \"residenceCountry\": \"AE\",\r\n        \"isUAEResident\": false,\r\n        \"passportDetails\": [\r\n          {\r\n            \"passportNumber\": \"\",\r\n            \"passportExpiryDate\": \"2019-08-22\",\r\n            \"diplomatPassport\": false\r\n          }\r\n        ],\r\n        \"emirateIdDetails\": {\r\n          \"eidNumber\": \"\",\r\n          \"eidExpiryDt\": \"2019-08-22\"\r\n        },\r\n        \"selfGovtPosition\": \"Currently hold\",\r\n        \"relativeGovtPosition\": \"Currently hold\",\r\n        \"qualification\": \"Under Graduate\",\r\n        \"experienceInYrs\": \"\",\r\n        \"sourceOfWealth\": {\r\n          \"wealthType\": \"Personal Savings\",\r\n          \"others\": \"\"\r\n        }\r\n      },\r\n      \"contactDetails\": {\r\n        \"primaryMobileNo\": \"\",\r\n        \"primaryMobCountryCode\": \"\",\r\n        \"primaryEmail\": \"user@example.com\",\r\n        \"primaryPhoneNo\": \"\",\r\n        \"primaryPhoneCountryCode\": \"\",\r\n        \"fax\": \"\",\r\n        \"faxCountryCode\": \"\",\r\n        \"secondaryPhoneNo\": \"\",\r\n        \"secondaryPhoneCountryCode\": \"\",\r\n        \"secondaryMobileNo\": \"\",\r\n        \"secondaryMobileCountryCode\": \"\",\r\n        \"secondaryEmail\": \"user@example.com\",\r\n        \"website\": \"\"\r\n      },\r\n      \"employmentDetails\": {\r\n        \"employmentType\": \"Salaried\",\r\n        \"otherEmploymentType\": \"\",\r\n        \"designation\": \"\",\r\n        \"empNo\": \"\",\r\n        \"department\": \"\",\r\n        \"employerName\": \"\",\r\n        \"occupation\": \"\",\r\n        \"totalExperienceYrs\": 0,\r\n        \"employmentStartDate\": \"2019-08-22\"\r\n      },\r\n      \"sameAsCompanyAddress\": false,\r\n      \"addressInfo\": [\r\n        {\r\n          \"typeOfAddress\": \"Residence Address\",\r\n          \"addressDetails\": [\r\n            {\r\n              \"addressFieldDesc\": \"Residence Address\",\r\n              \"preferredAddress\": \"Yes\",\r\n              \"addressLine1\": \"\",\r\n              \"addressLine2\": \"\",\r\n              \"addressLine3\": \"\",\r\n              \"addressLine4\": \"\",\r\n              \"poBox\": \"\",\r\n              \"emirateCity\": \"\",\r\n              \"country\": \"\"\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"accountSigningInfo\": {\r\n        \"accountSigningType\": \"Any of us\",\r\n        \"accountSigningInstn\": \"\",\r\n        \"authorityType\": \"SP - Sole Proprietor\"\r\n      },\r\n      \"debitCardInfo\": {\r\n        \"issueDebitCard\": true,\r\n        \"authSignatoryDetails\": {\r\n          \"fullNameOnPassport\": \"\",\r\n          \"nameOnDebitCard\": \"\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"channelServicesInfo\": {\r\n    \"mobileInstructions\": false,\r\n    \"marketingSMS\": false,\r\n    \"doNotDisturbHours\": \"\",\r\n    \"weeklyBalanceNotification\": \"Sunday\",\r\n    \"monthlyBalanceNotification\": 0\r\n  },\r\n  \"documents\": [\r\n    {\r\n      \"documentType\": \"Passport\",\r\n      \"documentTitle\": \"\",\r\n      \"fileName\": \"\",\r\n      \"filePath\": \"\",\r\n      \"url\": \"\",\r\n      \"fileData\": \"\",\r\n      \"fileFormat\": \"application/pdf\",\r\n      \"fileSize\": 0,\r\n      \"fileDescription\": \"\",\r\n      \"submittedBy\": \"\",\r\n      \"submittedDt\": \"\",\r\n      \"updatedBy\": \"\",\r\n      \"updatedDt\": \"\",\r\n      \"avsCheckDt\": \"\",\r\n      \"avsCheck\": false,\r\n      \"verified\": false,\r\n      \"verifiedBy\": \"\",\r\n      \"isEncrypted\": false,\r\n      \"encryptionDetails\": \"\",\r\n      \"uploadStatus\": \"Uploaded\"\r\n    }\r\n  ],\r\n  \"prospectStatusInfo\": {\r\n    \"statusType\": \"\",\r\n    \"statusCode\": \"\",\r\n    \"statusFlag\": \"\",\r\n    \"statusNotes\": \"\",\r\n    \"statusReason\": \"\",\r\n    \"statusOverAll\": \"\",\r\n    \"reasonNotes\": \"\",\r\n    \"reasonCode\": \"\",\r\n    \"reasonStatus\": \"\"\r\n  },\r\n  \"freeFieldsInfo\": {\r\n    \"freeField1\": \"\",\r\n    \"freeField2\": \"\",\r\n    \"freeField3\": \"\",\r\n    \"freeField4\": \"\",\r\n    \"freeField5\": \"\"\r\n  }\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"usertypes",
-						"sme",
-						"prospects"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "OnboardSMECustomer",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": " {\r\n    \"prospectId\": \"COSME0013\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"usertypes",
-						"sme",
-						"prospects"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "UpdateSMEPropsal ",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/COSME009",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\"prospectId\": \"COSME008\"}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/COSME009",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"usertypes",
-						"sme",
-						"prospects",
-						"COSME009"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "SearchSMEPropsal",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/search",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"userType\":\"sme\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/search",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"usertypes",
-						"sme",
-						"prospects",
-						"search"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "SearchRetailPropsal",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/search",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"userType\":\"sme\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/search",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"usertypes",
-						"sme",
-						"prospects",
-						"search"
-					]
-				}
+				"description": ""
 			},
-			"response": []
+			"response": [
+				{
+					"id": "0f6c906b-eb69-4a94-a55d-c8adcbf06e5c",
+					"name": "SearchRetailPropsal",
+					"originalRequest": {
+						"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userType\":\"sme\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "access-control-allow-headers",
+							"key": "access-control-allow-headers",
+							"value": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding, X-Requested-With, X-Authorization",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"name": "access-control-allow-methods",
+							"key": "access-control-allow-methods",
+							"value": "*",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"name": "access-control-allow-origin",
+							"key": "access-control-allow-origin",
+							"value": "*",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"name": "content-encoding",
+							"key": "content-encoding",
+							"value": "gzip",
+							"description": "The type of encoding used on the data."
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "matched-stub-id",
+							"key": "matched-stub-id",
+							"value": "b5647793-e5ad-4426-9a6e-4984dbe1b906",
+							"description": "Custom header"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Jetty(9.2.z-SNAPSHOT)",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "vary",
+							"key": "vary",
+							"value": "Accept-Encoding, User-Agent",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						},
+						{
+							"name": "x-content-type-options",
+							"key": "x-content-type-options",
+							"value": "nosniff",
+							"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+						},
+						{
+							"name": "x-frame-options",
+							"key": "x-frame-options",
+							"value": "DENY",
+							"description": "Clickjacking protection: \"deny\" - no rendering within a frame, \"sameorigin\" - no rendering if origin mismatch"
+						},
+						{
+							"name": "x-xss-protection",
+							"key": "x-xss-protection",
+							"value": "1; mode=block",
+							"description": "Cross-site scripting (XSS) filter"
+						}
+					],
+					"cookie": [],
+					"responseTime": 124,
+					"body": "{\r\n  \"searchResult\": [\r\n    {\r\n      \"prospectId\": \"COSME0010\",\r\n      \"_links\": {\r\n        \"self\": {\r\n          \"href\": \"/banks/RAK/usertypes/sme/prospects/COSME0008\"\r\n        }\r\n      },\r\n      \"status\": {\r\n        \"statusType\": \"Active\",\r\n        \"statusCode\": \"200\",\r\n        \"statusFlag\": \"ABC\",\r\n        \"statusNotes\": \"SNote XXXXX\",\r\n        \"statusReason\": \"SReason YYYYY\",\r\n        \"statusOverAll\": \"SOver ZZZZZ\",\r\n        \"reasonNotes\": \"RNote available\",\r\n        \"reasonCode\": \"123\",\r\n        \"reasonStatus\": \"RStatus XXXXX\"\r\n      },\r\n      \"applicantInfo\": {\r\n        \"fullName\": \"FN COSME0010\",\r\n        \"email\": \"search@email.com\",\r\n        \"countryCode\": \"+971\",\r\n        \"mobileNo\": \"1234567890\"\r\n      }\r\n    }\r\n  ]\r\n}\r\n"
+				}
+			]
 		},
 		{
 			"name": "SearchCorporatePropsal",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/corporate/prospects/search",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"userType\":\"corporate\",\t\r\n  \"fname\": \"COSME0010\",\r\n  \"countryCode\": \"+971\",\r\n  \"mobileNo\": \"1234567890\",\r\n  \"leadNumber\": \"001\",\r\n  \"tradeLicenseNo\": \"XXXXXXXXXXXXXX\",\r\n  \"email\": \"search@email.com\",\r\n  \"eidNumber\": \"YYYYYYYYYY\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/corporate/prospects/search",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"usertypes",
-						"corporate",
-						"prospects",
-						"search"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "POST Propspect document upload",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0017/documents",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"documentType\": \"Passport\",\r\n  \"documentTitle\": \"COSME0017\",\r\n  \"fileName\": \"\",\r\n  \"filePath\": \"\",\r\n  \"url\": \"\",\r\n  \"fileData\": \"\",\r\n  \"fileFormat\": \"application/pdf\",\r\n  \"fileSize\": 0,\r\n  \"fileDescription\": \"\",\r\n  \"submittedBy\": \"\",\r\n  \"submittedDt\": \"\",\r\n  \"updatedBy\": \"\",\r\n  \"updatedDt\": \"\",\r\n  \"avsCheckDt\": \"\",\r\n  \"avsCheck\": false,\r\n  \"verified\": false,\r\n  \"verifiedBy\": \"\",\r\n  \"isEncrypted\": false,\r\n  \"encryptionDetails\": \"\",\r\n  \"uploadStatus\": \"Uploaded\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0017/documents",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"prospects",
-						"COSME0017",
-						"documents"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "PUTReuploadDocument",
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0019/documents",
 				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n  \"prospectId\": \"COSME0019\",\r\n  \"documentType\": \"Passport\",\r\n  \"documentTitle\": \"hello\",\r\n  \"fileName\": \"\",\r\n  \"filePath\": \"\",\r\n  \"url\": \"\",\r\n  \"fileData\": \"\",\r\n  \"fileFormat\": \"application/pdf\",\r\n  \"fileSize\": 0,\r\n  \"fileDescription\": \"\",\r\n  \"submittedBy\": \"\",\r\n  \"submittedDt\": \"\",\r\n  \"updatedBy\": \"\",\r\n  \"updatedDt\": \"\",\r\n  \"avsCheckDt\": \"\",\r\n  \"avsCheck\": false,\r\n  \"verified\": false,\r\n  \"verifiedBy\": \"\",\r\n  \"isEncrypted\": false,\r\n  \"encryptionDetails\": \"\",\r\n  \"uploadStatus\": \"Uploaded\"\r\n}"
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0019/documents",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"prospects",
-						"COSME0019",
-						"documents"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "GETSMEDatalist",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/usertypes/SME/datalist",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://localhost:8080/webapply/api/state",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"webapply",
-						"api",
-						"state"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "GETSMEPrescreening",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0020/screening",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{prospectId: \"COSME0020\"}"
+					"raw": ""
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0020/screening",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"prospects",
-						"COSME0020",
-						"screening"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "GETDocumentByID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
+				"url": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0018/documents/1234",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{prospectId:\"COSME0018\",\r\ndocumentId:\"1234\"}"
+					"raw": ""
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/customer-onboarding/v1/banks/RAK/prospects/COSME0018/documents/1234",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"customer-onboarding",
-						"v1",
-						"banks",
-						"RAK",
-						"prospects",
-						"COSME0018",
-						"documents",
-						"1234"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		}
