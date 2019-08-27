@@ -21,7 +21,7 @@ function* receiveAppConfigSaga() {
 function* updateFieldSaga(action) {
   const state = yield select();
   const prospect = state.appConfig.prospect;
-  state[action.data.name] = action.data.value;
+  state.appConfig[action.data.name] = action.data.value;
   console.log("prospect", prospect);
   yield put(updateProspect(prospect));
 }
