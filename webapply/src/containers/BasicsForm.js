@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { compose } from "recompose";
-import { Formik, Field, Form } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import ErrorBoundary from "../components/ErrorBoundary";
-import Input from "../components/InputField/Input";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import SelectCombined2 from "../components/InputField/SelectCombined.v2";
@@ -49,71 +47,37 @@ const BasicsForm = props => {
         finish at a later stage)
       </p>
 
-      {/*
-      Just for this screen Formik is used -  https://jaredpalmer.com/formik/docs/overview
-      aproach to validate inputs with formik - https://jaredpalmer.com/formik/docs/guides/validation#docsNav
-      */}
-      <TextInput id="UI0001" />
+      <form onSubmit={handleSubmit}>
+        <TextInput id="UI0001" />
+        <TextInput id="UI0002" />
+        <SelectCombined2
+          name="phoneCode2"
+          options={codes}
+          inputType="text"
+          inputName="phone"
+          inputPlaceholder="Your Mobile Number"
+          inputLabel="Your Phone"
+        />
+        <CustomCheckbox
+          name="apply"
+          label="I am applying on behalf of someone’s company "
+        />
+        <ErrorBoundary className={classes.reCaptchaContainer}>
+          <ReCaptcha
+            onVerify={token =>
+              console.log("ReCaptcha onVerify callback:", token)
+            }
+            onExpired={() =>
+              console.log("ReCaptcha onExpired callback (2 min)")
+            }
+            onError={() => console.log("ReCaptcha onError callback")}
+          />
+        </ErrorBoundary>
 
-      <Formik
-        validateOnBlur
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-      >
-        {({ handleBlur }) => (
-          <Form noValidate>
-            <Field
-              required
-              type="text"
-              name="name"
-              label="Your name"
-              placeholder="Name"
-              component={Input}
-            />
-
-            <Field
-              required
-              type="email"
-              name="email"
-              placeholder="ivan@gmail.com"
-              label="Your email"
-              component={Input}
-            />
-
-            <Field
-              name="phoneCode2"
-              options={codes}
-              component={SelectCombined2}
-              inputType="text"
-              inputName="phone"
-              inputPlaceholder="Your Mobile Number"
-              inputLabel="Your Phone"
-            />
-
-            <Field
-              name="apply"
-              label="I am applying on behalf of someone’s company "
-              component={CustomCheckbox}
-            />
-
-            <ErrorBoundary className={classes.reCaptchaContainer}>
-              <ReCaptcha
-                onVerify={token =>
-                  console.log("ReCaptcha onVerify callback:", token)
-                }
-                onExpired={() =>
-                  console.log("ReCaptcha onExpired callback (2 min)")
-                }
-                onError={() => console.log("ReCaptcha onError callback")}
-              />
-            </ErrorBoundary>
-
-            <Link to="/confirm">
-              <SubmitButton />
-            </Link>
-          </Form>
-        )}
-      </Formik>
+        <Link to="/confirm">
+          <SubmitButton />
+        </Link>
+      </form>
     </div>
   );
 };
