@@ -50,6 +50,7 @@ const BasicsForm = props => {
       <form onSubmit={handleSubmit}>
         <TextInput id="UI0001" />
         <TextInput id="UI0002" />
+
         <SelectCombined2
           name="phoneCode2"
           options={codes}

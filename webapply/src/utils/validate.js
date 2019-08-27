@@ -1,42 +1,44 @@
-import data from "./../data.json";
-
-const validate = (event, inputId = "UI0001") => {
-  const inputConfig = data[inputId];
-  const field = event.target;
+const validate = (field, fieldConfig) => {
   const validity = field.validity;
+
   const REQUIRED = "required";
   const INVALID = "invalid";
 
   // Empty field
   if (validity.valueMissing) {
-    return inputConfig.validation[REQUIRED];
+    return fieldConfig.validationErrors[REQUIRED];
   }
 
   if (validity.typeMismatch) {
     // Email
     if (field.type === "email") {
-      return inputConfig.validation[INVALID];
+      return fieldConfig.validationErrors[INVALID];
     }
 
     // URL
     if (field.type === "url") {
-      return inputConfig.validation[INVALID];
+      return fieldConfig.validationErrors[INVALID];
     }
+  }
+
+  // If pattern doesn't match
+  if (validity.patternMismatch) {
+    return fieldConfig.validationErrors[INVALID];
   }
 
   // If too short
   if (validity.tooShort) {
-    return inputConfig.validation[INVALID];
+    return fieldConfig.validationErrors[INVALID];
   }
 
   // If a number field is over the max
   if (validity.rangeOverflow) {
-    return inputConfig.validation[INVALID];
+    return fieldConfig.validationErrors[INVALID];
   }
 
   // If a number field is below the min
   if (validity.rangeUnderflow) {
-    return inputConfig.validation[INVALID];
+    return fieldConfig.validationErrors[INVALID];
   }
 };
 

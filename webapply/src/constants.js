@@ -83,3 +83,18 @@ export const codes = [
     label: "+391"
   }
 ];
+
+export const fieldAttr = (id, fieldConfig) => {
+  return {
+    id: fieldConfig.id,
+    type: fieldConfig.type || "text",
+    name: fieldConfig.name,
+    min: fieldConfig.min,
+    max: fieldConfig.max,
+    maxLength: fieldConfig.maxlength,
+    pattern: fieldConfig.pattern,
+    required: !!fieldConfig.required,
+    disabled: !!fieldConfig.disabled,
+    readOnly: !!fieldConfig.readOnly
+  };
+};
