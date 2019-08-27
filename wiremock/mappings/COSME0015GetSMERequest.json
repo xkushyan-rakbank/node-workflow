@@ -1,12 +1,7 @@
 {
 	"request": {
 		"method": "GET",
-		"url": "/api/customer-onboarding/v1/banks/RAK/usertypes/SME/datalist",
-		"bodyPatterns": [
-			{
-				"matchesJsonPath": "$[?(@.code == '1234')]"
-			}
-		]
+		"url": "/api/customer-onboarding/v1/banks/RAK/usertypes/SME/datalist"
 	},
 	"response": {
 		"status": 200,	

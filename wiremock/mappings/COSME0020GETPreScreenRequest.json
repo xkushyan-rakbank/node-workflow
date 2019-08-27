@@ -1,12 +1,7 @@
 {
 	"request": {
 		"method": "GET",
-		"url": "/api/customer-onboarding/v1/banks/RAK/prospects/COSME0020/screening",
-		"bodyPatterns": [
-			{
-				"matchesJsonPath": "$[?(@.prospectId == 'COSME0020')]"
-			}
-		]
+		"url": "/api/customer-onboarding/v1/banks/RAK/prospects/COSME0020/screening"
 	},
 	"response": {
 		"status": 200,
