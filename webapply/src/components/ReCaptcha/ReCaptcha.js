@@ -1,5 +1,4 @@
-import React, { memo } from "react";
-import { useRecaptcha } from "./hooks";
+import React, { PureComponent } from "react";
 import ReCaptchaNotRobot from "./ReCaptchaNotRobot";
 
 export const COMPONENTS_BY_TYPE = {
@@ -8,30 +7,44 @@ export const COMPONENTS_BY_TYPE = {
 
 /**
  * @see https://developers.google.com/recaptcha/docs/display
- * @param {Function} verifyCallback
- * @param {String} type
- * @param {Object} rest
- * @return {Node}
- * @constructor
  */
-const ReCaptcha = ({ type, ...rest }) => {
-  const grecaptcha = useRecaptcha();
+class ReCaptcha extends React.PureComponent {
+  static types = {
+    NOT_ROBOT: "NOT_ROBOT"
+  };
 
-  const Component = COMPONENTS_BY_TYPE[type];
+  static defaultProps = {
+    type: ReCaptcha.types.NOT_ROBOT
+  };
 
-  if (!Component || !grecaptcha) {
-    return null;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      grecaptcha: window.grecaptcha
+    };
   }
 
-  return <Component {...rest} grecaptcha={grecaptcha} />;
-};
+  componentDidMount() {
+    window.recaptchaOnloadCallback = () => {
+      this.setState({ grecaptcha: window.grecaptcha });
+    };
+  }
 
-ReCaptcha.types = {
-  NOT_ROBOT: "NOT_ROBOT"
-};
+  componentWillUnmount() {
+    window.recaptchaOnloadCallback = () => {};
+  }
 
-ReCaptcha.defaultProps = {
-  type: ReCaptcha.types.NOT_ROBOT
-};
+  render() {
+    const { type, ...rest } = this.props;
 
-export default memo(ReCaptcha);
+    const Component = COMPONENTS_BY_TYPE[type];
+
+    if (!Component || !this.state.grecaptcha) {
+      return null;
+    }
+    return <Component {...rest} grecaptcha={this.state.grecaptcha} />;
+  }
+}
+
+export default ReCaptcha;

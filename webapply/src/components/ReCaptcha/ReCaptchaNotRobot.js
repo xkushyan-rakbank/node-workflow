@@ -1,49 +1,44 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 const PUB_KEY = process.env.REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY || " ";
 
-/**
- * @param {Function} onVerify
- * @param {Function} onExpired
- * @param {Function} onError
- * @param {Object} grecaptcha
- * @param {Function} grecaptcha.render
- * @param {Function} grecaptcha.reset
- * @param {Function} grecaptcha.getResponse
- * @param {Object} rest - proxy props
- * @return {Node}
- * @constructor
- */
-const ReCaptchaNotRobot = ({
-  onVerify,
-  onExpired,
-  onError,
-  grecaptcha,
-  ...rest
-}) => {
-  const ref = useRef(null);
+class ReCaptchaNotRobot extends React.PureComponent {
+  static defaultProps = {
+    onVerify: () => {},
+    onExpired: () => {},
+    onError: () => {}
+  };
 
-  useEffect(() => {
-    const id = grecaptcha.render(ref.current, {
+  constructor(props) {
+    super(props);
+
+    this.rootRef = React.createRef();
+    this.reCaptchaId = 0;
+    this.options = {
       sitekey: PUB_KEY,
       size: "normal",
-      callback: onVerify,
-      "expired-callback": onExpired,
-      "error-callback": onError
-    });
-
-    return () => {
-      grecaptcha.reset(id);
+      callback: props.onVerify,
+      "expired-callback": props.onExpired,
+      "error-callback": props.onError
     };
-  }, [grecaptcha]);
+  }
 
-  return <div {...rest} ref={ref} className="g-recaptcha" />;
-};
+  componentDidMount() {
+    this.reCaptchaId = this.props.grecaptcha.render(
+      this.rootRef.current,
+      this.options
+    );
+  }
 
-ReCaptchaNotRobot.defualtProps = {
-  onVerify: () => {},
-  onExpired: () => {},
-  onError: () => {}
-};
+  componentWillUnmount() {
+    this.props.grecaptcha.reset(this.reCaptchaId);
+  }
+
+  render() {
+    const { onVerify, onExpired, onError, grecaptcha, ...rest } = this.props;
+
+    return <div {...rest} ref={this.rootRef} className="g-recaptcha" />;
+  }
+}
 
 export default ReCaptchaNotRobot;
