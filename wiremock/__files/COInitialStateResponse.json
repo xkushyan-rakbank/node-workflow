@@ -1724,6 +1724,7 @@
 			"applicable": true,
 			"label": "Company Name",
 			"placeholder": "Company Name",
+			"title": "This is the same as in your Trade License",
 			"path": "$.prospect.organizationInfo.companyName",
 			"name": "prospect.organizationInfo.companyName",
 			"required": true,

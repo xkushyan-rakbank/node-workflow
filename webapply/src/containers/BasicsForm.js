@@ -21,16 +21,6 @@ const styles = {
   }
 };
 
-const initialValues = {
-  name: "",
-  email: "",
-  phoneCode: "",
-  phoneCode2: codes[0].value,
-  phone: "",
-  apply: false,
-  date: null
-};
-
 const BasicsForm = props => {
   const { classes } = props;
 

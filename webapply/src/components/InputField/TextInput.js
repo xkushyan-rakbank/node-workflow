@@ -27,30 +27,24 @@ class Input extends React.Component {
   };
 
   render() {
-    const {
-      config: { label = "", placeholder = "" },
-      type,
-      infoTitle,
-      classes,
-      value
-    } = this.props;
-    if (label) {
+    const { id, config, classes, value } = this.props;
+
+    if (id && config.label) {
       return (
         <FormControl className="formControl">
           <TextField
             variant="outlined"
             value={value}
-            label={label}
-            placeholder={placeholder}
+            label={config.label}
+            placeholder={config.placeholder}
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
-              required: !!get(this.props.config, "validationErrors.required")
+              required: !!get(config, "validationErrors.required")
             }}
-            type={type}
             onChange={this.updateField}
           />
-          {!!infoTitle && <InfoTitle title={infoTitle} />}
+          {!!config.title && <InfoTitle title={config.title} />}
         </FormControl>
       );
     }

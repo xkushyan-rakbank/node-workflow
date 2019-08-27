@@ -9,6 +9,7 @@ import Select from "../components/InputField/Select";
 import SectionTitle from "../components/SectionTitle";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import DatePicker from "../components/InputField/DatePicker";
+import TextInput from "../components/InputField/TextInput";
 import { codes } from "./../constants";
 
 const style = {
@@ -18,11 +19,6 @@ const style = {
   topIndent: {
     marginTop: "40px"
   }
-};
-
-const initialValues = {
-  lisenceDate: null,
-  incorporationDate: null
 };
 
 const AboutCompany = props => {
@@ -37,121 +33,106 @@ const AboutCompany = props => {
         Explanation text goes here. One to three short sentences maximum. This
         is the third sentence.
       </p>
-      <Formik
-        validateOnBlur
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-      >
-        {props => (
-          <form onSubmit={handleSubmit}>
-            <SectionTitle
-              title="Company Details"
-              className={classes.sectionTitleIndent}
+      <form onSubmit={handleSubmit}>
+        <SectionTitle
+          title="Company Details"
+          className={classes.sectionTitleIndent}
+        />
+
+        <TextInput
+          id="UI0078"
+          // infoTitle="This is the same as in your Trade License"
+        />
+
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <Select
+              name="companyCategory"
+              label="Company Category"
+              options={codes}
             />
+          </Grid>
+          <Grid item md={6} sm={12}>
             <Input
-              required
               type="text"
-              name="companyName"
-              placeholder="Company placeholder"
-              label="Company name"
-              infoTitle="This is the same as in your Trade License"
+              name="numberOfEmployees"
+              placeholder="Number of Employees"
+              label="Number of employees"
             />
+          </Grid>
+        </Grid>
+        <Input
+          required
+          type="text"
+          name="companyName"
+          placeholder="Company name"
+          label="Company name"
+          infoTitle="This is the same as your TRN number of UAE"
+        />
 
-            <Grid container spacing={3}>
-              <Grid item md={6} sm={12}>
-                <Select
-                  name="companyCategory"
-                  label="Company Category"
-                  options={codes}
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Input
-                  type="text"
-                  name="numberOfEmployees"
-                  placeholder="Number of Employees"
-                  label="Number of employees"
-                />
-              </Grid>
-            </Grid>
-            <Input
-              required
-              type="text"
-              name="companyName"
-              placeholder="Company name"
-              label="Company name"
-              infoTitle="This is the same as your TRN number of UAE"
+        <SectionTitle
+          title="Industry"
+          className={cx(classes.sectionTitleIndent, classes.topIndent)}
+        />
+
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <Select name="industry" label="Industry" options={codes} />
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <Select name="subCategory" label="Sub-category" options={codes} />
+          </Grid>
+        </Grid>
+
+        <SectionTitle
+          title="License Information"
+          className={cx(classes.sectionTitleIndent, classes.topIndent)}
+        />
+        <Input
+          required
+          type="text"
+          name="licensNumber"
+          placeholder="Licens Number"
+          label="Licens"
+        />
+
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <Select
+              name="licenseIssuingAuthority"
+              label="License issuing authority"
+              options={codes}
             />
-
-            <SectionTitle
-              title="Industry"
-              className={cx(classes.sectionTitleIndent, classes.topIndent)}
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <Field
+              name="lisenceDate"
+              label="Lisence issuing date"
+              component={DatePicker}
             />
-
-            <Grid container spacing={3}>
-              <Grid item md={6} sm={12}>
-                <Select name="industry" label="Industry" options={codes} />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Select
-                  name="subCategory"
-                  label="Sub-category"
-                  options={codes}
-                />
-              </Grid>
-            </Grid>
-
-            <SectionTitle
-              title="License Information"
-              className={cx(classes.sectionTitleIndent, classes.topIndent)}
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <Field
+              name="incorporationDate"
+              label="Lisence issuing date"
+              component={DatePicker}
+              infoTitle="Your date of incorporation is the date when the business was established"
             />
-            <Input
-              required
-              type="text"
-              name="licensNumber"
-              placeholder="Licens Number"
-              label="Licens"
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <Select
+              name="countryOfIncorporation"
+              label="Country of incorporation"
+              options={codes}
             />
-
-            <Grid container spacing={3}>
-              <Grid item md={6} sm={12}>
-                <Select
-                  name="licenseIssuingAuthority"
-                  label="License issuing authority"
-                  options={codes}
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="lisenceDate"
-                  label="Lisence issuing date"
-                  component={DatePicker}
-                />
-              </Grid>
-            </Grid>
-            <Grid container spacing={3}>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="incorporationDate"
-                  label="Lisence issuing date"
-                  component={DatePicker}
-                  infoTitle="Your date of incorporation is the date when the business was established"
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Select
-                  name="countryOfIncorporation"
-                  label="Country of incorporation"
-                  options={codes}
-                />
-              </Grid>
-            </Grid>
-            <Link to="/add-company-stakeholders">
-              <SubmitButton />
-            </Link>
-          </form>
-        )}
-      </Formik>
+          </Grid>
+        </Grid>
+        <Link to="/add-company-stakeholders">
+          <SubmitButton />
+        </Link>
+      </form>
     </>
   );
 };
