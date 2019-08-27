@@ -41,7 +41,7 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <ConnectedRouter history={history}>
           <FormLayout>
-            <Redirect from="/" to="start-with-the-basics" />
+            <Redirect from="/" to="/about-your-company" />
             <Switch>
               <Route
                 exact

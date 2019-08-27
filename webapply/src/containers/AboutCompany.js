@@ -5,11 +5,12 @@ import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 import Input from "../components/InputField/Input";
 import Select from "../components/InputField/Select";
+import PureSelect from "../components/InputField/PureSelect";
 import SectionTitle from "../components/SectionTitle";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import DatePicker from "../components/InputField/DatePicker";
 import TextInput from "../components/InputField/TextInput";
-import { codes } from "./../constants";
+import { codes, options } from "./../constants";
 
 const style = {
   sectionTitleIndent: {
@@ -38,18 +39,11 @@ const AboutCompany = props => {
           className={classes.sectionTitleIndent}
         />
 
-        <TextInput
-          id="UI0078"
-          // infoTitle="This is the same as in your Trade License"
-        />
+        <TextInput id="UI0078" />
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <Select
-              name="companyCategory"
-              label="Company Category"
-              options={codes}
-            />
+            <PureSelect id="UI0161" options={options} />
           </Grid>
           <Grid item md={6} sm={12}>
             <Input

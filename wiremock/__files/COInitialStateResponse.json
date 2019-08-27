@@ -3364,7 +3364,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "company Category",
+			"label": "Company Category",
 			"placeholder": "company Category",
 			"path": "$.prospect.orgKYCDetails.companyCategory",
 			"name": "prospect.orgKYCDetails.companyCategory",
