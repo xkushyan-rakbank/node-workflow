@@ -91,25 +91,7 @@ jobs:
       - task: SonarQubePublish@4
         inputs:
           pollingTimeoutSec: '300'
-      - task: PowerShell@2
-        displayName: 'Check Sonar Quality Gate'
-        inputs:
-          targetType: 'inline'
-          script: |
-            # Write your PowerShell commands here.
-            
-            $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
-            $base64 = [System.Convert]::ToBase64String($token)
-             
-            $basicAuth = [string]::Format("Basic {0}", $base64)
-            $headers = @{ Authorization = $basicAuth }
-             
-            $result = Invoke-RestMethod -Method Get -Uri http://alegrisource.westeurope.cloudapp.azure.com/api/qualitygates/project_status?projectKey=alegri-cockpit20 -Headers $headers
-            $result | ConvertTo-Json | Write-Host
-             
-            if ($result.projectStatus.status -eq "OK") {
-            Write-Host "Quality Gate Succeeded"
-            }else{
-            throw "Quality gate failed"
-            }
-        enabled: false
+- task: PowerShell@2
+  inputs:
+    filePath: 'webapply/get-sonarqube-quality-gate-status.ps1'
+    arguments: '-SonarServerName "http://104.211.240.147:9000/" -SonarProjectKey "onboarding_webapply" -SonarToken "d8c342584b463b68af3864c244f404440bdbfaf1"'
