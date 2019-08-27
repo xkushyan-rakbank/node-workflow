@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { compose } from "recompose";
 import { Formik, Field, Form } from "formik";
 import { withStyles } from "@material-ui/core/styles";
+import ErrorBoundary from "../components/ErrorBoundary";
 import Input from "../components/InputField/Input";
 import TextInput from "../components/InputField/TextInput";
+import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import SelectCombined2 from "../components/InputField/SelectCombined.v2";
 import CustomCheckbox from "../components/InputField/Checkbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
@@ -13,6 +15,11 @@ import { codes } from "./../constants";
 const styles = {
   baseForm: {
     maxWidth: "612px"
+  },
+  reCaptchaContainer: {
+    display: "flex",
+    paddingTop: "10px",
+    justifyContent: "flex-end"
   }
 };
 
@@ -88,6 +95,19 @@ const BasicsForm = props => {
               label="I am applying on behalf of someone’s company "
               component={CustomCheckbox}
             />
+
+            <ErrorBoundary className={classes.reCaptchaContainer}>
+              <ReCaptcha
+                onVerify={token =>
+                  console.log("ReCaptcha onVerify callback:", token)
+                }
+                onExpired={() =>
+                  console.log("ReCaptcha onExpired callback (2 min)")
+                }
+                onError={() => console.log("ReCaptcha onError callback")}
+              />
+            </ErrorBoundary>
+
             <Link to="/confirm">
               <SubmitButton />
             </Link>

@@ -37,6 +37,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "server:mock": "cd ../wiremock/ && java -jar wiremock-standalone-2.24.1.jar",
+    "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
