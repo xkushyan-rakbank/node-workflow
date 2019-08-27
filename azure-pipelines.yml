@@ -96,3 +96,4 @@ jobs:
         inputs:
           filePath: 'webapply/get-sonarqube-quality-gate-status.ps1'
           arguments: '-SonarServerName "http://104.211.240.147:9000/" -SonarProjectKey "onboarding_webapply" -SonarToken "d8c342584b463b68af3864c244f404440bdbfaf1"'
+        enabled: false
