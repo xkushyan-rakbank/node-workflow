@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { compose } from "recompose";
 import get from "lodash/get";
 import InfoTitle from "./../InfoTitle";
-import { receiveAppConfig, updateField } from "../../store/actions/appConfig";
+import { updateField } from "../../store/actions/appConfig";
 
 const styles = {
   textField: {
@@ -69,7 +69,6 @@ const mapStateToProps = (state, { id }) => {
 };
 
 const mapDispatchToProps = {
-  receiveAppConfig,
   updateField
 };
 
