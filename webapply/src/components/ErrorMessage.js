@@ -20,7 +20,10 @@ const style = {
   },
   multiLineError: {
     position: "absolute",
-    right: "0"
+    right: "-21px",
+    top: "-47px",
+    fontSize: "18px",
+    color: "#ea2b1e"
   }
 };
 

@@ -1,14 +1,18 @@
 import React from "react";
+import get from "lodash/get";
 import DateFnsUtils from "@date-io/date-fns";
 import FormControl from "@material-ui/core/FormControl";
+import { compose } from "recompose";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import InfoTitle from "./../InfoTitle";
-import { withStyles } from "@material-ui/core/styles";
+import { updateField } from "../../store/actions/appConfig";
 
-const style = {
+const styles = {
   datePicker: {
     position: "relative",
     "&::after": {
@@ -32,26 +36,20 @@ const style = {
 };
 
 const DatePicker = props => {
-  const {
-    classes,
-    field: { value, name },
-    form: { setFieldValue },
-    form,
-    label,
-    field,
-    infoTitle,
-    ...rest
-  } = props;
+  const updateField = value => {
+    const { name } = props.config;
+    props.updateField({ value, name });
+  };
+
+  const { value, classes, config } = props;
 
   return (
     <FormControl className="formControl">
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
-          {...rest}
-          {...field}
           autoOk
-          name={name}
-          label={label}
+          name={config.name}
+          label={config.label}
           disableToolbar
           margin="normal"
           variant="inline"
@@ -59,15 +57,36 @@ const DatePicker = props => {
           inputVariant="outlined"
           placeholder="__/__/____"
           className={classes.datePicker}
-          onChange={value => form.setFieldValue(name, value, true)}
+          value={value}
+          onChange={updateField}
           KeyboardButtonProps={{
             "aria-label": "change date"
           }}
         />
       </MuiPickersUtilsProvider>
-      {!!infoTitle && <InfoTitle title={infoTitle} />}
+      {!!config.title && <InfoTitle title={config.title} />}
     </FormControl>
   );
 };
 
-export default withStyles(style)(DatePicker);
+const mapStateToProps = (state, { id }) => {
+  const config = state.appConfig.uiConfig[id] || {};
+  const value = get(state.appConfig, config.name);
+
+  return {
+    config,
+    value
+  };
+};
+
+const mapDispatchToProps = {
+  updateField
+};
+
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(DatePicker);

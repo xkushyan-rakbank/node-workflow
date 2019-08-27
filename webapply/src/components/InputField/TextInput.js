@@ -29,13 +29,13 @@ class Input extends React.Component {
 
   updateField = event => {
     const value = event.target.value;
-    const { name } = this.props.fieldConfig;
+    const { name } = this.props.config;
     this.props.updateField({ value, name });
   };
 
   fieldValidation = event => {
     const field = event.target;
-    const fieldConfig = this.props.fieldConfig;
+    const fieldConfig = this.props.config;
     const errors = validate(field, fieldConfig);
     this.setState({
       fieldErrors: errors
@@ -43,26 +43,24 @@ class Input extends React.Component {
   };
 
   render() {
-    const { classes, value, id } = this.props;
+    const { id, config, classes, value } = this.props;
     const { fieldErrors } = this.state;
-    const fieldConfig = this.props.fieldConfig;
-    const attrs = fieldAttr(id, fieldConfig);
-    if (fieldConfig.label) {
+    const attrs = fieldAttr(id, config);
+
+    if (id && config.label) {
       return (
         <FormControl className="formControl">
           <TextField
             variant="outlined"
             value={value}
-            label={fieldConfig.label}
+            label={config.label}
             className={classes.textField}
             onChange={this.updateField}
             inputProps={attrs}
             onBlur={this.fieldValidation}
             error={!!fieldErrors}
           />
-          {!!fieldConfig.infoTitle && (
-            <InfoTitle title={fieldConfig.infoTitle} />
-          )}
+          {!!config.infoTitle && <InfoTitle title={config.infoTitle} />}
 
           {!!fieldErrors && (
             <ErrorMessage
@@ -78,11 +76,11 @@ class Input extends React.Component {
 }
 
 const mapStateToProps = (state, { id }) => {
-  const fieldConfig = state.appConfig.uiConfig[id] || {};
-  const value = get(state.appConfig, fieldConfig.name);
+  const config = state.appConfig.uiConfig[id] || {};
+  const value = get(state.appConfig, config.name);
 
   return {
-    fieldConfig,
+    config,
     value
   };
 };

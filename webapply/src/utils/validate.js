@@ -14,11 +14,6 @@ const validate = (field, fieldConfig) => {
     if (field.type === "email") {
       return fieldConfig.validationErrors[INVALID];
     }
-
-    // URL
-    if (field.type === "url") {
-      return fieldConfig.validationErrors[INVALID];
-    }
   }
 
   // If pattern doesn't match
@@ -28,6 +23,14 @@ const validate = (field, fieldConfig) => {
 
   // If too short
   if (validity.tooShort) {
+    return fieldConfig.validationErrors[INVALID];
+  }
+
+  if (validity.tooLong) {
+    return fieldConfig.validationErrors[INVALID];
+  }
+
+  if (validity.badInput) {
     return fieldConfig.validationErrors[INVALID];
   }
 

@@ -84,7 +84,6 @@ form .MuiGrid-root {
 .form {
   &Inner {
     max-width: 800px;
-    overflow-y: scroll;
     padding-bottom: 30px;
     .nextButton {
       margin: 42px 0 0 !important;
@@ -92,7 +91,7 @@ form .MuiGrid-root {
   }
   &Wrapper {
     flex: 1 1 auto;
-    padding: 147px 15px 0 0;
+    padding: 147px 20px 0 0;
     overflow-y: auto;
     min-height: 0px;
     h2 {

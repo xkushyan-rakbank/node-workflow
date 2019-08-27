@@ -7,6 +7,7 @@ import {
   updateProspect
 } from "../actions/appConfig";
 import { getAppConfig } from "../../api/appConfig";
+import set from "lodash/set";
 
 function* receiveAppConfigSaga() {
   try {
@@ -20,10 +21,9 @@ function* receiveAppConfigSaga() {
 
 function* updateFieldSaga(action) {
   const state = yield select();
-  const prospect = state.appConfig.prospect;
-  state.appConfig[action.data.name] = action.data.value;
-  console.log("prospect", prospect);
-  yield put(updateProspect(prospect));
+  const config = state.appConfig;
+  set(config, action.data.name, action.data.value);
+  yield put(updateProspect(config.prospect));
 }
 
 export default function* appConfigSaga() {
