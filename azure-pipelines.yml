@@ -34,31 +34,43 @@ jobs:
         displayName: 'Buildling webapply Application'
         enabled: true
 
+      - task: CopyFiles@2
+        displayName: 'Stage Artifacts'
+        inputs:
+          SourceFolder: webapply/build/
+          TargetFolder: '$(build.artifactstagingdirectory)/webapply'
+      - task: ArchiveFiles@2
+        displayName: 'Archive web'
+        inputs:
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/webapply/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/webapply/webapply.zip'
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
+                    "target": "onboarding/$(Build.BuildNumber)/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: 'Jfrog'
+
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Build Artifacts'
         inputs:
-          PathtoPublish: '$(System.DefaultWorkingDirectory)/webapply/build'
-          ArtifactName: 'webapply_$(Build.BuildNumber)'
-# below is used for the publishing the artifacts to the jfrog artifactory 
-#      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-#        displayName: 'Artifactory Generic Upload'
-#        inputs:
-#          artifactoryService: Jfrog
-#          fileSpec: |
-#            {
-#              "files": [
-#                {
-#                  "pattern": "$(Build.ArtifactStagingDirectory)/webapply/build/*.zip",
-#                  "target": "digital2/$(Build.BuildNumber)/CO_Webapply/"
-#                }
-#              ]
-#            }
-#          collectBuildInfo: true
-         
-#      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
-#        displayName: 'Publish Build Info to Artifactory'
-#        inputs:
-#          artifactoryService: Jfrog
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
+          ArtifactName: 'Webapply'
+    
     - job: SonarQube
       dependsOn:
        - Webapply
@@ -67,10 +79,37 @@ jobs:
       pool:
        name: Hosted macOS
       steps:
+      #prepare the Sonarqube for executing the sonar 
       - task: SonarQubePrepare@4
-        displayName: 'Prepare analysis on SonarQube'
         inputs:
           SonarQube: 'sonarqube'
           scannerMode: 'CLI'
           configMode: 'file'
+      #execute the sonar qube analyze in order to run the analyzes of the source code
+      - task: SonarQubeAnalyze@4
+      # publish the sonar report
+      - task: SonarQubePublish@4
+        inputs:
+          pollingTimeoutSec: '300'
+      - task: PowerShell@2
+        displayName: 'Check Sonar Quality Gate'
+        inputs:
+          targetType: 'inline'
+          script: |
+            # Write your PowerShell commands here.
+            
+            $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
+            $base64 = [System.Convert]::ToBase64String($token)
+             
+            $basicAuth = [string]::Format("Basic {0}", $base64)
+            $headers = @{ Authorization = $basicAuth }
+             
+            $result = Invoke-RestMethod -Method Get -Uri http://alegrisource.westeurope.cloudapp.azure.com/api/qualitygates/project_status?projectKey=alegri-cockpit20 -Headers $headers
+            $result | ConvertTo-Json | Write-Host
+             
+            if ($result.projectStatus.status -eq "OK") {
+            Write-Host "Quality Gate Succeeded"
+            }else{
+            throw "Quality gate failed"
+            }
         enabled: false

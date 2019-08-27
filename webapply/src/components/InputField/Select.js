@@ -7,6 +7,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { withStyles } from "@material-ui/core/styles";
+import InfoTitle from "../InfoTitle";
 
 const style = {
   selectField: {
@@ -51,6 +52,7 @@ const CustomSelect = props => {
     placeholder,
     options,
     classes,
+    infoTitle,
     ...rest
   } = props;
   const inputLabel = React.useRef(null);
@@ -79,6 +81,7 @@ const CustomSelect = props => {
           </MenuItem>
         ))}
       </Select>
+      {!!infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>
   );
 };

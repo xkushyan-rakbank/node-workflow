@@ -19,7 +19,7 @@
         "reasonStatus": "RStatus XXXXX"
       },
       "applicantInfo": {
-        "fullNname": "FN COSME0010",
+        "fullName": "FN COSME0010",
         "email": "search@email.com",
         "countryCode": "+971",
         "mobileNo": "1234567890"

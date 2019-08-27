@@ -1,0 +1,15 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/api/customer-onboarding/v1/banks/RAK/usertypes/SME/datalist",
+		"bodyPatterns": [
+			{
+				"matchesJsonPath": "$[?(@.code == '1234')]"
+			}
+		]
+	},
+	"response": {
+		"status": 200,	
+		"bodyFileName": "COSME0015GetSMEResponse.json"
+	}
+}

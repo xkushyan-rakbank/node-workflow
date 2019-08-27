@@ -1,0 +1,15 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/api/customer-onboarding/v1/banks/RAK/prospects/COSME0020/screening",
+		"bodyPatterns": [
+			{
+				"matchesJsonPath": "$[?(@.prospectId == 'COSME0020')]"
+			}
+		]
+	},
+	"response": {
+		"status": 200,
+		"bodyFileName": "COSME0020GETPreScreenResponse.json"
+	}
+}

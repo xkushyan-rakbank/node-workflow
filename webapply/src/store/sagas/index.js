@@ -1,6 +1,6 @@
 import { all, fork } from "redux-saga/effects";
-import uiConfigSaga from "./uiConfig";
+import appConfigSaga from "./appConfig";
 
 export default function*() {
-  yield all([fork(uiConfigSaga)]);
+  yield all([fork(appConfigSaga)]);
 }

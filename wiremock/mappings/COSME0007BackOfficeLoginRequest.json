@@ -4,7 +4,7 @@
 		"url": "/api/customer-onboarding/v1/banks/RAK/users/authenticate",
 		"bodyPatterns": [
 			{
-				"matchesJsonPath": "$[?(@.username == 'COSME0007'),(@.password == 'COSME@2019')]"
+				"matchesJsonPath": "$[?(@.username == 'COSME0007')]"
 			}
 		]
 	},

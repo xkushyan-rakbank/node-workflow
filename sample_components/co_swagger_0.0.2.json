@@ -537,7 +537,7 @@
         }
       }
     },
-    "/banks/RAK/documents/legal/{documentName}": {
+    "/banks/RAK/legal/documents/{documentName}": {
       "get": {
         "summary": "get terms and conditions document",
         "operationId": "getTermsAndConditionsDocument",

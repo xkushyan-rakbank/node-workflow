@@ -31,8 +31,8 @@
 			"applicable": true,
 			"label": "Your Name",
 			"placeholder": "Your Name",
-			"path": "$.prospect.applicantInfo.fullNname",
-			"name": "prospect.applicantInfo.fullNname",
+			"path": "$.prospect.applicantInfo.fullName",
+			"name": "prospect.applicantInfo.fullName",
 			"required": true,
 			"datalistId": null,
 			"help": "",
@@ -9362,7 +9362,7 @@
 	},
 	"prospect": {
 		"applicantInfo": {
-			"fullNname": "",
+			"fullName": "",
 			"email": "user@example.com",
 			"countryCode": "",
 			"mobileNo": ""

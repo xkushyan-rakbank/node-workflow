@@ -1,0 +1,26 @@
+{
+  "errorType": "FieldsValidation",
+  "errors": [
+    {
+      "fieldPath": "$.applicantInfo.fullName",
+      "code": "INVALID",
+      "errorType": "InvalidField",
+      "message": "Your name is invalid, no special characters allowed",
+      "developerText": ""
+    },
+    {
+      "fieldPath": "$.applicantInfo.email",
+      "code": "INVALID",
+      "errorType": "InvalidField",
+      "message": "Your email is invalid, email should contain @ and .",
+      "developerText": ""
+    },
+    {
+      "fieldPath": "$.applicantInfo.mobileNo",
+      "code": "INVALID",
+      "errorType": "InvalidField",
+      "message": "Mobile number is invalid. It should be 10 digits length",
+      "developerText": ""
+    }
+  ]
+}

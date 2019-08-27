@@ -1,37 +1,37 @@
 {
   "applicantInfo": {
-    "fullNname": "COSME008",
+    "fullNname": "cosme00name",
     "email": "user@example.com",
-    "countryCode": "+971",
-    "mobileNo": "1234567890"
+    "countryCode": "",
+    "mobileNo": ""
   },
   "generalInfo": {
-    "prospectId": "COSME008",
+    "prospectId": "COSME0013",
     "_links": {
       "self": {
         "href": "/banks/RAK/usertypes/sme/prospects/COSME0008"
       }
     },
     "cifId": 0,
-    "customerType": "SME",
-    "dsaId": "DSAID",
-    "groupId": "GID",
-    "groupName": "GNAME",
-    "rmCode": "RMCODE",
-    "accountManagerId": "AMID",
+    "customerType": "",
+    "dsaId": "",
+    "groupId": "",
+    "groupName": "",
+    "rmCode": "",
+    "accountManagerId": "",
     "isPoliticallyExposed": "N"
   },
   "applicationInfo": {
-    "viewId": "01",
-    "leadNumber": "LN01",
-    "riskScore": "10",
-    "srNumber": "12345678",
+    "viewId": "",
+    "leadNumber": "",
+    "riskScore": "",
+    "srNumber": "",
     "channelId": "Bank to confirm on the LOVs",
     "channelType": "Mobile",
-    "createdDate": "2019-08-18",
-    "lastModifiedDate": "2019-08-18",
-    "createdBy": "CR_TEST",
-    "lastModifiedBy": "2019-08-20",
+    "createdDate": "",
+    "lastModifiedDate": "",
+    "createdBy": "",
+    "lastModifiedBy": "",
     "actionType": "Save",
     "saveType": "auto",
     "tncAgreed": false,
@@ -57,31 +57,31 @@
       "statusOverAll": "proceed",
       "screeningResults": [
         {
-          "screeningType": "dedupe",
-          "screeningStatus": "Active",
-          "screeningFlag": "SCFlag",
-          "screeningNotes": "SCNotes",
-          "screeningReason": "SCReason",
-          "reasonNotes": "reasonNote",
-          "reasonCode": "ReasonCode",
-          "reasonStatus": "Blocked"
+          "screeningType": "",
+          "screeningStatus": "",
+          "screeningFlag": "",
+          "screeningNotes": "",
+          "screeningReason": "",
+          "reasonNotes": "",
+          "reasonCode": "",
+          "reasonStatus": ""
         }
       ]
     },
     "branchCity": "LOVs to be confirmed by Bank",
     "branchID": "LOVs to be confirmed by Bank",
     "countryOfIncorporation": "AE",
-    "companyName": "COMPANYXXXX",
-    "shortName": "CX",
-    "dateOfIncorporation": "2019-08-21",
+    "companyName": "",
+    "shortName": "",
+    "dateOfIncorporation": "2019-08-25",
     "numberOfEmployees": 0,
     "licenseType": "Trade License",
-    "licenseTypeOther": "na",
+    "licenseTypeOther": "",
     "licenseIssuingAuthority": "LOVs to be confirmed by Bank",
-    "licenseNumber": "1234567890ABC",
-    "licenseIssueDate": "2019-08-21",
-    "licenseExpiryDate": "2019-08-21",
-    "vatRegistrationNumber": "abcdefghijkl",
+    "licenseNumber": "",
+    "licenseIssueDate": "2019-08-25",
+    "licenseExpiryDate": "2019-08-25",
+    "vatRegistrationNumber": "",
     "addressInfo": [
       {
         "typeOfAddress": "Registered Address/Head office",
@@ -90,42 +90,42 @@
           {
             "addressFieldDesc": "Registered Address/Head office",
             "preferredAddress": "Yes",
-            "addressLine1": "Address Line #1",
-            "addressLine2": "Address line @2",
-            "addressLine3": "Address line 3",
+            "addressLine1": "",
+            "addressLine2": "",
+            "addressLine3": "",
             "addressLine4": "",
-            "poBox": "123456",
-            "emirateCity": "EMCity",
-            "country": "UAE",
+            "poBox": "",
+            "emirateCity": "",
+            "country": "",
             "typeOfSpaceOccupied": {
               "spaceType": "Office",
-              "others": "na"
+              "others": ""
             }
           }
         ]
       }
     ],
     "contactDetails": {
-      "primaryMobileNo": "1234567890",
-      "primaryMobCountryCode": "+971",
+      "primaryMobileNo": "",
+      "primaryMobCountryCode": "",
       "primaryEmail": "user@example.com",
-      "primaryPhoneNo": "2234567890",
-      "primaryPhoneCountryCode": "+971",
-      "fax": "123456",
-      "faxCountryCode": "+971",
-      "secondaryPhoneNo": "9876543210",
-      "secondaryPhoneCountryCode": "+971",
-      "secondaryMobileNo": "0123456789",
-      "secondaryMobileCountryCode": "+971",
+      "primaryPhoneNo": "",
+      "primaryPhoneCountryCode": "",
+      "fax": "",
+      "faxCountryCode": "",
+      "secondaryPhoneNo": "",
+      "secondaryPhoneCountryCode": "",
+      "secondaryMobileNo": "",
+      "secondaryMobileCountryCode": "",
       "secondaryEmail": "user@example.com",
-      "website": "www.website.com"
+      "website": ""
     },
     "contactDetailsForTxnReconfirming": [
       {
-        "primaryMobileNo": "0987654321",
-        "primaryMobCountryCode": "+971",
-        "primaryPhoneNo": "1234567890",
-        "primaryPhoneCountryCode": "_971"
+        "primaryMobileNo": "",
+        "primaryMobCountryCode": "",
+        "primaryPhoneNo": "",
+        "primaryPhoneCountryCode": ""
       }
     ]
   },
@@ -137,13 +137,13 @@
     "yearsInBusiness": 0,
     "topCustomers": [
       {
-        "name": "KYC TOP CUNAME",
+        "name": "",
         "country": "LOVs to be fetched from datalist API"
       }
     ],
     "topSuppliers": [
       {
-        "name": "TOP Suppliers",
+        "name": "",
         "country": "LOVs to be fetched from datalist API"
       }
     ],
@@ -162,37 +162,37 @@
     ],
     "anticipatedTransactionsDetails": {
       "totalMonthlyCashCreditsAED": {
-        "amountInFigures": "10000.00",
-        "inPercent": 20
+        "amountInFigures": "",
+        "inPercent": 0
       },
       "totalMonthlyNonCashCreditsAED": {
-        "amountInFigures": "3000.00",
-        "inPercent": 30
+        "amountInFigures": "",
+        "inPercent": 0
       },
-      "totalMonthlyCreditsAED": "5000.00",
-      "maxAmtSingleTxnCashAED": "1000.00",
-      "maxAmtSingleTxnNonCashAED": "1000.00"
+      "totalMonthlyCreditsAED": "",
+      "maxAmtSingleTxnCashAED": "",
+      "maxAmtSingleTxnNonCashAED": ""
     },
     "otherBankingRelationshipsInfo": {
       "otherBankingRelationshipsExist": false,
       "otherBankDetails": [
         {
-          "bankName": "BANKXX"
+          "bankName": ""
         }
       ]
     },
     "otherEntitiesInUAE": false,
     "entitiesInUAE": [
       {
-        "companyName": "COMPANYXXXX",
+        "companyName": "",
         "emirate": "LOVs to be fetched from data list API",
-        "tradeLicenseNo": "1234567890ABC"
+        "tradeLicenseNo": ""
       }
     ],
     "otherEntitiesOutsideUAE": false,
     "entitiesOutsideUAE": [
       {
-        "companyName": "1234567890AAA",
+        "companyName": "",
         "country": "LOVs to be fetched from data list API"
       }
     ],
@@ -204,40 +204,40 @@
         "statusOverAll": "proceed",
         "screeningResults": [
           {
-            "screeningType": "blacklist",
-            "screeningStatus": "blocked",
-            "screeningFlag": "SCFlag",
-            "screeningNotes": "SCNote",
-            "screeningReason": "SCReason",
-            "reasonNotes": "Blacklist ReasonNotes",
-            "reasonCode": "black",
-            "reasonStatus": "blocked"
+            "screeningType": "",
+            "screeningStatus": "",
+            "screeningFlag": "",
+            "screeningNotes": "",
+            "screeningReason": "",
+            "reasonNotes": "",
+            "reasonCode": "",
+            "reasonStatus": ""
           }
         ]
       },
       "salutation": "Mr.",
-      "firstName": "COSME008",
-      "middleName": "COSME008 Middle",
-      "lastName": "COSME008 last",
-      "shortName": "COSME008 Short",
-      "fullName": "COSME full",
+      "firstName": "",
+      "middleName": "",
+      "lastName": "",
+      "shortName": "",
+      "fullName": "",
       "gender": "Male",
       "maritalStatus": "Married",
-      "maritalStatusOthers": "YES",
-      "occupation": "SOFTWARE Engineer",
-      "mothersMaidenName": "MMNAME",
-      "numberOfDependants": 2,
-      "highestEducationAttained": "XXXX",
-      "employmentStatus": "ACTIVE",
+      "maritalStatusOthers": "",
+      "occupation": "",
+      "mothersMaidenName": "",
+      "numberOfDependants": 0,
+      "highestEducationAttained": "",
+      "employmentStatus": "",
       "kycVerified": false,
       "kycDetails": {
         "salutation": "Mr.",
-        "shareholderPOASignatoryName": "POASign",
+        "shareholderPOASignatoryName": "",
         "isSignatory": false,
         "isShareholder": false,
         "shareHoldingPercentage": 0,
-        "dateOfBirth": "2019-08-21",
-        "nationality": "UAE",
+        "dateOfBirth": "2019-08-25",
+        "nationality": "",
         "dualCitizenship": false,
         "dualCitizenshipCountry": [
           "LOVs to be fetched from datalist API"
@@ -246,49 +246,49 @@
         "isUAEResident": false,
         "passportDetails": [
           {
-            "passportNumber": "PSNO1234",
-            "passportExpiryDate": "2019-08-21",
+            "passportNumber": "",
+            "passportExpiryDate": "2019-08-25",
             "diplomatPassport": false
           }
         ],
         "emirateIdDetails": {
-          "eidNumber": "EIDNO",
-          "eidExpiryDt": "2019-08-21"
+          "eidNumber": "",
+          "eidExpiryDt": "2019-08-25"
         },
         "selfGovtPosition": "Currently hold",
         "relativeGovtPosition": "Currently hold",
         "qualification": "Under Graduate",
-        "experienceInYrs": "XX",
+        "experienceInYrs": "",
         "sourceOfWealth": {
           "wealthType": "Personal Savings",
-          "others": "na"
+          "others": ""
         }
       },
       "contactDetails": {
-        "primaryMobileNo": "1234567890",
-        "primaryMobCountryCode": "+971",
+        "primaryMobileNo": "",
+        "primaryMobCountryCode": "",
         "primaryEmail": "user@example.com",
-        "primaryPhoneNo": "1234567890",
-        "primaryPhoneCountryCode": "+971",
-        "fax": "123456",
-        "faxCountryCode": "+971",
-        "secondaryPhoneNo": "0987654321",
-        "secondaryPhoneCountryCode": "+971",
-        "secondaryMobileNo": "0987654322",
-        "secondaryMobileCountryCode": "+971",
+        "primaryPhoneNo": "",
+        "primaryPhoneCountryCode": "",
+        "fax": "",
+        "faxCountryCode": "",
+        "secondaryPhoneNo": "",
+        "secondaryPhoneCountryCode": "",
+        "secondaryMobileNo": "",
+        "secondaryMobileCountryCode": "",
         "secondaryEmail": "user@example.com",
-        "website": "www.website.com"
+        "website": ""
       },
       "employmentDetails": {
         "employmentType": "Salaried",
-        "otherEmploymentType": "na",
-        "designation": "MD",
-        "empNo": "123456",
-        "department": "SE",
-        "employerName": "EMPNAME",
-        "occupation": "SE",
+        "otherEmploymentType": "",
+        "designation": "",
+        "empNo": "",
+        "department": "",
+        "employerName": "",
+        "occupation": "",
         "totalExperienceYrs": 0,
-        "employmentStartDate": "2019-08-21"
+        "employmentStartDate": "2019-08-25"
       },
       "sameAsCompanyAddress": false,
       "addressInfo": [
@@ -298,27 +298,27 @@
             {
               "addressFieldDesc": "Residence Address",
               "preferredAddress": "Yes",
-              "addressLine1": "Address Line 1",
-              "addressLine2": "Address Line 2",
-              "addressLine3": "Address Line 3",
+              "addressLine1": "",
+              "addressLine2": "",
+              "addressLine3": "",
               "addressLine4": "",
-              "poBox": "123456",
-              "emirateCity": "EMI-City",
-              "country": "UAE"
+              "poBox": "",
+              "emirateCity": "",
+              "country": ""
             }
           ]
         }
       ],
       "accountSigningInfo": {
         "accountSigningType": "Any of us",
-        "accountSigningInstn": "SIGNINSTN",
+        "accountSigningInstn": "",
         "authorityType": "SP - Sole Proprietor"
       },
       "debitCardInfo": {
         "issueDebitCard": true,
         "authSignatoryDetails": {
-          "fullNameOnPassport": "FNPASSPORT",
-          "nameOnDebitCard": "VISA"
+          "fullNameOnPassport": "",
+          "nameOnDebitCard": ""
         }
       }
     }
@@ -326,50 +326,50 @@
   "channelServicesInfo": {
     "mobileInstructions": false,
     "marketingSMS": false,
-    "doNotDisturbHours": "10",
+    "doNotDisturbHours": "",
     "weeklyBalanceNotification": "Sunday",
     "monthlyBalanceNotification": 0
   },
   "documents": [
     {
       "documentType": "Passport",
-      "documentTitle": "DC TITTLE",
-      "fileName": "file.txt",
-      "filePath": "/file.txt",
+      "documentTitle": "",
+      "fileName": "",
+      "filePath": "",
       "url": "",
-      "fileData": "filedata",
+      "fileData": "",
       "fileFormat": "application/pdf",
       "fileSize": 0,
-      "fileDescription": "filedec",
-      "submittedBy": "submittedbyxxx",
-      "submittedDt": "2019-08-18",
-      "updatedBy": "updatebyxxx",
-      "updatedDt": "2019-08-19",
+      "fileDescription": "",
+      "submittedBy": "",
+      "submittedDt": "",
+      "updatedBy": "",
+      "updatedDt": "",
       "avsCheckDt": "",
       "avsCheck": false,
       "verified": false,
-      "verifiedBy": "verifiedxxxx",
+      "verifiedBy": "",
       "isEncrypted": false,
-      "encryptionDetails": "na",
+      "encryptionDetails": "",
       "uploadStatus": "Uploaded"
     }
   ],
   "prospectStatusInfo": {
-    "statusType": "ACTIVE",
-    "statusCode": "AC001",
-    "statusFlag": "SFLAG",
-    "statusNotes": "SNOTE",
-    "statusReason": "SReason",
-    "statusOverAll": "Active",
-    "reasonNotes": "ReasonNote",
-    "reasonCode": "RC001",
-    "reasonStatus": "ACTIVE"
+    "statusType": "",
+    "statusCode": "",
+    "statusFlag": "",
+    "statusNotes": "",
+    "statusReason": "",
+    "statusOverAll": "",
+    "reasonNotes": "",
+    "reasonCode": "",
+    "reasonStatus": ""
   },
   "freeFieldsInfo": {
-    "freeField1": "FF1",
-    "freeField2": "FF2",
-    "freeField3": "FF3",
-    "freeField4": "FF4",
-    "freeField5": "FF5"
+    "freeField1": "",
+    "freeField2": "",
+    "freeField3": "",
+    "freeField4": "",
+    "freeField5": ""
   }
 }
