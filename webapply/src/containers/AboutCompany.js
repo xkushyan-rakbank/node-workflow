@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Formik, Field } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
@@ -91,9 +90,9 @@ const AboutCompany = props => {
         <Input
           required
           type="text"
-          name="licensNumber"
-          placeholder="Licens Number"
-          label="Licens"
+          name="licenseNumber"
+          placeholder="License Number"
+          label="License"
         />
 
         <Grid container spacing={3}>
@@ -105,21 +104,12 @@ const AboutCompany = props => {
             />
           </Grid>
           <Grid item md={6} sm={12}>
-            <Field
-              name="lisenceDate"
-              label="Lisence issuing date"
-              component={DatePicker}
-            />
+            <DatePicker id="UI0090" />
           </Grid>
         </Grid>
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <Field
-              name="incorporationDate"
-              label="Lisence issuing date"
-              component={DatePicker}
-              infoTitle="Your date of incorporation is the date when the business was established"
-            />
+            <DatePicker id="UI0080" />
           </Grid>
           <Grid item md={6} sm={12}>
             <Select
