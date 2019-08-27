@@ -11,6 +11,7 @@ import { history } from "./store/configureStore";
 import BasicsForm from "./containers/BasicsForm";
 import AboutCompany from "./containers/AboutCompany";
 import CompanyStakeholders from "./containers/CompanyStakeholders";
+import FinalQuestions from "./containers/FinalQuestions";
 import FormConfirm from "./containers/FormConfirm";
 import FormLayout from "./containers/FormLayout";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -58,6 +59,7 @@ class App extends React.Component {
                 path="/add-company-stakeholders"
                 component={CompanyStakeholders}
               />
+              <Route exact path="/FinalQuestions" component={FinalQuestions} />
             </Switch>
           </FormLayout>
         </ConnectedRouter>
