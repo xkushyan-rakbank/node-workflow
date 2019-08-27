@@ -62,6 +62,7 @@ const FormNavigation = ({ classes }) => {
         </li>
         <li>Company Information</li>
         <li>Company Stakeholders</li>
+        <li>Final questions</li>
         <li>Upload Documents</li>
         <li>Somthing Else</li>
       </ul>
