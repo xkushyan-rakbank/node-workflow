@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { compose } from "recompose";
 import { Formik, Field, Form } from "formik";
@@ -35,25 +35,6 @@ const initialValues = {
 
 const BasicsForm = props => {
   const { classes } = props;
-
-  const [token, setToken] = useState("");
-
-  const handleRecaptchaVerify = token => {
-    setToken(token);
-  };
-
-  const handleRecaptchaExpired = () => {
-    setToken("");
-  };
-
-  useEffect(() => {
-    console.log("RECaptcha verify token:", token);
-  }, [token]);
-
-  useEffect(() => {
-    console.log(props);
-    props.reciveUiConfig();
-  });
 
   const handleSubmit = values => {
     console.log("values", JSON.stringify(values, null, 2));
@@ -117,9 +98,13 @@ const BasicsForm = props => {
 
             <ErrorBoundary className={classes.reCaptchaContainer}>
               <ReCaptcha
-                onVerify={handleRecaptchaVerify}
-                onExpired={handleRecaptchaExpired}
-                onError={handleRecaptchaExpired}
+                onVerify={token =>
+                  console.log("ReCaptcha onVerify callback:", token)
+                }
+                onExpired={() =>
+                  console.log("ReCaptcha onExpired callback (2 min)")
+                }
+                onError={() => console.log("ReCaptcha onError callback")}
               />
             </ErrorBoundary>
 

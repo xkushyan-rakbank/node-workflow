@@ -26,9 +26,11 @@ class ReCaptcha extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.recaptchaOnloadCallback = () => {
-      this.setState({ grecaptcha: window.grecaptcha });
-    };
+    if (!this.state.grecaptcha) {
+      window.recaptchaOnloadCallback = () => {
+        this.setState({ grecaptcha: window.grecaptcha });
+      };
+    }
   }
 
   componentWillUnmount() {
