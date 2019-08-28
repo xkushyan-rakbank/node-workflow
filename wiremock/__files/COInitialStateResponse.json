@@ -6248,7 +6248,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "This is a diplomatic Passport",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].kycDetails.passportDetails[*].diplomatPassport",
 			"name": "prospect.signatoryInfo[*].kycDetails.passportDetails[*].diplomatPassport",

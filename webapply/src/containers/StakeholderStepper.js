@@ -20,7 +20,7 @@ const styles = {
 
 const StakeholderStepper = props => {
   const { classes } = props;
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(4);
   const handleContinue = () => {
     if (step < stakeHoldersSteps.length) {
       setStep(step + 1);
