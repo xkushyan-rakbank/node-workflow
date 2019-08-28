@@ -26,7 +26,8 @@
 			},
 			"validationErrors": {
 				"required": "Field is required.",
-				"invalid": "Field is invalid."
+				"invalid": "Field is invalid.",
+				"multiline": "Fild shoul contain only lowercase and uppercase letters"
 			},
 			"applicable": true,
 			"label": "Your Name",
