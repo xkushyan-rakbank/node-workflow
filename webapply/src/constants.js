@@ -84,25 +84,6 @@ export const codes = [
   }
 ];
 
-export const options = [
-  {
-    value: "option1",
-    label: "option1"
-  },
-  {
-    value: "option2",
-    label: "option2"
-  },
-  {
-    value: "option3",
-    label: "option3"
-  },
-  {
-    value: "option4",
-    label: "option4"
-  }
-];
-
 export const fieldAttr = (id, fieldConfig) => {
   return {
     id: fieldConfig.id,
