@@ -25,8 +25,9 @@ const style = {
     fontStretch: "normal"
   },
   iconWrapper: {
-    width: "22px",
-    height: "22px",
+    width: "26px",
+    height: "26px",
+    boxSizing: "border-box",
     border: "solid 1.5px #16216a",
     borderRadius: "50%",
     color: "#16216a",
@@ -36,7 +37,7 @@ const style = {
     marginRight: "10px"
   },
   icon: {
-    fontSize: "18px"
+    fontSize: "20px"
   }
 };
 
