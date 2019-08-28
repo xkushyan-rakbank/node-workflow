@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Select from "../InputField/Select";
 import Input from "../InputField/Input";
 import Checkbox from "../InputField/Checkbox";
+import RefactoredCheckbox from "../InputField/RefactoredCheckbox";
 import { nationality as nationalityOptions } from "../../constants";
 
 const styles = {
@@ -51,12 +52,7 @@ const Nationality = props => {
           />
         </Grid>
         <Grid item md={6} sm={12}>
-          <Checkbox
-            name="diplomaticPassport"
-            label="This is a diplomatic Passport"
-            value={diplomaticPassport}
-            onChange={setDiplomaticPassport}
-          />
+          <RefactoredCheckbox id="UI0296" indexes={[0, 0]} />
         </Grid>
       </Grid>
     </>

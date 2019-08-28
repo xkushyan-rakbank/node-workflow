@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { push } from "connected-react-router";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
@@ -18,10 +20,15 @@ const styles = {
 
 const StakeholderStepper = props => {
   const { classes } = props;
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(4);
   const handleContinue = () => {
     if (step < stakeHoldersSteps.length) {
       setStep(step + 1);
+    } else {
+      //todo remove after finished implementation
+      props.go({
+        pathname: "/FinalQuestions"
+      });
     }
   };
 
@@ -46,4 +53,13 @@ const StakeholderStepper = props => {
   );
 };
 
-export default withStyles(styles)(StakeholderStepper);
+const mapDispatchToProps = dispatch => ({
+  go: path => dispatch(push(path))
+});
+
+export default withStyles(styles)(
+  connect(
+    null,
+    mapDispatchToProps
+  )(StakeholderStepper)
+);
