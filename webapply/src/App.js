@@ -41,22 +41,14 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <ConnectedRouter history={history}>
           <FormLayout>
-            <Redirect from="/" to="/about-your-company" />
+            <Redirect from="/" to="/ApplicantInfo" />
             <Switch>
+              <Route exact path="/ApplicantInfo" component={BasicsForm} />
+              <Route exact path="/VerifyOTP" component={FormConfirm} />
+              <Route exact path="/CompanyInfo" component={AboutCompany} />
               <Route
                 exact
-                path="/start-with-the-basics"
-                component={BasicsForm}
-              />
-              <Route exact path="/confirm" component={FormConfirm} />
-              <Route
-                exact
-                path="/about-your-company"
-                component={AboutCompany}
-              />
-              <Route
-                exact
-                path="/add-company-stakeholders"
+                path="/StakeholdersInfo"
                 component={CompanyStakeholders}
               />
               <Route exact path="/FinalQuestions" component={FinalQuestions} />

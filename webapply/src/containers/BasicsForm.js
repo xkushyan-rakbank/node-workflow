@@ -39,6 +39,7 @@ const BasicsForm = props => {
 
       <form onSubmit={handleSubmit}>
         <TextInput id="UI0001" />
+
         <TextInput id="UI0002" />
 
         <SelectCombined2
@@ -49,10 +50,12 @@ const BasicsForm = props => {
           inputPlaceholder="Your Mobile Number"
           inputLabel="Your Phone"
         />
+
         <CustomCheckbox
           name="apply"
           label="I am applying on behalf of someone’s company "
         />
+
         <ErrorBoundary className={classes.reCaptchaContainer}>
           <ReCaptcha
             onVerify={token =>
@@ -65,7 +68,7 @@ const BasicsForm = props => {
           />
         </ErrorBoundary>
 
-        <Link to="/confirm">
+        <Link to="/VerifyOTP">
           <SubmitButton />
         </Link>
       </form>

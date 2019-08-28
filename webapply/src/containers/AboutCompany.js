@@ -113,7 +113,7 @@ const AboutCompany = props => {
             />
           </Grid>
         </Grid>
-        <Link to="/add-company-stakeholders">
+        <Link to="/StakeholdersInfo">
           <SubmitButton />
         </Link>
       </form>

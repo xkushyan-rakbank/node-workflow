@@ -1,47 +1,72 @@
+import { errorType } from "./../constants";
+
 const validate = (field, fieldConfig) => {
   const validity = field.validity;
-
-  const REQUIRED = "required";
-  const INVALID = "invalid";
+  const errorConfig = fieldConfig.validationErrors;
 
   // Empty field
   if (validity.valueMissing) {
-    return fieldConfig.validationErrors[REQUIRED];
+    return {
+      error: errorConfig[errorType.required]
+    };
   }
 
+  // If field value is not the correct syntax.
   if (validity.typeMismatch) {
-    // Email
     if (field.type === "email") {
-      return fieldConfig.validationErrors[INVALID];
+      const errors = validationErrorMessages(errorConfig);
+      return errors;
     }
   }
 
   // If pattern doesn't match
   if (validity.patternMismatch) {
-    return fieldConfig.validationErrors[INVALID];
+    const errors = validationErrorMessages(errorConfig);
+    return errors;
   }
 
   // If too short
   if (validity.tooShort) {
-    return fieldConfig.validationErrors[INVALID];
+    const errors = validationErrorMessages(errorConfig);
+    return errors;
   }
 
+  // If too long
   if (validity.tooLong) {
-    return fieldConfig.validationErrors[INVALID];
+    const errors = validationErrorMessages(errorConfig);
+    return errors;
   }
 
+  // if the user has provided input that the browser is unable to convert
   if (validity.badInput) {
-    return fieldConfig.validationErrors[INVALID];
+    const errors = validationErrorMessages(errorConfig);
+    return errors;
   }
 
   // If a number field is over the max
   if (validity.rangeOverflow) {
-    return fieldConfig.validationErrors[INVALID];
+    const errors = validationErrorMessages(errorConfig);
+    return errors;
   }
 
   // If a number field is below the min
   if (validity.rangeUnderflow) {
-    return fieldConfig.validationErrors[INVALID];
+    const errors = validationErrorMessages(errorConfig);
+    return errors;
+  }
+};
+
+//helper function to check for multiline errorType
+const validationErrorMessages = errorConfig => {
+  if (errorType.multiline in errorConfig) {
+    return {
+      error: errorConfig[errorType.invalid],
+      multiLineError: errorConfig[errorType.multiline]
+    };
+  } else {
+    return {
+      error: errorConfig[errorType.invalid]
+    };
   }
 };
 

@@ -51,7 +51,7 @@ const Confirm = ({ classes }) => {
           <span>
             Didn’t get the code? <a href="#"> Send a new code</a>
           </span>
-          <Link to="/about-your-company">
+          <Link to="/CompanyInfo">
             <SubmitButton />
           </Link>
         </div>

@@ -27,15 +27,16 @@ const style = {
   }
 };
 
-const ErrorMessage = ({ error, multiLine, classes }) => {
+const ErrorMessage = ({ error, multiLineError, classes }) => {
+  console.log(!!multiLineError);
   return (
     <div className={classes.error}>
       <div className="flexAlignCenter">
         <img src={ErrorIcon} alt="erorr" />
         <p>{error}</p>
-        {multiLine !== "" && (
+        {!!multiLineError && (
           <Tooltip
-            title={multiLine}
+            title={multiLineError}
             placement="right"
             className={classes.multiLineError}
           >

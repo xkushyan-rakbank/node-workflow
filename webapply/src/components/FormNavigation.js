@@ -1,4 +1,7 @@
 import React from "react";
+import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { compose } from "recompose";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Chat from "./Chat";
 import backgroundImage from "./../assets/images/background-blob.svg";
@@ -50,7 +53,11 @@ const style = {
   }
 };
 
-const FormNavigation = ({ classes }) => {
+const FormNavigation = props => {
+  const { match, location, history, classes } = props;
+  // console.log("match", match);
+  // console.log("location", location);
+  // console.log("history", history);
   return (
     <div className={classes.formNav}>
       <ul>
@@ -72,4 +79,7 @@ const FormNavigation = ({ classes }) => {
   );
 };
 
-export default withStyles(style)(FormNavigation);
+export default compose(
+  withStyles(style),
+  withRouter
+)(FormNavigation);

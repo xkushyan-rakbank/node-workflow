@@ -117,3 +117,9 @@ export const fieldAttr = (id, fieldConfig) => {
     readOnly: !!fieldConfig.readOnly
   };
 };
+
+export const errorType = {
+  required: "required",
+  invalid: "invalid",
+  multiline: "multiline"
+};

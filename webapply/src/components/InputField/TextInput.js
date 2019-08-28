@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
@@ -24,7 +25,7 @@ const styles = {
 
 class Input extends React.Component {
   state = {
-    fieldErrors: ""
+    fieldErrors: {}
   };
 
   updateField = event => {
@@ -58,14 +59,14 @@ class Input extends React.Component {
             onChange={this.updateField}
             inputProps={attrs}
             onBlur={this.fieldValidation}
-            error={!!fieldErrors}
+            error={!isEmpty(fieldErrors)}
           />
           {!!config.infoTitle && <InfoTitle title={config.infoTitle} />}
 
-          {!!fieldErrors && (
+          {!isEmpty(fieldErrors) && (
             <ErrorMessage
-              error={fieldErrors}
-              multiLine="more errors will be here" // replace it from config
+              error={fieldErrors.error}
+              multiLineError={fieldErrors.multiLineError}
             />
           )}
         </FormControl>

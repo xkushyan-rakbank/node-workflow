@@ -50,7 +50,7 @@ const styles = {
 const Header = ({ classes }) => {
   return (
     <header className={classes.header}>
-      <Link to="/start-with-the-basics">
+      <Link to="/ApplicantInfo">
         <img src={logo} alt="rak bank" />
       </Link>
       <span> RAKstarter Application</span>
