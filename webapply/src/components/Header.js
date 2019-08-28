@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import routes from "./../routes";
 import logo from "./../assets/images/logo.png";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -50,7 +51,7 @@ const styles = {
 const Header = ({ classes }) => {
   return (
     <header className={classes.header}>
-      <Link to="/ApplicantInfo">
+      <Link to={routes.applicantInfo}>
         <img src={logo} alt="rak bank" />
       </Link>
       <span> RAKstarter Application</span>

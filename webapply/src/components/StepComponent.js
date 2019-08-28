@@ -57,7 +57,6 @@ const StepComponent = props => {
     handleContinue
   } = props;
   const Form = stakeHoldersSteps[step - 1].component;
-
   const renderTitle = () => {
     if (active) {
       return <SectionTitle title={props.title} className={classes.title} />;

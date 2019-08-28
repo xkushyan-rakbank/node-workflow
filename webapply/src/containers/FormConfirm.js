@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Input from "./../components/InputField/Input";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import routes from "./../routes"; // remove it in future
 import { withStyles } from "@material-ui/core/styles";
 
 const style = {
@@ -51,7 +52,7 @@ const Confirm = ({ classes }) => {
           <span>
             Didn’t get the code? <a href="#"> Send a new code</a>
           </span>
-          <Link to="/CompanyInfo">
+          <Link to={routes.companyInfo}>
             <SubmitButton />
           </Link>
         </div>

@@ -1,9 +1,12 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router";
-import { connect } from "react-redux";
 import { compose } from "recompose";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import DoneIcon from "@material-ui/icons/Done";
+import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
+import { formStepper } from "./../constants";
 import backgroundImage from "./../assets/images/background-blob.svg";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -26,58 +29,50 @@ const style = {
     "& ul": {
       margin: "0",
       padding: "0",
-      paddingRight: "57px",
-      "& li": {
-        listStyleType: "none",
-        fontSize: "20px",
-        fontWeight: "600",
-        lineHeight: "1.2",
-        color: "#ffffff",
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        "@media only screen and (max-width: 1100px)": {
-          fontSize: "16px"
-        },
-        "&:not(:last-child)": {
-          marginBottom: "30px"
-        },
-        "&:not(:first-child)": {
-          opacity: "0.5"
-        }
-      }
+      paddingRight: "57px"
     }
-  },
-  icon: {
-    fontSize: "12px !important"
   }
 };
 
-const FormNavigation = props => {
-  const { match, location, history, classes } = props;
-  // console.log("match", match);
-  // console.log("location", location);
-  // console.log("history", history);
-  return (
-    <div className={classes.formNav}>
-      <ul>
-        <li>
-          Basic Information
-          <span className="circle">
-            <ArrowBackIcon className={classes.icon} />
-          </span>
-        </li>
-        <li>Company Information</li>
-        <li>Company Stakeholders</li>
-        <li>Final questions</li>
-        <li>Upload Documents</li>
-        <li>Somthing Else</li>
-      </ul>
+class FormNavigation extends React.Component {
+  state = {
+    step: 1
+  };
 
-      <Chat />
-    </div>
-  );
-};
+  componentDidUpdate(prevProps) {
+    const { location } = this.props;
+    console.log(location);
+    if (prevProps.location.key !== location.key) {
+      if (this.state.step < formStepper.length - 2) {
+        this.setState(prevState => ({
+          step: prevState.step + 1
+        }));
+      }
+    }
+  }
+
+  render() {
+    const { history, location, classes } = this.props;
+    const { step } = this.state;
+    console.log(step);
+    return (
+      <div className={classes.formNav}>
+        <ul>
+          {formStepper.map(item => (
+            <FormNavigationStep
+              key={item.step}
+              title={item.title}
+              activeStep={step === item.step}
+              filled={step > item.step}
+            />
+          ))}
+        </ul>
+
+        <Chat />
+      </div>
+    );
+  }
+}
 
 export default compose(
   withStyles(style),

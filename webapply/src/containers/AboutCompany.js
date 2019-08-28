@@ -10,6 +10,7 @@ import SectionTitle from "../components/SectionTitle";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import DatePicker from "../components/InputField/DatePicker";
 import TextInput from "../components/InputField/TextInput";
+import routes from "./../routes"; // remove it in future
 import { codes } from "./../constants";
 
 const style = {
@@ -113,7 +114,7 @@ const AboutCompany = props => {
             />
           </Grid>
         </Grid>
-        <Link to="/StakeholdersInfo">
+        <Link to={routes.stakeholdersInfo}>
           <SubmitButton />
         </Link>
       </form>

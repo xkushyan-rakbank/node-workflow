@@ -14,6 +14,7 @@ import CompanyStakeholders from "./containers/CompanyStakeholders";
 import FinalQuestions from "./containers/FinalQuestions";
 import FormConfirm from "./containers/FormConfirm";
 import FormLayout from "./containers/FormLayout";
+import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
 import "./App.scss";
 
@@ -41,17 +42,20 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <ConnectedRouter history={history}>
           <FormLayout>
-            <Redirect from="/" to="/ApplicantInfo" />
             <Switch>
-              <Route exact path="/ApplicantInfo" component={BasicsForm} />
-              <Route exact path="/VerifyOTP" component={FormConfirm} />
-              <Route exact path="/CompanyInfo" component={AboutCompany} />
+              <Route exact path={routes.applicantInfo} component={BasicsForm} />
+              <Route exact path={routes.verifyOtp} component={FormConfirm} />
+              <Route exact path={routes.companyInfo} component={AboutCompany} />
               <Route
                 exact
-                path="/StakeholdersInfo"
+                path={routes.stakeholdersInfo}
                 component={CompanyStakeholders}
               />
-              <Route exact path="/FinalQuestions" component={FinalQuestions} />
+              <Route
+                exact
+                path={routes.finalQuestions}
+                component={FinalQuestions}
+              />
             </Switch>
           </FormLayout>
         </ConnectedRouter>

@@ -8,6 +8,7 @@ import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import SelectCombined2 from "../components/InputField/SelectCombined.v2";
 import CustomCheckbox from "../components/InputField/Checkbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import routes from "./../routes"; // remove it in future
 import { codes } from "./../constants";
 
 const styles = {
@@ -68,7 +69,7 @@ const BasicsForm = props => {
           />
         </ErrorBoundary>
 
-        <Link to="/VerifyOTP">
+        <Link to={routes.verifyOtp}>
           <SubmitButton />
         </Link>
       </form>

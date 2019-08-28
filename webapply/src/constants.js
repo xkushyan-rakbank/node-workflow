@@ -4,6 +4,7 @@ import Shareholding from "./components/StepForms/Shareholding";
 import Nationality from "./components/StepForms/Nationality";
 import CountryOfResidence from "./components/StepForms/CountryOfResidence";
 import PublicPosition from "./components/StepForms/PublicPosition";
+import routes from "./routes";
 
 export const stakeHoldersSteps = [
   {
@@ -104,3 +105,17 @@ export const errorType = {
   invalid: "invalid",
   multiline: "multiline"
 };
+
+export const formStepper = [
+  {
+    step: 1,
+    title: "Basic Information",
+    path: routes.applicantInfo,
+    relatedPath: routes.verifyOtp //clarify in Dhanya about additional item on right steps
+  },
+  { step: 2, title: "Company Information", path: routes.companyInfo },
+  { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
+  { step: 4, title: "Final questions", path: routes.finalQuestions },
+  { step: 5, title: "Upload Documents", path: undefined },
+  { step: 6, title: "Somthing Else", path: undefined }
+];
