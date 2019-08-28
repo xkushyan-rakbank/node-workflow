@@ -43,7 +43,8 @@ class Input extends React.Component {
   };
 
   render() {
-    const { id, config, classes, value } = this.props;
+    const { id, config, classes, value, InputProps } = this.props;
+
     const { fieldErrors } = this.state;
     const attrs = fieldAttr(id, config);
 
@@ -59,6 +60,7 @@ class Input extends React.Component {
             inputProps={attrs}
             onBlur={this.fieldValidation}
             error={!!fieldErrors}
+            InputProps={InputProps}
           />
           {!!config.infoTitle && <InfoTitle title={config.infoTitle} />}
 

@@ -3415,7 +3415,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Annual Financial Turnover",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.annualFinTurnoverAmtInAED",
 			"name": "prospect.orgKYCDetails.annualFinTurnoverAmtInAED",
@@ -3541,7 +3541,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Customer Name",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.topCustomers[*].name",
 			"name": "prospect.orgKYCDetails.topCustomers[*].name",
@@ -3573,7 +3573,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Country",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.topCustomers[*].country",
 			"name": "prospect.orgKYCDetails.topCustomers[*].country",
@@ -3667,7 +3667,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Supplier Name",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.topSuppliers[*].name",
 			"name": "prospect.orgKYCDetails.topSuppliers[*].name",
@@ -3699,7 +3699,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Country",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.topSuppliers[*].country",
 			"name": "prospect.orgKYCDetails.topSuppliers[*].country",
@@ -3759,7 +3759,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Country of Origin",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.topOriginGoodsCountries[*]",
 			"name": "prospect.orgKYCDetails.topOriginGoodsCountries[*]",
@@ -4034,7 +4034,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Part of Total in Cash",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures",
 			"name": "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures",
@@ -4128,8 +4128,9 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Part of Total in Non-Cash",
 			"placeholder": "",
+			"infoTitle": "Non-cash: cheque / EFT / internal transfer / point of sale",
 			"path": "$.prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures",
 			"name": "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures",
 			"required": true,
@@ -4221,7 +4222,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Maximum amount in Cash",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED",
 			"name": "prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED",
@@ -4252,8 +4253,9 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Maximum amount in Non-Cash",
 			"placeholder": "",
+			"infoTitle": "Non-cash: cheque / EFT / internal transfer / point of sale",
 			"path": "$.prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED",
 			"name": "prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED",
 			"required": true,
