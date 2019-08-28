@@ -62,7 +62,7 @@ class Input extends React.Component {
             error={!!fieldErrors}
             InputProps={InputProps}
           />
-          {!!config.infoTitle && <InfoTitle title={config.infoTitle} />}
+          {!!config.title && <InfoTitle title={config.title} />}
 
           {!!fieldErrors && (
             <ErrorMessage
