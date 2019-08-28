@@ -6,6 +6,8 @@ import LinkButton from "../Buttons/LinkButton";
 import CompanyBackgroundForm from "./CompanyBackgroundForm";
 import CollapsedSection from "./CollapsedSection";
 import AnticipatedTransactions from "./AnticipatedTransactions";
+import CompanyNetwork from "./CompanyNetwork";
+import ContactInformation from "./ContactInformation";
 
 const style = {
   container: {
@@ -96,13 +98,13 @@ class CompanySummaryCard extends Component {
       {
         title: "Company network",
         key: "network",
-        component: null,
+        component: CompanyNetwork,
         handler: this.handleContinue
       },
       {
         title: "Company contact information",
         key: "contactInformation",
-        component: null,
+        component: ContactInformation,
         handler: this.handleContinue
       }
     ];
@@ -127,6 +129,14 @@ class CompanySummaryCard extends Component {
         }
       });
     } else {
+      this.setState({
+        [activeSectionKey.key]: {
+          isExpanded: false,
+          isFilled: true
+        },
+        isExpanded: false,
+        isFilled: true
+      });
     }
   };
 
