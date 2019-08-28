@@ -10,7 +10,7 @@ import SectionTitle from "../components/SectionTitle";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import DatePicker from "../components/InputField/DatePicker";
 import TextInput from "../components/InputField/TextInput";
-import { codes, options } from "./../constants";
+import { codes } from "./../constants";
 
 const style = {
   sectionTitleIndent: {
@@ -43,7 +43,7 @@ const AboutCompany = props => {
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0161" options={options} />
+            <PureSelect id="UI0161" />
           </Grid>
           <Grid item md={6} sm={12}>
             <Input

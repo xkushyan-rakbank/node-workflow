@@ -45,7 +45,7 @@ const styles = {
   }
 };
 
-class CustomSelect extends React.Component {
+class PureSelect extends React.Component {
   state = {
     labelWidth: 0
   };
@@ -65,7 +65,7 @@ class CustomSelect extends React.Component {
   };
 
   render() {
-    const { config, value, id, options, classes } = this.props;
+    const { config, value, id, classes } = this.props;
 
     return (
       <FormControl className="formControl" variant="outlined">
@@ -86,11 +86,12 @@ class CustomSelect extends React.Component {
           onChange={this.updateField}
         >
           <MenuItem value=""></MenuItem>
-          {options.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
+          {config.datalist &&
+            config.datalist.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.displayText}
+              </MenuItem>
+            ))}
         </Select>
         {!!config.title && <InfoTitle title={config.title} />}
       </FormControl>
@@ -118,4 +119,4 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   )
-)(CustomSelect);
+)(PureSelect);

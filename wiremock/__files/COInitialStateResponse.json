@@ -3369,7 +3369,27 @@
 			"path": "$.prospect.orgKYCDetails.companyCategory",
 			"name": "prospect.orgKYCDetails.companyCategory",
 			"required": false,
-			"datalistId": null,
+			"datalistId": "CompanyCategory",
+			"datalist": [
+				{
+					"code": "CAT-1",
+					"key": "CAT-1",
+					"value": "CAT-1",
+					"displayText": "Company Category1"
+				},
+				{
+					"code": "CAT-2",
+					"key": "CAT-2",
+					"value": "CAT-2",
+					"displayText": "Company Category2"
+				},
+				{
+					"code": "CAT-3",
+					"key": "CAT-3",
+					"value": "CAT-3",
+					"displayText": "Company Category3"
+				}
+			],
 			"help": ""
 		},
 		"UI0184": {
