@@ -65,7 +65,7 @@ class PureSelect extends React.Component {
   };
 
   render() {
-    const { config, value, id, classes } = this.props;
+    const { config, value, id, classes, className } = this.props;
 
     return (
       <FormControl className="formControl" variant="outlined">
@@ -82,7 +82,11 @@ class PureSelect extends React.Component {
             />
           }
           IconComponent={KeyboardArrowDownIcon}
-          className={cx(classes.selectField, classes.selectFieldBasic)}
+          className={cx(
+            classes.selectField,
+            classes.selectFieldBasic,
+            className
+          )}
           onChange={this.updateField}
         >
           <MenuItem value=""></MenuItem>

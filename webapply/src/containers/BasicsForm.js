@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
-import SelectCombined2 from "../components/InputField/SelectCombined.v2";
+import CombinedSelect from "../components/InputField/CombinedSelect";
 import CustomCheckbox from "../components/InputField/Checkbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import { codes } from "./../constants";
@@ -41,14 +41,7 @@ const BasicsForm = props => {
         <TextInput id="UI0001" />
         <TextInput id="UI0002" />
 
-        <SelectCombined2
-          name="phoneCode2"
-          options={codes}
-          inputType="text"
-          inputName="phone"
-          inputPlaceholder="Your Mobile Number"
-          inputLabel="Your Phone"
-        />
+        <CombinedSelect selectId="UI0003" inputId="UI0004" />
         <CustomCheckbox
           name="apply"
           label="I am applying on behalf of someone’s company "

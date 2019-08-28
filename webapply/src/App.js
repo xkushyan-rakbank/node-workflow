@@ -2,11 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  withStyles
-} from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { history } from "./store/configureStore";
 import BasicsForm from "./containers/BasicsForm";
 import AboutCompany from "./containers/AboutCompany";

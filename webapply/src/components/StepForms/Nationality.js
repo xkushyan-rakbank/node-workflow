@@ -18,7 +18,6 @@ const Nationality = props => {
   const [passportNumber, setPassportNumber] = useState();
   const changeNationality = event => setNationality(event.target.value);
   const [secondCitizenships, setSecondCitizenships] = useState(false);
-  const [diplomaticPassport, setDiplomaticPassport] = useState(false);
 
   return (
     <>
