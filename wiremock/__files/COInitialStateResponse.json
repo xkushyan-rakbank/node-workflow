@@ -2301,7 +2301,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Office / Shop Number",
 			"placeholder": "",
 			"path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].addressFieldDesc",
 			"name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].addressFieldDesc",
@@ -2361,7 +2361,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Street / Location",
 			"placeholder": "",
 			"path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].addressLine1",
 			"name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].addressLine1",
@@ -2493,7 +2493,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "PO Box Number",
 			"placeholder": "",
 			"path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].poBox",
 			"name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].poBox",
@@ -2564,11 +2564,37 @@
 			"path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].country",
 			"name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].country",
 			"required": false,
-			"datalistId": null,
+			"datalistId": "CountryList",
 			"help": "",
 			"default": "AE",
 			"maxlength": "100",
-			"pattern": "^[a-zA-Z]*$"
+			"pattern": "^[a-zA-Z]*$",
+			"datalist": [
+				{
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "Emirate"
+				},
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "United States"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "Ukraine"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "Great Britain"
+				}
+			]
 		},
 		"UI0116": {
 			"criteria": {
@@ -2626,12 +2652,26 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Type of Space Occupied",
 			"placeholder": "",
 			"path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].typeOfSpaceOccupied.spaceType",
 			"name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].typeOfSpaceOccupied.spaceType",
 			"required": false,
-			"datalistId": null
+			"datalistId": "SpaceType",
+			"datalist": [
+				{
+					"code": "O",
+					"key": "O",
+					"value": "O",
+					"displayText": "Office"
+				},
+				{
+					"code": "CS",
+					"key": "CS",
+					"value": "CS",
+					"displayText": "Coworking Space"
+				}
+			]
 		},
 		"UI0124": {
 			"criteria": {
@@ -2786,8 +2826,8 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "Your e-mail Address",
-			"placeholder": "Your e-mail Address",
+			"label": "Primary E-mail",
+			"placeholder": "",
 			"path": "$.prospect.organizationInfo.contactDetails.primaryEmail",
 			"name": "prospect.organizationInfo.contactDetails.primaryEmail",
 			"required": true,
@@ -2855,9 +2895,35 @@
 			"path": "$.prospect.organizationInfo.contactDetails.primaryPhoneCountryCode",
 			"name": "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode",
 			"required": false,
-			"datalistId": null,
 			"maxlength": "60",
-			"pattern": "^[0-9]*$"
+			"pattern": "^[0-9]*$",
+			"datalistId": "CountryCode",
+			"datalist": [
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "+791"
+				},
+				{
+					"code": "EUR",
+					"key": "EUR",
+					"value": "EUR",
+					"displayText": "+992"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "+380"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "+391"
+				}
+			]
 		},
 		"UI0131": {
 			"criteria": {
@@ -2946,7 +3012,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Secondary Phone Nomber",
 			"placeholder": "",
 			"path": "$.prospect.organizationInfo.contactDetails.secondaryPhoneNo",
 			"name": "prospect.organizationInfo.contactDetails.secondaryPhoneNo",
@@ -3047,9 +3113,35 @@
 			"path": "$.prospect.organizationInfo.contactDetails.secondaryMobileCountryCode",
 			"name": "prospect.organizationInfo.contactDetails.secondaryMobileCountryCode",
 			"required": false,
-			"datalistId": null,
 			"maxlength": "60",
-			"pattern": "^[0-9]*$"
+			"pattern": "^[0-9]*$",
+			"datalistId": "CountryCode",
+			"datalist": [
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "+791"
+				},
+				{
+					"code": "EUR",
+					"key": "EUR",
+					"value": "EUR",
+					"displayText": "+992"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "+380"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "+391"
+				}
+			]
 		},
 		"UI0137": {
 			"criteria": {
@@ -3604,7 +3696,33 @@
 			"path": "$.prospect.orgKYCDetails.topCustomers[*].country",
 			"name": "prospect.orgKYCDetails.topCustomers[*].country",
 			"required": false,
-			"datalistId": null
+			"datalistId": "CountryList",
+			"datalist": [
+				{
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "Emirate"
+				},
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "United States"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "Ukraine"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "Great Britain"
+				}
+			]
 		},
 		"UI0191": {
 			"criteria": {
@@ -3730,7 +3848,33 @@
 			"path": "$.prospect.orgKYCDetails.topSuppliers[*].country",
 			"name": "prospect.orgKYCDetails.topSuppliers[*].country",
 			"required": false,
-			"datalistId": null
+			"datalistId": "CountryList",
+			"datalist": [
+				{
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "Emirate"
+				},
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "United States"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "Ukraine"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "Great Britain"
+				}
+			]
 		},
 		"UI0196": {
 			"criteria": {
@@ -3790,7 +3934,33 @@
 			"path": "$.prospect.orgKYCDetails.topOriginGoodsCountries[*]",
 			"name": "prospect.orgKYCDetails.topOriginGoodsCountries[*]",
 			"required": false,
-			"datalistId": null
+			"datalistId": "CountryList",
+			"datalist": [
+				{
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "Emirate"
+				},
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "United States"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "Ukraine"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "Great Britain"
+				}
+			]
 		},
 		"UI0199": {
 			"criteria": {
@@ -4439,7 +4609,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Bank Name",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails[*].bankName",
 			"name": "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails[*].bankName",
@@ -4566,8 +4736,8 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "company Name",
-			"placeholder": "company Name",
+			"label": "Company Name",
+			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.entitiesInUAE[*].companyName",
 			"name": "prospect.orgKYCDetails.entitiesInUAE[*].companyName",
 			"required": false,
@@ -4598,12 +4768,20 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Emirate",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.entitiesInUAE[*].emirate",
 			"name": "prospect.orgKYCDetails.entitiesInUAE[*].emirate",
 			"required": false,
-			"datalistId": null
+			"datalistId": "EmirateList",
+			"datalist": [
+				{
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "Emirate"
+				}
+			]
 		},
 		"UI0228": {
 			"criteria": {
@@ -4628,7 +4806,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Trade License Number",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.entitiesInUAE[*].tradeLicenseNo",
 			"name": "prospect.orgKYCDetails.entitiesInUAE[*].tradeLicenseNo",
@@ -4755,7 +4933,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Company Name",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.entitiesOutsideUAE[*].companyName",
 			"name": "prospect.orgKYCDetails.entitiesOutsideUAE[*].companyName",
@@ -4787,12 +4965,32 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Country",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.entitiesOutsideUAE[*].country",
 			"name": "prospect.orgKYCDetails.entitiesOutsideUAE[*].country",
 			"required": false,
-			"datalistId": null
+			"datalistId": "CountryExceptEmirateList",
+			"datalist": [
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "United States"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "Ukraine"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "Great Britain"
+				}
+			]
 		},
 		"UI0235": {
 			"criteria": {
@@ -9522,7 +9720,7 @@
 			"contactDetails": {
 				"primaryMobileNo": "",
 				"primaryMobCountryCode": "",
-				"primaryEmail": "user@example.com",
+				"primaryEmail": "",
 				"primaryPhoneNo": "",
 				"primaryPhoneCountryCode": "",
 				"fax": "",
@@ -9531,7 +9729,7 @@
 				"secondaryPhoneCountryCode": "",
 				"secondaryMobileNo": "",
 				"secondaryMobileCountryCode": "",
-				"secondaryEmail": "user@example.com",
+				"secondaryEmail": "",
 				"website": ""
 			},
 			"contactDetailsForTxnReconfirming": [

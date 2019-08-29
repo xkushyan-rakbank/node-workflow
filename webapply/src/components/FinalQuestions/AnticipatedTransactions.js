@@ -6,6 +6,8 @@ import { withStyles } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
 
 const style = {
   title: {
@@ -31,6 +33,9 @@ const style = {
     display: "flex",
     justifyContent: "center",
     margin: "20px 0 0"
+  },
+  disabledInput: {
+    backgroundColor: "rgba(242, 242, 242, 0.5)"
   }
 };
 
@@ -84,8 +89,15 @@ class AnticipatedTransactions extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item sm={12}>
-            {/* not correct should be calculated with local state??? */}
-            {/*<TextInput id="???" InputProps={this.commonInputProps} />*/}
+            <FormControl className="formControl">
+              <TextField
+                className={this.props.classes.disabledInput}
+                variant="outlined"
+                disabled
+                InputProps={this.commonInputProps}
+                value="12300 in Total Monthly Credits"
+              />
+            </FormControl>
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput id="UI0209" InputProps={this.commonInputProps} />

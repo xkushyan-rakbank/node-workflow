@@ -14,7 +14,8 @@ const style = {
     border: "none",
     backgroundColor: "#ffffff",
     cursor: "pointer",
-    padding: "0"
+    padding: "0",
+    outline: "none"
   },
   text: {
     fontSize: "14px",
