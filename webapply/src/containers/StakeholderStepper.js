@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { push } from "connected-react-router";
-import { connect } from "react-redux";
+import React from "react";
 import { withStyles } from "@material-ui/core";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import { stakeHoldersSteps } from "../constants";
+import SuccessFilledStakeholder from "../components/StepForms/SuccessFilledStakeholder";
 
 const styles = {
   title: {
@@ -18,48 +17,51 @@ const styles = {
   }
 };
 
-const StakeholderStepper = props => {
-  const { classes } = props;
-  const [step, setStep] = useState(4);
-  const handleContinue = () => {
-    if (step < stakeHoldersSteps.length) {
-      setStep(step + 1);
+class StakeholderStepper extends React.Component {
+  state = {
+    isFinalScreenShown: false,
+    step: 1
+  };
+
+  handleContinue = () => {
+    if (this.state.step < stakeHoldersSteps.length) {
+      this.setState(state => ({ step: state.step + 1 }));
     } else {
-      //todo remove after finished implementation
-      props.go({
-        pathname: "/FinalQuestions"
-      });
+      this.setState({ isFinalScreenShown: true });
     }
   };
 
-  return (
-    <CompanyStakeholderCard
-      content={<div className={classes.title}>New Stakeholder</div>}
-    >
-      <div className={classes.formContent}>
-        {stakeHoldersSteps.map(item => (
-          <StepComponent
-            key={item.step}
-            step={item.step}
-            title={item.title}
-            active={step === item.step}
-            filled={step > item.step}
-            clickHandler={() => setStep(item.step)}
-            handleContinue={handleContinue}
-          />
-        ))}
-      </div>
-    </CompanyStakeholderCard>
-  );
-};
+  render() {
+    const { classes } = this.props;
+    const { step, isFinalScreenShown } = this.state;
 
-const mapDispatchToProps = dispatch => ({
-  go: path => dispatch(push(path))
-});
+    if (isFinalScreenShown) {
+      return <SuccessFilledStakeholder name="Chema Pastrana" />;
+    }
 
-export default withStyles(styles)(
-  connect(
-    null,
-    mapDispatchToProps
-  )(StakeholderStepper)
-);
+    return (
+      <CompanyStakeholderCard
+        content={<div className={classes.title}>New Stakeholder</div>}
+      >
+        <div className={classes.formContent}>
+          {stakeHoldersSteps.map(item => {
+            const setStep = () => this.setState({ step: item.step });
+            return (
+              <StepComponent
+                key={item.step}
+                step={item.step}
+                title={item.title}
+                active={step === item.step}
+                filled={step > item.step}
+                clickHandler={setStep}
+                handleContinue={this.handleContinue}
+              />
+            );
+          })}
+        </div>
+      </CompanyStakeholderCard>
+    );
+  }
+}
+
+export default withStyles(styles)(StakeholderStepper);
