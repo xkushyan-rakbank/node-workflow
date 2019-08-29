@@ -41,7 +41,7 @@ class FormNavigation extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { location } = this.props;
-    console.log(location);
+
     if (prevProps.location.key !== location.key) {
       if (this.state.step < formStepper.length - 2) {
         this.setState(prevState => ({
@@ -54,7 +54,6 @@ class FormNavigation extends React.Component {
   render() {
     const { history, location, classes } = this.props;
     const { step } = this.state;
-    console.log(step);
     return (
       <div className={classes.formNav}>
         <ul>
@@ -62,7 +61,10 @@ class FormNavigation extends React.Component {
             <FormNavigationStep
               key={item.step}
               title={item.title}
-              activeStep={step === item.step}
+              activeStep={
+                location.pathname === item.path ||
+                location.pathname === item.relatedPath
+              }
               filled={step > item.step}
             />
           ))}

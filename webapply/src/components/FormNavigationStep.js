@@ -41,16 +41,16 @@ const FormNavigationLink = props => {
     <li className={activeClass}>
       {title}
 
-      {activeStep && (
+      {activeStep ? (
         <span className="circle">
           <ArrowBackIcon className={classes.icon} />
         </span>
-      )}
-
-      {filled && (
+      ) : filled ? (
         <span className="circle">
           <DoneIcon className={classes.icon} />
         </span>
+      ) : (
+        ""
       )}
     </li>
   );
