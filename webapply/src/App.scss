@@ -49,31 +49,6 @@ body,
   }
 }
 
-.selectCombined {
-  flex-direction: row !important;
-  align-items: baseline;
-  margin: 12px 0 24px !important;
-  > div {
-    margin: 0 !important;
-    &:first-child {
-      fieldset {
-        border-right: 0;
-        border-top-right-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-        border-top-left-radius: 8px !important;
-        border-bottom-left-radius: 8px !important;
-      }
-    }
-    &:last-child {
-      flex: 1;
-      fieldset {
-        border-top-left-radius: 0 !important;
-        border-bottom-left-radius: 0 !important;
-      }
-    }
-  }
-}
-
 form .MuiGrid-root {
   > .MuiGrid-item {
     padding-top: 0;

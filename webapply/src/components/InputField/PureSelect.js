@@ -42,6 +42,15 @@ const styles = {
       position: "absolute",
       right: "20px"
     }
+  },
+  selectFieldCombined: {
+    width: "90px !important",
+    "& fieldset": {
+      borderColor: "rgba(194, 194, 194, 0.56)"
+    },
+    "& svg": {
+      right: "10px"
+    }
   }
 };
 
@@ -65,10 +74,20 @@ class PureSelect extends React.Component {
   };
 
   render() {
-    const { config, value, id, classes } = this.props;
+    const { config, value, id, classes, combinedSelect } = this.props;
+
+    const className = combinedSelect
+      ? classes.selectFieldCombined
+      : classes.selectFieldBasic;
 
     return (
-      <FormControl className="formControl" variant="outlined">
+      <FormControl
+        className={cx(
+          "formControl",
+          combinedSelect ? classes.selectFieldCombined : ""
+        )}
+        variant="outlined"
+      >
         <InputLabel ref={this.inputLabel} htmlFor={id}>
           {config.label}
         </InputLabel>
@@ -82,7 +101,7 @@ class PureSelect extends React.Component {
             />
           }
           IconComponent={KeyboardArrowDownIcon}
-          className={cx(classes.selectField, classes.selectFieldBasic)}
+          className={cx(classes.selectField, className)}
           onChange={this.updateField}
         >
           <MenuItem value=""></MenuItem>
