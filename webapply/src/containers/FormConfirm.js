@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Input from "./../components/InputField/Input";
+import PureSelect from "./../components/InputField/PureSelect";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import routes from "./../routes"; // remove it in future
 import { withStyles } from "@material-ui/core/styles";
@@ -44,7 +45,7 @@ const Confirm = ({ classes }) => {
         <Grid container xs={12} direction="row" justify="flex-start">
           {Array.from(Array(6).keys()).map(index => (
             <Grid key={index} className={classes.squareInput}>
-              <Input type="text" name={`code-${index}`} />
+              <Input type="text" name={`code-${index}`} type="number" />
             </Grid>
           ))}
         </Grid>

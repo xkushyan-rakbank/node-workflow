@@ -137,3 +137,24 @@ a {
     text-decoration: none;
   }
 }
+
+.MuiSelect-select.Mui-disabled {
+  background-color: #f9f9f9;
+}
+
+.MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(194, 194, 194, 0.56) !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.linkContainer {
+  text-align: right;
+  a {
+    display: inline-block;
+  }
+}

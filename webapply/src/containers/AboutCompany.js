@@ -44,25 +44,21 @@ const AboutCompany = props => {
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0161" />
+            <PureSelect id="UI0152" />
           </Grid>
           <Grid item md={6} sm={12}>
-            <Input
-              type="text"
-              name="numberOfEmployees"
-              placeholder="Number of Employees"
-              label="Number of employees"
-            />
+            <PureSelect id="UI0161" />
           </Grid>
         </Grid>
-        <Input
-          required
-          type="text"
-          name="companyName"
-          placeholder="Company name"
-          label="Company name"
-          infoTitle="This is the same as your TRN number of UAE"
-        />
+
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <TextInput id="UI0092" />
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <TextInput id="UI0081" />
+          </Grid>
+        </Grid>
 
         <SectionTitle
           title="Industry"
@@ -71,10 +67,10 @@ const AboutCompany = props => {
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <Select name="industry" label="Industry" options={codes} />
+            <PureSelect id="UI0201" indexes="1" />
           </Grid>
           <Grid item md={6} sm={12}>
-            <Select name="subCategory" label="Sub-category" options={codes} />
+            <PureSelect id="UI0204" indexes="1" disabled />
           </Grid>
         </Grid>
 
@@ -82,38 +78,34 @@ const AboutCompany = props => {
           title="License Information"
           className={cx(classes.sectionTitleIndent, classes.topIndent)}
         />
-        <Input
-          required
-          type="text"
-          name="licenseNumber"
-          placeholder="License Number"
-          label="License"
-        />
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <Select
-              name="licenseIssuingAuthority"
-              label="License issuing authority"
-              options={codes}
-            />
+            <TextInput id="UI0089" />
           </Grid>
           <Grid item md={6} sm={12}>
             <DatePicker id="UI0090" />
           </Grid>
         </Grid>
+
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <PureSelect id="UI0087" />
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <PureSelect id="UI0076" />
+          </Grid>
+        </Grid>
+
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
             <DatePicker id="UI0080" />
           </Grid>
           <Grid item md={6} sm={12}>
-            <Select
-              name="countryOfIncorporation"
-              label="Country of incorporation"
-              options={codes}
-            />
+            <TextInput id="UI0185" />
           </Grid>
         </Grid>
+
         <Link to={routes.stakeholdersInfo}>
           <SubmitButton />
         </Link>

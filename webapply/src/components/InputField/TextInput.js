@@ -63,7 +63,6 @@ class Input extends React.Component {
             error={!isEmpty(fieldErrors)}
             InputProps={InputProps}
           />
-          {!!config.title && <InfoTitle title={config.title} />}
 
           {!isEmpty(fieldErrors) && (
             <ErrorMessage
@@ -71,6 +70,8 @@ class Input extends React.Component {
               multiLineError={fieldErrors.multiLineError}
             />
           )}
+
+          {!!config.title && <InfoTitle title={config.title} />}
         </FormControl>
       );
     }

@@ -61,6 +61,10 @@ class PureSelect extends React.Component {
 
   inputLabel = React.createRef();
 
+  componentDidMount() {
+    this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!prevProps.config.name && this.props.config.name) {
       this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
@@ -74,7 +78,8 @@ class PureSelect extends React.Component {
   };
 
   render() {
-    const { config, value, id, classes, combinedSelect } = this.props;
+    console.log("run");
+    const { config, value, id, classes, combinedSelect, disabled } = this.props;
 
     const className = combinedSelect
       ? classes.selectFieldCombined
@@ -93,6 +98,7 @@ class PureSelect extends React.Component {
         </InputLabel>
         <Select
           value={value}
+          disabled={disabled}
           input={
             <OutlinedInput
               labelWidth={this.state.labelWidth}
@@ -104,7 +110,6 @@ class PureSelect extends React.Component {
           className={cx(classes.selectField, className)}
           onChange={this.updateField}
         >
-          <MenuItem value=""></MenuItem>
           {config.datalist &&
             config.datalist.map(option => (
               <MenuItem key={option.value} value={option.value}>

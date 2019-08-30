@@ -7,7 +7,7 @@ import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import CombinedSelect from "../components/InputField/CombinedSelect";
 import PureSelect from "../components/InputField/PureSelect";
-import CustomCheckbox from "../components/InputField/Checkbox";
+import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import routes from "./../routes"; // remove it in future
 import { codes } from "./../constants";
@@ -46,13 +46,9 @@ const BasicsForm = props => {
 
         <CombinedSelect selectId="UI0003" inputId="UI0004" />
 
-        <PureSelect id="UI0161" />
-        <CustomCheckbox
-          name="apply"
-          label="I am applying on behalf of someone’s company "
-        />
+        <RefactoredCheckbox id="UI0004_1" />
 
-        <ErrorBoundary className={classes.reCaptchaContainer}>
+        {/* <ErrorBoundary className={classes.reCaptchaContainer}>
           <ReCaptcha
             onVerify={token =>
               console.log("ReCaptcha onVerify callback:", token)
@@ -62,11 +58,12 @@ const BasicsForm = props => {
             }
             onError={() => console.log("ReCaptcha onError callback")}
           />
-        </ErrorBoundary>
-
-        <Link to={routes.verifyOtp}>
-          <SubmitButton />
-        </Link>
+        </ErrorBoundary> */}
+        <div className="linkContainer">
+          <Link to={routes.verifyOtp}>
+            <SubmitButton />
+          </Link>
+        </div>
       </form>
     </div>
   );

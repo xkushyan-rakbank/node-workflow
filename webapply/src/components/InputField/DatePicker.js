@@ -35,39 +35,45 @@ const styles = {
   }
 };
 
-const DatePicker = props => {
-  const updateField = value => {
-    const { name } = props.config;
-    props.updateField({ value, name });
+class DatePicker extends React.Component {
+  updateField = value => {
+    const { name } = this.props.config;
+    this.props.updateField({ value, name });
   };
+  render() {
+    const { value, classes, config } = this.props;
 
-  const { value, classes, config } = props;
+    return (
+      <FormControl className="formControl">
+        {config.label ? (
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              autoOk
+              name={config.name}
+              label={config.label || ""}
+              disableToolbar
+              margin="normal"
+              variant="inline"
+              format="MM/dd/yyyy"
+              inputVariant="outlined"
+              placeholder="__/__/____"
+              className={classes.datePicker}
+              value={value}
+              onChange={this.updateField}
+              KeyboardButtonProps={{
+                "aria-label": "change date"
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        ) : (
+          ""
+        )}
 
-  return (
-    <FormControl className="formControl">
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          autoOk
-          name={config.name}
-          label={config.label}
-          disableToolbar
-          margin="normal"
-          variant="inline"
-          format="MM/dd/yyyy"
-          inputVariant="outlined"
-          placeholder="__/__/____"
-          className={classes.datePicker}
-          value={value}
-          onChange={updateField}
-          KeyboardButtonProps={{
-            "aria-label": "change date"
-          }}
-        />
-      </MuiPickersUtilsProvider>
-      {!!config.title && <InfoTitle title={config.title} />}
-    </FormControl>
-  );
-};
+        {!!config.title && <InfoTitle title={config.title} />}
+      </FormControl>
+    );
+  }
+}
 
 const mapStateToProps = (state, { id }) => {
   const config = state.appConfig.uiConfig[id] || {};
