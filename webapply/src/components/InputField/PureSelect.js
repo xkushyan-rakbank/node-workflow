@@ -33,7 +33,8 @@ const styles = {
       right: " 56px"
     },
     "& fieldset": {
-      borderColor: "rgba(194, 194, 194, 0.56)",
+      borderRadius: "8px !important",
+      border: "solid 1px rgba(194, 194, 194, 0.56)",
       "& + div": {
         paddingRight: "56px"
       }

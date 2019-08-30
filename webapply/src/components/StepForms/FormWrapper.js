@@ -10,7 +10,7 @@ const styles = {
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    margin: "8px 0 40px"
+    margin: "25px 0 40px"
   }
 };
 

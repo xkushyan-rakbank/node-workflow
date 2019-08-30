@@ -24,6 +24,10 @@ const styles = {
       right: " 56px",
       zIndex: " -1"
     },
+    "& fieldset": {
+      borderRadius: "8px !important",
+      border: "solid 1px rgba(194, 194, 194, 0.56)"
+    },
     "& svg": {
       fill: "#16216a",
       fontSize: "16px"

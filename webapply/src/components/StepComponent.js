@@ -59,7 +59,13 @@ const StepComponent = props => {
   const Form = stakeHoldersSteps[step - 1].component;
   const renderTitle = () => {
     if (active) {
-      return <SectionTitle title={props.title} className={classes.title} />;
+      return (
+        <SectionTitle
+          title={props.title}
+          subTitle={props.subTitle}
+          className={classes.title}
+        />
+      );
     }
     return filled ? (
       <div className={classes.filledTitle}>

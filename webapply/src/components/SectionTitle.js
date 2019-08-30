@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
+import InfoTitle from "./InfoTitle";
 
 const styles = {
   wrapper: {
@@ -20,12 +21,15 @@ const styles = {
 };
 
 const SectionTitle = props => {
-  const { classes, title } = props;
+  const { classes, title, subTitle } = props;
   return (
-    <div className={cx(classes.wrapper, props.className)}>
-      <div className={classes.divider} />
-      {title}
-    </div>
+    <>
+      <div className={cx(classes.wrapper, props.className)}>
+        <div className={classes.divider} />
+        {title}
+      </div>
+      {!!subTitle && <InfoTitle title={subTitle} />}
+    </>
   );
 };
 

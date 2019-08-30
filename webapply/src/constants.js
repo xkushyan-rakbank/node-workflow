@@ -10,6 +10,7 @@ export const stakeHoldersSteps = [
   {
     step: 1,
     title: "Personal Information",
+    infoTitle: "This section should be the same as in the person's passport",
     component: PersonalInformation
   },
   {

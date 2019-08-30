@@ -51,6 +51,7 @@ class StakeholderStepper extends React.Component {
                 key={item.step}
                 step={item.step}
                 title={item.title}
+                subTitle={item.infoTitle}
                 active={step === item.step}
                 filled={step > item.step}
                 clickHandler={setStep}
