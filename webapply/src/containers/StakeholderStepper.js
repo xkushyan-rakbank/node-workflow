@@ -4,6 +4,7 @@ import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import { stakeHoldersSteps } from "../constants";
 import SuccessFilledStakeholder from "../components/StepForms/SuccessFilledStakeholder";
+import StatusLoader from "../components/StatusLoader";
 
 const styles = {
   title: {
@@ -41,7 +42,12 @@ class StakeholderStepper extends React.Component {
 
     return (
       <CompanyStakeholderCard
-        content={<div className={classes.title}>New Stakeholder</div>}
+        content={
+          <>
+            <div className={classes.title}>New Stakeholder</div>
+            <StatusLoader />
+          </>
+        }
       >
         <div className={classes.formContent}>
           {stakeHoldersSteps.map(item => {
