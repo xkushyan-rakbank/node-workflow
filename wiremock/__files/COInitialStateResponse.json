@@ -6916,12 +6916,38 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Source of wealth",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].kycDetails.sourceOfWealth.wealthType",
 			"name": "prospect.signatoryInfo[*].kycDetails.sourceOfWealth.wealthType",
 			"required": false,
-			"datalistId": null
+			"datalistId": "WealthType",
+			"datalist": [
+				{
+					"code": "M",
+					"key": "M",
+					"value": "M",
+					"displayText": "Money"
+				},
+				{
+					"code": "RE",
+					"key": "RE",
+					"value": "RE",
+					"displayText": "Real Estate"
+				},
+				{
+					"code": "ORG",
+					"key": "ORG",
+					"value": "ORG",
+					"displayText": "Organizations"
+				},
+				{
+					"code": "O",
+					"key": "O",
+					"value": "O",
+					"displayText": "Other"
+				}
+			]
 		},
 		"UI0321": {
 			"criteria": {
@@ -6946,7 +6972,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Specify other sources of wealth",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].kycDetails.sourceOfWealth.others",
 			"name": "prospect.signatoryInfo[*].kycDetails.sourceOfWealth.others",
@@ -7108,7 +7134,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Phone Number",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].contactDetails.primaryPhoneNo",
 			"name": "prospect.signatoryInfo[*].contactDetails.primaryPhoneNo",
@@ -7145,9 +7171,35 @@
 			"path": "$.prospect.signatoryInfo[*].contactDetails.primaryPhoneCountryCode",
 			"name": "prospect.signatoryInfo[*].contactDetails.primaryPhoneCountryCode",
 			"required": false,
-			"datalistId": null,
 			"maxlength": "60",
-			"pattern": "^[0-9]*$"
+			"pattern": "^[0-9]*$",
+			"datalistId": "CountryCode",
+			"datalist": [
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "+791"
+				},
+				{
+					"code": "EUR",
+					"key": "EUR",
+					"value": "EUR",
+					"displayText": "+992"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "+380"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "+391"
+				}
+			]
 		},
 		"UI0328": {
 			"criteria": {
@@ -7462,12 +7514,26 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Employment Type",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].employmentDetails.employmentType",
 			"name": "prospect.signatoryInfo[*].employmentDetails.employmentType",
 			"required": false,
-			"datalistId": null
+			"datalistId": "EmploymentType",
+            "datalist": [
+				{
+					"code": "E-1",
+					"key": "E-1",
+					"value": "E-1",
+					"displayText": "Employment Type 1"
+				},
+				{
+					"code": "E-2",
+					"key": "E-2",
+					"value": "E-2",
+					"displayText": "Employment Type 2"
+				}
+			]
 		},
 		"UI0342": {
 			"criteria": {
@@ -7524,7 +7590,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Designation",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].employmentDetails.designation",
 			"name": "prospect.signatoryInfo[*].employmentDetails.designation",
@@ -7620,7 +7686,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Employer Name",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].employmentDetails.employerName",
 			"name": "prospect.signatoryInfo[*].employmentDetails.employerName",
@@ -7652,7 +7718,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Occupation",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].employmentDetails.occupation",
 			"name": "prospect.signatoryInfo[*].employmentDetails.occupation",
@@ -7684,7 +7750,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Years of experience",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].employmentDetails.totalExperienceYrs",
 			"name": "prospect.signatoryInfo[*].employmentDetails.totalExperienceYrs",

@@ -42,7 +42,7 @@ const style = {
   }
 };
 
-class ContactInformation extends Component {
+class CompanyContactInformationForm extends Component {
   static defaultProps = {
     handleContinue: () => {}
   };
@@ -157,4 +157,4 @@ class ContactInformation extends Component {
   }
 }
 
-export default withStyles(style)(ContactInformation);
+export default withStyles(style)(CompanyContactInformationForm);

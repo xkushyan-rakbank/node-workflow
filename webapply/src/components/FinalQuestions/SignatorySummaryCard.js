@@ -2,10 +2,17 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import CompanyStakeholderCard from "../CompanyStakeholderCard";
 import ContinueButton from "../Buttons/ContinueButton";
-import CollapsedSection from "./CollapsedSection";
-import PersonalInformationForm from "./PersonalInformationForm";
+import CollapsedSection from "../CollapsedSection";
+import SignatoryPersonalInformationForm from "./SignatoryPersonalInformationForm";
+import SignatoryEmploymentDetailsForm from "./SignatoryEmploymentDetailsForm";
+import SignatoryWealthForm from "./SignatoryWealthForm";
+import SignatoryContactInformationForm from "./SignatoryContactInformationForm";
+import LinkButton from "../Buttons/LinkButton";
 
 const style = {
+  card: {
+    marginBottom: "24px"
+  },
   contentBox: {
     display: "flex",
     flexGrow: "1",
@@ -39,16 +46,19 @@ const style = {
 
 class SignatorySummaryCard extends Component {
   static defaultProps = {
-    signatory: {}
+    signatory: {},
+    index: 0
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      isExpanded: true,
+      isExpanded: false,
+      isFilled: true,
+      isDisabled: true,
       personalInformation: {
-        isExpanded: false,
+        isExpanded: true,
         isFilled: false
       },
       employmentDetails: {
@@ -69,22 +79,22 @@ class SignatorySummaryCard extends Component {
       {
         title: "Personal Information",
         key: "personalInformation",
-        component: PersonalInformationForm
+        component: SignatoryPersonalInformationForm
       },
       {
         title: "Employment details",
         key: "employmentDetails",
-        component: null
+        component: SignatoryEmploymentDetailsForm
       },
       {
         title: "Wealth",
         key: "wealth",
-        component: null
+        component: SignatoryWealthForm
       },
       {
         title: "Preferred contact information",
         key: "contactInformation",
-        component: null
+        component: SignatoryContactInformationForm
       }
     ];
 
@@ -116,8 +126,7 @@ class SignatorySummaryCard extends Component {
           isExpanded: false,
           isFilled: true
         },
-        isExpanded: false,
-        isFilled: true
+        isExpanded: false
       });
     }
   };
@@ -140,6 +149,31 @@ class SignatorySummaryCard extends Component {
     });
   };
 
+  renderControls() {
+    if (this.state.isExpanded) {
+      return null;
+    }
+
+    return this.state.isFilled ? (
+      <LinkButton
+        clickHandler={() =>
+          this.setState({
+            isExpanded: true,
+            isFilled: false,
+            isDisabled: false
+          })
+        }
+      />
+    ) : (
+      <ContinueButton
+        handleClick={() =>
+          this.setState({ isExpanded: true, isFilled: true, isDisabled: true })
+        }
+        disabled={this.state.isDisabled}
+      />
+    );
+  }
+
   renderCardContent() {
     return (
       <div className={this.props.classes.contentBox}>
@@ -148,14 +182,16 @@ class SignatorySummaryCard extends Component {
             {this.props.signatory.firstName} {this.props.signatory.lastName}
           </div>
           <div className={this.props.classes.signatoryField}>
-            Power of attorney
+            {this.props.signatory.signatoryRights}
           </div>
           <div className={this.props.classes.shareholdingField}>
-            Shareholding 51%
+            {this.props.signatory.shareholding > 0
+              ? `Shareholding ${this.props.signatory.shareholding}%`
+              : "No shareholding"}
           </div>
         </div>
         <div className={this.props.classes.controlsBox}>
-          {!this.state.isExpanded && <ContinueButton disabled />}
+          {this.renderControls()}
         </div>
       </div>
     );
@@ -164,12 +200,13 @@ class SignatorySummaryCard extends Component {
   render() {
     return (
       <CompanyStakeholderCard
+        className={this.props.classes.card}
         firstName={this.props.signatory.firstName}
         lastName={this.props.signatory.lastName}
         content={this.renderCardContent()}
       >
         {this.state.isExpanded &&
-          this.sectionsConfig.map(item => {
+          this.sectionsConfig.map((item, index) => {
             const Component = item.component;
             return (
               <CollapsedSection
@@ -179,7 +216,12 @@ class SignatorySummaryCard extends Component {
                 expanded={this.state[item.key].isExpanded}
                 filled={this.state[[item.key]].isFilled}
               >
-                {Component && <Component handleContinue={item.handler} />}
+                {Component && (
+                  <Component
+                    handleContinue={item.handler}
+                    index={this.props.index}
+                  />
+                )}
               </CollapsedSection>
             );
           })}
