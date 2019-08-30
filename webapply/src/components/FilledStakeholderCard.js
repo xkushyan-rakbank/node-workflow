@@ -8,8 +8,7 @@ const style = {
     fontSize: "18px",
     fontWeight: 600,
     lineHeight: 1.33,
-    color: "#373737",
-    marginLeft: "20px"
+    color: "#373737"
   },
   signatoryField: {
     fontSize: "14px",
@@ -20,8 +19,7 @@ const style = {
     opacity: 0.5,
     fontSize: "12px",
     lineHeight: 1.33,
-    color: "#263d4c",
-    marginLeft: "20px"
+    color: "#263d4c"
   },
   userInfo: {
     display: "flex",
