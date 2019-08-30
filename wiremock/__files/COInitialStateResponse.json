@@ -5679,10 +5679,24 @@
 			"path": "$.prospect.signatoryInfo[*].maritalStatus",
 			"name": "prospect.signatoryInfo[*].maritalStatus",
 			"required": false,
-			"datalistId": null,
 			"help": "",
 			"maxlength": "50",
-			"pattern": "^[a-zA-Z]*$"
+			"pattern": "^[a-zA-Z]*$",
+			"datalistId": "MaritalList",
+			"datalist": [
+				{
+					"code": "M",
+					"key": "M",
+					"value": "M",
+					"displayText": "Married"
+				},
+				{
+					"code": "S",
+					"key": "S",
+					"value": "S",
+					"displayText": "Single"
+				}
+			]
 		},
 		"UI0267": {
 			"criteria": {
