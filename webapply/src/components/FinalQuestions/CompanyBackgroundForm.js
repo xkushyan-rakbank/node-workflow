@@ -40,6 +40,32 @@ class CompanyBackgroundForm extends Component {
     handleContinue: () => {}
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      customerCount: 1,
+      supplierCount: 1,
+      countryOfOriginCount: 1
+    };
+  }
+
+  updateCountedStateValue = (key, increment = 1) => {
+    this.setState({ [key]: this.state[key] + increment });
+  };
+
+  handleAddCustomerClick = () => {
+    this.updateCountedStateValue("customerCount");
+  };
+
+  handleAddSupplierClick = () => {
+    this.updateCountedStateValue("supplierCount");
+  };
+
+  handleAddCountryOfOriginClick = () => {
+    this.updateCountedStateValue("countryOfOriginCount");
+  };
+
   render() {
     return (
       <form>
@@ -55,15 +81,23 @@ class CompanyBackgroundForm extends Component {
           spacing={3}
           className={this.props.classes.flexContainer}
         >
-          <Grid item md={6} sm={12}>
-            <TextInput id="UI0188" index="0" />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            {/*<PureSelect id="UI0189" index="0" />*/}
-            <TextInput id="UI0189" index="0" />
-          </Grid>
+          {Array.from(Array(this.state.customerCount).keys()).map(index => {
+            return (
+              <React.Fragment key={index}>
+                <Grid item md={6} sm={12}>
+                  <TextInput id="UI0188" index={index} />
+                </Grid>
+                <Grid item md={6} sm={12}>
+                  <PureSelect id="UI0189" index={index} />
+                </Grid>
+              </React.Fragment>
+            );
+          })}
         </Grid>
-        <AddButton title="Add another customer" />
+        <AddButton
+          onClick={this.handleAddCustomerClick}
+          title="Add another customer"
+        />
 
         <div className={this.props.classes.divider} />
 
@@ -74,15 +108,24 @@ class CompanyBackgroundForm extends Component {
           spacing={3}
           className={this.props.classes.flexContainer}
         >
-          <Grid item md={6} sm={12}>
-            <TextInput id="UI0193" index="0" />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            {/*<PureSelect id="UI0194" index="0" />*/}
-            <TextInput id="UI0194" index="0" />
-          </Grid>
+          {Array.from(Array(this.state.supplierCount).keys()).map(index => {
+            return (
+              <React.Fragment key={index}>
+                <Grid item md={6} sm={12}>
+                  <TextInput id="UI0193" index={index} />
+                </Grid>
+                <Grid item md={6} sm={12}>
+                  <PureSelect id="UI0194" index={index} />
+                </Grid>
+              </React.Fragment>
+            );
+          })}
         </Grid>
-        <AddButton title="Add another supplier" />
+        <AddButton
+          onClick={this.handleAddSupplierClick}
+          title="Add another supplier"
+        />
+
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>Main origin of goods</h4>
@@ -93,11 +136,17 @@ class CompanyBackgroundForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            {/*<PureSelect id="UI0197" index="0" />*/}
-            <TextInput id="UI0197" index="0" />
+            {Array.from(Array(this.state.countryOfOriginCount).keys()).map(
+              index => {
+                return <PureSelect key={index} id="UI0197" index={index} />;
+              }
+            )}
           </Grid>
         </Grid>
-        <AddButton title="Add another country of origin" />
+        <AddButton
+          onClick={this.handleAddCountryOfOriginClick}
+          title="Add another country of origin"
+        />
 
         <div className={this.props.classes.controlsWrapper}>
           <ContinueButton handleClick={this.props.handleContinue} />

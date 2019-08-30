@@ -10,7 +10,6 @@ import PureSelect from "../components/InputField/PureSelect";
 import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import routes from "./../routes"; // remove it in future
-import { codes } from "./../constants";
 
 const styles = {
   baseForm: {

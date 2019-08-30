@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import SectionTitle from "../components/SectionTitle";
 import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard";
+import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryCard";
 
 const style = {
   sectionContainer: {
@@ -14,6 +15,18 @@ const style = {
 };
 
 class FinalQuestions extends React.Component {
+  static defaultProps = {
+    signatories: [
+      {
+        id: 343453542345,
+        firstName: "Christer",
+        lastName: "Petterson",
+        signatoryRights: true,
+        shareholding: 51
+      }
+    ]
+  };
+
   render() {
     return (
       <>
@@ -35,6 +48,9 @@ class FinalQuestions extends React.Component {
             title="Final questions about signatories"
             className={this.props.classes.title}
           />
+          {this.props.signatories.map(item => {
+            return <SignatorySummaryCard signatory={item} />;
+          })}
         </div>
       </>
     );

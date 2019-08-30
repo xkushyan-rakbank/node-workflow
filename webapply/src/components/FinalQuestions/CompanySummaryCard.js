@@ -86,40 +86,39 @@ class CompanySummaryCard extends Component {
       {
         title: "Company background",
         key: "companyBackground",
-        component: CompanyBackgroundForm,
-        handler: this.handleContinue
+        component: CompanyBackgroundForm
       },
       {
         title: "Anticipated transactions",
         key: "anticipatedTransactions",
-        component: AnticipatedTransactions,
-        handler: this.handleContinue
+        component: AnticipatedTransactions
       },
       {
         title: "Company network",
         key: "network",
-        component: CompanyNetwork,
-        handler: this.handleContinue
+        component: CompanyNetwork
       },
       {
         title: "Company contact information",
         key: "contactInformation",
-        component: ContactInformation,
-        handler: this.handleContinue
+        component: ContactInformation
       }
     ];
+
+    this.sectionsConfig.forEach(item => {
+      item.handler = this.handleContinue(item);
+      item.sectionHeadClickHandler = this.handleSectionHeadClick(item);
+    });
   }
 
-  handleContinue = () => {
-    const activeSectionKey = this.sectionsConfig.find(
-      item => this.state[item.key].isExpanded
-    );
-    const index = this.sectionsConfig.indexOf(activeSectionKey);
-    const nextSection = this.sectionsConfig[index + 1];
+  handleContinue = section => () => {
+    const nextSection = this.sectionsConfig[
+      this.sectionsConfig.indexOf(section) + 1
+    ];
 
     if (nextSection) {
       this.setState({
-        [activeSectionKey.key]: {
+        [section.key]: {
           isExpanded: false,
           isFilled: true
         },
@@ -130,7 +129,7 @@ class CompanySummaryCard extends Component {
       });
     } else {
       this.setState({
-        [activeSectionKey.key]: {
+        [section.key]: {
           isExpanded: false,
           isFilled: true
         },
@@ -138,6 +137,24 @@ class CompanySummaryCard extends Component {
         isFilled: true
       });
     }
+  };
+
+  handleSectionHeadClick = section => () => {
+    this.setState({
+      ...this.sectionsConfig
+        .map(({ key }) => key)
+        .reduce((acc, key) => {
+          acc[key] = {
+            isFilled: this.state[key].isFilled,
+            isExpanded: false
+          };
+          return acc;
+        }, {}),
+      [section.key]: {
+        isFilled: this.state[section.key].isFilled,
+        isExpanded: !this.state[section.key].isExpanded
+      }
+    });
   };
 
   render() {
@@ -172,23 +189,21 @@ class CompanySummaryCard extends Component {
               ))}
           </div>
         </header>
-        {this.state.isExpanded && (
-          <>
-            {this.sectionsConfig.map(item => {
-              const Component = item.component;
-              return (
-                <CollapsedSection
-                  key={item.key}
-                  title={item.title}
-                  expanded={this.state[item.key].isExpanded}
-                  filled={this.state[[item.key]].isFilled}
-                >
-                  {Component && <Component handleContinue={item.handler} />}
-                </CollapsedSection>
-              );
-            })}
-          </>
-        )}
+        {this.state.isExpanded &&
+          this.sectionsConfig.map(item => {
+            const Component = item.component;
+            return (
+              <CollapsedSection
+                key={item.key}
+                onClick={item.sectionHeadClickHandler}
+                title={item.title}
+                expanded={this.state[item.key].isExpanded}
+                filled={this.state[[item.key]].isFilled}
+              >
+                {Component && <Component handleContinue={item.handler} />}
+              </CollapsedSection>
+            );
+          })}
       </div>
     );
   }
