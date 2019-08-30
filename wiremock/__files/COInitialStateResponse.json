@@ -4913,7 +4913,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Emirate",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.entitiesInUAE[*].emirate",
 			"name": "prospect.orgKYCDetails.entitiesInUAE[*].emirate",
@@ -4951,7 +4951,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Trade License Number",
 			"placeholder": "",
 			"path": "$.prospect.orgKYCDetails.entitiesInUAE[*].tradeLicenseNo",
 			"name": "prospect.orgKYCDetails.entitiesInUAE[*].tradeLicenseNo",
@@ -7166,7 +7166,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "+791",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].contactDetails.primaryPhoneCountryCode",
 			"name": "prospect.signatoryInfo[*].contactDetails.primaryPhoneCountryCode",
