@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import SectionTitle from "../SectionTitle";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
+import { getInputValueById } from "../../store/selectors/appConfig";
 
 const style = {
   title: {
@@ -22,6 +24,10 @@ const style = {
     marginTop: "0",
     marginBottom: "0"
   },
+  divider: {
+    marginTop: "30px",
+    borderBottom: "solid 1px rgba(230, 230, 230, 0.5)"
+  },
   controlsWrapper: {
     display: "flex",
     justifyContent: "center",
@@ -29,29 +35,37 @@ const style = {
   }
 };
 
-class PersonalInformationForm extends Component {
+const OTHER_SOURCE_OF_WEALTH = "O";
+
+class SignatoryWealthForm extends Component {
   static defaultProps = {
     handleContinue: () => {},
     index: 0
   };
 
+  isOtherSourceOfWealthSelected() {
+    return this.props.soursOfWealth === OTHER_SOURCE_OF_WEALTH;
+  }
+
   render() {
     return (
       <form>
-        <SectionTitle
-          title="Personal Information"
-          className={this.props.classes.title}
-        />
+        <SectionTitle title="Wealth" className={this.props.classes.title} />
+
         <Grid
-          spacing={3}
           container
+          spacing={3}
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0263" index={this.props.index} />
+            <PureSelect id="UI0316" index={this.props.index} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0269" index={this.props.index} />
+            <TextInput
+              id="UI0321"
+              index={this.props.index}
+              disabled={!this.isOtherSourceOfWealthSelected()}
+            />
           </Grid>
         </Grid>
 
@@ -63,4 +77,8 @@ class PersonalInformationForm extends Component {
   }
 }
 
-export default withStyles(style)(PersonalInformationForm);
+const mapStateToProps = state => ({
+  soursOfWealth: getInputValueById(state, "UI0316")
+});
+
+export default withStyles(style)(connect(mapStateToProps)(SignatoryWealthForm));

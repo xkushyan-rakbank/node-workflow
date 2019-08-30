@@ -39,7 +39,7 @@ const style = {
   }
 };
 
-class AnticipatedTransactions extends Component {
+class CompanyAnticipatedTransactionsForm extends Component {
   static defaultProps = {
     handleContinue: () => {},
     companyCurrency: "AED"
@@ -134,4 +134,4 @@ class AnticipatedTransactions extends Component {
   }
 }
 
-export default withStyles(style)(AnticipatedTransactions);
+export default withStyles(style)(CompanyAnticipatedTransactionsForm);

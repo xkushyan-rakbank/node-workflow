@@ -19,10 +19,17 @@ class FinalQuestions extends React.Component {
     signatories: [
       {
         id: 343453542345,
-        firstName: "Christer",
-        lastName: "Petterson",
-        signatoryRights: true,
+        firstName: "Vartika",
+        lastName: "Gupta",
+        signatoryRights: "Power of attorney",
         shareholding: 51
+      },
+      {
+        id: 343453542346,
+        firstName: "Alberto",
+        lastName: "Diaz",
+        signatoryRights: "Board Resolution",
+        shareholding: 0
       }
     ]
   };
@@ -48,8 +55,14 @@ class FinalQuestions extends React.Component {
             title="Final questions about signatories"
             className={this.props.classes.title}
           />
-          {this.props.signatories.map(item => {
-            return <SignatorySummaryCard signatory={item} />;
+          {this.props.signatories.map((item, index) => {
+            return (
+              <SignatorySummaryCard
+                key={item.id}
+                signatory={item}
+                index={index}
+              />
+            );
           })}
         </div>
       </>

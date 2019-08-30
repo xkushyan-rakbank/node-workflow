@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
@@ -20,6 +21,9 @@ const styles = {
       borderRadius: "8px !important",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
     }
+  },
+  disabled: {
+    backgroundColor: "rgba(242, 242, 242, 0.5)"
   }
 };
 
@@ -44,7 +48,15 @@ class Input extends React.Component {
   };
 
   render() {
-    const { id, config, classes, value, InputProps } = this.props;
+    const {
+      id,
+      config,
+      classes,
+      className,
+      value,
+      InputProps,
+      disabled
+    } = this.props;
 
     const { fieldErrors } = this.state;
     const attrs = fieldAttr(id, config);
@@ -53,12 +65,16 @@ class Input extends React.Component {
       return (
         <FormControl className="formControl">
           <TextField
+            disabled={disabled}
             variant="outlined"
-            value={value}
+            value={value || ""}
             label={config.label}
-            className={classes.textField}
+            className={cx(classes.textField, className)}
             onChange={this.updateField}
-            inputProps={attrs}
+            inputProps={{
+              ...attrs,
+              disabled: disabled
+            }}
             onBlur={this.fieldValidation}
             error={!isEmpty(fieldErrors)}
             InputProps={InputProps}

@@ -35,7 +35,7 @@ const style = {
   }
 };
 
-class CompanyNetwork extends Component {
+class CompanyNetworkForm extends Component {
   static defaultProps = {
     handleContinue: () => {}
   };
@@ -179,4 +179,4 @@ class CompanyNetwork extends Component {
   }
 }
 
-export default withStyles(style)(CompanyNetwork);
+export default withStyles(style)(CompanyNetworkForm);

@@ -9,7 +9,8 @@ const style = {
     display: "flex",
     alignItems: "center",
     padding: "0 16px",
-    borderTop: "solid 1px rgba(230, 230, 230, 0.5)"
+    borderTop: "solid 1px rgba(230, 230, 230, 0.5)",
+    cursor: "pointer"
   },
   contentContainer: {
     borderTop: "solid 1px rgba(230, 230, 230, 0.5)",
