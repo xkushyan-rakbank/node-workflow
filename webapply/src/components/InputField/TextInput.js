@@ -2,12 +2,14 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import InfoTitle from "./../InfoTitle";
+import PureSelect from "./PureSelect";
 import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
@@ -24,6 +26,48 @@ const styles = {
   },
   disabled: {
     backgroundColor: "rgba(242, 242, 242, 0.5)"
+  },
+  selectCombined: {
+    flexDirection: "row !important",
+    alignItems: "baseline",
+    margin: "12px 0 24px !important",
+    "& label": {
+      maxWidth: "unset"
+    },
+    "& > div": {
+      margin: "0 !important",
+      "&:first-child": {
+        "& fieldset": {
+          borderRight: 0,
+          borderTopRightRadius: " 0 !important",
+          borderBottomRightRadius: " 0 !important",
+          borderTopLeftRadius: " 8px !important",
+          borderBottomLeftRadius: " 8px !important"
+        }
+      },
+      "&:last-child": {
+        flex: "1",
+        "& fieldset": {
+          borderTopLeftRadius: "0 !important",
+          borderBottomLeftRadius: "0 !important"
+        }
+      }
+    }
+  },
+  selectCombinedError: {
+    margin: "12px 0 10px !important",
+    "& fieldset": {
+      borderColor: " #f44336"
+    }
+  },
+  selectCombinedWrapper: {
+    marginBottom: "24px"
+  },
+  regularWrapper: {
+    margin: "12px 0 24px !important",
+    "& .formControl": {
+      margin: "0 !important"
+    }
   }
 };
 
@@ -40,7 +84,9 @@ class Input extends React.Component {
 
   fieldValidation = event => {
     const field = event.target;
+
     const fieldConfig = this.props.config;
+
     const errors = validate(field, fieldConfig);
     this.setState({
       fieldErrors: errors
@@ -55,40 +101,60 @@ class Input extends React.Component {
       className,
       value,
       InputProps,
-      disabled
+      disabled,
+      withSelect,
+      selectId
     } = this.props;
 
     const { fieldErrors } = this.state;
     const attrs = fieldAttr(id, config);
 
+    const isError = !isEmpty(fieldErrors);
+    console.log("isError", isError);
+
     if (id && config.label) {
       return (
-        <FormControl className="formControl">
-          <TextField
-            disabled={disabled}
-            variant="outlined"
-            value={value || ""}
-            label={config.label}
-            className={cx(classes.textField, className)}
-            onChange={this.updateField}
-            inputProps={{
-              ...attrs,
-              disabled: disabled
-            }}
-            onBlur={this.fieldValidation}
-            error={!isEmpty(fieldErrors)}
-            InputProps={InputProps}
-          />
+        <div
+          className={
+            withSelect ? classes.selectCombinedWrapper : classes.regularWrapper
+          }
+        >
+          <FormGroup
+            className={cx(
+              withSelect ? classes.selectCombined : "",
+              isError ? classes.selectCombinedError : ""
+            )}
+          >
+            {!!withSelect && <PureSelect id={selectId} combinedSelect />}
 
-          {!isEmpty(fieldErrors) && (
+            <FormControl className="formControl">
+              <TextField
+                disabled={disabled}
+                variant="outlined"
+                value={value || ""}
+                label={config.label}
+                className={cx(classes.textField, className)}
+                onChange={this.updateField}
+                inputProps={{
+                  ...attrs,
+                  disabled: disabled
+                }}
+                onBlur={this.fieldValidation}
+                error={isError}
+                InputProps={InputProps}
+              />
+
+              {!!config.title && <InfoTitle title={config.title} />}
+            </FormControl>
+          </FormGroup>
+
+          {isError && (
             <ErrorMessage
               error={fieldErrors.error}
               multiLineError={fieldErrors.multiLineError}
             />
           )}
-
-          {!!config.title && <InfoTitle title={config.title} />}
-        </FormControl>
+        </div>
       );
     }
     return null;
@@ -98,7 +164,7 @@ class Input extends React.Component {
 const mapStateToProps = (state, { id }) => {
   const config = state.appConfig.uiConfig[id] || {};
   const value = get(state.appConfig, config.name);
-
+  console.log("state", state);
   return {
     config,
     value

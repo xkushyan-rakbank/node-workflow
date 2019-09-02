@@ -1,6 +1,8 @@
 import { errorType } from "./../constants";
 
 const validate = (field, fieldConfig) => {
+  console.log("field", field);
+  console.log("fieldConfig", fieldConfig);
   const validity = field.validity;
   const errorConfig = fieldConfig.validationErrors;
 

@@ -9,7 +9,8 @@ const styles = {
     fontSize: "20px",
     fontWeight: 600,
     alignItems: "center",
-    color: "#373737"
+    color: "#373737",
+    marginBottom: "10px"
   },
   divider: {
     width: "5px",

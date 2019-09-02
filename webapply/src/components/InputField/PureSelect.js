@@ -79,7 +79,6 @@ class PureSelect extends React.Component {
   };
 
   render() {
-    console.log("run");
     const { config, value, id, classes, combinedSelect, disabled } = this.props;
 
     const className = combinedSelect

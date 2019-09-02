@@ -10,6 +10,7 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import InfoTitle from "./../InfoTitle";
+import validate from "./../../utils/validate";
 import { updateField } from "../../store/actions/appConfig";
 
 const styles = {
@@ -40,12 +41,28 @@ const styles = {
 };
 
 class DatePicker extends React.Component {
+  state = {
+    fieldErrors: {}
+  };
+
   updateField = value => {
     const { name } = this.props.config;
     this.props.updateField({ value, name });
   };
+
+  fieldValidation = event => {
+    console.log("object");
+    const field = event.target;
+    const fieldConfig = this.props.config;
+    const errors = validate(field, fieldConfig);
+    this.setState({
+      fieldErrors: errors
+    });
+  };
+
   render() {
     const { value, classes, config } = this.props;
+    const { fieldErrors } = this.state;
 
     return (
       <FormControl className="formControl">
@@ -64,6 +81,8 @@ class DatePicker extends React.Component {
               className={classes.datePicker}
               value={value}
               onChange={this.updateField}
+              error
+              validationError="Format de date invalide"
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}
