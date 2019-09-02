@@ -81,8 +81,6 @@ class DatePicker extends React.Component {
               className={classes.datePicker}
               value={value}
               onChange={this.updateField}
-              error
-              validationError="Format de date invalide"
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}

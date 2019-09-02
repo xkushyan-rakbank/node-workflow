@@ -61,7 +61,9 @@ class BasicsForm extends React.Component {
             />
           </ErrorBoundary>
           <div className="linkContainer">
-            <SubmitButton disabled={false} />
+            <Link to={routes.verifyOtp}>
+              <SubmitButton />
+            </Link>
           </div>
         </form>
       </div>
