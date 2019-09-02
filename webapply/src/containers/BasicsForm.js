@@ -1,17 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { compose } from "recompose";
-import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import CombinedSelect from "../components/InputField/CombinedSelect";
-import PureSelect from "../components/InputField/PureSelect";
 import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import routes from "./../routes"; // remove it in future
-import { appInfoFormSubmit } from "./../store/actions/ApplicationInfoSubmit"; // remove it in future
 
 const styles = {
   baseForm: {
@@ -71,15 +68,4 @@ class BasicsForm extends React.Component {
     );
   }
 }
-
-const mapDispatchToProps = {
-  appInfoFormSubmit
-};
-
-export default compose(
-  withStyles(styles),
-  connect(
-    null,
-    mapDispatchToProps
-  )
-)(BasicsForm);
+export default withStyles(styles)(BasicsForm);

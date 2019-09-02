@@ -55,7 +55,6 @@ const styles = {
     color: "#373737",
     userSelect: "none",
     cursor: "pointer",
-    fontWeight: "600",
     fontSize: "14px",
     lineHeight: "24px",
     fontWeight: "400"

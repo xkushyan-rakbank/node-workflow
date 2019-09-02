@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import ReCaptchaNotRobot from "./ReCaptchaNotRobot";
 
 export const COMPONENTS_BY_TYPE = {

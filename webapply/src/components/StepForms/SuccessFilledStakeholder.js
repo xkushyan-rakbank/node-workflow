@@ -1,6 +1,4 @@
 import React from "react";
-import { compose } from "recompose";
-import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import doneIcon from "../../assets/images/done-icon.png";
 
@@ -29,7 +27,7 @@ const styles = {
 class SuccessFilledStakeholder extends React.Component {
   componentDidMount() {
     setTimeout(() => {
-      this.props.history.push("/FinalQuestions");
+      this.props.hideForm();
     }, 5000);
   }
 
@@ -47,7 +45,4 @@ class SuccessFilledStakeholder extends React.Component {
   }
 }
 
-export default compose(
-  withStyles(styles),
-  withRouter
-)(SuccessFilledStakeholder);
+export default withStyles(styles)(SuccessFilledStakeholder);

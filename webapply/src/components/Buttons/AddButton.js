@@ -1,7 +1,7 @@
 import React from "react";
-import DoneIcon from "@material-ui/icons/Add";
-import { withStyles } from "@material-ui/core";
 import cx from "classnames";
+import { withStyles } from "@material-ui/core";
+import AddIcon from "../AddIcon";
 
 const style = {
   container: {
@@ -24,21 +24,6 @@ const style = {
     fontWeight: 400,
     fontStyle: "normal",
     fontStretch: "normal"
-  },
-  iconWrapper: {
-    width: "26px",
-    height: "26px",
-    boxSizing: "border-box",
-    border: "solid 1.5px #16216a",
-    borderRadius: "50%",
-    color: "#16216a",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: "10px"
-  },
-  icon: {
-    fontSize: "20px"
   }
 };
 
@@ -50,9 +35,7 @@ const AddButton = props => {
       type="button"
       {...rest}
     >
-      <div className={classes.iconWrapper}>
-        <DoneIcon className={classes.icon} />
-      </div>
+      <AddIcon />
       <span className={classes.text}>{title}</span>
     </button>
   );
