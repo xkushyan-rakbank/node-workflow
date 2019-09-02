@@ -38,6 +38,9 @@ const style = {
       position: "absolute",
       right: "20px"
     }
+  },
+  inputLabel: {
+    fontSize: "14px"
   }
 };
 
@@ -64,7 +67,11 @@ const CustomSelect = props => {
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <InputLabel ref={inputLabel} htmlFor={id}>
+      <InputLabel
+        ref={inputLabel}
+        htmlFor={id}
+        classes={{ shrink: classes.inputLabel }}
+      >
         {label}
       </InputLabel>
       <Select

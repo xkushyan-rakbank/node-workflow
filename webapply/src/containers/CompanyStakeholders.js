@@ -3,13 +3,13 @@ import { withStyles } from "@material-ui/core";
 import FilledStakeholderCard from "../components/FilledStakeholderCard";
 import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
-import ContainedButton from "../components/Buttons/ContainedButton";
 import Button from "@material-ui/core/Button/Button";
 import { ReactComponent as RightArrowWhite } from "./../assets/images/white.svg";
 
 const style = {
   buttonStyle: {
     width: "346px",
+    height: "56px",
     borderRadius: "28px",
     textTransform: "none",
     fontSize: "18px",
@@ -21,7 +21,13 @@ const style = {
   buttonsWrapper: {
     display: "flex",
     justifyContent: "space-between",
-    marginTop: "40px"
+    marginTop: "40px",
+    "@media (max-width: 1600px)": {
+      flexDirection: "column",
+      "&>button": {
+        margin: "0 0 24px"
+      }
+    }
   }
 };
 

@@ -1,16 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import InfoTitle from "./../InfoTitle";
-import ErrorMessage from "./../ErrorMessage";
-import validate from "./../../utils/validate";
-
-const inputData = {
-  maxlength: 10,
-  minlength: 2,
-  max: 10
-};
 
 const style = {
   textField: {

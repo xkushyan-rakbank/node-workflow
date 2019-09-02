@@ -1,9 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router";
 import { compose } from "recompose";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import DoneIcon from "@material-ui/icons/Done";
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
 import { formStepper } from "./../constants";
@@ -52,7 +49,7 @@ class FormNavigation extends React.Component {
   }
 
   render() {
-    const { history, location, classes } = this.props;
+    const { location, classes } = this.props;
     const { step } = this.state;
     return (
       <div className={classes.formNav}>

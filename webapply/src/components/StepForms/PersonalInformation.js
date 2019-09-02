@@ -1,16 +1,9 @@
-import React, { useState } from "react";
-import FormGroup from "@material-ui/core/FormGroup";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
-import SelectCombined from "../InputField/SelectCombined";
 import TextInput from "../InputField/TextInput";
-import PureSelect from "../InputField/PureSelect";
 import CombinedSelect from "../InputField/CombinedSelect";
 import DatePicker from "../InputField/DatePicker";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
-import {
-  gender as genderOptions,
-  maritalStatus as maritalStatusOptions
-} from "../../constants";
 
 const PersonalInformation = () => {
   return (

@@ -2,7 +2,6 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
-import { ReactComponent as RightArrowBlue } from "./../../assets/images/blue.svg";
 import { ReactComponent as RightArrowWhite } from "./../../assets/images/white.svg";
 
 const styles = {
