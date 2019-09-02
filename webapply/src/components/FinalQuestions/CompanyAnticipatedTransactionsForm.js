@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SectionTitle from "../SectionTitle";
-import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -142,7 +141,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
             <TextInput id="UI0216" InputProps={this.commonInputProps} />
           </Grid>
         </Grid>
-        <Checkbox label="The company uses virtual currencies" />
 
         <div className={this.props.classes.controlsWrapper}>
           <ContinueButton handleClick={this.props.handleContinue} />

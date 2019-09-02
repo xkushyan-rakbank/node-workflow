@@ -83,12 +83,12 @@ class CompanyContactInformationForm extends Component {
                 <Grid item md={6} sm={12}>
                   <TextInput id="UI0103" index={index} />
                   <TextInput id="UI0109" index={index} />
-                  <PureSelect id="UI0115" index={index} />
+                  <PureSelect id="UI0114" index={index} />
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <PureSelect id="UI0117" index={index} />
                   <TextInput id="UI0113" index={index} />
-                  {/* <TextInput id="UI0114" index={index} /> */}
+                  {/* <TextInput id="UI0115" index={index} /> */}
                   <FormControl className="formControl">
                     <TextField
                       className={this.props.classes.disabledInput}

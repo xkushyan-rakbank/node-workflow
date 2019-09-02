@@ -4,7 +4,8 @@ import Check from "./../../assets/images/on.svg";
 
 const style = {
   checkboxWrapper: {
-    display: "inline-flex"
+    display: "inline-flex",
+    cursor: "pointer"
   },
   checkboxContainer: {
     display: "inline-block",

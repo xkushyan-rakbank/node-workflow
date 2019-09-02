@@ -5,10 +5,14 @@ import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import CombinedSelect from "../InputField/CombinedSelect";
+import AddButton from "../Buttons/AddButton";
+import Checkbox from "../InputField/Checkbox";
+import PureSelect from "../InputField/PureSelect";
 
 const style = {
   title: {
-    fontSize: "16px"
+    fontSize: "16px",
+    marginBottom: "20px"
   },
   groupLabel: {
     marginTop: "15px",
@@ -39,6 +43,15 @@ class SignatoryContactInformationForm extends Component {
     index: 0
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isAddLandlineNumber: false,
+      isAddressSameAsCompany: false
+    };
+  }
+
   render() {
     return (
       <form>
@@ -52,13 +65,37 @@ class SignatoryContactInformationForm extends Component {
           spacing={3}
           className={this.props.classes.flexContainer}
         >
-          <Grid item md={6} sm={12}>
-            <CombinedSelect selectId="UI0327" inputId="UI0326" />
+          <Grid item sm={12}>
+            <Checkbox
+              value={this.state.isAddressSameAsCompany}
+              onChange={event =>
+                this.setState({ isAddressSameAsCompany: event.target.checked })
+              }
+              label="Same as Company Address"
+            />
+            <TextInput id="UI0361" />
           </Grid>
           <Grid item md={6} sm={12}>
+            <TextInput id="UI0364" />
+            <PureSelect id="UI0370" />
+            <CombinedSelect selectId="UI0324" inputId="UI0323" />
+            {this.state.isAddLandlineNumber && (
+              <CombinedSelect selectId="UI0327" inputId="UI0326" />
+            )}
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <TextInput id="UI0368" />
+            <PureSelect id="UI0369" />
             <TextInput id="UI0325" />
           </Grid>
         </Grid>
+
+        {!this.state.isAddLandlineNumber && (
+          <AddButton
+            title="Add a landline number"
+            onClick={() => this.setState({ isAddLandlineNumber: true })}
+          />
+        )}
 
         <div className={this.props.classes.controlsWrapper}>
           <ContinueButton
