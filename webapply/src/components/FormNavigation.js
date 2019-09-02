@@ -22,7 +22,7 @@ const style = {
     backgroundSize: "cover",
     backgroundPosition: "30% 0",
     zIndex: "11",
-    "@media only screen and (max-width: 991px)": {
+    "@media only screen and (max-width: 1300px)": {
       flex: "0 0 45%",
       backgroundPosition: "25% 0"
     },
