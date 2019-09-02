@@ -68,13 +68,10 @@ class CompanyContactInformationForm extends Component {
           className={this.props.classes.title}
         />
         <Grid container justify="space-between">
-          <h4 className={this.props.classes.groupLabel}>
-            Company contact information
-          </h4>
+          <h4 className={this.props.classes.groupLabel}>Registered address</h4>
           <InfoTitle title="We will use this as your mailing address" />
         </Grid>
 
-        <Checkbox label="The company has no accounts with other banks, inside or outside the UAE" />
         <Grid
           container
           spacing={3}
@@ -85,20 +82,13 @@ class CompanyContactInformationForm extends Component {
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
                   <TextInput id="UI0103" index={index} />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <PureSelect id="UI0117" index={index} />
-                </Grid>
-                <Grid item md={6} sm={12}>
                   <TextInput id="UI0109" index={index} />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <TextInput id="UI0113" index={index} />
-                </Grid>
-                <Grid item md={6} sm={12}>
                   <PureSelect id="UI0115" index={index} />
                 </Grid>
                 <Grid item md={6} sm={12}>
+                  <PureSelect id="UI0117" index={index} />
+                  <TextInput id="UI0113" index={index} />
+                  {/* <TextInput id="UI0114" index={index} /> */}
                   <FormControl className="formControl">
                     <TextField
                       className={this.props.classes.disabledInput}
