@@ -2,34 +2,31 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
-import { ReactComponent as RightArrowBlue } from "./../../assets/images/blue.svg";
-import { ReactComponent as RightArrowWhite } from "./../../assets/images/white.svg";
+import AddIcon from "../AddIcon";
 
 const styles = {
   buttonStyle: {
-    width: "192px",
+    display: "flex",
+    justifyContent: "space-between",
+    maxWidth: "305px",
     height: "56px",
-    borderRadius: "28px ",
-    outline: "none ",
-    fontSize: "18px",
+    borderRadius: "28px",
+    border: "solid 1px #16216a",
     textTransform: "none",
-    padding: "0 25px",
-    svg: {
-      fontSize: "14px",
-      marginLeft: "10px"
-    }
+    fontSize: "18px",
+    fontWeight: "normal",
+    letterSpacing: "normal",
+    margin: "0 16px"
   },
   labelStyle: {
-    textAlign: "left",
-    color: "#ffffff",
-    justifyContent: "space-between"
+    margin: "0 14px"
   }
 };
 
 const ContainedButton = props => {
   const {
-    variant = "contained",
-    label = "",
+    variant = "outlined",
+    label = "Add Another Stakeholder",
     type = "button",
     disabled = false,
     className = "",
@@ -46,14 +43,13 @@ const ContainedButton = props => {
       color={color}
       type={type}
       classes={{
-        root: cx(classes.buttonStyle, className),
-        label: classes.labelStyle
+        root: cx(classes.buttonStyle, className)
       }}
       disabled={disabled}
       onClick={handleClick}
     >
-      {label}
-      {type === "submit" && <RightArrowWhite className={classes.icon} />}
+      <AddIcon />
+      <div className={classes.labelStyle}>{label}</div>
     </Button>
   );
 };
