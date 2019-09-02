@@ -69,7 +69,9 @@ class Input extends React.Component {
             variant="outlined"
             value={value || ""}
             label={config.label}
-            className={cx(classes.textField, className)}
+            className={cx(classes.textField, className, {
+              [this.props.classes.disabled]: disabled
+            })}
             onChange={this.updateField}
             inputProps={{
               ...attrs,

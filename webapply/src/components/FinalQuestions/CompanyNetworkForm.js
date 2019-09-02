@@ -43,34 +43,38 @@ class CompanyNetworkForm extends Component {
   constructor(props) {
     super(props);
 
-    this.insideSubsidiaryCountLimit = 5;
-    this.outsideSubsidiaryCountLimit = 5;
-
+    this.limits = {
+      anotherBankCount: 5,
+      insideSubsidiaryCount: 5,
+      outsideSubsidiaryCount: 5
+    };
     this.state = {
       anotherBankCount: 1,
       insideSubsidiaryCount: 0,
-      outsideSubsidiaryCount: 0
+      outsideSubsidiaryCount: 0,
+      isDontHaveOtherBankAccounts: false,
+      isDontHaveInsideSubsidiary: false,
+      isDontHaveOutsideSubsidiary: false
     };
   }
 
+  updateCountedStateValue = (key, increment = 1) => {
+    if (key in this.limits && this.state[key] >= this.limits[key]) {
+      return;
+    }
+    this.setState({ [key]: this.state[key] + increment });
+  };
+
   handleAddAnotherBank = () => {
-    this.setState({ anotherBankCount: this.state.anotherBankCount + 1 });
+    this.updateCountedStateValue("anotherBankCount");
   };
 
   handleAddInsideSubsidiaryClick = () => {
-    if (this.state.insideSubsidiaryCount < this.insideSubsidiaryCountLimit) {
-      this.setState({
-        insideSubsidiaryCount: this.state.insideSubsidiaryCount + 1
-      });
-    }
+    this.updateCountedStateValue("insideSubsidiaryCount");
   };
 
   handleAddOutsideSubsidiaryClick = () => {
-    if (this.state.outsideSubsidiaryCount < this.outsideSubsidiaryCountLimit) {
-      this.setState({
-        outsideSubsidiaryCount: this.state.outsideSubsidiaryCount + 1
-      });
-    }
+    this.updateCountedStateValue("outsideSubsidiaryCount");
   };
 
   render() {
@@ -84,7 +88,13 @@ class CompanyNetworkForm extends Component {
         <h4 className={this.props.classes.groupLabel}>
           Relationships with other banks
         </h4>
-        <Checkbox label="The company has no accounts with other banks, inside or outside the UAE" />
+        <Checkbox
+          label="The company has no accounts with other banks, inside or outside the UAE"
+          value={this.state.isDontHaveOtherBankAccounts}
+          onChange={event =>
+            this.setState({ isDontHaveOtherBankAccounts: event.target.checked })
+          }
+        />
         <Grid
           container
           spacing={3}
@@ -93,15 +103,27 @@ class CompanyNetworkForm extends Component {
           <Grid item sm={12}>
             {Array.from(Array(this.state.anotherBankCount).keys()).map(
               index => {
-                return <TextInput key={index} id="UI0221" index={index} />;
+                return (
+                  <TextInput
+                    key={index}
+                    id="UI0221"
+                    index={index}
+                    disabled={this.state.isDontHaveOtherBankAccounts}
+                  />
+                );
               }
             )}
           </Grid>
         </Grid>
-        <AddButton
-          onClick={this.handleAddAnotherBank}
-          title="Add another bank"
-        />
+        {!this.state.isDontHaveOtherBankAccounts && (
+          <AddButton
+            onClick={this.handleAddAnotherBank}
+            title="Add another bank"
+            disabled={
+              this.state.anotherBankCount >= this.limits.anotherBankCount
+            }
+          />
+        )}
 
         <div className={this.props.classes.divider} />
 
@@ -109,7 +131,13 @@ class CompanyNetworkForm extends Component {
           Relationships with subsidiaries inside the UAE
         </h4>
 
-        <Checkbox label="The company has no branches, subsidiaries or other companies, inside or outside the UAE" />
+        <Checkbox
+          label="The company has no branches, subsidiaries or other companies, inside or outside the UAE"
+          value={this.state.isDontHaveInsideSubsidiary}
+          onChange={event =>
+            this.setState({ isDontHaveInsideSubsidiary: event.target.checked })
+          }
+        />
         <Grid
           container
           spacing={3}
@@ -137,6 +165,11 @@ class CompanyNetworkForm extends Component {
         <AddButton
           onClick={this.handleAddInsideSubsidiaryClick}
           title="Add a subsidiary inside the UAE"
+          disabled={
+            this.state.insideSubsidiaryCount >=
+              this.limits.insideSubsidiaryCount ||
+            this.state.isDontHaveInsideSubsidiary
+          }
         />
 
         <div className={this.props.classes.divider} />
@@ -144,7 +177,13 @@ class CompanyNetworkForm extends Component {
         <h4 className={this.props.classes.groupLabel}>
           Relationships with subsidiaries outside the UAE
         </h4>
-        <Checkbox label="The company has no branches, subsidiaries or other companies, inside or outside the UAE" />
+        <Checkbox
+          label="The company has no branches, subsidiaries or other companies, inside or outside the UAE"
+          value={this.state.isDontHaveOutsideSubsidiary}
+          onChange={event =>
+            this.setState({ isDontHaveOutsideSubsidiary: event.target.checked })
+          }
+        />
         <Grid
           container
           spacing={3}
@@ -169,6 +208,11 @@ class CompanyNetworkForm extends Component {
         <AddButton
           onClick={this.handleAddOutsideSubsidiaryClick}
           title="Add another subsidiary"
+          disabled={
+            this.state.outsideSubsidiaryCount >=
+              this.limits.outsideSubsidiaryCount ||
+            this.state.isDontHaveOutsideSubsidiary
+          }
         />
 
         <div className={this.props.classes.controlsWrapper}>
