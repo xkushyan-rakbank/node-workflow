@@ -9,9 +9,9 @@ pr:
   branches:
     include:
       - develop
-trigger: none
-#trigger:
-#  - develop
+#trigger: none
+trigger:
+  - develop
 #  - releases/*
 jobs:
     - job: Webapply
