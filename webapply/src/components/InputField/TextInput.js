@@ -103,7 +103,8 @@ class Input extends React.Component {
       InputProps,
       disabled,
       withSelect,
-      selectId
+      selectId,
+      indexes
     } = this.props;
 
     const { fieldErrors } = this.state;
@@ -124,8 +125,9 @@ class Input extends React.Component {
               [classes.selectCombinedError]: isError
             })}
           >
-            {!!withSelect && <PureSelect id={selectId} combinedSelect />}
-
+            {!!withSelect && (
+              <PureSelect id={selectId} indexes={indexes} combinedSelect />
+            )}
             <FormControl className="formControl">
               <TextField
                 disabled={disabled}
