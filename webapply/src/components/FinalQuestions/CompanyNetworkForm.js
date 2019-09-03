@@ -148,13 +148,28 @@ class CompanyNetworkForm extends Component {
               return (
                 <React.Fragment key={index}>
                   <Grid item sm={12}>
-                    <TextInput key={index} id="UI0225" index={index} />
+                    <TextInput
+                      key={index}
+                      id="UI0225"
+                      index={index}
+                      disabled={this.state.isDontHaveInsideSubsidiary}
+                    />
                   </Grid>
                   <Grid item md={6} sm={12}>
-                    <TextInput key={index} id="UI0228" index={index} />
+                    <TextInput
+                      key={index}
+                      id="UI0228"
+                      index={index}
+                      disabled={this.state.isDontHaveInsideSubsidiary}
+                    />
                   </Grid>
                   <Grid item md={6} sm={12}>
-                    <PureSelect key={index} id="UI0226" index={index} />
+                    <PureSelect
+                      key={index}
+                      id="UI0226"
+                      index={index}
+                      disabled={this.state.isDontHaveInsideSubsidiary}
+                    />
                   </Grid>
                 </React.Fragment>
               );
@@ -194,10 +209,20 @@ class CompanyNetworkForm extends Component {
               return (
                 <React.Fragment key={index}>
                   <Grid item md={6} sm={12}>
-                    <TextInput key={index} id="UI0232" index={index} />
+                    <TextInput
+                      key={index}
+                      id="UI0232"
+                      index={index}
+                      disabled={this.state.isDontHaveOutsideSubsidiary}
+                    />
                   </Grid>
                   <Grid item md={6} sm={12}>
-                    <PureSelect key={index} id="UI0233" index={index} />
+                    <PureSelect
+                      key={index}
+                      id="UI0233"
+                      index={index}
+                      disabled={this.state.isDontHaveOutsideSubsidiary}
+                    />
                   </Grid>
                 </React.Fragment>
               );

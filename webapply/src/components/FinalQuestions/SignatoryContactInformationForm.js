@@ -8,6 +8,7 @@ import CombinedSelect from "../InputField/CombinedSelect";
 import AddButton from "../Buttons/AddButton";
 import Checkbox from "../InputField/Checkbox";
 import PureSelect from "../InputField/PureSelect";
+import CustomCheckbox from "../InputField/RefactoredCheckbox";
 
 const style = {
   title: {
@@ -47,8 +48,7 @@ class SignatoryContactInformationForm extends Component {
     super(props);
 
     this.state = {
-      isAddLandlineNumber: false,
-      isAddressSameAsCompany: false
+      isAddLandlineNumber: false
     };
   }
 
@@ -66,13 +66,7 @@ class SignatoryContactInformationForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item sm={12}>
-            <Checkbox
-              value={this.state.isAddressSameAsCompany}
-              onChange={event =>
-                this.setState({ isAddressSameAsCompany: event.target.checked })
-              }
-              label="Same as Company Address"
-            />
+            <CustomCheckbox id="UI0350" indexes={[this.props.index]} />
             <TextInput id="UI0361" />
           </Grid>
           <Grid item md={6} sm={12}>

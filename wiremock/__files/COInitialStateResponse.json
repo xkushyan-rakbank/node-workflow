@@ -4956,13 +4956,43 @@
 			"path": "$.prospect.orgKYCDetails.entitiesInUAE[*].emirate",
 			"name": "prospect.orgKYCDetails.entitiesInUAE[*].emirate",
 			"required": false,
-			"datalistId": "EmirateList",
+			"datalistId": "EmirateCityList",
 			"datalist": [
 				{
-					"code": "AE",
-					"key": "AE",
-					"value": "AE",
-					"displayText": "Emirate"
+					"code": "Dubai",
+					"key": "Dubai",
+					"value": "Dubai",
+					"displayText": "Dubai"
+				},
+				{
+					"code": "AD",
+					"key": "AD",
+					"value": "AD",
+					"displayText": "Abu Dhabi"
+				},
+				{
+					"code": "SH",
+					"key": "SH",
+					"value": "SH",
+					"displayText": "Sharjah"
+				},
+				{
+					"code": "F",
+					"key": "F",
+					"value": "F",
+					"displayText": "Fujairah"
+				},
+				{
+					"code": "A",
+					"key": "A",
+					"value": "A",
+					"displayText": "Ajman"
+				},
+				{
+					"code": "RK",
+					"key": "RK",
+					"value": "RK",
+					"displayText": "Ras Al Khaimah"
 				}
 			]
 		},
@@ -7864,7 +7894,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Same as Company Address",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].sameAsCompanyAddress",
 			"name": "prospect.signatoryInfo[*].sameAsCompanyAddress",

@@ -52,7 +52,8 @@ class CompanyContactInformationForm extends Component {
 
     this.state = {
       addressCount: 1,
-      secondaryPhoneNumber: false
+      secondaryPhoneNumber: false,
+      isHaveMoreBranches: false
     };
   }
 
@@ -102,7 +103,13 @@ class CompanyContactInformationForm extends Component {
             );
           })}
         </Grid>
-        <Checkbox label="I have more branches elsewhere" />
+        <Checkbox
+          label="I have more branches elsewhere"
+          value={this.state.isHaveMoreBranches}
+          onChange={event =>
+            this.setState({ isHaveMoreBranches: event.target.checked })
+          }
+        />
 
         <div className={this.props.classes.divider} />
 
