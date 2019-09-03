@@ -50,9 +50,12 @@ const style = {
     marginLeft: "8px",
     userSelect: "none",
     cursor: "pointer",
-    fontWeight: "600",
     fontSize: "14px",
-    lineHeight: "24px"
+    lineHeight: "24px",
+    color: "#373737",
+    "& a": {
+      color: "#373737"
+    }
   }
 };
 

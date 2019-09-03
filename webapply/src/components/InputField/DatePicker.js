@@ -62,7 +62,6 @@ class DatePicker extends React.Component {
 
   render() {
     const { value, classes, config } = this.props;
-    const { fieldErrors } = this.state;
 
     return (
       <FormControl className="formControl">

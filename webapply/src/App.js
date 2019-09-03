@@ -10,6 +10,7 @@ import CompanyStakeholders from "./containers/CompanyStakeholders";
 import FinalQuestions from "./containers/FinalQuestions";
 import FormConfirm from "./containers/FormConfirm";
 import FormLayout from "./containers/FormLayout";
+import SelectServices from "./containers/SelectServices";
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
 import "./App.scss";
@@ -53,6 +54,11 @@ class App extends React.Component {
                 exact
                 path={routes.finalQuestions}
                 component={FinalQuestions}
+              />
+              <Route
+                exact
+                path={routes.selectServices}
+                component={SelectServices}
               />
             </Switch>
           </FormLayout>

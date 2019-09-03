@@ -118,5 +118,5 @@ export const formStepper = [
   { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
   { step: 4, title: "Final questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: undefined },
-  { step: 6, title: "Somthing Else", path: undefined }
+  { step: 6, title: "Select services", path: routes.selectServices }
 ];

@@ -17,7 +17,7 @@ const styles = {
 };
 
 const SubmitButton = props => {
-  const { disabled = false, classes } = props;
+  const { disabled = false, classes, label = "Next Step" } = props;
   return (
     <Grid
       container
@@ -29,7 +29,7 @@ const SubmitButton = props => {
       <ContainedButton
         type="submit"
         disabled={disabled}
-        label="Next Step"
+        label={label}
         className={classes.nextButton}
       />
     </Grid>
