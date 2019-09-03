@@ -3,15 +3,12 @@ import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
-import Input from "../components/InputField/Input";
-import Select from "../components/InputField/Select";
 import PureSelect from "../components/InputField/PureSelect";
 import SectionTitle from "../components/SectionTitle";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import DatePicker from "../components/InputField/DatePicker";
 import TextInput from "../components/InputField/TextInput";
 import routes from "./../routes"; // remove it in future
-import { codes } from "./../constants";
 
 const style = {
   sectionTitleIndent: {

@@ -32,12 +32,22 @@ class StakeholderStepper extends React.Component {
     }
   };
 
+  finishStakeholderCreation = () => {
+    this.props.hideForm();
+    this.setState({ isFinalScreenShown: false });
+  };
+
   render() {
     const { classes } = this.props;
     const { step, isFinalScreenShown } = this.state;
 
     if (isFinalScreenShown) {
-      return <SuccessFilledStakeholder name="Chema Pastrana" />;
+      return (
+        <SuccessFilledStakeholder
+          name="Chema Pastrana"
+          hideForm={this.finishStakeholderCreation}
+        />
+      );
     }
 
     return (
