@@ -58,12 +58,12 @@ class SignatoryWealthForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0316" index={this.props.index} />
+            <PureSelect id="UI0316" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
               id="UI0321"
-              index={this.props.index}
+              indexes={[this.props.index]}
               disabled={!this.isOtherSourceOfWealthSelected()}
             />
           </Grid>
@@ -77,8 +77,8 @@ class SignatoryWealthForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  soursOfWealth: getInputValueById(state, "UI0316")
+const mapStateToProps = (state, { index }) => ({
+  soursOfWealth: getInputValueById(state, "UI0316", [index])
 });
 
 export default withStyles(style)(connect(mapStateToProps)(SignatoryWealthForm));

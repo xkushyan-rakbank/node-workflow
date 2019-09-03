@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
@@ -33,18 +33,30 @@ const style = {
 
 class FormNavigation extends React.Component {
   state = {
-    step: 1
+    step: (this.getRouteConfig() || {}).step || 1
   };
 
   componentDidUpdate(prevProps) {
     const { location } = this.props;
 
     if (prevProps.location.key !== location.key) {
-      if (this.state.step < formStepper.length - 2) {
-        this.setState(prevState => ({
-          step: prevState.step + 1
-        }));
-      }
+      this.updateStepState();
+    }
+  }
+
+  getRouteConfig() {
+    const {
+      location: { pathname }
+    } = this.props;
+    return formStepper.find(item =>
+      [item.path, item.relatedPath].some(path => pathname === path)
+    );
+  }
+
+  updateStepState() {
+    const { step = 1 } = this.getRouteConfig() || {};
+    if (step !== this.state.step) {
+      this.setState({ step });
     }
   }
 

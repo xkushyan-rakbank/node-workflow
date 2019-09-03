@@ -1,6 +1,4 @@
 import React from "react";
-import { Fromik } from "formik";
-import { Link } from "react-router-dom";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
@@ -9,7 +7,6 @@ import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import routes from "./../routes"; // remove it in future
 import validate from "./../utils/validate";
 
 const styles = {
@@ -44,7 +41,7 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const { classes, config } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.baseForm}>

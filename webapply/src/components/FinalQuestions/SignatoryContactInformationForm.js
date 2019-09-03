@@ -4,10 +4,15 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
+import CombinedSelect from "../InputField/CombinedSelect";
+import AddButton from "../Buttons/AddButton";
+import PureSelect from "../InputField/PureSelect";
+import CustomCheckbox from "../InputField/RefactoredCheckbox";
 
 const style = {
   title: {
-    fontSize: "16px"
+    fontSize: "16px",
+    marginBottom: "20px"
   },
   groupLabel: {
     marginTop: "15px",
@@ -38,6 +43,14 @@ class SignatoryContactInformationForm extends Component {
     index: 0
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isAddLandlineNumber: false
+    };
+  }
+
   render() {
     return (
       <form>
@@ -51,13 +64,39 @@ class SignatoryContactInformationForm extends Component {
           spacing={3}
           className={this.props.classes.flexContainer}
         >
-          <Grid item md={6} sm={12}>
-            <TextInput id="UI0326" selectId="UI0327" withSelect />
+          <Grid item sm={12}>
+            <CustomCheckbox id="UI0350" indexes={[this.props.index]} />
+            <TextInput id="UI0361" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0325" />
+            <TextInput id="UI0364" indexes={[this.props.index]} />
+            <PureSelect id="UI0370" indexes={[this.props.index]} />
+            <CombinedSelect
+              selectId="UI0324"
+              inputId="UI0323"
+              indexes={[this.props.index]}
+            />
+            {this.state.isAddLandlineNumber && (
+              <CombinedSelect
+                selectId="UI0327"
+                inputId="UI0326"
+                indexes={[this.props.index]}
+              />
+            )}
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <TextInput id="UI0368" indexes={[this.props.index]} />
+            <PureSelect id="UI0369" indexes={[this.props.index]} />
+            <TextInput id="UI0325" indexes={[this.props.index]} />
           </Grid>
         </Grid>
+
+        {!this.state.isAddLandlineNumber && (
+          <AddButton
+            title="Add a landline number"
+            onClick={() => this.setState({ isAddLandlineNumber: true })}
+          />
+        )}
 
         <div className={this.props.classes.controlsWrapper}>
           <ContinueButton

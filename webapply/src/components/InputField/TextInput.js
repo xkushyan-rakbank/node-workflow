@@ -14,6 +14,7 @@ import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
 import validate from "./../../utils/validate";
+import combineNestingName from "../../utils/combineNestingName";
 
 const styles = {
   textField: {
@@ -78,8 +79,7 @@ class Input extends React.Component {
 
   updateField = event => {
     const value = event.target.value;
-    const { name } = this.props.config;
-
+    const { name } = this.props;
     this.props.updateField({ value, name });
   };
 
@@ -113,15 +113,16 @@ class Input extends React.Component {
     if (id && config.label) {
       return (
         <div
-          className={
-            withSelect ? classes.selectCombinedWrapper : classes.regularWrapper
-          }
+          className={cx({
+            [classes.selectCombinedWrapper]: withSelect,
+            [classes.regularWrapper]: !withSelect
+          })}
         >
           <FormGroup
-            className={cx(
-              withSelect ? classes.selectCombined : "",
-              isError ? classes.selectCombinedError : ""
-            )}
+            className={cx({
+              [classes.selectCombined]: withSelect,
+              [classes.selectCombinedError]: isError
+            })}
           >
             {!!withSelect && <PureSelect id={selectId} combinedSelect />}
 
@@ -131,8 +132,9 @@ class Input extends React.Component {
                 variant="outlined"
                 value={value || ""}
                 label={config.label}
-                name={config.name}
-                className={cx(classes.textField, className)}
+                className={cx(classes.textField, className, {
+                  [classes.disabled]: disabled
+                })}
                 onChange={this.updateField}
                 inputProps={{
                   ...attrs,
@@ -160,12 +162,19 @@ class Input extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id }) => {
+const mapStateToProps = (state, { id, indexes }) => {
   const config = state.appConfig.uiConfig[id] || {};
-  const value = get(state.appConfig, config.name);
+  const name =
+    config.name && config.name.search(/\*/)
+      ? combineNestingName(config.name, indexes)
+      : config.name;
+
+  const value = get(state.appConfig, name);
+
   return {
     config,
-    value
+    value,
+    name
   };
 };
 

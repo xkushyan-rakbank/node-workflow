@@ -43,14 +43,24 @@ class CompanyBackgroundForm extends Component {
   constructor(props) {
     super(props);
 
+    this.limits = {
+      customerCount: 5,
+      supplierCount: 5,
+      countryOfOriginCount: 5
+    };
     this.state = {
       customerCount: 1,
       supplierCount: 1,
-      countryOfOriginCount: 1
+      countryOfOriginCount: 1,
+      isDontTradingGoods: false,
+      isDontHaveSuppliers: false
     };
   }
 
   updateCountedStateValue = (key, increment = 1) => {
+    if (key in this.limits && this.state[key] >= this.limits[key]) {
+      return;
+    }
     this.setState({ [key]: this.state[key] + increment });
   };
 
@@ -74,8 +84,7 @@ class CompanyBackgroundForm extends Component {
           className={this.props.classes.title}
         />
 
-        <h4 className={this.props.classes.groupLabel}>Main customers</h4>
-        <Checkbox label="I don't have customers yet" />
+        <h4 className={this.props.classes.groupLabel}>Top customers</h4>
         <Grid
           container
           spacing={3}
@@ -85,10 +94,10 @@ class CompanyBackgroundForm extends Component {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
-                  <TextInput id="UI0188" index={index} />
+                  <TextInput id="UI0188" indexes={[index]} />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                  <PureSelect id="UI0189" index={index} />
+                  <PureSelect id="UI0189" indexes={[index]} />
                 </Grid>
               </React.Fragment>
             );
@@ -97,12 +106,19 @@ class CompanyBackgroundForm extends Component {
         <AddButton
           onClick={this.handleAddCustomerClick}
           title="Add another customer"
+          disabled={this.state.customerCount >= this.limits.customerCount}
         />
 
         <div className={this.props.classes.divider} />
 
-        <h4 className={this.props.classes.groupLabel}>Main suppliers</h4>
-        <Checkbox label="I don't have suppliers yet" />
+        <h4 className={this.props.classes.groupLabel}>Top suppliers</h4>
+        <Checkbox
+          label="I don't have suppliers yet"
+          value={this.state.isDontHaveSuppliers}
+          onChange={event =>
+            this.setState({ isDontHaveSuppliers: event.target.checked })
+          }
+        />
         <Grid
           container
           spacing={3}
@@ -112,10 +128,18 @@ class CompanyBackgroundForm extends Component {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
-                  <TextInput id="UI0193" index={index} />
+                  <TextInput
+                    id="UI0193"
+                    indexes={[index]}
+                    disabled={this.state.isDontHaveSuppliers}
+                  />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                  <PureSelect id="UI0194" index={index} />
+                  <PureSelect
+                    id="UI0194"
+                    indexes={[index]}
+                    disabled={this.state.isDontHaveSuppliers}
+                  />
                 </Grid>
               </React.Fragment>
             );
@@ -124,12 +148,22 @@ class CompanyBackgroundForm extends Component {
         <AddButton
           onClick={this.handleAddSupplierClick}
           title="Add another supplier"
+          disabled={
+            this.state.isDontHaveSuppliers ||
+            this.state.supplierCount >= this.limits.supplierCount
+          }
         />
 
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>Main origin of goods</h4>
-        <Checkbox label="I don't trade with goods yet" />
+        <Checkbox
+          value={this.state.isDontTradingGoods}
+          onChange={event =>
+            this.setState({ isDontTradingGoods: event.target.checked })
+          }
+          label="I don't trade with goods yet"
+        />
         <Grid
           container
           spacing={3}
@@ -138,7 +172,14 @@ class CompanyBackgroundForm extends Component {
           <Grid item md={6} sm={12}>
             {Array.from(Array(this.state.countryOfOriginCount).keys()).map(
               index => {
-                return <PureSelect key={index} id="UI0197" index={index} />;
+                return (
+                  <PureSelect
+                    key={index}
+                    id="UI0197"
+                    indexes={[index]}
+                    disabled={this.state.isDontTradingGoods}
+                  />
+                );
               }
             )}
           </Grid>
@@ -146,6 +187,10 @@ class CompanyBackgroundForm extends Component {
         <AddButton
           onClick={this.handleAddCountryOfOriginClick}
           title="Add another country of origin"
+          disabled={
+            this.state.isDontTradingGoods ||
+            this.state.countryOfOriginCount >= this.limits.countryOfOriginCount
+          }
         />
 
         <div className={this.props.classes.controlsWrapper}>

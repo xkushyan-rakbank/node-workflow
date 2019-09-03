@@ -55,20 +55,20 @@ class SignatoryEmploymentDetailsForm extends Component {
         >
           <Grid item md={6} sm={12}>
             {/* Not sure about UI0347 id prospect.signatoryInfo[*].employmentDetails.occupation - on design mockups was "Qualification" label */}
-            <TextInput id="UI0347" index={this.props.index} />
+            <TextInput id="UI0347" indexes={[this.props.index]} />
 
-            <PureSelect id="UI0337" index={this.props.index} />
+            <PureSelect id="UI0337" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0348" index={this.props.index} />
-            <TextInput id="UI0343" index={this.props.index} />
+            <TextInput id="UI0348" indexes={[this.props.index]} />
+            <TextInput id="UI0343" indexes={[this.props.index]} />
           </Grid>
           <Grid item sm={12}>
             <Checkbox label="This Person works at Designit Arabia" />
           </Grid>
           <Grid item sm={12}>
             {/* not sure UI0346 id prospect.signatoryInfo[*].employmentDetails.employerName - on design mockups was "Company Name" label*/}
-            <TextInput id="UI0346" index={this.props.index} />
+            <TextInput id="UI0346" indexes={[this.props.index]} />
           </Grid>
         </Grid>
 

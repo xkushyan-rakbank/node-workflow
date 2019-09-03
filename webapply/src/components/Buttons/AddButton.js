@@ -15,7 +15,10 @@ const style = {
     backgroundColor: "#ffffff",
     cursor: "pointer",
     padding: "0",
-    outline: "none"
+    outline: "none",
+    "&[disabled]": {
+      opacity: "0.5"
+    }
   },
   text: {
     fontSize: "14px",

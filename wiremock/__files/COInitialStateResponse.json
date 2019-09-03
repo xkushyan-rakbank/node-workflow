@@ -1065,14 +1065,41 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Currencies",
 			"placeholder": "",
+			"title": "You will get one RAKstarter account number for each currency you select. Have in mind that each account is charged separately.",
 			"path": "$.prospect.accountInfo[*].accountCurrencies",
 			"name": "prospect.accountInfo[*].accountCurrencies",
 			"required": false,
-			"datalistId": null,
 			"default": "AED",
-			"help": ""
+			"help": "",
+			"datalistId": "currencies",
+			"datalist": [
+				{
+					"code": "cur1",
+					"key": "cur1",
+					"value": "currency 1",
+					"displayText": "currency 1"
+				},
+				{
+					"code": "cur2",
+					"key": "cur2",
+					"value": "currency 2",
+					"displayText": "currency 2"
+				},
+				{
+					"code": "cur3",
+					"key": "cur3",
+					"value": "currency 3",
+					"displayText": "currency 3"
+				},
+				{
+					"code": "cur4",
+					"key": "cur4",
+					"value": "currency 4",
+					"displayText": "currency 4"
+				}
+			]
 		},
 		"UI0050": {
 			"criteria": {
@@ -1687,13 +1714,39 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
-			"placeholder": "",
+			"label": "City",
+			"placeholder": "City",
 			"path": "$.prospect.organizationInfo.branchCity",
 			"name": "prospect.organizationInfo.branchCity",
 			"required": true,
-			"datalistId": null,
-			"help": ""
+			"help": "",
+			"datalistId": "cities",
+			"datalist": [
+				{
+					"code": "cities1",
+					"key": "cities1",
+					"value": "cities1",
+					"displayText": "cities1"
+				},
+				{
+					"code": "cities2",
+					"key": "cities2",
+					"value": "cities2",
+					"displayText": "cities2"
+				},
+				{
+					"code": "cities3",
+					"key": "cities3",
+					"value": "cities3",
+					"displayText": "cities3"
+				},
+				{
+					"code": "cities4",
+					"key": "cities4",
+					"value": "cities4",
+					"displayText": "cities4"
+				}
+			]
 		},
 		"UI0074": {
 			"criteria": {
@@ -1718,13 +1771,39 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
-			"placeholder": "",
+			"label": "Branch",
+			"placeholder": "Branch",
 			"path": "$.prospect.organizationInfo.branchID",
 			"name": "prospect.organizationInfo.branchID",
 			"required": true,
-			"datalistId": null,
-			"help": ""
+			"help": "",
+			"datalistId": "branchId",
+			"datalist": [
+				{
+					"code": "branchId1",
+					"key": "branchId1",
+					"value": "branchId1",
+					"displayText": "branchId1"
+				},
+				{
+						"code": "branchId2",
+						"key": "branchId2",
+						"value": "branchId2",
+						"displayText": "branchId2"
+				},
+				{
+					"code": "branchId3",
+					"key": "branchId3",
+					"value": "branchId3",
+					"displayText": "branchId3"
+				},
+				{
+					"code": "branchId4",
+					"key": "branchId4",
+					"value": "branchId4",
+					"displayText": "branchId4"
+				}
+			]
 		},
 		"UI0076": {
 			"criteria": {
@@ -2591,15 +2670,53 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Emirate",
 			"placeholder": "",
 			"path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].emirateCity",
 			"name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].emirateCity",
 			"required": false,
-			"datalistId": null,
+			"datalistId": "EmirateCityList",
 			"help": "",
 			"maxlength": "200",
-			"pattern": "^[a-zA-Z]*$"
+			"pattern": "^[a-zA-Z]*$",
+			"datalist": [
+				{
+					"code": "Dubai",
+					"key": "Dubai",
+					"value": "Dubai",
+					"displayText": "Dubai"
+				},
+				{
+					"code": "AD",
+					"key": "AD",
+					"value": "AD",
+					"displayText": "Abu Dhabi"
+				},
+				{
+					"code": "SH",
+					"key": "SH",
+					"value": "SH",
+					"displayText": "Sharjah"
+				},
+				{
+					"code": "F",
+					"key": "F",
+					"value": "F",
+					"displayText": "Fujairah"
+				},
+				{
+					"code": "A",
+					"key": "A",
+					"value": "A",
+					"displayText": "Ajman"
+				},
+				{
+					"code": "RK",
+					"key": "RK",
+					"value": "RK",
+					"displayText": "Ras Al Khaimah"
+				}
+			]
 		},
 		"UI0115": {
 			"criteria": {
@@ -4918,13 +5035,43 @@
 			"path": "$.prospect.orgKYCDetails.entitiesInUAE[*].emirate",
 			"name": "prospect.orgKYCDetails.entitiesInUAE[*].emirate",
 			"required": false,
-			"datalistId": "EmirateList",
+			"datalistId": "EmirateCityList",
 			"datalist": [
 				{
-					"code": "AE",
-					"key": "AE",
-					"value": "AE",
-					"displayText": "Emirate"
+					"code": "Dubai",
+					"key": "Dubai",
+					"value": "Dubai",
+					"displayText": "Dubai"
+				},
+				{
+					"code": "AD",
+					"key": "AD",
+					"value": "AD",
+					"displayText": "Abu Dhabi"
+				},
+				{
+					"code": "SH",
+					"key": "SH",
+					"value": "SH",
+					"displayText": "Sharjah"
+				},
+				{
+					"code": "F",
+					"key": "F",
+					"value": "F",
+					"displayText": "Fujairah"
+				},
+				{
+					"code": "A",
+					"key": "A",
+					"value": "A",
+					"displayText": "Ajman"
+				},
+				{
+					"code": "RK",
+					"key": "RK",
+					"value": "RK",
+					"displayText": "Ras Al Khaimah"
 				}
 			]
 		},
@@ -7052,8 +7199,8 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "Primary Mobile No",
-			"placeholder": "Primary Mobile No",
+			"label": "Mobile Number",
+			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].contactDetails.primaryMobileNo",
 			"name": "prospect.signatoryInfo[*].contactDetails.primaryMobileNo",
 			"required": false,
@@ -7085,7 +7232,7 @@
 			},
 			"applicable": true,
 			"label": "+971",
-			"placeholder": "+971",
+			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].contactDetails.primaryMobCountryCode",
 			"name": "prospect.signatoryInfo[*].contactDetails.primaryMobCountryCode",
 			"required": false,
@@ -7826,7 +7973,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Same as Company Address",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].sameAsCompanyAddress",
 			"name": "prospect.signatoryInfo[*].sameAsCompanyAddress",
@@ -8053,7 +8200,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Flat / Villa / Building",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].preferredAddress",
 			"name": "prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].preferredAddress",
@@ -8083,7 +8230,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Street / Location",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].addressLine1",
 			"name": "prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].addressLine1",
@@ -8215,7 +8362,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "PO Box Number",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].poBox",
 			"name": "prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].poBox",
@@ -8248,15 +8395,53 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Emirate",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].emirateCity",
 			"name": "prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].emirateCity",
 			"required": false,
-			"datalistId": null,
+			"datalistId": "EmirateCityList",
 			"help": "",
 			"maxlength": "200",
-			"pattern": "^[a-zA-Z]*$"
+			"pattern": "^[a-zA-Z]*$",
+			"datalist": [
+				{
+					"code": "Dubai",
+					"key": "Dubai",
+					"value": "Dubai",
+					"displayText": "Dubai"
+				},
+				{
+					"code": "AD",
+					"key": "AD",
+					"value": "AD",
+					"displayText": "Abu Dhabi"
+				},
+				{
+					"code": "SH",
+					"key": "SH",
+					"value": "SH",
+					"displayText": "Sharjah"
+				},
+				{
+					"code": "F",
+					"key": "F",
+					"value": "F",
+					"displayText": "Fujairah"
+				},
+				{
+					"code": "A",
+					"key": "A",
+					"value": "A",
+					"displayText": "Ajman"
+				},
+				{
+					"code": "RK",
+					"key": "RK",
+					"value": "RK",
+					"displayText": "Ras Al Khaimah"
+				}
+			]
 		},
 		"UI0370": {
 			"criteria": {
@@ -8281,16 +8466,42 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Country",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].country",
 			"name": "prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].country",
 			"required": false,
-			"datalistId": null,
+			"datalistId": "CountryList",
 			"help": "",
 			"default": "AE",
 			"maxlength": "100",
-			"pattern": "^[a-zA-Z]*$"
+			"pattern": "^[a-zA-Z]*$",
+			"datalist": [
+				{
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "United Arab Emirates"
+				},
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "United States"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "Ukraine"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "Great Britain"
+				}
+			]
 		},
 		"UI0371": {
 			"criteria": {
@@ -9920,8 +10131,8 @@
 					}
 				]
 			},
-			"branchCity": "LOVs to be confirmed by Bank",
-			"branchID": "LOVs to be confirmed by Bank",
+			"branchCity": "",
+			"branchID": "",
 			"countryOfIncorporation": "",
 			"companyName": "",
 			"shortName": "",

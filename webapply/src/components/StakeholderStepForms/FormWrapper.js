@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
+import cx from "classnames";
 import ContinueButton from "../Buttons/ContinueButton";
 
 const styles = {
@@ -16,7 +17,7 @@ const styles = {
 
 const FormWrapper = props => {
   return (
-    <form className={props.classes.formWrapper}>
+    <form className={cx(props.classes.formWrapper, props.className)}>
       {props.children}
       <div className={props.classes.buttonWrapper}>
         <ContinueButton handleClick={props.handleContinue} />

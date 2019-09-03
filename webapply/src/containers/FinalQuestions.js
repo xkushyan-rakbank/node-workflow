@@ -3,6 +3,9 @@ import { withStyles } from "@material-ui/core/styles";
 import SectionTitle from "../components/SectionTitle";
 import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard";
 import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryCard";
+import { Link } from "react-router-dom";
+import routes from "../routes";
+import SubmitButton from "../components/Buttons/SubmitButton";
 
 const style = {
   sectionContainer: {
@@ -64,6 +67,11 @@ class FinalQuestions extends React.Component {
               />
             );
           })}
+        </div>
+        <div className="linkContainer">
+          <Link to={routes.selectServices}>
+            <SubmitButton />
+          </Link>
         </div>
       </>
     );

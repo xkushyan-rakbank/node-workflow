@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import SectionTitle from "../SectionTitle";
-import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -8,6 +8,8 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
+import InfoTitle from "../InfoTitle";
+import { getInputValueById } from "../../store/selectors/appConfig";
 
 const style = {
   title: {
@@ -26,7 +28,7 @@ const style = {
     marginBottom: "0"
   },
   divider: {
-    marginTop: "30px",
+    marginTop: "0px",
     borderBottom: "solid 1px rgba(230, 230, 230, 0.5)"
   },
   controlsWrapper: {
@@ -48,6 +50,10 @@ class CompanyAnticipatedTransactionsForm extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      totalMonthlyCreditsValue: 0
+    };
+
     this.commonInputProps = {
       endAdornment: (
         <InputAdornment position="end">
@@ -55,6 +61,19 @@ class CompanyAnticipatedTransactionsForm extends Component {
         </InputAdornment>
       )
     };
+  }
+
+  getTotalMonthlyCreditsValue() {
+    const { annualFinancialTurnover } = this.props;
+    if (
+      !annualFinancialTurnover ||
+      Number.isNaN(Number(annualFinancialTurnover))
+    ) {
+      return "Total Monthly Credits";
+    }
+    return `${(annualFinancialTurnover / 12).toFixed(
+      0
+    )} in Total Monthly Credits`;
   }
 
   render() {
@@ -65,9 +84,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
           className={this.props.classes.title}
         />
 
-        <h4 className={this.props.classes.groupLabel}>
-          Source of funds from the business
-        </h4>
         <Grid
           container
           spacing={3}
@@ -81,7 +97,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>
-          Details of anticipated transactions
+          Anticipated monthly transactions
         </h4>
         <Grid
           container
@@ -95,8 +111,9 @@ class CompanyAnticipatedTransactionsForm extends Component {
                 variant="outlined"
                 disabled
                 InputProps={this.commonInputProps}
-                value="12300 in Total Monthly Credits"
+                value={this.getTotalMonthlyCreditsValue()}
               />
+              <InfoTitle title="This section is calculated based on the company’s Annual Financial Turnover" />
             </FormControl>
           </Grid>
           <Grid item md={6} sm={12}>
@@ -124,7 +141,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
             <TextInput id="UI0216" InputProps={this.commonInputProps} />
           </Grid>
         </Grid>
-        <Checkbox label="The company uses virtual currencies" />
 
         <div className={this.props.classes.controlsWrapper}>
           <ContinueButton handleClick={this.props.handleContinue} />
@@ -134,4 +150,10 @@ class CompanyAnticipatedTransactionsForm extends Component {
   }
 }
 
-export default withStyles(style)(CompanyAnticipatedTransactionsForm);
+const mapStateToProps = state => ({
+  annualFinancialTurnover: getInputValueById(state, "UI0184")
+});
+
+export default withStyles(style)(
+  connect(mapStateToProps)(CompanyAnticipatedTransactionsForm)
+);
