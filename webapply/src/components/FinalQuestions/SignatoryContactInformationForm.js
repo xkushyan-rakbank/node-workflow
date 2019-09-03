@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
-import CombinedSelect from "../InputField/CombinedSelect";
 
 const style = {
   title: {
@@ -53,7 +52,7 @@ class SignatoryContactInformationForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            <CombinedSelect selectId="UI0327" inputId="UI0326" />
+            <TextInput id="UI0326" selectId="UI0327" withSelect />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput id="UI0325" />

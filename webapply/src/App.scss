@@ -85,9 +85,6 @@ form .MuiGrid-root {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  &.MuiInputLabel-shrink {
-    max-width: unset;
-  }
 }
 
 .flexContainerForButton {
@@ -133,6 +130,7 @@ form .MuiGrid-root {
 }
 
 a {
+  text-decoration: none;
   &:hover {
     text-decoration: none;
   }

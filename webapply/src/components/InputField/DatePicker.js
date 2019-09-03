@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 import DateFnsUtils from "@date-io/date-fns";
 import FormControl from "@material-ui/core/FormControl";
 import { compose } from "recompose";
@@ -10,6 +11,7 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import InfoTitle from "./../InfoTitle";
+import ErrorMessage from "./../ErrorMessage";
 import validate from "./../../utils/validate";
 import { updateField } from "../../store/actions/appConfig";
 
@@ -46,12 +48,12 @@ class DatePicker extends React.Component {
   };
 
   updateField = value => {
+    console.log(value);
     const { name } = this.props.config;
     this.props.updateField({ value, name });
   };
 
   fieldValidation = event => {
-    console.log("object");
     const field = event.target;
     const fieldConfig = this.props.config;
     const errors = validate(field, fieldConfig);
@@ -63,6 +65,7 @@ class DatePicker extends React.Component {
   render() {
     const { value, classes, config } = this.props;
     const { fieldErrors } = this.state;
+    const isError = !isEmpty(fieldErrors);
 
     return (
       <FormControl className="formControl">
@@ -81,6 +84,8 @@ class DatePicker extends React.Component {
               className={classes.datePicker}
               value={value}
               onChange={this.updateField}
+              onBlur={this.fieldValidation}
+              error={isError}
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}
@@ -91,6 +96,13 @@ class DatePicker extends React.Component {
         )}
 
         {!!config.title && <InfoTitle title={config.title} />}
+
+        {isError && (
+          <ErrorMessage
+            error={fieldErrors.error}
+            multiLineError={fieldErrors.multiLineError}
+          />
+        )}
       </FormControl>
     );
   }

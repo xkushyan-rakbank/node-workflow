@@ -10,7 +10,6 @@ import PureSelect from "../InputField/PureSelect";
 import TextField from "@material-ui/core/TextField";
 import InfoTitle from "../InfoTitle";
 import FormControl from "@material-ui/core/FormControl";
-import CombinedSelect from "../InputField/CombinedSelect";
 
 const style = {
   title: {
@@ -129,9 +128,9 @@ class CompanyContactInformationForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            <CombinedSelect selectId="UI0130" inputId="UI0129" />
+            <TextInput id="UI0129" selectId="UI0130" withSelect />
             {this.state.secondaryPhoneNumber && (
-              <CombinedSelect selectId="UI0136" inputId="UI0133" />
+              <TextInput id="UI0133" selectId="UI0136" withSelect />
             )}
           </Grid>
           <Grid item md={6} sm={12}>

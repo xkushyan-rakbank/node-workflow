@@ -98,11 +98,11 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "+971",
+			"label": "",
 			"placeholder": "+971",
 			"path": "$.prospect.applicantInfo.countryCode",
 			"name": "prospect.applicantInfo.countryCode",
-			"required": true,
+			"required": false,
 			"help": "",
 			"pattern": "^[0-9]*$",
 			"maxlength": "3",
@@ -9852,7 +9852,7 @@
 	"prospect": {
 		"applicantInfo": {
 			"fullName": "",
-			"email": "user@example.com",
+			"email": "",
 			"countryCode": "",
 			"mobileNo": "",
 			"apply": ""

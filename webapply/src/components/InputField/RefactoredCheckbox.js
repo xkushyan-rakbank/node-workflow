@@ -69,11 +69,12 @@ class CustomCheckbox extends React.Component {
   };
 
   render() {
-    const { config, classes, value } = this.props;
+    const { config, classes, value, id } = this.props;
     return (
       <label className={classes.checkboxWrapper}>
         <div className={classes.checkboxContainer}>
           <input
+            id={id}
             type="checkbox"
             value={value}
             name={config.name}

@@ -28,7 +28,6 @@ const style = {
 };
 
 const ErrorMessage = ({ error, multiLineError, classes }) => {
-  console.log(!!multiLineError);
   return (
     <div className={classes.error}>
       <div className="flexAlignCenter">

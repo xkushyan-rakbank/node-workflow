@@ -79,15 +79,15 @@ class Input extends React.Component {
   updateField = event => {
     const value = event.target.value;
     const { name } = this.props.config;
+
     this.props.updateField({ value, name });
   };
 
   fieldValidation = event => {
     const field = event.target;
-
     const fieldConfig = this.props.config;
-
     const errors = validate(field, fieldConfig);
+
     this.setState({
       fieldErrors: errors
     });
@@ -108,9 +108,7 @@ class Input extends React.Component {
 
     const { fieldErrors } = this.state;
     const attrs = fieldAttr(id, config);
-
     const isError = !isEmpty(fieldErrors);
-    console.log("isError", isError);
 
     if (id && config.label) {
       return (
@@ -133,6 +131,7 @@ class Input extends React.Component {
                 variant="outlined"
                 value={value || ""}
                 label={config.label}
+                name={config.name}
                 className={cx(classes.textField, className)}
                 onChange={this.updateField}
                 inputProps={{
@@ -164,7 +163,6 @@ class Input extends React.Component {
 const mapStateToProps = (state, { id }) => {
   const config = state.appConfig.uiConfig[id] || {};
   const value = get(state.appConfig, config.name);
-  console.log("state", state);
   return {
     config,
     value

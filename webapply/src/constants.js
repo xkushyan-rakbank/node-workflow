@@ -88,9 +88,8 @@ export const codes = [
 
 export const fieldAttr = (id, fieldConfig) => {
   return {
-    id: fieldConfig.id,
+    id: id,
     type: fieldConfig.type || "text",
-    name: fieldConfig.name,
     min: fieldConfig.min,
     max: fieldConfig.max,
     maxLength: fieldConfig.maxlength,

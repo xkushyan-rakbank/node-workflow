@@ -1,4 +1,6 @@
 import React from "react";
+import { compose } from "recompose";
+import { connect } from "react-redux";
 import cx from "classnames";
 import get from "lodash/get";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -10,8 +12,6 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { withStyles } from "@material-ui/core/styles";
 import InfoTitle from "../InfoTitle";
 import { updateField } from "../../store/actions/appConfig";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 
 const styles = {
   selectField: {
@@ -64,6 +64,8 @@ class PureSelect extends React.Component {
 
   componentDidMount() {
     this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
+    // uncomitted when PureSelect component will replace Select in project
+    // window.addEventListener("resize", () => console.log(this.inputLabel));
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -80,7 +82,6 @@ class PureSelect extends React.Component {
 
   render() {
     const { config, value, id, classes, combinedSelect, disabled } = this.props;
-
     const className = combinedSelect
       ? classes.selectFieldCombined
       : classes.selectFieldBasic;

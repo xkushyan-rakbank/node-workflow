@@ -64,10 +64,10 @@ const AboutCompany = props => {
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0201" indexes="1" />
+            <PureSelect id="UI0201" indexes={[0]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0204" indexes="1" disabled />
+            <PureSelect id="UI0204" indexes={[0]} disabled />
           </Grid>
         </Grid>
 

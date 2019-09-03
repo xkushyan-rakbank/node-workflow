@@ -41,7 +41,7 @@ const Confirm = ({ classes }) => {
         <b> +791 756 565 840</b>. Please input here to Autenticate.
       </p>
       <form>
-        <Grid container xs={12} direction="row" justify="flex-start">
+        <Grid container item xs={12} direction="row" justify="flex-start">
           {Array.from(Array(6).keys()).map(index => (
             <Grid key={index} className={classes.squareInput}>
               <Input name={`code-${index}`} type="number" />

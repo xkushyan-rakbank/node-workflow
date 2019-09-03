@@ -1,14 +1,16 @@
 import React from "react";
+import { Fromik } from "formik";
 import { Link } from "react-router-dom";
 import { compose } from "recompose";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
-import CombinedSelect from "../components/InputField/CombinedSelect";
 import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import routes from "./../routes"; // remove it in future
+import validate from "./../utils/validate";
 
 const styles = {
   baseForm: {
@@ -22,14 +24,27 @@ const styles = {
 };
 
 class BasicsForm extends React.Component {
-  handleSubmit = event => {
+  submitForm = event => {
     event.preventDefault();
-    const isValid = event.target.checkValidity();
-    console.log(event.target.elements);
+    const fields = event.target.elements;
+    const fieldsConfig = this.props.config.uiConfig;
+    const errorList = [];
+    for (let i = 0; i < fields.length; i++) {
+      const id = fields[i].getAttribute("id");
+      const error = validate(fields[i], fieldsConfig[id]);
+      if (error) {
+        errorList.push(error);
+      }
+      fields[i].focus();
+    }
+
+    if (!errorList.length) {
+      this.props.history.push("/VerifyOTP");
+    }
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, config } = this.props;
 
     return (
       <div className={classes.baseForm}>
@@ -40,7 +55,7 @@ class BasicsForm extends React.Component {
           (autosave and finish at a later stage)
         </p>
 
-        <form onSubmit={this.handleSubmit} noValidate>
+        <form noValidate onSubmit={this.submitForm}>
           <TextInput id="UI0001" />
 
           <TextInput id="UI0002" />
@@ -60,14 +75,25 @@ class BasicsForm extends React.Component {
               onError={() => console.log("ReCaptcha onError callback")}
             />
           </ErrorBoundary>
-          <div className="linkContainer">
-            <Link to={routes.verifyOtp}>
-              <SubmitButton />
-            </Link>
-          </div>
+
+          <SubmitButton />
         </form>
       </div>
     );
   }
 }
-export default withStyles(styles)(BasicsForm);
+
+const mapStateToProps = state => {
+  const config = state.appConfig || {};
+  return {
+    config
+  };
+};
+
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    null
+  )
+)(BasicsForm);
