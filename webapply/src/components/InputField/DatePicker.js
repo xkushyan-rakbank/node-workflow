@@ -51,7 +51,6 @@ class DatePicker extends React.Component {
   };
 
   fieldValidation = event => {
-    console.log("object");
     const field = event.target;
     const fieldConfig = this.props.config;
     const errors = validate(field, fieldConfig);

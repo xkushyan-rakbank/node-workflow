@@ -1065,14 +1065,41 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Currencies",
 			"placeholder": "",
+			"title": "You will get one RAKstarter account number for each currency you select. Have in mind that each account is charged separately.",
 			"path": "$.prospect.accountInfo[*].accountCurrencies",
 			"name": "prospect.accountInfo[*].accountCurrencies",
 			"required": false,
-			"datalistId": null,
 			"default": "AED",
-			"help": ""
+			"help": "",
+			"datalistId": "currencies",
+			"datalist": [
+				{
+					"code": "cur1",
+					"key": "cur1",
+					"value": "currency 1",
+					"displayText": "currency 1"
+				},
+				{
+					"code": "cur2",
+					"key": "cur2",
+					"value": "currency 2",
+					"displayText": "currency 2"
+				},
+				{
+					"code": "cur3",
+					"key": "cur3",
+					"value": "currency 3",
+					"displayText": "currency 3"
+				},
+				{
+					"code": "cur4",
+					"key": "cur4",
+					"value": "currency 4",
+					"displayText": "currency 4"
+				}
+			]
 		},
 		"UI0050": {
 			"criteria": {
@@ -1687,13 +1714,39 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
-			"placeholder": "",
+			"label": "City",
+			"placeholder": "City",
 			"path": "$.prospect.organizationInfo.branchCity",
 			"name": "prospect.organizationInfo.branchCity",
 			"required": true,
-			"datalistId": null,
-			"help": ""
+			"help": "",
+			"datalistId": "cities",
+			"datalist": [
+				{
+					"code": "cities1",
+					"key": "cities1",
+					"value": "cities1",
+					"displayText": "cities1"
+				},
+				{
+					"code": "cities2",
+					"key": "cities2",
+					"value": "cities2",
+					"displayText": "cities2"
+				},
+				{
+					"code": "cities3",
+					"key": "cities3",
+					"value": "cities3",
+					"displayText": "cities3"
+				},
+				{
+					"code": "cities4",
+					"key": "cities4",
+					"value": "cities4",
+					"displayText": "cities4"
+				}
+			]
 		},
 		"UI0074": {
 			"criteria": {
@@ -1718,13 +1771,39 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
-			"placeholder": "",
+			"label": "Branch",
+			"placeholder": "Branch",
 			"path": "$.prospect.organizationInfo.branchID",
 			"name": "prospect.organizationInfo.branchID",
 			"required": true,
-			"datalistId": null,
-			"help": ""
+			"help": "",
+			"datalistId": "branchId",
+			"datalist": [
+				{
+					"code": "branchId1",
+					"key": "branchId1",
+					"value": "branchId1",
+					"displayText": "branchId1"
+				},
+				{
+						"code": "branchId2",
+						"key": "branchId2",
+						"value": "branchId2",
+						"displayText": "branchId2"
+				},
+				{
+					"code": "branchId3",
+					"key": "branchId3",
+					"value": "branchId3",
+					"displayText": "branchId3"
+				},
+				{
+					"code": "branchId4",
+					"key": "branchId4",
+					"value": "branchId4",
+					"displayText": "branchId4"
+				}
+			]
 		},
 		"UI0076": {
 			"criteria": {
@@ -10052,8 +10131,8 @@
 					}
 				]
 			},
-			"branchCity": "LOVs to be confirmed by Bank",
-			"branchID": "LOVs to be confirmed by Bank",
+			"branchCity": "",
+			"branchID": "",
 			"countryOfIncorporation": "",
 			"companyName": "",
 			"shortName": "",

@@ -4,7 +4,7 @@ import DoneIcon from "@material-ui/icons/Done";
 import SectionTitle from "./SectionTitle";
 import LinkButton from "./Buttons/LinkButton";
 import { stakeHoldersSteps } from "../constants";
-import FormWrapper from "./StepForms/FormWrapper";
+import FormWrapper from "./StakeholderStepForms/FormWrapper";
 
 const styles = {
   title: {

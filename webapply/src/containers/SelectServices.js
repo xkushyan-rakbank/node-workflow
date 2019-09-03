@@ -1,12 +1,23 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import SubmitApplication from "./SubmitApplication";
+import SectionTitle from "../components/SectionTitle";
+import Select from "../components/InputField/PureSelect";
+import Grid from "@material-ui/core/Grid";
+import Subtitle from "../components/Subtitle";
+import Checkbox from "../components/InputField/Checkbox";
+import FormWrapper from "../components/StakeholderStepForms/FormWrapper";
+import ServicesStepper from "./ServicesStepper";
 
-const style = {};
+const style = {
+  formWrapper: {
+    margin: 0
+  }
+};
 
 class SelectServices extends React.Component {
   state = {
-    canSubmit: true
+    canSubmit: false
   };
 
   render() {
@@ -20,6 +31,8 @@ class SelectServices extends React.Component {
           Explanation text goes here. One to three short sentences maximum. This
           is the third sentence.
         </p>
+
+        <ServicesStepper />
       </>
     );
   }

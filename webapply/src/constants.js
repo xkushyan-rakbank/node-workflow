@@ -1,9 +1,12 @@
-import PersonalInformation from "./components/StepForms/PersonalInformation";
-import SignatoryRights from "./components/StepForms/SignatoryRights";
-import Shareholding from "./components/StepForms/Shareholding";
-import Nationality from "./components/StepForms/Nationality";
-import CountryOfResidence from "./components/StepForms/CountryOfResidence";
-import PublicPosition from "./components/StepForms/PublicPosition";
+import PersonalInformation from "./components/StakeholderStepForms/PersonalInformation";
+import SignatoryRights from "./components/StakeholderStepForms/SignatoryRights";
+import Shareholding from "./components/StakeholderStepForms/Shareholding";
+import Nationality from "./components/StakeholderStepForms/Nationality";
+import CountryOfResidence from "./components/StakeholderStepForms/CountryOfResidence";
+import PublicPosition from "./components/StakeholderStepForms/PublicPosition";
+import AccountDetails from "./components/ServicesStepForms/AccountDetails";
+import SigningPreferences from "./components/ServicesStepForms/SigningPreferences";
+import Channels from "./components/ServicesStepForms/Channels";
 import routes from "./routes";
 
 export const stakeHoldersSteps = [
@@ -119,4 +122,18 @@ export const formStepper = [
   { step: 4, title: "Final questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: undefined },
   { step: 6, title: "Select services", path: routes.selectServices }
+];
+
+export const servicesSteps = [
+  {
+    step: 1,
+    title: "Account details",
+    component: AccountDetails
+  },
+  {
+    step: 2,
+    title: "Signing preferences",
+    component: SigningPreferences
+  },
+  { step: 3, title: "Channels", component: Channels }
 ];

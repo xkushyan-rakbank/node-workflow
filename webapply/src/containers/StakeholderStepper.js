@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import { stakeHoldersSteps } from "../constants";
-import SuccessFilledStakeholder from "../components/StepForms/SuccessFilledStakeholder";
+import SuccessFilledStakeholder from "../components/StakeholderStepForms/SuccessFilledStakeholder";
 import StatusLoader from "../components/StatusLoader";
 
 const styles = {
