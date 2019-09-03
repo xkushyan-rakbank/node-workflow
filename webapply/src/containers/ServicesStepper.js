@@ -36,7 +36,9 @@ class ServicesStepper extends React.Component {
         {servicesSteps.map(item => {
           const setStep = () => this.setState({ step: item.step });
           const Component = item.component;
-          return item.step === this.state.step ? <Component /> : null;
+          return item.step === this.state.step ? (
+            <Component key={item.step} />
+          ) : null;
         })}
       </div>
     );
