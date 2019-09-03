@@ -206,7 +206,7 @@ class SignatorySummaryCard extends Component {
         content={this.renderCardContent()}
       >
         {this.state.isExpanded &&
-          this.sectionsConfig.map((item, index) => {
+          this.sectionsConfig.map(item => {
             const Component = item.component;
             return (
               <CollapsedSection

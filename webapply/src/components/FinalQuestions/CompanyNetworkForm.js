@@ -107,7 +107,7 @@ class CompanyNetworkForm extends Component {
                   <TextInput
                     key={index}
                     id="UI0221"
-                    index={index}
+                    indexes={[index]}
                     disabled={this.state.isDontHaveOtherBankAccounts}
                   />
                 );
@@ -151,7 +151,7 @@ class CompanyNetworkForm extends Component {
                     <TextInput
                       key={index}
                       id="UI0225"
-                      index={index}
+                      indexes={[index]}
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
                   </Grid>
@@ -159,7 +159,7 @@ class CompanyNetworkForm extends Component {
                     <TextInput
                       key={index}
                       id="UI0228"
-                      index={index}
+                      indexes={[index]}
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
                   </Grid>
@@ -167,7 +167,7 @@ class CompanyNetworkForm extends Component {
                     <PureSelect
                       key={index}
                       id="UI0226"
-                      index={index}
+                      indexes={[index]}
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
                   </Grid>
@@ -212,7 +212,7 @@ class CompanyNetworkForm extends Component {
                     <TextInput
                       key={index}
                       id="UI0232"
-                      index={index}
+                      indexes={[index]}
                       disabled={this.state.isDontHaveOutsideSubsidiary}
                     />
                   </Grid>
@@ -220,7 +220,7 @@ class CompanyNetworkForm extends Component {
                     <PureSelect
                       key={index}
                       id="UI0233"
-                      index={index}
+                      indexes={[index]}
                       disabled={this.state.isDontHaveOutsideSubsidiary}
                     />
                   </Grid>

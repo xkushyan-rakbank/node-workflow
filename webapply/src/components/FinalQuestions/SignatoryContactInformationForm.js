@@ -6,7 +6,6 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import CombinedSelect from "../InputField/CombinedSelect";
 import AddButton from "../Buttons/AddButton";
-import Checkbox from "../InputField/Checkbox";
 import PureSelect from "../InputField/PureSelect";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
 
@@ -67,20 +66,28 @@ class SignatoryContactInformationForm extends Component {
         >
           <Grid item sm={12}>
             <CustomCheckbox id="UI0350" indexes={[this.props.index]} />
-            <TextInput id="UI0361" />
+            <TextInput id="UI0361" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0364" />
-            <PureSelect id="UI0370" />
-            <CombinedSelect selectId="UI0324" inputId="UI0323" />
+            <TextInput id="UI0364" indexes={[this.props.index]} />
+            <PureSelect id="UI0370" indexes={[this.props.index]} />
+            <CombinedSelect
+              selectId="UI0324"
+              inputId="UI0323"
+              indexes={[this.props.index]}
+            />
             {this.state.isAddLandlineNumber && (
-              <CombinedSelect selectId="UI0327" inputId="UI0326" />
+              <CombinedSelect
+                selectId="UI0327"
+                inputId="UI0326"
+                indexes={[this.props.index]}
+              />
             )}
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0368" />
-            <PureSelect id="UI0369" />
-            <TextInput id="UI0325" />
+            <TextInput id="UI0368" indexes={[this.props.index]} />
+            <PureSelect id="UI0369" indexes={[this.props.index]} />
+            <TextInput id="UI0325" indexes={[this.props.index]} />
           </Grid>
         </Grid>
 

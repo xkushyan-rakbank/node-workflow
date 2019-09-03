@@ -45,7 +45,7 @@ const Shareholding = props => {
           label="Percentage"
           placeholder="Percentage"
           value={percentage}
-          onChange={setPercentage}
+          onChange={({ target: { value } }) => setPercentage(value)}
         />
         <div className={props.classes.percentageIcon}>%</div>
       </Grid>

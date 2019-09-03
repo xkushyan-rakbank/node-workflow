@@ -37,7 +37,7 @@ const Nationality = props => {
             label="Passport Number"
             placeholder="Passport Number"
             value={passportNumber}
-            onChange={setPassportNumber}
+            onChange={({ target: { value } }) => setPassportNumber(value)}
           />
         </Grid>
       </Grid>

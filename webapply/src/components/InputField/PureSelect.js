@@ -12,6 +12,7 @@ import InfoTitle from "../InfoTitle";
 import { updateField } from "../../store/actions/appConfig";
 import { compose } from "recompose";
 import { connect } from "react-redux";
+import combineNestingName from "../../utils/combineNestingName";
 
 const styles = {
   selectField: {
@@ -74,7 +75,7 @@ class PureSelect extends React.Component {
 
   updateField = event => {
     const { value } = event.target;
-    const { name } = this.props.config;
+    const { name } = this.props;
     this.props.updateField({ value, name });
   };
 
@@ -123,13 +124,19 @@ class PureSelect extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id }) => {
+const mapStateToProps = (state, { id, indexes }) => {
   const config = state.appConfig.uiConfig[id] || {};
-  const value = get(state.appConfig, config.name);
+  const name =
+    config.name && config.name.search(/\*/)
+      ? combineNestingName(config.name, indexes)
+      : config.name;
+
+  const value = get(state.appConfig, name);
 
   return {
     config,
-    value
+    value,
+    name
   };
 };
 

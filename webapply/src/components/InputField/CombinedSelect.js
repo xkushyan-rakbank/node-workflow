@@ -35,11 +35,11 @@ const style = {
 };
 
 const CombinedSelect = props => {
-  const { selectId, inputId, classes } = props;
+  const { selectId, inputId, classes, indexes } = props;
   return (
     <FormGroup className={classes.selectCombined}>
-      <PureSelect id={selectId} combinedSelect />
-      <TextInput id={inputId} />
+      <PureSelect id={selectId} combinedSelect indexes={indexes} />
+      <TextInput id={inputId} indexes={indexes} />
     </FormGroup>
   );
 };

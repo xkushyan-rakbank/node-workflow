@@ -14,6 +14,7 @@ import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
 import validate from "./../../utils/validate";
+import combineNestingName from "../../utils/combineNestingName";
 
 const styles = {
   textField: {
@@ -78,7 +79,7 @@ class Input extends React.Component {
 
   updateField = event => {
     const value = event.target.value;
-    const { name } = this.props.config;
+    const { name } = this.props;
     this.props.updateField({ value, name });
   };
 
@@ -164,13 +165,19 @@ class Input extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id }) => {
+const mapStateToProps = (state, { id, indexes }) => {
   const config = state.appConfig.uiConfig[id] || {};
-  const value = get(state.appConfig, config.name);
-  console.log("state", state);
+  const name =
+    config.name && config.name.search(/\*/)
+      ? combineNestingName(config.name, indexes)
+      : config.name;
+
+  const value = get(state.appConfig, name);
+
   return {
     config,
-    value
+    value,
+    name
   };
 };
 

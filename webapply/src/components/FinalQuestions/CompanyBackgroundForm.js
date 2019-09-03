@@ -94,10 +94,10 @@ class CompanyBackgroundForm extends Component {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
-                  <TextInput id="UI0188" index={index} />
+                  <TextInput id="UI0188" indexes={[index]} />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                  <PureSelect id="UI0189" index={index} />
+                  <PureSelect id="UI0189" indexes={[index]} />
                 </Grid>
               </React.Fragment>
             );
@@ -130,14 +130,14 @@ class CompanyBackgroundForm extends Component {
                 <Grid item md={6} sm={12}>
                   <TextInput
                     id="UI0193"
-                    index={index}
+                    indexes={[index]}
                     disabled={this.state.isDontHaveSuppliers}
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <PureSelect
                     id="UI0194"
-                    index={index}
+                    indexes={[index]}
                     disabled={this.state.isDontHaveSuppliers}
                   />
                 </Grid>
@@ -176,7 +176,7 @@ class CompanyBackgroundForm extends Component {
                   <PureSelect
                     key={index}
                     id="UI0197"
-                    index={index}
+                    indexes={[index]}
                     disabled={this.state.isDontTradingGoods}
                   />
                 );
