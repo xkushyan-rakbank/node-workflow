@@ -8,6 +8,7 @@ import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import validate from "./../utils/validate";
+import PureSelect from "../components/InputField/PureSelect";
 
 const styles = {
   baseForm: {
@@ -60,7 +61,13 @@ class BasicsForm extends React.Component {
           <TextInput
             id="Aplnt.mobileNo"
             selectId="Aplnt.countryCode"
-            withSelect
+            select={
+              <PureSelect
+                id="Aplnt.countryCode"
+                combinedSelect
+                defaultValue="USA"
+              />
+            }
           />
 
           <RefactoredCheckbox id="Aplnt.applyOnbehalf" />

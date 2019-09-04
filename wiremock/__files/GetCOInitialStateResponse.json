@@ -3267,11 +3267,37 @@
 			"path": "$.prospect.organizationInfo.contactDetails.secondaryMobileCountryCode",
 			"name": "prospect.organizationInfo.contactDetails.secondaryMobileCountryCode",
 			"required": false,
-			"datalistId": null,
+			"datalistId": "CountryCode",
 			"readonlyFor": [
 			],
 			"maxlength": "60",
-			"pattern": "^[0-9]*$"
+			"pattern": "^[0-9]*$",
+			"datalist": [
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "+791"
+				},
+				{
+					"code": "EUR",
+					"key": "EUR",
+					"value": "EUR",
+					"displayText": "+992"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "+380"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "+391"
+				}
+			]
 		},
 		"OrgCont.secondaryEmail": {
 			"criteria": {

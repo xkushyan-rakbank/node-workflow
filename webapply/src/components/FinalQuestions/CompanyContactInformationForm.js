@@ -128,14 +128,24 @@ class CompanyContactInformationForm extends Component {
           <Grid item md={6} sm={12}>
             <TextInput
               id="OrgCont.primaryPhoneNo"
-              selectId="OrgCont.primaryPhoneCountryCode"
-              withSelect
+              select={
+                <PureSelect
+                  id="OrgCont.primaryPhoneCountryCode"
+                  defaultValue="USA"
+                  combinedSelect
+                />
+              }
             />
             {this.state.secondaryPhoneNumber && (
               <TextInput
                 id="OrgCont.secondaryPhoneNo"
-                selectId="OrgCont.secondaryMobileCountryCode"
-                withSelect
+                select={
+                  <PureSelect
+                    id="OrgCont.secondaryMobileCountryCode"
+                    defaultValue="USA"
+                    combinedSelect
+                  />
+                }
               />
             )}
           </Grid>

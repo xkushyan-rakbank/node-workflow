@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextInput from "../InputField/TextInput";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
+import PureSelect from "../InputField/PureSelect";
 
 const PersonalInformation = ({ index }) => {
   return (
@@ -14,10 +15,11 @@ const PersonalInformation = ({ index }) => {
       <Grid item container spacing={3}>
         <Grid item md={6} sm={12}>
           <TextInput
-            withSelect
-            selectId="Sig.gender"
             id="Sig.firstName"
             indexes={[index]}
+            select={
+              <PureSelect id="Sig.gender" indexes={[index]} combinedSelect />
+            }
           />
         </Grid>
         <Grid item md={6} sm={12}>

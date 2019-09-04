@@ -10,7 +10,6 @@ import get from "lodash/get";
 import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";
 import InfoTitle from "./../InfoTitle";
-import PureSelect from "./PureSelect";
 import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
@@ -113,9 +112,7 @@ class Input extends React.Component {
       InputProps,
       InputLabelProps,
       disabled,
-      withSelect,
-      selectId,
-      indexes
+      select
     } = this.props;
 
     const { fieldErrors } = this.state;
@@ -126,19 +123,17 @@ class Input extends React.Component {
       return (
         <div
           className={cx({
-            [classes.selectCombinedWrapper]: withSelect,
-            [classes.regularWrapper]: !withSelect
+            [classes.selectCombinedWrapper]: select,
+            [classes.regularWrapper]: !select
           })}
         >
           <FormGroup
             className={cx({
-              [classes.selectCombined]: withSelect,
+              [classes.selectCombined]: select,
               [classes.selectCombinedError]: isError
             })}
           >
-            {!!withSelect && (
-              <PureSelect id={selectId} indexes={indexes} combinedSelect />
-            )}
+            {select}
             <FormControl className="formControl">
               <TextField
                 InputLabelProps={InputLabelProps}

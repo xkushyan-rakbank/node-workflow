@@ -80,19 +80,29 @@ class SignatoryContactInformationForm extends Component {
             />
             <PureSelect id="SigAddrAdrd.country" indexes={[this.props.index]} />
             <TextInput
-              withSelect
-              selectId="SigCont.primaryMobCountryCode"
               id="SigCont.primaryMobileNo"
               indexes={[this.props.index]}
-              defaultSelectValue="USA"
+              select={
+                <PureSelect
+                  id="SigCont.primaryMobCountryCode"
+                  indexes={[this.props.index]}
+                  defaultValue="USA"
+                  combinedSelect
+                />
+              }
             />
             {this.state.isAddLandlineNumber && (
               <TextInput
-                withSelect
-                selectId="SigCont.primaryPhoneCountryCode"
+                select={
+                  <PureSelect
+                    id="SigCont.primaryPhoneCountryCode"
+                    indexes={[this.props.index]}
+                    defaultValue="USA"
+                    combinedSelect
+                  />
+                }
                 id="SigCont.primaryPhoneNo"
                 indexes={[this.props.index]}
-                defaultSelectValue="USA"
               />
             )}
           </Grid>
