@@ -90,7 +90,10 @@ class CompanyAnticipatedTransactionsForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item sm={12}>
-            <TextInput id="UI0184" InputProps={this.commonInputProps} />
+            <TextInput
+              id="Okyc.annualFinTurnoverAmtInAED"
+              InputProps={this.commonInputProps}
+            />
           </Grid>
         </Grid>
 
@@ -117,10 +120,16 @@ class CompanyAnticipatedTransactionsForm extends Component {
             </FormControl>
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0209" InputProps={this.commonInputProps} />
+            <TextInput
+              id="OkycAntTxnTotCashCr.amountInFigures"
+              InputProps={this.commonInputProps}
+            />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0212" InputProps={this.commonInputProps} />
+            <TextInput
+              id="OkycAntTxnTotNonCashCr.amountInFigures"
+              InputProps={this.commonInputProps}
+            />
           </Grid>
         </Grid>
         <div className={this.props.classes.divider} />
@@ -135,10 +144,16 @@ class CompanyAnticipatedTransactionsForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0215" InputProps={this.commonInputProps} />
+            <TextInput
+              id="OkycAntTxn.maxAmtSingleTxnCashAED"
+              InputProps={this.commonInputProps}
+            />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0216" InputProps={this.commonInputProps} />
+            <TextInput
+              id="OkycAntTxn.maxAmtSingleTxnNonCashAED"
+              InputProps={this.commonInputProps}
+            />
           </Grid>
         </Grid>
 
@@ -151,7 +166,10 @@ class CompanyAnticipatedTransactionsForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  annualFinancialTurnover: getInputValueById(state, "UI0184")
+  annualFinancialTurnover: getInputValueById(
+    state,
+    "Okyc.annualFinTurnoverAmtInAED"
+  )
 });
 
 export default withStyles(style)(

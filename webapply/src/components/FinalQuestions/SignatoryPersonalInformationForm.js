@@ -48,10 +48,13 @@ class SignatoryPersonalInformationForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0263" indexes={[this.props.index]} />
+            <PureSelect id="Sig.maritalStatus" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0269" indexes={[this.props.index]} />
+            <TextInput
+              id="Sig.mothersMaidenName"
+              indexes={[this.props.index]}
+            />
           </Grid>
         </Grid>
 

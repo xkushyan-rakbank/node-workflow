@@ -7,9 +7,7 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
-import TextField from "@material-ui/core/TextField";
 import InfoTitle from "../InfoTitle";
-import FormControl from "@material-ui/core/FormControl";
 
 const style = {
   title: {
@@ -81,22 +79,25 @@ class CompanyContactInformationForm extends Component {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
-                  <TextInput id="UI0103" indexes={[index]} />
-                  <TextInput id="UI0109" indexes={[index]} />
-                  <PureSelect id="UI0114" indexes={[index]} />
+                  <TextInput
+                    id="OrgAddrAdrd.addressFieldDesc"
+                    indexes={[index]}
+                  />
+                  <TextInput id="OrgAddrAdrd.addressLine1" indexes={[index]} />
+                  <PureSelect id="OrgAddrAdrd.emirateCity" indexes={[index]} />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                  <PureSelect id="UI0117" indexes={[index]} />
-                  <TextInput id="UI0113" indexes={[index]} />
-                  {/* <TextInput id="UI0115" indexes={[index]} /> */}
-                  <FormControl className="formControl">
-                    <TextField
-                      className={this.props.classes.disabledInput}
-                      variant="outlined"
-                      disabled
-                      value="United Arab Emirates"
-                    />
-                  </FormControl>
+                  <PureSelect
+                    id="OrgAddrAdrdSpace.spaceType"
+                    indexes={[index]}
+                  />
+                  <TextInput id="OrgAddrAdrd.poBox" indexes={[index]} />
+                  <TextInput
+                    id="OrgAddrAdrd.country"
+                    indexes={[index]}
+                    disabled
+                    defaultValue="United Arab Emirates"
+                  />
                 </Grid>
               </React.Fragment>
             );
@@ -125,13 +126,21 @@ class CompanyContactInformationForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0129" selectId="UI0130" withSelect />
+            <TextInput
+              id="OrgCont.primaryPhoneNo"
+              selectId="OrgCont.primaryPhoneCountryCode"
+              withSelect
+            />
             {this.state.secondaryPhoneNumber && (
-              <TextInput id="UI0133" selectId="UI0136" withSelect />
+              <TextInput
+                id="OrgCont.secondaryPhoneNo"
+                selectId="OrgCont.secondaryMobileCountryCode"
+                withSelect
+              />
             )}
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0128" />
+            <TextInput id="OrgCont.primaryEmail" />
           </Grid>
         </Grid>
 

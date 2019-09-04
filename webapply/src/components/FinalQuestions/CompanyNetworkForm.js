@@ -106,7 +106,7 @@ class CompanyNetworkForm extends Component {
                 return (
                   <TextInput
                     key={index}
-                    id="UI0221"
+                    id="OkycObriObd.bankName"
                     indexes={[index]}
                     disabled={this.state.isDontHaveOtherBankAccounts}
                   />
@@ -150,7 +150,7 @@ class CompanyNetworkForm extends Component {
                   <Grid item sm={12}>
                     <TextInput
                       key={index}
-                      id="UI0225"
+                      id="OkycEntIn.companyName"
                       indexes={[index]}
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
@@ -158,7 +158,7 @@ class CompanyNetworkForm extends Component {
                   <Grid item md={6} sm={12}>
                     <TextInput
                       key={index}
-                      id="UI0228"
+                      id="OkycEntIn.tradeLicenseNo"
                       indexes={[index]}
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
@@ -166,7 +166,7 @@ class CompanyNetworkForm extends Component {
                   <Grid item md={6} sm={12}>
                     <PureSelect
                       key={index}
-                      id="UI0226"
+                      id="OkycEntIn.emirate"
                       indexes={[index]}
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
@@ -211,7 +211,7 @@ class CompanyNetworkForm extends Component {
                   <Grid item md={6} sm={12}>
                     <TextInput
                       key={index}
-                      id="UI0232"
+                      id="OkycEntOut.companyName"
                       indexes={[index]}
                       disabled={this.state.isDontHaveOutsideSubsidiary}
                     />
@@ -219,7 +219,7 @@ class CompanyNetworkForm extends Component {
                   <Grid item md={6} sm={12}>
                     <PureSelect
                       key={index}
-                      id="UI0233"
+                      id="OkycEntOut.country"
                       indexes={[index]}
                       disabled={this.state.isDontHaveOutsideSubsidiary}
                     />

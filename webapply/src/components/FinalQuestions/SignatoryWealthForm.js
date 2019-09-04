@@ -44,6 +44,7 @@ class SignatoryWealthForm extends Component {
   };
 
   isOtherSourceOfWealthSelected() {
+    // temp - work only on WireMock data
     return this.props.soursOfWealth === OTHER_SOURCE_OF_WEALTH;
   }
 
@@ -58,11 +59,14 @@ class SignatoryWealthForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0316" indexes={[this.props.index]} />
+            <PureSelect
+              id="SigKycdWlth.wealthType"
+              indexes={[this.props.index]}
+            />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
-              id="UI0321"
+              id="SigKycdWlth.others"
               indexes={[this.props.index]}
               disabled={!this.isOtherSourceOfWealthSelected()}
             />
@@ -78,7 +82,7 @@ class SignatoryWealthForm extends Component {
 }
 
 const mapStateToProps = (state, { index }) => ({
-  soursOfWealth: getInputValueById(state, "UI0316", [index])
+  soursOfWealth: getInputValueById(state, "SigKycdWlth.wealthType", [index])
 });
 
 export default withStyles(style)(connect(mapStateToProps)(SignatoryWealthForm));

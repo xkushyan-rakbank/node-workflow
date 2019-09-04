@@ -3000,7 +3000,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": "+971",
+			"label": " ",
 			"placeholder": null,
 			"path": "$.prospect.organizationInfo.contactDetails.primaryPhoneCountryCode",
 			"name": "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode",
@@ -3131,7 +3131,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": "Secondary Phone Nomber",
+			"label": "Secondary Phone Number",
 			"placeholder": null,
 			"path": "$.prospect.organizationInfo.contactDetails.secondaryPhoneNo",
 			"name": "prospect.organizationInfo.contactDetails.secondaryPhoneNo",
@@ -3262,7 +3262,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": "+971",
+			"label": " ",
 			"placeholder": null,
 			"path": "$.prospect.organizationInfo.contactDetails.secondaryMobileCountryCode",
 			"name": "prospect.organizationInfo.contactDetails.secondaryMobileCountryCode",
@@ -6263,7 +6263,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Qualification",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.qualification",
 			"name": "prospect.signatoryInfo[*].kycDetails.qualification",
@@ -6297,7 +6297,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Years of experience",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.experienceInYrs",
 			"name": "prospect.signatoryInfo[*].kycDetails.experienceInYrs",
@@ -6462,16 +6462,42 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": "+971",
+			"label": " ",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].contactDetails.primaryMobCountryCode",
 			"name": "prospect.signatoryInfo[*].contactDetails.primaryMobCountryCode",
 			"required": false,
-			"datalistId": null,
 			"readonlyFor": [
 			],
 			"maxlength": "60",
-			"pattern": "^[0-9]*$"
+			"pattern": "^[0-9]*$",
+			"datalistId": "CountryCode",
+			"datalist": [
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "+791"
+				},
+				{
+					"code": "EUR",
+					"key": "EUR",
+					"value": "EUR",
+					"displayText": "+992"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "+380"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "+391"
+				}
+			]
 		},
 		"SigCont.primaryEmail": {
 			"criteria": {
@@ -6567,7 +6593,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": "+791",
+			"label": " ",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].contactDetails.primaryPhoneCountryCode",
 			"name": "prospect.signatoryInfo[*].contactDetails.primaryPhoneCountryCode",

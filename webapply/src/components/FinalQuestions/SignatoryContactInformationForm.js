@@ -65,29 +65,41 @@ class SignatoryContactInformationForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item sm={12}>
-            <CustomCheckbox id="UI0350" indexes={[this.props.index]} />
-            <TextInput id="UI0361" indexes={[this.props.index]} />
+            <CustomCheckbox
+              id="Sig.sameAsCompanyAddress"
+              indexes={[this.props.index]}
+            />
+            <TextInput
+              id="SigAddrAdrd.preferredAddress"
+              indexes={[this.props.index]}
+            />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0364" indexes={[this.props.index]} />
-            <PureSelect id="UI0370" indexes={[this.props.index]} />
+            <TextInput
+              id="SigAddrAdrd.addressLine1"
+              indexes={[this.props.index]}
+            />
+            <PureSelect id="SigAddrAdrd.country" indexes={[this.props.index]} />
             <CombinedSelect
-              selectId="UI0324"
-              inputId="UI0323"
+              selectId="SigCont.primaryMobCountryCode"
+              inputId="SigCont.primaryMobileNo"
               indexes={[this.props.index]}
             />
             {this.state.isAddLandlineNumber && (
               <CombinedSelect
-                selectId="UI0327"
-                inputId="UI0326"
+                selectId="SigCont.primaryPhoneCountryCode"
+                inputId="SigCont.primaryPhoneNo"
                 indexes={[this.props.index]}
               />
             )}
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0368" indexes={[this.props.index]} />
-            <PureSelect id="UI0369" indexes={[this.props.index]} />
-            <TextInput id="UI0325" indexes={[this.props.index]} />
+            <TextInput id="SigAddrAdrd.poBox" indexes={[this.props.index]} />
+            <PureSelect
+              id="SigAddrAdrd.emirateCity"
+              indexes={[this.props.index]}
+            />
+            <TextInput id="SigCont.primaryEmail" indexes={[this.props.index]} />
           </Grid>
         </Grid>
 
