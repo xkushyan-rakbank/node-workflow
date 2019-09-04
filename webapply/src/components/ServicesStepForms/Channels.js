@@ -1,8 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 import SectionTitle from "../SectionTitle";
-import Select from "../InputField/PureSelect";
 import Subtitle from "../Subtitle";
 import Checkbox from "../InputField/Checkbox";
 import FormWrapper from "../StakeholderStepForms/FormWrapper";
@@ -16,25 +14,15 @@ const style = {
 class AccountDetails extends React.Component {
   render() {
     return (
-      <FormWrapper className={this.props.classes.formWrapper}>
+      <FormWrapper
+        className={this.props.classes.formWrapper}
+        handleContinue={this.props.goToNext}
+      >
         <SectionTitle title="Account details" />
 
         <Subtitle title="Select currencies" />
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Select id="Acnt.accountCurrencies" />
-          </Grid>
-        </Grid>
 
         <Subtitle title="Select branch" />
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Select id="Org.branchCity" />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            <Select id="Org.branchID" />
-          </Grid>
-        </Grid>
 
         <Subtitle title="Select interest" />
         <Checkbox label="I want to earn interest from my account" />

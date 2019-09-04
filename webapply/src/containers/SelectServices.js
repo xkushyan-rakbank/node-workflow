@@ -1,12 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import SubmitApplication from "./SubmitApplication";
-import SectionTitle from "../components/SectionTitle";
-import Select from "../components/InputField/PureSelect";
-import Grid from "@material-ui/core/Grid";
-import Subtitle from "../components/Subtitle";
-import Checkbox from "../components/InputField/Checkbox";
-import FormWrapper from "../components/StakeholderStepForms/FormWrapper";
 import ServicesStepper from "./ServicesStepper";
 
 const style = {
@@ -21,10 +15,9 @@ class SelectServices extends React.Component {
   };
 
   render() {
-    if (this.state.canSubmit) {
-      return <SubmitApplication />;
-    }
-    return (
+    return this.state.canSubmit ? (
+      <SubmitApplication />
+    ) : (
       <>
         <h2>Services for your account</h2>
         <p className="formDescription">
@@ -32,7 +25,9 @@ class SelectServices extends React.Component {
           is the third sentence.
         </p>
 
-        <ServicesStepper />
+        <ServicesStepper
+          goToFinish={() => this.setState({ canSubmit: true })}
+        />
       </>
     );
   }

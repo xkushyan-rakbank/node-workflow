@@ -1,6 +1,8 @@
 import { errorType } from "./../constants";
+import store, { history } from "../store/configureStore";
+import get from "lodash/get";
 
-const validate = (field, fieldConfig) => {
+export const validate = (field, fieldConfig) => {
   if (fieldConfig) {
     const validity = field.validity;
     const errorConfig = fieldConfig.validationErrors;
@@ -74,4 +76,22 @@ const validationErrorMessages = errorConfig => {
   }
 };
 
-export default validate;
+const validateForm = (fields, redirectUrl) => {
+  const reduxStore = store.getState();
+  const config = get(reduxStore, "appConfig.uiConfig");
+  const errorList = [];
+  for (let i = 0; i < fields.length; i++) {
+    const id = fields[i].getAttribute("id");
+    const error = validate(fields[i], config[id]);
+    if (error) {
+      errorList.push(error);
+    }
+    fields[i].focus();
+  }
+
+  if (!errorList.length) {
+    history.push(redirectUrl);
+  }
+};
+
+export default validateForm;

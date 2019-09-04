@@ -65,25 +65,6 @@ export const publicPositions = [
   { value: "Yes", label: "Yes" }
 ];
 
-export const codes = [
-  {
-    value: "USA",
-    label: "+791"
-  },
-  {
-    value: "EUR",
-    label: "+992"
-  },
-  {
-    value: "UA",
-    label: "+291"
-  },
-  {
-    value: "GB",
-    label: "+391"
-  }
-];
-
 export const fieldAttr = (id, fieldConfig) => {
   return {
     id: id,

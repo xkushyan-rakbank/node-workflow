@@ -7,8 +7,8 @@ import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import validate from "./../utils/validate";
 import PureSelect from "../components/InputField/PureSelect";
+import validateForm from "../utils/validate";
 
 const styles = {
   baseForm: {
@@ -25,20 +25,7 @@ class BasicsForm extends React.Component {
   submitForm = event => {
     event.preventDefault();
     const fields = event.target.elements;
-    const fieldsConfig = this.props.config.uiConfig;
-    const errorList = [];
-    for (let i = 0; i < fields.length; i++) {
-      const id = fields[i].getAttribute("id");
-      const error = validate(fields[i], fieldsConfig[id]);
-      if (error) {
-        errorList.push(error);
-      }
-      fields[i].focus();
-    }
-
-    if (!errorList.length) {
-      this.props.history.push("/VerifyOTP");
-    }
+    validateForm(fields, "/VerifyOTP");
   };
 
   render() {

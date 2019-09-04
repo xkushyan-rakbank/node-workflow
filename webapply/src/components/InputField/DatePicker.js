@@ -12,7 +12,7 @@ import {
 } from "@material-ui/pickers";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
-import validate from "./../../utils/validate";
+import { validate } from "./../../utils/validate";
 import { updateField } from "../../store/actions/appConfig";
 import combineNestingName from "../../utils/combineNestingName";
 

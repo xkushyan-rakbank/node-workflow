@@ -16,7 +16,10 @@ const style = {
 class AccountDetails extends React.Component {
   render() {
     return (
-      <FormWrapper className={this.props.classes.formWrapper}>
+      <FormWrapper
+        className={this.props.classes.formWrapper}
+        handleContinue={this.props.goToNext}
+      >
         <SectionTitle title="Account details" />
 
         <Subtitle title="Select currencies" />

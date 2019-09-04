@@ -13,7 +13,7 @@ import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
-import validate from "./../../utils/validate";
+import { validate } from "./../../utils/validate";
 import combineNestingName from "../../utils/combineNestingName";
 
 const styles = {
