@@ -20,21 +20,8 @@ class SigningPreferences extends React.Component {
         <SectionTitle title="Account details" />
 
         <Subtitle title="Select currencies" />
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Select id="UI0045" />
-          </Grid>
-        </Grid>
 
         <Subtitle title="Select branch" />
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Select id="UI0072" />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            <Select id="UI0074" />
-          </Grid>
-        </Grid>
 
         <Subtitle title="Select interest" />
         <Checkbox label="I want to earn interest from my account" />

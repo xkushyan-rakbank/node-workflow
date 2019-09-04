@@ -8,12 +8,16 @@ const SignatoryRights = ({ index, isSignatory }) => {
   return (
     <Grid container spacing={3}>
       <Grid item md={6} sm={12}>
-        <PureSelect id="UI0280" defaultValue="true" indexes={[index]} />
+        <PureSelect
+          id="SigKycd.isSignatory"
+          defaultValue="true"
+          indexes={[index]}
+        />
       </Grid>
       <Grid item md={6} sm={12}>
         <PureSelect
           disabled={isSignatory === "false"}
-          id="UI0377"
+          id="SigAcntSig.authorityType"
           indexes={[index]}
         />
       </Grid>

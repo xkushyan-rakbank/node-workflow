@@ -9,27 +9,27 @@ const PersonalInformation = ({ index }) => {
     <>
       <Grid item container spacing={3}>
         <Grid item sm={12} className="mb-25 mt-25">
-          <CustomCheckbox id="UI0273" indexes={[index]} />
+          <CustomCheckbox id="Sig.kycVerified" indexes={[index]} />
         </Grid>
       </Grid>
       <Grid item container spacing={3}>
         <Grid item md={6} sm={12}>
           <CombinedSelect
-            selectId="UI0260"
-            inputId="UI0255"
+            selectId="Sig.gender"
+            inputId="Sig.firstName"
             indexes={[index]}
           />
         </Grid>
         <Grid item md={6} sm={12}>
-          <TextInput id="UI0256" indexes={[index]} />
+          <TextInput id="Sig.middleName" indexes={[index]} />
         </Grid>
       </Grid>
       <Grid item container spacing={3}>
         <Grid item md={6} sm={12}>
-          <TextInput id="UI0257" indexes={[index]} />
+          <TextInput id="Sig.lastName" indexes={[index]} />
         </Grid>
         <Grid item md={6} sm={12}>
-          <TextInput id="UI0283" indexes={[index]} />
+          <TextInput id="SigKycd.dateOfBirth" indexes={[index]} />
         </Grid>
       </Grid>
     </>

@@ -53,13 +53,17 @@ class BasicsForm extends React.Component {
         </p>
 
         <form noValidate onSubmit={this.submitForm}>
-          <TextInput id="UI0001" />
+          <TextInput id="Aplnt.fullName" />
 
-          <TextInput id="UI0002" />
+          <TextInput id="Aplnt.email" />
 
-          <TextInput id="UI0004" selectId="UI0003" withSelect />
+          <TextInput
+            id="Aplnt.mobileNo"
+            selectId="Aplnt.countryCode"
+            withSelect
+          />
 
-          <RefactoredCheckbox id="UI0004_1" />
+          <RefactoredCheckbox id="Aplnt.applyOnbehalf" />
 
           <ErrorBoundary className={classes.reCaptchaContainer}>
             <ReCaptcha

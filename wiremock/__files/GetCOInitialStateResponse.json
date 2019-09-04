@@ -196,7 +196,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "I am applying on behalf of someone’s company",
 			"placeholder": null,
 			"path": "$.prospect.applicantInfo.applyOnbehalf",
 			"name": "prospect.applicantInfo.applyOnbehalf",
@@ -3974,13 +3974,45 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
-			"placeholder": null,
+			"label": "Industry",
+			"placeholder": "Industry",
 			"path": "$.prospect.orgKYCDetails.industryMultiSelect[*].industry[*]",
 			"name": "prospect.orgKYCDetails.industryMultiSelect[*].industry[*]",
 			"required": false,
 			"datalistId": null,
 			"readonlyFor": [
+			],
+			"datalist": [
+				{
+					"code": "Energy Equipment & Services",
+					"key": "Energy Equipment & Services",
+					"value": "Energy Equipment & Services",
+					"displayText": "Energy Equipment & Services"
+				},
+				{
+					"code": "OGC&F",
+					"key": "OGC&F",
+					"value": "OGC&F",
+					"displayText": "Oil, Gas & Consumable Fuels"
+				},
+				{
+					"code": "chemicals",
+					"key": "chemicals",
+					"value": "chemicals",
+					"displayText": "Chemicals"
+				},
+				{
+					"code": "M&M",
+					"key": "M&M",
+					"value": "M&M",
+					"displayText": "Metals & Mining"
+				},
+				{
+					"code": "P&PP",
+					"key": "P&PP",
+					"value": "P&PP",
+					"displayText": "Paper & Forest Products"
+				}
 			]
 		},
 		"OkycIndus.subCategory": {
@@ -5635,15 +5667,29 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Is this person a signatory?",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.isSignatory",
 			"name": "prospect.signatoryInfo[*].kycDetails.isSignatory",
 			"required": false,
-			"datalistId": null,
 			"readonlyFor": [
 			],
-			"default": "false"
+			"default": "false",
+			"datalistId": "YesNoList",
+			"datalist": [
+				{
+					"code": "Y",
+					"key": "Y",
+					"value": "true",
+					"displayText": "Yes"
+				},
+				{
+					"code": "N",
+					"key": "N",
+					"value": "false",
+					"displayText": "No"
+				}
+			]
 		},
 		"SigKycd.isShareholder": {
 			"criteria": {
@@ -5669,15 +5715,30 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Is this person a shareholder?",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.isShareholder",
 			"name": "prospect.signatoryInfo[*].kycDetails.isShareholder",
 			"required": false,
-			"datalistId": null,
 			"readonlyFor": [
 			],
-			"default": "false"
+			"default": "false",
+			"datalistId": "YesNoList",
+			"datalist": [
+				{
+					"code": "Y",
+					"key": "Y",
+					"value": "true",
+					"displayText": "Yes"
+				},
+				{
+					"code": "N",
+					"key": "N",
+					"value": "false",
+					"displayText": "No"
+				}
+			]
+
 		},
 		"SigKycd.shareHoldingPercentage": {
 			"criteria": {
@@ -5703,7 +5764,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Percentage",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.shareHoldingPercentage",
 			"name": "prospect.signatoryInfo[*].kycDetails.shareHoldingPercentage",
@@ -5777,11 +5838,31 @@
 			"path": "$.prospect.signatoryInfo[*].kycDetails.nationality",
 			"name": "prospect.signatoryInfo[*].kycDetails.nationality",
 			"required": false,
-			"datalistId": null,
 			"readonlyFor": [
 			],
 			"maxlength": "50",
-			"pattern": "^[a-zA-Z]*$"
+			"pattern": "^[a-zA-Z]*$",
+			"datalistId": "nationality",
+			"datalist": [
+				{
+					"code": "Nationality1",
+					"key": "Nationality1",
+					"value": "Nationality1",
+					"displayText": "Nationality1"
+				},
+				{
+					"code": "Nationality2",
+					"key": "Nationality2",
+					"value": "Nationality2",
+					"displayText": "Nationality2"
+				},
+				{
+					"code": "Nationality3",
+					"key": "Nationality3",
+					"value": "Nationality3",
+					"displayText": "Nationality3"
+				}
+			]
 		},
 		"SigKycd.dualCitizenship": {
 			"criteria": {
@@ -7671,13 +7752,27 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Authority type",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].accountSigningInfo.authorityType",
 			"name": "prospect.signatoryInfo[*].accountSigningInfo.authorityType",
 			"required": false,
-			"datalistId": null,
 			"readonlyFor": [
+			],
+			"datalistId": "AuthorityTypeList",
+			"datalist": [
+				{
+					"code": "SP",
+					"key": "SP",
+					"value": "SP",
+					"displayText": "Sole Proprietor"
+				},
+				{
+					"code": "PP",
+					"key": "PP",
+					"value": "PP",
+					"displayText": "Partial Proprietor"
+				}
 			]
 		},
 		"SigDbtc.issueDebitCard": {

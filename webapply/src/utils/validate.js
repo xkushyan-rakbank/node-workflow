@@ -60,12 +60,12 @@ const validate = (field, fieldConfig) => {
   }
 };
 
-//helper function to check for multiline errorType
+//helper function to check for multilineInvalid errorType
 const validationErrorMessages = errorConfig => {
-  if (errorType.multiline in errorConfig) {
+  if (errorType.multilineInvalid in errorConfig) {
     return {
       error: errorConfig[errorType.invalid],
-      multiLineError: errorConfig[errorType.multiline]
+      multiLineError: errorConfig[errorType.multilineInvalid]
     };
   } else {
     return {

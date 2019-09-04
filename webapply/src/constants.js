@@ -55,11 +55,6 @@ export const authorityType = [
   { value: "AuthorityType2", label: "AuthorityType2" }
 ];
 
-export const nationality = [
-  { value: "Nationality1", label: "Nationality1" },
-  { value: "Nationality2", label: "Nationality2" }
-];
-
 export const countryOfResidence = [
   { value: "Country Of Residence1", label: "Country Of Residence1" },
   { value: "Country Of Residence2", label: "Country Of Residence2" }

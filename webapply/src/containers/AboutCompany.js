@@ -37,23 +37,23 @@ const AboutCompany = props => {
           className={classes.sectionTitleIndent}
         />
 
-        <TextInput id="UI0078" />
+        <TextInput id="Org.companyName" />
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0152" />
+            <PureSelect id="Okyc.constitutionType" />
           </Grid>
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0161" />
+            <PureSelect id="Okyc.companyCategory" />
           </Grid>
         </Grid>
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0092" />
+            <TextInput id="Org.vatRegistrationNumber" />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0081" />
+            <TextInput id="Org.numberOfEmployees" />
           </Grid>
         </Grid>
 
@@ -64,10 +64,10 @@ const AboutCompany = props => {
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0201" indexes={[0]} />
+            <PureSelect id="OkycIndus.industry" indexes={[0]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <PureSelect id="UI0204" indexes={[0]} disabled />
+            <PureSelect id="OkycIndus.subCategory" indexes={[0]} disabled />
           </Grid>
         </Grid>
 
@@ -78,28 +78,28 @@ const AboutCompany = props => {
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0089" />
+            <TextInput id="Org.licenseNumber" />
           </Grid>
           <Grid item md={6} sm={12}>
-            <DatePicker id="UI0090" />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <PureSelect id="UI0087" />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            <PureSelect id="UI0076" />
+            <DatePicker id="Org.licenseIssueDate" />
           </Grid>
         </Grid>
 
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <DatePicker id="UI0080" />
+            <PureSelect id="Org.licenseIssuingAuthority" />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="UI0185" />
+            <PureSelect id="Org.countryOfIncorporation" />
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <DatePicker id="Org.dateOfIncorporation" />
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <TextInput id="Okyc.yearsInBusiness" />
           </Grid>
         </Grid>
 

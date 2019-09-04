@@ -22,17 +22,17 @@ class AccountDetails extends React.Component {
         <Subtitle title="Select currencies" />
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <Select id="UI0045" indexes={[0]} />
+            <Select id="Acnt.accountCurrencies" indexes={[0]} />
           </Grid>
         </Grid>
 
         <Subtitle title="Select branch" />
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <Select id="UI0072" />
+            <Select id="Org.branchCity" />
           </Grid>
           <Grid item md={6} sm={12}>
-            <Select id="UI0074" />
+            <Select id="Org.branchID" />
           </Grid>
         </Grid>
 

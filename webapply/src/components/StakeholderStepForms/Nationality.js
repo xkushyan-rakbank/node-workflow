@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Select from "../InputField/Select";
-import Input from "../InputField/Input";
-import Checkbox from "../InputField/Checkbox";
-import RefactoredCheckbox from "../InputField/RefactoredCheckbox";
-import { nationality as nationalityOptions } from "../../constants";
+import Select from "../InputField/PureSelect";
+import Input from "../InputField/TextInput";
+import Checkbox from "../InputField/RefactoredCheckbox";
 
 const styles = {
   bottomIndent: {
@@ -14,44 +12,22 @@ const styles = {
 };
 
 const Nationality = props => {
-  const [nationality, setNationality] = useState(nationalityOptions[0].value);
-  const [passportNumber, setPassportNumber] = useState();
-  const changeNationality = event => setNationality(event.target.value);
-  const [secondCitizenships, setSecondCitizenships] = useState(false);
-
   return (
     <>
       <Grid container spacing={3}>
         <Grid item md={6} sm={12}>
-          <Select
-            name="nationality"
-            label="Nationality"
-            options={nationalityOptions}
-            value={nationality}
-            onChange={changeNationality}
-          />
+          <Select id="SigKycd.nationality" indexes={[0]} />
         </Grid>
         <Grid item md={6} sm={12}>
-          <Input
-            name="passportNumber"
-            label="Passport Number"
-            placeholder="Passport Number"
-            value={passportNumber}
-            onChange={({ target: { value } }) => setPassportNumber(value)}
-          />
+          <Input id="SigKycdPspd.passportNumber" indexes={[0, 0]} />
         </Grid>
       </Grid>
       <Grid container spacing={3} className={props.classes.bottomIndent}>
         <Grid item md={6} sm={12}>
-          <Checkbox
-            name="secondCitizenships"
-            label="This person has a second citizenships"
-            value={secondCitizenships}
-            onChange={setSecondCitizenships}
-          />
+          <Checkbox id="SigKycd.dualCitizenship" indexes={[0]} />
         </Grid>
         <Grid item md={6} sm={12}>
-          <RefactoredCheckbox id="UI0296" indexes={[0, 0]} />
+          <Checkbox id="SigKycdPspd.diplomatPassport" indexes={[0, 0]} />
         </Grid>
       </Grid>
     </>

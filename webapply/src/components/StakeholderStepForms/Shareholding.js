@@ -27,7 +27,7 @@ const Shareholding = props => {
     <Grid container spacing={3}>
       <Grid item md={6} sm={12}>
         <PureSelect
-          id="UI0281"
+          id="SigKycd.isShareholder"
           indexes={[props.index]}
           defaultValue="true"
           disabled={props.isSoleProprietor}
@@ -36,7 +36,7 @@ const Shareholding = props => {
       <Grid item md={6} sm={12}>
         <TextInput
           disabled={props.isShareholder === "false" || props.isSoleProprietor}
-          id="UI0282"
+          id="SigKycd.shareHoldingPercentage"
           defaultValue={props.isSoleProprietor ? 100 : undefined}
           indexes={[props.index]}
           InputProps={{
