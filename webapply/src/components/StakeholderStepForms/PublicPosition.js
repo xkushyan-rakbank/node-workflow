@@ -48,4 +48,8 @@ const PublicPositions = props => {
   );
 };
 
+PublicPositions.defaultProps = {
+  index: 0
+};
+
 export default withStyles(styles)(PublicPositions);

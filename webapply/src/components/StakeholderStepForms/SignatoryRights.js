@@ -1,40 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import Select from "../InputField/Select";
-import {
-  personSignatory as personSignatoryOptions,
-  authorityType as authorityTypeOptions
-} from "../../constants";
+import PureSelect from "../InputField/PureSelect";
+import { getInputValueById } from "../../store/selectors/appConfig";
 
-const SignatoryRights = () => {
-  const [personSignatory, setPersonSignatory] = useState(
-    personSignatoryOptions[0].value
-  );
-  const [authorityType, setAuthorityType] = useState();
-  const changePersonSignatory = event => setPersonSignatory(event.target.value);
-  const changeAuthorityType = event => setAuthorityType(event.target.value);
+const SignatoryRights = ({ index, isSignatory }) => {
   return (
     <Grid container spacing={3}>
       <Grid item md={6} sm={12}>
-        <Select
-          name="personSignatory"
-          label="Is this person a signatory?"
-          options={personSignatoryOptions}
-          value={personSignatory}
-          onChange={changePersonSignatory}
-        />
+        <PureSelect id="UI0280" defaultValue="true" indexes={[index]} />
       </Grid>
       <Grid item md={6} sm={12}>
-        <Select
-          name="maritalStatus"
-          label="Marital Status"
-          options={authorityTypeOptions}
-          value={authorityType}
-          onChange={changeAuthorityType}
+        <PureSelect
+          disabled={isSignatory === "false"}
+          id="UI0377"
+          indexes={[index]}
         />
       </Grid>
     </Grid>
   );
 };
 
-export default SignatoryRights;
+const mapStateToProps = (state, { index }) => ({
+  isSignatory: getInputValueById(state, "UI0280", [index])
+});
+
+export default connect(mapStateToProps)(SignatoryRights);

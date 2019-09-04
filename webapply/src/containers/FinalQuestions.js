@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import SectionTitle from "../components/SectionTitle";
 import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard";
@@ -6,6 +7,7 @@ import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryC
 import { Link } from "react-router-dom";
 import routes from "../routes";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import { getSignatories } from "../store/selectors/appConfig";
 
 const style = {
   sectionContainer: {
@@ -19,22 +21,7 @@ const style = {
 
 class FinalQuestions extends React.Component {
   static defaultProps = {
-    signatories: [
-      {
-        id: 343453542345,
-        firstName: "Vartika",
-        lastName: "Gupta",
-        signatoryRights: "Power of attorney",
-        shareholding: 51
-      },
-      {
-        id: 343453542346,
-        firstName: "Alberto",
-        lastName: "Diaz",
-        signatoryRights: "Board Resolution",
-        shareholding: 0
-      }
-    ]
+    signatories: []
   };
 
   render() {
@@ -61,7 +48,7 @@ class FinalQuestions extends React.Component {
           {this.props.signatories.map((item, index) => {
             return (
               <SignatorySummaryCard
-                key={item.id}
+                key={index}
                 signatory={item}
                 index={index}
               />
@@ -78,4 +65,8 @@ class FinalQuestions extends React.Component {
   }
 }
 
-export default withStyles(style)(FinalQuestions);
+const mapStateToProps = state => ({
+  signatories: getSignatories(state)
+});
+
+export default withStyles(style)(connect(mapStateToProps)(FinalQuestions));

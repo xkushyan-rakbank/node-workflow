@@ -2,6 +2,7 @@ import get from "lodash/get";
 import combineNestingName from "../../utils/combineNestingName";
 
 export const getUiConfig = state => state.appConfig.uiConfig || {};
+export const geProspect = state => state.appConfig.prospect || {};
 
 export const getInputValueById = (state, id, indexes = []) => {
   const config = getUiConfig(state)[id] || {};
@@ -12,3 +13,5 @@ export const getInputValueById = (state, id, indexes = []) => {
 
   return get(state.appConfig, name);
 };
+
+export const getSignatories = state => geProspect(state).signatoryInfo;

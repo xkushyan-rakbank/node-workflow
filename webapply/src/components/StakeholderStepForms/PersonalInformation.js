@@ -1,7 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextInput from "../InputField/TextInput";
-import DatePicker from "../InputField/DatePicker";
 import CombinedSelect from "../InputField/CombinedSelect";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
 
@@ -30,7 +29,7 @@ const PersonalInformation = ({ index }) => {
           <TextInput id="UI0257" indexes={[index]} />
         </Grid>
         <Grid item md={6} sm={12}>
-          <DatePicker id="UI0283" indexes={[index]} />
+          <TextInput id="UI0283" indexes={[index]} />
         </Grid>
       </Grid>
     </>

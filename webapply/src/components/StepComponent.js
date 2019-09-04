@@ -53,6 +53,7 @@ const StepComponent = props => {
     active,
     classes,
     step,
+    index,
     clickHandler,
     handleContinue
   } = props;
@@ -86,7 +87,7 @@ const StepComponent = props => {
       </div>
       {active && (
         <FormWrapper handleContinue={handleContinue}>
-          <Form />
+          <Form index={index} />
         </FormWrapper>
       )}
     </>

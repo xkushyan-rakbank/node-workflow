@@ -5935,7 +5935,7 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "Mr.",
+			"label": " ",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].gender",
 			"name": "prospect.signatoryInfo[*].gender",
@@ -5946,13 +5946,13 @@
 				{
 					"code": "male",
 					"key": "male",
-					"value": "male",
+					"value": "Mr.",
 					"displayText": "Mr."
 				},
 				{
 					"code": "female",
 					"key": "female",
-					"value": "female",
+					"value": "Mrs.",
 					"displayText": "Mrs."
 				}
 			]
@@ -6349,13 +6349,27 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Is this person a signatory?",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].kycDetails.isSignatory",
 			"name": "prospect.signatoryInfo[*].kycDetails.isSignatory",
 			"required": false,
-			"datalistId": null,
-			"default": "false"
+			"datalistId": "YesNoList",
+			"default": "true",
+			"datalist": [
+				{
+					"code": "Y",
+					"key": "Y",
+					"value": "true",
+					"displayText": "Yes"
+				},
+				{
+					"code": "N",
+					"key": "N",
+					"value": "false",
+					"displayText": "No"
+				}
+			]
 		},
 		"UI0281": {
 			"criteria": {
@@ -6380,13 +6394,27 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Is this person a shareholder?",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].kycDetails.isShareholder",
 			"name": "prospect.signatoryInfo[*].kycDetails.isShareholder",
 			"required": false,
-			"datalistId": null,
-			"default": "false"
+			"datalistId": "YesNoList",
+			"default": "false",
+			"datalist": [
+				{
+					"code": "Y",
+					"key": "Y",
+					"value": "true",
+					"displayText": "Yes"
+				},
+				{
+					"code": "N",
+					"key": "N",
+					"value": "false",
+					"displayText": "No"
+				}
+			]
 		},
 		"UI0282": {
 			"criteria": {
@@ -6411,13 +6439,14 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Percentage",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].kycDetails.shareHoldingPercentage",
 			"name": "prospect.signatoryInfo[*].kycDetails.shareHoldingPercentage",
 			"required": false,
 			"datalistId": null,
 			"help": "",
+			"pattern": "^[1-9][0-9]?$|^100$",
 			"max": "100"
 		},
 		"UI0283": {
@@ -8622,12 +8651,26 @@
 				"invalid": "Field is invalid."
 			},
 			"applicable": true,
-			"label": "",
+			"label": "Authority type",
 			"placeholder": "",
 			"path": "$.prospect.signatoryInfo[*].accountSigningInfo.authorityType",
 			"name": "prospect.signatoryInfo[*].accountSigningInfo.authorityType",
 			"required": false,
-			"datalistId": null
+			"datalistId": "AuthorityTypeList",
+			"datalist": [
+				{
+					"code": "SP",
+					"key": "SP",
+					"value": "SP",
+					"displayText": "Sole Proprietor"
+				},
+				{
+					"code": "PP",
+					"key": "PP",
+					"value": "PP",
+					"displayText": "Partial Proprietor"
+				}
+			]
 		},
 		"UI0384": {
 			"criteria": {

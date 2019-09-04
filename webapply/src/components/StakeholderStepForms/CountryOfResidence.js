@@ -35,4 +35,8 @@ const CountryOfResidence = () => {
   );
 };
 
+CountryOfResidence.defaultProps = {
+  index: 0
+};
+
 export default CountryOfResidence;

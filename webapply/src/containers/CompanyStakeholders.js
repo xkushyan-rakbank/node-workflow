@@ -5,6 +5,7 @@ import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
 import Button from "@material-ui/core/Button/Button";
 import { ReactComponent as RightArrowWhite } from "./../assets/images/white.svg";
+import routes from "../routes";
 
 const style = {
   buttonStyle: {
@@ -46,7 +47,7 @@ class CompanyStakeholders extends React.Component {
     showNewStakeholder: false
   };
 
-  goToFinalQuestions = () => this.props.history.push("/FinalQuestions");
+  goToFinalQuestions = () => this.props.history.push(routes.finalQuestions);
 
   showNewStakeholder = () => this.setState({ showNewStakeholder: true });
 
@@ -74,7 +75,7 @@ class CompanyStakeholders extends React.Component {
         </div>
 
         {this.state.showNewStakeholder && (
-          <StakeholderStepper hideForm={this.hideNewStakeholder} />
+          <StakeholderStepper hideForm={this.hideNewStakeholder} index={0} />
         )}
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={this.showNewStakeholder} />

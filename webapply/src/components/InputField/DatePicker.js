@@ -14,6 +14,7 @@ import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import validate from "./../../utils/validate";
 import { updateField } from "../../store/actions/appConfig";
+import combineNestingName from "../../utils/combineNestingName";
 
 const styles = {
   datePicker: {
@@ -48,8 +49,7 @@ class DatePicker extends React.Component {
   };
 
   updateField = value => {
-    console.log(value);
-    const { name } = this.props.config;
+    const { name } = this.props;
     this.props.updateField({ value, name });
   };
 
@@ -69,7 +69,7 @@ class DatePicker extends React.Component {
 
     return (
       <FormControl className="formControl">
-        {config.label ? (
+        {config.label && (
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               autoOk
@@ -91,8 +91,6 @@ class DatePicker extends React.Component {
               }}
             />
           </MuiPickersUtilsProvider>
-        ) : (
-          ""
         )}
 
         {!!config.title && <InfoTitle title={config.title} />}
@@ -108,13 +106,18 @@ class DatePicker extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id }) => {
+const mapStateToProps = (state, { id, indexes }) => {
   const config = state.appConfig.uiConfig[id] || {};
-  const value = get(state.appConfig, config.name);
+  const name =
+    config.name && config.name.search(/\*/)
+      ? combineNestingName(config.name, indexes)
+      : config.name;
+  const value = get(state.appConfig, name);
 
   return {
     config,
-    value
+    value,
+    name
   };
 };
 

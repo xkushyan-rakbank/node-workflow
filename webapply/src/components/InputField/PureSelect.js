@@ -1,6 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import get from "lodash/get";
+import isUndefined from "lodash/isUndefined";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
@@ -65,6 +66,12 @@ class PureSelect extends React.Component {
 
   componentDidMount() {
     this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
+    if (!isUndefined(this.props.defaultValue)) {
+      this.props.updateField({
+        value: this.props.defaultValue,
+        name: this.props.name
+      });
+    }
     // uncomitted when PureSelect component will replace Select in project
     // window.addEventListener("resize", () => console.log(this.inputLabel));
   }

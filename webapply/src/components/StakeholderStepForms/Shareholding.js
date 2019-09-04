@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import Select from "../InputField/Select";
-import Input from "../InputField/Input";
-import { personSignatory as personShareholderOptions } from "../../constants";
+import TextInput from "../InputField/TextInput";
+import PureSelect from "../InputField/PureSelect";
+import { getInputValueById } from "../../store/selectors/appConfig";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const styles = {
   percentageInput: {
@@ -22,35 +23,35 @@ const styles = {
 };
 
 const Shareholding = props => {
-  const [personShareholder, setPersonShareholder] = useState(
-    personShareholderOptions[0].value
-  );
-  const [percentage, setPercentage] = useState();
-  const changePersonShareholder = event =>
-    setPersonShareholder(event.target.value);
   return (
     <Grid container spacing={3}>
       <Grid item md={6} sm={12}>
-        <Select
-          name="personShareholder"
-          label="Is this person a shareholder?"
-          options={personShareholderOptions}
-          value={personShareholder}
-          onChange={changePersonShareholder}
+        <PureSelect
+          id="UI0281"
+          indexes={[props.index]}
+          defaultValue="true"
+          disabled={props.isSoleProprietor}
         />
       </Grid>
-      <Grid item md={6} sm={12} className={props.classes.percentageInput}>
-        <Input
-          name="percentage"
-          label="Percentage"
-          placeholder="Percentage"
-          value={percentage}
-          onChange={({ target: { value } }) => setPercentage(value)}
+      <Grid item md={6} sm={12}>
+        <TextInput
+          disabled={props.isShareholder === "false" || props.isSoleProprietor}
+          id="UI0282"
+          defaultValue={props.isSoleProprietor ? 100 : undefined}
+          indexes={[props.index]}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">%</InputAdornment>
+          }}
         />
-        <div className={props.classes.percentageIcon}>%</div>
       </Grid>
     </Grid>
   );
 };
 
-export default withStyles(styles)(Shareholding);
+const mapStateToProps = (state, { index }) => ({
+  isShareholder: getInputValueById(state, "UI0281", [index]),
+  // temp - will work only on WireMock data
+  isSoleProprietor: getInputValueById(state, "UI0377", [index]) === "SP"
+});
+
+export default connect(mapStateToProps)(Shareholding);

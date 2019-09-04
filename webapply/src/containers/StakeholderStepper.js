@@ -19,6 +19,10 @@ const styles = {
 };
 
 class StakeholderStepper extends React.Component {
+  static defaultProps = {
+    index: 0
+  };
+
   state = {
     isFinalScreenShown: false,
     step: 1
@@ -38,7 +42,7 @@ class StakeholderStepper extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, index } = this.props;
     const { step, isFinalScreenShown } = this.state;
 
     if (isFinalScreenShown) {
@@ -64,6 +68,7 @@ class StakeholderStepper extends React.Component {
             const setStep = () => this.setState({ step: item.step });
             return (
               <StepComponent
+                index={index}
                 key={item.step}
                 step={item.step}
                 title={item.title}

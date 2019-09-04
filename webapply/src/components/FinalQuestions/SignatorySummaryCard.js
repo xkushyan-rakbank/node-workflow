@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import get from "lodash/get";
 import CompanyStakeholderCard from "../CompanyStakeholderCard";
 import ContinueButton from "../Buttons/ContinueButton";
 import CollapsedSection from "../CollapsedSection";
@@ -174,6 +175,21 @@ class SignatorySummaryCard extends Component {
     );
   }
 
+  getShareHoldingPercentage() {
+    return Number(
+      get(this.props.signatory, "kycDetails.shareHoldingPercentage", 0)
+    );
+  }
+
+  getShareholdingLabel() {
+    const percentage = this.getShareHoldingPercentage();
+    return percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding";
+  }
+
+  getSignatoryRightsLabel() {
+    // todo implement method
+  }
+
   renderCardContent() {
     return (
       <div className={this.props.classes.contentBox}>
@@ -182,12 +198,10 @@ class SignatorySummaryCard extends Component {
             {this.props.signatory.firstName} {this.props.signatory.lastName}
           </div>
           <div className={this.props.classes.signatoryField}>
-            {this.props.signatory.signatoryRights}
+            {this.getSignatoryRightsLabel()}
           </div>
           <div className={this.props.classes.shareholdingField}>
-            {this.props.signatory.shareholding > 0
-              ? `Shareholding ${this.props.signatory.shareholding}%`
-              : "No shareholding"}
+            {this.getShareholdingLabel()}
           </div>
         </div>
         <div className={this.props.classes.controlsBox}>

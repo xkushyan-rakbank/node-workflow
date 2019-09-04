@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import get from "lodash/get";
+import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";
 import InfoTitle from "./../InfoTitle";
 import PureSelect from "./PureSelect";
@@ -77,6 +78,15 @@ class Input extends React.Component {
     fieldErrors: {}
   };
 
+  componentDidMount() {
+    if (!isUndefined(this.props.defaultValue)) {
+      this.props.updateField({
+        value: this.props.defaultValue,
+        name: this.props.name
+      });
+    }
+  }
+
   updateField = event => {
     const value = event.target.value;
     const { name } = this.props;
@@ -101,6 +111,7 @@ class Input extends React.Component {
       className,
       value,
       InputProps,
+      InputLabelProps,
       disabled,
       withSelect,
       selectId,
@@ -130,6 +141,7 @@ class Input extends React.Component {
             )}
             <FormControl className="formControl">
               <TextField
+                InputLabelProps={InputLabelProps}
                 disabled={disabled}
                 variant="outlined"
                 value={value || ""}
