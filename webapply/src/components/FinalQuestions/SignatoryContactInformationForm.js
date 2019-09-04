@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
-import CombinedSelect from "../InputField/CombinedSelect";
 import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
@@ -80,16 +79,20 @@ class SignatoryContactInformationForm extends Component {
               indexes={[this.props.index]}
             />
             <PureSelect id="SigAddrAdrd.country" indexes={[this.props.index]} />
-            <CombinedSelect
+            <TextInput
+              withSelect
               selectId="SigCont.primaryMobCountryCode"
-              inputId="SigCont.primaryMobileNo"
+              id="SigCont.primaryMobileNo"
               indexes={[this.props.index]}
+              defaultSelectValue="USA"
             />
             {this.state.isAddLandlineNumber && (
-              <CombinedSelect
+              <TextInput
+                withSelect
                 selectId="SigCont.primaryPhoneCountryCode"
-                inputId="SigCont.primaryPhoneNo"
+                id="SigCont.primaryPhoneNo"
                 indexes={[this.props.index]}
+                defaultSelectValue="USA"
               />
             )}
           </Grid>
