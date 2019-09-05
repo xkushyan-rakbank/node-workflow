@@ -13,8 +13,7 @@ pr:
 trigger:
   - develop
 #  - releases/*
-variables:
-  REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: 6LeySrQUAAAAAFYLOupmE2A4flQ1hPKLM1_0wusl
+
 jobs:
     - job: Webapply
       timeoutInMinutes: 120
