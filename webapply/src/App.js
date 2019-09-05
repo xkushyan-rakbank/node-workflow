@@ -10,6 +10,7 @@ import CompanyStakeholders from "./containers/CompanyStakeholders";
 import FinalQuestions from "./containers/FinalQuestions";
 import FormConfirm from "./containers/FormConfirm";
 import FormLayout from "./containers/FormLayout";
+import SearchProspect from "./containers/SearchProspect";
 import SelectServices from "./containers/SelectServices";
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -45,6 +46,7 @@ class App extends React.Component {
               <Route exact path={routes.applicantInfo} component={BasicsForm} />
               <Route exact path={routes.verifyOtp} component={FormConfirm} />
               <Route exact path={routes.companyInfo} component={AboutCompany} />
+              <Route exact path={routes.searchInfo} component={SearchProspect} />
               <Route
                 exact
                 path={routes.stakeholdersInfo}
