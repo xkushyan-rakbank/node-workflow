@@ -18,13 +18,20 @@ const styles = {
 };
 
 const ContinueButton = props => {
-  const { label = "Continue", disabled = false, handleClick, classes } = props;
+  const {
+    label = "Continue",
+    disabled = false,
+    handleClick,
+    classes,
+    ...rest
+  } = props;
   return (
     <ContainedButton
       className={classes.buttonStyle}
       disabled={disabled}
       handleClick={handleClick}
       label={label}
+      {...rest}
     />
   );
 };

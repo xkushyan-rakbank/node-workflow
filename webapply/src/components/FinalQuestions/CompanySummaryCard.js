@@ -7,12 +7,9 @@ import CollapsedSection from "../CollapsedSection";
 import CompanyAnticipatedTransactionsForm from "./CompanyAnticipatedTransactionsForm";
 import CompanyNetworkForm from "./CompanyNetworkForm";
 import CompanyContactInformationForm from "./CompanyContactInformationForm";
+import validateForm from "../../utils/validate";
 
 class CompanySummaryCard extends Component {
-  static defaultProps = {
-    companyName: "Designit Arabia"
-  };
-
   constructor(props) {
     super(props);
 
@@ -60,20 +57,29 @@ class CompanySummaryCard extends Component {
       }
     ];
 
-    this.sectionsConfig.forEach(item => {
+    this.sectionsConfig.forEach((item, index) => {
       item.handler = this.handleContinue(item);
       item.sectionHeadClickHandler = this.handleSectionHeadClick(item);
+      item.nextSection = this.sectionsConfig[index + 1] || null;
     });
   }
 
-  handleContinue = section => () => {
-    const nextSection = this.sectionsConfig[
-      this.sectionsConfig.indexOf(section) + 1
-    ];
+  handleContinue = section => event => {
+    const errorList = validateForm(event);
 
+    console.log({ errorList });
+
+    if (errorList.length > 0) {
+      return errorList;
+    }
+
+    this.updateSectionsSate(section);
+  };
+
+  updateSectionsSate({ nextSection, key }) {
     if (nextSection) {
       this.setState({
-        [section.key]: {
+        [key]: {
           isExpanded: false,
           isFilled: true
         },
@@ -84,7 +90,7 @@ class CompanySummaryCard extends Component {
       });
     } else {
       this.setState({
-        [section.key]: {
+        [key]: {
           isExpanded: false,
           isFilled: true
         },
@@ -92,7 +98,7 @@ class CompanySummaryCard extends Component {
         isFilled: true
       });
     }
-  };
+  }
 
   handleSectionHeadClick = section => () => {
     this.setState({

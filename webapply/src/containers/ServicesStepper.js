@@ -10,7 +10,6 @@ class ServicesStepper extends React.Component {
   };
 
   handleContinue = () => {
-    console.log(this.state.step, servicesSteps.length);
     if (this.state.step < servicesSteps.length) {
       this.setState(state => ({ step: state.step + 1 }));
     } else {

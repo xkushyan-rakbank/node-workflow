@@ -3694,7 +3694,8 @@
 			"datalistId": null,
 			"readonlyFor": [
 			],
-			"format": "amount"
+			"format": "amount",
+			"pattern": "^[0-9]*$"
 		},
 		"Okyc.yearsInBusiness": {
 			"criteria": {
@@ -4107,7 +4108,8 @@
 			"datalistId": null,
 			"readonlyFor": [
 			],
-			"format": "amount"
+			"format": "amount",
+			"pattern": "^[0-9]*$"
 		},
 		"OkycAntTxnTotCashCr.inPercent": {
 			"criteria": {
@@ -4175,7 +4177,8 @@
 			"datalistId": null,
 			"readonlyFor": [
 			],
-			"format": "amount"
+			"format": "amount",
+			"pattern": "^[0-9]*$"
 		},
 		"OkycAntTxnTotNonCashCr.inPercent": {
 			"criteria": {
@@ -4277,7 +4280,8 @@
 			"datalistId": null,
 			"readonlyFor": [
 			],
-			"format": "amount"
+			"format": "amount",
+			"pattern": "^[0-9]*$"
 		},
 		"OkycAntTxn.maxAmtSingleTxnNonCashAED": {
 			"criteria": {
@@ -4311,7 +4315,8 @@
 			"datalistId": null,
 			"readonlyFor": [
 			],
-			"format": "amount"
+			"format": "amount",
+			"pattern": "^[0-9]*$"
 		},
 		"OkycObri.otherBankingRelationshipsExist": {
 			"criteria": {

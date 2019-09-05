@@ -90,7 +90,7 @@ class FormConfirm extends React.Component {
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
           <div className="flexContainerForButton">
             <span>
-              Didn’t get the code? <a href=""> Send a new code</a>
+              Didn’t get the code? <a href="/"> Send a new code</a>
             </span>
             <SubmitButton />
           </div>

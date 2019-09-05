@@ -35,6 +35,7 @@ const ContainedButton = props => {
     handleClick,
     color = "primary",
     component = "button",
+    withRightArrow,
     classes
   } = props;
 
@@ -52,7 +53,7 @@ const ContainedButton = props => {
       onClick={handleClick}
     >
       {label}
-      {type === "submit" && <RightArrowWhite className={classes.icon} />}
+      {withRightArrow && <RightArrowWhite className={classes.icon} />}
     </Button>
   );
 };

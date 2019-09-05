@@ -40,9 +40,14 @@ class SignatoryEmploymentDetailsForm extends Component {
     index: 0
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.handleContinue(event);
+  };
+
   render() {
     return (
-      <form>
+      <form noValidate onSubmit={this.handleSubmit}>
         <SectionTitle
           title="Employment details"
           className={this.props.classes.title}
@@ -82,7 +87,7 @@ class SignatoryEmploymentDetailsForm extends Component {
         </Grid>
 
         <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton handleClick={this.props.handleContinue} />
+          <ContinueButton type="submit" />
         </div>
       </form>
     );

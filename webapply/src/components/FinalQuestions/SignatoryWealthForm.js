@@ -48,9 +48,14 @@ class SignatoryWealthForm extends Component {
     return this.props.soursOfWealth === OTHER_SOURCE_OF_WEALTH;
   }
 
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.handleContinue(event);
+  };
+
   render() {
     return (
-      <form>
+      <form noValidate onSubmit={this.handleSubmit}>
         <SectionTitle title="Wealth" className={this.props.classes.title} />
 
         <Grid
@@ -74,7 +79,7 @@ class SignatoryWealthForm extends Component {
         </Grid>
 
         <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton handleClick={this.props.handleContinue} />
+          <ContinueButton type="submit" />
         </div>
       </form>
     );

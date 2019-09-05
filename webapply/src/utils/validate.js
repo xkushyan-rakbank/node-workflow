@@ -85,7 +85,7 @@ const validateForm = event => {
     const id = fields[i].getAttribute("id");
     const error = validate(fields[i], config[id]);
     if (error) {
-      errorList.push(error);
+      errorList.push({ id, error });
     }
     fields[i].focus();
   }

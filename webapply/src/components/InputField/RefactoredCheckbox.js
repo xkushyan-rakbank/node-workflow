@@ -69,7 +69,7 @@ class CustomCheckbox extends React.Component {
   };
 
   render() {
-    const { config, classes, value, id } = this.props;
+    const { config, classes, value = false, id } = this.props;
     return (
       <label className={classes.checkboxWrapper}>
         <div className={classes.checkboxContainer}>

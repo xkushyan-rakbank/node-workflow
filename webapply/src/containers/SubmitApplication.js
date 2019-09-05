@@ -31,7 +31,7 @@ const SubmitApplication = props => {
         <Checkbox
           label={
             <div>
-              I agree with RakBank’s <a href="#">terms and conditions</a>
+              I agree with RakBank’s <a href="/">terms and conditions</a>
             </div>
           }
         />

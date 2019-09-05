@@ -76,9 +76,14 @@ class CompanyAnticipatedTransactionsForm extends Component {
     )} in Total Monthly Credits`;
   }
 
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.handleContinue(event);
+  };
+
   render() {
     return (
-      <form>
+      <form noValidate onSubmit={this.handleSubmit}>
         <SectionTitle
           title="Anticipated transactions"
           className={this.props.classes.title}
@@ -158,7 +163,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
         </Grid>
 
         <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton handleClick={this.props.handleContinue} />
+          <ContinueButton type="submit" />
         </div>
       </form>
     );

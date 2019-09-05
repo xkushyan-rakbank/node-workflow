@@ -123,7 +123,7 @@ class Input extends React.Component {
       config,
       classes,
       className,
-      InputProps,
+      InputProps = {},
       InputLabelProps,
       disabled,
       select
@@ -150,6 +150,13 @@ class Input extends React.Component {
             {select}
             <FormControl className="formControl">
               <TextField
+                InputProps={{
+                  ...InputProps,
+                  inputProps: {
+                    ...attrs,
+                    disabled: disabled
+                  }
+                }}
                 InputLabelProps={InputLabelProps}
                 disabled={disabled}
                 defaultValue={this.props.defaultValue || this.props.value}
@@ -158,13 +165,8 @@ class Input extends React.Component {
                 className={cx(classes.textField, className, {
                   [classes.disabled]: disabled
                 })}
-                inputProps={{
-                  ...attrs,
-                  disabled: disabled
-                }}
                 onBlur={this.handleOnBlur}
                 error={isError}
-                InputProps={InputProps}
               />
 
               {!!config.title && <InfoTitle title={config.title} />}

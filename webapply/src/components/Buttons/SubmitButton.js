@@ -28,6 +28,7 @@ const SubmitButton = props => {
     >
       <ContainedButton
         type="submit"
+        withRightArrow
         disabled={disabled}
         label={label}
         className={classes.nextButton}

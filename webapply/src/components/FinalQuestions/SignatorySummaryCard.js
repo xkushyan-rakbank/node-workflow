@@ -9,6 +9,7 @@ import SignatoryEmploymentDetailsForm from "./SignatoryEmploymentDetailsForm";
 import SignatoryWealthForm from "./SignatoryWealthForm";
 import SignatoryContactInformationForm from "./SignatoryContactInformationForm";
 import LinkButton from "../Buttons/LinkButton";
+import validateForm from "../../utils/validate";
 
 const style = {
   card: {
@@ -99,20 +100,27 @@ class SignatorySummaryCard extends Component {
       }
     ];
 
-    this.sectionsConfig.forEach(item => {
+    this.sectionsConfig.forEach((item, index) => {
       item.handler = this.handleContinue(item);
       item.sectionHeadClickHandler = this.handleSectionHeadClick(item);
+      item.nextSection = this.sectionsConfig[index + 1] || null;
     });
   }
 
-  handleContinue = section => () => {
-    const nextSection = this.sectionsConfig[
-      this.sectionsConfig.indexOf(section) + 1
-    ];
+  handleContinue = section => event => {
+    const errorList = validateForm(event);
 
+    if (errorList.length > 0) {
+      return errorList;
+    }
+
+    this.updateSectionsSate(section);
+  };
+
+  updateSectionsSate({ nextSection, key }) {
     if (nextSection) {
       this.setState({
-        [section.key]: {
+        [key]: {
           isExpanded: false,
           isFilled: true
         },
@@ -123,14 +131,15 @@ class SignatorySummaryCard extends Component {
       });
     } else {
       this.setState({
-        [section.key]: {
+        [key]: {
           isExpanded: false,
           isFilled: true
         },
-        isExpanded: false
+        isExpanded: false,
+        isFilled: true
       });
     }
-  };
+  }
 
   handleSectionHeadClick = section => () => {
     this.setState({
