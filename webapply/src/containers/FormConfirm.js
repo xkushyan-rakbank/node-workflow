@@ -1,10 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Input from "./../components/InputField/Input";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import routes from "./../routes"; // remove it in future
 import { withStyles } from "@material-ui/core/styles";
+import { digitRegExp } from "../constants";
+import ErrorMessage from "../components/ErrorMessage";
 
 const style = {
   confirmForm: {
@@ -32,32 +32,39 @@ const style = {
   }
 };
 
-class Confirm extends React.Component {
+class FormConfirm extends React.Component {
   constructor(props) {
     super(props);
-
-    this.codeLength = 6;
-
     this.state = {
-      valueList: []
+      code: Array(6).fill(""),
+      invalid: false
     };
-    this.inputConfig = Array.from(Array(this.codeLength).keys()).map(index => ({
-      onChange: this.handleInputChange(index)
-    }));
   }
 
-  handleInputChange = index => ({ target: { value } }) => {
-    if (value.length <= 1) {
-      const { valueList } = this.state;
-      valueList[index] = value;
-      this.setState({ valueList });
-      //todo switch focus to next input
+  handleSubmit = event => {
+    event.preventDefault();
+    if (this.state.code.every(value => digitRegExp.test(value))) {
+      console.log(this.state.code.join(""));
+      this.props.history.push("/CompanyInfo");
+    } else {
+      this.setState({ invalid: true });
     }
+  };
+
+  handleChange = event => {
+    const { value, name } = event.target;
+    const newValue = value.trim();
+    const newState = { invalid: false };
+    if (digitRegExp.test(value) || (this.state.code[name] && !newValue)) {
+      const newCode = this.state.code;
+      newCode[name] = newValue;
+      newState.code = newCode;
+    }
+    this.setState({ ...newState });
   };
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.confirmForm}>
         <h2>Confirm It’s You</h2>
@@ -65,26 +72,27 @@ class Confirm extends React.Component {
           We have sent you a verification code to <b>christer@acme.com</b> and
           <b> +791 756 565 840</b>. Please input here to Autenticate.
         </p>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">
-            {this.inputConfig.map((item, index) => (
-              <Grid key={index} className={classes.squareInput}>
-                <Input
-                  name={`code-${index}`}
-                  type="number"
-                  value={this.state.valueList[index] || ""}
-                  onChange={item.onChange}
-                />
-              </Grid>
-            ))}
+            {this.state.code.map((value, index) => {
+              return (
+                <Grid key={`code-${index}`} className={classes.squareInput}>
+                  <Input
+                    name={index.toString()}
+                    inputProps={{ maxLength: 1 }}
+                    onChange={this.handleChange}
+                    value={value}
+                  />
+                </Grid>
+              );
+            })}
           </Grid>
+          {this.state.invalid && <ErrorMessage error="Invalid code" />}
           <div className="flexContainerForButton">
             <span>
               Didn’t get the code? <a href=""> Send a new code</a>
             </span>
-            <Link to={routes.companyInfo}>
-              <SubmitButton />
-            </Link>
+            <SubmitButton />
           </div>
         </form>
       </div>
@@ -92,4 +100,4 @@ class Confirm extends React.Component {
   }
 }
 
-export default withStyles(style)(Confirm);
+export default withStyles(style)(FormConfirm);

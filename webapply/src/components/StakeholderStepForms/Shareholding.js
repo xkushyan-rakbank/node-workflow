@@ -1,26 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputValueById } from "../../store/selectors/appConfig";
 import InputAdornment from "@material-ui/core/InputAdornment";
-
-const styles = {
-  percentageInput: {
-    position: "relative",
-    "& input[name='percentage']": {
-      paddingRight: "40px"
-    }
-  },
-  percentageIcon: {
-    fontSize: "16px",
-    color: "#517085",
-    position: "absolute",
-    top: "30px",
-    right: "30px"
-  }
-};
 
 const Shareholding = props => {
   return (

@@ -1,8 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 import SectionTitle from "../SectionTitle";
-import Select from "../InputField/PureSelect";
 import Subtitle from "../Subtitle";
 import Checkbox from "../InputField/Checkbox";
 import FormWrapper from "../StakeholderStepForms/FormWrapper";

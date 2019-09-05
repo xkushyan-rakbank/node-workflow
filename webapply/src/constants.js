@@ -29,21 +29,6 @@ export const stakeHoldersSteps = [
   }
 ];
 
-export const gender = [
-  { value: "Mr.", label: "Mr." },
-  { value: "Ms.", label: "Ms." }
-];
-
-export const maritalStatus = [
-  { value: "Single", label: "Single" },
-  { value: "Married", label: "Married" }
-];
-
-export const personSignatory = [
-  { value: true, label: "Yes" },
-  { value: false, label: "No" }
-];
-
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
   { value: "AuthorityType2", label: "AuthorityType2" }
@@ -106,3 +91,5 @@ export const servicesSteps = [
   },
   { step: 3, title: "Channels", component: Channels }
 ];
+
+export const digitRegExp = new RegExp("^[0-9]$");
