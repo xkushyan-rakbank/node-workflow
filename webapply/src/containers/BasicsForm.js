@@ -9,6 +9,7 @@ import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import PureSelect from "../components/InputField/PureSelect";
 import validateForm from "../utils/validate";
+import { history } from "../store/configureStore";
 
 const styles = {
   baseForm: {
@@ -24,8 +25,11 @@ const styles = {
 class BasicsForm extends React.Component {
   submitForm = event => {
     event.preventDefault();
-    const fields = event.target.elements;
-    validateForm(fields, "/VerifyOTP");
+    const errorList = validateForm(event);
+
+    if (!errorList.length) {
+      history.push("/VerifyOTP");
+    }
   };
 
   render() {

@@ -76,7 +76,8 @@ const validationErrorMessages = errorConfig => {
   }
 };
 
-const validateForm = (fields, redirectUrl) => {
+const validateForm = event => {
+  const fields = event.target.elements;
   const reduxStore = store.getState();
   const config = get(reduxStore, "appConfig.uiConfig");
   const errorList = [];
@@ -89,9 +90,7 @@ const validateForm = (fields, redirectUrl) => {
     fields[i].focus();
   }
 
-  if (!errorList.length) {
-    history.push(redirectUrl);
-  }
+  return errorList;
 };
 
 export default validateForm;
