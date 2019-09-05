@@ -27,10 +27,22 @@ class ReCaptcha extends React.PureComponent {
 
   componentDidMount() {
     if (!this.state.grecaptcha) {
+      this.addReCaptchaScriptToDOM();
       window.recaptchaOnloadCallback = () => {
         this.setState({ grecaptcha: window.grecaptcha });
       };
     }
+  }
+
+  addReCaptchaScriptToDOM() {
+    const script = document.createElement("script");
+    script.setAttribute("async", "");
+    script.setAttribute("defer", "");
+    script.setAttribute(
+      "src",
+      "https://www.google.com/recaptcha/api.js?onload=recaptchaOnloadCallback&render=explicit&hl=en"
+    );
+    document.body.appendChild(script);
   }
 
   componentWillUnmount() {
