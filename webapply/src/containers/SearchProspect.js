@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextInput from "../components/InputField/TextInput";
-import ContinueButton from "../components/Buttons/ContinueButton";
+import SearchButton from "../components/Buttons/SearchButton";
 import PureSelect from "../components/InputField/PureSelect";
 import Grid from "@material-ui/core/Grid";
 
