@@ -78,7 +78,10 @@ class Input extends React.Component {
   };
 
   componentDidMount() {
-    if (!isUndefined(this.props.defaultValue)) {
+    if (
+      !isUndefined(this.props.defaultValue) &&
+      (isUndefined(this.props.value) || this.props.value === "")
+    ) {
       this.props.updateField({
         value: this.props.defaultValue,
         name: this.props.name
@@ -87,9 +90,11 @@ class Input extends React.Component {
   }
 
   updateField = event => {
-    const value = event.target.value;
     const { name } = this.props;
-    this.props.updateField({ value, name });
+    const value = event.target.value.trim();
+    if (value !== this.props.value) {
+      this.props.updateField({ value, name });
+    }
   };
 
   fieldValidation = event => {
@@ -100,6 +105,16 @@ class Input extends React.Component {
     this.setState({
       fieldErrors: errors
     });
+
+    return field.validity.valid;
+  };
+
+  handleOnBlur = event => {
+    const isValid = this.fieldValidation(event);
+
+    if (isValid) {
+      this.updateField(event);
+    }
   };
 
   render() {
@@ -108,7 +123,6 @@ class Input extends React.Component {
       config,
       classes,
       className,
-      value,
       InputProps,
       InputLabelProps,
       disabled,
@@ -138,18 +152,17 @@ class Input extends React.Component {
               <TextField
                 InputLabelProps={InputLabelProps}
                 disabled={disabled}
+                defaultValue={this.props.defaultValue || this.props.value}
                 variant="outlined"
-                value={value || ""}
                 label={config.label}
                 className={cx(classes.textField, className, {
                   [classes.disabled]: disabled
                 })}
-                onChange={this.updateField}
                 inputProps={{
                   ...attrs,
                   disabled: disabled
                 }}
-                onBlur={this.fieldValidation}
+                onBlur={this.handleOnBlur}
                 error={isError}
                 InputProps={InputProps}
               />
