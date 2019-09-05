@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import TextInput from "../components/InputField/TextInput";
-import SubmitButton from "../components/Buttons/SubmitButton";
+import ContinueButton from "../components/Buttons/ContinueButton";
 import routes from "./../routes"; // remove it in future
+import PureSelect from "../components/InputField/PureSelect";
+import Grid from "@material-ui/core/Grid";
 
 const styles = {
   baseForm: {
@@ -46,20 +48,42 @@ class SearchProspect extends React.Component {
 
         <TextInput id="Search.fullName" />
 
-        <TextInput id="Search.mobileNo" selectId="Search.countryCode" withSelect />
-        
-        <TextInput id="Search.leadNumber" />
+        <TextInput
+            id="Search.mobileNo"
+            selectId="Search.countryCode"
+            select={
+              <PureSelect
+                id="Search.countryCode"
+                combinedSelect
+                defaultValue="USA"
+              />
+            }
+          />
 
-        <TextInput id="Search.tradeLicenseNo" /> 
-        
-        <TextInput id="Search.email" />  
+<Grid container spacing={3}>
+           <Grid item md={6} sm={12}>
+             <TextInput id="Search.leadNumber"/>
+           </Grid>
+           <Grid item md={6} sm={12}>
+             <TextInput id="Search.tradeLicenseNo" />
+           </Grid>
+         </Grid>
 
-        <TextInput id="Search.eidNumber" />
+
+         <Grid container spacing={3}>
+           <Grid item md={6} sm={12}>
+             <TextInput id="Search.email"/>
+           </Grid>
+           <Grid item md={6} sm={12}>
+             <TextInput id="Search.eidNumber" />
+           </Grid>
+         </Grid>
+
               
           <div className="linkContainer">
-            <Link to={routes.verifyOtp}>
-              <SubmitButton />
-            </Link>
+         
+              <ContinueButton />
+           
           </div>
         </form>
       </div>
