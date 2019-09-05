@@ -5,5 +5,5 @@ export default {
   stakeholdersInfo: "/StakeholdersInfo",
   finalQuestions: "/FinalQuestions",
   selectServices: "/SelectServices",
-  searchInfo: "/SearchInfo"
+  searchProspect: "/SearchProspect"
 };
