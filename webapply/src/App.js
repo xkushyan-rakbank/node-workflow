@@ -46,7 +46,11 @@ class App extends React.Component {
               <Route exact path={routes.applicantInfo} component={BasicsForm} />
               <Route exact path={routes.verifyOtp} component={FormConfirm} />
               <Route exact path={routes.companyInfo} component={AboutCompany} />
-              <Route exact path={routes.searchInfo} component={SearchProspect} />
+              <Route
+                exact
+                path={routes.searchInfo}
+                component={SearchProspect}
+              />
               <Route
                 exact
                 path={routes.stakeholdersInfo}

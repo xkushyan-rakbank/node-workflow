@@ -39,17 +39,28 @@ class FormConfirm extends React.Component {
       code: Array(6).fill(""),
       invalid: false
     };
+    this.inputRefs = [];
+  }
+
+  getFullCode() {
+    return this.state.code.join("");
   }
 
   handleSubmit = event => {
     event.preventDefault();
     if (this.state.code.every(value => digitRegExp.test(value))) {
-      console.log(this.state.code.join(""));
-      this.props.history.push("/CompanyInfo");
+      console.log(this.getFullCode());
+      // this.props.history.push("/CompanyInfo");
     } else {
       this.setState({ invalid: true });
     }
   };
+
+  jumpToNextInput(name) {
+    const index = Number(name);
+    this.inputRefs[index] && this.inputRefs[index].blur();
+    this.inputRefs[index + 1] && this.inputRefs[index + 1].focus();
+  }
 
   handleChange = event => {
     const { value, name } = event.target;
@@ -59,8 +70,19 @@ class FormConfirm extends React.Component {
       const newCode = this.state.code;
       newCode[name] = newValue;
       newState.code = newCode;
+      if (newValue) {
+        this.jumpToNextInput(name);
+      }
     }
     this.setState({ ...newState });
+  };
+
+  bindNodeRef = index => node => {
+    this.inputRefs[index] = node;
+  };
+
+  handleInputFocus = index => () => {
+    this.inputRefs[index] && this.inputRefs[index].select();
   };
 
   render() {
@@ -79,7 +101,11 @@ class FormConfirm extends React.Component {
                 <Grid key={`code-${index}`} className={classes.squareInput}>
                   <Input
                     name={index.toString()}
-                    inputProps={{ maxLength: 1 }}
+                    inputProps={{
+                      maxLength: 1,
+                      ref: this.bindNodeRef(index)
+                    }}
+                    onFocus={this.handleInputFocus(index)}
                     onChange={this.handleChange}
                     value={value}
                   />
@@ -92,7 +118,9 @@ class FormConfirm extends React.Component {
             <span>
               Didn’t get the code? <a href="/"> Send a new code</a>
             </span>
-            <SubmitButton />
+            <SubmitButton
+              disabled={this.state.code.some(value => !digitRegExp.test(value))}
+            />
           </div>
         </form>
       </div>
