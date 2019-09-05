@@ -74,7 +74,7 @@ class SearchProspect extends React.Component {
           </Grid>
 
           <div className="linkContainer">
-            <ContinueButton />
+             <SearchButton />
           </div>
         </form>
       </div>
