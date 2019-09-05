@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import cx from "classnames";
 import ContinueButton from "../Buttons/ContinueButton";
+import validateForm from "../../utils/validate";
 
 const styles = {
   formWrapper: {
@@ -16,11 +17,21 @@ const styles = {
 };
 
 const FormWrapper = props => {
+  const submitForm = event => {
+    event.preventDefault();
+    const errorList = validateForm(event);
+    if (!errorList.length) {
+      props.handleContinue();
+    }
+  };
   return (
-    <form className={cx(props.classes.formWrapper, props.className)}>
+    <form
+      className={cx(props.classes.formWrapper, props.className)}
+      onSubmit={submitForm}
+    >
       {props.children}
       <div className={props.classes.buttonWrapper}>
-        <ContinueButton handleClick={props.handleContinue} />
+        <ContinueButton type="submit" />
       </div>
     </form>
   );

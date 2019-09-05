@@ -1,6 +1,4 @@
 import React from "react";
-import { compose } from "recompose";
-import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
@@ -9,7 +7,6 @@ import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import PureSelect from "../components/InputField/PureSelect";
 import validateForm from "../utils/validate";
-import { history } from "../store/configureStore";
 
 const styles = {
   baseForm: {
@@ -28,11 +25,12 @@ class BasicsForm extends React.Component {
     const errorList = validateForm(event);
 
     if (!errorList.length) {
-      history.push("/VerifyOTP");
+      this.props.history.push("/VerifyOTP");
     }
   };
 
   render() {
+    console.log(this.props);
     const { classes } = this.props;
 
     return (
@@ -82,17 +80,4 @@ class BasicsForm extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  const config = state.appConfig || {};
-  return {
-    config
-  };
-};
-
-export default compose(
-  withStyles(styles),
-  connect(
-    mapStateToProps,
-    null
-  )
-)(BasicsForm);
+export default withStyles(styles)(BasicsForm);

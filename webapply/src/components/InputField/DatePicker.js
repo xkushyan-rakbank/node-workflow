@@ -63,7 +63,7 @@ class DatePicker extends React.Component {
   };
 
   render() {
-    const { value, classes, config } = this.props;
+    const { value, classes, config, name } = this.props;
     const { fieldErrors } = this.state;
     const isError = !isEmpty(fieldErrors);
 
@@ -82,7 +82,7 @@ class DatePicker extends React.Component {
               inputVariant="outlined"
               placeholder="__/__/____"
               className={classes.datePicker}
-              value={value}
+              value={value || null}
               onChange={this.updateField}
               onBlur={this.fieldValidation}
               error={isError}

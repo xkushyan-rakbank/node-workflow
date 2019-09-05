@@ -109,7 +109,9 @@ class PureSelect extends React.Component {
           {config.label}
         </InputLabel>
         <Select
-          value={value || ""}
+          native={false}
+          required
+          value={value}
           disabled={disabled}
           input={
             <OutlinedInput
