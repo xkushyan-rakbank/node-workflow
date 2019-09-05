@@ -36,7 +36,7 @@
 			],
 			"description": "name of the applicant",
 			"maxlength": "240",
-			"pattern": "^[a-zA-Z]*$"
+			"pattern": "^[a-zA-Z\\s]*$"
 		},
 		"Aplnt.email": {
 			"criteria": {
@@ -68,6 +68,7 @@
 			"name": "prospect.applicantInfo.email",
 			"required": true,
 			"datalistId": null,
+			"pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
 			"readonlyFor": [
 			],
 			"description": "email Id of the applicant",
@@ -5868,25 +5869,31 @@
 			],
 			"maxlength": "50",
 			"pattern": "^[a-zA-Z]*$",
-			"datalistId": "nationality",
+			"datalistId": "NationalityList",
 			"datalist": [
 				{
-					"code": "Nationality1",
-					"key": "Nationality1",
-					"value": "Nationality1",
-					"displayText": "Nationality1"
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "United Arab Emirates"
 				},
 				{
-					"code": "Nationality2",
-					"key": "Nationality2",
-					"value": "Nationality2",
-					"displayText": "Nationality2"
+					"code": "SP",
+					"key": "SP",
+					"value": "SP",
+					"displayText": "Spain"
 				},
 				{
-					"code": "Nationality3",
-					"key": "Nationality3",
-					"value": "Nationality3",
-					"displayText": "Nationality3"
+					"code": "ITA",
+					"key": "ITA",
+					"value": "ITA",
+					"displayText": "Italy"
+				},
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "USA"
 				}
 			]
 		},
@@ -5914,7 +5921,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "This person has a second citizenship",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.dualCitizenship",
 			"name": "prospect.signatoryInfo[*].kycDetails.dualCitizenship",
@@ -5953,8 +5960,34 @@
 			"path": "$.prospect.signatoryInfo[*].kycDetails.dualCitizenshipCountry[*]",
 			"name": "prospect.signatoryInfo[*].kycDetails.dualCitizenshipCountry[*]",
 			"required": false,
-			"datalistId": null,
 			"readonlyFor": [
+			],
+			"datalistId": "NationalityList",
+			"datalist": [
+				{
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "United Arab Emirates"
+				},
+				{
+					"code": "SP",
+					"key": "SP",
+					"value": "SP",
+					"displayText": "Spain"
+				},
+				{
+					"code": "ITA",
+					"key": "ITA",
+					"value": "ITA",
+					"displayText": "Italy"
+				},
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "USA"
+				}
 			]
 		},
 		"SigKycd.residenceCountry": {
@@ -5986,11 +6019,37 @@
 			"path": "$.prospect.signatoryInfo[*].kycDetails.residenceCountry",
 			"name": "prospect.signatoryInfo[*].kycDetails.residenceCountry",
 			"required": false,
-			"datalistId": null,
 			"readonlyFor": [
 			],
 			"default": "AE",
-			"description": "Defaulted for signatories/POA (isSignatory)"
+			"description": "Defaulted for signatories/POA (isSignatory)",
+			"datalistId": "NationalityList",
+			"datalist": [
+				{
+					"code": "AE",
+					"key": "AE",
+					"value": "AE",
+					"displayText": "United Arab Emirates"
+				},
+				{
+					"code": "SP",
+					"key": "SP",
+					"value": "SP",
+					"displayText": "Spain"
+				},
+				{
+					"code": "ITA",
+					"key": "ITA",
+					"value": "ITA",
+					"displayText": "Italy"
+				},
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "USA"
+				}
+			]
 		},
 		"SigKycd.isUAEResident": {
 			"criteria": {
@@ -6154,7 +6213,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Emirates ID",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.emirateIdDetails.eidNumber",
 			"name": "prospect.signatoryInfo[*].kycDetails.emirateIdDetails.eidNumber",
@@ -6223,7 +6282,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Position",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.selfGovtPosition",
 			"name": "prospect.signatoryInfo[*].kycDetails.selfGovtPosition",
@@ -6256,7 +6315,7 @@
 				"multilineInvalid": null
 			},
 			"applicable": null,
-			"label": null,
+			"label": "Position",
 			"placeholder": null,
 			"path": "$.prospect.signatoryInfo[*].kycDetails.relativeGovtPosition",
 			"name": "prospect.signatoryInfo[*].kycDetails.relativeGovtPosition",

@@ -1,42 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import Select from "../InputField/Select";
-import Input from "../InputField/Input";
-import { countryOfResidence as countryOfResidenceOptions } from "../../constants";
+import Select from "../InputField/PureSelect";
+import Input from "../InputField/TextInput";
+import { getInputValueById } from "../../store/selectors/appConfig";
 
-const CountryOfResidence = () => {
-  const [countryOfResidence, setCountryOfResidence] = useState(
-    countryOfResidenceOptions[0].value
-  );
-  const [emiratesID, setEmiratesID] = useState();
-  const changeCountryOfResidence = event =>
-    setCountryOfResidence(event.target.value);
-  return (
-    <Grid container spacing={3}>
-      <Grid item md={6} sm={12}>
-        <Select
-          name="countryOfResidence"
-          label="Country of Residence"
-          options={countryOfResidenceOptions}
-          value={countryOfResidence}
-          onChange={changeCountryOfResidence}
-        />
+class CountryOfResidence extends React.Component {
+  static defaultProps = {
+    index: 0
+  };
+
+  render() {
+    const { index, isOAE, isSignatory } = this.props;
+
+    return (
+      <Grid container spacing={3}>
+        <Grid item md={6} sm={12}>
+          <Select
+            disabled={isSignatory}
+            defaultValue="AE"
+            id="SigKycd.residenceCountry"
+            indexes={[index]}
+          />
+        </Grid>
+        <Grid item md={6} sm={12}>
+          <Input
+            defaultValue="784-XXXX-XXXXXXX-X"
+            disabled={!isOAE}
+            id="SigKycdEmid.eidNumber"
+            indexes={[index]}
+          />
+        </Grid>
       </Grid>
-      <Grid item md={6} sm={12}>
-        <Input
-          name="emiratesID"
-          label="Emirates ID"
-          placeholder="Emirates ID"
-          value={emiratesID}
-          onChange={setEmiratesID}
-        />
-      </Grid>
-    </Grid>
-  );
-};
+    );
+  }
+}
 
-CountryOfResidence.defaultProps = {
-  index: 0
-};
+const mapStateToProps = (state, { index }) => ({
+  isOAE: getInputValueById(state, "SigKycd.residenceCountry", [index]) === "AE",
+  isSignatory:
+    getInputValueById(state, "SigKycd.isSignatory", [index]) === "true"
+});
 
-export default CountryOfResidence;
+export default connect(mapStateToProps)(CountryOfResidence);

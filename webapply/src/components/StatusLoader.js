@@ -23,7 +23,7 @@ const StatusLoader = props => {
   const loadingProcess = (
     <>
       <CircularProgress
-        color="#517085"
+        color="primary"
         size="16px"
         className={props.classes.spinner}
       />
