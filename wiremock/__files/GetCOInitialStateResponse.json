@@ -10111,6 +10111,276 @@
 			"maxlength": "80",
 			"pattern": "^[a-zA-Z0-9. ]*$"
 		},
+		"Search.fullName": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "Full Name",
+			"placeholder": null,
+			"path": "$.prospect.searchInfo.fname",
+			"name": "prospect.searchInfo.fname",
+			"required": true,
+			"datalistId": null,
+			"readonlyFor": [],
+			"description": "name of the applicant",
+			"maxlength": "240",
+			"pattern": "^[a-zA-Z]*$"
+		},
+		"Search.countryCode": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "",
+			"placeholder": null,
+			"path": "$.prospect.searchInfo.countryCode",
+			"name": "prospect.searchInfo.countryCode",
+			"required": true,
+			"datalistId": "CountryCode",
+			"readonlyFor": [
+			],
+			"datalist": [
+				{
+					"code": "USA",
+					"key": "USA",
+					"value": "USA",
+					"displayText": "+791"
+				},
+				{
+					"code": "EUR",
+					"key": "EUR",
+					"value": "EUR",
+					"displayText": "+992"
+				},
+				{
+					"code": "UA",
+					"key": "UA",
+					"value": "UA",
+					"displayText": "+380"
+				},
+				{
+					"code": "GB",
+					"key": "GB",
+					"value": "GB",
+					"displayText": "+391"
+				}
+			],
+			"description": "country code",
+			"pattern": "^[0-9]*$",
+			"maxlength": "3"
+		},
+		"Search.mobileNo": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "Mobile Number",
+			"placeholder": null,
+			"path": "$.prospect.searchInfo.mobileNo",
+			"name": "prospect.searchInfo.mobileNo",
+			"required": true,
+			"datalistId": null,
+			"readonlyFor": [
+			],
+			"description": "mobile number",
+			"pattern": "^[0-9]*$",
+			"maxlength": "15"
+		},
+		"Search.leadNumber": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "Lead Number",
+			"placeholder": null,
+			"path": "$.prospect.searchInfo.leadNumber",
+			"name": "prospect.searchInfo.leadNumber",
+			"required": false,
+			"datalistId": null,
+			"readonlyFor": [],
+			"description": "lead Number of the applicant",
+			"maxlength": "50"
+		},
+		"Search.tradeLicenseNo": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "Trade License Number",
+			"placeholder": null,
+			"path": "$.prospect.searchInfo.tradeLicenseNo",
+			"name": "prospect.searchInfo.tradeLicenseNo",
+			"required": false,
+			"datalistId": null,
+			"readonlyFor": [],
+			"description": "tradeLicenseNo of the applicant",
+			"maxlength": "50"
+		},
+		"Search.email": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "E-mail Address",
+			"placeholder": null,
+			"path": "$.prospect.searchInfo.email",
+			"name": "prospect.searchInfo.email",
+			"required": false,
+			"datalistId": null,
+			"readonlyFor": [],
+			"description": "email Id of the applicant",
+			"format": "email",
+			"maxlength": "50"
+		},
+		"Search.eidNumber": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "Emirates ID Number",
+			"placeholder": null,
+			"path": "$.prospect.searchInfo.eidNumber",
+			"name": "prospect.searchInfo.eidNumber",
+			"required": false,
+			"datalistId": null,
+			"readonlyFor": [],
+			"description": "eidNumber Id of the applicant",
+			"maxlength": "50"
+		},
 		"shortKeyNames": {
 			"ProspectDocument": "ProspDocs",
 			"documents": "Docs",
@@ -10150,7 +10420,8 @@
 			"companyDocuments": "CompDocs",
 			"applicationInfo": "Appl",
 			"signatoryInfo": "Sig",
-			"kycDetails": "Kycd"
+			"kycDetails": "Kycd",
+			"SearchProspect": "Search"
 		}
 	},
 	"prospect": {
@@ -10557,6 +10828,16 @@
 			"freeField3": "",
 			"freeField4": "",
 			"freeField5": ""
+		},
+		"searchInfo": {
+            "userType": "",
+			"fname": "",
+			"countryCode": "",
+            "mobileNo": "",
+            "leadNumber": "",
+            "tradeLicenseNo":"",
+            "email": "",
+			"eidNumber": ""
 		}
 	}
 }
