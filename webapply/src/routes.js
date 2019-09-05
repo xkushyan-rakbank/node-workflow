@@ -4,5 +4,6 @@ export default {
   companyInfo: "/CompanyInfo",
   stakeholdersInfo: "/StakeholdersInfo",
   finalQuestions: "/FinalQuestions",
-  selectServices: "/SelectServices"
+  selectServices: "/SelectServices",
+  searchInfo: "/SearchInfo"
 };
