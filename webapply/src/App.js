@@ -48,7 +48,7 @@ class App extends React.Component {
               <Route exact path={routes.companyInfo} component={AboutCompany} />
               <Route
                 exact
-                path={routes.searchInfo}
+                path={routes.searchProspect}
                 component={SearchProspect}
               />
               <Route
