@@ -185,6 +185,7 @@ class Input extends React.Component {
                 })}
                 onBlur={this.handleOnBlur}
                 error={isError}
+                onFocus={() => this.setState({ fieldErrors: {} })}
               />
 
               {!!config.title && <InfoTitle title={config.title} />}

@@ -92,11 +92,9 @@ class PureSelect extends React.Component {
     if (prevProps.required !== this.props.required) {
       this.setState({ fieldErrors: {} });
     }
-    if (this.isSelectRequired()) {
-      this.setRequiredForInput();
-    } else {
-      this.unsetRequiredForInput();
-    }
+    this.isSelectRequired()
+      ? this.setRequiredForInput()
+      : this.unsetRequiredForInput();
   }
 
   isSelectRequired() {
