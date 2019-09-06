@@ -92,6 +92,12 @@ class Input extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.required !== this.props.required) {
+      this.setState({ fieldErrors: {} });
+    }
+  }
+
   updateField = event => {
     const { name } = this.props;
     const value = event.target.value.trim();
@@ -132,7 +138,7 @@ class Input extends React.Component {
       classes,
       className,
       InputProps = {},
-      attr = {},
+      required,
       InputLabelProps,
       disabled,
       select
@@ -141,9 +147,11 @@ class Input extends React.Component {
     const { fieldErrors } = this.state;
     const inputProps = {
       ...fieldAttr(id, config),
-      ...attr,
       disabled
     };
+    if (required) {
+      inputProps.required = true;
+    }
     const isError = !isEmpty(fieldErrors);
 
     if (id && config.label) {
