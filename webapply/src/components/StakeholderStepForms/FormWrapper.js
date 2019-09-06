@@ -26,6 +26,7 @@ const FormWrapper = props => {
   };
   return (
     <form
+      noValidate
       className={cx(props.classes.formWrapper, props.className)}
       onSubmit={submitForm}
     >

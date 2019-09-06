@@ -102,9 +102,7 @@ class CompanyBackgroundForm extends Component {
                   <TextInput
                     id="OkycTopc.name"
                     indexes={[index]}
-                    attr={{
-                      required: index === 0
-                    }}
+                    required={index === 0}
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -146,6 +144,7 @@ class CompanyBackgroundForm extends Component {
                   <TextInput
                     id="OkycTops.name"
                     indexes={[index]}
+                    required={!this.state.isDontHaveSuppliers && index === 0}
                     disabled={this.state.isDontHaveSuppliers}
                   />
                 </Grid>
@@ -153,6 +152,7 @@ class CompanyBackgroundForm extends Component {
                   <PureSelect
                     id="OkycTops.country"
                     indexes={[index]}
+                    required={!this.state.isDontHaveSuppliers && index === 0}
                     disabled={this.state.isDontHaveSuppliers}
                   />
                 </Grid>
@@ -190,6 +190,7 @@ class CompanyBackgroundForm extends Component {
                 return (
                   <PureSelect
                     key={index}
+                    required={index === 0 && !this.state.isDontTradingGoods}
                     id="Okyc.topOriginGoodsCountries"
                     indexes={[index]}
                     disabled={this.state.isDontTradingGoods}
