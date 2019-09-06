@@ -15,6 +15,7 @@ import ErrorMessage from "./../ErrorMessage";
 import { validate } from "./../../utils/validate";
 import { updateField } from "../../store/actions/appConfig";
 import combineNestingName from "../../utils/combineNestingName";
+import { fieldAttr } from "../../constants";
 
 const styles = {
   datePicker: {
@@ -63,10 +64,10 @@ class DatePicker extends React.Component {
   };
 
   render() {
-    const { value, classes, config } = this.props;
+    const { value, classes, config, id } = this.props;
     const { fieldErrors } = this.state;
     const isError = !isEmpty(fieldErrors);
-
+    const attrs = fieldAttr(id, config);
     return (
       <FormControl className="formControl">
         {config.label && (
@@ -89,6 +90,8 @@ class DatePicker extends React.Component {
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}
+              autoComplete="off"
+              {...attrs}
             />
           </MuiPickersUtilsProvider>
         )}
