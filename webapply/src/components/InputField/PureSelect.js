@@ -90,7 +90,10 @@ class PureSelect extends React.Component {
       this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
       this.setRequiredForInput();
     }
-    if ((!prevProps && this.props.required) || isEmpty(prevProps.config)) {
+    if (
+      (!prevProps && this.props.required) ||
+      (isEmpty(prevProps.config) && !isEmpty(this.props.config))
+    ) {
       this.setRequiredForInput();
     }
   }

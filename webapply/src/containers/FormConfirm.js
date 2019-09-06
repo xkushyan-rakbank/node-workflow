@@ -94,7 +94,7 @@ class FormConfirm extends React.Component {
           We have sent you a verification code to <b>christer@acme.com</b> and
           <b> +791 756 565 840</b>. Please input here to Autenticate.
         </p>
-        <form onSubmit={this.handleSubmit}>
+        <form noValidate onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">
             {this.state.code.map((value, index) => {
               return (
