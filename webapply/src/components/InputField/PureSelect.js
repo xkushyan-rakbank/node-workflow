@@ -165,7 +165,7 @@ class PureSelect extends React.Component {
     const { fieldErrors } = this.state;
     const {
       config,
-      value,
+      value = "",
       id,
       classes,
       combinedSelect,

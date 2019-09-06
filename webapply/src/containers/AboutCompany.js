@@ -22,7 +22,6 @@ class AboutCompany extends React.Component {
   submitForm = event => {
     event.preventDefault();
     const errorList = validateForm(event);
-    console.log(errorList);
 
     if (!errorList.length) {
       this.props.history.push("/StakeholdersInfo");

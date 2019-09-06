@@ -67,8 +67,6 @@ class CompanySummaryCard extends Component {
   handleContinue = section => event => {
     const errorList = validateForm(event);
 
-    console.log({ errorList });
-
     if (errorList.length > 0) {
       return errorList;
     }
