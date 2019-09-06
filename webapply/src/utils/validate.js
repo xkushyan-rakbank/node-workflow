@@ -5,7 +5,6 @@ import get from "lodash/get";
 export const validate = (field, fieldConfig) => {
   if (fieldConfig) {
     const validity = field.validity;
-    console.log(validity);
     const errorConfig = fieldConfig.validationErrors;
 
     if (validity.valid) return;

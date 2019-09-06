@@ -30,7 +30,6 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     const { classes } = this.props;
 
     return (

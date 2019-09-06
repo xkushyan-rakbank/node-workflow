@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
+import Route from "./components/Route";
 import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -40,8 +41,6 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <ConnectedRouter history={history}>
           <FormLayout>
-            {/* <Redirect from="/" to={routes.applicantInfo} /> */}
-
             <Switch>
               <Route exact path={routes.applicantInfo} component={BasicsForm} />
               <Route exact path={routes.verifyOtp} component={FormConfirm} />
@@ -66,6 +65,7 @@ class App extends React.Component {
                 path={routes.selectServices}
                 component={SelectServices}
               />
+              <Route path="*" />
             </Switch>
           </FormLayout>
         </ConnectedRouter>
