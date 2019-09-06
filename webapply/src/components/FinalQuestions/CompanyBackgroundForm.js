@@ -99,10 +99,20 @@ class CompanyBackgroundForm extends Component {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
-                  <TextInput id="OkycTopc.name" indexes={[index]} />
+                  <TextInput
+                    id="OkycTopc.name"
+                    indexes={[index]}
+                    attr={{
+                      required: index === 0
+                    }}
+                  />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                  <PureSelect id="OkycTopc.country" indexes={[index]} />
+                  <PureSelect
+                    id="OkycTopc.country"
+                    indexes={[index]}
+                    required={index === 0}
+                  />
                 </Grid>
               </React.Fragment>
             );

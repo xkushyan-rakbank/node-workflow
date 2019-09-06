@@ -14,6 +14,9 @@ import { updateField } from "../../store/actions/appConfig";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import combineNestingName from "../../utils/combineNestingName";
+import { validate } from "../../utils/validate";
+import isEmpty from "lodash/isEmpty";
+import ErrorMessage from "../ErrorMessage";
 
 const styles = {
   selectField: {
@@ -59,10 +62,12 @@ const styles = {
 
 class PureSelect extends React.Component {
   state = {
-    labelWidth: 0
+    labelWidth: 0,
+    fieldErrors: {}
   };
 
   inputLabel = React.createRef();
+  inputRef = {};
 
   componentDidMount() {
     this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
@@ -83,40 +88,89 @@ class PureSelect extends React.Component {
     if (!prevProps.config.name && this.props.config.name) {
       this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
     }
+    if (this.props.required) {
+      this.setRequiredForInput();
+    }
   }
 
+  setRequiredForInput() {
+    const inputNode = this.inputRef.node;
+    if (!inputNode) {
+      return;
+    }
+    inputNode.required = true;
+    inputNode.type = "text";
+    inputNode.style.width = "1px";
+    inputNode.style.height = "1px";
+    inputNode.style.opacity = "0";
+    inputNode.focus = this.handleInputFocus;
+  }
+
+  handleInputFocus = () => {
+    this.checkInputValidity();
+  };
+
+  checkInputValidity = () => {
+    if (!this.inputRef.node) {
+      return;
+    }
+    const config = {
+      ...this.props.config
+    };
+
+    if (this.props.required) {
+      config.required = true;
+    }
+
+    this.setState({
+      fieldErrors: validate(this.inputRef.node, config)
+    });
+
+    return this.inputRef.node.validity.valid;
+  };
+
   updateField = event => {
+    this.setState({ fieldErrors: {} });
     const { value } = event.target;
     const { name } = this.props;
     this.props.updateField({ value, name });
   };
 
   render() {
-    const { config, value, id, classes, combinedSelect, disabled } = this.props;
+    const { fieldErrors } = this.state;
+    const {
+      config,
+      value,
+      id,
+      classes,
+      combinedSelect,
+      disabled,
+      name
+    } = this.props;
+    const isError = !isEmpty(fieldErrors);
     const className = combinedSelect
       ? classes.selectFieldCombined
       : classes.selectFieldBasic;
 
     return (
       <FormControl
-        className={cx(
-          "formControl",
-          combinedSelect ? classes.selectFieldCombined : ""
-        )}
+        className={cx("formControl", {
+          [classes.selectFieldCombined]: combinedSelect
+        })}
         variant="outlined"
+        error={isError}
       >
         <InputLabel ref={this.inputLabel} htmlFor={id}>
           {config.label}
         </InputLabel>
         <Select
-          native={false}
-          required
           value={value}
           disabled={disabled}
           input={
             <OutlinedInput
+              inputRef={node => (this.inputRef = node)}
               labelWidth={this.state.labelWidth}
-              name={config.name}
+              name={name}
               id={id}
             />
           }
@@ -132,6 +186,12 @@ class PureSelect extends React.Component {
             ))}
         </Select>
         {!!config.title && <InfoTitle title={config.title} />}
+        {isError && (
+          <ErrorMessage
+            error={fieldErrors.error}
+            multiLineError={fieldErrors.multiLineError}
+          />
+        )}
       </FormControl>
     );
   }

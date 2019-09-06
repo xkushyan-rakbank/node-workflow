@@ -73,6 +73,9 @@ const styles = {
 };
 
 class Input extends React.Component {
+  static defaultProps = {
+    attr: {}
+  };
   state = {
     fieldErrors: {}
   };
@@ -99,11 +102,16 @@ class Input extends React.Component {
 
   fieldValidation = event => {
     const field = event.target;
-    const fieldConfig = this.props.config;
-    const errors = validate(field, fieldConfig);
+    const config = {
+      ...this.props.config
+    };
+
+    if (this.props.attr.required) {
+      config.required = true;
+    }
 
     this.setState({
-      fieldErrors: errors
+      fieldErrors: validate(field, config)
     });
 
     return field.validity.valid;
@@ -124,13 +132,18 @@ class Input extends React.Component {
       classes,
       className,
       InputProps = {},
+      attr = {},
       InputLabelProps,
       disabled,
       select
     } = this.props;
 
     const { fieldErrors } = this.state;
-    const attrs = fieldAttr(id, config);
+    const inputProps = {
+      ...fieldAttr(id, config),
+      ...attr,
+      disabled
+    };
     const isError = !isEmpty(fieldErrors);
 
     if (id && config.label) {
@@ -152,10 +165,7 @@ class Input extends React.Component {
               <TextField
                 InputProps={{
                   ...InputProps,
-                  inputProps: {
-                    ...attrs,
-                    disabled: disabled
-                  }
+                  inputProps
                 }}
                 InputLabelProps={InputLabelProps}
                 disabled={disabled}
