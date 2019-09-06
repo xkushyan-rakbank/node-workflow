@@ -77,7 +77,7 @@ class PureSelect extends React.Component {
         name: this.props.name
       });
     }
-    if (this.props.required || this.props.config.required) {
+    if (this.isSelectRequired()) {
       this.setRequiredForInput();
     }
 
@@ -88,11 +88,19 @@ class PureSelect extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (isEmpty(prevProps.config) && !isEmpty(this.props.config)) {
       this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
-      this.setRequiredForInput();
     }
-    if ((!prevProps && this.props.required) || isEmpty(prevProps.config)) {
-      this.setRequiredForInput();
+    if (prevProps.required !== this.props.required) {
+      this.setState({ fieldErrors: {} });
     }
+    if (this.isSelectRequired()) {
+      this.setRequiredForInput();
+    } else {
+      this.unsetRequiredForInput();
+    }
+  }
+
+  isSelectRequired() {
+    return this.props.required || get(this.props, "config.required", false);
   }
 
   setRequiredForInput() {
@@ -106,6 +114,19 @@ class PureSelect extends React.Component {
     inputNode.style.height = "1px";
     inputNode.style.opacity = "0";
     inputNode.focus = this.handleInputFocus;
+  }
+
+  unsetRequiredForInput() {
+    const inputNode = this.inputRef.node;
+    if (!inputNode) {
+      return;
+    }
+    inputNode.required = false;
+    inputNode.type = "hidden";
+    inputNode.style.width = "unset";
+    inputNode.style.height = "unset";
+    inputNode.style.opacity = "unset";
+    inputNode.focus = () => {};
   }
 
   handleInputFocus = () => {
