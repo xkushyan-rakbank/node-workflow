@@ -78,7 +78,6 @@ const validationErrorMessages = errorConfig => {
 
 const validateForm = event => {
   const fields = event.target.elements;
-  console.log(fields);
   const reduxStore = store.getState();
   const config = get(reduxStore, "appConfig.uiConfig");
   const errorList = [];

@@ -22,6 +22,7 @@ class AboutCompany extends React.Component {
   submitForm = event => {
     event.preventDefault();
     const errorList = validateForm(event);
+    console.log(errorList);
 
     if (!errorList.length) {
       this.props.history.push("/StakeholdersInfo");
@@ -37,7 +38,7 @@ class AboutCompany extends React.Component {
           Explanation text goes here. One to three short sentences maximum. This
           is the third sentence.
         </p>
-        <form onSubmit={this.submitForm}>
+        <form onSubmit={this.submitForm} noValidate>
           <SectionTitle
             title="Company Details"
             className={classes.sectionTitleIndent}

@@ -50,7 +50,7 @@ class FormConfirm extends React.Component {
     event.preventDefault();
     if (this.state.code.every(value => digitRegExp.test(value))) {
       console.log(this.getFullCode());
-      // this.props.history.push("/CompanyInfo");
+      this.props.history.push("/CompanyInfo");
     } else {
       this.setState({ invalid: true });
     }
@@ -116,7 +116,7 @@ class FormConfirm extends React.Component {
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
           <div className="flexContainerForButton">
             <span>
-              Didn’t get the code? <a href="/"> Send a new code</a>
+              Didn’t get the code? <a href="#"> Send a new code</a>
             </span>
             <SubmitButton
               disabled={this.state.code.some(value => !digitRegExp.test(value))}

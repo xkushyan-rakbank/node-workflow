@@ -71,24 +71,26 @@ class PureSelect extends React.Component {
 
   componentDidMount() {
     this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
-    if (
-      !isUndefined(this.props.defaultValue) &&
-      (isUndefined(this.props.value) || this.props.value === "")
-    ) {
+    if (!isUndefined(this.props.defaultValue) && !this.props.value) {
       this.props.updateField({
         value: this.props.defaultValue,
         name: this.props.name
       });
     }
+    if (this.props.required || this.props.config.required) {
+      this.setRequiredForInput();
+    }
+
     // uncomitted when PureSelect component will replace Select in project
     // window.addEventListener("resize", () => console.log(this.inputLabel));
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.config.name && this.props.config.name) {
+    if (isEmpty(prevProps.config) && !isEmpty(this.props.config)) {
       this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
+      this.setRequiredForInput();
     }
-    if (this.props.required) {
+    if ((!prevProps && this.props.required) || isEmpty(prevProps.config)) {
       this.setRequiredForInput();
     }
   }
@@ -136,6 +138,8 @@ class PureSelect extends React.Component {
     this.props.updateField({ value, name });
   };
 
+  handleBlur = () => this.checkInputValidity();
+
   render() {
     const { fieldErrors } = this.state;
     const {
@@ -177,6 +181,7 @@ class PureSelect extends React.Component {
           IconComponent={KeyboardArrowDownIcon}
           className={cx(classes.selectField, className)}
           onChange={this.updateField}
+          onBlur={this.handleBlur}
         >
           {config.datalist &&
             config.datalist.map(option => (
