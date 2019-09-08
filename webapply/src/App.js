@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { history } from "./store/configureStore";
 import BasicsForm from "./containers/BasicsForm";
+import Login from "./containers/Login";
 import AboutCompany from "./containers/AboutCompany";
 import CompanyStakeholders from "./containers/CompanyStakeholders";
 import FinalQuestions from "./containers/FinalQuestions";
@@ -45,6 +46,7 @@ class App extends React.Component {
               <Route exact path={routes.applicantInfo} component={BasicsForm} />
               <Route exact path={routes.verifyOtp} component={FormConfirm} />
               <Route exact path={routes.companyInfo} component={AboutCompany} />
+              <Route exact path={routes.login} component={Login} />
               <Route
                 exact
                 path={routes.searchProspect}
