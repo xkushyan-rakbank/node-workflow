@@ -1,0 +1,38 @@
+{
+	"CountryCode": [
+		{
+			"code": "USA",
+			"key": "USA",
+			"value": "USA",
+			"displayText": "+791"
+		},
+		{
+			"code": "EUR",
+			"key": "EUR",
+			"value": "EUR",
+			"displayText": "+992"
+		},
+		{
+			"code": "AED",
+			"key": "AED",
+			"value": "AED",
+			"displayText": "United Arab Emirates"
+		}
+		
+	],
+	"Gender": [
+		{
+			"code": "M",
+			"key": "M",
+			"value": "M",
+			"displayText": "Male"
+		},
+		{
+			"code": "F",
+			"key": "F",
+			"value": "F",
+			"displayText": "Female"
+		}
+		
+	]
+}

@@ -1,0 +1,406 @@
+{
+	"applicantInfo": {
+		"fullName": "",
+		"email": "",
+		"countryCode": "",
+		"mobileNo": "",
+		"applyOnbehalf": true
+	},
+	"generalInfo": {
+		"prospectId": "",
+		"_links": {
+			"self": {
+				"href": ""
+			}
+		},
+		"cifId": 0,
+		"customerType": "",
+		"dsaId": "",
+		"groupId": "",
+		"groupName": "",
+		"rmCode": "",
+		"accountManagerId": "",
+		"isPoliticallyExposed": ""
+	},
+	"applicationInfo": {
+		"viewId": "",
+		"leadNumber": "",
+		"riskScore": "",
+		"srNumber": "",
+		"channelId": "",
+		"channelType": "",
+		"createdDate": "",
+		"lastModifiedDate": "",
+		"createdBy": "",
+		"lastModifiedBy": "",
+		"actionType": "",
+		"saveType": "",
+		"tncAgreed": false,
+		"declaration": true
+	},
+	"accountInfo": [
+		{
+			"branchId": "",
+			"accountType": "",
+			"accountSubType": "",
+			"accountNo": "",
+			"accountCurrencies": "",
+			"accountPurpose": "",
+			"debitCardApplied": true,
+			"chequeBookApplied": true,
+			"eStatements": true,
+			"mailStatements": false,
+			"receiveInterest": true,
+			"deliverByCourier": true
+		}
+	],
+	"organizationInfo": {
+		"screeningInfo": {
+			"statusOverAll": "proceed",
+			"screeningResults": [
+				{
+					"screeningType": "",
+					"screeningStatus": "",
+					"screeningFlag": "",
+					"screeningNotes": "",
+					"screeningReason": "",
+					"reasonNotes": "",
+					"reasonCode": "",
+					"reasonStatus": ""
+				}
+			]
+		},
+		"branchCity": "",
+		"branchID": "",
+		"countryOfIncorporation": "",
+		"companyName": "",
+		"shortName": "",
+		"dateOfIncorporation": "",
+		"numberOfEmployees": 0,
+		"licenseType": "",
+		"licenseTypeOther": "",
+		"licenseIssuingAuthority": "",
+		"licenseNumber": "",
+		"licenseIssueDate": "",
+		"licenseExpiryDate": "",
+		"vatRegistrationNumber": "",
+		"addressInfo": [
+			{
+				"typeOfAddress": "",
+				"officeAddressDifferent": "No",
+				"addressDetails": [
+					{
+						"addressFieldDesc": "",
+						"preferredAddress": "",
+						"addressLine1": "",
+						"addressLine2": "",
+						"addressLine3": "",
+						"addressLine4": "",
+						"poBox": "",
+						"emirateCity": "",
+						"country": "",
+						"typeOfSpaceOccupied": {
+							"spaceType": "",
+							"others": ""
+						}
+					}
+				]
+			}
+		],
+		"contactDetails": {
+			"primaryMobileNo": "",
+			"primaryMobCountryCode": "",
+			"primaryEmail": "",
+			"primaryPhoneNo": "",
+			"primaryPhoneCountryCode": "",
+			"fax": "",
+			"faxCountryCode": "",
+			"secondaryPhoneNo": "",
+			"secondaryPhoneCountryCode": "",
+			"secondaryMobileNo": "",
+			"secondaryMobileCountryCode": "",
+			"secondaryEmail": "",
+			"website": ""
+		},
+		"contactDetailsForTxnReconfirming": [
+			{
+				"primaryMobileNo": "",
+				"primaryMobCountryCode": "",
+				"primaryPhoneNo": "",
+				"primaryPhoneCountryCode": ""
+			}
+		]
+	},
+	"orgKYCDetails": {
+		"businessUnit": "",
+		"constitutionType": "",
+		"companyCategory": "",
+		"annualFinTurnoverAmtInAED": "",
+		"yearsInBusiness": 0,
+		"topCustomers": [
+			{
+				"name": "",
+				"country": ""
+			}
+		],
+		"topSuppliers": [
+			{
+				"name": "",
+				"country": ""
+			}
+		],
+		"topOriginGoodsCountries": [
+			""
+		],
+		"industryMultiSelect": [
+			{
+				"industry": [
+					""
+				],
+				"subCategory": [
+					""
+				]
+			}
+		],
+		"anticipatedTransactionsDetails": {
+			"totalMonthlyCashCreditsAED": {
+				"amountInFigures": "",
+				"inPercent": 0
+			},
+			"totalMonthlyNonCashCreditsAED": {
+				"amountInFigures": "",
+				"inPercent": 0
+			},
+			"totalMonthlyCreditsAED": "",
+			"maxAmtSingleTxnCashAED": "",
+			"maxAmtSingleTxnNonCashAED": ""
+		},
+		"otherBankingRelationshipsInfo": {
+			"otherBankingRelationshipsExist": false,
+			"otherBankDetails": [
+				{
+					"bankName": ""
+				}
+			]
+		},
+		"otherEntitiesInUAE": false,
+		"entitiesInUAE": [
+			{
+				"companyName": "",
+				"emirate": "",
+				"tradeLicenseNo": ""
+			}
+		],
+		"otherEntitiesOutsideUAE": false,
+		"entitiesOutsideUAE": [
+			{
+				"companyName": "",
+				"country": ""
+			}
+		],
+		"isShareholderACompany": false
+	},
+	"signatoryInfo": [
+		{
+			"screeningInfo": {
+				"statusOverAll": "proceed",
+				"screeningResults": [
+					{
+						"screeningType": "",
+						"screeningStatus": "",
+						"screeningFlag": "",
+						"screeningNotes": "",
+						"screeningReason": "",
+						"reasonNotes": "",
+						"reasonCode": "",
+						"reasonStatus": ""
+					}
+				]
+			},
+			"salutation": "Mr.",
+			"signatoryId": "",
+			"firstName": "",
+			"middleName": "",
+			"lastName": "",
+			"shortName": "",
+			"fullName": "",
+			"gender": "Male",
+			"maritalStatus": "Married",
+			"maritalStatusOthers": "",
+			"occupation": "",
+			"mothersMaidenName": "",
+			"numberOfDependants": 0,
+			"highestEducationAttained": "",
+			"employmentStatus": "",
+			"kycVerified": false,
+			"kycDetails": {
+				"salutation": "Mr.",
+				"shareholderPOASignatoryName": "",
+				"isSignatory": false,
+				"isShareholder": false,
+				"shareHoldingPercentage": 0,
+				"dateOfBirth": "",
+				"nationality": "",
+				"dualCitizenship": false,
+				"dualCitizenshipCountry": [
+					""
+				],
+				"residenceCountry": "AE",
+				"isUAEResident": false,
+				"passportDetails": [
+					{
+						"passportNumber": "",
+						"passportExpiryDate": "",
+						"diplomat": false
+					}
+				],
+				"emirateIdDetails": {
+					"eidNumber": "",
+					"eidExpiryDt": ""
+				},
+				"selfGovtPosition": "Currently hold",
+				"relativeGovtPosition": "Currently hold",
+				"qualification": "Under Graduate",
+				"experienceInYrs": "",
+				"sourceOfWealth": {
+					"wealthType": "Personal Savings",
+					"others": ""
+				}
+			},
+			"contactDetails": {
+				"primaryMobileNo": "",
+				"primaryMobCountryCode": "",
+				"primaryEmail": "",
+				"primaryPhoneNo": "",
+				"primaryPhoneCountryCode": "",
+				"fax": "",
+				"faxCountryCode": "",
+				"secondaryPhoneNo": "",
+				"secondaryPhoneCountryCode": "",
+				"secondaryMobileNo": "",
+				"secondaryMobileCountryCode": "",
+				"secondaryEmail": "",
+				"website": ""
+			},
+			"employmentDetails": {
+				"employmentType": "Salaried",
+				"otherEmploymentType": "",
+				"designation": "",
+				"empNo": "",
+				"department": "",
+				"employerName": "",
+				"occupation": "",
+				"totalExperienceYrs": 0,
+				"employmentStartDate": ""
+			},
+			"sameAsCompanyAddress": false,
+			"addressInfo": [
+				{
+					"typeOfAddress": "",
+					"addressDetails": [
+						{
+							"addressFieldDesc": "",
+							"preferredAddress": "",
+							"addressLine1": "",
+							"addressLine2": "",
+							"addressLine3": "",
+							"addressLine4": "",
+							"poBox": "",
+							"emirateCity": "",
+							"country": ""
+						}
+					]
+				}
+			],
+			"accountSigningInfo": {
+				"accountSigningType": "",
+				"accountSigningInstn": "",
+				"authorityType": ""
+			},
+			"debitCardInfo": {
+				"issueDebitCard": true,
+				"authSignatoryDetails": {
+					"fullNameOn": "",
+					"nameOnDebitCard": ""
+				}
+			}
+		}
+	],
+	"channelServicesInfo": {
+		"mobileInstructions": false,
+		"marketingSMS": false,
+		"doNotDisturbHours": "",
+		"weeklyBalanceNotification": "",
+		"monthlyBalanceNotification": 0
+	},
+	"documents": {
+		"companyDocuments": [
+			{
+				"documentType": "",
+				"signatoryId": "",
+				"documentTitle": "",
+				"fileName": "",
+				"filePath": "",
+				"url": "",
+				"fileData": "",
+				"fileFormat": "",
+				"fileSize": 0,
+				"fileDescription": "",
+				"submittedBy": "",
+				"submittedDt": "",
+				"updatedBy": "",
+				"updatedDt": "",
+				"avsCheckDt": "",
+				"avsCheck": false,
+				"verified": false,
+				"verifiedBy": "",
+				"isEncrypted": false,
+				"encryptionDetails": "",
+				"uploadStatus": "Uploaded"
+			}
+		],
+		"stakeholdersDocuments": [
+			{
+				"documentType": "",
+				"signatoryId": "",
+				"documentTitle": "",
+				"fileName": "",
+				"filePath": "",
+				"url": "",
+				"fileData": "",
+				"fileFormat": "",
+				"fileSize": 0,
+				"fileDescription": "",
+				"submittedBy": "",
+				"submittedDt": "",
+				"updatedBy": "",
+				"updatedDt": "",
+				"avsCheckDt": "",
+				"avsCheck": false,
+				"verified": false,
+				"verifiedBy": "",
+				"isEncrypted": false,
+				"encryptionDetails": "",
+				"uploadStatus": ""
+			}
+		]
+	},
+	"prospectStatusInfo": {
+		"statusType": "",
+		"statusCode": "",
+		"statusFlag": "",
+		"statusNotes": "",
+		"statusReason": "",
+		"statusOverAll": "",
+		"reasonNotes": "",
+		"reasonCode": "",
+		"reasonStatus": ""
+	},
+	"freeFieldsInfo": {
+		"freeField1": "",
+		"freeField2": "",
+		"freeField3": "",
+		"freeField4": "",
+		"freeField5": ""
+	}
+}

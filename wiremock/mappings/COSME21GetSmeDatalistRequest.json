@@ -1,0 +1,10 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/api/v1/banks/RAK/usertypes/sme/datalist"
+	},
+	"response": {
+		"status": 200,
+		"bodyFileName": "COSME21GetSmeDatalistResponse.json"
+	}
+}

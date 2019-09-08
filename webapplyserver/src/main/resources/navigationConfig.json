@@ -1,0 +1,46 @@
+{
+	"sme": [
+		{
+			"path": "/applicant-info",
+			"label": "Basic Information",
+			"redirectTo": "",
+			"component": "ApplicantInfo",
+			"submitted": false
+		},
+		{
+			"path": "/company-info",
+			"label": "Company Information",
+			"redirectTo": "",
+			"component": "CompanyInfo",
+			"submitted": false
+		},
+		{
+			"path": "/company-stakeholders",
+			"label": "Company Stakeholders",
+			"redirectTo": "",
+			"component": "CompanyStakeholders",
+			"submitted": false
+		},
+		{
+			"path": "/final-questions",
+			"label": "Final Questions",
+			"redirectTo": "",
+			"component": "FinalQuestions",
+			"submitted": false
+		},
+		{
+			"path": "/upload-documents",
+			"label": "Upload Documents",
+			"redirectTo": "",
+			"component": "UploadDocuments",
+			"submitted": false
+		},
+		{
+			"path": "/select-services",
+			"label": "Select Services",
+			"redirectTo": "",
+			"component": "SelectServices",
+			"submitted": false
+		}
+	]
+}
