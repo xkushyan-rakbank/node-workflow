@@ -1,0 +1,50 @@
+2019-09-08 23:24:47,295 INFO o.s.b.StartupInfoLogger [main] Starting Application on C02SN3G4H03M with PID 4693 (/Users/dhakv/Documents/GitRepos/Onboarding/webapplyserver/target/classes started by dhakv in /Users/dhakv/Documents/GitRepos/Onboarding/webapplyserver)
+2019-09-08 23:24:47,304 DEBUG o.s.b.StartupInfoLogger [main] Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
+2019-09-08 23:24:47,305 INFO o.s.b.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-09-08 23:24:48,484 INFO o.s.b.w.e.t.TomcatWebServer [main] Tomcat initialized with port(s): 9090 (http)
+2019-09-08 23:24:48,516 INFO o.a.j.l.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-9090"]
+2019-09-08 23:24:48,529 INFO o.a.j.l.DirectJDKLog [main] Starting service [Tomcat]
+2019-09-08 23:24:48,530 INFO o.a.j.l.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-09-08 23:24:48,648 INFO o.a.j.l.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2019-09-08 23:24:48,648 DEBUG o.s.b.w.s.c.ServletWebServerApplicationContext [main] Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2019-09-08 23:24:48,648 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1296 ms
+2019-09-08 23:24:48,724 INFO a.r.w.c.WebApplyController [main] loading uiConfig.json
+2019-09-08 23:24:48,796 INFO a.r.w.c.WebApplyController [main] loading appConfig.json
+2019-09-08 23:24:48,798 INFO a.r.w.c.WebApplyController [main] loading navigationConfig.json
+2019-09-08 23:24:48,800 INFO a.r.w.c.WebApplyController [main] loading smeProspect.json
+2019-09-08 23:24:48,809 INFO a.r.w.c.WebApplyController [main] reload config files and cache again
+2019-09-08 23:24:48,829 ERROR a.r.w.c.EnvUtil [main] System property 'ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod
+2019-09-08 23:24:48,845 INFO a.r.w.c.WebApplyController [main] invoke api endpoint - http://localhost:9091/api/v1/banks/RAK/usertypes/sme/datalist
+2019-09-08 23:24:48,882 DEBUG o.s.c.l.CompositeLog [main] HTTP GET http://localhost:9091/api/v1/banks/RAK/usertypes/sme/datalist
+2019-09-08 23:24:48,885 DEBUG o.s.c.l.CompositeLog [main] Accept=[text/plain, application/json, application/*+json, */*]
+2019-09-08 23:24:48,964 DEBUG o.s.c.l.CompositeLog [main] Response 200 OK
+2019-09-08 23:24:48,966 DEBUG o.s.c.l.CompositeLog [main] Reading to [java.lang.String] as "application/octet-stream"
+2019-09-08 23:24:48,972 INFO a.r.w.c.WebApplyController [main] Status of api - http://localhost:9091/api/v1/banks/RAK/usertypes/sme/datalist is  200 OK
+2019-09-08 23:24:48,976 DEBUG a.r.w.c.WebApplyController [main] datalist 
+2019-09-08 23:24:49,018 INFO a.r.w.c.WebApplyController [main] adding data to cache key - SME_CHECKING_CUSTOMER_DESKTOP
+2019-09-08 23:24:49,023 INFO a.r.w.c.WebApplyController [main] invoke api endpoint - http://localhost:9091/api/v1/banks/RAK/usertypes/sme/datalist
+2019-09-08 23:24:49,026 DEBUG o.s.c.l.CompositeLog [main] HTTP GET http://localhost:9091/api/v1/banks/RAK/usertypes/sme/datalist
+2019-09-08 23:24:49,028 DEBUG o.s.c.l.CompositeLog [main] Accept=[text/plain, application/json, application/*+json, */*]
+2019-09-08 23:24:49,033 DEBUG o.s.c.l.CompositeLog [main] Response 200 OK
+2019-09-08 23:24:49,034 DEBUG o.s.c.l.CompositeLog [main] Reading to [java.lang.String] as "application/octet-stream"
+2019-09-08 23:24:49,035 INFO a.r.w.c.WebApplyController [main] Status of api - http://localhost:9091/api/v1/banks/RAK/usertypes/sme/datalist is  200 OK
+2019-09-08 23:24:49,036 DEBUG a.r.w.c.WebApplyController [main] datalist 
+2019-09-08 23:24:49,047 INFO a.r.w.c.WebApplyController [main] adding data to cache key - SME_CHECKING_AGENT_DESKTOP
+2019-09-08 23:24:49,175 DEBUG o.s.w.s.h.SimpleUrlHandlerMapping [main] Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2019-09-08 23:24:49,285 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-08 23:24:49,298 DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter [main] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2019-09-08 23:24:49,378 TRACE o.s.w.s.h.AbstractHandlerMethodMapping [main] 
+	a.r.w.c.WebApplyController:
+	{GET /api/v1/config, produces [application/json]}: getWebApplyConfig(String,String,String,String)
+	{POST /api/v1/config/reload, produces [application/json]}: loadAppInitialState()
+2019-09-08 23:24:49,383 TRACE o.s.w.s.h.AbstractHandlerMethodMapping [main] 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ /error}: error(HttpServletRequest)
+	{ /error, produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2019-09-08 23:24:49,385 DEBUG o.s.w.s.h.AbstractHandlerMethodMapping [main] 4 mappings in 'requestMappingHandlerMapping'
+2019-09-08 23:24:49,397 DEBUG o.s.w.s.h.SimpleUrlHandlerMapping [main] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2019-09-08 23:24:49,407 DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver [main] ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2019-09-08 23:24:49,510 INFO o.a.j.l.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-9090"]
+2019-09-08 23:24:49,551 INFO o.s.b.w.e.t.TomcatWebServer [main] Tomcat started on port(s): 9090 (http) with context path '/webapply'
+2019-09-08 23:24:49,554 INFO o.s.b.StartupInfoLogger [main] Started Application in 2.636 seconds (JVM running for 3.494)
+2019-09-08 23:25:12,427 INFO o.s.s.c.ExecutorConfigurationSupport [Thread-3] Shutting down ExecutorService 'applicationTaskExecutor'

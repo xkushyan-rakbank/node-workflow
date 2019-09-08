@@ -12,9 +12,9 @@ public class EnvUtil {
 
 	static {
 		if (StringUtils.isBlank(env)) {
-			env = "dev";
+			env = "local";
 			logger.error(
-					"System property 'ENV' not configured, defaulted to 'dev'. Allowed values dev, uat, test or prod");
+					"System property 'ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod");
 		} else {
 			env = env.toLowerCase();
 		}

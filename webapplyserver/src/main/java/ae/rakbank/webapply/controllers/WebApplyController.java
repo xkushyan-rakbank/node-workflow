@@ -114,8 +114,8 @@ public class WebApplyController {
 	public ResponseEntity<Object> loadAppInitialState() {
 		logger.info("reload config files and cache again");
 		HttpHeaders headers = new HttpHeaders();
-		// [Sep 8, 2019], Web Apply & MobileApply same set of controls/fields. Add
-		// 'mobile' to devices if MobileApply has different set of fields
+		// (Assumption) WebApply & MobileApply will have same set of fields otherwise
+		// add "mobile" to devices array
 		String[] devices = { "desktop" };
 		for (String device : devices) {
 			try {
