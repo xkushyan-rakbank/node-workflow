@@ -1,7 +1,6 @@
 package ae.rakbank.webapply.controllers;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.Map.Entry;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +75,7 @@ public class WebApplyController {
 			ObjectMapper objectMapper = new ObjectMapper();
 			Resource resource = resourceLoader.getResource("classpath:" + filename);
 			System.out.println(resource.getFile().toString());
-			String fileContent = Files.readString(resource.getFile().toPath());
+			String fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
 			return objectMapper.readTree(fileContent);
 		} catch (IOException e) {
 			logger.error("error loading " + filename, e);
@@ -91,7 +92,7 @@ public class WebApplyController {
 		HttpHeaders headers = new HttpHeaders();
 		String cacheKey = getCacheKey(segment, product, role, device);
 		String cachedValue = getCachedData(cacheKey);
-		if (cachedValue != null && !cachedValue.isBlank()) {
+		if (StringUtils.isNotBlank(cachedValue)) {
 			logger.info("cached data found for key - " + cacheKey);
 			return new ResponseEntity<Object>(cachedValue, headers, HttpStatus.OK);
 

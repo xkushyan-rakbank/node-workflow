@@ -1,5 +1,6 @@
 package ae.rakbank.webapply.commons;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,7 @@ public class EnvUtil {
 	private static String env = System.getenv("ENV");
 
 	static {
-		if (env == null || env.isBlank()) {
+		if (StringUtils.isBlank(env)) {
 			env = "dev";
 			logger.error(
 					"System property 'ENV' not configured, defaulted to 'dev'. Allowed values dev, uat, test or prod");
