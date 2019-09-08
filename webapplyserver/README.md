@@ -6,3 +6,8 @@ Eclipse Project Setup
 4. Open Eclipse and browser for /workspace
 5. Import projects.. -> maven -> Existing maven projects -> Browse for /Onboarding/webapplyserver --> Click Finish
 6. Right click on Application.java and Run As -> Java Application
+
+API Invocation:
+
+(From Browser) http://localhost:9090/webapply/api/v1/config?role=customer&product=checking&segment=sme
+(From Postman) POST http://localhost:9090/webapply/api/v1/config/reload
