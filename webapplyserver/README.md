@@ -11,3 +11,6 @@ API Invocation:
 
 (From Browser) http://localhost:9090/webapply/api/v1/config?role=customer&product=checking&segment=sme
 (From Postman) POST http://localhost:9090/webapply/api/v1/config/reload
+
+War Artifact:
+mvn clean install
