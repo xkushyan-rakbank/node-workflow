@@ -78,10 +78,18 @@ jobs:
       pool:
        name: Hosted macOS
       steps:
-      - task: ArtifactoryMaven@1
-        displayName: 'WebapplyServer Build'
+
+      - task: NodeTool@0
+        displayName: 'Use Node 10.x'
         inputs:
-          mavenPomFile: 'webapplyserver/pom.xml'
+          versionSpec: 10.x
+
+      - bash : |
+          cd webapplyserver
+          mvn clean
+          mvn clean install
+        displayName: 'Buildling webapplyServer Application'
+        enabled: true
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:
