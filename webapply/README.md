@@ -76,3 +76,18 @@ Copy `.env` file and paste your values
 ```bash
 cp .env .env.local
 ```
+
+### Google ReCaptcha setup
+
+See  [how its work's](https://developers.google.com/recaptcha/intro)
+
+ReCaptcha V2 "I am not a robot" [documentation](https://developers.google.com/recaptcha/docs/display)
+
+1. Create a google account
+2. [Sign up for an API key pair for your site](http://www.google.com/recaptcha/admin)
+3. Add new ReCaptcha recourse: set `label`, select `type` reCaptcha V2 "I am not a robot", and add `domains`
+4. Add `REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY` variable to `.env.local` (`.env.production`, `.env.test`...) 
+file and paste generated `site key` 
+5. Another `secret key` need keep for [Server Side Validation](https://developers.google.com/recaptcha/docs/verify)
+6. For build/start application you can [set environment variable](https://create-react-app.dev/docs/adding-custom-environment-variables#adding-temporary-environment-variables-in-your-shell) `REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY` in your Shell before run
+ process, then this variables will be ignored in .env files
