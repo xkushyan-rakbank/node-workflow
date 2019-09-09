@@ -18,3 +18,32 @@ If you want to learn more about creating good readme files then refer the follow
 - [ASP.NET Core](https://github.com/aspnet/Home)
 - [Visual Studio Code](https://github.com/Microsoft/vscode)
 - [Chakra Core](https://github.com/Microsoft/ChakraCore)
+
+
+Clone Onboarding Repo:
+
+Azure Repo Commands:
+
+// Install git bash on windows
+
+//switch to bash mode
+$ bash
+
+//generate SSH keys
+$ ssh-keygen
+
+// Your public key has been saved in /Users/<user>/.ssh/id_rsa.pub.
+
+$ cat /Users/<user>/.ssh/id_rsa.pub
+
+// copy the cat output and paste in Azure Repos - Manage  SSH Keys > Add
+
+$git init
+
+// clone Onboarding repo
+bash$ git clone git@ssh.dev.azure.com:v3/softwarelicense/Onboarding/Onboarding
+
+
+// cd Onboarding
+
+basgh$ git pull
