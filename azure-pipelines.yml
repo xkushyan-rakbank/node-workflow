@@ -73,7 +73,51 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
           ArtifactName: 'Webapply'
-    
+    - job: WebapplyServer
+      pool:
+       name: Hosted macOS
+      steps:
+      - task: ArtifactoryMaven@1
+        displayName: 'WebapplyServer Build'
+        inputs:
+          mavenPomFile: 'webapplyserver/pom.xml'
+      - task: CopyFiles@2
+        displayName: 'Stage Artifacts'
+        inputs:
+          SourceFolder: webapplyserver/target/
+          TargetFolder: '$(build.artifactstagingdirectory)/webapplyserver'
+      - task: ArchiveFiles@2
+        displayName: 'Archive web'
+        inputs:
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/webapplyserver/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/webapplyserver/webapplyServer.war'
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
+                    "target": "onboarding/$(Build.BuildNumber)/webapplyServer/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: 'Jfrog'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Build Artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
+          ArtifactName: 'WebapplyServer'
+
     - job: SonarQube
       dependsOn:
        - Webapply
