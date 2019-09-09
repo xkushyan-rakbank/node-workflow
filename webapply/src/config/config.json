@@ -3513,7 +3513,7 @@
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "80",
-      "pattern": "^[a-zA-Z]*$"
+      "pattern": "^[a-zA-Z\\s]*$"
     },
     "Sig.middleName": {
       "criteria": {
@@ -3536,7 +3536,7 @@
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "80",
-      "pattern": "^[a-zA-Z]*$"
+      "pattern": "^[a-zA-Z\\s]*$"
     },
     "Sig.lastName": {
       "criteria": {
@@ -3559,7 +3559,7 @@
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "80",
-      "pattern": "^[a-zA-Z]*$"
+      "pattern": "^[a-zA-Z\\s]*$"
     },
     "Sig.shortName": {
       "criteria": {
@@ -3620,7 +3620,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Mr.",
+      "label": "Title",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].gender",
       "name": "prospect.signatoryInfo[*].gender",
@@ -7072,80 +7072,56 @@
       "description": "eidNumber Id of the applicant",
       "maxlength": "50"
     },
-		"login.userName": {
-			"criteria": {
-				"roles": [
-					"customer",
-					"agent"
-				],
-				"segments": [
-					"sme"
-				],
-				"products": [
-					"checking"
-				],
-				"devices": [
-					"mobile",
-					"tablet",
-					"desktop"
-				]
-			},
-			"validationErrors": {
-				"required": "Field is required.",
-				"invalid": "Field is invalid.",
-				"multilineInvalid": null
-			},
-			"applicable": null,
-			"label": "User Name",
-			"placeholder": null,
-			"path": "$.Login.userName",
-			"name": "Login.userName",
-			"required": true,
-			"datalistId": null,
-			"readonlyFor": [
-			],
-			"description": "user name of the applicant",
-			"maxlength": "240",
-			"pattern": "^[a-zA-Z\\s]*$"
-		},
-		"login.password": {
-			"criteria": {
-				"roles": [
-					"customer",
-					"agent"
-				],
-				"segments": [
-					"sme"
-				],
-				"products": [
-					"checking"
-				],
-				"devices": [
-					"mobile",
-					"tablet",
-					"desktop"
-				]
-			},
-			"validationErrors": {
-				"required": "Field is required.",
-				"invalid": "Field is invalid.",
-				"multilineInvalid": null
-			},
-			"applicable": null,
-			"label": "Your password",
-			"placeholder": null,
-			"path": "$.Login.password",
-			"name": "Login.password",
+    "login.userName": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": "User Name",
+      "placeholder": null,
+      "path": "$.Login.userName",
+      "name": "Login.userName",
       "required": true,
-      "type":"password",
-			"datalistId": null,
-			"pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
-			"readonlyFor": [
-			],
+      "datalistId": null,
+      "readonlyFor": [],
+      "description": "user name of the applicant",
+      "maxlength": "240",
+      "pattern": "^[a-zA-Z\\s]*$"
+    },
+    "login.password": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": "Your password",
+      "placeholder": null,
+      "path": "$.Login.password",
+      "name": "Login.password",
+      "required": true,
+      "type": "password",
+      "datalistId": null,
+      "pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
+      "readonlyFor": [],
       "description": "Password of the applicant",
-      "format":"application/data",
-			"maxlength": "20"
-		},
+      "format": "application/data",
+      "maxlength": "20"
+    },
     "shortKeyNames": {
       "ProspectDocument": "ProspDocs",
       "documents": "Docs",
@@ -7597,9 +7573,9 @@
       "email": "",
       "eidNumber": ""
     },
-		"Login": {
-			"userName": "",
-			"password": ""
-		}
+    "Login": {
+      "userName": "",
+      "password": ""
+    }
   }
 }
