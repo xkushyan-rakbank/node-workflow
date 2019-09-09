@@ -73,6 +73,7 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
           ArtifactName: 'Webapply'
+          
     - job: WebapplyServer
       pool:
        name: Hosted macOS
