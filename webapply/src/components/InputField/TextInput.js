@@ -75,11 +75,14 @@ const styles = {
 
 class Input extends React.Component {
   static defaultProps = {
-    attr: {}
+    customValidationMessage: () => null
   };
+
   state = {
     fieldErrors: {}
   };
+
+  inputRef = React.createRef();
 
   componentDidMount() {
     if (
@@ -93,9 +96,18 @@ class Input extends React.Component {
     }
   }
 
+  setInputValue(value) {
+    if (this.inputRef.current) {
+      this.inputRef.current.value = value;
+    }
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.required !== this.props.required) {
       this.setState({ fieldErrors: {} });
+    }
+    if (prevProps.value !== this.props.value) {
+      this.setInputValue(this.props.value);
     }
   }
 
@@ -113,8 +125,8 @@ class Input extends React.Component {
       ...this.props.config
     };
 
-    if (this.props.attr.required) {
-      config.required = true;
+    if (isBoolean(this.props.required)) {
+      config.required = this.props.required;
     }
 
     this.setState({
@@ -133,8 +145,12 @@ class Input extends React.Component {
   };
 
   composeFieldAttrWithPropAttr(inputProps) {
-    const props = { ...inputProps };
-    const { disabled, required } = this.props;
+    const props = {
+      ...inputProps,
+      ref: this.inputRef
+    };
+
+    const { disabled, required, max, min } = this.props;
 
     if (isBoolean(disabled)) {
       props.disabled = disabled;
@@ -142,8 +158,25 @@ class Input extends React.Component {
     if (isBoolean(required)) {
       props.required = required;
     }
+    if (!isUndefined(max)) {
+      props.max = max;
+    }
+    if (!isUndefined(min)) {
+      props.min = min;
+    }
 
     return props;
+  }
+
+  getCustomValidationMessage() {
+    return this.inputRef.current
+      ? this.props.customValidationMessage(
+          this.inputRef.current,
+          this.state.fieldErrors,
+          this.props.config,
+          this.props.name
+        )
+      : null;
   }
 
   render() {
@@ -165,6 +198,7 @@ class Input extends React.Component {
     );
 
     const isError = !isEmpty(fieldErrors);
+    const customValidationMessage = this.getCustomValidationMessage();
 
     if (id && config.label) {
       return (
@@ -204,12 +238,13 @@ class Input extends React.Component {
             </FormControl>
           </FormGroup>
 
-          {isError && (
+          {isError && !customValidationMessage && (
             <ErrorMessage
               error={fieldErrors.error}
               multiLineError={fieldErrors.multiLineError}
             />
           )}
+          {customValidationMessage}
         </div>
       );
     }

@@ -6,7 +6,6 @@ import PureSelect from "../components/InputField/PureSelect";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 
-
 const styles = {
   baseForm: {
     maxWidth: "612px"
@@ -25,7 +24,8 @@ const styles = {
   },
   indent: {
     marginBottom: "24px"
-  }, emptyAvatar: {
+  },
+  emptyAvatar: {
     backgroundColor: "#ffffff",
     border: "solid 1px #d3d8db",
     width: "40px"
@@ -33,13 +33,11 @@ const styles = {
 };
 
 class SearchProspect extends React.Component {
-
   handleSubmit = event => {
     event.preventDefault();
     const isValid = event.target.checkValidity();
     console.log(isValid, event.target.elements);
   };
-
 
   render() {
     const { classes } = this.props;
@@ -50,7 +48,6 @@ class SearchProspect extends React.Component {
 
         <form onSubmit={this.handleSubmit} noValidate>
           <TextInput id="Search.fullName" />
-
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
               <TextInput
@@ -64,15 +61,11 @@ class SearchProspect extends React.Component {
                   />
                 }
               />
-
             </Grid>
             <Grid item md={6} sm={12}>
               <TextInput id="Search.email" />
             </Grid>
           </Grid>
-
-
-
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
               <TextInput id="Search.raktrackNumber" />
@@ -81,17 +74,11 @@ class SearchProspect extends React.Component {
               <TextInput id="Search.tradeLicenseNo" />
             </Grid>
           </Grid>
-
-
           <div className="linkContainer">
             <SearchButton />
           </div>
-
           <h2>My applications</h2>
-
           <Avatar className={classes.emptyAvatar} /> New Applications
-
-       
         </form>
       </div>
     );

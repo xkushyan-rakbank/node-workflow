@@ -5,15 +5,34 @@ import TextInput from "../InputField/TextInput";
 import get from "lodash/get";
 import PureSelect from "../InputField/PureSelect";
 import {
+  getInputNameById,
   getInputValueById,
   getSignatories
 } from "../../store/selectors/appConfig";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import ErrorMessage from "../ErrorMessage";
+import { updateField } from "../../store/actions/appConfig";
 
 class Shareholding extends React.Component {
   inputProps = {
     endAdornment: <InputAdornment position="end">%</InputAdornment>
   };
+
+  updateShareholderPercentageValue(value) {
+    this.props.updateField({
+      value: value,
+      name: this.props.shareholderPercentageInputName
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevProps.isShareholder !== this.props.isShareholder &&
+      this.props.isShareholder === "false"
+    ) {
+      this.updateShareholderPercentageValue(0);
+    }
+  }
 
   otherSignatoriesPercentage() {
     return this.props.signatories
@@ -26,6 +45,16 @@ class Shareholding extends React.Component {
   availablePercentage() {
     return 100 - this.otherSignatoriesPercentage();
   }
+
+  customValidationMessage = input => {
+    if (input && Number(input.value) > 100) {
+      return (
+        <ErrorMessage error="Shareholders can't hold more than 100% of shares in total" />
+      );
+    }
+
+    return null;
+  };
 
   render() {
     return (
@@ -47,6 +76,10 @@ class Shareholding extends React.Component {
             }
             id="SigKycd.shareHoldingPercentage"
             defaultValue={this.props.isSoleProprietor ? 100 : undefined}
+            min="0"
+            max={this.availablePercentage()}
+            customValidationMessage={this.customValidationMessage}
+            required={this.props.isShareholder === "true"}
             indexes={[this.props.index]}
             InputProps={this.inputProps}
           />
@@ -58,6 +91,11 @@ class Shareholding extends React.Component {
 
 const mapStateToProps = (state, { index }) => ({
   isShareholder: getInputValueById(state, "SigKycd.isShareholder", [index]),
+  shareholderPercentageInputName: getInputNameById(
+    state,
+    "SigKycd.shareHoldingPercentage",
+    [index]
+  ),
   // temp - will work only on WireMock data
   isSoleProprietor:
     getInputValueById(state, "SigAcntSig.authorityType", [index]) === "SP",
@@ -69,4 +107,11 @@ const mapStateToProps = (state, { index }) => ({
   signatories: getSignatories(state)
 });
 
-export default connect(mapStateToProps)(Shareholding);
+const mapDispatchToProps = {
+  updateField
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Shareholding);

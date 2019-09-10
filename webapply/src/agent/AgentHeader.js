@@ -30,23 +30,24 @@ const styles = {
       fontSize: " 14px",
       lineHeight: " 1.71",
       letterSpacing: " normal",
-      styles:"bold",
+      styles: "bold",
       color: " #373737",
       position: " relative",
       marginRight: " 40px",
       marginLeft: " 450px",
-      paddingRight: " 40px",
-    }, "& span": {
+      paddingRight: " 40px"
+    },
+    "& span": {
       opacity: " 0.5",
       fontFamily: "Open Sans",
       fontSize: " 14px",
       lineHeight: " 1.71",
       letterSpacing: " normal",
-      styles:"bold",
+      styles: "bold",
       color: " #373737",
       position: " relative",
       marginRight: " 40px",
-      paddingRight: " 40px",
+      paddingRight: " 40px"
     }
   }
 };
@@ -57,7 +58,6 @@ const Header = ({ classes }) => {
       <Link to={routes.applicantInfo}>
         <img src={logo} alt="rak bank" />
       </Link>
-    
     </header>
   );
 };
