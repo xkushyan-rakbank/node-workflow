@@ -6881,7 +6881,7 @@
       "maxlength": "80",
       "pattern": "^[a-zA-Z0-9. ]*$"
     },
-    "Search.fullName": {
+     "Search.fullName": {
       "criteria": {
         "roles": ["customer", "agent"],
         "segments": ["sme"],
@@ -6894,11 +6894,10 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Full Name",
+      "label": "Applicants Name",
       "placeholder": null,
       "path": "$.prospect.searchInfo.fname",
       "name": "prospect.searchInfo.fname",
-      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "description": "name of the applicant",
@@ -6922,7 +6921,6 @@
       "placeholder": null,
       "path": "$.prospect.searchInfo.countryCode",
       "name": "prospect.searchInfo.countryCode",
-      "required": true,
       "datalistId": "CountryCode",
       "readonlyFor": [],
       "datalist": [
@@ -6979,7 +6977,7 @@
       "pattern": "^[0-9]*$",
       "maxlength": "15"
     },
-    "Search.leadNumber": {
+    "Search.raktrackNumber": {
       "criteria": {
         "roles": ["customer", "agent"],
         "segments": ["sme"],
@@ -6992,11 +6990,11 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Lead Number",
+      "label": "RAKTrack Number",
       "placeholder": null,
-      "path": "$.prospect.searchInfo.leadNumber",
-      "name": "prospect.searchInfo.leadNumber",
-      "required": false,
+      "path": "$.prospect.searchInfo.raktrackNumber",
+      "name": "prospect.searchInfo.raktrackNumber",
+     
       "datalistId": null,
       "readonlyFor": [],
       "description": "lead Number of the applicant",
@@ -7019,7 +7017,7 @@
       "placeholder": null,
       "path": "$.prospect.searchInfo.tradeLicenseNo",
       "name": "prospect.searchInfo.tradeLicenseNo",
-      "required": false,
+     
       "datalistId": null,
       "readonlyFor": [],
       "description": "tradeLicenseNo of the applicant",
@@ -7049,79 +7047,80 @@
       "format": "email",
       "maxlength": "50"
     },
-    "Search.eidNumber": {
-      "criteria": {
-        "roles": ["customer", "agent"],
-        "segments": ["sme"],
-        "products": ["checking"],
-        "devices": ["mobile", "tablet", "desktop"]
-      },
-      "validationErrors": {
-        "required": "Field is required.",
-        "invalid": "Field is invalid.",
-        "multilineInvalid": null
-      },
-      "applicable": null,
-      "label": "Emirates ID Number",
-      "placeholder": null,
-      "path": "$.prospect.searchInfo.eidNumber",
-      "name": "prospect.searchInfo.eidNumber",
-      "required": false,
-      "datalistId": null,
-      "readonlyFor": [],
-      "description": "eidNumber Id of the applicant",
-      "maxlength": "50"
-    },
-    "login.userName": {
-      "criteria": {
-        "roles": ["customer", "agent"],
-        "segments": ["sme"],
-        "products": ["checking"],
-        "devices": ["mobile", "tablet", "desktop"]
-      },
-      "validationErrors": {
-        "required": "Field is required.",
-        "invalid": "Field is invalid.",
-        "multilineInvalid": null
-      },
-      "applicable": null,
-      "label": "User Name",
-      "placeholder": null,
-      "path": "$.Login.userName",
-      "name": "Login.userName",
+		"login.userName": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "User Name",
+			"placeholder": null,
+			"path": "$.Login.userName",
+			"name": "Login.userName",
+			"required": true,
+			"datalistId": null,
+			"readonlyFor": [
+			],
+			"description": "user name of the applicant",
+			"maxlength": "240",
+			"pattern": "^[a-zA-Z\\s]*$"
+		},
+		"login.password": {
+			"criteria": {
+				"roles": [
+					"customer",
+					"agent"
+				],
+				"segments": [
+					"sme"
+				],
+				"products": [
+					"checking"
+				],
+				"devices": [
+					"mobile",
+					"tablet",
+					"desktop"
+				]
+			},
+			"validationErrors": {
+				"required": "Field is required.",
+				"invalid": "Field is invalid.",
+				"multilineInvalid": null
+			},
+			"applicable": null,
+			"label": "Your password",
+			"placeholder": null,
+			"path": "$.Login.password",
+			"name": "Login.password",
       "required": true,
-      "datalistId": null,
-      "readonlyFor": [],
-      "description": "user name of the applicant",
-      "maxlength": "240",
-      "pattern": "^[a-zA-Z\\s]*$"
-    },
-    "login.password": {
-      "criteria": {
-        "roles": ["customer", "agent"],
-        "segments": ["sme"],
-        "products": ["checking"],
-        "devices": ["mobile", "tablet", "desktop"]
-      },
-      "validationErrors": {
-        "required": "Field is required.",
-        "invalid": "Field is invalid.",
-        "multilineInvalid": null
-      },
-      "applicable": null,
-      "label": "Your password",
-      "placeholder": null,
-      "path": "$.Login.password",
-      "name": "Login.password",
-      "required": true,
-      "type": "password",
-      "datalistId": null,
-      "pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
-      "readonlyFor": [],
+      "type":"password",
+			"datalistId": null,
+			"pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
+			"readonlyFor": [
+			],
       "description": "Password of the applicant",
-      "format": "application/data",
-      "maxlength": "20"
-    },
+      "format":"application/data",
+			"maxlength": "20"
+		},
     "shortKeyNames": {
       "ProspectDocument": "ProspDocs",
       "documents": "Docs",
@@ -7568,14 +7567,13 @@
       "fname": "",
       "countryCode": "",
       "mobileNo": "",
-      "leadNumber": "",
+      "raktrackNumber": "",
       "tradeLicenseNo": "",
-      "email": "",
-      "eidNumber": ""
+      "email": ""
     },
-    "Login": {
-      "userName": "",
-      "password": ""
-    }
+		"Login": {
+			"userName": "",
+			"password": ""
+		}
   }
 }
