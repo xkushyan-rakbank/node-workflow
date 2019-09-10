@@ -9,6 +9,7 @@ import { compose } from "recompose";
 import get from "lodash/get";
 import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";
+import isBoolean from "lodash/isBoolean";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
@@ -74,11 +75,14 @@ const styles = {
 
 class Input extends React.Component {
   static defaultProps = {
-    attr: {}
+    customValidationMessage: () => null
   };
+
   state = {
     fieldErrors: {}
   };
+
+  inputRef = React.createRef();
 
   componentDidMount() {
     if (
@@ -92,9 +96,18 @@ class Input extends React.Component {
     }
   }
 
+  setInputValue(value) {
+    if (this.inputRef.current) {
+      this.inputRef.current.value = value;
+    }
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.required !== this.props.required) {
       this.setState({ fieldErrors: {} });
+    }
+    if (prevProps.value !== this.props.value) {
+      this.setInputValue(this.props.value);
     }
   }
 
@@ -112,8 +125,8 @@ class Input extends React.Component {
       ...this.props.config
     };
 
-    if (this.props.attr.required) {
-      config.required = true;
+    if (isBoolean(this.props.required)) {
+      config.required = this.props.required;
     }
 
     this.setState({
@@ -131,28 +144,61 @@ class Input extends React.Component {
     }
   };
 
+  composeFieldAttrWithPropAttr(inputProps) {
+    const props = {
+      ...inputProps,
+      ref: this.inputRef
+    };
+
+    const { disabled, required, max, min } = this.props;
+
+    if (isBoolean(disabled)) {
+      props.disabled = disabled;
+    }
+    if (isBoolean(required)) {
+      props.required = required;
+    }
+    if (!isUndefined(max)) {
+      props.max = max;
+    }
+    if (!isUndefined(min)) {
+      props.min = min;
+    }
+
+    return props;
+  }
+
+  getCustomValidationMessage() {
+    return this.inputRef.current
+      ? this.props.customValidationMessage(
+          this.inputRef.current,
+          this.state.fieldErrors,
+          this.props.config,
+          this.props.name
+        )
+      : null;
+  }
+
   render() {
     const {
       id,
+      name,
       config,
       classes,
       className,
       InputProps = {},
-      required,
       InputLabelProps,
       disabled,
       select
     } = this.props;
 
     const { fieldErrors } = this.state;
-    const inputProps = {
-      ...fieldAttr(id, config),
-      disabled
-    };
-    if (required) {
-      inputProps.required = true;
-    }
+    const inputProps = this.composeFieldAttrWithPropAttr(
+      fieldAttr(id, config, name)
+    );
+
     const isError = !isEmpty(fieldErrors);
+    const customValidationMessage = this.getCustomValidationMessage();
 
     if (id && config.label) {
       return (
@@ -192,12 +238,13 @@ class Input extends React.Component {
             </FormControl>
           </FormGroup>
 
-          {isError && (
+          {isError && !customValidationMessage && (
             <ErrorMessage
               error={fieldErrors.error}
               multiLineError={fieldErrors.multiLineError}
             />
           )}
+          {customValidationMessage}
         </div>
       );
     }

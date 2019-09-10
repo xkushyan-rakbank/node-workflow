@@ -6,5 +6,5 @@ export default {
   finalQuestions: "/FinalQuestions",
   selectServices: "/SelectServices",
   searchProspect: "/SearchProspect",
-   login: "/Login"
+  login: "/Login"
 };

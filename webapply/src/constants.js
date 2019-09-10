@@ -6,7 +6,13 @@ import CountryOfResidence from "./components/StakeholderStepForms/CountryOfResid
 import AccountDetails from "./components/ServicesStepForms/AccountDetails";
 import SigningPreferences from "./components/ServicesStepForms/SigningPreferences";
 import Channels from "./components/ServicesStepForms/Channels";
+import isUndefined from "lodash/isUndefined";
+
 import routes from "./routes";
+
+export const DATA_ATTRIBUTES = {
+  INPUT_ID: "data-config-id"
+};
 
 export const stakeHoldersSteps = [
   {
@@ -44,13 +50,42 @@ export const publicPositions = [
   { value: "Yes", label: "Yes" }
 ];
 
-export const fieldAttr = (id, fieldConfig) => {
+export const defineInputFormatByConfig = fieldConfig => {
+  switch (fieldConfig.format) {
+    case "amount":
+      return "number";
+    case "date":
+      return "text";
+    default:
+      return "text";
+  }
+};
+
+export const defineInputMaxLengthByConfig = fieldConfig => {
+  const type = defineInputFormatByConfig(fieldConfig);
+  if (type !== "text" || isUndefined(fieldConfig.max)) {
+    return fieldConfig.maxlength;
+  }
+  return fieldConfig.max;
+};
+
+export const defineInputMinLengthByConfig = fieldConfig => {
+  const type = defineInputFormatByConfig(fieldConfig);
+  if (type !== "text" || isUndefined(fieldConfig.min)) {
+    return fieldConfig.minlength;
+  }
+  return fieldConfig.min;
+};
+
+export const fieldAttr = (id, fieldConfig, name) => {
   return {
-    id: id,
-    type: fieldConfig.type || "text",
+    [DATA_ATTRIBUTES.INPUT_ID]: id,
+    id: name,
+    type: defineInputFormatByConfig(fieldConfig),
     min: fieldConfig.min,
     max: fieldConfig.max,
-    maxLength: fieldConfig.maxlength,
+    maxLength: defineInputMaxLengthByConfig(fieldConfig),
+    minLength: defineInputMinLengthByConfig(fieldConfig),
     pattern: fieldConfig.pattern,
     required: !!fieldConfig.required,
     disabled: !!fieldConfig.disabled,

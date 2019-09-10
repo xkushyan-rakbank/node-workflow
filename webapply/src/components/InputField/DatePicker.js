@@ -15,7 +15,7 @@ import ErrorMessage from "./../ErrorMessage";
 import { validate } from "./../../utils/validate";
 import { updateField } from "../../store/actions/appConfig";
 import combineNestingName from "../../utils/combineNestingName";
-import { fieldAttr } from "../../constants";
+import { DATA_ATTRIBUTES, fieldAttr } from "../../constants";
 
 const styles = {
   datePicker: {
@@ -49,25 +49,61 @@ class DatePicker extends React.Component {
     fieldErrors: {}
   };
 
-  updateField = value => {
-    const { name } = this.props;
-    this.props.updateField({ value, name });
+  inputRef = React.createRef();
+
+  inputProps = {
+    ref: this.inputRef,
+    pattern:
+      "^(0[1-9]|1[0-2])\\/(((0|1)[0-9]|2[0-9]|3[0-1])\\/((19|20)\\d\\d))$"
   };
 
-  fieldValidation = event => {
-    const field = event.target;
-    const fieldConfig = this.props.config;
-    const errors = validate(field, fieldConfig);
+  resetFieldErrors = () => {
+    this.setState({ fieldErrors: {} });
+  };
+
+  updateField = (dateValue, stringValue) => {
+    const { name } = this.props;
+    if (!dateValue || dateValue.toString() !== "Invalid Date") {
+      this.props.updateField({ value: stringValue, name });
+    }
+  };
+
+  composeInputProps() {
+    return {
+      ...this.inputProps,
+      [DATA_ATTRIBUTES.INPUT_ID]: this.props.id
+    };
+  }
+
+  fieldValidation = () => {
     this.setState({
-      fieldErrors: errors
+      fieldErrors: validate(this.inputRef.current, this.props.config)
     });
   };
 
+  handleFocus = () => {
+    this.resetFieldErrors();
+  };
+
+  handleAccept = () => {
+    this.resetFieldErrors();
+  };
+
+  handleBlur = () => {
+    this.fieldValidation();
+  };
+
+  handleClose = () => {
+    this.fieldValidation();
+  };
+
   render() {
-    const { value, classes, config, id } = this.props;
+    const { value, classes, config, id, name } = this.props;
     const { fieldErrors } = this.state;
     const isError = !isEmpty(fieldErrors);
-    const attrs = fieldAttr(id, config);
+    const attrs = fieldAttr(id, config, name);
+    const inputProps = this.composeInputProps();
+
     return (
       <FormControl className="formControl">
         {config.label && (
@@ -76,17 +112,24 @@ class DatePicker extends React.Component {
               autoOk
               name={config.name}
               label={config.label || ""}
+              invalidDateMessage={""}
               disableToolbar
               margin="normal"
               variant="inline"
               format="MM/dd/yyyy"
               inputVariant="outlined"
               placeholder="__/__/____"
+              mask="__/__/____"
+              maskChar="_"
               className={classes.datePicker}
               value={value || null}
+              onAccept={this.handleAccept}
+              onFocus={this.handleFocus}
               onChange={this.updateField}
-              onBlur={this.fieldValidation}
+              onBlur={this.handleBlur}
+              onClose={this.handleClose}
               error={isError}
+              inputProps={inputProps}
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}

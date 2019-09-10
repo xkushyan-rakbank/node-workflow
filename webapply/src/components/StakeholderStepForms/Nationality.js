@@ -6,7 +6,11 @@ import Select from "../InputField/PureSelect";
 import Input from "../InputField/TextInput";
 import Checkbox from "../InputField/RefactoredCheckbox";
 import UICheckbox from "../InputField/Checkbox";
-import { getInputValueById } from "../../store/selectors/appConfig";
+import {
+  getInputNameById,
+  getInputValueById
+} from "../../store/selectors/appConfig";
+import { updateField } from "../../store/actions/appConfig";
 
 const styles = {
   bottomIndent: {
@@ -31,9 +35,45 @@ class Nationality extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.isDualCitizenship !== this.props.isDualCitizenship) {
+    if (
+      prevProps.isDualCitizenship !== this.props.isDualCitizenship &&
+      !this.props.isDualCitizenship
+    ) {
       this.setState({ isHasThirdCitizenship: false });
+      this.resetDualCitizenshipValues();
+      this.resetThirdCitizenshipValues();
     }
+    if (
+      prevState.isHasThirdCitizenship !== this.state.isHasThirdCitizenship &&
+      !this.state.isHasThirdCitizenship
+    ) {
+      this.resetThirdCitizenshipValues();
+    }
+  }
+
+  /**
+   * @param {Object[]} list
+   * @param {String} list[].name
+   * @param {Any} list[].value
+   */
+  resetFieldValues(list) {
+    list.forEach(this.props.updateField);
+  }
+
+  resetDualCitizenshipValues() {
+    this.resetFieldValues([
+      { name: this.props.firstDualCitizenshipCountryInputName, value: "" },
+      { name: this.props.secondPassportNumberInputName, value: "" },
+      { name: this.props.secondDiplomatPassportInputName, value: false }
+    ]);
+  }
+
+  resetThirdCitizenshipValues() {
+    this.resetFieldValues([
+      { name: this.props.secondDualCitizenshipCountryInputName, value: "" },
+      { name: this.props.thirdPassportNumberInputName, value: "" },
+      { name: this.props.thirdDiplomatPassportInputName, value: false }
+    ]);
   }
 
   render() {
@@ -149,7 +189,46 @@ const mapStateToProps = (state, { index }) => ({
   // temp - work only with wire mock data
   isDualCitizenship: getInputValueById(state, "SigKycd.dualCitizenship", [
     index
-  ])
+  ]),
+  firstDualCitizenshipCountryInputName: getInputNameById(
+    state,
+    "SigKycd.dualCitizenshipCountry",
+    [index, 0]
+  ),
+  secondPassportNumberInputName: getInputNameById(
+    state,
+    "SigKycdPspd.passportNumber",
+    [index, 1]
+  ),
+  secondDiplomatPassportInputName: getInputNameById(
+    state,
+    "SigKycdPspd.diplomatPassport",
+    [index, 1]
+  ),
+  secondDualCitizenshipCountryInputName: getInputNameById(
+    state,
+    "SigKycd.dualCitizenshipCountry",
+    [index, 1]
+  ),
+  thirdPassportNumberInputName: getInputNameById(
+    state,
+    "SigKycdPspd.passportNumber",
+    [index, 2]
+  ),
+  thirdDiplomatPassportInputName: getInputNameById(
+    state,
+    "SigKycdPspd.diplomatPassport",
+    [index, 2]
+  )
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(Nationality));
+const mapDispatchToProps = {
+  updateField
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Nationality)
+);

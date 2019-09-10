@@ -36,11 +36,11 @@ class Login extends React.Component {
     return (
       <div className={classes.baseForm}>
         <h2>Login</h2>
-        
+
         <form noValidate onSubmit={this.submitForm}>
           <TextInput id="login.userName" />
 
-          <Password id="login.password" /> 
+          <Password id="login.password" />
 
           <ErrorBoundary className={classes.reCaptchaContainer}>
             <ReCaptcha

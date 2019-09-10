@@ -16,7 +16,9 @@ import { connect } from "react-redux";
 import combineNestingName from "../../utils/combineNestingName";
 import { validate } from "../../utils/validate";
 import isEmpty from "lodash/isEmpty";
+import isBoolean from "lodash/isBoolean";
 import ErrorMessage from "../ErrorMessage";
+import { DATA_ATTRIBUTES } from "../../constants";
 
 const styles = {
   selectField: {
@@ -98,7 +100,10 @@ class PureSelect extends React.Component {
   }
 
   isSelectRequired() {
-    return this.props.required || get(this.props, "config.required", false);
+    if (isBoolean(this.props.required)) {
+      return this.props.required;
+    }
+    return get(this.props, "config.required", false);
   }
 
   setRequiredForInput() {
@@ -159,18 +164,24 @@ class PureSelect extends React.Component {
 
   handleBlur = () => this.checkInputValidity();
 
+  composeInputProps() {
+    return {
+      [DATA_ATTRIBUTES.INPUT_ID]: this.props.id
+    };
+  }
+
   render() {
     const { fieldErrors } = this.state;
     const {
       config,
       value = "",
-      id,
       classes,
       combinedSelect,
       disabled,
       name
     } = this.props;
     const isError = !isEmpty(fieldErrors);
+    const inputProps = this.composeInputProps();
     const className = combinedSelect
       ? classes.selectFieldCombined
       : classes.selectFieldBasic;
@@ -183,7 +194,7 @@ class PureSelect extends React.Component {
         variant="outlined"
         error={isError}
       >
-        <InputLabel ref={this.inputLabel} htmlFor={id}>
+        <InputLabel ref={this.inputLabel} htmlFor={name}>
           {config.label}
         </InputLabel>
         <Select
@@ -194,7 +205,8 @@ class PureSelect extends React.Component {
               inputRef={node => (this.inputRef = node)}
               labelWidth={this.state.labelWidth}
               name={name}
-              id={id}
+              id={name}
+              inputProps={inputProps}
             />
           }
           IconComponent={KeyboardArrowDownIcon}
