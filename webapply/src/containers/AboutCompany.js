@@ -31,7 +31,7 @@ class AboutCompany extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <>
+      <div className="mainContainer">
         <h2>Tell Us about Your Company</h2>
         <p className="formDescription">
           Explanation text goes here. One to three short sentences maximum. This
@@ -111,7 +111,7 @@ class AboutCompany extends React.Component {
 
           <SubmitButton />
         </form>
-      </>
+      </div>
     );
   }
 }

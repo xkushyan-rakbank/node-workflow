@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="530px" height="940px" viewBox="0 0 530 940" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Slice</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0 1680 0 1680 940 0 940"></polygon>
+        <polygon id="path-3" points="0 0 1024 0 1024 1398.284 0 1398.284"></polygon>
+        <linearGradient x1="67.017%" y1="47.515%" x2="62.281%" y2="102.119%" id="linearGradient-5">
+            <stop stop-color="#C10910" offset="0%"></stop>
+            <stop stop-color="#9E001F" offset="100%"></stop>
+        </linearGradient>
+        <ellipse id="path-6" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"></ellipse>
+        <ellipse id="path-8" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"></ellipse>
+        <linearGradient x1="100%" y1="1.514%" x2="0%" y2="89.668%" id="linearGradient-10">
+            <stop stop-color="#EB151D" offset="0%"></stop>
+            <stop stop-color="#A00006" offset="100%"></stop>
+        </linearGradient>
+        <ellipse id="path-11" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"></ellipse>
+        <ellipse id="path-13" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"></ellipse>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-15">
+            <stop stop-color="#FF00BC" offset="0%"></stop>
+            <stop stop-color="#FF4E00" offset="100%"></stop>
+        </linearGradient>
+        <ellipse id="path-16" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"></ellipse>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="background-red-blob">
+            <g id="Group" transform="translate(840.000000, 470.000000) scale(-1, 1) translate(-840.000000, -470.000000) ">
+                <g id="Clipped">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="a"></g>
+                    <g mask="url(#mask-2)">
+                        <g transform="translate(1569.642000, 490.500000) rotate(90.000000) translate(-1569.642000, -490.500000) translate(1057.642000, -209.000000)">
+                            <mask id="mask-4" fill="white">
+                                <use xlink:href="#path-3"></use>
+                            </mask>
+                            <g id="c" stroke="none" fill="none"></g>
+                            <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-4)">
+                                <g transform="translate(-980.310000, -1820.458000)">
+                                    <g id="e-link">
+                                        <ellipse id="e" fill="url(#linearGradient-5)" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"></ellipse>
+                                    </g>
+                                    <g id="Clipped">
+                                        <mask id="mask-7" fill="white">
+                                            <use xlink:href="#path-6"></use>
+                                        </mask>
+                                        <g id="e"></g>
+                                        <g id="Group" mask="url(#mask-7)">
+                                            <g transform="translate(2.730000, 0.000000)">
+                                                <g id="h-link">
+                                                    <ellipse id="h" fill="url(#linearGradient-5)" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"></ellipse>
+                                                </g>
+                                                <g id="Clipped">
+                                                    <mask id="mask-9" fill="white">
+                                                        <use xlink:href="#path-8"></use>
+                                                    </mask>
+                                                    <g id="h"></g>
+                                                    <g id="Group" mask="url(#mask-9)">
+                                                        <g transform="translate(281.000000, 772.000000)">
+                                                            <g id="Group" opacity="0.705" stroke="none" fill-rule="evenodd" transform="translate(0.259000, 68.745000)">
+                                                                <g id="k-link" fill="url(#linearGradient-10)">
+                                                                    <ellipse id="k" cx="1030.827" cy="1016.015" rx="1030.827" ry="1015.1"></ellipse>
+                                                                </g>
+                                                                <g id="k-link" fill="#EB151D">
+                                                                    <ellipse id="k" cx="1030.827" cy="1016.015" rx="1030.827" ry="1015.1"></ellipse>
+                                                                </g>
+                                                            </g>
+                                                            <polygon id="Path" stroke-opacity="0.01" stroke="#979797" points="0.759 0.245 2116.026 0.245 2116.026 2153.14 0.759 2153.14"></polygon>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                                <g id="Clipped">
+                                                    <mask id="mask-12" fill="white">
+                                                        <use xlink:href="#path-11"></use>
+                                                    </mask>
+                                                    <g id="h"></g>
+                                                    <g id="Group" mask="url(#mask-12)">
+                                                        <g transform="translate(188.416000, 1019.134000)">
+                                                            <ellipse id="Oval" stroke="none" fill="#FF6A00" fill-rule="evenodd" opacity="0.247" cx="1014.443" cy="966.698" rx="845.141" ry="832.248"></ellipse>
+                                                            <polygon id="Path" stroke-opacity="0.01" stroke="#979797" stroke-width="1" fill="none" points="0.5 0.5 1979.233 0.5 1979.233 1873.738 0.5 1873.738"></polygon>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                    <g id="Clipped">
+                                        <mask id="mask-14" fill="white">
+                                            <use xlink:href="#path-13"></use>
+                                        </mask>
+                                        <g id="e"></g>
+                                        <g id="Group" opacity="0.32" mask="url(#mask-14)" fill="url(#linearGradient-15)">
+                                            <g transform="translate(974.000000, 1613.000000)" id="Path">
+                                                <polygon points="0.848 0.405 1038.501 0.405 1038.501 1793.973 0.848 1793.973"></polygon>
+                                            </g>
+                                        </g>
+                                    </g>
+                                    <g id="Clipped">
+                                        <mask id="mask-17" fill="white">
+                                            <use xlink:href="#path-16"></use>
+                                        </mask>
+                                        <g id="e"></g>
+                                        <polygon id="Path" fill="#EC2D1B" opacity="0.618" mask="url(#mask-17)" points="900.809 1691.732 2240.809 1691.732 2240.809 2971.339 900.809 2971.339"></polygon>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

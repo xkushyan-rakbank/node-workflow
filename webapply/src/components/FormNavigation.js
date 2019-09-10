@@ -4,29 +4,47 @@ import { compose } from "recompose";
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
 import { formStepper } from "./../constants";
-import backgroundImage from "./../assets/images/background-blob.svg";
+import backgroundImage from "./../assets/images/background-red-blob-slice.svg";
 import { withStyles } from "@material-ui/core/styles";
 
 const style = {
   formNav: {
-    flex: "0 0 664px",
+    flex: "0 0 530px",
     position: "relative",
-    overflow: "hidden",
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
+    paddingTop: "180px",
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: "cover",
-    backgroundPosition: "30% 0",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right center",
     zIndex: "11",
     "@media only screen and (max-width: 1300px)": {
-      flex: "0 0 45%",
-      backgroundPosition: "25% 0"
+      flex: "0 0 45%"
     },
     "& ul": {
       margin: "0",
-      padding: "0",
-      paddingRight: "57px"
+      padding: "5px 0 0 20px",
+      marginLeft: "80px",
+      height: "271px",
+      overflowY: "auto",
+      direction: "rtl",
+      "@media only screen and (max-width: 1300px)": {
+        marginLeft: "40px"
+      },
+      "&::-webkit-scrollbar": {
+        width: "2px",
+        height: "5px"
+      },
+      "&::-webkit-scrollbar-track": {
+        webkitBoxShadow: "inset 0 0 1px rgba(255,255,255, 0.4)",
+        backgroundColor: "rgba(255,255,255, 0.4)"
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "#fff",
+        outline: "1px solid red"
+      },
+      "& li": {
+        direction: "ltr"
+      }
     }
   }
 };

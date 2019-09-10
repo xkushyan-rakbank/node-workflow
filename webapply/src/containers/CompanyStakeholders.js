@@ -61,7 +61,7 @@ class CompanyStakeholders extends React.Component {
     const { stakeholders } = this.state;
     const { classes } = this.props;
     return (
-      <>
+      <div className="mainContainer">
         <h2>Add Company Stakeholders</h2>
         <p className="formDescription">
           Explanation text goes here. One to three short sentences maximum. This
@@ -89,7 +89,7 @@ class CompanyStakeholders extends React.Component {
             <RightArrowWhite />
           </Button>
         </div>
-      </>
+      </div>
     );
   }
 }

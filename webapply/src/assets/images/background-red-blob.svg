@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1680" height="940" viewBox="0 0 1680 940">
+    <defs>
+        <path id="a" d="M0 0h1680v940H0z"/>
+        <path id="c" d="M0 0h1024v1398.284H0z"/>
+        <linearGradient id="f" x1="67.017%" x2="62.281%" y1="47.515%" y2="102.119%">
+            <stop offset="0%" stop-color="#C10910"/>
+            <stop offset="100%" stop-color="#9E001F"/>
+        </linearGradient>
+        <ellipse id="e" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"/>
+        <ellipse id="h" cx="1490.944" cy="1469.543" rx="1490.944" ry="1469.543"/>
+        <linearGradient id="j" x1="100%" x2="0%" y1="1.514%" y2="89.668%">
+            <stop offset="0%" stop-color="#EB151D"/>
+            <stop offset="100%" stop-color="#A00006"/>
+        </linearGradient>
+        <ellipse id="k" cx="1030.827" cy="1085.015" rx="1030.827" ry="1015.1"/>
+        <linearGradient id="l" x1="100%" x2="0%" y1="50%" y2="50%">
+            <stop offset="0%" stop-color="#FF00BC"/>
+            <stop offset="100%" stop-color="#FF4E00"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 1680 0)">
+        <mask id="b" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <g mask="url(#b)">
+            <g transform="rotate(90 1145.321 1123.821)">
+                <mask id="d" fill="#fff">
+                    <use xlink:href="#c"/>
+                </mask>
+                <g mask="url(#d)">
+                    <g transform="translate(-980.31 -1820.458)">
+                        <mask id="g" fill="#fff">
+                            <use xlink:href="#e"/>
+                        </mask>
+                        <use fill="url(#f)" xlink:href="#e"/>
+                        <g mask="url(#g)">
+                            <g transform="translate(2.73)">
+                                <mask id="i" fill="#fff">
+                                    <use xlink:href="#h"/>
+                                </mask>
+                                <use fill="url(#f)" xlink:href="#h"/>
+                                <g mask="url(#i)">
+                                    <g opacity=".705" transform="translate(281.259 771.745)">
+                                        <use fill="url(#j)" xlink:href="#k"/>
+                                        <use fill="#EB151D" xlink:href="#k"/>
+                                    </g>
+                                    <path stroke="#979797" stroke-opacity=".01" d="M281.759 772.245h2115.267V2925.14H281.759z"/>
+                                </g>
+                                <g mask="url(#i)">
+                                    <g transform="translate(188.416 1019.134)">
+                                        <ellipse cx="1014.443" cy="966.698" fill="#FF6A00" opacity=".247" rx="845.141" ry="832.248"/>
+                                        <path stroke="#979797" stroke-opacity=".01" d="M.5.5h1978.733v1873.238H.5z"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                        <g mask="url(#g)" opacity=".32">
+                            <path fill="url(#l)" d="M0 0h1037.653v1793.568H0z" transform="translate(974.848 1613.405)"/>
+                        </g>
+                        <path fill="#EC2D1B" d="M900.809 1691.732h1340v1279.607h-1340z" mask="url(#g)" opacity=".618"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

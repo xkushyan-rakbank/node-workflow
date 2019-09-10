@@ -1,60 +1,58 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import routes from "./../routes";
-import logo from "./../assets/images/logo.png";
+import logo from "./../assets/images/rakBank.svg";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   header: {
-    padding: " 28px 0",
     position: " fixed",
     top: " 0",
     width: " 100%",
-    paddingLeft: " 10vw",
-    backgroundColor: " #fff",
-    zIndex: "2",
-    "@media only screen and (max-width: 1100px)": {
-      paddingLeft: "5vw"
-    },
+    display: "flex",
+    zIndex: "21",
     "& img": {
       width: "120px"
-    },
-    "& a": {
-      display: "inline-block",
-      verticalAlign: "middle"
-    },
-    "& span": {
-      opacity: " 0.5",
-      fontFamily: "Open Sans",
-      fontSize: " 14px",
-      lineHeight: " 1.71",
-      letterSpacing: " normal",
-      color: " #373737",
-      position: " relative",
-      paddingLeft: " 40px",
-      marginLeft: " 20px",
-      "&:before": {
-        content: " '' ",
-        position: " absolute",
-        left: " 0",
-        top: " 50%",
-        transform: " translate(0, -50%)",
-        width: " 28px",
-        height: " 1px",
-        opacity: " 0.44",
-        backgroundColor: "#9b9b9b"
-      }
     }
+  },
+  logo: {
+    flex: "0 0 calc(530px - 40px)",
+    padding: "28px 0 28px 40px",
+    "@media only screen and (max-width: 1300px)": {
+      flex: "0 0 calc(45% - 40px)"
+    }
+  },
+  headerTitle: {
+    display: "flex",
+    flex: "1 1 auto",
+    backgroundColor: "#fff",
+    "& span": {
+      maxWidth: "780px",
+      width: "100%",
+      fontSize: "14px",
+      color: "#86868b"
+    }
+  },
+  headerTitleIn: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0 50px",
+    width: "100%"
   }
 };
 
 const Header = ({ classes }) => {
   return (
     <header className={classes.header}>
-      <Link to={routes.applicantInfo}>
+      <Link to={routes.applicantInfo} className={classes.logo}>
         <img src={logo} alt="rak bank" />
       </Link>
-      <span> RAKstarter Application</span>
+      <div className={classes.headerTitle}>
+        <div className={classes.headerTitleIn}>
+          <span> RAKstarter Application </span>
+        </div>
+      </div>
     </header>
   );
 };

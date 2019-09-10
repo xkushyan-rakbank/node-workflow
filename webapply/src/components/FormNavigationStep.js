@@ -6,27 +6,36 @@ import { withStyles } from "@material-ui/core/styles";
 
 const style = {
   stepItem: {
-    color: "#ffffff",
+    color: "#fff",
     listStyleType: "none",
     fontSize: "20px",
     fontWeight: "600",
     lineHeight: "1.2",
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     alignItems: "center",
     opacity: "0.5",
+    paddingLeft: "44px",
+    position: "relative",
+    fontWeight: "400",
     "@media only screen and (max-width: 1100px)": {
       fontSize: "16px"
     },
     "&:not(:last-child)": {
-      marginBottom: "30px"
+      marginBottom: "25px"
+    },
+    "& span": {
+      position: "absolute",
+      left: "0",
+      marginLeft: "0"
     }
   },
   icon: {
     fontSize: "13px !important"
   },
   activeStepItem: {
-    opacity: "1"
+    opacity: "1",
+    fontWeight: "600"
   }
 };
 
@@ -39,8 +48,6 @@ const FormNavigationLink = props => {
   // console.log(filled);
   return (
     <li className={activeClass}>
-      {title}
-
       {activeStep ? (
         <span className="circle">
           <ArrowBackIcon className={classes.icon} />
@@ -52,6 +59,7 @@ const FormNavigationLink = props => {
       ) : (
         ""
       )}
+      {title}
     </li>
   );
 };

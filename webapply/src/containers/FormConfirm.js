@@ -8,12 +8,13 @@ import ErrorMessage from "../components/ErrorMessage";
 
 const style = {
   confirmForm: {
-    maxWidth: "633px"
+    maxWidth: "780px",
+    width: "100%"
   },
   formDescription: {
     fontSize: "20px",
     color: "#373737",
-    margin: "80px 0 40px",
+    margin: "0px 0 18px",
     "& b": {
       fontWeight: "600"
     }
@@ -88,11 +89,11 @@ class FormConfirm extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.confirmForm}>
+      <div className="mainContainer">
         <h2>Confirm It’s You</h2>
         <p className={classes.formDescription}>
-          We have sent you a verification code to <b>christer@acme.com</b> and
-          <b> +791 756 565 840</b>. Please input here to Autenticate.
+          We have sent you a verification code. Please input the six digits
+          below, to cofirm this is you.
         </p>
         <form noValidate onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">

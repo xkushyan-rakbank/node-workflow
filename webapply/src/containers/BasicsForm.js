@@ -9,9 +9,6 @@ import PureSelect from "../components/InputField/PureSelect";
 import validateForm from "../utils/validate";
 
 const styles = {
-  baseForm: {
-    maxWidth: "612px"
-  },
   reCaptchaContainer: {
     display: "flex",
     paddingTop: "10px",
@@ -33,12 +30,11 @@ class BasicsForm extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.baseForm}>
+      <div className="mainContainer">
         <h2>Let’s Start with the Basics</h2>
         <p className="formDescription">
-          We know from experience users may get scared when asked for details.
-          We need a trust-creating message, to explain why we need them
-          (autosave and finish at a later stage)
+          First things first, you need a login, so you can come back to your
+          application later.
         </p>
 
         <form noValidate onSubmit={this.submitForm}>
@@ -57,6 +53,8 @@ class BasicsForm extends React.Component {
               />
             }
           />
+
+          <PureSelect id="" />
 
           <RefactoredCheckbox id="Aplnt.applyOnbehalf" />
 

@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 const style = {
   chat: {
     position: "absolute",
-    right: "57px",
+    left: "77px",
     bottom: "50px",
     color: "#fff",
     fontSize: "18px",
@@ -28,7 +28,7 @@ const style = {
       backgroundColor: " #fff",
       borderRadius: "50%",
       boxShadow: "0 2px 14px 0 rgba(0, 0, 0, 0.18)",
-      marginLeft: "20px"
+      marginRight: "20px"
     },
     "& p": {
       margin: "0"
@@ -51,10 +51,10 @@ const Chat = ({ classes }) => {
   return (
     <div className={classes.chat}>
       <div className={classes.chatInner}>
-        <a href="/"> Chat with Us</a>
         <span>
           <img src={chatIcon} alt="chat" />
         </span>
+        <a href="/"> Chat with Us</a>
       </div>
     </div>
   );
