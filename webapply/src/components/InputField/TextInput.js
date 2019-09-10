@@ -9,6 +9,7 @@ import { compose } from "recompose";
 import get from "lodash/get";
 import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";
+import isBoolean from "lodash/isBoolean";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
@@ -131,27 +132,38 @@ class Input extends React.Component {
     }
   };
 
+  composeFieldAttrWithPropAttr(inputProps) {
+    const props = { ...inputProps };
+    const { disabled, required } = this.props;
+
+    if (isBoolean(disabled)) {
+      props.disabled = disabled;
+    }
+    if (isBoolean(required)) {
+      props.required = required;
+    }
+
+    return props;
+  }
+
   render() {
     const {
       id,
+      name,
       config,
       classes,
       className,
       InputProps = {},
-      required,
       InputLabelProps,
       disabled,
       select
     } = this.props;
 
     const { fieldErrors } = this.state;
-    const inputProps = {
-      ...fieldAttr(id, config),
-      disabled
-    };
-    if (required) {
-      inputProps.required = true;
-    }
+    const inputProps = this.composeFieldAttrWithPropAttr(
+      fieldAttr(id, config, name)
+    );
+
     const isError = !isEmpty(fieldErrors);
 
     if (id && config.label) {

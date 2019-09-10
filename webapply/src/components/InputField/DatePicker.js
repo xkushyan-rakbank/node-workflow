@@ -15,7 +15,7 @@ import ErrorMessage from "./../ErrorMessage";
 import { validate } from "./../../utils/validate";
 import { updateField } from "../../store/actions/appConfig";
 import combineNestingName from "../../utils/combineNestingName";
-import { fieldAttr } from "../../constants";
+import { DATA_ATTRIBUTES, fieldAttr } from "../../constants";
 
 const styles = {
   datePicker: {
@@ -68,6 +68,13 @@ class DatePicker extends React.Component {
     }
   };
 
+  composeInputProps() {
+    return {
+      ...this.inputProps,
+      [DATA_ATTRIBUTES.INPUT_ID]: this.props.id
+    };
+  }
+
   fieldValidation = () => {
     this.setState({
       fieldErrors: validate(this.inputRef.current, this.props.config)
@@ -91,10 +98,12 @@ class DatePicker extends React.Component {
   };
 
   render() {
-    const { value, classes, config, id } = this.props;
+    const { value, classes, config, id, name } = this.props;
     const { fieldErrors } = this.state;
     const isError = !isEmpty(fieldErrors);
-    const attrs = fieldAttr(id, config);
+    const attrs = fieldAttr(id, config, name);
+    const inputProps = this.composeInputProps();
+
     return (
       <FormControl className="formControl">
         {config.label && (
@@ -120,7 +129,7 @@ class DatePicker extends React.Component {
               onBlur={this.handleBlur}
               onClose={this.handleClose}
               error={isError}
-              inputProps={this.inputProps}
+              inputProps={inputProps}
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}

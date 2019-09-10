@@ -16,6 +16,7 @@ const SignatoryRights = ({ index, isSignatory }) => {
       </Grid>
       <Grid item md={6} sm={12}>
         <PureSelect
+          required={isSignatory === "true"}
           disabled={isSignatory === "false"}
           id="SigAcntSig.authorityType"
           indexes={[index]}
@@ -26,7 +27,7 @@ const SignatoryRights = ({ index, isSignatory }) => {
 };
 
 const mapStateToProps = (state, { index }) => ({
-  isSignatory: getInputValueById(state, "UI0280", [index])
+  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index])
 });
 
 export default connect(mapStateToProps)(SignatoryRights);

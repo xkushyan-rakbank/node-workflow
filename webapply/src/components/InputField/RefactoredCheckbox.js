@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Check from "./../../assets/images/on.svg";
 import { updateField } from "../../store/actions/appConfig";
 import combineNestingName from "../../utils/combineNestingName";
+import { DATA_ATTRIBUTES } from "../../constants";
 
 const styles = {
   checkboxWrapper: {
@@ -68,22 +69,29 @@ class CustomCheckbox extends React.Component {
     this.props.updateField({ value, name });
   };
 
+  getDataAttr() {
+    return {
+      [DATA_ATTRIBUTES.INPUT_ID]: this.props.id
+    };
+  }
+
   render() {
-    const { config, classes, value = false, id } = this.props;
+    const { config, classes, value = false, id, name } = this.props;
     return (
       <label className={classes.checkboxWrapper}>
         <div className={classes.checkboxContainer}>
           <input
-            id={id}
+            {...this.getDataAttr()}
+            id={name}
             type="checkbox"
             value={value}
-            name={config.name}
+            name={name}
             onChange={this.updateField}
             checked={value}
             className={classes.hiddenCheckbox}
           />
           <div className={classes.styledCheckbox}>
-            {value && <img src={Check} alt="" />}
+            {value && <img src={Check} alt="check icon" />}
           </div>
         </div>
         <span className={classes.label}>{config.label}</span>
