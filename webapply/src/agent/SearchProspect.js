@@ -9,26 +9,6 @@ import MyApplications from "./MyApplications";
 const styles = {
   baseForm: {
     maxWidth: "612px"
-  },
-  reCaptchaContainer: {
-    display: "flex",
-    paddingTop: "10px",
-    justifyContent: "flex-end"
-  },
-
-  nameField: {
-    fontSize: "18px",
-    fontWeight: 600,
-    lineHeight: 1.33,
-    color: "#373737"
-  },
-  indent: {
-    marginBottom: "24px"
-  },
-  emptyAvatar: {
-    backgroundColor: "#ffffff",
-    border: "solid 1px #d3d8db",
-    width: "40px"
   }
 };
 
