@@ -20,7 +20,12 @@ const PersonalInformation = ({ index }) => {
             id="Sig.firstName"
             indexes={[index]}
             select={
-              <PureSelect id="Sig.gender" indexes={[index]} combinedSelect />
+              <PureSelect
+                id="Sig.gender"
+                indexes={[index]}
+                combinedSelect
+                defaultValue="Male"
+              />
             }
           />
         </Grid>
