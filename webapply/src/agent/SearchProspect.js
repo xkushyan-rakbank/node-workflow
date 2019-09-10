@@ -4,7 +4,7 @@ import TextInput from "../components/InputField/TextInput";
 import SearchButton from "../components/Buttons/SearchButton";
 import PureSelect from "../components/InputField/PureSelect";
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
+import MyApplications from "./MyApplications";
 
 const styles = {
   baseForm: {
@@ -66,6 +66,7 @@ class SearchProspect extends React.Component {
               <TextInput id="Search.email" />
             </Grid>
           </Grid>
+
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
               <TextInput id="Search.raktrackNumber" />
@@ -74,11 +75,12 @@ class SearchProspect extends React.Component {
               <TextInput id="Search.tradeLicenseNo" />
             </Grid>
           </Grid>
+
           <div className="linkContainer">
             <SearchButton />
           </div>
-          <h2>My applications</h2>
-          <Avatar className={classes.emptyAvatar} /> New Applications
+
+          <MyApplications />
         </form>
       </div>
     );
