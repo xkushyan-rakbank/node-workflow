@@ -9,27 +9,32 @@ const style = {
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     backgroundColor: "#ffffff"
   },
+
   applicationRow: {
     borderBottom: "1px solid #e6e6e6",
     "&:last-of-type": {
       border: "none"
     },
+
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
     alignItems: "center",
     padding: "24px 20px 19px 30px"
   },
+
   companyName: {
     fontSize: "16px",
     fontWeight: 600,
     lineHeight: 1,
     color: "#263d4c"
   },
+
   account: {
     fontSize: "12px",
     lineHeight: 1.33,
     color: "#86868b"
   },
+
   status: {
     borderRadius: "4px",
     backgroundColor: "#e9e9ed",
@@ -37,6 +42,7 @@ const style = {
     color: "#373737",
     padding: "0 5px"
   },
+  
   action: {
     fontSize: "14px",
     fontStyle: "italic",
@@ -63,19 +69,59 @@ class MyApplications extends React.Component {
             <div>
               <span className={classes.status}>Incomplete application</span>
             </div>
-            <div className={classes.action}>We will call you soon</div>
+            <div className={classes.action}>Finish application</div>
           </div>
           <div className={classes.applicationRow}>
             <div>
-              <div className={classes.companyName}>Designit Arabia</div>
-              <div className={classes.account}>Current Account Islamic</div>
+              <div className={classes.companyName}>Company name</div>
+              <div className={classes.account}>RAKelite</div>
             </div>
             <div>
               <span className={classes.status}>Assessing</span>
             </div>
             <div className={classes.action}>We will call you soon</div>
           </div>
-        </div>
+          <div className={classes.applicationRow}>
+            <div>
+              <div className={classes.companyName}>Company name</div>
+              <div className={classes.account}>RAKstarter</div>
+            </div>
+            <div>
+              <span className={classes.status}>Assessing</span>
+            </div>
+            <div className={classes.action}>We will call you soon</div>
+          </div>
+          <div className={classes.applicationRow}>
+            <div>
+              <div className={classes.companyName}>Company name</div>
+              <div className={classes.account}>RAKelite Islamic</div>
+            </div>
+            <div>
+              <span className={classes.status}>New documents needed</span>
+            </div>
+            <div className={classes.action}>upload documents</div>
+          </div>
+          <div className={classes.applicationRow}>
+            <div>
+              <div className={classes.companyName}>Company name</div>
+              <div className={classes.account}>RAKstarter Islamic</div>
+            </div>
+            <div>
+              <span className={classes.status}>Ready to sign</span>
+            </div>
+            <div className={classes.action}>We will call you soon</div>
+          </div>
+          <div className={classes.applicationRow}>
+          <div>
+              <div className={classes.companyName}>Company name</div>
+              <div className={classes.account}>RAKstarter</div>
+            </div>
+            <div>
+              <span className={classes.status}>Account activated</span>
+            </div>
+            <div className={classes.action}>See account</div>
+          </div>
+      </div>
       </>
     );
   }
