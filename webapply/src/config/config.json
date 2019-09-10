@@ -4282,7 +4282,7 @@
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "15",
-      "pattern": "^[0-9]*$"
+      "pattern": "^784[0-9]*$"
     },
     "SigKycdEmid.eidExpiryDt": {
       "criteria": {
