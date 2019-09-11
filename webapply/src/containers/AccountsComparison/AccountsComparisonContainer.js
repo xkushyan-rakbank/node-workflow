@@ -4,10 +4,14 @@ import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 
 const style = {
   container: {
-    display: "inline-block"
+    display: "inline-block",
+    "& + &": {
+      marginTop: "150px"
+    }
   },
   cardsContainer: {
     display: "flex",
+    flexDirection: "column",
     marginTop: "40px"
   },
   note: {

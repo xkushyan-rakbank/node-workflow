@@ -6,7 +6,9 @@ import doneIcon from "../../assets/images/done-icon.png";
 const style = {
   cardsContainer: {
     display: "flex",
-    marginTop: "40px"
+    marginTop: "20px",
+    marginLeft: "-20px",
+    flexWrap: "wrap"
   }
 };
 
