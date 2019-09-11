@@ -1,4 +1,5 @@
 export default {
+  accountsComparison: "/AccountsComparison",
   applicantInfo: "/ApplicantInfo",
   verifyOtp: "/VerifyOTP",
   companyInfo: "/CompanyInfo",

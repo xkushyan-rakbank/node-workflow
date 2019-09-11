@@ -189,6 +189,7 @@ class Input extends React.Component {
       InputProps = {},
       InputLabelProps,
       disabled,
+      placeholder,
       select
     } = this.props;
 
@@ -221,6 +222,7 @@ class Input extends React.Component {
                   ...InputProps,
                   inputProps
                 }}
+                placeholder={placeholder}
                 InputLabelProps={InputLabelProps}
                 disabled={disabled}
                 defaultValue={this.props.defaultValue || this.props.value}

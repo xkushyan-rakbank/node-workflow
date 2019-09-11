@@ -42,7 +42,7 @@ const style = {
     color: "#373737",
     padding: "0 5px"
   },
-  
+
   action: {
     fontSize: "14px",
     fontStyle: "italic",
@@ -112,7 +112,7 @@ class MyApplications extends React.Component {
             <div className={classes.action}>We will call you soon</div>
           </div>
           <div className={classes.applicationRow}>
-          <div>
+            <div>
               <div className={classes.companyName}>Company name</div>
               <div className={classes.account}>RAKstarter</div>
             </div>
@@ -121,7 +121,7 @@ class MyApplications extends React.Component {
             </div>
             <div className={classes.action}>See account</div>
           </div>
-      </div>
+        </div>
       </>
     );
   }

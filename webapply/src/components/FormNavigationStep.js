@@ -9,7 +9,6 @@ const style = {
     color: "#fff",
     listStyleType: "none",
     fontSize: "20px",
-    fontWeight: "600",
     lineHeight: "1.2",
     display: "flex",
     justifyContent: "flex-start",

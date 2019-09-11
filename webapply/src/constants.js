@@ -62,11 +62,6 @@ export const countryOfResidence = [
   { value: "Country Of Residence2", label: "Country Of Residence2" }
 ];
 
-export const publicPositions = [
-  { value: "Never held", label: "Never held" },
-  { value: "Yes", label: "Yes" }
-];
-
 export const defineInputFormatByConfig = fieldConfig => {
   switch (fieldConfig.format) {
     case "amount":

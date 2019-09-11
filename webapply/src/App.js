@@ -14,6 +14,8 @@ import FormConfirm from "./containers/FormConfirm";
 import FormLayout from "./containers/FormLayout";
 import SearchProspect from "./agent/SearchProspect";
 import SelectServices from "./containers/SelectServices";
+import AccountsComparison from "./containers/AccountsComparison/AccountsComparison";
+
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
 import "./App.scss";
@@ -66,6 +68,11 @@ class App extends React.Component {
                 exact
                 path={routes.selectServices}
                 component={SelectServices}
+              />
+              <Route
+                exact
+                path={routes.accountsComparison}
+                component={AccountsComparison}
               />
               <Route path="*" />
             </Switch>
