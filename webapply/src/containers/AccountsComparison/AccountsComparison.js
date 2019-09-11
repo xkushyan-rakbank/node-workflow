@@ -12,10 +12,7 @@ const style = {
 
 const AccountsComparison = ({ classes }) => (
   <div className={classes.container}>
-    <AccountsComparisonContainer>
-      <AccountCardContainer />
-    </AccountsComparisonContainer>
-    <AccountsComparisonContainer>content</AccountsComparisonContainer>
+    <AccountsComparisonContainer />
   </div>
 );
 
