@@ -25,6 +25,11 @@ const style = {
   },
   addButton: {
     marginTop: "12px"
+  },
+  radioLabel: {
+    "& > span": {
+      fontSize: "14px"
+    }
   }
 };
 
@@ -60,6 +65,7 @@ class SigningPreferences extends React.Component {
                 control={
                   <Radio color="secondary" classes={{ root: classes.radio }} />
                 }
+                className={classes.radioLabel}
                 label="All of us must sign"
               />
               <FormControlLabel
@@ -67,6 +73,7 @@ class SigningPreferences extends React.Component {
                 control={
                   <Radio color="secondary" classes={{ root: classes.radio }} />
                 }
+                className={classes.radioLabel}
                 label="Any of us can sign"
               />
               <FormControlLabel
@@ -74,6 +81,7 @@ class SigningPreferences extends React.Component {
                 control={
                   <Radio color="secondary" classes={{ root: classes.radio }} />
                 }
+                className={classes.radioLabel}
                 label="Other (please specify)"
               />
             </div>
