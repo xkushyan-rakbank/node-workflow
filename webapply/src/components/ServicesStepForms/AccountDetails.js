@@ -17,16 +17,10 @@ const style = {
     margin: "-90px 0 0"
   },
   checkboxesWrapper: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
     marginBottom: "30px"
   },
   checkboxWrapper: {
     marginTop: "10px"
-  },
-  paperWrapper: {
-    margin: "10px 0",
-    padding: "0 46px 47px"
   }
 };
 
@@ -43,9 +37,9 @@ class AccountDetails extends React.Component {
       >
         <SectionTitle title="Account details" />
 
-        <div className={cx("paper", classes.paperWrapper)}>
+        <div className="paper">
           <Subtitle title="Select currencies" />
-          <div className={classes.checkboxesWrapper}>
+          <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
             {datalist.map(option => (
               <Checkbox
                 key={option.key}
@@ -57,7 +51,7 @@ class AccountDetails extends React.Component {
           <InfoTitle title={title} />
         </div>
 
-        <div className={cx("paper", classes.paperWrapper)}>
+        <div className="paper">
           <Subtitle title="Select branch" />
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
@@ -69,7 +63,7 @@ class AccountDetails extends React.Component {
           </Grid>
         </div>
 
-        <div className={cx("paper", classes.paperWrapper)}>
+        <div className="paper">
           <Subtitle title="Select interest" />
           <Checkbox label="I want to earn interest from my account" />
         </div>

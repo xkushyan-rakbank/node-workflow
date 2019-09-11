@@ -44,7 +44,6 @@ const FormNavigationLink = props => {
     ? cx(classes.stepItem, classes.activeStepItem)
     : classes.stepItem;
 
-  // console.log(filled);
   return (
     <li className={activeClass}>
       {activeStep ? (
