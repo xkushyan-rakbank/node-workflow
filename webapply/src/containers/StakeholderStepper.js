@@ -70,6 +70,7 @@ class StakeholderStepper extends React.Component {
               <StepComponent
                 index={index}
                 key={item.step}
+                steps={stakeHoldersSteps}
                 step={item.step}
                 title={item.title}
                 subTitle={item.infoTitle}

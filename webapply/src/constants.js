@@ -6,6 +6,9 @@ import CountryOfResidence from "./components/StakeholderStepForms/CountryOfResid
 import AccountDetails from "./components/ServicesStepForms/AccountDetails";
 import SigningPreferences from "./components/ServicesStepForms/SigningPreferences";
 import Channels from "./components/ServicesStepForms/Channels";
+import CompanyDetails from "./components/AboutCompanyStepForms/CompanyDetails";
+import Industry from "./components/AboutCompanyStepForms/Industry";
+import LicenseInformation from "./components/AboutCompanyStepForms/LicenseInformation";
 import isUndefined from "lodash/isUndefined";
 
 import routes from "./routes";
@@ -33,6 +36,20 @@ export const stakeHoldersSteps = [
     title: "Country of residence",
     component: CountryOfResidence
   }
+];
+
+export const aboutCompanySteps = [
+  {
+    step: 1,
+    title: "Company Details",
+    component: CompanyDetails
+  },
+  {
+    step: 2,
+    title: "Industry",
+    component: Industry
+  },
+  { step: 3, title: "Lisence Information", component: LicenseInformation }
 ];
 
 export const authorityType = [
