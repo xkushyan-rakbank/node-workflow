@@ -137,3 +137,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .mt-25 {
   margin-top: 25px !important;
 }
+
+.paper {
+  border-radius: 8px;
+  box-shadow: 0 5px 21px 0 rgba(0, 0, 0, 0.03);
+  border: solid 1px #e8e8e8;
+}

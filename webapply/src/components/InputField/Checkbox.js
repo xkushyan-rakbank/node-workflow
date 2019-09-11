@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import cx from "classnames";
 import Check from "./../../assets/images/on.svg";
 
 const style = {
@@ -59,10 +60,17 @@ const style = {
   }
 };
 
-const CustomCheckbox = ({ classes, checked, field, label, ...props }) => {
+const CustomCheckbox = ({
+  classes,
+  checked,
+  field,
+  label,
+  className,
+  ...props
+}) => {
   const value = field ? field.value : props.value;
   return (
-    <label className={classes.checkboxWrapper}>
+    <label className={cx(classes.checkboxWrapper, className)}>
       <div className={classes.checkboxContainer}>
         <input
           {...field}
