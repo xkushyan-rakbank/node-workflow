@@ -6,7 +6,8 @@ const styles = {
     margin: "24px 0 14px",
     fontSize: "20px",
     lineHeight: 1.5,
-    color: "#373737"
+    color: "#373737",
+    fontWeight: 600
   },
   divider: {
     width: "5px",

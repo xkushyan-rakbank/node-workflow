@@ -11,9 +11,7 @@ const style = {
     backgroundColor: "#fff",
     padding: "28px 24px",
     boxSizing: "border-box",
-    "& + &": {
-      marginLeft: "25px"
-    }
+    margin: "20px 0 0 20px"
   },
   header: {
     display: "flex",

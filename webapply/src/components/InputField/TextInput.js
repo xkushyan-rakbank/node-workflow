@@ -33,9 +33,6 @@ const styles = {
     flexDirection: "row !important",
     alignItems: "baseline",
     margin: "12px 0 24px !important",
-    "& label": {
-      maxWidth: "unset"
-    },
     "& > div": {
       margin: "0 !important",
       "&:first-child": {

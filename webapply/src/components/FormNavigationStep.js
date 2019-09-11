@@ -9,7 +9,6 @@ const style = {
     color: "#fff",
     listStyleType: "none",
     fontSize: "20px",
-    fontWeight: "600",
     lineHeight: "1.2",
     display: "flex",
     justifyContent: "flex-start",
@@ -45,7 +44,6 @@ const FormNavigationLink = props => {
     ? cx(classes.stepItem, classes.activeStepItem)
     : classes.stepItem;
 
-  // console.log(filled);
   return (
     <li className={activeClass}>
       {activeStep ? (

@@ -8,10 +8,14 @@ const styles = {
     backgroundColor: "#eff2f4",
     marginLeft: "auto",
     lineHeight: 1,
-    color: "#517085",
-    padding: "8px 16px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    width: "109px",
+    height: "32px",
+    justifyContent: "center",
+    fontSize: "16px",
+    fontWeight: "400",
+    color: "#373737"
   },
   spinner: {
     marginRight: "8px"
@@ -23,9 +27,9 @@ const StatusLoader = props => {
   const loadingProcess = (
     <>
       <CircularProgress
-        color="primary"
         size="16px"
         className={props.classes.spinner}
+        thickness={5}
       />
       Saving...
     </>

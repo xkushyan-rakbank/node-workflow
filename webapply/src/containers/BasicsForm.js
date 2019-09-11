@@ -30,7 +30,7 @@ class BasicsForm extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className="mainContainer">
+      <>
         <h2>Let’s Start with the Basics</h2>
         <p className="formDescription">
           First things first, you need a login, so you can come back to your
@@ -72,7 +72,7 @@ class BasicsForm extends React.Component {
 
           <SubmitButton />
         </form>
-      </div>
+      </>
     );
   }
 }

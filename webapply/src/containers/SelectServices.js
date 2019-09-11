@@ -18,7 +18,7 @@ class SelectServices extends React.Component {
     return this.state.canSubmit ? (
       <SubmitApplication />
     ) : (
-      <div className="mainContainer">
+      <>
         <h2>Services for your account</h2>
         <p className="formDescription">
           Explanation text goes here. One to three short sentences maximum. This
@@ -28,7 +28,7 @@ class SelectServices extends React.Component {
         <ServicesStepper
           goToFinish={() => this.setState({ canSubmit: true })}
         />
-      </div>
+      </>
     );
   }
 }
