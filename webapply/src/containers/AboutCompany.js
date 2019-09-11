@@ -53,7 +53,7 @@ class AboutCompany extends React.Component {
     const { step, isFinalScreenShown } = this.state;
 
     return (
-      <div className="mainContainer">
+      <>
         <h2>Tell Us about Your Company</h2>
         <p className="formDescription">
           Explanation text goes here. One to three short sentences maximum. This
@@ -87,7 +87,7 @@ class AboutCompany extends React.Component {
             })}
           </div>
         </CompanyStakeholderCard>
-      </div>
+      </>
     );
   }
 }

@@ -89,7 +89,7 @@ class FormConfirm extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className="mainContainer">
+      <>
         <h2>Confirm It’s You</h2>
         <p className={classes.formDescription}>
           We have sent you a verification code. Please input the six digits
@@ -124,7 +124,7 @@ class FormConfirm extends React.Component {
             />
           </div>
         </form>
-      </div>
+      </>
     );
   }
 }

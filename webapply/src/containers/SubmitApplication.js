@@ -18,7 +18,7 @@ const style = {
 const SubmitApplication = props => {
   const { classes } = props;
   return (
-    <div className="mainContainer">
+    <>
       <h2>Submit application</h2>
       <p className="formDescription">
         Explanation text goes here. One to three short sentences maximum. This
@@ -39,7 +39,7 @@ const SubmitApplication = props => {
       </div>
 
       <Button label="Submit" />
-    </div>
+    </>
   );
 };
 

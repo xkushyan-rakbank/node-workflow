@@ -42,7 +42,9 @@ const FormLayout = ({ children, classes }) => {
       <div className={classes.formLayout}>
         <FormNavigation />
         <div className={classes.formWrapper}>
-          <div className={classes.formInner}>{children}</div>
+          <div className={classes.formInner}>
+            <div className="mainContainer">{children}</div>
+          </div>
         </div>
       </div>
     </React.Fragment>
