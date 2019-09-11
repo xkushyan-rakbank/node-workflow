@@ -53,6 +53,9 @@ const styles = {
   },
   selectFieldCombined: {
     width: "90px !important",
+    "& label": {
+      maxWidth: "unset"
+    },
     "& fieldset": {
       borderColor: "rgba(194, 194, 194, 0.56)"
     },

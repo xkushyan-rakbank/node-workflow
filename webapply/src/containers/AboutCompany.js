@@ -1,16 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import cx from "classnames";
-import PureSelect from "../components/InputField/PureSelect";
-import SectionTitle from "../components/SectionTitle";
-import SubmitButton from "../components/Buttons/SubmitButton";
-import DatePicker from "../components/InputField/DatePicker";
-import TextInput from "../components/InputField/TextInput";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import StatusLoader from "../components/StatusLoader";
-import validateForm from "../utils/validate";
 import { aboutCompanySteps } from "../constants";
 import routes from "./../routes";
 
@@ -35,7 +27,6 @@ class AboutCompany extends React.Component {
   };
 
   state = {
-    isFinalScreenShown: false,
     step: 1
   };
 
@@ -43,14 +34,13 @@ class AboutCompany extends React.Component {
     if (this.state.step < aboutCompanySteps.length) {
       this.setState(state => ({ step: state.step + 1 }));
     } else {
-      this.setState({ isFinalScreenShown: true });
       this.props.history.push(routes.stakeholdersInfo);
     }
   };
 
   render() {
     const { classes, index } = this.props;
-    const { step, isFinalScreenShown } = this.state;
+    const { step } = this.state;
 
     return (
       <>

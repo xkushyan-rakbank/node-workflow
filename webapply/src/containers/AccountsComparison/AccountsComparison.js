@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import AccountsComparisonContainer from "./AccountsComparisonContainer";
-import AccountCardContainer from "./AccountCardContainer";
 
 const style = {
   container: {

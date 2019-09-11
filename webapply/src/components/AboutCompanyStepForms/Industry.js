@@ -1,6 +1,5 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 
 const Industry = () => {
