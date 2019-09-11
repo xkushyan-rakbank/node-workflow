@@ -1,28 +1,26 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import ApplicationOverviewFirstStep from "./ApplicationOverviewFirstStep";
+import ApplicationOverviewSecondStep from "./ApplicationOverviewSecondStep";
 
 const style = {
-  sectionTitleIndent: {
-    marginBottom: "24px"
-  },
-  topIndent: {
-    marginTop: "40px"
+  appOverviewWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%"
   }
 };
 
-class ApplicationOverview extends React.Component {
+class ApplicationOverviewContainer extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <>
-        <h3>Two easy steps</h3>
-        <p>
-          Explanation text goes here. One to three short sentences maximum. This
-          is the third sentence.
-        </p>
-      </>
+      <div className={classes.appOverviewWrapper}>
+        <ApplicationOverviewFirstStep />
+        <ApplicationOverviewSecondStep />
+      </div>
     );
   }
 }
 
-export default withStyles(style)(ApplicationOverview);
+export default withStyles(style)(ApplicationOverviewContainer);
