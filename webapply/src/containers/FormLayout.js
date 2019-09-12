@@ -32,6 +32,10 @@ const style = {
     "& nextButton": {
       margin: "42px 0 0 !important"
     }
+  },
+  mainContainer: {
+    maxWidth: "780px",
+    width: "100%"
   }
 };
 
@@ -43,7 +47,7 @@ const FormLayout = ({ children, classes }) => {
         <FormNavigation />
         <div className={classes.formWrapper}>
           <div className={classes.formInner}>
-            <div className="mainContainer">{children}</div>
+            <div className={classes.mainContainer}>{children}</div>
           </div>
         </div>
       </div>

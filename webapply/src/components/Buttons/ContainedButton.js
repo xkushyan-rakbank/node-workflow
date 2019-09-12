@@ -13,6 +13,10 @@ const styles = {
     fontSize: "18px",
     textTransform: "none",
     padding: "0 25px",
+    backgroundColor: "#000",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.7)"
+    },
     svg: {
       fontSize: "14px",
       marginLeft: "10px"

@@ -6,17 +6,17 @@ import AddIcon from "../AddIcon";
 
 const styles = {
   buttonStyle: {
+    border: 0,
+    color: "#000",
     display: "flex",
-    justifyContent: "space-between",
-    maxWidth: "305px",
-    height: "56px",
-    borderRadius: "28px",
-    border: "solid 1px #16216a",
-    textTransform: "none",
-    fontSize: "18px",
-    fontWeight: "normal",
-    letterSpacing: "normal",
-    margin: "0 16px"
+    height: "104px",
+    width: "100%",
+    justifyContent: "flex-start",
+    textTransform: "inherit",
+    fontSize: "20px",
+    "&:hover": {
+      border: 0
+    }
   },
   labelStyle: {
     margin: "0 14px"

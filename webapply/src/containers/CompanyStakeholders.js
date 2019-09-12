@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core";
 import FilledStakeholderCard from "../components/FilledStakeholderCard";
 import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
+import SubmitButton from "../components/Buttons/SubmitButton";
 import Button from "@material-ui/core/Button/Button";
 import { ReactComponent as RightArrowWhite } from "./../assets/images/white.svg";
 import routes from "../routes";
@@ -20,15 +21,12 @@ const style = {
     justifyContent: "space-between"
   },
   buttonsWrapper: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginTop: "40px",
-    "@media (max-width: 1600px)": {
-      flexDirection: "column",
-      "&>button": {
-        margin: "0 0 24px"
-      }
-    }
+    borderRadius: "8px",
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    border: "solid 1px #e8e8e8",
+    backgroundColor: "#ffffff",
+    flexDirection: "column",
+    marginTop: "24px"
   }
 };
 
@@ -79,7 +77,7 @@ class CompanyStakeholders extends React.Component {
         )}
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={this.showNewStakeholder} />
-          <Button
+          {/* <Button
             className={classes.buttonStyle}
             variant="contained"
             color="primary"
@@ -87,8 +85,9 @@ class CompanyStakeholders extends React.Component {
           >
             I have added all stakeholders
             <RightArrowWhite />
-          </Button>
+          </Button> */}
         </div>
+        <SubmitButton handleClick={this.goToFinalQuestions} />
       </>
     );
   }
