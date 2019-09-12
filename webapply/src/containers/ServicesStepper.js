@@ -6,7 +6,7 @@ const styles = {};
 
 class ServicesStepper extends React.Component {
   state = {
-    step: 2
+    step: 3
   };
 
   handleContinue = () => {
