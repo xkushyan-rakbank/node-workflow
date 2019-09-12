@@ -5,7 +5,8 @@ import AccountsComparisonContainer from "./AccountsComparisonContainer";
 const style = {
   container: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    maxWidth: "790px"
   }
 };
 

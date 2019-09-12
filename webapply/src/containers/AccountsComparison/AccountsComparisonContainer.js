@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import AccountCardContainer from "./AccountCardContainer";
 import InfoNote from "../../components/InfoNote";
+import TableCompare from "../../components/TableCompare";
 
 const style = {
   container: {
@@ -37,6 +38,7 @@ class AccountsComparisonContainer extends React.Component {
             title="Compare the accounts"
             info="Our three business accounts, side by side"
           />
+          <TableCompare />
           <InfoNote text="Note: 5% VAT will be levied on all charges applicable to business customers as published on the Service & Price guide. For all other charges related to your accounts please visit www.rakbank.ae " />
         </div>
       </React.Fragment>
