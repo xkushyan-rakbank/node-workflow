@@ -9,44 +9,49 @@ import Paper from "@material-ui/core/Paper";
 import ContainedButton from "./Buttons/ContainedButton";
 
 const style = {
-  head: {
-    backgroundColor: "#eff2f4",
-    color: "#000"
-  },
-  root: {
+  paperRoot: {
     marginTop: "40px",
     boxSizing: "border-box",
-    boxShadow: "none",
-    "&:nth-of-type(odd)": {
-      backgroundColor: "red"
-    }
+    boxShadow: "none"
   },
-  table: {
+  tableHead: {
+    backgroundColor: "#f7f8f9"
+  },
+  tableRoot: {
     tableLayout: "fixed",
     width: "auto",
     borderRadius: "8px",
-    overflow: "hidden",
+    position: "relative",
     "& th, & td": {
       borderBottom: "none"
+    },
+    "& tr:not(:last-child) td": {
+      "&::before": {
+        content: "''",
+        position: "absolute",
+        left: 0,
+        right: 0,
+        margin: "0 auto",
+        width: "90%",
+        height: "2px",
+        backgroundColor: "#f7f8f9"
+      }
+    },
+    "& tr:nth-of-type(even) td": {
+      "&::before": {
+        bottom: 2
+      }
+    },
+    "& tr:nth-of-type(odd) td": {
+      "&::before": {
+        bottom: -2
+      }
     }
   },
-  body: {
+  rootCellName: {
     maxWidth: "180px",
     paddingLeft: "5px",
     paddingRight: "0"
-  },
-  contentCeil: {
-    fontSize: "16px",
-    color: "#373737",
-    "& button": {
-      marginTop: "20px"
-    }
-  },
-  foo: {
-    backgroundColor: "green"
-  },
-  boo: {
-    color: "red"
   }
 };
 
@@ -78,9 +83,30 @@ const mockDataRows = [
   )
 ];
 
-const StyledTableCell = withStyles(() => ({
+const StyledTableRow = withStyles(() => ({
+  root: {
+    "& th": {
+      fontSize: "14px",
+      color: "#888888",
+      padding: "0 5px 0 0px"
+    },
+    "& td": {
+      height: "60px",
+      padding: "0",
+      position: "relative"
+    },
+    "&:nth-of-type(even)": {
+      backgroundColor: "#f7f8f9"
+    }
+  }
+}))(TableRow);
+
+const StyledTableHeader = withStyles(() => ({
+  root: {
+    position: "relative",
+    textAlign: "center"
+  },
   head: {
-    backgroundColor: "#f7f8f9",
     color: "#373737",
     fontSize: "16px",
     fontWeight: "600",
@@ -92,22 +118,16 @@ const StyledTableCell = withStyles(() => ({
   }
 }))(TableCell);
 
-const StyledTableRow = withStyles(() => ({
+const StyledTableCell = withStyles(() => ({
   root: {
-    "& th": {
-      fontSize: "14px",
-      color: "#888888",
-      padding: "0 5px 0 0px"
-    },
-    "& td": {
-      height: "60px",
-      padding: "0px 0px 0px 0px"
-    },
-    "&:nth-of-type(even)": {
-      backgroundColor: "#f7f8f9"
+    fontSize: "16px",
+    color: "#373737",
+    textAlign: "center",
+    "& button": {
+      marginTop: "20px"
     }
   }
-}))(TableRow);
+}))(TableCell);
 
 const StyledContainedButton = props => {
   const Button = withStyles(() => ({
@@ -136,21 +156,38 @@ const StyledContainedButton = props => {
   return <Button {...props} />;
 };
 
+const SelectedAccountContainer = () => {
+  return (
+    <Paper
+      style={{
+        position: "absolute",
+        left: "48%",
+        width: "200px",
+        top: "-15px",
+        height: "calc(100% + 30px)",
+        borderRadius: "8px",
+        boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
+        border: "solid 1px #e8e8e8"
+      }}
+    />
+  );
+};
+
 class TableCompare extends React.Component {
   render() {
     const { classes } = this.props;
 
     return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell style={{ width: 180 }} align="center">
-                {" "}
-              </StyledTableCell>
-              <StyledTableCell align="center">RAKstarter</StyledTableCell>
-              <StyledTableCell align="center">Current Account</StyledTableCell>
-              <StyledTableCell align="center">RAKelite</StyledTableCell>
+      <Paper classes={{ root: classes.paperRoot }}>
+        <Table classes={{ root: classes.tableRoot }}>
+          <SelectedAccountContainer />
+
+          <TableHead style={{ position: "relative" }}>
+            <TableRow classes={{ head: classes.tableHead }}>
+              <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
+              <StyledTableHeader>RAKstarter</StyledTableHeader>
+              <StyledTableHeader>Current Account</StyledTableHeader>
+              <StyledTableHeader>RAKelite</StyledTableHeader>
             </TableRow>
           </TableHead>
 
@@ -158,43 +195,32 @@ class TableCompare extends React.Component {
             {mockDataRows.map(row => (
               <StyledTableRow key={row.name}>
                 <TableCell
-                  className={classes.body}
+                  classes={{ root: classes.rootCellName }}
                   align="right"
                   component="th"
                   scope="row"
                 >
                   {row.name}
                 </TableCell>
-                <TableCell className={classes.contentCeil} align="center">
-                  {row.starter}
-                </TableCell>
-                <TableCell className={classes.contentCeil} align="center">
-                  {row.currentAccount}
-                </TableCell>
-                <TableCell className={classes.contentCeil} align="center">
-                  {row.elite}
-                </TableCell>
+                <StyledTableCell>{row.starter}</StyledTableCell>
+                <StyledTableCell>{row.currentAccount}</StyledTableCell>
+                <StyledTableCell>{row.elite}</StyledTableCell>
               </StyledTableRow>
             ))}
 
             <StyledTableRow>
-              <TableCell
-                className={classes.body}
-                align="right"
-                component="th"
-                scope="row"
-              >
+              <TableCell component="th" scope="row">
                 {" "}
               </TableCell>
-              <TableCell className={classes.contentCeil} align="center">
+              <StyledTableCell>
                 <StyledContainedButton label="Read more" />
-              </TableCell>
-              <TableCell className={classes.contentCeil} align="center">
+              </StyledTableCell>
+              <StyledTableCell>
                 <StyledContainedButton label="Read more" />
-              </TableCell>
-              <TableCell className={classes.contentCeil} align="center">
+              </StyledTableCell>
+              <StyledTableCell>
                 <StyledContainedButton label="Read more" />
-              </TableCell>
+              </StyledTableCell>
             </StyledTableRow>
           </TableBody>
         </Table>
