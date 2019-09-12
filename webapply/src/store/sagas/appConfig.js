@@ -8,6 +8,7 @@ import {
 } from "../actions/appConfig";
 import { getAppConfig } from "../../api/appConfig";
 import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
 
 function* receiveAppConfigSaga() {
   try {
@@ -23,7 +24,7 @@ function* updateFieldSaga(action) {
   const state = yield select();
   const config = state.appConfig;
   set(config, action.data.name, action.data.value);
-  yield put(updateProspect(config.prospect));
+  yield put(updateProspect(cloneDeep(config.prospect)));
 }
 
 export default function* appConfigSaga() {
