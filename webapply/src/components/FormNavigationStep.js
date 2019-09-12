@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "classnames";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import DoneIcon from "@material-ui/icons/Done";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -48,7 +48,7 @@ const FormNavigationLink = props => {
     <li className={activeClass}>
       {activeStep ? (
         <span className="circle">
-          <ArrowBackIcon className={classes.icon} />
+          <ArrowForwardIcon className={classes.icon} />
         </span>
       ) : filled ? (
         <span className="circle">
