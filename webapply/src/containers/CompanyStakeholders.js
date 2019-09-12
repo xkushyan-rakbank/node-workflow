@@ -4,8 +4,8 @@ import FilledStakeholderCard from "../components/FilledStakeholderCard";
 import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import Button from "@material-ui/core/Button/Button";
-import { ReactComponent as RightArrowWhite } from "./../assets/images/white.svg";
+// import Button from "@material-ui/core/Button/Button";
+// import { ReactComponent as RightArrowWhite } from "./../assets/images/white.svg";
 import routes from "../routes";
 
 const style = {
