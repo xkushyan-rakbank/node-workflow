@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "classnames";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import DoneIcon from "@material-ui/icons/Done";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -9,7 +9,6 @@ const style = {
     color: "#fff",
     listStyleType: "none",
     fontSize: "20px",
-    fontWeight: "600",
     lineHeight: "1.2",
     display: "flex",
     justifyContent: "flex-start",
@@ -45,12 +44,11 @@ const FormNavigationLink = props => {
     ? cx(classes.stepItem, classes.activeStepItem)
     : classes.stepItem;
 
-  // console.log(filled);
   return (
     <li className={activeClass}>
       {activeStep ? (
         <span className="circle">
-          <ArrowBackIcon className={classes.icon} />
+          <ArrowForwardIcon className={classes.icon} />
         </span>
       ) : filled ? (
         <span className="circle">

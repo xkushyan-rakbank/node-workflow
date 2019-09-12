@@ -17,7 +17,7 @@ const styles = {
 };
 
 const SubmitButton = props => {
-  const { disabled = false, classes, label = "Next Step" } = props;
+  const { disabled = false, classes, label = "Next Step", handleClick } = props;
   return (
     <Grid
       container
@@ -32,6 +32,7 @@ const SubmitButton = props => {
         disabled={disabled}
         label={label}
         className={classes.nextButton}
+        handleClick={handleClick}
       />
     </Grid>
   );

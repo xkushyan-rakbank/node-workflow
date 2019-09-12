@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 import SectionTitle from "./SectionTitle";
 import LinkButton from "./Buttons/LinkButton";
-import { stakeHoldersSteps } from "../constants";
 import FormWrapper from "./StakeholderStepForms/FormWrapper";
 
 const styles = {
@@ -55,9 +54,10 @@ const StepComponent = props => {
     step,
     index,
     clickHandler,
-    handleContinue
+    handleContinue,
+    steps
   } = props;
-  const Form = stakeHoldersSteps[step - 1].component;
+  const Form = steps[step - 1].component;
   const renderTitle = () => {
     if (active) {
       return (

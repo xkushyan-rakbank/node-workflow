@@ -6,6 +6,9 @@ import CountryOfResidence from "./components/StakeholderStepForms/CountryOfResid
 import AccountDetails from "./components/ServicesStepForms/AccountDetails";
 import SigningPreferences from "./components/ServicesStepForms/SigningPreferences";
 import Channels from "./components/ServicesStepForms/Channels";
+import CompanyDetails from "./components/AboutCompanyStepForms/CompanyDetails";
+import Industry from "./components/AboutCompanyStepForms/Industry";
+import LicenseInformation from "./components/AboutCompanyStepForms/LicenseInformation";
 import isUndefined from "lodash/isUndefined";
 
 import routes from "./routes";
@@ -35,6 +38,20 @@ export const stakeHoldersSteps = [
   }
 ];
 
+export const aboutCompanySteps = [
+  {
+    step: 1,
+    title: "Company Details",
+    component: CompanyDetails
+  },
+  {
+    step: 2,
+    title: "Industry",
+    component: Industry
+  },
+  { step: 3, title: "Lisence Information", component: LicenseInformation }
+];
+
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
   { value: "AuthorityType2", label: "AuthorityType2" }
@@ -43,11 +60,6 @@ export const authorityType = [
 export const countryOfResidence = [
   { value: "Country Of Residence1", label: "Country Of Residence1" },
   { value: "Country Of Residence2", label: "Country Of Residence2" }
-];
-
-export const publicPositions = [
-  { value: "Never held", label: "Never held" },
-  { value: "Yes", label: "Yes" }
 ];
 
 export const defineInputFormatByConfig = fieldConfig => {

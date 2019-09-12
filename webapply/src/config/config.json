@@ -767,32 +767,33 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "cur1",
-          "key": "cur1",
-          "value": "currency 1",
-          "displayText": "currency 1"
+          "code": "AED",
+          "key": "AED",
+          "value": "AED",
+          "displayText": "AED"
         },
         {
-          "code": "cur2",
-          "key": "cur2",
-          "value": "currency 2",
-          "displayText": "currency 2"
+          "code": "USD",
+          "key": "USD",
+          "value": "USD",
+          "displayText": "USD"
         },
         {
-          "code": "cur3",
-          "key": "cur3",
-          "value": "currency 3",
-          "displayText": "currency 3"
+          "code": "EUR",
+          "key": "EUR",
+          "value": "EUR",
+          "displayText": "EUR"
         },
         {
-          "code": "cur4",
-          "key": "cur4",
-          "value": "currency 4",
-          "displayText": "currency 4"
+          "code": "GBP",
+          "key": "GBP",
+          "value": "GBP",
+          "displayText": "GBP"
         }
       ],
       "default": "AED",
-      "description": "Multi-selection of currency"
+      "description": "Multi-selection of currency",
+      "title": "You will get one RAKstarter account number for each currency you select."
     },
     "Acnt.accountPurpose": {
       "criteria": {
@@ -1293,6 +1294,7 @@
         "invalid": "Field is invalid.",
         "multilineInvalid": null
       },
+      "title": "This should be the same as in your Trade License",
       "applicable": null,
       "label": "Company Name",
       "placeholder": null,
@@ -1537,6 +1539,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
+      "title": "This should be the same as your TRN number of UAE",
       "label": "VAT registration number (Optional)",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.vatRegistrationNumber",
@@ -2314,7 +2317,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "primaryMobileNo",
+      "label": "Primary mobile nr",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryMobileNo",
       "name": "prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryMobileNo",
@@ -2342,10 +2345,36 @@
       "path": "$.prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryMobCountryCode",
       "name": "prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryMobCountryCode",
       "required": false,
-      "datalistId": null,
       "readonlyFor": [],
       "maxlength": "60",
-      "pattern": "^[0-9]*$"
+      "pattern": "^[0-9]*$",
+      "datalistId": "CountryCode",
+      "datalist": [
+        {
+          "code": "USA",
+          "key": "USA",
+          "value": "USA",
+          "displayText": "+791"
+        },
+        {
+          "code": "EUR",
+          "key": "EUR",
+          "value": "EUR",
+          "displayText": "+992"
+        },
+        {
+          "code": "UA",
+          "key": "UA",
+          "value": "UA",
+          "displayText": "+380"
+        },
+        {
+          "code": "GB",
+          "key": "GB",
+          "value": "GB",
+          "displayText": "+391"
+        }
+      ]
     },
     "OrgContReconf.primaryPhoneNo": {
       "criteria": {
@@ -2360,7 +2389,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "primary Mobile No",
+      "label": "Landline phone nr (optional)",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryPhoneNo",
       "name": "prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryPhoneNo",
@@ -2388,10 +2417,36 @@
       "path": "$.prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryPhoneCountryCode",
       "name": "prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryPhoneCountryCode",
       "required": false,
-      "datalistId": null,
       "readonlyFor": [],
       "maxlength": "60",
-      "pattern": "^[0-9]*$"
+      "pattern": "^[0-9]*$",
+      "datalistId": "CountryCode",
+      "datalist": [
+        {
+          "code": "USA",
+          "key": "USA",
+          "value": "USA",
+          "displayText": "+791"
+        },
+        {
+          "code": "EUR",
+          "key": "EUR",
+          "value": "EUR",
+          "displayText": "+992"
+        },
+        {
+          "code": "UA",
+          "key": "UA",
+          "value": "UA",
+          "displayText": "+380"
+        },
+        {
+          "code": "GB",
+          "key": "GB",
+          "value": "GB",
+          "displayText": "+391"
+        }
+      ]
     },
     "Okyc.businessUnit": {
       "criteria": {
@@ -2552,6 +2607,8 @@
       "required": true,
       "datalistId": null,
       "readonlyFor": [],
+      "format": "amount",
+      "min": "0",
       "pattern": "^[0-9]*$"
     },
     "OkycTopc.name": {
@@ -2755,11 +2812,11 @@
       },
       "applicable": null,
       "label": "Industry",
-      "placeholder": "Industry",
+      "placeholder": "",
       "path": "$.prospect.orgKYCDetails.industryMultiSelect[*].industry[*]",
       "name": "prospect.orgKYCDetails.industryMultiSelect[*].industry[*]",
       "required": false,
-      "datalistId": null,
+      "datalistId": "IndustryList",
       "readonlyFor": [],
       "datalist": [
         {
@@ -2812,8 +2869,40 @@
       "path": "$.prospect.orgKYCDetails.industryMultiSelect[*].subCategory[*]",
       "name": "prospect.orgKYCDetails.industryMultiSelect[*].subCategory[*]",
       "required": false,
-      "datalistId": "industrySubCategory",
-      "readonlyFor": []
+      "datalistId": "IndustrySubCategory",
+      "readonlyFor": [],
+      "datalist": [
+        {
+          "code": "Energy Equipment & Services",
+          "key": "Energy Equipment & Services",
+          "value": "Energy Equipment & Services",
+          "displayText": "Sub Energy Equipment & Services"
+        },
+        {
+          "code": "OGC&F",
+          "key": "OGC&F",
+          "value": "OGC&F",
+          "displayText": "Sub Oil, Gas & Consumable Fuels"
+        },
+        {
+          "code": "chemicals",
+          "key": "chemicals",
+          "value": "chemicals",
+          "displayText": "Sub Chemicals"
+        },
+        {
+          "code": "M&M",
+          "key": "M&M",
+          "value": "M&M",
+          "displayText": "Sub Metals & Mining"
+        },
+        {
+          "code": "P&PP",
+          "key": "P&PP",
+          "value": "P&PP",
+          "displayText": "Sub Paper & Forest Products"
+        }
+      ]
     },
     "OkycAntTxnTotCashCr.amountInFigures": {
       "criteria": {
@@ -4595,13 +4684,13 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": " ",
+      "label": "",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].contactDetails.primaryPhoneCountryCode",
       "name": "prospect.signatoryInfo[*].contactDetails.primaryPhoneCountryCode",
       "required": false,
-      "datalistId": "CountryCode",
       "readonlyFor": [],
+      "datalistId": "CountryCode",
       "datalist": [
         {
           "code": "USA",

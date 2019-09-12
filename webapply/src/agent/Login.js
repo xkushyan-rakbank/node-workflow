@@ -3,9 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
-import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import PureSelect from "../components/InputField/PureSelect";
 import validateForm from "../utils/validate";
 import Password from "../components/InputField/Password";
 

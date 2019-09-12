@@ -7,7 +7,7 @@ const styles = {
     width: "180px",
     height: "40px",
     borderRadius: "21px ",
-    backgroundColor: "#16216a",
+    backgroundColor: "#000",
     fontSize: "18px",
     lineHeight: "normal",
     letterSpacing: "normal",

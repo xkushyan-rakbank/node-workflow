@@ -26,7 +26,7 @@ class FinalQuestions extends React.Component {
 
   render() {
     return (
-      <div className="mainContainer">
+      <>
         <h2>Final questions</h2>
         <p className="formDescription">
           This final section is required by law, to help us understand the
@@ -60,7 +60,7 @@ class FinalQuestions extends React.Component {
             <SubmitButton />
           </Link>
         </div>
-      </div>
+      </>
     );
   }
 }
