@@ -8,15 +8,14 @@ const style = {
     flex: "1 1",
     justifyContent: "center",
     alignItems: "center",
+    minWidth: props => (props.minWidth ? props.minWidth : "0"),
+    margin: "10px",
     padding: "27px 20px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
-    textAlign: "center",
-    "&:not(:first-child)": {
-      marginLeft: "20px"
-    }
+    textAlign: "center"
   },
   iconCardTitle: {
     paddingBottom: "20px",

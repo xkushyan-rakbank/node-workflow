@@ -1,13 +1,10 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DoneIcon from "@material-ui/icons/Done";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
+import CommonQuestions from "./CommonQuestions";
 
 const style = {
   stepWrapper: {
@@ -18,9 +15,12 @@ const style = {
     color: "green"
   },
   stepAnswers: {
-    borderRadius: "8px"
+    borderRadius: "8px",
+    overflow: "hidden"
   },
   stepAnswersTitle: {
+    fontSize: "16px",
+    fontWeight: "600",
     padding: "18px 24px",
     backgroundColor: "rgba(239, 242, 244, .5)"
   },
@@ -37,16 +37,16 @@ const ApplicationOverviewSecondStep = ({ classes }) => (
     />
     <div className={classes.stepCardsWrapper}>
       <IconCardsContainer>
-        <IconCardItem text="Company Trade Lisence">
+        <IconCardItem minWidth="100px" text="Company Trade License">
           <DoneIcon className={classes.icon} />
         </IconCardItem>
-        <IconCardItem text="Passport for all signatories">
+        <IconCardItem minWidth="100px" text="Passport for all signatories">
           <DoneIcon className={classes.icon} />
         </IconCardItem>
-        <IconCardItem text="Emirates ID for all signatories">
+        <IconCardItem minWidth="100px" text="Emirates ID for all signatories">
           <DoneIcon className={classes.icon} />
         </IconCardItem>
-        <IconCardItem text="MoA for all signatories*">
+        <IconCardItem minWidth="100px" text="MoA for all signatories*">
           <DoneIcon className={classes.icon} />
         </IconCardItem>
       </IconCardsContainer>
@@ -56,62 +56,7 @@ const ApplicationOverviewSecondStep = ({ classes }) => (
       <div className={classes.stepAnswersTitle}>
         Got more questions? We got some answers
       </div>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className={classes.heading}>
-            Can I come back later and complete the application?
-          </div>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div>Some information</div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className={classes.heading}>
-            How long will it take to get the account?
-          </div>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div>Some information</div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className={classes.heading}>
-            What if I need help with some fields?
-          </div>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div>Some information</div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div className={classes.heading}>
-            How do I check the status on my submitted application?
-          </div>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div>Some information</div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+      <CommonQuestions />
     </div>
   </div>
 );
