@@ -3,8 +3,11 @@ import Grid from "@material-ui/core/Grid";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import DatePicker from "../InputField/DatePicker";
+import InfoTitle from "../InfoTitle";
 
 const LicenseInformation = () => {
+  const maxYearsInBusiness = new Date().getFullYear();
+
   return (
     <>
       <Grid container spacing={3}>
@@ -12,7 +15,7 @@ const LicenseInformation = () => {
           <TextInput id="Org.licenseNumber" />
         </Grid>
         <Grid item md={6} sm={12}>
-          <DatePicker id="Org.licenseIssueDate" />
+          <DatePicker id="Org.licenseIssueDate" disableFuture={true} />
         </Grid>
       </Grid>
 
@@ -27,12 +30,13 @@ const LicenseInformation = () => {
 
       <Grid container spacing={3}>
         <Grid item md={6} sm={12}>
-          <DatePicker id="Org.dateOfIncorporation" />
+          <DatePicker id="Org.dateOfIncorporation" disableFuture={true} />
         </Grid>
         <Grid item md={6} sm={12}>
-          <TextInput id="Okyc.yearsInBusiness" />
+          <TextInput id="Okyc.yearsInBusiness" max={maxYearsInBusiness} />
         </Grid>
       </Grid>
+      <InfoTitle title="This should be the same as in your Trade License" />
     </>
   );
 };

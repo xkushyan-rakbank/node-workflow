@@ -22,19 +22,20 @@ const styles = {
     position: "relative",
     "&::after": {
       content: "''",
-      position: " absolute",
-      width: " 1px",
-      height: " 100%",
-      backgroundColor: " #ddd",
-      right: " 56px",
-      zIndex: " -1"
+      display: "block",
+      position: "absolute",
+      width: "1px",
+      height: "100%",
+      backgroundColor: "#ddd",
+      right: "56px",
+      zIndex: "-1"
     },
     "& fieldset": {
       borderRadius: "8px !important",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
     },
     "& svg": {
-      fill: "#16216a",
+      fill: "#373737",
       fontSize: "16px"
     },
     "& button": {
@@ -54,7 +55,7 @@ class DatePicker extends React.Component {
   inputProps = {
     ref: this.inputRef,
     pattern:
-      "^(0[1-9]|1[0-2])\\/(((0|1)[0-9]|2[0-9]|3[0-1])\\/((19|20)\\d\\d))$"
+      "^(0[1-9]|1[0-2])\\/(((0|1)[0-9]|2[0-9]|3[0-1])\\/((1|2)\\d\\d\\d))$"
   };
 
   resetFieldErrors = () => {
@@ -98,7 +99,15 @@ class DatePicker extends React.Component {
   };
 
   render() {
-    const { value, classes, config, id, name } = this.props;
+    const {
+      value,
+      classes,
+      config,
+      id,
+      name,
+      disableFuture,
+      minDate = new Date("01-01-1000")
+    } = this.props;
     const { fieldErrors } = this.state;
     const isError = !isEmpty(fieldErrors);
     const attrs = fieldAttr(id, config, name);
@@ -110,9 +119,11 @@ class DatePicker extends React.Component {
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               autoOk
+              minDate={minDate}
+              disableFuture={disableFuture}
               name={config.name}
               label={config.label || ""}
-              invalidDateMessage={""}
+              invalidDateMessage={" "}
               disableToolbar
               margin="normal"
               variant="inline"

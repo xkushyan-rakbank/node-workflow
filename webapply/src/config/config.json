@@ -1294,6 +1294,7 @@
         "invalid": "Field is invalid.",
         "multilineInvalid": null
       },
+      "title": "This should be the same as in your Trade License",
       "applicable": null,
       "label": "Company Name",
       "placeholder": null,
@@ -1538,6 +1539,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
+      "title": "This should be the same as your TRN number of UAE",
       "label": "VAT registration number (Optional)",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.vatRegistrationNumber",
@@ -2605,6 +2607,8 @@
       "required": true,
       "datalistId": null,
       "readonlyFor": [],
+      "format": "amount",
+      "min": "0",
       "pattern": "^[0-9]*$"
     },
     "OkycTopc.name": {
@@ -2808,11 +2812,11 @@
       },
       "applicable": null,
       "label": "Industry",
-      "placeholder": "Industry",
+      "placeholder": "",
       "path": "$.prospect.orgKYCDetails.industryMultiSelect[*].industry[*]",
       "name": "prospect.orgKYCDetails.industryMultiSelect[*].industry[*]",
       "required": false,
-      "datalistId": null,
+      "datalistId": "IndustryList",
       "readonlyFor": [],
       "datalist": [
         {
@@ -2865,8 +2869,40 @@
       "path": "$.prospect.orgKYCDetails.industryMultiSelect[*].subCategory[*]",
       "name": "prospect.orgKYCDetails.industryMultiSelect[*].subCategory[*]",
       "required": false,
-      "datalistId": "industrySubCategory",
-      "readonlyFor": []
+      "datalistId": "IndustrySubCategory",
+      "readonlyFor": [],
+      "datalist": [
+        {
+          "code": "Energy Equipment & Services",
+          "key": "Energy Equipment & Services",
+          "value": "Energy Equipment & Services",
+          "displayText": "Sub Energy Equipment & Services"
+        },
+        {
+          "code": "OGC&F",
+          "key": "OGC&F",
+          "value": "OGC&F",
+          "displayText": "Sub Oil, Gas & Consumable Fuels"
+        },
+        {
+          "code": "chemicals",
+          "key": "chemicals",
+          "value": "chemicals",
+          "displayText": "Sub Chemicals"
+        },
+        {
+          "code": "M&M",
+          "key": "M&M",
+          "value": "M&M",
+          "displayText": "Sub Metals & Mining"
+        },
+        {
+          "code": "P&PP",
+          "key": "P&PP",
+          "value": "P&PP",
+          "displayText": "Sub Paper & Forest Products"
+        }
+      ]
     },
     "OkycAntTxnTotCashCr.amountInFigures": {
       "criteria": {
