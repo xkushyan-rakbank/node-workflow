@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
@@ -7,6 +8,7 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
+import { updateField } from "../../store/actions/appConfig";
 
 const style = {
   title: {
@@ -56,6 +58,59 @@ class CompanyNetworkForm extends Component {
       isDontHaveInsideSubsidiary: false,
       isDontHaveOutsideSubsidiary: false
     };
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevState.isDontHaveOtherBankAccounts !==
+        this.state.isDontHaveOtherBankAccounts &&
+      this.state.isDontHaveOtherBankAccounts
+    ) {
+      this.resetBankAccountValues();
+    }
+    if (
+      prevState.isDontHaveInsideSubsidiary !==
+        this.state.isDontHaveInsideSubsidiary &&
+      this.state.isDontHaveInsideSubsidiary
+    ) {
+      this.resetInsideSubsidiaryValues();
+    }
+    if (
+      prevState.isDontHaveOutsideSubsidiary !==
+        this.state.isDontHaveOutsideSubsidiary &&
+      this.state.isDontHaveOutsideSubsidiary
+    ) {
+      this.resetOutsideSubsidiaryValues();
+    }
+  }
+
+  resetBankAccountValues() {
+    this.setState({ anotherBankCount: 1 });
+    this.props.updateField({
+      name:
+        "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails",
+      value: [{ bankName: "" }]
+    });
+  }
+
+  resetInsideSubsidiaryValues() {
+    if (this.state.insideSubsidiaryCount > 1) {
+      this.setState({ insideSubsidiaryCount: 1 });
+    }
+    this.props.updateField({
+      name: "prospect.orgKYCDetails.entitiesInUAE",
+      value: [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
+    });
+  }
+
+  resetOutsideSubsidiaryValues() {
+    if (this.state.outsideSubsidiaryCount > 1) {
+      this.setState({ outsideSubsidiaryCount: 1 });
+    }
+    this.props.updateField({
+      name: "prospect.orgKYCDetails.entitiesOutsideUAE",
+      value: [{ tradeLicenseNo: "", companyName: "" }]
+    });
   }
 
   updateCountedStateValue = (key, increment = 1) => {
@@ -113,6 +168,9 @@ class CompanyNetworkForm extends Component {
                     key={index}
                     id="OkycObriObd.bankName"
                     indexes={[index]}
+                    required={
+                      index === 0 && !this.state.isDontHaveOtherBankAccounts
+                    }
                     disabled={this.state.isDontHaveOtherBankAccounts}
                   />
                 );
@@ -120,15 +178,14 @@ class CompanyNetworkForm extends Component {
             )}
           </Grid>
         </Grid>
-        {!this.state.isDontHaveOtherBankAccounts && (
-          <AddButton
-            onClick={this.handleAddAnotherBank}
-            title="Add another bank"
-            disabled={
-              this.state.anotherBankCount >= this.limits.anotherBankCount
-            }
-          />
-        )}
+        <AddButton
+          onClick={this.handleAddAnotherBank}
+          title="Add another bank"
+          disabled={
+            this.state.anotherBankCount >= this.limits.anotherBankCount ||
+            this.state.isDontHaveOtherBankAccounts
+          }
+        />
 
         <div className={this.props.classes.divider} />
 
@@ -157,6 +214,9 @@ class CompanyNetworkForm extends Component {
                       key={index}
                       id="OkycEntIn.companyName"
                       indexes={[index]}
+                      required={
+                        index === 0 && !this.state.isDontHaveInsideSubsidiary
+                      }
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
                   </Grid>
@@ -165,6 +225,9 @@ class CompanyNetworkForm extends Component {
                       key={index}
                       id="OkycEntIn.tradeLicenseNo"
                       indexes={[index]}
+                      required={
+                        index === 0 && !this.state.isDontHaveInsideSubsidiary
+                      }
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
                   </Grid>
@@ -173,6 +236,9 @@ class CompanyNetworkForm extends Component {
                       key={index}
                       id="OkycEntIn.emirate"
                       indexes={[index]}
+                      required={
+                        index === 0 && !this.state.isDontHaveInsideSubsidiary
+                      }
                       disabled={this.state.isDontHaveInsideSubsidiary}
                     />
                   </Grid>
@@ -218,6 +284,9 @@ class CompanyNetworkForm extends Component {
                       key={index}
                       id="OkycEntOut.companyName"
                       indexes={[index]}
+                      required={
+                        index === 0 && !this.state.isDontHaveOutsideSubsidiary
+                      }
                       disabled={this.state.isDontHaveOutsideSubsidiary}
                     />
                   </Grid>
@@ -226,6 +295,9 @@ class CompanyNetworkForm extends Component {
                       key={index}
                       id="OkycEntOut.country"
                       indexes={[index]}
+                      required={
+                        index === 0 && !this.state.isDontHaveOutsideSubsidiary
+                      }
                       disabled={this.state.isDontHaveOutsideSubsidiary}
                     />
                   </Grid>
@@ -253,4 +325,13 @@ class CompanyNetworkForm extends Component {
   }
 }
 
-export default withStyles(style)(CompanyNetworkForm);
+const mapDispatchToProps = {
+  updateField
+};
+
+export default withStyles(style)(
+  connect(
+    null,
+    mapDispatchToProps
+  )(CompanyNetworkForm)
+);
