@@ -13,9 +13,6 @@ import { connect } from "react-redux";
 import InfoTitle from "../InfoTitle";
 
 const style = {
-  formWrapper: {
-    margin: "-90px 0 0"
-  },
   checkboxesWrapper: {
     marginBottom: "30px"
   },
