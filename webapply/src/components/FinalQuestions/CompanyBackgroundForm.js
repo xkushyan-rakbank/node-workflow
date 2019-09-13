@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
@@ -7,6 +8,8 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import AddButton from "../Buttons/AddButton";
+import { updateField } from "../../store/actions/appConfig";
+import { getOrgKYCDetails } from "../../store/selectors/appConfig";
 
 const style = {
   title: {
@@ -55,6 +58,33 @@ class CompanyBackgroundForm extends Component {
       isDontTradingGoods: false,
       isDontHaveSuppliers: false
     };
+
+    this.topOriginGoodsCountriesPath =
+      "prospect.orgKYCDetails.topOriginGoodsCountries";
+    this.topOriginGoodsCountriesDefaultValue = [""];
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevState.isDontTradingGoods !== this.state.isDontTradingGoods &&
+      this.state.isDontTradingGoods
+    ) {
+      this.setState({ countryOfOriginCount: 1 });
+      this.props.updateField({
+        name: this.topOriginGoodsCountriesPath,
+        value: this.topOriginGoodsCountriesDefaultValue
+      });
+    }
+    if (
+      prevState.isDontHaveSuppliers !== this.state.isDontHaveSuppliers &&
+      this.state.isDontHaveSuppliers
+    ) {
+      this.setState({ supplierCount: 1 });
+      this.props.updateField({
+        name: "prospect.orgKYCDetails.topSuppliers",
+        value: [{ name: "", country: "" }]
+      });
+    }
   }
 
   updateCountedStateValue = (key, increment = 1) => {
@@ -217,4 +247,17 @@ class CompanyBackgroundForm extends Component {
   }
 }
 
-export default withStyles(style)(CompanyBackgroundForm);
+const mapStateToProps = state => ({
+  orgKYCDetails: getOrgKYCDetails(state)
+});
+
+const mapDispatchToProps = {
+  updateField
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(CompanyBackgroundForm)
+);
