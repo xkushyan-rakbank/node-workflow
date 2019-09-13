@@ -1,21 +1,25 @@
 import React from "react";
 import cx from "classnames";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import TextField from "@material-ui/core/TextField";
-import { connect } from "react-redux";
-import { compose } from "recompose";
-import get from "lodash/get";
+import isNumber from "lodash/isNumber";
 import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";
 import isBoolean from "lodash/isBoolean";
+import isNil from "lodash/isNil";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
 import { validate } from "./../../utils/validate";
-import combineNestingName from "../../utils/combineNestingName";
+import {
+  getFieldConfigById,
+  getInputNameById,
+  getInputValueById
+} from "../../store/selectors/appConfig";
 
 const styles = {
   textField: {
@@ -76,15 +80,28 @@ class Input extends React.Component {
   };
 
   state = {
-    fieldErrors: {}
+    value: this.getInitValue(),
+    fieldErrors: {},
+    isFocused: false,
+    isDirty: false
   };
+
+  getInitValue() {
+    if (this.props.value || isNumber(this.props.value)) {
+      return this.props.value;
+    }
+    if (this.props.defaultValue || isNumber(this.props.defaultValue)) {
+      return this.props.defaultValue;
+    }
+    return "";
+  }
 
   inputRef = React.createRef();
 
   componentDidMount() {
     if (
       !isUndefined(this.props.defaultValue) &&
-      (isUndefined(this.props.value) || this.props.value === "")
+      (isUndefined(this.state.value) || this.state.value === "")
     ) {
       this.props.updateField({
         value: this.props.defaultValue,
@@ -93,38 +110,48 @@ class Input extends React.Component {
     }
   }
 
-  setInputValue(value) {
-    if (this.inputRef.current) {
-      this.inputRef.current.value = value;
-    }
+  handleChange = event => {
+    this.setState({ value: event.target.value });
+  };
+
+  resetErrorState() {
+    this.setState({ fieldErrors: {} });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.required !== this.props.required) {
-      this.setState({ fieldErrors: {} });
+      this.resetErrorState();
     }
-    if (prevProps.value !== this.props.value) {
-      this.setInputValue(this.props.value);
+    if (prevProps.value !== this.props.value && !isNil(this.props.value)) {
+      this.setState(() => ({ value: this.props.value }));
+      if (this.state.isDirty) {
+        this.fieldValidation();
+      }
+    }
+    if (this.isPropAttrChanged(prevProps) && this.state.isDirty) {
+      this.fieldValidation();
     }
   }
 
-  updateField = event => {
+  isPropAttrChanged(prevProps) {
+    return ["max", "min", "required", "disabled"].some(
+      attr => prevProps[attr] !== this.props[attr]
+    );
+  }
+
+  updateField = () => {
     const { name } = this.props;
-    const value = event.target.value.trim();
+    const value = this.state.value;
     if (value !== this.props.value) {
       this.props.updateField({ value, name });
     }
   };
 
-  fieldValidation = event => {
-    const field = event.target;
+  fieldValidation = () => {
+    const field = this.inputRef.current;
     const config = {
       ...this.props.config
     };
-
-    if (isBoolean(this.props.required)) {
-      config.required = this.props.required;
-    }
 
     this.setState({
       fieldErrors: validate(field, config)
@@ -133,21 +160,28 @@ class Input extends React.Component {
     return field.validity.valid;
   };
 
-  handleOnBlur = event => {
-    const isValid = this.fieldValidation(event);
+  handleOnBlur = () => {
+    this.setState({
+      isFocused: false,
+      isDirty: true
+    });
 
-    if (isValid) {
-      this.updateField(event);
+    if (this.fieldValidation()) {
+      this.updateField();
     }
   };
 
+  handleFocus = () => {
+    this.setState({ isFocused: true });
+    this.resetErrorState();
+  };
+
   composeFieldAttrWithPropAttr(inputProps) {
+    const { disabled, required, max, min } = this.props;
     const props = {
       ...inputProps,
       ref: this.inputRef
     };
-
-    const { disabled, required, max, min } = this.props;
 
     if (isBoolean(disabled)) {
       props.disabled = disabled;
@@ -167,13 +201,21 @@ class Input extends React.Component {
 
   getCustomValidationMessage() {
     return this.inputRef.current
-      ? this.props.customValidationMessage(
-          this.inputRef.current,
-          this.state.fieldErrors,
-          this.props.config,
-          this.props.name
-        )
+      ? this.props.customValidationMessage({
+          inputRef: this.inputRef.current,
+          fieldErrors: this.state.fieldErrors,
+          fieldConfig: this.props.config,
+          fieldName: this.props.name,
+          isFocused: this.state.isFocused,
+          isDirty: this.state.isDirty
+        })
       : null;
+  }
+
+  isLabelShrink() {
+    return (
+      this.state.isFocused || !!this.state.value || isNumber(this.state.value)
+    );
   }
 
   render() {
@@ -215,14 +257,18 @@ class Input extends React.Component {
             {select}
             <FormControl className="formControl">
               <TextField
+                value={this.state.value}
+                onChange={this.handleChange}
                 InputProps={{
                   ...InputProps,
                   inputProps
                 }}
                 placeholder={placeholder}
-                InputLabelProps={InputLabelProps}
+                InputLabelProps={{
+                  shrink: this.isLabelShrink(),
+                  ...InputLabelProps
+                }}
                 disabled={disabled}
-                defaultValue={this.props.defaultValue || this.props.value}
                 variant="outlined"
                 label={config.label}
                 className={cx(classes.textField, className, {
@@ -230,7 +276,7 @@ class Input extends React.Component {
                 })}
                 onBlur={this.handleOnBlur}
                 error={isError}
-                onFocus={() => this.setState({ fieldErrors: {} })}
+                onFocus={this.handleFocus}
               />
 
               {!!config.title && <InfoTitle title={config.title} />}
@@ -251,30 +297,19 @@ class Input extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id, indexes }) => {
-  const config = state.appConfig.uiConfig[id] || {};
-  const name =
-    config.name && config.name.search(/\*/)
-      ? combineNestingName(config.name, indexes)
-      : config.name;
-
-  const value = get(state.appConfig, name);
-
-  return {
-    config,
-    value,
-    name
-  };
-};
+const mapStateToProps = (state, { id, indexes }) => ({
+  config: getFieldConfigById(state, id),
+  value: getInputValueById(state, id, indexes),
+  name: getInputNameById(state, id, indexes)
+});
 
 const mapDispatchToProps = {
   updateField
 };
 
-export default compose(
-  withStyles(styles),
+export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )
-)(Input);
+  )(Input)
+);

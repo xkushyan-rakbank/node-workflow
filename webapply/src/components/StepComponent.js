@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import DoneIcon from "@material-ui/icons/Done";
+import DoneIcon from "./DoneIcon";
 import SectionTitle from "./SectionTitle";
 import LinkButton from "./Buttons/LinkButton";
 import FormWrapper from "./StakeholderStepForms/FormWrapper";
@@ -19,20 +19,6 @@ const styles = {
   },
   linkTitle: {
     padding: 0
-  },
-  iconWrapper: {
-    border: "1.5px solid #517085",
-    borderRadius: "50%",
-    width: "22px",
-    fontSize: "22px",
-    color: "#517085",
-    height: "22px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  doneIcon: {
-    fontSize: "13px"
   },
   filledTitle: {
     display: "flex",
@@ -71,9 +57,7 @@ const StepComponent = props => {
     return filled ? (
       <div className={classes.filledTitle}>
         <LinkButton title={title} className={classes.linkTitle} />
-        <div className={classes.iconWrapper}>
-          <DoneIcon className={classes.doneIcon} />
-        </div>
+        <DoneIcon />
       </div>
     ) : (
       <div className={classes.disabledStep}>{title}</div>

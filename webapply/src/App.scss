@@ -13,7 +13,6 @@ body,
 #root {
   height: 100%;
   min-height: 100%;
-  min-width: 767px;
 }
 
 .formDescription {
@@ -147,6 +146,6 @@ input[type="number"]::-webkit-outer-spin-button {
   grid-template-columns: 1fr 1fr;
 }
 
-.MuiRadio-root {
-  color: #517085;
+.centeredText {
+  text-align: center;
 }

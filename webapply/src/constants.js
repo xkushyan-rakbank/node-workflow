@@ -66,6 +66,8 @@ export const defineInputFormatByConfig = fieldConfig => {
   switch (fieldConfig.format) {
     case "amount":
       return "number";
+    case "email":
+      return "email";
     case "date":
       return "text";
     default:

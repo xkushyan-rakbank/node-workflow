@@ -6,7 +6,11 @@ import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
-import { getInputValueById } from "../../store/selectors/appConfig";
+import {
+  getInputNameById,
+  getInputValueById
+} from "../../store/selectors/appConfig";
+import { updateField } from "../../store/actions/appConfig";
 
 const style = {
   title: {
@@ -43,9 +47,25 @@ class SignatoryWealthForm extends Component {
     index: 0
   };
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevProps.soursOfWealth !== this.props.soursOfWealth &&
+      !this.isOtherSourceOfWealthSelected()
+    ) {
+      this.updateOtherWealthTypeValue("");
+    }
+  }
+
   isOtherSourceOfWealthSelected() {
     // temp - work only on WireMock data
     return this.props.soursOfWealth === OTHER_SOURCE_OF_WEALTH;
+  }
+
+  updateOtherWealthTypeValue(value) {
+    this.props.updateField({
+      value: value,
+      name: this.props.otherWealthTypeInputName
+    });
   }
 
   handleSubmit = event => {
@@ -87,7 +107,19 @@ class SignatoryWealthForm extends Component {
 }
 
 const mapStateToProps = (state, { index }) => ({
-  soursOfWealth: getInputValueById(state, "SigKycdWlth.wealthType", [index])
+  soursOfWealth: getInputValueById(state, "SigKycdWlth.wealthType", [index]),
+  otherWealthTypeInputName: getInputNameById(state, "SigKycdWlth.others", [
+    index
+  ])
 });
 
-export default withStyles(style)(connect(mapStateToProps)(SignatoryWealthForm));
+const mapDispatchToProps = {
+  updateField
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SignatoryWealthForm)
+);

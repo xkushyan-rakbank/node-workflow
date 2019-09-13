@@ -830,7 +830,8 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "I want debit cards for all signatories",
+      "title": "Debit cards will be issued for eligible AED accounts only",
       "placeholder": null,
       "path": "$.prospect.accountInfo[*].debitCardApplied",
       "name": "prospect.accountInfo[*].debitCardApplied",
@@ -853,7 +854,8 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "I want a cheque book for the company",
+      "title": "Cheque book will be issued for eligible AED accounts only",
       "placeholder": null,
       "path": "$.prospect.accountInfo[*].chequeBookApplied",
       "name": "prospect.accountInfo[*].chequeBookApplied",
@@ -876,7 +878,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "I want online bank statements",
       "placeholder": null,
       "path": "$.prospect.accountInfo[*].eStatements",
       "name": "prospect.accountInfo[*].eStatements",
@@ -898,7 +900,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "I want paper statements (monthly charges apply)",
       "placeholder": null,
       "path": "$.prospect.accountInfo[*].mailStatements",
       "name": "prospect.accountInfo[*].mailStatements",
@@ -1940,7 +1942,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Mobile NO",
+      "label": "Mobile number",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.contactDetails.primaryMobileNo",
       "name": "prospect.organizationInfo.contactDetails.primaryMobileNo",
@@ -1963,15 +1965,41 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "+971",
+      "label": " ",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.contactDetails.primaryMobCountryCode",
       "name": "prospect.organizationInfo.contactDetails.primaryMobCountryCode",
       "required": true,
-      "datalistId": null,
+      "datalistId": "CountryCode",
       "readonlyFor": [],
       "maxlength": "60",
-      "pattern": "^[0-9]*$"
+      "pattern": "^[0-9]*$",
+      "datalist": [
+        {
+          "code": "USA",
+          "key": "USA",
+          "value": "USA",
+          "displayText": "+791"
+        },
+        {
+          "code": "EUR",
+          "key": "EUR",
+          "value": "EUR",
+          "displayText": "+992"
+        },
+        {
+          "code": "UA",
+          "key": "UA",
+          "value": "UA",
+          "displayText": "+380"
+        },
+        {
+          "code": "GB",
+          "key": "GB",
+          "value": "GB",
+          "displayText": "+391"
+        }
+      ]
     },
     "OrgCont.primaryEmail": {
       "criteria": {
@@ -5577,7 +5605,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "Name on debit card",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].debitCardInfo.authSignatoryDetails.nameOnDebitCard",
       "name": "prospect.signatoryInfo[*].debitCardInfo.authSignatoryDetails.nameOnDebitCard",

@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import SectionTitle from "../SectionTitle";
 import Subtitle from "../Subtitle";
 import FormWrapper from "../StakeholderStepForms/FormWrapper";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -53,8 +52,6 @@ class SigningPreferences extends React.Component {
         className={classes.formWrapper}
         handleContinue={this.props.goToNext}
       >
-        <SectionTitle title="Signing preferences" />
-
         <div className="paper">
           <Subtitle title="Signing transactions" />
 
@@ -94,7 +91,7 @@ class SigningPreferences extends React.Component {
             <InfoTitle title="Maximum two people" />
           </div>
           {this.state.contactPersons.map((person, index) => (
-            <>
+            <React.Fragment key={index}>
               <TextInput id="Sig.fullName" indexes={[index]} />
               <Grid container spacing={3}>
                 <Grid item md={6} sm={12}>
@@ -124,7 +121,7 @@ class SigningPreferences extends React.Component {
                   />
                 </Grid>
               </Grid>
-            </>
+            </React.Fragment>
           ))}
 
           <AddButton

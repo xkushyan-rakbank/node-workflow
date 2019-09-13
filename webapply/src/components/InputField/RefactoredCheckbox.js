@@ -10,11 +10,13 @@ import { DATA_ATTRIBUTES } from "../../constants";
 
 const styles = {
   checkboxWrapper: {
-    display: "flex"
+    display: "flex",
+    alignItems: "center"
   },
   checkboxContainer: {
     display: "inline-block",
-    verticalAlign: "middle"
+    verticalAlign: "middle",
+    marginTop: "5px"
   },
   icon: {
     fill: "none",
@@ -59,6 +61,18 @@ const styles = {
     fontSize: "14px",
     lineHeight: "24px",
     fontWeight: "400"
+  },
+  doubleLabel: {
+    marginLeft: "17px"
+  },
+  firstRow: {
+    fontSize: "14px",
+    lineHeight: 1.71,
+    color: "#373737"
+  },
+  secondRow: {
+    fontSize: "12px",
+    color: "#a4a4a4"
   }
 };
 
@@ -94,7 +108,14 @@ class CustomCheckbox extends React.Component {
             {value && <img src={Check} alt="check icon" />}
           </div>
         </div>
-        <span className={classes.label}>{config.label}</span>
+        {config.title ? (
+          <div className={classes.doubleLabel}>
+            <div className={classes.firstRow}>{config.label}</div>
+            <div className={classes.secondRow}>{config.title}</div>
+          </div>
+        ) : (
+          <span className={classes.label}>{config.label}</span>
+        )}
       </label>
     );
   }
