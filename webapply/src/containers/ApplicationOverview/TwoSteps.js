@@ -9,29 +9,28 @@ import IconCardItem from "../../components/IconCards/IconCardItem";
 const style = {
   icon: {
     fontSize: "55px",
-    color: "green"
+    color: "green",
   },
-  stepImageBackground: {},
-  stepfirstGroup: {
-    paddingTop: "150px"
+  firstGroup: {
+    paddingTop: "150px",
   },
-  stepSectionIndent: {
-    marginBottom: "40px"
+  indent: {
+    marginBottom: "15px",
   },
-  stepSecondGroup: {
+  secondGroup: {
     height: "370px",
     paddingTop: "80px",
     "& span": {
-      maxWidth: "380px"
+      maxWidth: "380px",
     },
-    background: `url(${logo}) no-repeat 60% 90%/60%`
+    background: `url(${logo}) no-repeat 60% 90%/60%`,
   }
 };
 
-const ApplicationOverviewFirstStep = ({ classes }) => (
+const TwoSteps = ({ classes }) => (
   <>
-    <div className={classes.stepfirstGroup}>
-      <div className={classes.stepSectionIndent}>
+    <div className={classes.firstGroup}>
+      <div className={classes.indent}>
         <SectionTitleWithInfo title="Two easy steps" />
       </div>
       <IconCardsContainer>
@@ -51,7 +50,7 @@ const ApplicationOverviewFirstStep = ({ classes }) => (
         </IconCardItem>
       </IconCardsContainer>
     </div>
-    <div className={classes.stepSecondGroup}>
+    <div className={classes.secondGroup}>
       <SectionTitleWithInfo
         title="Grab a cup of tea"
         info="We need to spend some time getting to know you and your company"
@@ -60,4 +59,4 @@ const ApplicationOverviewFirstStep = ({ classes }) => (
   </>
 );
 
-export default withStyles(style)(ApplicationOverviewFirstStep);
+export default withStyles(style)(TwoSteps);

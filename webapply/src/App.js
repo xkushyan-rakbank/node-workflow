@@ -15,7 +15,8 @@ import FormLayout from "./containers/FormLayout";
 import SearchProspect from "./agent/SearchProspect";
 import SelectServices from "./containers/SelectServices";
 import AccountsComparison from "./containers/AccountsComparison/AccountsComparison";
-import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOverviewContainer";
+import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOverview";
+import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -82,6 +83,11 @@ class App extends React.Component {
                 exact
                 path={routes.applicationOverview}
                 component={ApplicationOverview}
+              />
+              <Route
+                exact
+                path={routes.detailedAccount}
+                component={DetailedAccount}
               />
               <Route path="*" />
             </Switch>

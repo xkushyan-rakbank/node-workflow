@@ -14,7 +14,7 @@ const style = {
     color: "#000"
   },
   root: {
-    marginTop: "40px",
+    marginTop: "20px",
     boxSizing: "border-box",
     boxShadow: "none",
     "&:nth-of-type(odd)": {

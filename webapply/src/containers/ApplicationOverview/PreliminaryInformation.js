@@ -8,28 +8,28 @@ import CommonQuestions from "./CommonQuestions";
 
 const style = {
   stepWrapper: {
-    paddingTop: "150px"
+    paddingTop: "150px",
   },
   icon: {
     fontSize: "55px",
-    color: "green"
+    color: "green",
   },
   stepAnswers: {
     borderRadius: "8px",
-    overflow: "hidden"
+    overflow: "hidden",
   },
   stepAnswersTitle: {
+    padding: "18px 24px",
     fontSize: "16px",
     fontWeight: "600",
-    padding: "18px 24px",
-    backgroundColor: "rgba(239, 242, 244, .5)"
+    backgroundColor: "rgba(239, 242, 244, .5)",
   },
   stepCardsWrapper: {
-    padding: "50px 0"
+    padding: "20px 0 50px 0",
   }
 };
 
-const ApplicationOverviewSecondStep = ({ classes }) => (
+const PreliminaryInformation = ({ classes }) => (
   <div className={classes.stepWrapper}>
     <SectionTitleWithInfo
       title="Have these ready"
@@ -61,4 +61,4 @@ const ApplicationOverviewSecondStep = ({ classes }) => (
   </div>
 );
 
-export default withStyles(style)(ApplicationOverviewSecondStep);
+export default withStyles(style)(PreliminaryInformation);
