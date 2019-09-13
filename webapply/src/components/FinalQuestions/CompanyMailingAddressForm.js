@@ -7,7 +7,7 @@ import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import InfoTitle from "../InfoTitle";
 
-const style = {
+const styles = {
   title: {
     fontSize: "16px"
   },
@@ -107,4 +107,4 @@ class CompanyMailingAddressForm extends Component {
   }
 }
 
-export default withStyles(style)(CompanyMailingAddressForm);
+export default withStyles(styles)(CompanyMailingAddressForm);

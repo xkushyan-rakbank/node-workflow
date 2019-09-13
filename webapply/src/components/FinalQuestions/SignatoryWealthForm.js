@@ -12,25 +12,13 @@ import {
 } from "../../store/selectors/appConfig";
 import { updateField } from "../../store/actions/appConfig";
 
-const style = {
+const styles = {
   title: {
     fontSize: "16px"
-  },
-  groupLabel: {
-    marginTop: "15px",
-    marginBottom: "7px",
-    fontSize: "16px",
-    fontWeight: "600",
-    lineHeight: "1.9",
-    color: "#373737"
   },
   flexContainer: {
     marginTop: "0",
     marginBottom: "0"
-  },
-  divider: {
-    marginTop: "30px",
-    borderBottom: "solid 1px rgba(230, 230, 230, 0.5)"
   },
   controlsWrapper: {
     display: "flex",
@@ -93,6 +81,7 @@ class SignatoryWealthForm extends Component {
             <TextInput
               id="SigKycdWlth.others"
               indexes={[this.props.index]}
+              required={this.isOtherSourceOfWealthSelected()}
               disabled={!this.isOtherSourceOfWealthSelected()}
             />
           </Grid>
@@ -117,7 +106,7 @@ const mapDispatchToProps = {
   updateField
 };
 
-export default withStyles(style)(
+export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps

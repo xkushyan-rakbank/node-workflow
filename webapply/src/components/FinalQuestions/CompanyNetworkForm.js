@@ -10,7 +10,7 @@ import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
 import { updateField } from "../../store/actions/appConfig";
 
-const style = {
+const styles = {
   title: {
     fontSize: "16px"
   },
@@ -329,7 +329,7 @@ const mapDispatchToProps = {
   updateField
 };
 
-export default withStyles(style)(
+export default withStyles(styles)(
   connect(
     null,
     mapDispatchToProps

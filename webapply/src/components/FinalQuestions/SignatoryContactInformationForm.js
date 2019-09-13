@@ -6,28 +6,15 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
-import CustomCheckbox from "../InputField/RefactoredCheckbox";
 
-const style = {
+const styles = {
   title: {
     fontSize: "16px",
     marginBottom: "20px"
   },
-  groupLabel: {
-    marginTop: "15px",
-    marginBottom: "7px",
-    fontSize: "16px",
-    fontWeight: "600",
-    lineHeight: "1.9",
-    color: "#373737"
-  },
   flexContainer: {
     marginTop: "0",
     marginBottom: "0"
-  },
-  divider: {
-    marginTop: "30px",
-    borderBottom: "solid 1px rgba(230, 230, 230, 0.5)"
   },
   controlsWrapper: {
     display: "flex",
@@ -68,22 +55,7 @@ class SignatoryContactInformationForm extends Component {
           spacing={3}
           className={this.props.classes.flexContainer}
         >
-          <Grid item sm={12}>
-            <CustomCheckbox
-              id="Sig.sameAsCompanyAddress"
-              indexes={[this.props.index]}
-            />
-            <TextInput
-              id="SigAddrAdrd.preferredAddress"
-              indexes={[this.props.index]}
-            />
-          </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput
-              id="SigAddrAdrd.addressLine1"
-              indexes={[this.props.index]}
-            />
-            <PureSelect id="SigAddrAdrd.country" indexes={[this.props.index]} />
             <TextInput
               id="SigCont.primaryMobileNo"
               indexes={[this.props.index]}
@@ -98,6 +70,8 @@ class SignatoryContactInformationForm extends Component {
             />
             {this.state.isAddLandlineNumber && (
               <TextInput
+                id="SigCont.primaryPhoneNo"
+                indexes={[this.props.index]}
                 select={
                   <PureSelect
                     id="SigCont.primaryPhoneCountryCode"
@@ -106,17 +80,10 @@ class SignatoryContactInformationForm extends Component {
                     combinedSelect
                   />
                 }
-                id="SigCont.primaryPhoneNo"
-                indexes={[this.props.index]}
               />
             )}
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="SigAddrAdrd.poBox" indexes={[this.props.index]} />
-            <PureSelect
-              id="SigAddrAdrd.emirateCity"
-              indexes={[this.props.index]}
-            />
             <TextInput id="SigCont.primaryEmail" indexes={[this.props.index]} />
           </Grid>
         </Grid>
@@ -136,4 +103,4 @@ class SignatoryContactInformationForm extends Component {
   }
 }
 
-export default withStyles(style)(SignatoryContactInformationForm);
+export default withStyles(styles)(SignatoryContactInformationForm);

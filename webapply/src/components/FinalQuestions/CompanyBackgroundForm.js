@@ -11,7 +11,7 @@ import AddButton from "../Buttons/AddButton";
 import { updateField } from "../../store/actions/appConfig";
 import { getOrgKYCDetails } from "../../store/selectors/appConfig";
 
-const style = {
+const styles = {
   title: {
     fontSize: "16px"
   },
@@ -255,7 +255,7 @@ const mapDispatchToProps = {
   updateField
 };
 
-export default withStyles(style)(
+export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
