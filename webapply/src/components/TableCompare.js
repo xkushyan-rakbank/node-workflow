@@ -12,7 +12,8 @@ const style = {
   paperRoot: {
     marginTop: "40px",
     boxSizing: "border-box",
-    boxShadow: "none"
+    boxShadow: "none",
+    position: "relative"
   },
   tableHead: {
     backgroundColor: "#f7f8f9"
@@ -22,8 +23,10 @@ const style = {
     width: "auto",
     borderRadius: "8px",
     position: "relative",
+    overflow: "hidden",
     "& th, & td": {
-      borderBottom: "none"
+      borderBottom: "none",
+      zIndex: "1"
     },
     "& tr:not(:last-child) td": {
       "&::before": {
@@ -46,6 +49,9 @@ const style = {
       "&::before": {
         bottom: -2
       }
+    },
+    "& th:last-child, & td:last-child": {
+      paddingRight: 0
     }
   },
   rootCellName: {
@@ -156,13 +162,14 @@ const StyledContainedButton = props => {
   return <Button {...props} />;
 };
 
-const SelectedAccountContainer = () => {
+const SelectedAccountContainer = ({ offset, width }) => {
   return (
     <Paper
       style={{
         position: "absolute",
-        left: "48%",
-        width: "200px",
+        zIndex: "1",
+        left: `${offset}px`,
+        width: width || "200px",
         top: "-15px",
         height: "calc(100% + 30px)",
         borderRadius: "8px",
@@ -174,14 +181,35 @@ const SelectedAccountContainer = () => {
 };
 
 class TableCompare extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      offset: 380
+    };
+  }
+
+  onHoverSection = e => {
+    if (e.target.tagName === "TD") {
+      const { offsetLeft, clientWidth } = e.target;
+      this.setState({
+        offset: offsetLeft,
+        width: clientWidth
+      });
+    }
+  };
+
   render() {
     const { classes } = this.props;
 
     return (
       <Paper classes={{ root: classes.paperRoot }}>
-        <Table classes={{ root: classes.tableRoot }}>
-          <SelectedAccountContainer />
+        <SelectedAccountContainer
+          offset={this.state.offset}
+          width={this.state.width}
+        />
 
+        <Table classes={{ root: classes.tableRoot }}>
           <TableHead style={{ position: "relative" }}>
             <TableRow classes={{ head: classes.tableHead }}>
               <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
@@ -212,13 +240,13 @@ class TableCompare extends React.Component {
               <TableCell component="th" scope="row">
                 {" "}
               </TableCell>
-              <StyledTableCell>
+              <StyledTableCell onMouseEnter={this.onHoverSection}>
                 <StyledContainedButton label="Read more" />
               </StyledTableCell>
-              <StyledTableCell>
+              <StyledTableCell onMouseEnter={this.onHoverSection}>
                 <StyledContainedButton label="Read more" />
               </StyledTableCell>
-              <StyledTableCell>
+              <StyledTableCell onMouseEnter={this.onHoverSection}>
                 <StyledContainedButton label="Read more" />
               </StyledTableCell>
             </StyledTableRow>
