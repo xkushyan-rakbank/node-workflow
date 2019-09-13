@@ -10,7 +10,7 @@ import ContainedButton from "./Buttons/ContainedButton";
 
 const style = {
   paperRoot: {
-    marginTop: "40px",
+    marginTop: "5px",
     boxSizing: "border-box",
     boxShadow: "none",
     position: "relative"
@@ -24,6 +24,7 @@ const style = {
     borderRadius: "8px",
     position: "relative",
     overflow: "hidden",
+    margin: "30px 0",
     "& th, & td": {
       borderBottom: "none",
       zIndex: "1"
@@ -131,6 +132,12 @@ const StyledTableCell = withStyles(() => ({
     textAlign: "center",
     "& button": {
       marginTop: "20px"
+    },
+    "&:hover": {
+      "& button": {
+        width: "145px",
+        padding: "7px 0"
+      }
     }
   }
 }))(TableCell);
@@ -145,17 +152,17 @@ const StyledContainedButton = props => {
       padding: "3px 0",
       width: props.width || "120px",
       "&:hover": {
-        backgroundColor: "#000"
+        backgroundColor: "#000",
+        "& span": {
+          color: "#fff"
+        }
       }
     },
     labelStyle: {
       color: "#373737",
       fontSize: "14px",
       textAlign: "center",
-      display: "block",
-      "&:hover": {
-        color: "#fff"
-      }
+      display: "block"
     }
   }))(ContainedButton);
 
@@ -169,7 +176,7 @@ const SelectedAccountContainer = ({ offset, width }) => {
         position: "absolute",
         zIndex: "1",
         left: `${offset}px`,
-        width: width || "200px",
+        width: width - 5 || "195px",
         top: "-15px",
         height: "calc(100% + 30px)",
         borderRadius: "8px",
@@ -204,54 +211,59 @@ class TableCompare extends React.Component {
 
     return (
       <Paper classes={{ root: classes.paperRoot }}>
-        <SelectedAccountContainer
-          offset={this.state.offset}
-          width={this.state.width}
-        />
+        <div style={{ overflowX: "auto" }}>
+          <div style={{ minWidth: "780px", position: "relative" }}>
+            <SelectedAccountContainer
+              offset={this.state.offset}
+              width={this.state.width}
+            />
+            <Table classes={{ root: classes.tableRoot }}>
+              <TableHead style={{ position: "relative" }}>
+                <TableRow classes={{ head: classes.tableHead }}>
+                  <StyledTableHeader style={{ width: 180 }}>
+                    {" "}
+                  </StyledTableHeader>
+                  <StyledTableHeader>RAKstarter</StyledTableHeader>
+                  <StyledTableHeader>Current Account</StyledTableHeader>
+                  <StyledTableHeader>RAKelite</StyledTableHeader>
+                </TableRow>
+              </TableHead>
 
-        <Table classes={{ root: classes.tableRoot }}>
-          <TableHead style={{ position: "relative" }}>
-            <TableRow classes={{ head: classes.tableHead }}>
-              <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
-              <StyledTableHeader>RAKstarter</StyledTableHeader>
-              <StyledTableHeader>Current Account</StyledTableHeader>
-              <StyledTableHeader>RAKelite</StyledTableHeader>
-            </TableRow>
-          </TableHead>
+              <TableBody>
+                {mockDataRows.map(row => (
+                  <StyledTableRow key={row.name}>
+                    <TableCell
+                      classes={{ root: classes.rootCellName }}
+                      align="right"
+                      component="th"
+                      scope="row"
+                    >
+                      {row.name}
+                    </TableCell>
+                    <StyledTableCell>{row.starter}</StyledTableCell>
+                    <StyledTableCell>{row.currentAccount}</StyledTableCell>
+                    <StyledTableCell>{row.elite}</StyledTableCell>
+                  </StyledTableRow>
+                ))}
 
-          <TableBody>
-            {mockDataRows.map(row => (
-              <StyledTableRow key={row.name}>
-                <TableCell
-                  classes={{ root: classes.rootCellName }}
-                  align="right"
-                  component="th"
-                  scope="row"
-                >
-                  {row.name}
-                </TableCell>
-                <StyledTableCell>{row.starter}</StyledTableCell>
-                <StyledTableCell>{row.currentAccount}</StyledTableCell>
-                <StyledTableCell>{row.elite}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-
-            <StyledTableRow>
-              <TableCell component="th" scope="row">
-                {" "}
-              </TableCell>
-              <StyledTableCell onMouseEnter={this.onHoverSection}>
-                <StyledContainedButton label="Read more" />
-              </StyledTableCell>
-              <StyledTableCell onMouseEnter={this.onHoverSection}>
-                <StyledContainedButton label="Read more" />
-              </StyledTableCell>
-              <StyledTableCell onMouseEnter={this.onHoverSection}>
-                <StyledContainedButton label="Read more" />
-              </StyledTableCell>
-            </StyledTableRow>
-          </TableBody>
-        </Table>
+                <StyledTableRow>
+                  <TableCell component="th" scope="row">
+                    {" "}
+                  </TableCell>
+                  <StyledTableCell onMouseEnter={this.onHoverSection}>
+                    <StyledContainedButton label="Read more" />
+                  </StyledTableCell>
+                  <StyledTableCell onMouseEnter={this.onHoverSection}>
+                    <StyledContainedButton label="Read more" />
+                  </StyledTableCell>
+                  <StyledTableCell onMouseEnter={this.onHoverSection}>
+                    <StyledContainedButton label="Read more" />
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </div>
       </Paper>
     );
   }
