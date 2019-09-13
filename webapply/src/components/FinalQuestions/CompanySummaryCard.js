@@ -6,6 +6,7 @@ import CompanyBackgroundForm from "./CompanyBackgroundForm";
 import CollapsedSection from "../CollapsedSection";
 import CompanyAnticipatedTransactionsForm from "./CompanyAnticipatedTransactionsForm";
 import CompanyNetworkForm from "./CompanyNetworkForm";
+import CompanyMailingAddressForm from "./CompanyMailingAddressForm";
 import CompanyContactInformationForm from "./CompanyContactInformationForm";
 import validateForm from "../../utils/validate";
 
@@ -15,23 +16,7 @@ class CompanySummaryCard extends Component {
 
     this.state = {
       isExpanded: false,
-      isFilled: false,
-      companyBackground: {
-        isFilled: false,
-        isExpanded: true
-      },
-      anticipatedTransactions: {
-        isFilled: false,
-        isExpanded: false
-      },
-      network: {
-        isFilled: false,
-        isExpanded: false
-      },
-      contactInformation: {
-        isFilled: false,
-        isExpanded: false
-      }
+      isFilled: false
     };
 
     this.sectionsConfig = [
@@ -51,7 +36,12 @@ class CompanySummaryCard extends Component {
         component: CompanyNetworkForm
       },
       {
-        title: "Company contact information",
+        title: "Preferred mailing address",
+        key: "mailingAddress",
+        component: CompanyMailingAddressForm
+      },
+      {
+        title: "Preferred contact information",
         key: "contactInformation",
         component: CompanyContactInformationForm
       }
@@ -61,6 +51,11 @@ class CompanySummaryCard extends Component {
       item.handler = this.handleContinue(item);
       item.sectionHeadClickHandler = this.handleSectionHeadClick(item);
       item.nextSection = this.sectionsConfig[index + 1] || null;
+
+      this.state[item.key] = {
+        isFilled: false,
+        isExpanded: index === 0
+      };
     });
   }
 

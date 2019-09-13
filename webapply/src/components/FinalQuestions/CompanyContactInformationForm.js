@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SectionTitle from "../SectionTitle";
-import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
@@ -13,29 +12,14 @@ const style = {
   title: {
     fontSize: "16px"
   },
-  groupLabel: {
-    marginTop: "15px",
-    marginBottom: "7px",
-    fontSize: "16px",
-    fontWeight: "600",
-    lineHeight: "1.9",
-    color: "#373737"
-  },
   flexContainer: {
     marginTop: "0",
     marginBottom: "0"
-  },
-  divider: {
-    marginTop: "30px",
-    borderBottom: "solid 1px rgba(230, 230, 230, 0.5)"
   },
   controlsWrapper: {
     display: "flex",
     justifyContent: "center",
     margin: "20px 0 0"
-  },
-  disabledInput: {
-    backgroundColor: "rgba(242, 242, 242, 0.5)"
   }
 };
 
@@ -48,9 +32,7 @@ class CompanyContactInformationForm extends Component {
     super(props);
 
     this.state = {
-      addressCount: 1,
-      secondaryPhoneNumber: false,
-      isHaveMoreBranches: false
+      secondaryPhoneNumber: false
     };
   }
 
@@ -67,68 +49,12 @@ class CompanyContactInformationForm extends Component {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
         <SectionTitle
-          title="Company contact information"
+          title="Preferred contact information"
           className={this.props.classes.title}
         />
-        <Grid container justify="space-between">
-          <h4 className={this.props.classes.groupLabel}>Registered address</h4>
-          <InfoTitle title="We will use this as your mailing address" />
-        </Grid>
 
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
-          {Array.from(Array(this.state.addressCount).keys()).map(index => {
-            return (
-              <React.Fragment key={index}>
-                <Grid item md={6} sm={12}>
-                  <TextInput
-                    id="OrgAddrAdrd.addressFieldDesc"
-                    indexes={[index, 0]}
-                  />
-                  <TextInput
-                    id="OrgAddrAdrd.addressLine1"
-                    indexes={[index, 0]}
-                  />
-                  <PureSelect
-                    id="OrgAddrAdrd.emirateCity"
-                    indexes={[index, 0]}
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <PureSelect
-                    id="OrgAddrAdrdSpace.spaceType"
-                    indexes={[index, 0]}
-                  />
-                  <TextInput id="OrgAddrAdrd.poBox" indexes={[index, 0]} />
-                  <TextInput
-                    id="OrgAddrAdrd.country"
-                    indexes={[index, 0]}
-                    disabled
-                    defaultValue="United Arab Emirates"
-                  />
-                </Grid>
-              </React.Fragment>
-            );
-          })}
-        </Grid>
-        <Checkbox
-          label="I have more branches elsewhere"
-          value={this.state.isHaveMoreBranches}
-          onChange={event =>
-            this.setState({ isHaveMoreBranches: event.target.checked })
-          }
-        />
-
-        <div className={this.props.classes.divider} />
-
-        <Grid container justify="space-between">
-          <h4 className={this.props.classes.groupLabel}>
-            Preferred contact information
-          </h4>
-          <InfoTitle title="We will use this for our bank communication with you" />
+        <Grid container>
+          <InfoTitle title="Heads up! We can only send chequebooks if you use a phone number from the UAE." />
         </Grid>
 
         <Grid
@@ -138,10 +64,10 @@ class CompanyContactInformationForm extends Component {
         >
           <Grid item md={6} sm={12}>
             <TextInput
-              id="OrgCont.primaryPhoneNo"
+              id="OrgCont.primaryMobileNo"
               select={
                 <PureSelect
-                  id="OrgCont.primaryPhoneCountryCode"
+                  id="OrgCont.primaryMobCountryCode"
                   defaultValue="USA"
                   combinedSelect
                 />
@@ -149,10 +75,10 @@ class CompanyContactInformationForm extends Component {
             />
             {this.state.secondaryPhoneNumber && (
               <TextInput
-                id="OrgCont.secondaryPhoneNo"
+                id="OrgCont.primaryPhoneNo"
                 select={
                   <PureSelect
-                    id="OrgCont.secondaryMobileCountryCode"
+                    id="OrgCont.primaryPhoneCountryCode"
                     defaultValue="USA"
                     combinedSelect
                   />
@@ -168,7 +94,7 @@ class CompanyContactInformationForm extends Component {
         {!this.state.secondaryPhoneNumber && (
           <AddButton
             onClick={this.handleSecondaryPhoneBtnClick}
-            title="Add a secondary phone number"
+            title="Add a landline number"
           />
         )}
 
