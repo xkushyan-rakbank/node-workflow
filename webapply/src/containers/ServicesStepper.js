@@ -1,6 +1,8 @@
 import React from "react";
+import omit from "lodash/omit";
 import { withStyles } from "@material-ui/core";
 import { servicesSteps } from "../constants";
+import ServicesStepTitle from "../components/ServicesStepTitle";
 
 const styles = {};
 
@@ -22,9 +24,18 @@ class ServicesStepper extends React.Component {
       <div>
         {servicesSteps.map(item => {
           const Component = item.component;
-          return item.step === this.state.step ? (
-            <Component key={item.step} goToNext={this.handleContinue} />
-          ) : null;
+          const stepData = omit(item, "component");
+          return (
+            <React.Fragment key={item.title}>
+              <ServicesStepTitle step={stepData} activeStep={this.state.step} />
+              {this.state.step === item.step && (
+                <Component
+                  goToNext={this.handleContinue}
+                  activeStep={this.state.step}
+                />
+              )}
+            </React.Fragment>
+          );
         })}
       </div>
     );

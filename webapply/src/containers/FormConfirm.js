@@ -117,6 +117,7 @@ class FormConfirm extends React.Component {
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
           <div className="flexContainerForButton">
             <span>
+              {/*eslint-disable-next-line*/}
               Didn’t get the code? <a href="#"> Send a new code</a>
             </span>
             <SubmitButton

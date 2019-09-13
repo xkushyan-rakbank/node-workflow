@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 import get from "lodash/get";
-import SectionTitle from "../SectionTitle";
 import Select from "../InputField/PureSelect";
 import Subtitle from "../Subtitle";
 import Checkbox from "../InputField/Checkbox";
@@ -13,6 +12,9 @@ import { connect } from "react-redux";
 import InfoTitle from "../InfoTitle";
 
 const style = {
+  formWrapper: {
+    margin: 0
+  },
   checkboxesWrapper: {
     marginBottom: "30px"
   },
@@ -32,8 +34,6 @@ class AccountDetails extends React.Component {
         className={classes.formWrapper}
         handleContinue={this.props.goToNext}
       >
-        <SectionTitle title="Account details" />
-
         <div className="paper">
           <Subtitle title="Select currencies" />
           <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
