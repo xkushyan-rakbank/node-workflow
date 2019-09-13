@@ -9,6 +9,8 @@ import TextInput from "../InputField/TextInput";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import InfoTitle from "../InfoTitle";
+import isNumber from "lodash/isNumber";
+import isNaN from "lodash/isNaN";
 import { getInputValueById } from "../../store/selectors/appConfig";
 
 const style = {
@@ -63,23 +65,64 @@ class CompanyAnticipatedTransactionsForm extends Component {
     };
   }
 
+  getNumberOrZero(value) {
+    value = Number(value);
+    return !isNaN(value) && isNumber(value) ? value : 0;
+  }
+
+  getMonthFinancialTurnover() {
+    const total = this.getNumberOrZero(this.props.annualFinancialTurnover);
+    return total ? total / 12 : 0;
+  }
+
   getTotalMonthlyCreditsValue() {
-    const { annualFinancialTurnover } = this.props;
-    if (
-      !annualFinancialTurnover ||
-      Number.isNaN(Number(annualFinancialTurnover))
-    ) {
+    const monthFinancialTurnover = this.getMonthFinancialTurnover();
+    if (!monthFinancialTurnover) {
       return "Total Monthly Credits";
     }
-    return `${(annualFinancialTurnover / 12).toFixed(
-      0
-    )} in Total Monthly Credits`;
+    return `${monthFinancialTurnover.toFixed(0)} in Total Monthly Credits`;
   }
 
   handleSubmit = event => {
     event.preventDefault();
     this.props.handleContinue(event);
   };
+
+  partOfTotalInCashMaxValue() {
+    if (this.getMonthFinancialTurnover() > 0) {
+      return (
+        this.getMonthFinancialTurnover() -
+        this.getNumberOrZero(this.props.notCashAmountInFigures)
+      );
+    }
+  }
+
+  partOfTotalInNotCashMaxValue() {
+    if (this.getMonthFinancialTurnover() > 0) {
+      return (
+        this.getMonthFinancialTurnover() -
+        this.getNumberOrZero(this.props.cashAmountInFigures)
+      );
+    }
+  }
+
+  maximumSingleAmountInCashMaxValue() {
+    const allAmount = this.getNumberOrZero(this.props.annualFinancialTurnover);
+    if (allAmount > 0) {
+      return (
+        allAmount - this.getNumberOrZero(this.props.maximumSingleNotCashAmount)
+      );
+    }
+  }
+
+  maximumSingleAmountInNotCashMaxValue() {
+    const allAmount = this.getNumberOrZero(this.props.annualFinancialTurnover);
+    if (allAmount > 0) {
+      return (
+        allAmount - this.getNumberOrZero(this.props.maximumSingleCashAmount)
+      );
+    }
+  }
 
   render() {
     return (
@@ -96,6 +139,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
         >
           <Grid item sm={12}>
             <TextInput
+              min="0"
               id="Okyc.annualFinTurnoverAmtInAED"
               InputProps={this.commonInputProps}
             />
@@ -126,12 +170,16 @@ class CompanyAnticipatedTransactionsForm extends Component {
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
+              min="0"
+              max={this.partOfTotalInCashMaxValue()}
               id="OkycAntTxnTotCashCr.amountInFigures"
               InputProps={this.commonInputProps}
             />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
+              min="0"
+              max={this.partOfTotalInNotCashMaxValue()}
               id="OkycAntTxnTotNonCashCr.amountInFigures"
               InputProps={this.commonInputProps}
             />
@@ -150,12 +198,16 @@ class CompanyAnticipatedTransactionsForm extends Component {
         >
           <Grid item md={6} sm={12}>
             <TextInput
+              min="0"
+              max={this.maximumSingleAmountInCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnCashAED"
               InputProps={this.commonInputProps}
             />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
+              min="0"
+              max={this.maximumSingleAmountInNotCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnNonCashAED"
               InputProps={this.commonInputProps}
             />
@@ -174,6 +226,22 @@ const mapStateToProps = state => ({
   annualFinancialTurnover: getInputValueById(
     state,
     "Okyc.annualFinTurnoverAmtInAED"
+  ),
+  cashAmountInFigures: getInputValueById(
+    state,
+    "OkycAntTxnTotCashCr.amountInFigures"
+  ),
+  notCashAmountInFigures: getInputValueById(
+    state,
+    "OkycAntTxnTotNonCashCr.amountInFigures"
+  ),
+  maximumSingleCashAmount: getInputValueById(
+    state,
+    "OkycAntTxn.maxAmtSingleTxnCashAED"
+  ),
+  maximumSingleNotCashAmount: getInputValueById(
+    state,
+    "OkycAntTxn.maxAmtSingleTxnNonCashAED"
   )
 });
 

@@ -18,11 +18,10 @@ class Shareholding extends React.Component {
     endAdornment: <InputAdornment position="end">%</InputAdornment>
   };
 
-  updateShareholderPercentageValue(value) {
-    this.props.updateField({
-      value: value,
-      name: this.props.shareholderPercentageInputName
-    });
+  componentDidMount() {
+    if (this.props.isSoleProprietor) {
+      this.updateShareholderPercentageValue(100);
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -32,6 +31,13 @@ class Shareholding extends React.Component {
     ) {
       this.updateShareholderPercentageValue(0);
     }
+  }
+
+  updateShareholderPercentageValue(value) {
+    this.props.updateField({
+      value: value,
+      name: this.props.shareholderPercentageInputName
+    });
   }
 
   otherSignatoriesPercentage() {
@@ -46,8 +52,8 @@ class Shareholding extends React.Component {
     return 100 - this.otherSignatoriesPercentage();
   }
 
-  customValidationMessage = input => {
-    if (input && Number(input.value) > 100) {
+  customValidationMessage = ({ inputRef, isFocused }) => {
+    if (inputRef && !isFocused && Number(inputRef.value) > 100) {
       return (
         <ErrorMessage error="Shareholders can't hold more than 100% of shares in total" />
       );

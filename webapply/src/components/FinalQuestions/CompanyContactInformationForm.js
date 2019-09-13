@@ -86,20 +86,26 @@ class CompanyContactInformationForm extends Component {
                 <Grid item md={6} sm={12}>
                   <TextInput
                     id="OrgAddrAdrd.addressFieldDesc"
-                    indexes={[index]}
+                    indexes={[index, 0]}
                   />
-                  <TextInput id="OrgAddrAdrd.addressLine1" indexes={[index]} />
-                  <PureSelect id="OrgAddrAdrd.emirateCity" indexes={[index]} />
+                  <TextInput
+                    id="OrgAddrAdrd.addressLine1"
+                    indexes={[index, 0]}
+                  />
+                  <PureSelect
+                    id="OrgAddrAdrd.emirateCity"
+                    indexes={[index, 0]}
+                  />
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <PureSelect
                     id="OrgAddrAdrdSpace.spaceType"
-                    indexes={[index]}
+                    indexes={[index, 0]}
                   />
-                  <TextInput id="OrgAddrAdrd.poBox" indexes={[index]} />
+                  <TextInput id="OrgAddrAdrd.poBox" indexes={[index, 0]} />
                   <TextInput
                     id="OrgAddrAdrd.country"
-                    indexes={[index]}
+                    indexes={[index, 0]}
                     disabled
                     defaultValue="United Arab Emirates"
                   />
