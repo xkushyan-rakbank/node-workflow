@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import logo from "./../../assets/images/logo.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
+import ExpandedOptionsCards from "../../components/ExpandedOptionsCards/ExpandedOptionsCards";
 
 const style = {
   icon: {
@@ -35,6 +36,7 @@ const AccountingSoftware = ({ classes }) => (
         />
       </div>
     </div>
+    <ExpandedOptionsCards />
   </>
 );
 
