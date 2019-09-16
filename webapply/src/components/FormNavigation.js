@@ -129,6 +129,8 @@ class FormNavigation extends React.Component {
     const { step } = this.state;
     return (
       <div className={classes.formNav}>
+        {/* Side navigation content */}
+        {/* <SideNavInfo classes={classes} /> */}
         <ul>
           {formStepper.map(item => (
             <FormNavigationStep
