@@ -1,4 +1,4 @@
-import { DATA_ATTRIBUTES, errorType } from "./../constants";
+import { errorType } from "./../constants";
 import store from "../store/configureStore";
 import get from "lodash/get";
 
@@ -78,14 +78,14 @@ const validationErrorMessages = errorConfig => {
 
 const validateForm = event => {
   const fields = event.target.elements;
-  const reduxStore = store.getState();
-  const config = get(reduxStore, "appConfig.uiConfig");
+  const config = get(store.getState(), "appConfig.uiConfig");
   const errorList = [];
   for (let i = 0; i < fields.length; i++) {
-    const id = fields[i].getAttribute(DATA_ATTRIBUTES.INPUT_ID);
-    const error = validate(fields[i], config[id]);
+    const id = fields[i].id;
+    const [configId] = id.split("_");
+    const error = validate(fields[i], config[configId]);
     if (error) {
-      errorList.push({ id, error });
+      errorList.push({ id, error, configId });
     }
     fields[i].focus();
   }

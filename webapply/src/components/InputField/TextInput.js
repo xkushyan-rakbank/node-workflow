@@ -15,11 +15,7 @@ import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
 import { validate } from "./../../utils/validate";
-import {
-  getFieldConfigById,
-  getInputNameById,
-  getInputValueById
-} from "../../store/selectors/appConfig";
+import { getGeneralInputProps } from "../../store/selectors/appConfig";
 
 const styles = {
   textField: {
@@ -221,7 +217,7 @@ class Input extends React.Component {
   render() {
     const {
       id,
-      name,
+      indexes,
       config,
       classes,
       className,
@@ -234,7 +230,7 @@ class Input extends React.Component {
 
     const { fieldErrors } = this.state;
     const inputProps = this.composeFieldAttrWithPropAttr(
-      fieldAttr(id, config, name)
+      fieldAttr(id, config, indexes)
     );
 
     const isError = !isEmpty(fieldErrors);
@@ -298,9 +294,7 @@ class Input extends React.Component {
 }
 
 const mapStateToProps = (state, { id, indexes }) => ({
-  config: getFieldConfigById(state, id),
-  value: getInputValueById(state, id, indexes),
-  name: getInputNameById(state, id, indexes)
+  ...getGeneralInputProps(state, id, indexes)
 });
 
 const mapDispatchToProps = {

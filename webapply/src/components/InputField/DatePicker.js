@@ -1,5 +1,4 @@
 import React from "react";
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import DateFnsUtils from "@date-io/date-fns";
 import FormControl from "@material-ui/core/FormControl";
@@ -14,8 +13,8 @@ import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { validate } from "./../../utils/validate";
 import { updateField } from "../../store/actions/appConfig";
-import combineNestingName from "../../utils/combineNestingName";
-import { DATA_ATTRIBUTES, fieldAttr } from "../../constants";
+import { fieldAttr } from "../../constants";
+import { getGeneralInputProps } from "../../store/selectors/appConfig";
 
 const styles = {
   datePicker: {
@@ -71,8 +70,7 @@ class DatePicker extends React.Component {
 
   composeInputProps() {
     return {
-      ...this.inputProps,
-      [DATA_ATTRIBUTES.INPUT_ID]: this.props.id
+      ...this.inputProps
     };
   }
 
@@ -104,13 +102,13 @@ class DatePicker extends React.Component {
       classes,
       config,
       id,
-      name,
+      indexes,
       disableFuture,
       minDate = new Date("01-01-1000")
     } = this.props;
     const { fieldErrors } = this.state;
     const isError = !isEmpty(fieldErrors);
-    const attrs = fieldAttr(id, config, name);
+    const attrs = fieldAttr(id, config, indexes);
     const inputProps = this.composeInputProps();
 
     return (
@@ -163,20 +161,9 @@ class DatePicker extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id, indexes }) => {
-  const config = state.appConfig.uiConfig[id] || {};
-  const name =
-    config.name && config.name.search(/\*/)
-      ? combineNestingName(config.name, indexes)
-      : config.name;
-  const value = get(state.appConfig, name);
-
-  return {
-    config,
-    value,
-    name
-  };
-};
+const mapStateToProps = (state, { id, indexes }) => ({
+  ...getGeneralInputProps(state, id, indexes)
+});
 
 const mapDispatchToProps = {
   updateField

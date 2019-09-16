@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import CompanyCard from "../CompanyCard";
 import ContinueButton from "../Buttons/ContinueButton";
 import LinkButton from "../Buttons/LinkButton";
@@ -9,6 +10,7 @@ import CompanyNetworkForm from "./CompanyNetworkForm";
 import CompanyMailingAddressForm from "./CompanyMailingAddressForm";
 import CompanyContactInformationForm from "./CompanyContactInformationForm";
 import validateForm from "../../utils/validate";
+import { getInputValueById } from "../../store/selectors/appConfig";
 
 class CompanySummaryCard extends Component {
   constructor(props) {
@@ -131,7 +133,7 @@ class CompanySummaryCard extends Component {
   render() {
     return (
       <CompanyCard
-        companyName="Designit Arabia"
+        companyName={this.props.companyName}
         controls={this.renderControlsContent()}
       >
         {this.state.isExpanded &&
@@ -154,4 +156,9 @@ class CompanySummaryCard extends Component {
   }
 }
 
-export default CompanySummaryCard;
+const mapStateToProps = state => ({
+  // TODO: remove default value "Designit Arabia"
+  companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
+});
+
+export default connect(mapStateToProps)(CompanySummaryCard);

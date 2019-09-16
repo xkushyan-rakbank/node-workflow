@@ -9,21 +9,21 @@ import IconCardItem from "../../components/IconCards/IconCardItem";
 const style = {
   icon: {
     fontSize: "55px",
-    color: "green",
+    color: "green"
   },
   firstGroup: {
-    paddingTop: "150px",
+    paddingTop: "150px"
   },
   indent: {
-    marginBottom: "15px",
+    marginBottom: "15px"
   },
   secondGroup: {
     height: "370px",
     paddingTop: "80px",
     "& span": {
-      maxWidth: "380px",
+      maxWidth: "380px"
     },
-    background: `url(${logo}) no-repeat 60% 90%/60%`,
+    background: `url(${logo}) no-repeat 60% 90%/60%`
   }
 };
 
