@@ -17,12 +17,12 @@ const styles = {
 };
 
 const SubmitButton = props => {
-  const { disabled = false, classes, label = "Next Step", handleClick } = props;
+  const { disabled = false, classes, label, handleClick, justify } = props;
   return (
     <Grid
       container
       direction="row"
-      justify="flex-end"
+      justify={justify}
       alignItems="center"
       className={classes.buttonWrap}
     >

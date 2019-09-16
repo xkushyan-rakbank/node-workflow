@@ -5,7 +5,9 @@ import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
 import { formStepper } from "./../constants";
 import backgroundImage from "./../assets/images/background-red-blob-slice.svg";
+import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
+import SubmitButton from "./Buttons/SubmitButton";
 
 const style = {
   formNav: {
@@ -46,8 +48,52 @@ const style = {
         direction: "ltr"
       }
     }
+  },
+  contentContainer: {
+    width: 340,
+    marginLeft: 80,
+    height: 323,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
+  },
+  sectionTitle: {
+    color: "#fff",
+    fontSize: "48px",
+    lineHeight: "1.17",
+    fontWeight: 600
+  },
+  sectionSubtitle: {
+    fontSize: "16px",
+    lineHeight: "1.5",
+    color: "#fff",
+    marginTop: 20,
+    display: "block",
+    fontWeight: "normal"
   }
 };
+
+const SideNavInfo = ({ classes }) => (
+  <div className={classes.contentContainer}>
+    <div>
+      <Typography
+        variant="h2"
+        component="h2"
+        classes={{ root: classes.sectionTitle }}
+      >
+        RAKstarter account
+      </Typography>
+      <Typography
+        variant="subtitle1"
+        component="span"
+        classes={{ root: classes.sectionSubtitle }}
+      >
+        A new zero balance account, for the budding entrepreneurs out there{" "}
+      </Typography>
+    </div>
+    <SubmitButton justify="flex-start" label="Next Step" />
+  </div>
+);
 
 class FormNavigation extends React.Component {
   state = {

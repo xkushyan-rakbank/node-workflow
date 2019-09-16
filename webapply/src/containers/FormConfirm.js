@@ -122,6 +122,8 @@ class FormConfirm extends React.Component {
             </span>
             <SubmitButton
               disabled={this.state.code.some(value => !digitRegExp.test(value))}
+              label="Next Step"
+              justify="flex-end"
             />
           </div>
         </form>
