@@ -13,7 +13,7 @@ import isNumber from "lodash/isNumber";
 import isNaN from "lodash/isNaN";
 import { getInputValueById } from "../../store/selectors/appConfig";
 
-const style = {
+const styles = {
   title: {
     fontSize: "16px"
   },
@@ -245,6 +245,6 @@ const mapStateToProps = state => ({
   )
 });
 
-export default withStyles(style)(
+export default withStyles(styles)(
   connect(mapStateToProps)(CompanyAnticipatedTransactionsForm)
 );

@@ -7,11 +7,12 @@ import CollapsedSection from "../CollapsedSection";
 import SignatoryPersonalInformationForm from "./SignatoryPersonalInformationForm";
 import SignatoryEmploymentDetailsForm from "./SignatoryEmploymentDetailsForm";
 import SignatoryWealthForm from "./SignatoryWealthForm";
+import SignatoryMailingAddressForm from "./SignatoryMailingAddressForm";
 import SignatoryContactInformationForm from "./SignatoryContactInformationForm";
 import LinkButton from "../Buttons/LinkButton";
 import validateForm from "../../utils/validate";
 
-const style = {
+const styles = {
   card: {
     marginBottom: "24px"
   },
@@ -58,23 +59,7 @@ class SignatorySummaryCard extends Component {
     this.state = {
       isExpanded: false,
       isFilled: true,
-      isDisabled: true,
-      personalInformation: {
-        isExpanded: true,
-        isFilled: false
-      },
-      employmentDetails: {
-        isExpanded: false,
-        isFilled: false
-      },
-      wealth: {
-        isExpanded: false,
-        isFilled: false
-      },
-      contactInformation: {
-        isExpanded: false,
-        isFilled: false
-      }
+      isDisabled: true
     };
 
     this.sectionsConfig = [
@@ -94,6 +79,11 @@ class SignatorySummaryCard extends Component {
         component: SignatoryWealthForm
       },
       {
+        title: "Preferred mailing address",
+        key: "mailingAddress",
+        component: SignatoryMailingAddressForm
+      },
+      {
         title: "Preferred contact information",
         key: "contactInformation",
         component: SignatoryContactInformationForm
@@ -104,6 +94,11 @@ class SignatorySummaryCard extends Component {
       item.handler = this.handleContinue(item);
       item.sectionHeadClickHandler = this.handleSectionHeadClick(item);
       item.nextSection = this.sectionsConfig[index + 1] || null;
+
+      this.state[item.key] = {
+        isFilled: false,
+        isExpanded: index === 0
+      };
     });
   }
 
@@ -196,7 +191,7 @@ class SignatorySummaryCard extends Component {
   }
 
   getSignatoryRightsLabel() {
-    // todo implement method
+    return get(this.props.signatory, "accountSigningInfo.authorityType");
   }
 
   renderCardContent() {
@@ -253,4 +248,4 @@ class SignatorySummaryCard extends Component {
   }
 }
 
-export default withStyles(style)(SignatorySummaryCard);
+export default withStyles(styles)(SignatorySummaryCard);

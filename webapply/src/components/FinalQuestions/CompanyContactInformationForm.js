@@ -8,7 +8,7 @@ import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
 import InfoTitle from "../InfoTitle";
 
-const style = {
+const styles = {
   title: {
     fontSize: "16px"
   },
@@ -106,4 +106,4 @@ class CompanyContactInformationForm extends Component {
   }
 }
 
-export default withStyles(style)(CompanyContactInformationForm);
+export default withStyles(styles)(CompanyContactInformationForm);

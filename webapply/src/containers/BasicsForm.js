@@ -70,7 +70,7 @@ class BasicsForm extends React.Component {
             />
           </ErrorBoundary>
 
-          <SubmitButton />
+          <SubmitButton label="Next Step" justify="flex-end" />
         </form>
       </>
     );

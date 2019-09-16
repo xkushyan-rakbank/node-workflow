@@ -87,7 +87,7 @@ class CompanyStakeholders extends React.Component {
             <RightArrowWhite />
           </Button> */}
         </div>
-        <SubmitButton handleClick={this.goToFinalQuestions} />
+        <SubmitButton handleClick={this.goToFinalQuestions} label="Next Step" />
       </>
     );
   }

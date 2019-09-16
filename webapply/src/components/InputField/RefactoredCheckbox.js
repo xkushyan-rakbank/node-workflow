@@ -1,12 +1,11 @@
 import React from "react";
-import get from "lodash/get";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import Check from "./../../assets/images/on.svg";
 import { updateField } from "../../store/actions/appConfig";
-import combineNestingName from "../../utils/combineNestingName";
-import { DATA_ATTRIBUTES } from "../../constants";
+import { defineDynamicInputId } from "../../constants";
+import { getGeneralInputProps } from "../../store/selectors/appConfig";
 
 const styles = {
   checkboxWrapper: {
@@ -85,21 +84,19 @@ class CustomCheckbox extends React.Component {
 
   getDataAttr() {
     return {
-      [DATA_ATTRIBUTES.INPUT_ID]: this.props.id
+      id: defineDynamicInputId(this.props.id, this.props.indexes)
     };
   }
 
   render() {
-    const { config, classes, value = false, name } = this.props;
+    const { config, classes, value = false } = this.props;
     return (
       <label className={classes.checkboxWrapper}>
         <div className={classes.checkboxContainer}>
           <input
             {...this.getDataAttr()}
-            id={name}
             type="checkbox"
             value={value}
-            name={name}
             onChange={this.updateField}
             checked={value}
             className={classes.hiddenCheckbox}
@@ -121,20 +118,9 @@ class CustomCheckbox extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id, indexes }) => {
-  const config = state.appConfig.uiConfig[id] || {};
-  const hasNesting = config.name && config.name.search(/\*/);
-  const name = hasNesting
-    ? combineNestingName(config.name, indexes)
-    : config.name;
-  const value = get(state.appConfig, name);
-
-  return {
-    config,
-    value,
-    name
-  };
-};
+const mapStateToProps = (state, { id, indexes }) => ({
+  ...getGeneralInputProps(state, id, indexes)
+});
 
 const mapDispatchToProps = {
   updateField

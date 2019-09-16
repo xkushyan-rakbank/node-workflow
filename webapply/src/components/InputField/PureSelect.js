@@ -13,12 +13,12 @@ import InfoTitle from "../InfoTitle";
 import { updateField } from "../../store/actions/appConfig";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import combineNestingName from "../../utils/combineNestingName";
 import { validate } from "../../utils/validate";
 import isEmpty from "lodash/isEmpty";
 import isBoolean from "lodash/isBoolean";
 import ErrorMessage from "../ErrorMessage";
-import { DATA_ATTRIBUTES } from "../../constants";
+import { defineDynamicInputId } from "../../constants";
+import { getGeneralInputProps } from "../../store/selectors/appConfig";
 
 const styles = {
   selectField: {
@@ -168,9 +168,7 @@ class PureSelect extends React.Component {
   handleBlur = () => this.checkInputValidity();
 
   composeInputProps() {
-    return {
-      [DATA_ATTRIBUTES.INPUT_ID]: this.props.id
-    };
+    return {};
   }
 
   render() {
@@ -181,8 +179,10 @@ class PureSelect extends React.Component {
       classes,
       combinedSelect,
       disabled,
-      name
+      id,
+      indexes
     } = this.props;
+    const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
     const inputProps = this.composeInputProps();
     const className = combinedSelect
@@ -197,7 +197,7 @@ class PureSelect extends React.Component {
         variant="outlined"
         error={isError}
       >
-        <InputLabel ref={this.inputLabel} htmlFor={name}>
+        <InputLabel ref={this.inputLabel} htmlFor={attrId}>
           {config.label}
         </InputLabel>
         <Select
@@ -207,8 +207,7 @@ class PureSelect extends React.Component {
             <OutlinedInput
               inputRef={node => (this.inputRef = node)}
               labelWidth={this.state.labelWidth}
-              name={name}
-              id={name}
+              id={attrId}
               inputProps={inputProps}
             />
           }
@@ -236,21 +235,9 @@ class PureSelect extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id, indexes }) => {
-  const config = state.appConfig.uiConfig[id] || {};
-  const name =
-    config.name && config.name.search(/\*/)
-      ? combineNestingName(config.name, indexes)
-      : config.name;
-
-  const value = get(state.appConfig, name);
-
-  return {
-    config,
-    value,
-    name
-  };
-};
+const mapStateToProps = (state, { id, indexes }) => ({
+  ...getGeneralInputProps(state, id, indexes)
+});
 
 const mapDispatchToProps = {
   updateField

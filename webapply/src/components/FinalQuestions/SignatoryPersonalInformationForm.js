@@ -6,17 +6,9 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 
-const style = {
+const styles = {
   title: {
     fontSize: "16px"
-  },
-  groupLabel: {
-    marginTop: "15px",
-    marginBottom: "7px",
-    fontSize: "16px",
-    fontWeight: "600",
-    lineHeight: "1.9",
-    color: "#373737"
   },
   flexContainer: {
     marginTop: "0",
@@ -71,4 +63,4 @@ class SignatoryPersonalInformationForm extends Component {
   }
 }
 
-export default withStyles(style)(SignatoryPersonalInformationForm);
+export default withStyles(styles)(SignatoryPersonalInformationForm);

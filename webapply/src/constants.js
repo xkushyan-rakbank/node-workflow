@@ -10,12 +10,9 @@ import CompanyDetails from "./components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "./components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "./components/AboutCompanyStepForms/LicenseInformation";
 import isUndefined from "lodash/isUndefined";
+import isArray from "lodash/isArray";
 
 import routes from "./routes";
-
-export const DATA_ATTRIBUTES = {
-  INPUT_ID: "data-config-id"
-};
 
 export const stakeHoldersSteps = [
   {
@@ -57,10 +54,12 @@ export const authorityType = [
   { value: "AuthorityType2", label: "AuthorityType2" }
 ];
 
-export const countryOfResidence = [
-  { value: "Country Of Residence1", label: "Country Of Residence1" },
-  { value: "Country Of Residence2", label: "Country Of Residence2" }
-];
+export const defineDynamicInputId = (id, indexes) => {
+  if (isArray(indexes) && indexes.length > 0) {
+    return `${id}_${indexes.join("_")}`;
+  }
+  return id;
+};
 
 export const defineInputFormatByConfig = fieldConfig => {
   switch (fieldConfig.format) {
@@ -91,10 +90,9 @@ export const defineInputMinLengthByConfig = fieldConfig => {
   return fieldConfig.min;
 };
 
-export const fieldAttr = (id, fieldConfig, name) => {
+export const fieldAttr = (id, fieldConfig, indexes) => {
   return {
-    [DATA_ATTRIBUTES.INPUT_ID]: id,
-    id: name,
+    id: defineDynamicInputId(id, indexes),
     type: defineInputFormatByConfig(fieldConfig),
     min: fieldConfig.min,
     max: fieldConfig.max,
