@@ -8,7 +8,7 @@ import CommonQuestions from "./CommonQuestions";
 
 const style = {
   stepWrapper: {
-    paddingTop: "150px"
+    // paddingTop: "150px"
   },
   icon: {
     fontSize: "55px",

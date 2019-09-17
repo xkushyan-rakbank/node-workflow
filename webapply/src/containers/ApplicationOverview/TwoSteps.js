@@ -12,13 +12,14 @@ const style = {
     color: "green"
   },
   firstGroup: {
-    paddingTop: "150px"
+    width: "100%"
   },
   indent: {
     marginBottom: "15px"
   },
   secondGroup: {
-    height: "370px",
+    height: "300px",
+    width: "100%",
     paddingTop: "80px",
     "& span": {
       maxWidth: "380px"
