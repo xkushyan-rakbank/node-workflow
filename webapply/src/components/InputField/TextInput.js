@@ -31,7 +31,7 @@ const styles = {
   },
   selectCombined: {
     flexDirection: "row !important",
-    alignItems: "baseline",
+    alignItems: "flex-start",
     margin: "12px 0 24px !important",
     "& > div": {
       margin: "0 !important",
@@ -63,7 +63,7 @@ const styles = {
     marginBottom: "24px"
   },
   regularWrapper: {
-    margin: "12px 0 24px !important",
+    margin: "12px 0 20px !important",
     "& .formControl": {
       margin: "0 !important"
     }

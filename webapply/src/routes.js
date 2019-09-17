@@ -1,4 +1,6 @@
 export default {
+  comeBackLoginVerification: "/ComeBackVerification",
+  comeBackLogin: "/ComeBackLogin",
   accountsComparison: "/AccountsComparison",
   applicationOverview: "/ApplicationOverview",
   detailedAccount: "/DetailedAccount",

@@ -17,6 +17,8 @@ import SelectServices from "./containers/SelectServices";
 import AccountsComparison from "./containers/AccountsComparison/AccountsComparison";
 import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOverview";
 import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
+import ComeBackLogin from "./containers/ComeBack/ComeBackLogin";
+import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -88,6 +90,16 @@ class App extends React.Component {
                 exact
                 path={routes.detailedAccount}
                 component={DetailedAccount}
+              />
+              <Route
+                exact
+                path={routes.comeBackLogin}
+                component={ComeBackLogin}
+              />
+              <Route
+                exact
+                path={routes.comeBackLoginVerification}
+                component={ComeBackVerification}
               />
               <Route path="*" />
             </Switch>

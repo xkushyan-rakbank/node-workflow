@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import get from "lodash/get";
 import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
@@ -52,16 +53,9 @@ class CompanyBackgroundForm extends Component {
       countryOfOriginCount: 5
     };
     this.state = {
-      customerCount: 1,
-      supplierCount: 1,
-      countryOfOriginCount: 1,
       isDontTradingGoods: false,
       isDontHaveSuppliers: false
     };
-
-    this.topOriginGoodsCountriesPath =
-      "prospect.orgKYCDetails.topOriginGoodsCountries";
-    this.topOriginGoodsCountriesDefaultValue = [""];
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -69,47 +63,164 @@ class CompanyBackgroundForm extends Component {
       prevState.isDontTradingGoods !== this.state.isDontTradingGoods &&
       this.state.isDontTradingGoods
     ) {
-      this.setState({ countryOfOriginCount: 1 });
       this.props.updateField({
-        name: this.topOriginGoodsCountriesPath,
-        value: this.topOriginGoodsCountriesDefaultValue
+        name: "prospect.orgKYCDetails.topOriginGoodsCountries",
+        value: [""]
       });
     }
     if (
       prevState.isDontHaveSuppliers !== this.state.isDontHaveSuppliers &&
       this.state.isDontHaveSuppliers
     ) {
-      this.setState({ supplierCount: 1 });
       this.props.updateField({
         name: "prospect.orgKYCDetails.topSuppliers",
-        value: [{ name: "", country: "" }]
+        value: [this.getEmptyCustomerSupplierItem()]
       });
     }
   }
 
-  updateCountedStateValue = (key, increment = 1) => {
-    if (key in this.limits && this.state[key] >= this.limits[key]) {
-      return;
-    }
-    this.setState({ [key]: this.state[key] + increment });
+  /**
+   * @typedef {Object} CustomerSupplierData
+   * @property {String} name
+   * @property {String} country
+   *
+   * Filed empty item collection
+   * @param {CustomerSupplierData} [item]
+   * @return {CustomerSupplierData}
+   */
+  mapNameAndCountryCollection = item => {
+    const { name = "", country = "" } = item || {};
+    return { name, country };
   };
 
+  /**
+   * @return {CustomerSupplierData}
+   */
+  getEmptyCustomerSupplierItem() {
+    return {
+      name: "",
+      country: ""
+    };
+  }
+
+  /**
+   * @return {CustomerSupplierData[]}
+   */
+  getTopCustomerData() {
+    return get(this.props.orgKYCDetails, "topCustomers", [
+      this.getEmptyCustomerSupplierItem()
+    ]);
+  }
+
+  /**
+   * @return {CustomerSupplierData[]}
+   */
+  getTopSupplierData() {
+    return get(this.props.orgKYCDetails, "topSuppliers", [
+      this.getEmptyCustomerSupplierItem()
+    ]);
+  }
+
+  /**
+   * @return {String[]}
+   */
+  getTopOriginGoodsCountries() {
+    return get(this.props.orgKYCDetails, "topOriginGoodsCountries", [""]);
+  }
+
+  filterAndUpdateTopCustomersValues() {
+    const dataList = this.getTopCustomerData()
+      .map(this.mapNameAndCountryCollection)
+      .filter((item, index) => index === 0 || item.name || item.country);
+
+    if (dataList.length > this.limits.customerCount) {
+      dataList.length = this.limits.customerCount;
+    }
+
+    this.props.updateField({
+      name: "prospect.orgKYCDetails.topCustomers",
+      value: dataList
+    });
+  }
+
+  filterAndUpdateTopSuppliersValues() {
+    const dataList = this.getTopSupplierData()
+      .map(this.mapNameAndCountryCollection)
+      .filter((item, index) => index === 0 || item.name || item.country);
+
+    if (dataList.length > this.limits.supplierCount) {
+      dataList.length = this.limits.supplierCount;
+    }
+
+    this.props.updateField({
+      name: "prospect.orgKYCDetails.topSuppliers",
+      value: dataList
+    });
+  }
+
   handleAddCustomerClick = () => {
-    this.updateCountedStateValue("customerCount");
+    const dataList = this.getTopCustomerData();
+    if (dataList.length < this.limits.customerCount) {
+      this.props.updateField({
+        name: "prospect.orgKYCDetails.topCustomers",
+        value: [...dataList, this.getEmptyCustomerSupplierItem()]
+      });
+    }
   };
 
   handleAddSupplierClick = () => {
-    this.updateCountedStateValue("supplierCount");
+    const dataList = this.getTopSupplierData();
+    if (dataList.length < this.limits.supplierCount) {
+      this.props.updateField({
+        name: "prospect.orgKYCDetails.topSuppliers",
+        value: [...dataList, this.getEmptyCustomerSupplierItem()]
+      });
+    }
   };
 
   handleAddCountryOfOriginClick = () => {
-    this.updateCountedStateValue("countryOfOriginCount");
+    const dataList = this.getTopOriginGoodsCountries();
+    if (dataList.length < this.limits.countryOfOriginCount) {
+      this.props.updateField({
+        name: "prospect.orgKYCDetails.topOriginGoodsCountries",
+        value: [...dataList, ""]
+      });
+    }
   };
 
   handleSubmit = event => {
     event.preventDefault();
+    this.filterAndUpdateTopCustomersValues();
+    this.filterAndUpdateTopSuppliersValues();
+
     this.props.handleContinue(event);
   };
+
+  isTopCustomerNameRequired(index) {
+    return index === 0 || this.getTopCustomerData()[index].country !== "";
+  }
+
+  isTopCustomerCountyRequired(index) {
+    return index === 0 || this.getTopCustomerData()[index].name !== "";
+  }
+
+  isTopSupplierNameRequired(index) {
+    if (!this.state.isDontHaveSuppliers && index === 0) {
+      return true;
+    }
+    return this.getTopSupplierData()[index].country !== "";
+  }
+
+  isTopSupplierCountryRequired(index) {
+    if (!this.state.isDontHaveSuppliers && index === 0) {
+      return true;
+    }
+    return this.getTopSupplierData()[index].name !== "";
+  }
+
+  isCountryOriginGoodsRequired(index) {
+    return index === 0 && !this.state.isDontTradingGoods;
+  }
 
   render() {
     return (
@@ -125,21 +236,22 @@ class CompanyBackgroundForm extends Component {
           spacing={3}
           className={this.props.classes.flexContainer}
         >
-          {Array.from(Array(this.state.customerCount).keys()).map(index => {
+          {this.getTopCustomerData().map((_, index) => {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
                   <TextInput
                     id="OkycTopc.name"
                     indexes={[index]}
-                    required={index === 0}
+                    required={this.isTopCustomerNameRequired(index)}
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <PureSelect
                     id="OkycTopc.country"
                     indexes={[index]}
-                    required={index === 0}
+                    resetValue={""}
+                    required={this.isTopCustomerCountyRequired(index)}
                   />
                 </Grid>
               </React.Fragment>
@@ -149,7 +261,9 @@ class CompanyBackgroundForm extends Component {
         <AddButton
           onClick={this.handleAddCustomerClick}
           title="Add another customer"
-          disabled={this.state.customerCount >= this.limits.customerCount}
+          disabled={
+            this.getTopCustomerData().length >= this.limits.customerCount
+          }
         />
 
         <div className={this.props.classes.divider} />
@@ -167,14 +281,14 @@ class CompanyBackgroundForm extends Component {
           spacing={3}
           className={this.props.classes.flexContainer}
         >
-          {Array.from(Array(this.state.supplierCount).keys()).map(index => {
+          {this.getTopSupplierData().map((_, index) => {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
                   <TextInput
                     id="OkycTops.name"
                     indexes={[index]}
-                    required={!this.state.isDontHaveSuppliers && index === 0}
+                    required={this.isTopSupplierNameRequired(index)}
                     disabled={this.state.isDontHaveSuppliers}
                   />
                 </Grid>
@@ -182,7 +296,8 @@ class CompanyBackgroundForm extends Component {
                   <PureSelect
                     id="OkycTops.country"
                     indexes={[index]}
-                    required={!this.state.isDontHaveSuppliers && index === 0}
+                    resetValue={""}
+                    required={this.isTopSupplierCountryRequired(index)}
                     disabled={this.state.isDontHaveSuppliers}
                   />
                 </Grid>
@@ -195,7 +310,7 @@ class CompanyBackgroundForm extends Component {
           title="Add another supplier"
           disabled={
             this.state.isDontHaveSuppliers ||
-            this.state.supplierCount >= this.limits.supplierCount
+            this.getTopSupplierData().length >= this.limits.supplierCount
           }
         />
 
@@ -215,19 +330,21 @@ class CompanyBackgroundForm extends Component {
           className={this.props.classes.flexContainer}
         >
           <Grid item md={6} sm={12}>
-            {Array.from(Array(this.state.countryOfOriginCount).keys()).map(
-              index => {
-                return (
-                  <PureSelect
-                    key={index}
-                    required={index === 0 && !this.state.isDontTradingGoods}
-                    id="Okyc.topOriginGoodsCountries"
-                    indexes={[index]}
-                    disabled={this.state.isDontTradingGoods}
-                  />
-                );
-              }
-            )}
+            {this.getTopOriginGoodsCountries().map((_, index) => {
+              return (
+                <PureSelect
+                  key={index}
+                  id="Okyc.topOriginGoodsCountries"
+                  indexes={[index]}
+                  resetValue={""}
+                  excludeValues={this.getTopOriginGoodsCountries().filter(
+                    (_, valueIndex) => valueIndex !== index
+                  )}
+                  required={this.isCountryOriginGoodsRequired(index)}
+                  disabled={this.state.isDontTradingGoods}
+                />
+              );
+            })}
           </Grid>
         </Grid>
         <AddButton
@@ -235,7 +352,8 @@ class CompanyBackgroundForm extends Component {
           title="Add another country of origin"
           disabled={
             this.state.isDontTradingGoods ||
-            this.state.countryOfOriginCount >= this.limits.countryOfOriginCount
+            this.getTopOriginGoodsCountries().length >=
+              this.limits.countryOfOriginCount
           }
         />
 
