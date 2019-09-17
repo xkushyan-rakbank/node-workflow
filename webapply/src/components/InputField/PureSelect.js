@@ -11,10 +11,10 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { withStyles } from "@material-ui/core/styles";
 import InfoTitle from "../InfoTitle";
 import { updateField } from "../../store/actions/appConfig";
-import { compose } from "recompose";
 import { connect } from "react-redux";
 import { validate } from "../../utils/validate";
 import isEmpty from "lodash/isEmpty";
+import isNil from "lodash/isNil";
 import isBoolean from "lodash/isBoolean";
 import ErrorMessage from "../ErrorMessage";
 import { defineDynamicInputId } from "../../constants";
@@ -82,9 +82,9 @@ class PureSelect extends React.Component {
         name: this.props.name
       });
     }
-    if (this.isSelectRequired()) {
-      this.setRequiredForInput();
-    }
+    this.isSelectRequired()
+      ? this.setRequiredForInput()
+      : this.unsetRequiredForInput();
 
     // uncomitted when PureSelect component will replace Select in project
     // window.addEventListener("resize", () => console.log(this.inputLabel));
@@ -94,7 +94,7 @@ class PureSelect extends React.Component {
     if (isEmpty(prevProps.config) && !isEmpty(this.props.config)) {
       this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
     }
-    if (prevProps.required !== this.props.required) {
+    if (prevProps.required !== this.props.required && !this.props.required) {
       this.setState({ fieldErrors: {} });
     }
     this.isSelectRequired()
@@ -132,7 +132,7 @@ class PureSelect extends React.Component {
     inputNode.style.width = "unset";
     inputNode.style.height = "unset";
     inputNode.style.opacity = "unset";
-    inputNode.focus = () => {};
+    inputNode.focus = this.handleInputFocus;
   }
 
   handleInputFocus = () => {
@@ -180,6 +180,9 @@ class PureSelect extends React.Component {
       combinedSelect,
       disabled,
       id,
+      resetValue,
+      resetLabel = "",
+      excludeValues = [],
       indexes
     } = this.props;
     const attrId = defineDynamicInputId(id, indexes);
@@ -216,12 +219,17 @@ class PureSelect extends React.Component {
           onChange={this.updateField}
           onBlur={this.handleBlur}
         >
+          {!isNil(resetValue) && (
+            <MenuItem value={resetValue}>{resetLabel}</MenuItem>
+          )}
           {config.datalist &&
-            config.datalist.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.displayText}
-              </MenuItem>
-            ))}
+            config.datalist
+              .filter(item => !excludeValues.includes(item.value))
+              .map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.displayText}
+                </MenuItem>
+              ))}
         </Select>
         {!!config.title && <InfoTitle title={config.title} />}
         {isError && (
@@ -243,10 +251,9 @@ const mapDispatchToProps = {
   updateField
 };
 
-export default compose(
-  withStyles(styles),
+export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )
-)(PureSelect);
+  )(PureSelect)
+);
