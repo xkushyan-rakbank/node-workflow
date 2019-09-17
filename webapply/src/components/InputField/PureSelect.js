@@ -52,7 +52,7 @@ const styles = {
     }
   },
   selectFieldCombined: {
-    width: "90px !important",
+    width: "93px !important",
     "& label": {
       maxWidth: "unset"
     },
