@@ -19,11 +19,12 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -36,7 +37,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 
-@Controller
+@RestController
+@RequestMapping("/api/v1")
 public class WebApplyController {
 
 	private static final Logger logger = LoggerFactory.getLogger(WebApplyController.class);
@@ -83,7 +85,7 @@ public class WebApplyController {
 		return null;
 	}
 
-	@GetMapping(value = "/api/v1/config", produces = "application/json")
+	@GetMapping(value = "/config", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Object> getWebApplyConfig(@RequestParam String segment, @RequestParam String product,
 			@RequestParam String role, @RequestParam(required = false, defaultValue = "desktop") String device)
@@ -109,7 +111,7 @@ public class WebApplyController {
 		return new ResponseEntity<Object>(webApplyConfig, headers, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/api/v1/config/reload", produces = "application/json")
+	@PostMapping(value = "/config/reload", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Object> loadAppInitialState() {
 		logger.info("reload config files and cache again");
