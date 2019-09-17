@@ -18,11 +18,12 @@ const style = {
   }
 };
 
-const TextHelpWithLink = ({ text, linkText, linkTo, classes }) => (
+const TextHelpWithLink = ({ text, linkText, linkTo, classes, ...props }) => (
   <Typography
     element="span"
     variant="subtitle1"
     classes={{ root: classes.rootTypography }}
+    {...props}
   >
     {text}{" "}
     <Link to={linkTo} className={classes.link}>

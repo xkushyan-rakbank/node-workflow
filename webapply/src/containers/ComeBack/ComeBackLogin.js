@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
+import ContainerComeBack from "./ContainerComeBack";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import TextInput from "../../components/InputField/TextInput";
 import PureSelect from "../../components/InputField/PureSelect";
@@ -8,19 +9,15 @@ import TextHelpWithLink from "../../components/TextHelpWithLink";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 
 const styles = {
-  // todo create common container centeredContainer
-  centeredContainer: {
-    paddingTop: 90,
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column"
-  },
   form: {
     width: "100%",
     height: 500,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    "@media only screen and (max-height: 768px)": {
+      height: 350
+    }
   }
 };
 
@@ -33,7 +30,7 @@ class ComeBackLogin extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.centeredContainer}>
+      <ContainerComeBack>
         <SectionTitleWithInfo
           title="Wondering about your application? You came to the right place."
           info="Please enter the login you used when you first applied"
@@ -63,7 +60,7 @@ class ComeBackLogin extends React.Component {
 
           <SubmitButton disabled label="Next" justify="flex-end" />
         </form>
-      </div>
+      </ContainerComeBack>
     );
   }
 }
