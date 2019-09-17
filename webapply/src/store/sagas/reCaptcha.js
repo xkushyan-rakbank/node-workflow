@@ -9,16 +9,13 @@ function* verifyToken() {
     const state = yield select();
     yield put(actions.setPending(true));
 
-    const { data } = yield call(
-      apiClient.reCaptcha.verify,
-      getReCaptchaToken(state)
-    );
-    yield put(
-      actions.setVerified(get(data, "g-recaptcha-response.success", false))
-    );
+    yield call(apiClient.reCaptcha.verify, getReCaptchaToken(state));
+    yield put(actions.setVerified(true));
   } catch (error) {
-    console.error(error);
-    yield put(actions.setError(error));
+    console.log(error);
+    yield put(
+      actions.setError(get(error, "data.message") || get(error, "message"))
+    );
   }
 }
 

@@ -83,8 +83,6 @@ class BasicsForm extends React.Component {
             }
           />
 
-          <PureSelect id="" />
-
           <RefactoredCheckbox id="Aplnt.applyOnbehalf" />
 
           <ErrorBoundary className={classes.reCaptchaContainer}>
