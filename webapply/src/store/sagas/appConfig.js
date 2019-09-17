@@ -1,4 +1,11 @@
-import { all, call, put, takeLatest, select } from "redux-saga/effects";
+import {
+  all,
+  call,
+  put,
+  takeLatest,
+  takeEvery,
+  select
+} from "redux-saga/effects";
 import {
   RECEIVE_APPCONFIG,
   receiveAppConfigSuccess,
@@ -30,6 +37,6 @@ function* updateFieldSaga(action) {
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
-    takeLatest(UPDATE_FIELD, updateFieldSaga)
+    takeEvery(UPDATE_FIELD, updateFieldSaga)
   ]);
 }
