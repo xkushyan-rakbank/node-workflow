@@ -2,7 +2,7 @@
   "errorType": "FieldsValidation",
   "errors": [
     {
-       "fieldPath": "$.mobileNo",
+       "fieldPath": "$.Aplnt.mobileNo",
       "code": "INVALID",
       "errorType": "ValidationError",
       "message": "Field is invalid",

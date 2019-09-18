@@ -2,19 +2,19 @@
   "errorType": "FieldsValidation",
   "errors": [
     {
-      "fieldPath": "$.mobileNo",
+      "fieldPath": "$.Aplnt.mobileNo",
       "code": "INVALID",
       "errorType": "ValidationError",
       "message": "Field is invalid",
       "developerText": "Mobile number should be 10 digits, no speacial characters allowed"
     },
 	{
-      "fieldPath": "$.email",
+      "fieldPath": "$.Aplnt.email",
       "code": "INVALID",
       "errorType": "ValidationError",
       "message": "Field is invalid",
       "developerText": "Email id should contain @ and ."
     }
-	
+
   ]
 }
