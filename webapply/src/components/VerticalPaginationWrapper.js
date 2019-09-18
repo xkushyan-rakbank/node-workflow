@@ -104,7 +104,7 @@ class VerticalPaginationWrapper extends React.Component {
     const correctedPadding = nextElementPosition
       ? `${parentBottomOffset}px`
       : "0px";
-    const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding})`;
+    const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding}*${nextElementPosition})`;
     this.setState({
       top,
       currentElement: nextElementPosition.toString()
@@ -116,7 +116,7 @@ class VerticalPaginationWrapper extends React.Component {
     const correctedPadding = nextElementPosition
       ? `${parentBottomOffset}px`
       : "0px";
-    const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding})`;
+    const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding}*${nextElementPosition})`;
     this.setState({
       top,
       currentElement: e.currentTarget.name

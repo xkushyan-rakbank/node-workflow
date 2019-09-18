@@ -14,7 +14,10 @@ const style = {
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
-    textAlign: "center"
+    textAlign: "center",
+    "@media only screen and (max-width: 1300px)": {
+      padding: "5px 20px"
+    }
   },
   iconCardText: {
     display: "flex",
