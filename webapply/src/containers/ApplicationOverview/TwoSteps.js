@@ -15,12 +15,11 @@ const style = {
     width: "100%"
   },
   indent: {
-    marginBottom: "15px"
+    marginBottom: "30px"
   },
   secondGroup: {
     height: "300px",
     width: "100%",
-    paddingTop: "80px",
     "& span": {
       maxWidth: "380px"
     },
@@ -34,22 +33,24 @@ const TwoSteps = ({ classes }) => (
       <div className={classes.indent}>
         <SectionTitleWithInfo title="Two easy steps" />
       </div>
-      <IconCardsContainer>
-        <IconCardItem
-          minWidth="260px"
-          title="First"
-          text="You fill a couple of questions"
-        >
-          <DoneIcon className={classes.icon} />
-        </IconCardItem>
-        <IconCardItem
-          minWidth="260px"
-          title="Then"
-          text="We call you to sign the account"
-        >
-          <DoneIcon className={classes.icon} />
-        </IconCardItem>
-      </IconCardsContainer>
+      <div className={classes.indent}>
+        <IconCardsContainer>
+          <IconCardItem
+            minWidth="260px"
+            title="First"
+            text="You fill a couple of questions"
+          >
+            <DoneIcon className={classes.icon} />
+          </IconCardItem>
+          <IconCardItem
+            minWidth="260px"
+            title="Then"
+            text="We call you to sign the account"
+          >
+            <DoneIcon className={classes.icon} />
+          </IconCardItem>
+        </IconCardsContainer>
+      </div>
     </div>
     <div className={classes.secondGroup}>
       <SectionTitleWithInfo

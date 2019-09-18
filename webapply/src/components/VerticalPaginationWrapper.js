@@ -3,12 +3,13 @@ import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
 
 // Parent wrapper component total vertical padding. Temporary solution. In the future should be fixed
-const parentOffset = 140;
+const parentTotalOffset = 140;
+const parentBottomOffset = 50;
 
 const style = {
   paginationWrapper: {
     position: "relative",
-    height: `calc(100vh - ${parentOffset}px)`,
+    height: `calc(100vh - ${parentTotalOffset}px)`,
     overflow: "hidden"
   },
   paginationContent: {
@@ -20,8 +21,9 @@ const style = {
   childWrapper: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    height: `calc(100vh - ${parentOffset}px)`,
+    justifyContent: "center",
+    height: `calc(100vh - ${parentTotalOffset}px)`,
+    overflow: "hidden",
     "&:not(:last-child)": {
       marginBottom: "50px"
     }
@@ -99,7 +101,10 @@ class VerticalPaginationWrapper extends React.Component {
     }
 
     this.timeStamp = now;
-    const top = `calc((100vh - ${parentOffset}px)*-${nextElementPosition})`;
+    const correctedPadding = nextElementPosition
+      ? `${parentBottomOffset}px`
+      : "0px";
+    const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding})`;
     this.setState({
       top,
       currentElement: nextElementPosition.toString()
@@ -107,9 +112,11 @@ class VerticalPaginationWrapper extends React.Component {
   };
 
   handleClick = e => {
-    const top = `calc((100vh - ${parentOffset}px)*-${parseInt(
-      e.currentTarget.name
-    )})`;
+    const nextElementPosition = parseInt(e.currentTarget.name);
+    const correctedPadding = nextElementPosition
+      ? `${parentBottomOffset}px`
+      : "0px";
+    const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding})`;
     this.setState({
       top,
       currentElement: e.currentTarget.name

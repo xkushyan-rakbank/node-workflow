@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import cx from "classnames";
 
-const MyExpansionPanel = withStyles({
+const StyledExpansionPanel = withStyles({
   root: {
     border: "none",
     boxShadow: "none",
@@ -27,7 +27,7 @@ const MyExpansionPanel = withStyles({
   expanded: {}
 })(ExpansionPanel);
 
-const MyExpansionPanelSummary = withStyles({
+const StyledExpansionPanelSummary = withStyles({
   root: {
     minHeight: 60,
     "&$expanded": {
@@ -35,6 +35,8 @@ const MyExpansionPanelSummary = withStyles({
     }
   },
   content: {
+    width: "calc(100% - 100px)",
+    overflow: "hidden",
     "&$expanded": {
       margin: "12px 0"
     }
@@ -42,7 +44,7 @@ const MyExpansionPanelSummary = withStyles({
   expanded: {}
 })(ExpansionPanelSummary);
 
-const MyExpansionPanelDetails = withStyles(theme => ({
+const StyledExpansionPanelDetails = withStyles(theme => ({
   root: {
     padding: theme.spacing(2),
     borderTop: "1px solid rgba(239, 242, 244, .5)",
@@ -62,7 +64,10 @@ const style = {
   },
   text: {
     paddingBottom: "5px",
-    fontSize: "16px"
+    fontSize: "16px",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis"
   },
   info: {
     paddingLeft: "10px"
@@ -85,12 +90,12 @@ class CommonQuestions extends React.Component {
     const { expanded } = this.state;
     return (
       <>
-        <MyExpansionPanel
+        <StyledExpansionPanel
           square
           expanded={expanded === "panel-1"}
           onChange={() => this.handleChange("panel-1")}
         >
-          <MyExpansionPanelSummary
+          <StyledExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1d-content"
             id="panel1d-header"
@@ -99,17 +104,17 @@ class CommonQuestions extends React.Component {
               <HelpOutlineIcon className={classes.iconStyle} />
               Can I come back later and complete the application?
             </div>
-          </MyExpansionPanelSummary>
-          <MyExpansionPanelDetails>
+          </StyledExpansionPanelSummary>
+          <StyledExpansionPanelDetails>
             <div className={cx(classes.text, classes.info)}>Some info</div>
-          </MyExpansionPanelDetails>
-        </MyExpansionPanel>
-        <MyExpansionPanel
+          </StyledExpansionPanelDetails>
+        </StyledExpansionPanel>
+        <StyledExpansionPanel
           square
           expanded={expanded === "panel-2"}
           onChange={() => this.handleChange("panel-2")}
         >
-          <MyExpansionPanelSummary
+          <StyledExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1d-content"
             id="panel1d-header"
@@ -118,17 +123,17 @@ class CommonQuestions extends React.Component {
               <HelpOutlineIcon className={classes.iconStyle} />
               How long will it take to get the account?
             </div>
-          </MyExpansionPanelSummary>
-          <MyExpansionPanelDetails>
+          </StyledExpansionPanelSummary>
+          <StyledExpansionPanelDetails>
             <div className={cx(classes.text, classes.info)}>Some info</div>
-          </MyExpansionPanelDetails>
-        </MyExpansionPanel>
-        <MyExpansionPanel
+          </StyledExpansionPanelDetails>
+        </StyledExpansionPanel>
+        <StyledExpansionPanel
           square
           expanded={expanded === "panel-3"}
           onChange={() => this.handleChange("panel-3")}
         >
-          <MyExpansionPanelSummary
+          <StyledExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1d-content"
             id="panel1d-header"
@@ -137,17 +142,17 @@ class CommonQuestions extends React.Component {
               <HelpOutlineIcon className={classes.iconStyle} />
               What if I need help with some fields?
             </div>
-          </MyExpansionPanelSummary>
-          <MyExpansionPanelDetails>
+          </StyledExpansionPanelSummary>
+          <StyledExpansionPanelDetails>
             <div className={cx(classes.text, classes.info)}>Some info</div>
-          </MyExpansionPanelDetails>
-        </MyExpansionPanel>
-        <MyExpansionPanel
+          </StyledExpansionPanelDetails>
+        </StyledExpansionPanel>
+        <StyledExpansionPanel
           square
           expanded={expanded === "panel-4"}
           onChange={() => this.handleChange("panel-4")}
         >
-          <MyExpansionPanelSummary
+          <StyledExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1d-content"
             id="panel1d-header"
@@ -156,11 +161,11 @@ class CommonQuestions extends React.Component {
               <HelpOutlineIcon className={classes.iconStyle} />
               How do I check the status on my submitted application?
             </div>
-          </MyExpansionPanelSummary>
-          <MyExpansionPanelDetails>
+          </StyledExpansionPanelSummary>
+          <StyledExpansionPanelDetails>
             <div className={cx(classes.text, classes.info)}>Some info</div>
-          </MyExpansionPanelDetails>
-        </MyExpansionPanel>
+          </StyledExpansionPanelDetails>
+        </StyledExpansionPanel>
       </>
     );
   }
