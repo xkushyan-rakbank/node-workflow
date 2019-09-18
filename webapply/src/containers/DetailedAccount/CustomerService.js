@@ -6,8 +6,8 @@ import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
 
 const style = {
-  stepWrapper: {
-    paddingTop: "150px"
+  indent: {
+    marginBottom: "50px"
   },
   icon: {
     fontSize: "55px",
@@ -29,11 +29,13 @@ const style = {
 };
 
 const CustomerService = ({ classes }) => (
-  <div className={classes.stepWrapper}>
-    <SectionTitleWithInfo
-      title="Customer service. On your terms."
-      info="Get access to our world-class RAKBANK service, at your door or on the go"
-    />
+  <>
+    <div className={classes.indent}>
+      <SectionTitleWithInfo
+        title="Customer service. On your terms."
+        info="Get access to our world-class RAKBANK service, at your door or on the go"
+      />
+    </div>
     <div className={classes.stepCardsWrapper}>
       <IconCardsContainer>
         <IconCardItem minWidth="100px" text="Dedicated relationship manager">
@@ -47,7 +49,7 @@ const CustomerService = ({ classes }) => (
         </IconCardItem>
       </IconCardsContainer>
     </div>
-  </div>
+  </>
 );
 
 export default withStyles(style)(CustomerService);
