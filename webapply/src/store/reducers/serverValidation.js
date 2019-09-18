@@ -13,15 +13,7 @@ import * as actions from "../actions/serverValidation";
  * @type {ServerValidation}
  */
 const initialState = {
-  inputs: {
-    "prospect.applicantInfo.fullName": {
-      fieldPath: "$.prospect.applicantInfo.fullName",
-      errorCode: "Validation",
-      errorType: "InputError",
-      message: "Server validation message",
-      developerText: ""
-    }
-  }
+  inputs: {}
 };
 
 const serverErrorsReducer = (state = initialState, action) => {

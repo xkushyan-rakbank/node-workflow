@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import appConfig from "./appConfig";
 import reCaptcha from "./reCaptcha";
+import applicantInfoForm from "./applicantInfoForm";
 import serverValidation from "./serverValidation";
 
 /**
@@ -16,7 +17,8 @@ const reducers = history =>
     router: connectRouter(history),
     appConfig,
     serverValidation,
-    reCaptcha
+    reCaptcha,
+    applicantInfoForm
   });
 
 export default reducers;

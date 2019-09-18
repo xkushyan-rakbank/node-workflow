@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
+import store from "../store/configureStore";
+import get from "lodash/get";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
@@ -8,6 +10,7 @@ import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import PureSelect from "../components/InputField/PureSelect";
 import { setToken, verifyToken, setVerified } from "../store/actions/reCaptcha";
+import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import validateForm from "../utils/validate";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
 
@@ -25,6 +28,7 @@ class BasicsForm extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log("update");
     if (
       prevProps.reCaptchaToken !== this.props.reCaptchaToken &&
       this.props.reCaptchaToken
@@ -33,12 +37,15 @@ class BasicsForm extends React.Component {
     }
   }
 
-  submitForm = event => {
+  submitForm = (event, values) => {
     event.preventDefault();
     const errorList = validateForm(event);
 
+    // this.props.history.push("/VerifyOTP");
+
     if (!errorList.length) {
-      this.props.history.push("/VerifyOTP");
+      const data = get(store.getState(), "appConfig.prospect");
+      this.props.applicantInfoForm(data);
     }
   };
 
@@ -57,7 +64,6 @@ class BasicsForm extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <>
         <h2>Let’s Start with the Basics</h2>
@@ -83,7 +89,7 @@ class BasicsForm extends React.Component {
             }
           />
 
-          <RefactoredCheckbox id="Aplnt.applyOnbehalf" />
+          <PureSelect id="Aplnt.applyOnbehalf" />
 
           <ErrorBoundary className={classes.reCaptchaContainer}>
             <ReCaptcha
@@ -93,11 +99,7 @@ class BasicsForm extends React.Component {
             />
           </ErrorBoundary>
 
-          <SubmitButton
-            label="Next Step"
-            justify="flex-end"
-            disabled={!this.props.isReCaptchaVerified}
-          />
+          <SubmitButton label="Next Step" justify="flex-end" />
         </form>
       </>
     );
@@ -112,7 +114,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setToken,
   setVerified,
-  verifyToken
+  verifyToken,
+  applicantInfoForm
 };
 
 export default withStyles(styles)(

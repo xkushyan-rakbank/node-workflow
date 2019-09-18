@@ -156,14 +156,27 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "I am applying on behalf of someone’s company",
+      "label": "Whose company are you applying for?",
       "placeholder": null,
       "path": "$.prospect.applicantInfo.applyOnbehalf",
       "name": "prospect.applicantInfo.applyOnbehalf",
       "required": false,
-      "datalistId": null,
       "readonlyFor": [],
-      "description": "apply on behalf of someone's company"
+      "description": "apply on behalf of someone's company",
+      "datalist": [
+        {
+          "code": "option1",
+          "key": "option1",
+          "value": "option1",
+          "displayText": "Option 1"
+        },
+        {
+          "code": "option2",
+          "key": "option2",
+          "value": "option2",
+          "displayText": "Option 2"
+        }
+      ]
     },
     "Gen.prospectId": {
       "criteria": {
@@ -7286,7 +7299,7 @@
       "email": "",
       "countryCode": "",
       "mobileNo": "",
-      "applyOnbehalf": false
+      "applyOnbehalf": ""
     },
     "generalInfo": {
       "prospectId": "",
