@@ -10,7 +10,7 @@ import CompanyNetworkForm from "./CompanyNetworkForm";
 import CompanyMailingAddressForm from "./CompanyMailingAddressForm";
 import CompanyContactInformationForm from "./CompanyContactInformationForm";
 import validateForm from "../../utils/validate";
-import { getInputValueById } from "../../store/selectors/appConfig";
+import { getInputValueById } from "../../store/selectors/input";
 
 class CompanySummaryCard extends Component {
   constructor(props) {

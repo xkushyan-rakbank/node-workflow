@@ -4,11 +4,11 @@ import Grid from "@material-ui/core/Grid";
 import TextInput from "../InputField/TextInput";
 import get from "lodash/get";
 import PureSelect from "../InputField/PureSelect";
+import { getSignatories } from "../../store/selectors/appConfig";
 import {
   getInputNameById,
-  getInputValueById,
-  getSignatories
-} from "../../store/selectors/appConfig";
+  getInputValueById
+} from "../../store/selectors/input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import ErrorMessage from "../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
