@@ -225,6 +225,7 @@ class Input extends React.Component {
       InputLabelProps,
       disabled,
       placeholder,
+      serverValidation,
       select
     } = this.props;
 
@@ -284,6 +285,9 @@ class Input extends React.Component {
               error={fieldErrors.error}
               multiLineError={fieldErrors.multiLineError}
             />
+          )}
+          {!isNil(serverValidation) && serverValidation.message && (
+            <ErrorMessage error={serverValidation.message} />
           )}
           {customValidationMessage}
         </div>
