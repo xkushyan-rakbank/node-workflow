@@ -1,5 +1,24 @@
 {
-  "appConfig": {},
+  "appConfig": {
+    "endpoints": {
+      "host": "http://localhost:9091",
+      "appConfigPath": "/webapply/api/v1/config",
+      "datalistPath": "/webapply/api/v1/banks/RAK/usertypes/{userType}/datalist",
+      "createProspectPath": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/",
+      "searchProspectPath": "/webapply/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
+      "getProspectPath": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+      "updateProspectPath": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+      "getProspectDocumentsPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/documents",
+      "uploadDocumentPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/documents",
+      "reuploadDocumentPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/documents",
+      "getDocumentByIdPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+      "prescreeningPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/screening",
+      "authenticateUserPath": "/webapply/api/v1/banks/RAK/users/authenticate",
+      "getDocumentByTitlePath": "/webapply/api/v1/banks/RAK/legal/documents/{documentTitle}",
+      "otpPath": "/webapply/api/v1/banks/RAK/otp",
+      "recaptchaPath": "/webapply/api/v1/banks/RAK/recaptcha/verify"
+    }
+  },
   "uiConfig": {
     "Aplnt.fullName": {
       "criteria": {
@@ -7116,7 +7135,6 @@
       "placeholder": null,
       "path": "$.prospect.searchInfo.raktrackNumber",
       "name": "prospect.searchInfo.raktrackNumber",
-
       "datalistId": null,
       "readonlyFor": [],
       "description": "lead Number of the applicant",
@@ -7139,7 +7157,6 @@
       "placeholder": null,
       "path": "$.prospect.searchInfo.tradeLicenseNo",
       "name": "prospect.searchInfo.tradeLicenseNo",
-
       "datalistId": null,
       "readonlyFor": [],
       "description": "tradeLicenseNo of the applicant",
