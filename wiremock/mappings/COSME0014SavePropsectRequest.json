@@ -1,10 +1,10 @@
 {
     "request": {
         "method": "POST",
-        "url": "/banks/RAK/usertypes/sme/prospects/",
+        "url": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/",
         "bodyPatterns": [
 			{
-				"matchesJsonPath": "$.applicantInfo[?(@.fullName == 'InvalidFields')]"
+				"matchesJsonPath": "$.applicantInfo[?(@.fullName == 'HappyPath')]"
 			}
 		]
     },
