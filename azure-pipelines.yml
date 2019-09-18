@@ -31,7 +31,6 @@ jobs:
       - bash : |
           cd webapply
           npm install
-    #PUBLIC_URL=https://conv.rakbankonline.ae/quickapply npm run build
           npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
