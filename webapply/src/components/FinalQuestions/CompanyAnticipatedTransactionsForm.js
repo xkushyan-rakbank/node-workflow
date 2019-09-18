@@ -11,7 +11,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InfoTitle from "../InfoTitle";
 import isNumber from "lodash/isNumber";
 import isNaN from "lodash/isNaN";
-import { getInputValueById } from "../../store/selectors/appConfig";
+import { getInputValueById } from "../../store/selectors/input";
 
 const styles = {
   title: {

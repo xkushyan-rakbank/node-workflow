@@ -18,7 +18,7 @@ import isNil from "lodash/isNil";
 import isBoolean from "lodash/isBoolean";
 import ErrorMessage from "../ErrorMessage";
 import { defineDynamicInputId } from "../../constants";
-import { getGeneralInputProps } from "../../store/selectors/appConfig";
+import { getGeneralInputProps } from "../../store/selectors/input";
 
 const styles = {
   selectField: {

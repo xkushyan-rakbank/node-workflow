@@ -9,7 +9,7 @@ import UICheckbox from "../InputField/Checkbox";
 import {
   getInputNameById,
   getInputValueById
-} from "../../store/selectors/appConfig";
+} from "../../store/selectors/input";
 import { updateField } from "../../store/actions/appConfig";
 
 const styles = {

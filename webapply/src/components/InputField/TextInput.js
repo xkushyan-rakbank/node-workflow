@@ -15,7 +15,7 @@ import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
 import { validate } from "./../../utils/validate";
-import { getGeneralInputProps } from "../../store/selectors/appConfig";
+import { getGeneralInputProps } from "../../store/selectors/input";
 
 const styles = {
   textField: {
@@ -225,6 +225,7 @@ class Input extends React.Component {
       InputLabelProps,
       disabled,
       placeholder,
+      serverValidation,
       select
     } = this.props;
 
@@ -284,6 +285,9 @@ class Input extends React.Component {
               error={fieldErrors.error}
               multiLineError={fieldErrors.multiLineError}
             />
+          )}
+          {!isNil(serverValidation) && serverValidation.message && (
+            <ErrorMessage error={serverValidation.message} />
           )}
           {customValidationMessage}
         </div>

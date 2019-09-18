@@ -6,7 +6,7 @@ import TextInput from "../InputField/TextInput";
 import {
   getInputNameById,
   getInputValueById
-} from "../../store/selectors/appConfig";
+} from "../../store/selectors/input";
 import { updateField } from "../../store/actions/appConfig";
 
 class CountryOfResidence extends React.Component {
