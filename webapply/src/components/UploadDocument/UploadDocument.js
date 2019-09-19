@@ -135,9 +135,6 @@ class UploadDocuments extends Component {
         enableUpload: false
       },
       () => {
-        let CancelToken = axios.CancelToken;
-        let source = CancelToken.source();
-        let cancelToken = source.token;
         let config = {
           onUploadProgress: ProgressEvent => {
             let progress = Math.round(
@@ -148,12 +145,6 @@ class UploadDocuments extends Component {
             let width = progress;
             element.style.width = width + "%";
             progressPercentage.innerHTML = progress + "%";
-          },
-          cancelToken: source.token
-        };
-        let headers = {
-          headers: {
-            "Content-Type": "multipart/form-data"
           }
         };
         const fd = new FormData();
@@ -163,9 +154,8 @@ class UploadDocuments extends Component {
           this.state.selectedFile.name
         );
         axios
-          .post("", fd, headers, config, cancelToken)
+          .post("", fd, config)
           .then(res => {
-            console.log("test api");
             this.setState({
               enableUpload: false
             });
@@ -175,7 +165,7 @@ class UploadDocuments extends Component {
             console.log(error);
             this.setState({
               fileError: true,
-              enableUpload: false
+              enableUpload: true
             });
           });
       }
