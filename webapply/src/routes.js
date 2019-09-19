@@ -7,6 +7,7 @@ export default {
   companyInfo: "/CompanyInfo",
   stakeholdersInfo: "/StakeholdersInfo",
   finalQuestions: "/FinalQuestions",
+  uploadDocuments: "/UploadDocuments",
   selectServices: "/SelectServices",
   searchProspect: "/SearchProspect",
   login: "/Login"

@@ -17,6 +17,7 @@ import SelectServices from "./containers/SelectServices";
 import AccountsComparison from "./containers/AccountsComparison/AccountsComparison";
 import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOverview";
 import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
+import UploadDocuments from "./containers/FileUploader";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -68,6 +69,11 @@ class App extends React.Component {
                 exact
                 path={routes.finalQuestions}
                 component={FinalQuestions}
+              />
+              <Route
+                exact
+                path={routes.uploadDocuments}
+                component={UploadDocuments}
               />
               <Route
                 exact
