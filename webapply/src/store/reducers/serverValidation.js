@@ -30,7 +30,10 @@ const serverErrorsReducer = (state = initialState, action) => {
       return {
         ...state,
         inputs: action.payload.reduce(
-          (acc, item) => (acc[composeInputKeyFromValidationData(item)] = item),
+          (acc, item) => {
+            acc[composeInputKeyFromValidationData(item)] = item;
+            return acc;
+          },
           { ...state.inputs }
         )
       };
