@@ -1,10 +1,10 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/api/customer-onboarding/v1/banks/RAK/otp",
+		"url": "/webapply/api/v1/banks/RAK/otp",
 		"bodyPatterns": [
 			{
-				"matchesJsonPath": "$[?(@.email == 'otp@email.com')]"
+				"matchesJsonPath": "$[?(@.otpToken == '111111')]"
 			}
 		]
 	},
@@ -18,7 +18,7 @@
             "X-Content-Type-Options" : "nosniff",
             "x-frame-options" : "DENY",
             "x-xss-protection" : "1; mode=block"
-        },		
+        },
 		"bodyFileName": "COSME0002GenerateOTPResponse.json"
 	}
 }
