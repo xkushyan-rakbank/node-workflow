@@ -1,12 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import store from "../store/configureStore";
-import get from "lodash/get";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
-import RefactoredCheckbox from "../components/InputField/RefactoredCheckbox";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import PureSelect from "../components/InputField/PureSelect";
 import { setToken, verifyToken, setVerified } from "../store/actions/reCaptcha";
@@ -40,11 +37,8 @@ class BasicsForm extends React.Component {
     event.preventDefault();
     const errorList = validateForm(event);
 
-    // this.props.history.push("/VerifyOTP");
-
     if (!errorList.length) {
-      const data = get(store.getState(), "appConfig.prospect");
-      this.props.applicantInfoForm(data);
+      this.props.applicantInfoForm();
     }
   };
 
