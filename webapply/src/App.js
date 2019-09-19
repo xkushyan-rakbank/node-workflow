@@ -19,6 +19,7 @@ import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOve
 import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
 import ComeBackLogin from "./containers/ComeBack/ComeBackLogin";
 import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
+import MyApplications from "./containers/MyApplications/MyApplications";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -100,6 +101,11 @@ class App extends React.Component {
                 exact
                 path={routes.comeBackLoginVerification}
                 component={ComeBackVerification}
+              />
+              <Route
+                exact
+                path={routes.MyApplications}
+                component={MyApplications}
               />
               <Route path="*" />
             </Switch>
