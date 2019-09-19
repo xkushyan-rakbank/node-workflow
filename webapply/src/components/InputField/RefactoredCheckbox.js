@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Check from "./../../assets/images/on.svg";
 import { updateField } from "../../store/actions/appConfig";
 import { defineDynamicInputId } from "../../constants";
-import { getGeneralInputProps } from "../../store/selectors/appConfig";
+import { getGeneralInputProps } from "../../store/selectors/input";
 
 const styles = {
   checkboxWrapper: {

@@ -2,9 +2,6 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
 const style = {
-  root: {
-    minHeight: "100px"
-  },
   title: {
     fontSize: "24px",
     fontWeight: 600,
@@ -21,10 +18,10 @@ const style = {
 };
 
 const SectionTitleWithInfo = ({ title, info, classes }) => (
-  <div className={classes.root}>
+  <>
     <h3 className={classes.title}>{title}</h3>
     <span className={classes.info}>{info}</span>
-  </div>
+  </>
 );
 
 export default withStyles(style)(SectionTitleWithInfo);

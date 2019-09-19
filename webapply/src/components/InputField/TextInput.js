@@ -15,7 +15,7 @@ import ErrorMessage from "./../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
 import { validate } from "./../../utils/validate";
-import { getGeneralInputProps } from "../../store/selectors/appConfig";
+import { getGeneralInputProps } from "../../store/selectors/input";
 
 const styles = {
   textField: {
@@ -31,7 +31,7 @@ const styles = {
   },
   selectCombined: {
     flexDirection: "row !important",
-    alignItems: "baseline",
+    alignItems: "flex-start",
     margin: "12px 0 24px !important",
     "& > div": {
       margin: "0 !important",
@@ -63,7 +63,7 @@ const styles = {
     marginBottom: "24px"
   },
   regularWrapper: {
-    margin: "12px 0 24px !important",
+    margin: "12px 0 20px !important",
     "& .formControl": {
       margin: "0 !important"
     }
@@ -225,9 +225,9 @@ class Input extends React.Component {
       InputLabelProps,
       disabled,
       placeholder,
+      serverValidation,
       select
     } = this.props;
-
     const { fieldErrors } = this.state;
     const inputProps = this.composeFieldAttrWithPropAttr(
       fieldAttr(id, config, indexes)
@@ -284,6 +284,9 @@ class Input extends React.Component {
               error={fieldErrors.error}
               multiLineError={fieldErrors.multiLineError}
             />
+          )}
+          {!isNil(serverValidation) && serverValidation.message && (
+            <ErrorMessage error={serverValidation.message} />
           )}
           {customValidationMessage}
         </div>

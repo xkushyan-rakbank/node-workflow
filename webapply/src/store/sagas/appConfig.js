@@ -1,4 +1,11 @@
-import { all, call, put, takeLatest, select } from "redux-saga/effects";
+import {
+  all,
+  call,
+  put,
+  takeLatest,
+  takeEvery,
+  select
+} from "redux-saga/effects";
 import {
   RECEIVE_APPCONFIG,
   receiveAppConfigSuccess,
@@ -6,16 +13,15 @@ import {
   UPDATE_FIELD,
   updateProspect
 } from "../actions/appConfig";
-import { getAppConfig } from "../../api/appConfig";
+import apiClient from "../../api/apiClient";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 
 function* receiveAppConfigSaga() {
   try {
-    const response = yield call(getAppConfig);
+    const response = yield call(apiClient.config.get);
     yield put(receiveAppConfigSuccess(response.data));
   } catch (error) {
-    console.error(error);
     yield put(receiveAppConfigFail(error));
   }
 }
@@ -30,6 +36,6 @@ function* updateFieldSaga(action) {
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
-    takeLatest(UPDATE_FIELD, updateFieldSaga)
+    takeEvery(UPDATE_FIELD, updateFieldSaga)
   ]);
 }

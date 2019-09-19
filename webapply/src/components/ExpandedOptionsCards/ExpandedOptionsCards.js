@@ -30,8 +30,9 @@ const mockData = [
 const style = {
   root: {
     display: "flex",
-    flex: "1 1 380px",
-    flexWrap: "wrap"
+    width: "100%",
+    flexWrap: "wrap",
+    margin: "0 -10px"
   }
 };
 

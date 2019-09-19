@@ -31,17 +31,25 @@ const style = {
     flex: "1 1",
     flexDirection: "column",
     minWidth: "270px",
+    maxHeight: "340px",
     margin: "10px",
     padding: "40px 20px 25px 20px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
-    color: "#373737"
+    color: "#373737",
+    "@media only screen and (max-width: 1300px)": {
+      maxHeight: "220px",
+      padding: "10px 20px 10px 20px"
+    }
   },
   title: {
     fontSize: "20px",
     borderBottom: "solid 1px #e8e8e8",
-    paddingBottom: "20px"
+    paddingBottom: "20px",
+    "@media only screen and (max-width: 1300px)": {
+      paddingBottom: "10px"
+    }
   },
   name: {
     fontWeight: 600,
@@ -82,8 +90,17 @@ const style = {
   options: {
     paddingLeft: "20px",
     fontSize: "20px",
+    "@media only screen and (max-width: 1300px)": {
+      "& li": {
+        fontSize: "16px"
+      },
+      margin: "5px 0"
+    },
     "& li:not(:last-child)": {
-      marginBottom: "20px"
+      marginBottom: "20px",
+      "@media only screen and (max-width: 1300px)": {
+        marginBottom: "5px"
+      }
     }
   },
   link: {
@@ -92,7 +109,10 @@ const style = {
     textDecoration: "underline"
   },
   linkWrapper: {
-    marginBottom: "40px"
+    marginBottom: "40px",
+    "@media only screen and (max-width: 1300px)": {
+      marginBottom: "10px"
+    }
   },
   included: {
     fontSize: "16px",

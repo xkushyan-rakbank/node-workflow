@@ -1,5 +1,24 @@
 {
-  "appConfig": {},
+  "appConfig": {
+    "endpoints": {
+      "host": "http://localhost:9091",
+      "appConfigPath": "/webapply/api/v1/config",
+      "datalistPath": "/webapply/api/v1/banks/RAK/usertypes/{userType}/datalist",
+      "createProspectPath": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/",
+      "searchProspectPath": "/webapply/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
+      "getProspectPath": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+      "updateProspectPath": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+      "getProspectDocumentsPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/documents",
+      "uploadDocumentPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/documents",
+      "reuploadDocumentPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/documents",
+      "getDocumentByIdPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+      "prescreeningPath": "/webapply/api/v1/banks/RAK/prospects/{prospectId}/screening",
+      "authenticateUserPath": "/webapply/api/v1/banks/RAK/users/authenticate",
+      "getDocumentByTitlePath": "/webapply/api/v1/banks/RAK/legal/documents/{documentTitle}",
+      "otpPath": "/webapply/api/v1/banks/RAK/otp",
+      "recaptchaPath": "/webapply/api/v1/banks/RAK/recaptcha/verify"
+    }
+  },
   "uiConfig": {
     "Aplnt.fullName": {
       "criteria": {
@@ -137,14 +156,27 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "I am applying on behalf of someone’s company",
+      "label": "Whose company are you applying for?",
       "placeholder": null,
       "path": "$.prospect.applicantInfo.applyOnbehalf",
       "name": "prospect.applicantInfo.applyOnbehalf",
       "required": false,
-      "datalistId": null,
       "readonlyFor": [],
-      "description": "apply on behalf of someone's company"
+      "description": "apply on behalf of someone's company",
+      "datalist": [
+        {
+          "code": "option1",
+          "key": "option1",
+          "value": "option1",
+          "displayText": "Option 1"
+        },
+        {
+          "code": "option2",
+          "key": "option2",
+          "value": "option2",
+          "displayText": "Option 2"
+        }
+      ]
     },
     "Gen.prospectId": {
       "criteria": {
@@ -7116,7 +7148,6 @@
       "placeholder": null,
       "path": "$.prospect.searchInfo.raktrackNumber",
       "name": "prospect.searchInfo.raktrackNumber",
-
       "datalistId": null,
       "readonlyFor": [],
       "description": "lead Number of the applicant",
@@ -7139,7 +7170,6 @@
       "placeholder": null,
       "path": "$.prospect.searchInfo.tradeLicenseNo",
       "name": "prospect.searchInfo.tradeLicenseNo",
-
       "datalistId": null,
       "readonlyFor": [],
       "description": "tradeLicenseNo of the applicant",
@@ -7269,7 +7299,7 @@
       "email": "",
       "countryCode": "",
       "mobileNo": "",
-      "applyOnbehalf": false
+      "applyOnbehalf": ""
     },
     "generalInfo": {
       "prospectId": "",
@@ -7482,7 +7512,129 @@
         "middleName": "",
         "lastName": "",
         "shortName": "",
-        "fullName": "",
+        "fullName": "Abhi",
+        "gender": "Male",
+        "maritalStatus": "Married",
+        "maritalStatusOthers": "",
+        "occupation": "",
+        "mothersMaidenName": "",
+        "numberOfDependants": 0,
+        "highestEducationAttained": "",
+        "employmentStatus": "",
+        "kycVerified": false,
+        "kycDetails": {
+          "salutation": "Mr.",
+          "shareholderPOASignatoryName": "",
+          "isSignatory": false,
+          "isShareholder": false,
+          "shareHoldingPercentage": 0,
+          "dateOfBirth": "",
+          "nationality": "",
+          "dualCitizenship": false,
+          "dualCitizenshipCountry": [""],
+          "residenceCountry": "AE",
+          "isUAEResident": false,
+          "passportDetails": [
+            {
+              "passportNumber": "",
+              "passportExpiryDate": "",
+              "diplomat": false
+            }
+          ],
+          "emirateIdDetails": {
+            "eidNumber": "",
+            "eidExpiryDt": ""
+          },
+          "selfGovtPosition": "Currently hold",
+          "relativeGovtPosition": "Currently hold",
+          "qualification": "Under Graduate",
+          "experienceInYrs": "",
+          "sourceOfWealth": {
+            "wealthType": "Personal Savings",
+            "others": ""
+          }
+        },
+        "contactDetails": {
+          "primaryMobileNo": "",
+          "primaryMobCountryCode": "",
+          "primaryEmail": "",
+          "primaryPhoneNo": "",
+          "primaryPhoneCountryCode": "",
+          "fax": "",
+          "faxCountryCode": "",
+          "secondaryPhoneNo": "",
+          "secondaryPhoneCountryCode": "",
+          "secondaryMobileNo": "",
+          "secondaryMobileCountryCode": "",
+          "secondaryEmail": "",
+          "website": ""
+        },
+        "employmentDetails": {
+          "employmentType": "Salaried",
+          "otherEmploymentType": "",
+          "designation": "",
+          "empNo": "",
+          "department": "",
+          "employerName": "",
+          "occupation": "",
+          "totalExperienceYrs": 0,
+          "employmentStartDate": ""
+        },
+        "sameAsCompanyAddress": false,
+        "addressInfo": [
+          {
+            "typeOfAddress": "",
+            "addressDetails": [
+              {
+                "addressFieldDesc": "",
+                "preferredAddress": "",
+                "addressLine1": "",
+                "addressLine2": "",
+                "addressLine3": "",
+                "addressLine4": "",
+                "poBox": "",
+                "emirateCity": "",
+                "country": ""
+              }
+            ]
+          }
+        ],
+        "accountSigningInfo": {
+          "accountSigningType": "",
+          "accountSigningInstn": "",
+          "authorityType": ""
+        },
+        "debitCardInfo": {
+          "issueDebitCard": true,
+          "authSignatoryDetails": {
+            "fullNameOn": "",
+            "nameOnDebitCard": ""
+          }
+        }
+      },
+      {
+        "screeningInfo": {
+          "statusOverAll": "proceed",
+          "screeningResults": [
+            {
+              "screeningType": "",
+              "screeningStatus": "",
+              "screeningFlag": "",
+              "screeningNotes": "",
+              "screeningReason": "",
+              "reasonNotes": "",
+              "reasonCode": "",
+              "reasonStatus": ""
+            }
+          ]
+        },
+        "salutation": "Mr.",
+        "signatoryId": "",
+        "firstName": "",
+        "middleName": "",
+        "lastName": "",
+        "shortName": "",
+        "fullName": "Bhakta",
         "gender": "Male",
         "maritalStatus": "Married",
         "maritalStatusOthers": "",

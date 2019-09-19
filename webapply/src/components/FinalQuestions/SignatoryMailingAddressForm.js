@@ -7,7 +7,7 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
-import { getInputValueById } from "../../store/selectors/appConfig";
+import { getInputValueById } from "../../store/selectors/input";
 
 const styles = {
   title: {

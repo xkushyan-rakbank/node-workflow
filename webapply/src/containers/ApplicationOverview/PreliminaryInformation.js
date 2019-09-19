@@ -7,9 +7,6 @@ import IconCardItem from "../../components/IconCards/IconCardItem";
 import CommonQuestions from "./CommonQuestions";
 
 const style = {
-  stepWrapper: {
-    paddingTop: "150px"
-  },
   icon: {
     fontSize: "55px",
     color: "green"
@@ -25,12 +22,12 @@ const style = {
     backgroundColor: "rgba(239, 242, 244, .5)"
   },
   stepCardsWrapper: {
-    padding: "20px 0 50px 0"
+    padding: "20px 0 30px 0"
   }
 };
 
 const PreliminaryInformation = ({ classes }) => (
-  <div className={classes.stepWrapper}>
+  <>
     <SectionTitleWithInfo
       title="Have these ready"
       info="Before we start, make sure you have these documents at hand"
@@ -51,14 +48,13 @@ const PreliminaryInformation = ({ classes }) => (
         </IconCardItem>
       </IconCardsContainer>
     </div>
-
     <div className={classes.stepAnswers}>
       <div className={classes.stepAnswersTitle}>
         Got more questions? We got some answers
       </div>
       <CommonQuestions />
     </div>
-  </div>
+  </>
 );
 
 export default withStyles(style)(PreliminaryInformation);

@@ -1,10 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Input from "./../components/InputField/Input";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import { withStyles } from "@material-ui/core/styles";
 import { digitRegExp } from "../constants";
 import ErrorMessage from "../components/ErrorMessage";
+import { generateOtpCode } from "../store/actions/otp";
+import { getProspectId } from "../store/selectors/appConfig";
+import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
+import { getInputNameById } from "../store/selectors/input";
 
 const style = {
   confirmForm: {
@@ -30,6 +35,10 @@ const style = {
     "& input": {
       textAlign: "center"
     }
+  },
+  link: {
+    textDecoration: "underline",
+    cursor: "pointer"
   }
 };
 
@@ -43,13 +52,33 @@ class FormConfirm extends React.Component {
     this.inputRefs = [];
   }
 
+  componentDidMount() {
+    this.sendGenerateOtpCodeRequest();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.prospectId !== this.props.prospectId) {
+      this.sendGenerateOtpCodeRequest();
+    }
+  }
+
+  sendGenerateOtpCodeRequest() {
+    if (this.props.prospectId) {
+      this.props.generateOtpCode();
+    }
+  }
+
   getFullCode() {
     return this.state.code.join("");
   }
 
+  isCodeValueValid() {
+    return this.state.code.every(value => digitRegExp.test(value));
+  }
+
   handleSubmit = event => {
     event.preventDefault();
-    if (this.state.code.every(value => digitRegExp.test(value))) {
+    if (this.isCodeValueValid()) {
       console.log(this.getFullCode());
       this.props.history.push("/CompanyInfo");
     } else {
@@ -86,6 +115,10 @@ class FormConfirm extends React.Component {
     this.inputRefs[index] && this.inputRefs[index].select();
   };
 
+  handleSendNewCodeLinkClick = () => {
+    this.sendGenerateOtpCodeRequest();
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -99,7 +132,7 @@ class FormConfirm extends React.Component {
           <Grid container item xs={12} direction="row" justify="flex-start">
             {this.state.code.map((value, index) => {
               return (
-                <Grid key={`code-${index}`} className={classes.squareInput}>
+                <Grid key={index} className={classes.squareInput}>
                   <Input
                     name={index.toString()}
                     inputProps={{
@@ -117,11 +150,16 @@ class FormConfirm extends React.Component {
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
           <div className="flexContainerForButton">
             <span>
-              {/*eslint-disable-next-line*/}
-              Didn’t get the code? <a href="#"> Send a new code</a>
+              Didn’t get the code?{" "}
+              <span
+                onClick={this.handleSendNewCodeLinkClick}
+                className={classes.link}
+              >
+                Send a new code
+              </span>
             </span>
             <SubmitButton
-              disabled={this.state.code.some(value => !digitRegExp.test(value))}
+              disabled={!this.isCodeValueValid()}
               label="Next Step"
               justify="flex-end"
             />
@@ -132,4 +170,25 @@ class FormConfirm extends React.Component {
   }
 }
 
-export default withStyles(style)(FormConfirm);
+const mapStateToProps = state => ({
+  prospectId: getProspectId(state),
+  mobileServerValidation: getInputServerValidityByPath(
+    state,
+    getInputNameById(state, "Aplnt.mobileNo")
+  ),
+  emailServerValidation: getInputServerValidityByPath(
+    state,
+    getInputNameById(state, "Aplnt.email")
+  )
+});
+
+const mapDispatchToProps = {
+  generateOtpCode
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FormConfirm)
+);

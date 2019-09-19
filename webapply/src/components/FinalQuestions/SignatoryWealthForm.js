@@ -9,7 +9,7 @@ import PureSelect from "../InputField/PureSelect";
 import {
   getInputNameById,
   getInputValueById
-} from "../../store/selectors/appConfig";
+} from "../../store/selectors/input";
 import { updateField } from "../../store/actions/appConfig";
 
 const styles = {

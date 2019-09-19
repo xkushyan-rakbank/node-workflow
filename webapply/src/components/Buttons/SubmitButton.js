@@ -17,7 +17,14 @@ const styles = {
 };
 
 const SubmitButton = props => {
-  const { disabled = false, classes, label, handleClick, justify } = props;
+  const {
+    disabled = false,
+    classes,
+    label,
+    handleClick,
+    justify,
+    containerExtraStyles
+  } = props;
   return (
     <Grid
       container
@@ -25,6 +32,7 @@ const SubmitButton = props => {
       justify={justify}
       alignItems="center"
       className={classes.buttonWrap}
+      style={containerExtraStyles}
     >
       <ContainedButton
         type="submit"
