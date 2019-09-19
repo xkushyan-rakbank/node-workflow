@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Input from "./../components/InputField/Input";
@@ -6,9 +7,9 @@ import SubmitButton from "../components/Buttons/SubmitButton";
 import { withStyles } from "@material-ui/core/styles";
 import { digitRegExp } from "../constants";
 import ErrorMessage from "../components/ErrorMessage";
-import { generateOtpCode } from "../store/actions/otp";
-import { getProspectId } from "../store/selectors/appConfig";
+import { generateOtpCode, verifyOtp } from "../store/actions/otp";
 import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
+import { getOtp } from "../store/selectors/otp";
 import { getInputNameById } from "../store/selectors/input";
 
 const style = {
@@ -39,6 +40,10 @@ const style = {
   link: {
     textDecoration: "underline",
     cursor: "pointer"
+  },
+  linkDisabled: {
+    opacity: "0.5",
+    cursor: "not-allowed"
   }
 };
 
@@ -47,24 +52,26 @@ class FormConfirm extends React.Component {
     super(props);
     this.state = {
       code: Array(6).fill(""),
-      invalid: false
+      invalid: false,
+      isRegenerateCodeAllow: true
     };
     this.inputRefs = [];
+    this.regenerateCodeDelay = 10 * 1000;
   }
 
-  componentDidMount() {
-    this.sendGenerateOtpCodeRequest();
+  componentWillUnmount() {
+    clearTimeout(this.resetRegenerateCodeAllowTimeoutId);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.prospectId !== this.props.prospectId) {
-      this.sendGenerateOtpCodeRequest();
+    if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
+      this.props.history.push("/CompanyInfo");
     }
-  }
-
-  sendGenerateOtpCodeRequest() {
-    if (this.props.prospectId) {
-      this.props.generateOtpCode();
+    if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {
+      this.resetRegenerateCodeAllowTimeoutId = setTimeout(
+        () => this.setState({ isRegenerateCodeAllow: true }),
+        this.regenerateCodeDelay
+      );
     }
   }
 
@@ -78,9 +85,9 @@ class FormConfirm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
     if (this.isCodeValueValid()) {
-      console.log(this.getFullCode());
-      this.props.history.push("/CompanyInfo");
+      this.props.verifyOtp(this.getFullCode());
     } else {
       this.setState({ invalid: true });
     }
@@ -116,7 +123,11 @@ class FormConfirm extends React.Component {
   };
 
   handleSendNewCodeLinkClick = () => {
-    this.sendGenerateOtpCodeRequest();
+    if (!this.state.isRegenerateCodeAllow) {
+      return;
+    }
+    this.setState({ isRegenerateCodeAllow: false });
+    this.props.generateOtpCode();
   };
 
   render() {
@@ -136,6 +147,7 @@ class FormConfirm extends React.Component {
                   <Input
                     name={index.toString()}
                     inputProps={{
+                      autoComplete: "off",
                       maxLength: 1,
                       ref: this.bindNodeRef(index)
                     }}
@@ -148,19 +160,24 @@ class FormConfirm extends React.Component {
             })}
           </Grid>
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
+          {this.props.otp.verificationError && (
+            <ErrorMessage error="Code verification failed" />
+          )}
           <div className="flexContainerForButton">
             <span>
               Didn’t get the code?{" "}
               <span
                 onClick={this.handleSendNewCodeLinkClick}
-                className={classes.link}
+                className={cx(classes.link, {
+                  [classes.linkDisabled]: !this.state.isRegenerateCodeAllow
+                })}
               >
                 Send a new code
               </span>
             </span>
             <SubmitButton
-              disabled={!this.isCodeValueValid()}
-              label="Next Step"
+              disabled={!this.isCodeValueValid() || this.props.otp.isPending}
+              label={this.props.otp.isPending ? "Verify..." : "Next Step"}
               justify="flex-end"
             />
           </div>
@@ -171,7 +188,7 @@ class FormConfirm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  prospectId: getProspectId(state),
+  otp: getOtp(state),
   mobileServerValidation: getInputServerValidityByPath(
     state,
     getInputNameById(state, "Aplnt.mobileNo")
@@ -183,7 +200,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  generateOtpCode
+  generateOtpCode,
+  verifyOtp
 };
 
 export default withStyles(style)(
