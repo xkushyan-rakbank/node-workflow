@@ -28,7 +28,6 @@ class BasicsForm extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("update");
     if (
       prevProps.reCaptchaToken !== this.props.reCaptchaToken &&
       this.props.reCaptchaToken
