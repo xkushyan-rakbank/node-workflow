@@ -228,7 +228,6 @@ class Input extends React.Component {
       serverValidation,
       select
     } = this.props;
-
     const { fieldErrors } = this.state;
     const inputProps = this.composeFieldAttrWithPropAttr(
       fieldAttr(id, config, indexes)

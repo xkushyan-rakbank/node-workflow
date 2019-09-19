@@ -1,8 +1,8 @@
-import axios from "axios";
-import config from "../config/config";
-
-const { host, createProspectPath } = config.appConfig.endpoints;
+import httpClient from "./axiosConfig";
 
 export function applicantInfoFormSubmit(data) {
-  return axios.post(`${host}${createProspectPath}`, data);
+  return httpClient.post(
+    `/webapply/api/v1/banks/RAK/usertypes/sme/prospects/`,
+    data
+  );
 }

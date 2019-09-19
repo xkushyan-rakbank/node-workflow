@@ -21,10 +21,10 @@ const serverErrorsReducer = (state = initialState, action) => {
     case actions.SET_INPUTS_ERRORS:
       return {
         ...state,
-        inputs: action.payload.reduce(
-          (acc, item) => (acc[composeInputKeyFromValidationData(item)] = item),
-          {}
-        )
+        inputs: action.payload.reduce((acc, item) => {
+          acc[composeInputKeyFromValidationData(item)] = item;
+          return acc;
+        }, {})
       };
     case actions.PATCH_INPUTS_ERRORS:
       return {
@@ -49,7 +49,9 @@ const serverErrorsReducer = (state = initialState, action) => {
  * @return {String}
  */
 export function composeInputKeyFromValidationData(validationData) {
-  return validationData.fieldPath.replace("$.", "").replace("$", "");
+  const replaced = validationData.fieldPath.replace("$.", "").replace("$", "");
+
+  return `prospect.${replaced}`;
 }
 
 export default serverErrorsReducer;
