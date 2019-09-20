@@ -2,11 +2,10 @@ import React from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import Input from "./../components/InputField/Input";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
+import OtpVerification from "../components/OtpVerification";
 import { withStyles } from "@material-ui/core/styles";
-import { digitRegExp } from "../constants";
 import ErrorMessage from "../components/ErrorMessage";
 import { generateOtpCode, verifyOtp } from "../store/actions/otp";
 import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
@@ -55,9 +54,9 @@ class FormConfirm extends React.Component {
     this.state = {
       code: Array(6).fill(""),
       invalid: false,
+      isValidCode: false,
       isRegenerateCodeAllow: true
     };
-    this.inputRefs = [];
     this.regenerateCodeDelay = 10 * 1000;
   }
 
@@ -81,9 +80,12 @@ class FormConfirm extends React.Component {
     return this.state.code.join("");
   }
 
-  isCodeValueValid() {
-    return this.state.code.every(value => digitRegExp.test(value));
-  }
+  isCodeValueValid = ({ isValid, code }) => {
+    this.setState({
+      isValidCode: isValid,
+      code
+    });
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -95,40 +97,11 @@ class FormConfirm extends React.Component {
     }
   };
 
-  jumpToNextInput(name) {
-    const index = Number(name);
-    this.inputRefs[index] && this.inputRefs[index].blur();
-    this.inputRefs[index + 1] && this.inputRefs[index + 1].focus();
-  }
-
-  handleChange = event => {
-    const { value, name } = event.target;
-    const newValue = value.trim();
-    const newState = { invalid: false };
-    if (digitRegExp.test(value) || (this.state.code[name] && !newValue)) {
-      const newCode = this.state.code;
-      newCode[name] = newValue;
-      newState.code = newCode;
-      if (newValue) {
-        this.jumpToNextInput(name);
-      }
-    }
-    this.setState({ ...newState });
-  };
-
-  bindNodeRef = index => node => {
-    this.inputRefs[index] = node;
-  };
-
-  handleInputFocus = index => () => {
-    this.inputRefs[index] && this.inputRefs[index].select();
-  };
-
   handleSendNewCodeLinkClick = () => {
     if (!this.state.isRegenerateCodeAllow) {
       return;
     }
-    this.setState({ isRegenerateCodeAllow: false });
+    this.setState({ isRegenerateCodeAllow: false, isValidCode: false });
     this.props.generateOtpCode();
   };
 
@@ -143,23 +116,7 @@ class FormConfirm extends React.Component {
         </p>
         <form noValidate onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">
-            {this.state.code.map((value, index) => {
-              return (
-                <Grid key={index} className={classes.squareInput}>
-                  <Input
-                    name={index.toString()}
-                    inputProps={{
-                      autoComplete: "off",
-                      maxLength: 1,
-                      ref: this.bindNodeRef(index)
-                    }}
-                    onFocus={this.handleInputFocus(index)}
-                    onChange={this.handleChange}
-                    value={value}
-                  />
-                </Grid>
-              );
-            })}
+            <OtpVerification onChange={this.isCodeValueValid} />
           </Grid>
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
           {this.props.otp.verificationError && (
@@ -182,7 +139,7 @@ class FormConfirm extends React.Component {
             <BackLink path={routes.applicantInfo} />
 
             <SubmitButton
-              disabled={!this.isCodeValueValid() || this.props.otp.isPending}
+              disabled={!this.state.isValidCode || this.props.otp.isPending}
               label={this.props.otp.isPending ? "Verify..." : "Next Step"}
               justify="flex-end"
             />

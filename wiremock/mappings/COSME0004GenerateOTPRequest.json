@@ -4,7 +4,7 @@
 		"url": "/webapply/api/v1/banks/RAK/otp",
 		"bodyPatterns": [
 			{
-				"matchesJsonPath": "$[?(@.email == 'no_otp@email.com')]"
+				"matchesJsonPath": "$[?(@.mobileNo && @.mobileNo != '0123456789')]"
 			}
 		]
 	},

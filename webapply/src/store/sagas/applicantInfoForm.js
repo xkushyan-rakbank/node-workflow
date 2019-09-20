@@ -1,5 +1,4 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
-import { history } from "./../configureStore";
 import {
   APPLICANT_INFO_FORM,
   applicantInfoFormSuccess
@@ -7,19 +6,18 @@ import {
 import * as appConfigActions from "../actions/appConfig";
 import { setInputsErrors } from "./../actions/serverValidation";
 import apiClient from "../../api/apiClient";
-import routes from "./../../routes";
 import * as appConfigSelectors from "../selectors/appConfig";
 
 function* applicantInfoFormSaga() {
   try {
     const state = yield select();
-    const { data: prospect } = yield call(
+    const { data } = yield call(
       apiClient.prospect.create,
       appConfigSelectors.getProspect(state)
     );
     yield put(applicantInfoFormSuccess());
-    yield put(appConfigActions.updateProspect(prospect));
-    yield call(history.push, routes.verifyOtp);
+    // temp implementation - work with WireMock data
+    yield put(appConfigActions.updateProspectId(data.prospectId));
   } catch (error) {
     const { errors } = error.response.data;
     yield put(setInputsErrors(errors));

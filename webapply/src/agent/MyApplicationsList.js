@@ -43,10 +43,7 @@ const style = {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
     alignItems: "center",
-    padding: "24px 20px 19px 30px",
-    "@media only screen and (max-height: 991px)": {
-      padding: "12px 10px 10px 15px"
-    }
+    padding: "24px 20px 19px 30px"
   },
   companyName: {
     fontSize: "16px",

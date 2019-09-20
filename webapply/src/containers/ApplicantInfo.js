@@ -9,8 +9,11 @@ import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
+import { generateOtpCode } from "../store/actions/otp";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
-import { getGeneralInputProps } from "../store/selectors/input";
+import * as appConfigSelectors from "../store/selectors/appConfig";
+import * as otpSelectors from "../store/selectors/otp";
+import * as inputSelectors from "../store/selectors/input";
 import validateForm from "../utils/validate";
 import routes from "../routes";
 
@@ -34,9 +37,19 @@ class BasicsForm extends React.Component {
     ) {
       this.props.verifyToken();
     }
+    if (
+      prevProps.prospectId !== this.props.prospectId &&
+      this.props.prospectId
+    ) {
+      // its not handle case when user navigate back from next page "OTPVerification"
+      this.props.generateOtpCode();
+    }
+    if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
+      this.props.history.push(routes.verifyOtp);
+    }
   }
 
-  submitForm = (event, values) => {
+  submitForm = event => {
     event.preventDefault();
     const errorList = validateForm(event);
 
@@ -59,8 +72,7 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const { classes, lastFormField, isReCaptchaVerified } = this.props;
-    const disabled = !isReCaptchaVerified || !lastFormField.value;
+    const { classes, lastInputValue, isReCaptchaVerified } = this.props;
     return (
       <>
         <h2>Let’s Start with the Basics</h2>
@@ -102,7 +114,7 @@ class BasicsForm extends React.Component {
             <SubmitButton
               label="Next Step"
               justify="flex-end"
-              disabled={disabled}
+              disabled={!isReCaptchaVerified || !lastInputValue}
             />
           </div>
         </form>
@@ -112,12 +124,15 @@ class BasicsForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  prospectId: appConfigSelectors.getProspectId(state),
+  otp: otpSelectors.getOtp(state),
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
   isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),
-  lastFormField: { ...getGeneralInputProps(state, "Aplnt.applyOnbehalf") }
+  lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.applyOnbehalf")
 });
 
 const mapDispatchToProps = {
+  generateOtpCode,
   setToken,
   setVerified,
   verifyToken,
