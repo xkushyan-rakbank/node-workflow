@@ -1,16 +1,16 @@
+import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
+import SubmitButton from "../components/Buttons/SubmitButton";
 import ErrorBoundary from "../components/ErrorBoundary";
+import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
-import SubmitButton from "../components/Buttons/SubmitButton";
-import PureSelect from "../components/InputField/PureSelect";
-import { setToken, verifyToken, setVerified } from "../store/actions/reCaptcha";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
-import validateForm from "../utils/validate";
+import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
-
+import { getGeneralInputProps } from "../store/selectors/input";
+import validateForm from "../utils/validate";
 const styles = {
   reCaptchaContainer: {
     display: "flex",
@@ -56,7 +56,8 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, lastFormField, isReCaptchaVerified } = this.props;
+    const disabled = !isReCaptchaVerified || !lastFormField.value;
     return (
       <>
         <h2>Let’s Start with the Basics</h2>
@@ -92,7 +93,11 @@ class BasicsForm extends React.Component {
             />
           </ErrorBoundary>
 
-          <SubmitButton label="Next Step" justify="flex-end" />
+          <SubmitButton
+            label="Next Step"
+            justify="flex-end"
+            disabled={disabled}
+          />
         </form>
       </>
     );
@@ -101,7 +106,8 @@ class BasicsForm extends React.Component {
 
 const mapStateToProps = state => ({
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
-  isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state)
+  isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),
+  lastFormField: { ...getGeneralInputProps(state, "Aplnt.applyOnbehalf") }
 });
 
 const mapDispatchToProps = {
