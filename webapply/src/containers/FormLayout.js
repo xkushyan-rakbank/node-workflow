@@ -1,7 +1,7 @@
-import React from "react";
-import Header from "./../components/Header";
-import FormNavigation from "../components/FormNavigation";
 import { withStyles } from "@material-ui/core/styles";
+import React from "react";
+import FormNavigation from "../components/FormNavigation";
+import Header from "./../components/Header";
 
 const style = {
   formLayout: {

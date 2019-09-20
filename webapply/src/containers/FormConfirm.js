@@ -1,10 +1,18 @@
 import React from "react";
+import cx from "classnames";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Input from "./../components/InputField/Input";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import BackLink from "../components/Buttons/BackLink";
 import { withStyles } from "@material-ui/core/styles";
 import { digitRegExp } from "../constants";
 import ErrorMessage from "../components/ErrorMessage";
+import { generateOtpCode, verifyOtp } from "../store/actions/otp";
+import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
+import { getOtp } from "../store/selectors/otp";
+import { getInputNameById } from "../store/selectors/input";
+import routes from "../routes";
 
 const style = {
   confirmForm: {
@@ -30,6 +38,14 @@ const style = {
     "& input": {
       textAlign: "center"
     }
+  },
+  link: {
+    textDecoration: "underline",
+    cursor: "pointer"
+  },
+  linkDisabled: {
+    opacity: "0.5",
+    cursor: "not-allowed"
   }
 };
 
@@ -38,20 +54,42 @@ class FormConfirm extends React.Component {
     super(props);
     this.state = {
       code: Array(6).fill(""),
-      invalid: false
+      invalid: false,
+      isRegenerateCodeAllow: true
     };
     this.inputRefs = [];
+    this.regenerateCodeDelay = 10 * 1000;
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.resetRegenerateCodeAllowTimeoutId);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
+      this.props.history.push("/CompanyInfo");
+    }
+    if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {
+      this.resetRegenerateCodeAllowTimeoutId = setTimeout(
+        () => this.setState({ isRegenerateCodeAllow: true }),
+        this.regenerateCodeDelay
+      );
+    }
   }
 
   getFullCode() {
     return this.state.code.join("");
   }
 
+  isCodeValueValid() {
+    return this.state.code.every(value => digitRegExp.test(value));
+  }
+
   handleSubmit = event => {
     event.preventDefault();
-    if (this.state.code.every(value => digitRegExp.test(value))) {
-      console.log(this.getFullCode());
-      this.props.history.push("/CompanyInfo");
+
+    if (this.isCodeValueValid()) {
+      this.props.verifyOtp(this.getFullCode());
     } else {
       this.setState({ invalid: true });
     }
@@ -86,6 +124,14 @@ class FormConfirm extends React.Component {
     this.inputRefs[index] && this.inputRefs[index].select();
   };
 
+  handleSendNewCodeLinkClick = () => {
+    if (!this.state.isRegenerateCodeAllow) {
+      return;
+    }
+    this.setState({ isRegenerateCodeAllow: false });
+    this.props.generateOtpCode();
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -99,10 +145,11 @@ class FormConfirm extends React.Component {
           <Grid container item xs={12} direction="row" justify="flex-start">
             {this.state.code.map((value, index) => {
               return (
-                <Grid key={`code-${index}`} className={classes.squareInput}>
+                <Grid key={index} className={classes.squareInput}>
                   <Input
                     name={index.toString()}
                     inputProps={{
+                      autoComplete: "off",
                       maxLength: 1,
                       ref: this.bindNodeRef(index)
                     }}
@@ -115,16 +162,30 @@ class FormConfirm extends React.Component {
             })}
           </Grid>
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
+          {this.props.otp.verificationError && (
+            <ErrorMessage error="Code verification failed" />
+          )}
           <div className="flexContainerForButton">
             <span>
-              {/*eslint-disable-next-line*/}
-              Didn’t get the code? <a href="#"> Send a new code</a>
+              Didn’t get the code?{" "}
+              <span
+                onClick={this.handleSendNewCodeLinkClick}
+                className={cx(classes.link, {
+                  [classes.linkDisabled]: !this.state.isRegenerateCodeAllow
+                })}
+              >
+                Send a new code
+              </span>
             </span>
-            <SubmitButton
-              disabled={this.state.code.some(value => !digitRegExp.test(value))}
-              label="Next Step"
-              justify="flex-end"
-            />
+            <div className="linkContainer">
+              <BackLink path={routes.applicantInfo} />
+
+              <SubmitButton
+                disabled={!this.isCodeValueValid() || this.props.otp.isPending}
+                label={this.props.otp.isPending ? "Verify..." : "Next Step"}
+                justify="flex-end"
+              />
+            </div>
           </div>
         </form>
       </>
@@ -132,4 +193,26 @@ class FormConfirm extends React.Component {
   }
 }
 
-export default withStyles(style)(FormConfirm);
+const mapStateToProps = state => ({
+  otp: getOtp(state),
+  mobileServerValidation: getInputServerValidityByPath(
+    state,
+    getInputNameById(state, "Aplnt.mobileNo")
+  ),
+  emailServerValidation: getInputServerValidityByPath(
+    state,
+    getInputNameById(state, "Aplnt.email")
+  )
+});
+
+const mapDispatchToProps = {
+  generateOtpCode,
+  verifyOtp
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FormConfirm)
+);

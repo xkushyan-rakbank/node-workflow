@@ -5,7 +5,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { history } from "./store/configureStore";
-import BasicsForm from "./containers/BasicsForm";
+import ApplicantInfo from "./containers/ApplicantInfo";
 import Login from "./agent/Login";
 import AboutCompany from "./containers/AboutCompany";
 import CompanyStakeholders from "./containers/CompanyStakeholders";
@@ -20,6 +20,7 @@ import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
 import ComeBackLogin from "./containers/ComeBack/ComeBackLogin";
 import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
 import MyApplications from "./containers/MyApplications/MyApplications";
+import UploadDocuments from "./containers/FileUploader";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -53,7 +54,11 @@ class App extends React.Component {
         <ConnectedRouter history={history}>
           <FormLayout>
             <Switch>
-              <Route exact path={routes.applicantInfo} component={BasicsForm} />
+              <Route
+                exact
+                path={routes.applicantInfo}
+                component={ApplicantInfo}
+              />
               <Route exact path={routes.verifyOtp} component={FormConfirm} />
               <Route exact path={routes.companyInfo} component={AboutCompany} />
               <Route exact path={routes.login} component={Login} />
@@ -71,6 +76,11 @@ class App extends React.Component {
                 exact
                 path={routes.finalQuestions}
                 component={FinalQuestions}
+              />
+              <Route
+                exact
+                path={routes.uploadDocuments}
+                component={UploadDocuments}
               />
               <Route
                 exact

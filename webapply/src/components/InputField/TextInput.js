@@ -173,7 +173,7 @@ class Input extends React.Component {
   };
 
   composeFieldAttrWithPropAttr(inputProps) {
-    const { disabled, required, max, min } = this.props;
+    const { disabled, required, max, min, type } = this.props;
     const props = {
       ...inputProps,
       ref: this.inputRef
@@ -190,6 +190,9 @@ class Input extends React.Component {
     }
     if (!isUndefined(min)) {
       props.min = min;
+    }
+    if (!isUndefined(type)) {
+      props.type = type;
     }
 
     return props;
@@ -228,7 +231,6 @@ class Input extends React.Component {
       serverValidation,
       select
     } = this.props;
-
     const { fieldErrors } = this.state;
     const inputProps = this.composeFieldAttrWithPropAttr(
       fieldAttr(id, config, indexes)

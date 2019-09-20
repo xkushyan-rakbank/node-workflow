@@ -13,15 +13,7 @@ import * as actions from "../actions/serverValidation";
  * @type {ServerValidation}
  */
 const initialState = {
-  inputs: {
-    "prospect.applicantInfo.fullName": {
-      fieldPath: "$.prospect.applicantInfo.fullName",
-      errorCode: "Validation",
-      errorType: "InputError",
-      message: "Server validation message",
-      developerText: ""
-    }
-  }
+  inputs: {}
 };
 
 const serverErrorsReducer = (state = initialState, action) => {
@@ -29,16 +21,19 @@ const serverErrorsReducer = (state = initialState, action) => {
     case actions.SET_INPUTS_ERRORS:
       return {
         ...state,
-        inputs: action.payload.reduce(
-          (acc, item) => (acc[composeInputKeyFromValidationData(item)] = item),
-          {}
-        )
+        inputs: action.payload.reduce((acc, item) => {
+          acc[composeInputKeyFromValidationData(item)] = item;
+          return acc;
+        }, {})
       };
     case actions.PATCH_INPUTS_ERRORS:
       return {
         ...state,
         inputs: action.payload.reduce(
-          (acc, item) => (acc[composeInputKeyFromValidationData(item)] = item),
+          (acc, item) => {
+            acc[composeInputKeyFromValidationData(item)] = item;
+            return acc;
+          },
           { ...state.inputs }
         )
       };
@@ -57,7 +52,9 @@ const serverErrorsReducer = (state = initialState, action) => {
  * @return {String}
  */
 export function composeInputKeyFromValidationData(validationData) {
-  return validationData.fieldPath.replace("$.", "").replace("$", "");
+  const replaced = validationData.fieldPath.replace("$.", "").replace("$", "");
+
+  return `prospect.${replaced}`;
 }
 
 export default serverErrorsReducer;
