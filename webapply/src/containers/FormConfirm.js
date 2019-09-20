@@ -177,15 +177,15 @@ class FormConfirm extends React.Component {
                 Send a new code
               </span>
             </span>
-            <div className="linkContainer">
-              <BackLink path={routes.applicantInfo} />
+          </div>
+          <div className="linkContainer">
+            <BackLink path={routes.applicantInfo} />
 
-              <SubmitButton
-                disabled={!this.isCodeValueValid() || this.props.otp.isPending}
-                label={this.props.otp.isPending ? "Verify..." : "Next Step"}
-                justify="flex-end"
-              />
-            </div>
+            <SubmitButton
+              disabled={!this.isCodeValueValid() || this.props.otp.isPending}
+              label={this.props.otp.isPending ? "Verify..." : "Next Step"}
+              justify="flex-end"
+            />
           </div>
         </form>
       </>

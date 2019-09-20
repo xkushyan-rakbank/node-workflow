@@ -4,6 +4,7 @@ import appConfig from "./appConfig";
 import reCaptcha from "./reCaptcha";
 import applicantInfoForm from "./applicantInfoForm";
 import serverValidation from "./serverValidation";
+import aboutCompany from "./aboutCompany";
 import otp from "./otp";
 
 /**
@@ -21,7 +22,8 @@ const reducers = history =>
     otp,
     serverValidation,
     reCaptcha,
-    applicantInfoForm
+    applicantInfoForm,
+    aboutCompany
   });
 
 export default reducers;
