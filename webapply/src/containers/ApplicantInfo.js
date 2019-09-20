@@ -2,6 +2,7 @@ import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import BackLink from "../components/Buttons/BackLink";
 import ErrorBoundary from "../components/ErrorBoundary";
 import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
@@ -11,6 +12,8 @@ import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
 import { getGeneralInputProps } from "../store/selectors/input";
 import validateForm from "../utils/validate";
+import routes from "../routes";
+
 const styles = {
   reCaptchaContainer: {
     display: "flex",
@@ -93,11 +96,15 @@ class BasicsForm extends React.Component {
             />
           </ErrorBoundary>
 
-          <SubmitButton
-            label="Next Step"
-            justify="flex-end"
-            disabled={disabled}
-          />
+          <div className="linkContainer">
+            <BackLink path={routes.detailedAccount} />
+
+            <SubmitButton
+              label="Next Step"
+              justify="flex-end"
+              disabled={disabled}
+            />
+          </div>
         </form>
       </>
     );

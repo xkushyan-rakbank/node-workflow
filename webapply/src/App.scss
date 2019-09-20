@@ -133,9 +133,13 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .linkContainer {
-  text-align: right;
-  a {
-    display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 42px;
+  > div {
+    width: auto;
+    margin: 0;
   }
 }
 

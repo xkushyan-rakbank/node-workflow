@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Input from "./../components/InputField/Input";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import BackLink from "../components/Buttons/BackLink";
 import { withStyles } from "@material-ui/core/styles";
 import { digitRegExp } from "../constants";
 import ErrorMessage from "../components/ErrorMessage";
@@ -11,6 +12,7 @@ import { generateOtpCode, verifyOtp } from "../store/actions/otp";
 import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
 import { getOtp } from "../store/selectors/otp";
 import { getInputNameById } from "../store/selectors/input";
+import routes from "../routes";
 
 const style = {
   confirmForm: {
@@ -175,11 +177,15 @@ class FormConfirm extends React.Component {
                 Send a new code
               </span>
             </span>
-            <SubmitButton
-              disabled={!this.isCodeValueValid() || this.props.otp.isPending}
-              label={this.props.otp.isPending ? "Verify..." : "Next Step"}
-              justify="flex-end"
-            />
+            <div className="linkContainer">
+              <BackLink path={routes.applicantInfo} />
+
+              <SubmitButton
+                disabled={!this.isCodeValueValid() || this.props.otp.isPending}
+                label={this.props.otp.isPending ? "Verify..." : "Next Step"}
+                justify="flex-end"
+              />
+            </div>
           </div>
         </form>
       </>

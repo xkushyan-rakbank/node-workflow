@@ -3,7 +3,6 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import cx from "classnames";
 import ContainedButton from "./ContainedButton";
-import BackButton from "./BackButton";
 import createMixins from "@material-ui/core/styles/createMixins";
 
 const styles = {
@@ -27,23 +26,17 @@ const SubmitButton = props => {
     label,
     handleClick,
     justify,
-    containerExtraStyles,
-    withBackButton
+    containerExtraStyles
   } = props;
-  const buttonWrap = !!withBackButton
-    ? cx(classes.buttonWrap, classes.buttonWrapWithBackLink)
-    : classes.buttonWrap;
   return (
     <Grid
       container
       direction="row"
       justify={justify}
       alignItems="center"
-      className={buttonWrap}
+      className={classes.buttonWrap}
       style={containerExtraStyles}
     >
-      {!!withBackButton && <BackButton />}
-
       <ContainedButton
         type="submit"
         withRightArrow
