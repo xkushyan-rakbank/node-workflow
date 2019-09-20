@@ -1,6 +1,9 @@
 import httpClient from "./axiosConfig";
 import config from "../config/config";
 
+export const OTP_ACTION_GENERATE = "generate";
+export const OTP_ACTION_VERIFY = "verify";
+
 export default {
   config: {
     /**
@@ -26,34 +29,51 @@ export default {
       });
     }
   },
+  /**
+   * @typedef ApiOtpPayload
+   * @property {String} prospectId
+   * @property {String} countryCode
+   * @property {String} mobileNo
+   * @property {("generate"|"verify")} [action]
+   * @property {String} [otpToken]
+   */
   otp: {
     /**
      * @param {String} prospectId
      * @param {String} countryCode
      * @param {String} mobileNo
-     * @param {String} email
-     * @param {String} [action="generate"]
      */
-    generate: ({
-      prospectId,
-      countryCode,
-      mobileNo,
-      email,
-      action = "generate"
-    }) => {
+    generate: ({ prospectId, countryCode, mobileNo }) => {
       return httpClient.request({
-        url: "/api/customer-onboarding/v1/banks/RAK/otp",
+        url: "/webapply/api/v1/banks/RAK/otp",
         method: "POST",
         data: {
+          action: OTP_ACTION_GENERATE,
           prospectId,
           countryCode,
-          mobileNo,
-          email,
-          action
+          mobileNo
         }
       });
     },
-    verify: () => {}
+    /**
+     * @param {String} prospectId
+     * @param {String} countryCode
+     * @param {String} mobileNo
+     * @param {String} otpToken
+     */
+    verify: ({ prospectId, countryCode, mobileNo, otpToken }) => {
+      return httpClient.request({
+        url: "/webapply/api/v1/banks/RAK/otp",
+        method: "POST",
+        data: {
+          action: OTP_ACTION_VERIFY,
+          prospectId,
+          countryCode,
+          mobileNo,
+          otpToken
+        }
+      });
+    }
   },
   prospect: {
     /**

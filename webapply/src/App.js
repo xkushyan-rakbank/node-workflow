@@ -20,6 +20,7 @@ import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
 import ComeBackLogin from "./containers/ComeBack/ComeBackLogin";
 import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
 import MyApplications from "./containers/MyApplications/MyApplications";
+import UploadDocuments from "./containers/FileUploader";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -75,6 +76,11 @@ class App extends React.Component {
                 exact
                 path={routes.finalQuestions}
                 component={FinalQuestions}
+              />
+              <Route
+                exact
+                path={routes.uploadDocuments}
+                component={UploadDocuments}
               />
               <Route
                 exact

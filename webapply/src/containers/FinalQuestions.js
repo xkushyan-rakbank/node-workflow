@@ -56,7 +56,7 @@ class FinalQuestions extends React.Component {
           })}
         </div>
         <div className="linkContainer">
-          <Link to={routes.selectServices}>
+          <Link to={routes.uploadDocuments}>
             <SubmitButton label="Next Step" justify="flex-end" />
           </Link>
         </div>

@@ -1,5 +1,17 @@
 {
-	"mode": "email",
-	"otpTokenValidityInSec": 300,
-	"otpTokenValidUntil": ""
+	"verified": true,
+	"prospects": [
+		{
+			"_links": {
+				"self": {
+					"href": "​/banks​/RAK​/usertypes​/sme​/prospects​/COSME007"
+				}
+			},
+			"prospectId": "COSME006",
+			"fullName": "CUSTOMER ONBOARDING",
+			"email": "sc_otp@email.com",
+			"countryCode": "+971",
+			"mobileNo": "0123456789"
+		}
+	]
 }
