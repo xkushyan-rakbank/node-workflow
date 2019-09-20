@@ -1,7 +1,8 @@
 import React from "react";
-import DoneIcon from "@material-ui/icons/Done";
 import { withStyles } from "@material-ui/core";
 import logo from "./../../assets/images/logo.png";
+import interrogation from "./../../assets/images/interrogation.svg";
+import signature from "./../../assets/images/signature.svg";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
@@ -40,14 +41,14 @@ const TwoSteps = ({ classes }) => (
             title="First"
             text="You fill a couple of questions"
           >
-            <DoneIcon className={classes.icon} />
+            <img src={interrogation} alt="interrogation" />
           </IconCardItem>
           <IconCardItem
             minWidth="260px"
             title="Then"
             text="We call you to sign the account"
           >
-            <DoneIcon className={classes.icon} />
+            <img src={signature} alt="signature" />
           </IconCardItem>
         </IconCardsContainer>
       </div>

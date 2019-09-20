@@ -64,7 +64,9 @@ const style = {
   },
   text: {
     paddingBottom: "5px",
-    fontSize: "16px",
+    fontSize: "16px"
+  },
+  textEllipsis: {
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis"
@@ -86,86 +88,35 @@ class CommonQuestions extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, data } = this.props;
     const { expanded } = this.state;
     return (
       <>
-        <StyledExpansionPanel
-          square
-          expanded={expanded === "panel-1"}
-          onChange={() => this.handleChange("panel-1")}
-        >
-          <StyledExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1d-content"
-            id="panel1d-header"
-          >
-            <div className={classes.text}>
-              <HelpOutlineIcon className={classes.iconStyle} />
-              Can I come back later and complete the application?
-            </div>
-          </StyledExpansionPanelSummary>
-          <StyledExpansionPanelDetails>
-            <div className={cx(classes.text, classes.info)}>Some info</div>
-          </StyledExpansionPanelDetails>
-        </StyledExpansionPanel>
-        <StyledExpansionPanel
-          square
-          expanded={expanded === "panel-2"}
-          onChange={() => this.handleChange("panel-2")}
-        >
-          <StyledExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1d-content"
-            id="panel1d-header"
-          >
-            <div className={classes.text}>
-              <HelpOutlineIcon className={classes.iconStyle} />
-              How long will it take to get the account?
-            </div>
-          </StyledExpansionPanelSummary>
-          <StyledExpansionPanelDetails>
-            <div className={cx(classes.text, classes.info)}>Some info</div>
-          </StyledExpansionPanelDetails>
-        </StyledExpansionPanel>
-        <StyledExpansionPanel
-          square
-          expanded={expanded === "panel-3"}
-          onChange={() => this.handleChange("panel-3")}
-        >
-          <StyledExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1d-content"
-            id="panel1d-header"
-          >
-            <div className={classes.text}>
-              <HelpOutlineIcon className={classes.iconStyle} />
-              What if I need help with some fields?
-            </div>
-          </StyledExpansionPanelSummary>
-          <StyledExpansionPanelDetails>
-            <div className={cx(classes.text, classes.info)}>Some info</div>
-          </StyledExpansionPanelDetails>
-        </StyledExpansionPanel>
-        <StyledExpansionPanel
-          square
-          expanded={expanded === "panel-4"}
-          onChange={() => this.handleChange("panel-4")}
-        >
-          <StyledExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1d-content"
-            id="panel1d-header"
-          >
-            <div className={classes.text}>
-              <HelpOutlineIcon className={classes.iconStyle} />
-              How do I check the status on my submitted application?
-            </div>
-          </StyledExpansionPanelSummary>
-          <StyledExpansionPanelDetails>
-            <div className={cx(classes.text, classes.info)}>Some info</div>
-          </StyledExpansionPanelDetails>
-        </StyledExpansionPanel>
+        {data.length > 0 &&
+          data.map(item => (
+            <StyledExpansionPanel
+              key={item.id}
+              square
+              expanded={expanded === item.id}
+              onChange={() => this.handleChange(item.id)}
+            >
+              <StyledExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1d-content"
+                id="panel1d-header"
+              >
+                <div className={cx(classes.text, classes.textEllipsis)}>
+                  <HelpOutlineIcon className={classes.iconStyle} />
+                  {item.question}
+                </div>
+              </StyledExpansionPanelSummary>
+              <StyledExpansionPanelDetails>
+                <div className={cx(classes.text, classes.info)}>
+                  {item.answer}
+                </div>
+              </StyledExpansionPanelDetails>
+            </StyledExpansionPanel>
+          ))}
       </>
     );
   }
