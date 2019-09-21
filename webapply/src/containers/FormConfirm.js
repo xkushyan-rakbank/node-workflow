@@ -90,11 +90,12 @@ class FormConfirm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    if (this.isCodeValueValid()) {
-      this.props.verifyOtp(this.getFullCode());
-    } else {
-      this.setState({ invalid: true });
-    }
+    // if (this.isCodeValueValid()) {
+    this.props.verifyOtp(this.getFullCode());
+    // } else {
+    // TODO handle incorrect input code from server
+    //   this.setState({ invalid: true });
+    // }
   };
 
   handleSendNewCodeLinkClick = () => {
