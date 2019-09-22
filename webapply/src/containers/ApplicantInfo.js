@@ -37,16 +37,16 @@ class BasicsForm extends React.Component {
     ) {
       this.props.verifyToken();
     }
-    if (
-      prevProps.prospectId !== this.props.prospectId &&
-      this.props.prospectId
-    ) {
-      // its not handle case when user navigate back from next page "OTPVerification"
-      this.props.generateOtpCode();
-    }
-    if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
-      this.props.history.push(routes.verifyOtp);
-    }
+    // if (
+    //   prevProps.prospectId !== this.props.prospectId &&
+    //   this.props.prospectId
+    // ) {
+    //   // its not handle case when user navigate back from next page "OTPVerification"
+    //   this.props.generateOtpCode();
+    // }
+    // if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
+    //   this.props.history.push(routes.verifyOtp);
+    // }
   }
 
   submitForm = event => {
@@ -67,7 +67,6 @@ class BasicsForm extends React.Component {
   };
 
   handleReCaptchaError = error => {
-    console.error(error);
     this.props.setVerified(false);
   };
 
