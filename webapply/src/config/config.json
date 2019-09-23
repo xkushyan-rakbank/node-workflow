@@ -7319,6 +7319,8 @@
     },
     "applicationInfo": {
       "viewId": "",
+      "islamicBanking": false,
+      "accountType": "",
       "leadNumber": "",
       "riskScore": "",
       "srNumber": "",

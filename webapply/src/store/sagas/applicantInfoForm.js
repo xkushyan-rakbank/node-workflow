@@ -3,10 +3,12 @@ import {
   APPLICANT_INFO_FORM,
   applicantInfoFormSuccess
 } from "../actions/applicantInfoForm";
+import { history } from "./../configureStore";
 import * as appConfigActions from "../actions/appConfig";
 import { setInputsErrors } from "./../actions/serverValidation";
 import apiClient from "../../api/apiClient";
 import * as appConfigSelectors from "../selectors/appConfig";
+import routes from "./../../routes";
 
 function* applicantInfoFormSaga() {
   try {
@@ -15,9 +17,11 @@ function* applicantInfoFormSaga() {
       apiClient.prospect.create,
       appConfigSelectors.getProspect(state)
     );
+    console.log("data", data);
     yield put(applicantInfoFormSuccess());
-    // temp implementation - work with WireMock data
-    yield put(appConfigActions.updateProspectId(data.prospectId));
+    yield call(history.push, routes.verifyOtp);
+    // // temp implementation - work with WireMock data
+    // yield put(appConfigActions.updateProspectId(data.prospectId));
   } catch (error) {
     const { errors } = error.response.data;
     yield put(setInputsErrors(errors));

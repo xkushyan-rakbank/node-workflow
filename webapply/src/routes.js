@@ -1,3 +1,5 @@
+export const basename = { basename: "/sme" };
+
 export default {
   MyApplications: "/MyApplications",
   comeBackLoginVerification: "/ComeBackVerification",
