@@ -27,6 +27,12 @@ export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 /**
  * @param {Store} state
+ * @return {ApplicationInfo}
+ */
+export const getApplicationInfo = state =>
+  getProspect(state).applicationInfo || {};
+/**
+ * @param {Store} state
  * @return {String}
  */
 export const getProspectId = state => getGeneralInfo(state).prospectId;

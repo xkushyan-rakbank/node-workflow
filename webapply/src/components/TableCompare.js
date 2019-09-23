@@ -7,6 +7,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import ContainedButton from "./Buttons/ContainedButton";
+import { connect } from "react-redux";
+import * as appConfigSelectors from "../store/selectors/appConfig";
+import { updateField } from "../store/actions/appConfig";
 
 const style = {
   paperRoot: {
@@ -206,6 +209,12 @@ class TableCompare extends React.Component {
     }
   };
 
+  handleClick = accountType =>
+    updateField({
+      value: accountType,
+      name: "prospect.applicationInfo.accountType"
+    });
+
   render() {
     const { classes } = this.props;
 
@@ -251,13 +260,22 @@ class TableCompare extends React.Component {
                     {" "}
                   </TableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton label="Read more" />
+                    <StyledContainedButton
+                      label="Read more"
+                      handleClick={() => this.handleClick("RAKStarter")}
+                    />
                   </StyledTableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton label="Read more" />
+                    <StyledContainedButton
+                      label="Read more"
+                      handleClick={() => this.handleClick("Current Account")}
+                    />
                   </StyledTableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton label="Read more" />
+                    <StyledContainedButton
+                      label="Read more"
+                      handleClick={() => this.handleClick("RAKelite")}
+                    />
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
@@ -269,4 +287,17 @@ class TableCompare extends React.Component {
   }
 }
 
-export default withStyles(style)(TableCompare);
+const mapStateToProps = state => ({
+  applicationInfo: appConfigSelectors.getApplicationInfo(state)
+});
+
+const mapDispatchToProps = {
+  updateField
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TableCompare)
+);
