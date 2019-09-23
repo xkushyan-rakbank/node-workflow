@@ -137,10 +137,10 @@ const mapStateToProps = state => ({
   prospectId: appConfigSelectors.getProspectId(state),
   otp: otpSelectors.getOtp(state),
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
-  isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),
   lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
   isProceed: appConfigSelectors.getProceedStatus(state),
   screeningResults: appConfigSelectors.getScreeningResults(state)
+  // isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),
 });
 
 const mapDispatchToProps = {
