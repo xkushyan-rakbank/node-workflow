@@ -7,6 +7,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
+import ApplicationStatus from "../components/ApplicationStatus";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
@@ -71,52 +72,62 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const { classes, lastInputValue, isReCaptchaVerified } = this.props;
+    const {
+      classes,
+      lastInputValue,
+      isReCaptchaVerified,
+      isProceed,
+      screeningResults: { screeningReason }
+    } = this.props;
     return (
       <>
-        <h2>Let’s Start with the Basics</h2>
-        <p className="formDescription">
-          First things first, you need a login, so you can come back to your
-          application later.
-        </p>
+        {!!isProceed ? (
+          <>
+            <h2>Let’s Start with the Basics</h2>
+            <p className="formDescription">
+              First things first, you need a login, so you can come back to your
+              application later.
+            </p>
 
-        <form noValidate onSubmit={this.submitForm}>
-          <TextInput id="Aplnt.fullName" />
+            <form noValidate onSubmit={this.submitForm}>
+              <TextInput id="Aplnt.fullName" />
 
-          <TextInput id="Aplnt.email" />
+              <TextInput id="Aplnt.email" />
 
-          <TextInput
-            id="Aplnt.mobileNo"
-            selectId="Aplnt.countryCode"
-            select={
-              <PureSelect
-                id="Aplnt.countryCode"
-                combinedSelect
-                defaultValue="USA"
+              <TextInput
+                id="Aplnt.mobileNo"
+                selectId="Aplnt.countryCode"
+                select={
+                  <PureSelect
+                    id="Aplnt.countryCode"
+                    combinedSelect
+                    defaultValue="USA"
+                  />
+                }
               />
-            }
-          />
 
-          <PureSelect id="Aplnt.applyOnbehalf" />
+              <ErrorBoundary className={classes.reCaptchaContainer}>
+                <ReCaptcha
+                  onVerify={this.handleReCaptchaVerify}
+                  onExpired={this.handleReCaptchaExpired}
+                  onError={this.handleReCaptchaError}
+                />
+              </ErrorBoundary>
 
-          <ErrorBoundary className={classes.reCaptchaContainer}>
-            <ReCaptcha
-              onVerify={this.handleReCaptchaVerify}
-              onExpired={this.handleReCaptchaExpired}
-              onError={this.handleReCaptchaError}
-            />
-          </ErrorBoundary>
+              <div className="linkContainer">
+                <BackLink path={routes.detailedAccount} />
 
-          <div className="linkContainer">
-            <BackLink path={routes.detailedAccount} />
-
-            <SubmitButton
-              label="Next Step"
-              justify="flex-end"
-              disabled={!isReCaptchaVerified || !lastInputValue}
-            />
-          </div>
-        </form>
+                <SubmitButton
+                  label="Next Step"
+                  justify="flex-end"
+                  disabled={!lastInputValue}
+                />
+              </div>
+            </form>
+          </>
+        ) : (
+          <ApplicationStatus reason={screeningReason} />
+        )}
       </>
     );
   }
@@ -127,7 +138,9 @@ const mapStateToProps = state => ({
   otp: otpSelectors.getOtp(state),
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
   isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),
-  lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.applyOnbehalf")
+  lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
+  isProceed: appConfigSelectors.getProceedStatus(state),
+  screeningResults: appConfigSelectors.getScreeningResults(state)
 });
 
 const mapDispatchToProps = {

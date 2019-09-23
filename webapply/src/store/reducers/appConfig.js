@@ -54,6 +54,8 @@ const appConfigReducer = (state = initialState, action) => {
         prospect: action.prospect
       };
     case UPDATE_PROSPECT_ID:
+      console.log("state", state);
+      console.log("action", action);
       return {
         ...state,
         prospect: {
