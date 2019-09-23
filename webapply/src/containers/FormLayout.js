@@ -36,7 +36,9 @@ const style = {
   },
   mainContainer: {
     maxWidth: "780px",
-    width: "100%"
+    width: "100%",
+    paddingTop: 90,
+    paddingBottom: 20
   }
 };
 
