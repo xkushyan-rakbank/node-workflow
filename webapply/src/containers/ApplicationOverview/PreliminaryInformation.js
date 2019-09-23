@@ -1,9 +1,9 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import license from "./../../assets/images/trade-license.svg";
-import passport from "./../../assets/images/passport-visa.svg";
-import emiratesId from "./../../assets/images/emirates-id.svg";
-import companyDocuments from "./../../assets/images/company-documents.svg";
+import license from "../../assets/icons/trade-license.svg";
+import passport from "../../assets/icons/passport-visa.svg";
+import emiratesId from "../../assets/icons/emirates-id.svg";
+import companyDocuments from "../../assets/icons/company-documents.svg";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";

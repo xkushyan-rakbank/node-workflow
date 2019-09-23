@@ -1,6 +1,10 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
+import earn from "../../assets/icons/earn.svg";
+import deposit from "../../assets/icons/deposit.svg";
+import availability from "../../assets/icons/availability.svg";
+import exchange from "../../assets/icons/exchange.svg";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../components/HorizontalIconCards/HorizontalIconCardsContainer";
 import HorizontalIconCardItem from "../../components/HorizontalIconCards/HorizontalIconCardItem";
@@ -32,18 +36,15 @@ const AccountBenefits = ({ classes }) => {
   return (
     <>
       <div className={classes.indent}>
-        <SectionTitleWithInfo title="An unmatched set of benefits, for an unmatched price" />
+        <SectionTitleWithInfo title="The tools you need for the scale you want" />
       </div>
       <HorizontalIconCardsContainer>
-        <HorizontalIconCardItem
-          minWidth="260px"
-          text="Zero minimum monthly average credit balance"
-        >
+        <HorizontalIconCardItem minWidth="260px" text="A low minimum balance">
           <DoneIcon className={classes.icon} />
         </HorizontalIconCardItem>
         <HorizontalIconCardItem
           minWidth="260px"
-          text="No ledger/ fall back fee"
+          text="Comprehensive account statements for all your transactions"
         >
           <DoneIcon className={classes.icon} />
         </HorizontalIconCardItem>
@@ -51,25 +52,25 @@ const AccountBenefits = ({ classes }) => {
           minWidth="260px"
           text="Available in AED, USD, EUR, GBP"
         >
-          <DoneIcon className={classes.icon} />
+          <img src={availability} alt="availability" />
         </HorizontalIconCardItem>
         <HorizontalIconCardItem
           minWidth="260px"
-          text="Attractive Foreign Exchange and Trade Finance rates"
+          text="Exclusive Foreign Exchange and Trade Finance rates"
         >
-          <DoneIcon className={classes.icon} />
+          <img src={exchange} alt="exchange" />
         </HorizontalIconCardItem>
         <HorizontalIconCardItem
           minWidth="260px"
-          text="Competitive rate of interest on Fixed Deposits"
+          text="Exclusive rates of interest on Fixed Deposits"
         >
-          <DoneIcon className={classes.icon} />
+          <img src={deposit} alt="deposit" />
         </HorizontalIconCardItem>
         <HorizontalIconCardItem
           minWidth="260px"
-          text="Earn attractive interest"
+          text="Earn preferential interest"
         >
-          <DoneIcon className={classes.icon} />
+          <img src={earn} alt="earn" />
         </HorizontalIconCardItem>
         <div className={classes.notification}>
           *Companies older than 12 months are not eligible for the RAKstarter

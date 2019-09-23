@@ -1,29 +1,9 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import { Link } from "@material-ui/core";
-import ContainedButton from "../Buttons/ContainedButton";
-
-const StyledContainedButton = withStyles({
-  buttonStyle: {
-    height: "auto",
-    padding: "3px 0",
-    border: "1px solid #373737",
-    boxShadow: "none",
-    backgroundColor: "#fff",
-    "&:hover": {
-      backgroundColor: "#000",
-      "& span": {
-        color: "#fff"
-      }
-    }
-  },
-  labelStyle: {
-    display: "block",
-    color: "#373737",
-    fontSize: "14px",
-    textAlign: "center"
-  }
-})(ContainedButton);
+import plus from "../../assets/icons/rak-value-plus.svg";
+import max from "../../assets/icons/rak-value-max.svg";
+import check from "../../assets/icons/check_outline_ic.svg";
 
 const style = {
   root: {
@@ -32,7 +12,7 @@ const style = {
     flex: "1 1",
     flexDirection: "column",
     minWidth: "270px",
-    maxHeight: "340px",
+    maxHeight: "572px",
     margin: "10px",
     padding: "40px 20px 25px 20px",
     border: "solid 1px #e8e8e8",
@@ -53,42 +33,26 @@ const style = {
   title: {
     fontSize: "20px",
     borderBottom: "solid 1px #e8e8e8",
-    paddingBottom: "20px",
+    paddingBottom: "30px",
     "@media only screen and (max-width: 1300px)": {
       paddingBottom: "10px"
     }
+  },
+  icon: {
+    display: "flex",
+    height: "80px",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "30px"
   },
   name: {
     fontWeight: 600,
     textAlign: "center"
   },
-  value: {
-    position: "relative",
-    display: "inline-block",
-    marginLeft: "16px",
-    padding: "3px 10px",
-    borderRadius: "4px",
-    fontSize: "16px",
-    color: "#fff",
-    backgroundColor: "#ea2925",
-    boxShadow: "0 2px 6px 0 rgba(0, 0, 0, 0.15)",
-    "&::after": {
-      content: "''",
-      position: "absolute",
-      top: "50%",
-      left: "-6px",
-      width: 0,
-      height: 0,
-      transform: "translateY(-50%)",
-      borderStyle: "solid",
-      borderWidth: "8px 12px 8px 0",
-      borderColor: "transparent #ea2925 transparent transparent"
-    }
-  },
   cost: {
-    paddingTop: "10px",
+    paddingTop: "25px",
     fontSize: "14px",
-    color: "#c6c6cc",
+    fontWeight: 600,
     textAlign: "center",
     "& span": {
       marginLeft: "5px"
@@ -96,37 +60,63 @@ const style = {
   },
   options: {
     paddingLeft: "20px",
-    fontSize: "20px",
+    fontSize: "16px",
+    "& li": {
+      position: "relative",
+      listStyleType: "none"
+    },
     "@media only screen and (max-width: 1300px)": {
       "& li": {
         fontSize: "16px"
       },
       margin: "5px 0"
     },
-    "& li:not(:last-child)": {
+    "& > li:not(:last-child)": {
       marginBottom: "20px",
       "@media only screen and (max-width: 1300px)": {
         marginBottom: "5px"
       }
     }
   },
+  listIcon: {
+    position: "absolute",
+    top: "3px",
+    left: "-25px"
+  },
+  nestedOptions: {
+    paddingLeft: "20px",
+    fontSize: "14px",
+    "& li": {
+      marginBottom: "5px"
+    },
+    "& li::after": {
+      content: "''",
+      position: "absolute",
+      top: "10px",
+      left: "-15px",
+      width: "6px",
+      height: "1px",
+      backgroundColor: "#000"
+    }
+  },
   link: {
     fontSize: "14px",
-    color: "#c6c6cc",
+    color: "#373737",
     textDecoration: "underline"
   },
   linkWrapper: {
-    marginBottom: "40px",
+    paddingBottom: "40px",
+    borderBottom: "solid 1px #e8e8e8",
     "@media only screen and (max-width: 1300px)": {
       marginBottom: "10px"
     }
   },
-  included: {
-    fontSize: "16px",
-    textAlign: "center"
-  },
-  applyButton: {
-    textAlign: "center"
+  upgrade: {
+    paddingTop: "5px",
+    fontSize: "14px",
+    fontStyle: "italic",
+    textAlign: "center",
+    color: "#86868b"
   },
   closeButton: {
     position: "absolute",
@@ -157,7 +147,7 @@ const style = {
   }
 };
 
-const ExpandedOptionsCard = ({
+const ExpandedOptionsDetailedCard = ({
   classes,
   optionList,
   isIncluded,
@@ -167,19 +157,35 @@ const ExpandedOptionsCard = ({
 }) => (
   <div className={classes.root}>
     <div className={classes.title}>
-      <div className={classes.name}>
-        RAKvalue
-        <span className={classes.value}>{value}</span>
+      <div className={classes.icon}>
+        {value === "RAKvalue PLUS" ? (
+          <img src={plus} alt="rak-plus" />
+        ) : (
+          <img src={max} alt="rak-max" />
+        )}
       </div>
-      <div className={classes.cost}>
-        {cost}
-        <span>AED/ month</span>
-      </div>
+      <div className={classes.name}>{value}</div>
     </div>
     {optionList && (
       <ul className={classes.options}>
         {optionList.map(option => (
-          <li key={option.text}>{option.text}</li>
+          <li key={option.text}>
+            <img
+              className={classes.listIcon}
+              src={check}
+              alt="check"
+              height={16}
+              width={16}
+            />
+            {option.text}
+            {option.items && (
+              <ul className={classes.nestedOptions}>
+                {option.items.map(item => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            )}
+          </li>
         ))}
       </ul>
     )}
@@ -188,17 +194,12 @@ const ExpandedOptionsCard = ({
         Read more
       </Link>
     </div>
-    <div>
-      {isIncluded ? (
-        <div className={classes.included}>Included with your RAKstarter</div>
-      ) : (
-        <div className={classes.applyButton}>
-          <StyledContainedButton
-            label="Apply with MAX"
-            handleClick={() => console.log("not implemented yet")}
-          />
-        </div>
-      )}
+    <div className={classes.cost}>
+      {cost}
+      <span>AED/ month</span>
+    </div>
+    <div className={classes.upgrade}>
+      {isIncluded ? "Included in RAKstarter" : "Available upgrade"}
     </div>
     <div
       className={classes.closeButton}
@@ -207,4 +208,4 @@ const ExpandedOptionsCard = ({
   </div>
 );
 
-export default withStyles(style)(ExpandedOptionsCard);
+export default withStyles(style)(ExpandedOptionsDetailedCard);

@@ -25,8 +25,8 @@ const AccountingSoftware = ({ classes }) => (
     <div className={classes.image} />
     <div className={classes.indent}>
       <SectionTitleWithInfo
-        title="Scale at your own pace"
-        info="We need to spend some time getting to know you and your company"
+        title="You run the business. We run with you."
+        info="Scale up with our top accounting solution and business insurance"
       />
     </div>
     <ExpandedOptionsCards />

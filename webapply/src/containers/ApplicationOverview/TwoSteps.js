@@ -1,8 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import logo from "./../../assets/images/logo.png";
-import interrogation from "./../../assets/images/interrogation.svg";
-import signature from "./../../assets/images/signature.svg";
+import interrogation from "../../assets/icons/interrogation.svg";
+import signature from "../../assets/icons/signature.svg";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
