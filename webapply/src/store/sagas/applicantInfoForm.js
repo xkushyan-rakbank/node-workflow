@@ -17,6 +17,7 @@ function* applicantInfoFormSaga() {
       apiClient.prospect.create,
       appConfigSelectors.getProspect(state)
     );
+    console.log("data", data);
     yield put(applicantInfoFormSuccess());
     yield call(history.push, routes.verifyOtp);
     // // temp implementation - work with WireMock data

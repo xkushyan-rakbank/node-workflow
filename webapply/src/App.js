@@ -56,6 +56,11 @@ class App extends React.Component {
             <Switch>
               <Route
                 exact
+                path={routes.accountsComparison}
+                component={AccountsComparison}
+              />
+              <Route
+                exact
                 path={routes.applicantInfo}
                 component={ApplicantInfo}
               />
@@ -87,11 +92,7 @@ class App extends React.Component {
                 path={routes.selectServices}
                 component={SelectServices}
               />
-              <Route
-                exact
-                path={routes.accountsComparison}
-                component={AccountsComparison}
-              />
+
               <Route
                 exact
                 path={routes.applicationOverview}

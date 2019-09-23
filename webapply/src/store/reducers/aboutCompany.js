@@ -12,6 +12,11 @@ const aboutCompanyReducer = (state = initialState, action) => {
     case ABOUT_COMPANY_FORM_SUCCESS:
       return {
         ...state,
+        loading: true
+      };
+    case ABOUT_COMPANY_FORM_SUCCESS:
+      return {
+        ...state,
         loading: false
       };
     case ABOUT_COMPANY_FORM_FAIL:

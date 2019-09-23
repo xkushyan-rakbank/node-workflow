@@ -15,7 +15,7 @@ class Route extends React.Component {
 
   render() {
     if (this.isNotFoundRoute()) {
-      return <Redirect to={routes.applicantInfo} />;
+      return <Redirect to={routes.accountsComparison} />;
     }
 
     return <ReactRoute {...this.props} />;
