@@ -9,12 +9,10 @@ import java.util.Map.Entry;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,6 +34,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.commons.FileHelper;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -44,10 +43,10 @@ public class WebApplyController {
 	private static final Logger logger = LoggerFactory.getLogger(WebApplyController.class);
 
 	@Autowired
-	private ResourceLoader resourceLoader;
+	ServletContext servletContext;
 
 	@Autowired
-	ServletContext servletContext;
+	FileHelper fileHelper;
 
 	private JsonNode uiConfigJSON = null;
 
@@ -59,30 +58,16 @@ public class WebApplyController {
 
 	@PostConstruct
 	public void initAppState() {
-		uiConfigJSON = loadJSONConfigFile("uiConfig.json");
-		appConfigJSON = loadJSONConfigFile("appConfig.json");
-		navigationJSON = loadJSONConfigFile("navigationConfig.json");
-		smeProspectJSON = loadJSONConfigFile("smeProspect.json");
+		uiConfigJSON = fileHelper.loadJSONFile("uiConfig.json");
+		appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
+		navigationJSON = fileHelper.loadJSONFile("navigationConfig.json");
+		smeProspectJSON = fileHelper.loadJSONFile("smeProspect.json");
 
 		try {
 			loadAppInitialState();
 		} catch (Exception e) {
 			logger.error("unable to prepare config for web apply", e);
 		}
-	}
-
-	private JsonNode loadJSONConfigFile(String filename) {
-		try {
-			logger.info("loading " + filename);
-			ObjectMapper objectMapper = new ObjectMapper();
-			Resource resource = resourceLoader.getResource("classpath:" + filename);
-			System.out.println(resource.getFile().toString());
-			String fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
-			return objectMapper.readTree(fileContent);
-		} catch (IOException e) {
-			logger.error("error loading " + filename, e);
-		}
-		return null;
 	}
 
 	@GetMapping(value = "/config", produces = "application/json")
