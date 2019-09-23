@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
-import { ReactComponent as CompanyIconSvg } from "../../assets//images/company-icon.svg";
+import companyIconSvg from "../../assets//images/company-icon.svg";
 
 const style = {
   fileUploadPlaceholder: {
@@ -214,7 +214,11 @@ class UploadDocuments extends Component {
           </>
         ) : (
           <>
-            <div>{this.props.icon || <CompanyIconSvg />}</div>
+            <div>
+              {this.props.icon || (
+                <img src={companyIconSvg} alt="companyIconSvg" />
+              )}
+            </div>
             <div className={this.props.classes.contentBox}>
               <div className={this.props.classes.uploadFileName}>
                 {" "}

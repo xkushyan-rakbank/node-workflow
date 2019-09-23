@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import arrowBack from "./../../assets/images/backArrow.svg";
-import AddIcon from "../AddIcon";
 
 const style = {
   container: {

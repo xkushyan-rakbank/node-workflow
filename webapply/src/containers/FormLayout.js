@@ -25,17 +25,20 @@ const style = {
     }
   },
   formInner: {
+    height: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "90px 50px 50px",
+    padding: "0 50px 50px",
     "& nextButton": {
       margin: "42px 0 0 !important"
     }
   },
   mainContainer: {
     maxWidth: "780px",
-    width: "100%"
+    width: "100%",
+    paddingTop: 90,
+    paddingBottom: 20
   }
 };
 

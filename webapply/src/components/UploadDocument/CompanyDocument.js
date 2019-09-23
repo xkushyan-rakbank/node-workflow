@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { ReactComponent as CompanyIconSvg } from "../../assets//images/company-icon.svg";
+import companyIconSvg from "../../assets//images/company-icon.svg";
 import UploadDocument from "./UploadDocument";
 
 const style = {
@@ -83,7 +83,9 @@ class CompanyDocuments extends Component {
       <div className={this.props.classes.container}>
         <header className={this.props.classes.header}>
           <div className={this.props.classes.companyIconWrap}>
-            {this.props.icon || <CompanyIconSvg />}
+            {this.props.icon || (
+              <img src={companyIconSvg} alt="companyIconSvg" />
+            )}
           </div>
           <div className={this.props.classes.contentBox}>
             <h3 className={this.props.classes.label}>Designit Arabia</h3>

@@ -36,3 +36,8 @@ export const getApplicationInfo = state =>
  * @return {String}
  */
 export const getProspectId = state => getGeneralInfo(state).prospectId;
+
+export const getProceedStatus = state => state.applicationStatus.isProceed;
+
+export const getScreeningResults = state =>
+  state.applicationStatus.screeningResults;
