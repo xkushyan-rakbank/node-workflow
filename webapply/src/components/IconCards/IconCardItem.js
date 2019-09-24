@@ -36,6 +36,9 @@ const style = {
     paddingBottom: "20px",
     "@media only screen and (max-width: 1300px)": {
       paddingBottom: "10px"
+    },
+    "& img": {
+      width: 60
     }
   }
 };

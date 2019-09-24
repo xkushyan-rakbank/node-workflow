@@ -150,7 +150,9 @@ class VerticalPaginationWrapper extends React.Component {
           </div>
         </div>
         <div className={classes.paginationDots}>
-          {nextElementPosition !== 0 && this.renderPagination(children)}
+          {videoUrl
+            ? nextElementPosition !== 0 && this.renderPagination(children)
+            : this.renderPagination(children)}
         </div>
       </>
     );
