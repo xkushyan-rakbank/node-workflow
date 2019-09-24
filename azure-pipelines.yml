@@ -74,6 +74,59 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
           ArtifactName: 'Webapply'
           
+    - job: document-uploader
+      pool:
+       name: Hosted macOS
+      steps:
+
+      - task: NodeTool@0
+        displayName: 'Use Node 10.x'
+        inputs:
+          versionSpec: 10.x
+
+      - bash : |
+          cd document-uploader
+          mvn clean
+          mvn clean install
+        displayName: 'Buildling Document Uploader Application'
+        enabled: true
+      - task: CopyFiles@2
+        displayName: 'Stage Artifacts'
+        inputs:
+          SourceFolder: document-uploader/target/
+          TargetFolder: '$(build.artifactstagingdirectory)/document-uploader'
+      - task: ArchiveFiles@2
+        displayName: 'Archive web'
+        inputs:
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/document-uploader/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/document-uploader/document-uploader.war'
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/document-uploader/*.war",
+                    "target": "onboarding/$(Build.BuildNumber)/document-uploader/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: 'Jfrog'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Build Artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/document-uploader'
+          ArtifactName: 'document-uploader'
+
     - job: WebapplyServer
       pool:
        name: Hosted macOS
