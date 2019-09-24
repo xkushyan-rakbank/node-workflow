@@ -1,15 +1,22 @@
 import React from "react";
 import TwoSteps from "./TwoSteps";
+import { connect } from "react-redux";
 import PreliminaryInformation from "./PreliminaryInformation";
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
 
-const ApplicationOverview = () => {
+const ApplicationOverview = ({ applicationInfo }) => {
+  const { accountType } = applicationInfo;
   return (
     <VerticalPaginationWrapper>
-      <TwoSteps />
+      <TwoSteps accountType={accountType} />
       <PreliminaryInformation />
     </VerticalPaginationWrapper>
   );
 };
 
-export default ApplicationOverview;
+const mapStateToProps = state => ({
+  applicationInfo: appConfigSelectors.getApplicationInfo(state)
+});
+
+export default connect(mapStateToProps)(ApplicationOverview);

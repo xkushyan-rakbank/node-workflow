@@ -1,7 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import logo from "./../../assets/images/logo.png";
-import overview from "../../assets/gif/overview_reg.gif";
+import overviewRegular from "../../assets/gif/overview_reg.gif";
+import overviewIslamic from "../../assets/gif/overview_islamic.gif";
+import overviewElite from "../../assets/gif/overview_elite.gif";
 import interrogation from "../../assets/icons/interrogation.png";
 import signature from "../../assets/icons/signature.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
@@ -36,44 +37,63 @@ const style = {
   info: {
     color: "#373737",
     fontSize: 18
+  },
+  overview: {
+    "@media only screen and (max-width: 1300px)": {
+      display: "none"
+    }
   }
 };
 
-const TwoSteps = ({ classes }) => (
-  <>
-    <div className={classes.firstGroup}>
-      <div className={classes.indent}>
-        <SectionTitleWithInfo title="Two easy steps" />
+const TwoSteps = ({ classes, accountType }) => {
+  const getGifUrl = () => {
+    switch (accountType) {
+      case "RAKStarter":
+        return overviewRegular;
+      case "Current Account":
+        return overviewIslamic;
+      case "RAKelite":
+        return overviewElite;
+      default:
+        return overviewRegular;
+    }
+  };
+  return (
+    <>
+      <div className={classes.firstGroup}>
+        <div className={classes.indent}>
+          <SectionTitleWithInfo title="Two easy steps" />
+        </div>
+        <div className={classes.indent}>
+          <IconCardsContainer>
+            <IconCardItem
+              minWidth="260px"
+              title="First"
+              text="You fill a couple of questions"
+            >
+              <img src={interrogation} alt="interrogation" />
+            </IconCardItem>
+            <IconCardItem
+              minWidth="260px"
+              title="Then"
+              text="We call you to sign the account"
+            >
+              <img src={signature} alt="signature" />
+            </IconCardItem>
+          </IconCardsContainer>
+        </div>
       </div>
-      <div className={classes.indent}>
-        <IconCardsContainer>
-          <IconCardItem
-            minWidth="260px"
-            title="First"
-            text="You fill a couple of questions"
-          >
-            <img src={interrogation} alt="interrogation" />
-          </IconCardItem>
-          <IconCardItem
-            minWidth="260px"
-            title="Then"
-            text="We call you to sign the account"
-          >
-            <img src={signature} alt="signature" />
-          </IconCardItem>
-        </IconCardsContainer>
+      <div className={classes.secondGroup}>
+        <div>
+          <h3 className={classes.title}>Grab a cup of tea</h3>
+          <span className={classes.info}>
+            We need to spend some time getting to know you and your company
+          </span>
+        </div>
+        <img className={classes.overview} src={getGifUrl()} alt="overview" />
       </div>
-    </div>
-    <div className={classes.secondGroup}>
-      <div>
-        <h3 className={classes.title}>Grab a cup of tea</h3>
-        <span className={classes.info}>
-          We need to spend some time getting to know you and your company
-        </span>
-      </div>
-      <img src={overview} alt="" />
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 export default withStyles(style)(TwoSteps);

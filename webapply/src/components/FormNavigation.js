@@ -69,6 +69,9 @@ const style = {
     marginTop: 20,
     display: "block",
     fontWeight: "normal"
+  },
+  nextButton: {
+    width: "238px"
   }
 };
 
@@ -88,7 +91,10 @@ const accountInfo = {
   }
 };
 
-const AccountInfo = ({ classes, accountType }) => {
+const AccountInfo = ({ classes, accountType, history }) => {
+  const { location: { pathname } = {} } = history;
+  const handleClick = path => history.push(path);
+  const isApplicationOverview = pathname === "/ApplicationOverview";
   return (
     <div className={classes.contentContainer}>
       {accountType ? (
@@ -109,7 +115,11 @@ const AccountInfo = ({ classes, accountType }) => {
               {accountInfo[accountType].subtitle}
             </Typography>
           </div>
-          <SubmitButton justify="flex-start" label="Apply now" />
+          <SubmitButton
+            justify="flex-start"
+            label="Apply now"
+            handleClick={() => handleClick("/ApplicationOverview")}
+          />
         </>
       ) : (
         <Typography
@@ -117,7 +127,17 @@ const AccountInfo = ({ classes, accountType }) => {
           component="h2"
           classes={{ root: classes.sectionTitle }}
         >
-          All businesses start with an account. Get yours now.
+          {isApplicationOverview
+            ? "Opening an account has never been this simple."
+            : "All businesses start with an account. Get yours now."}
+          {isApplicationOverview && (
+            <SubmitButton
+              justify="flex-start"
+              label="Start application"
+              handleClick={() => handleClick("/ApplicantInfo")}
+              classes={{ nextButton: classes.nextButton }}
+            />
+          )}
         </Typography>
       )}
     </div>
@@ -178,19 +198,24 @@ class FormNavigation extends React.Component {
   }
 
   render() {
-    const { applicationInfo = {}, location, classes } = this.props;
+    const { applicationInfo = {}, location, classes, history } = this.props;
     const { step } = this.state;
     const { accountType, islamicBanking } = applicationInfo;
     const showAccountInfo = new Set([
       "/AccountsComparison",
-      "/DetailedAccount"
+      "/DetailedAccount",
+      "/ApplicationOverview"
     ]).has(location.pathname);
     const backgroundImage = getBgImage(accountType, islamicBanking);
 
     return (
       <div className={classes.formNav} style={{ backgroundImage }}>
         {showAccountInfo ? (
-          <AccountInfo classes={classes} accountType={accountType} />
+          <AccountInfo
+            classes={classes}
+            accountType={accountType}
+            history={history}
+          />
         ) : (
           <FormStepper step={step} path={location.pathname} />
         )}
