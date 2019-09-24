@@ -1,6 +1,6 @@
 {
 	"local": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "http://localhost:9091",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -20,7 +20,6 @@
 		},
 		"dehEndpoints": {
 			"host": "http://localhost:9091",
-			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
 			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
 			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
@@ -35,10 +34,14 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "http://localhost:9091",
+			"generateToken": "/OAuth/token"
 		}
 	},
 	"dev": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -57,8 +60,7 @@
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
 		},
 		"dehEndpoints": {
-			"host": "http://localhost:9091",
-			"appConfigPath": "/webapply/api/v1/config",
+			"host": "",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
 			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
 			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
@@ -73,10 +75,14 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "",
+			"generateToken": "/OAuth/token"
 		}
 	},
 	"test": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -95,8 +101,7 @@
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
 		},
 		"dehEndpoints": {
-			"host": "http://localhost:9091",
-			"appConfigPath": "/webapply/api/v1/config",
+			"host": "",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
 			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
 			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
@@ -111,10 +116,14 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "",
+			"generateToken": "/OAuth/token"
 		}
 	},
 	"uat": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -133,8 +142,7 @@
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
 		},
 		"dehEndpoints": {
-			"host": "http://localhost:9091",
-			"appConfigPath": "/webapply/api/v1/config",
+			"host": "",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
 			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
 			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
@@ -149,10 +157,14 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "",
+			"generateToken": "/OAuth/token"
 		}
 	},
 	"prod": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -171,8 +183,7 @@
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
 		},
 		"dehEndpoints": {
-			"host": "http://localhost:9091",
-			"appConfigPath": "/webapply/api/v1/config",
+			"host": "",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
 			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
 			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
@@ -187,6 +198,10 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "",
+			"generateToken": "/OAuth/token"
 		}
 	}
 }

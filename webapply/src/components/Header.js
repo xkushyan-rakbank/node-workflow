@@ -10,7 +10,7 @@ const styles = {
     top: " 0",
     width: " 100%",
     display: "flex",
-    zIndex: "21",
+    zIndex: 0,
     "& img": {
       width: "120px"
     }

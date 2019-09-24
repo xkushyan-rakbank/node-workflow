@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,7 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import ContainedButton from "./Buttons/ContainedButton";
 import { connect } from "react-redux";
 import * as appConfigSelectors from "../store/selectors/appConfig";
-import { updateField } from "../store/actions/appConfig";
+import { updateProspect } from "../store/actions/appConfig";
 
 const style = {
   paperRoot: {
@@ -191,13 +192,9 @@ const SelectedAccountContainer = ({ offset, width }) => {
 };
 
 class TableCompare extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      offset: 380
-    };
-  }
+  state = {
+    offset: 380
+  };
 
   onHoverSection = e => {
     if (e.target.tagName === "TD") {
@@ -209,11 +206,14 @@ class TableCompare extends React.Component {
     }
   };
 
-  handleClick = accountType =>
-    updateField({
+  handleClick = accountType => {
+    const { history, updateProspect } = this.props;
+    updateProspect({
       value: accountType,
       name: "prospect.applicationInfo.accountType"
     });
+    history.push("/DetailedAccount");
+  };
 
   render() {
     const { classes } = this.props;
@@ -232,7 +232,7 @@ class TableCompare extends React.Component {
                   <StyledTableHeader style={{ width: 180 }}>
                     {" "}
                   </StyledTableHeader>
-                  <StyledTableHeader>RAKstarter</StyledTableHeader>
+                  <StyledTableHeader>RAKStarter</StyledTableHeader>
                   <StyledTableHeader>Current Account</StyledTableHeader>
                   <StyledTableHeader>RAKelite</StyledTableHeader>
                 </TableRow>
@@ -292,12 +292,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
-export default withStyles(style)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(TableCompare)
+export default withRouter(
+  withStyles(style)(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(TableCompare)
+  )
 );

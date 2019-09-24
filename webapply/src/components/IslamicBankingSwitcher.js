@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button/Button";
 import * as appConfigSelectors from "../store/selectors/appConfig";
-import { updateField } from "../store/actions/appConfig";
+import { updateProspect } from "../store/actions/appConfig";
 import { connect } from "react-redux";
 import cx from "classnames";
 
@@ -38,9 +38,13 @@ const styles = {
     color: "#ffffff"
   }
 };
-const IslamicBankingSwitcher = ({ classes, updateField, applicationInfo }) => {
+const IslamicBankingSwitcher = ({
+  classes,
+  updateProspect,
+  applicationInfo
+}) => {
   const handleClick = islamicBanking =>
-    updateField({
+    updateProspect({
       value: islamicBanking,
       name: "prospect.applicationInfo.islamicBanking"
     });
@@ -83,7 +87,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

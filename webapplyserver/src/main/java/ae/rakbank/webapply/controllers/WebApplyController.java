@@ -13,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,7 +124,7 @@ public class WebApplyController {
 	private String buildAppInitialState(String segment, String product, String role, String device) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
-		initStateJSON.set("endpoints", appConfigJSON.get(EnvUtil.getEnv()).get("endpoints"));
+		initStateJSON.set("endpoints", appConfigJSON.get(EnvUtil.getEnv()).get("webApplyEndpoints"));
 		initStateJSON.set("navigationConfig", navigationJSON.get(segment));
 		initStateJSON.set("prospect", getProspect(segment, product));
 		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
@@ -227,10 +226,10 @@ public class WebApplyController {
 	}
 
 	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws IOException {
-		String hostValue = initStateJSON.get("endpoints").get("host").asText();
+		String hostValue = initStateJSON.get("dehEndpoints").get("host").asText();
 		String scheme = hostValue.substring(0, hostValue.indexOf(':'));
 		String host = hostValue.substring(hostValue.indexOf("://") + 3);
-		String path = initStateJSON.get("endpoints").get("datalistPath").asText();
+		String path = initStateJSON.get("dehEndpoints").get("datalistPath").asText();
 
 		UriComponents uriComponents = UriComponentsBuilder.newInstance().scheme(scheme).host(host).path(path)
 				.buildAndExpand(segment);
