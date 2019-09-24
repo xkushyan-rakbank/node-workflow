@@ -73,59 +73,6 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
           ArtifactName: 'Webapply'
-          
-    - job: document_uploader
-      pool:
-       name: Hosted macOS
-      steps:
-      - task: NodeTool@0
-        displayName: 'Use Node 10.x'
-        inputs:
-          versionSpec: 10.x
-
-      - bash : |
-          cd document_uploader
-          mvn clean
-          mvn clean install
-        displayName: 'Buildling Document Uploader Application'
-        enabled: true
-      - task: CopyFiles@2
-        displayName: 'Stage Artifacts'
-        inputs:
-          SourceFolder: document_uploader/target/
-          TargetFolder: '$(build.artifactstagingdirectory)/document_uploader'
-      - task: ArchiveFiles@2
-        displayName: 'Archive web'
-        inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/document_uploader/'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/document-uploader/document_uploader.war'
-
-# below is used for the publishing the artifacts to the jfrog artifactory 
-      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
-        inputs:
-          artifactoryService: 'Jfrog'
-          fileSpec: |
-            {
-              "files": [
-                {
-                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/document_uploader.war",
-                    "target": "onboarding/$(Build.BuildNumber)/document_uploader/"
-                }
-              ]
-            }
-          collectBuildInfo: true
-      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
-        displayName: 'Publish Build Info to Artifactory'
-        inputs:
-          artifactoryService: 'Jfrog'
-
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish Build Artifacts'
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/document_uploader'
-          ArtifactName: 'document_uploader'
-
     - job: WebapplyServer
       pool:
        name: Hosted macOS
@@ -177,6 +124,58 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
           ArtifactName: 'WebapplyServer'
+          
+    - job: document_uploader
+      pool:
+       name: Hosted macOS
+      steps:
+      - task: NodeTool@0
+        displayName: 'Use Node 10.x'
+        inputs:
+          versionSpec: 10.x
+
+      - bash : |
+          cd document_uploader
+          mvn clean
+          mvn clean install
+        displayName: 'Buildling Document Uploader Application'
+        enabled: true
+      - task: CopyFiles@2
+        displayName: 'Stage Artifacts'
+        inputs:
+          SourceFolder: document_uploader/target/
+          TargetFolder: '$(build.artifactstagingdirectory)/document_uploader'
+      - task: ArchiveFiles@2
+        displayName: 'Archive Document uploader file'
+        inputs:
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/document_uploader/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/document-uploader/*.war'
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
+                    "target": "onboarding/$(Build.BuildNumber)/document_uploader/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: 'Jfrog'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Build Artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/document_uploader'
+          ArtifactName: 'document_uploader'
 
     - job: SonarQube
       dependsOn:

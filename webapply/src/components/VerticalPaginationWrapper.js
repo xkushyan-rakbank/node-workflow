@@ -2,6 +2,8 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
 
+import VideoBackground from "./BackgroundVideoPlayer";
+
 // Parent wrapper component total vertical padding. Temporary solution. In the future should be fixed
 const parentTotalOffset = 140;
 const parentBottomOffset = 50;
@@ -33,6 +35,7 @@ const style = {
     top: "50vh",
     right: "30px",
     width: "10px",
+    zIndex: 2,
     transform: "translateY(-50%)"
   },
   paginationDot: {
@@ -61,6 +64,7 @@ class VerticalPaginationWrapper extends React.Component {
     super(props);
     this.state = {
       top: "0",
+      nextElementPosition: 0,
       currentElement: "0"
     };
     this.timeStamp = new Date();
@@ -107,6 +111,7 @@ class VerticalPaginationWrapper extends React.Component {
     const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding}*${nextElementPosition})`;
     this.setState({
       top,
+      nextElementPosition,
       currentElement: nextElementPosition.toString()
     });
   };
@@ -119,16 +124,25 @@ class VerticalPaginationWrapper extends React.Component {
     const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding}*${nextElementPosition})`;
     this.setState({
       top,
+      nextElementPosition,
       currentElement: e.currentTarget.name
     });
   };
 
   render() {
-    const { classes, children } = this.props;
-    const { top } = this.state;
+    const { classes, children, videoUrl } = this.props;
+    const { top, nextElementPosition } = this.state;
+
     return (
       <>
         <div className={classes.paginationWrapper} onWheel={this.handleWheel}>
+          {videoUrl && (
+            <VideoBackground
+              nextElementPosition={nextElementPosition}
+              videoUrl={videoUrl}
+              handleClick={this.handleClick}
+            />
+          )}
           <div style={{ top }} className={classes.paginationContent}>
             {React.Children.map(children, child => (
               <div className={classes.childWrapper}>{child}</div>
@@ -136,7 +150,9 @@ class VerticalPaginationWrapper extends React.Component {
           </div>
         </div>
         <div className={classes.paginationDots}>
-          {this.renderPagination(children)}
+          {videoUrl
+            ? nextElementPosition !== 0 && this.renderPagination(children)
+            : this.renderPagination(children)}
         </div>
       </>
     );
