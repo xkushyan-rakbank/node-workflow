@@ -98,7 +98,7 @@ jobs:
         displayName: 'Archive web'
         inputs:
           rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/document_uploader/'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/document-uploader/document_uploader.war'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/document-uploader/*.war'
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
