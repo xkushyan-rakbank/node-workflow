@@ -109,7 +109,7 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/document_uploader.war",
+                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
                     "target": "onboarding/$(Build.BuildNumber)/document_uploader/"
                 }
               ]
