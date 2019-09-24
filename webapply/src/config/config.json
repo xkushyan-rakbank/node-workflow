@@ -7320,7 +7320,7 @@
     "applicationInfo": {
       "viewId": "",
       "islamicBanking": false,
-      "accountType": "RAKStarter",
+      "accountType": "",
       "rakValuePackage": "RAKvalue PLUS",
       "leadNumber": "",
       "riskScore": "",
