@@ -6,11 +6,14 @@ import AccountCardContainer from "./AccountCardContainer";
 import InfoNote from "../../components/InfoNote";
 import TableCompare from "../../components/TableCompare";
 
+import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
+
 class AccountsComparisonContainer extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <VerticalPaginationWrapper>
+        <VerticalPaginationWrapper videoUrl={accountComparisonVideo}>
+          <div></div>
           <div>
             <SectionTitleWithInfo
               title="One business account for every business stage"
