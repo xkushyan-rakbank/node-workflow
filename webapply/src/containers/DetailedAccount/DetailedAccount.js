@@ -8,21 +8,19 @@ import VerticalPaginationWrapper from "../../components/VerticalPaginationWrappe
 import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher";
 import AccountBenefits from "./AccountBenefits";
 import AccountingSoftware from "./AccountingSoftware";
-import CustomerService from "./CustomerService";
 
 import getVideoUrl from "../../utils/getVideoUrl";
 
 const DetailedAccount = props => {
   const videoUrl = getVideoUrl(props.applicationInfo);
-
+  const accountType = props.applicationInfo.accountType;
   return (
     <>
       <IslamicBankingSwitcher />
       <VerticalPaginationWrapper videoUrl={videoUrl}>
         <div></div>
-        <AccountBenefits />
-        <AccountingSoftware />
-        <CustomerService />
+        <AccountBenefits accountType={accountType} />
+        <AccountingSoftware accountType={accountType} />
       </VerticalPaginationWrapper>
     </>
   );

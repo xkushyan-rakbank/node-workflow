@@ -23,7 +23,10 @@ const style = {
     display: "flex",
     flex: "1 1",
     fontSize: "16px",
-    textAlign: "left"
+    textAlign: "left",
+    "@media only screen and (max-height: 800px)": {
+      fontSize: "14px"
+    }
   },
   iconCardImg: {
     display: "flex",
