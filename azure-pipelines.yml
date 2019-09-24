@@ -109,7 +109,7 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
+                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/document_uploader.war",
                     "target": "onboarding/$(Build.BuildNumber)/document_uploader/"
                 }
               ]
@@ -123,8 +123,8 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Build Artifacts'
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/document-uploader'
-          ArtifactName: 'document-uploader'
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/document_uploader'
+          ArtifactName: 'document_uploader'
 
     - job: WebapplyServer
       pool:
