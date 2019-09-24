@@ -77,8 +77,10 @@ class BasicsForm extends React.Component {
       lastInputValue,
       isReCaptchaVerified,
       isProceed,
+      applicationInfo,
       screeningResults: { screeningReason }
     } = this.props;
+    console.log("applicationInfo", applicationInfo);
     return (
       <>
         {!!isProceed ? (
@@ -139,7 +141,8 @@ const mapStateToProps = state => ({
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
   lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
   isProceed: appConfigSelectors.getProceedStatus(state),
-  screeningResults: appConfigSelectors.getScreeningResults(state)
+  screeningResults: appConfigSelectors.getScreeningResults(state),
+  applicationInfo: appConfigSelectors.getApplicationInfo(state)
   // isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),
 });
 
