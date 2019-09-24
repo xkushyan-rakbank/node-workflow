@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1680" height="940" viewBox="0 0 1680 940">
+    <defs>
+        <path id="a" d="M.316.45h1680v940H.316z"/>
+        <path id="c" d="M0 0h961.965v1467.08H0z"/>
+        <linearGradient id="f" x1="64.042%" x2="60.134%" y1="47.442%" y2="103.648%">
+            <stop offset="0%" stop-color="#BC6D4C"/>
+            <stop offset="100%" stop-color="#974231"/>
+        </linearGradient>
+        <ellipse id="e" cx="1400.622" cy="1541.845" rx="1400.622" ry="1541.845"/>
+        <linearGradient id="i" x1="62.573%" x2="48.453%" y1="80.373%" y2="102.287%">
+            <stop offset="0%" stop-color="#BC6D4C"/>
+            <stop offset="100%" stop-color="#974231"/>
+        </linearGradient>
+        <ellipse id="h" cx="1400.622" cy="1541.845" rx="1400.622" ry="1541.845"/>
+        <linearGradient id="k" x1="91.336%" x2="8.664%" y1="0%" y2="90.906%">
+            <stop offset="0%" stop-color="#C37955"/>
+            <stop offset="100%" stop-color="#974231"/>
+        </linearGradient>
+        <ellipse id="l" cx="968.378" cy="1138.398" rx="968.378" ry="1065.044"/>
+        <linearGradient id="m" x1="100%" x2="0%" y1="50%" y2="50%">
+            <stop offset="0%" stop-color="#A5553D"/>
+            <stop offset="100%" stop-color="#CD855D"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 1681 0)">
+        <mask id="b" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <g mask="url(#b)">
+            <g transform="rotate(90 1162.082 1162.813)">
+                <mask id="d" fill="#fff">
+                    <use xlink:href="#c"/>
+                </mask>
+                <g mask="url(#d)">
+                    <g transform="translate(-920.921 -1910.026)">
+                        <mask id="g" fill="#fff">
+                            <use xlink:href="#e"/>
+                        </mask>
+                        <use fill="url(#f)" xlink:href="#e"/>
+                        <g mask="url(#g)">
+                            <g transform="translate(2.565)">
+                                <mask id="j" fill="#fff">
+                                    <use xlink:href="#h"/>
+                                </mask>
+                                <use fill="url(#i)" xlink:href="#h"/>
+                                <g mask="url(#j)">
+                                    <g opacity=".705" transform="translate(264.22 809.715)">
+                                        <use fill="url(#k)" xlink:href="#l"/>
+                                        <use fill="#BE6F4D" xlink:href="#l"/>
+                                    </g>
+                                    <path stroke="#979797" stroke-opacity=".01" d="M264.72 810.215h1987.062v2258.868H264.72z"/>
+                                </g>
+                                <g mask="url(#j)">
+                                    <g transform="translate(177.002 1069.276)">
+                                        <ellipse cx="952.987" cy="1014.26" fill="#FFA877" opacity=".133" rx="793.942" ry="873.195"/>
+                                        <path stroke="#979797" stroke-opacity=".01" d="M.5.5h1858.8v1965.452H.5z"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                        <g mask="url(#g)" opacity=".32">
+                            <path fill="url(#m)" d="M0 0h974.792v1881.813H0z" transform="translate(915.791 1692.785)"/>
+                        </g>
+                        <path fill="#A5553D" d="M846.238 1774.966H2105.06V3117.53H846.238z" mask="url(#g)" opacity=".407"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
