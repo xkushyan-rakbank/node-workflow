@@ -78,7 +78,6 @@ jobs:
       pool:
        name: Hosted macOS
       steps:
-
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
         inputs:
@@ -131,7 +130,6 @@ jobs:
       pool:
        name: Hosted macOS
       steps:
-
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
         inputs:
