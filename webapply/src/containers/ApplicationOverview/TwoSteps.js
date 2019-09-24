@@ -1,8 +1,9 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import logo from "./../../assets/images/logo.png";
-import interrogation from "../../assets/icons/interrogation.svg";
-import signature from "../../assets/icons/signature.svg";
+import overview from "../../assets/gif/overview_reg.gif";
+import interrogation from "../../assets/icons/interrogation.png";
+import signature from "../../assets/icons/signature.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
@@ -21,10 +22,20 @@ const style = {
   secondGroup: {
     height: "300px",
     width: "100%",
+    display: "flex",
     "& span": {
       maxWidth: "380px"
-    },
-    background: `url(${logo}) no-repeat 60% 90%/60%`
+    }
+  },
+  title: {
+    color: "#373737",
+    fontSize: 20,
+    margin: 0,
+    fontWeight: "600"
+  },
+  info: {
+    color: "#373737",
+    fontSize: 18
   }
 };
 
@@ -54,10 +65,13 @@ const TwoSteps = ({ classes }) => (
       </div>
     </div>
     <div className={classes.secondGroup}>
-      <SectionTitleWithInfo
-        title="Grab a cup of tea"
-        info="We need to spend some time getting to know you and your company"
-      />
+      <div>
+        <h3 className={classes.title}>Grab a cup of tea</h3>
+        <span className={classes.info}>
+          We need to spend some time getting to know you and your company
+        </span>
+      </div>
+      <img src={overview} alt="" />
     </div>
   </>
 );
