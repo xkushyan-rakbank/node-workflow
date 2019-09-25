@@ -30,6 +30,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,json,css,scss,md}": [
       "prettier --write",
+      "eslint --max-warnings=0",
       "git add"
     ]
   },
