@@ -165,7 +165,7 @@ const StyledTableCell = withStyles(() => ({
       color: "#888"
     },
     "& button": {
-      marginTop: "20px"
+      marginTop: "5px"
     },
     "&:hover": {
       "& button": {
@@ -226,9 +226,9 @@ class TableCompare extends React.Component {
     offset: 380
   };
 
-  onHoverSection = e => {
-    if (e.target.tagName === "TD") {
-      const { offsetLeft, clientWidth } = e.target;
+  onHoverSection = event => {
+    if (event.target.tagName === "TD") {
+      const { offsetLeft, clientWidth } = event.target;
       this.setState({
         offset: offsetLeft,
         width: clientWidth

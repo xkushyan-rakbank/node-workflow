@@ -11,7 +11,16 @@ const style = {
   cardsContainer: {
     display: "flex",
     flexWrap: "wrap",
-    marginTop: 20
+    marginTop: 20,
+    "@media only screen and (max-width: 1420px)": {
+      flexDirection: "column",
+      marginTop: 10
+    },
+    "@media only screen and (max-width: 1100px)": {
+      flexWrap: "nowrap",
+      overflowY: "scroll",
+      flexDirection: "row"
+    }
   }
 };
 
