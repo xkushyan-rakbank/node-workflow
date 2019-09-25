@@ -2,10 +2,12 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import SectionTitle from "../components/SectionTitle";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import routes from "../routes";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
 import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
+import { docUpload } from "../store/actions/uploadDocActions";
 const style = {
   sectionContainer: {
     marginBottom: "40px"
@@ -25,7 +27,12 @@ class FileUploader extends React.Component {
     signatories: []
   };
 
+  componentWillMount() {
+    this.props.docUpload();
+  }
+
   render() {
+    const authUsers = this.props;
     return (
       <>
         <h2>Upload your documents</h2>
@@ -42,8 +49,7 @@ class FileUploader extends React.Component {
         </div>
         <div className={this.props.classes.sectionContainer}>
           <SectionTitle title="Signatories documents" />
-          {/* need to keep inside map function */}
-          <SignatoriesDocuments />
+          <SignatoriesDocuments authUsers={authUsers} />
         </div>
         <div className="linkContainer">
           <Link to={routes.finalQuestions}>
@@ -58,4 +64,20 @@ class FileUploader extends React.Component {
   }
 }
 
-export default withStyles(style)(FileUploader);
+const mapStateToProps = state => {
+  return {
+    authUsers: state.users.authUsers,
+    uploadedDoc: state.uploadedDocs.docs
+  };
+};
+
+const mapDispatchToProps = {
+  docUpload
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FileUploader)
+);

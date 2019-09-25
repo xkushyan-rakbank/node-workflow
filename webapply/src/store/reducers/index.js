@@ -4,6 +4,8 @@ import appConfig from "./appConfig";
 import reCaptcha from "./reCaptcha";
 import applicantInfoForm from "./applicantInfoForm";
 import serverValidation from "./serverValidation";
+import authReducer from "./authReducers";
+import docUploadReducer from "./docUploadReducer";
 
 /**
  * @typedef {Object} Store
@@ -18,7 +20,9 @@ const reducers = history =>
     appConfig,
     serverValidation,
     reCaptcha,
-    applicantInfoForm
+    applicantInfoForm,
+    users: authReducer,
+    uploadedDocs: docUploadReducer
   });
 
 export default reducers;

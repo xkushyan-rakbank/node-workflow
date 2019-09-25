@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 import Avatar from "../../components/Avatar";
 import UploadDocuments from "../../components/UploadDocument/UploadDocument";
+import { getInputValueById } from "../../store/selectors/input";
+
 const style = {
   container: {
     borderRadius: "8px",
@@ -70,29 +73,50 @@ const style = {
 
 class SignatoriesDocuments extends Component {
   render() {
-    return (
-      <div className={this.props.classes.container}>
-        <div>
-          <div className={this.props.classes.contentWrapper}>
-            <Avatar firstName="Bhakta" lastName="Dash" />
+    let docUploadDetails = this.props.authUsers.uploadedDoc;
+    if (docUploadDetails.stakeholdersDocuments) {
+      docUploadDetails = this.props.authUsers.uploadedDoc.stakeholdersDocuments;
+    }
+
+    console.log("doc details >>> " + docUploadDetails);
+    const authUsers = this.props.authUsers.authUsers;
+    const userList = authUsers.map((authUser, index) => {
+      return (
+        <div className={this.props.classes.container}>
+          <div className={this.props.classes.contentWrapper} key={authUser.id}>
+            <Avatar
+              firstName={authUser.fullName}
+              lastName={authUser.fullName}
+            />
             <div className={this.props.classes.userInfo}>
-              <div className={this.props.classes.nameField}>Bhakta Dash</div>
+              <div className={this.props.classes.nameField}>
+                {authUser.fullName}
+              </div>
               <div className={this.props.classes.SignatoryRights}>
-                Board Resolution
+                {authUser.roles}
               </div>
               <div className={this.props.classes.shareholdingField}>
-                {" "}
-                Shareholding 51%{" "}
+                Shareholding {authUser.Shareholding}
               </div>
             </div>
           </div>
+          {docUploadDetails.map((companyDoc, index) => {
+            if (authUser.fullName === companyDoc.signatoryName) {
+              return <UploadDocuments key={index} companyDoc={companyDoc} />;
+            }
+          })}
         </div>
-        {/* company documents need to put nside a map function */}
-
-        <UploadDocuments />
-      </div>
-    );
+      );
+    });
+    return <>{userList}</>;
   }
 }
 
-export default withStyles(style)(SignatoriesDocuments);
+const mapStateToProps = state => ({
+  // TODO: remove default value "Designit Arabia"
+  companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
+});
+
+export default withStyles(style)(
+  connect(mapStateToProps)(SignatoriesDocuments)
+);
