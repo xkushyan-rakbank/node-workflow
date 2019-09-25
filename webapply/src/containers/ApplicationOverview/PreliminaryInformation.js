@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 import license from "../../assets/icons/trade-license.png";
 import passport from "../../assets/icons/passport-visa.png";
 import emiratesId from "../../assets/icons/emirates-id.png";
-import companyDocuments from "../../assets/gif/submitted_regular.gif";
+import companyDocuments from "../../assets/icons/company-documents.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";

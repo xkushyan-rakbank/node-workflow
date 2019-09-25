@@ -9,17 +9,45 @@ import TableCompare from "../../components/TableCompare";
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
 
 class AccountsComparisonContainer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      indexScrollToSection: {
+        currentTarget: {
+          name: 0
+        }
+      }
+    };
+  }
+
+  scrollToSection = e => {
+    const { name: index } = e.currentTarget;
+
+    this.setState({
+      // todo refactor VerticalPaginationWrapper component to use index
+      indexScrollToSection: {
+        currentTarget: {
+          name: index
+        }
+      }
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
-        <VerticalPaginationWrapper videoUrl={accountComparisonVideo}>
+        <VerticalPaginationWrapper
+          videoUrl={accountComparisonVideo}
+          indexScrollToSection={this.state.indexScrollToSection}
+        >
           <div></div>
           <div>
             <SectionTitleWithInfo
               title="One business account for every business stage"
               info="Wherever your business is, our accounts will meet you there"
             />
-            <AccountCardContainer />
+            <AccountCardContainer handleClick={this.scrollToSection} />
             <InfoNote text="Note: Companies older than 12 months are not eligible for the RAKstarter account" />
           </div>
 

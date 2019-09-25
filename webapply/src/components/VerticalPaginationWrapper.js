@@ -70,6 +70,12 @@ class VerticalPaginationWrapper extends React.Component {
     this.timeStamp = new Date();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.indexScrollToSection) {
+      this.handleClick(nextProps.indexScrollToSection);
+    }
+  }
+
   renderPagination = children => {
     const { classes } = this.props;
     const { currentElement } = this.state;
@@ -117,6 +123,7 @@ class VerticalPaginationWrapper extends React.Component {
   };
 
   handleClick = e => {
+    // todo instead of e.currentTarget.name use index
     const nextElementPosition = parseInt(e.currentTarget.name);
     const correctedPadding = nextElementPosition
       ? `${parentBottomOffset}px`
