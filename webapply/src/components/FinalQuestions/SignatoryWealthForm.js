@@ -6,10 +6,7 @@ import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
-import {
-  getInputNameById,
-  getInputValueById
-} from "../../store/selectors/input";
+import { getInputNameById, getInputValueById } from "../../store/selectors/input";
 import { updateField } from "../../store/actions/appConfig";
 
 const styles = {
@@ -36,10 +33,7 @@ class SignatoryWealthForm extends Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      prevProps.soursOfWealth !== this.props.soursOfWealth &&
-      !this.isOtherSourceOfWealthSelected()
-    ) {
+    if (prevProps.soursOfWealth !== this.props.soursOfWealth && !this.isOtherSourceOfWealthSelected()) {
       this.updateOtherWealthTypeValue("");
     }
   }
@@ -51,7 +45,7 @@ class SignatoryWealthForm extends Component {
 
   updateOtherWealthTypeValue(value) {
     this.props.updateField({
-      value: value,
+      value,
       name: this.props.otherWealthTypeInputName
     });
   }
@@ -66,16 +60,9 @@ class SignatoryWealthForm extends Component {
       <form noValidate onSubmit={this.handleSubmit}>
         <SectionTitle title="Wealth" className={this.props.classes.title} />
 
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
-            <PureSelect
-              id="SigKycdWlth.wealthType"
-              indexes={[this.props.index]}
-            />
+            <PureSelect id="SigKycdWlth.wealthType" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
@@ -97,9 +84,7 @@ class SignatoryWealthForm extends Component {
 
 const mapStateToProps = (state, { index }) => ({
   soursOfWealth: getInputValueById(state, "SigKycdWlth.wealthType", [index]),
-  otherWealthTypeInputName: getInputNameById(state, "SigKycdWlth.others", [
-    index
-  ])
+  otherWealthTypeInputName: getInputNameById(state, "SigKycdWlth.others", [index])
 });
 
 const mapDispatchToProps = {

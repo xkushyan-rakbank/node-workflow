@@ -32,10 +32,7 @@ class BasicsForm extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      prevProps.reCaptchaToken !== this.props.reCaptchaToken &&
-      this.props.reCaptchaToken
-    ) {
+    if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
       this.props.verifyToken();
     }
     // if (
@@ -75,20 +72,16 @@ class BasicsForm extends React.Component {
     const {
       classes,
       lastInputValue,
-      isReCaptchaVerified,
       isProceed,
-      applicationInfo,
       screeningResults: { screeningReason }
     } = this.props;
-    console.log("applicationInfo", applicationInfo);
     return (
       <>
-        {!!isProceed ? (
+        {isProceed ? (
           <>
             <h2>Let’s Start with the Basics</h2>
             <p className="formDescription">
-              First things first, you need a login, so you can come back to your
-              application later.
+              First things first, you need a login, so you can come back to your application later.
             </p>
 
             <form noValidate onSubmit={this.submitForm}>
@@ -99,13 +92,7 @@ class BasicsForm extends React.Component {
               <TextInput
                 id="Aplnt.mobileNo"
                 selectId="Aplnt.countryCode"
-                select={
-                  <PureSelect
-                    id="Aplnt.countryCode"
-                    combinedSelect
-                    defaultValue="USA"
-                  />
-                }
+                select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="USA" />}
               />
 
               <ErrorBoundary className={classes.reCaptchaContainer}>
@@ -119,11 +106,7 @@ class BasicsForm extends React.Component {
               <div className="linkContainer">
                 <BackLink path={routes.detailedAccount} />
 
-                <SubmitButton
-                  label="Next Step"
-                  justify="flex-end"
-                  disabled={!lastInputValue}
-                />
+                <SubmitButton label="Next Step" justify="flex-end" disabled={!lastInputValue} />
               </div>
             </form>
           </>
