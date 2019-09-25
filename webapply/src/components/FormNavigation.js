@@ -97,7 +97,7 @@ const AccountInfo = ({ classes, accountType, history }) => {
   const isApplicationOverview = pathname === "/ApplicationOverview";
   return (
     <div className={classes.contentContainer}>
-      {accountType ? (
+      {accountType && pathname !== "/ApplicationOverview" ? (
         <>
           <div>
             <Typography
