@@ -14,7 +14,7 @@ import { generateOtpCode } from "../store/actions/otp";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import * as otpSelectors from "../store/selectors/otp";
-import * as inputSelectors from "../store/selectors/input";
+import * as inputSelectors from "../../store/selectors/input";
 import validateForm from "../utils/validate";
 import routes from "../routes";
 
