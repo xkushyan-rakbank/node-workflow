@@ -1,31 +1,72 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import SubmitApplication from "./SubmitApplication";
-import ServicesStepper from "./ServicesStepper";
+import { servicesSteps } from "../constants";
+import cx from "classnames";
+import ServicesStepTitle from "../components/ServicesStepTitle";
+import omit from "lodash/omit";
 
 const style = {
+  stepWrapper: { marginBottom: "20px" },
   formWrapper: {
-    margin: 0
+    borderTop: "1px solid rgba(230, 230, 230, 0.5)",
+    padding: "6px 20px"
   }
 };
 
 class SelectServices extends React.Component {
   state = {
-    canSubmit: false
+    canSubmit: false,
+    step: 1
   };
 
+  handleContinue = () => {
+    if (this.state.step < servicesSteps.length) {
+      this.setState(state => ({ step: state.step + 1 }));
+    } else {
+      this.goToFinish();
+    }
+  };
+
+  goToFinish = () => this.setState({ canSubmit: true });
+
   render() {
+    const { classes } = this.props;
     return this.state.canSubmit ? (
       <SubmitApplication />
     ) : (
       <>
         <h2>Services for your account</h2>
         <p className="formDescription">
-          Explanation text goes here. One to three short sentences maximum. This is the third
-          sentence.
+          Enough of us asking. Now it’s your turn to say which services you
+          want, whether it is foreign currencies, cards or chequebooks.
         </p>
 
-        <ServicesStepper goToFinish={() => this.setState({ canSubmit: true })} />
+        <div>
+          {servicesSteps.map(item => {
+            const Component = item.component;
+            const stepData = omit(item, "component");
+            return (
+              <div
+                key={item.title}
+                className={cx("paper", classes.stepWrapper)}
+              >
+                <ServicesStepTitle
+                  step={stepData}
+                  activeStep={this.state.step}
+                />
+                {this.state.step === item.step && (
+                  <div className={classes.formWrapper}>
+                    <Component
+                      goToNext={this.handleContinue}
+                      activeStep={this.state.step}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </>
     );
   }

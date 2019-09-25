@@ -27,29 +27,23 @@ const AccountDetails = props => {
   const { classes, goToNext } = props;
   return (
     <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-      <div className="paper">
-        <div className={classes.contactsTitle}>
-          <Subtitle title="Debit Cards" />
-          <InfoTitle title="These will be mailed by courier to your preferred address" />
-        </div>
-        <Checkbox id="Acnt.debitCardApplied" indexes={[0]} />
-        <div className={classes.signatoryLabel}>[Signatory number 1 name]</div>
-        <TextInput id="SigDbtcAuths.nameOnDebitCard" indexes={[0]} />
+      <div className={classes.contactsTitle}>
+        <Subtitle title="Debit Cards" />
+        <InfoTitle title="These will be mailed by courier to your preferred address" />
       </div>
+      <Checkbox id="Acnt.debitCardApplied" indexes={[0]} />
+      <div className={classes.signatoryLabel}>[Signatory number 1 name]</div>
+      <TextInput id="SigDbtcAuths.nameOnDebitCard" indexes={[0]} />
 
-      <div className="paper">
-        <div className={classes.contactsTitle}>
-          <Subtitle title="Cheque book" />
-          <InfoTitle title="These will be mailed by courier to your preferred address" />
-        </div>
-        <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} />
+      <div className={classes.contactsTitle}>
+        <Subtitle title="Cheque book" />
+        <InfoTitle title="These will be mailed by courier to your preferred address" />
       </div>
+      <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} />
 
-      <div className="paper">
-        <Subtitle title="Bank statements" />
-        <Checkbox id="Acnt.eStatements" indexes={[0]} />
-        <Checkbox id="Acnt.mailStatements" indexes={[0]} />
-      </div>
+      <Subtitle title="Bank statements" />
+      <Checkbox id="Acnt.eStatements" indexes={[0]} />
+      <Checkbox id="Acnt.mailStatements" indexes={[0]} />
     </FormWrapper>
   );
 };

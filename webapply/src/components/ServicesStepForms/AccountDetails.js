@@ -30,44 +30,45 @@ class AccountDetails extends React.Component {
       accountCurrencies: { datalist, title }
     } = this.props;
     return (
-      <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
-        <div className="paper">
-          <Subtitle title="Select currencies" />
-          <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
-            {datalist.map(option => (
-              <Checkbox
-                key={option.key}
-                label={option.displayText}
-                className={classes.checkboxWrapper}
-              />
-            ))}
-          </div>
-          <InfoTitle title={title} />
+      <FormWrapper
+        className={classes.formWrapper}
+        handleContinue={this.props.goToNext}
+      >
+        <Subtitle title="Select currencies" />
+        <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
+          {datalist.map(option => (
+            <Checkbox
+              key={option.key}
+              label={option.displayText}
+              className={classes.checkboxWrapper}
+            />
+          ))}
         </div>
+        <InfoTitle title={title} />
 
-        <div className="paper">
-          <Subtitle title="Select branch" />
-          <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
-              <Select id="Org.branchCity" />
-            </Grid>
-            <Grid item md={6} sm={12}>
-              <Select id="Org.branchID" />
-            </Grid>
+        <Subtitle title="Select branch" />
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <Select id="Org.branchCity" />
           </Grid>
-        </div>
+          <Grid item md={6} sm={12}>
+            <Select id="Org.branchID" />
+          </Grid>
+        </Grid>
 
-        <div className="paper">
-          <Subtitle title="Select interest" />
-          <Checkbox label="I want to earn interest from my account" />
-        </div>
+        <Subtitle title="Select interest" />
+        <Checkbox label="I want to earn interest from my account" />
       </FormWrapper>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  accountCurrencies: get(state.appConfig, "uiConfig['Acnt.accountCurrencies']", { datalist: [] })
+  accountCurrencies: get(
+    state.appConfig,
+    "uiConfig['Acnt.accountCurrencies']",
+    { datalist: [] }
+  )
 });
 
 export default compose(

@@ -49,78 +49,81 @@ class SigningPreferences extends React.Component {
     const { classes } = this.props;
     return (
       <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
-        <div className="paper">
-          <Subtitle title="Signing transactions" />
+        <Subtitle title="Signing transactions" />
 
-          <RadioGroup name="signing_transactions">
-            <div className="box-group-grid">
-              <FormControlLabel
-                value="all"
-                control={<Radio color="secondary" classes={{ root: classes.radio }} />}
-                className={classes.radioLabel}
-                label="All of us must sign"
-              />
-              <FormControlLabel
-                value="any"
-                control={<Radio color="secondary" classes={{ root: classes.radio }} />}
-                className={classes.radioLabel}
-                label="Any of us can sign"
-              />
-              <FormControlLabel
-                value="other"
-                control={<Radio color="secondary" classes={{ root: classes.radio }} />}
-                className={classes.radioLabel}
-                label="Other (please specify)"
-              />
-            </div>
-          </RadioGroup>
-        </div>
+        <RadioGroup name="signing_transactions">
+          <div className="box-group-grid">
+            <FormControlLabel
+              value="all"
+              control={
+                <Radio color="secondary" classes={{ root: classes.radio }} />}
 
-        <div className="paper">
-          <div className={classes.contactsTitle}>
-            <Subtitle title="Contacts for re-confirming transactions" />
-            <InfoTitle title="Maximum two people" />
+              className={classes.radioLabel}
+              label="All of us must sign"
+            />
+            <FormControlLabel
+              value="any"
+              control={
+                <Radio color="secondary" classes={{ root: classes.radio }} />
+              }
+              className={classes.radioLabel}
+              label="Any of us can sign"
+            />
+            <FormControlLabel
+              value="other"
+              control={
+                <Radio color="secondary" classes={{ root: classes.radio }} />
+              }
+              className={classes.radioLabel}
+              label="Other (please specify)"
+            />
           </div>
-          {this.state.contactPersons.map((person, index) => (
-            <React.Fragment key={index}>
-              <TextInput id="Sig.fullName" indexes={[index]} />
-              <Grid container spacing={3}>
-                <Grid item md={6} sm={12}>
-                  <TextInput
-                    id="OrgContReconf.primaryMobileNo"
-                    indexes={[index]}
-                    select={
-                      <PureSelect
-                        id="OrgContReconf.primaryMobCountryCode"
-                        indexes={[index]}
-                        combinedSelect
-                      />
-                    }
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <TextInput
-                    id="OrgContReconf.primaryPhoneNo"
-                    indexes={[index]}
-                    select={
-                      <PureSelect
-                        id="OrgContReconf.primaryPhoneCountryCode"
-                        indexes={[index]}
-                        combinedSelect
-                      />
-                    }
-                  />
-                </Grid>
-              </Grid>
-            </React.Fragment>
-          ))}
+        </RadioGroup>
 
-          <AddButton
-            title="Add another person"
-            onClick={this.handleAddPerson}
-            className={classes.addButton}
-          />
+        <div className={classes.contactsTitle}>
+          <Subtitle title="Contacts for re-confirming transactions" />
+          <InfoTitle title="Maximum two people" />
         </div>
+
+        {this.state.contactPersons.map((person, index) => (
+          <React.Fragment key={index}>
+            <TextInput id="Sig.fullName" indexes={[index]} />
+            <Grid container spacing={3}>
+              <Grid item md={6} sm={12}>
+                <TextInput
+                  id="OrgContReconf.primaryMobileNo"
+                  indexes={[index]}
+                  select={
+                    <PureSelect
+                      id="OrgContReconf.primaryMobCountryCode"
+                      indexes={[index]}
+                      combinedSelect
+                    />
+                  }
+                />
+              </Grid>
+              <Grid item md={6} sm={12}>
+                <TextInput
+                  id="OrgContReconf.primaryPhoneNo"
+                  indexes={[index]}
+                  select={
+                    <PureSelect
+                      id="OrgContReconf.primaryPhoneCountryCode"
+                      indexes={[index]}
+                      combinedSelect
+                    />
+                  }
+                />
+              </Grid>
+            </Grid>
+          </React.Fragment>
+        ))}
+
+        <AddButton
+          title="Add another person"
+          onClick={this.handleAddPerson}
+          className={classes.addButton}
+        />
       </FormWrapper>
     );
   }
