@@ -18,7 +18,7 @@ const style = {
     },
     "@media only screen and (max-width: 1100px)": {
       flexWrap: "nowrap",
-      overflowY: "scroll",
+      overflowX: "scroll",
       flexDirection: "row"
     }
   }
