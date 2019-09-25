@@ -3,7 +3,8 @@
     "react-app",
     "plugin:prettier/recommended",
     "plugin:import/errors",
-    "prettier"
+    "prettier",
+    "eslint:recommended"
   ],
   "rules": {
     "quotes": ["error", "double"],
