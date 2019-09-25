@@ -1,7 +1,7 @@
 {
   "extends": [
-    "plugin:prettier/recommended",
     "react-app",
+    "plugin:prettier/recommended",
     "plugin:import/errors",
     "prettier"
   ],
@@ -15,5 +15,6 @@
     "no-debugger": "warn",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "object-shorthand": "error"
-  }
+  },
+  "plugins": ["prettier"]
 }
