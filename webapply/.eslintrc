@@ -1,5 +1,10 @@
 {
-  "extends": ["react-app", "plugin:import/errors", "prettier"],
+  "extends": [
+    "plugin:prettier/recommended",
+    "react-app",
+    "plugin:import/errors",
+    "prettier"
+  ],
   "rules": {
     "quotes": ["error", "double"],
     "max-len": [
