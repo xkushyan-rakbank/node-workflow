@@ -28,15 +28,18 @@ public class ApiRequestForwarder {
 	@Autowired
 	FileHelper fileHelper;
 
-	private JsonNode endpoints = null;
+	private JsonNode dehURIs = null;
 
-	private String dehHost = null;
+	private String dehBaseUrl = null;
+
+	
 
 	@PostConstruct
-	public void initAppState() {
+	public void init() {
 		JsonNode appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
-		endpoints = appConfigJSON.get(EnvUtil.getEnv()).get("dehEndpoints");
-		dehHost = endpoints.get("host").asText();
+		dehURIs = appConfigJSON.get("DehURIs");
+		dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
+		
 	}
 
 	@PostMapping(value = "/banks/RAK/usertypes/sme/prospects/", produces = "application/json", consumes = "application/json")
@@ -45,7 +48,7 @@ public class ApiRequestForwarder {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<JsonNode> request = new HttpEntity<>(jsonNode);
 
-		String url = dehHost + endpoints.get("createProspectPath").asText();
+		String url = dehBaseUrl + dehURIs.get("createProspectPath").asText();
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
 	}
@@ -56,7 +59,7 @@ public class ApiRequestForwarder {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<JsonNode> request = new HttpEntity<>(jsonNode);
 
-		String url = dehHost + endpoints.get("createProspectPath").asText();
+		String url = dehBaseUrl + dehURIs.get("createProspectPath").asText();
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
 	}
@@ -67,7 +70,7 @@ public class ApiRequestForwarder {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<JsonNode> request = new HttpEntity<>(jsonNode);
 
-		String url = dehHost + endpoints.get("createProspectPath").asText();
+		String url = dehBaseUrl + dehURIs.get("createProspectPath").asText();
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
 	}
@@ -78,7 +81,7 @@ public class ApiRequestForwarder {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<JsonNode> request = new HttpEntity<>(jsonNode);
 
-		String url = dehHost + endpoints.get("createProspectPath").asText();
+		String url = dehBaseUrl + dehURIs.get("createProspectPath").asText();
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
 	}
@@ -90,7 +93,7 @@ public class ApiRequestForwarder {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<JsonNode> request = new HttpEntity<>(jsonNode);
 
-		String url = dehHost + endpoints.get("createProspectPath").asText();
+		String url = dehBaseUrl + dehURIs.get("createProspectPath").asText();
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
 	}
@@ -102,7 +105,7 @@ public class ApiRequestForwarder {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<JsonNode> request = new HttpEntity<>(jsonNode);
 
-		String url = dehHost + endpoints.get("createProspectPath").asText();
+		String url = dehBaseUrl + dehURIs.get("createProspectPath").asText();
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
 	}
@@ -115,7 +118,7 @@ public class ApiRequestForwarder {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<JsonNode> request = new HttpEntity<>(jsonNode);
 
-		String url = dehHost + endpoints.get("createProspectPath").asText();
+		String url = dehBaseUrl + dehURIs.get("createProspectPath").asText();
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
 	}
@@ -127,7 +130,7 @@ public class ApiRequestForwarder {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<JsonNode> request = new HttpEntity<>(jsonNode);
 
-		String url = dehHost + endpoints.get("createProspectPath").asText();
+		String url = dehBaseUrl + dehURIs.get("createProspectPath").asText();
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
 	}

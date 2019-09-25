@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -124,7 +125,8 @@ public class WebApplyController {
 	private String buildAppInitialState(String segment, String product, String role, String device) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
-		initStateJSON.set("endpoints", appConfigJSON.get(EnvUtil.getEnv()).get("webApplyEndpoints"));
+
+		setWebApplyEndpoints(objectMapper, initStateJSON);
 		initStateJSON.set("navigationConfig", navigationJSON.get(segment));
 		initStateJSON.set("prospect", getProspect(segment, product));
 		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
@@ -143,6 +145,20 @@ public class WebApplyController {
 
 		return initStateJSON.toString();
 
+	}
+
+	private void setWebApplyEndpoints(ObjectMapper objectMapper, ObjectNode initStateJSON) {
+		ObjectNode endpointsJSON = objectMapper.createObjectNode();
+		endpointsJSON.put("baseUrl",
+				appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("WebApplyBaseUrl").asText());
+		JsonNode webApplyURIs = appConfigJSON.get("WebApplyURIs");
+		Iterator<String> uris = webApplyURIs.fieldNames();
+		while (uris.hasNext()) {
+			String uriName = uris.next();
+			endpointsJSON.set(uriName, webApplyURIs.get(uriName));
+		}
+
+		initStateJSON.set("endpoints", endpointsJSON);
 	}
 
 	private ObjectNode filterUIConfigFieldsByCriteria(ObjectNode uiConfigNode, String segment, String product,
@@ -226,25 +242,18 @@ public class WebApplyController {
 	}
 
 	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws IOException {
-		String hostValue = initStateJSON.get("dehEndpoints").get("host").asText();
-		String scheme = hostValue.substring(0, hostValue.indexOf(':'));
-		String host = hostValue.substring(hostValue.indexOf("://") + 3);
-		String path = initStateJSON.get("dehEndpoints").get("datalistPath").asText();
-
-		UriComponents uriComponents = UriComponentsBuilder.newInstance().scheme(scheme).host(host).path(path)
-				.buildAndExpand(segment);
-
-		String endpoint = uriComponents.toUriString();
-
-		logger.info("invoke api endpoint - " + endpoint);
-
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
-		ObjectMapper mapper = new ObjectMapper();
-		logger.info("Status of api - " + endpoint + " is  " + response.getStatusCode());
-		JsonNode datalistJSON = mapper.readTree(response.getBody());
-		logger.debug("datalist ", datalistJSON.toString());
-		return datalistJSON;
+
+		String dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
+		JsonNode dehURIs = appConfigJSON.get("DehURIs");
+		String url = dehBaseUrl + dehURIs.get("datalistUri").asText();
+
+		UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
+
+		ResponseEntity<JsonNode> response = restTemplate.exchange(uriComponents.toUri(), HttpMethod.GET, null,
+				JsonNode.class);
+		
+		return response.getBody();
 	}
 
 	private String getCacheKey(String segment, String product, String role, String device) {
