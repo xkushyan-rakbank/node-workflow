@@ -46,7 +46,11 @@ const style = {
     display: "flex",
     width: "100%",
     flexWrap: "wrap",
-    justifyContent: "center"
+    overflow: "auto",
+    justifyContent: "center",
+    "@media only screen and (max-width: 850px)": {
+      justifyContent: "flex-start"
+    }
   }
 };
 

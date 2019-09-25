@@ -7,8 +7,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import cx from "classnames";
 
-const StyledExpansionPanel = withStyles({
+const style = {
   root: {
+    minWidth: "550px",
     border: "none",
     boxShadow: "none",
     "&:not(:last-child)": {
@@ -24,37 +25,27 @@ const StyledExpansionPanel = withStyles({
       margin: "auto"
     }
   },
-  expanded: {}
-})(ExpansionPanel);
-
-const StyledExpansionPanelSummary = withStyles({
-  root: {
+  expanded: {},
+  summaryRoot: {
     minHeight: 60,
     "&$expanded": {
       minHeight: 60
     }
   },
-  content: {
+  summaryContent: {
     width: "calc(100% - 100px)",
     overflow: "hidden",
     "&$expanded": {
       margin: "12px 0"
     }
   },
-  expanded: {}
-})(ExpansionPanelSummary);
-
-const StyledExpansionPanelDetails = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2),
+  detailsRoot: {
+    padding: "16px",
     borderTop: "1px solid rgba(239, 242, 244, .5)",
     borderBottom: "1px solid rgba(239, 242, 244, .5)",
     fontSize: "16px",
     backgroundColor: "#fff"
-  }
-}))(ExpansionPanelDetails);
-
-const style = {
+  },
   iconStyle: {
     position: "relative",
     top: "4px",
@@ -94,28 +85,34 @@ class CommonQuestions extends React.Component {
       <>
         {data.length > 0 &&
           data.map(item => (
-            <StyledExpansionPanel
+            <ExpansionPanel
               key={item.id}
               square
               expanded={expanded === item.id}
               onChange={() => this.handleChange(item.id)}
+              classes={{ root: classes.root, expanded: classes.expanded }}
             >
-              <StyledExpansionPanelSummary
+              <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1d-content"
                 id="panel1d-header"
+                classes={{
+                  root: classes.summaryRoot,
+                  content: classes.summaryContent,
+                  expanded: classes.expanded
+                }}
               >
                 <div className={cx(classes.text, classes.textEllipsis)}>
                   <HelpOutlineIcon className={classes.iconStyle} />
                   {item.question}
                 </div>
-              </StyledExpansionPanelSummary>
-              <StyledExpansionPanelDetails>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails classes={{ root: classes.detailsRoot }}>
                 <div className={cx(classes.text, classes.info)}>
                   {item.answer}
                 </div>
-              </StyledExpansionPanelDetails>
-            </StyledExpansionPanel>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           ))}
       </>
     );
