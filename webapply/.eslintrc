@@ -1,15 +1,7 @@
 {
-  "extends": [
-    "react-app",
-    "plugin:flowtype/recommended",
-    "plugin:import/errors",
-    "prettier",
-    "prettier/flowtype"
-  ],
-  "plugins": ["flowtype"],
+  "extends": ["react-app", "plugin:import/errors", "prettier"],
   "rules": {
     "quotes": ["error", "double"],
-    "flowtype/no-types-missing-file-annotation": 2,
     "max-len": [
       "error",
       { "code": 120, "ignoreUrls": true, "ignoreStrings": true }
