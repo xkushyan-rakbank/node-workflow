@@ -54,7 +54,7 @@ const serverErrorsReducer = (state = initialState, action) => {
 export function composeInputKeyFromValidationData(validationData) {
   const replaced = validationData.fieldPath.replace("$.", "").replace("$", "");
 
-  return `prospect.${replaced}`;
+  return replaced.startsWith("prospect.") ? replaced : `prospect.${replaced}`;
 }
 
 export default serverErrorsReducer;

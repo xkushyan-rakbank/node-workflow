@@ -1,6 +1,6 @@
 {
 	"local": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "http://localhost:9091",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -17,10 +17,31 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"dehEndpoints": {
+			"host": "http://localhost:9091",
+			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
+			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
+			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
+			"getProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"updateProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"getProspectDocumentsPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"uploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"reuploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"getDocumentByIdPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+			"prescreeningPath": "/api/v1/banks/RAK/prospects/{prospectId}/screening",
+			"authenticateUserPath": "/api/v1/banks/RAK/users/authenticate",
+			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
+			"otpPath": "/api/v1/banks/RAK/otp",
+			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "http://localhost:9091",
+			"generateToken": "/OAuth/token"
 		}
 	},
 	"dev": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -37,10 +58,31 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"dehEndpoints": {
+			"host": "",
+			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
+			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
+			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
+			"getProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"updateProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"getProspectDocumentsPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"uploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"reuploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"getDocumentByIdPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+			"prescreeningPath": "/api/v1/banks/RAK/prospects/{prospectId}/screening",
+			"authenticateUserPath": "/api/v1/banks/RAK/users/authenticate",
+			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
+			"otpPath": "/api/v1/banks/RAK/otp",
+			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "",
+			"generateToken": "/OAuth/token"
 		}
 	},
 	"test": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -57,10 +99,31 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"dehEndpoints": {
+			"host": "",
+			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
+			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
+			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
+			"getProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"updateProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"getProspectDocumentsPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"uploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"reuploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"getDocumentByIdPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+			"prescreeningPath": "/api/v1/banks/RAK/prospects/{prospectId}/screening",
+			"authenticateUserPath": "/api/v1/banks/RAK/users/authenticate",
+			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
+			"otpPath": "/api/v1/banks/RAK/otp",
+			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "",
+			"generateToken": "/OAuth/token"
 		}
 	},
 	"uat": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -77,10 +140,31 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"dehEndpoints": {
+			"host": "",
+			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
+			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
+			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
+			"getProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"updateProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"getProspectDocumentsPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"uploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"reuploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"getDocumentByIdPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+			"prescreeningPath": "/api/v1/banks/RAK/prospects/{prospectId}/screening",
+			"authenticateUserPath": "/api/v1/banks/RAK/users/authenticate",
+			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
+			"otpPath": "/api/v1/banks/RAK/otp",
+			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "",
+			"generateToken": "/OAuth/token"
 		}
 	},
 	"prod": {
-		"endpoints": {
+		"webApplyEndpoints": {
 			"host": "",
 			"appConfigPath": "/webapply/api/v1/config",
 			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
@@ -97,6 +181,27 @@
 			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
 			"otpPath": "/api/v1/banks/RAK/otp",
 			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"dehEndpoints": {
+			"host": "",
+			"datalistPath": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
+			"createProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/",
+			"searchProspectPath": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
+			"getProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"updateProspectPath": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+			"getProspectDocumentsPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"uploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"reuploadDocumentPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
+			"getDocumentByIdPath": "/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+			"prescreeningPath": "/api/v1/banks/RAK/prospects/{prospectId}/screening",
+			"authenticateUserPath": "/api/v1/banks/RAK/users/authenticate",
+			"getDocumentByTitlePath": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
+			"otpPath": "/api/v1/banks/RAK/otp",
+			"recaptchaPath": "/api/v1/banks/RAK/recaptcha/verify"
+		},
+		"oAuthEndpoints": {
+			"host": "",
+			"generateToken": "/OAuth/token"
 		}
 	}
 }

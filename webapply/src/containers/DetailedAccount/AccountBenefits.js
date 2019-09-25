@@ -1,9 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
-import DoneIcon from "@material-ui/icons/Done";
+import manager from "../../assets/icons/manager.png";
+import balance from "../../assets/icons/balance.png";
+import availability from "../../assets/icons/availability.png";
+import exchange from "../../assets/icons/exchange.png";
+import transaction from "../../assets/icons/transaction.png";
+import withdrawal from "../../assets/icons/withdrawal.png";
+import processing from "../../assets/icons/processing.png";
+import serviceCenter from "../../assets/icons/service-center.png";
+import lounge from "../../assets/icons/lounge.svg";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../components/HorizontalIconCards/HorizontalIconCardsContainer";
 import HorizontalIconCardItem from "../../components/HorizontalIconCards/HorizontalIconCardItem";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
 
 const style = {
   indent: {
@@ -23,61 +33,151 @@ const style = {
     }
   },
   icon: {
-    fontSize: "50px",
-    color: "green"
+    width: "64px",
+    height: "64px",
+    "@media only screen and (max-width: 1300px)": {
+      width: "56px",
+      height: "56px"
+    }
   }
 };
 
-const AccountBenefits = ({ classes }) => {
+const AccountBenefits = ({ classes, accountType }) => {
+  const getText = accountType => {
+    switch (accountType) {
+      case "RAKStarter":
+        return "Unmatched benefits to make banking stress-free";
+      case "Current Account":
+        return "Unmatched benefits for an unmatched price";
+      case "RAKelite":
+        return "Unmatched privileges to take your business to the next level";
+      default:
+        return "";
+    }
+  };
+
+  const text = getText(accountType);
+  const flag = "RAKelite";
   return (
     <>
       <div className={classes.indent}>
-        <SectionTitleWithInfo title="An unmatched set of benefits, for an unmatched price" />
+        <SectionTitleWithInfo title={text} />
       </div>
-      <HorizontalIconCardsContainer>
-        <HorizontalIconCardItem
-          minWidth="260px"
-          text="Zero minimum monthly average credit balance"
-        >
-          <DoneIcon className={classes.icon} />
-        </HorizontalIconCardItem>
-        <HorizontalIconCardItem
-          minWidth="260px"
-          text="No ledger/ fall back fee"
-        >
-          <DoneIcon className={classes.icon} />
-        </HorizontalIconCardItem>
-        <HorizontalIconCardItem
-          minWidth="260px"
-          text="Available in AED, USD, EUR, GBP"
-        >
-          <DoneIcon className={classes.icon} />
-        </HorizontalIconCardItem>
-        <HorizontalIconCardItem
-          minWidth="260px"
-          text="Attractive Foreign Exchange and Trade Finance rates"
-        >
-          <DoneIcon className={classes.icon} />
-        </HorizontalIconCardItem>
-        <HorizontalIconCardItem
-          minWidth="260px"
-          text="Competitive rate of interest on Fixed Deposits"
-        >
-          <DoneIcon className={classes.icon} />
-        </HorizontalIconCardItem>
-        <HorizontalIconCardItem
-          minWidth="260px"
-          text="Earn attractive interest"
-        >
-          <DoneIcon className={classes.icon} />
-        </HorizontalIconCardItem>
-        <div className={classes.notification}>
-          *Companies older than 12 months are not eligible for the RAKstarter
-          account
-        </div>
-      </HorizontalIconCardsContainer>
+      {flag === "RAKStarter" && (
+        <HorizontalIconCardsContainer>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="No minimum balance required"
+          >
+            <img className={classes.icon} src={balance} alt="balance" />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Available in AED, USD, EUR, GBP"
+          >
+            <img
+              className={classes.icon}
+              src={availability}
+              alt="availability"
+            />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Preferential transaction fees through Digital Banking"
+          >
+            <img className={classes.icon} src={transaction} alt="transaction" />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Dedicated Relationship Manager"
+          >
+            <img className={classes.icon} src={manager} alt="manager" />
+          </HorizontalIconCardItem>
+          <div className={classes.notification}>
+            *Companies older than 12 months are not eligible for the RAKstarter
+            account
+          </div>
+        </HorizontalIconCardsContainer>
+      )}
+      {flag === "Current Account" && (
+        <HorizontalIconCardsContainer>
+          <HorizontalIconCardItem minWidth="260px" text="A low minimum balance">
+            <img className={classes.icon} src={balance} alt="balance" />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Available in AED, USD, EUR, GBP"
+          >
+            <img
+              className={classes.icon}
+              src={availability}
+              alt="availability"
+            />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Preferential transaction fees through Digital Banking"
+          >
+            <img className={classes.icon} src={transaction} alt="transaction" />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Dedicated Relationship Manager"
+          >
+            <img className={classes.icon} src={manager} alt="manager" />
+          </HorizontalIconCardItem>
+        </HorizontalIconCardsContainer>
+      )}
+      {flag === "RAKelite" && (
+        <HorizontalIconCardsContainer>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Fast track processing of all your banking requests"
+          >
+            <img className={classes.icon} src={processing} alt="processing" />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Preferential transaction fees through Digital Banking"
+          >
+            <img className={classes.icon} src={withdrawal} alt="withdrawal" />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Exclusive RAKelite service centers"
+          >
+            <img
+              className={classes.icon}
+              src={serviceCenter}
+              alt="service-center"
+            />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Preferential exchange rates"
+          >
+            <img className={classes.icon} src={exchange} alt="exchange" />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Free lounges, golf courses and valet services worldwide"
+          >
+            <img className={classes.icon} src={lounge} alt="lounge" />
+          </HorizontalIconCardItem>
+          <HorizontalIconCardItem
+            minWidth="260px"
+            text="Dedicated Relationship Manager"
+          >
+            <img className={classes.icon} src={manager} alt="manager" />
+          </HorizontalIconCardItem>
+        </HorizontalIconCardsContainer>
+      )}
     </>
   );
 };
 
-export default withStyles(style)(AccountBenefits);
+const mapStateToProps = state => ({
+  applicationInfo: appConfigSelectors.getApplicationInfo(state)
+});
+
+export default connect(mapStateToProps)(withStyles(style)(AccountBenefits));

@@ -12,7 +12,7 @@ const styles = {
   },
   application: {
     width: 380,
-    height: 340,
+    height: 263,
     borderRadius: 8,
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     backgroundColor: "#ffffff",
@@ -33,23 +33,13 @@ const styles = {
   account: {
     color: "#86868b"
   },
-  imageContainer: {
-    width: 70,
-    height: 70,
-    borderRadius: "50%",
-    border: "solid 2px #e8e8e8",
-    marginTop: "24px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
   status: {
-    borderRadius: "4px",
+    borderRadius: 4,
     backgroundColor: "#e9e9ed",
     fontSize: "12px",
     color: "#373737",
-    padding: "2px 5px",
-    marginTop: 20
+    padding: "1px 5px",
+    marginTop: 40
   },
   blockAction: {
     marginTop: 40
@@ -74,9 +64,6 @@ const MyApplicationsGrid = ({ classes, currentApplications }) => (
         >
           {application.account}
         </Typography>
-        <div className={classes.imageContainer}>
-          <CropOriginalIcon style={{ fontSize: 46, color: "#86868b" }} />
-        </div>
         <span className={classes.status}>{application.status}</span>
 
         <div className={classes.blockAction}>

@@ -4,8 +4,7 @@ import { withStyles } from "@material-ui/core";
 const style = {
   iconsWrapper: {
     display: "flex",
-    flexWrap: "wrap",
-    margin: "0 -10px"
+    flexWrap: "wrap"
   }
 };
 

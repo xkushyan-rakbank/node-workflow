@@ -7,6 +7,7 @@ const styles = {
   buttonWrap: {
     margin: "42px 0 0 "
   },
+  buttonWrapWithBackLink: {},
   nextButton: {
     fontWeight: 600,
     letterSpacing: "normal",

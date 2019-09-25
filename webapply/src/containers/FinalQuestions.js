@@ -1,12 +1,12 @@
+import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import SectionTitle from "../components/SectionTitle";
+import { Link } from "react-router-dom";
+import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard";
 import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryCard";
-import { Link } from "react-router-dom";
+import SectionTitle from "../components/SectionTitle";
 import routes from "../routes";
-import SubmitButton from "../components/Buttons/SubmitButton";
 import { getSignatories } from "../store/selectors/appConfig";
 
 const style = {

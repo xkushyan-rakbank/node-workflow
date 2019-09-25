@@ -10,7 +10,7 @@ const styles = {
     top: " 0",
     width: " 100%",
     display: "flex",
-    zIndex: "21",
+    zIndex: 0,
     "& img": {
       width: "120px"
     }
@@ -45,7 +45,7 @@ const styles = {
 const Header = ({ classes }) => {
   return (
     <header className={classes.header}>
-      <Link to={routes.applicantInfo} className={classes.logo}>
+      <Link to={routes.accountsComparison} className={classes.logo}>
         <img src={logo} alt="rak bank" />
       </Link>
       <div className={classes.headerTitle}>

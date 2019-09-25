@@ -1,28 +1,42 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import ExpandedOptionsCard from "./ExpandedOptionsCard";
+import ExpandedDetailedOptionsCard from "./ExpandedDetailedOptionsCard";
 
 const mockData = [
   {
     optionList: [
-      "Accountable Basic",
-      "RAK Insurance",
-      "International remittances"
+      {
+        text: "One stop business solution",
+        items: [
+          "Automated accounting",
+          "Smart invoicing",
+          "Integrated VAT solution"
+        ]
+      },
+      { text: "Business insurance" },
+      { text: "Host of other banking benefits" }
     ],
     isIncluded: true,
     cost: 49,
-    value: "plus",
+    value: "RAKvalue PLUS",
     href: "#"
   },
   {
     optionList: [
-      "Accountable Advanced",
-      "RAK Insurance",
-      "Extended banking benefits"
+      {
+        text: "One stop business solution",
+        items: [
+          "Automated accounting",
+          "Smart invoicing",
+          "Integrated VAT solution"
+        ]
+      },
+      { text: "Business insurance" },
+      { text: "Host of other banking benefits" }
     ],
     isIncluded: false,
     cost: 149,
-    value: "max",
+    value: "RAKvalue MAX",
     href: "#"
   }
 ];
@@ -32,23 +46,26 @@ const style = {
     display: "flex",
     width: "100%",
     flexWrap: "wrap",
-    margin: "0 -10px"
+    justifyContent: "center"
   }
 };
 
-const ExpandedOptionsCards = ({ classes }) => (
-  <div className={classes.root}>
-    {mockData.map(({ optionList, isIncluded, cost, value, href }) => (
-      <ExpandedOptionsCard
-        key={value}
-        optionList={optionList}
-        isIncluded={isIncluded}
-        cost={cost}
-        value={value}
-        href={href}
-      />
-    ))}
-  </div>
-);
+const ExpandedOptionsCards = ({ classes, accountType }) => {
+  return (
+    <div className={classes.root}>
+      {mockData.map(({ optionList, isIncluded, cost, value, href }) => (
+        <ExpandedDetailedOptionsCard
+          key={value}
+          optionList={optionList}
+          isIncluded={isIncluded}
+          cost={cost}
+          value={value}
+          href={href}
+          accountType={accountType}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default withStyles(style)(ExpandedOptionsCards);

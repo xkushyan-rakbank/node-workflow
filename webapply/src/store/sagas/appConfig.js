@@ -11,7 +11,9 @@ import {
   receiveAppConfigSuccess,
   receiveAppConfigFail,
   UPDATE_FIELD,
-  updateProspect
+  updateProspect,
+  UPDATE_PROSPECT,
+  setProspect
 } from "../actions/appConfig";
 import apiClient from "../../api/apiClient";
 import set from "lodash/set";
@@ -33,9 +35,17 @@ function* updateFieldSaga(action) {
   yield put(updateProspect(cloneDeep(config.prospect)));
 }
 
+function* updateProspectSaga(action) {
+  const state = yield select();
+  const config = state.appConfig;
+  set(config, action.data.name, action.data.value);
+  yield put(setProspect(cloneDeep(config.prospect)));
+}
+
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
-    takeEvery(UPDATE_FIELD, updateFieldSaga)
+    takeEvery(UPDATE_FIELD, updateFieldSaga),
+    takeEvery(UPDATE_PROSPECT, updateProspectSaga)
   ]);
 }

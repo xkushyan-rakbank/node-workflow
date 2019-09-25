@@ -9,13 +9,10 @@ import java.util.Map.Entry;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +33,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.commons.FileHelper;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -44,10 +42,10 @@ public class WebApplyController {
 	private static final Logger logger = LoggerFactory.getLogger(WebApplyController.class);
 
 	@Autowired
-	private ResourceLoader resourceLoader;
+	ServletContext servletContext;
 
 	@Autowired
-	ServletContext servletContext;
+	FileHelper fileHelper;
 
 	private JsonNode uiConfigJSON = null;
 
@@ -59,30 +57,16 @@ public class WebApplyController {
 
 	@PostConstruct
 	public void initAppState() {
-		uiConfigJSON = loadJSONConfigFile("uiConfig.json");
-		appConfigJSON = loadJSONConfigFile("appConfig.json");
-		navigationJSON = loadJSONConfigFile("navigationConfig.json");
-		smeProspectJSON = loadJSONConfigFile("smeProspect.json");
+		uiConfigJSON = fileHelper.loadJSONFile("uiConfig.json");
+		appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
+		navigationJSON = fileHelper.loadJSONFile("navigationConfig.json");
+		smeProspectJSON = fileHelper.loadJSONFile("smeProspect.json");
 
 		try {
 			loadAppInitialState();
 		} catch (Exception e) {
 			logger.error("unable to prepare config for web apply", e);
 		}
-	}
-
-	private JsonNode loadJSONConfigFile(String filename) {
-		try {
-			logger.info("loading " + filename);
-			ObjectMapper objectMapper = new ObjectMapper();
-			Resource resource = resourceLoader.getResource("classpath:" + filename);
-			System.out.println(resource.getFile().toString());
-			String fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
-			return objectMapper.readTree(fileContent);
-		} catch (IOException e) {
-			logger.error("error loading " + filename, e);
-		}
-		return null;
 	}
 
 	@GetMapping(value = "/config", produces = "application/json")
@@ -140,7 +124,7 @@ public class WebApplyController {
 	private String buildAppInitialState(String segment, String product, String role, String device) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
-		initStateJSON.set("endpoints", appConfigJSON.get(EnvUtil.getEnv()).get("endpoints"));
+		initStateJSON.set("endpoints", appConfigJSON.get(EnvUtil.getEnv()).get("webApplyEndpoints"));
 		initStateJSON.set("navigationConfig", navigationJSON.get(segment));
 		initStateJSON.set("prospect", getProspect(segment, product));
 		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
@@ -242,10 +226,10 @@ public class WebApplyController {
 	}
 
 	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws IOException {
-		String hostValue = initStateJSON.get("endpoints").get("host").asText();
+		String hostValue = initStateJSON.get("dehEndpoints").get("host").asText();
 		String scheme = hostValue.substring(0, hostValue.indexOf(':'));
 		String host = hostValue.substring(hostValue.indexOf("://") + 3);
-		String path = initStateJSON.get("endpoints").get("datalistPath").asText();
+		String path = initStateJSON.get("dehEndpoints").get("datalistPath").asText();
 
 		UriComponents uriComponents = UriComponentsBuilder.newInstance().scheme(scheme).host(host).path(path)
 				.buildAndExpand(segment);

@@ -2,7 +2,7 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
-import { ReactComponent as RightArrowWhite } from "./../../assets/images/white.svg";
+import rightArrowWhite from "./../../assets/images/white.svg";
 
 const styles = {
   buttonStyle: {
@@ -40,7 +40,9 @@ const ContainedButton = props => {
     color = "primary",
     component = "button",
     withRightArrow,
-    classes
+    classes,
+    // todo change property name
+    name
   } = props;
 
   return (
@@ -55,9 +57,16 @@ const ContainedButton = props => {
       }}
       disabled={disabled}
       onClick={handleClick}
+      name={name}
     >
       {label}
-      {withRightArrow && <RightArrowWhite className={classes.icon} />}
+      {withRightArrow && (
+        <img
+          src={rightArrowWhite}
+          alt="rightArrowWhite"
+          className={classes.icon}
+        />
+      )}
     </Button>
   );
 };

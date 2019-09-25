@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -7,6 +8,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import ContainedButton from "./Buttons/ContainedButton";
+import { connect } from "react-redux";
+import * as appConfigSelectors from "../store/selectors/appConfig";
+import { updateProspect } from "../store/actions/appConfig";
+
+import checkIc from "../assets/icons/check.png";
 
 const style = {
   paperRoot: {
@@ -68,25 +74,46 @@ const createData = (name, starter, currentAccount, elite) => {
 
 const mockDataRows = [
   createData(
-    "Minumum monthly  credit balance",
-    "Zero",
-    "AED 25,000",
-    "AED 500,000"
+    "Monthly Average Credit Balance",
+    { text: "Zero" },
+    { text: "AED 25,0000", info: "or equivalent at entity level" },
+    { text: "AED 500,000", info: "or equivalent at entity level" }
   ),
   createData(
-    "Montly charges for not maintaining balance",
-    "Zero",
-    "AED 50",
-    "AED 250"
+    "Monthly charges for not maintaining average balance",
+    { text: "Zero" },
+    { text: "AED 50" },
+    { text: "AED 250" }
   ),
-  createData("Monthly account maintenance fees", "AED 99", "AED 50", "Zero"),
-  createData("A free chequebook every year", 305, 3.7, 67),
-  createData("Lifestyle benefits", 356, 16.0, 49),
+  createData(
+    "Monthly Maintenance fees",
+    { text: "AED 99" },
+    { text: "AED 50" },
+    { text: "Zero" }
+  ),
+  createData(
+    "Free Cheque book every year",
+    { ic: checkIc },
+    { ic: checkIc },
+    { ic: checkIc }
+  ),
+  createData(
+    "Free Teller Transactions",
+    { text: "-" },
+    { text: "-" },
+    { ic: checkIc }
+  ),
+  createData(
+    "Lifestyle benefits",
+    { text: "-" },
+    { text: "-" },
+    { ic: checkIc }
+  ),
   createData(
     "RAKvalue Package(PLUS and MAX)",
-    "Mandatory",
-    "Optional",
-    "Optional"
+    { text: "Mandatory", info: "(PLUS - AED 49)" },
+    { text: "Optional" },
+    { text: "Optional" }
   )
 ];
 
@@ -130,6 +157,13 @@ const StyledTableCell = withStyles(() => ({
     fontSize: "16px",
     color: "#373737",
     textAlign: "center",
+    "& span": {
+      display: "block"
+    },
+    "& span + span": {
+      fontSize: "12px",
+      color: "#888"
+    },
     "& button": {
       marginTop: "20px"
     },
@@ -188,13 +222,9 @@ const SelectedAccountContainer = ({ offset, width }) => {
 };
 
 class TableCompare extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      offset: 380
-    };
-  }
+  state = {
+    offset: 380
+  };
 
   onHoverSection = e => {
     if (e.target.tagName === "TD") {
@@ -204,6 +234,15 @@ class TableCompare extends React.Component {
         width: clientWidth
       });
     }
+  };
+
+  handleClick = accountType => {
+    const { history, updateProspect } = this.props;
+    updateProspect({
+      value: accountType,
+      name: "prospect.applicationInfo.accountType"
+    });
+    history.push("/DetailedAccount");
   };
 
   render() {
@@ -223,7 +262,7 @@ class TableCompare extends React.Component {
                   <StyledTableHeader style={{ width: 180 }}>
                     {" "}
                   </StyledTableHeader>
-                  <StyledTableHeader>RAKstarter</StyledTableHeader>
+                  <StyledTableHeader>RAKStarter</StyledTableHeader>
                   <StyledTableHeader>Current Account</StyledTableHeader>
                   <StyledTableHeader>RAKelite</StyledTableHeader>
                 </TableRow>
@@ -240,9 +279,23 @@ class TableCompare extends React.Component {
                     >
                       {row.name}
                     </TableCell>
-                    <StyledTableCell>{row.starter}</StyledTableCell>
-                    <StyledTableCell>{row.currentAccount}</StyledTableCell>
-                    <StyledTableCell>{row.elite}</StyledTableCell>
+                    <StyledTableCell>
+                      <span>{row.starter.text}</span>
+                      <span>{row.starter.info}</span>
+                      {row.starter.ic && <img src={row.starter.ic} alt="" />}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      <span>{row.currentAccount.text}</span>
+                      <span>{row.currentAccount.info}</span>
+                      {row.currentAccount.ic && (
+                        <img src={row.currentAccount.ic} alt="" />
+                      )}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      <span>{row.elite.text}</span>
+                      <span>{row.elite.info}</span>
+                      {row.elite.ic && <img src={row.elite.ic} alt="" />}
+                    </StyledTableCell>
                   </StyledTableRow>
                 ))}
 
@@ -251,13 +304,22 @@ class TableCompare extends React.Component {
                     {" "}
                   </TableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton label="Read more" />
+                    <StyledContainedButton
+                      label="Read more"
+                      handleClick={() => this.handleClick("RAKStarter")}
+                    />
                   </StyledTableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton label="Read more" />
+                    <StyledContainedButton
+                      label="Read more"
+                      handleClick={() => this.handleClick("Current Account")}
+                    />
                   </StyledTableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton label="Read more" />
+                    <StyledContainedButton
+                      label="Read more"
+                      handleClick={() => this.handleClick("RAKelite")}
+                    />
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
@@ -269,4 +331,19 @@ class TableCompare extends React.Component {
   }
 }
 
-export default withStyles(style)(TableCompare);
+const mapStateToProps = state => ({
+  applicationInfo: appConfigSelectors.getApplicationInfo(state)
+});
+
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export default withRouter(
+  withStyles(style)(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(TableCompare)
+  )
+);

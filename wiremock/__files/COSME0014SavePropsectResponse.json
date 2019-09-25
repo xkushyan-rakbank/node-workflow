@@ -1,24 +1,24 @@
 {
-    "accountNo": "",
-    "prospectId": "COSME0000000000000001",
-    "_links": {
-      "self": {
-        "href": "/banks/RAK/usertypes/sme/prospects/COSME0000000000000001"
-      }
-    },
-    "preScreening": {
-      "statusOverAll": "proceed",
-      "screeningResults": [
-        {
-          "screeningType": "",
-          "screeningStatus": "",
-          "screeningFlag": "",
-          "screeningNotes": "",
-          "screeningReason": "",
-          "reasonNotes": "",
-          "reasonCode": "",
-          "reasonStatus": ""
-        }
-      ]
+  "accountNo": "",
+  "prospectId": "COSME0000000000000001",
+  "_links": {
+    "self": {
+      "href": "/banks/RAK/usertypes/sme/prospects/COSME0000000000000001"
     }
+  },
+  "preScreening": {
+    "statusOverAll": "proceed",
+    "screeningResults": [
+      {
+        "screeningType": "",
+        "screeningStatus": "",
+        "screeningFlag": "",
+        "screeningNotes": "",
+        "screeningReason": "It looks like we already know you and have your details! Let us save you time. We will call you back within X days to meet you in person and help you out.",
+        "reasonNotes": "",
+        "reasonCode": "",
+        "reasonStatus": ""
+      }
+    ]
   }
+}

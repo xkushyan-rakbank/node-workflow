@@ -1,11 +1,11 @@
 import httpClient from "./axiosConfig";
 import config from "../config/config";
 
+export const OTP_ACTION_GENERATE = "generate";
+export const OTP_ACTION_VERIFY = "verify";
+
 export default {
   config: {
-    /**
-     * @return {Promise<{data: AppConfig}>}
-     */
     get: () => {
       // return httpClient.request({
       //   method: "GET",
@@ -14,10 +14,8 @@ export default {
       return Promise.resolve({ data: config });
     }
   },
+
   reCaptcha: {
-    /**
-     * @param {String} recaptchaToken
-     */
     verify: recaptchaToken => {
       return httpClient.request({
         url: "/recaptcha/verify",
@@ -26,39 +24,36 @@ export default {
       });
     }
   },
+
   otp: {
-    /**
-     * @param {String} prospectId
-     * @param {String} countryCode
-     * @param {String} mobileNo
-     * @param {String} email
-     * @param {String} [action="generate"]
-     */
-    generate: ({
-      prospectId,
-      countryCode,
-      mobileNo,
-      email,
-      action = "generate"
-    }) => {
+    generate: ({ prospectId, countryCode, mobileNo }) => {
       return httpClient.request({
-        url: "/api/customer-onboarding/v1/banks/RAK/otp",
+        url: "/webapply/api/v1/banks/RAK/otp",
         method: "POST",
         data: {
+          action: OTP_ACTION_GENERATE,
           prospectId,
           countryCode,
-          mobileNo,
-          email,
-          action
+          mobileNo
         }
       });
     },
-    verify: () => {}
+    verify: ({ prospectId, countryCode, mobileNo, otpToken }) => {
+      return httpClient.request({
+        url: "/webapply/api/v1/banks/RAK/otp",
+        method: "POST",
+        data: {
+          action: OTP_ACTION_VERIFY,
+          prospectId,
+          countryCode,
+          mobileNo,
+          otpToken
+        }
+      });
+    }
   },
+
   prospect: {
-    /**
-     * @param {Prospect} data
-     */
     create: data => {
       return httpClient.request({
         url: "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/",
@@ -66,10 +61,6 @@ export default {
         data
       });
     },
-    /**
-     * @param {String} prospectId
-     * @param {Prospect} data
-     */
     update: (prospectId, data) => {
       return httpClient.request({
         url: `/webapply/api/v1/banks/RAK/usertypes/sme/prospects/${prospectId}`,

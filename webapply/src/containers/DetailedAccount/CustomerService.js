@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import DoneIcon from "@material-ui/icons/Done";
+import manager from "../../assets/icons/manager.png";
+import service from "../../assets/icons/service.svg";
+import banking from "../../assets/icons/banking.svg";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
@@ -24,9 +26,15 @@ const style = {
     backgroundColor: "rgba(239, 242, 244, .5)"
   },
   stepCardsWrapper: {
-    padding: "20px 0 50px 0"
+    padding: "20px 10px 50px 10px"
   }
 };
+
+const StyledIconCardItem = withStyles({
+  iconCardWrapper: {
+    padding: "68px 20px"
+  }
+})(IconCardItem);
 
 const CustomerService = ({ classes }) => (
   <>
@@ -38,15 +46,18 @@ const CustomerService = ({ classes }) => (
     </div>
     <div className={classes.stepCardsWrapper}>
       <IconCardsContainer>
-        <IconCardItem minWidth="100px" text="Dedicated relationship manager">
-          <DoneIcon className={classes.icon} />
-        </IconCardItem>
-        <IconCardItem minWidth="100px" text="24/7 customer service">
-          <DoneIcon className={classes.icon} />
-        </IconCardItem>
-        <IconCardItem minWidth="100px" text="Physical and online banking">
-          <DoneIcon className={classes.icon} />
-        </IconCardItem>
+        <StyledIconCardItem
+          minWidth="100px"
+          text="Dedicated relationship manager"
+        >
+          <img src={manager} width={80} height={80} alt="manager" />
+        </StyledIconCardItem>
+        <StyledIconCardItem minWidth="100px" text="24/7 customer service">
+          <img width={80} height={80} src={service} alt="service" />
+        </StyledIconCardItem>
+        <StyledIconCardItem minWidth="100px" text="Physical and online banking">
+          <img width={80} height={80} src={banking} alt="banking" />
+        </StyledIconCardItem>
       </IconCardsContainer>
     </div>
   </>

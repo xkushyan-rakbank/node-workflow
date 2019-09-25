@@ -5,11 +5,12 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-import ListIcon from "@material-ui/icons/List";
-import AppsIcon from "@material-ui/icons/Apps";
+import list_ic from "../../assets/icons/list_white_ic.svg";
+import list_gray_ic from "../../assets/icons/list_gray_ic.svg";
+import grid_ic from "../../assets/icons/grid_grey_ic.svg";
+import grid_white_ic from "../../assets/icons/grid_white_ic.svg";
 
 import ContainerComeBack from "../ComeBack/ContainerComeBack";
-import AddButton from "../../components/Buttons/AddButton";
 import { mockDataMyCurrentApplication } from "../../agent/MyApplications";
 import MyApplicationsList from "../../agent/MyApplicationsList";
 import MyApplicationsGrid from "../../agent/MyApplicationsGrid";
@@ -38,19 +39,23 @@ const styles = {
         cursor: "pointer"
       }
     }
-  },
-  addNewApp: {
-    marginTop: 40
   }
 };
 
-const ButtonWithIcon = ({ Icon, typeView, selectedView, handleClick }) => {
+const ButtonWithIcon = ({
+  icon,
+  iconSelected,
+  typeView,
+  selectedView,
+  handleClick
+}) => {
+  const isSelected = selectedView === typeView;
   return (
     <button
-      className={cx({ selected: selectedView === typeView })}
+      className={cx({ selected: isSelected })}
       onClick={() => handleClick(typeView)}
     >
-      <Icon style={{ color: selectedView === typeView ? "#fff" : "#ccc" }} />
+      <img src={isSelected ? icon : iconSelected} alt="type view" />
     </button>
   );
 };
@@ -84,13 +89,15 @@ class MyApplications extends React.Component {
           </Typography>
           <Box classes={{ root: classes.rootChangeViewContainer }}>
             <ButtonWithIcon
-              Icon={ListIcon}
+              icon={list_ic}
+              iconSelected={list_gray_ic}
               typeView="list"
               selectedView={selectedView}
               handleClick={this.handleChangeView}
             />
             <ButtonWithIcon
-              Icon={AppsIcon}
+              icon={grid_white_ic}
+              iconSelected={grid_ic}
               typeView="grid"
               selectedView={selectedView}
               handleClick={this.handleChangeView}
@@ -99,7 +106,6 @@ class MyApplications extends React.Component {
         </Grid>
 
         <Grid container direction="column">
-          <AddButton title="New application" className={classes.addNewApp} />
           {selectedView === "list" ? (
             <MyApplicationsList
               currentApplications={mockDataMyCurrentApplication}

@@ -1,11 +1,10 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/api/customer-onboarding/v1/banks/RAK/otp",
+		"url": "/webapply/api/v1/banks/RAK/otp",
 		"bodyPatterns": [
 			{
-				"matchesJsonPath": "$[?(@.email == 'no_otp@email.com')]",
-				"matchesJsonPath": "$[?(@.mobileNo == '9876543210')]"
+				"matchesJsonPath": "$[?(@.mobileNo && @.mobileNo != '0123456789')]"
 			}
 		]
 	},
@@ -19,7 +18,7 @@
             "X-Content-Type-Options" : "nosniff",
             "x-frame-options" : "DENY",
             "x-xss-protection" : "1; mode=block"
-        },		
+        },
 		"bodyFileName": "COSME0004GenerateOTPResponse.json"
 	}
 }

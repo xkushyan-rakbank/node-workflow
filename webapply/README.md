@@ -91,3 +91,28 @@ file and paste generated `site key`
 5. Another `secret key` need keep for [Server Side Validation](https://developers.google.com/recaptcha/docs/verify)
 6. For build/start application you can [set environment variable](https://create-react-app.dev/docs/adding-custom-environment-variables#adding-temporary-environment-variables-in-your-shell) `REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY` in your Shell before run
  process, then this variables will be ignored in .env files
+
+### Deployment of the webapply server :
+
+once the Build id completed and azure pipeline will uploaded the build artifact to jfrog
+
+Jenkins jobs ( http://10.15.25.115:8000/jenkins/view/Customer_Onboarding/job/webapply%20Deployment_Dev/ ) 
+
+will downlaod the Build artifact and copy the content in /var/www/webapply path on the resepective servers
+
+where Nginx is installed and web static pages are servered.
+
+### Nginx installation steps 
+
+1. rpm -ivh <.rpm file> 
+2. create a dir called 'www' under /var
+3. change the permission of the www dir to 777
+    chmod 777 /var/www
+4. update the configuration file ( /etc/nginx/conf.d/default.conf) with the below changes 
+----------------------------------------------
+specifc the port in which nginx wants to execute
+location /quickapply {
+    alias /var/www/webappply;
+    try_files $uri $uri/ /index.html?/$request_uri;
+}
+----------------------------------------------

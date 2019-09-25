@@ -1,12 +1,18 @@
 {
-  "errorType": "FieldsValidation",
-  "errors": [
+  "verified": false,
+  "prospects": [
     {
-       "fieldPath": "$.Aplnt.mobileNo",
-      "code": "INVALID",
-      "errorType": "ValidationError",
-      "message": "Field is invalid",
-      "developerText": "Mobile number should be 10 digits, no speacial characters allowed"
+      "_links": {
+        "self": {
+          "href": "​/banks​/RAK​/usertypes​/sme​/prospects​/COSME007"
+        }
+      },
+      "prospectId": "COSME006",
+      "fullName": "CUSTOMER ONBOARDING",
+      "email": "sc_otp@email.com",
+      "countryCode": "+971",
+      "mobileNo": "0123456789"
     }
   ]
 }
+

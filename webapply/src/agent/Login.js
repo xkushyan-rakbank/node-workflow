@@ -5,7 +5,6 @@ import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import validateForm from "../utils/validate";
-import Password from "../components/InputField/Password";
 
 const styles = {
   baseForm: {
@@ -38,11 +37,12 @@ class Login extends React.Component {
         <form noValidate onSubmit={this.submitForm}>
           <TextInput id="login.userName" />
 
-          <Password id="login.password" />
+          <TextInput id="login.password" type="password" />
 
           <ErrorBoundary className={classes.reCaptchaContainer}>
             <ReCaptcha
               onVerify={token =>
+                // see implementation ReCaptcha handling in webapply/src/containers/ApplicantInfo.js
                 console.log("ReCaptcha onVerify callback:", token)
               }
               onExpired={() =>

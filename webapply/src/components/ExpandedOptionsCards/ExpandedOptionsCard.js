@@ -27,6 +27,7 @@ const StyledContainedButton = withStyles({
 
 const style = {
   root: {
+    position: "relative",
     display: "flex",
     flex: "1 1",
     flexDirection: "column",
@@ -38,6 +39,12 @@ const style = {
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
+    "&:hover": {
+      borderColor: "#000"
+    },
+    "&:hover $closeButton": {
+      display: "block"
+    },
     "@media only screen and (max-width: 1300px)": {
       maxHeight: "220px",
       padding: "10px 20px 10px 20px"
@@ -120,6 +127,33 @@ const style = {
   },
   applyButton: {
     textAlign: "center"
+  },
+  closeButton: {
+    position: "absolute",
+    top: "-19px",
+    right: "-19px",
+    display: "none",
+    width: "38px",
+    height: "38px",
+    borderRadius: "50%",
+    backgroundColor: "#fff",
+    boxShadow: "0 5px 10px 0 rgba(158, 158, 158, 0.5)",
+    cursor: "pointer",
+    "&::after, &::before": {
+      content: "''",
+      position: "absolute",
+      top: "19px",
+      left: "7px",
+      width: "25px",
+      height: "2px",
+      backgroundColor: "#000"
+    },
+    "&::after": {
+      transform: "rotate(45deg)"
+    },
+    "&::before": {
+      transform: "rotate(-45deg)"
+    }
   }
 };
 
@@ -145,7 +179,7 @@ const ExpandedOptionsCard = ({
     {optionList && (
       <ul className={classes.options}>
         {optionList.map(option => (
-          <li key={option}>{option}</li>
+          <li key={option.text}>{option.text}</li>
         ))}
       </ul>
     )}
@@ -166,6 +200,10 @@ const ExpandedOptionsCard = ({
         </div>
       )}
     </div>
+    <div
+      className={classes.closeButton}
+      onClick={() => console.log("not implemented yet")}
+    />
   </div>
 );
 

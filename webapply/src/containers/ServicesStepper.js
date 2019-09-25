@@ -1,8 +1,8 @@
-import React from "react";
-import omit from "lodash/omit";
 import { withStyles } from "@material-ui/core";
-import { servicesSteps } from "../constants";
+import omit from "lodash/omit";
+import React from "react";
 import ServicesStepTitle from "../components/ServicesStepTitle";
+import { servicesSteps } from "../constants";
 
 const styles = {};
 

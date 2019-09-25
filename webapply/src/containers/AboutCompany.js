@@ -1,8 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import StatusLoader from "../components/StatusLoader";
+import { aboutCompany } from "../store/actions/aboutCompany";
 import { aboutCompanySteps } from "../constants";
 import routes from "./../routes";
 
@@ -32,6 +34,7 @@ class AboutCompany extends React.Component {
 
   handleContinue = () => {
     if (this.state.step < aboutCompanySteps.length) {
+      this.props.aboutCompany();
       this.setState(state => ({ step: state.step + 1 }));
     } else {
       this.props.history.push(routes.stakeholdersInfo);
@@ -82,4 +85,13 @@ class AboutCompany extends React.Component {
   }
 }
 
-export default withStyles(style)(AboutCompany);
+const mapDispatchToProps = {
+  aboutCompany
+};
+
+export default withStyles(style)(
+  connect(
+    null,
+    mapDispatchToProps
+  )(AboutCompany)
+);
