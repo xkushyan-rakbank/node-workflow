@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import manager from "../../assets/icons/manager.svg";
+import manager from "../../assets/icons/manager.png";
 import service from "../../assets/icons/service.svg";
 import banking from "../../assets/icons/banking.svg";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
@@ -50,13 +50,13 @@ const CustomerService = ({ classes }) => (
           minWidth="100px"
           text="Dedicated relationship manager"
         >
-          <img src={manager} alt="manager" />
+          <img src={manager} width={80} height={80} alt="manager" />
         </StyledIconCardItem>
         <StyledIconCardItem minWidth="100px" text="24/7 customer service">
-          <img src={service} alt="service" />
+          <img width={80} height={80} src={service} alt="service" />
         </StyledIconCardItem>
         <StyledIconCardItem minWidth="100px" text="Physical and online banking">
-          <img src={banking} alt="banking" />
+          <img width={80} height={80} src={banking} alt="banking" />
         </StyledIconCardItem>
       </IconCardsContainer>
     </div>

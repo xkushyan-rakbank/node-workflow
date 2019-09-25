@@ -23,7 +23,8 @@ const style = {
     },
     "@media only screen and (max-width: 1420px)": {
       padding: "18px 12px 20px",
-      height: "430px"
+      width: 237,
+      height: 366
     }
   },
   header: {
@@ -41,13 +42,21 @@ const style = {
     "@media only screen and (max-width: 1420px)": {
       fontSize: "18px",
       "& span": {
-        marginTop: 13
+        marginTop: "13px",
+        fontSize: "13px"
+      },
+      "& img": {
+        width: 40,
+        height: 40
       }
     }
   },
   divider: {
     border: "solid 1px #e8e8e8",
-    margin: "30px auto 0"
+    margin: "30px auto 0",
+    "@media only screen and (max-width: 1420px)": {
+      margin: "15px auto 0"
+    }
   },
   differences: {
     margin: "28px 0 0 0",
@@ -57,6 +66,9 @@ const style = {
       color: "#373737",
       listStyle: "none",
       position: "relative",
+      "@media only screen and (max-width: 1420px)": {
+        fontSize: "13px"
+      },
       "& img": {
         position: "absolute",
         left: -20,
@@ -88,7 +100,9 @@ const AccountTypeCard = ({
   title,
   differences,
   buttonText,
-  classes
+  classes,
+  handleClick,
+  scrollToIndex
 }) => (
   <div className={classes.container}>
     <div>
@@ -112,7 +126,9 @@ const AccountTypeCard = ({
     </div>
 
     <div className={classes.buttonWrapper}>
-      <ContinueButton>{buttonText}</ContinueButton>
+      <ContinueButton handleClick={handleClick} name={scrollToIndex}>
+        {buttonText}
+      </ContinueButton>
     </div>
   </div>
 );

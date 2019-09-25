@@ -40,7 +40,9 @@ const ContainedButton = props => {
     color = "primary",
     component = "button",
     withRightArrow,
-    classes
+    classes,
+    // todo change property name
+    name
   } = props;
 
   return (
@@ -55,6 +57,7 @@ const ContainedButton = props => {
       }}
       disabled={disabled}
       onClick={handleClick}
+      name={name}
     >
       {label}
       {withRightArrow && (
