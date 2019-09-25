@@ -57,11 +57,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
     };
 
     this.commonInputProps = {
-      endAdornment: (
-        <InputAdornment position="end">
-          {this.props.companyCurrency}
-        </InputAdornment>
-      )
+      endAdornment: <InputAdornment position="end">{this.props.companyCurrency}</InputAdornment>
     };
   }
 
@@ -91,8 +87,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
   partOfTotalInCashMaxValue() {
     if (this.getMonthFinancialTurnover() > 0) {
       return (
-        this.getMonthFinancialTurnover() -
-        this.getNumberOrZero(this.props.notCashAmountInFigures)
+        this.getMonthFinancialTurnover() - this.getNumberOrZero(this.props.notCashAmountInFigures)
       );
     }
   }
@@ -100,8 +95,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
   partOfTotalInNotCashMaxValue() {
     if (this.getMonthFinancialTurnover() > 0) {
       return (
-        this.getMonthFinancialTurnover() -
-        this.getNumberOrZero(this.props.cashAmountInFigures)
+        this.getMonthFinancialTurnover() - this.getNumberOrZero(this.props.cashAmountInFigures)
       );
     }
   }
@@ -109,34 +103,23 @@ class CompanyAnticipatedTransactionsForm extends Component {
   maximumSingleAmountInCashMaxValue() {
     const allAmount = this.getNumberOrZero(this.props.annualFinancialTurnover);
     if (allAmount > 0) {
-      return (
-        allAmount - this.getNumberOrZero(this.props.maximumSingleNotCashAmount)
-      );
+      return allAmount - this.getNumberOrZero(this.props.maximumSingleNotCashAmount);
     }
   }
 
   maximumSingleAmountInNotCashMaxValue() {
     const allAmount = this.getNumberOrZero(this.props.annualFinancialTurnover);
     if (allAmount > 0) {
-      return (
-        allAmount - this.getNumberOrZero(this.props.maximumSingleCashAmount)
-      );
+      return allAmount - this.getNumberOrZero(this.props.maximumSingleCashAmount);
     }
   }
 
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle
-          title="Anticipated transactions"
-          className={this.props.classes.title}
-        />
+        <SectionTitle title="Anticipated transactions" className={this.props.classes.title} />
 
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item sm={12}>
             <TextInput
               min="0"
@@ -148,14 +131,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
 
         <div className={this.props.classes.divider} />
 
-        <h4 className={this.props.classes.groupLabel}>
-          Anticipated monthly transactions
-        </h4>
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <h4 className={this.props.classes.groupLabel}>Anticipated monthly transactions</h4>
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item sm={12}>
             <FormControl className="formControl">
               <TextField
@@ -191,11 +168,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
           Maximum amount expected in a single transaction
         </h4>
 
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             <TextInput
               min="0"
@@ -223,28 +196,11 @@ class CompanyAnticipatedTransactionsForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  annualFinancialTurnover: getInputValueById(
-    state,
-    "Okyc.annualFinTurnoverAmtInAED"
-  ),
-  cashAmountInFigures: getInputValueById(
-    state,
-    "OkycAntTxnTotCashCr.amountInFigures"
-  ),
-  notCashAmountInFigures: getInputValueById(
-    state,
-    "OkycAntTxnTotNonCashCr.amountInFigures"
-  ),
-  maximumSingleCashAmount: getInputValueById(
-    state,
-    "OkycAntTxn.maxAmtSingleTxnCashAED"
-  ),
-  maximumSingleNotCashAmount: getInputValueById(
-    state,
-    "OkycAntTxn.maxAmtSingleTxnNonCashAED"
-  )
+  annualFinancialTurnover: getInputValueById(state, "Okyc.annualFinTurnoverAmtInAED"),
+  cashAmountInFigures: getInputValueById(state, "OkycAntTxnTotCashCr.amountInFigures"),
+  notCashAmountInFigures: getInputValueById(state, "OkycAntTxnTotNonCashCr.amountInFigures"),
+  maximumSingleCashAmount: getInputValueById(state, "OkycAntTxn.maxAmtSingleTxnCashAED"),
+  maximumSingleNotCashAmount: getInputValueById(state, "OkycAntTxn.maxAmtSingleTxnNonCashAED")
 });
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(CompanyAnticipatedTransactionsForm)
-);
+export default withStyles(styles)(connect(mapStateToProps)(CompanyAnticipatedTransactionsForm));

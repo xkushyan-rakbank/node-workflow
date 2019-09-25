@@ -29,10 +29,7 @@ class ServicesStepper extends React.Component {
             <React.Fragment key={item.title}>
               <ServicesStepTitle step={stepData} activeStep={this.state.step} />
               {this.state.step === item.step && (
-                <Component
-                  goToNext={this.handleContinue}
-                  activeStep={this.state.step}
-                />
+                <Component goToNext={this.handleContinue} activeStep={this.state.step} />
               )}
             </React.Fragment>
           );

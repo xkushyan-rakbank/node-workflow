@@ -30,10 +30,7 @@ class AccountDetails extends React.Component {
       accountCurrencies: { datalist, title }
     } = this.props;
     return (
-      <FormWrapper
-        className={classes.formWrapper}
-        handleContinue={this.props.goToNext}
-      >
+      <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
         <div className="paper">
           <Subtitle title="Select currencies" />
           <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
@@ -70,11 +67,7 @@ class AccountDetails extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  accountCurrencies: get(
-    state.appConfig,
-    "uiConfig['Acnt.accountCurrencies']",
-    { datalist: [] }
-  )
+  accountCurrencies: get(state.appConfig, "uiConfig['Acnt.accountCurrencies']", { datalist: [] })
 });
 
 export default compose(

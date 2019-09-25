@@ -107,18 +107,14 @@ class CompanyBackgroundForm extends Component {
    * @return {CustomerSupplierData[]}
    */
   getTopCustomerData() {
-    return get(this.props.orgKYCDetails, "topCustomers", [
-      this.getEmptyCustomerSupplierItem()
-    ]);
+    return get(this.props.orgKYCDetails, "topCustomers", [this.getEmptyCustomerSupplierItem()]);
   }
 
   /**
    * @return {CustomerSupplierData[]}
    */
   getTopSupplierData() {
-    return get(this.props.orgKYCDetails, "topSuppliers", [
-      this.getEmptyCustomerSupplierItem()
-    ]);
+    return get(this.props.orgKYCDetails, "topSuppliers", [this.getEmptyCustomerSupplierItem()]);
   }
 
   /**
@@ -225,17 +221,10 @@ class CompanyBackgroundForm extends Component {
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle
-          title="Company background"
-          className={this.props.classes.title}
-        />
+        <SectionTitle title="Company background" className={this.props.classes.title} />
 
         <h4 className={this.props.classes.groupLabel}>Top customers</h4>
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           {this.getTopCustomerData().map((_, index) => {
             return (
               <React.Fragment key={index}>
@@ -261,9 +250,7 @@ class CompanyBackgroundForm extends Component {
         <AddButton
           onClick={this.handleAddCustomerClick}
           title="Add another customer"
-          disabled={
-            this.getTopCustomerData().length >= this.limits.customerCount
-          }
+          disabled={this.getTopCustomerData().length >= this.limits.customerCount}
         />
 
         <div className={this.props.classes.divider} />
@@ -272,15 +259,9 @@ class CompanyBackgroundForm extends Component {
         <Checkbox
           label="I don't have suppliers yet"
           value={this.state.isDontHaveSuppliers}
-          onChange={event =>
-            this.setState({ isDontHaveSuppliers: event.target.checked })
-          }
+          onChange={event => this.setState({ isDontHaveSuppliers: event.target.checked })}
         />
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           {this.getTopSupplierData().map((_, index) => {
             return (
               <React.Fragment key={index}>
@@ -319,16 +300,10 @@ class CompanyBackgroundForm extends Component {
         <h4 className={this.props.classes.groupLabel}>Main origin of goods</h4>
         <Checkbox
           value={this.state.isDontTradingGoods}
-          onChange={event =>
-            this.setState({ isDontTradingGoods: event.target.checked })
-          }
+          onChange={event => this.setState({ isDontTradingGoods: event.target.checked })}
           label="I don't trade with goods yet"
         />
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             {this.getTopOriginGoodsCountries().map((_, index) => {
               return (
@@ -352,8 +327,7 @@ class CompanyBackgroundForm extends Component {
           title="Add another country of origin"
           disabled={
             this.state.isDontTradingGoods ||
-            this.getTopOriginGoodsCountries().length >=
-              this.limits.countryOfOriginCount
+            this.getTopOriginGoodsCountries().length >= this.limits.countryOfOriginCount
           }
         />
 

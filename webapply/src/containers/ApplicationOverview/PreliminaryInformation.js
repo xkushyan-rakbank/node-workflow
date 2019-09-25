@@ -81,14 +81,12 @@ const PreliminaryInformation = ({ classes }) => (
       </IconCardsContainer>
     </div>
     <div className={classes.note}>
-      1. Not applicable to UAE nationals. 2. Memorandum of Association, Articles
-      of Association, Share Certificate, Partners Agreement or Service
-      Agreement, whichever is applicable to your company.
+      1. Not applicable to UAE nationals. 2. Memorandum of Association, Articles of Association,
+      Share Certificate, Partners Agreement or Service Agreement, whichever is applicable to your
+      company.
     </div>
     <div className={classes.answers}>
-      <div className={classes.title}>
-        Got more questions? We got some answers
-      </div>
+      <div className={classes.title}>Got more questions? We got some answers</div>
       <CommonQuestions data={mockData} />
     </div>
   </>

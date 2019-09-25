@@ -4,7 +4,8 @@ import cx from "classnames";
 
 import VideoBackground from "./BackgroundVideoPlayer";
 
-// Parent wrapper component total vertical padding. Temporary solution. In the future should be fixed
+// Parent wrapper component total vertical padding.
+//Temporary solution. In the future should be fixed
 const parentTotalOffset = 140;
 const parentBottomOffset = 50;
 
@@ -111,10 +112,11 @@ class VerticalPaginationWrapper extends React.Component {
     }
 
     this.timeStamp = now;
-    const correctedPadding = nextElementPosition
-      ? `${parentBottomOffset}px`
-      : "0px";
-    const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding}*${nextElementPosition})`;
+    const correctedPadding = nextElementPosition ? `${parentBottomOffset}px` : "0px";
+    const top = `
+          calc((100vh -
+          ${parentTotalOffset}px)*-${nextElementPosition} -
+          ${correctedPadding}*${nextElementPosition})`;
     this.setState({
       top,
       nextElementPosition,
@@ -125,10 +127,11 @@ class VerticalPaginationWrapper extends React.Component {
   handleClick = e => {
     // todo instead of e.currentTarget.name use index
     const nextElementPosition = parseInt(e.currentTarget.name);
-    const correctedPadding = nextElementPosition
-      ? `${parentBottomOffset}px`
-      : "0px";
-    const top = `calc((100vh - ${parentTotalOffset}px)*-${nextElementPosition} - ${correctedPadding}*${nextElementPosition})`;
+    const correctedPadding = nextElementPosition ? `${parentBottomOffset}px` : "0px";
+    const top = `
+          calc((100vh -
+          ${parentTotalOffset}px)*-${nextElementPosition} -
+          ${correctedPadding}*${nextElementPosition})`;
     this.setState({
       top,
       nextElementPosition,

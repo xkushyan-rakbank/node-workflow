@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import CropOriginalIcon from "@material-ui/icons/CropOriginal";
 import { StyledWhiteContainedButton } from "./MyApplicationsList";
 
 const styles = {
@@ -16,8 +15,7 @@ const styles = {
     borderRadius: 8,
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     backgroundColor: "#ffffff",
-    backgroundImage:
-      "linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0))",
+    backgroundImage: "linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0))",
     padding: "37px 20px 10px",
     boxSizing: "border-box",
     display: "inline-flex",
@@ -50,18 +48,10 @@ const MyApplicationsGrid = ({ classes, currentApplications }) => (
   <div className={classes.gridContainer}>
     {currentApplications.map((application, index) => (
       <div className={classes.application} key={index}>
-        <Typography
-          variant="h6"
-          component="span"
-          classes={{ root: classes.title }}
-        >
+        <Typography variant="h6" component="span" classes={{ root: classes.title }}>
           {application.companyName}
         </Typography>
-        <Typography
-          variant="subtitle2"
-          component="span"
-          classes={{ root: classes.account }}
-        >
+        <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
           {application.account}
         </Typography>
         <span className={classes.status}>{application.status}</span>

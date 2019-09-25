@@ -39,18 +39,6 @@ const style = {
     lineHeight: 1.33,
     color: "#263d4c"
   },
-  SignatoryRights: {
-    width: "39px",
-    height: "14px",
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "1.17",
-    letterSpacing: "normal",
-    color: "#888888",
-    paddingLeft: "9px"
-  },
   userInfo: {
     display: "flex",
     flexDirection: "column",
@@ -77,13 +65,8 @@ class SignatoriesDocuments extends Component {
             <Avatar firstName="Bhakta" lastName="Dash" />
             <div className={this.props.classes.userInfo}>
               <div className={this.props.classes.nameField}>Bhakta Dash</div>
-              <div className={this.props.classes.SignatoryRights}>
-                Board Resolution
-              </div>
-              <div className={this.props.classes.shareholdingField}>
-                {" "}
-                Shareholding 51%{" "}
-              </div>
+              <div className={this.props.classes.SignatoryRights}>Board Resolution</div>
+              <div className={this.props.classes.shareholdingField}> Shareholding 51% </div>
             </div>
           </div>
         </div>

@@ -43,19 +43,12 @@ class CompanyMailingAddressForm extends Component {
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle
-          title="Preferred mailing address"
-          className={this.props.classes.title}
-        />
+        <SectionTitle title="Preferred mailing address" className={this.props.classes.title} />
         <Grid container>
           <InfoTitle title="You guessed it, we will use this section for our communication with you" />
         </Grid>
 
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           {Array.from(Array(this.state.addressCount).keys()).map(index => {
             return (
               <React.Fragment key={index}>
@@ -82,11 +75,7 @@ class CompanyMailingAddressForm extends Component {
                     indexes={[index, 0]}
                     required={index === 0}
                   />
-                  <TextInput
-                    id="OrgAddrAdrd.poBox"
-                    indexes={[index, 0]}
-                    required={index === 0}
-                  />
+                  <TextInput id="OrgAddrAdrd.poBox" indexes={[index, 0]} required={index === 0} />
                   <TextInput
                     id="OrgAddrAdrd.country"
                     indexes={[index, 0]}

@@ -111,9 +111,7 @@ class CommonQuestions extends React.Component {
                 </div>
               </StyledExpansionPanelSummary>
               <StyledExpansionPanelDetails>
-                <div className={cx(classes.text, classes.info)}>
-                  {item.answer}
-                </div>
+                <div className={cx(classes.text, classes.info)}>{item.answer}</div>
               </StyledExpansionPanelDetails>
             </StyledExpansionPanel>
           ))}

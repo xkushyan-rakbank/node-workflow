@@ -3,10 +3,7 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import PureSelect from "../InputField/PureSelect";
 import TextInput from "../InputField/TextInput";
-import {
-  getInputNameById,
-  getInputValueById
-} from "../../store/selectors/input";
+import { getInputNameById, getInputValueById } from "../../store/selectors/input";
 import { updateField } from "../../store/actions/appConfig";
 
 class CountryOfResidence extends React.Component {
@@ -61,11 +58,8 @@ class CountryOfResidence extends React.Component {
 }
 
 const mapStateToProps = (state, { index }) => ({
-  residenceCountry: getInputValueById(state, "SigKycd.residenceCountry", [
-    index
-  ]),
-  isSignatory:
-    getInputValueById(state, "SigKycd.isSignatory", [index]) === "true",
+  residenceCountry: getInputValueById(state, "SigKycd.residenceCountry", [index]),
+  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index]) === "true",
   eidNumberInputName: getInputNameById(state, "SigKycdEmid.eidNumber", [index])
 });
 

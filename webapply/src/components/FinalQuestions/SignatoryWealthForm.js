@@ -33,7 +33,10 @@ class SignatoryWealthForm extends Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.soursOfWealth !== this.props.soursOfWealth && !this.isOtherSourceOfWealthSelected()) {
+    if (
+      prevProps.soursOfWealth !== this.props.soursOfWealth &&
+      !this.isOtherSourceOfWealthSelected()
+    ) {
       this.updateOtherWealthTypeValue("");
     }
   }

@@ -62,22 +62,19 @@ class CompanyNetworkForm extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (
-      prevState.isDontHaveOtherBankAccounts !==
-        this.state.isDontHaveOtherBankAccounts &&
+      prevState.isDontHaveOtherBankAccounts !== this.state.isDontHaveOtherBankAccounts &&
       this.state.isDontHaveOtherBankAccounts
     ) {
       this.resetBankAccountValues();
     }
     if (
-      prevState.isDontHaveInsideSubsidiary !==
-        this.state.isDontHaveInsideSubsidiary &&
+      prevState.isDontHaveInsideSubsidiary !== this.state.isDontHaveInsideSubsidiary &&
       this.state.isDontHaveInsideSubsidiary
     ) {
       this.resetInsideSubsidiaryValues();
     }
     if (
-      prevState.isDontHaveOutsideSubsidiary !==
-        this.state.isDontHaveOutsideSubsidiary &&
+      prevState.isDontHaveOutsideSubsidiary !== this.state.isDontHaveOutsideSubsidiary &&
       this.state.isDontHaveOutsideSubsidiary
     ) {
       this.resetOutsideSubsidiaryValues();
@@ -87,8 +84,7 @@ class CompanyNetworkForm extends Component {
   resetBankAccountValues() {
     this.setState({ anotherBankCount: 1 });
     this.props.updateField({
-      name:
-        "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails",
+      name: "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails",
       value: [{ bankName: "" }]
     });
   }
@@ -140,42 +136,27 @@ class CompanyNetworkForm extends Component {
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle
-          title="Company network"
-          className={this.props.classes.title}
-        />
+        <SectionTitle title="Company network" className={this.props.classes.title} />
 
-        <h4 className={this.props.classes.groupLabel}>
-          Relationships with other banks
-        </h4>
+        <h4 className={this.props.classes.groupLabel}>Relationships with other banks</h4>
         <Checkbox
           label="The company has no accounts with other banks, inside or outside the UAE"
           value={this.state.isDontHaveOtherBankAccounts}
-          onChange={event =>
-            this.setState({ isDontHaveOtherBankAccounts: event.target.checked })
-          }
+          onChange={event => this.setState({ isDontHaveOtherBankAccounts: event.target.checked })}
         />
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item sm={12}>
-            {Array.from(Array(this.state.anotherBankCount).keys()).map(
-              index => {
-                return (
-                  <TextInput
-                    key={index}
-                    id="OkycObriObd.bankName"
-                    indexes={[index]}
-                    required={
-                      index === 0 && !this.state.isDontHaveOtherBankAccounts
-                    }
-                    disabled={this.state.isDontHaveOtherBankAccounts}
-                  />
-                );
-              }
-            )}
+            {Array.from(Array(this.state.anotherBankCount).keys()).map(index => {
+              return (
+                <TextInput
+                  key={index}
+                  id="OkycObriObd.bankName"
+                  indexes={[index]}
+                  required={index === 0 && !this.state.isDontHaveOtherBankAccounts}
+                  disabled={this.state.isDontHaveOtherBankAccounts}
+                />
+              );
+            })}
           </Grid>
         </Grid>
         <AddButton
@@ -196,64 +177,49 @@ class CompanyNetworkForm extends Component {
         <Checkbox
           label="The company has no branches, subsidiaries or other companies, inside or outside the UAE"
           value={this.state.isDontHaveInsideSubsidiary}
-          onChange={event =>
-            this.setState({ isDontHaveInsideSubsidiary: event.target.checked })
-          }
+          onChange={event => this.setState({ isDontHaveInsideSubsidiary: event.target.checked })}
         />
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
-          {Array.from(Array(this.state.insideSubsidiaryCount).keys()).map(
-            index => {
-              return (
-                <React.Fragment key={index}>
-                  <Grid item sm={12}>
-                    <TextInput
-                      key={index}
-                      id="OkycEntIn.companyName"
-                      indexes={[index]}
-                      required={
-                        index === 0 && !this.state.isDontHaveInsideSubsidiary
-                      }
-                      disabled={this.state.isDontHaveInsideSubsidiary}
-                    />
-                  </Grid>
-                  <Grid item md={6} sm={12}>
-                    <TextInput
-                      key={index}
-                      id="OkycEntIn.tradeLicenseNo"
-                      indexes={[index]}
-                      required={
-                        index === 0 && !this.state.isDontHaveInsideSubsidiary
-                      }
-                      disabled={this.state.isDontHaveInsideSubsidiary}
-                    />
-                  </Grid>
-                  <Grid item md={6} sm={12}>
-                    <PureSelect
-                      key={index}
-                      id="OkycEntIn.emirate"
-                      indexes={[index]}
-                      required={
-                        index === 0 && !this.state.isDontHaveInsideSubsidiary
-                      }
-                      disabled={this.state.isDontHaveInsideSubsidiary}
-                    />
-                  </Grid>
-                </React.Fragment>
-              );
-            }
-          )}
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
+          {Array.from(Array(this.state.insideSubsidiaryCount).keys()).map(index => {
+            return (
+              <React.Fragment key={index}>
+                <Grid item sm={12}>
+                  <TextInput
+                    key={index}
+                    id="OkycEntIn.companyName"
+                    indexes={[index]}
+                    required={index === 0 && !this.state.isDontHaveInsideSubsidiary}
+                    disabled={this.state.isDontHaveInsideSubsidiary}
+                  />
+                </Grid>
+                <Grid item md={6} sm={12}>
+                  <TextInput
+                    key={index}
+                    id="OkycEntIn.tradeLicenseNo"
+                    indexes={[index]}
+                    required={index === 0 && !this.state.isDontHaveInsideSubsidiary}
+                    disabled={this.state.isDontHaveInsideSubsidiary}
+                  />
+                </Grid>
+                <Grid item md={6} sm={12}>
+                  <PureSelect
+                    key={index}
+                    id="OkycEntIn.emirate"
+                    indexes={[index]}
+                    required={index === 0 && !this.state.isDontHaveInsideSubsidiary}
+                    disabled={this.state.isDontHaveInsideSubsidiary}
+                  />
+                </Grid>
+              </React.Fragment>
+            );
+          })}
         </Grid>
 
         <AddButton
           onClick={this.handleAddInsideSubsidiaryClick}
           title="Add a subsidiary inside the UAE"
           disabled={
-            this.state.insideSubsidiaryCount >=
-              this.limits.insideSubsidiaryCount ||
+            this.state.insideSubsidiaryCount >= this.limits.insideSubsidiaryCount ||
             this.state.isDontHaveInsideSubsidiary
           }
         />
@@ -266,53 +232,40 @@ class CompanyNetworkForm extends Component {
         <Checkbox
           label="The company has no branches, subsidiaries or other companies, inside or outside the UAE"
           value={this.state.isDontHaveOutsideSubsidiary}
-          onChange={event =>
-            this.setState({ isDontHaveOutsideSubsidiary: event.target.checked })
-          }
+          onChange={event => this.setState({ isDontHaveOutsideSubsidiary: event.target.checked })}
         />
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
-          {Array.from(Array(this.state.outsideSubsidiaryCount).keys()).map(
-            index => {
-              return (
-                <React.Fragment key={index}>
-                  <Grid item md={6} sm={12}>
-                    <TextInput
-                      key={index}
-                      id="OkycEntOut.companyName"
-                      indexes={[index]}
-                      required={
-                        index === 0 && !this.state.isDontHaveOutsideSubsidiary
-                      }
-                      disabled={this.state.isDontHaveOutsideSubsidiary}
-                    />
-                  </Grid>
-                  <Grid item md={6} sm={12}>
-                    <PureSelect
-                      key={index}
-                      id="OkycEntOut.country"
-                      indexes={[index]}
-                      required={
-                        index === 0 && !this.state.isDontHaveOutsideSubsidiary
-                      }
-                      disabled={this.state.isDontHaveOutsideSubsidiary}
-                    />
-                  </Grid>
-                </React.Fragment>
-              );
-            }
-          )}
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
+          {Array.from(Array(this.state.outsideSubsidiaryCount).keys()).map(index => {
+            return (
+              <React.Fragment key={index}>
+                <Grid item md={6} sm={12}>
+                  <TextInput
+                    key={index}
+                    id="OkycEntOut.companyName"
+                    indexes={[index]}
+                    required={index === 0 && !this.state.isDontHaveOutsideSubsidiary}
+                    disabled={this.state.isDontHaveOutsideSubsidiary}
+                  />
+                </Grid>
+                <Grid item md={6} sm={12}>
+                  <PureSelect
+                    key={index}
+                    id="OkycEntOut.country"
+                    indexes={[index]}
+                    required={index === 0 && !this.state.isDontHaveOutsideSubsidiary}
+                    disabled={this.state.isDontHaveOutsideSubsidiary}
+                  />
+                </Grid>
+              </React.Fragment>
+            );
+          })}
         </Grid>
 
         <AddButton
           onClick={this.handleAddOutsideSubsidiaryClick}
           title="Add another subsidiary"
           disabled={
-            this.state.outsideSubsidiaryCount >=
-              this.limits.outsideSubsidiaryCount ||
+            this.state.outsideSubsidiaryCount >= this.limits.outsideSubsidiaryCount ||
             this.state.isDontHaveOutsideSubsidiary
           }
         />

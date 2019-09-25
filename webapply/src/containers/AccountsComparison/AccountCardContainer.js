@@ -43,11 +43,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
       <AccountTypeCard
         iconSrc={established_businesses_ic}
         title="For Exclusive Banking Privileges"
-        differences={[
-          "Preferential pricing",
-          "No fees",
-          "Fast-tracked services"
-        ]}
+        differences={["Preferential pricing", "No fees", "Fast-tracked services"]}
         buttonText="RAKelite"
         scrollToIndex={scrollToIndex}
         handleClick={handleClick}

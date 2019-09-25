@@ -157,14 +157,7 @@ const style = {
   }
 };
 
-const ExpandedOptionsCard = ({
-  classes,
-  optionList,
-  isIncluded,
-  cost,
-  value,
-  href
-}) => (
+const ExpandedOptionsCard = ({ classes, optionList, isIncluded, cost, value, href }) => (
   <div className={classes.root}>
     <div className={classes.title}>
       <div className={classes.name}>
@@ -200,10 +193,7 @@ const ExpandedOptionsCard = ({
         </div>
       )}
     </div>
-    <div
-      className={classes.closeButton}
-      onClick={() => console.log("not implemented yet")}
-    />
+    <div className={classes.closeButton} onClick={() => console.log("not implemented yet")} />
   </div>
 );
 

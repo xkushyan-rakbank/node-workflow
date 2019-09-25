@@ -22,7 +22,10 @@ class Shareholding extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.isShareholder !== this.props.isShareholder && this.props.isShareholder === "false") {
+    if (
+      prevProps.isShareholder !== this.props.isShareholder &&
+      this.props.isShareholder === "false"
+    ) {
       this.updateShareholderPercentageValue(0);
     }
   }
@@ -86,7 +89,9 @@ class Shareholding extends React.Component {
 
 const mapStateToProps = (state, { index }) => ({
   isShareholder: getInputValueById(state, "SigKycd.isShareholder", [index]),
-  shareholderPercentageInputName: getInputNameById(state, "SigKycd.shareHoldingPercentage", [index]),
+  shareholderPercentageInputName: getInputNameById(state, "SigKycd.shareHoldingPercentage", [
+    index
+  ]),
   // temp - will work only on WireMock data
   isSoleProprietor: getInputValueById(state, "SigAcntSig.authorityType", [index]) === "SP",
   currentPercentage: getInputValueById(state, "SigKycd.shareHoldingPercentage", [index]),

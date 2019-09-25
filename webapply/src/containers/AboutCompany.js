@@ -49,8 +49,8 @@ class AboutCompany extends React.Component {
       <>
         <h2>Tell Us about Your Company</h2>
         <p className="formDescription">
-          Explanation text goes here. One to three short sentences maximum. This
-          is the third sentence.
+          Explanation text goes here. One to three short sentences maximum. This is the third
+          sentence.
         </p>
         <CompanyStakeholderCard
           content={

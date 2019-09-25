@@ -35,23 +35,13 @@ class SignatoryPersonalInformationForm extends Component {
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle
-          title="Personal Information"
-          className={this.props.classes.title}
-        />
-        <Grid
-          spacing={3}
-          container
-          className={this.props.classes.flexContainer}
-        >
+        <SectionTitle title="Personal Information" className={this.props.classes.title} />
+        <Grid spacing={3} container className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             <PureSelect id="Sig.maritalStatus" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput
-              id="Sig.mothersMaidenName"
-              indexes={[this.props.index]}
-            />
+            <TextInput id="Sig.mothersMaidenName" indexes={[this.props.index]} />
           </Grid>
         </Grid>
 

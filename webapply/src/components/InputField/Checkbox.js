@@ -60,14 +60,7 @@ const style = {
   }
 };
 
-const CustomCheckbox = ({
-  classes,
-  checked,
-  field,
-  label,
-  className,
-  ...props
-}) => {
+const CustomCheckbox = ({ classes, checked, field, label, className, ...props }) => {
   const value = field ? field.value : props.value;
   return (
     <label className={cx(classes.checkboxWrapper, className)}>
@@ -79,9 +72,7 @@ const CustomCheckbox = ({
           checked={value}
           className={classes.hiddenCheckbox}
         />
-        <div className={classes.styledCheckbox}>
-          {value && <img src={Check} alt="" />}
-        </div>
+        <div className={classes.styledCheckbox}>{value && <img src={Check} alt="" />}</div>
       </div>
       <span className={classes.label}>{label}</span>
     </label>

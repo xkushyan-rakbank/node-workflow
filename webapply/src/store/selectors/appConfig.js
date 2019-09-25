@@ -10,12 +10,10 @@ export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
-export const getApplicationInfo = state =>
-  getProspect(state).applicationInfo || {};
+export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
 export const getProspectId = state => getGeneralInfo(state).prospectId;
 
 export const getProceedStatus = state => state.applicationStatus.isProceed;
 
-export const getScreeningResults = state =>
-  state.applicationStatus.screeningResults;
+export const getScreeningResults = state => state.applicationStatus.screeningResults;

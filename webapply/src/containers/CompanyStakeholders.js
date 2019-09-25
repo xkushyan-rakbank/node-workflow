@@ -62,8 +62,8 @@ class CompanyStakeholders extends React.Component {
       <>
         <h2>Add Company Stakeholders</h2>
         <p className="formDescription">
-          Explanation text goes here. One to three short sentences maximum. This
-          is the third sentence.
+          Explanation text goes here. One to three short sentences maximum. This is the third
+          sentence.
         </p>
 
         <div>

@@ -65,21 +65,11 @@ const AccountBenefits = ({ classes, accountType }) => {
       </div>
       {flag === "RAKStarter" && (
         <HorizontalIconCardsContainer>
-          <HorizontalIconCardItem
-            minWidth="260px"
-            text="No minimum balance required"
-          >
+          <HorizontalIconCardItem minWidth="260px" text="No minimum balance required">
             <img className={classes.icon} src={balance} alt="balance" />
           </HorizontalIconCardItem>
-          <HorizontalIconCardItem
-            minWidth="260px"
-            text="Available in AED, USD, EUR, GBP"
-          >
-            <img
-              className={classes.icon}
-              src={availability}
-              alt="availability"
-            />
+          <HorizontalIconCardItem minWidth="260px" text="Available in AED, USD, EUR, GBP">
+            <img className={classes.icon} src={availability} alt="availability" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem
             minWidth="260px"
@@ -87,15 +77,11 @@ const AccountBenefits = ({ classes, accountType }) => {
           >
             <img className={classes.icon} src={transaction} alt="transaction" />
           </HorizontalIconCardItem>
-          <HorizontalIconCardItem
-            minWidth="260px"
-            text="Dedicated Relationship Manager"
-          >
+          <HorizontalIconCardItem minWidth="260px" text="Dedicated Relationship Manager">
             <img className={classes.icon} src={manager} alt="manager" />
           </HorizontalIconCardItem>
           <div className={classes.notification}>
-            *Companies older than 12 months are not eligible for the RAKstarter
-            account
+            *Companies older than 12 months are not eligible for the RAKstarter account
           </div>
         </HorizontalIconCardsContainer>
       )}
@@ -104,15 +90,8 @@ const AccountBenefits = ({ classes, accountType }) => {
           <HorizontalIconCardItem minWidth="260px" text="A low minimum balance">
             <img className={classes.icon} src={balance} alt="balance" />
           </HorizontalIconCardItem>
-          <HorizontalIconCardItem
-            minWidth="260px"
-            text="Available in AED, USD, EUR, GBP"
-          >
-            <img
-              className={classes.icon}
-              src={availability}
-              alt="availability"
-            />
+          <HorizontalIconCardItem minWidth="260px" text="Available in AED, USD, EUR, GBP">
+            <img className={classes.icon} src={availability} alt="availability" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem
             minWidth="260px"
@@ -120,10 +99,7 @@ const AccountBenefits = ({ classes, accountType }) => {
           >
             <img className={classes.icon} src={transaction} alt="transaction" />
           </HorizontalIconCardItem>
-          <HorizontalIconCardItem
-            minWidth="260px"
-            text="Dedicated Relationship Manager"
-          >
+          <HorizontalIconCardItem minWidth="260px" text="Dedicated Relationship Manager">
             <img className={classes.icon} src={manager} alt="manager" />
           </HorizontalIconCardItem>
         </HorizontalIconCardsContainer>
@@ -142,20 +118,10 @@ const AccountBenefits = ({ classes, accountType }) => {
           >
             <img className={classes.icon} src={withdrawal} alt="withdrawal" />
           </HorizontalIconCardItem>
-          <HorizontalIconCardItem
-            minWidth="260px"
-            text="Exclusive RAKelite service centers"
-          >
-            <img
-              className={classes.icon}
-              src={serviceCenter}
-              alt="service-center"
-            />
+          <HorizontalIconCardItem minWidth="260px" text="Exclusive RAKelite service centers">
+            <img className={classes.icon} src={serviceCenter} alt="service-center" />
           </HorizontalIconCardItem>
-          <HorizontalIconCardItem
-            minWidth="260px"
-            text="Preferential exchange rates"
-          >
+          <HorizontalIconCardItem minWidth="260px" text="Preferential exchange rates">
             <img className={classes.icon} src={exchange} alt="exchange" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem
@@ -164,10 +130,7 @@ const AccountBenefits = ({ classes, accountType }) => {
           >
             <img className={classes.icon} src={lounge} alt="lounge" />
           </HorizontalIconCardItem>
-          <HorizontalIconCardItem
-            minWidth="260px"
-            text="Dedicated Relationship Manager"
-          >
+          <HorizontalIconCardItem minWidth="260px" text="Dedicated Relationship Manager">
             <img className={classes.icon} src={manager} alt="manager" />
           </HorizontalIconCardItem>
         </HorizontalIconCardsContainer>

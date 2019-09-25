@@ -33,11 +33,7 @@ const style = {
 const AddButton = props => {
   const { classes, title = "Add", className, ...rest } = props;
   return (
-    <button
-      className={cx(classes.container, className)}
-      type="button"
-      {...rest}
-    >
+    <button className={cx(classes.container, className)} type="button" {...rest}>
       <AddIcon />
       <span className={classes.text}>{title}</span>
     </button>

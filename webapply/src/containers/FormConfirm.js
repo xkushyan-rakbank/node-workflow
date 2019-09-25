@@ -112,17 +112,15 @@ class FormConfirm extends React.Component {
       <>
         <h2>Confirm It’s You</h2>
         <p className={classes.formDescription}>
-          We have sent you a verification code. Please input the six digits
-          below, to cofirm this is you.
+          We have sent you a verification code. Please input the six digits below, to cofirm this is
+          you.
         </p>
         <form noValidate onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">
             <OtpVerification onChange={this.isCodeValueValid} />
           </Grid>
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
-          {this.props.otp.verificationError && (
-            <ErrorMessage error="Code verification failed" />
-          )}
+          {this.props.otp.verificationError && <ErrorMessage error="Code verification failed" />}
           <div className="flexContainerForButton">
             <span>
               Didn’t get the code?{" "}
@@ -157,10 +155,7 @@ const mapStateToProps = state => ({
     state,
     getInputNameById(state, "Aplnt.mobileNo")
   ),
-  emailServerValidation: getInputServerValidityByPath(
-    state,
-    getInputNameById(state, "Aplnt.email")
-  )
+  emailServerValidation: getInputServerValidityByPath(state, getInputNameById(state, "Aplnt.email"))
 });
 
 const mapDispatchToProps = {

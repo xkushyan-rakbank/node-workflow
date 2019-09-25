@@ -85,30 +85,10 @@ const mockDataRows = [
     { text: "AED 50" },
     { text: "AED 250" }
   ),
-  createData(
-    "Monthly Maintenance fees",
-    { text: "AED 99" },
-    { text: "AED 50" },
-    { text: "Zero" }
-  ),
-  createData(
-    "Free Cheque book every year",
-    { ic: checkIc },
-    { ic: checkIc },
-    { ic: checkIc }
-  ),
-  createData(
-    "Free Teller Transactions",
-    { text: "-" },
-    { text: "-" },
-    { ic: checkIc }
-  ),
-  createData(
-    "Lifestyle benefits",
-    { text: "-" },
-    { text: "-" },
-    { ic: checkIc }
-  ),
+  createData("Monthly Maintenance fees", { text: "AED 99" }, { text: "AED 50" }, { text: "Zero" }),
+  createData("Free Cheque book every year", { ic: checkIc }, { ic: checkIc }, { ic: checkIc }),
+  createData("Free Teller Transactions", { text: "-" }, { text: "-" }, { ic: checkIc }),
+  createData("Lifestyle benefits", { text: "-" }, { text: "-" }, { ic: checkIc }),
   createData(
     "RAKvalue Package(PLUS and MAX)",
     { text: "Mandatory", info: "(PLUS - AED 49)" },
@@ -252,16 +232,11 @@ class TableCompare extends React.Component {
       <Paper classes={{ root: classes.paperRoot }}>
         <div style={{ overflowX: "auto" }}>
           <div style={{ minWidth: "780px", position: "relative" }}>
-            <SelectedAccountContainer
-              offset={this.state.offset}
-              width={this.state.width}
-            />
+            <SelectedAccountContainer offset={this.state.offset} width={this.state.width} />
             <Table classes={{ root: classes.tableRoot }}>
               <TableHead style={{ position: "relative" }}>
                 <TableRow classes={{ head: classes.tableHead }}>
-                  <StyledTableHeader style={{ width: 180 }}>
-                    {" "}
-                  </StyledTableHeader>
+                  <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
                   <StyledTableHeader>RAKStarter</StyledTableHeader>
                   <StyledTableHeader>Current Account</StyledTableHeader>
                   <StyledTableHeader>RAKelite</StyledTableHeader>
@@ -287,9 +262,7 @@ class TableCompare extends React.Component {
                     <StyledTableCell>
                       <span>{row.currentAccount.text}</span>
                       <span>{row.currentAccount.info}</span>
-                      {row.currentAccount.ic && (
-                        <img src={row.currentAccount.ic} alt="" />
-                      )}
+                      {row.currentAccount.ic && <img src={row.currentAccount.ic} alt="" />}
                     </StyledTableCell>
                     <StyledTableCell>
                       <span>{row.elite.text}</span>

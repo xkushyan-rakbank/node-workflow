@@ -66,18 +66,10 @@ const TwoSteps = ({ classes, accountType }) => {
         </div>
         <div className={classes.indent}>
           <IconCardsContainer>
-            <IconCardItem
-              minWidth="260px"
-              title="First"
-              text="You fill a couple of questions"
-            >
+            <IconCardItem minWidth="260px" title="First" text="You fill a couple of questions">
               <img src={interrogation} alt="interrogation" />
             </IconCardItem>
-            <IconCardItem
-              minWidth="260px"
-              title="Then"
-              text="We call you to sign the account"
-            >
+            <IconCardItem minWidth="260px" title="Then" text="We call you to sign the account">
               <img src={signature} alt="signature" />
             </IconCardItem>
           </IconCardsContainer>
