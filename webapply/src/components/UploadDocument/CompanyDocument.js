@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import companyIconSvg from "../../assets//images/company-icon.svg";
 import UploadDocument from "./UploadDocument";
+import { getInputValueById } from "../../store/selectors/input";
+import { connect } from "react-redux";
 
 const style = {
   container: {
@@ -79,6 +81,19 @@ const style = {
 
 class CompanyDocuments extends Component {
   render() {
+    const companyDocuments = this.props.uploadedDoc;
+    let companyDocument;
+    const companyName = this.props.companyName;
+    if (companyDocuments.companyDocuments) {
+      companyDocument = companyDocuments.companyDocuments.map((companyDoc, index) => {
+        return (
+          <>
+            <UploadDocument companyDoc={companyDoc} />
+          </>
+        );
+      });
+    }
+
     return (
       <div className={this.props.classes.container}>
         <header className={this.props.classes.header}>
@@ -86,14 +101,21 @@ class CompanyDocuments extends Component {
             {this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}
           </div>
           <div className={this.props.classes.contentBox}>
-            <h3 className={this.props.classes.label}>Designit Arabia</h3>
+            <h3 className={this.props.classes.label}>{companyName}</h3>
           </div>
         </header>
         {/* company documents need to put nside a map function */}
-        <UploadDocument />
+        {companyDocument}
       </div>
     );
   }
 }
 
-export default withStyles(style)(CompanyDocuments);
+const mapStateToProps = state => {
+  return {
+    companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia",
+    uploadedDoc: state.uploadedDocs.docs
+  };
+};
+
+export default withStyles(style)(connect(mapStateToProps)(CompanyDocuments));

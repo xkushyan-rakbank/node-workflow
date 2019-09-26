@@ -15,6 +15,16 @@ export default {
     }
   },
 
+  authentication: {
+    login: data => {
+      return httpClient.request({
+        url: "/webapply/api/v1/banks/RAK/users/authenticate",
+        method: "post",
+        data
+      });
+    }
+  },
+
   reCaptcha: {
     verify: recaptchaToken => {
       return httpClient.request({
@@ -66,6 +76,15 @@ export default {
         url: `/webapply/api/v1/banks/RAK/usertypes/sme/prospects/${prospectId}`,
         method: "PUT",
         data
+      });
+    }
+  },
+
+  uploadDocuments: {
+    uploadDocument: () => {
+      return httpClient.request({
+        url: "/webapply/api/v1/banks/RAK/prospects/001/documents",
+        method: "GET"
       });
     }
   }

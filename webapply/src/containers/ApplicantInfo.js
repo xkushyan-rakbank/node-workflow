@@ -69,12 +69,7 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const {
-      classes,
-      lastInputValue,
-      isProceed,
-      screeningResults: { screeningReason }
-    } = this.props;
+    const { classes, lastInputValue, isProceed, serverError, screeningResults } = this.props;
     return (
       <>
         {isProceed ? (
@@ -111,7 +106,7 @@ class BasicsForm extends React.Component {
             </form>
           </>
         ) : (
-          <ApplicationStatus reason={screeningReason} />
+          <ApplicationStatus serverError={serverError} errorReason={screeningResults} />
         )}
       </>
     );
@@ -124,6 +119,7 @@ const mapStateToProps = state => ({
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
   lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
   isProceed: appConfigSelectors.getProceedStatus(state),
+  serverError: appConfigSelectors.getServerErrorStatus(state),
   screeningResults: appConfigSelectors.getScreeningResults(state),
   applicationInfo: appConfigSelectors.getApplicationInfo(state)
   // isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),

@@ -7,6 +7,9 @@ import serverValidation from "./serverValidation";
 import aboutCompany from "./aboutCompany";
 import applicationStatus from "./applicationStatus";
 import otp from "./otp";
+import login from "./loginForm";
+import authReducer from "./authReducers";
+import docUploadReducer from "./docUploadReducer";
 
 /**
  * @typedef {Object} Store
@@ -25,7 +28,10 @@ const reducers = history =>
     reCaptcha,
     applicantInfoForm,
     aboutCompany,
-    applicationStatus
+    applicationStatus,
+    login,
+    users: authReducer,
+    uploadedDocs: docUploadReducer
   });
 
 export default reducers;

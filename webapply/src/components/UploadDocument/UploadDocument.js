@@ -146,9 +146,13 @@ class UploadDocuments extends Component {
           }
         };
         const fd = new FormData();
-        fd.append("images", this.state.selectedFile, this.state.selectedFile.name);
+        fd.append("file", this.state.selectedFile, this.state.selectedFile.name);
         axios
-          .post("", fd, config)
+          .post(
+            "http://10.86.251.138:8080/docUploader/banks/RAK/prospects/700/documents",
+            fd,
+            config
+          )
           .then(res => {
             this.setState({
               enableUpload: false
@@ -171,13 +175,13 @@ class UploadDocuments extends Component {
   }
 
   render() {
+    const docType = this.props.companyDoc;
     return (
       <div className={this.props.classes.fileUploadPlaceholder}>
-        {console.log(this.state)}
         {this.state.enableUpload ? (
           <>
             <div className={this.props.classes.contentBox}>
-              <p className={this.props.classes.uploadedFileName}>Spanish passport</p>
+              <p className={this.props.classes.uploadedFileName}>{docType.documentType}</p>
               {this.state.fileError ? (
                 <p className={this.props.classes.ErrorExplanation}>Error explanation goes here</p>
               ) : (

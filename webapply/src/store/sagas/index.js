@@ -4,6 +4,8 @@ import reCaptchaSaga from "./reCaptcha";
 import applicantInfoSaga from "./applicantInfoForm";
 import aboutCompanySaga from "./aboutCompany";
 import otpSaga from "./otp";
+import loginForm from "./loginForm";
+import uploadDoc from "./uploadDoc";
 
 export default function*() {
   yield all([
@@ -11,6 +13,8 @@ export default function*() {
     fork(reCaptchaSaga),
     fork(otpSaga),
     fork(applicantInfoSaga),
-    fork(aboutCompanySaga)
+    fork(aboutCompanySaga),
+    fork(loginForm),
+    fork(uploadDoc)
   ]);
 }
