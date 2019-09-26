@@ -5,6 +5,9 @@
     "bodyPatterns": [
       {
         "matchesJsonPath": "$.applicantInfo[?(@.fullName !== 'InvalidFields')]"
+      },
+      {
+        "matchesJsonPath": "$.applicantInfo[?(@.fullName !== 'VerifyOTP')]"
       }
     ]
   },

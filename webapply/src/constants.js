@@ -11,6 +11,7 @@ import Industry from "./components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "./components/AboutCompanyStepForms/LicenseInformation";
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
+import decline from "./assets/gif/declined_regular.gif";
 
 import routes from "./routes";
 
@@ -140,3 +141,11 @@ export const servicesSteps = [
 ];
 
 export const digitRegExp = new RegExp("^[0-9]$");
+
+export const applicationStatus = {
+  serverError: {
+    reason:
+      "We're sorry, a server error occurred. Please wait a bit and try again. Thank you for your interest in RAKBANK.",
+    icon: decline
+  }
+};
