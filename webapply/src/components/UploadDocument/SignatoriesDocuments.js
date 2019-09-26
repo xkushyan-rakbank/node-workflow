@@ -85,6 +85,7 @@ class SignatoriesDocuments extends Component {
             if (authUser.fullName === companyDoc.signatoryName) {
               return <UploadDocuments key={index} companyDoc={companyDoc} />;
             }
+            return null;
           })}
         </div>
       );
