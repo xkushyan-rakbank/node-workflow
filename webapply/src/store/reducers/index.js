@@ -7,6 +7,7 @@ import serverValidation from "./serverValidation";
 import aboutCompany from "./aboutCompany";
 import applicationStatus from "./applicationStatus";
 import otp from "./otp";
+import login from "./loginForm";
 
 /**
  * @typedef {Object} Store
@@ -25,7 +26,8 @@ const reducers = history =>
     reCaptcha,
     applicantInfoForm,
     aboutCompany,
-    applicationStatus
+    applicationStatus,
+    login
   });
 
 export default reducers;
