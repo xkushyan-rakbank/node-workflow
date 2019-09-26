@@ -74,13 +74,12 @@ const style = {
 class SignatoriesDocuments extends Component {
   render() {
     let docUploadDetails = this.props.authUsers.uploadedDoc;
-    if (docUploadDetails.stakeholdersDocuments) {
-      docUploadDetails = this.props.authUsers.uploadedDoc.stakeholdersDocuments;
-    }
-
-    console.log("doc details >>> " + docUploadDetails);
     const authUsers = this.props.authUsers.authUsers;
     const userList = authUsers.map((authUser, index) => {
+      if (this.props.authUsers.uploadedDoc.stakeholdersDocuments) {
+        docUploadDetails = this.props.authUsers.uploadedDoc
+          .stakeholdersDocuments[index + "_" + authUser.fullName];
+      }
       return (
         <div className={this.props.classes.container}>
           <div className={this.props.classes.contentWrapper} key={authUser.id}>
