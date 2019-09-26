@@ -5,7 +5,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import validateForm from "../utils/validate";
+// import validateForm from "../utils/validate";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
 import { loginInfoForm } from "../store/actions/loginForm";
@@ -29,10 +29,7 @@ class Login extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      prevProps.reCaptchaToken !== this.props.reCaptchaToken &&
-      this.props.reCaptchaToken
-    ) {
+    if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
       this.props.verifyToken();
     }
   }
@@ -55,7 +52,8 @@ class Login extends React.Component {
   };
 
   render() {
-    const { classes, isReCaptchaVerified, userName, password } = this.props;
+    const { classes, userName, password } = this.props;
+    // const { classes, isReCaptchaVerified, userName, password } = this.props;
 
     return (
       <div className={classes.baseForm}>
@@ -73,13 +71,9 @@ class Login extends React.Component {
               onError={this.handleReCaptchaError}
             />
           </ErrorBoundary>
-
-          {/* <SubmitButton label="Next Step" justify="flex-end" disabled={!isReCaptchaVerified}/> */}
-          <SubmitButton
-            label="Next Step"
-            justify="flex-end"
-            disabled={!userName && !password}
-          />
+          {/* <SubmitButton label="Next Step" justify="flex-end" 
+              disabled={!isReCaptchaVerified}/> */}
+          <SubmitButton label="Next Step" justify="flex-end" disabled={!userName && !password} />
         </form>
       </div>
     );

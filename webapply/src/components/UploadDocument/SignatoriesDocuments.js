@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 import Avatar from "../../components/Avatar";
 import UploadDocuments from "../../components/UploadDocument/UploadDocument";
+import { getInputValueById } from "../../store/selectors/input";
+
 const style = {
   container: {
     borderRadius: "8px",
@@ -58,24 +61,41 @@ const style = {
 
 class SignatoriesDocuments extends Component {
   render() {
-    return (
-      <div className={this.props.classes.container}>
-        <div>
+    let docUploadDetails = this.props.authUsers.uploadedDoc;
+    const authUsers = this.props.authUsers.authUsers;
+    const userList = authUsers.map((authUser, index) => {
+      if (this.props.authUsers.uploadedDoc.stakeholdersDocuments) {
+        docUploadDetails = this.props.authUsers.uploadedDoc.stakeholdersDocuments[
+          index + "_" + authUser.fullName
+        ];
+      }
+      return (
+        <div className={this.props.classes.container} key={authUser.id}>
           <div className={this.props.classes.contentWrapper}>
-            <Avatar firstName="Bhakta" lastName="Dash" />
+            <Avatar firstName={authUser.fullName} lastName={authUser.fullName} />
             <div className={this.props.classes.userInfo}>
-              <div className={this.props.classes.nameField}>Bhakta Dash</div>
-              <div className={this.props.classes.SignatoryRights}>Board Resolution</div>
-              <div className={this.props.classes.shareholdingField}> Shareholding 51% </div>
+              <div className={this.props.classes.nameField}>{authUser.fullName}</div>
+              <div className={this.props.classes.SignatoryRights}>{authUser.roles}</div>
+              <div className={this.props.classes.shareholdingField}>
+                Shareholding {authUser.Shareholding}
+              </div>
             </div>
           </div>
+          {docUploadDetails.map((companyDoc, index) => {
+            if (authUser.fullName === companyDoc.signatoryName) {
+              return <UploadDocuments key={index} companyDoc={companyDoc} />;
+            }
+          })}
         </div>
-        {/* company documents need to put nside a map function */}
-
-        <UploadDocuments />
-      </div>
-    );
+      );
+    });
+    return <>{userList}</>;
   }
 }
 
-export default withStyles(style)(SignatoriesDocuments);
+const mapStateToProps = state => ({
+  // TODO: remove default value "Designit Arabia"
+  companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
+});
+
+export default withStyles(style)(connect(mapStateToProps)(SignatoriesDocuments));

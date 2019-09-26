@@ -78,5 +78,14 @@ export default {
         data
       });
     }
+  },
+
+  uploadDocuments: {
+    uploadDocument: () => {
+      return httpClient.request({
+        url: "/webapply/api/v1/banks/RAK/prospects/001/documents",
+        method: "GET"
+      });
+    }
   }
 };
