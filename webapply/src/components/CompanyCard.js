@@ -52,18 +52,12 @@ class CompanyCard extends Component {
       <div className={this.props.classes.container}>
         <header className={this.props.classes.header}>
           <div className={this.props.classes.companyIconWrap}>
-            {this.props.icon || (
-              <img src={companyIconSvg} alt="companyIconSvg" />
-            )}
+            {this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}
           </div>
           <div className={this.props.classes.contentBox}>
-            <h3 className={this.props.classes.label}>
-              {this.props.companyName}
-            </h3>
+            <h3 className={this.props.classes.label}>{this.props.companyName}</h3>
           </div>
-          <div className={this.props.classes.controlsBox}>
-            {this.props.controls}
-          </div>
+          <div className={this.props.classes.controlsBox}>{this.props.controls}</div>
         </header>
         {this.props.children}
       </div>

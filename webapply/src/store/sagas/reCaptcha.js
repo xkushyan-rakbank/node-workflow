@@ -13,9 +13,7 @@ function* verifyToken() {
     yield put(actions.setVerified(true));
   } catch (error) {
     console.log(error);
-    yield put(
-      actions.setError(get(error, "data.message") || get(error, "message"))
-    );
+    yield put(actions.setError(get(error, "data.message") || get(error, "message")));
   }
 }
 

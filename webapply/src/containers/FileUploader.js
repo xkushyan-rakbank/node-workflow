@@ -30,14 +30,10 @@ class FileUploader extends React.Component {
       <>
         <h2>Upload your documents</h2>
         <p className="formDescription">
-          Remember we asked you to have the papers ready? Now it’s time to
-          upload them.
+          Remember we asked you to have the papers ready? Now it’s time to upload them.
         </p>
         <div className={this.props.classes.sectionContainer}>
-          <SectionTitle
-            title="Company documents"
-            className={this.props.classes.title}
-          />
+          <SectionTitle title="Company documents" className={this.props.classes.title} />
           <CompanyDocuments />
         </div>
         <div className={this.props.classes.sectionContainer}>

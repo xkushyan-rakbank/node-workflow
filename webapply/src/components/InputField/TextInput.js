@@ -212,9 +212,7 @@ class Input extends React.Component {
   }
 
   isLabelShrink() {
-    return (
-      this.state.isFocused || !!this.state.value || isNumber(this.state.value)
-    );
+    return this.state.isFocused || !!this.state.value || isNumber(this.state.value);
   }
 
   render() {
@@ -232,9 +230,7 @@ class Input extends React.Component {
       select
     } = this.props;
     const { fieldErrors } = this.state;
-    const inputProps = this.composeFieldAttrWithPropAttr(
-      fieldAttr(id, config, indexes)
-    );
+    const inputProps = this.composeFieldAttrWithPropAttr(fieldAttr(id, config, indexes));
 
     const isError = !isEmpty(fieldErrors);
     const customValidationMessage = this.getCustomValidationMessage();
@@ -283,10 +279,7 @@ class Input extends React.Component {
           </FormGroup>
 
           {isError && !customValidationMessage && (
-            <ErrorMessage
-              error={fieldErrors.error}
-              multiLineError={fieldErrors.multiLineError}
-            />
+            <ErrorMessage error={fieldErrors.error} multiLineError={fieldErrors.multiLineError} />
           )}
           {!isNil(serverValidation) && serverValidation.message && (
             <ErrorMessage error={serverValidation.message} />

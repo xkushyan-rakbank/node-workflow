@@ -68,11 +68,7 @@ const AccountBenefits = ({ classes, accountType }) => {
             <img className={classes.icon} src={balance} alt="balance" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem text="Available in AED, USD, EUR, GBP">
-            <img
-              className={classes.icon}
-              src={availability}
-              alt="availability"
-            />
+            <img className={classes.icon} src={availability} alt="availability" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem text="Preferential transaction fees through Digital Banking">
             <img className={classes.icon} src={transaction} alt="transaction" />
@@ -81,8 +77,7 @@ const AccountBenefits = ({ classes, accountType }) => {
             <img className={classes.icon} src={manager} alt="manager" />
           </HorizontalIconCardItem>
           <div className={classes.notification}>
-            *Companies older than 12 months are not eligible for the RAKstarter
-            account
+            *Companies older than 12 months are not eligible for the RAKstarter account
           </div>
         </HorizontalIconCardsContainer>
       )}
@@ -92,11 +87,7 @@ const AccountBenefits = ({ classes, accountType }) => {
             <img className={classes.icon} src={balance} alt="balance" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem text="Available in AED, USD, EUR, GBP">
-            <img
-              className={classes.icon}
-              src={availability}
-              alt="availability"
-            />
+            <img className={classes.icon} src={availability} alt="availability" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem text="Preferential transaction fees through Digital Banking">
             <img className={classes.icon} src={transaction} alt="transaction" />
@@ -115,11 +106,7 @@ const AccountBenefits = ({ classes, accountType }) => {
             <img className={classes.icon} src={withdrawal} alt="withdrawal" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem text="Exclusive RAKelite service centers">
-            <img
-              className={classes.icon}
-              src={serviceCenter}
-              alt="service-center"
-            />
+            <img className={classes.icon} src={serviceCenter} alt="service-center" />
           </HorizontalIconCardItem>
           <HorizontalIconCardItem text="Preferential exchange rates">
             <img className={classes.icon} src={exchange} alt="exchange" />

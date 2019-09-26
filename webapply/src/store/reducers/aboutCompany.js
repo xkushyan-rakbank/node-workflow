@@ -1,7 +1,4 @@
-import {
-  ABOUT_COMPANY_FORM_SUCCESS,
-  ABOUT_COMPANY_FORM_FAIL
-} from "../actions/aboutCompany";
+import { ABOUT_COMPANY_FORM_SUCCESS, ABOUT_COMPANY_FORM_FAIL } from "../actions/aboutCompany";
 
 const initialState = {
   loading: false

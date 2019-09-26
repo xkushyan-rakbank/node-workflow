@@ -42,14 +42,7 @@ const style = {
   }
 };
 
-const CollapsedSection = ({
-  classes,
-  expanded,
-  children,
-  filled,
-  title,
-  ...rest
-}) => {
+const CollapsedSection = ({ classes, expanded, children, filled, title, ...rest }) => {
   return (
     <>
       {expanded ? (

@@ -194,10 +194,7 @@ class Password extends React.Component {
           </FormGroup>
 
           {isError && (
-            <ErrorMessage
-              error={fieldErrors.error}
-              multiLineError={fieldErrors.multiLineError}
-            />
+            <ErrorMessage error={fieldErrors.error} multiLineError={fieldErrors.multiLineError} />
           )}
         </div>
       );

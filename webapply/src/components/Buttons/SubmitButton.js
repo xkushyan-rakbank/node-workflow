@@ -18,14 +18,7 @@ const styles = {
 };
 
 const SubmitButton = props => {
-  const {
-    disabled = false,
-    classes,
-    label,
-    handleClick,
-    justify,
-    containerExtraStyles
-  } = props;
+  const { disabled = false, classes, label, handleClick, justify, containerExtraStyles } = props;
   return (
     <Grid
       container

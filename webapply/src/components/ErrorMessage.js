@@ -34,11 +34,7 @@ const ErrorMessage = ({ error, multiLineError, classes }) => {
         <img src={ErrorIcon} alt="erorr" />
         <p>{error}</p>
         {!!multiLineError && (
-          <Tooltip
-            title={multiLineError}
-            placement="right"
-            className={classes.multiLineError}
-          >
+          <Tooltip title={multiLineError} placement="right" className={classes.multiLineError}>
             <InfoIcon />
           </Tooltip>
         )}

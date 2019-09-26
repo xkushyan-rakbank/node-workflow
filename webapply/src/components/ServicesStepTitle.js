@@ -43,16 +43,10 @@ const ServicesStepTitle = ({ step, activeStep, classes }) => {
   const doneStep = step.step < activeStep;
   const currentStep = activeStep === step.step;
   return (
-    <div
-      className={cx(
-        classes.wrapper,
-        currentStep ? classes.activeTitle : classes.notActiveStep
-      )}
-    >
+    <div className={cx(classes.wrapper, currentStep ? classes.activeTitle : classes.notActiveStep)}>
       <SectionTitle
-        title={
-          doneStep ? <a href="#">{step.title}</a> : <div>{step.title}</div>
-        }
+        // eslint-disable-next-line
+        title={doneStep ? <a>{step.title}</a> : <div>{step.title}</div>}
         className={cx(classes.titleWrapper, {
           [classes.disabled]: !currentStep
         })}

@@ -42,19 +42,10 @@ const styles = {
   }
 };
 
-const ButtonWithIcon = ({
-  icon,
-  iconSelected,
-  typeView,
-  selectedView,
-  handleClick
-}) => {
+const ButtonWithIcon = ({ icon, iconSelected, typeView, selectedView, handleClick }) => {
   const isSelected = selectedView === typeView;
   return (
-    <button
-      className={cx({ selected: isSelected })}
-      onClick={() => handleClick(typeView)}
-    >
+    <button className={cx({ selected: isSelected })} onClick={() => handleClick(typeView)}>
       <img src={isSelected ? icon : iconSelected} alt="type view" />
     </button>
   );
@@ -78,12 +69,7 @@ class MyApplications extends React.Component {
 
     return (
       <ContainerComeBack>
-        <Grid
-          container
-          direction="row"
-          alignItems="center"
-          justify="space-between"
-        >
+        <Grid container direction="row" alignItems="center" justify="space-between">
           <Typography classes={{ root: classes.rootTitle }} variant="h5">
             My applications
           </Typography>
@@ -107,13 +93,9 @@ class MyApplications extends React.Component {
 
         <Grid container direction="column">
           {selectedView === "list" ? (
-            <MyApplicationsList
-              currentApplications={mockDataMyCurrentApplication}
-            />
+            <MyApplicationsList currentApplications={mockDataMyCurrentApplication} />
           ) : (
-            <MyApplicationsGrid
-              currentApplications={mockDataMyCurrentApplication}
-            />
+            <MyApplicationsGrid currentApplications={mockDataMyCurrentApplication} />
           )}
         </Grid>
       </ContainerComeBack>

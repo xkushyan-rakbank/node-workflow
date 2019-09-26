@@ -39,22 +39,12 @@ class SignatoryMailingAddressForm extends React.Component {
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle
-          title="Preferred mailing address"
-          className={this.props.classes.title}
-        />
+        <SectionTitle title="Preferred mailing address" className={this.props.classes.title} />
 
         <Grid container>
-          <CustomCheckbox
-            id="Sig.sameAsCompanyAddress"
-            indexes={[this.props.index]}
-          />
+          <CustomCheckbox id="Sig.sameAsCompanyAddress" indexes={[this.props.index]} />
         </Grid>
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item sm={12}>
             <TextInput
               id="SigAddrAdrd.preferredAddress"
@@ -102,11 +92,7 @@ class SignatoryMailingAddressForm extends React.Component {
 }
 
 const mapStateToProps = (state, { index }) => ({
-  sameAsCompanyAddress: getInputValueById(state, "Sig.sameAsCompanyAddress", [
-    index
-  ])
+  sameAsCompanyAddress: getInputValueById(state, "Sig.sameAsCompanyAddress", [index])
 });
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(SignatoryMailingAddressForm)
-);
+export default withStyles(styles)(connect(mapStateToProps)(SignatoryMailingAddressForm));

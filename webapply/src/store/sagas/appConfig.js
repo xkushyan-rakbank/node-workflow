@@ -1,11 +1,4 @@
-import {
-  all,
-  call,
-  put,
-  takeLatest,
-  takeEvery,
-  select
-} from "redux-saga/effects";
+import { all, call, put, takeLatest, takeEvery, select } from "redux-saga/effects";
 import {
   RECEIVE_APPCONFIG,
   receiveAppConfigSuccess,

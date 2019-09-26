@@ -46,10 +46,7 @@ const CustomerService = ({ classes }) => (
     </div>
     <div className={classes.stepCardsWrapper}>
       <IconCardsContainer>
-        <StyledIconCardItem
-          minWidth="100px"
-          text="Dedicated relationship manager"
-        >
+        <StyledIconCardItem minWidth="100px" text="Dedicated relationship manager">
           <img src={manager} width={80} height={80} alt="manager" />
         </StyledIconCardItem>
         <StyledIconCardItem minWidth="100px" text="24/7 customer service">

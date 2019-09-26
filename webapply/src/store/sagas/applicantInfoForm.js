@@ -1,12 +1,6 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
-import {
-  APPLICANT_INFO_FORM,
-  applicantInfoFormSuccess
-} from "../actions/applicantInfoForm";
-import {
-  applicationStatusProceed,
-  applicationStatusStop
-} from "./../actions/applicationStatus";
+import { APPLICANT_INFO_FORM, applicantInfoFormSuccess } from "../actions/applicantInfoForm";
+import { applicationStatusProceed, applicationStatusStop } from "./../actions/applicationStatus";
 import { history } from "./../configureStore";
 import * as appConfigActions from "../actions/appConfig";
 import { setInputsErrors } from "./../actions/serverValidation";
@@ -19,10 +13,7 @@ function* applicantInfoFormSaga() {
     const state = yield select();
     const {
       data: { prospectId, preScreening }
-    } = yield call(
-      apiClient.prospect.create,
-      appConfigSelectors.getProspect(state)
-    );
+    } = yield call(apiClient.prospect.create, appConfigSelectors.getProspect(state));
 
     if (preScreening.statusOverAll === "stop") {
       yield put(applicationStatusStop(preScreening.screeningResults));

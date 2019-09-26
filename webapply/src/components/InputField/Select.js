@@ -67,11 +67,7 @@ const CustomSelect = props => {
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <InputLabel
-        ref={inputLabel}
-        htmlFor={id}
-        classes={{ shrink: classes.inputLabel }}
-      >
+      <InputLabel ref={inputLabel} htmlFor={id} classes={{ shrink: classes.inputLabel }}>
         {label}
       </InputLabel>
       <Select

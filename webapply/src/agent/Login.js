@@ -45,9 +45,7 @@ class Login extends React.Component {
                 // see implementation ReCaptcha handling in webapply/src/containers/ApplicantInfo.js
                 console.log("ReCaptcha onVerify callback:", token)
               }
-              onExpired={() =>
-                console.log("ReCaptcha onExpired callback (2 min)")
-              }
+              onExpired={() => console.log("ReCaptcha onExpired callback (2 min)")}
               onError={() => console.log("ReCaptcha onError callback")}
             />
           </ErrorBoundary>

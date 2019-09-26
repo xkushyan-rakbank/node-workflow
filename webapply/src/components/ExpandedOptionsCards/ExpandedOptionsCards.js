@@ -7,11 +7,7 @@ const mockData = [
     optionList: [
       {
         text: "One stop business solution",
-        items: [
-          "Automated accounting",
-          "Smart invoicing",
-          "Integrated VAT solution"
-        ]
+        items: ["Automated accounting", "Smart invoicing", "Integrated VAT solution"]
       },
       { text: "Business insurance" },
       { text: "Host of other banking benefits" }
@@ -25,11 +21,7 @@ const mockData = [
     optionList: [
       {
         text: "One stop business solution",
-        items: [
-          "Automated accounting",
-          "Smart invoicing",
-          "Integrated VAT solution"
-        ]
+        items: ["Automated accounting", "Smart invoicing", "Integrated VAT solution"]
       },
       { text: "Business insurance" },
       { text: "Host of other banking benefits" }

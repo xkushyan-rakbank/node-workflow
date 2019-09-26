@@ -54,70 +54,26 @@ class App extends React.Component {
         <ConnectedRouter history={history}>
           <FormLayout>
             <Switch>
-              <Route
-                exact
-                path={routes.accountsComparison}
-                component={AccountsComparison}
-              />
-              <Route
-                exact
-                path={routes.applicantInfo}
-                component={ApplicantInfo}
-              />
+              <Route exact path={routes.accountsComparison} component={AccountsComparison} />
+              <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
               <Route exact path={routes.verifyOtp} component={FormConfirm} />
               <Route exact path={routes.companyInfo} component={AboutCompany} />
               <Route exact path={routes.login} component={Login} />
-              <Route
-                exact
-                path={routes.searchProspect}
-                component={SearchProspect}
-              />
-              <Route
-                exact
-                path={routes.stakeholdersInfo}
-                component={CompanyStakeholders}
-              />
-              <Route
-                exact
-                path={routes.finalQuestions}
-                component={FinalQuestions}
-              />
-              <Route
-                exact
-                path={routes.uploadDocuments}
-                component={UploadDocuments}
-              />
-              <Route
-                exact
-                path={routes.selectServices}
-                component={SelectServices}
-              />
+              <Route exact path={routes.searchProspect} component={SearchProspect} />
+              <Route exact path={routes.stakeholdersInfo} component={CompanyStakeholders} />
+              <Route exact path={routes.finalQuestions} component={FinalQuestions} />
+              <Route exact path={routes.uploadDocuments} component={UploadDocuments} />
+              <Route exact path={routes.selectServices} component={SelectServices} />
 
-              <Route
-                exact
-                path={routes.applicationOverview}
-                component={ApplicationOverview}
-              />
-              <Route
-                exact
-                path={routes.detailedAccount}
-                component={DetailedAccount}
-              />
-              <Route
-                exact
-                path={routes.comeBackLogin}
-                component={ComeBackLogin}
-              />
+              <Route exact path={routes.applicationOverview} component={ApplicationOverview} />
+              <Route exact path={routes.detailedAccount} component={DetailedAccount} />
+              <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
               <Route
                 exact
                 path={routes.comeBackLoginVerification}
                 component={ComeBackVerification}
               />
-              <Route
-                exact
-                path={routes.MyApplications}
-                component={MyApplications}
-              />
+              <Route exact path={routes.MyApplications} component={MyApplications} />
               <Route path="*" />
             </Switch>
           </FormLayout>

@@ -7,8 +7,7 @@ export const getServerValidation = state => state.serverValidation;
  * @param {Store} state
  * @return {{String: ServerValidationInputData}}
  */
-export const getServerValidationInputs = state =>
-  getServerValidation(state).inputs;
+export const getServerValidationInputs = state => getServerValidation(state).inputs;
 /**
  * @param {Store} state
  * @param {String} path

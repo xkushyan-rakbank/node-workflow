@@ -82,9 +82,7 @@ class PureSelect extends React.Component {
         name: this.props.name
       });
     }
-    this.isSelectRequired()
-      ? this.setRequiredForInput()
-      : this.unsetRequiredForInput();
+    this.isSelectRequired() ? this.setRequiredForInput() : this.unsetRequiredForInput();
 
     // uncomitted when PureSelect component will replace Select in project
     // window.addEventListener("resize", () => console.log(this.inputLabel));
@@ -97,9 +95,7 @@ class PureSelect extends React.Component {
     if (prevProps.required !== this.props.required && !this.props.required) {
       this.setState({ fieldErrors: {} });
     }
-    this.isSelectRequired()
-      ? this.setRequiredForInput()
-      : this.unsetRequiredForInput();
+    this.isSelectRequired() ? this.setRequiredForInput() : this.unsetRequiredForInput();
   }
 
   isSelectRequired() {
@@ -188,9 +184,7 @@ class PureSelect extends React.Component {
     const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
     const inputProps = this.composeInputProps();
-    const className = combinedSelect
-      ? classes.selectFieldCombined
-      : classes.selectFieldBasic;
+    const className = combinedSelect ? classes.selectFieldCombined : classes.selectFieldBasic;
 
     return (
       <FormControl
@@ -219,9 +213,7 @@ class PureSelect extends React.Component {
           onChange={this.updateField}
           onBlur={this.handleBlur}
         >
-          {!isNil(resetValue) && (
-            <MenuItem value={resetValue}>{resetLabel}</MenuItem>
-          )}
+          {!isNil(resetValue) && <MenuItem value={resetValue}>{resetLabel}</MenuItem>}
           {config.datalist &&
             config.datalist
               .filter(item => !excludeValues.includes(item.value))
@@ -233,10 +225,7 @@ class PureSelect extends React.Component {
         </Select>
         {!!config.title && <InfoTitle title={config.title} />}
         {isError && (
-          <ErrorMessage
-            error={fieldErrors.error}
-            multiLineError={fieldErrors.multiLineError}
-          />
+          <ErrorMessage error={fieldErrors.error} multiLineError={fieldErrors.multiLineError} />
         )}
       </FormControl>
     );

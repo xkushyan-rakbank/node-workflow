@@ -83,9 +83,7 @@ class CompanyDocuments extends Component {
       <div className={this.props.classes.container}>
         <header className={this.props.classes.header}>
           <div className={this.props.classes.companyIconWrap}>
-            {this.props.icon || (
-              <img src={companyIconSvg} alt="companyIconSvg" />
-            )}
+            {this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}
           </div>
           <div className={this.props.classes.contentBox}>
             <h3 className={this.props.classes.label}>Designit Arabia</h3>

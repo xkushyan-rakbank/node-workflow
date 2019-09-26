@@ -45,16 +45,9 @@ class SignatoryContactInformationForm extends Component {
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle
-          title="Preferred contact information"
-          className={this.props.classes.title}
-        />
+        <SectionTitle title="Preferred contact information" className={this.props.classes.title} />
 
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             <TextInput
               id="SigCont.primaryMobileNo"
