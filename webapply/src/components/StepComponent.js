@@ -47,11 +47,7 @@ const StepComponent = props => {
   const renderTitle = () => {
     if (active) {
       return (
-        <SectionTitle
-          title={props.title}
-          subTitle={props.subTitle}
-          className={classes.title}
-        />
+        <SectionTitle title={props.title} subTitle={props.subTitle} className={classes.title} />
       );
     }
     return filled ? (

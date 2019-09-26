@@ -21,10 +21,17 @@ const style = {
     "&:last-child": {
       marginRight: 0
     },
-    "@media only screen and (max-width: 1420px)": {
-      padding: "18px 12px 20px",
-      width: 237,
-      height: 366
+    "@media (max-width: 1420px), (max-height: 900px)": {
+      padding: "9px 12px 10px",
+      width: "100%",
+      height: "auto",
+      margin: "10px 19px 0 0px",
+      "&:last-child": {
+        marginRight: 20
+      }
+    },
+    "@media only screen and (max-width: 1220px)": {
+      padding: "3px 12px 10px"
     }
   },
   header: {
@@ -39,43 +46,75 @@ const style = {
       display: "block",
       marginTop: 26
     },
-    "@media only screen and (max-width: 1420px)": {
-      fontSize: "18px",
+    "@media (max-width: 1420px), (max-height: 900px)": {
+      flexDirection: "row",
       "& span": {
-        marginTop: "13px",
-        fontSize: "13px"
+        margin: "0 0 0 10px"
       },
       "& img": {
         width: 40,
         height: 40
+      }
+    },
+    "@media only screen and (max-width: 1220px)": {
+      "& img": {
+        display: "none"
+      },
+      "& span": {
+        margin: "0"
       }
     }
   },
   divider: {
     border: "solid 1px #e8e8e8",
     margin: "30px auto 0",
-    "@media only screen and (max-width: 1420px)": {
-      margin: "15px auto 0"
+    "@media (max-width: 1420px), (max-height: 900px)": {
+      margin: "0 auto 0"
     }
   },
   differences: {
     margin: "28px 0 0 0",
     paddingLeft: "20px",
+    "@media (max-width: 1420px), (max-height: 900px)": {
+      display: "Flex",
+      flexWrap: "wrap",
+      flexDirection: "row",
+      margin: "0 0 5px 0",
+      paddingLeft: 0
+    },
+    "@media only screen and (max-width: 1100px)": {
+      paddingLeft: "20px"
+    },
     "& li": {
       fontSize: "16px",
       color: "#373737",
       listStyle: "none",
       position: "relative",
-      "@media only screen and (max-width: 1420px)": {
-        fontSize: "13px"
+      "@media (max-width: 1420px), (max-height: 900px)": {
+        display: "flex",
+        marginTop: 10,
+        marginRight: 10
       },
       "& img": {
         position: "absolute",
         left: -20,
-        top: 3
+        top: 3,
+        "@media (max-width: 1420px), (max-height: 900px)": {
+          position: "inherit",
+          left: 0,
+          top: 0
+        },
+        "@media only screen and (max-width: 1100px)": {
+          position: "absolute",
+          left: -20,
+          top: 3
+        }
       },
       "& + li": {
-        marginTop: 16
+        marginTop: 16,
+        "@media (max-width: 1420px), (max-height: 900px)": {
+          marginTop: 10
+        }
       }
     }
   },

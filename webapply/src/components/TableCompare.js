@@ -21,6 +21,13 @@ const style = {
     boxShadow: "none",
     position: "relative"
   },
+  tableContainer: {
+    minWidth: "780px",
+    position: "relative",
+    "@media only screen and (max-height: 900px)": {
+      maxHeight: "400px"
+    }
+  },
   tableHead: {
     backgroundColor: "#f7f8f9"
   },
@@ -65,6 +72,38 @@ const style = {
     maxWidth: "180px",
     paddingLeft: "5px",
     paddingRight: "0"
+  },
+  selectedAccountContainer: {
+    position: "absolute",
+    zIndex: "1",
+    top: "-15px",
+    height: "calc(100% + 30px)",
+    "@media only screen and (max-height: 900px)": {
+      height: "calc(100% + 166px)"
+    },
+    borderRadius: "8px",
+    boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
+    border: "solid 1px #e8e8e8"
+  },
+  containedButton: {
+    boxShadow: "none",
+    backgroundColor: "#fff",
+    height: "auto",
+    border: "1px solid #373737",
+    padding: "3px 0",
+    width: "120px",
+    "&:hover": {
+      backgroundColor: "#000",
+      "& span": {
+        color: "#fff"
+      }
+    }
+  },
+  containedButtonLabelStyle: {
+    color: "#373737",
+    fontSize: "14px",
+    textAlign: "center",
+    display: "block"
   }
 };
 
@@ -85,30 +124,10 @@ const mockDataRows = [
     { text: "AED 50" },
     { text: "AED 250" }
   ),
-  createData(
-    "Monthly Maintenance fees",
-    { text: "AED 99" },
-    { text: "AED 50" },
-    { text: "Zero" }
-  ),
-  createData(
-    "Free Cheque book every year",
-    { ic: checkIc },
-    { ic: checkIc },
-    { ic: checkIc }
-  ),
-  createData(
-    "Free Teller Transactions",
-    { text: "-" },
-    { text: "-" },
-    { ic: checkIc }
-  ),
-  createData(
-    "Lifestyle benefits",
-    { text: "-" },
-    { text: "-" },
-    { ic: checkIc }
-  ),
+  createData("Monthly Maintenance fees", { text: "AED 99" }, { text: "AED 50" }, { text: "Zero" }),
+  createData("Free Cheque book every year", { ic: checkIc }, { ic: checkIc }, { ic: checkIc }),
+  createData("Free Teller Transactions", { text: "-" }, { text: "-" }, { ic: checkIc }),
+  createData("Lifestyle benefits", { text: "-" }, { text: "-" }, { ic: checkIc }),
   createData(
     "RAKvalue Package(PLUS and MAX)",
     { text: "Mandatory", info: "(PLUS - AED 49)" },
@@ -165,7 +184,7 @@ const StyledTableCell = withStyles(() => ({
       color: "#888"
     },
     "& button": {
-      marginTop: "20px"
+      marginTop: "5px"
     },
     "&:hover": {
       "& button": {
@@ -176,59 +195,14 @@ const StyledTableCell = withStyles(() => ({
   }
 }))(TableCell);
 
-const StyledContainedButton = props => {
-  const Button = withStyles(() => ({
-    buttonStyle: {
-      boxShadow: "none",
-      backgroundColor: "#fff",
-      height: "auto",
-      border: "1px solid #373737",
-      padding: "3px 0",
-      width: props.width || "120px",
-      "&:hover": {
-        backgroundColor: "#000",
-        "& span": {
-          color: "#fff"
-        }
-      }
-    },
-    labelStyle: {
-      color: "#373737",
-      fontSize: "14px",
-      textAlign: "center",
-      display: "block"
-    }
-  }))(ContainedButton);
-
-  return <Button {...props} />;
-};
-
-const SelectedAccountContainer = ({ offset, width }) => {
-  return (
-    <Paper
-      style={{
-        position: "absolute",
-        zIndex: "1",
-        left: `${offset}px`,
-        width: width - 5 || "195px",
-        top: "-15px",
-        height: "calc(100% + 30px)",
-        borderRadius: "8px",
-        boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
-        border: "solid 1px #e8e8e8"
-      }}
-    />
-  );
-};
-
 class TableCompare extends React.Component {
   state = {
     offset: 380
   };
 
-  onHoverSection = e => {
-    if (e.target.tagName === "TD") {
-      const { offsetLeft, clientWidth } = e.target;
+  onHoverSection = event => {
+    if (event.target.tagName === "TD") {
+      const { offsetLeft, clientWidth } = event.target;
       this.setState({
         offset: offsetLeft,
         width: clientWidth
@@ -247,21 +221,23 @@ class TableCompare extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { offset } = this.state;
 
     return (
       <Paper classes={{ root: classes.paperRoot }}>
         <div style={{ overflowX: "auto" }}>
-          <div style={{ minWidth: "780px", position: "relative" }}>
-            <SelectedAccountContainer
-              offset={this.state.offset}
-              width={this.state.width}
+          <div className={classes.tableContainer} style={{}}>
+            <Paper
+              classes={{ root: classes.selectedAccountContainer }}
+              style={{
+                left: `${offset}px`,
+                width: this.state.width - 5 || "195px"
+              }}
             />
             <Table classes={{ root: classes.tableRoot }}>
               <TableHead style={{ position: "relative" }}>
                 <TableRow classes={{ head: classes.tableHead }}>
-                  <StyledTableHeader style={{ width: 180 }}>
-                    {" "}
-                  </StyledTableHeader>
+                  <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
                   <StyledTableHeader>RAKStarter</StyledTableHeader>
                   <StyledTableHeader>Current Account</StyledTableHeader>
                   <StyledTableHeader>RAKelite</StyledTableHeader>
@@ -287,9 +263,7 @@ class TableCompare extends React.Component {
                     <StyledTableCell>
                       <span>{row.currentAccount.text}</span>
                       <span>{row.currentAccount.info}</span>
-                      {row.currentAccount.ic && (
-                        <img src={row.currentAccount.ic} alt="" />
-                      )}
+                      {row.currentAccount.ic && <img src={row.currentAccount.ic} alt="" />}
                     </StyledTableCell>
                     <StyledTableCell>
                       <span>{row.elite.text}</span>
@@ -304,21 +278,33 @@ class TableCompare extends React.Component {
                     {" "}
                   </TableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton
+                    <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("RAKStarter")}
+                      classes={{
+                        buttonStyle: classes.containedButton,
+                        labelStyle: classes.containedButtonLabelStyle
+                      }}
                     />
                   </StyledTableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton
+                    <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("Current Account")}
+                      classes={{
+                        buttonStyle: classes.containedButton,
+                        labelStyle: classes.containedButtonLabelStyle
+                      }}
                     />
                   </StyledTableCell>
                   <StyledTableCell onMouseEnter={this.onHoverSection}>
-                    <StyledContainedButton
+                    <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("RAKelite")}
+                      classes={{
+                        buttonStyle: classes.containedButton,
+                        labelStyle: classes.containedButtonLabelStyle
+                      }}
                     />
                   </StyledTableCell>
                 </StyledTableRow>

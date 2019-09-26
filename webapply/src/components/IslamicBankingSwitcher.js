@@ -38,11 +38,7 @@ const styles = {
     color: "#ffffff"
   }
 };
-const IslamicBankingSwitcher = ({
-  classes,
-  updateProspect,
-  applicationInfo
-}) => {
+const IslamicBankingSwitcher = ({ classes, updateProspect, applicationInfo }) => {
   const handleClick = islamicBanking =>
     updateProspect({
       value: islamicBanking,

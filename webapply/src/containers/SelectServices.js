@@ -21,13 +21,11 @@ class SelectServices extends React.Component {
       <>
         <h2>Services for your account</h2>
         <p className="formDescription">
-          Explanation text goes here. One to three short sentences maximum. This
-          is the third sentence.
+          Explanation text goes here. One to three short sentences maximum. This is the third
+          sentence.
         </p>
 
-        <ServicesStepper
-          goToFinish={() => this.setState({ canSubmit: true })}
-        />
+        <ServicesStepper goToFinish={() => this.setState({ canSubmit: true })} />
       </>
     );
   }

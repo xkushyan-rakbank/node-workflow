@@ -137,9 +137,7 @@ class UploadDocuments extends Component {
       () => {
         let config = {
           onUploadProgress: ProgressEvent => {
-            let progress = Math.round(
-              (ProgressEvent.loaded / ProgressEvent.total) * 100
-            );
+            let progress = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100);
             let element = document.getElementById("myprogressBar");
             let progressPercentage = document.getElementById("progressStatus");
             let width = progress;
@@ -148,11 +146,7 @@ class UploadDocuments extends Component {
           }
         };
         const fd = new FormData();
-        fd.append(
-          "file",
-          this.state.selectedFile,
-          this.state.selectedFile.name
-        );
+        fd.append("file", this.state.selectedFile, this.state.selectedFile.name);
         axios
           .post(
             "http://10.86.251.138:8080/docUploader/banks/RAK/prospects/700/documents",
@@ -187,13 +181,9 @@ class UploadDocuments extends Component {
         {this.state.enableUpload ? (
           <>
             <div className={this.props.classes.contentBox}>
-              <p className={this.props.classes.uploadedFileName}>
-                {docType.documentType}
-              </p>
+              <p className={this.props.classes.uploadedFileName}>{docType.documentType}</p>
               {this.state.fileError ? (
-                <p className={this.props.classes.ErrorExplanation}>
-                  Error explanation goes here
-                </p>
+                <p className={this.props.classes.ErrorExplanation}>Error explanation goes here</p>
               ) : (
                 <p className={this.props.classes.fileSizeMessage}>
                   Supported formats are PDF, JPG and PNG | 3MB maximum size
@@ -218,11 +208,7 @@ class UploadDocuments extends Component {
           </>
         ) : (
           <>
-            <div>
-              {this.props.icon || (
-                <img src={companyIconSvg} alt="companyIconSvg" />
-              )}
-            </div>
+            <div>{this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
             <div className={this.props.classes.contentBox}>
               <div className={this.props.classes.uploadFileName}>
                 {" "}
@@ -236,10 +222,7 @@ class UploadDocuments extends Component {
                   <div id="myprogressBar"></div>
                 </div>
                 <div id="progressStatus"></div>
-                <div
-                  className={this.props.classes.cancel}
-                  onClick={this.fileUploadCancel}
-                >
+                <div className={this.props.classes.cancel} onClick={this.fileUploadCancel}>
                   X
                 </div>
               </div>

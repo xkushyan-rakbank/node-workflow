@@ -17,7 +17,6 @@
     "lint-staged": "^9.2.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.12.0",
-    "prettier": "^1.18.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
@@ -28,8 +27,9 @@
     "redux-saga": "^1.0.5"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css,scss,md}": [
-      "prettier --write",
+    "src/**/*.{js,jsx}": [
+      "prettier --print-width 100 --write",
+      "eslint --max-warnings=0",
       "git add"
     ]
   },
@@ -38,11 +38,20 @@
     "build": "react-scripts build",
     "server:mock": "cd ../wiremock/ && java -jar wiremock-standalone-2.24.1.jar",
     "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
+    "eslint": "eslint src/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "prettier": {
+    "printWidth": 100
   },
   "browserslist": {
     "production": [
@@ -61,5 +70,14 @@
       "pre-commit": "lint-staged"
     }
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "1.18.2"
+  }
 }

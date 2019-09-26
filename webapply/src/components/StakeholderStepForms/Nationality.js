@@ -6,10 +6,7 @@ import Select from "../InputField/PureSelect";
 import Input from "../InputField/TextInput";
 import Checkbox from "../InputField/RefactoredCheckbox";
 import UICheckbox from "../InputField/Checkbox";
-import {
-  getInputNameById,
-  getInputValueById
-} from "../../store/selectors/input";
+import { getInputNameById, getInputValueById } from "../../store/selectors/input";
 import { updateField } from "../../store/actions/appConfig";
 
 const styles = {
@@ -87,21 +84,14 @@ class Nationality extends React.Component {
             <Checkbox id="SigKycd.dualCitizenship" indexes={[index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <Input
-              key={index}
-              id="SigKycdPspd.passportNumber"
-              indexes={[index, 0]}
-            />
+            <Input key={index} id="SigKycdPspd.passportNumber" indexes={[index, 0]} />
             <Checkbox id="SigKycdPspd.diplomatPassport" indexes={[index, 0]} />
           </Grid>
           {this.props.isDualCitizenship && (
             <>
               <Grid item sm={12} className={classes.divider} />
               <Grid item md={6} sm={12}>
-                <Select
-                  id="SigKycd.dualCitizenshipCountry"
-                  indexes={[index, 0]}
-                />
+                <Select id="SigKycd.dualCitizenshipCountry" indexes={[index, 0]} />
                 <UICheckbox
                   label="This person has a third citizenship"
                   value={this.state.isHasThirdCitizenship}
@@ -111,15 +101,8 @@ class Nationality extends React.Component {
                 />
               </Grid>
               <Grid item md={6} sm={12}>
-                <Input
-                  key={index}
-                  id="SigKycdPspd.passportNumber"
-                  indexes={[index, 1]}
-                />
-                <Checkbox
-                  id="SigKycdPspd.diplomatPassport"
-                  indexes={[index, 1]}
-                />
+                <Input key={index} id="SigKycdPspd.passportNumber" indexes={[index, 1]} />
+                <Checkbox id="SigKycdPspd.diplomatPassport" indexes={[index, 1]} />
               </Grid>
             </>
           )}
@@ -127,21 +110,11 @@ class Nationality extends React.Component {
             <>
               <Grid item sm={12} className={classes.divider} />
               <Grid item md={6} sm={12}>
-                <Select
-                  id="SigKycd.dualCitizenshipCountry"
-                  indexes={[index, 1]}
-                />
+                <Select id="SigKycd.dualCitizenshipCountry" indexes={[index, 1]} />
               </Grid>
               <Grid item md={6} sm={12}>
-                <Input
-                  key={index}
-                  id="SigKycdPspd.passportNumber"
-                  indexes={[index, 2]}
-                />
-                <Checkbox
-                  id="SigKycdPspd.diplomatPassport"
-                  indexes={[index, 2]}
-                />
+                <Input key={index} id="SigKycdPspd.passportNumber" indexes={[index, 2]} />
+                <Checkbox id="SigKycdPspd.diplomatPassport" indexes={[index, 2]} />
               </Grid>
             </>
           )}
@@ -151,9 +124,7 @@ class Nationality extends React.Component {
           <Grid item md={6} sm={12}>
             <UICheckbox
               value={this.state.isHasSelfGovtPosition}
-              onChange={({ target }) =>
-                this.setState({ isHasSelfGovtPosition: target.checked })
-              }
+              onChange={({ target }) => this.setState({ isHasSelfGovtPosition: target.checked })}
               label="This person has held a position at the government or in a government-owned company/organisation in the last 5 years"
             />
           </Grid>
@@ -187,39 +158,25 @@ class Nationality extends React.Component {
 
 const mapStateToProps = (state, { index }) => ({
   // temp - work only with wire mock data
-  isDualCitizenship: getInputValueById(state, "SigKycd.dualCitizenship", [
-    index
+  isDualCitizenship: getInputValueById(state, "SigKycd.dualCitizenship", [index]),
+  firstDualCitizenshipCountryInputName: getInputNameById(state, "SigKycd.dualCitizenshipCountry", [
+    index,
+    0
   ]),
-  firstDualCitizenshipCountryInputName: getInputNameById(
-    state,
-    "SigKycd.dualCitizenshipCountry",
-    [index, 0]
-  ),
-  secondPassportNumberInputName: getInputNameById(
-    state,
-    "SigKycdPspd.passportNumber",
-    [index, 1]
-  ),
-  secondDiplomatPassportInputName: getInputNameById(
-    state,
-    "SigKycdPspd.diplomatPassport",
-    [index, 1]
-  ),
-  secondDualCitizenshipCountryInputName: getInputNameById(
-    state,
-    "SigKycd.dualCitizenshipCountry",
-    [index, 1]
-  ),
-  thirdPassportNumberInputName: getInputNameById(
-    state,
-    "SigKycdPspd.passportNumber",
-    [index, 2]
-  ),
-  thirdDiplomatPassportInputName: getInputNameById(
-    state,
-    "SigKycdPspd.diplomatPassport",
-    [index, 2]
-  )
+  secondPassportNumberInputName: getInputNameById(state, "SigKycdPspd.passportNumber", [index, 1]),
+  secondDiplomatPassportInputName: getInputNameById(state, "SigKycdPspd.diplomatPassport", [
+    index,
+    1
+  ]),
+  secondDualCitizenshipCountryInputName: getInputNameById(state, "SigKycd.dualCitizenshipCountry", [
+    index,
+    1
+  ]),
+  thirdPassportNumberInputName: getInputNameById(state, "SigKycdPspd.passportNumber", [index, 2]),
+  thirdDiplomatPassportInputName: getInputNameById(state, "SigKycdPspd.diplomatPassport", [
+    index,
+    2
+  ])
 });
 
 const mapDispatchToProps = {

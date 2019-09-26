@@ -16,10 +16,7 @@ const style = {
 const LinkButton = props => {
   const { classes, clickHandler, title = "Edit", className } = props;
   return (
-    <button
-      className={cx(classes.editButton, className)}
-      onClick={clickHandler}
-    >
+    <button className={cx(classes.editButton, className)} onClick={clickHandler}>
       {title}
     </button>
   );

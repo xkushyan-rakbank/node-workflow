@@ -78,8 +78,7 @@ const style = {
 const accountInfo = {
   RAKStarter: {
     title: "RAKstarter account",
-    subtitle:
-      "A new zero balance account, for the budding entrepreneurs out there"
+    subtitle: "A new zero balance account, for the budding entrepreneurs out there"
   },
   "Current Account": {
     title: "Business Current Account",
@@ -97,14 +96,10 @@ const AccountInfo = ({ classes, accountType, history }) => {
   const isApplicationOverview = pathname === "/ApplicationOverview";
   return (
     <div className={classes.contentContainer}>
-      {accountType ? (
+      {accountType && pathname !== "/ApplicationOverview" ? (
         <>
           <div>
-            <Typography
-              variant="h2"
-              component="h2"
-              classes={{ root: classes.sectionTitle }}
-            >
+            <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
               {accountInfo[accountType].title}
             </Typography>
             <Typography
@@ -122,11 +117,7 @@ const AccountInfo = ({ classes, accountType, history }) => {
           />
         </>
       ) : (
-        <Typography
-          variant="h2"
-          component="h2"
-          classes={{ root: classes.sectionTitle }}
-        >
+        <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
           {isApplicationOverview
             ? "Opening an account has never been this simple."
             : "All businesses start with an account. Get yours now."}
@@ -185,9 +176,7 @@ class FormNavigation extends React.Component {
     const {
       location: { pathname }
     } = this.props;
-    return formStepper.find(item =>
-      [item.path, item.relatedPath].some(path => pathname === path)
-    );
+    return formStepper.find(item => [item.path, item.relatedPath].some(path => pathname === path));
   }
 
   updateStepState() {
@@ -211,11 +200,7 @@ class FormNavigation extends React.Component {
     return (
       <div className={classes.formNav} style={{ backgroundImage }}>
         {showAccountInfo ? (
-          <AccountInfo
-            classes={classes}
-            accountType={accountType}
-            history={history}
-          />
+          <AccountInfo classes={classes} accountType={accountType} history={history} />
         ) : (
           <FormStepper step={step} path={location.pathname} />
         )}

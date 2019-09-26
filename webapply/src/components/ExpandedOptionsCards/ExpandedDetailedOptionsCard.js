@@ -153,13 +153,7 @@ const ExpandedOptionsDetailedCard = ({
       <ul className={classes.options}>
         {optionList.map(option => (
           <li key={option.text}>
-            <img
-              className={classes.listIcon}
-              src={check}
-              alt="check"
-              height={16}
-              width={16}
-            />
+            <img className={classes.listIcon} src={check} alt="check" height={16} width={16} />
             {option.text}
             {option.items && (
               <ul className={classes.nestedOptions}>

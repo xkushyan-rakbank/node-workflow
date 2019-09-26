@@ -26,19 +26,11 @@ const StatusLoader = props => {
   const { loading = true } = props;
   const loadingProcess = (
     <>
-      <CircularProgress
-        size="16px"
-        className={props.classes.spinner}
-        thickness={5}
-      />
+      <CircularProgress size="16px" className={props.classes.spinner} thickness={5} />
       Saving...
     </>
   );
-  return (
-    <div className={props.classes.wrapper}>
-      {loading ? loadingProcess : "Saved"}
-    </div>
-  );
+  return <div className={props.classes.wrapper}>{loading ? loadingProcess : "Saved"}</div>;
 };
 
 export default withStyles(styles)(StatusLoader);

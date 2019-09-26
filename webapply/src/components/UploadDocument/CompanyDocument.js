@@ -85,24 +85,20 @@ class CompanyDocuments extends Component {
     let companyDocument;
     const companyName = this.props.companyName;
     if (companyDocuments.companyDocuments) {
-      companyDocument = companyDocuments.companyDocuments.map(
-        (companyDoc, index) => {
-          return (
-            <>
-              <UploadDocument companyDoc={companyDoc} />
-            </>
-          );
-        }
-      );
+      companyDocument = companyDocuments.companyDocuments.map((companyDoc, index) => {
+        return (
+          <>
+            <UploadDocument companyDoc={companyDoc} />
+          </>
+        );
+      });
     }
 
     return (
       <div className={this.props.classes.container}>
         <header className={this.props.classes.header}>
           <div className={this.props.classes.companyIconWrap}>
-            {this.props.icon || (
-              <img src={companyIconSvg} alt="companyIconSvg" />
-            )}
+            {this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}
           </div>
           <div className={this.props.classes.contentBox}>
             <h3 className={this.props.classes.label}>{companyName}</h3>
@@ -117,8 +113,7 @@ class CompanyDocuments extends Component {
 
 const mapStateToProps = state => {
   return {
-    companyName:
-      getInputValueById(state, "Org.companyName") || "Designit Arabia",
+    companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia",
     uploadedDoc: state.uploadedDocs.docs
   };
 };

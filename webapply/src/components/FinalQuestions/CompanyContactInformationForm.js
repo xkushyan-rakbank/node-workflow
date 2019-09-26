@@ -48,29 +48,18 @@ class CompanyContactInformationForm extends Component {
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle
-          title="Preferred contact information"
-          className={this.props.classes.title}
-        />
+        <SectionTitle title="Preferred contact information" className={this.props.classes.title} />
 
         <Grid container>
           <InfoTitle title="Heads up! We can only send chequebooks if you use a phone number from the UAE." />
         </Grid>
 
-        <Grid
-          container
-          spacing={3}
-          className={this.props.classes.flexContainer}
-        >
+        <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             <TextInput
               id="OrgCont.primaryMobileNo"
               select={
-                <PureSelect
-                  id="OrgCont.primaryMobCountryCode"
-                  defaultValue="USA"
-                  combinedSelect
-                />
+                <PureSelect id="OrgCont.primaryMobCountryCode" defaultValue="USA" combinedSelect />
               }
             />
             {this.state.secondaryPhoneNumber && (
@@ -92,10 +81,7 @@ class CompanyContactInformationForm extends Component {
         </Grid>
 
         {!this.state.secondaryPhoneNumber && (
-          <AddButton
-            onClick={this.handleSecondaryPhoneBtnClick}
-            title="Add a landline number"
-          />
+          <AddButton onClick={this.handleSecondaryPhoneBtnClick} title="Add a landline number" />
         )}
 
         <div className={this.props.classes.controlsWrapper}>

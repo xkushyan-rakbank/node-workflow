@@ -24,10 +24,7 @@ class ReCaptchaNotRobot extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.reCaptchaId = this.props.grecaptcha.render(
-      this.rootRef.current,
-      this.options
-    );
+    this.reCaptchaId = this.props.grecaptcha.render(this.rootRef.current, this.options);
   }
 
   componentWillUnmount() {

@@ -7,6 +7,7 @@ import serverValidation from "./serverValidation";
 import aboutCompany from "./aboutCompany";
 import applicationStatus from "./applicationStatus";
 import otp from "./otp";
+import login from "./loginForm";
 import authReducer from "./authReducers";
 import docUploadReducer from "./docUploadReducer";
 
@@ -28,6 +29,7 @@ const reducers = history =>
     applicantInfoForm,
     aboutCompany,
     applicationStatus,
+    login,
     users: authReducer,
     uploadedDocs: docUploadReducer
   });

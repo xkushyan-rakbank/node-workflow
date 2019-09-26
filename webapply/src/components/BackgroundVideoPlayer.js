@@ -68,28 +68,13 @@ class BackgroundVideoPlayer extends React.Component {
   render() {
     const { classes, nextElementPosition, videoUrl, handleClick } = this.props;
     const video = (
-      <div
-        style={{ top: `-${100 * nextElementPosition}vh` }}
-        className={classes.container}
-      >
-        <video
-          autoPlay
-          loop
-          muted
-          id="video-background"
-          className={classes.video}
-          key={videoUrl}
-        >
+      <div style={{ top: `-${100 * nextElementPosition}vh` }} className={classes.container}>
+        <video autoPlay loop muted id="video-background" className={classes.video} key={videoUrl}>
           <source src={videoUrl} />
         </video>
 
         <div className={classes.buttonContainer}>
-          <Fab
-            variant="extended"
-            className={classes.scrollButton}
-            name={1}
-            onClick={handleClick}
-          >
+          <Fab variant="extended" className={classes.scrollButton} name={1} onClick={handleClick}>
             Read more
             <ExpandMoreIcon classes={{ root: classes.expandMoreIc }} />
           </Fab>

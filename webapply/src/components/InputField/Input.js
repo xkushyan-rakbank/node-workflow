@@ -16,16 +16,7 @@ const style = {
 };
 
 const Input = props => {
-  const {
-    field,
-    type,
-    label,
-    placeholder,
-    infoTitle,
-    classes,
-    required = false,
-    ...rest
-  } = props;
+  const { field, type, label, placeholder, infoTitle, classes, required = false, ...rest } = props;
 
   return (
     <FormControl className="formControl">
@@ -35,7 +26,7 @@ const Input = props => {
         required={required}
         type={type}
         placeholder={placeholder}
-        InputLabelProps={{ shrink: true, required: required }}
+        InputLabelProps={{ shrink: true, required }}
         label={label}
         variant="outlined"
         className={classes.textField}

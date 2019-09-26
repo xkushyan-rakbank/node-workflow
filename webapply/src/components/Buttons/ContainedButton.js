@@ -61,11 +61,7 @@ const ContainedButton = props => {
     >
       {label}
       {withRightArrow && (
-        <img
-          src={rightArrowWhite}
-          alt="rightArrowWhite"
-          className={classes.icon}
-        />
+        <img src={rightArrowWhite} alt="rightArrowWhite" className={classes.icon} />
       )}
     </Button>
   );

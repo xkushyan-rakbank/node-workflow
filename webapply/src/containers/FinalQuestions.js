@@ -29,9 +29,8 @@ class FinalQuestions extends React.Component {
       <>
         <h2>Final questions</h2>
         <p className="formDescription">
-          This final section is required by law, to help us understand the
-          background of the company and that of the stakeholders with signatory
-          rights
+          This final section is required by law, to help us understand the background of the company
+          and that of the stakeholders with signatory rights
         </p>
         <div className={this.props.classes.sectionContainer}>
           <SectionTitle
@@ -46,13 +45,7 @@ class FinalQuestions extends React.Component {
             className={this.props.classes.title}
           />
           {this.props.signatories.map((item, index) => {
-            return (
-              <SignatorySummaryCard
-                key={index}
-                signatory={item}
-                index={index}
-              />
-            );
+            return <SignatorySummaryCard key={index} signatory={item} index={index} />;
           })}
         </div>
         <div className="linkContainer">

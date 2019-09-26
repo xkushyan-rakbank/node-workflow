@@ -40,9 +40,7 @@ const style = {
 
 const FormNavigationLink = props => {
   const { classes, title, activeStep, filled } = props;
-  const activeClass = activeStep
-    ? cx(classes.stepItem, classes.activeStepItem)
-    : classes.stepItem;
+  const activeClass = activeStep ? cx(classes.stepItem, classes.activeStepItem) : classes.stepItem;
 
   return (
     <li className={activeClass}>

@@ -38,12 +38,8 @@ const FilledStakeholderCard = props => {
     <>
       <div className={classes.userInfo}>
         <div className={classes.nameField}>{`${firstName} ${lastName}`}</div>
-        {signatoryRights && (
-          <div className={classes.signatoryField}>Signatory Rights</div>
-        )}
-        <div className={classes.shareholdingField}>
-          {`Shareholding ${shareholding}%`}
-        </div>
+        {signatoryRights && <div className={classes.signatoryField}>Signatory Rights</div>}
+        <div className={classes.shareholdingField}>{`Shareholding ${shareholding}%`}</div>
       </div>
 
       <LinkButton />

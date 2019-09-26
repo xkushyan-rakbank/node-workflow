@@ -27,8 +27,7 @@ const style = {
     borderRadius: "8px",
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     backgroundColor: "#ffffff",
-    backgroundImage:
-      "linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0))"
+    backgroundImage: "linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0))"
   },
   icon: {
     width: "40px",

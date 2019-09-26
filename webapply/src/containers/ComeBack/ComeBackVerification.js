@@ -93,11 +93,7 @@ class ComeBackVerification extends React.Component {
             <div className={classes.goBackContainer}>
               <KeyboardBackspaceIcon className={classes.goBackArrow} />
               <Link to="#">
-                <Typography
-                  element="span"
-                  variant="subtitle1"
-                  classes={{ root: classes.goBack }}
-                >
+                <Typography element="span" variant="subtitle1" classes={{ root: classes.goBack }}>
                   Go back
                 </Typography>
               </Link>

@@ -11,7 +11,16 @@ const style = {
   cardsContainer: {
     display: "flex",
     flexWrap: "wrap",
-    marginTop: 20
+    marginTop: 20,
+    "@media only screen and (max-width: 1420px)": {
+      flexDirection: "column",
+      marginTop: 10
+    },
+    "@media only screen and (max-width: 1100px)": {
+      flexWrap: "nowrap",
+      overflowX: "scroll",
+      flexDirection: "row"
+    }
   }
 };
 
@@ -43,11 +52,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
       <AccountTypeCard
         iconSrc={established_businesses_ic}
         title="For Exclusive Banking Privileges"
-        differences={[
-          "Preferential pricing",
-          "No fees",
-          "Fast-tracked services"
-        ]}
+        differences={["Preferential pricing", "No fees", "Fast-tracked services"]}
         buttonText="RAKelite"
         scrollToIndex={scrollToIndex}
         handleClick={handleClick}

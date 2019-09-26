@@ -54,11 +54,7 @@ const otpReducer = (state = initialState, action) => {
       };
     }
     case actions.GENERATE_CODE_SUCCESS: {
-      const {
-        mode,
-        otpTokenValidityInSec,
-        otpTokenValidUntil
-      } = action.payload;
+      const { mode, otpTokenValidityInSec, otpTokenValidUntil } = action.payload;
       return {
         ...state,
         mode,

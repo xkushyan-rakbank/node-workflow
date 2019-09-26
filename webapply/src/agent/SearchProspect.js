@@ -33,13 +33,7 @@ class SearchProspect extends React.Component {
               <TextInput
                 id="Search.mobileNo"
                 selectId="Search.countryCode"
-                select={
-                  <PureSelect
-                    id="Search.countryCode"
-                    combinedSelect
-                    defaultValue="USA"
-                  />
-                }
+                select={<PureSelect id="Search.countryCode" combinedSelect defaultValue="USA" />}
               />
             </Grid>
             <Grid item md={6} sm={12}>

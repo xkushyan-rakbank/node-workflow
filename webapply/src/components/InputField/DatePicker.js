@@ -5,10 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { validate } from "./../../utils/validate";
@@ -53,8 +50,7 @@ class DatePicker extends React.Component {
 
   inputProps = {
     ref: this.inputRef,
-    pattern:
-      "^(0[1-9]|1[0-2])\\/(((0|1)[0-9]|2[0-9]|3[0-1])\\/((1|2)\\d\\d\\d))$"
+    pattern: "^(0[1-9]|1[0-2])\\/(((0|1)[0-9]|2[0-9]|3[0-1])\\/((1|2)\\d\\d\\d))$"
   };
 
   resetFieldErrors = () => {
@@ -151,10 +147,7 @@ class DatePicker extends React.Component {
         {!!config.title && <InfoTitle title={config.title} />}
 
         {isError && (
-          <ErrorMessage
-            error={fieldErrors.error}
-            multiLineError={fieldErrors.multiLineError}
-          />
+          <ErrorMessage error={fieldErrors.error} multiLineError={fieldErrors.multiLineError} />
         )}
       </FormControl>
     );

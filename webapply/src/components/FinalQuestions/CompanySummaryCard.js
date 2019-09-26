@@ -118,24 +118,15 @@ class CompanySummaryCard extends Component {
       return null;
     }
     return this.state.isFilled ? (
-      <LinkButton
-        clickHandler={() =>
-          this.setState({ isExpanded: true, isFilled: false })
-        }
-      />
+      <LinkButton clickHandler={() => this.setState({ isExpanded: true, isFilled: false })} />
     ) : (
-      <ContinueButton
-        handleClick={() => this.setState({ isExpanded: true, isFilled: true })}
-      />
+      <ContinueButton handleClick={() => this.setState({ isExpanded: true, isFilled: true })} />
     );
   }
 
   render() {
     return (
-      <CompanyCard
-        companyName={this.props.companyName}
-        controls={this.renderControlsContent()}
-      >
+      <CompanyCard companyName={this.props.companyName} controls={this.renderControlsContent()}>
         {this.state.isExpanded &&
           this.sectionsConfig.map(item => {
             const Component = item.component;

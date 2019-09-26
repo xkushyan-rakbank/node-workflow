@@ -42,18 +42,6 @@ const style = {
     lineHeight: 1.33,
     color: "#263d4c"
   },
-  SignatoryRights: {
-    width: "39px",
-    height: "14px",
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "1.17",
-    letterSpacing: "normal",
-    color: "#888888",
-    paddingLeft: "9px"
-  },
   userInfo: {
     display: "flex",
     flexDirection: "column",
@@ -77,23 +65,17 @@ class SignatoriesDocuments extends Component {
     const authUsers = this.props.authUsers.authUsers;
     const userList = authUsers.map((authUser, index) => {
       if (this.props.authUsers.uploadedDoc.stakeholdersDocuments) {
-        docUploadDetails = this.props.authUsers.uploadedDoc
-          .stakeholdersDocuments[index + "_" + authUser.fullName];
+        docUploadDetails = this.props.authUsers.uploadedDoc.stakeholdersDocuments[
+          index + "_" + authUser.fullName
+        ];
       }
       return (
-        <div className={this.props.classes.container}>
-          <div className={this.props.classes.contentWrapper} key={authUser.id}>
-            <Avatar
-              firstName={authUser.fullName}
-              lastName={authUser.fullName}
-            />
+        <div className={this.props.classes.container} key={authUser.id}>
+          <div className={this.props.classes.contentWrapper}>
+            <Avatar firstName={authUser.fullName} lastName={authUser.fullName} />
             <div className={this.props.classes.userInfo}>
-              <div className={this.props.classes.nameField}>
-                {authUser.fullName}
-              </div>
-              <div className={this.props.classes.SignatoryRights}>
-                {authUser.roles}
-              </div>
+              <div className={this.props.classes.nameField}>{authUser.fullName}</div>
+              <div className={this.props.classes.SignatoryRights}>{authUser.roles}</div>
               <div className={this.props.classes.shareholdingField}>
                 Shareholding {authUser.Shareholding}
               </div>
@@ -116,6 +98,4 @@ const mapStateToProps = state => ({
   companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
 });
 
-export default withStyles(style)(
-  connect(mapStateToProps)(SignatoriesDocuments)
-);
+export default withStyles(style)(connect(mapStateToProps)(SignatoriesDocuments));

@@ -48,10 +48,7 @@ class SigningPreferences extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <FormWrapper
-        className={classes.formWrapper}
-        handleContinue={this.props.goToNext}
-      >
+      <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
         <div className="paper">
           <Subtitle title="Signing transactions" />
 
@@ -59,25 +56,19 @@ class SigningPreferences extends React.Component {
             <div className="box-group-grid">
               <FormControlLabel
                 value="all"
-                control={
-                  <Radio color="secondary" classes={{ root: classes.radio }} />
-                }
+                control={<Radio color="secondary" classes={{ root: classes.radio }} />}
                 className={classes.radioLabel}
                 label="All of us must sign"
               />
               <FormControlLabel
                 value="any"
-                control={
-                  <Radio color="secondary" classes={{ root: classes.radio }} />
-                }
+                control={<Radio color="secondary" classes={{ root: classes.radio }} />}
                 className={classes.radioLabel}
                 label="Any of us can sign"
               />
               <FormControlLabel
                 value="other"
-                control={
-                  <Radio color="secondary" classes={{ root: classes.radio }} />
-                }
+                control={<Radio color="secondary" classes={{ root: classes.radio }} />}
                 className={classes.radioLabel}
                 label="Other (please specify)"
               />

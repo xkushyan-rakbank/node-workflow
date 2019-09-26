@@ -5,10 +5,7 @@ import TextInput from "../InputField/TextInput";
 import get from "lodash/get";
 import PureSelect from "../InputField/PureSelect";
 import { getSignatories } from "../../store/selectors/appConfig";
-import {
-  getInputNameById,
-  getInputValueById
-} from "../../store/selectors/input";
+import { getInputNameById, getInputValueById } from "../../store/selectors/input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import ErrorMessage from "../ErrorMessage";
 import { updateField } from "../../store/actions/appConfig";
@@ -35,7 +32,7 @@ class Shareholding extends React.Component {
 
   updateShareholderPercentageValue(value) {
     this.props.updateField({
-      value: value,
+      value,
       name: this.props.shareholderPercentageInputName
     });
   }
@@ -54,9 +51,7 @@ class Shareholding extends React.Component {
 
   customValidationMessage = ({ inputRef, isFocused }) => {
     if (inputRef && !isFocused && Number(inputRef.value) > 100) {
-      return (
-        <ErrorMessage error="Shareholders can't hold more than 100% of shares in total" />
-      );
+      return <ErrorMessage error="Shareholders can't hold more than 100% of shares in total" />;
     }
 
     return null;
@@ -76,10 +71,7 @@ class Shareholding extends React.Component {
         <Grid item md={6} sm={12}>
           <TextInput
             type="number"
-            disabled={
-              this.props.isShareholder === "false" ||
-              this.props.isSoleProprietor
-            }
+            disabled={this.props.isShareholder === "false" || this.props.isSoleProprietor}
             id="SigKycd.shareHoldingPercentage"
             defaultValue={this.props.isSoleProprietor ? 100 : undefined}
             min="0"
@@ -97,19 +89,12 @@ class Shareholding extends React.Component {
 
 const mapStateToProps = (state, { index }) => ({
   isShareholder: getInputValueById(state, "SigKycd.isShareholder", [index]),
-  shareholderPercentageInputName: getInputNameById(
-    state,
-    "SigKycd.shareHoldingPercentage",
-    [index]
-  ),
+  shareholderPercentageInputName: getInputNameById(state, "SigKycd.shareHoldingPercentage", [
+    index
+  ]),
   // temp - will work only on WireMock data
-  isSoleProprietor:
-    getInputValueById(state, "SigAcntSig.authorityType", [index]) === "SP",
-  currentPercentage: getInputValueById(
-    state,
-    "SigKycd.shareHoldingPercentage",
-    [index]
-  ),
+  isSoleProprietor: getInputValueById(state, "SigAcntSig.authorityType", [index]) === "SP",
+  currentPercentage: getInputValueById(state, "SigKycd.shareHoldingPercentage", [index]),
   signatories: getSignatories(state)
 });
 

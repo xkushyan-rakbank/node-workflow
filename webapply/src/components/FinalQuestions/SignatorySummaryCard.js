@@ -171,18 +171,14 @@ class SignatorySummaryCard extends Component {
       />
     ) : (
       <ContinueButton
-        handleClick={() =>
-          this.setState({ isExpanded: true, isFilled: true, isDisabled: true })
-        }
+        handleClick={() => this.setState({ isExpanded: true, isFilled: true, isDisabled: true })}
         disabled={this.state.isDisabled}
       />
     );
   }
 
   getShareHoldingPercentage() {
-    return Number(
-      get(this.props.signatory, "kycDetails.shareHoldingPercentage", 0)
-    );
+    return Number(get(this.props.signatory, "kycDetails.shareHoldingPercentage", 0));
   }
 
   getShareholdingLabel() {
@@ -201,16 +197,10 @@ class SignatorySummaryCard extends Component {
           <div className={this.props.classes.name}>
             {this.props.signatory.firstName} {this.props.signatory.lastName}
           </div>
-          <div className={this.props.classes.signatoryField}>
-            {this.getSignatoryRightsLabel()}
-          </div>
-          <div className={this.props.classes.shareholdingField}>
-            {this.getShareholdingLabel()}
-          </div>
+          <div className={this.props.classes.signatoryField}>{this.getSignatoryRightsLabel()}</div>
+          <div className={this.props.classes.shareholdingField}>{this.getShareholdingLabel()}</div>
         </div>
-        <div className={this.props.classes.controlsBox}>
-          {this.renderControls()}
-        </div>
+        <div className={this.props.classes.controlsBox}>{this.renderControls()}</div>
       </div>
     );
   }
@@ -234,12 +224,7 @@ class SignatorySummaryCard extends Component {
                 expanded={this.state[item.key].isExpanded}
                 filled={this.state[[item.key]].isFilled}
               >
-                {Component && (
-                  <Component
-                    handleContinue={item.handler}
-                    index={this.props.index}
-                  />
-                )}
+                {Component && <Component handleContinue={item.handler} index={this.props.index} />}
               </CollapsedSection>
             );
           })}

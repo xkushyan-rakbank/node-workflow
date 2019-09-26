@@ -54,9 +54,7 @@ class MyApplications extends React.Component {
       <>
         <h2>My applications</h2>
         <AddButton title="New application" />
-        <MyApplicationsList
-          currentApplications={mockDataMyCurrentApplication}
-        />
+        <MyApplicationsList currentApplications={mockDataMyCurrentApplication} />
       </>
     );
   }

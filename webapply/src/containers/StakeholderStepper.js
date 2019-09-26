@@ -47,10 +47,7 @@ class StakeholderStepper extends React.Component {
 
     if (isFinalScreenShown) {
       return (
-        <SuccessFilledStakeholder
-          name="Chema Pastrana"
-          hideForm={this.finishStakeholderCreation}
-        />
+        <SuccessFilledStakeholder name="Chema Pastrana" hideForm={this.finishStakeholderCreation} />
       );
     }
 
