@@ -21,17 +21,10 @@ const style = {
     "&:last-child": {
       marginRight: 0
     },
-    "@media (max-width: 1420px), (max-height: 900px)": {
-      padding: "9px 12px 10px",
-      width: "100%",
-      height: "auto",
-      margin: "10px 19px 0 0px",
-      "&:last-child": {
-        marginRight: 20
-      }
-    },
-    "@media only screen and (max-width: 1220px)": {
-      padding: "3px 12px 10px"
+    "@media only screen and (max-width: 1420px), (max-height: 820px)": {
+      margin: "10px 10px 0 0px",
+      padding: "17px 12px 20px",
+      height: "auto"
     }
   },
   header: {
@@ -46,74 +39,54 @@ const style = {
       display: "block",
       marginTop: 26
     },
-    "@media (max-width: 1420px), (max-height: 900px)": {
-      flexDirection: "row",
+    "@media only screen and (max-width: 1420px)": {
+      fontSize: "16px",
       "& span": {
-        margin: "0 0 0 10px"
+        marginTop: "10px",
+        display: "block",
+        minHeight: "44px"
       },
       "& img": {
-        width: 40,
-        height: 40
+        width: 50,
+        height: 50
       }
     },
     "@media only screen and (max-width: 1220px)": {
-      "& img": {
-        display: "none"
-      },
       "& span": {
-        margin: "0"
+        margin: "13px"
       }
     }
   },
   divider: {
     border: "solid 1px #e8e8e8",
     margin: "30px auto 0",
-    "@media (max-width: 1420px), (max-height: 900px)": {
-      margin: "0 auto 0"
+    "@media only screen and (max-width: 1420px)": {
+      margin: "10px auto 0"
     }
   },
   differences: {
     margin: "28px 0 0 0",
     paddingLeft: "20px",
-    "@media (max-width: 1420px), (max-height: 900px)": {
-      display: "Flex",
-      flexWrap: "wrap",
-      flexDirection: "row",
-      margin: "0 0 5px 0",
-      paddingLeft: 0
-    },
-    "@media only screen and (max-width: 1100px)": {
-      paddingLeft: "20px"
+    "@media only screen and (max-width: 1420px)": {
+      margin: "10px 0 10px 0"
     },
     "& li": {
       fontSize: "16px",
       color: "#373737",
       listStyle: "none",
       position: "relative",
-      "@media (max-width: 1420px), (max-height: 900px)": {
-        display: "flex",
-        marginTop: 10,
-        marginRight: 10
+      "@media only screen and (max-width: 1420px)": {
+        fontSize: "14px"
       },
       "& img": {
         position: "absolute",
         left: -20,
-        top: 3,
-        "@media (max-width: 1420px), (max-height: 900px)": {
-          position: "inherit",
-          left: 0,
-          top: 0
-        },
-        "@media only screen and (max-width: 1100px)": {
-          position: "absolute",
-          left: -20,
-          top: 3
-        }
+        top: 3
       },
       "& + li": {
-        marginTop: 16,
-        "@media (max-width: 1420px), (max-height: 900px)": {
-          marginTop: 10
+        marginTop: "16px",
+        "@media only screen and (max-width: 1420px)": {
+          marginTop: "5px"
         }
       }
     }
@@ -141,7 +114,8 @@ const AccountTypeCard = ({
   buttonText,
   classes,
   handleClick,
-  scrollToIndex
+  scrollToIndex,
+  accountType
 }) => (
   <div className={classes.container}>
     <div>
@@ -165,7 +139,10 @@ const AccountTypeCard = ({
     </div>
 
     <div className={classes.buttonWrapper}>
-      <ContinueButton handleClick={handleClick} name={scrollToIndex}>
+      <ContinueButton
+        handleClick={() => handleClick({ scrollToIndex, accountType })}
+        name={scrollToIndex}
+      >
         {buttonText}
       </ContinueButton>
     </div>

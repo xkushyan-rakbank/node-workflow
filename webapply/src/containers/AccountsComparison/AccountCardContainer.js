@@ -10,16 +10,14 @@ import established_businesses_ic from "../../assets/icons/established_businesses
 const style = {
   cardsContainer: {
     display: "flex",
-    flexWrap: "wrap",
+    flexWrap: "nowrap",
     marginTop: 20,
+    overflow: "auto",
+    paddingBottom: "20px",
+    marginBottom: "-20px",
     "@media only screen and (max-width: 1420px)": {
-      flexDirection: "column",
-      marginTop: 10
-    },
-    "@media only screen and (max-width: 1100px)": {
-      flexWrap: "nowrap",
-      overflowX: "scroll",
-      flexDirection: "row"
+      marginTop: 10,
+      flexGrow: "1"
     }
   }
 };
@@ -39,6 +37,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
         ]}
         buttonText="RAKstarter"
         scrollToIndex={scrollToIndex}
+        accountType="RAKstarter"
         handleClick={handleClick}
       />
       <AccountTypeCard
@@ -47,6 +46,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
         differences={["Low balance account", "Low fees", "Dedicated service"]}
         buttonText="Current Account"
         scrollToIndex={scrollToIndex}
+        accountType="Current Account"
         handleClick={handleClick}
       />
       <AccountTypeCard
@@ -55,6 +55,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
         differences={["Preferential pricing", "No fees", "Fast-tracked services"]}
         buttonText="RAKelite"
         scrollToIndex={scrollToIndex}
+        accountType="RAKelite"
         handleClick={handleClick}
       />
     </div>

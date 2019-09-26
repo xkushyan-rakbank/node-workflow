@@ -21,6 +21,7 @@ import ComeBackLogin from "./containers/ComeBack/ComeBackLogin";
 import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
 import MyApplications from "./containers/MyApplications/MyApplications";
 import UploadDocuments from "./containers/FileUploader";
+import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -54,6 +55,7 @@ class App extends React.Component {
         <ConnectedRouter history={history}>
           <FormLayout>
             <Switch>
+              <Route exact path={routes.ApplicationSubmitted} component={ApplicationSubmitted} />
               <Route exact path={routes.accountsComparison} component={AccountsComparison} />
               <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
               <Route exact path={routes.verifyOtp} component={FormConfirm} />

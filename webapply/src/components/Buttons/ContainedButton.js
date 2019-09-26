@@ -41,7 +41,6 @@ const ContainedButton = props => {
     component = "button",
     withRightArrow,
     classes,
-    // todo change property name
     name
   } = props;
 
