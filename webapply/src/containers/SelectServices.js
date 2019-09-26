@@ -1,10 +1,10 @@
 import React from "react";
+import cx from "classnames";
+import omit from "lodash/omit";
 import { withStyles } from "@material-ui/core";
 import SubmitApplication from "./SubmitApplication";
-import { servicesSteps } from "../constants";
-import cx from "classnames";
 import ServicesStepTitle from "../components/ServicesStepTitle";
-import omit from "lodash/omit";
+import { servicesSteps } from "../constants";
 
 const style = {
   stepWrapper: { marginBottom: "20px" },
@@ -27,6 +27,8 @@ class SelectServices extends React.Component {
       this.goToFinish();
     }
   };
+
+  setStep = step => this.setState({ step });
 
   goToFinish = () => this.setState({ canSubmit: true });
 
@@ -54,6 +56,7 @@ class SelectServices extends React.Component {
                 <ServicesStepTitle
                   step={stepData}
                   activeStep={this.state.step}
+                  setStep={this.setStep}
                 />
                 {this.state.step === item.step && (
                   <div className={classes.formWrapper}>

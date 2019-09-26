@@ -28,8 +28,9 @@ const styles = {
   }
 };
 
-const ServicesStepTitle = ({ step, activeStep, classes }) => {
+const ServicesStepTitle = ({ step, activeStep, classes, setStep }) => {
   const doneStep = step.step < activeStep;
+  const editStep = () => setStep(step.step);
   return (
     <div className={classes.wrapper}>
       <div className={classes.icon}>
@@ -37,7 +38,9 @@ const ServicesStepTitle = ({ step, activeStep, classes }) => {
       </div>
       <div className={classes.title}>{step.title}</div>
 
-      {doneStep && <LinkButton className={classes.editButton} />}
+      {doneStep && (
+        <LinkButton className={classes.editButton} clickHandler={editStep} />
+      )}
     </div>
   );
 };

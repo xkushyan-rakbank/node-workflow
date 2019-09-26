@@ -825,7 +825,7 @@
       ],
       "default": "AED",
       "description": "Multi-selection of currency",
-      "title": "You will get one RAKstarter account number for each currency you select."
+      "title": "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval."
     },
     "Acnt.accountPurpose": {
       "criteria": {
@@ -7342,7 +7342,7 @@
         "accountType": "",
         "accountSubType": "",
         "accountNo": "",
-        "accountCurrencies": "",
+        "accountCurrencies": [],
         "accountPurpose": "",
         "debitCardApplied": true,
         "chequeBookApplied": true,
