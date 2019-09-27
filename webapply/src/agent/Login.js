@@ -52,9 +52,7 @@ class Login extends React.Component {
   };
 
   render() {
-    const { classes, userName, password } = this.props;
-    // const { classes, isReCaptchaVerified, userName, password } = this.props;
-
+    const { classes, isReCaptchaVerified, userName, password } = this.props;
     return (
       <div className={classes.baseForm}>
         <h2>Login</h2>
@@ -71,9 +69,11 @@ class Login extends React.Component {
               onError={this.handleReCaptchaError}
             />
           </ErrorBoundary>
-          {/* <SubmitButton label="Next Step" justify="flex-end" 
-              disabled={!isReCaptchaVerified}/> */}
-          <SubmitButton label="Next Step" justify="flex-end" disabled={!userName && !password} />
+          <SubmitButton
+            label="Next Step"
+            justify="flex-end"
+            disabled={!password || !userName || !isReCaptchaVerified}
+          />
         </form>
       </div>
     );
