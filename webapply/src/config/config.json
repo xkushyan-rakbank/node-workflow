@@ -954,7 +954,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "I don't wish to receive interest from my account",
       "placeholder": null,
       "path": "$.prospect.accountInfo[*].receiveInterest",
       "name": "prospect.accountInfo[*].receiveInterest",
@@ -1195,7 +1195,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "City",
+      "label": "Emirate / City",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.branchCity",
       "name": "prospect.organizationInfo.branchCity",
@@ -1204,28 +1204,64 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "cities1",
-          "key": "cities1",
-          "value": "cities1",
-          "displayText": "cities1"
+          "code": "Abu Dhabi",
+          "key": "Abu Dhabi",
+          "value": "Abu Dhabi",
+          "displayText": "Abu Dhabi"
         },
         {
-          "code": "cities2",
-          "key": "cities2",
-          "value": "cities2",
-          "displayText": "cities2"
+          "code": "Ajman",
+          "key": "Ajman",
+          "value": "Ajman",
+          "displayText": "Ajman"
         },
         {
-          "code": "cities3",
-          "key": "cities3",
-          "value": "cities3",
-          "displayText": "cities3"
+          "code": "Al Ain",
+          "key": "Al Ain",
+          "value": "Al Ain",
+          "displayText": "Al Ain"
         },
         {
-          "code": "cities4",
-          "key": "cities4",
-          "value": "cities4",
-          "displayText": "cities4"
+          "code": "Dubai",
+          "key": "Dubai",
+          "value": "Dubai",
+          "displayText": "Dubai"
+        },
+        {
+          "code": "Fujairah",
+          "key": "Fujairah",
+          "value": "Fujairah",
+          "displayText": "Fujairah"
+        },
+        {
+          "code": "Kalba",
+          "key": "Kalba",
+          "value": "Kalba",
+          "displayText": "Kalba"
+        },
+        {
+          "code": "Khorfakkan",
+          "key": "Khorfakkan",
+          "value": "Khorfakkan",
+          "displayText": "Khorfakkan"
+        },
+        {
+          "code": "Ras Al Khaimah",
+          "key": "Ras Al Khaimah",
+          "value": "Ras Al Khaimah",
+          "displayText": "Ras Al Khaimah"
+        },
+        {
+          "code": "Sharjah",
+          "key": "Sharjah",
+          "value": "Sharjah",
+          "displayText": "Sharjah"
+        },
+        {
+          "code": "Umm Al Quwain",
+          "key": "Umm Al Quwain",
+          "value": "Umm Al Quwain",
+          "displayText": "Umm Al Quwain"
         }
       ],
       "description": "get the values from datalist API"
@@ -7349,7 +7385,7 @@
         "chequeBookApplied": true,
         "eStatements": true,
         "mailStatements": false,
-        "receiveInterest": true,
+        "receiveInterest": false,
         "deliverByCourier": true
       }
     ],

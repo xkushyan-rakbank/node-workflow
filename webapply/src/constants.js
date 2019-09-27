@@ -11,10 +11,10 @@ import Channels from "./components/ServicesStepForms/Channels";
 import CompanyDetails from "./components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "./components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "./components/AboutCompanyStepForms/LicenseInformation";
-import accountDetails from "./assets/icons/account_details.svg";
-import signingPreferences from "./assets/icons/signing_preferences.svg";
-import channels from "./assets/icons/channels.svg";
-import valueAddedServices from "./assets/icons/value_added_services.svg";
+import accountDetails from "./assets/icons/account_details.png";
+import signingPreferences from "./assets/icons/signing_preferences.png";
+import channels from "./assets/icons/channels.png";
+import valueAddedServices from "./assets/icons/value_added_services.png";
 import decline from "./assets/gif/declined_regular.gif";
 
 import routes from "./routes";
