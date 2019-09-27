@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import routes from "./../routes";
-import logo from "./../assets/images/rakBank.svg";
+import logo from "./../assets/images/rakbankLogo.png";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -10,7 +10,7 @@ const styles = {
     top: " 0",
     width: " 100%",
     display: "flex",
-    zIndex: 0,
+    zIndex: 12,
     "& img": {
       width: "120px"
     }

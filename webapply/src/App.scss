@@ -206,3 +206,7 @@ input[type="number"]::-webkit-outer-spin-button {
 #progressStatus {
   padding-left: 11px;
 }
+
+.videoBg + header {
+  z-index: 9;
+}

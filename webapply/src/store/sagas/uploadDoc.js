@@ -1,4 +1,4 @@
-import { all, call, put, select, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import apiClient from "../../api/apiClient";
 import * as actions from "../actions/uploadDocActions";
 

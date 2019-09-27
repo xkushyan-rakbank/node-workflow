@@ -16,11 +16,12 @@ const styles = {
     right: 0,
     transition: "top 400ms",
     overflow: "hidden",
-    maxHeight: "100vh"
+    maxHeight: "100vh",
+    zIndex: 11
   },
   video: {
     position: "absolute",
-    zIndex: 1,
+    zIndex: 10,
     minWidth: "100%",
     minHeight: "100vh"
   },
@@ -54,7 +55,8 @@ const styles = {
 class BackgroundVideoPlayer extends React.Component {
   constructor(props) {
     super(props);
-    this.videoBg = document.createElement("div");
+    this.videoBg = document.createElement("div.");
+    this.videoBg.className = "videoBg";
   }
 
   componentDidMount() {

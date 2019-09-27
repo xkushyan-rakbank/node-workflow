@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
-import arrowBack from "./../../assets/images/backArrow.svg";
+import arrowBack from "./../../assets/icons/Black.png";
 
 const style = {
   container: {
     marginRight: "20px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    "& img": {
+      width: "18px"
+    }
   },
   text: {
     fontSize: "14px",
