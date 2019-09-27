@@ -115,7 +115,7 @@ const mockDataRows = [
   createData(
     "Monthly Average Credit Balance",
     { text: "Zero" },
-    { text: "AED 25,0000", info: "or equivalent at entity level" },
+    { text: "AED 25,000", info: "or equivalent at entity level" },
     { text: "AED 500,000", info: "or equivalent at entity level" }
   ),
   createData(
@@ -206,7 +206,7 @@ class TableCompare extends React.Component {
     this.RAKElite = React.createRef();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { selectedAccount } = nextProps;
     switch (selectedAccount) {
       case "RAKstarter":
@@ -240,14 +240,23 @@ class TableCompare extends React.Component {
     history.push("/DetailedAccount");
   };
 
+  handleScroll = e => {
+    const { currentTarget } = e;
+    const hasHorizontalScrollbar = currentTarget.scrollWidth < 780;
+    const hasVerticalScrollbar = currentTarget.scrollHeight < 540;
+    if (hasHorizontalScrollbar || hasVerticalScrollbar) {
+      e.stopPropagation();
+    }
+  };
+
   render() {
     const { classes } = this.props;
     const { offset } = this.state;
 
     return (
-      <Paper classes={{ root: classes.paperRoot }}>
+      <Paper classes={{ root: classes.paperRoot }} onWheel={this.handleScroll}>
         <div style={{ overflowX: "auto" }}>
-          <div className={classes.tableContainer} style={{}}>
+          <div className={classes.tableContainer}>
             <Paper
               classes={{ root: classes.selectedAccountContainer }}
               style={{
