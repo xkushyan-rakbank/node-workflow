@@ -57,7 +57,7 @@ const Header = ({ classes, checkLoginStatus, getAgentName, location }) => {
           {checkLoginStatus ? (
             <span>{getAgentName}</span>
           ) : (
-            location.pathname != "/Login" && <span> RAKstarter Application </span>
+            location.pathname !== "/Login" && <span> RAKstarter Application </span>
           )}
         </div>
       </div>

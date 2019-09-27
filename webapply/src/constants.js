@@ -8,6 +8,7 @@ import CountryOfResidence from "./components/StakeholderStepForms/CountryOfResid
 import AccountDetails from "./components/ServicesStepForms/AccountDetails";
 import SigningPreferences from "./components/ServicesStepForms/SigningPreferences";
 import Channels from "./components/ServicesStepForms/Channels";
+import ValueAddedServices from "./components/ServicesStepForms/ValueAddedServices";
 import CompanyDetails from "./components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "./components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "./components/AboutCompanyStepForms/LicenseInformation";
@@ -155,7 +156,7 @@ export const servicesSteps = [
   {
     step: 4,
     title: "Value added services",
-    component: Channels,
+    component: ValueAddedServices,
     icon: valueAddedServices
   }
 ];

@@ -11,13 +11,16 @@ const style = {
   formWrapper: {
     borderTop: "1px solid rgba(230, 230, 230, 0.5)",
     padding: "6px 20px"
+  },
+  valueAddedServices: {
+    padding: 0
   }
 };
 
 class SelectServices extends React.Component {
   state = {
     canSubmit: false,
-    step: 1
+    step: 4
   };
 
   handleContinue = () => {
@@ -56,7 +59,11 @@ class SelectServices extends React.Component {
                   setStep={this.setStep}
                 />
                 {this.state.step === item.step && (
-                  <div className={classes.formWrapper}>
+                  <div
+                    className={cx(classes.formWrapper, {
+                      [classes.valueAddedServices]: this.state.step === 4
+                    })}
+                  >
                     <Component goToNext={this.handleContinue} activeStep={this.state.step} />
                   </div>
                 )}
