@@ -13,6 +13,7 @@ class AccountsComparisonContainer extends React.Component {
     super(props);
 
     this.state = {
+      selectedAccount: "Current Account",
       indexScrollToSection: {
         currentTarget: {
           name: 0
@@ -22,15 +23,12 @@ class AccountsComparisonContainer extends React.Component {
   }
 
   scrollToSection = e => {
-    const { name: index } = e.currentTarget;
-
+    const { scrollToIndex: index, accountType } = e;
     this.setState({
-      // todo refactor VerticalPaginationWrapper component to use index
       indexScrollToSection: {
-        currentTarget: {
-          name: index
-        }
-      }
+        currentTarget: { name: index }
+      },
+      selectedAccount: accountType
     });
   };
 
@@ -56,7 +54,7 @@ class AccountsComparisonContainer extends React.Component {
               title="Compare the accounts"
               info="Our three business accounts, side by side"
             />
-            <TableCompare />
+            <TableCompare selectedAccount={this.state.selectedAccount} />
             <InfoNote text="Note: 5% VAT will be levied on all charges applicable to business customers as published on the Service & Price guide. For all other charges related to your accounts please visit www.rakbank.ae " />
           </div>
         </VerticalPaginationWrapper>

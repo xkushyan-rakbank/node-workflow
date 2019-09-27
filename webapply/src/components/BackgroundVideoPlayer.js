@@ -31,7 +31,10 @@ const styles = {
     bottom: 40,
     zIndex: 3,
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    "@media only screen and (max-width: 1300px)": {
+      left: "45%"
+    }
   },
   scrollButton: {
     width: "195px",

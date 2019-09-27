@@ -60,7 +60,10 @@ const style = {
     color: "#fff",
     fontSize: "48px",
     lineHeight: "1.17",
-    fontWeight: 600
+    fontWeight: 600,
+    "@media only screen and (max-width: 1300px)": {
+      paddingRight: "16px"
+    }
   },
   sectionSubtitle: {
     fontSize: "16px",
