@@ -81,11 +81,13 @@ class SignatoriesDocuments extends Component {
               </div>
             </div>
           </div>
-          {docUploadDetails.map((companyDoc, index) => {
-            if (authUser.fullName === companyDoc.signatoryName) {
-              return <UploadDocuments key={index} companyDoc={companyDoc} />;
-            }
-          })}
+          {docUploadDetails.length &&
+            docUploadDetails.map((companyDoc, index) => {
+              if (authUser.fullName === companyDoc.signatoryName) {
+                return <UploadDocuments key={index} companyDoc={companyDoc} />;
+              }
+              return null;
+            })}
         </div>
       );
     });

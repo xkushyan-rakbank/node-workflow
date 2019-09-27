@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
-import arrowBack from "./../../assets/icons/Black.png";
+import arrowBack from "./../../assets/icons/backArrow.png";
 
 const style = {
   container: {

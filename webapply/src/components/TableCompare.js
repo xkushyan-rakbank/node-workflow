@@ -25,7 +25,7 @@ const style = {
     minWidth: "780px",
     position: "relative",
     "@media only screen and (max-height: 900px)": {
-      maxHeight: "400px"
+      maxHeight: "368px"
     }
   },
   tableHead: {
@@ -79,7 +79,7 @@ const style = {
     top: "-15px",
     height: "calc(100% + 30px)",
     "@media only screen and (max-height: 900px)": {
-      height: "calc(100% + 166px)"
+      height: "calc(100% + 133px)"
     },
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
@@ -115,7 +115,7 @@ const mockDataRows = [
   createData(
     "Monthly Average Credit Balance",
     { text: "Zero" },
-    { text: "AED 25,0000", info: "or equivalent at entity level" },
+    { text: "AED 25,000", info: "or equivalent at entity level" },
     { text: "AED 500,000", info: "or equivalent at entity level" }
   ),
   createData(
@@ -125,7 +125,6 @@ const mockDataRows = [
     { text: "AED 250" }
   ),
   createData("Monthly Maintenance fees", { text: "AED 99" }, { text: "AED 50" }, { text: "Zero" }),
-  createData("Free Cheque book every year", { ic: checkIc }, { ic: checkIc }, { ic: checkIc }),
   createData("Free Teller Transactions", { text: "-" }, { text: "-" }, { ic: checkIc }),
   createData("Lifestyle benefits", { text: "-" }, { text: "-" }, { ic: checkIc }),
   createData(
@@ -196,19 +195,41 @@ const StyledTableCell = withStyles(() => ({
 }))(TableCell);
 
 class TableCompare extends React.Component {
-  state = {
-    offset: 380
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      offset: 380
+    };
 
-  onHoverSection = event => {
-    if (event.target.tagName === "TD") {
-      const { offsetLeft, clientWidth } = event.target;
-      this.setState({
-        offset: offsetLeft,
-        width: clientWidth
-      });
+    this.RAKStarter = React.createRef();
+    this.CurrentAccount = React.createRef();
+    this.RAKElite = React.createRef();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { selectedAccount } = nextProps;
+    switch (selectedAccount) {
+      case "RAKstarter":
+        this.setState({
+          offset: this.RAKStarter.current.offsetLeft
+        });
+        break;
+      case "Current Account":
+        this.setState({
+          offset: this.CurrentAccount.current.offsetLeft
+        });
+        break;
+      case "RAKelite":
+        this.setState({
+          offset: this.RAKElite.current.offsetLeft
+        });
+        break;
+      default:
+        this.setState({
+          offset: this.CurrentAccount.current.offsetLeft
+        });
     }
-  };
+  }
 
   handleClick = accountType => {
     const { history, updateProspect } = this.props;
@@ -219,14 +240,23 @@ class TableCompare extends React.Component {
     history.push("/DetailedAccount");
   };
 
+  handleScroll = e => {
+    const { currentTarget } = e;
+    const hasHorizontalScrollbar = currentTarget.scrollWidth < 780;
+    const hasVerticalScrollbar = currentTarget.scrollHeight < 540;
+    if (hasHorizontalScrollbar || hasVerticalScrollbar) {
+      e.stopPropagation();
+    }
+  };
+
   render() {
     const { classes } = this.props;
     const { offset } = this.state;
 
     return (
-      <Paper classes={{ root: classes.paperRoot }}>
+      <Paper classes={{ root: classes.paperRoot }} onWheel={this.handleScroll}>
         <div style={{ overflowX: "auto" }}>
-          <div className={classes.tableContainer} style={{}}>
+          <div className={classes.tableContainer}>
             <Paper
               classes={{ root: classes.selectedAccountContainer }}
               style={{
@@ -277,7 +307,7 @@ class TableCompare extends React.Component {
                   <TableCell component="th" scope="row">
                     {" "}
                   </TableCell>
-                  <StyledTableCell onMouseEnter={this.onHoverSection}>
+                  <StyledTableCell ref={this.RAKStarter}>
                     <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("RAKStarter")}
@@ -287,7 +317,7 @@ class TableCompare extends React.Component {
                       }}
                     />
                   </StyledTableCell>
-                  <StyledTableCell onMouseEnter={this.onHoverSection}>
+                  <StyledTableCell ref={this.CurrentAccount}>
                     <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("Current Account")}
@@ -297,7 +327,7 @@ class TableCompare extends React.Component {
                       }}
                     />
                   </StyledTableCell>
-                  <StyledTableCell onMouseEnter={this.onHoverSection}>
+                  <StyledTableCell ref={this.RAKElite}>
                     <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("RAKelite")}

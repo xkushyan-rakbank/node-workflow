@@ -3,12 +3,13 @@ import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import questionMark from "../../assets/icons/question-mark.png";
+import arrowDown from "../../assets/icons/arrow-down.png";
 import cx from "classnames";
 
-const StyledExpansionPanel = withStyles({
+const style = {
   root: {
+    minWidth: "550px",
     border: "none",
     boxShadow: "none",
     "&:not(:last-child)": {
@@ -24,43 +25,35 @@ const StyledExpansionPanel = withStyles({
       margin: "auto"
     }
   },
-  expanded: {}
-})(ExpansionPanel);
-
-const StyledExpansionPanelSummary = withStyles({
-  root: {
+  expanded: {},
+  summaryRoot: {
     minHeight: 60,
     "&$expanded": {
       minHeight: 60
     }
   },
-  content: {
+  summaryContent: {
     width: "calc(100% - 100px)",
     overflow: "hidden",
     "&$expanded": {
       margin: "12px 0"
     }
   },
-  expanded: {}
-})(ExpansionPanelSummary);
-
-const StyledExpansionPanelDetails = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2),
+  detailsRoot: {
+    padding: "16px",
     borderTop: "1px solid rgba(239, 242, 244, .5)",
     borderBottom: "1px solid rgba(239, 242, 244, .5)",
     fontSize: "16px",
     backgroundColor: "#fff"
-  }
-}))(ExpansionPanelDetails);
-
-const style = {
+  },
+  iconSize: {
+    width: "24px",
+    height: "24px"
+  },
   iconStyle: {
     position: "relative",
     top: "4px",
-    marginRight: "20px",
-    fontSize: "23px",
-    color: "#888888"
+    marginRight: "20px"
   },
   text: {
     paddingBottom: "5px",
@@ -94,26 +87,36 @@ class CommonQuestions extends React.Component {
       <>
         {data.length > 0 &&
           data.map(item => (
-            <StyledExpansionPanel
+            <ExpansionPanel
               key={item.id}
               square
               expanded={expanded === item.id}
               onChange={() => this.handleChange(item.id)}
+              classes={{ root: classes.root, expanded: classes.expanded }}
             >
-              <StyledExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
+              <ExpansionPanelSummary
+                expandIcon={<img src={arrowDown} alt="arrow-down" className={classes.iconSize} />}
                 aria-controls="panel1d-content"
                 id="panel1d-header"
+                classes={{
+                  root: classes.summaryRoot,
+                  content: classes.summaryContent,
+                  expanded: classes.expanded
+                }}
               >
                 <div className={cx(classes.text, classes.textEllipsis)}>
-                  <HelpOutlineIcon className={classes.iconStyle} />
+                  <img
+                    src={questionMark}
+                    alt="question"
+                    className={cx(classes.iconStyle, classes.iconSize)}
+                  />
                   {item.question}
                 </div>
-              </StyledExpansionPanelSummary>
-              <StyledExpansionPanelDetails>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails classes={{ root: classes.detailsRoot }}>
                 <div className={cx(classes.text, classes.info)}>{item.answer}</div>
-              </StyledExpansionPanelDetails>
-            </StyledExpansionPanel>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           ))}
       </>
     );

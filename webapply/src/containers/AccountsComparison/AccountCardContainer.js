@@ -10,16 +10,14 @@ import established_businesses_ic from "../../assets/icons/established_businesses
 const style = {
   cardsContainer: {
     display: "flex",
-    flexWrap: "wrap",
+    flexWrap: "nowrap",
     marginTop: 20,
+    overflow: "auto",
+    paddingBottom: "20px",
+    marginBottom: "-20px",
     "@media only screen and (max-width: 1420px)": {
-      flexDirection: "column",
-      marginTop: 10
-    },
-    "@media only screen and (max-width: 1100px)": {
-      flexWrap: "nowrap",
-      overflowX: "scroll",
-      flexDirection: "row"
+      marginTop: 10,
+      flexGrow: "1"
     }
   }
 };
@@ -31,7 +29,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
     <div className={classes.cardsContainer}>
       <AccountTypeCard
         iconSrc={startups_ic}
-        title="For Startups or Entrepreneurs"
+        title="For Startups and Entrepreneurs"
         differences={[
           "Zero balance account",
           "Preferential transaction fees",
@@ -39,22 +37,33 @@ const AccountCardContainer = ({ classes, handleClick }) => {
         ]}
         buttonText="RAKstarter"
         scrollToIndex={scrollToIndex}
+        accountType="RAKstarter"
         handleClick={handleClick}
       />
       <AccountTypeCard
         iconSrc={businesses_ic}
-        title="For Established Businesses"
-        differences={["Low balance account", "Low fees", "Dedicated service"]}
+        title="For Growing Businesses"
+        differences={[
+          "Low balance account",
+          "Preferential transaction fees",
+          "Dedicated Relationship Manager "
+        ]}
         buttonText="Current Account"
         scrollToIndex={scrollToIndex}
+        accountType="Current Account"
         handleClick={handleClick}
       />
       <AccountTypeCard
         iconSrc={established_businesses_ic}
-        title="For Exclusive Banking Privileges"
-        differences={["Preferential pricing", "No fees", "Fast-tracked services"]}
+        title="For Established Businesses"
+        differences={[
+          "Free unlimited remittances",
+          "Host of lifestyle benefits",
+          "Dedicated Relationship Manager"
+        ]}
         buttonText="RAKelite"
         scrollToIndex={scrollToIndex}
+        accountType="RAKelite"
         handleClick={handleClick}
       />
     </div>

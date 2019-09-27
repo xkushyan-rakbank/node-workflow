@@ -10,12 +10,11 @@ const styles = {
     fontWeight: "normal",
     lineHeight: 1.33,
     color: "#517085",
-    alignItems: "center",
     marginTop: "10px !important"
   },
   icon: {
     fontSize: "13.1px",
-    marginRight: "6.4px"
+    margin: "1px 6.4px 0 0"
   }
 };
 

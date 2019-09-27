@@ -1,15 +1,14 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 import get from "lodash/get";
-import Select from "../InputField/PureSelect";
-import Subtitle from "../Subtitle";
-import Checkbox from "../InputField/Checkbox";
-import FormWrapper from "../StakeholderStepForms/FormWrapper";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import InfoTitle from "../InfoTitle";
+import { withStyles } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Select from "../InputField/PureSelect";
+import Checkbox from "../InputField/RefactoredCheckbox";
+import RadioGroup from "../InputField/RadioGroup";
+import FormWrapper from "../StakeholderStepForms/FormWrapper";
 
 const style = {
   formWrapper: {
@@ -20,54 +19,49 @@ const style = {
   },
   checkboxWrapper: {
     marginTop: "10px"
+  },
+  sectionLabel: {
+    padding: "30px 0 20px"
+  },
+  topDivider: {
+    borderTop: "1px solid rgba(230, 230, 230, 0.5)",
+    marginTop: "30px"
   }
 };
 
 class AccountDetails extends React.Component {
   render() {
-    const {
-      classes,
-      accountCurrencies: { datalist, title }
-    } = this.props;
+    const { classes, islamicBanking } = this.props;
     return (
       <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
-        <div className="paper">
-          <Subtitle title="Select currencies" />
-          <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
-            {datalist.map(option => (
-              <Checkbox
-                key={option.key}
-                label={option.displayText}
-                className={classes.checkboxWrapper}
-              />
-            ))}
-          </div>
-          <InfoTitle title={title} />
-        </div>
+        <div className={cx("text", classes.sectionLabel)}>Top customers</div>
+        <RadioGroup id="Acnt.accountCurrencies" indexes={[0]} />
 
-        <div className="paper">
-          <Subtitle title="Select branch" />
-          <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
-              <Select id="Org.branchCity" />
-            </Grid>
-            <Grid item md={6} sm={12}>
-              <Select id="Org.branchID" />
-            </Grid>
+        <div className={cx("text", classes.topDivider, classes.sectionLabel)}>Select branch</div>
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <Select id="Org.branchCity" />
           </Grid>
-        </div>
+          <Grid item md={6} sm={12}>
+            <Select id="Org.branchID" />
+          </Grid>
+        </Grid>
 
-        <div className="paper">
-          <Subtitle title="Select interest" />
-          <Checkbox label="I want to earn interest from my account" />
-        </div>
+        {!islamicBanking && (
+          <>
+            <div className={cx("text", classes.topDivider, classes.sectionLabel)}>
+              Select interest
+            </div>
+            <Checkbox id="Acnt.receiveInterest" indexes={[0]} />
+          </>
+        )}
       </FormWrapper>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  accountCurrencies: get(state.appConfig, "uiConfig['Acnt.accountCurrencies']", { datalist: [] })
+  islamicBanking: get(state.appConfig, "prospect.applicationInfo.islamicBanking")
 });
 
 export default compose(

@@ -3,12 +3,13 @@ import { withStyles } from "@material-ui/core";
 import { Link } from "@material-ui/core";
 import plus from "../../assets/icons/rak-value-plus.png";
 import max from "../../assets/icons/rak-value-max.png";
-import check from "../../assets/icons/check_outline_ic.svg";
+import check from "../../assets/icons/check_outline_ic.png";
 
 const style = {
   root: {
     position: "relative",
     display: "flex",
+    flexGrow: 1,
     flexDirection: "column",
     minWidth: "270px",
     maxHeight: "572px",
@@ -19,6 +20,7 @@ const style = {
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
     "@media only screen and (max-width: 1300px)": {
+      flexGrow: 0,
       maxHeight: "220px",
       padding: "10px 20px 10px 20px"
     },

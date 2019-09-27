@@ -6,10 +6,10 @@ import VerticalPaginationWrapper from "../../components/VerticalPaginationWrappe
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 
 const ApplicationOverview = ({ applicationInfo }) => {
-  const { accountType } = applicationInfo;
+  const { accountType, islamicBanking } = applicationInfo;
   return (
     <VerticalPaginationWrapper>
-      <TwoSteps accountType={accountType} />
+      <TwoSteps accountType={accountType} islamicBanking={islamicBanking} />
       <PreliminaryInformation />
     </VerticalPaginationWrapper>
   );
