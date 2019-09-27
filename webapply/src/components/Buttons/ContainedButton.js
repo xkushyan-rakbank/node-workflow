@@ -2,7 +2,7 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
-import rightArrowWhite from "./../../assets/images/white.svg";
+import rightArrowWhite from "./../../assets/icons/whiteArrow.png";
 
 const styles = {
   buttonStyle: {

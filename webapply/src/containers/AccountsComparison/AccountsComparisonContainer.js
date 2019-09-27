@@ -1,4 +1,5 @@
 import React from "react";
+import { withStyles } from "@material-ui/core/styles";
 
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
@@ -7,6 +8,13 @@ import InfoNote from "../../components/InfoNote";
 import TableCompare from "../../components/TableCompare";
 
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
+
+const styles = {
+  externalLink: {
+    color: "#888888",
+    textDecoration: "underline"
+  }
+};
 
 class AccountsComparisonContainer extends React.Component {
   constructor(props) {
@@ -33,6 +41,8 @@ class AccountsComparisonContainer extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <React.Fragment>
         <VerticalPaginationWrapper
@@ -42,11 +52,11 @@ class AccountsComparisonContainer extends React.Component {
           <div></div>
           <div>
             <SectionTitleWithInfo
-              title="One business account for every business stage"
-              info="Wherever your business is, our accounts will meet you there"
+              title="Business accounts for every business stage"
+              info="Available in both conventional and islamic variants"
             />
             <AccountCardContainer handleClick={this.scrollToSection} />
-            <InfoNote text="Note: Companies older than 12 months are not eligible for the RAKstarter account" />
+            <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
           </div>
 
           <div>
@@ -55,7 +65,17 @@ class AccountsComparisonContainer extends React.Component {
               info="Our three business accounts, side by side"
             />
             <TableCompare selectedAccount={this.state.selectedAccount} />
-            <InfoNote text="Note: 5% VAT will be levied on all charges applicable to business customers as published on the Service & Price guide. For all other charges related to your accounts please visit www.rakbank.ae " />
+            <InfoNote
+              text={
+                <>
+                  Note: 5% VAT will be levied on all charges applicable to business customers. To
+                  see our detailed Service & Price Guide click{" "}
+                  <a className={classes.externalLink} target="_blank" href="www.rakbank.ae">
+                    here
+                  </a>
+                </>
+              }
+            />
           </div>
         </VerticalPaginationWrapper>
       </React.Fragment>
@@ -63,4 +83,4 @@ class AccountsComparisonContainer extends React.Component {
   }
 }
 
-export default AccountsComparisonContainer;
+export default withStyles(styles)(AccountsComparisonContainer);

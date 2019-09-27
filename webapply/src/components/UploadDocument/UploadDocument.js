@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
-import companyIconSvg from "../../assets//images/company-icon.svg";
+import companyIconSvg from "../../assets/icons/brief.png";
 
 const style = {
   fileUploadPlaceholder: {

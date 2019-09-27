@@ -9,7 +9,7 @@ import transaction from "../../assets/icons/transaction.png";
 import withdrawal from "../../assets/icons/withdrawal.png";
 import processing from "../../assets/icons/processing.png";
 import serviceCenter from "../../assets/icons/service-center.png";
-import lounge from "../../assets/icons/lounge.svg";
+import lounge from "../../assets/icons/lounge.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../components/HorizontalIconCards/HorizontalIconCardsContainer";
 import HorizontalIconCardItem from "../../components/HorizontalIconCards/HorizontalIconCardItem";

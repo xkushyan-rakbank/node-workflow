@@ -16,7 +16,11 @@ const styles = {
     borderRadius: "50%",
     display: "flex",
     justifyContent: "center",
-    margin: "0 20px"
+    alignItems: "center",
+    margin: "0 20px",
+    "&>img": {
+      height: "fit-content"
+    }
   },
   title: {
     fontSize: "20px",
@@ -38,9 +42,7 @@ const ServicesStepTitle = ({ step, activeStep, classes, setStep }) => {
       </div>
       <div className={classes.title}>{step.title}</div>
 
-      {doneStep && (
-        <LinkButton className={classes.editButton} clickHandler={editStep} />
-      )}
+      {doneStep && <LinkButton className={classes.editButton} clickHandler={editStep} />}
     </div>
   );
 };

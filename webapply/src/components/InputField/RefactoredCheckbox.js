@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import Check from "./../../assets/images/on.svg";
+import Check from "../../assets/icons/on.png";
 import { updateField } from "../../store/actions/appConfig";
 import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
@@ -41,7 +41,7 @@ const styles = {
     display: "inline-block",
     width: "20px",
     height: "20px",
-    border: "solid 2px #16216a",
+    border: "solid 2px #373737",
     borderRadius: "8px",
     transition: "all 150ms",
     position: "relative",

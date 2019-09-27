@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
-import Check from "./../../assets/images/on.svg";
+import Check from "../../assets/icons/on.png";
 
 const style = {
   checkboxWrapper: {
@@ -36,7 +36,7 @@ const style = {
     display: "inline-block",
     width: "20px",
     height: "20px",
-    border: "solid 2px #16216a",
+    border: "solid 2px #373737",
     borderRadius: "8px",
     transition: "all 150ms",
     position: "relative",
