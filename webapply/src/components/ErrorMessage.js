@@ -1,7 +1,7 @@
 import React from "react";
 import Tooltip from "@material-ui/core/Tooltip";
-import ErrorIcon from "./../assets/images/error.svg";
-import InfoIcon from "@material-ui/icons/InfoOutlined";
+import ErrorIcon from "./../assets/images/error.png";
+import infoIcon from "./../assets/images/info_error.png";
 import { withStyles } from "@material-ui/core/styles";
 
 const style = {
@@ -31,11 +31,11 @@ const ErrorMessage = ({ error, multiLineError, classes }) => {
   return (
     <div className={classes.error}>
       <div className="flexAlignCenter">
-        <img src={ErrorIcon} alt="erorr" />
+        <img src={ErrorIcon} alt="error" />
         <p>{error}</p>
         {!!multiLineError && (
           <Tooltip title={multiLineError} placement="right" className={classes.multiLineError}>
-            <InfoIcon />
+            <img src={infoIcon} alt="info error" />
           </Tooltip>
         )}
       </div>

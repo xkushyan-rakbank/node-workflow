@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import expandMoreIcon from "../assets/icons/arrow-down.png";
 
 const appRootEl = document.getElementById("root");
 
@@ -30,7 +30,7 @@ const styles = {
     left: 530,
     right: 0,
     bottom: 40,
-    zIndex: 3,
+    zIndex: 15,
     display: "flex",
     justifyContent: "center",
     "@media only screen and (max-width: 1300px)": {
@@ -48,8 +48,7 @@ const styles = {
     letterSpacing: "normal"
   },
   expandMoreIc: {
-    color: "#373737",
-    fontSize: "24px",
+    width: "22px",
     marginLeft: 18,
     pointerEvents: "none"
   }
@@ -81,7 +80,7 @@ class BackgroundVideoPlayer extends React.Component {
         <div className={classes.buttonContainer}>
           <Fab variant="extended" className={classes.scrollButton} name={1} onClick={handleClick}>
             Read more
-            <ExpandMoreIcon classes={{ root: classes.expandMoreIc }} />
+            <img src={expandMoreIcon} className={classes.expandMoreIc} alt="scroll down" />
           </Fab>
         </div>
       </div>
