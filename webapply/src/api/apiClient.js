@@ -87,5 +87,14 @@ export default {
         method: "GET"
       });
     }
+  },
+  search: {
+    seaerchApplication: (apiUIrl, data) => {
+      return httpClient.request({
+        url: apiUIrl,
+        method: "POST",
+        data
+      });
+    }
   }
 };

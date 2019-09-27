@@ -4,10 +4,11 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
-import { formStepper } from "../constants";
+import { formStepper, searchProspectStepper } from "./../constants";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import SubmitButton from "./Buttons/SubmitButton";
+import * as loginSelector from "./../store/selectors/loginSelector";
 
 const style = {
   formNav: {
@@ -138,18 +139,30 @@ const AccountInfo = ({ classes, accountType, history }) => {
   );
 };
 
-const FormStepper = ({ step, path }) => (
-  <ul>
-    {formStepper.map(item => (
-      <FormNavigationStep
-        key={item.step}
-        title={item.title}
-        activeStep={path === item.path || path === item.relatedPath}
-        filled={step > item.step}
-      />
-    ))}
-  </ul>
-);
+const FormStepper = ({ step, path, checkLoginStatus }) =>
+  checkLoginStatus ? (
+    <ul>
+      {searchProspectStepper.map(item => (
+        <FormNavigationStep
+          key={item.step}
+          title={item.title}
+          activeStep={path === item.path || path === item.relatedPath}
+          filled={step > item.step}
+        />
+      ))}
+    </ul>
+  ) : (
+    <ul>
+      {formStepper.map(item => (
+        <FormNavigationStep
+          key={item.step}
+          title={item.title}
+          activeStep={path === item.path || path === item.relatedPath}
+          filled={step > item.step}
+        />
+      ))}
+    </ul>
+  );
 
 const getBgImage = (accountType, islamicBanking) => {
   const bgImageUrl =
@@ -190,7 +203,7 @@ class FormNavigation extends React.Component {
   }
 
   render() {
-    const { applicationInfo = {}, location, classes, history } = this.props;
+    const { applicationInfo = {}, location, classes, history, checkLoginStatus } = this.props;
     const { step } = this.state;
     const { accountType, islamicBanking } = applicationInfo;
     const showAccountInfo = new Set([
@@ -205,17 +218,19 @@ class FormNavigation extends React.Component {
         {showAccountInfo ? (
           <AccountInfo classes={classes} accountType={accountType} history={history} />
         ) : (
-          <FormStepper step={step} path={location.pathname} />
+          location.pathname != "/Login" && (
+            <FormStepper step={step} path={location.pathname} checkLoginStatus={checkLoginStatus} />
+          )
         )}
-
-        <Chat />
+        {!checkLoginStatus && <Chat />}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  applicationInfo: state.appConfig.prospect.applicationInfo
+  applicationInfo: state.appConfig.prospect.applicationInfo,
+  checkLoginStatus: loginSelector.checkLoginStatus(state)
 });
 
 export default compose(

@@ -1,8 +1,12 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import routes from "./../routes";
 import logo from "./../assets/images/rakBank.svg";
 import { withStyles } from "@material-ui/core/styles";
+import * as loginSelector from "./../store/selectors/loginSelector";
 
 const styles = {
   header: {
@@ -42,7 +46,7 @@ const styles = {
   }
 };
 
-const Header = ({ classes }) => {
+const Header = ({ classes, checkLoginStatus, getAgentName, location }) => {
   return (
     <header className={classes.header}>
       <Link to={routes.accountsComparison} className={classes.logo}>
@@ -50,11 +54,24 @@ const Header = ({ classes }) => {
       </Link>
       <div className={classes.headerTitle}>
         <div className={classes.headerTitleIn}>
-          <span> RAKstarter Application </span>
+          {checkLoginStatus ? (
+            <span>{getAgentName}</span>
+          ) : (
+            location.pathname != "/Login" && <span> RAKstarter Application </span>
+          )}
         </div>
       </div>
     </header>
   );
 };
 
-export default withStyles(styles)(Header);
+const mapStateToProps = state => ({
+  checkLoginStatus: loginSelector.checkLoginStatus(state),
+  getAgentName: loginSelector.getAgentName(state)
+});
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles),
+  withRouter
+)(Header);
