@@ -45,19 +45,16 @@ const style = {
   }
 };
 
-const TwoSteps = ({ classes, accountType }) => {
+const TwoSteps = ({ classes, accountType, islamicBanking }) => {
   const getGifUrl = () => {
-    switch (accountType) {
-      case "RAKStarter":
-        return overviewRegular;
-      case "Current Account":
-        return overviewIslamic;
-      case "RAKelite":
-        return overviewElite;
-      default:
-        return overviewRegular;
+    if (accountType === "RAKelite") {
+      return overviewElite;
+    } else if (islamicBanking) {
+      return overviewIslamic;
     }
+    return overviewRegular;
   };
+
   return (
     <>
       <div className={classes.firstGroup}>
