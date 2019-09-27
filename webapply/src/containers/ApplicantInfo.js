@@ -86,7 +86,7 @@ class BasicsForm extends React.Component {
           <TextInput
             id="Aplnt.mobileNo"
             selectId="Aplnt.countryCode"
-            select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="USA" />}
+            select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="UAE" />}
           />
 
           {/* <SearchSelect /> */}
