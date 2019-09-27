@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import companyIconSvg from "../assets/images/company-icon.svg";
+import companyIconSvg from "../assets/icons/brief.png";
 
 const style = {
   container: {
@@ -22,9 +22,13 @@ const style = {
     alignItems: "center",
     width: "40px",
     height: "40px",
-    border: "solid 1px #16216a",
+    border: "solid 1px #e9e9ed",
     borderRadius: "50%",
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    "&>img": {
+      height: "unset",
+      width: "20px"
+    }
   },
   contentBox: {
     display: "flex",
