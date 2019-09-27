@@ -1,0 +1,19 @@
+{
+  "errorType": "OTPValidation",
+  "errors": [
+    {
+      "fieldPath": "$.applicantInfo.email",
+      "code": "INVALID",
+      "errorType": "OTPValidation",
+      "message": "There was an error in sending the OTP. Please re-verify your email Id.",
+      "developerText": ""
+    },
+    {
+      "fieldPath": "$.applicantInfo.mobileNo",
+      "code": "INVALID",
+      "errorType": "OTPValidation",
+      "message": "There was an error in sending the OTP. Please re-verify your mobile number.",
+      "developerText": ""
+    }
+  ]
+}

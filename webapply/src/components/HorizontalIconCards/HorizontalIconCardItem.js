@@ -7,7 +7,7 @@ const style = {
     flex: "1 1",
     justifyContent: "center",
     alignItems: "center",
-    minWidth: props => (props.minWidth ? props.minWidth : "0"),
+    minWidth: "285px",
     margin: "10px",
     padding: "27px 20px",
     border: "solid 1px #e8e8e8",
@@ -17,6 +17,9 @@ const style = {
     textAlign: "center",
     "@media only screen and (max-width: 1300px)": {
       padding: "5px 20px"
+    },
+    "@media only screen and (max-height: 800px)": {
+      margin: "5px"
     }
   },
   iconCardText: {

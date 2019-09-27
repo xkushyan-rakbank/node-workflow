@@ -10,6 +10,7 @@ import otp from "./otp";
 import login from "./loginForm";
 import authReducer from "./authReducers";
 import docUploadReducer from "./docUploadReducer";
+import searchProspect from "./searchProspect";
 
 /**
  * @typedef {Object} Store
@@ -31,7 +32,8 @@ const reducers = history =>
     applicationStatus,
     login,
     users: authReducer,
-    uploadedDocs: docUploadReducer
+    uploadedDocs: docUploadReducer,
+    searchProspect
   });
 
 export default reducers;

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import ContainerComeBack from "./ContainerComeBack";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import TextHelpWithLink from "../../components/TextHelpWithLink";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import arrowBackIc from "../../assets/icons/backArrow.png";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 import OtpVerification from "../../components/OtpVerification";
 
@@ -29,7 +29,10 @@ const style = {
     alignItems: "center"
   },
   goBackArrow: {
-    marginRight: 5
+    marginRight: 5,
+    "& img": {
+      marginRight: 5
+    }
   },
   goBack: {
     color: "#373737",
@@ -91,7 +94,7 @@ class ComeBackVerification extends React.Component {
             justify="flex-end"
           >
             <div className={classes.goBackContainer}>
-              <KeyboardBackspaceIcon className={classes.goBackArrow} />
+              <img src={arrowBackIc} alt="step to back" />
               <Link to="#">
                 <Typography element="span" variant="subtitle1" classes={{ root: classes.goBack }}>
                   Go back

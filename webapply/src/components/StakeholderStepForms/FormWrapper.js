@@ -11,8 +11,8 @@ const styles = {
   buttonWrapper: {
     width: "100%",
     display: "flex",
-    justifyContent: "center",
-    margin: "25px 0 40px"
+    justifyContent: "flex-end",
+    margin: "40px 0"
   }
 };
 

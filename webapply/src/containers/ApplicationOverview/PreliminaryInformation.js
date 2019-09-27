@@ -39,9 +39,10 @@ const mockData = [
 const style = {
   answers: {
     borderRadius: "8px",
-    overflow: "hidden"
+    overflow: "auto"
   },
   title: {
+    minWidth: "500px",
     padding: "18px 24px",
     fontSize: "16px",
     fontWeight: "600",
@@ -51,10 +52,17 @@ const style = {
     marginBottom: "50px",
     fontSize: "12px",
     textAlign: "center",
-    color: "#888888"
+    color: "#888888",
+    "@media only screen and (max-height: 800px)": {
+      marginBottom: "15px"
+    }
   },
   cardsWrapper: {
     padding: "20px 0 10px 0"
+  },
+  iconsWrapper: {
+    flexWrap: "nowrap",
+    overflowX: "auto"
   }
 };
 
@@ -65,7 +73,7 @@ const PreliminaryInformation = ({ classes }) => (
       info="Before we start, make sure you have these documents at hand"
     />
     <div className={classes.cardsWrapper}>
-      <IconCardsContainer>
+      <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
         <IconCardItem minWidth="100px" text="Trade License">
           <img src={license} alt="trade-license" />
         </IconCardItem>

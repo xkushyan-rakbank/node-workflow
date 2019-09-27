@@ -1,3 +1,5 @@
+import isUndefined from "lodash/isUndefined";
+import isArray from "lodash/isArray";
 import PersonalInformation from "./components/StakeholderStepForms/PersonalInformation";
 import SignatoryRights from "./components/StakeholderStepForms/SignatoryRights";
 import Shareholding from "./components/StakeholderStepForms/Shareholding";
@@ -9,8 +11,11 @@ import Channels from "./components/ServicesStepForms/Channels";
 import CompanyDetails from "./components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "./components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "./components/AboutCompanyStepForms/LicenseInformation";
-import isUndefined from "lodash/isUndefined";
-import isArray from "lodash/isArray";
+import accountDetails from "./assets/icons/account_details.png";
+import signingPreferences from "./assets/icons/signing_preferences.png";
+import channels from "./assets/icons/channels.png";
+import valueAddedServices from "./assets/icons/value_added_services.png";
+import decline from "./assets/gif/declined_regular.gif";
 
 import routes from "./routes";
 
@@ -125,18 +130,42 @@ export const formStepper = [
   { step: 6, title: "Select services", path: routes.selectServices }
 ];
 
+export const searchProspectStepper = [
+  {
+    step: 1,
+    title: "Search Applications",
+    path: routes.searchProspect
+  }
+];
+
 export const servicesSteps = [
   {
     step: 1,
     title: "Account details",
-    component: AccountDetails
+    component: AccountDetails,
+    icon: accountDetails
   },
   {
     step: 2,
     title: "Signing preferences",
-    component: SigningPreferences
+    component: SigningPreferences,
+    icon: signingPreferences
   },
-  { step: 3, title: "Channels", component: Channels }
+  { step: 3, title: "Channels", component: Channels, icon: channels },
+  {
+    step: 4,
+    title: "Value added services",
+    component: Channels,
+    icon: valueAddedServices
+  }
 ];
 
 export const digitRegExp = new RegExp("^[0-9]$");
+
+export const applicationStatus = {
+  serverError: {
+    reason:
+      "We're sorry, a server error occurred. Please wait a bit and try again. Thank you for your interest in RAKBANK.",
+    icon: decline
+  }
+};

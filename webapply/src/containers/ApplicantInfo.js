@@ -6,8 +6,9 @@ import BackLink from "../components/Buttons/BackLink";
 import ErrorBoundary from "../components/ErrorBoundary";
 import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
+// import SearchSelect from "../components/InputField/SearchSelect";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
-import ApplicationStatus from "../components/ApplicationStatus";
+// import ApplicationStatus from "../components/ApplicationStatus";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
@@ -69,50 +70,41 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const {
-      classes,
-      lastInputValue,
-      isProceed,
-      screeningResults: { screeningReason }
-    } = this.props;
+    const { classes, lastInputValue } = this.props;
     return (
       <>
-        {isProceed ? (
-          <>
-            <h2>Let’s Start with the Basics</h2>
-            <p className="formDescription">
-              First things first, you need a login, so you can come back to your application later.
-            </p>
+        <h2>Let’s Start with the Basics</h2>
+        <p className="formDescription">
+          First things first, you need a login, so you can come back to your application later.
+        </p>
 
-            <form noValidate onSubmit={this.submitForm}>
-              <TextInput id="Aplnt.fullName" />
+        <form noValidate onSubmit={this.submitForm}>
+          <TextInput id="Aplnt.fullName" />
 
-              <TextInput id="Aplnt.email" />
+          <TextInput id="Aplnt.email" />
 
-              <TextInput
-                id="Aplnt.mobileNo"
-                selectId="Aplnt.countryCode"
-                select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="USA" />}
-              />
+          <TextInput
+            id="Aplnt.mobileNo"
+            selectId="Aplnt.countryCode"
+            select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="USA" />}
+          />
 
-              <ErrorBoundary className={classes.reCaptchaContainer}>
-                <ReCaptcha
-                  onVerify={this.handleReCaptchaVerify}
-                  onExpired={this.handleReCaptchaExpired}
-                  onError={this.handleReCaptchaError}
-                />
-              </ErrorBoundary>
+          {/* <SearchSelect /> */}
 
-              <div className="linkContainer">
-                <BackLink path={routes.detailedAccount} />
+          <ErrorBoundary className={classes.reCaptchaContainer}>
+            <ReCaptcha
+              onVerify={this.handleReCaptchaVerify}
+              onExpired={this.handleReCaptchaExpired}
+              onError={this.handleReCaptchaError}
+            />
+          </ErrorBoundary>
 
-                <SubmitButton label="Next Step" justify="flex-end" disabled={!lastInputValue} />
-              </div>
-            </form>
-          </>
-        ) : (
-          <ApplicationStatus reason={screeningReason} />
-        )}
+          <div className="linkContainer">
+            <BackLink path={routes.detailedAccount} />
+
+            <SubmitButton label="Next Step" justify="flex-end" disabled={!lastInputValue} />
+          </div>
+        </form>
       </>
     );
   }
@@ -124,6 +116,7 @@ const mapStateToProps = state => ({
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
   lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
   isProceed: appConfigSelectors.getProceedStatus(state),
+  serverError: appConfigSelectors.getServerErrorStatus(state),
   screeningResults: appConfigSelectors.getScreeningResults(state),
   applicationInfo: appConfigSelectors.getApplicationInfo(state)
   // isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),

@@ -16,6 +16,9 @@ export const getProspectId = state => getGeneralInfo(state).prospectId;
 
 export const getProceedStatus = state => state.applicationStatus.isProceed;
 
+export const getServerErrorStatus = state => state.applicationStatus.serverErorr;
+
 export const getScreeningResults = state => state.applicationStatus.screeningResults;
 
 export const getLoginParam = state => state.appConfig.login;
+export const getSearchInfo = state => state.appConfig.searchInfo || {};

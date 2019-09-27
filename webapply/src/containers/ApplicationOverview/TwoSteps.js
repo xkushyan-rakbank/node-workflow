@@ -45,19 +45,16 @@ const style = {
   }
 };
 
-const TwoSteps = ({ classes, accountType }) => {
+const TwoSteps = ({ classes, accountType, islamicBanking }) => {
   const getGifUrl = () => {
-    switch (accountType) {
-      case "RAKStarter":
-        return overviewRegular;
-      case "Current Account":
-        return overviewIslamic;
-      case "RAKelite":
-        return overviewElite;
-      default:
-        return overviewRegular;
+    if (accountType === "RAKelite") {
+      return overviewElite;
+    } else if (islamicBanking) {
+      return overviewIslamic;
     }
+    return overviewRegular;
   };
+
   return (
     <>
       <div className={classes.firstGroup}>
@@ -66,10 +63,10 @@ const TwoSteps = ({ classes, accountType }) => {
         </div>
         <div className={classes.indent}>
           <IconCardsContainer>
-            <IconCardItem minWidth="260px" title="First" text="You fill a couple of questions">
+            <IconCardItem minWidth="200px" title="First" text="You fill a couple of questions">
               <img src={interrogation} alt="interrogation" />
             </IconCardItem>
-            <IconCardItem minWidth="260px" title="Then" text="We call you to sign the account">
+            <IconCardItem minWidth="200px" title="Then" text="We call you to sign the account">
               <img src={signature} alt="signature" />
             </IconCardItem>
           </IconCardsContainer>

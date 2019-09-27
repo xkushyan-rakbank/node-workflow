@@ -11,6 +11,10 @@ const style = {
   }
 };
 
-const InfoNote = ({ text, classes }) => <span className={classes.note}>{text}</span>;
+const InfoNote = ({ text, classes, ...props }) => (
+  <span className={classes.note} {...props}>
+    {text}
+  </span>
+);
 
 export default withStyles(style)(InfoNote);

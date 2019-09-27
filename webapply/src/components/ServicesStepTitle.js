@@ -1,57 +1,48 @@
 import React from "react";
-import cx from "classnames";
 import { withStyles } from "@material-ui/core";
-import SectionTitle from "./SectionTitle";
-import DoneIcon from "./DoneIcon";
+import LinkButton from "./Buttons/LinkButton";
 
 const styles = {
   wrapper: {
     display: "flex",
-    justifyContent: "space-between"
-  },
-  notActiveStep: {
-    borderColor: "rgba(230, 230, 230, 0.5)",
-    borderWidth: "1px 0",
-    borderStyle: "solid",
-    padding: "14px 0",
-    marginTop: "-1px"
-  },
-  titleWrapper: { margin: 0 },
-  activeTitle: {
-    margin: "34px 0 11px"
-  },
-  disabled: {
-    fontSize: "16px",
-    color: "#263d4c",
-    fontWeight: "normal",
-
-    "&>div": {
-      opacity: 0.5
-    },
-    "&>a": {
-      opacity: 0.8,
-      color: "#263d4c",
-      textDecoration: "underline"
-    }
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding: "20px 0"
   },
   icon: {
-    opacity: 0.8
+    width: "40px",
+    height: "40px",
+    border: "solid 1.5px #e9e9ed",
+    borderRadius: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "0 20px",
+    "&>img": {
+      height: "fit-content"
+    }
+  },
+  title: {
+    fontSize: "20px",
+    fontWeight: 600,
+    color: "#373737"
+  },
+  editButton: {
+    margin: "0 40px 0 auto"
   }
 };
 
-const ServicesStepTitle = ({ step, activeStep, classes }) => {
+const ServicesStepTitle = ({ step, activeStep, classes, setStep }) => {
   const doneStep = step.step < activeStep;
-  const currentStep = activeStep === step.step;
+  const editStep = () => setStep(step.step);
   return (
-    <div className={cx(classes.wrapper, currentStep ? classes.activeTitle : classes.notActiveStep)}>
-      <SectionTitle
-        // eslint-disable-next-line
-        title={doneStep ? <a>{step.title}</a> : <div>{step.title}</div>}
-        className={cx(classes.titleWrapper, {
-          [classes.disabled]: !currentStep
-        })}
-      />
-      {doneStep && <DoneIcon className={classes.icon} />}
+    <div className={classes.wrapper}>
+      <div className={classes.icon}>
+        <img src={step.icon} alt="" />
+      </div>
+      <div className={classes.title}>{step.title}</div>
+
+      {doneStep && <LinkButton className={classes.editButton} clickHandler={editStep} />}
     </div>
   );
 };

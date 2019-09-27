@@ -91,10 +91,10 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -825,7 +825,7 @@
       ],
       "default": "AED",
       "description": "Multi-selection of currency",
-      "title": "You will get one RAKstarter account number for each currency you select."
+      "title": "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval."
     },
     "Acnt.accountPurpose": {
       "criteria": {
@@ -954,7 +954,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "I don't wish to receive interest from my account",
       "placeholder": null,
       "path": "$.prospect.accountInfo[*].receiveInterest",
       "name": "prospect.accountInfo[*].receiveInterest",
@@ -1195,7 +1195,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "City",
+      "label": "Emirate / City",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.branchCity",
       "name": "prospect.organizationInfo.branchCity",
@@ -1204,28 +1204,64 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "cities1",
-          "key": "cities1",
-          "value": "cities1",
-          "displayText": "cities1"
+          "code": "Abu Dhabi",
+          "key": "Abu Dhabi",
+          "value": "Abu Dhabi",
+          "displayText": "Abu Dhabi"
         },
         {
-          "code": "cities2",
-          "key": "cities2",
-          "value": "cities2",
-          "displayText": "cities2"
+          "code": "Ajman",
+          "key": "Ajman",
+          "value": "Ajman",
+          "displayText": "Ajman"
         },
         {
-          "code": "cities3",
-          "key": "cities3",
-          "value": "cities3",
-          "displayText": "cities3"
+          "code": "Al Ain",
+          "key": "Al Ain",
+          "value": "Al Ain",
+          "displayText": "Al Ain"
         },
         {
-          "code": "cities4",
-          "key": "cities4",
-          "value": "cities4",
-          "displayText": "cities4"
+          "code": "Dubai",
+          "key": "Dubai",
+          "value": "Dubai",
+          "displayText": "Dubai"
+        },
+        {
+          "code": "Fujairah",
+          "key": "Fujairah",
+          "value": "Fujairah",
+          "displayText": "Fujairah"
+        },
+        {
+          "code": "Kalba",
+          "key": "Kalba",
+          "value": "Kalba",
+          "displayText": "Kalba"
+        },
+        {
+          "code": "Khorfakkan",
+          "key": "Khorfakkan",
+          "value": "Khorfakkan",
+          "displayText": "Khorfakkan"
+        },
+        {
+          "code": "Ras Al Khaimah",
+          "key": "Ras Al Khaimah",
+          "value": "Ras Al Khaimah",
+          "displayText": "Ras Al Khaimah"
+        },
+        {
+          "code": "Sharjah",
+          "key": "Sharjah",
+          "value": "Sharjah",
+          "displayText": "Sharjah"
+        },
+        {
+          "code": "Umm Al Quwain",
+          "key": "Umm Al Quwain",
+          "value": "Umm Al Quwain",
+          "displayText": "Umm Al Quwain"
         }
       ],
       "description": "get the values from datalist API"
@@ -7048,7 +7084,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Applicants Name",
+      "label": "Applicant Name",
       "placeholder": null,
       "path": "$.searchInfo.fname",
       "name": "searchInfo.fname",
@@ -7122,9 +7158,9 @@
       "applicable": null,
       "label": "Mobile Number",
       "placeholder": null,
-      "path": "$.prospect.searchInfo.mobileNo",
-      "name": "prospect.searchInfo.mobileNo",
-      "required": true,
+      "path": "$.searchInfo.mobileNo",
+      "name": "searchInfo.mobileNo",
+      "required": false,
       "datalistId": null,
       "readonlyFor": [],
       "description": "mobile number",
@@ -7146,8 +7182,8 @@
       "applicable": null,
       "label": "RAKTrack Number",
       "placeholder": null,
-      "path": "$.prospect.searchInfo.raktrackNumber",
-      "name": "prospect.searchInfo.raktrackNumber",
+      "path": "$.searchInfo.raktrackNumber",
+      "name": "searchInfo.raktrackNumber",
       "datalistId": null,
       "readonlyFor": [],
       "description": "lead Number of the applicant",
@@ -7168,12 +7204,13 @@
       "applicable": null,
       "label": "Trade License Number",
       "placeholder": null,
-      "path": "$.prospect.searchInfo.tradeLicenseNo",
-      "name": "prospect.searchInfo.tradeLicenseNo",
+      "path": "$.searchInfo.tradeLicenseNo",
+      "name": "searchInfo.tradeLicenseNo",
       "datalistId": null,
       "readonlyFor": [],
       "description": "tradeLicenseNo of the applicant",
-      "maxlength": "50"
+      "pattern": "^[a-zA-Z0-9]*$",
+      "maxlength": "20"
     },
     "Search.email": {
       "criteria": {
@@ -7190,8 +7227,8 @@
       "applicable": null,
       "label": "E-mail Address",
       "placeholder": null,
-      "path": "$.prospect.searchInfo.email",
-      "name": "prospect.searchInfo.email",
+      "path": "$.searchInfo.email",
+      "name": "searchInfo.email",
       "required": false,
       "datalistId": null,
       "readonlyFor": [],
@@ -7243,7 +7280,7 @@
       "required": true,
       "type": "password",
       "datalistId": null,
-      "pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
+      "pattern": "^([a-zA-Z0-9@*#]{8,15})$",
       "readonlyFor": [],
       "description": "Password of the applicant",
       "format": "application/data",
@@ -7342,13 +7379,13 @@
         "accountType": "",
         "accountSubType": "",
         "accountNo": "",
-        "accountCurrencies": "",
+        "accountCurrencies": [],
         "accountPurpose": "",
         "debitCardApplied": true,
         "chequeBookApplied": true,
         "eStatements": true,
         "mailStatements": false,
-        "receiveInterest": true,
+        "receiveInterest": false,
         "deliverByCourier": true
       }
     ],
@@ -7814,19 +7851,6 @@
       "freeField3": "",
       "freeField4": "",
       "freeField5": ""
-    },
-    "searchInfo": {
-      "userType": "",
-      "fname": "",
-      "countryCode": "",
-      "mobileNo": "",
-      "raktrackNumber": "",
-      "tradeLicenseNo": "",
-      "email": ""
-    },
-    "Login": {
-      "userName": "",
-      "password": ""
     }
   }
 }
