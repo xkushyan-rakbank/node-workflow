@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
-
 import companyIconSvg from "../../assets//images/company-icon.svg";
 
 const style = {
@@ -122,7 +121,8 @@ class UploadDocuments extends Component {
     this.state = {
       selectedFile: null,
       enableUpload: true,
-      fileError: false
+      fileError: false,
+      isUploadSucess: false
     };
     this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
     this.fileUploadCancel = this.fileUploadCancel.bind(this);
@@ -132,7 +132,8 @@ class UploadDocuments extends Component {
     this.setState(
       {
         selectedFile: event.target.files[0],
-        enableUpload: false
+        enableUpload: false,
+        isUploadSucess: false
       },
       () => {
         let config = {
@@ -155,7 +156,8 @@ class UploadDocuments extends Component {
           )
           .then(res => {
             this.setState({
-              enableUpload: false
+              enableUpload: false,
+              isUploadSucess: true
             });
             console.log(res);
           })
@@ -171,13 +173,35 @@ class UploadDocuments extends Component {
   }
 
   fileUploadCancel(e) {
-    console.log("cancel button clicked");
+    let CancelToken = axios.CancelToken;
+    axios({
+      method: "post",
+      url: "http://10.86.138.206:8080/docUploader/banks/RAK/prospects/700/documents",
+      cancelToken: new CancelToken(function executor(c) {
+        // An executor function receives a cancel function as a parameter
+      })
+    })
+      .then(() => console.log("success"))
+      .catch(function(err) {
+        if (axios.isCancel(err)) {
+          console.log("im canceled");
+        } else {
+          console.log("im server response error");
+        }
+      });
   }
 
   render() {
     const docType = this.props.companyDoc;
     return (
       <div className={this.props.classes.fileUploadPlaceholder}>
+        <input
+          style={{ display: "none" }}
+          type="file"
+          onChange={this.fileSelectedHandler}
+          ref={fileInput => (this.fileInput = fileInput)}
+          multiple
+        />
         {this.state.enableUpload ? (
           <>
             <div className={this.props.classes.contentBox}>
@@ -190,43 +214,47 @@ class UploadDocuments extends Component {
                 </p>
               )}
             </div>
-            <input
-              style={{ display: "none" }}
-              type="file"
-              onChange={this.fileSelectedHandler}
-              ref={fileInput => (this.fileInput = fileInput)}
-              multiple
-            />
+
             <p
               className={this.props.classes.controlsBox}
               justify="flex-end"
               onClick={() => this.fileInput.click()}
             >
-              {" "}
-              Upload{" "}
-            </p>{" "}
+              Upload
+            </p>
           </>
         ) : (
           <>
             <div>{this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
             <div className={this.props.classes.contentBox}>
               <div className={this.props.classes.uploadFileName}>
-                {" "}
                 {this.state.selectedFile.name}
                 <span className={this.props.classes.SignatoryRights}>
                   {this.state.selectedFile.size} Bytes
                 </span>
               </div>
-              <div className={this.props.classes.uploadFileName}>
-                <div id="Progress_Status">
-                  <div id="myprogressBar"></div>
+              {this.state.isUploadSucess ? null : (
+                <div className={this.props.classes.uploadFileName}>
+                  <div id="Progress_Status">
+                    <div id="myprogressBar"></div>
+                  </div>
+                  <div id="progressStatus"></div>
+                  <div className={this.props.classes.cancel} onClick={this.fileUploadCancel}>
+                    {" "}
+                    X{" "}
+                  </div>
                 </div>
-                <div id="progressStatus"></div>
-                <div className={this.props.classes.cancel} onClick={this.fileUploadCancel}>
-                  X
-                </div>
-              </div>
+              )}
             </div>
+            {this.state.isUploadSucess ? (
+              <p
+                className={this.props.classes.controlsBox}
+                justify="flex-end"
+                onClick={() => this.fileInput.click()}
+              >
+                Upload
+              </p>
+            ) : null}
           </>
         )}
       </div>

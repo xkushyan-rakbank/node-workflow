@@ -1,7 +1,4 @@
-import {
-  DOC_UPLOADER_SUCESS,
-  DOC_UPLOADER_ERROR
-} from "../actions/uploadDocActions";
+import { DOC_UPLOADER_SUCESS, DOC_UPLOADER_ERROR } from "../actions/uploadDocActions";
 
 const initialState = {
   docs: []

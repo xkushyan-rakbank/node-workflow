@@ -8,6 +8,7 @@ import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
 import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
 import { docUpload } from "../store/actions/uploadDocActions";
+import BackLink from "../components/Buttons/BackLink";
 const style = {
   sectionContainer: {
     marginBottom: "40px"
@@ -21,14 +22,23 @@ const style = {
     height: "940px"
   }
 };
-
 class FileUploader extends React.Component {
-  static defaultProps = {
-    signatories: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDisabled: true,
+      uploadDocCount: 5
+    };
+  }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.docUpload();
+    if (this.state.uploadDocCount === 6) {
+      console.log(this.props.uploadDocCount);
+      this.setState({
+        isDisabled: false
+      });
+    }
   }
 
   render() {
@@ -48,12 +58,14 @@ class FileUploader extends React.Component {
           <SignatoriesDocuments authUsers={authUsers} />
         </div>
         <div className="linkContainer">
-          <Link to={routes.finalQuestions}>
-            <p className="formGoback">Go Back</p>
-          </Link>
-          <Link to={routes.selectServices}>
-            <SubmitButton label="Next Step" justify="flex-end" />
-          </Link>
+          <BackLink path={routes.finalQuestions} />
+          {this.state.isDisabled ? (
+            <SubmitButton label="Next Step" justify="flex-end" disabled={true} />
+          ) : (
+            <Link to={routes.selectServices}>
+              <SubmitButton label="Next Step" justify="flex-end" />
+            </Link>
+          )}
         </div>
       </>
     );
