@@ -32,14 +32,12 @@ public class ApiRequestForwarder {
 
 	private String dehBaseUrl = null;
 
-	
-
 	@PostConstruct
 	public void init() {
 		JsonNode appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
 		dehURIs = appConfigJSON.get("DehURIs");
 		dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
-		
+
 	}
 
 	@PostMapping(value = "/banks/RAK/usertypes/sme/prospects/", produces = "application/json", consumes = "application/json")

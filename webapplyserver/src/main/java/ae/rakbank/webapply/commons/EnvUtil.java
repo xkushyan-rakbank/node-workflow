@@ -8,7 +8,9 @@ public class EnvUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(EnvUtil.class);
 
-	private static String env = System.getenv("ENV");
+	private static String env = System.getenv("WEB_APPLY_ENV");
+
+	private static String configDir = System.getenv("WEB_APPLY_CONFIG_DIR");
 
 	static {
 		if (StringUtils.isBlank(env)) {
@@ -22,6 +24,10 @@ public class EnvUtil {
 
 	public static String getEnv() {
 		return env;
+	}
+
+	public static String getConfigDir() {
+		return configDir;
 	}
 
 	public static boolean isProd() {
