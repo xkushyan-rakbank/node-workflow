@@ -208,6 +208,10 @@ class TableCompare extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { selectedAccount } = nextProps;
+    this.handleHighlightSelectedAccount(selectedAccount);
+  }
+
+  handleHighlightSelectedAccount = selectedAccount => {
     switch (selectedAccount) {
       case "RAKstarter":
         this.setState({
@@ -229,7 +233,7 @@ class TableCompare extends React.Component {
           offset: this.CurrentAccount.current.offsetLeft
         });
     }
-  }
+  };
 
   handleClick = accountType => {
     const { history, updateProspect } = this.props;
@@ -242,16 +246,33 @@ class TableCompare extends React.Component {
 
   handleScroll = e => {
     const { currentTarget } = e;
-    const hasHorizontalScrollbar = currentTarget.scrollWidth < 780;
+    // const hasHorizontalScrollbar = currentTarget.scrollWidth < 780;
     const hasVerticalScrollbar = currentTarget.scrollHeight < 540;
-    if (hasHorizontalScrollbar || hasVerticalScrollbar) {
+    if (hasVerticalScrollbar) {
       e.stopPropagation();
     }
+  };
+
+  handleHover = e => {
+    const { currentTarget } = e;
+    this.handleHighlightSelectedAccount(currentTarget.dataset.name);
   };
 
   render() {
     const { classes } = this.props;
     const { offset } = this.state;
+
+    const StyledTableHeaderWitHoverHandler = ({ name, text }) => (
+      <StyledTableHeader data-name={name} onMouseEnter={this.handleHover}>
+        {text}
+      </StyledTableHeader>
+    );
+
+    const StyledTableCellWitHoverHandler = ({ name, ...props }) => (
+      <StyledTableCell data-name={name} {...props} onMouseEnter={this.handleHover}>
+        {props.children}
+      </StyledTableCell>
+    );
 
     return (
       <Paper classes={{ root: classes.paperRoot }} onWheel={this.handleScroll}>
@@ -268,9 +289,9 @@ class TableCompare extends React.Component {
               <TableHead style={{ position: "relative" }}>
                 <TableRow classes={{ head: classes.tableHead }}>
                   <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
-                  <StyledTableHeader>RAKStarter</StyledTableHeader>
-                  <StyledTableHeader>Current Account</StyledTableHeader>
-                  <StyledTableHeader>RAKelite</StyledTableHeader>
+                  <StyledTableHeaderWitHoverHandler name="RAKstarter" text="RAKStarter" />
+                  <StyledTableHeaderWitHoverHandler name="Current Account" text="Current Account" />
+                  <StyledTableHeaderWitHoverHandler name="RAKelite" text="RAKelite" />
                 </TableRow>
               </TableHead>
 
@@ -285,21 +306,24 @@ class TableCompare extends React.Component {
                     >
                       {row.name}
                     </TableCell>
-                    <StyledTableCell>
+
+                    <StyledTableCellWitHoverHandler name="RAKstarter">
                       <span>{row.starter.text}</span>
                       <span>{row.starter.info}</span>
                       {row.starter.ic && <img src={row.starter.ic} alt="" />}
-                    </StyledTableCell>
-                    <StyledTableCell>
+                    </StyledTableCellWitHoverHandler>
+
+                    <StyledTableCellWitHoverHandler name="Current Account">
                       <span>{row.currentAccount.text}</span>
                       <span>{row.currentAccount.info}</span>
                       {row.currentAccount.ic && <img src={row.currentAccount.ic} alt="" />}
-                    </StyledTableCell>
-                    <StyledTableCell>
+                    </StyledTableCellWitHoverHandler>
+
+                    <StyledTableCellWitHoverHandler name="RAKelite">
                       <span>{row.elite.text}</span>
                       <span>{row.elite.info}</span>
                       {row.elite.ic && <img src={row.elite.ic} alt="" />}
-                    </StyledTableCell>
+                    </StyledTableCellWitHoverHandler>
                   </StyledTableRow>
                 ))}
 
@@ -307,7 +331,12 @@ class TableCompare extends React.Component {
                   <TableCell component="th" scope="row">
                     {" "}
                   </TableCell>
-                  <StyledTableCell ref={this.RAKStarter}>
+
+                  <StyledTableCell
+                    ref={this.RAKStarter}
+                    name="RAKstarter"
+                    onMouseEnter={this.handleHover}
+                  >
                     <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("RAKStarter")}
@@ -317,7 +346,11 @@ class TableCompare extends React.Component {
                       }}
                     />
                   </StyledTableCell>
-                  <StyledTableCell ref={this.CurrentAccount}>
+                  <StyledTableCell
+                    ref={this.CurrentAccount}
+                    name="Current Account"
+                    onMouseEnter={this.handleHover}
+                  >
                     <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("Current Account")}
@@ -327,7 +360,11 @@ class TableCompare extends React.Component {
                       }}
                     />
                   </StyledTableCell>
-                  <StyledTableCell ref={this.RAKElite}>
+                  <StyledTableCell
+                    ref={this.RAKElite}
+                    data-name="RAKelite"
+                    onMouseEnter={this.handleHover}
+                  >
                     <ContainedButton
                       label="Read more"
                       handleClick={() => this.handleClick("RAKelite")}

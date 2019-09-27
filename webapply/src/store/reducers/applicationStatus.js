@@ -1,7 +1,8 @@
 import {
   APPLICATION_STATUS_PROCEED,
   APPLICATION_STATUS_STOP,
-  APPLICATION_STATUS_SERVER_ERROR
+  APPLICATION_STATUS_SERVER_ERROR,
+  APPLICATION_STATUS_RESET
 } from "./../actions/applicationStatus";
 
 const initialState = {
@@ -28,6 +29,13 @@ const applicationStatusReducer = (state = initialState, action) => {
         ...state,
         isProceed: false,
         screeningResults: action.screeningResults[0] // tmp - clarify in Dhanya why array !!!!
+      };
+    case APPLICATION_STATUS_RESET:
+      return {
+        ...state,
+        isProceed: true,
+        serverErorr: false,
+        screeningResults: {}
       };
     default:
       return state;

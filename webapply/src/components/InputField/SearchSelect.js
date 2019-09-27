@@ -9,7 +9,8 @@ const styles = {
     height: "56px",
     borderRadius: "8px",
     border: "solid 1px #e9e9ed",
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    position: "relative"
   },
   serchSelectButton: {
     height: "100%",
@@ -51,6 +52,14 @@ const styles = {
     right: 0,
     position: "fixed",
     zIndex: 0
+  },
+  selectWrapper: {
+    backgroundColor: "white",
+    width: "100%",
+    borderRadius: 4,
+    boxShadow: "0 0 0 1px hsla(218, 50%, 10%, 0.1), 0 4px 11px hsla(218, 50%, 10%, 0.1)",
+    position: "absolute",
+    zIndex: 2
   }
 };
 
@@ -93,7 +102,7 @@ class SearchSelect extends React.Component<> {
         </button>
 
         {isOpen ? (
-          <div>
+          <div className={classes.selectWrapper}>
             <Select
               autoFocus
               backspaceRemovesValue={false}
