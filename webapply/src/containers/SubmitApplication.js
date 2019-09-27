@@ -1,9 +1,9 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import WorkOutlined from "@material-ui/icons/WorkOutlined";
 import Checkbox from "../components/InputField/Checkbox";
 import Button from "../components/Buttons/SubmitButton";
 import FormTitle from "../components/FormTitle";
+import brief from "../assets/icons/brief.png";
 
 const style = {
   checkboxesWrapper: {
@@ -72,7 +72,7 @@ const SubmitApplication = props => {
       />
       <div className={classes.card}>
         <div className={classes.icon}>
-          <WorkOutlined />
+          <img src={brief} alt="brief" width={24} height={24} />
         </div>
         <div className={classes.mainTitle}>Designit Arabia</div>
         <div className={classes.grayText}>RAKstarter account</div>

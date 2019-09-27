@@ -16,7 +16,7 @@ const style = {
 
 class SelectServices extends React.Component {
   state = {
-    canSubmit: false,
+    canSubmit: true,
     step: 1
   };
 
@@ -40,8 +40,8 @@ class SelectServices extends React.Component {
       <>
         <h2>Services for your account</h2>
         <p className="formDescription">
-          Enough of us asking. Now it’s your turn to say which services you
-          want, whether it is foreign currencies, cards or chequebooks.
+          Enough of us asking. Now it’s your turn to say which services you want, whether it is
+          foreign currencies, cards or chequebooks.
         </p>
 
         <div>
@@ -49,10 +49,7 @@ class SelectServices extends React.Component {
             const Component = item.component;
             const stepData = omit(item, "component");
             return (
-              <div
-                key={item.title}
-                className={cx("paper", classes.stepWrapper)}
-              >
+              <div key={item.title} className={cx("paper", classes.stepWrapper)}>
                 <ServicesStepTitle
                   step={stepData}
                   activeStep={this.state.step}
@@ -60,10 +57,7 @@ class SelectServices extends React.Component {
                 />
                 {this.state.step === item.step && (
                   <div className={classes.formWrapper}>
-                    <Component
-                      goToNext={this.handleContinue}
-                      activeStep={this.state.step}
-                    />
+                    <Component goToNext={this.handleContinue} activeStep={this.state.step} />
                   </div>
                 )}
               </div>
