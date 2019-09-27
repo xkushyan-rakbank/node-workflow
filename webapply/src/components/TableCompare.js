@@ -242,9 +242,9 @@ class TableCompare extends React.Component {
 
   handleScroll = e => {
     const { currentTarget } = e;
-    const hasHorizontalScrollbar = currentTarget.scrollWidth < 780;
+    // const hasHorizontalScrollbar = currentTarget.scrollWidth < 780;
     const hasVerticalScrollbar = currentTarget.scrollHeight < 540;
-    if (hasHorizontalScrollbar || hasVerticalScrollbar) {
+    if (hasVerticalScrollbar) {
       e.stopPropagation();
     }
   };
