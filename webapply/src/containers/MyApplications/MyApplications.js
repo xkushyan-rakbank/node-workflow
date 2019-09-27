@@ -5,10 +5,10 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-import list_ic from "../../assets/icons/list_white_ic.svg";
-import list_gray_ic from "../../assets/icons/list_gray_ic.svg";
-import grid_ic from "../../assets/icons/grid_grey_ic.svg";
-import grid_white_ic from "../../assets/icons/grid_white_ic.svg";
+import list_ic from "../../assets/icons/list_white_ic.png";
+import list_gray_ic from "../../assets/icons/list_gray_ic.png";
+import grid_ic from "../../assets/icons/grid_grey_ic.png";
+import grid_white_ic from "../../assets/icons/grid_white_ic.png";
 
 import ContainerComeBack from "../ComeBack/ContainerComeBack";
 import { mockDataMyCurrentApplication } from "../../agent/MyApplications";

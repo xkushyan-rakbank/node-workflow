@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import check_ic from "../assets/icons/check_outline_ic.svg";
+import check_ic from "../assets/images/check.png";
 import ContinueButton from "./Buttons/ContinueButton";
 
 const style = {
