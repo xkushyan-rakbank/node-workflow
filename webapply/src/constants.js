@@ -130,6 +130,14 @@ export const formStepper = [
   { step: 6, title: "Select services", path: routes.selectServices }
 ];
 
+export const searchProspectStepper = [
+  {
+    step: 1,
+    title: "Search Applications",
+    path: routes.searchProspect
+  }
+];
+
 export const servicesSteps = [
   {
     step: 1,

@@ -6,6 +6,7 @@ import aboutCompanySaga from "./aboutCompany";
 import otpSaga from "./otp";
 import loginForm from "./loginForm";
 import uploadDoc from "./uploadDoc";
+import searchProspectSaga from "./searchProspect";
 
 export default function*() {
   yield all([
@@ -15,6 +16,7 @@ export default function*() {
     fork(applicantInfoSaga),
     fork(aboutCompanySaga),
     fork(loginForm),
-    fork(uploadDoc)
+    fork(uploadDoc),
+    fork(searchProspectSaga)
   ]);
 }

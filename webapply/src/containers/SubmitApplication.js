@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core";
 import WorkOutlined from "@material-ui/icons/WorkOutlined";
 import Checkbox from "../components/InputField/Checkbox";
 import Button from "../components/Buttons/SubmitButton";
+import FormTitle from "../components/FormTitle";
 
 const style = {
   checkboxesWrapper: {
@@ -65,15 +66,10 @@ const SubmitApplication = props => {
   const { classes } = props;
   return (
     <>
-      <div className="centeredText">
-        <h2>Submit application</h2>
-        <p className="formDescription">
-          And just like that, we have reached the end!
-          <br />
-          Here’s the overview of what you’re applying for.
-        </p>
-      </div>
-
+      <FormTitle
+        title="Submit application"
+        info="And just like that, we have reached the end! Here’s the overview of what you’re applying for."
+      />
       <div className={classes.card}>
         <div className={classes.icon}>
           <WorkOutlined />

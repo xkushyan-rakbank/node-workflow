@@ -3,8 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import questionMark from "../../assets/icons/question-mark.png";
+import arrowDown from "../../assets/icons/arrow-down.png";
 import cx from "classnames";
 
 const style = {
@@ -46,12 +46,14 @@ const style = {
     fontSize: "16px",
     backgroundColor: "#fff"
   },
+  iconSize: {
+    width: "24px",
+    height: "24px"
+  },
   iconStyle: {
     position: "relative",
     top: "4px",
-    marginRight: "20px",
-    fontSize: "23px",
-    color: "#888888"
+    marginRight: "20px"
   },
   text: {
     paddingBottom: "5px",
@@ -93,7 +95,7 @@ class CommonQuestions extends React.Component {
               classes={{ root: classes.root, expanded: classes.expanded }}
             >
               <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<img src={arrowDown} alt="arrow-down" className={classes.iconSize} />}
                 aria-controls="panel1d-content"
                 id="panel1d-header"
                 classes={{
@@ -103,7 +105,11 @@ class CommonQuestions extends React.Component {
                 }}
               >
                 <div className={cx(classes.text, classes.textEllipsis)}>
-                  <HelpOutlineIcon className={classes.iconStyle} />
+                  <img
+                    src={questionMark}
+                    alt="question"
+                    className={cx(classes.iconStyle, classes.iconSize)}
+                  />
                   {item.question}
                 </div>
               </ExpansionPanelSummary>

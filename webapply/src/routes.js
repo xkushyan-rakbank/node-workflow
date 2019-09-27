@@ -16,5 +16,6 @@ export default {
   uploadDocuments: "/UploadDocuments",
   selectServices: "/SelectServices",
   searchProspect: "/SearchProspect",
-  login: "/Login"
+  login: "/Login",
+  SearchedAppInfo: "/SearchedAppInfo"
 };

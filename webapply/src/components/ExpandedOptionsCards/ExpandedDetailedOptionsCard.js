@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 import { Link } from "@material-ui/core";
 import plus from "../../assets/icons/rak-value-plus.png";
 import max from "../../assets/icons/rak-value-max.png";
-import check from "../../assets/icons/check_outline_ic.svg";
+import check from "../../assets/icons/check_outline_ic.png";
 
 const style = {
   root: {
