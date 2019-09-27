@@ -16,7 +16,7 @@ const style = {
 
 class SelectServices extends React.Component {
   state = {
-    canSubmit: true,
+    canSubmit: false,
     step: 1
   };
 
