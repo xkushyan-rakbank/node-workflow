@@ -1,0 +1,158 @@
+{
+    "searchResult": [
+      {
+        "prospectId": "100",
+        "_links": {
+          "self": {
+            "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/100"
+          }
+        },
+        "status": {
+          "statusType": "Incomplete",
+          "statusCode": "",
+          "statusFlag": "",
+          "statusNotes": "",
+          "statusReason": "",
+          "statusOverAll": "",
+          "reasonNotes": "",
+          "reasonCode": "",
+          "reasonStatus": ""
+        },
+        "applicantInfo": {
+          "fullName": "Anjali Kesarwani",
+          "email": "akesarwani@abc.com",
+          "countryCode": "+971",
+          "mobileNo": "45689679867"
+        },
+        "preScreeningInfo": {
+          "statusOverAll": "proceed",
+          "screeningResults": [
+            {
+              "screeningType": "string",
+              "screeningStatus": "string",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "string",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            }
+          ]
+        },
+        "auditTrail": [
+          {
+            "fieldName": "string",
+            "modifiedBy": "string",
+            "modifiedDateTime": "string"
+          }
+        ],
+        "organizationInfo": {
+          "licenseNumber": "string",
+          "companyName": "string"
+        }
+      },
+      {
+        "prospectId": "101",
+        "_links": {
+          "self": {
+            "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/101"
+          }
+        },
+        "status": {
+          "statusType": "Dedupe",
+          "statusCode": "",
+          "statusFlag": "",
+          "statusNotes": "",
+          "statusReason": "",
+          "statusOverAll": "",
+          "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within X days to meet you in person and help you out.",
+          "reasonCode": "",
+          "reasonStatus": ""
+        },
+        "applicantInfo": {
+          "fullName": "Anjali Gupta",
+          "email": "agupta@abc.com",
+          "countryCode": "+971",
+          "mobileNo": "345678098"
+        },
+        "preScreeningInfo": {
+          "statusOverAll": "proceed",
+          "screeningResults": [
+            {
+              "screeningType": "string",
+              "screeningStatus": "string",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "string",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            }
+          ]
+        },
+        "auditTrail": [
+          {
+            "fieldName": "string",
+            "modifiedBy": "string",
+            "modifiedDateTime": "string"
+          }
+        ],
+        "organizationInfo": {
+          "licenseNumber": "string",
+          "companyName": "string"
+        }
+      },
+      {
+        "prospectId": "102",
+        "_links": {
+          "self": {
+            "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/102"
+          }
+        },
+        "status": {
+          "statusType": "Blacklisted",
+          "statusCode": "",
+          "statusFlag": "",
+          "statusNotes": "",
+          "statusReason": "",
+          "statusOverAll": "",
+          "reasonNotes": "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAK BANK",
+          "reasonCode": "",
+          "reasonStatus": ""
+        },
+        "applicantInfo": {
+          "fullName": "Anjali Tandon",
+          "email": "atandon@abc.com",
+          "countryCode": "+971",
+          "mobileNo": "6789098789"
+        },
+        "preScreeningInfo": {
+          "statusOverAll": "proceed",
+          "screeningResults": [
+            {
+              "screeningType": "string",
+              "screeningStatus": "string",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "string",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            }
+          ]
+        },
+        "auditTrail": [
+          {
+            "fieldName": "string",
+            "modifiedBy": "string",
+            "modifiedDateTime": "string"
+          }
+        ],
+        "organizationInfo": {
+          "licenseNumber": "string",
+          "companyName": "string"
+        }
+      }
+    ]
+  }
+  

@@ -1,0 +1,113 @@
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import ContainedButton from "../components/Buttons/ContainedButton";
+
+export const StyledWhiteContainedButton = props => {
+  const Button = withStyles(() => ({
+    buttonStyle: {
+      boxShadow: "none",
+      border: "solid 1px #373737",
+      backgroundColor: "#fff",
+      width: 160,
+      height: 32,
+      padding: "0 10px",
+      "&:hover": {
+        backgroundColor: "#000",
+        "& span": {
+          color: "#fff"
+        }
+      }
+    },
+    labelStyle: {
+      color: "#373737",
+      fontSize: 14,
+      justifyContent: "center"
+    }
+  }))(ContainedButton);
+
+  return <Button {...props} />;
+};
+
+const style = {
+  wrapper: {
+    marginTop: "24px",
+    borderRadius: "8px",
+    boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#ffffff"
+  },
+  applicationRow: {
+    borderBottom: "1px solid #e6e6e6",
+    "&:last-of-type": {
+      border: "none"
+    },
+    display: "grid",
+    gridTemplateColumns: "2fr 2fr 1fr",
+    alignItems: "center",
+    padding: "24px 20px 19px 30px"
+  },
+  fullName: {
+    fontSize: "18px",
+    fontWeight: 600,
+    lineHeight: 1,
+    color: "#263d4c"
+  },
+  companyName: {
+    fontSize: "18px",
+    fontWeight: 600,
+    lineHeight: 1,
+    color: "#263d4c",
+    marginTop: "-23px"
+  },
+  account: {
+    fontSize: "14px",
+    lineHeight: 1.33,
+    color: "#86868b",
+    marginTop: 5
+  },
+  status: {
+    borderRadius: "4px",
+    backgroundColor: "#e9e9ed",
+    fontSize: "14px",
+    color: "#373737",
+    padding: "3px 5px"
+  },
+  action: {
+    fontSize: "14px",
+    fontStyle: "italic",
+    lineHeight: 1.14,
+    textAlign: "center",
+    color: "#b5b5bb"
+  },
+  buttonLinks: {
+    marginLeft: "10px"
+  },
+  highlight: {
+    position: "relative",
+    bottom: "2px"
+  }
+};
+
+const SearchApplicationList = ({ classes, currentApplications }) => {
+  return (
+    <div className={classes.wrapper}>
+      {currentApplications.map((application, index) => (
+        <div className={classes.applicationRow} key={index}>
+          <div>
+            <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
+            <div className={classes.account}>{application.applicantInfo.email}</div>
+            <span className={classes.account}>{application.applicantInfo.mobileNo}</span>
+          </div>
+          <div>
+            <div className={classes.companyName}>Comapany name</div>
+            <div className={classes.account}>TL number</div>
+          </div>
+          <div>
+            <span className={classes.status}>{application.status.statusType}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default withStyles(style)(SearchApplicationList);

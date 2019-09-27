@@ -22,6 +22,7 @@ import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
 import MyApplications from "./containers/MyApplications/MyApplications";
 import UploadDocuments from "./containers/FileUploader";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
+import SearchedAppInfo from "./agent/SearchedAppInfo";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -76,6 +77,7 @@ class App extends React.Component {
                 component={ComeBackVerification}
               />
               <Route exact path={routes.MyApplications} component={MyApplications} />
+              <Route exact path={routes.SearchedAppInfo} component={SearchedAppInfo} />
               <Route path="*" />
             </Switch>
           </FormLayout>
