@@ -59,7 +59,6 @@ public class WebApplyController {
 
 	private JsonNode appConfigJSON = null;
 
-	private JsonNode navigationJSON = null;
 
 	private JsonNode smeProspectJSON = null;
 
@@ -67,7 +66,6 @@ public class WebApplyController {
 	public void initAppState() {
 		uiConfigJSON = fileHelper.loadJSONFile("uiConfig.json");
 		appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
-		navigationJSON = fileHelper.loadJSONFile("navigationConfig.json");
 		smeProspectJSON = fileHelper.loadJSONFile("smeProspect.json");
 
 		try {
@@ -134,7 +132,6 @@ public class WebApplyController {
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
 
 		setWebApplyEndpoints(objectMapper, initStateJSON);
-		initStateJSON.set("navigationConfig", navigationJSON.get(segment));
 		initStateJSON.set("prospect", getProspect(segment, product));
 		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
 		// deep clone the json nodes
