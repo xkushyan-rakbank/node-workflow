@@ -85,7 +85,7 @@ jobs:
       - bash : |
           cd webapplyserver
           mvn clean
-          mvn clean install
+          mvn install
         displayName: 'Buildling webapplyServer Application'
         enabled: true
       - task: CopyFiles@2
