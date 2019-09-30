@@ -41,7 +41,8 @@ const StepComponent = props => {
     index,
     clickHandler,
     handleContinue,
-    steps
+    steps,
+    hideContinue
   } = props;
   const Form = steps[step - 1].component;
   const renderTitle = () => {
@@ -66,7 +67,7 @@ const StepComponent = props => {
         {renderTitle()}
       </div>
       {active && (
-        <FormWrapper handleContinue={handleContinue}>
+        <FormWrapper handleContinue={handleContinue} hideContinue={hideContinue}>
           <Form index={index} />
         </FormWrapper>
       )}

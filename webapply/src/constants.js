@@ -17,6 +17,10 @@ import signingPreferences from "./assets/icons/signing_preferences.png";
 import channels from "./assets/icons/channels.png";
 import valueAddedServices from "./assets/icons/value_added_services.png";
 import decline from "./assets/gif/declined_regular.gif";
+import SearchedCompanyDetails from "./components/SearchedAppInfoSteps/CompanyDetails";
+import CheckList from "./components/SearchedAppInfoSteps/CheckList";
+import Documents from "./components/SearchedAppInfoSteps/Documents";
+import AuditTrail from "./components/SearchedAppInfoSteps/AuditTrail";
 
 import routes from "./routes";
 
@@ -170,3 +174,18 @@ export const applicationStatus = {
     icon: decline
   }
 };
+
+export const searchedAppInfoSteps = [
+  {
+    step: 1,
+    title: "Company Details",
+    component: SearchedCompanyDetails
+  },
+  {
+    step: 2,
+    title: "Checks",
+    component: CheckList
+  },
+  { step: 3, title: "Documents", component: Documents },
+  { step: 4, title: "Audit Trail", component: AuditTrail }
+];
