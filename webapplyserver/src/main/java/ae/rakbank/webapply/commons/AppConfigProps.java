@@ -3,7 +3,7 @@ package ae.rakbank.webapply.commons;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties
-public class AppConfig {
+public class AppConfigProps {
 
 	private String location;
 

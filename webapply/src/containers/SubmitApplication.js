@@ -4,6 +4,10 @@ import Checkbox from "../components/InputField/Checkbox";
 import Button from "../components/Buttons/SubmitButton";
 import FormTitle from "../components/FormTitle";
 import brief from "../assets/icons/brief.png";
+import * as appConfigSelectors from "../store/selectors/appConfig";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
 
 const style = {
   checkboxesWrapper: {
@@ -58,12 +62,45 @@ const style = {
     fontSize: "14px",
     lineHeight: 1.29,
     color: "#86868b"
+  },
+  indent: {
+    marginBottom: "15px"
   }
 };
 
 class SubmitApplication extends React.Component {
+  state = {
+    isInformationProvided: false,
+    areTermsAgreed: false,
+    needCommunication: false
+  };
+
+  handleChange = ({ currentTarget }) => {
+    const name = currentTarget.name;
+    this.setState({ [name]: !this.state[name] });
+  };
+
+  handleClick = () => {
+    const { history } = this.props;
+    history.push("/ApplicationSubmitted");
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, applicationInfo, accountInfo, signatoryInfo, organizationInfo } = this.props;
+    const [account] = accountInfo;
+    const companyName = organizationInfo.companyName || "Company name";
+    const accountType = applicationInfo.accountType || "Account type";
+    const currencies = accountInfo.length && account.accountCurrencies.join(" & ");
+    const stakeholders = signatoryInfo.map(stakeholder => (
+      <div key={stakeholder.fullName} className={classes.grayText}>
+        {stakeholder.fullName}
+      </div>
+    ));
+    const isDebitCardApplied = accountInfo.length && account.debitCardApplied;
+    const isChequeBookApplied = accountInfo.length && account.chequeBookApplied;
+    const isOnlineBankingApplied = accountInfo.length && account.eStatements;
+    const rakValuePackage = applicationInfo.rakValuePackage || "RAKvalue package";
+    const { isInformationProvided, areTermsAgreed, needCommunication } = this.state;
     return (
       <>
         <FormTitle
@@ -74,42 +111,74 @@ class SubmitApplication extends React.Component {
           <div className={classes.icon}>
             <img src={brief} alt="brief" width={24} height={24} />
           </div>
-          <div className={classes.mainTitle}>Designit Arabia</div>
-          <div className={classes.grayText}>RAKstarter account</div>
+          <div className={classes.mainTitle}>{companyName}</div>
+          <div className={classes.grayText}>{accountType}</div>
           <div className={classes.divider} />
+          {signatoryInfo.length > 0 && (
+            <div className={classes.indent}>
+              <div className={classes.secondaryTitle}>Company Stakeholders</div>
+              {stakeholders}
+            </div>
+          )}
           <div className={classes.secondaryTitle}>Services selected</div>
-          <div className={classes.grayText}>
-            AED & USD
-            <br />
-            Any of you can sign
-            <br />
-            Debit cards for all signatories
-            <br />
-            Online bank statements
-          </div>
+          <div className={classes.grayText}>{currencies}</div>
+          {/* TODO not implemented yet */}
+          <div className={classes.grayText}>Any of you can sign</div>
+          {isDebitCardApplied && (
+            <div className={classes.grayText}>Debit cards for all signatories</div>
+          )}
+          {isChequeBookApplied && (
+            <div className={classes.grayText}>Cheque book for the company</div>
+          )}
+          {isOnlineBankingApplied && <div className={classes.grayText}>Online bank statements</div>}
+          <div className={classes.grayText}>{rakValuePackage}</div>
         </div>
         <div className={classes.checkboxesWrapper}>
           <Checkbox
+            value={isInformationProvided}
+            name="isInformationProvided"
             label="I confirm that the information provided is true and complete"
             className={classes.listItem}
+            onChange={this.handleChange}
           />
           <Checkbox
+            value={areTermsAgreed}
+            name="areTermsAgreed"
             label={
               <span>
                 I agree with RakBank’s <a href="/">terms and conditions</a>
               </span>
             }
             className={classes.listItem}
+            onChange={this.handleChange}
           />
           <Checkbox
+            value={needCommunication}
+            name="needCommunication"
             label="I want to receive marketing and promotional communication from RakBank"
             className={classes.listItem}
+            onChange={this.handleChange}
           />
         </div>
-        <Button label="Submit" />
+        <Button
+          disabled={!(isInformationProvided && areTermsAgreed)}
+          label="Submit"
+          handleClick={this.handleClick}
+        />
       </>
     );
   }
 }
 
-export default withStyles(style)(SubmitApplication);
+const mapStateToProps = state => ({
+  applicationInfo: appConfigSelectors.getApplicationInfo(state),
+  accountInfo: appConfigSelectors.getAccountInfo(state),
+  signatoryInfo: appConfigSelectors.getSignatories(state),
+  organizationInfo: appConfigSelectors.getOrganizationInfo(state)
+});
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(style),
+  withRouter
+)(SubmitApplication);

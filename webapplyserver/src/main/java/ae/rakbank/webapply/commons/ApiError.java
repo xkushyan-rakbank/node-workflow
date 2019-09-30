@@ -30,6 +30,13 @@ public class ApiError {
 		setException(ex);
 	}
 
+	public ApiError(HttpStatus status, String message, String debugMessage) {
+		this();
+		this.status = status;
+		this.message = message;
+		this.debugMessage = debugMessage;
+	}
+
 	private void setException(Throwable ex) {
 		if (!EnvUtil.isProd()) {
 			this.debugMessage = ex.getLocalizedMessage();

@@ -92,7 +92,7 @@ class CompanyDocuments extends Component {
       companyDocument = companyDocuments.companyDocuments.map((companyDoc, index) => {
         return (
           <>
-            <UploadDocument companyDoc={companyDoc} />
+            <UploadDocument key={index} companyDoc={companyDoc} />
           </>
         );
       });
@@ -108,7 +108,6 @@ class CompanyDocuments extends Component {
             <h3 className={this.props.classes.label}>{companyName}</h3>
           </div>
         </header>
-        {/* company documents need to put nside a map function */}
         {companyDocument}
       </div>
     );

@@ -46,21 +46,26 @@ const styles = {
   }
 };
 
+const routesToHideHeaderTitle = new Set([routes.accountsComparison, routes.detailedAccount]);
+
 const Header = ({ classes, checkLoginStatus, getAgentName, location }) => {
   return (
     <header className={classes.header}>
       <Link to={routes.accountsComparison} className={classes.logo}>
         <img src={logo} alt="rak bank" />
       </Link>
-      <div className={classes.headerTitle}>
-        <div className={classes.headerTitleIn}>
-          {checkLoginStatus ? (
-            <span>{getAgentName}</span>
-          ) : (
-            location.pathname != "/Login" && <span> RAKstarter Application </span>
-          )}
+
+      {!routesToHideHeaderTitle.has(location.pathname) && (
+        <div className={classes.headerTitle}>
+          <div className={classes.headerTitleIn}>
+            {checkLoginStatus ? (
+              <span>{getAgentName}</span>
+            ) : (
+              location.pathname !== "/Login" && <span> RAKstarter Application </span>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };

@@ -5,11 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-import ae.rakbank.webapply.commons.AppConfig;
+import ae.rakbank.webapply.commons.AppConfigProps;
 
 @SpringBootApplication
-@EnableConfigurationProperties(AppConfig.class)
+@EnableConfigurationProperties(AppConfigProps.class)
+@EnableScheduling
 public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

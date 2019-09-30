@@ -5,7 +5,11 @@ import * as actions from "../actions/uploadDocActions";
 function* UploadDoc() {
   try {
     const response = yield call(apiClient.uploadDocuments.uploadDocument);
-    yield put(actions.docUploadSuccess(response.data));
+    if (response.status === 200) {
+      yield put(actions.docUploadSuccess(response.data));
+    } else {
+      yield put(actions.docUploadError());
+    }
   } catch (error) {
     yield put(actions.docUploadError(error));
   }
