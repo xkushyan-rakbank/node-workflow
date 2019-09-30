@@ -26,7 +26,7 @@ class Industry extends React.Component {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
-                  <PureSelect id="OkycIndus.industry" indexes={[index, 0]} />
+                  <PureSelect id="OkycIndus.industry" multiple indexes={[index, 0]} />
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <PureSelect

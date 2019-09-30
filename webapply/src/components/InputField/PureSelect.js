@@ -16,6 +16,9 @@ import { validate } from "../../utils/validate";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import isBoolean from "lodash/isBoolean";
+import Checkbox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
+import ListItemText from "@material-ui/core/ListItemText";
 import ErrorMessage from "../ErrorMessage";
 import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
@@ -39,12 +42,12 @@ const styles = {
       backgroundColor: " #ddd",
       right: " 56px"
     },
+    "& > div:first-child": {
+      paddingRight: "56px"
+    },
     "& fieldset": {
       borderRadius: "8px !important",
-      border: "solid 1px rgba(194, 194, 194, 0.56)",
-      "& + div": {
-        paddingRight: "56px"
-      }
+      border: "solid 1px rgba(194, 194, 194, 0.56)"
     },
     "& svg": {
       position: "absolute",
@@ -61,6 +64,24 @@ const styles = {
     },
     "& svg": {
       right: "10px"
+    }
+  },
+  chips: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  chip: {
+    margin: 2
+  }
+};
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250
     }
   }
 };
@@ -167,6 +188,14 @@ class PureSelect extends React.Component {
     return {};
   }
 
+  renderValueForMultiple = selected => (
+    <div className={this.props.classes.chips}>
+      {selected.map(value => (
+        <Chip key={value} label={value} className={this.props.classes.chip} />
+      ))}
+    </div>
+  );
+
   render() {
     const { fieldErrors } = this.state;
     const {
@@ -179,13 +208,14 @@ class PureSelect extends React.Component {
       resetValue,
       resetLabel = "",
       excludeValues = [],
+      multiple,
       indexes
     } = this.props;
+    console.log(value);
     const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
     const inputProps = this.composeInputProps();
     const className = combinedSelect ? classes.selectFieldCombined : classes.selectFieldBasic;
-
     return (
       <FormControl
         className={cx("formControl", {
@@ -197,9 +227,17 @@ class PureSelect extends React.Component {
         <InputLabel ref={this.inputLabel} htmlFor={attrId}>
           {config.label}
         </InputLabel>
+
         <Select
-          value={value}
+          multiple={multiple}
           disabled={disabled}
+          value={value || []}
+          onBlur={this.handleBlur}
+          onChange={this.updateField}
+          IconComponent={KeyboardArrowDownIcon}
+          className={cx(classes.selectField, className)}
+          MenuProps={multiple && MenuProps}
+          renderValue={multiple && this.renderValueForMultiple}
           input={
             <OutlinedInput
               inputRef={node => (this.inputRef = node)}
@@ -208,22 +246,28 @@ class PureSelect extends React.Component {
               inputProps={inputProps}
             />
           }
-          IconComponent={KeyboardArrowDownIcon}
-          className={cx(classes.selectField, className)}
-          onChange={this.updateField}
-          onBlur={this.handleBlur}
         >
           {!isNil(resetValue) && <MenuItem value={resetValue}>{resetLabel}</MenuItem>}
+
           {config.datalist &&
             config.datalist
               .filter(item => !excludeValues.includes(item.value))
               .map(option => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.displayText}
+                  {multiple ? (
+                    <>
+                      <ListItemText primary={option.value} />
+                      <Checkbox checked={value.indexOf(option.value) > -1} />
+                    </>
+                  ) : (
+                    option.displayText
+                  )}
                 </MenuItem>
               ))}
         </Select>
+
         {!!config.title && <InfoTitle title={config.title} />}
+
         {isError && (
           <ErrorMessage error={fieldErrors.error} multiLineError={fieldErrors.multiLineError} />
         )}

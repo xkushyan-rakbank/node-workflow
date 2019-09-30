@@ -6,9 +6,7 @@ import BackLink from "../components/Buttons/BackLink";
 import ErrorBoundary from "../components/ErrorBoundary";
 import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
-// import SearchSelect from "../components/InputField/SearchSelect";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
-// import ApplicationStatus from "../components/ApplicationStatus";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
@@ -88,8 +86,6 @@ class BasicsForm extends React.Component {
             selectId="Aplnt.countryCode"
             select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="UAE" />}
           />
-
-          {/* <SearchSelect /> */}
 
           <ErrorBoundary className={classes.reCaptchaContainer}>
             <ReCaptcha
