@@ -121,7 +121,7 @@ class DatePicker extends React.Component {
               disableToolbar
               margin="normal"
               variant="inline"
-              format="MM/dd/yyyy"
+              format="dd/MM/yyyy"
               inputVariant="outlined"
               placeholder="__/__/____"
               mask="__/__/____"

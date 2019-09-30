@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import doneIcon from "../../assets/images/done-icon.png";
+import doneIcon from "../../assets/images/done_icon.png";
 
 const styles = {
   wrapper: {
@@ -15,7 +15,8 @@ const styles = {
     flexDirection: "column"
   },
   placeholder: {
-    marginBottom: "22px"
+    marginBottom: "22px",
+    width: "135px"
   },
   successTitle: {
     fontSize: "18px",
@@ -37,7 +38,7 @@ class SuccessFilledStakeholder extends React.Component {
       <div className={classes.wrapper}>
         <img src={doneIcon} alt="" className={classes.placeholder} />
         <div className={classes.successTitle}>
-          You have successfully added
+          Congrats! You have added
           <br /> <b>{name}</b> as a stakeholder
         </div>
       </div>
