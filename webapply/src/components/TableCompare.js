@@ -334,7 +334,7 @@ class TableCompare extends React.Component {
 
                   <StyledTableCell
                     ref={this.RAKStarter}
-                    name="RAKstarter"
+                    data-name="RAKstarter"
                     onMouseEnter={this.handleHover}
                   >
                     <ContainedButton
@@ -348,7 +348,7 @@ class TableCompare extends React.Component {
                   </StyledTableCell>
                   <StyledTableCell
                     ref={this.CurrentAccount}
-                    name="Current Account"
+                    data-name="Current Account"
                     onMouseEnter={this.handleHover}
                   >
                     <ContainedButton
