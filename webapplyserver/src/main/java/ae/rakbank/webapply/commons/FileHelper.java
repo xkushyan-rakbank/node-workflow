@@ -1,8 +1,11 @@
 package ae.rakbank.webapply.commons;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +28,16 @@ public class FileHelper {
 		try {
 			logger.info("loading " + filename);
 			ObjectMapper objectMapper = new ObjectMapper();
-			Resource resource = resourceLoader.getResource("classpath:" + filename);
-			System.out.println(resource.getFile().toString());
-			String fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
+
+			String fileContent = null;
+			if (StringUtils.isNotBlank(EnvUtil.getConfigDir())) {
+				logger.info("Read JSON file from classpath:" + EnvUtil.getConfigDir() + "/filename");
+				FileUtils.readFileToString(new File(EnvUtil.getConfigDir() + "/filename"), StandardCharsets.UTF_8);
+			} else {
+				logger.info("Read JSON file from classpath:" + filename);
+				Resource resource = resourceLoader.getResource("classpath:" + filename);
+				fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
+			}
 			return objectMapper.readTree(fileContent);
 		} catch (IOException e) {
 			logger.error("error loading " + filename, e);

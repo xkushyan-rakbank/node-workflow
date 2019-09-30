@@ -218,7 +218,7 @@ class FormNavigation extends React.Component {
         {showAccountInfo ? (
           <AccountInfo classes={classes} accountType={accountType} history={history} />
         ) : (
-          location.pathname != "/Login" && (
+          location.pathname !== "/Login" && (
             <FormStepper step={step} path={location.pathname} checkLoginStatus={checkLoginStatus} />
           )
         )}

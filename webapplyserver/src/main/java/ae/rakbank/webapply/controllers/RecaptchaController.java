@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ae.rakbank.webapply.services.RecaptchaService;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class RecaptchaController {

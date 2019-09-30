@@ -1,7 +1,6 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher";

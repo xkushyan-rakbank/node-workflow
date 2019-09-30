@@ -1,6 +1,8 @@
 import React from "react";
+import cx from "classnames";
 import { withStyles } from "@material-ui/core";
 import { Link } from "@material-ui/core";
+import ContinueButton from "../Buttons/ContainedButton";
 import plus from "../../assets/icons/rak-value-plus.png";
 import max from "../../assets/icons/rak-value-max.png";
 import check from "../../assets/icons/check_outline_ic.png";
@@ -128,6 +130,19 @@ const style = {
     fontStyle: "italic",
     textAlign: "center",
     color: "#86868b"
+  },
+  indent: {
+    marginBottom: "6px"
+  },
+  button: {
+    fontSize: "16px",
+    width: "200px",
+    height: "40px",
+    borderRadius: "21px",
+    margin: "auto",
+    "&>span": {
+      justifyContent: "center"
+    }
   }
 };
 
@@ -138,51 +153,66 @@ const ExpandedOptionsDetailedCard = ({
   cost,
   value,
   href,
-  accountType
-}) => (
-  <div className={classes.root}>
-    <div className={classes.title}>
-      <div className={classes.icon}>
-        {value === "RAKvalue PLUS" ? (
-          <img width={80} height={80} src={plus} alt="rak-plus" />
+  accountType,
+  className,
+  buttonLabel,
+  selectService
+}) => {
+  const renderTitle = () =>
+    accountType === "RAKStarter" && value === "RAKvalue PLUS"
+      ? "Included in RAKstarter"
+      : "Available upgrade";
+
+  return (
+    <div className={cx(classes.root, className)}>
+      <div className={classes.title}>
+        <div className={classes.icon}>
+          {value === "RAKvalue PLUS" ? (
+            <img width={80} height={80} src={plus} alt="rak-plus" />
+          ) : (
+            <img width={80} height={80} src={max} alt="rak-max" />
+          )}
+        </div>
+        <div className={classes.name}>{value}</div>
+      </div>
+      {optionList && (
+        <ul className={classes.options}>
+          {optionList.map(option => (
+            <li key={option.text}>
+              <img className={classes.listIcon} src={check} alt="check" height={16} width={16} />
+              <div
+                className={cx("text", classes.indent)}
+                dangerouslySetInnerHTML={{ __html: option.text }}
+              />
+              {option.items && (
+                <ul className={classes.nestedOptions}>
+                  {option.items.map(item => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className={classes.linkWrapper}>
+        <Link href={href} className={classes.link}>
+          Read more
+        </Link>
+      </div>
+      <div className={classes.cost}>
+        {cost}
+        <span>AED/ month</span>
+      </div>
+      <div className={classes.upgrade}>
+        {selectService ? (
+          <ContinueButton className={classes.button} label={buttonLabel} />
         ) : (
-          <img width={80} height={80} src={max} alt="rak-max" />
+          renderTitle()
         )}
       </div>
-      <div className={classes.name}>{value}</div>
     </div>
-    {optionList && (
-      <ul className={classes.options}>
-        {optionList.map(option => (
-          <li key={option.text}>
-            <img className={classes.listIcon} src={check} alt="check" height={16} width={16} />
-            {option.text}
-            {option.items && (
-              <ul className={classes.nestedOptions}>
-                {option.items.map(item => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
-    )}
-    <div className={classes.linkWrapper}>
-      <Link href={href} className={classes.link}>
-        Read more
-      </Link>
-    </div>
-    <div className={classes.cost}>
-      {cost}
-      <span>AED/ month</span>
-    </div>
-    <div className={classes.upgrade}>
-      {accountType === "RAKStarter" && value === "RAKvalue PLUS"
-        ? "Included in RAKstarter"
-        : "Available upgrade"}
-    </div>
-  </div>
-);
+  );
+};
 
 export default withStyles(style)(ExpandedOptionsDetailedCard);

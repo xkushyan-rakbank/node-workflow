@@ -2,6 +2,7 @@ package ae.rakbank.webapply.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -13,9 +14,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +38,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.commons.FileHelper;
+import ae.rakbank.webapply.services.OAuthClient;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -48,11 +52,13 @@ public class WebApplyController {
 	@Autowired
 	FileHelper fileHelper;
 
+	@Autowired
+	OAuthClient oauthClient;
+
 	private JsonNode uiConfigJSON = null;
 
 	private JsonNode appConfigJSON = null;
 
-	private JsonNode navigationJSON = null;
 
 	private JsonNode smeProspectJSON = null;
 
@@ -60,7 +66,6 @@ public class WebApplyController {
 	public void initAppState() {
 		uiConfigJSON = fileHelper.loadJSONFile("uiConfig.json");
 		appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
-		navigationJSON = fileHelper.loadJSONFile("navigationConfig.json");
 		smeProspectJSON = fileHelper.loadJSONFile("smeProspect.json");
 
 		try {
@@ -109,8 +114,8 @@ public class WebApplyController {
 				buildAppInitialState("sme", "checking", "customer", device);
 				buildAppInitialState("sme", "checking", "agent", device);
 
-			} catch (IOException e) {
-				logger.error("unable to reload configs", e);
+			} catch (Exception e) {
+				logger.error("unable to load/reload configs", e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
 				return new ResponseEntity<Object>(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -122,12 +127,11 @@ public class WebApplyController {
 		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
 
-	private String buildAppInitialState(String segment, String product, String role, String device) throws IOException {
+	private String buildAppInitialState(String segment, String product, String role, String device) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
 
 		setWebApplyEndpoints(objectMapper, initStateJSON);
-		initStateJSON.set("navigationConfig", navigationJSON.get(segment));
 		initStateJSON.set("prospect", getProspect(segment, product));
 		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
 		// deep clone the json nodes
@@ -241,19 +245,45 @@ public class WebApplyController {
 		return null;
 	}
 
-	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws IOException {
-		RestTemplate restTemplate = new RestTemplate();
+	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws Exception {
+		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-		String dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
-		JsonNode dehURIs = appConfigJSON.get("DehURIs");
-		String url = dehBaseUrl + dehURIs.get("datalistUri").asText();
+		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-		UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
+			RestTemplate restTemplate = new RestTemplate();
 
-		ResponseEntity<JsonNode> response = restTemplate.exchange(uriComponents.toUri(), HttpMethod.GET, null,
-				JsonNode.class);
-		
-		return response.getBody();
+			String dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
+			JsonNode dehURIs = appConfigJSON.get("DehURIs");
+			String url = dehBaseUrl + dehURIs.get("datalistUri").asText();
+
+			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.set("Authorization", "Bearer " + oauthResponse.getBody().get("access_token").asText());
+
+			HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
+			logger.debug("GetDataList API request " + request.toString());
+
+			ResponseEntity<JsonNode> response = restTemplate.exchange(uriComponents.toUri(), HttpMethod.GET, request,
+					JsonNode.class);
+
+			logger.debug("GetDataList API response " + response.getBody().toString());
+
+			if (!response.getStatusCode().is2xxSuccessful()) {
+				logger.error("call to datalist api failed. HttpStatus=" + response.getStatusCodeValue() + ", response="
+						+ response.getBody().toString());
+			} else {
+				return response.getBody();
+			}
+
+		} else {
+			logger.error("Unable to call datalist API due to oauth error.");
+			throw new Exception("Unable to call datalist API due to oauth error.");
+		}
+
+		return null;
 	}
 
 	private String getCacheKey(String segment, String product, String role, String device) {
