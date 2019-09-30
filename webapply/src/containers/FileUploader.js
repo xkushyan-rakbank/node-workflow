@@ -26,7 +26,7 @@ class FileUploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDisabled: true,
+      isDisabled: false,
       uploadDocCount: 5
     };
   }

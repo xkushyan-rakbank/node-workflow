@@ -5,7 +5,7 @@ import ContainedButton from "./ContainedButton";
 
 const styles = {
   buttonWrap: {
-    margin: "0 0 "
+    margin: "42px 0 0 "
   },
   buttonWrapWithBackLink: {},
   nextButton: {
