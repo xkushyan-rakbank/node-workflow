@@ -62,7 +62,7 @@ class BackgroundVideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    appRootEl.prepend(this.videoBg);
+    appRootEl.insertBefore(this.videoBg, appRootEl.childNodes[0]);
   }
 
   componentWillUnmount() {
