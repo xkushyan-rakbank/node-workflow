@@ -16,6 +16,9 @@ import { validate } from "../../utils/validate";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import isBoolean from "lodash/isBoolean";
+import Checkbox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
+import ListItemText from "@material-ui/core/ListItemText";
 import ErrorMessage from "../ErrorMessage";
 import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
@@ -179,7 +182,8 @@ class PureSelect extends React.Component {
       resetValue,
       resetLabel = "",
       excludeValues = [],
-      indexes
+      indexes,
+      multiple
     } = this.props;
     const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
@@ -197,33 +201,72 @@ class PureSelect extends React.Component {
         <InputLabel ref={this.inputLabel} htmlFor={attrId}>
           {config.label}
         </InputLabel>
-        <Select
-          value={value}
-          disabled={disabled}
-          input={
-            <OutlinedInput
-              inputRef={node => (this.inputRef = node)}
-              labelWidth={this.state.labelWidth}
-              id={attrId}
-              inputProps={inputProps}
-            />
-          }
-          IconComponent={KeyboardArrowDownIcon}
-          className={cx(classes.selectField, className)}
-          onChange={this.updateField}
-          onBlur={this.handleBlur}
-        >
-          {!isNil(resetValue) && <MenuItem value={resetValue}>{resetLabel}</MenuItem>}
-          {config.datalist &&
-            config.datalist
-              .filter(item => !excludeValues.includes(item.value))
-              .map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.displayText}
-                </MenuItem>
-              ))}
-        </Select>
+
+        {multiple ? (
+          <Select
+            multiple
+            value={value}
+            onBlur={this.handleBlur}
+            onChange={this.updateField}
+            IconComponent={KeyboardArrowDownIcon}
+            className={cx(classes.selectField, className)}
+            input={
+              <OutlinedInput
+                inputRef={node => (this.inputRef = node)}
+                labelWidth={this.state.labelWidth}
+                id={attrId}
+                inputProps={inputProps}
+              />
+            }
+            renderValue={selected => (
+              <div className={classes.chips}>
+                {selected.map(value => (
+                  <Chip key={value} label={value} className={classes.chip} />
+                ))}
+              </div>
+            )}
+          >
+            {config.datalist &&
+              config.datalist
+                .filter(item => !excludeValues.includes(item.value))
+                .map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    <ListItemText primary={option.value} />
+                    <Checkbox checked={value.indexOf(option.value) > -1} />
+                  </MenuItem>
+                ))}
+          </Select>
+        ) : (
+          <Select
+            value={value}
+            disabled={disabled}
+            input={
+              <OutlinedInput
+                inputRef={node => (this.inputRef = node)}
+                labelWidth={this.state.labelWidth}
+                id={attrId}
+                inputProps={inputProps}
+              />
+            }
+            IconComponent={KeyboardArrowDownIcon}
+            className={cx(classes.selectField, className)}
+            onChange={this.updateField}
+            onBlur={this.handleBlur}
+          >
+            {!isNil(resetValue) && <MenuItem value={resetValue}>{resetLabel}</MenuItem>}
+            {config.datalist &&
+              config.datalist
+                .filter(item => !excludeValues.includes(item.value))
+                .map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.displayText}
+                  </MenuItem>
+                ))}
+          </Select>
+        )}
+
         {!!config.title && <InfoTitle title={config.title} />}
+
         {isError && (
           <ErrorMessage error={fieldErrors.error} multiLineError={fieldErrors.multiLineError} />
         )}
