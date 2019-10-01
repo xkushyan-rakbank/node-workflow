@@ -4,12 +4,12 @@
     "url": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/COSME0000000000000001",
     "bodyPatterns": [
       {
-        "matchesJsonPath": "$.organizationInfo[?(@.companyName !== 'InvalidFields')]"
+        "matchesJsonPath": "$.organizationInfo[?(@.companyName == 'InvalidFields')]"
       }
     ]
   },
   "response": {
-    "status": 200,
+    "status": 400,
     "headers": {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
@@ -19,6 +19,6 @@
       "x-frame-options": "DENY",
       "x-xss-protection": "1; mode=block"
     },
-    "bodyFileName": "COSME0014UpdatePropsectResponse.json"
+    "bodyFileName": "COSME0014UpdatePropsectResponseInvalidFields.json"
   }
 }
