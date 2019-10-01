@@ -23,6 +23,7 @@ import MyApplications from "./containers/MyApplications/MyApplications";
 import UploadDocuments from "./containers/FileUploader";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
 import SearchedAppInfo from "./agent/SearchedAppInfo";
+import EditApplication from "./components/UploadDocument/EditApplication";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -66,6 +67,7 @@ class App extends React.Component {
               <Route exact path={routes.stakeholdersInfo} component={CompanyStakeholders} />
               <Route exact path={routes.finalQuestions} component={FinalQuestions} />
               <Route exact path={routes.uploadDocuments} component={UploadDocuments} />
+              <Route exact path={routes.editApplication} component={EditApplication} />
               <Route exact path={routes.selectServices} component={SelectServices} />
 
               <Route exact path={routes.applicationOverview} component={ApplicationOverview} />

@@ -95,6 +95,12 @@ export default {
         method: "POST",
         data
       });
+    },
+    getDocuments: apiUIrl => {
+      return httpClient.request({
+        url: apiUIrl,
+        method: "GET"
+      });
     }
   }
 };

@@ -1,7 +1,8 @@
 import { SEARCH_APPLICATIONS_SUCCESS, SEARCH_APPLICATIONS_FAIL } from "../actions/searchProspect";
 
 const initialState = {
-  searchResults: []
+  searchResults: [],
+  currentProspect: ""
 };
 
 const searchProspectReducer = (state = initialState, action) => {

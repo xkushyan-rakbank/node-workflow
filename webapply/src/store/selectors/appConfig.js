@@ -10,9 +10,13 @@ export const getOrganizationInfo = state => getProspect(state).organizationInfo 
 
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
 
+export const getIndustryMultiSelect = state => getOrgKYCDetails(state).industryMultiSelect || [];
+
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
+
+export const getAboutCompamyInfo = state => state.aboutCompany || {};
 
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 

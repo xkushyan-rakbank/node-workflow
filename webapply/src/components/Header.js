@@ -7,6 +7,7 @@ import routes from "./../routes";
 import logo from "./../assets/images/rakbankLogo.png";
 import { withStyles } from "@material-ui/core/styles";
 import * as loginSelector from "./../store/selectors/loginSelector";
+import * as appConfigSelectors from "../store/selectors/appConfig";
 
 const styles = {
   header: {
@@ -19,11 +20,15 @@ const styles = {
       width: "120px"
     }
   },
-  logo: {
-    flex: "0 0 calc(530px - 40px)",
+  logoContainer: {
+    boxSizing: "border-box",
+    width: "530px",
     padding: "28px 0 28px 40px",
     "@media only screen and (max-width: 1300px)": {
-      flex: "0 0 calc(45% - 40px)"
+      width: "45%"
+    },
+    "@media only screen and (max-width: 920px)": {
+      width: "420px"
     }
   },
   headerTitle: {
@@ -34,7 +39,10 @@ const styles = {
       maxWidth: "780px",
       width: "100%",
       fontSize: "14px",
-      color: "#86868b"
+      color: "#86868b",
+      "& span": {
+        fontWeight: "600"
+      }
     }
   },
   headerTitleIn: {
@@ -46,22 +54,38 @@ const styles = {
   }
 };
 
-const routesToHideHeaderTitle = new Set([routes.accountsComparison, routes.detailedAccount]);
+const routesToHideHeaderTitle = [routes.accountsComparison, routes.detailedAccount];
 
-const Header = ({ classes, checkLoginStatus, getAgentName, location }) => {
+const Header = props => {
+  const {
+    classes,
+    checkLoginStatus,
+    getAgentName,
+    location,
+    applicationInfo,
+    organizationInfo
+  } = props;
+
   return (
     <header className={classes.header}>
-      <Link to={routes.accountsComparison} className={classes.logo}>
-        <img src={logo} alt="rak bank" />
-      </Link>
+      <div className={classes.logoContainer}>
+        <Link to={routes.accountsComparison}>
+          <img src={logo} alt="rak bank" />
+        </Link>
+      </div>
 
-      {!routesToHideHeaderTitle.has(location.pathname) && (
+      {!routesToHideHeaderTitle.includes(location.pathname) && (
         <div className={classes.headerTitle}>
           <div className={classes.headerTitleIn}>
             {checkLoginStatus ? (
               <span>{getAgentName}</span>
             ) : (
-              location.pathname !== "/Login" && <span> RAKstarter Application </span>
+              location.pathname !== "/Login" && (
+                <span>
+                  {applicationInfo.rakValuePackage}
+                  <span> {organizationInfo.companyName}</span>
+                </span>
+              )
             )}
           </div>
         </div>
@@ -72,7 +96,9 @@ const Header = ({ classes, checkLoginStatus, getAgentName, location }) => {
 
 const mapStateToProps = state => ({
   checkLoginStatus: loginSelector.checkLoginStatus(state),
-  getAgentName: loginSelector.getAgentName(state)
+  getAgentName: loginSelector.getAgentName(state),
+  applicationInfo: appConfigSelectors.getApplicationInfo(state),
+  organizationInfo: appConfigSelectors.getOrganizationInfo(state)
 });
 
 export default compose(

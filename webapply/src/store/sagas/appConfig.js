@@ -24,8 +24,6 @@ function* receiveAppConfigSaga() {
 function* updateFieldSaga(action) {
   const state = yield select();
   const config = state.appConfig;
-  console.log("action.data.name", action.data.name);
-  console.log("action.data.value", action.data.value);
   set(config, action.data.name, action.data.value);
   yield put(updateProspect(cloneDeep(config.prospect)));
 }

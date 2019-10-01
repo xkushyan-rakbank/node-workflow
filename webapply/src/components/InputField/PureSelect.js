@@ -40,7 +40,9 @@ const styles = {
       width: " 1px",
       height: " 100%",
       backgroundColor: " #ddd",
-      right: " 56px"
+      right: " 56px",
+      top: 0,
+      zIndex: "-1"
     },
     "& > div:first-child": {
       paddingRight: "56px"
@@ -211,7 +213,7 @@ class PureSelect extends React.Component {
       multiple,
       indexes
     } = this.props;
-    console.log(value);
+
     const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
     const inputProps = this.composeInputProps();
