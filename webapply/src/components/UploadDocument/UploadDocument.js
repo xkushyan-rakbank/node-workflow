@@ -130,6 +130,8 @@ class UploadDocuments extends Component {
   }
 
   fileSelectedHandler(event) {
+    console.log(this.props.companyDoc);
+    console.log(event.target.files[0]);
     this.setState(
       {
         selectedFile: event.target.files[0],
@@ -147,14 +149,37 @@ class UploadDocuments extends Component {
             progressPercentage.innerHTML = progress + "%";
           }
         };
+
+        let fileDetails = {
+          documentType: this.props.companyDoc.documentType,
+          signatoryId: "",
+          signatoryName: this.props.companyDoc.signatoryName,
+          documentTitle: this.props.companyDoc.documentType,
+          fileName: this.state.selectedFile.name,
+          filePath: "",
+          url: "",
+          fileData: this.state.selectedFile.type,
+          fileFormat: this.state.selectedFile.type,
+          fileSize: this.state.selectedFile.size,
+          fileDescription: this.props.companyDoc.documentType,
+          submittedBy: "",
+          submittedDt: this.state.selectedFile.lastModifiedDate,
+          updatedBy: "",
+          updatedDt: this.state.selectedFile.lastModifiedDate,
+          avsCheckDt: "",
+          avsCheck: false,
+          verified: false,
+          verifiedBy: "",
+          isEncrypted: false,
+          encryptionDetails: "",
+          uploadStatus: ""
+        };
+
         const fd = new FormData();
-        fd.append("file", this.state.selectedFile, this.state.selectedFile.name);
+        // fd.append("file", this.state.selectedFile, fileDetails);
+        fd.append("file", fileDetails);
         axios
-          .post(
-            "http://10.86.251.138:8080/docUploader/banks/RAK/prospects/700/documents",
-            fd,
-            config
-          )
+          .post("http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents", fd, config)
           .then(res => {
             this.setState({
               enableUpload: false,
@@ -215,7 +240,6 @@ class UploadDocuments extends Component {
                 </p>
               )}
             </div>
-
             <p
               className={this.props.classes.controlsBox}
               justify="flex-end"

@@ -40,7 +40,9 @@ const styles = {
       width: " 1px",
       height: " 100%",
       backgroundColor: " #ddd",
-      right: " 56px"
+      right: " 56px",
+      top: 0,
+      zIndex: "-1"
     },
     "& > div:first-child": {
       paddingRight: "56px"

@@ -1,11 +1,15 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
-import { SEARCH_APPLICATIONS, searchApplicationsSuccess } from "../actions/searchProspect";
+import {
+  SEARCH_APPLICATIONS,
+  searchApplicationsSuccess,
+  GET_DOCUMENTS,
+  getDocumentsSuccess
+} from "../actions/searchProspect";
 import { setInputsErrors } from "./../actions/serverValidation";
 import apiClient from "../../api/apiClient";
 
 function* searchProspectFormSaga(action) {
   try {
-    console.log("search inputs", action);
     const state = yield select();
     const inputParam = {
       fname: action.payload.fname || "",
@@ -28,6 +32,22 @@ function* searchProspectFormSaga(action) {
   }
 }
 
+function* getDocumentsSaga() {
+  try {
+    const state = yield select();
+    const apiUrl = state.appConfig.appConfig.endpoints.getProspectDocumentsPath.replace(
+      "{prospectId}",
+      "100"
+    );
+    const response = yield call(apiClient.search.getDocuments, apiUrl);
+    yield put(getDocumentsSuccess(response.data));
+  } catch (error) {
+    const { errors } = error.response.data;
+    yield put(setInputsErrors(errors));
+  }
+}
+
 export default function* searchProspectSaga() {
   yield all([takeLatest(SEARCH_APPLICATIONS, searchProspectFormSaga)]);
+  yield all([takeLatest(GET_DOCUMENTS, getDocumentsSaga)]);
 }

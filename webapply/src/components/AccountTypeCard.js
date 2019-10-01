@@ -37,7 +37,8 @@ const style = {
     textAlign: "center",
     "& span": {
       display: "block",
-      marginTop: 26
+      marginTop: 26,
+      width: "100%"
     },
     "@media only screen and (max-width: 1420px)": {
       fontSize: "16px",

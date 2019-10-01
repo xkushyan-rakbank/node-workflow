@@ -2045,10 +2045,10 @@
       "pattern": "^[0-9]*$",
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -2138,10 +2138,10 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -2256,10 +2256,10 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -2330,10 +2330,10 @@
       "pattern": "^[0-9]*$",
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -2448,10 +2448,10 @@
       "datalistId": "CountryCode",
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -2520,10 +2520,10 @@
       "datalistId": "CountryCode",
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -4699,10 +4699,10 @@
       "datalistId": "CountryCode",
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -4792,10 +4792,10 @@
       "datalistId": "CountryCode",
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -7118,10 +7118,10 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "USA",
-          "key": "USA",
-          "value": "USA",
-          "displayText": "+791"
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
+          "displayText": "+971"
         },
         {
           "code": "EUR",
@@ -7183,7 +7183,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "RAKTrack Number",
+      "label": "RAKTrack Lead Number",
       "placeholder": null,
       "path": "$.searchInfo.raktrackNumber",
       "name": "searchInfo.raktrackNumber",
@@ -7855,5 +7855,17 @@
       "freeField4": "",
       "freeField5": ""
     }
+  },
+  "searchInfo": {
+    "fname": "",
+    "countryCode": "",
+    "mobileNo": "",
+    "raktrackNumber": "",
+    "tradeLicenseNo": "",
+    "email": ""
+  },
+  "login": {
+    "userName": "",
+    "password": ""
   }
 }

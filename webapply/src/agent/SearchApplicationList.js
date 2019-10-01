@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import ContainedButton from "../components/Buttons/ContainedButton";
+import routes from "../routes";
+import { Link } from "react-router-dom";
 
 export const StyledWhiteContainedButton = props => {
   const Button = withStyles(() => ({
@@ -77,13 +79,6 @@ const style = {
     lineHeight: 1.14,
     textAlign: "center",
     color: "#b5b5bb"
-  },
-  buttonLinks: {
-    marginLeft: "10px"
-  },
-  highlight: {
-    position: "relative",
-    bottom: "2px"
   }
 };
 
@@ -91,7 +86,7 @@ const SearchApplicationList = ({ classes, currentApplications }) => {
   return (
     <div className={classes.wrapper}>
       {currentApplications.map((application, index) => (
-        <div className={classes.applicationRow} key={index}>
+        <Link className={classes.applicationRow} key={index} to={routes.SearchedAppInfo}>
           <div>
             <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
             <div className={classes.account}>{application.applicantInfo.email}</div>
@@ -104,7 +99,7 @@ const SearchApplicationList = ({ classes, currentApplications }) => {
           <div>
             <span className={classes.status}>{application.status.statusType}</span>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
