@@ -20,6 +20,9 @@ const style = {
   Rectangle: {
     width: "622px",
     height: "940px"
+  },
+  buttonWrap: {
+    marginTop: "0"
   }
 };
 class FileUploader extends React.Component {
@@ -43,17 +46,19 @@ class FileUploader extends React.Component {
 
   render() {
     const authUsers = this.props;
+    const { classes } = this.props;
+
     return (
       <>
         <h2>Upload your documents</h2>
         <p className="formDescription">
           Remember we asked you to have the papers ready? Now it’s time to upload them.
         </p>
-        <div className={this.props.classes.sectionContainer}>
-          <SectionTitle title="Company documents" className={this.props.classes.title} />
+        <div className={classes.sectionContainer}>
+          <SectionTitle title="Company documents" className={classes.title} />
           <CompanyDocuments />
         </div>
-        <div className={this.props.classes.sectionContainer}>
+        <div className={classes.sectionContainer}>
           <SectionTitle title="Signatories documents" />
           <SignatoriesDocuments authUsers={authUsers} />
         </div>
@@ -63,7 +68,11 @@ class FileUploader extends React.Component {
             <SubmitButton label="Next Step" justify="flex-end" disabled={true} />
           ) : (
             <Link to={routes.selectServices}>
-              <SubmitButton label="Next Step" justify="flex-end" />
+              <SubmitButton
+                label="Next Step"
+                justify="flex-end"
+                classes={{ buttonWrap: classes.buttonWrap }}
+              />
             </Link>
           )}
         </div>
