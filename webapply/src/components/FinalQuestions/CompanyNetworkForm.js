@@ -46,27 +46,18 @@ class CompanyNetworkForm extends Component {
     super(props);
 
     this.limits = {
-      anotherBankCount: 5,
       insideSubsidiaryCount: 5,
       outsideSubsidiaryCount: 5
     };
     this.state = {
-      anotherBankCount: 1,
       insideSubsidiaryCount: 0,
       outsideSubsidiaryCount: 0,
-      isDontHaveOtherBankAccounts: false,
       isDontHaveInsideSubsidiary: false,
       isDontHaveOutsideSubsidiary: false
     };
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      prevState.isDontHaveOtherBankAccounts !== this.state.isDontHaveOtherBankAccounts &&
-      this.state.isDontHaveOtherBankAccounts
-    ) {
-      this.resetBankAccountValues();
-    }
     if (
       prevState.isDontHaveInsideSubsidiary !== this.state.isDontHaveInsideSubsidiary &&
       this.state.isDontHaveInsideSubsidiary
@@ -79,14 +70,6 @@ class CompanyNetworkForm extends Component {
     ) {
       this.resetOutsideSubsidiaryValues();
     }
-  }
-
-  resetBankAccountValues() {
-    this.setState({ anotherBankCount: 1 });
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails",
-      value: [{ bankName: "" }]
-    });
   }
 
   resetInsideSubsidiaryValues() {
@@ -116,10 +99,6 @@ class CompanyNetworkForm extends Component {
     this.setState({ [key]: this.state[key] + increment });
   };
 
-  handleAddAnotherBank = () => {
-    this.updateCountedStateValue("anotherBankCount");
-  };
-
   handleAddInsideSubsidiaryClick = () => {
     this.updateCountedStateValue("insideSubsidiaryCount");
   };
@@ -137,36 +116,6 @@ class CompanyNetworkForm extends Component {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
         <SectionTitle title="Company network" className={this.props.classes.title} />
-
-        <h4 className={this.props.classes.groupLabel}>Relationships with other banks</h4>
-        <Checkbox
-          label="The company has no accounts with other banks, inside or outside the UAE"
-          value={this.state.isDontHaveOtherBankAccounts}
-          onChange={event => this.setState({ isDontHaveOtherBankAccounts: event.target.checked })}
-        />
-        <Grid container spacing={3} className={this.props.classes.flexContainer}>
-          <Grid item sm={12}>
-            {Array.from(Array(this.state.anotherBankCount).keys()).map(index => {
-              return (
-                <TextInput
-                  key={index}
-                  id="OkycObriObd.bankName"
-                  indexes={[index]}
-                  required={index === 0 && !this.state.isDontHaveOtherBankAccounts}
-                  disabled={this.state.isDontHaveOtherBankAccounts}
-                />
-              );
-            })}
-          </Grid>
-        </Grid>
-        <AddButton
-          onClick={this.handleAddAnotherBank}
-          title="Add another bank"
-          disabled={
-            this.state.anotherBankCount >= this.limits.anotherBankCount ||
-            this.state.isDontHaveOtherBankAccounts
-          }
-        />
 
         <div className={this.props.classes.divider} />
 
