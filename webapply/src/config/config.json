@@ -1619,7 +1619,8 @@
       "readonlyFor": [],
       "description": "Company's VAT Registration No.",
       "pattern": "^[a-zA-Z0-9]*$",
-      "maxlength": "12"
+      "maxlength": "15",
+      "minlength": "12"
     },
     "OrgAddr.typeOfAddress": {
       "criteria": {
@@ -2628,34 +2629,36 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "Airlines/Aviation",
-          "key": "Airlines/Aviation",
-          "value": "Airlines/Aviation",
-          "displayText": "Airlines/Aviation"
+          "code": "CharitableTrust",
+          "key": "CharitableTrust",
+          "value": "Charitable Trustd",
+          "displayText": "Charitable Trust",
+          "subCategory": [
+            {
+              "code": "EIPO",
+              "key": "EIPO",
+              "value": "Educational Institute - Private owned",
+              "displayText": "Educational Institute - Private owned"
+            }
+          ]
         },
         {
-          "code": "ADR",
-          "key": "ADR",
-          "value": "ADR",
-          "displayText": "Alternative Dispute Resolution"
+          "code": "EIGO",
+          "key": "EIGO",
+          "value": "Educational Institute - Government owned",
+          "displayText": "Educational Institute - Government owned"
         },
         {
-          "code": "AltMedicine",
-          "key": "AltMedicine",
-          "value": "AltMedicine",
-          "displayText": "Alternative Medicine"
+          "code": "EIPO",
+          "key": "EIPO",
+          "value": "Educational Institute - Private owned",
+          "displayText": "Educational Institute - Private owned"
         },
         {
-          "code": "Animation",
-          "key": "Animation",
-          "value": "Animation",
-          "displayText": "Animation"
-        },
-        {
-          "code": "CAT-3",
-          "key": "CAT-3",
-          "value": "CAT-3",
-          "displayText": "Architecture & Planning"
+          "code": "FCPL",
+          "key": "FCPL",
+          "value": "Foreign company - Private Limited",
+          "displayText": "Foreign company - Private Limited"
         }
       ],
       "description": "get the values from datalist API. RO flag for special cases to be discussed with Vartika."

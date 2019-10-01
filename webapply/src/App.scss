@@ -315,3 +315,8 @@ h3 {
   letter-spacing: normal;
   color: #373737;
 }
+
+.MuiListItemText-root {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

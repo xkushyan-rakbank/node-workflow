@@ -211,7 +211,7 @@ class PureSelect extends React.Component {
       multiple,
       indexes
     } = this.props;
-    console.log(value);
+
     const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
     const inputProps = this.composeInputProps();

@@ -49,7 +49,6 @@ class BasicsForm extends React.Component {
   submitForm = event => {
     event.preventDefault();
     const errorList = validateForm(event);
-
     if (!errorList.length) {
       this.props.applicantInfoForm();
     }

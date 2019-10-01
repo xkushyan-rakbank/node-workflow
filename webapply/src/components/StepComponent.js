@@ -44,6 +44,7 @@ const StepComponent = props => {
     steps
   } = props;
   const Form = steps[step - 1].component;
+
   const renderTitle = () => {
     if (active) {
       return (
