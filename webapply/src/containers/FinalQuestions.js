@@ -5,17 +5,18 @@ import { Link } from "react-router-dom";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard";
 import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryCard";
-import SectionTitle from "../components/SectionTitle";
 import routes from "../routes";
 import { getSignatories } from "../store/selectors/appConfig";
 
 const style = {
   sectionContainer: {
-    marginBottom: "40px"
+    marginBottom: "20px"
   },
-  title: {
-    marginTop: "20px",
-    marginBottom: "40px"
+  description: {
+    fontSize: "20px",
+    color: "#373737",
+    margin: "20px 0 130px",
+    lineHeight: 1.5
   }
 };
 
@@ -25,25 +26,18 @@ class FinalQuestions extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <>
         <h2>Final questions</h2>
-        <p className="formDescription">
+        <p className={classes.description}>
           This final section is required by law, to help us understand the background of the company
           and that of the stakeholders with signatory rights
         </p>
         <div className={this.props.classes.sectionContainer}>
-          <SectionTitle
-            title="Final questions about the company"
-            className={this.props.classes.title}
-          />
           <CompanySummaryCard />
         </div>
         <div className={this.props.classes.sectionContainer}>
-          <SectionTitle
-            title="Final questions about signatories"
-            className={this.props.classes.title}
-          />
           {this.props.signatories.map((item, index) => {
             return <SignatorySummaryCard key={index} signatory={item} index={index} />;
           })}
