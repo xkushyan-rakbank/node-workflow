@@ -1,4 +1,5 @@
 import React from "react";
+import { withStyles } from "@material-ui/core";
 import cx from "classnames";
 import get from "lodash/get";
 import { compose } from "recompose";
@@ -8,6 +9,12 @@ import InfoTitle from "../InfoTitle";
 import CustomCheckbox from "./CustomCheckbox";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import { updateField } from "../../store/actions/appConfig";
+
+const style = {
+  formControl: {
+    display: "block"
+  }
+};
 
 class RadiobuttonGroup extends React.Component {
   constructor(props) {
@@ -41,7 +48,12 @@ class RadiobuttonGroup extends React.Component {
       config: { datalist = [], title, required, error }
     } = this.props;
     return (
-      <FormControl error={error} component="fieldset" required={required}>
+      <FormControl
+        error={error}
+        component="fieldset"
+        classes={{ root: classes.formControl }}
+        required={required}
+      >
         <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
           {datalist.map(item => (
             <CustomCheckbox
@@ -72,5 +84,6 @@ export default compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )
+  ),
+  withStyles(style)
 )(RadiobuttonGroup);
