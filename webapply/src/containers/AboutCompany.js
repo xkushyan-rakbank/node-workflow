@@ -68,8 +68,8 @@ class AboutCompany extends React.Component {
 
   render() {
     const { classes, index, loading } = this.props;
-    const { step } = this.state;
-    const disabled = step === aboutCompanySteps.length;
+    const { step, completedSteps } = this.state;
+    const disabled = completedSteps.includes(aboutCompanySteps.length);
 
     return (
       <>
@@ -113,7 +113,7 @@ class AboutCompany extends React.Component {
           <SubmitButton
             label="Next Step"
             justify="flex-end"
-            disabled={disabled}
+            disabled={!disabled}
             handleClick={this.handleClick}
           />
         </div>

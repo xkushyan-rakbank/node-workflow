@@ -1572,7 +1572,7 @@
       "required": true,
       "datalistId": null,
       "readonlyFor": [],
-      "format": "date"
+      "format": ""
     },
     "Org.licenseExpiryDate": {
       "criteria": {
@@ -1594,7 +1594,7 @@
       "required": false,
       "datalistId": null,
       "readonlyFor": [],
-      "format": "date"
+      "format": ""
     },
     "Org.vatRegistrationNumber": {
       "criteria": {

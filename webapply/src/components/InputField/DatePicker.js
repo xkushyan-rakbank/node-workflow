@@ -49,8 +49,7 @@ class DatePicker extends React.Component {
   inputRef = React.createRef();
 
   inputProps = {
-    ref: this.inputRef,
-    pattern: "^(0[1-9]|1[0-2])\\/(((0|1)[0-9]|2[0-9]|3[0-1])\\/((1|2)\\d\\d\\d))$"
+    ref: this.inputRef
   };
 
   resetFieldErrors = () => {
@@ -59,9 +58,7 @@ class DatePicker extends React.Component {
 
   updateField = (dateValue, stringValue) => {
     const { name } = this.props;
-    if (!dateValue || dateValue.toString() !== "Invalid Date") {
-      this.props.updateField({ value: stringValue, name });
-    }
+    this.props.updateField({ value: dateValue, name });
   };
 
   composeInputProps() {
@@ -80,15 +77,11 @@ class DatePicker extends React.Component {
     this.resetFieldErrors();
   };
 
-  handleAccept = () => {
+  handleAccept = date => {
     this.resetFieldErrors();
   };
 
   handleBlur = () => {
-    this.fieldValidation();
-  };
-
-  handleClose = () => {
     this.fieldValidation();
   };
 
@@ -100,6 +93,7 @@ class DatePicker extends React.Component {
       id,
       indexes,
       disableFuture,
+      disabled,
       minDate = new Date("01-01-1000")
     } = this.props;
     const { fieldErrors } = this.state;
@@ -115,9 +109,9 @@ class DatePicker extends React.Component {
               autoOk
               minDate={minDate}
               disableFuture={disableFuture}
+              disabled={disabled}
               name={config.name}
               label={config.label || ""}
-              invalidDateMessage={" "}
               disableToolbar
               margin="normal"
               variant="inline"
@@ -132,7 +126,6 @@ class DatePicker extends React.Component {
               onFocus={this.handleFocus}
               onChange={this.updateField}
               onBlur={this.handleBlur}
-              onClose={this.handleClose}
               error={isError}
               inputProps={inputProps}
               KeyboardButtonProps={{

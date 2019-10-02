@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +16,19 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
+import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.commons.FileHelper;
 import ae.rakbank.webapply.commons.RecaptchaUtil;
 
 @Service
 public class RecaptchaService {
 
 	private static final Logger logger = LoggerFactory.getLogger(RecaptchaService.class);
+
+	@Autowired
+	FileHelper fileHelper;
 
 	@Value("${google.recaptcha.secret}")
 	String recaptchaSecret;
@@ -29,6 +38,14 @@ public class RecaptchaService {
 
 	@Autowired
 	RestTemplateBuilder restTemplateBuilder;
+
+	@PostConstruct
+	public void init() {
+		JsonNode appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
+		recaptchaSecret = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSecret").asText();
+		recaptchaEndpoint = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("ReCaptchaUrl").asText()
+				+ appConfigJSON.get("ReCaptchaURIs").get("siteVerify").asText();
+	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public String verifyRecaptcha(String ip, String recaptchaResponse) {

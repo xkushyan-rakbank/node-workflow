@@ -3,6 +3,7 @@ import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
+import dotsBg from "../../assets/images/dots_bg.png";
 import checkedIc from "../../assets/icons/company-documents.png";
 import bankingIc from "../../assets/icons/banking.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
@@ -55,6 +56,8 @@ const styles = {
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     boxSizing: "border-box",
+    position: "relative",
+    overflow: "hidden",
     "@media only screen and (max-width: 1420px)": {
       width: "calc(50% - 10px)"
     },
@@ -83,6 +86,14 @@ const styles = {
       fontSize: "12px",
       color: "#86868b"
     }
+  },
+  dottedBg: {
+    position: "absolute",
+    width: "100%",
+    top: -10,
+    left: 2,
+    height: "auto",
+    zIndex: "-1"
   },
   accountNumberColumn: {
     "@media only screen and (max-width: 991px)": {
@@ -163,6 +174,8 @@ class ApplicationSubmitted extends React.Component {
               })}
               key={accountData.id}
             >
+              <img src={dotsBg} className={classes.dottedBg} alt="background" />
+
               <span className="info">Your AED account number</span>
               <div className="mainInfo">
                 <span className="number">{accountData.id}</span>
