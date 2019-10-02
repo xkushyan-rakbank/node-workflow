@@ -30,6 +30,12 @@ const styles = {
       color: " #000",
       top: " 50%",
       transform: " translate(0, -50%)"
+    },
+    "& fieldset": {
+      // target style IE11
+      "@media all and (-ms-high-contrast: active), (-ms-high-contrast: none)": {
+        top: "0"
+      }
     }
   },
   selectFieldBasic: {

@@ -15,6 +15,7 @@ const style = {
     "@media only screen and (max-width: 1100px)": {}
   },
   formWrapper: {
+    flexBasis: "0%",
     flex: "1 1 auto",
     minHeight: "0px",
     "& h2": {

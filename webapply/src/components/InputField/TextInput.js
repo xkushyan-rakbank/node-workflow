@@ -31,7 +31,6 @@ const styles = {
   },
   selectCombined: {
     flexDirection: "row !important",
-    alignItems: "flex-start",
     margin: "12px 0 24px !important",
     "& > div": {
       margin: "0 !important",
