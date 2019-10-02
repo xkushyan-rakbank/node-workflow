@@ -3,22 +3,26 @@
 		"local": {
 			"WebApplyBaseUrl": "http://localhost:9090",
 			"DehBaseUrl": "http://localhost:9091",
-			"OAuthBaseUrl": "http://localhost:9091"
+			"OAuthBaseUrl": "http://localhost:9091",
+			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"dev": {
 			"WebApplyBaseUrl": "http://localhost:9091",
 			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092"
+			"OAuthBaseUrl": "http://localhost:9092",
+			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"uat": {
 			"WebApplyBaseUrl": "http://localhost:9091",
 			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092"
+			"OAuthBaseUrl": "http://localhost:9092",
+			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"prod": {
 			"WebApplyBaseUrl": "http://localhost:9091",
 			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092"
+			"OAuthBaseUrl": "http://localhost:9092",
+			"ReCaptchaUrl": "https://www.google.com"
 		}
 	},
 	"WebApplyURIs": {
@@ -57,6 +61,9 @@
 	"OAuthURIs": {
 		"generateTokenUri": "/OAuth/token"
 	},
+	"ReCaptchaURIs": {
+		"siteVerify": "recaptcha/api/siteverify"
+	},
 	"OtherConfigs": {
 		"local": {
 			"OAuthGrantType": "password",
@@ -69,7 +76,9 @@
 			"OAuthLangId": "001",
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
-			"OAuthStateMode": "N"
+			"OAuthStateMode": "N",
+			"ReCaptchaSiteKey": "",
+			"ReCaptchaSecret": ""
 		},
 		"dev": {
 			"OAuthGrantType": "password",
@@ -82,7 +91,9 @@
 			"OAuthLangId": "001",
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
-			"OAuthStateMode": "N"
+			"OAuthStateMode": "N",
+			"ReCaptchaSiteKey": "",
+			"ReCaptchaSecret": ""
 		},
 		"uat": {
 			"OAuthGrantType": "password",
@@ -95,7 +106,9 @@
 			"OAuthLangId": "001",
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
-			"OAuthStateMode": "N"
+			"OAuthStateMode": "N",
+			"ReCaptchaSiteKey": "",
+			"ReCaptchaSecret": ""
 		},
 		"prod": {
 			"OAuthGrantType": "password",
@@ -108,7 +121,9 @@
 			"OAuthLangId": "001",
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
-			"OAuthStateMode": "N"
+			"OAuthStateMode": "N",
+			"ReCaptchaSiteKey": "",
+			"ReCaptchaSecret": ""
 		}
 	}
 }
