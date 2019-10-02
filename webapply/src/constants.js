@@ -110,7 +110,6 @@ export const fieldAttr = (id, fieldConfig, indexes) => {
     minLength: defineInputMinLengthByConfig(fieldConfig),
     pattern: fieldConfig.pattern,
     required: !!fieldConfig.required,
-    disabled: !!fieldConfig.disabled,
     readOnly: !!fieldConfig.readOnly
   };
 };
