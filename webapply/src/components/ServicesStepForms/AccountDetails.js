@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Select from "../InputField/PureSelect";
 import Checkbox from "../InputField/RefactoredCheckbox";
-import RadioGroup from "../InputField/RadioGroup";
+import CheckboxGroup from "../InputField/CheckboxGroup";
 import FormWrapper from "../StakeholderStepForms/FormWrapper";
 
 const style = {
@@ -35,7 +35,7 @@ class AccountDetails extends React.Component {
     return (
       <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
         <div className={cx("text", classes.sectionLabel)}>Top customers</div>
-        <RadioGroup id="Acnt.accountCurrencies" indexes={[0]} />
+        <CheckboxGroup id="Acnt.accountCurrencies" indexes={[0]} />
 
         <div className={cx("text", classes.topDivider, classes.sectionLabel)}>Select branch</div>
         <Grid container spacing={3}>

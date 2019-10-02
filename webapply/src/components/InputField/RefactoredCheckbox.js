@@ -6,6 +6,7 @@ import Check from "../../assets/icons/on.png";
 import { updateField } from "../../store/actions/appConfig";
 import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
+import questionMark from "../../assets/icons/question_mark_grey.png";
 
 const styles = {
   checkboxWrapper: {
@@ -16,11 +17,6 @@ const styles = {
     display: "inline-block",
     verticalAlign: "middle",
     marginTop: "5px"
-  },
-  icon: {
-    fill: "none",
-    stroke: "white",
-    strokeWidth: "2px"
   },
   hiddenCheckbox: {
     border: "0",
@@ -72,6 +68,9 @@ const styles = {
   secondRow: {
     fontSize: "12px",
     color: "#a4a4a4"
+  },
+  questionIcon: {
+    marginLeft: "10px"
   }
 };
 
@@ -89,7 +88,7 @@ class CustomCheckbox extends React.Component {
   }
 
   render() {
-    const { config, classes, value = false } = this.props;
+    const { config, classes, value = false, withQuestion } = this.props;
     return (
       <label className={classes.checkboxWrapper}>
         <div className={classes.checkboxContainer}>
@@ -113,6 +112,7 @@ class CustomCheckbox extends React.Component {
         ) : (
           <span className={classes.label}>{config.label}</span>
         )}
+        {withQuestion && <img src={questionMark} alt="" className={classes.questionIcon} />}
       </label>
     );
   }

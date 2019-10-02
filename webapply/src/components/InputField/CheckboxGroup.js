@@ -16,7 +16,7 @@ const style = {
   }
 };
 
-class RadiobuttonGroup extends React.Component {
+class CheckboxGroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -86,4 +86,4 @@ export default compose(
     mapDispatchToProps
   ),
   withStyles(style)
-)(RadiobuttonGroup);
+)(CheckboxGroup);
