@@ -103,7 +103,11 @@ class Input extends React.Component {
   }
 
   handleChange = event => {
+    const { callback } = this.props;
     this.setState({ value: event.target.value });
+    if (callback) {
+      callback(event.target.value);
+    }
   };
 
   resetErrorState() {

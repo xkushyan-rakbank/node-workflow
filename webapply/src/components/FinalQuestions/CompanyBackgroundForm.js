@@ -52,8 +52,7 @@ const styles = {
     right: "-100px",
     "@media only screen and (max-width: 959px)": {
       top: "70px",
-      right: "auto",
-      left: 0
+      right: "12px"
     }
   },
   marginBottom: {
@@ -78,6 +77,9 @@ class CompanyBackgroundForm extends Component {
       anotherBankCount: 5
     };
     this.state = {
+      isCustomerNameFilled: false,
+      isSupplierNameFilled: false,
+      isBankNameFilled: false,
       isDontTradingGoods: false,
       isDontHaveSuppliers: false,
       isDontHaveOtherBankAccounts: true
@@ -118,10 +120,6 @@ class CompanyBackgroundForm extends Component {
    * @param {CustomerSupplierData} [item]
    * @return {CustomerSupplierData}
    */
-  mapNameAndCountryCollection = item => {
-    const { name = "", country = "" } = item || {};
-    return { name, country };
-  };
 
   /**
    * @return {CustomerSupplierData}
@@ -176,33 +174,11 @@ class CompanyBackgroundForm extends Component {
     });
   }
 
-  filterAndUpdateTopCustomersValues() {
-    const dataList = this.getTopCustomerData()
-      .map(this.mapNameAndCountryCollection)
-      .filter((item, index) => index === 0 || item.name || item.country);
+  topCustomerNameChangeHandle = value => this.setState({ isCustomerNameFilled: !!value });
 
-    if (dataList.length > this.limits.customerCount) {
-      dataList.length = this.limits.customerCount;
-    }
+  topTopSupplierNameChangeHandle = value => this.setState({ isSupplierNameFilled: !!value });
 
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.topCustomers": dataList
-    });
-  }
-
-  filterAndUpdateTopSuppliersValues() {
-    const dataList = this.getTopSupplierData()
-      .map(this.mapNameAndCountryCollection)
-      .filter((item, index) => index === 0 || item.name || item.country);
-
-    if (dataList.length > this.limits.supplierCount) {
-      dataList.length = this.limits.supplierCount;
-    }
-
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.topSuppliers": dataList
-    });
-  }
+  topOtherBankNameChangeHandle = value => this.setState({ isBankNameFilled: !!value });
 
   handleAddCustomerClick = () => {
     const dataList = this.getTopCustomerData();
@@ -277,9 +253,6 @@ class CompanyBackgroundForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.filterAndUpdateTopCustomersValues();
-    this.filterAndUpdateTopSuppliersValues();
-
     this.props.handleContinue(event);
   };
 
@@ -292,29 +265,33 @@ class CompanyBackgroundForm extends Component {
   };
 
   isTopCustomerNameRequired(index) {
-    return index === 0 || this.getTopCustomerData()[index].country !== "";
+    return this.getTopCustomerData()[index].name === "";
   }
 
   isTopCustomerCountyRequired(index) {
-    return index === 0 || this.getTopCustomerData()[index].name !== "";
+    return this.getTopCustomerData()[index].country === "";
   }
 
   isTopSupplierNameRequired(index) {
-    if (!this.state.isDontHaveSuppliers && index === 0) {
-      return true;
-    }
-    return this.getTopSupplierData()[index].country !== "";
+    const { isDontHaveSuppliers } = this.state;
+    return !isDontHaveSuppliers && this.getTopSupplierData()[index].name === "";
   }
 
   isTopSupplierCountryRequired(index) {
-    if (!this.state.isDontHaveSuppliers && index === 0) {
-      return true;
-    }
-    return this.getTopSupplierData()[index].name !== "";
+    const { isDontHaveSuppliers } = this.state;
+    return !isDontHaveSuppliers && this.getTopSupplierData()[index].country === "";
   }
 
   isCountryOriginGoodsRequired(index) {
-    return index === 0 && !this.state.isDontTradingGoods;
+    const { isDontTradingGoods } = this.state;
+    const goods = this.getTopOriginGoodsCountries();
+    return !isDontTradingGoods && !goods[index];
+  }
+
+  isOtherBankNameRequired(index) {
+    const { isDontHaveOtherBankAccounts } = this.state;
+    const banks = this.getOtherBankingRelationshipsInfo();
+    return !isDontHaveOtherBankAccounts && !banks[index].bankName;
   }
 
   isAddTopCustomerDisabled = () => {
@@ -355,18 +332,27 @@ class CompanyBackgroundForm extends Component {
   };
 
   isContinueDisabled = () => {
-    const { isDontHaveOtherBankAccounts, isDontTradingGoods, isDontHaveSuppliers } = this.state;
+    const {
+      isDontHaveOtherBankAccounts,
+      isDontTradingGoods,
+      isDontHaveSuppliers,
+      isCustomerNameFilled,
+      isSupplierNameFilled,
+      isBankNameFilled
+    } = this.state;
     const customers = this.getTopCustomerData();
     const isTopCustomersFilled =
-      customers.length > 1 || !!(customers[0].name && customers[0].country);
+      customers.length > 1 || !!(isCustomerNameFilled && customers[0].country);
     const suppliers = this.getTopSupplierData();
     const isTopSuppliersFilled =
-      isDontHaveSuppliers || suppliers.length > 1 || !!(suppliers[0].name && suppliers[0].country);
+      isDontHaveSuppliers ||
+      suppliers.length > 1 ||
+      !!(isSupplierNameFilled && suppliers[0].country);
     const goods = this.getTopOriginGoodsCountries();
     const isOriginGoodsFilled = isDontTradingGoods || goods.length > 1 || !!goods[0];
     const banks = this.getOtherBankingRelationshipsInfo();
     const isAnotherBanksFilled =
-      isDontHaveOtherBankAccounts || banks.length > 1 || !!banks[0].bankName;
+      isDontHaveOtherBankAccounts || banks.length > 1 || isBankNameFilled;
     return !(
       isTopCustomersFilled &&
       isTopSuppliersFilled &&
@@ -392,6 +378,7 @@ class CompanyBackgroundForm extends Component {
                     id="OkycTopc.name"
                     indexes={[index]}
                     required={this.isTopCustomerNameRequired(index)}
+                    callback={this.topCustomerNameChangeHandle}
                   />
                 </Grid>
                 <Grid
@@ -441,6 +428,7 @@ class CompanyBackgroundForm extends Component {
                     indexes={[index]}
                     required={this.isTopSupplierNameRequired(index)}
                     disabled={isDontHaveSuppliers}
+                    callback={this.topTopSupplierNameChangeHandle}
                   />
                 </Grid>
                 <Grid
@@ -536,8 +524,9 @@ class CompanyBackgroundForm extends Component {
                         <TextInput
                           id="OkycObriObd.bankName"
                           indexes={[index]}
-                          required={index === 0 && !isDontHaveOtherBankAccounts}
+                          required={this.isOtherBankNameRequired(index)}
                           disabled={isDontHaveOtherBankAccounts}
+                          callback={this.topOtherBankNameChangeHandle}
                         />
                         {index !== 0 && (
                           <RemoveButton

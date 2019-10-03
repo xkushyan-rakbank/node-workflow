@@ -23,8 +23,7 @@ const style = {
     },
     "@media only screen and (max-width: 959px)": {
       top: "80px",
-      right: "auto",
-      left: "12px"
+      right: "12px"
     }
   },
   text: {
