@@ -39,14 +39,14 @@ class CompanySummaryCard extends Component {
         component: CompanyBackgroundForm
       },
       {
+        title: "Branches and subsidiaries",
+        key: "network",
+        component: CompanyNetworkForm
+      },
+      {
         title: "Anticipated transactions",
         key: "anticipatedTransactions",
         component: CompanyAnticipatedTransactionsForm
-      },
-      {
-        title: "Company network",
-        key: "network",
-        component: CompanyNetworkForm
       },
       {
         title: "Preferred mailing address",
