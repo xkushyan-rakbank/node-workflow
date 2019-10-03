@@ -8,7 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InfoTitle from "../InfoTitle";
 import CustomCheckbox from "./CustomCheckbox";
 import { getGeneralInputProps } from "../../store/selectors/input";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
 const style = {
   formControl: {
@@ -35,11 +35,7 @@ class CheckboxGroup extends React.Component {
     if (checked && !newValue.includes(value)) {
       newValue.push(value);
     }
-
-    this.props.updateField({
-      value: newValue,
-      name: this.props.name
-    });
+    this.props.updateProspect({ [this.props.name]: newValue });
   };
 
   render() {
@@ -61,7 +57,7 @@ class CheckboxGroup extends React.Component {
               value={item.value}
               label={item.displayText}
               handleChange={this.handleChange}
-              checked={this.props.value.includes(item.value)}
+              // checked={this.props.value.includes(item.value)}
             />
           ))}
         </div>
@@ -77,7 +73,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default compose(

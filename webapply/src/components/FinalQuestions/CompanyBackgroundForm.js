@@ -11,7 +11,7 @@ import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import AddButton from "../Buttons/AddButton";
 import RemoveButton from "../Buttons/RemoveButton";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { getOrgKYCDetails } from "../../store/selectors/appConfig";
 
 const styles = {
@@ -95,18 +95,16 @@ class CompanyBackgroundForm extends Component {
       prevState.isDontTradingGoods !== this.state.isDontTradingGoods &&
       this.state.isDontTradingGoods
     ) {
-      this.props.updateField({
-        name: "prospect.orgKYCDetails.topOriginGoodsCountries",
-        value: [""]
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.topOriginGoodsCountries": [""]
       });
     }
     if (
       prevState.isDontHaveSuppliers !== this.state.isDontHaveSuppliers &&
       this.state.isDontHaveSuppliers
     ) {
-      this.props.updateField({
-        name: "prospect.orgKYCDetails.topSuppliers",
-        value: [this.getEmptyCustomerSupplierItem()]
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.topSuppliers": [this.getEmptyCustomerSupplierItem()]
       });
     }
   }
@@ -172,13 +170,9 @@ class CompanyBackgroundForm extends Component {
 
   resetBankAccountValues() {
     this.setState({ anotherBankCount: 1 });
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails",
-      value: [{ bankName: "" }]
-    });
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
-      value: false
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": [{ bankName: "" }],
+      "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist": false
     });
   }
 
@@ -191,9 +185,8 @@ class CompanyBackgroundForm extends Component {
       dataList.length = this.limits.customerCount;
     }
 
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.topCustomers",
-      value: dataList
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.topCustomers": dataList
     });
   }
 
@@ -206,18 +199,16 @@ class CompanyBackgroundForm extends Component {
       dataList.length = this.limits.supplierCount;
     }
 
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.topSuppliers",
-      value: dataList
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.topSuppliers": dataList
     });
   }
 
   handleAddCustomerClick = () => {
     const dataList = this.getTopCustomerData();
     if (dataList.length < this.limits.customerCount) {
-      this.props.updateField({
-        name: "prospect.orgKYCDetails.topCustomers",
-        value: [...dataList, this.getEmptyCustomerSupplierItem()]
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.topCustomers": [...dataList, this.getEmptyCustomerSupplierItem()]
       });
     }
   };
@@ -225,18 +216,16 @@ class CompanyBackgroundForm extends Component {
   handleRemoveTopCustomer = index => {
     const dataList = this.getTopCustomerData();
     dataList.splice(index, 1);
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.topCustomers",
-      value: [...dataList]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.topCustomers": [...dataList]
     });
   };
 
   handleAddSupplierClick = () => {
     const dataList = this.getTopSupplierData();
     if (dataList.length < this.limits.supplierCount) {
-      this.props.updateField({
-        name: "prospect.orgKYCDetails.topSuppliers",
-        value: [...dataList, this.getEmptyCustomerSupplierItem()]
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.topSuppliers": [...dataList, this.getEmptyCustomerSupplierItem()]
       });
     }
   };
@@ -244,18 +233,16 @@ class CompanyBackgroundForm extends Component {
   handleRemoveSupplier = index => {
     const dataList = this.getTopSupplierData();
     dataList.splice(index, 1);
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.topSuppliers",
-      value: [...dataList]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.topSuppliers": [...dataList]
     });
   };
 
   handleAddCountryOfOriginClick = () => {
     const dataList = this.getTopOriginGoodsCountries();
     if (dataList.length < this.limits.countryOfOriginCount) {
-      this.props.updateField({
-        name: "prospect.orgKYCDetails.topOriginGoodsCountries",
-        value: [...dataList, ""]
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.topOriginGoodsCountries": [...dataList, ""]
       });
     }
   };
@@ -263,18 +250,19 @@ class CompanyBackgroundForm extends Component {
   handleRemoveTopGood = index => {
     const dataList = this.getTopOriginGoodsCountries();
     dataList.splice(index, 1);
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.topOriginGoodsCountries",
-      value: [...dataList]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.topOriginGoodsCountries": [...dataList]
     });
   };
 
   handleAddAnotherBank = () => {
     const dataList = this.getOtherBankingRelationshipsInfo();
     if (dataList.length < this.limits.anotherBankCount) {
-      this.props.updateField({
-        name: "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails",
-        value: [...dataList, this.getEmptyOtherBankingItem()]
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": [
+          ...dataList,
+          this.getEmptyOtherBankingItem()
+        ]
       });
     }
   };
@@ -282,9 +270,8 @@ class CompanyBackgroundForm extends Component {
   handleRemoveBankInfo = index => {
     const dataList = this.getOtherBankingRelationshipsInfo();
     dataList.splice(index, 1);
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails",
-      value: [...dataList]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": [...dataList]
     });
   };
 
@@ -297,9 +284,9 @@ class CompanyBackgroundForm extends Component {
   };
 
   handleSwitchOtherBankAccounts = e => {
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
-      value: e.target.checked
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist":
+        e.target.checked
     });
     this.setState({ isDontHaveOtherBankAccounts: !e.target.checked });
   };
@@ -586,7 +573,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

@@ -1,7 +1,6 @@
 export const RECEIVE_APPCONFIG = "RECEIVE_APPCONFIG";
 export const RECEIVE_APPCONFIG_SUCCESS = "RECEIVE_APPCONFIG_SUCCESS";
 export const RECEIVE_APPCONFIG_FAIL = "RECEIVE_APPCONFIG_FAIL";
-export const UPDATE_FIELD = "UPDATE_FIELD";
 export const UPDATE_PROSPECT = "UPDATE_PROSPECT";
 export const SET_PROSPECT = "SET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
@@ -18,12 +17,8 @@ export const receiveAppConfigFail = error => {
   return { type: RECEIVE_APPCONFIG_FAIL, error };
 };
 
-export const updateField = data => {
-  return { type: UPDATE_FIELD, data };
-};
-
-export const updateProspect = data => {
-  return { type: UPDATE_PROSPECT, data };
+export const updateProspect = fields => {
+  return { type: UPDATE_PROSPECT, fields };
 };
 
 export const setProspect = prospect => {
