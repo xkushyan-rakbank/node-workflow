@@ -44,7 +44,7 @@ const styles = {
     marginBottom: "20px"
   },
   container: {
-    top: "100%",
+    top: "calc(100% - 10px)",
     right: "12px"
   }
 };
@@ -62,6 +62,9 @@ class CompanyNetworkForm extends Component {
       outsideSubsidiaryCount: 5
     };
     this.state = {
+      insideSubsidiaryCompanyNameFilled: false,
+      insideSubsidiaryTradeLicenseNoFilled: false,
+      outsideSubsidiaryCompanyNameFilled: false,
       insideSubsidiaryCount: 1,
       outsideSubsidiaryCount: 1,
       isDontHaveInsideSubsidiary: true,
@@ -129,6 +132,15 @@ class CompanyNetworkForm extends Component {
     });
   }
 
+  insideSubsidiaryCompanyNameChangeHandle = value =>
+    this.setState({ insideSubsidiaryCompanyNameFilled: !!value });
+
+  insideSubsidiaryTradeLicenseNoChangeHandle = value =>
+    this.setState({ insideSubsidiaryTradeLicenseNoFilled: !!value });
+
+  outsideSubsidiaryCompanyNameChangeHandle = value =>
+    this.setState({ outsideSubsidiaryCompanyNameFilled: !!value });
+
   handleAddInsideSubsidiarySwitch = e => {
     this.props.updateField({
       name: "prospect.orgKYCDetails.otherEntitiesInUAE",
@@ -189,23 +201,23 @@ class CompanyNetworkForm extends Component {
   };
 
   isInsideSubsidiaryCompanyNameRequired(index) {
-    return index === 0 || this.getInsideSubsidiariesData()[index].companyName === "";
+    return this.getInsideSubsidiariesData()[index].companyName === "";
   }
 
   isInsideSubsidiaryEmirateRequired(index) {
-    return index === 0 || this.getInsideSubsidiariesData()[index].emirate === "";
+    return this.getInsideSubsidiariesData()[index].emirate === "";
   }
 
   isInsideSubsidiaryTradeLicenseRequired(index) {
-    return index === 0 || this.getInsideSubsidiariesData()[index].tradeLicenseNo === "";
+    return this.getInsideSubsidiariesData()[index].tradeLicenseNo === "";
   }
 
   isOutsideSubsidiaryCompanyNameRequired(index) {
-    return index === 0 || this.getOutsideSubsidiariesData()[index].companyName === "";
+    return this.getOutsideSubsidiariesData()[index].companyName === "";
   }
 
   isOutsideSubsidiaryCountryRequired(index) {
-    return index === 0 || this.getOutsideSubsidiariesData()[index].country === "";
+    return this.getOutsideSubsidiariesData()[index].country === "";
   }
 
   isAddInsideSubsidiaryDisabled = () => {
@@ -232,21 +244,27 @@ class CompanyNetworkForm extends Component {
   };
 
   isContinueDisabled = () => {
-    const { isDontHaveInsideSubsidiary, isDontHaveOutsideSubsidiary } = this.state;
+    const {
+      isDontHaveInsideSubsidiary,
+      isDontHaveOutsideSubsidiary,
+      insideSubsidiaryCompanyNameFilled,
+      insideSubsidiaryTradeLicenseNoFilled,
+      outsideSubsidiaryCompanyNameFilled
+    } = this.state;
     const insideSubsidiaries = this.getInsideSubsidiariesData();
     const isInsideSubsidiariesFilled =
       isDontHaveInsideSubsidiary ||
       insideSubsidiaries.length > 1 ||
       !!(
-        insideSubsidiaries[0].companyName &&
+        insideSubsidiaryCompanyNameFilled &&
         insideSubsidiaries[0].emirate &&
-        insideSubsidiaries[0].tradeLicenseNo
+        insideSubsidiaryTradeLicenseNoFilled
       );
     const outsideSubsidiaries = this.getOutsideSubsidiariesData();
     const isOutsideSubsidiariesFilled =
       isDontHaveOutsideSubsidiary ||
       outsideSubsidiaries.length > 1 ||
-      !!(outsideSubsidiaries[0].companyName && outsideSubsidiaries[0].country);
+      !!(outsideSubsidiaryCompanyNameFilled && outsideSubsidiaries[0].country);
     return !(isInsideSubsidiariesFilled && isOutsideSubsidiariesFilled);
   };
 
@@ -281,6 +299,7 @@ class CompanyNetworkForm extends Component {
                         indexes={[index]}
                         required={this.isInsideSubsidiaryCompanyNameRequired(index)}
                         disabled={this.state.isDontHaveInsideSubsidiary}
+                        callback={this.insideSubsidiaryCompanyNameChangeHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12}>
@@ -290,6 +309,7 @@ class CompanyNetworkForm extends Component {
                         indexes={[index]}
                         required={this.isInsideSubsidiaryTradeLicenseRequired(index)}
                         disabled={this.state.isDontHaveInsideSubsidiary}
+                        callback={this.insideSubsidiaryTradeLicenseNoChangeHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
@@ -343,6 +363,7 @@ class CompanyNetworkForm extends Component {
                         indexes={[index]}
                         required={this.isOutsideSubsidiaryCompanyNameRequired(index)}
                         disabled={this.state.isDontHaveOutsideSubsidiary}
+                        callback={this.outsideSubsidiaryCompanyNameChangeHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
