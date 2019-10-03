@@ -8,7 +8,7 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
 const styles = {
   title: {
@@ -76,9 +76,8 @@ class CompanyNetworkForm extends Component {
     if (this.state.insideSubsidiaryCount > 1) {
       this.setState({ insideSubsidiaryCount: 1 });
     }
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.entitiesInUAE",
-      value: [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.entitiesInUAE": [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
     });
   }
 
@@ -86,9 +85,8 @@ class CompanyNetworkForm extends Component {
     if (this.state.outsideSubsidiaryCount > 1) {
       this.setState({ outsideSubsidiaryCount: 1 });
     }
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.entitiesOutsideUAE",
-      value: [{ tradeLicenseNo: "", companyName: "" }]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.entitiesOutsideUAE": [{ tradeLicenseNo: "", companyName: "" }]
     });
   }
 
@@ -228,7 +226,7 @@ class CompanyNetworkForm extends Component {
 }
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

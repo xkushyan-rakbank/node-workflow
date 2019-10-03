@@ -8,6 +8,7 @@ import logo from "./../assets/images/rakbankLogo.png";
 import { withStyles } from "@material-ui/core/styles";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import * as appConfigSelectors from "../store/selectors/appConfig";
+import { sideNavWidthXL, sideNavWidthMD, sideNavWidthSM } from "../constants/styles";
 
 const styles = {
   header: {
@@ -22,13 +23,14 @@ const styles = {
   },
   logoContainer: {
     boxSizing: "border-box",
-    width: "530px",
+    width: `${sideNavWidthXL}px`,
     padding: "28px 0 28px 40px",
     "@media only screen and (max-width: 1300px)": {
-      width: "45%"
+      width: `${sideNavWidthMD}px`
     },
-    "@media only screen and (max-width: 920px)": {
-      width: "420px"
+    "@media only screen and (max-width: 1220px)": {
+      width: `${sideNavWidthSM}px`,
+      paddingLeft: "20px"
     }
   },
   headerTitle: {

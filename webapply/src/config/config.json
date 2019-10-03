@@ -3411,7 +3411,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "This stakeholder is a company",
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.isShareholderACompany",
       "name": "prospect.orgKYCDetails.isShareholderACompany",
@@ -4000,7 +4000,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "This stakeholder is a company",
+      "label": "",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].kycVerified",
       "name": "prospect.signatoryInfo[*].kycVerified",
@@ -4078,13 +4078,13 @@
         {
           "code": "Y",
           "key": "Y",
-          "value": "true",
+          "value": true,
           "displayText": "Yes"
         },
         {
           "code": "N",
           "key": "N",
-          "value": "false",
+          "value": false,
           "displayText": "No"
         }
       ]
@@ -7547,7 +7547,7 @@
         "kycDetails": {
           "salutation": "Mr.",
           "shareholderPOASignatoryName": "",
-          "isSignatory": false,
+          "isSignatory": "",
           "isShareholder": false,
           "shareHoldingPercentage": 0,
           "dateOfBirth": "",
@@ -7669,7 +7669,7 @@
         "kycDetails": {
           "salutation": "Mr.",
           "shareholderPOASignatoryName": "",
-          "isSignatory": false,
+          "isSignatory": true,
           "isShareholder": false,
           "shareHoldingPercentage": 0,
           "dateOfBirth": "",

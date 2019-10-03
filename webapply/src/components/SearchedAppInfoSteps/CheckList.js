@@ -76,10 +76,10 @@ class CheckList extends React.Component {
             <div className={classes.checkListData + " " + classes.heading}>Check Name</div>
           </div>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Check Results</div>
+            <div className={classes.checkListData + " " + classes.heading}>Status</div>
           </div>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Reason</div>
+            <div className={classes.checkListData + " " + classes.heading}>Result/Reason</div>
           </div>
         </div>
         {mockCheckListData.map((application, index) => (

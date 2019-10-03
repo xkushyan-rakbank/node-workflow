@@ -8,7 +8,7 @@ import { getSignatories } from "../../store/selectors/appConfig";
 import { getInputNameById, getInputValueById } from "../../store/selectors/input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import ErrorMessage from "../ErrorMessage";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
 class Shareholding extends React.Component {
   inputProps = {
@@ -31,10 +31,7 @@ class Shareholding extends React.Component {
   }
 
   updateShareholderPercentageValue(value) {
-    this.props.updateField({
-      value,
-      name: this.props.shareholderPercentageInputName
-    });
+    this.props.updateProspect({ [this.props.shareholderPercentageInputName]: value });
   }
 
   otherSignatoriesPercentage() {
@@ -99,7 +96,7 @@ const mapStateToProps = (state, { index }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default connect(

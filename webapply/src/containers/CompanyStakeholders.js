@@ -63,7 +63,7 @@ class CompanyStakeholders extends React.Component {
 
   goToFinalQuestions = () => this.props.history.push(routes.finalQuestions);
 
-  showNewStakeholder = () => this.setState({ showNewStakeholder: true });
+  showNewStakeholder = () => this.setState({ showNewStakeholder: true, editableStakeholder: null });
 
   hideNewStakeholder = () => {
     const stakeholders = this.state.stakeholders;
@@ -71,7 +71,13 @@ class CompanyStakeholders extends React.Component {
     this.setState({ showNewStakeholder: false, editableStakeholder: null });
   };
 
-  changeEditableStep = stakeholderIndex => this.setState({ editableStakeholder: stakeholderIndex });
+  changeEditableStep = stakeholderIndex =>
+    this.setState({ editableStakeholder: stakeholderIndex, showNewStakeholder: false });
+
+  deleteStakeholder = stakeholderId => {
+    const newStakeholders = this.state.stakeholders.filter(item => item.id !== stakeholderId);
+    this.setState({ stakeholders: newStakeholders });
+  };
 
   render() {
     const { stakeholders, showNewStakeholder, editableStakeholder } = this.state;
@@ -91,9 +97,15 @@ class CompanyStakeholders extends React.Component {
         </div>
 
         <div>
-          {stakeholders.map((item, index) =>
-            editableStakeholder === index ? (
-              <StakeholderStepper hideForm={this.hideNewStakeholder} index={editableStakeholder} />
+          {stakeholders.map((item, index) => {
+            const deleteStakeholder = () => this.deleteStakeholder(item.id);
+            return editableStakeholder === index ? (
+              <StakeholderStepper
+                hideForm={this.hideNewStakeholder}
+                index={editableStakeholder}
+                key={item.id}
+                deleteStakeholder={deleteStakeholder}
+              />
             ) : (
               <FilledStakeholderCard
                 {...item}
@@ -101,11 +113,16 @@ class CompanyStakeholders extends React.Component {
                 changeEditableStep={this.changeEditableStep}
                 key={`${item.id}-${index}`}
               />
-            )
-          )}
+            );
+          })}
         </div>
 
-        {showNewStakeholder && <StakeholderStepper hideForm={this.hideNewStakeholder} index={0} />}
+        {showNewStakeholder && (
+          <StakeholderStepper
+            hideForm={this.hideNewStakeholder}
+            index={this.state.stakeholders.length}
+          />
+        )}
 
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={this.showNewStakeholder} />
@@ -127,6 +144,7 @@ class CompanyStakeholders extends React.Component {
             handleClick={this.goToFinalQuestions}
             label="Next Step"
             justify="flex-end"
+            disabled
           />
         </div>
       </>

@@ -10,7 +10,8 @@ const styles = {
     marginRight: "-20px",
     marginLeft: "-20px",
     position: "relative",
-    overflow: "hidden"
+    overflow: "hidden",
+    paddingBottom: "20px"
   },
   containerBg: {
     position: "absolute",

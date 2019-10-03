@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import expandMoreIcon from "../assets/icons/arrow-down.png";
-
+import { sideNavWidthXL, sideNavWidthLG, sideNavWidthMD } from "../constants/styles";
 const appRootEl = document.getElementById("root");
 
 const styles = {
@@ -23,18 +23,24 @@ const styles = {
     position: "absolute",
     zIndex: 10,
     minWidth: "100%",
-    minHeight: "100vh"
+    minHeight: "100vh",
+    "@media only screen and (max-width: 1220px)": {
+      left: "-10%"
+    }
   },
   buttonContainer: {
     position: "absolute",
-    left: 530,
+    left: sideNavWidthXL,
     right: 0,
     bottom: 40,
     zIndex: 15,
     display: "flex",
     justifyContent: "center",
+    "@media only screen and (max-width: 1420px)": {
+      left: sideNavWidthLG
+    },
     "@media only screen and (max-width: 1300px)": {
-      left: "45%"
+      left: `${sideNavWidthMD}px`
     }
   },
   scrollButton: {

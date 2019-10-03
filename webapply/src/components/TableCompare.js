@@ -24,8 +24,8 @@ const style = {
   tableContainer: {
     minWidth: "780px",
     position: "relative",
-    "@media only screen and (max-height: 900px)": {
-      maxHeight: "368px"
+    "@media only screen and (max-height: 920px)": {
+      maxHeight: "480px"
     }
   },
   tableHead: {
@@ -79,7 +79,7 @@ const style = {
     top: "-15px",
     height: "calc(100% + 30px)",
     "@media only screen and (max-height: 900px)": {
-      height: "calc(100% + 133px)"
+      height: "calc(100% + 30px)"
     },
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",

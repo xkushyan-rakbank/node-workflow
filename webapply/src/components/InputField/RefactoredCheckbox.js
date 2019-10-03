@@ -3,9 +3,10 @@ import { withStyles } from "@material-ui/core/styles";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import Check from "../../assets/icons/on.png";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
+import questionMark from "../../assets/icons/question_mark_grey.png";
 
 const styles = {
   checkboxWrapper: {
@@ -16,11 +17,6 @@ const styles = {
     display: "inline-block",
     verticalAlign: "middle",
     marginTop: "5px"
-  },
-  icon: {
-    fill: "none",
-    stroke: "white",
-    strokeWidth: "2px"
   },
   hiddenCheckbox: {
     border: "0",
@@ -72,14 +68,17 @@ const styles = {
   secondRow: {
     fontSize: "12px",
     color: "#a4a4a4"
+  },
+  questionIcon: {
+    marginLeft: "10px"
   }
 };
 
 class CustomCheckbox extends React.Component {
-  updateField = event => {
+  updateProspect = event => {
     const value = event.target.checked;
     const { name } = this.props;
-    this.props.updateField({ value, name });
+    this.props.updateProspect({ [name]: value });
   };
 
   getDataAttr() {
@@ -89,7 +88,7 @@ class CustomCheckbox extends React.Component {
   }
 
   render() {
-    const { config, classes, value = false } = this.props;
+    const { config, classes, value = false, withQuestion } = this.props;
     return (
       <label className={classes.checkboxWrapper}>
         <div className={classes.checkboxContainer}>
@@ -97,7 +96,7 @@ class CustomCheckbox extends React.Component {
             {...this.getDataAttr()}
             type="checkbox"
             value={value}
-            onChange={this.updateField}
+            onChange={this.updateProspect}
             checked={value}
             className={classes.hiddenCheckbox}
           />
@@ -113,6 +112,7 @@ class CustomCheckbox extends React.Component {
         ) : (
           <span className={classes.label}>{config.label}</span>
         )}
+        {withQuestion && <img src={questionMark} alt="" className={classes.questionIcon} />}
       </label>
     );
   }
@@ -123,7 +123,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default compose(
