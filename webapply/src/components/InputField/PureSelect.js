@@ -215,12 +215,12 @@ class PureSelect extends React.Component {
       indexes,
       subOptions
     } = this.props;
-    console.log(subOptions);
+
     const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
     const inputProps = this.composeInputProps();
     const className = combinedSelect ? classes.selectFieldCombined : classes.selectFieldBasic;
-    const options = config.datalist;
+    const options = subOptions ? subOptions : config.datalist;
 
     return (
       <FormControl

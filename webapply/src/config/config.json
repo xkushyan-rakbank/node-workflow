@@ -2921,7 +2921,7 @@
         {
           "code": "Energy Equipment & Services",
           "key": "Energy Equipment & Services",
-          "value": "EES",
+          "value": "Energy Equipment & Services",
           "displayText": "Energy Equipment & Services",
           "subCategory": [
             {
@@ -2941,7 +2941,7 @@
         {
           "code": "OGC&F",
           "key": "OGC&F",
-          "value": "OGC&F",
+          "value": "Oil, Gas & Consumable Fuels",
           "displayText": "Oil, Gas & Consumable Fuels",
           "subCategory": [
             {

@@ -1,24 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
+import isEmpty from "lodash/isEmpty";
 import Grid from "@material-ui/core/Grid";
 import PureSelect from "../InputField/PureSelect";
 import { getInputValueById, getFieldConfigById } from "../../store/selectors/input";
 import InfoTitle from "../InfoTitle";
 
 class Industry extends React.Component {
-  renderOptionsForSubId = () => {
-    const { industryValue, industryConfig } = this.props;
-
-    if (industryValue) {
-      const arr = industryConfig.datalist.filter(item => industryValue.includes(item.value));
-      const newOptions = arr
+  renderOptionsForSubId = (value, valueConfig) => {
+    if (value) {
+      const optionsArr = valueConfig.datalist.filter(item => value.includes(item.value));
+      const subOptionsArr = optionsArr
         .map(item => item.subCategory)
         .reduce((acc, curr) => [...acc, ...curr], []);
-      return newOptions;
+      return subOptionsArr;
     }
   };
 
   render() {
+    const { industryValue, industryConfig } = this.props;
+    const subOptions = this.renderOptionsForSubId(industryValue, industryConfig);
+
     return (
       <Grid container spacing={3}>
         <Grid item md={6} sm={12}>
@@ -26,8 +28,8 @@ class Industry extends React.Component {
         </Grid>
         <Grid item md={6} sm={12}>
           <PureSelect
-            disabled={false}
-            subOptions={this.renderOptionsForSubId()}
+            disabled={isEmpty(industryValue)}
+            subOptions={subOptions}
             id="OkycIndus.subCategory"
             indexes={[0, 0]}
           />
