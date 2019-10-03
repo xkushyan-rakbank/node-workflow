@@ -177,7 +177,7 @@ export const applicationStatus = {
 export const searchedAppInfoSteps = [
   {
     step: 1,
-    title: "Company Details",
+    title: "Details",
     component: SearchedCompanyDetails
   },
   {
