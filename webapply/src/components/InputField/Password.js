@@ -11,7 +11,7 @@ import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
 import { validate } from "./../../utils/validate";
 import combineNestingName from "../../utils/combineNestingName";
@@ -85,9 +85,8 @@ class Password extends React.Component {
       !isUndefined(this.props.defaultValue) &&
       (isUndefined(this.props.value) || this.props.value === "")
     ) {
-      this.props.updateField({
-        value: this.props.defaultValue,
-        name: this.props.name
+      this.props.updateProspect({
+        [this.props.name]: this.props.defaultValue
       });
     }
   }
@@ -98,11 +97,11 @@ class Password extends React.Component {
     }
   }
 
-  updateField = event => {
+  updateProspect = event => {
     const { name } = this.props;
     const value = event.target.value.trim();
     if (value !== this.props.value) {
-      this.props.updateField({ value, name });
+      this.props.updateProspect({ [name]: value });
     }
   };
 
@@ -127,7 +126,7 @@ class Password extends React.Component {
     const isValid = this.fieldValidation(event);
 
     if (isValid) {
-      this.updateField(event);
+      this.updateProspect(event);
     }
   };
 
@@ -220,7 +219,7 @@ const mapStateToProps = (state, { id, indexes }) => {
 };
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default compose(

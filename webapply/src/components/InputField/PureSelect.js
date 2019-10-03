@@ -10,7 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { withStyles } from "@material-ui/core/styles";
 import InfoTitle from "../InfoTitle";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { connect } from "react-redux";
 import { validate } from "../../utils/validate";
 import isEmpty from "lodash/isEmpty";
@@ -106,10 +106,7 @@ class PureSelect extends React.Component {
   componentDidMount() {
     this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
     if (!isUndefined(this.props.defaultValue) && !this.props.value) {
-      this.props.updateField({
-        value: this.props.defaultValue,
-        name: this.props.name
-      });
+      this.props.updateProspect({ [this.props.name]: this.props.defaultValue });
     }
     this.isSelectRequired() ? this.setRequiredForInput() : this.unsetRequiredForInput();
 
@@ -183,11 +180,9 @@ class PureSelect extends React.Component {
     return this.inputRef.node.validity.valid;
   };
 
-  updateField = event => {
+  updateProspect = event => {
     this.setState({ fieldErrors: {} });
-    const { value } = event.target;
-    const { name } = this.props;
-    this.props.updateField({ value, name });
+    this.props.updateProspect({ [this.props.name]: event.target.value });
   };
 
   handleBlur = () => this.checkInputValidity();
@@ -241,7 +236,7 @@ class PureSelect extends React.Component {
           disabled={disabled}
           value={value || []}
           onBlur={this.handleBlur}
-          onChange={this.updateField}
+          onChange={this.updateProspect}
           IconComponent={KeyboardArrowDownIcon}
           className={cx(classes.selectField, className)}
           MenuProps={multiple && MenuProps}
@@ -289,7 +284,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

@@ -4,13 +4,12 @@ import Grid from "@material-ui/core/Grid";
 import PureSelect from "../InputField/PureSelect";
 import InlineRadioGroup from "../InputField/InlineRadioGroup";
 import { getInputNameById, getInputValueById } from "../../store/selectors/input";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
 class SignatoryRights extends React.Component {
   updateAuthorityTypeValue(value) {
-    this.props.updateField({
-      value,
-      name: this.props.authorityTypeInputName
+    this.props.updateProspect({
+      [this.props.authorityTypeInputName]: value
     });
   }
 
@@ -42,7 +41,7 @@ const mapStateToProps = (state, { index }) => {
 };
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default connect(

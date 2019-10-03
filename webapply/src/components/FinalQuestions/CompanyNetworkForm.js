@@ -11,7 +11,7 @@ import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import RemoveButton from "../Buttons/RemoveButton";
 import PureSelect from "../InputField/PureSelect";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { getOrgKYCDetails } from "../../store/selectors/appConfig";
 
 const styles = {
@@ -116,9 +116,8 @@ class CompanyNetworkForm extends Component {
     if (this.state.insideSubsidiaryCount > 1) {
       this.setState({ insideSubsidiaryCount: 1 });
     }
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.entitiesInUAE",
-      value: [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.entitiesInUAE": [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
     });
   }
 
@@ -126,9 +125,8 @@ class CompanyNetworkForm extends Component {
     if (this.state.outsideSubsidiaryCount > 1) {
       this.setState({ outsideSubsidiaryCount: 1 });
     }
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.entitiesOutsideUAE",
-      value: [{ country: "", companyName: "" }]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.entitiesOutsideUAE": [{ country: "", companyName: "" }]
     });
   }
 
@@ -142,19 +140,15 @@ class CompanyNetworkForm extends Component {
     this.setState({ outsideSubsidiaryCompanyNameFilled: !!value });
 
   handleAddInsideSubsidiarySwitch = e => {
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.otherEntitiesInUAE",
-      value: e.target.checked
-    });
+    this.props.updateProspect({ "prospect.orgKYCDetails.otherEntitiesInUAE": e.target.checked });
     this.setState({ isDontHaveInsideSubsidiary: !e.target.checked });
   };
 
   handleAddInsideSubsidiaryClick = () => {
     const dataList = this.getInsideSubsidiariesData();
     if (dataList.length < this.limits.insideSubsidiaryCount) {
-      this.props.updateField({
-        name: "prospect.orgKYCDetails.entitiesInUAE",
-        value: [...dataList, this.getEmptyInsideSubsidiarysItem()]
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.entitiesInUAE": [...dataList, this.getEmptyInsideSubsidiarysItem()]
       });
     }
   };
@@ -162,16 +156,12 @@ class CompanyNetworkForm extends Component {
   handleRemoveInsideSubsidiary = index => {
     const dataList = this.getInsideSubsidiariesData();
     dataList.splice(index, 1);
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.entitiesInUAE",
-      value: [...dataList]
-    });
+    this.props.updateProspect({ "prospect.orgKYCDetails.entitiesInUAE": [...dataList] });
   };
 
   handleAddOutsideSubsidiarySwitch = e => {
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.otherEntitiesOutsideUAE",
-      value: e.target.checked
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.otherEntitiesOutsideUAE": e.target.checked
     });
     this.setState({ isDontHaveOutsideSubsidiary: !e.target.checked });
   };
@@ -179,9 +169,11 @@ class CompanyNetworkForm extends Component {
   handleAddOutsideSubsidiaryClick = () => {
     const dataList = this.getOutsideSubsidiariesData();
     if (dataList.length < this.limits.outsideSubsidiaryCount) {
-      this.props.updateField({
-        name: "prospect.orgKYCDetails.entitiesOutsideUAE",
-        value: [...dataList, this.getEmptyOutsideSubsidiarysItem()]
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.entitiesOutsideUAE": [
+          ...dataList,
+          this.getEmptyOutsideSubsidiarysItem()
+        ]
       });
     }
   };
@@ -189,10 +181,7 @@ class CompanyNetworkForm extends Component {
   handleRemoveOutsideSubsidiary = index => {
     const dataList = this.getOutsideSubsidiariesData();
     dataList.splice(index, 1);
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.entitiesOutsideUAE",
-      value: [...dataList]
-    });
+    this.props.updateProspect({ "prospect.orgKYCDetails.entitiesOutsideUAE": [...dataList] });
   };
 
   handleSubmit = event => {
@@ -407,7 +396,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

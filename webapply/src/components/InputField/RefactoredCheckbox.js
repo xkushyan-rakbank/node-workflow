@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import Check from "../../assets/icons/on.png";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import questionMark from "../../assets/icons/question_mark_grey.png";
@@ -75,10 +75,10 @@ const styles = {
 };
 
 class CustomCheckbox extends React.Component {
-  updateField = event => {
+  updateProspect = event => {
     const value = event.target.checked;
     const { name } = this.props;
-    this.props.updateField({ value, name });
+    this.props.updateProspect({ [name]: value });
   };
 
   getDataAttr() {
@@ -96,7 +96,7 @@ class CustomCheckbox extends React.Component {
             {...this.getDataAttr()}
             type="checkbox"
             value={value}
-            onChange={this.updateField}
+            onChange={this.updateProspect}
             checked={value}
             className={classes.hiddenCheckbox}
           />
@@ -123,7 +123,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default compose(

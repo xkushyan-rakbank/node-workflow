@@ -9,7 +9,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/picker
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { validate } from "./../../utils/validate";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { fieldAttr } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
 
@@ -56,9 +56,9 @@ class DatePicker extends React.Component {
     this.setState({ fieldErrors: {} });
   };
 
-  updateField = (dateValue, stringValue) => {
+  updateProspect = dateValue => {
     const { name } = this.props;
-    this.props.updateField({ value: dateValue, name });
+    this.props.updateProspect({ [name]: dateValue, name });
   };
 
   composeInputProps() {
@@ -124,7 +124,7 @@ class DatePicker extends React.Component {
               value={value || null}
               onAccept={this.handleAccept}
               onFocus={this.handleFocus}
-              onChange={this.updateField}
+              onChange={this.updateProspect}
               onBlur={this.handleBlur}
               error={isError}
               inputProps={inputProps}
@@ -152,7 +152,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default compose(

@@ -9,7 +9,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { getGeneralInputProps } from "../../store/selectors/input";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
 const styles = {
   wrapper: {
@@ -41,11 +41,7 @@ class RadiobuttonGroup extends React.Component {
 
   handleChange = event => {
     const value = JSON.parse(event.target.value);
-    console.log(this.props.name, value);
-    this.props.updateField({
-      value,
-      name: this.props.name
-    });
+    this.props.updateProspect({ [this.props.name]: value });
   };
 
   render() {
@@ -86,7 +82,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default compose(
