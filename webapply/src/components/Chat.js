@@ -6,11 +6,11 @@ const style = {
   chat: {
     position: "absolute",
     left: "77px",
-    bottom: "50px",
+    bottom: "40px",
     color: "#fff",
     fontSize: "18px",
-    "@media only screen and (max-width: 1100px)": {
-      fontSize: "14px"
+    "@media only screen and (max-width: 1220px)": {
+      left: "15px"
     }
   },
   chatInner: {

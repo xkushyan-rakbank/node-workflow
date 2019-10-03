@@ -9,6 +9,7 @@ import routes from "../routes";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import { history } from "./../store/configureStore";
+import BackLink from "../components/Buttons/BackLink";
 
 const styles = {
   sectionTitleIndent: {
@@ -77,7 +78,7 @@ class SearchedAppInfo extends React.Component {
                   title={item.title}
                   subTitle={item.infoTitle}
                   active={step === item.step}
-                  filled={step > item.step}
+                  filled={false}
                   clickHandler={setStep}
                   handleContinue={this.handleContinue}
                   hideContinue={true}
@@ -86,8 +87,9 @@ class SearchedAppInfo extends React.Component {
             })}
           </div>
         </CompanyStakeholderCard>
-        <div className={classes.buttonContainer}>
-          <SubmitButton label={"Edit"} />
+        <div className="linkContainer">
+          <BackLink path={routes.searchProspect} />
+          <SubmitButton label={"Edit"} justify="flex-end" />
         </div>
       </>
     );

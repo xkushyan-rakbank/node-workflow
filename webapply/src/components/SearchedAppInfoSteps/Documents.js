@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
-import SectionTitle from "./../SectionTitle";
 import Avatar from "../../components/Avatar";
 
 const styles = {
@@ -17,8 +16,11 @@ const styles = {
     height: "45px"
   },
   title: {
-    marginTop: "20px",
-    marginBottom: "20px"
+    marginTop: "0px",
+    color: "#373737",
+    fontSize: "15px",
+    alignItems: "center",
+    fontWeight: "600"
   },
   wrapper: {
     marginTop: "24px",
@@ -69,23 +71,32 @@ const styles = {
 
 export const mockCompanyDocData = [
   {
-    documentType: "Passport",
-    documentTitle: "passportScannedCopy"
+    documentType: "Trade License",
+    documentTitle: "Trade License",
+    uploadStatus: "Uploaded"
   },
   {
-    documentType: "TradeLicenseNo",
-    documentTitle: "tlNumberScannedCopy"
+    documentType: "Memorandum of Association",
+    documentTitle: "Memorandum of Association",
+    uploadStatus: "Uploaded"
   }
 ];
 
 export const mockSignatoriesDocData = [
   {
-    documentType: "EMID",
-    documentTitle: "emidScannedCopy"
+    documentType: "Passport",
+    documentTitle: "Passport",
+    uploadStatus: "Uploaded"
+  },
+  {
+    documentType: "Emirates ID",
+    documentTitle: "Emirates ID",
+    uploadStatus: "Uploaded"
   },
   {
     documentType: "Visa",
-    documentTitle: "visaScannedCopy"
+    documentTitle: "Visa",
+    uploadStatus: "Uploaded"
   }
 ];
 
@@ -93,14 +104,14 @@ const Documents = props => {
   const { classes } = props;
   return (
     <>
-      <SectionTitle title="Company documents" className={classes.title} />
+      <h4 className={classes.title}>Company Documents</h4>
       <div className={classes.wrapper}>
         <div className={classes.applicationRow}>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Type</div>
+            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
           </div>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
+            <div className={classes.checkListData + " " + classes.heading}>Upload Status</div>
           </div>
           <div>
             <div className={classes.checkListData + " " + classes.heading}>Actions</div>
@@ -109,10 +120,10 @@ const Documents = props => {
         {mockCompanyDocData.map((application, index) => (
           <div className={classes.applicationRow} key={index}>
             <div>
-              <div className={classes.checkListData}>{application.documentType}</div>
+              <div className={classes.checkListData}>{application.documentTitle}</div>
             </div>
             <div>
-              <div className={classes.checkListData}>{application.documentType}</div>
+              <div className={classes.checkListData}>{application.uploadStatus}</div>
             </div>
             <div>
               <Link className={classes.link}>Print / Download</Link>
@@ -120,7 +131,8 @@ const Documents = props => {
           </div>
         ))}
       </div>
-      <SectionTitle title="Signatories documents" className={classes.title} />
+      <br />
+      <h4 className={classes.title}>Stakeholder Documents</h4>
       <div className={classes.contentWrapper}>
         <Avatar firstName="Anjali" lastName="Tandon" />
         <div className={classes.userInfo}>
@@ -130,10 +142,10 @@ const Documents = props => {
       <div className={classes.wrapper}>
         <div className={classes.applicationRow}>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Type</div>
+            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
           </div>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
+            <div className={classes.checkListData + " " + classes.heading}>Upload Status</div>
           </div>
           <div>
             <div className={classes.checkListData + " " + classes.heading}>Actions</div>
@@ -142,10 +154,10 @@ const Documents = props => {
         {mockSignatoriesDocData.map((application, index) => (
           <div className={classes.applicationRow} key={index}>
             <div>
-              <div className={classes.checkListData}>{application.documentType}</div>
+              <div className={classes.checkListData}>{application.documentTitle}</div>
             </div>
             <div>
-              <div className={classes.checkListData}>{application.documentType}</div>
+              <div className={classes.checkListData}>{application.uploadStatus}</div>
             </div>
             <div>
               <Link className={classes.link}>Print / Download</Link>
@@ -162,10 +174,10 @@ const Documents = props => {
       <div className={classes.wrapper}>
         <div className={classes.applicationRow}>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Type</div>
+            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
           </div>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
+            <div className={classes.checkListData + " " + classes.heading}>Upload Status</div>
           </div>
           <div>
             <div className={classes.checkListData + " " + classes.heading}>Actions</div>
@@ -174,10 +186,10 @@ const Documents = props => {
         {mockSignatoriesDocData.map((application, index) => (
           <div className={classes.applicationRow} key={index}>
             <div>
-              <div className={classes.checkListData}>{application.documentType}</div>
+              <div className={classes.checkListData}>{application.documentTitle}</div>
             </div>
             <div>
-              <div className={classes.checkListData}>{application.documentType}</div>
+              <div className={classes.checkListData}>{application.uploadStatus}</div>
             </div>
             <div>
               <Link className={classes.link}>Print / Download</Link>

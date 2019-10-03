@@ -21,9 +21,7 @@ const style = {
     "&:last-child": {
       marginRight: 0
     },
-    "@media only screen and (max-width: 1420px), (max-height: 820px)": {
-      margin: "10px 10px 0 0px",
-      padding: "17px 12px 20px",
+    "@media only screen and (max-height: 920px)": {
       height: "auto"
     }
   },
@@ -41,7 +39,6 @@ const style = {
       width: "100%"
     },
     "@media only screen and (max-width: 1420px)": {
-      fontSize: "16px",
       "& span": {
         marginTop: "10px",
         display: "block",
@@ -60,16 +57,13 @@ const style = {
   },
   divider: {
     border: "solid 1px #e8e8e8",
-    margin: "30px auto 0",
-    "@media only screen and (max-width: 1420px)": {
-      margin: "10px auto 0"
-    }
+    margin: "30px auto 0"
   },
   differences: {
     margin: "28px 0 0 0",
     paddingLeft: "20px",
     "@media only screen and (max-width: 1420px)": {
-      margin: "10px 0 10px 0"
+      margin: "15px 0 15px 0"
     },
     "& li": {
       fontSize: "16px",
@@ -87,7 +81,7 @@ const style = {
       "& + li": {
         marginTop: "16px",
         "@media only screen and (max-width: 1420px)": {
-          marginTop: "5px"
+          marginTop: "9px"
         }
       }
     }
