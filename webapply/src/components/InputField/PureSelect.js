@@ -217,13 +217,16 @@ class PureSelect extends React.Component {
       resetLabel = "",
       excludeValues = [],
       multiple,
-      indexes
+      indexes,
+      subOptions
     } = this.props;
-
+    console.log(subOptions);
     const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
     const inputProps = this.composeInputProps();
     const className = combinedSelect ? classes.selectFieldCombined : classes.selectFieldBasic;
+    const options = config.datalist;
+
     return (
       <FormControl
         className={cx("formControl", {
@@ -257,14 +260,14 @@ class PureSelect extends React.Component {
         >
           {!isNil(resetValue) && <MenuItem value={resetValue}>{resetLabel}</MenuItem>}
 
-          {config.datalist &&
-            config.datalist
+          {options &&
+            options
               .filter(item => !excludeValues.includes(item.value))
               .map(option => (
-                <MenuItem key={option.value} value={option.value}>
+                <MenuItem key={option.key} value={option.value}>
                   {multiple ? (
                     <>
-                      <ListItemText primary={option.value} />
+                      <ListItemText primary={option.displayText} />
                       <Checkbox checked={value.indexOf(option.value) > -1} />
                     </>
                   ) : (

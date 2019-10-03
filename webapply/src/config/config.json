@@ -2921,32 +2921,42 @@
         {
           "code": "Energy Equipment & Services",
           "key": "Energy Equipment & Services",
-          "value": "Energy Equipment & Services",
-          "displayText": "Energy Equipment & Services"
+          "value": "EES",
+          "displayText": "Energy Equipment & Services",
+          "subCategory": [
+            {
+              "code": "Oil&GasDrilling",
+              "key": "Oil&GasDrilling",
+              "value": "Oil&GasDrilling",
+              "displayText": "Oil & Gas Drilling"
+            },
+            {
+              "code": "Oil&GasEquipment&Services",
+              "key": "Oil&GasEquipment&Services",
+              "value": "Oil&GasEquipment&Services",
+              "displayText": "Oil & Gas Equipment & Services"
+            }
+          ]
         },
         {
           "code": "OGC&F",
           "key": "OGC&F",
           "value": "OGC&F",
-          "displayText": "Oil, Gas & Consumable Fuels"
-        },
-        {
-          "code": "chemicals",
-          "key": "chemicals",
-          "value": "chemicals",
-          "displayText": "Chemicals"
-        },
-        {
-          "code": "M&M",
-          "key": "M&M",
-          "value": "M&M",
-          "displayText": "Metals & Mining"
-        },
-        {
-          "code": "P&PP",
-          "key": "P&PP",
-          "value": "P&PP",
-          "displayText": "Paper & Forest Products"
+          "displayText": "Oil, Gas & Consumable Fuels",
+          "subCategory": [
+            {
+              "code": "IntegratedOil&Gas",
+              "key": "IntegratedOil&Gas",
+              "value": "IntegratedOil&Gas",
+              "displayText": "Integrated Oil & Gas"
+            },
+            {
+              "code": "Oil&GasExploration&Production",
+              "key": "Oil&GasExploration&Production",
+              "value": "Oil&GasExploration&Production",
+              "displayText": "Oil & Gas Exploration & Production"
+            }
+          ]
         }
       ]
     },
@@ -2970,38 +2980,7 @@
       "required": false,
       "datalistId": "IndustrySubCategory",
       "readonlyFor": [],
-      "datalist": [
-        {
-          "code": "Energy Equipment & Services",
-          "key": "Energy Equipment & Services",
-          "value": "Energy Equipment & Services",
-          "displayText": "Sub Energy Equipment & Services"
-        },
-        {
-          "code": "OGC&F",
-          "key": "OGC&F",
-          "value": "OGC&F",
-          "displayText": "Sub Oil, Gas & Consumable Fuels"
-        },
-        {
-          "code": "chemicals",
-          "key": "chemicals",
-          "value": "chemicals",
-          "displayText": "Sub Chemicals"
-        },
-        {
-          "code": "M&M",
-          "key": "M&M",
-          "value": "M&M",
-          "displayText": "Sub Metals & Mining"
-        },
-        {
-          "code": "P&PP",
-          "key": "P&PP",
-          "value": "P&PP",
-          "displayText": "Sub Paper & Forest Products"
-        }
-      ]
+      "datalist": []
     },
     "OkycAntTxnTotCashCr.amountInFigures": {
       "criteria": {
