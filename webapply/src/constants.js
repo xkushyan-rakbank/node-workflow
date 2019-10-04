@@ -21,7 +21,11 @@ import SearchedCompanyDetails from "./components/SearchedAppInfoSteps/CompanyDet
 import CheckList from "./components/SearchedAppInfoSteps/CheckList";
 import Documents from "./components/SearchedAppInfoSteps/Documents";
 import AuditTrail from "./components/SearchedAppInfoSteps/AuditTrail";
-
+import CompanyBackgroundForm from "./components/FinalQuestions/CompanyBackgroundForm";
+import CompanyContactInformationForm from "./components/FinalQuestions/CompanyContactInformationForm";
+import CompanyMailingAddressForm from "./components/FinalQuestions/CompanyMailingAddressForm";
+import CompanyNetworkForm from "./components/FinalQuestions/CompanyNetworkForm";
+import CompanyAnticipatedTransactionsForm from "./components/FinalQuestions/CompanyAnticipatedTransactionsForm";
 import routes from "./routes";
 
 export const stakeHoldersSteps = [
@@ -57,6 +61,34 @@ export const aboutCompanySteps = [
     component: Industry
   },
   { step: 3, title: "Lisence Information", component: LicenseInformation }
+];
+
+export const finalQuestionsSteps = [
+  {
+    step: 1,
+    title: "Business relationships",
+    component: CompanyBackgroundForm
+  },
+  {
+    step: 2,
+    title: "Branches and subsidiaries",
+    component: CompanyNetworkForm
+  },
+  {
+    step: 3,
+    title: "Anticipated transactions",
+    component: CompanyAnticipatedTransactionsForm
+  },
+  {
+    step: 4,
+    title: "Preferred mailing address",
+    component: CompanyMailingAddressForm
+  },
+  {
+    step: 5,
+    title: "Preferred contact information",
+    component: CompanyContactInformationForm
+  }
 ];
 
 export const authorityType = [

@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
-import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import AddButton from "../Buttons/AddButton";
@@ -86,7 +84,14 @@ class CompanyBackgroundForm extends Component {
     };
   }
 
+  componentDidMount() {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
     if (
       prevState.isDontHaveOtherBankAccounts !== this.state.isDontHaveOtherBankAccounts &&
       this.state.isDontHaveOtherBankAccounts
@@ -365,9 +370,7 @@ class CompanyBackgroundForm extends Component {
     const { isDontHaveSuppliers, isDontTradingGoods, isDontHaveOtherBankAccounts } = this.state;
     const { classes } = this.props;
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Business relationships" className={this.props.classes.title} />
-
+      <>
         <h4 className={this.props.classes.groupLabel}>Top customers</h4>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           {this.getTopCustomerData().map((_, index) => {
@@ -548,11 +551,7 @@ class CompanyBackgroundForm extends Component {
             />
           </>
         )}
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton disabled={this.isContinueDisabled()} type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }

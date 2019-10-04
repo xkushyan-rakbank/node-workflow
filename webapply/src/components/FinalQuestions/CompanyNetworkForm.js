@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
-import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import RemoveButton from "../Buttons/RemoveButton";
@@ -72,7 +70,14 @@ class CompanyNetworkForm extends Component {
     };
   }
 
+  componentDidMount() {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
     if (
       prevState.isDontHaveInsideSubsidiary !== this.state.isDontHaveInsideSubsidiary &&
       this.state.isDontHaveInsideSubsidiary
@@ -261,9 +266,7 @@ class CompanyNetworkForm extends Component {
     const { isDontHaveInsideSubsidiary, isDontHaveOutsideSubsidiary } = this.state;
     const { classes } = this.props;
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Branches and subsidiaries" className={this.props.classes.title} />
-
+      <>
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>
@@ -382,11 +385,7 @@ class CompanyNetworkForm extends Component {
             />
           </>
         )}
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton disabled={this.isContinueDisabled()} type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }

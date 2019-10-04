@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SectionTitle from "../SectionTitle";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
@@ -64,6 +62,16 @@ class CompanyAnticipatedTransactionsForm extends Component {
     this.commonInputProps = {
       endAdornment: <InputAdornment position="end">{this.props.companyCurrency}</InputAdornment>
     };
+  }
+
+  componentDidMount() {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   getNumberOrZero(value) {
@@ -148,9 +156,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
 
   render() {
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Anticipated transactions" className={this.props.classes.title} />
-
+      <>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item sm={12}>
             <TextInput
@@ -223,11 +229,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
             />
           </Grid>
         </Grid>
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton disabled={this.isContinueDisabled()} type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }
