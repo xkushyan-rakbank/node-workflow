@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import companyIconSvg from "../../assets/icons/file.png";
 
-import companyIconSvg from "../../assets/icons/brief.png";
-
+const CancelToken = axios.CancelToken;
+let call;
 const style = {
   fileUploadPlaceholder: {
     height: "50px",
@@ -125,13 +126,17 @@ class UploadDocuments extends Component {
       fileError: false,
       isUploadSucess: false
     };
-    this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
+    this.fileUploadHandler = this.fileUploadHandler.bind(this);
     this.fileUploadCancel = this.fileUploadCancel.bind(this);
   }
 
-  fileSelectedHandler(event) {
-    console.log(this.props.companyDoc);
-    console.log(event.target.files[0]);
+  fileUploadHandler(event) {
+    call = "";
+    call = call + this.props.companyDoc.documentType + this.props.companyDoc.signatoryId;
+    call = call.replace(/\s/g, "");
+    console.log("call$$$ ", call);
+    this.call = CancelToken.source();
+
     this.setState(
       {
         selectedFile: event.target.files[0],
@@ -174,47 +179,43 @@ class UploadDocuments extends Component {
           encryptionDetails: "",
           uploadStatus: ""
         };
-
         const fd = new FormData();
-        // fd.append("file", this.state.selectedFile, fileDetails);
         fd.append("file", fileDetails);
-        axios
-          .post("http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents", fd, config)
-          .then(res => {
-            this.setState({
-              enableUpload: false,
-              isUploadSucess: true
+        setTimeout(() => {
+          axios
+            .post(
+              "http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents",
+              fd,
+              config,
+              {
+                cancelToken: this.call.token
+              }
+            )
+            .catch(function(thrown) {
+              if (axios.isCancel(thrown)) {
+                this.setState({
+                  fileError: true,
+                  enableUpload: true
+                });
+                console.log("Request canceled", thrown.message);
+              } else {
+                this.setState({
+                  enableUpload: false,
+                  isUploadSucess: false
+                });
+                console.log("Request success", thrown.message);
+              }
             });
-            console.log(res);
-          })
-          .catch(error => {
-            console.log(error);
-            this.setState({
-              fileError: true,
-              enableUpload: true
-            });
-          });
+        }, 10000);
       }
     );
   }
 
   fileUploadCancel(e) {
-    let CancelToken = axios.CancelToken;
-    axios({
-      method: "post",
-      url: "http://10.86.138.206:8080/docUploader/banks/RAK/prospects/700/documents",
-      cancelToken: new CancelToken(function executor(c) {
-        // An executor function receives a cancel function as a parameter
-      })
-    })
-      .then(() => console.log("success"))
-      .catch(function(err) {
-        if (axios.isCancel(err)) {
-          console.log("im canceled");
-        } else {
-          console.log("im server response error");
-        }
-      });
+    call = e;
+    call = call.replace(/\s/g, "");
+    console.log("call### ", call);
+    this.call.cancel("Operation canceled by the user.");
   }
 
   render() {
@@ -224,7 +225,7 @@ class UploadDocuments extends Component {
         <input
           style={{ display: "none" }}
           type="file"
-          onChange={this.fileSelectedHandler}
+          onChange={this.fileUploadHandler}
           ref={fileInput => (this.fileInput = fileInput)}
           multiple
         />
@@ -264,7 +265,14 @@ class UploadDocuments extends Component {
                     <div id="myprogressBar"></div>
                   </div>
                   <div id="progressStatus"></div>
-                  <div className={this.props.classes.cancel} onClick={this.fileUploadCancel}>
+                  <div
+                    className={this.props.classes.cancel}
+                    onClick={() =>
+                      this.fileUploadCancel(
+                        this.props.companyDoc.documentType + this.props.companyDoc.signatoryId
+                      )
+                    }
+                  >
                     {" "}
                     X{" "}
                   </div>
@@ -288,3 +296,23 @@ class UploadDocuments extends Component {
 }
 
 export default withStyles(style)(UploadDocuments);
+
+// const fd = new FormData();
+// // fd.append("file", this.state.selectedFile, fileDetails);
+// fd.append("file", fileDetails);
+// axios
+//   // .post("http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents", fd, config)
+//   .then(res => {
+//     this.setState({
+//       enableUpload: false,
+//       isUploadSucess: false
+//     });
+//     console.log(res);
+//   })
+//   .catch(error => {
+//     console.log(error);
+//     this.setState({
+//       fileError: true,
+//       enableUpload: true
+//     });
+//   });
