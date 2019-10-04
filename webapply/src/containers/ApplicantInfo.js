@@ -8,6 +8,7 @@ import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
+import { updateAplicationType } from "../store/actions/appConfig";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
@@ -50,6 +51,7 @@ class BasicsForm extends React.Component {
     event.preventDefault();
     const errorList = validateForm(event);
     if (!errorList.length) {
+      this.props.updateAplicationType("save");
       this.props.applicantInfoForm();
     }
   };
@@ -122,7 +124,8 @@ const mapDispatchToProps = {
   setToken,
   setVerified,
   verifyToken,
-  applicantInfoForm
+  applicantInfoForm,
+  updateAplicationType
 };
 
 export default withStyles(styles)(

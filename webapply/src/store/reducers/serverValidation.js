@@ -1,17 +1,5 @@
 import * as actions from "../actions/serverValidation";
 
-/**
- * @typedef {Object} ServerValidationInputData
- * @property {String} fieldPath
- * @property {String} errorCode
- * @property {String} errorType
- * @property {String} message
- * @property {String} developerText
- *
- * @typedef {Object} ServerValidation
- * @property {{[String]: ServerValidationInputData}} inputs
- * @type {ServerValidation}
- */
 const initialState = {
   inputs: {}
 };
@@ -47,10 +35,6 @@ const serverErrorsReducer = (state = initialState, action) => {
   }
 };
 
-/**
- * @param {ServerValidationInputData} validationData
- * @return {String}
- */
 export function composeInputKeyFromValidationData(validationData) {
   const replaced = validationData.fieldPath.replace("$.", "").replace("$", "");
 
