@@ -35,7 +35,7 @@ const styles = {
   },
   controlsWrapper: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     margin: "20px 0 0"
   },
   disabledInput: {
@@ -53,6 +53,11 @@ class CompanyAnticipatedTransactionsForm extends Component {
     super(props);
 
     this.state = {
+      isAnnualTurnoverFilled: false,
+      isMonthlyCashPartFilled: false,
+      isMonthlyNonCashPartFilled: false,
+      isMaxCashAmountFilled: false,
+      isMaxNonCashAmountFilled: false,
       totalMonthlyCreditsValue: 0
     };
 
@@ -114,6 +119,33 @@ class CompanyAnticipatedTransactionsForm extends Component {
     }
   }
 
+  annualFinTurnoverChangeHandle = value => this.setState({ isAnnualTurnoverFilled: !!value });
+
+  monthlyCashPartChangeHandle = value => this.setState({ isMonthlyCashPartFilled: !!value });
+
+  monthlyNonCashPartChangeHandle = value => this.setState({ isMonthlyNonCashPartFilled: !!value });
+
+  maxCashAmountChangeHandle = value => this.setState({ isMaxCashAmountFilled: !!value });
+
+  maxNonCashAmountChangeHandle = value => this.setState({ isMaxNonCashAmountFilled: !!value });
+
+  isContinueDisabled = () => {
+    return !(
+      (this.state.isAnnualTurnoverFilled &&
+        this.state.isMonthlyCashPartFilled &&
+        this.state.isMonthlyNonCashPartFilled &&
+        this.state.isMaxCashAmountFilled &&
+        this.state.isMaxNonCashAmountFilled) ||
+      !!(
+        this.props.annualFinancialTurnover &&
+        this.props.cashAmountInFigures &&
+        this.props.notCashAmountInFigures &&
+        this.props.maximumSingleCashAmount &&
+        this.props.maximumSingleNotCashAmount
+      )
+    );
+  };
+
   render() {
     return (
       <form noValidate onSubmit={this.handleSubmit}>
@@ -125,6 +157,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
               min="0"
               id="Okyc.annualFinTurnoverAmtInAED"
               InputProps={this.commonInputProps}
+              callback={this.annualFinTurnoverChangeHandle}
             />
           </Grid>
         </Grid>
@@ -151,6 +184,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.partOfTotalInCashMaxValue()}
               id="OkycAntTxnTotCashCr.amountInFigures"
               InputProps={this.commonInputProps}
+              callback={this.monthlyCashPartChangeHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -159,6 +193,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.partOfTotalInNotCashMaxValue()}
               id="OkycAntTxnTotNonCashCr.amountInFigures"
               InputProps={this.commonInputProps}
+              callback={this.monthlyNonCashPartChangeHandle}
             />
           </Grid>
         </Grid>
@@ -175,6 +210,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.maximumSingleAmountInCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnCashAED"
               InputProps={this.commonInputProps}
+              callback={this.maxCashAmountChangeHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -183,12 +219,13 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.maximumSingleAmountInNotCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnNonCashAED"
               InputProps={this.commonInputProps}
+              callback={this.maxNonCashAmountChangeHandle}
             />
           </Grid>
         </Grid>
 
         <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton type="submit" />
+          <ContinueButton disabled={this.isContinueDisabled()} type="submit" />
         </div>
       </form>
     );
