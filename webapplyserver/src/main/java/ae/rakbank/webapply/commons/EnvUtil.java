@@ -10,13 +10,18 @@ public class EnvUtil {
 
 	private static String env = System.getenv("WEB_APPLY_ENV");
 
-	private static String configDir = System.getenv("WEB_APPLY_CONFIG_DIR");
+	private static String configDir = System.getenv("WEB_APPLY_DIR");
 
 	static {
+
+		if (StringUtils.isBlank(configDir)) {
+			logger.error("System property 'WEB_APPLY_DIR' not configured, load config files from classpath:");
+		}
+
 		if (StringUtils.isBlank(env)) {
 			env = "local";
 			logger.error(
-					"System property 'ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod");
+					"System property 'WEB_APPLY_ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod");
 		} else {
 			env = env.toLowerCase();
 		}

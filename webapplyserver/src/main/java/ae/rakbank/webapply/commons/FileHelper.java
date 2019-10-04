@@ -31,8 +31,9 @@ public class FileHelper {
 
 			String fileContent = null;
 			if (StringUtils.isNotBlank(EnvUtil.getConfigDir())) {
-				logger.info("Read JSON file from classpath:" + EnvUtil.getConfigDir() + "/filename");
-				FileUtils.readFileToString(new File(EnvUtil.getConfigDir() + "/filename"), StandardCharsets.UTF_8);
+				logger.info("Read JSON file from classpath:" + EnvUtil.getConfigDir() + "/" + filename);
+				fileContent = FileUtils.readFileToString(new File(EnvUtil.getConfigDir() + "/" + filename),
+						StandardCharsets.UTF_8);
 			} else {
 				logger.info("Read JSON file from classpath:" + filename);
 				Resource resource = resourceLoader.getResource("classpath:" + filename);
@@ -43,6 +44,18 @@ public class FileHelper {
 			logger.error("error loading " + filename, e);
 		}
 		return null;
+	}
+
+	public JsonNode getUIConfigJSON() {
+		return loadJSONFile("uiConfig.json");
+	}
+
+	public JsonNode getAppConfigJSON() {
+		return loadJSONFile("appConfig.json");
+	}
+
+	public JsonNode getSMEProspectJSON() {
+		return loadJSONFile("smeProspect.json");
 	}
 
 }

@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.commons.FileHelper;
-import ae.rakbank.webapply.services.OAuthClient;
+import ae.rakbank.webapply.services.OAuthService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -53,25 +53,24 @@ public class WebApplyController {
 	FileHelper fileHelper;
 
 	@Autowired
-	OAuthClient oauthClient;
+	OAuthService oauthClient;
 
 	private JsonNode uiConfigJSON = null;
 
 	private JsonNode appConfigJSON = null;
 
-
 	private JsonNode smeProspectJSON = null;
 
 	@PostConstruct
 	public void initAppState() {
-		uiConfigJSON = fileHelper.loadJSONFile("uiConfig.json");
-		appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
-		smeProspectJSON = fileHelper.loadJSONFile("smeProspect.json");
+		uiConfigJSON = fileHelper.getUIConfigJSON();
+		appConfigJSON = fileHelper.getAppConfigJSON();
+		smeProspectJSON = fileHelper.getSMEProspectJSON();
 
 		try {
 			loadAppInitialState();
 		} catch (Exception e) {
-			logger.error("unable to prepare config for web apply", e);
+			logger.error("error in preparing the config json and put the values in ServletContext", e);
 		}
 	}
 
@@ -128,6 +127,7 @@ public class WebApplyController {
 	}
 
 	private String buildAppInitialState(String segment, String product, String role, String device) throws Exception {
+		logger.info("Begin buildAppInitialState() method");
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
 
@@ -147,11 +147,14 @@ public class WebApplyController {
 		String configJSON = initStateJSON.toString();
 		putCache(cacheKey, configJSON);
 
+		logger.info("End buildAppInitialState() method");
+
 		return initStateJSON.toString();
 
 	}
 
 	private void setWebApplyEndpoints(ObjectMapper objectMapper, ObjectNode initStateJSON) {
+		logger.info("Begin setWebApplyEndpoints() method");
 		ObjectNode endpointsJSON = objectMapper.createObjectNode();
 		endpointsJSON.put("baseUrl",
 				appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("WebApplyBaseUrl").asText());
@@ -163,10 +166,13 @@ public class WebApplyController {
 		}
 
 		initStateJSON.set("endpoints", endpointsJSON);
+		logger.info("End setWebApplyEndpoints() method");
 	}
 
 	private ObjectNode filterUIConfigFieldsByCriteria(ObjectNode uiConfigNode, String segment, String product,
 			String role, String device, JsonNode datalist) {
+		logger.info("Begin filterUIConfigFieldsByCriteria() method");
+
 		Iterator<Entry<String, JsonNode>> fields = uiConfigNode.fields();
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode uiFields = objectMapper.createObjectNode();
@@ -200,11 +206,15 @@ public class WebApplyController {
 			}
 
 		}
+
+		logger.info("End filterUIConfigFieldsByCriteria() method");
+
 		return uiFields;
 
 	}
 
 	private boolean matchCriteria(JsonNode fieldConfig, String segment, String product, String role, String device) {
+
 		JsonNode criteria = fieldConfig.get("criteria");
 
 		List<String> roles = new ArrayList<>();
@@ -223,6 +233,8 @@ public class WebApplyController {
 				&& devices.contains(device)) {
 			return true;
 		}
+
+		logger.info("End matchCriteria() method");
 
 		return false;
 	}
@@ -246,6 +258,8 @@ public class WebApplyController {
 	}
 
 	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws Exception {
+		logger.info("Begin getDatalistJSON() method, segment=" + segment);
+
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
@@ -282,7 +296,7 @@ public class WebApplyController {
 			logger.error("Unable to call datalist API due to oauth error.");
 			throw new Exception("Unable to call datalist API due to oauth error.");
 		}
-
+		logger.info("End getDatalistJSON() method, segment=" + segment);
 		return null;
 	}
 
