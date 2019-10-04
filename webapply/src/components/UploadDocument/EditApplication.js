@@ -61,6 +61,9 @@ const style = {
     outline: "transparent",
     cursor: "pointer",
     verticalAlign: "middle"
+  },
+  backIcon: {
+    verticalAlign: "middle"
   }
 };
 
@@ -87,8 +90,8 @@ class EditApplication extends Component {
         </div>
         <div className="linkContainer">
           <button className={this.props.classes.BtnBack} justify="flex-end">
-            <img src={arrowBack} alt="back" />
-            Submit documents
+            <img className={this.props.classes.backIcon} src={arrowBack} alt="back" />
+            Back to Applications
           </button>
           <button className={this.props.classes.BtnSubmit} justify="flex-end">
             Submit documents
