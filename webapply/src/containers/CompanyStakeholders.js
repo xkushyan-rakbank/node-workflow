@@ -10,6 +10,10 @@ import questionMark from "../assets/icons/question_mark_grey.png";
 // import { ReactComponent as RightArrowWhite } from "./../assets/icons/whiteArrow.png";
 import BackLink from "../components/Buttons/BackLink";
 import routes from "../routes";
+import { compose } from "recompose";
+import { connect } from "react-redux";
+import { updateProspect } from "../store/actions/appConfig";
+import get from "lodash/get";
 
 const style = {
   buttonStyle: {
@@ -80,8 +84,9 @@ class CompanyStakeholders extends React.Component {
   };
 
   render() {
-    const { stakeholders, showNewStakeholder, editableStakeholder } = this.state;
-    const { classes } = this.props;
+    const { showNewStakeholder, editableStakeholder } = this.state;
+    const { stakeholders, classes } = this.props;
+
     return (
       <>
         <h2>Add your company’s stakeholders</h2>
@@ -103,7 +108,7 @@ class CompanyStakeholders extends React.Component {
               <StakeholderStepper
                 hideForm={this.hideNewStakeholder}
                 index={editableStakeholder}
-                key={item.id}
+                key={index}
                 deleteStakeholder={deleteStakeholder}
               />
             ) : (
@@ -126,15 +131,6 @@ class CompanyStakeholders extends React.Component {
 
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={this.showNewStakeholder} />
-          {/* <Button
-            className={classes.buttonStyle}
-            variant="contained"
-            color="primary"
-            onClick={this.goToFinalQuestions}
-          >
-            I have added all stakeholders
-            <RightArrowWhite />
-          </Button> */}
         </div>
 
         <div className="linkContainer">
@@ -152,4 +148,18 @@ class CompanyStakeholders extends React.Component {
   }
 }
 
-export default withStyles(style)(CompanyStakeholders);
+const mapStateToProps = state => ({
+  stakeholders: get(state, "appConfig.prospect.signatoryInfo", [])
+});
+
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export default compose(
+  withStyles(style),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(CompanyStakeholders);
