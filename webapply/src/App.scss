@@ -137,6 +137,7 @@ input[type="number"]::-webkit-outer-spin-button {
   align-items: center;
   justify-content: flex-end;
   margin-top: 42px;
+  margin-bottom: 42px;
   > div {
     width: auto;
     margin: 0;
@@ -314,4 +315,9 @@ h3 {
   line-height: 1.38;
   letter-spacing: normal;
   color: #373737;
+}
+
+.MuiListItemText-root {
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

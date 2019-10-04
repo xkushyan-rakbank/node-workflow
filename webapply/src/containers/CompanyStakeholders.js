@@ -1,11 +1,14 @@
 import React from "react";
+import cx from "classnames";
 import { withStyles } from "@material-ui/core";
 import FilledStakeholderCard from "../components/FilledStakeholderCard";
 import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import questionMark from "../assets/icons/question_mark_grey.png";
 // import Button from "@material-ui/core/Button/Button";
 // import { ReactComponent as RightArrowWhite } from "./../assets/icons/whiteArrow.png";
+import BackLink from "../components/Buttons/BackLink";
 import routes from "../routes";
 
 const style = {
@@ -27,12 +30,21 @@ const style = {
     backgroundColor: "#ffffff",
     flexDirection: "column",
     marginTop: "24px"
+  },
+  infoTitle: {
+    display: "flex",
+    margin: "-20px 0 60px",
+    "&>img": {
+      marginRight: "10px",
+      alignItems: "center"
+    }
   }
 };
 
 class CompanyStakeholders extends React.Component {
-  state = {
-    stakeholders: [
+  constructor(props) {
+    super(props);
+    const stakeholders = [
       {
         id: 343453542345,
         firstName: "Christer",
@@ -40,41 +52,78 @@ class CompanyStakeholders extends React.Component {
         signatoryRights: true,
         shareholding: 51
       }
-    ],
-    isFinalScreenShown: true,
-    showNewStakeholder: false
-  };
+    ];
+    this.state = {
+      stakeholders,
+      isFinalScreenShown: false,
+      showNewStakeholder: false,
+      editableStakeholder: stakeholders.length ? null : 0
+    };
+  }
 
   goToFinalQuestions = () => this.props.history.push(routes.finalQuestions);
 
-  showNewStakeholder = () => this.setState({ showNewStakeholder: true });
+  showNewStakeholder = () => this.setState({ showNewStakeholder: true, editableStakeholder: null });
 
   hideNewStakeholder = () => {
     const stakeholders = this.state.stakeholders;
     stakeholders.push(this.state.stakeholders[0]);
-    this.setState({ showNewStakeholder: false });
+    this.setState({ showNewStakeholder: false, editableStakeholder: null });
+  };
+
+  changeEditableStep = stakeholderIndex =>
+    this.setState({ editableStakeholder: stakeholderIndex, showNewStakeholder: false });
+
+  deleteStakeholder = stakeholderId => {
+    const newStakeholders = this.state.stakeholders.filter(item => item.id !== stakeholderId);
+    this.setState({ stakeholders: newStakeholders });
   };
 
   render() {
-    const { stakeholders } = this.state;
+    const { stakeholders, showNewStakeholder, editableStakeholder } = this.state;
     const { classes } = this.props;
     return (
       <>
-        <h2>Add Company Stakeholders</h2>
+        <h2>Add your company’s stakeholders</h2>
         <p className="formDescription">
-          Explanation text goes here. One to three short sentences maximum. This is the third
-          sentence.
+          Now we need to know about those who have a say in your company. This includes
+          shareholders, signatories and some others. Check our guide below to see which one applies
+          to your company.
         </p>
 
-        <div>
-          {stakeholders.map((item, idx) => (
-            <FilledStakeholderCard {...item} key={`${item.id}-${idx}`} />
-          ))}
+        <div className={cx("smallText", classes.infoTitle)}>
+          <img src={questionMark} alt="" />
+          Who is a stakeholder?
         </div>
 
-        {this.state.showNewStakeholder && (
-          <StakeholderStepper hideForm={this.hideNewStakeholder} index={0} />
+        <div>
+          {stakeholders.map((item, index) => {
+            const deleteStakeholder = () => this.deleteStakeholder(item.id);
+            return editableStakeholder === index ? (
+              <StakeholderStepper
+                hideForm={this.hideNewStakeholder}
+                index={editableStakeholder}
+                key={item.id}
+                deleteStakeholder={deleteStakeholder}
+              />
+            ) : (
+              <FilledStakeholderCard
+                {...item}
+                index={index}
+                changeEditableStep={this.changeEditableStep}
+                key={`${item.id}-${index}`}
+              />
+            );
+          })}
+        </div>
+
+        {showNewStakeholder && (
+          <StakeholderStepper
+            hideForm={this.hideNewStakeholder}
+            index={this.state.stakeholders.length}
+          />
         )}
+
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={this.showNewStakeholder} />
           {/* <Button
@@ -87,7 +136,17 @@ class CompanyStakeholders extends React.Component {
             <RightArrowWhite />
           </Button> */}
         </div>
-        <SubmitButton handleClick={this.goToFinalQuestions} label="Next Step" />
+
+        <div className="linkContainer">
+          <BackLink path={routes.companyInfo} />
+
+          <SubmitButton
+            handleClick={this.goToFinalQuestions}
+            label="Next Step"
+            justify="flex-end"
+            disabled
+          />
+        </div>
       </>
     );
   }

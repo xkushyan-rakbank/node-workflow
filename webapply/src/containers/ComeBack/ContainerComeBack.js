@@ -6,7 +6,8 @@ const style = {
     paddingTop: 90,
     display: "flex",
     justifyContent: "center",
-    flexDirection: "column"
+    flexDirection: "column",
+    width: "100%"
   }
 };
 

@@ -3,8 +3,6 @@ import {
   RECEIVE_APPCONFIG,
   receiveAppConfigSuccess,
   receiveAppConfigFail,
-  UPDATE_FIELD,
-  updateProspect,
   UPDATE_PROSPECT,
   setProspect
 } from "../actions/appConfig";
@@ -21,26 +19,20 @@ function* receiveAppConfigSaga() {
   }
 }
 
-function* updateFieldSaga(action) {
-  const state = yield select();
-  const config = state.appConfig;
-  console.log("action.data.name", action.data.name);
-  console.log("action.data.value", action.data.value);
-  set(config, action.data.name, action.data.value);
-  yield put(updateProspect(cloneDeep(config.prospect)));
-}
-
 function* updateProspectSaga(action) {
   const state = yield select();
-  const config = state.appConfig;
-  set(config, action.data.name, action.data.value);
-  yield put(setProspect(cloneDeep(config.prospect)));
+  const config = cloneDeep(state.appConfig);
+
+  for (let name in action.fields) {
+    set(config, name, action.fields[name]);
+  }
+
+  yield put(setProspect(config.prospect));
 }
 
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
-    takeEvery(UPDATE_FIELD, updateFieldSaga),
     takeEvery(UPDATE_PROSPECT, updateProspectSaga)
   ]);
 }

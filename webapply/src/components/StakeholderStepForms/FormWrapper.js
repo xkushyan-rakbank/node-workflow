@@ -22,6 +22,7 @@ const FormWrapper = props => {
   const submitForm = event => {
     event.preventDefault();
     const errorList = validateForm(event);
+
     if (!errorList.length) {
       props.handleContinue();
     }

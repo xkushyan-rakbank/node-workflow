@@ -12,7 +12,7 @@ import isBoolean from "lodash/isBoolean";
 import isNil from "lodash/isNil";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { fieldAttr } from "./../../constants";
 import { validate } from "./../../utils/validate";
 import { getGeneralInputProps } from "../../store/selectors/input";
@@ -31,7 +31,6 @@ const styles = {
   },
   selectCombined: {
     flexDirection: "row !important",
-    alignItems: "flex-start",
     margin: "12px 0 24px !important",
     "& > div": {
       margin: "0 !important",
@@ -99,15 +98,16 @@ class Input extends React.Component {
       !isUndefined(this.props.defaultValue) &&
       (isUndefined(this.state.value) || this.state.value === "")
     ) {
-      this.props.updateField({
-        value: this.props.defaultValue,
-        name: this.props.name
-      });
+      this.props.updateProspect({ [this.props.name]: this.props.defaultValue });
     }
   }
 
   handleChange = event => {
+    const { callback } = this.props;
     this.setState({ value: event.target.value });
+    if (callback) {
+      callback(event.target.value);
+    }
   };
 
   resetErrorState() {
@@ -135,11 +135,11 @@ class Input extends React.Component {
     );
   }
 
-  updateField = () => {
+  updateProspect = () => {
     const { name } = this.props;
     const value = this.state.value;
     if (value !== this.props.value) {
-      this.props.updateField({ value, name });
+      this.props.updateProspect({ [name]: value });
     }
   };
 
@@ -163,7 +163,7 @@ class Input extends React.Component {
     });
 
     if (this.fieldValidation()) {
-      this.updateField();
+      this.updateProspect();
     }
   };
 
@@ -297,7 +297,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

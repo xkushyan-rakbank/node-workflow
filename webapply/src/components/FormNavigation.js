@@ -9,18 +9,30 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import SubmitButton from "./Buttons/SubmitButton";
 import * as loginSelector from "./../store/selectors/loginSelector";
+import {
+  sideNavWidthXL,
+  sideNavWidthLG,
+  sideNavWidthMD,
+  sideNavWidthSM
+} from "../constants/styles";
 
 const style = {
   formNav: {
-    flex: "0 0 530px",
+    flex: `0 0 ${sideNavWidthXL}px`,
     position: "relative",
-    paddingTop: "180px",
+    paddingTop: "170px",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "right center",
     zIndex: "11",
+    "@media only screen and (max-width: 1420px)": {
+      flex: `0 0 ${sideNavWidthLG}px`
+    },
     "@media only screen and (max-width: 1300px)": {
-      flex: "0 0 45%"
+      flex: `0 0 ${sideNavWidthMD}px`
+    },
+    "@media only screen and (max-width: 1220px)": {
+      flex: `0 0 ${sideNavWidthSM}px`
     },
     "& ul": {
       margin: "0",
@@ -55,7 +67,14 @@ const style = {
     height: 323,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    "@media only screen and (max-width: 1300px)": {
+      marginLeft: 40,
+      width: "auto"
+    },
+    "@media only screen and (max-width: 1220px)": {
+      marginLeft: 20
+    }
   },
   sectionTitle: {
     color: "#fff",
@@ -63,7 +82,11 @@ const style = {
     lineHeight: "1.17",
     fontWeight: 600,
     "@media only screen and (max-width: 1300px)": {
-      paddingRight: "16px"
+      paddingRight: "16px",
+      fontSize: "40px"
+    },
+    "@media only screen and (max-width: 1220px)": {
+      fontSize: "30px"
     }
   },
   sectionSubtitle: {
@@ -72,7 +95,10 @@ const style = {
     color: "#fff",
     marginTop: 20,
     display: "block",
-    fontWeight: "normal"
+    fontWeight: "normal",
+    "@media only screen and (max-width: 1220px)": {
+      paddingRight: "25px"
+    }
   },
   nextButton: {
     width: "238px"

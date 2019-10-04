@@ -10,7 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { withStyles } from "@material-ui/core/styles";
 import InfoTitle from "../InfoTitle";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { connect } from "react-redux";
 import { validate } from "../../utils/validate";
 import isEmpty from "lodash/isEmpty";
@@ -30,6 +30,12 @@ const styles = {
       color: " #000",
       top: " 50%",
       transform: " translate(0, -50%)"
+    },
+    "& fieldset": {
+      // target style IE11
+      "@media all and (-ms-high-contrast: active), (-ms-high-contrast: none)": {
+        top: "0"
+      }
     }
   },
   selectFieldBasic: {
@@ -40,7 +46,9 @@ const styles = {
       width: " 1px",
       height: " 100%",
       backgroundColor: " #ddd",
-      right: " 56px"
+      right: " 56px",
+      top: 0,
+      zIndex: "-1"
     },
     "& > div:first-child": {
       paddingRight: "56px"
@@ -98,10 +106,7 @@ class PureSelect extends React.Component {
   componentDidMount() {
     this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
     if (!isUndefined(this.props.defaultValue) && !this.props.value) {
-      this.props.updateField({
-        value: this.props.defaultValue,
-        name: this.props.name
-      });
+      this.props.updateProspect({ [this.props.name]: this.props.defaultValue });
     }
     this.isSelectRequired() ? this.setRequiredForInput() : this.unsetRequiredForInput();
 
@@ -175,11 +180,9 @@ class PureSelect extends React.Component {
     return this.inputRef.node.validity.valid;
   };
 
-  updateField = event => {
+  updateProspect = event => {
     this.setState({ fieldErrors: {} });
-    const { value } = event.target;
-    const { name } = this.props;
-    this.props.updateField({ value, name });
+    this.props.updateProspect({ [this.props.name]: event.target.value });
   };
 
   handleBlur = () => this.checkInputValidity();
@@ -209,13 +212,16 @@ class PureSelect extends React.Component {
       resetLabel = "",
       excludeValues = [],
       multiple,
-      indexes
+      indexes,
+      subOptions
     } = this.props;
-    console.log(value);
+
     const attrId = defineDynamicInputId(id, indexes);
     const isError = !isEmpty(fieldErrors);
     const inputProps = this.composeInputProps();
     const className = combinedSelect ? classes.selectFieldCombined : classes.selectFieldBasic;
+    const options = subOptions ? subOptions : config.datalist;
+
     return (
       <FormControl
         className={cx("formControl", {
@@ -233,7 +239,7 @@ class PureSelect extends React.Component {
           disabled={disabled}
           value={value || []}
           onBlur={this.handleBlur}
-          onChange={this.updateField}
+          onChange={this.updateProspect}
           IconComponent={KeyboardArrowDownIcon}
           className={cx(classes.selectField, className)}
           MenuProps={multiple && MenuProps}
@@ -249,14 +255,14 @@ class PureSelect extends React.Component {
         >
           {!isNil(resetValue) && <MenuItem value={resetValue}>{resetLabel}</MenuItem>}
 
-          {config.datalist &&
-            config.datalist
+          {options &&
+            options
               .filter(item => !excludeValues.includes(item.value))
               .map(option => (
-                <MenuItem key={option.value} value={option.value}>
+                <MenuItem key={option.key} value={option.value}>
                   {multiple ? (
                     <>
-                      <ListItemText primary={option.value} />
+                      <ListItemText primary={option.displayText} />
                       <Checkbox checked={value.indexOf(option.value) > -1} />
                     </>
                   ) : (
@@ -281,7 +287,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

@@ -4,7 +4,10 @@ import { withStyles } from "@material-ui/core/styles";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import StatusLoader from "../components/StatusLoader";
+import SubmitButton from "../components/Buttons/SubmitButton";
+import BackLink from "../components/Buttons/BackLink";
 import { aboutCompany } from "../store/actions/aboutCompany";
+import { getAboutCompamyInfo } from "../store/selectors/appConfig";
 import { aboutCompanySteps } from "../constants";
 import routes from "./../routes";
 
@@ -29,21 +32,44 @@ class AboutCompany extends React.Component {
   };
 
   state = {
-    step: 1
+    step: 1,
+    completedSteps: []
   };
 
-  handleContinue = () => {
-    if (this.state.step < aboutCompanySteps.length) {
-      this.props.aboutCompany();
-      this.setState(state => ({ step: state.step + 1 }));
-    } else {
-      this.props.history.push(routes.stakeholdersInfo);
+  componentDidUpdate(prevProps) {
+    if (prevProps.resetStep !== this.props.resetStep && this.props.resetStep) {
+      this.setState(state => {
+        const completedSteps = [...state.completedSteps, state.step];
+        const step = state.step + 1;
+
+        return {
+          step,
+          completedSteps
+        };
+      });
+    }
+  }
+
+  handleContinue = event => {
+    this.props.aboutCompany();
+  };
+
+  handleClick = () => this.props.history.push(routes.stakeholdersInfo);
+
+  setStep = item => {
+    if (this.state.completedSteps.includes(item.step)) {
+      this.setState({ step: item.step });
     }
   };
 
+  isFilled = item => {
+    return this.state.completedSteps.includes(item.step);
+  };
+
   render() {
-    const { classes, index } = this.props;
-    const { step } = this.state;
+    const { classes, index, loading } = this.props;
+    const { step, completedSteps } = this.state;
+    const disabled = completedSteps.includes(aboutCompanySteps.length);
 
     return (
       <>
@@ -56,13 +82,13 @@ class AboutCompany extends React.Component {
           content={
             <>
               <div className={classes.title}>Company name</div>
-              <StatusLoader />
+              {loading && <StatusLoader />}
             </>
           }
         >
           <div className={classes.formContent}>
             {aboutCompanySteps.map(item => {
-              const setStep = () => this.setState({ step: item.step });
+              const setStep = () => this.setStep(item);
               return (
                 <StepComponent
                   index={index}
@@ -72,7 +98,7 @@ class AboutCompany extends React.Component {
                   title={item.title}
                   subTitle={item.infoTitle}
                   active={step === item.step}
-                  filled={step > item.step}
+                  filled={this.isFilled(item)}
                   clickHandler={setStep}
                   handleContinue={this.handleContinue}
                 />
@@ -80,10 +106,25 @@ class AboutCompany extends React.Component {
             })}
           </div>
         </CompanyStakeholderCard>
+
+        <div className="linkContainer">
+          <BackLink path={routes.verifyOtp} />
+
+          <SubmitButton
+            label="Next Step"
+            justify="flex-end"
+            disabled={!disabled}
+            handleClick={this.handleClick}
+          />
+        </div>
       </>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  ...getAboutCompamyInfo(state)
+});
 
 const mapDispatchToProps = {
   aboutCompany
@@ -91,7 +132,7 @@ const mapDispatchToProps = {
 
 export default withStyles(style)(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(AboutCompany)
 );

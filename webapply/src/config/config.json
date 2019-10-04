@@ -1572,7 +1572,7 @@
       "required": true,
       "datalistId": null,
       "readonlyFor": [],
-      "format": "date"
+      "format": ""
     },
     "Org.licenseExpiryDate": {
       "criteria": {
@@ -1594,7 +1594,7 @@
       "required": false,
       "datalistId": null,
       "readonlyFor": [],
-      "format": "date"
+      "format": ""
     },
     "Org.vatRegistrationNumber": {
       "criteria": {
@@ -1619,7 +1619,8 @@
       "readonlyFor": [],
       "description": "Company's VAT Registration No.",
       "pattern": "^[a-zA-Z0-9]*$",
-      "maxlength": "12"
+      "maxlength": "15",
+      "minlength": "12"
     },
     "OrgAddr.typeOfAddress": {
       "criteria": {
@@ -2628,34 +2629,36 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "Airlines/Aviation",
-          "key": "Airlines/Aviation",
-          "value": "Airlines/Aviation",
-          "displayText": "Airlines/Aviation"
+          "code": "CharitableTrust",
+          "key": "CharitableTrust",
+          "value": "Charitable Trustd",
+          "displayText": "Charitable Trust",
+          "subCategory": [
+            {
+              "code": "EIPO",
+              "key": "EIPO",
+              "value": "Educational Institute - Private owned",
+              "displayText": "Educational Institute - Private owned"
+            }
+          ]
         },
         {
-          "code": "ADR",
-          "key": "ADR",
-          "value": "ADR",
-          "displayText": "Alternative Dispute Resolution"
+          "code": "EIGO",
+          "key": "EIGO",
+          "value": "Educational Institute - Government owned",
+          "displayText": "Educational Institute - Government owned"
         },
         {
-          "code": "AltMedicine",
-          "key": "AltMedicine",
-          "value": "AltMedicine",
-          "displayText": "Alternative Medicine"
+          "code": "EIPO",
+          "key": "EIPO",
+          "value": "Educational Institute - Private owned",
+          "displayText": "Educational Institute - Private owned"
         },
         {
-          "code": "Animation",
-          "key": "Animation",
-          "value": "Animation",
-          "displayText": "Animation"
-        },
-        {
-          "code": "CAT-3",
-          "key": "CAT-3",
-          "value": "CAT-3",
-          "displayText": "Architecture & Planning"
+          "code": "FCPL",
+          "key": "FCPL",
+          "value": "Foreign company - Private Limited",
+          "displayText": "Foreign company - Private Limited"
         }
       ],
       "description": "get the values from datalist API. RO flag for special cases to be discussed with Vartika."
@@ -2919,31 +2922,41 @@
           "code": "Energy Equipment & Services",
           "key": "Energy Equipment & Services",
           "value": "Energy Equipment & Services",
-          "displayText": "Energy Equipment & Services"
+          "displayText": "Energy Equipment & Services",
+          "subCategory": [
+            {
+              "code": "Oil&GasDrilling",
+              "key": "Oil&GasDrilling",
+              "value": "Oil&GasDrilling",
+              "displayText": "Oil & Gas Drilling"
+            },
+            {
+              "code": "Oil&GasEquipment&Services",
+              "key": "Oil&GasEquipment&Services",
+              "value": "Oil&GasEquipment&Services",
+              "displayText": "Oil & Gas Equipment & Services"
+            }
+          ]
         },
         {
           "code": "OGC&F",
           "key": "OGC&F",
-          "value": "OGC&F",
-          "displayText": "Oil, Gas & Consumable Fuels"
-        },
-        {
-          "code": "chemicals",
-          "key": "chemicals",
-          "value": "chemicals",
-          "displayText": "Chemicals"
-        },
-        {
-          "code": "M&M",
-          "key": "M&M",
-          "value": "M&M",
-          "displayText": "Metals & Mining"
-        },
-        {
-          "code": "P&PP",
-          "key": "P&PP",
-          "value": "P&PP",
-          "displayText": "Paper & Forest Products"
+          "value": "Oil, Gas & Consumable Fuels",
+          "displayText": "Oil, Gas & Consumable Fuels",
+          "subCategory": [
+            {
+              "code": "IntegratedOil&Gas",
+              "key": "IntegratedOil&Gas",
+              "value": "IntegratedOil&Gas",
+              "displayText": "Integrated Oil & Gas"
+            },
+            {
+              "code": "Oil&GasExploration&Production",
+              "key": "Oil&GasExploration&Production",
+              "value": "Oil&GasExploration&Production",
+              "displayText": "Oil & Gas Exploration & Production"
+            }
+          ]
         }
       ]
     },
@@ -2967,38 +2980,7 @@
       "required": false,
       "datalistId": "IndustrySubCategory",
       "readonlyFor": [],
-      "datalist": [
-        {
-          "code": "Energy Equipment & Services",
-          "key": "Energy Equipment & Services",
-          "value": "Energy Equipment & Services",
-          "displayText": "Sub Energy Equipment & Services"
-        },
-        {
-          "code": "OGC&F",
-          "key": "OGC&F",
-          "value": "OGC&F",
-          "displayText": "Sub Oil, Gas & Consumable Fuels"
-        },
-        {
-          "code": "chemicals",
-          "key": "chemicals",
-          "value": "chemicals",
-          "displayText": "Sub Chemicals"
-        },
-        {
-          "code": "M&M",
-          "key": "M&M",
-          "value": "M&M",
-          "displayText": "Sub Metals & Mining"
-        },
-        {
-          "code": "P&PP",
-          "key": "P&PP",
-          "value": "P&PP",
-          "displayText": "Sub Paper & Forest Products"
-        }
-      ]
+      "datalist": []
     },
     "OkycAntTxnTotCashCr.amountInFigures": {
       "criteria": {
@@ -3429,7 +3411,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "This stakeholder is a company",
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.isShareholderACompany",
       "name": "prospect.orgKYCDetails.isShareholderACompany",
@@ -4018,7 +4000,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "This stakeholder is a company",
+      "label": "",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].kycVerified",
       "name": "prospect.signatoryInfo[*].kycVerified",
@@ -4096,13 +4078,13 @@
         {
           "code": "Y",
           "key": "Y",
-          "value": "true",
+          "value": true,
           "displayText": "Yes"
         },
         {
           "code": "N",
           "key": "N",
-          "value": "false",
+          "value": false,
           "displayText": "No"
         }
       ]
@@ -7565,7 +7547,7 @@
         "kycDetails": {
           "salutation": "Mr.",
           "shareholderPOASignatoryName": "",
-          "isSignatory": false,
+          "isSignatory": "",
           "isShareholder": false,
           "shareHoldingPercentage": 0,
           "dateOfBirth": "",
@@ -7687,7 +7669,7 @@
         "kycDetails": {
           "salutation": "Mr.",
           "shareholderPOASignatoryName": "",
-          "isSignatory": false,
+          "isSignatory": true,
           "isShareholder": false,
           "shareHoldingPercentage": 0,
           "dateOfBirth": "",

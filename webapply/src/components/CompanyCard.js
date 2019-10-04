@@ -4,6 +4,7 @@ import companyIconSvg from "../assets/icons/brief.png";
 
 const style = {
   container: {
+    position: "relative",
     borderRadius: "8px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
     border: "solid 1px #e8e8e8",

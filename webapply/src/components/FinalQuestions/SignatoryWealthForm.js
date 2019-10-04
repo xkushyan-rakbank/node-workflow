@@ -7,7 +7,7 @@ import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputNameById, getInputValueById } from "../../store/selectors/input";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
 const styles = {
   title: {
@@ -47,10 +47,7 @@ class SignatoryWealthForm extends Component {
   }
 
   updateOtherWealthTypeValue(value) {
-    this.props.updateField({
-      value,
-      name: this.props.otherWealthTypeInputName
-    });
+    this.props.updateProspect({ [this.props.otherWealthTypeInputName]: value });
   }
 
   handleSubmit = event => {
@@ -91,7 +88,7 @@ const mapStateToProps = (state, { index }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

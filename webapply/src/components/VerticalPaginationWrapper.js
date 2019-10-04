@@ -5,15 +5,18 @@ import cx from "classnames";
 import VideoBackground from "./BackgroundVideoPlayer";
 
 // Parent wrapper component total vertical padding.
-//Temporary solution. In the future should be fixed
-const parentTotalOffset = 140;
+// Temporary solution. In the future should be fixed
+const parentTotalOffset = 192;
 const parentBottomOffset = 50;
 
 const style = {
   paginationWrapper: {
     position: "relative",
     height: `calc(100vh - ${parentTotalOffset}px)`,
-    overflow: "hidden"
+    overflow: "hidden",
+    "@media only screen and (max-width: 1300px)": {
+      height: "calc(100vh - 130px)"
+    }
   },
   paginationContent: {
     position: "absolute",
@@ -24,11 +27,9 @@ const style = {
   childWrapper: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
     height: `calc(100vh - ${parentTotalOffset}px)`,
-    overflow: "hidden",
     "&:not(:last-child)": {
-      marginBottom: "50px"
+      marginBottom: "60px"
     }
   },
   paginationDots: {
@@ -37,7 +38,10 @@ const style = {
     right: "30px",
     width: "10px",
     zIndex: 2,
-    transform: "translateY(-50%)"
+    transform: "translateY(-50%)",
+    "@media only screen and (max-width: 1360px)": {
+      right: "15px"
+    }
   },
   paginationDot: {
     width: "10px",

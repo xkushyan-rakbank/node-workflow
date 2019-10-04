@@ -7,7 +7,7 @@ import Input from "../InputField/TextInput";
 import Checkbox from "../InputField/RefactoredCheckbox";
 import UICheckbox from "../InputField/Checkbox";
 import { getInputNameById, getInputValueById } from "../../store/selectors/input";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
 const styles = {
   bottomIndent: {
@@ -54,7 +54,7 @@ class Nationality extends React.Component {
    * @param {Any} list[].value
    */
   resetFieldValues(list) {
-    list.forEach(this.props.updateField);
+    list.forEach(this.props.updateProspect);
   }
 
   resetDualCitizenshipValues() {
@@ -180,7 +180,7 @@ const mapStateToProps = (state, { index }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(

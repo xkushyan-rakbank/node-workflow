@@ -9,7 +9,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/picker
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { validate } from "./../../utils/validate";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 import { fieldAttr } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
 
@@ -49,19 +49,16 @@ class DatePicker extends React.Component {
   inputRef = React.createRef();
 
   inputProps = {
-    ref: this.inputRef,
-    pattern: "^(0[1-9]|1[0-2])\\/(((0|1)[0-9]|2[0-9]|3[0-1])\\/((1|2)\\d\\d\\d))$"
+    ref: this.inputRef
   };
 
   resetFieldErrors = () => {
     this.setState({ fieldErrors: {} });
   };
 
-  updateField = (dateValue, stringValue) => {
+  updateProspect = dateValue => {
     const { name } = this.props;
-    if (!dateValue || dateValue.toString() !== "Invalid Date") {
-      this.props.updateField({ value: stringValue, name });
-    }
+    this.props.updateProspect({ [name]: dateValue, name });
   };
 
   composeInputProps() {
@@ -80,15 +77,11 @@ class DatePicker extends React.Component {
     this.resetFieldErrors();
   };
 
-  handleAccept = () => {
+  handleAccept = date => {
     this.resetFieldErrors();
   };
 
   handleBlur = () => {
-    this.fieldValidation();
-  };
-
-  handleClose = () => {
     this.fieldValidation();
   };
 
@@ -100,6 +93,7 @@ class DatePicker extends React.Component {
       id,
       indexes,
       disableFuture,
+      disabled,
       minDate = new Date("01-01-1000")
     } = this.props;
     const { fieldErrors } = this.state;
@@ -115,13 +109,13 @@ class DatePicker extends React.Component {
               autoOk
               minDate={minDate}
               disableFuture={disableFuture}
+              disabled={disabled}
               name={config.name}
               label={config.label || ""}
-              invalidDateMessage={" "}
               disableToolbar
               margin="normal"
               variant="inline"
-              format="MM/dd/yyyy"
+              format="dd/MM/yyyy"
               inputVariant="outlined"
               placeholder="__/__/____"
               mask="__/__/____"
@@ -130,9 +124,8 @@ class DatePicker extends React.Component {
               value={value || null}
               onAccept={this.handleAccept}
               onFocus={this.handleFocus}
-              onChange={this.updateField}
+              onChange={this.updateProspect}
               onBlur={this.handleBlur}
-              onClose={this.handleClose}
               error={isError}
               inputProps={inputProps}
               KeyboardButtonProps={{
@@ -159,7 +152,7 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default compose(

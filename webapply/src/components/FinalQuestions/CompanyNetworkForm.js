@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import get from "lodash/get";
+import cx from "classnames";
 import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
@@ -7,8 +9,10 @@ import { withStyles } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
+import RemoveButton from "../Buttons/RemoveButton";
 import PureSelect from "../InputField/PureSelect";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
+import { getOrgKYCDetails } from "../../store/selectors/appConfig";
 
 const styles = {
   title: {
@@ -32,8 +36,16 @@ const styles = {
   },
   controlsWrapper: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     margin: "20px 0 0"
+  },
+  relative: {
+    position: "relative",
+    marginBottom: "20px"
+  },
+  container: {
+    top: "calc(100% - 10px)",
+    right: "12px"
   }
 };
 
@@ -46,27 +58,21 @@ class CompanyNetworkForm extends Component {
     super(props);
 
     this.limits = {
-      anotherBankCount: 5,
       insideSubsidiaryCount: 5,
       outsideSubsidiaryCount: 5
     };
     this.state = {
-      anotherBankCount: 1,
-      insideSubsidiaryCount: 0,
-      outsideSubsidiaryCount: 0,
-      isDontHaveOtherBankAccounts: false,
-      isDontHaveInsideSubsidiary: false,
-      isDontHaveOutsideSubsidiary: false
+      insideSubsidiaryCompanyNameFilled: false,
+      insideSubsidiaryTradeLicenseNoFilled: false,
+      outsideSubsidiaryCompanyNameFilled: false,
+      insideSubsidiaryCount: 1,
+      outsideSubsidiaryCount: 1,
+      isDontHaveInsideSubsidiary: true,
+      isDontHaveOutsideSubsidiary: true
     };
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      prevState.isDontHaveOtherBankAccounts !== this.state.isDontHaveOtherBankAccounts &&
-      this.state.isDontHaveOtherBankAccounts
-    ) {
-      this.resetBankAccountValues();
-    }
     if (
       prevState.isDontHaveInsideSubsidiary !== this.state.isDontHaveInsideSubsidiary &&
       this.state.isDontHaveInsideSubsidiary
@@ -81,21 +87,37 @@ class CompanyNetworkForm extends Component {
     }
   }
 
-  resetBankAccountValues() {
-    this.setState({ anotherBankCount: 1 });
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails",
-      value: [{ bankName: "" }]
-    });
+  getEmptyInsideSubsidiarysItem() {
+    return {
+      companyName: "",
+      emirate: "",
+      tradeLicenseNo: ""
+    };
+  }
+
+  getEmptyOutsideSubsidiarysItem() {
+    return {
+      companyName: "",
+      country: ""
+    };
+  }
+
+  getInsideSubsidiariesData() {
+    return get(this.props.orgKYCDetails, "entitiesInUAE", [this.getEmptyInsideSubsidiarysItem()]);
+  }
+
+  getOutsideSubsidiariesData() {
+    return get(this.props.orgKYCDetails, "entitiesOutsideUAE", [
+      this.getEmptyOutsideSubsidiarysItem()
+    ]);
   }
 
   resetInsideSubsidiaryValues() {
     if (this.state.insideSubsidiaryCount > 1) {
       this.setState({ insideSubsidiaryCount: 1 });
     }
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.entitiesInUAE",
-      value: [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.entitiesInUAE": [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
     });
   }
 
@@ -103,29 +125,63 @@ class CompanyNetworkForm extends Component {
     if (this.state.outsideSubsidiaryCount > 1) {
       this.setState({ outsideSubsidiaryCount: 1 });
     }
-    this.props.updateField({
-      name: "prospect.orgKYCDetails.entitiesOutsideUAE",
-      value: [{ tradeLicenseNo: "", companyName: "" }]
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.entitiesOutsideUAE": [{ country: "", companyName: "" }]
     });
   }
 
-  updateCountedStateValue = (key, increment = 1) => {
-    if (key in this.limits && this.state[key] >= this.limits[key]) {
-      return;
-    }
-    this.setState({ [key]: this.state[key] + increment });
-  };
+  insideSubsidiaryCompanyNameChangeHandle = value =>
+    this.setState({ insideSubsidiaryCompanyNameFilled: !!value });
 
-  handleAddAnotherBank = () => {
-    this.updateCountedStateValue("anotherBankCount");
+  insideSubsidiaryTradeLicenseNoChangeHandle = value =>
+    this.setState({ insideSubsidiaryTradeLicenseNoFilled: !!value });
+
+  outsideSubsidiaryCompanyNameChangeHandle = value =>
+    this.setState({ outsideSubsidiaryCompanyNameFilled: !!value });
+
+  handleAddInsideSubsidiarySwitch = e => {
+    this.props.updateProspect({ "prospect.orgKYCDetails.otherEntitiesInUAE": e.target.checked });
+    this.setState({ isDontHaveInsideSubsidiary: !e.target.checked });
   };
 
   handleAddInsideSubsidiaryClick = () => {
-    this.updateCountedStateValue("insideSubsidiaryCount");
+    const dataList = this.getInsideSubsidiariesData();
+    if (dataList.length < this.limits.insideSubsidiaryCount) {
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.entitiesInUAE": [...dataList, this.getEmptyInsideSubsidiarysItem()]
+      });
+    }
+  };
+
+  handleRemoveInsideSubsidiary = index => {
+    const dataList = this.getInsideSubsidiariesData();
+    dataList.splice(index, 1);
+    this.props.updateProspect({ "prospect.orgKYCDetails.entitiesInUAE": [...dataList] });
+  };
+
+  handleAddOutsideSubsidiarySwitch = e => {
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.otherEntitiesOutsideUAE": e.target.checked
+    });
+    this.setState({ isDontHaveOutsideSubsidiary: !e.target.checked });
   };
 
   handleAddOutsideSubsidiaryClick = () => {
-    this.updateCountedStateValue("outsideSubsidiaryCount");
+    const dataList = this.getOutsideSubsidiariesData();
+    if (dataList.length < this.limits.outsideSubsidiaryCount) {
+      this.props.updateProspect({
+        "prospect.orgKYCDetails.entitiesOutsideUAE": [
+          ...dataList,
+          this.getEmptyOutsideSubsidiarysItem()
+        ]
+      });
+    }
+  };
+
+  handleRemoveOutsideSubsidiary = index => {
+    const dataList = this.getOutsideSubsidiariesData();
+    dataList.splice(index, 1);
+    this.props.updateProspect({ "prospect.orgKYCDetails.entitiesOutsideUAE": [...dataList] });
   };
 
   handleSubmit = event => {
@@ -133,158 +189,219 @@ class CompanyNetworkForm extends Component {
     this.props.handleContinue(event);
   };
 
+  isInsideSubsidiaryCompanyNameRequired(index) {
+    return this.getInsideSubsidiariesData()[index].companyName === "";
+  }
+
+  isInsideSubsidiaryEmirateRequired(index) {
+    return this.getInsideSubsidiariesData()[index].emirate === "";
+  }
+
+  isInsideSubsidiaryTradeLicenseRequired(index) {
+    return this.getInsideSubsidiariesData()[index].tradeLicenseNo === "";
+  }
+
+  isOutsideSubsidiaryCompanyNameRequired(index) {
+    return this.getOutsideSubsidiariesData()[index].companyName === "";
+  }
+
+  isOutsideSubsidiaryCountryRequired(index) {
+    return this.getOutsideSubsidiariesData()[index].country === "";
+  }
+
+  isAddInsideSubsidiaryDisabled = () => {
+    const { insideSubsidiaryCount } = this.limits;
+    const insideSubsidiaries = this.getInsideSubsidiariesData();
+    const lastInsideSubsidiary = insideSubsidiaries[insideSubsidiaries.length - 1];
+    return (
+      insideSubsidiaries.length >= insideSubsidiaryCount ||
+      !lastInsideSubsidiary.companyName ||
+      !lastInsideSubsidiary.emirate ||
+      !lastInsideSubsidiary.tradeLicenseNo
+    );
+  };
+
+  isAddOutsideSubsidiaryDisabled = () => {
+    const { outsideSubsidiaryCount } = this.limits;
+    const outsideSubsidiaries = this.getOutsideSubsidiariesData();
+    const lastOutsideSubsidiary = outsideSubsidiaries[outsideSubsidiaries.length - 1];
+    return (
+      outsideSubsidiaries.length >= outsideSubsidiaryCount ||
+      !lastOutsideSubsidiary.companyName ||
+      !lastOutsideSubsidiary.country
+    );
+  };
+
+  isContinueDisabled = () => {
+    const {
+      isDontHaveInsideSubsidiary,
+      isDontHaveOutsideSubsidiary,
+      insideSubsidiaryCompanyNameFilled,
+      insideSubsidiaryTradeLicenseNoFilled,
+      outsideSubsidiaryCompanyNameFilled
+    } = this.state;
+    const insideSubsidiaries = this.getInsideSubsidiariesData();
+    const isInsideSubsidiariesFilled =
+      isDontHaveInsideSubsidiary ||
+      insideSubsidiaries.length > 1 ||
+      !!(
+        insideSubsidiaryCompanyNameFilled &&
+        insideSubsidiaries[0].emirate &&
+        insideSubsidiaryTradeLicenseNoFilled
+      );
+    const outsideSubsidiaries = this.getOutsideSubsidiariesData();
+    const isOutsideSubsidiariesFilled =
+      isDontHaveOutsideSubsidiary ||
+      outsideSubsidiaries.length > 1 ||
+      !!(outsideSubsidiaryCompanyNameFilled && outsideSubsidiaries[0].country);
+    return !(isInsideSubsidiariesFilled && isOutsideSubsidiariesFilled);
+  };
+
   render() {
+    const { isDontHaveInsideSubsidiary, isDontHaveOutsideSubsidiary } = this.state;
+    const { classes } = this.props;
     return (
       <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Company network" className={this.props.classes.title} />
-
-        <h4 className={this.props.classes.groupLabel}>Relationships with other banks</h4>
-        <Checkbox
-          label="The company has no accounts with other banks, inside or outside the UAE"
-          value={this.state.isDontHaveOtherBankAccounts}
-          onChange={event => this.setState({ isDontHaveOtherBankAccounts: event.target.checked })}
-        />
-        <Grid container spacing={3} className={this.props.classes.flexContainer}>
-          <Grid item sm={12}>
-            {Array.from(Array(this.state.anotherBankCount).keys()).map(index => {
-              return (
-                <TextInput
-                  key={index}
-                  id="OkycObriObd.bankName"
-                  indexes={[index]}
-                  required={index === 0 && !this.state.isDontHaveOtherBankAccounts}
-                  disabled={this.state.isDontHaveOtherBankAccounts}
-                />
-              );
-            })}
-          </Grid>
-        </Grid>
-        <AddButton
-          onClick={this.handleAddAnotherBank}
-          title="Add another bank"
-          disabled={
-            this.state.anotherBankCount >= this.limits.anotherBankCount ||
-            this.state.isDontHaveOtherBankAccounts
-          }
-        />
+        <SectionTitle title="Branches and subsidiaries" className={this.props.classes.title} />
 
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>
-          Relationships with subsidiaries inside the UAE
+          Branches or subsidiaries or other companies in the UAE
         </h4>
 
         <Checkbox
-          label="The company has no branches, subsidiaries or other companies, inside or outside the UAE"
-          value={this.state.isDontHaveInsideSubsidiary}
-          onChange={event => this.setState({ isDontHaveInsideSubsidiary: event.target.checked })}
+          label="The company has branches, subsidiaries or other companies in the UAE"
+          value={!isDontHaveInsideSubsidiary}
+          onChange={this.handleAddInsideSubsidiarySwitch}
         />
-        <Grid container spacing={3} className={this.props.classes.flexContainer}>
-          {Array.from(Array(this.state.insideSubsidiaryCount).keys()).map(index => {
-            return (
-              <React.Fragment key={index}>
-                <Grid item sm={12}>
-                  <TextInput
-                    key={index}
-                    id="OkycEntIn.companyName"
-                    indexes={[index]}
-                    required={index === 0 && !this.state.isDontHaveInsideSubsidiary}
-                    disabled={this.state.isDontHaveInsideSubsidiary}
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <TextInput
-                    key={index}
-                    id="OkycEntIn.tradeLicenseNo"
-                    indexes={[index]}
-                    required={index === 0 && !this.state.isDontHaveInsideSubsidiary}
-                    disabled={this.state.isDontHaveInsideSubsidiary}
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <PureSelect
-                    key={index}
-                    id="OkycEntIn.emirate"
-                    indexes={[index]}
-                    required={index === 0 && !this.state.isDontHaveInsideSubsidiary}
-                    disabled={this.state.isDontHaveInsideSubsidiary}
-                  />
-                </Grid>
-              </React.Fragment>
-            );
-          })}
-        </Grid>
-
-        <AddButton
-          onClick={this.handleAddInsideSubsidiaryClick}
-          title="Add a subsidiary inside the UAE"
-          disabled={
-            this.state.insideSubsidiaryCount >= this.limits.insideSubsidiaryCount ||
-            this.state.isDontHaveInsideSubsidiary
-          }
-        />
+        {!isDontHaveInsideSubsidiary && (
+          <>
+            <Grid container spacing={3} className={this.props.classes.flexContainer}>
+              {this.getInsideSubsidiariesData().map((_, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <Grid item sm={12}>
+                      <TextInput
+                        key={index}
+                        id="OkycEntIn.companyName"
+                        indexes={[index]}
+                        required={this.isInsideSubsidiaryCompanyNameRequired(index)}
+                        disabled={this.state.isDontHaveInsideSubsidiary}
+                        callback={this.insideSubsidiaryCompanyNameChangeHandle}
+                      />
+                    </Grid>
+                    <Grid item md={6} sm={12}>
+                      <TextInput
+                        key={index}
+                        id="OkycEntIn.tradeLicenseNo"
+                        indexes={[index]}
+                        required={this.isInsideSubsidiaryTradeLicenseRequired(index)}
+                        disabled={this.state.isDontHaveInsideSubsidiary}
+                        callback={this.insideSubsidiaryTradeLicenseNoChangeHandle}
+                      />
+                    </Grid>
+                    <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
+                      <PureSelect
+                        key={index}
+                        id="OkycEntIn.emirate"
+                        indexes={[index]}
+                        required={this.isInsideSubsidiaryEmirateRequired(index)}
+                        disabled={this.state.isDontHaveInsideSubsidiary}
+                      />
+                      {index !== 0 && (
+                        <RemoveButton
+                          onClick={() => this.handleRemoveInsideSubsidiary(index)}
+                          title="Remove"
+                          classes={{ container: classes.container }}
+                        />
+                      )}
+                    </Grid>
+                  </React.Fragment>
+                );
+              })}
+            </Grid>
+            <AddButton
+              onClick={this.handleAddInsideSubsidiaryClick}
+              title="Add a subsidiary inside the UAE"
+              disabled={this.isAddInsideSubsidiaryDisabled()}
+            />
+          </>
+        )}
 
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>
-          Relationships with subsidiaries outside the UAE
+          Branches or subsidiaries or other companies outside the UAE
         </h4>
         <Checkbox
-          label="The company has no branches, subsidiaries or other companies, inside or outside the UAE"
-          value={this.state.isDontHaveOutsideSubsidiary}
-          onChange={event => this.setState({ isDontHaveOutsideSubsidiary: event.target.checked })}
+          label="The company has branches, subsidiaries or other companies outside the UAE"
+          value={!isDontHaveOutsideSubsidiary}
+          onChange={this.handleAddOutsideSubsidiarySwitch}
         />
-        <Grid container spacing={3} className={this.props.classes.flexContainer}>
-          {Array.from(Array(this.state.outsideSubsidiaryCount).keys()).map(index => {
-            return (
-              <React.Fragment key={index}>
-                <Grid item md={6} sm={12}>
-                  <TextInput
-                    key={index}
-                    id="OkycEntOut.companyName"
-                    indexes={[index]}
-                    required={index === 0 && !this.state.isDontHaveOutsideSubsidiary}
-                    disabled={this.state.isDontHaveOutsideSubsidiary}
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <PureSelect
-                    key={index}
-                    id="OkycEntOut.country"
-                    indexes={[index]}
-                    required={index === 0 && !this.state.isDontHaveOutsideSubsidiary}
-                    disabled={this.state.isDontHaveOutsideSubsidiary}
-                  />
-                </Grid>
-              </React.Fragment>
-            );
-          })}
-        </Grid>
-
-        <AddButton
-          onClick={this.handleAddOutsideSubsidiaryClick}
-          title="Add another subsidiary"
-          disabled={
-            this.state.outsideSubsidiaryCount >= this.limits.outsideSubsidiaryCount ||
-            this.state.isDontHaveOutsideSubsidiary
-          }
-        />
+        {!isDontHaveOutsideSubsidiary && (
+          <>
+            <Grid container spacing={3} className={this.props.classes.flexContainer}>
+              {this.getOutsideSubsidiariesData().map((_, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <Grid item md={6} sm={12}>
+                      <TextInput
+                        key={index}
+                        id="OkycEntOut.companyName"
+                        indexes={[index]}
+                        required={this.isOutsideSubsidiaryCompanyNameRequired(index)}
+                        disabled={this.state.isDontHaveOutsideSubsidiary}
+                        callback={this.outsideSubsidiaryCompanyNameChangeHandle}
+                      />
+                    </Grid>
+                    <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
+                      <PureSelect
+                        key={index}
+                        id="OkycEntOut.country"
+                        indexes={[index]}
+                        required={this.isOutsideSubsidiaryCountryRequired(index)}
+                        disabled={this.state.isDontHaveOutsideSubsidiary}
+                      />
+                      {index !== 0 && (
+                        <RemoveButton
+                          onClick={() => this.handleRemoveOutsideSubsidiary(index)}
+                          title="Remove"
+                          classes={{ container: classes.container }}
+                        />
+                      )}
+                    </Grid>
+                  </React.Fragment>
+                );
+              })}
+            </Grid>
+            <AddButton
+              onClick={this.handleAddOutsideSubsidiaryClick}
+              title="Add another subsidiary"
+              disabled={this.isAddOutsideSubsidiaryDisabled()}
+            />
+          </>
+        )}
 
         <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton type="submit" />
+          <ContinueButton disabled={this.isContinueDisabled()} type="submit" />
         </div>
       </form>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  orgKYCDetails: getOrgKYCDetails(state)
+});
+
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default withStyles(styles)(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(CompanyNetworkForm)
 );

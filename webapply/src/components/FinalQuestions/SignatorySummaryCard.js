@@ -14,7 +14,7 @@ import validateForm from "../../utils/validate";
 
 const styles = {
   card: {
-    marginBottom: "24px"
+    marginBottom: "20px"
   },
   contentBox: {
     display: "flex",

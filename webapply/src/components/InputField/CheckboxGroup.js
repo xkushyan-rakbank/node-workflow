@@ -1,4 +1,5 @@
 import React from "react";
+import { withStyles } from "@material-ui/core";
 import cx from "classnames";
 import get from "lodash/get";
 import { compose } from "recompose";
@@ -7,9 +8,15 @@ import FormControl from "@material-ui/core/FormControl";
 import InfoTitle from "../InfoTitle";
 import CustomCheckbox from "./CustomCheckbox";
 import { getGeneralInputProps } from "../../store/selectors/input";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
-class RadiobuttonGroup extends React.Component {
+const style = {
+  formControl: {
+    display: "block"
+  }
+};
+
+class CheckboxGroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,11 +35,7 @@ class RadiobuttonGroup extends React.Component {
     if (checked && !newValue.includes(value)) {
       newValue.push(value);
     }
-
-    this.props.updateField({
-      value: newValue,
-      name: this.props.name
-    });
+    this.props.updateProspect({ [this.props.name]: newValue });
   };
 
   render() {
@@ -41,7 +44,12 @@ class RadiobuttonGroup extends React.Component {
       config: { datalist = [], title, required, error }
     } = this.props;
     return (
-      <FormControl error={error} component="fieldset" required={required}>
+      <FormControl
+        error={error}
+        component="fieldset"
+        classes={{ root: classes.formControl }}
+        required={required}
+      >
         <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
           {datalist.map(item => (
             <CustomCheckbox
@@ -49,7 +57,7 @@ class RadiobuttonGroup extends React.Component {
               value={item.value}
               label={item.displayText}
               handleChange={this.handleChange}
-              checked={this.props.value.includes(item.value)}
+              // checked={this.props.value.includes(item.value)}
             />
           ))}
         </div>
@@ -65,12 +73,13 @@ const mapStateToProps = (state, { id, indexes }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )
-)(RadiobuttonGroup);
+  ),
+  withStyles(style)
+)(CheckboxGroup);

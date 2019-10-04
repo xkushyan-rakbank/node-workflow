@@ -2,14 +2,26 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { StyledWhiteContainedButton } from "./MyApplicationsList";
+import waves_background from "../assets/images/waves_bg.png";
 
 const styles = {
   gridContainer: {
     marginTop: 4,
-    boxSizing: "bored-box",
-    marginRight: "-20px"
+    marginRight: "-20px",
+    marginLeft: "-20px",
+    position: "relative",
+    overflow: "hidden",
+    paddingBottom: "20px"
+  },
+  containerBg: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    zIndex: 0
   },
   application: {
+    position: "relative",
+    overflow: "hidden",
     width: 380,
     height: 263,
     borderRadius: 8,
@@ -21,15 +33,17 @@ const styles = {
     display: "inline-flex",
     flexDirection: "column",
     alignItems: "center",
-    margin: "20px 20px 0 0"
+    margin: "20px 0 0 20px"
   },
   title: {
     fontWeight: "600",
     color: "#263d4c",
-    lineHeight: "1.7"
+    lineHeight: "1.7",
+    zIndex: 1
   },
   account: {
-    color: "#86868b"
+    color: "#86868b",
+    zIndex: 1
   },
   status: {
     borderRadius: 4,
@@ -37,7 +51,8 @@ const styles = {
     fontSize: "12px",
     color: "#373737",
     padding: "1px 5px",
-    marginTop: 40
+    marginTop: 40,
+    zIndex: 1
   },
   blockAction: {
     marginTop: 40
@@ -48,6 +63,8 @@ const MyApplicationsGrid = ({ classes, currentApplications }) => (
   <div className={classes.gridContainer}>
     {currentApplications.map((application, index) => (
       <div className={classes.application} key={index}>
+        <img src={waves_background} className={classes.containerBg} alt="waves background" />
+
         <Typography variant="h6" component="span" classes={{ root: classes.title }}>
           {application.companyName}
         </Typography>

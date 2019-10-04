@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 import CompanyCard from "../CompanyCard";
 import ContinueButton from "../Buttons/ContinueButton";
 import LinkButton from "../Buttons/LinkButton";
@@ -12,6 +13,16 @@ import CompanyContactInformationForm from "./CompanyContactInformationForm";
 import validateForm from "../../utils/validate";
 import { getInputValueById } from "../../store/selectors/input";
 
+const style = {
+  buttonStyle: {
+    position: "absolute",
+    left: 0,
+    top: "-105px",
+    width: "auto",
+    padding: "10px 33px"
+  }
+};
+
 class CompanySummaryCard extends Component {
   constructor(props) {
     super(props);
@@ -23,19 +34,19 @@ class CompanySummaryCard extends Component {
 
     this.sectionsConfig = [
       {
-        title: "Company background",
+        title: "Business relationships",
         key: "companyBackground",
         component: CompanyBackgroundForm
+      },
+      {
+        title: "Branches and subsidiaries",
+        key: "network",
+        component: CompanyNetworkForm
       },
       {
         title: "Anticipated transactions",
         key: "anticipatedTransactions",
         component: CompanyAnticipatedTransactionsForm
-      },
-      {
-        title: "Company network",
-        key: "network",
-        component: CompanyNetworkForm
       },
       {
         title: "Preferred mailing address",
@@ -114,13 +125,18 @@ class CompanySummaryCard extends Component {
   };
 
   renderControlsContent() {
+    const { classes } = this.props;
     if (this.state.isExpanded) {
       return null;
     }
     return this.state.isFilled ? (
       <LinkButton clickHandler={() => this.setState({ isExpanded: true, isFilled: false })} />
     ) : (
-      <ContinueButton handleClick={() => this.setState({ isExpanded: true, isFilled: true })} />
+      <ContinueButton
+        label="Start here"
+        classes={{ buttonStyle: classes.buttonStyle }}
+        handleClick={() => this.setState({ isExpanded: true, isFilled: true })}
+      />
     );
   }
 
@@ -152,4 +168,4 @@ const mapStateToProps = state => ({
   companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
 });
 
-export default connect(mapStateToProps)(CompanySummaryCard);
+export default withStyles(style)(connect(mapStateToProps)(CompanySummaryCard));

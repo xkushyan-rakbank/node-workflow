@@ -20,7 +20,7 @@ const style = {
 class SelectServices extends React.Component {
   state = {
     canSubmit: false,
-    step: 4
+    step: 1
   };
 
   handleContinue = () => {

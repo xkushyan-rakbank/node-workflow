@@ -33,7 +33,16 @@ const style = {
 };
 
 const FilledStakeholderCard = props => {
-  const { firstName, lastName, signatoryRights, shareholding, classes } = props;
+  const {
+    firstName,
+    lastName,
+    signatoryRights,
+    shareholding,
+    classes,
+    changeEditableStep,
+    index
+  } = props;
+  const editStakeholder = () => changeEditableStep(index);
   const renderContent = () => (
     <>
       <div className={classes.userInfo}>
@@ -42,7 +51,7 @@ const FilledStakeholderCard = props => {
         <div className={classes.shareholdingField}>{`Shareholding ${shareholding}%`}</div>
       </div>
 
-      <LinkButton />
+      <LinkButton clickHandler={editStakeholder} />
     </>
   );
   return (

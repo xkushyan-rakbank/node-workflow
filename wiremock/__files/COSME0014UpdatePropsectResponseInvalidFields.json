@@ -1,0 +1,12 @@
+{
+  "errorType": "FieldsValidation",
+  "errors": [
+    {
+      "fieldPath": "$.organizationInfo.companyName",
+      "code": "INVALID",
+      "errorType": "InvalidField",
+      "message": "Your name is invalid, no special characters allowed",
+      "developerText": ""
+    }
+  ]
+}

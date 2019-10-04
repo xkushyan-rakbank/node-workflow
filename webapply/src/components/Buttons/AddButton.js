@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core";
-import AddIcon from "../AddIcon";
+import addIcon from "../../assets/icons/add-icon.png";
 
 const style = {
   container: {
@@ -27,6 +27,11 @@ const style = {
     fontWeight: 400,
     fontStyle: "normal",
     fontStretch: "normal"
+  },
+  icon: {
+    width: "24px",
+    height: "24px",
+    marginRight: "9px"
   }
 };
 
@@ -34,7 +39,7 @@ const AddButton = props => {
   const { classes, title = "Add", className, ...rest } = props;
   return (
     <button className={cx(classes.container, className)} type="button" {...rest}>
-      <AddIcon />
+      <img src={addIcon} alt="add" className={classes.icon} />
       <span className={classes.text}>{title}</span>
     </button>
   );

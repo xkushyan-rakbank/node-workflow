@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import PureSelect from "../InputField/PureSelect";
 import TextInput from "../InputField/TextInput";
 import { getInputNameById, getInputValueById } from "../../store/selectors/input";
-import { updateField } from "../../store/actions/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
 
 class CountryOfResidence extends React.Component {
   static defaultProps = {
@@ -18,9 +18,8 @@ class CountryOfResidence extends React.Component {
   }
 
   setEidNumberValue(value) {
-    this.props.updateField({
-      value,
-      name: this.props.eidNumberInputName
+    this.props.updateProspect({
+      [this.props.eidNumberInputName]: value
     });
   }
 
@@ -64,7 +63,7 @@ const mapStateToProps = (state, { index }) => ({
 });
 
 const mapDispatchToProps = {
-  updateField
+  updateProspect
 };
 
 export default connect(

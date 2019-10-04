@@ -15,6 +15,7 @@ const style = {
     "@media only screen and (max-width: 1100px)": {}
   },
   formWrapper: {
+    flexBasis: "0%",
     flex: "1 1 auto",
     minHeight: "0px",
     "& h2": {
@@ -39,8 +40,14 @@ const style = {
   mainContainer: {
     maxWidth: "780px",
     width: "100%",
-    margin: "auto",
-    padding: "90px 50px 20px"
+    margin: "0 auto",
+    padding: "165px 50px 20px",
+    "@media only screen and (max-width: 1360px)": {
+      maxWidth: "830px",
+      paddingTop: "100px",
+      paddingLeft: "25px",
+      paddingRight: "25px"
+    }
   }
 };
 

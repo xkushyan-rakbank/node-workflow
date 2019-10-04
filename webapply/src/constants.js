@@ -110,7 +110,6 @@ export const fieldAttr = (id, fieldConfig, indexes) => {
     minLength: defineInputMinLengthByConfig(fieldConfig),
     pattern: fieldConfig.pattern,
     required: !!fieldConfig.required,
-    disabled: !!fieldConfig.disabled,
     readOnly: !!fieldConfig.readOnly
   };
 };
@@ -178,7 +177,7 @@ export const applicationStatus = {
 export const searchedAppInfoSteps = [
   {
     step: 1,
-    title: "Company Details",
+    title: "Details",
     component: SearchedCompanyDetails
   },
   {
