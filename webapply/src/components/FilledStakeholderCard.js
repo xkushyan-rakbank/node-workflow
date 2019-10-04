@@ -35,18 +35,20 @@ const style = {
 const FilledStakeholderCard = props => {
   const {
     firstName,
-    lastName,
+    middleName,
+    fullName,
     signatoryRights,
     shareholding,
     classes,
     changeEditableStep,
     index
   } = props;
+  console.log(props);
   const editStakeholder = () => changeEditableStep(index);
   const renderContent = () => (
     <>
       <div className={classes.userInfo}>
-        <div className={classes.nameField}>{`${firstName} ${lastName}`}</div>
+        <div className={classes.nameField}>{`${firstName} ${middleName} ${fullName}`}</div>
         {signatoryRights && <div className={classes.signatoryField}>Signatory Rights</div>}
         <div className={classes.shareholdingField}>{`Shareholding ${shareholding}%`}</div>
       </div>
@@ -57,7 +59,7 @@ const FilledStakeholderCard = props => {
   return (
     <CompanyStakeholderCard
       firstName={firstName}
-      lastName={lastName}
+      lastName={fullName}
       content={renderContent()}
       className={classes.indent}
     />
