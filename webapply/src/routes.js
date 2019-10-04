@@ -18,5 +18,6 @@ export default {
   selectServices: "/SelectServices",
   searchProspect: "/SearchProspect",
   login: "/Login",
-  SearchedAppInfo: "/SearchedAppInfo"
+  SearchedAppInfo: "/SearchedAppInfo",
+  SubmitApplication: "/SubmitApplication"
 };
