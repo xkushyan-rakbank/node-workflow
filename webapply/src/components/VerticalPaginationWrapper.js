@@ -4,32 +4,28 @@ import cx from "classnames";
 
 import VideoBackground from "./BackgroundVideoPlayer";
 
-// Parent wrapper component total vertical padding.
-// Temporary solution. In the future should be fixed
-const parentTotalOffset = 192;
-const parentBottomOffset = 50;
-
 const style = {
   paginationWrapper: {
     position: "relative",
-    height: `calc(100vh - ${parentTotalOffset}px)`,
-    overflow: "hidden",
-    "@media only screen and (max-width: 1300px)": {
-      height: "calc(100vh - 130px)"
-    }
+    height: "100vh",
+    overflow: "hidden"
   },
   paginationContent: {
     position: "absolute",
     left: 0,
     width: "100%",
-    transition: "top 400ms"
+    transition: "top 400ms",
+    paddingTop: "165px",
+    "@media only screen and (max-height: 870px)": {
+      paddingTop: "0"
+    }
   },
   childWrapper: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${parentTotalOffset}px)`,
-    "&:not(:last-child)": {
-      marginBottom: "60px"
+    height: "100vh",
+    "@media only screen and (max-height: 870px)": {
+      justifyContent: "center"
     }
   },
   paginationDots: {
@@ -116,31 +112,21 @@ class VerticalPaginationWrapper extends React.Component {
     }
 
     this.timeStamp = now;
-    const correctedPadding = nextElementPosition ? `${parentBottomOffset}px` : "0px";
-    const top = `
-          calc((100vh -
-          ${parentTotalOffset}px)*-${nextElementPosition} -
-          ${correctedPadding}*${nextElementPosition})`;
+    this.scrollToPosition(nextElementPosition, nextElementPosition.toString());
+  };
+
+  scrollToPosition = (nextElementPosition, currentElement) => {
+    const top = `calc(100vh *-${nextElementPosition})`;
     this.setState({
       top,
       nextElementPosition,
-      currentElement: nextElementPosition.toString()
+      currentElement
     });
   };
 
   handleClick = e => {
-    // todo instead of e.currentTarget.name use index
     const nextElementPosition = parseInt(e.currentTarget.name);
-    const correctedPadding = nextElementPosition ? `${parentBottomOffset}px` : "0px";
-    const top = `
-          calc((100vh -
-          ${parentTotalOffset}px)*-${nextElementPosition} -
-          ${correctedPadding}*${nextElementPosition})`;
-    this.setState({
-      top,
-      nextElementPosition,
-      currentElement: e.currentTarget.name
-    });
+    this.scrollToPosition(nextElementPosition, e.currentTarget.name);
   };
 
   render() {
