@@ -1,0 +1,23 @@
+{
+    "prospectId": "MGHN43MD75",
+    "_links": {
+      "self": {
+        "href": "/api/v1/banks/RAK/usertypes/{userType}/prospects/MGHN43MD75"
+      }
+    },
+    "preScreening": {
+      "statusOverAll": "proceed",
+      "screeningResults": [
+        {
+          "screeningType": "string",
+          "screeningStatus": "string",
+          "screeningFlag": "string",
+          "screeningNotes": "string",
+          "screeningReason": "string",
+          "reasonNotes": "string",
+          "reasonCode": "string",
+          "reasonStatus": "string"
+        }
+      ]
+    }
+  }

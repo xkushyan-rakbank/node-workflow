@@ -176,7 +176,7 @@ public class ApiRequestForwarder {
 		}
 	}
 
-	@PostMapping(value = "/usertypes/{userType}/prospects/search", produces = "application/json", consumes = "application/json")
+	@PostMapping(value = "/usertypes/{segment}/prospects/search", produces = "application/json", consumes = "application/json")
 	@ResponseBody
 	public ResponseEntity<?> searchProspect(@RequestBody JsonNode jsonNode, @PathVariable String segment) {
 		logger.info("Begin searchProspect() method");
@@ -219,21 +219,20 @@ public class ApiRequestForwarder {
 
 	@GetMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> getProspectById(@RequestBody JsonNode jsonNode, @PathVariable String prospectId,
-			@PathVariable String segment) {
+	public ResponseEntity<?> getProspectById(@PathVariable String segment, @PathVariable String prospectId) {
 		logger.info("Begin getProspectById() method");
 
-		logger.debug(String.format("getProspectById() method args, RequestBody=[%s], prospectId=[%s], segment=[%s]",
-				jsonNode.toString(), prospectId, segment));
+		logger.debug(String.format("getProspectById() method args, RequestBody=[%s], prospectId=[%s], segment=[%s]", "",
+				prospectId, segment));
 
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(jsonNode, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(null, oauthResponse);
 
 			String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
+			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
 			try {
 				return invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, request, "getProspectById()",
