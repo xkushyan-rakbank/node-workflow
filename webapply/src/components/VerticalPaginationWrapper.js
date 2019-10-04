@@ -16,7 +16,7 @@ const style = {
     width: "100%",
     transition: "top 400ms",
     paddingTop: "165px",
-    "@media only screen and (max-height: 870px)": {
+    "@media only screen and (max-height: 870px), (max-width: 1290px)": {
       paddingTop: "0"
     }
   },
@@ -24,7 +24,7 @@ const style = {
     display: "flex",
     flexDirection: "column",
     height: "100vh",
-    "@media only screen and (max-height: 870px)": {
+    "@media only screen and (max-height: 870px), (max-width: 1300px)": {
       justifyContent: "center"
     }
   },
