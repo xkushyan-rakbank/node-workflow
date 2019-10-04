@@ -24,6 +24,7 @@ import UploadDocuments from "./containers/FileUploader";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
 import SearchedAppInfo from "./agent/SearchedAppInfo";
 import EditApplication from "./components/UploadDocument/EditApplication";
+import SubmitApplication from "./containers/SubmitApplication";
 
 import routes from "./routes.js";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -80,6 +81,7 @@ class App extends React.Component {
               />
               <Route exact path={routes.MyApplications} component={MyApplications} />
               <Route exact path={routes.SearchedAppInfo} component={SearchedAppInfo} />
+              <Route exact path={routes.SubmitApplication} component={SubmitApplication} />
               <Route path="*" />
             </Switch>
           </FormLayout>

@@ -2,12 +2,16 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import Checkbox from "../components/InputField/Checkbox";
 import Button from "../components/Buttons/SubmitButton";
+import BackLink from "../components/Buttons/BackLink";
 import FormTitle from "../components/FormTitle";
 import brief from "../assets/icons/brief.png";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
+import ErrorMessage from "../components/ErrorMessage";
+import { submitApplication } from "../constants";
+import routes from "../routes";
 
 const style = {
   checkboxesWrapper: {
@@ -72,12 +76,22 @@ class SubmitApplication extends React.Component {
   state = {
     isInformationProvided: false,
     areTermsAgreed: false,
-    needCommunication: false
+    needCommunication: false,
+    isTncClicked: false,
+    isTermsEnrolmentClicked: false,
+    isError: false
   };
 
   handleChange = ({ currentTarget }) => {
     const name = currentTarget.name;
-    this.setState({ [name]: !this.state[name] });
+    const { isTncClicked, isTermsEnrolmentClicked } = this.state;
+    if (name === "areTermsAgreed") {
+      return isTncClicked && isTermsEnrolmentClicked
+        ? this.setState({ [name]: !this.state[name], isError: false })
+        : this.setState({ isError: true });
+    } else {
+      this.setState({ [name]: !this.state[name] });
+    }
   };
 
   handleClick = () => {
@@ -85,8 +99,32 @@ class SubmitApplication extends React.Component {
     history.push("/ApplicationSubmitted");
   };
 
+  chkIsError = () => {
+    const { isTncClicked, isTermsEnrolmentClicked } = this.state;
+    return isTncClicked && isTermsEnrolmentClicked ? this.setState({ isError: false }) : null;
+  };
+
+  tncClicked = () => {
+    this.setState({ isTncClicked: true }, () => {
+      this.chkIsError();
+    });
+  };
+
+  termsEnrolmentClicked = () => {
+    this.setState({ isTermsEnrolmentClicked: true }, () => {
+      this.chkIsError();
+    });
+  };
+
   render() {
-    const { classes, applicationInfo, accountInfo, signatoryInfo, organizationInfo } = this.props;
+    const {
+      classes,
+      applicationInfo,
+      accountInfo,
+      signatoryInfo,
+      organizationInfo,
+      isAgentLoggedIn
+    } = this.props;
     const [account] = accountInfo;
     const companyName = organizationInfo.companyName || "Company name";
     const accountType = applicationInfo.accountType || "Account type";
@@ -96,17 +134,25 @@ class SubmitApplication extends React.Component {
         {stakeholder.fullName}
       </div>
     ));
+    const accntSignInType =
+      signatoryInfo[0] &&
+      signatoryInfo[0].accountSigningInfo &&
+      signatoryInfo[0].accountSigningInfo.accountSigningType;
+    let accntSignInMsg;
+    if (accntSignInType === "ALL") {
+      accntSignInMsg = "Any of you can sign";
+    }
     const isDebitCardApplied = accountInfo.length && account.debitCardApplied;
     const isChequeBookApplied = accountInfo.length && account.chequeBookApplied;
     const isOnlineBankingApplied = accountInfo.length && account.eStatements;
     const rakValuePackage = applicationInfo.rakValuePackage || "RAKvalue package";
-    const { isInformationProvided, areTermsAgreed, needCommunication } = this.state;
+    const { isInformationProvided, areTermsAgreed, needCommunication, isError } = this.state;
+    const chkboxErrorMessage = `Please click the ${submitApplication.termCondition} 
+      and ${submitApplication.termsOfEnrolment}`;
+
     return (
       <>
-        <FormTitle
-          title="Submit application"
-          info="And just like that, we have reached the end! Here’s the overview of what you’re applying for."
-        />
+        <FormTitle title={submitApplication.formTitle} info={submitApplication.formInfo} />
         <div className={classes.card}>
           <div className={classes.icon}>
             <img src={brief} alt="brief" width={24} height={24} />
@@ -123,7 +169,7 @@ class SubmitApplication extends React.Component {
           <div className={classes.secondaryTitle}>Services selected</div>
           <div className={classes.grayText}>{currencies}</div>
           {/* TODO not implemented yet */}
-          <div className={classes.grayText}>Any of you can sign</div>
+          <div className={classes.grayText}>{accntSignInMsg}</div>
           {isDebitCardApplied && (
             <div className={classes.grayText}>Debit cards for all signatories</div>
           )}
@@ -133,38 +179,61 @@ class SubmitApplication extends React.Component {
           {isOnlineBankingApplied && <div className={classes.grayText}>Online bank statements</div>}
           <div className={classes.grayText}>{rakValuePackage}</div>
         </div>
-        <div className={classes.checkboxesWrapper}>
-          <Checkbox
-            value={isInformationProvided}
-            name="isInformationProvided"
-            label="I confirm that the information provided is true and complete"
-            className={classes.listItem}
-            onChange={this.handleChange}
-          />
-          <Checkbox
-            value={areTermsAgreed}
-            name="areTermsAgreed"
-            label={
-              <span>
-                I agree with RakBank’s <a href="/">terms and conditions</a>
-              </span>
-            }
-            className={classes.listItem}
-            onChange={this.handleChange}
-          />
-          <Checkbox
-            value={needCommunication}
-            name="needCommunication"
-            label="I want to receive marketing and promotional communication from RakBank"
-            className={classes.listItem}
-            onChange={this.handleChange}
+        {isAgentLoggedIn && (
+          <div className={classes.checkboxesWrapper}>
+            <Checkbox
+              value={isInformationProvided}
+              name="isInformationProvided"
+              label={submitApplication.trueNdCompleteAcknldgelabel}
+              className={classes.listItem}
+              onChange={this.handleChange}
+            />
+            <Checkbox
+              value={areTermsAgreed}
+              name="areTermsAgreed"
+              label={
+                <span>
+                  I agree with RakBank’s{" "}
+                  <a
+                    href={submitApplication.termConditionUrl}
+                    onClick={this.tncClicked}
+                    // eslint-disable-next-line react/jsx-no-target-blank
+                    target="_blank"
+                  >
+                    terms and conditions and{" "}
+                  </a>
+                  <a
+                    href={submitApplication.termOfEnrolmentUrl}
+                    onClick={this.termsEnrolmentClicked}
+                    // eslint-disable-next-line react/jsx-no-target-blank
+                    target="_blank"
+                  >
+                    terms and enrollment
+                  </a>
+                </span>
+              }
+              className={classes.listItem}
+              onChange={this.handleChange}
+            />
+            <Checkbox
+              value={needCommunication}
+              name="needCommunication"
+              label={submitApplication.needCommunicationLabel}
+              className={classes.listItem}
+              onChange={this.handleChange}
+            />
+          </div>
+        )}
+        {isError && <ErrorMessage error={chkboxErrorMessage} />}
+        <div className="linkContainer">
+          <BackLink path={routes.selectServices} />
+          <Button
+            disabled={!(isInformationProvided && areTermsAgreed)}
+            label="Submit"
+            justify="flex-end"
+            handleClick={this.handleClick}
           />
         </div>
-        <Button
-          disabled={!(isInformationProvided && areTermsAgreed)}
-          label="Submit"
-          handleClick={this.handleClick}
-        />
       </>
     );
   }
@@ -174,7 +243,8 @@ const mapStateToProps = state => ({
   applicationInfo: appConfigSelectors.getApplicationInfo(state),
   accountInfo: appConfigSelectors.getAccountInfo(state),
   signatoryInfo: appConfigSelectors.getSignatories(state),
-  organizationInfo: appConfigSelectors.getOrganizationInfo(state)
+  organizationInfo: appConfigSelectors.getOrganizationInfo(state),
+  isAgentLoggedIn: appConfigSelectors.getIsAgentLoggedIn(state)
 });
 
 export default compose(
