@@ -293,8 +293,10 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json"
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": {
@@ -310,6 +312,12 @@
 						"MGHN43MD75",
 						"documents",
 						"MGHN43MD75_TL"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
 					]
 				}
 			},
@@ -1283,6 +1291,56 @@
 						"COSME0018",
 						"documents",
 						"1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9091/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9091/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"api",
+						"v1",
+						"banks",
+						"RAK",
+						"prospects",
+						"MGHN43MD75",
+						"documents",
+						"MGHN43MD75_TL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{WebApplyBaseUrl}}/api/v1/banks/RAK/usertypes/{userType}/prospects/MGHN43MD75",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{WebApplyBaseUrl}}/api/v1/banks/RAK/usertypes/{userType}/prospects/MGHN43MD75",
+					"host": [
+						"{{WebApplyBaseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"banks",
+						"RAK",
+						"usertypes",
+						"{userType}",
+						"prospects",
+						"MGHN43MD75"
 					]
 				}
 			},

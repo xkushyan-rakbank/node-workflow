@@ -30,6 +30,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.ApiError;
@@ -117,7 +118,7 @@ public class ApiRequestForwarder {
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
-						"createSMEProspect()", "createProspectUri", MediaType.APPLICATION_JSON, segment);
+						"createSMEProspect()", "createProspectUri", MediaType.APPLICATION_JSON, segment, null);
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
 						e);
@@ -161,7 +162,7 @@ public class ApiRequestForwarder {
 			try {
 
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.PUT, request,
-						"updateSMEProspect()", "updateProspectUri", MediaType.APPLICATION_JSON, segment);
+						"updateSMEProspect()", "updateProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -204,7 +205,7 @@ public class ApiRequestForwarder {
 			try {
 
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
-						"searchProspect()", "searchProspectUri", MediaType.APPLICATION_JSON, segment);
+						"searchProspect()", "searchProspectUri", MediaType.APPLICATION_JSON, segment, null);
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -246,7 +247,7 @@ public class ApiRequestForwarder {
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-						"getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment);
+						"getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -290,7 +291,7 @@ public class ApiRequestForwarder {
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
 						"getProspectDocumentById()", "getProspectDocumentByIdUri", MediaType.APPLICATION_OCTET_STREAM,
-						null);
+						null, prospectId);
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -332,7 +333,8 @@ public class ApiRequestForwarder {
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-						"getProspectDocuments()", "getProspectDocumentsUri", MediaType.APPLICATION_JSON, null);
+						"getProspectDocuments()", "getProspectDocumentsUri", MediaType.APPLICATION_JSON, null,
+						prospectId);
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
 						e);
@@ -373,7 +375,7 @@ public class ApiRequestForwarder {
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request, "login()",
-						"authenticateUserUri", MediaType.APPLICATION_JSON, null);
+						"authenticateUserUri", MediaType.APPLICATION_JSON, null, null);
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
@@ -430,7 +432,7 @@ public class ApiRequestForwarder {
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
-						"generateVerifyOTP()", "otpUri", MediaType.APPLICATION_JSON, null);
+						"generateVerifyOTP()", "otpUri", MediaType.APPLICATION_JSON, null, null);
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
@@ -471,7 +473,7 @@ public class ApiRequestForwarder {
 
 	private ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId,
-			MediaType mediaType, String segment) {
+			MediaType mediaType, String segment, String prospectId) {
 		logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", operationId, url));
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -497,8 +499,9 @@ public class ApiRequestForwarder {
 
 			cookieHelper.createWebApplyJWT(httpResponse);
 
-			if (MediaType.APPLICATION_JSON.equals(mediaType) && StringUtils.isNotBlank(segment)) {
-				updateHrefValue((JsonNode) response.getBody(), segment);
+			if (MediaType.APPLICATION_JSON.equals(mediaType)
+					&& (StringUtils.isNotBlank(segment) || StringUtils.contains(url, "documents"))) {
+				updateHrefValue((JsonNode) response.getBody(), segment, prospectId, url);
 			}
 
 		} else {
@@ -509,21 +512,38 @@ public class ApiRequestForwarder {
 		return new ResponseEntity<Object>(response.getBody(), headers, response.getStatusCode());
 	}
 
-	private void updateHrefValue(JsonNode parent, String segment) {
+	private void updateHrefValue(JsonNode parent, String segment, String prospectId, String endpoint) {
 		if (parent.has("prospectId") && parent.has("_links")) {
-			String prospectId = parent.get("prospectId").asText();
+			String prospectIdValue = parent.get("prospectId").asText();
 			String getProspectUri = appConfigJSON.get("WebApplyURIs").get("getProspectUri").asText();
 
 			UriComponents uriComponents = UriComponentsBuilder.fromUriString(getProspectUri).buildAndExpand(segment,
-					prospectId);
+					prospectIdValue);
 
 			((ObjectNode) parent.get("_links").get("self")).put("href", uriComponents.toString());
+
+		} else if (StringUtils.contains(endpoint, "documents") && parent.has("documentKey")) {
+			String documentKey = parent.get("documentKey").asText();
+
+			String getDocumentByIdUri = appConfigJSON.get("WebApplyURIs").get("getDocumentByIdUri").asText();
+
+			UriComponents uriComponents = UriComponentsBuilder.fromUriString(getDocumentByIdUri)
+					.buildAndExpand(prospectId, documentKey);
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			ObjectNode href = objectMapper.createObjectNode();
+			href.put("href", uriComponents.toString());
+
+			ObjectNode self = objectMapper.createObjectNode();
+			self.set("self", href);
+
+			((ObjectNode) parent).set("_links", self);
 
 		}
 
 		// Now, recursively invoke this method on all properties
 		for (JsonNode child : parent) {
-			updateHrefValue(child, segment);
+			updateHrefValue(child, segment, prospectId, endpoint);
 		}
 
 	}
