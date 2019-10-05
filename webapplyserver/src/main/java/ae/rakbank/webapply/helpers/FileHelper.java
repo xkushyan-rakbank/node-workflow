@@ -1,4 +1,4 @@
-package ae.rakbank.webapply.commons;
+package ae.rakbank.webapply.helpers;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ae.rakbank.webapply.commons.EnvUtil;
 
 @Component
 public class FileHelper {

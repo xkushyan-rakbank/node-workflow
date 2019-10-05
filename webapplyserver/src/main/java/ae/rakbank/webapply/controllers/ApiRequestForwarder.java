@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
-import ae.rakbank.webapply.commons.FileHelper;
+import ae.rakbank.webapply.helpers.CSRFTokenHelper;
+import ae.rakbank.webapply.helpers.CookieHelper;
+import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.OAuthService;
 import ae.rakbank.webapply.services.RecaptchaService;
 
@@ -49,6 +52,12 @@ public class ApiRequestForwarder {
 	@Autowired
 	RecaptchaService captchaService;
 
+	@Autowired
+	CSRFTokenHelper csrfTokenHelper;
+
+	@Autowired
+	CookieHelper cookieHelper;
+
 	private JsonNode dehURIs = null;
 
 	private String dehBaseUrl = null;
@@ -62,8 +71,8 @@ public class ApiRequestForwarder {
 
 	@PostMapping(value = "/usertypes/{segment}/prospects/", produces = "application/json", consumes = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> createSMEProspect(@RequestBody JsonNode requestBodyJSON, @PathVariable String segment,
-			HttpServletRequest servletRequest) {
+	public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@RequestBody JsonNode requestBodyJSON, @PathVariable String segment, HttpServletRequest servletRequest) {
 
 		logger.info("Begin createSMEProspect() method");
 
@@ -101,8 +110,8 @@ public class ApiRequestForwarder {
 			logger.info("Call createProspect endpoint: " + uriComponents.toString());
 
 			try {
-				return invokeApiEndpoint(uriComponents.toString(), HttpMethod.POST, request, "createSMEProspect()",
-						"createProspectUri");
+				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
+						"createSMEProspect()", "createProspectUri");
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
 						e);
@@ -136,8 +145,8 @@ public class ApiRequestForwarder {
 
 	@PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> updateSMEProspect(@RequestBody JsonNode jsonNode, @PathVariable String prospectId,
-			@PathVariable String segment) {
+	public ResponseEntity<?> updateSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@RequestBody JsonNode jsonNode, @PathVariable String prospectId, @PathVariable String segment) {
 		logger.info("Begin updateSMEProspect() method");
 
 		logger.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
@@ -154,8 +163,8 @@ public class ApiRequestForwarder {
 
 			try {
 
-				return invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT, request, "updateSMEProspect()",
-						"updateProspectUri");
+				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.PUT, request,
+						"updateSMEProspect()", "updateProspectUri");
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -178,7 +187,8 @@ public class ApiRequestForwarder {
 
 	@PostMapping(value = "/usertypes/{segment}/prospects/search", produces = "application/json", consumes = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> searchProspect(@RequestBody JsonNode jsonNode, @PathVariable String segment) {
+	public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@RequestBody JsonNode jsonNode, @PathVariable String segment) {
 		logger.info("Begin searchProspect() method");
 
 		logger.debug(String.format("searchProspect() method args, RequestBody=[%s], segment=[%s]", jsonNode.toString(),
@@ -195,8 +205,8 @@ public class ApiRequestForwarder {
 
 			try {
 
-				return invokeApiEndpoint(uriComponents.toString(), HttpMethod.POST, request, "searchProspect()",
-						"searchProspectUri");
+				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
+						"searchProspect()", "searchProspectUri");
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -219,11 +229,12 @@ public class ApiRequestForwarder {
 
 	@GetMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> getProspectById(@PathVariable String segment, @PathVariable String prospectId) {
+	public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@PathVariable String segment, @PathVariable String prospectId) {
 		logger.info("Begin getProspectById() method");
 
-		logger.debug(String.format("getProspectById() method args, RequestBody=[%s], prospectId=[%s], segment=[%s]", "",
-				prospectId, segment));
+		logger.debug(
+				String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
 
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
@@ -235,8 +246,8 @@ public class ApiRequestForwarder {
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
 			try {
-				return invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, request, "getProspectById()",
-						"getProspectUri");
+				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+						"getProspectById()", "getProspectUri");
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -259,26 +270,26 @@ public class ApiRequestForwarder {
 
 	@GetMapping(value = "/prospects/{prospectId}/documents/{documentId}", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> getProspectDocumentById(@RequestBody JsonNode jsonNode, @PathVariable String prospectId,
-			@PathVariable String documentId) {
+	public ResponseEntity<?> getProspectDocumentById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@PathVariable String prospectId, @PathVariable String documentId) {
 
-		logger.info("Begin getDocumentById() method");
+		logger.info("Begin getProspectDocumentById() method");
 
-		logger.debug(String.format("getDocumentById() method args, RequestBody=[%s], prospectId=[%s], documentId=[%s]",
-				jsonNode.toString(), prospectId, documentId));
+		logger.debug(String.format("getProspectDocumentById() method args, prospectId=[%s], documentId=[%s]",
+				prospectId, documentId));
 
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(jsonNode, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(null, oauthResponse);
 
 			String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
 
 			try {
-				return invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, request, "getProspectDocumentById()",
-						"getProspectDocumentByIdUri");
+				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+						"getProspectDocumentById()", "getProspectDocumentByIdUri");
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -301,7 +312,8 @@ public class ApiRequestForwarder {
 
 	@GetMapping(value = "/prospects/{prospectId}/documents", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> getProspectDocuments(@RequestBody JsonNode jsonNode, @PathVariable String prospectId) {
+	public ResponseEntity<?> getProspectDocuments(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@RequestBody JsonNode jsonNode, @PathVariable String prospectId) {
 
 		logger.info("Begin getProspectDocuments() method");
 
@@ -318,8 +330,8 @@ public class ApiRequestForwarder {
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
 
 			try {
-				return invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, request, "getProspectDocuments()",
-						"getProspectDocumentsUri");
+				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+						"getProspectDocuments()", "getProspectDocumentsUri");
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
 						e);
@@ -342,7 +354,8 @@ public class ApiRequestForwarder {
 
 	@PostMapping(value = "/users/authenticate", produces = "application/json", consumes = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> login(@RequestBody JsonNode jsonNode) {
+	public ResponseEntity<?> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@RequestBody JsonNode jsonNode) {
 
 		logger.info("Begin login() method");
 
@@ -357,7 +370,8 @@ public class ApiRequestForwarder {
 			String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
 
 			try {
-				return invokeApiEndpoint(url, HttpMethod.POST, request, "login()", "authenticateUserUri");
+				return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request, "login()",
+						"authenticateUserUri");
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
@@ -378,7 +392,8 @@ public class ApiRequestForwarder {
 
 	@PostMapping(value = "/otp", produces = "application/json", consumes = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> generateVerifyOTP(@RequestBody JsonNode requestJSON, HttpServletRequest servletRequest) {
+	public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@RequestBody JsonNode requestJSON, HttpServletRequest servletRequest) {
 
 		logger.info("Begin generateVerifyOTP() method");
 
@@ -411,7 +426,8 @@ public class ApiRequestForwarder {
 			String url = dehBaseUrl + dehURIs.get("otpUri").asText();
 
 			try {
-				return invokeApiEndpoint(url, HttpMethod.POST, request, "generateVerifyOTP()", "otpUri");
+				return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
+						"generateVerifyOTP()", "otpUri");
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
@@ -430,21 +446,35 @@ public class ApiRequestForwarder {
 		}
 	}
 
-	private ResponseEntity<?> invokeApiEndpoint(String url, HttpMethod httpMethod, HttpEntity<JsonNode> request,
-			String operationId, String uriId) {
+	private ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId) {
+		logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", operationId, url));
+
 		RestTemplate restTemplate = new RestTemplate();
 
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, httpMethod, request, JsonNode.class);
 
+		// ResponseEntity headers is immutable, so create new HttpHeaders object
+		HttpHeaders headers = new HttpHeaders();
+		headers.addAll(response.getHeaders());
+
+		logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]", operationId,
+				url, response.getStatusCodeValue(), response.getBody()));
+
 		if (response.getStatusCode().is2xxSuccessful()) {
-			logger.debug(String.format("OperationId=[%s], UriId=[%s] HttpStatus=[%s], response=[%s]", operationId,
-					uriId, response.getStatusCodeValue(), response.getBody()));
+			logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+					operationId, url, response.getStatusCodeValue()));
+
+			csrfTokenHelper.createCSRFToken(httpRequest, headers);
+
+			cookieHelper.createWebApplyJWT(httpResponse);
+
 		} else {
-			logger.error(String.format("OperationId=[%s], UriId=[%s] HttpStatus=[%s], response=[%s]", operationId,
-					uriId, response.getStatusCodeValue(), response.getBody()));
+			logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+					operationId, url, response.getStatusCodeValue()));
 		}
 
-		return new ResponseEntity<Object>(response.getBody(), response.getHeaders(), response.getStatusCode());
+		return new ResponseEntity<Object>(response.getBody(), headers, response.getStatusCode());
 	}
 
 }

@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.EnvUtil;
-import ae.rakbank.webapply.commons.FileHelper;
+import ae.rakbank.webapply.helpers.FileHelper;
 
 @Component
 public class OAuthService {

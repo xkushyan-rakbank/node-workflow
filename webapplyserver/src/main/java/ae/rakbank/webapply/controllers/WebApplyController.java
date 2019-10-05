@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -37,7 +39,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
-import ae.rakbank.webapply.commons.FileHelper;
+import ae.rakbank.webapply.helpers.CSRFTokenHelper;
+import ae.rakbank.webapply.helpers.CookieHelper;
+import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.OAuthService;
 
 @RestController
@@ -54,6 +58,12 @@ public class WebApplyController {
 
 	@Autowired
 	OAuthService oauthClient;
+
+	@Autowired
+	CSRFTokenHelper csrfTokenHelper;
+
+	@Autowired
+	CookieHelper cookieHelper;
 
 	private JsonNode uiConfigJSON = null;
 
@@ -76,11 +86,15 @@ public class WebApplyController {
 
 	@GetMapping(value = "/config", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Object> getWebApplyConfig(@RequestParam String segment, @RequestParam String product,
-			@RequestParam String role, @RequestParam(required = false, defaultValue = "desktop") String device)
-			throws Exception {
-		logger.info("begin getWebApplyConfigs");
+	public ResponseEntity<Object> getWebApplyConfig(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			@RequestParam String segment, @RequestParam String product, @RequestParam String role,
+			@RequestParam(required = false, defaultValue = "desktop") String device) throws Exception {
+		logger.info("Begin getWebApplyConfig() method");
+
 		HttpHeaders headers = new HttpHeaders();
+		csrfTokenHelper.createCSRFToken(httpRequest, headers);
+		cookieHelper.createWebApplyJWT(httpResponse);
+
 		String cacheKey = getCacheKey(segment, product, role, device);
 		String cachedValue = getCachedData(cacheKey);
 		if (StringUtils.isNotBlank(cachedValue)) {
@@ -94,7 +108,7 @@ public class WebApplyController {
 		} catch (IOException e) {
 			logger.error("error occured while loading config files", e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-			return new ResponseEntity<Object>(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return new ResponseEntity<Object>(webApplyConfig, headers, HttpStatus.OK);

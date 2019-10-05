@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import ae.rakbank.webapply.commons.EnvUtil;
-import ae.rakbank.webapply.commons.FileHelper;
 import ae.rakbank.webapply.commons.RecaptchaUtil;
+import ae.rakbank.webapply.helpers.FileHelper;
 
 @Service
 public class RecaptchaService {
