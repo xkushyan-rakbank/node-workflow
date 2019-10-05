@@ -15,6 +15,52 @@ trigger:
 #  - releases/*
 
 jobs:
+    - job: Wiremock
+      pool:
+       name: Hosted macOS
+      steps:
+      - task: NodeTool@0
+        displayName: 'Use Node 10.x'
+        inputs:
+          versionSpec: 10.x
+
+      - task: CopyFiles@2
+        displayName: 'Stage Artifacts'
+        inputs:
+          SourceFolder: wiremock/
+          TargetFolder: '$(build.artifactstagingdirectory)/Wiremock'
+      - task: ArchiveFiles@2
+        displayName: 'Archive web'
+        inputs:
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/Wiremock/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/Wiremock/Wiremock.zip'
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/Wiremock/*.zip",
+                    "target": "onboarding/$(Build.BuildNumber)/Wiremock/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: 'Jfrog'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Build Artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/Wiremock'
+          ArtifactName: 'Wiremock'
+
     - job: Webapply
       timeoutInMinutes: 120
       pool:
