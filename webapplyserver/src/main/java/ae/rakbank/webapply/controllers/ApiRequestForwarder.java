@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -101,7 +102,8 @@ public class ApiRequestForwarder {
 				}
 			}
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(requestBodyJSON, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
+					MediaType.APPLICATION_JSON);
 
 			String url = dehBaseUrl + dehURIs.get("createProspectUri").asText();
 
@@ -111,7 +113,7 @@ public class ApiRequestForwarder {
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
-						"createSMEProspect()", "createProspectUri");
+						"createSMEProspect()", "createProspectUri", MediaType.APPLICATION_JSON);
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
 						e);
@@ -133,16 +135,6 @@ public class ApiRequestForwarder {
 
 	}
 
-	private HttpEntity<JsonNode> getHttpEntityRequest(JsonNode requestBodyJSON,
-			ResponseEntity<JsonNode> oauthResponse) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("Authorization", "Bearer " + oauthResponse.getBody().get("access_token").asText());
-
-		return new HttpEntity<>(requestBodyJSON, headers);
-	}
-
 	@PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
 	@ResponseBody
 	public ResponseEntity<?> updateSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
@@ -156,7 +148,8 @@ public class ApiRequestForwarder {
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(jsonNode, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
+					MediaType.APPLICATION_JSON);
 
 			String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
@@ -164,7 +157,7 @@ public class ApiRequestForwarder {
 			try {
 
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.PUT, request,
-						"updateSMEProspect()", "updateProspectUri");
+						"updateSMEProspect()", "updateProspectUri", MediaType.APPLICATION_JSON);
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -198,7 +191,8 @@ public class ApiRequestForwarder {
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(jsonNode, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
+					MediaType.APPLICATION_JSON);
 
 			String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
@@ -206,7 +200,7 @@ public class ApiRequestForwarder {
 			try {
 
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
-						"searchProspect()", "searchProspectUri");
+						"searchProspect()", "searchProspectUri", MediaType.APPLICATION_JSON);
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -240,14 +234,15 @@ public class ApiRequestForwarder {
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(null, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
+					MediaType.APPLICATION_JSON);
 
 			String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-						"getProspectById()", "getProspectUri");
+						"getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON);
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -268,7 +263,7 @@ public class ApiRequestForwarder {
 		}
 	}
 
-	@GetMapping(value = "/prospects/{prospectId}/documents/{documentId}", produces = "application/json")
+	@GetMapping(value = "/prospects/{prospectId}/documents/{documentId}")
 	@ResponseBody
 	public ResponseEntity<?> getProspectDocumentById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			@PathVariable String prospectId, @PathVariable String documentId) {
@@ -282,14 +277,15 @@ public class ApiRequestForwarder {
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(null, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
+					MediaType.APPLICATION_OCTET_STREAM);
 
 			String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-						"getProspectDocumentById()", "getProspectDocumentByIdUri");
+						"getProspectDocumentById()", "getProspectDocumentByIdUri", MediaType.APPLICATION_OCTET_STREAM);
 
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
@@ -313,25 +309,25 @@ public class ApiRequestForwarder {
 	@GetMapping(value = "/prospects/{prospectId}/documents", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<?> getProspectDocuments(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestBody JsonNode jsonNode, @PathVariable String prospectId) {
+			@PathVariable String prospectId) {
 
 		logger.info("Begin getProspectDocuments() method");
 
-		logger.debug(String.format("getProspectDocuments() method args, RequestBody=[%s], prospectId=[%s]",
-				jsonNode.toString(), prospectId));
+		logger.debug(String.format("getProspectDocuments() method args, prospectId=[%s]", prospectId));
 
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(jsonNode, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
+					MediaType.APPLICATION_JSON);
 
 			String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-						"getProspectDocuments()", "getProspectDocumentsUri");
+						"getProspectDocuments()", "getProspectDocumentsUri", MediaType.APPLICATION_JSON);
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
 						e);
@@ -365,13 +361,14 @@ public class ApiRequestForwarder {
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(jsonNode, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
+					MediaType.APPLICATION_JSON);
 
 			String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request, "login()",
-						"authenticateUserUri");
+						"authenticateUserUri", MediaType.APPLICATION_JSON);
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
@@ -421,13 +418,14 @@ public class ApiRequestForwarder {
 				}
 			}
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(requestJSON, oauthResponse);
+			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
+					MediaType.APPLICATION_JSON);
 
 			String url = dehBaseUrl + dehURIs.get("otpUri").asText();
 
 			try {
 				return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
-						"generateVerifyOTP()", "otpUri");
+						"generateVerifyOTP()", "otpUri", MediaType.APPLICATION_JSON);
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
@@ -446,13 +444,38 @@ public class ApiRequestForwarder {
 		}
 	}
 
+	private HttpEntity<JsonNode> getHttpEntityRequest(HttpServletRequest httpRequest, JsonNode requestBodyJSON,
+			ResponseEntity<JsonNode> oauthResponse, MediaType mediaType) {
+		HttpHeaders headers = new HttpHeaders();
+		/*
+		 * Enumeration<String> enumeration = httpRequest.getHeaderNames(); while
+		 * (enumeration.hasMoreElements()) { String headerName =
+		 * enumeration.nextElement(); String headerValue =
+		 * httpRequest.getHeader(headerName); headers.add(headerName, headerValue); }
+		 */
+		
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		if (mediaType != null) {
+			headers.setContentType(mediaType);
+		}
+
+		headers.set("Authorization", "Bearer " + oauthResponse.getBody().get("access_token").asText());
+
+		return new HttpEntity<>(requestBodyJSON, headers);
+	}
+
 	private ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId) {
+			String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId,
+			MediaType mediaType) {
 		logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", operationId, url));
 
 		RestTemplate restTemplate = new RestTemplate();
-
-		ResponseEntity<JsonNode> response = restTemplate.exchange(url, httpMethod, request, JsonNode.class);
+		ResponseEntity<?> response = null;
+		if (MediaType.APPLICATION_JSON.equals(mediaType)) {
+			response = restTemplate.exchange(url, httpMethod, request, JsonNode.class);
+		} else {
+			response = restTemplate.exchange(url, httpMethod, request, Resource.class);
+		}
 
 		// ResponseEntity headers is immutable, so create new HttpHeaders object
 		HttpHeaders headers = new HttpHeaders();
