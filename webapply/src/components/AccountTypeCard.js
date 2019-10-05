@@ -25,6 +25,9 @@ const style = {
     "@media only screen and (max-height: 1100px)": {
       margin: "20px 10px 0 0px"
     },
+    "@media only screen and (max-width: 1100px)": {
+      padding: "37px 10px 40px"
+    },
     [portraitOrientationQueryIPads]: {
       padding: "5px 24px 11px",
       marginTop: "10px",
