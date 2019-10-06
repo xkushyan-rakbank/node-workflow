@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputValueById } from "../../store/selectors/input";
@@ -16,11 +14,6 @@ const styles = {
   flexContainer: {
     marginTop: "0",
     marginBottom: "0"
-  },
-  controlsWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    margin: "20px 0 0"
   }
 };
 
@@ -38,16 +31,9 @@ class SignatoryEmploymentDetailsForm extends Component {
     };
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
-  };
-
   render() {
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Employment details" className={this.props.classes.title} />
-
+      <>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             <TextInput id="SigKycd.qualification" indexes={[this.props.index]} />
@@ -71,11 +57,7 @@ class SignatoryEmploymentDetailsForm extends Component {
             <TextInput id="SigEmpd.employerName" indexes={[this.props.index]} />
           </Grid>
         </Grid>
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }

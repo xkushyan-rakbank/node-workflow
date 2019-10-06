@@ -28,7 +28,6 @@ import CompanyNetworkForm from "./components/FinalQuestions/CompanyNetworkForm";
 import CompanyAnticipatedTransactionsForm from "./components/FinalQuestions/CompanyAnticipatedTransactionsForm";
 import routes from "./routes";
 import SignatoryPersonalInformationForm from "./components/FinalQuestions/SignatoryPersonalInformationForm";
-import SignatoryContactInformationForm from "./components/FinalQuestions/SignatoryContactInformationForm";
 import SignatoryWealthForm from "./components/FinalQuestions/SignatoryWealthForm";
 import SignatoryMailingAddressForm from "./components/FinalQuestions/SignatoryMailingAddressForm";
 import SignatoryEmploymentDetailsForm from "./components/FinalQuestions/SignatoryEmploymentDetailsForm";
@@ -116,11 +115,6 @@ export const signatoriesSteps = [
     step: 4,
     title: "Preferred mailing address",
     component: SignatoryMailingAddressForm
-  },
-  {
-    step: 5,
-    title: "Preferred contact information",
-    component: SignatoryContactInformationForm
   }
 ];
 
