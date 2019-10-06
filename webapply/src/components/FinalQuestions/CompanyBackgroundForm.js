@@ -85,8 +85,22 @@ class CompanyBackgroundForm extends Component {
   }
 
   componentDidMount() {
-    const isButtonDisabled = this.isContinueDisabled();
-    this.props.setIsContinueDisabled(isButtonDisabled);
+    const otherBankingRelationshipsExist = this.getOtherBankingRelationshipsExists();
+    const customers = this.getTopCustomerData();
+    const suppliers = this.getTopSupplierData();
+    const banks = this.getOtherBankingRelationshipsInfo();
+    this.setState(
+      {
+        isDontHaveOtherBankAccounts: !otherBankingRelationshipsExist,
+        isCustomerNameFilled: !!customers[0].name,
+        isSupplierNameFilled: !!suppliers[0].name,
+        isBankNameFilled: !!banks[0].bankName
+      },
+      () => {
+        const isButtonDisabled = this.isContinueDisabled();
+        this.props.setIsContinueDisabled(isButtonDisabled);
+      }
+    );
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -161,6 +175,14 @@ class CompanyBackgroundForm extends Component {
    */
   getTopOriginGoodsCountries() {
     return get(this.props.orgKYCDetails, "topOriginGoodsCountries", [""]);
+  }
+
+  getOtherBankingRelationshipsExists() {
+    return get(
+      this.props.orgKYCDetails,
+      "otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
+      false
+    );
   }
 
   getOtherBankingRelationshipsInfo() {
@@ -256,11 +278,6 @@ class CompanyBackgroundForm extends Component {
     });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
-  };
-
   handleSwitchOtherBankAccounts = e => {
     this.props.updateProspect({
       "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist":
@@ -346,18 +363,13 @@ class CompanyBackgroundForm extends Component {
       isBankNameFilled
     } = this.state;
     const customers = this.getTopCustomerData();
-    const isTopCustomersFilled =
-      customers.length > 1 || !!(isCustomerNameFilled && customers[0].country);
+    const isTopCustomersFilled = isCustomerNameFilled && customers[0].country;
     const suppliers = this.getTopSupplierData();
     const isTopSuppliersFilled =
-      isDontHaveSuppliers ||
-      suppliers.length > 1 ||
-      !!(isSupplierNameFilled && suppliers[0].country);
+      isDontHaveSuppliers || (isSupplierNameFilled && suppliers[0].country);
     const goods = this.getTopOriginGoodsCountries();
-    const isOriginGoodsFilled = isDontTradingGoods || goods.length > 1 || !!goods[0];
-    const banks = this.getOtherBankingRelationshipsInfo();
-    const isAnotherBanksFilled =
-      isDontHaveOtherBankAccounts || banks.length > 1 || isBankNameFilled;
+    const isOriginGoodsFilled = isDontTradingGoods || goods[0];
+    const isAnotherBanksFilled = isDontHaveOtherBankAccounts || isBankNameFilled;
     return !(
       isTopCustomersFilled &&
       isTopSuppliersFilled &&

@@ -71,8 +71,23 @@ class CompanyNetworkForm extends Component {
   }
 
   componentDidMount() {
-    const isButtonDisabled = this.isContinueDisabled();
-    this.props.setIsContinueDisabled(isButtonDisabled);
+    const insideSubsidiaries = this.getInsideSubsidiariesData();
+    const outsideSubsidiaries = this.getOutsideSubsidiariesData();
+    const isOtherEntitiesInUAE = this.getInsideSubsidiariesExists();
+    const isOtherEntitiesOutsideUAE = this.getOutsideSubsidiariesExists();
+    this.setState(
+      {
+        insideSubsidiaryCompanyNameFilled: !!insideSubsidiaries[0].companyName,
+        insideSubsidiaryTradeLicenseNoFilled: !!insideSubsidiaries[0].tradeLicenseNo,
+        outsideSubsidiaryCompanyNameFilled: !!outsideSubsidiaries[0].companyName,
+        isDontHaveInsideSubsidiary: !isOtherEntitiesInUAE,
+        isDontHaveOutsideSubsidiary: !isOtherEntitiesOutsideUAE
+      },
+      () => {
+        const isButtonDisabled = this.isContinueDisabled();
+        this.props.setIsContinueDisabled(isButtonDisabled);
+      }
+    );
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -111,10 +126,18 @@ class CompanyNetworkForm extends Component {
     return get(this.props.orgKYCDetails, "entitiesInUAE", [this.getEmptyInsideSubsidiarysItem()]);
   }
 
+  getInsideSubsidiariesExists() {
+    return get(this.props.orgKYCDetails, "otherEntitiesInUAE", false);
+  }
+
   getOutsideSubsidiariesData() {
     return get(this.props.orgKYCDetails, "entitiesOutsideUAE", [
       this.getEmptyOutsideSubsidiarysItem()
     ]);
+  }
+
+  getOutsideSubsidiariesExists() {
+    return get(this.props.orgKYCDetails, "otherEntitiesOutsideUAE", false);
   }
 
   resetInsideSubsidiaryValues() {
@@ -189,11 +212,6 @@ class CompanyNetworkForm extends Component {
     this.props.updateProspect({ "prospect.orgKYCDetails.entitiesOutsideUAE": [...dataList] });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
-  };
-
   isInsideSubsidiaryCompanyNameRequired(index) {
     return this.getInsideSubsidiariesData()[index].companyName === "";
   }
@@ -248,17 +266,13 @@ class CompanyNetworkForm extends Component {
     const insideSubsidiaries = this.getInsideSubsidiariesData();
     const isInsideSubsidiariesFilled =
       isDontHaveInsideSubsidiary ||
-      insideSubsidiaries.length > 1 ||
-      !!(
-        insideSubsidiaryCompanyNameFilled &&
+      (insideSubsidiaryCompanyNameFilled &&
         insideSubsidiaries[0].emirate &&
-        insideSubsidiaryTradeLicenseNoFilled
-      );
+        insideSubsidiaryTradeLicenseNoFilled);
     const outsideSubsidiaries = this.getOutsideSubsidiariesData();
     const isOutsideSubsidiariesFilled =
       isDontHaveOutsideSubsidiary ||
-      outsideSubsidiaries.length > 1 ||
-      !!(outsideSubsidiaryCompanyNameFilled && outsideSubsidiaries[0].country);
+      (outsideSubsidiaryCompanyNameFilled && outsideSubsidiaries[0].country);
     return !(isInsideSubsidiariesFilled && isOutsideSubsidiariesFilled);
   };
 

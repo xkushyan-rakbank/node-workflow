@@ -29,7 +29,11 @@ const styles = {
   },
   container: {
     top: "18px",
-    right: "-110px"
+    right: "-110px",
+    "@media only screen and (max-width: 959px)": {
+      top: "63px",
+      right: "12px"
+    }
   }
 };
 
@@ -50,8 +54,20 @@ class CompanyContactInformationForm extends Component {
   }
 
   componentDidMount() {
-    const isButtonDisabled = this.isContinueDisabled();
-    this.props.setIsContinueDisabled(isButtonDisabled);
+    const primaryMobile = this.getPrimaryMobileData();
+    const primaryPhone = this.getPrimaryPhoneData();
+    const primaryEmail = this.getPrimaryEmailData();
+    this.setState(
+      {
+        isPrimaryMobileFilled: !!primaryMobile,
+        isPrimaryPhoneFilled: !!primaryPhone,
+        isPrimaryEmailFilled: !!primaryEmail
+      },
+      () => {
+        const isButtonDisabled = this.isContinueDisabled();
+        this.props.setIsContinueDisabled(isButtonDisabled);
+      }
+    );
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -90,22 +106,21 @@ class CompanyContactInformationForm extends Component {
   primaryEmailChangeHandle = value => this.setState({ isPrimaryEmailFilled: !!value });
 
   isContinueDisabled = () => {
-    const primaryMobile = this.getPrimaryMobileData();
     const primaryMobCountryCode = this.getPrimaryMobCountryCodeData();
-    const primaryPhone = this.getPrimaryPhoneData();
     const primaryPhoneCountryCode = this.getPrimaryPhoneCountryCodeData();
-    const primaryEmail = this.getPrimaryEmailData();
+    console.log(
+      !!primaryMobCountryCode,
+      this.state.isPrimaryMobileFilled,
+      this.state.isPrimaryEmailFilled,
+      !this.state.secondaryPhoneNumber || !!primaryPhoneCountryCode,
+      !this.state.secondaryPhoneNumber || this.state.isPrimaryPhoneFilled
+    );
     return !(
-      (this.state.isPrimaryMobileFilled &&
-        (this.state.isPrimaryPhoneFilled || !this.state.secondaryPhoneNumber) &&
-        this.state.isPrimaryEmailFilled) ||
-      !!(
-        primaryMobile &&
-        primaryMobCountryCode &&
-        primaryPhone &&
-        primaryPhoneCountryCode &&
-        primaryEmail
-      )
+      primaryMobCountryCode &&
+      this.state.isPrimaryMobileFilled &&
+      this.state.isPrimaryEmailFilled &&
+      (!this.state.secondaryPhoneNumber || primaryPhoneCountryCode) &&
+      (!this.state.secondaryPhoneNumber || this.state.isPrimaryPhoneFilled)
     );
   };
 
@@ -120,22 +135,14 @@ class CompanyContactInformationForm extends Component {
           <Grid item md={6} sm={12}>
             <TextInput
               id="OrgCont.primaryMobileNo"
-              select={
-                <PureSelect id="OrgCont.primaryMobCountryCode" defaultValue="USA" combinedSelect />
-              }
+              select={<PureSelect id="OrgCont.primaryMobCountryCode" combinedSelect />}
               callback={this.primaryMobileChangeHandle}
             />
             {this.state.secondaryPhoneNumber && (
               <div className={classes.relative}>
                 <TextInput
                   id="OrgCont.primaryPhoneNo"
-                  select={
-                    <PureSelect
-                      id="OrgCont.primaryPhoneCountryCode"
-                      defaultValue="USA"
-                      combinedSelect
-                    />
-                  }
+                  select={<PureSelect id="OrgCont.primaryPhoneCountryCode" combinedSelect />}
                   callback={this.primaryPhoneChangeHandle}
                 />
                 <RemoveButton

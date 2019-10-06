@@ -27,6 +27,11 @@ import CompanyMailingAddressForm from "./components/FinalQuestions/CompanyMailin
 import CompanyNetworkForm from "./components/FinalQuestions/CompanyNetworkForm";
 import CompanyAnticipatedTransactionsForm from "./components/FinalQuestions/CompanyAnticipatedTransactionsForm";
 import routes from "./routes";
+import SignatoryPersonalInformationForm from "./components/FinalQuestions/SignatoryPersonalInformationForm";
+import SignatoryContactInformationForm from "./components/FinalQuestions/SignatoryContactInformationForm";
+import SignatoryWealthForm from "./components/FinalQuestions/SignatoryWealthForm";
+import SignatoryMailingAddressForm from "./components/FinalQuestions/SignatoryMailingAddressForm";
+import SignatoryEmploymentDetailsForm from "./components/FinalQuestions/SignatoryEmploymentDetailsForm";
 
 export const stakeHoldersSteps = [
   {
@@ -88,6 +93,34 @@ export const finalQuestionsSteps = [
     step: 5,
     title: "Preferred contact information",
     component: CompanyContactInformationForm
+  }
+];
+
+export const signatoriesSteps = [
+  {
+    step: 1,
+    title: "Personal Information",
+    component: SignatoryPersonalInformationForm
+  },
+  {
+    step: 2,
+    title: "Employment details",
+    component: SignatoryEmploymentDetailsForm
+  },
+  {
+    step: 3,
+    title: "Wealth",
+    component: SignatoryWealthForm
+  },
+  {
+    step: 4,
+    title: "Preferred mailing address",
+    component: SignatoryMailingAddressForm
+  },
+  {
+    step: 5,
+    title: "Preferred contact information",
+    component: SignatoryContactInformationForm
   }
 ];
 

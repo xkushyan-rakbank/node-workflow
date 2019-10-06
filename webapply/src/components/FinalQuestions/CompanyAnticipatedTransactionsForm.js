@@ -65,8 +65,26 @@ class CompanyAnticipatedTransactionsForm extends Component {
   }
 
   componentDidMount() {
-    const isButtonDisabled = this.isContinueDisabled();
-    this.props.setIsContinueDisabled(isButtonDisabled);
+    const {
+      annualFinancialTurnover,
+      cashAmountInFigures,
+      notCashAmountInFigures,
+      maximumSingleCashAmount,
+      maximumSingleNotCashAmount
+    } = this.props;
+    this.setState(
+      {
+        isAnnualTurnoverFilled: !!annualFinancialTurnover,
+        isMonthlyCashPartFilled: !!cashAmountInFigures,
+        isMonthlyNonCashPartFilled: !!notCashAmountInFigures,
+        isMaxCashAmountFilled: !!maximumSingleCashAmount,
+        isMaxNonCashAmountFilled: !!maximumSingleNotCashAmount
+      },
+      () => {
+        const isButtonDisabled = this.isContinueDisabled();
+        this.props.setIsContinueDisabled(isButtonDisabled);
+      }
+    );
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -91,11 +109,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
     }
     return `${monthFinancialTurnover.toFixed(0)} in Total Monthly Credits`;
   }
-
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
-  };
 
   partOfTotalInCashMaxValue() {
     if (this.getMonthFinancialTurnover() > 0) {
@@ -139,18 +152,11 @@ class CompanyAnticipatedTransactionsForm extends Component {
 
   isContinueDisabled = () => {
     return !(
-      (this.state.isAnnualTurnoverFilled &&
-        this.state.isMonthlyCashPartFilled &&
-        this.state.isMonthlyNonCashPartFilled &&
-        this.state.isMaxCashAmountFilled &&
-        this.state.isMaxNonCashAmountFilled) ||
-      !!(
-        this.props.annualFinancialTurnover &&
-        this.props.cashAmountInFigures &&
-        this.props.notCashAmountInFigures &&
-        this.props.maximumSingleCashAmount &&
-        this.props.maximumSingleNotCashAmount
-      )
+      this.state.isAnnualTurnoverFilled &&
+      this.state.isMonthlyCashPartFilled &&
+      this.state.isMonthlyNonCashPartFilled &&
+      this.state.isMaxCashAmountFilled &&
+      this.state.isMaxNonCashAmountFilled
     );
   };
 

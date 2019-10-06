@@ -41,8 +41,20 @@ class CompanyMailingAddressForm extends Component {
   }
 
   componentDidMount() {
-    const isButtonDisabled = this.isContinueDisabled();
-    this.props.setIsContinueDisabled(isButtonDisabled);
+    const address = this.getAddressFieldData();
+    const location = this.getLocationData();
+    const boxNumber = this.getBoxNumberData();
+    this.setState(
+      {
+        isAdressFieldFilled: !!address,
+        isLocationFilled: !!location,
+        isBoxNumberFilled: !!boxNumber
+      },
+      () => {
+        const isButtonDisabled = this.isContinueDisabled();
+        this.props.setIsContinueDisabled(isButtonDisabled);
+      }
+    );
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -67,7 +79,11 @@ class CompanyMailingAddressForm extends Component {
   }
 
   getSpaceTypeData() {
-    return get(this.props.organizationInfo, "addressInfo[0].addressDetails[0].spaceType", "");
+    return get(
+      this.props.organizationInfo,
+      "addressInfo[0].addressDetails[0].typeOfSpaceOccupied.spaceType",
+      ""
+    );
   }
 
   getEmirateCityData() {
@@ -81,16 +97,21 @@ class CompanyMailingAddressForm extends Component {
   boxNumberChangeHandle = value => this.setState({ isBoxNumberFilled: !!value });
 
   isContinueDisabled = () => {
-    const address = this.getAddressFieldData();
-    const location = this.getLocationData();
-    const boxNumber = this.getBoxNumberData();
     const spaceType = this.getSpaceTypeData();
     const emirateCity = this.getEmirateCityData();
+    console.log(
+      this.state.isAdressFieldFilled,
+      this.state.isLocationFilled,
+      this.state.isBoxNumberFilled,
+      !!spaceType,
+      !!emirateCity
+    );
     return !(
-      (this.state.isAdressFieldFilled &&
-        this.state.isLocationFilled &&
-        this.state.isBoxNumberFilled) ||
-      !!(address && location && boxNumber && spaceType && emirateCity)
+      this.state.isAdressFieldFilled &&
+      this.state.isLocationFilled &&
+      this.state.isBoxNumberFilled &&
+      spaceType &&
+      emirateCity
     );
   };
 
