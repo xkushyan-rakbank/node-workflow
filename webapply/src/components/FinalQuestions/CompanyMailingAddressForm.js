@@ -99,13 +99,6 @@ class CompanyMailingAddressForm extends Component {
   isContinueDisabled = () => {
     const spaceType = this.getSpaceTypeData();
     const emirateCity = this.getEmirateCityData();
-    console.log(
-      this.state.isAdressFieldFilled,
-      this.state.isLocationFilled,
-      this.state.isBoxNumberFilled,
-      !!spaceType,
-      !!emirateCity
-    );
     return !(
       this.state.isAdressFieldFilled &&
       this.state.isLocationFilled &&

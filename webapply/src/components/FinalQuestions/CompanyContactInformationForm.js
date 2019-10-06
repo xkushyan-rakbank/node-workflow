@@ -108,13 +108,6 @@ class CompanyContactInformationForm extends Component {
   isContinueDisabled = () => {
     const primaryMobCountryCode = this.getPrimaryMobCountryCodeData();
     const primaryPhoneCountryCode = this.getPrimaryPhoneCountryCodeData();
-    console.log(
-      !!primaryMobCountryCode,
-      this.state.isPrimaryMobileFilled,
-      this.state.isPrimaryEmailFilled,
-      !this.state.secondaryPhoneNumber || !!primaryPhoneCountryCode,
-      !this.state.secondaryPhoneNumber || this.state.isPrimaryPhoneFilled
-    );
     return !(
       primaryMobCountryCode &&
       this.state.isPrimaryMobileFilled &&
