@@ -22,7 +22,6 @@ const style = {
     position: "relative"
   },
   tableContainer: {
-    minWidth: "780px",
     position: "relative",
     "@media only screen and (max-height: 920px)": {
       maxHeight: "480px"
@@ -145,7 +144,10 @@ const StyledTableRow = withStyles(() => ({
     "& td": {
       height: "60px",
       padding: "0",
-      position: "relative"
+      position: "relative",
+      "@media only screen and (max-width: 1360px)": {
+        width: "150px"
+      }
     },
     "&:nth-of-type(even)": {
       backgroundColor: "#f7f8f9"
@@ -166,7 +168,10 @@ const StyledTableHeader = withStyles(() => ({
     padding: 0,
     borderBottom: "none",
     width: "200px",
-    maxWidth: "200px"
+    maxWidth: "200px",
+    "@media only screen and (max-width: 1360px)": {
+      width: "150px"
+    }
   }
 }))(TableCell);
 
@@ -180,7 +185,10 @@ const StyledTableCell = withStyles(() => ({
     },
     "& span + span": {
       fontSize: "12px",
-      color: "#888"
+      color: "#888",
+      "@media only screen and (max-width: 1360px)": {
+        fontSize: "10px"
+      }
     },
     "& button": {
       marginTop: "5px"
@@ -198,7 +206,9 @@ class TableCompare extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      offset: 380
+      offset: 380,
+      selectedAccountContainerWidth: "190px",
+      selectedAccount: ""
     };
 
     this.RAKStarter = React.createRef();
@@ -209,6 +219,26 @@ class TableCompare extends React.Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { selectedAccount } = nextProps;
     this.handleHighlightSelectedAccount(selectedAccount);
+  }
+
+  updateDimensionSelectedAccountContainer = () => {
+    const selectedAccountContainerWidth = window
+      .getComputedStyle(this.RAKStarter.current)
+      .getPropertyValue("width");
+    this.setState({
+      selectedAccountContainerWidth: parseInt(selectedAccountContainerWidth) - 10
+    });
+
+    this.handleHighlightSelectedAccount(this.state.selectedAccount);
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensionSelectedAccountContainer);
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensionSelectedAccountContainer);
+    this.updateDimensionSelectedAccountContainer();
   }
 
   handleHighlightSelectedAccount = selectedAccount => {
@@ -246,7 +276,6 @@ class TableCompare extends React.Component {
 
   handleScroll = e => {
     const { currentTarget } = e;
-    // const hasHorizontalScrollbar = currentTarget.scrollWidth < 780;
     const hasVerticalScrollbar = currentTarget.scrollHeight < 540;
     if (hasVerticalScrollbar) {
       e.stopPropagation();
@@ -282,7 +311,7 @@ class TableCompare extends React.Component {
               classes={{ root: classes.selectedAccountContainer }}
               style={{
                 left: `${offset}px`,
-                width: this.state.width - 5 || "195px"
+                width: this.state.selectedAccountContainerWidth
               }}
             />
             <Table classes={{ root: classes.tableRoot }}>

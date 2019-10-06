@@ -10,11 +10,11 @@ public class EnvUtil {
 
 	private static String env = System.getenv("WEB_APPLY_ENV");
 
-	private static String configDir = System.getenv("WEB_APPLY_DIR");
+	private static final String WEB_APPLY_DIR = System.getenv("WEB_APPLY_DIR");
 
 	static {
 
-		if (StringUtils.isBlank(configDir)) {
+		if (StringUtils.isBlank(WEB_APPLY_DIR)) {
 			logger.error("System property 'WEB_APPLY_DIR' not configured, load config files from classpath:");
 		}
 
@@ -32,7 +32,10 @@ public class EnvUtil {
 	}
 
 	public static String getConfigDir() {
-		return configDir;
+		if (StringUtils.isNotBlank(WEB_APPLY_DIR)) {
+			return WEB_APPLY_DIR + "/config/";
+		}
+		return "";
 	}
 
 	public static boolean isProd() {

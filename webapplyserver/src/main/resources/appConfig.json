@@ -7,21 +7,21 @@
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"dev": {
-			"WebApplyBaseUrl": "http://localhost:9091",
-			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092",
+			"WebApplyBaseUrl": "http://localhost:8080",
+			"DehBaseUrl": "http://localhost:9091",
+			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"uat": {
-			"WebApplyBaseUrl": "http://localhost:9091",
-			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092",
+			"WebApplyBaseUrl": "http://localhost:8080",
+			"DehBaseUrl": "http://localhost:9091",
+			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"prod": {
-			"WebApplyBaseUrl": "http://localhost:9091",
-			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092",
+			"WebApplyBaseUrl": "http://localhost:8080",
+			"DehBaseUrl": "http://localhost:9091",
+			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com"
 		}
 	},
