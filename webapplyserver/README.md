@@ -15,3 +15,10 @@ API Invocation:
 
 War Artifact:
 mvn clean install
+
+JBoss EAP Deployment:
+1. Download JBoss EAP 7.2.0 (zip file) from https://developers.redhat.com/products/eap/download
+2. Unzip the jboss-eap-7.2.0.zip
+3. Copy webapply.war to /jboss-eap-7.2.0/standalone/deployments/
+4. Start the server from /jboss-eap-7.2/bin/ 
+5. Use ./standalone.sh on Mac and ./standalone.bat on Windows to start the server and deploy the war
