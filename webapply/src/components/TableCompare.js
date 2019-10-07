@@ -13,6 +13,7 @@ import * as appConfigSelectors from "../store/selectors/appConfig";
 import { updateProspect } from "../store/actions/appConfig";
 
 import checkIc from "../assets/icons/check.png";
+import { portraitOrientationQueryIPads } from "../constants/styles";
 
 const style = {
   paperRoot: {
@@ -263,6 +264,9 @@ const StyledTableCell = withStyles(() => ({
         padding: "7px 0",
         "@media only screen and (max-width: 1100px)": {
           padding: "3px 0"
+        },
+        [portraitOrientationQueryIPads]: {
+          width: "120px"
         }
       }
     }

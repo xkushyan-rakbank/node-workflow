@@ -56,6 +56,12 @@ const styles = {
       paddingTop: "100px",
       paddingLeft: "25px",
       paddingRight: "25px"
+    },
+    "@media only screen and (max-width: 1100px)": {
+      padding: ({ location }) =>
+        routerToAddPaddingInSlider.includes(location.pathname)
+          ? "0px 30px 0 25px"
+          : "165px 30px 20px 25px"
     }
   },
   mainContainerFullHeight: {

@@ -17,7 +17,8 @@ const style = {
     paddingLeft: "44px",
     position: "relative",
     fontWeight: "400",
-    "@media only screen and (max-width: 1100px)": {
+    "@media only screen and (max-width: 1300px)": {
+      paddingLeft: "5px",
       fontSize: "16px"
     },
     "&:not(:last-child)": {

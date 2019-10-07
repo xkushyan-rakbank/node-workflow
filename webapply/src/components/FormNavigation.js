@@ -13,7 +13,8 @@ import {
   sideNavWidthXL,
   sideNavWidthLG,
   sideNavWidthMD,
-  sideNavWidthSM
+  sideNavWidthSM,
+  portraitOrientationQueryIPads
 } from "../constants/styles";
 
 const style = {
@@ -33,6 +34,9 @@ const style = {
     },
     "@media only screen and (max-width: 1220px)": {
       flex: `0 0 ${sideNavWidthSM}px`
+    },
+    [portraitOrientationQueryIPads]: {
+      paddingTop: "270px"
     },
     "& ul": {
       margin: "0",

@@ -11,6 +11,9 @@ export const StyledWhiteContainedButton = props => {
       width: 160,
       height: 32,
       padding: "0 10px",
+      "@media only screen and (max-width: 991px)": {
+        width: "130px"
+      },
       "&:hover": {
         backgroundColor: "#000",
         "& span": {
@@ -21,7 +24,10 @@ export const StyledWhiteContainedButton = props => {
     labelStyle: {
       color: "#373737",
       fontSize: 14,
-      justifyContent: "center"
+      justifyContent: "center",
+      "@media only screen and (max-width: 991px)": {
+        fontSize: 12
+      }
     }
   }))(ContainedButton);
 
@@ -45,7 +51,14 @@ const style = {
     alignItems: "center",
     padding: "24px 20px 19px 30px",
     "& > div": {
-      flexGrow: 1
+      flexGrow: 1,
+      "@media only screen and (max-width: 991px)": {
+        flexGrow: "inherit"
+      }
+    },
+    "@media only screen and (max-width: 991px)": {
+      padding: "12px 10px 10px 15px",
+      justifyContent: "space-between"
     }
   },
   companyName: {
