@@ -20,8 +20,23 @@ const styles = {
 
 class SignatoryMailingAddressForm extends React.Component {
   static defaultProps = {
-    handleContinue: () => {},
     index: 0
+  };
+
+  componentDidMount() {
+    this.setState({}, () => {
+      const isButtonDisabled = this.isContinueDisabled();
+      this.props.setIsContinueDisabled(isButtonDisabled);
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
+  isContinueDisabled = () => {
+    return !true;
   };
 
   render() {
