@@ -7350,7 +7350,8 @@
       "lastModifiedDate": "",
       "createdBy": "",
       "lastModifiedBy": "",
-      "actionType": "",
+      "actionType": "save",
+      "retrieveMode": true,
       "saveType": "",
       "tncAgreed": false,
       "declaration": true

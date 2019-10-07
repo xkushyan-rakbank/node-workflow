@@ -18,7 +18,6 @@ export const getInputNameById = (state, id, indexes = []) => {
 };
 
 export const getInputValueById = (state, id, indexes = []) => {
-  console.log(getInputNameById(state, id, indexes));
   return get(state.appConfig, getInputNameById(state, id, indexes));
 };
 
