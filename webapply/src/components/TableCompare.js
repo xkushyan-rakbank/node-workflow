@@ -137,7 +137,7 @@ const style = {
 
 const shortNames = {
   starter: {
-    name: "RAKstarter",
+    name: "RAKStarter",
     ref: "RAKStarter"
   },
   currentAccount: {
@@ -334,10 +334,7 @@ class TableCompare extends React.Component {
 
   handleClick = accountType => {
     const { history, updateProspect } = this.props;
-    updateProspect({
-      value: accountType,
-      name: "prospect.applicationInfo.accountType"
-    });
+    updateProspect({ "prospect.applicationInfo.accountType": accountType });
     history.push("/DetailedAccount");
   };
 
