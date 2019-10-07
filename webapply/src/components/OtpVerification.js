@@ -13,7 +13,14 @@ const styles = {
       width: "110px",
       height: "88px",
       fontSize: "46px",
-      fontWeight: "600"
+      fontWeight: "600",
+      "@media only screen and (max-width: 1360px)": {
+        width: "100px"
+      },
+      "@media only screen and (max-width: 1220px)": {
+        width: "85px",
+        height: "70px"
+      }
     },
     "& input": {
       textAlign: "center"
@@ -71,7 +78,11 @@ class OtpVerification extends React.Component {
       <>
         {this.state.code.map((value, index) => {
           return (
-            <Grid key={`code-${index}`} className={classes.squareInput}>
+            <Grid
+              key={`code-${index}`}
+              className={classes.squareInput}
+              classes={{ root: classes.rootSquareInput }}
+            >
               <Input
                 key={`code-${index}`}
                 name={index.toString()}
