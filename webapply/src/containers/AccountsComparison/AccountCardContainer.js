@@ -6,6 +6,7 @@ import AccountTypeCard from "../../components/AccountTypeCard";
 import startups_ic from "../../assets/icons/startups_ic.png";
 import businesses_ic from "../../assets/icons/growing_businesses_ic.png";
 import established_businesses_ic from "../../assets/icons/established_businesses_ic.png";
+import { portraitOrientationQueryIPads } from "../../constants/styles";
 
 const style = {
   cardsContainer: {
@@ -18,6 +19,9 @@ const style = {
     "@media only screen and (max-width: 1420px)": {
       marginTop: 10,
       flexGrow: "1"
+    },
+    [portraitOrientationQueryIPads]: {
+      flexDirection: "column"
     }
   }
 };

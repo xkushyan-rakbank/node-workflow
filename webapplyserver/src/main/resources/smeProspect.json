@@ -4,7 +4,7 @@
 		"email": "",
 		"countryCode": "",
 		"mobileNo": "",
-		"applyOnbehalf": true
+		"applyOnbehalf": null
 	},
 	"generalInfo": {
 		"prospectId": "",
@@ -24,6 +24,9 @@
 	},
 	"applicationInfo": {
 		"viewId": "",
+		"islamicBanking": null,
+		"accountType": "",
+		"rakValuePackage": "",
 		"leadNumber": "",
 		"riskScore": "",
 		"srNumber": "",
@@ -35,8 +38,8 @@
 		"lastModifiedBy": "",
 		"actionType": "",
 		"saveType": "",
-		"tncAgreed": false,
-		"declaration": true
+		"tncAgreed": null,
+		"declaration": null
 	},
 	"accountInfo": [
 		{
@@ -46,17 +49,17 @@
 			"accountNo": "",
 			"accountCurrencies": "",
 			"accountPurpose": "",
-			"debitCardApplied": true,
-			"chequeBookApplied": true,
-			"eStatements": true,
-			"mailStatements": false,
-			"receiveInterest": true,
-			"deliverByCourier": true
+			"debitCardApplied": null,
+			"chequeBookApplied": null,
+			"eStatements": null,
+			"mailStatements": null,
+			"receiveInterest": null,
+			"deliverByCourier": null
 		}
 	],
 	"organizationInfo": {
 		"screeningInfo": {
-			"statusOverAll": "proceed",
+			"statusOverAll": "",
 			"screeningResults": [
 				{
 					"screeningType": "",
@@ -87,7 +90,7 @@
 		"addressInfo": [
 			{
 				"typeOfAddress": "",
-				"officeAddressDifferent": "No",
+				"officeAddressDifferent": "",
 				"addressDetails": [
 					{
 						"addressFieldDesc": "",
@@ -176,14 +179,14 @@
 			"maxAmtSingleTxnNonCashAED": ""
 		},
 		"otherBankingRelationshipsInfo": {
-			"otherBankingRelationshipsExist": false,
+			"otherBankingRelationshipsExist": null,
 			"otherBankDetails": [
 				{
 					"bankName": ""
 				}
 			]
 		},
-		"otherEntitiesInUAE": false,
+		"otherEntitiesInUAE": null,
 		"entitiesInUAE": [
 			{
 				"companyName": "",
@@ -191,19 +194,19 @@
 				"tradeLicenseNo": ""
 			}
 		],
-		"otherEntitiesOutsideUAE": false,
+		"otherEntitiesOutsideUAE": null,
 		"entitiesOutsideUAE": [
 			{
 				"companyName": "",
 				"country": ""
 			}
 		],
-		"isShareholderACompany": false
+		"isShareholderACompany": null
 	},
 	"signatoryInfo": [
 		{
 			"screeningInfo": {
-				"statusOverAll": "proceed",
+				"statusOverAll": "",
 				"screeningResults": [
 					{
 						"screeningType": "",
@@ -217,53 +220,53 @@
 					}
 				]
 			},
-			"salutation": "Mr.",
+			"salutation": "",
 			"signatoryId": "",
 			"firstName": "",
 			"middleName": "",
 			"lastName": "",
 			"shortName": "",
 			"fullName": "",
-			"gender": "Male",
-			"maritalStatus": "Married",
+			"gender": "",
+			"maritalStatus": "",
 			"maritalStatusOthers": "",
 			"occupation": "",
 			"mothersMaidenName": "",
 			"numberOfDependants": 0,
 			"highestEducationAttained": "",
 			"employmentStatus": "",
-			"kycVerified": false,
+			"kycVerified": null,
 			"kycDetails": {
-				"salutation": "Mr.",
+				"salutation": "",
 				"shareholderPOASignatoryName": "",
-				"isSignatory": false,
-				"isShareholder": false,
+				"isSignatory": null,
+				"isShareholder": null,
 				"shareHoldingPercentage": 0,
 				"dateOfBirth": "",
 				"nationality": "",
-				"dualCitizenship": false,
+				"dualCitizenship": null,
 				"dualCitizenshipCountry": [
 					""
 				],
-				"residenceCountry": "AE",
-				"isUAEResident": false,
+				"residenceCountry": "",
+				"isUAEResident": null,
 				"passportDetails": [
 					{
 						"passportNumber": "",
 						"passportExpiryDate": "",
-						"diplomat": false
+						"diplomatPassport": null
 					}
 				],
 				"emirateIdDetails": {
 					"eidNumber": "",
 					"eidExpiryDt": ""
 				},
-				"selfGovtPosition": "Currently hold",
-				"relativeGovtPosition": "Currently hold",
-				"qualification": "Under Graduate",
+				"selfGovtPosition": "",
+				"relativeGovtPosition": "",
+				"qualification": "",
 				"experienceInYrs": "",
 				"sourceOfWealth": {
-					"wealthType": "Personal Savings",
+					"wealthType": "",
 					"others": ""
 				}
 			},
@@ -283,7 +286,7 @@
 				"website": ""
 			},
 			"employmentDetails": {
-				"employmentType": "Salaried",
+				"employmentType": "",
 				"otherEmploymentType": "",
 				"designation": "",
 				"empNo": "",
@@ -293,7 +296,7 @@
 				"totalExperienceYrs": 0,
 				"employmentStartDate": ""
 			},
-			"sameAsCompanyAddress": false,
+			"sameAsCompanyAddress": null,
 			"addressInfo": [
 				{
 					"typeOfAddress": "",
@@ -318,17 +321,17 @@
 				"authorityType": ""
 			},
 			"debitCardInfo": {
-				"issueDebitCard": true,
+				"issueDebitCard": null,
 				"authSignatoryDetails": {
-					"fullNameOn": "",
+					"fullNameOnPassport": "",
 					"nameOnDebitCard": ""
 				}
 			}
 		}
 	],
 	"channelServicesInfo": {
-		"mobileInstructions": false,
-		"marketingSMS": false,
+		"mobileInstructions": null,
+		"marketingSMS": null,
 		"doNotDisturbHours": "",
 		"weeklyBalanceNotification": "",
 		"monthlyBalanceNotification": 0
@@ -338,7 +341,9 @@
 			{
 				"documentType": "",
 				"signatoryId": "",
+				"signatoryName": "",
 				"documentTitle": "",
+				"documentKey": "",
 				"fileName": "",
 				"filePath": "",
 				"url": "",
@@ -351,39 +356,45 @@
 				"updatedBy": "",
 				"updatedDt": "",
 				"avsCheckDt": "",
-				"avsCheck": false,
-				"verified": false,
+				"avsCheck": null,
+				"verified": null,
 				"verifiedBy": "",
-				"isEncrypted": false,
-				"encryptionDetails": "",
-				"uploadStatus": "Uploaded"
-			}
-		],
-		"stakeholdersDocuments": [
-			{
-				"documentType": "",
-				"signatoryId": "",
-				"documentTitle": "",
-				"fileName": "",
-				"filePath": "",
-				"url": "",
-				"fileData": "",
-				"fileFormat": "",
-				"fileSize": 0,
-				"fileDescription": "",
-				"submittedBy": "",
-				"submittedDt": "",
-				"updatedBy": "",
-				"updatedDt": "",
-				"avsCheckDt": "",
-				"avsCheck": false,
-				"verified": false,
-				"verifiedBy": "",
-				"isEncrypted": false,
+				"isEncrypted": null,
 				"encryptionDetails": "",
 				"uploadStatus": ""
 			}
-		]
+		],
+		"stakeholdersDocuments": {
+			"index_stakeholderName": {
+				"documents": [
+					{
+						"documentType": "",
+						"signatoryId": "",
+						"signatoryName": "",
+						"documentTitle": "",
+						"documentKey": "",
+						"fileName": "",
+						"filePath": "",
+						"url": "",
+						"fileData": "",
+						"fileFormat": "",
+						"fileSize": 0,
+						"fileDescription": "",
+						"submittedBy": "",
+						"submittedDt": "",
+						"updatedBy": "",
+						"updatedDt": "",
+						"avsCheckDt": "",
+						"avsCheck": null,
+						"verified": null,
+						"verifiedBy": "",
+						"isEncrypted": null,
+						"encryptionDetails": "",
+						"uploadStatus": ""
+					}
+				]
+			}
+		}
 	},
 	"prospectStatusInfo": {
 		"statusType": "",

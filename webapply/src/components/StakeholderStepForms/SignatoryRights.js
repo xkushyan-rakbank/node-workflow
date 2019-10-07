@@ -3,19 +3,16 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import PureSelect from "../InputField/PureSelect";
 import InlineRadioGroup from "../InputField/InlineRadioGroup";
-import { getInputNameById, getInputValueById } from "../../store/selectors/input";
+import { getInputValueById } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
 
 class SignatoryRights extends React.Component {
-  updateAuthorityTypeValue(value) {
-    this.props.updateProspect({
-      [this.props.authorityTypeInputName]: value
-    });
-  }
-
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.isSignatory !== this.props.isSignatory && this.props.isSignatory === "false") {
-      this.updateAuthorityTypeValue("");
+    console.log(prevProps.isSignatory, this.props.isSignatory);
+    if (prevProps.isSignatory && !this.props.isSignatory) {
+      this.props.updateProspect({
+        [`prospect.signatoryInfo[${this.props.index}].accountSigningInfo.authorityType`]: ""
+      });
     }
   }
 
@@ -35,8 +32,7 @@ class SignatoryRights extends React.Component {
 
 const mapStateToProps = (state, { index }) => {
   return {
-    isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index]),
-    authorityTypeInputName: getInputNameById(state, "SigAcntSig.authorityType", [index])
+    isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index])
   };
 };
 

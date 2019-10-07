@@ -13,6 +13,7 @@ public class ApiError {
 	private LocalDateTime timestamp;
 	private String message;
 	private String debugMessage;
+	private String exception;
 
 	private ApiError() {
 		timestamp = LocalDateTime.now();
@@ -37,9 +38,17 @@ public class ApiError {
 		this.debugMessage = debugMessage;
 	}
 
+	public ApiError(HttpStatus status, String message, String debugMessage, Throwable ex) {
+		this();
+		this.status = status;
+		this.message = message;
+		this.debugMessage = debugMessage;
+		setException(ex);
+	}
+
 	private void setException(Throwable ex) {
 		if (!EnvUtil.isProd()) {
-			this.debugMessage = ex.getLocalizedMessage();
+			this.exception = ex.getMessage();
 		}
 
 	}
@@ -52,7 +61,10 @@ public class ApiError {
 	}
 
 	public String getDebugMessage() {
-		return debugMessage;
+		if (!EnvUtil.isProd()) {
+			return debugMessage;
+		}
+		return null;
 	}
 
 	public String getMessage() {
@@ -61,6 +73,13 @@ public class ApiError {
 
 	public HttpStatus getStatus() {
 		return status;
+	}
+
+	public String getException() {
+		if (!EnvUtil.isProd()) {
+			return exception;
+		}
+		return null;
 	}
 
 }

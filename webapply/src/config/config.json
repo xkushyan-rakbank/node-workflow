@@ -7548,7 +7548,7 @@
           "salutation": "Mr.",
           "shareholderPOASignatoryName": "",
           "isSignatory": "",
-          "isShareholder": false,
+          "isShareholder": "",
           "shareHoldingPercentage": 0,
           "dateOfBirth": "",
           "nationality": "",

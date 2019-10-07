@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
-import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import RemoveButton from "../Buttons/RemoveButton";
@@ -72,7 +70,29 @@ class CompanyNetworkForm extends Component {
     };
   }
 
+  componentDidMount() {
+    const insideSubsidiaries = this.getInsideSubsidiariesData();
+    const outsideSubsidiaries = this.getOutsideSubsidiariesData();
+    const isOtherEntitiesInUAE = this.getInsideSubsidiariesExists();
+    const isOtherEntitiesOutsideUAE = this.getOutsideSubsidiariesExists();
+    this.setState(
+      {
+        insideSubsidiaryCompanyNameFilled: !!insideSubsidiaries[0].companyName,
+        insideSubsidiaryTradeLicenseNoFilled: !!insideSubsidiaries[0].tradeLicenseNo,
+        outsideSubsidiaryCompanyNameFilled: !!outsideSubsidiaries[0].companyName,
+        isDontHaveInsideSubsidiary: !isOtherEntitiesInUAE,
+        isDontHaveOutsideSubsidiary: !isOtherEntitiesOutsideUAE
+      },
+      () => {
+        const isButtonDisabled = this.isContinueDisabled();
+        this.props.setIsContinueDisabled(isButtonDisabled);
+      }
+    );
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
     if (
       prevState.isDontHaveInsideSubsidiary !== this.state.isDontHaveInsideSubsidiary &&
       this.state.isDontHaveInsideSubsidiary
@@ -106,10 +126,18 @@ class CompanyNetworkForm extends Component {
     return get(this.props.orgKYCDetails, "entitiesInUAE", [this.getEmptyInsideSubsidiarysItem()]);
   }
 
+  getInsideSubsidiariesExists() {
+    return get(this.props.orgKYCDetails, "otherEntitiesInUAE", false);
+  }
+
   getOutsideSubsidiariesData() {
     return get(this.props.orgKYCDetails, "entitiesOutsideUAE", [
       this.getEmptyOutsideSubsidiarysItem()
     ]);
+  }
+
+  getOutsideSubsidiariesExists() {
+    return get(this.props.orgKYCDetails, "otherEntitiesOutsideUAE", false);
   }
 
   resetInsideSubsidiaryValues() {
@@ -184,11 +212,6 @@ class CompanyNetworkForm extends Component {
     this.props.updateProspect({ "prospect.orgKYCDetails.entitiesOutsideUAE": [...dataList] });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
-  };
-
   isInsideSubsidiaryCompanyNameRequired(index) {
     return this.getInsideSubsidiariesData()[index].companyName === "";
   }
@@ -243,17 +266,13 @@ class CompanyNetworkForm extends Component {
     const insideSubsidiaries = this.getInsideSubsidiariesData();
     const isInsideSubsidiariesFilled =
       isDontHaveInsideSubsidiary ||
-      insideSubsidiaries.length > 1 ||
-      !!(
-        insideSubsidiaryCompanyNameFilled &&
+      (insideSubsidiaryCompanyNameFilled &&
         insideSubsidiaries[0].emirate &&
-        insideSubsidiaryTradeLicenseNoFilled
-      );
+        insideSubsidiaryTradeLicenseNoFilled);
     const outsideSubsidiaries = this.getOutsideSubsidiariesData();
     const isOutsideSubsidiariesFilled =
       isDontHaveOutsideSubsidiary ||
-      outsideSubsidiaries.length > 1 ||
-      !!(outsideSubsidiaryCompanyNameFilled && outsideSubsidiaries[0].country);
+      (outsideSubsidiaryCompanyNameFilled && outsideSubsidiaries[0].country);
     return !(isInsideSubsidiariesFilled && isOutsideSubsidiariesFilled);
   };
 
@@ -261,9 +280,7 @@ class CompanyNetworkForm extends Component {
     const { isDontHaveInsideSubsidiary, isDontHaveOutsideSubsidiary } = this.state;
     const { classes } = this.props;
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Branches and subsidiaries" className={this.props.classes.title} />
-
+      <>
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>
@@ -382,11 +399,7 @@ class CompanyNetworkForm extends Component {
             />
           </>
         )}
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton disabled={this.isContinueDisabled()} type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }

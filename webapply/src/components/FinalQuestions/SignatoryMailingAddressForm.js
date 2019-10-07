@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import SectionTitle from "../SectionTitle";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
@@ -17,11 +15,6 @@ const styles = {
   flexContainer: {
     marginTop: "0",
     marginBottom: "0"
-  },
-  controlsWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    margin: "20px 0 0"
   }
 };
 
@@ -31,16 +24,9 @@ class SignatoryMailingAddressForm extends React.Component {
     index: 0
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
-  };
-
   render() {
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Preferred mailing address" className={this.props.classes.title} />
-
+      <>
         <Grid container>
           <CustomCheckbox id="Sig.sameAsCompanyAddress" indexes={[this.props.index]} />
         </Grid>
@@ -82,11 +68,7 @@ class SignatoryMailingAddressForm extends React.Component {
             />
           </Grid>
         </Grid>
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }

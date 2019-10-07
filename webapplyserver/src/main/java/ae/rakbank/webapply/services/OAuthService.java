@@ -22,12 +22,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.EnvUtil;
-import ae.rakbank.webapply.commons.FileHelper;
+import ae.rakbank.webapply.helpers.FileHelper;
 
 @Component
-public class OAuthClient {
+public class OAuthService {
 
-	private static final Logger logger = LoggerFactory.getLogger(OAuthClient.class);
+	private static final Logger logger = LoggerFactory.getLogger(OAuthService.class);
 
 	@Autowired
 	FileHelper fileHelper;
@@ -53,8 +53,10 @@ public class OAuthClient {
 	private boolean isAccessTokenExpired() {
 		if (servletContext.getAttribute("OAuthTokenValidUntil") != null) {
 			LocalDateTime oauthValidDateTime = (LocalDateTime) servletContext.getAttribute("OAuthTokenValidUntil");
+			logger.info("OAuthTokenValidUntil attribute value is " + oauthValidDateTime);
 			return LocalDateTime.now().isAfter(oauthValidDateTime);
 		}
+		logger.info("OAuthTokenValidUntil attribute not found in servletContext.");
 		return true;
 	}
 
@@ -71,19 +73,7 @@ public class OAuthClient {
 			RestTemplate restTemplate = new RestTemplate();
 
 			ObjectMapper objectMapper = new ObjectMapper();
-			ObjectNode requestJSON = objectMapper.createObjectNode();
-
-			requestJSON.set("grant_type", oAuthConfigs.get("OAuthGrantType"));
-			requestJSON.set("client_id", oAuthConfigs.get("OAuthClientId"));
-			requestJSON.set("client_secret", oAuthConfigs.get("OAuthCleintSecret"));
-			requestJSON.set("BANK_ID", oAuthConfigs.get("OAuthBankId"));
-			requestJSON.set("CHANNEL_ID", oAuthConfigs.get("OAuthChannelId"));
-			requestJSON.set("username", oAuthConfigs.get("OAuthUsername"));
-			requestJSON.set("password", oAuthConfigs.get("OAuthPassword"));
-			requestJSON.set("LANGUAGE_ID", oAuthConfigs.get("OAuthLangId"));
-			requestJSON.set("LOGIN_FLAG", oAuthConfigs.get("OAuthLoginFlag"));
-			requestJSON.set("LOGIN_TYPE", oAuthConfigs.get("OAuthLoginType"));
-			requestJSON.set("STATEMODE", oAuthConfigs.get("OAuthStateMode"));
+			ObjectNode requestJSON = buildOAuthRequest(objectMapper);
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -101,14 +91,15 @@ public class OAuthClient {
 				logger.debug("GetOAuthToken API response " + response.getBody().toString());
 
 				if (response.getStatusCode().is2xxSuccessful()) {
-					int seconds = response.getBody().get("expires_in").asInt();
+					// minus 10 seconds to prevent access_token expire error while calling the API
+					int seconds = response.getBody().get("expires_in").asInt() - 10;
 					LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
 					servletContext.setAttribute("OAuthTokenValidUntil", tokenExpiryDateTime);
 
 					logger.info("New access_token expires on " + tokenExpiryDateTime.toString());
 				} else {
-					logger.error("Unable to get new access_token. HttpStatus=" + response.getStatusCodeValue()
-							+ ", response=" + response.getBody().toString());
+					logger.error(String.format("/OAuth/token API response: HttpStatus=[%s], message=[%s]",
+							response.getStatusCodeValue(), response.getBody()));
 				}
 
 				servletContext.setAttribute("OAuthTokenResponse", response);
@@ -120,5 +111,22 @@ public class OAuthClient {
 
 		return (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
 
+	}
+
+	private ObjectNode buildOAuthRequest(ObjectMapper objectMapper) {
+		ObjectNode requestJSON = objectMapper.createObjectNode();
+
+		requestJSON.set("grant_type", oAuthConfigs.get("OAuthGrantType"));
+		requestJSON.set("client_id", oAuthConfigs.get("OAuthClientId"));
+		requestJSON.set("client_secret", oAuthConfigs.get("OAuthCleintSecret"));
+		requestJSON.set("BANK_ID", oAuthConfigs.get("OAuthBankId"));
+		requestJSON.set("CHANNEL_ID", oAuthConfigs.get("OAuthChannelId"));
+		requestJSON.set("username", oAuthConfigs.get("OAuthUsername"));
+		requestJSON.set("password", oAuthConfigs.get("OAuthPassword"));
+		requestJSON.set("LANGUAGE_ID", oAuthConfigs.get("OAuthLangId"));
+		requestJSON.set("LOGIN_FLAG", oAuthConfigs.get("OAuthLoginFlag"));
+		requestJSON.set("LOGIN_TYPE", oAuthConfigs.get("OAuthLoginType"));
+		requestJSON.set("STATEMODE", oAuthConfigs.get("OAuthStateMode"));
+		return requestJSON;
 	}
 }

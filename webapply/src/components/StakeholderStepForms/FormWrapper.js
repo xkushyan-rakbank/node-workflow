@@ -18,6 +18,7 @@ const styles = {
 
 const FormWrapper = props => {
   const hideContinue = props.hideContinue ? props.hideContinue : false;
+  const isContinueDisabled = !!props.isContinueDisabled;
 
   const submitForm = event => {
     event.preventDefault();
@@ -36,7 +37,7 @@ const FormWrapper = props => {
       {props.children}
       {!hideContinue && (
         <div className={props.classes.buttonWrapper}>
-          <ContinueButton type="submit" />
+          <ContinueButton disabled={isContinueDisabled} type="submit" />
         </div>
       )}
     </form>

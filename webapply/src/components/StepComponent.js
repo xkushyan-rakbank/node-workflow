@@ -42,7 +42,9 @@ const StepComponent = props => {
     clickHandler,
     handleContinue,
     steps,
-    hideContinue
+    hideContinue,
+    isContinueDisabled,
+    setIsContinueDisabled
   } = props;
   const Form = steps[step - 1].component;
 
@@ -68,8 +70,12 @@ const StepComponent = props => {
         {renderTitle()}
       </div>
       {active && (
-        <FormWrapper handleContinue={handleContinue} hideContinue={hideContinue}>
-          <Form index={index} />
+        <FormWrapper
+          isContinueDisabled={isContinueDisabled}
+          handleContinue={handleContinue}
+          hideContinue={hideContinue}
+        >
+          <Form setIsContinueDisabled={setIsContinueDisabled} test="test" index={index} />
         </FormWrapper>
       )}
     </>

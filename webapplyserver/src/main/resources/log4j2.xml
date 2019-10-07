@@ -7,8 +7,8 @@
 		</Console>
 
 		<RollingFile name="RollingFile"
-			fileName="/var/logs/webapply.log"
-			filePattern="/var/logs/$${date:yyyy-MM}/webapply-%d{-dd-MMMM-yyyy}-%i.log.gz">
+			fileName="/var/webapply/logs/webapply.log"
+			filePattern="/var/webapply/logs/$${date:yyyy-MM}/webapply-%d{-dd-MMMM-yyyy}-%i.log.gz">
 			<PatternLayout>
 				<pattern>%d %p %C{1.} [%t] %m%n</pattern>
 			</PatternLayout>
@@ -23,7 +23,7 @@
 
 	<Loggers>
 		<!-- LOG everything at INFO level -->
-		<Root level="info">
+		<Root level="debug">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
 		</Root>

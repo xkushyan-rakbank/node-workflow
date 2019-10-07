@@ -1,36 +1,36 @@
 {
 	"BaseURLs": {
 		"local": {
-			"WebApplyBaseUrl": "http://localhost:9090",
+			"WebApplyBaseUrl": "http://localhost:8080",
 			"DehBaseUrl": "http://localhost:9091",
 			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"dev": {
-			"WebApplyBaseUrl": "http://localhost:9091",
-			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092",
+			"WebApplyBaseUrl": "http://localhost:8080",
+			"DehBaseUrl": "http://localhost:9091",
+			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"uat": {
-			"WebApplyBaseUrl": "http://localhost:9091",
-			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092",
+			"WebApplyBaseUrl": "http://localhost:8080",
+			"DehBaseUrl": "http://localhost:9091",
+			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"prod": {
-			"WebApplyBaseUrl": "http://localhost:9091",
-			"DehBaseUrl": "http://localhost:9092",
-			"OAuthBaseUrl": "http://localhost:9092",
+			"WebApplyBaseUrl": "http://localhost:8080",
+			"DehBaseUrl": "http://localhost:9091",
+			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com"
 		}
 	},
 	"WebApplyURIs": {
 		"appConfigUri": "/webapply/api/v1/config",
 		"datalistUri": "/webapply/api/v1/usertypes/{userType}/datalist",
-		"createProspectUri": "/webapply/api/v1/usertypes/sme/prospects/",
+		"createProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/",
 		"searchProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/search",
-		"getProspectUri": "/webapply/api/v1/usertypes/sme/prospects/{prospectId}",
+		"getProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/{prospectId}",
 		"updateProspectUri": "/webapply/api/v1/usertypes/sme/prospects/{prospectId}",
 		"getProspectDocumentsUri": "/webapply/api/v1/prospects/{prospectId}/documents",
 		"uploadDocumentUri": "/webapply/api/v1/prospects/{prospectId}/documents",
@@ -44,14 +44,14 @@
 	},
 	"DehURIs": {
 		"datalistUri": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
-		"createProspectUri": "/api/v1/banks/RAK/usertypes/sme/prospects/",
+		"createProspectUri": "/api/v1/banks/RAK/usertypes/{userType}/prospects/",
 		"searchProspectUri": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
-		"getProspectUri": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
-		"updateProspectUri": "/api/v1/banks/RAK/usertypes/sme/prospects/{prospectId}",
+		"getProspectUri": "/api/v1/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
+		"updateProspectUri": "/api/v1/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
 		"getProspectDocumentsUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
 		"uploadDocumentUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
 		"reuploadDocumentUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
-		"getDocumentByIdUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+		"getProspectDocumentByIdUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
 		"prescreeningUri": "/api/v1/banks/RAK/prospects/{prospectId}/screening",
 		"authenticateUserUri": "/api/v1/banks/RAK/users/authenticate",
 		"getDocumentByTitleUri": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
@@ -62,7 +62,7 @@
 		"generateTokenUri": "/OAuth/token"
 	},
 	"ReCaptchaURIs": {
-		"siteVerify": "recaptcha/api/siteverify"
+		"siteVerifyUri": "/recaptcha/api/siteverify"
 	},
 	"OtherConfigs": {
 		"local": {
