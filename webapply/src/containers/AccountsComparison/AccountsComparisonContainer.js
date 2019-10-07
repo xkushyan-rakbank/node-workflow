@@ -9,6 +9,9 @@ import TableCompare from "../../components/TableCompare";
 
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
 
+const linkToDetailedServiceAndGuide =
+  "https://rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA";
+
 const styles = {
   externalLink: {
     color: "#888888",
@@ -70,7 +73,12 @@ class AccountsComparisonContainer extends React.Component {
                 <>
                   Note: 5% VAT will be levied on all charges applicable to business customers. To
                   see our detailed Service & Price Guide click{" "}
-                  <a className={classes.externalLink} target="_blank" href="www.rakbank.ae">
+                  <a
+                    className={classes.externalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={linkToDetailedServiceAndGuide}
+                  >
                     here
                   </a>
                 </>

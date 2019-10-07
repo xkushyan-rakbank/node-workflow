@@ -332,7 +332,7 @@ class TableCompare extends React.Component {
     }
   };
 
-  handleClick = accountType => {
+  handleSelectAccount = accountType => {
     const { history, updateProspect } = this.props;
     updateProspect({ "prospect.applicationInfo.accountType": accountType });
     history.push("/DetailedAccount");
@@ -435,7 +435,7 @@ class TableCompare extends React.Component {
                       >
                         <ContainedButton
                           label="Read more"
-                          handleClick={() => this.handleClick(name)}
+                          handleClick={() => this.handleSelectAccount(name)}
                           classes={{
                             buttonStyle: classes.containedButton,
                             labelStyle: classes.containedButtonLabelStyle
@@ -486,7 +486,7 @@ class TableCompare extends React.Component {
                       <StyledTableCell data-name={name} onMouseEnter={this.handleHover} key={index}>
                         <ContainedButton
                           label="Read more"
-                          handleClick={() => this.handleClick(name)}
+                          handleClick={() => this.handleSelectAccount(name)}
                           classes={{
                             buttonStyle: classes.containedButton,
                             labelStyle: classes.containedButtonLabelStyle
