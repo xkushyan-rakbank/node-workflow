@@ -1,0 +1,45 @@
+{
+	"BaseURLs": {
+		"local": {
+			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
+		},
+		"dev": {
+			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
+		},
+		"uat": {
+			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
+		},
+		"prod": {
+			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
+		}
+	},
+	"S3URIs": {
+		"s3Uri": ""
+	},
+	"OtherConfigs": {
+		"local": {
+			"s3AccessKeyId": "ecs_test_user",
+			"s3SecretKey": "514axUUg+OO0n/DnDTCvc8m+kUehHO8LYzy4kTYa",
+			"s3Uri": "/",
+			"s3Bucket": "infra_bkp_test_bucket"
+		},
+		"dev": {
+			"s3AccessKeyId": "ecs_test_user",
+			"s3SecretKey": "514axUUg+OO0n/DnDTCvc8m+kUehHO8LYzy4kTYa",
+			"s3Uri": "/",
+			"s3Bucket": "infra_bkp_test_bucket"
+		},
+		"uat": {
+			"s3AccessKeyId": "ecs_test_user",
+			"s3SecretKey": "514axUUg+OO0n/DnDTCvc8m+kUehHO8LYzy4kTYa",
+			"s3Uri": "/",
+			"s3Bucket": "infra_bkp_test_bucket"
+		},
+		"prod": {
+			"s3AccessKeyId": "ecs_test_user",
+			"s3SecretKey": "514axUUg+OO0n/DnDTCvc8m+kUehHO8LYzy4kTYa",
+			"s3Uri": "/",
+			"s3Bucket": "infra_bkp_test_bucket"
+		}
+	}
+}
