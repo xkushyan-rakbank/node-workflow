@@ -13,6 +13,7 @@ import * as appConfigSelectors from "../store/selectors/appConfig";
 import { updateProspect } from "../store/actions/appConfig";
 
 import checkIc from "../assets/icons/check.png";
+import { portraitOrientationQueryIPads } from "../constants/styles";
 
 const style = {
   paperRoot: {
@@ -137,7 +138,7 @@ const style = {
 
 const shortNames = {
   starter: {
-    name: "RAKstarter",
+    name: "RAKStarter",
     ref: "RAKStarter"
   },
   currentAccount: {
@@ -263,6 +264,9 @@ const StyledTableCell = withStyles(() => ({
         padding: "7px 0",
         "@media only screen and (max-width: 1100px)": {
           padding: "3px 0"
+        },
+        [portraitOrientationQueryIPads]: {
+          width: "120px"
         }
       }
     }
@@ -332,12 +336,9 @@ class TableCompare extends React.Component {
     }
   };
 
-  handleClick = accountType => {
+  handleSelectAccount = accountType => {
     const { history, updateProspect } = this.props;
-    updateProspect({
-      value: accountType,
-      name: "prospect.applicationInfo.accountType"
-    });
+    updateProspect({ "prospect.applicationInfo.accountType": accountType });
     history.push("/DetailedAccount");
   };
 
@@ -438,7 +439,7 @@ class TableCompare extends React.Component {
                       >
                         <ContainedButton
                           label="Read more"
-                          handleClick={() => this.handleClick(name)}
+                          handleClick={() => this.handleSelectAccount(name)}
                           classes={{
                             buttonStyle: classes.containedButton,
                             labelStyle: classes.containedButtonLabelStyle
@@ -489,7 +490,7 @@ class TableCompare extends React.Component {
                       <StyledTableCell data-name={name} onMouseEnter={this.handleHover} key={index}>
                         <ContainedButton
                           label="Read more"
-                          handleClick={() => this.handleClick(name)}
+                          handleClick={() => this.handleSelectAccount(name)}
                           classes={{
                             buttonStyle: classes.containedButton,
                             labelStyle: classes.containedButtonLabelStyle

@@ -8,7 +8,12 @@ import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";
 import Header from "./../components/Header";
 import { applicationStatusReset } from "./../store/actions/applicationStatus";
-import * as appConfigSelectors from "../store/selectors/appConfig";
+import { updateViewId } from "./../store/actions/appConfig";
+import {
+  getProceedStatus,
+  getServerErrorStatus,
+  getScreeningResults
+} from "../store/selectors/appConfig";
 import { routerToAddPaddingInSlider } from "../constants/styles";
 
 const styles = {
@@ -51,6 +56,12 @@ const styles = {
       paddingTop: "100px",
       paddingLeft: "25px",
       paddingRight: "25px"
+    },
+    "@media only screen and (max-width: 1100px)": {
+      padding: ({ location }) =>
+        routerToAddPaddingInSlider.includes(location.pathname)
+          ? "0px 30px 0 25px"
+          : "165px 30px 20px 25px"
     }
   },
   mainContainerFullHeight: {
@@ -65,6 +76,16 @@ class FormLayout extends React.Component {
       this.props.applicationStatusReset();
     });
   }
+
+  componentDidUpdate(prevProps) {
+    const {
+      location: { key, pathname }
+    } = this.props;
+    if (prevProps.location.key !== key) {
+      this.props.updateViewId(pathname);
+    }
+  }
+
   render() {
     const { children, classes, isProceed, serverError, screeningResults } = this.props;
 
@@ -91,13 +112,14 @@ class FormLayout extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isProceed: appConfigSelectors.getProceedStatus(state),
-  serverError: appConfigSelectors.getServerErrorStatus(state),
-  screeningResults: appConfigSelectors.getScreeningResults(state)
+  isProceed: getProceedStatus(state),
+  serverError: getServerErrorStatus(state),
+  screeningResults: getScreeningResults(state)
 });
 
 const mapDispatchToProps = {
-  applicationStatusReset
+  applicationStatusReset,
+  updateViewId
 };
 
 export default compose(

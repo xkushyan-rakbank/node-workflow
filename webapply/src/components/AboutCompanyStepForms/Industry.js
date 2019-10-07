@@ -1,15 +1,32 @@
 import React from "react";
+import { compose } from "recompose";
 import { connect } from "react-redux";
 import isEmpty from "lodash/isEmpty";
 import Grid from "@material-ui/core/Grid";
 import PureSelect from "../InputField/PureSelect";
-import { getInputValueById, getFieldConfigById } from "../../store/selectors/input";
+import {
+  getInputValueById,
+  getFieldConfigById,
+  getInputNameById
+} from "../../store/selectors/input";
 import InfoTitle from "../InfoTitle";
+import { updateProspect } from "../../store/actions/appConfig";
 
 class Industry extends React.Component {
+  componentDidUpdate(prevProps) {
+    const { industryValue, industryConfig, industrySubCatName } = this.props;
+    if (prevProps.industryValue.length > industryValue.length) {
+      const subOptionsConfig = this.renderOptionsForSubId(industryValue, industryConfig);
+      const subOptionsValues = subOptionsConfig.map(option => option.value);
+
+      this.props.updateProspect({ [industrySubCatName]: subOptionsValues });
+    }
+  }
+
   renderOptionsForSubId = (value, valueConfig) => {
     if (value) {
       const optionsArr = valueConfig.datalist.filter(item => value.includes(item.value));
+
       const subOptionsArr = optionsArr
         .map(item => item.subCategory)
         .reduce((acc, curr) => [...acc, ...curr], []);
@@ -31,6 +48,7 @@ class Industry extends React.Component {
             disabled={isEmpty(industryValue)}
             subOptions={subOptions}
             id="OkycIndus.subCategory"
+            multiple
             indexes={[0, 0]}
           />
         </Grid>
@@ -43,7 +61,17 @@ class Industry extends React.Component {
 
 const mapStateToProps = state => ({
   industryValue: getInputValueById(state, "OkycIndus.industry", [0, 0]),
-  industryConfig: getFieldConfigById(state, "OkycIndus.industry")
+  industryConfig: getFieldConfigById(state, "OkycIndus.industry"),
+  industrySubCatName: getInputNameById(state, "OkycIndus.subCategory", [0, 0])
 });
 
-export default connect(mapStateToProps)(Industry);
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Industry);
