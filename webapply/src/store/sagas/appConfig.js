@@ -48,7 +48,6 @@ function* updateViewIdSaga({ viewId }) {
 function* displayScreenBasedOnViewIdSaga() {
   const state = yield select();
   const applicationInfo = getApplicationInfo(state);
-  // const isOTPVerified = state.otp.isVerified;
 
   if (applicationInfo.actionType === "submit") {
     yield call(history.push, routes.ApplicationSubmitted);
