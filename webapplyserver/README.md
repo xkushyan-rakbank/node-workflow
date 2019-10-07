@@ -14,7 +14,7 @@ API Invocation:
 (From Postman) POST http://localhost:9090/webapply/api/v1/config/reload
 
 War Artifact:
-1. Go to webapplyserver project dir (cmd or terminal)
+1. Go to webapplyserver project folder (cmd or terminal)
 2. Run "mvn clean install" to create war file under <PROJECT_DOR>/target folder
 
 JBoss EAP Deployment:
