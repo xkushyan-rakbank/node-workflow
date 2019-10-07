@@ -67,7 +67,6 @@ class FormConfirm extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("update");
     if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
       if (this.props.applicationInfo.retrieveMode) {
         this.props.displayScreenBasedOnViewId();
