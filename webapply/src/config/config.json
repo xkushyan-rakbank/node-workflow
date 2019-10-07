@@ -3334,6 +3334,50 @@
       "readonlyFor": [],
       "default": "false"
     },
+    "Okyc.isDontHaveSuppliersYet": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": null,
+      "placeholder": null,
+      "path": "$.prospect.orgKYCDetails.isDontHaveSuppliersYet",
+      "name": "prospect.orgKYCDetails.isDontHaveSuppliersYet",
+      "required": false,
+      "datalistId": null,
+      "readonlyFor": [],
+      "default": "false"
+    },
+    "Okyc.isDontTradeGoodsYet": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": null,
+      "placeholder": null,
+      "path": "$.prospect.orgKYCDetails.isDontTradeGoodsYet",
+      "name": "prospect.orgKYCDetails.isDontTradeGoodsYet",
+      "required": false,
+      "datalistId": null,
+      "readonlyFor": [],
+      "default": "false"
+    },
     "OkycEntOut.companyName": {
       "criteria": {
         "roles": ["customer", "agent"],
@@ -3842,6 +3886,12 @@
           "key": "S",
           "value": "S",
           "displayText": "Single"
+        },
+        {
+          "code": "O",
+          "key": "O",
+          "value": "O",
+          "displayText": "Others"
         }
       ],
       "description": "Mandatory for signatories/POA. Not required for shareholders.",
@@ -3861,11 +3911,11 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "Specify others",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].maritalStatusOthers",
       "name": "prospect.signatoryInfo[*].maritalStatusOthers",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "50",
@@ -4527,6 +4577,26 @@
         "invalid": "Field is invalid.",
         "multilineInvalid": null
       },
+      "datalist": [
+        {
+          "code": "UG",
+          "key": "UG",
+          "value": "UG",
+          "displayText": "Under Graduate"
+        },
+        {
+          "code": "G",
+          "key": "G",
+          "value": "G",
+          "displayText": "Graduate"
+        },
+        {
+          "code": "PG",
+          "key": "PG",
+          "value": "PG",
+          "displayText": "Post Graduate"
+        }
+      ],
       "applicable": null,
       "label": "Qualification",
       "placeholder": null,
@@ -4574,7 +4644,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Source of wealth",
+      "label": "Source of funds",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].kycDetails.sourceOfWealth.wealthType",
       "name": "prospect.signatoryInfo[*].kycDetails.sourceOfWealth.wealthType",
@@ -4621,7 +4691,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Specify other sources of wealth",
+      "label": "Specify other sources of funds",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].kycDetails.sourceOfWealth.others",
       "name": "prospect.signatoryInfo[*].kycDetails.sourceOfWealth.others",
@@ -5004,16 +5074,28 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "E-1",
-          "key": "E-1",
-          "value": "E-1",
-          "displayText": "Employment Type 1"
+          "code": "S",
+          "key": "S",
+          "value": "S",
+          "displayText": "Salaried"
         },
         {
-          "code": "E-2",
-          "key": "E-2",
-          "value": "E-2",
-          "displayText": "Employment Type 2"
+          "code": "SE",
+          "key": "SE",
+          "value": "SE",
+          "displayText": "Self-Employed"
+        },
+        {
+          "code": "H",
+          "key": "H",
+          "value": "H",
+          "displayText": "Housewife"
+        },
+        {
+          "code": "O",
+          "key": "O",
+          "value": "O",
+          "displayText": "Other"
         }
       ]
     },
@@ -5030,7 +5112,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "Specify Other",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].employmentDetails.otherEmploymentType",
       "name": "prospect.signatoryInfo[*].employmentDetails.otherEmploymentType",
@@ -5131,6 +5213,27 @@
       "readonlyFor": [],
       "maxlength": "50",
       "pattern": "^[a-zA-Z ]*$"
+    },
+    "SigEmpd.isWorkAtTheCompany": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": null,
+      "placeholder": null,
+      "path": "$.prospect.signatoryInfo[*].employmentDetails.isWorkAtTheCompany",
+      "name": "prospect.signatoryInfo[*].employmentDetails.isWorkAtTheCompany",
+      "required": false,
+      "datalistId": null,
+      "readonlyFor": []
     },
     "SigEmpd.occupation": {
       "criteria": {
@@ -7504,6 +7607,8 @@
         }
       ],
       "otherEntitiesOutsideUAE": false,
+      "isDontHaveSuppliersYet": false,
+      "isDontTradeGoodsYet": false,
       "entitiesOutsideUAE": [
         {
           "companyName": "",
@@ -7573,7 +7678,7 @@
           "qualification": "Under Graduate",
           "experienceInYrs": "",
           "sourceOfWealth": {
-            "wealthType": "Personal Savings",
+            "wealthType": "",
             "others": ""
           }
         },
@@ -7599,6 +7704,7 @@
           "empNo": "",
           "department": "",
           "employerName": "",
+          "isWorkAtTheCompany": false,
           "occupation": "",
           "totalExperienceYrs": 0,
           "employmentStartDate": ""

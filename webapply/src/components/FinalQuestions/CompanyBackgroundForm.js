@@ -86,12 +86,16 @@ class CompanyBackgroundForm extends Component {
 
   componentDidMount() {
     const otherBankingRelationshipsExist = this.getOtherBankingRelationshipsExists();
+    const isDontTradeGoodsYet = this.getIsDontTradeGoodsYet();
+    const isDontHaveSuppliersYet = this.getIsDontHaveSuppliersYet();
     const customers = this.getTopCustomerData();
     const suppliers = this.getTopSupplierData();
     const banks = this.getOtherBankingRelationshipsInfo();
     this.setState(
       {
         isDontHaveOtherBankAccounts: !otherBankingRelationshipsExist,
+        isDontTradingGoods: isDontTradeGoodsYet,
+        isDontHaveSuppliers: isDontHaveSuppliersYet,
         isCustomerNameFilled: !!customers[0].name,
         isSupplierNameFilled: !!suppliers[0].name,
         isBankNameFilled: !!banks[0].bankName
@@ -183,6 +187,14 @@ class CompanyBackgroundForm extends Component {
       "otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
       false
     );
+  }
+
+  getIsDontHaveSuppliersYet() {
+    return get(this.props.orgKYCDetails, "isDontHaveSuppliersYet", false);
+  }
+
+  getIsDontTradeGoodsYet() {
+    return get(this.props.orgKYCDetails, "isDontTradeGoodsYet", false);
   }
 
   getOtherBankingRelationshipsInfo() {
@@ -284,6 +296,20 @@ class CompanyBackgroundForm extends Component {
         e.target.checked
     });
     this.setState({ isDontHaveOtherBankAccounts: !e.target.checked });
+  };
+
+  handleSwitchIsDontHaveSuppliersYet = e => {
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.isDontHaveSuppliersYet": e.target.checked
+    });
+    this.setState({ isDontHaveSuppliers: e.target.checked });
+  };
+
+  handleSwitchIsDontTradeGoodsYet = e => {
+    this.props.updateProspect({
+      "prospect.orgKYCDetails.isDontTradeGoodsYet": e.target.checked
+    });
+    this.setState({ isDontTradingGoods: e.target.checked });
   };
 
   isTopCustomerNameRequired(index) {
@@ -431,7 +457,7 @@ class CompanyBackgroundForm extends Component {
         <Checkbox
           label="I don't have suppliers yet"
           value={isDontHaveSuppliers}
-          onChange={event => this.setState({ isDontHaveSuppliers: event.target.checked })}
+          onChange={e => this.handleSwitchIsDontHaveSuppliersYet(e)}
         />
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           {this.getTopSupplierData().map((_, index) => {
@@ -478,7 +504,7 @@ class CompanyBackgroundForm extends Component {
         <h4 className={this.props.classes.groupLabel}>Top origin of goods</h4>
         <Checkbox
           value={isDontTradingGoods}
-          onChange={event => this.setState({ isDontTradingGoods: event.target.checked })}
+          onChange={e => this.handleSwitchIsDontTradeGoodsYet(e)}
           label="I don't trade with goods yet"
         />
         <Grid container direction="column" spacing={3} className={this.props.classes.flexContainer}>

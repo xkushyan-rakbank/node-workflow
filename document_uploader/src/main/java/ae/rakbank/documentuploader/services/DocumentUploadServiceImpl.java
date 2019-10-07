@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import ae.rakbank.documentuploader.commons.AppConfig;
+import ae.rakbank.documentuploader.commons.AppConfigProps;
 import ae.rakbank.documentuploader.commons.DocumentNotFoundException;
 import ae.rakbank.documentuploader.commons.DocumentUploadException;
 
@@ -31,7 +31,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 	private final Path rootLocation;
 
 	@Autowired
-	public DocumentUploadServiceImpl(AppConfig properties) {
+	public DocumentUploadServiceImpl(AppConfigProps properties) {
 		this.rootLocation = Paths.get(properties.getLocation());
 	}
 

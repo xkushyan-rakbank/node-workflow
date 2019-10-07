@@ -108,7 +108,7 @@ export const signatoriesSteps = [
   },
   {
     step: 3,
-    title: "Wealth",
+    title: "Source of funds",
     component: SignatoryWealthForm
   },
   {
