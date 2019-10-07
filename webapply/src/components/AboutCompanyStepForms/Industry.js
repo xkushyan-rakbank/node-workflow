@@ -13,10 +13,6 @@ import InfoTitle from "../InfoTitle";
 import { updateProspect } from "../../store/actions/appConfig";
 
 class Industry extends React.Component {
-  state = {
-    categoryCount: 0
-  };
-
   componentDidUpdate(prevProps) {
     const { industryValue, industryConfig, industrySubCatName } = this.props;
     if (prevProps.industryValue.length > industryValue.length) {
