@@ -7,7 +7,10 @@ const style = {
     textAlign: "center",
     color: "#888888",
     marginTop: "33px",
-    display: "block"
+    display: "block",
+    "@media only screen and (max-width: 1100px)": {
+      marginTop: "16px"
+    }
   }
 };
 
