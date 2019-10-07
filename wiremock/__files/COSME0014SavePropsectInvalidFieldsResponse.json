@@ -9,7 +9,7 @@
       "developerText": ""
     },
     {
-      "fieldPath": "$.applicantInfo.email",
+      "fieldPath": "prospect.applicantInfo.email",
       "code": "INVALID",
       "errorType": "InvalidField",
       "message": "Your email is invalid, email should contain @ and .",

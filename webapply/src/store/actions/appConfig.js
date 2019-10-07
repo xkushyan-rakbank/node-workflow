@@ -4,6 +4,7 @@ export const RECEIVE_APPCONFIG_FAIL = "RECEIVE_APPCONFIG_FAIL";
 export const UPDATE_PROSPECT = "UPDATE_PROSPECT";
 export const SET_PROSPECT = "SET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
+export const UPDATE_UPLICATION_TYPE = "UPDATE_UPLICATION_TYPE";
 
 export const receiveAppConfig = () => {
   return { type: RECEIVE_APPCONFIG };
@@ -27,4 +28,8 @@ export const setProspect = prospect => {
 
 export const updateProspectId = prospectId => {
   return { type: UPDATE_PROSPECT_ID, prospectId };
+};
+
+export const updateAplicationType = aplicationType => {
+  return { type: UPDATE_UPLICATION_TYPE, aplicationType };
 };
