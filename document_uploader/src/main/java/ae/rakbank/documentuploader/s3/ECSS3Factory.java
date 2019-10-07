@@ -14,88 +14,81 @@
  */
 package ae.rakbank.documentuploader.s3;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.emc.object.s3.S3Client;
 import com.emc.object.s3.S3Config;
 import com.emc.object.s3.jersey.S3JerseyClient;
+import com.fasterxml.jackson.databind.JsonNode;
 
-import org.apache.commons.codec.binary.Base64;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.SecureRandom;
+import ae.rakbank.documentuploader.commons.EnvUtil;
+import ae.rakbank.documentuploader.helpers.FileHelper;
 
 /**
- * Factory class to create the ECS S3 client.  The client will be used in the examples for the
- * Java ECS S3 interface.
+ * Factory class to create the ECS S3 client. The client will be used in the
+ * examples for the Java ECS S3 interface.
  */
+@Component
 public class ECSS3Factory {
 
-    /* the S3 access key id - this is equivalent to the user */
-    public static final String S3_ACCESS_KEY_ID = "";
+	@Autowired
+	FileHelper fileHelper;
 
-    /* the S3 secret key associated with the S3_ACCESS_KEY_ID */
-    public static final String S3_SECRET_KEY = "";
+	/* the S3 access key id - this is equivalent to the user */
+	private String s3AccessKeyId = "";
 
-    /* the end point of the ECS S3 REST interface */
-    public static final String S3_URI = "";
+	/* the S3 secret key associated with the S3_ACCESS_KEY_ID */
+	private String s3SecretKey = "";
 
-    /* a unique bucket name to store objects */
-    public static final String S3_BUCKET = "workshop-bucket";
+	/* the end point of the ECS S3 REST interface */
+	private String s3Url = "";
 
-    /* the optional namespace within ECS - leave blank to use the default namespace */
-    public static final String S3_ECS_NAMESPACE = null; // use default namespace
+	/* a unique bucket name to store objects */
+	private String s3Bucket = "";
 
-    /* a unique object name to store */
-    public static final String S3_OBJECT = "workshop-object";
+	/*
+	 * the optional namespace within ECS - leave blank to use the default namespace
+	 */
+	public String seEcsNamespace = null; // use default namespace
 
-    public static S3Client getS3Client() throws URISyntaxException {
-        // for client-side load balancing
-        //S3Config config = new S3Config(Protocol.HTTPS, S3_HOST1, S3_HOST2);
-        // ditto with multiple VDCs
-        //S3Config config = new S3Config(Protocol.HTTPS, new Vdc(S3_V1_HOST), new Vdc(S3_V2_HOST));
+	@PostConstruct
+	public void initAppState() {
+		JsonNode docUploadConfig = fileHelper.getDocUploadConfigJson();
+		JsonNode otherConfigs = docUploadConfig.get("OtherConfigs").get(EnvUtil.getEnv());
+		s3AccessKeyId = otherConfigs.get("s3AccessKeyId").asText();
+		s3SecretKey = otherConfigs.get("s3SecretKey").asText();
+		s3Bucket = otherConfigs.get("s3Bucket").asText();
+		s3Url = docUploadConfig.get("BaseURLs").get(EnvUtil.getEnv()).get("s3BaseUrl").asText()
+				+ otherConfigs.get("s3Uri").asText();
+	}
 
-        S3Config config = new S3Config(new URI(S3_URI));
+	/* a unique object name to store */
+	public static final String S3_OBJECT = "workshop-object";
 
-        config.withIdentity(S3_ACCESS_KEY_ID).withSecretKey(S3_SECRET_KEY);
+	public S3Client getS3Client() throws URISyntaxException {
+		// for client-side load balancing
+		// S3Config config = new S3Config(Protocol.HTTPS, S3_HOST1, S3_HOST2);
+		// ditto with multiple VDCs
+		// S3Config config = new S3Config(Protocol.HTTPS, new Vdc(S3_V1_HOST), new
+		// Vdc(S3_V2_HOST));
 
-        S3Client client = new S3JerseyClient(config);
+		S3Config config = new S3Config(new URI(s3Url));
 
-        return client;
-    }
+		config.withIdentity(s3AccessKeyId).withSecretKey(s3SecretKey);
 
-    /*
-    private static void checkProxyConfig(AmazonS3Client client, Properties props) {
-        String proxyHost = props.getProperty(PROP_PROXY_HOST);
-        if (proxyHost != null && !proxyHost.isEmpty()) {
-            int proxyPort = Integer.parseInt(props.getProperty(PROP_PROXY_PORT));
-            ClientConfiguration config = new ClientConfiguration();
-            config.setProxyHost(proxyHost);
-            config.setProxyPort(proxyPort);
-            client.setConfiguration(config);
-        }
-    }
-     */
+		S3Client client = new S3JerseyClient(config);
 
-    // Generates a RSA key pair for testing.
-    public static void main(String[] args) {
-        try {
-            KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
-            keyGenerator.initialize(1024, new SecureRandom());
-            KeyPair myKeyPair = keyGenerator.generateKeyPair();
+		return client;
+	}
+	
+	public String getS3Bucket() {
+		return s3Bucket;
+	}
 
-            // Serialize.
-            byte[] pubKeyBytes = myKeyPair.getPublic().getEncoded();
-            byte[] privKeyBytes = myKeyPair.getPrivate().getEncoded();
-
-            String pubKeyStr = new String(Base64.encodeBase64(pubKeyBytes, false), "US-ASCII");
-            String privKeyStr = new String(Base64.encodeBase64(privKeyBytes, false), "US-ASCII");
-
-            System.out.println("Public Key: " + pubKeyStr);
-            System.out.println("Private Key: " + privKeyStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
