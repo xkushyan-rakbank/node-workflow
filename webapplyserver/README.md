@@ -15,7 +15,7 @@ API Invocation:
 
 War Artifact:
 1. Go to webapplyserver project folder (cmd or terminal)
-2. Run "mvn clean install" to create war file under <PROJECT_DOR>/target folder
+2. Run "mvn clean install" to create war file under <PROJECT_DIR>/target folder
 
 JBoss EAP Deployment:
 1. Download JBoss EAP 7.2.0 (zip file) from https://developers.redhat.com/products/eap/download
