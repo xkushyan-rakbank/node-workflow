@@ -2,7 +2,6 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import { history } from "./../configureStore";
 import * as actions from "../actions/loginForm";
 
-import { setInputsErrors } from "./../actions/serverValidation";
 import apiClient from "../../api/apiClient";
 import routes from "./../../routes";
 
@@ -20,8 +19,7 @@ function* loginFormSaga(action) {
       yield put(actions.loginInfoFormFail());
     }
   } catch (error) {
-    const { errors } = error.response.data;
-    yield put(setInputsErrors(errors));
+    console.log({ error });
   }
 }
 

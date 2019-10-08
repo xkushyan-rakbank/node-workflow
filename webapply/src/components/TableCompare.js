@@ -42,7 +42,7 @@ const style = {
       display: "none",
       margin: "0",
       "& + &": {
-        marginTop: "10px"
+        marginTop: "20px"
       },
       "&.mobileTable": {
         display: "block"
@@ -214,6 +214,14 @@ const StyledTableRow = withStyles(() => ({
     },
     "&:nth-of-type(even)": {
       backgroundColor: "#f7f8f9"
+    },
+    "@media only screen and (max-width: 1100px)": {
+      "&:nth-of-type(even)": {
+        backgroundColor: "#fff"
+      },
+      "&:nth-of-type(odd)": {
+        backgroundColor: "#f7f8f9"
+      }
     }
   }
 }))(TableRow);
@@ -237,7 +245,8 @@ const StyledTableHeader = withStyles(() => ({
       width: "150px"
     },
     "@media only screen and (max-width: 1100px)": {
-      height: "auto"
+      height: "auto",
+      fontSize: "14px"
     }
   }
 }))(TableCell);
@@ -247,6 +256,9 @@ const StyledTableCell = withStyles(() => ({
     fontSize: "16px",
     color: "#373737",
     textAlign: "center",
+    "@media only screen and (max-width: 1100px)": {
+      fontSize: "12px"
+    },
     "& span": {
       display: "block"
     },

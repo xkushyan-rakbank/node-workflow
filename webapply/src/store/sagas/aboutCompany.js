@@ -2,12 +2,10 @@ import { all, put, call, delay, select, takeLatest } from "redux-saga/effects";
 import {
   ABOUT_COMPANY_FORM,
   aboutCompanySuccess,
-  aboutCompanyFail,
   aboutCompanyResetStep
 } from "../actions/aboutCompany";
-import { applicationStatusServerError } from "./../actions/applicationStatus";
 import { getProspect, getProspectId } from "../selectors/appConfig";
-import { setInputsErrors, resetInputsErrors } from "../actions/serverValidation";
+import { resetInputsErrors } from "../actions/serverValidation";
 import apiClient from "../../api/apiClient";
 
 function* aboutCompanyFormSaga() {
@@ -23,24 +21,7 @@ function* aboutCompanyFormSaga() {
     yield delay(500);
     yield put(aboutCompanyResetStep({ resetStep: false }));
   } catch (error) {
-    if (error.response) {
-      /*
-       * The request was made and the server responded with a
-       * status code that falls out of the range of 2xx
-       */
-      const { errors } = error.response.data;
-      yield put(setInputsErrors(errors));
-      yield put(aboutCompanyFail());
-    } else if (error.request) {
-      /*
-       * The request was made but no response was received, `error.request`
-       * is an instance of XMLHttpRequest in the browser and an instance
-       * of http.ClientRequest in Node.js
-       */
-      yield put(applicationStatusServerError());
-    } else {
-      console.log({ error });
-    }
+    console.log({ error });
   }
 }
 
