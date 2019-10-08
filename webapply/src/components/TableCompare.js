@@ -53,7 +53,7 @@ const style = {
       zIndex: "1"
     },
     "& tr:not(:last-child) td": {
-      "&::before": {
+      "&:before": {
         content: "''",
         position: "absolute",
         left: 0,
@@ -61,16 +61,18 @@ const style = {
         margin: "0 auto",
         width: "90%",
         height: "2px",
-        backgroundColor: "#f7f8f9"
+        backgroundColor: "#f7f8f9",
+        display: "block",
+        top: "-2px"
       }
     },
     "& tr:nth-of-type(even) td": {
-      "&::before": {
+      "&:before": {
         bottom: "2px"
       }
     },
     "& tr:nth-of-type(odd) td": {
-      "&::before": {
+      "&:before": {
         bottom: "-2px"
       }
     },

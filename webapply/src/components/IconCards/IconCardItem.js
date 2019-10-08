@@ -30,7 +30,9 @@ const style = {
     }
   },
   iconCardText: {
-    fontSize: "16px"
+    fontSize: "16px",
+    display: "block",
+    width: "100%"
   },
   iconCardImg: {
     paddingBottom: "20px",
