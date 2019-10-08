@@ -75,7 +75,7 @@ const StepComponent = props => {
           handleContinue={handleContinue}
           hideContinue={hideContinue}
         >
-          <Form setIsContinueDisabled={setIsContinueDisabled} test="test" index={index} />
+          <Form setIsContinueDisabled={setIsContinueDisabled} index={index} />
         </FormWrapper>
       )}
     </>

@@ -140,15 +140,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
     }
   }
 
-  annualFinTurnoverChangeHandle = value => this.setState({ isAnnualTurnoverFilled: !!value });
-
-  monthlyCashPartChangeHandle = value => this.setState({ isMonthlyCashPartFilled: !!value });
-
-  monthlyNonCashPartChangeHandle = value => this.setState({ isMonthlyNonCashPartFilled: !!value });
-
-  maxCashAmountChangeHandle = value => this.setState({ isMaxCashAmountFilled: !!value });
-
-  maxNonCashAmountChangeHandle = value => this.setState({ isMaxNonCashAmountFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   isContinueDisabled = () => {
     return !(
@@ -169,7 +161,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
               min="0"
               id="Okyc.annualFinTurnoverAmtInAED"
               InputProps={this.commonInputProps}
-              callback={this.annualFinTurnoverChangeHandle}
+              storeFlag="isAnnualTurnoverFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
         </Grid>
@@ -196,7 +189,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.partOfTotalInCashMaxValue()}
               id="OkycAntTxnTotCashCr.amountInFigures"
               InputProps={this.commonInputProps}
-              callback={this.monthlyCashPartChangeHandle}
+              storeFlag="isMonthlyCashPartFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -205,7 +199,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.partOfTotalInNotCashMaxValue()}
               id="OkycAntTxnTotNonCashCr.amountInFigures"
               InputProps={this.commonInputProps}
-              callback={this.monthlyNonCashPartChangeHandle}
+              storeFlag="isMonthlyNonCashPartFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
         </Grid>
@@ -222,7 +217,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.maximumSingleAmountInCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnCashAED"
               InputProps={this.commonInputProps}
-              callback={this.maxCashAmountChangeHandle}
+              storeFlag="isMaxCashAmountFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -231,7 +227,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.maximumSingleAmountInNotCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnNonCashAED"
               InputProps={this.commonInputProps}
-              callback={this.maxNonCashAmountChangeHandle}
+              storeFlag="isMaxNonCashAmountFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
         </Grid>

@@ -7,9 +7,7 @@ import RemoveButton from "../Buttons/RemoveButton";
 import PureSelect from "../InputField/PureSelect";
 import InfoTitle from "../InfoTitle";
 import { connect } from "react-redux";
-import { getOrganizationInfo } from "../../store/selectors/appConfig";
-import { updateProspect } from "../../store/actions/appConfig";
-import get from "lodash/get";
+import { getInputValueById } from "../../store/selectors/input";
 
 const styles = {
   title: {
@@ -54,13 +52,11 @@ class CompanyContactInformationForm extends Component {
   }
 
   componentDidMount() {
-    const primaryMobile = this.getPrimaryMobileData();
-    const primaryPhone = this.getPrimaryPhoneData();
-    const primaryEmail = this.getPrimaryEmailData();
+    const { primaryMobileNo, primaryPhoneNo, primaryEmail } = this.props;
     this.setState(
       {
-        isPrimaryMobileFilled: !!primaryMobile,
-        isPrimaryPhoneFilled: !!primaryPhone,
+        isPrimaryMobileFilled: !!primaryMobileNo,
+        isPrimaryPhoneFilled: !!primaryPhoneNo,
         isPrimaryEmailFilled: !!primaryEmail
       },
       () => {
@@ -79,40 +75,14 @@ class CompanyContactInformationForm extends Component {
     this.setState({ secondaryPhoneNumber: !this.state.secondaryPhoneNumber });
   };
 
-  getPrimaryMobileData() {
-    return get(this.props.organizationInfo, "contactDetails.primaryMobileNo", "");
-  }
-
-  getPrimaryMobCountryCodeData() {
-    return get(this.props.organizationInfo, "contactDetails.primaryMobCountryCode", "");
-  }
-
-  getPrimaryPhoneData() {
-    return get(this.props.organizationInfo, "contactDetails.primaryPhoneNo", "");
-  }
-
-  getPrimaryPhoneCountryCodeData() {
-    return get(this.props.organizationInfo, "contactDetails.primaryPhoneCountryCode", "");
-  }
-
-  getPrimaryEmailData() {
-    return get(this.props.organizationInfo, "contactDetails.primaryEmail", "");
-  }
-
-  primaryMobileChangeHandle = value => this.setState({ isPrimaryMobileFilled: !!value });
-
-  primaryPhoneChangeHandle = value => this.setState({ isPrimaryPhoneFilled: !!value });
-
-  primaryEmailChangeHandle = value => this.setState({ isPrimaryEmailFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   isContinueDisabled = () => {
-    const primaryMobCountryCode = this.getPrimaryMobCountryCodeData();
-    const primaryPhoneCountryCode = this.getPrimaryPhoneCountryCodeData();
     return !(
-      primaryMobCountryCode &&
+      this.props.primaryMobCountryCode &&
       this.state.isPrimaryMobileFilled &&
       this.state.isPrimaryEmailFilled &&
-      (!this.state.secondaryPhoneNumber || primaryPhoneCountryCode) &&
+      (!this.state.secondaryPhoneNumber || this.props.primaryPhoneCountryCode) &&
       (!this.state.secondaryPhoneNumber || this.state.isPrimaryPhoneFilled)
     );
   };
@@ -129,14 +99,16 @@ class CompanyContactInformationForm extends Component {
             <TextInput
               id="OrgCont.primaryMobileNo"
               select={<PureSelect id="OrgCont.primaryMobCountryCode" combinedSelect />}
-              callback={this.primaryMobileChangeHandle}
+              storeFlag="isPrimaryMobileFilled"
+              callback={this.callbackHandle}
             />
             {this.state.secondaryPhoneNumber && (
               <div className={classes.relative}>
                 <TextInput
                   id="OrgCont.primaryPhoneNo"
                   select={<PureSelect id="OrgCont.primaryPhoneCountryCode" combinedSelect />}
-                  callback={this.primaryPhoneChangeHandle}
+                  storeFlag="isPrimaryPhoneFilled"
+                  callback={this.callbackHandle}
                 />
                 <RemoveButton
                   onClick={this.handleSecondaryPhoneBtnSwitch}
@@ -147,7 +119,11 @@ class CompanyContactInformationForm extends Component {
             )}
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="OrgCont.primaryEmail" callback={this.primaryEmailChangeHandle} />
+            <TextInput
+              id="OrgCont.primaryEmail"
+              storeFlag="isPrimaryEmailFilled"
+              callback={this.callbackHandle}
+            />
           </Grid>
         </Grid>
 
@@ -160,16 +136,11 @@ class CompanyContactInformationForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  organizationInfo: getOrganizationInfo(state)
+  primaryMobCountryCode: getInputValueById(state, "OrgCont.primaryMobCountryCode"),
+  primaryMobileNo: getInputValueById(state, "OrgCont.primaryMobileNo"),
+  primaryPhoneNo: getInputValueById(state, "OrgCont.primaryPhoneNo"),
+  primaryPhoneCountryCode: getInputValueById(state, "OrgCont.primaryPhoneCountryCode"),
+  primaryEmail: getInputValueById(state, "OrgCont.primaryEmail")
 });
 
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CompanyContactInformationForm)
-);
+export default withStyles(styles)(connect(mapStateToProps)(CompanyContactInformationForm));
