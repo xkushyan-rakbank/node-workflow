@@ -104,26 +104,6 @@ class SignatoryEmploymentDetailsForm extends Component {
     this.setState({ isWorkAtTheCompany: e.target.checked });
   };
 
-  isQualificationRequired() {
-    return this.getQualification() === "";
-  }
-
-  isEmploymentTypeRequired() {
-    return this.getEmployerName() === "";
-  }
-
-  isTotalExperienceYrsRequired() {
-    return this.getTotalExperienceYears() === "";
-  }
-
-  isDesignationRequired() {
-    return this.getDesignation() === "";
-  }
-
-  isEmployerNameRequired() {
-    return this.getEmployerName() === "";
-  }
-
   isContinueDisabled = () => {
     const qualification = this.getQualification();
     const employmentType = this.getEmploymentType();
@@ -142,29 +122,19 @@ class SignatoryEmploymentDetailsForm extends Component {
       <>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
-            <PureSelect
-              id="SigKycd.qualification"
-              indexes={[this.props.index]}
-              required={this.isQualificationRequired()}
-            />
-            <PureSelect
-              id="SigEmpd.employmentType"
-              indexes={[this.props.index]}
-              required={this.isEmploymentTypeRequired()}
-            />
+            <PureSelect id="SigKycd.qualification" indexes={[this.props.index]} />
+            <PureSelect id="SigEmpd.employmentType" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
               id="SigEmpd.totalExperienceYrs"
               indexes={[this.props.index]}
               callback={this.totalExperienceYrsChangeHandle}
-              required={this.isTotalExperienceYrsRequired()}
             />
             <TextInput
               id="SigEmpd.designation"
               indexes={[this.props.index]}
               callback={this.designationChangeHandle}
-              required={this.isDesignationRequired()}
             />
           </Grid>
           <Grid item sm={12}>
@@ -179,7 +149,6 @@ class SignatoryEmploymentDetailsForm extends Component {
               id="SigEmpd.employerName"
               indexes={[this.props.index]}
               callback={this.employerNameChangeHandle}
-              required={this.isEmployerNameRequired()}
             />
           </Grid>
         </Grid>

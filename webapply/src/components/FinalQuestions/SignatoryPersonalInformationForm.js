@@ -55,20 +55,8 @@ class SignatoryPersonalInformationForm extends Component {
     return get(this.props.signatoryInfo[this.props.index], "maritalStatusOthers", "");
   }
 
-  isMaritalStatusRequired() {
-    return this.getMaritalStatus() === "";
-  }
-
-  isMaritalStatusOthersRequired() {
-    return this.getMaritalStatusOthers() === "";
-  }
-
   getMothersMaidenName() {
     return get(this.props.signatoryInfo[this.props.index], "mothersMaidenName", "");
-  }
-
-  isMothersMaidenNameRequired() {
-    return this.getMothersMaidenName() === "";
   }
 
   maritalStatusChangeHandle = value => this.setState({ isMothersMaidenNameFilled: !!value });
@@ -91,16 +79,11 @@ class SignatoryPersonalInformationForm extends Component {
       <>
         <Grid spacing={3} container className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
-            <PureSelect
-              id="Sig.maritalStatus"
-              required={this.isMaritalStatusRequired()}
-              indexes={[this.props.index]}
-            />
+            <PureSelect id="Sig.maritalStatus" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
               id="Sig.mothersMaidenName"
-              required={this.isMothersMaidenNameRequired()}
               indexes={[this.props.index]}
               callback={this.maritalStatusChangeHandle}
             />
@@ -110,7 +93,6 @@ class SignatoryPersonalInformationForm extends Component {
               <TextInput
                 id="Sig.maritalStatusOthers"
                 indexes={[this.props.index]}
-                required={this.isMaritalStatusOthersRequired()}
                 callback={this.maritalStatusOthersChangeHandle}
               />
             </Grid>

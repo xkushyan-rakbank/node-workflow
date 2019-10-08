@@ -123,31 +123,20 @@ class CompanyMailingAddressForm extends Component {
                   <TextInput
                     id="OrgAddrAdrd.addressFieldDesc"
                     indexes={[index, 0]}
-                    required={index === 0}
                     callback={this.addressFieldChangeHandle}
                   />
                   <TextInput
                     id="OrgAddrAdrd.addressLine1"
                     indexes={[index, 0]}
-                    required={index === 0}
                     callback={this.locationChangeHandle}
                   />
-                  <PureSelect
-                    id="OrgAddrAdrd.emirateCity"
-                    indexes={[index, 0]}
-                    required={index === 0}
-                  />
+                  <PureSelect id="OrgAddrAdrd.emirateCity" indexes={[index, 0]} />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                  <PureSelect
-                    id="OrgAddrAdrdSpace.spaceType"
-                    indexes={[index, 0]}
-                    required={index === 0}
-                  />
+                  <PureSelect id="OrgAddrAdrdSpace.spaceType" indexes={[index, 0]} />
                   <TextInput
                     id="OrgAddrAdrd.poBox"
                     indexes={[index, 0]}
-                    required={index === 0}
                     callback={this.boxNumberChangeHandle}
                   />
                   <TextInput

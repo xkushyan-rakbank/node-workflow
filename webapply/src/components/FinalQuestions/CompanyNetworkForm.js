@@ -212,26 +212,6 @@ class CompanyNetworkForm extends Component {
     this.props.updateProspect({ "prospect.orgKYCDetails.entitiesOutsideUAE": [...dataList] });
   };
 
-  isInsideSubsidiaryCompanyNameRequired(index) {
-    return this.getInsideSubsidiariesData()[index].companyName === "";
-  }
-
-  isInsideSubsidiaryEmirateRequired(index) {
-    return this.getInsideSubsidiariesData()[index].emirate === "";
-  }
-
-  isInsideSubsidiaryTradeLicenseRequired(index) {
-    return this.getInsideSubsidiariesData()[index].tradeLicenseNo === "";
-  }
-
-  isOutsideSubsidiaryCompanyNameRequired(index) {
-    return this.getOutsideSubsidiariesData()[index].companyName === "";
-  }
-
-  isOutsideSubsidiaryCountryRequired(index) {
-    return this.getOutsideSubsidiariesData()[index].country === "";
-  }
-
   isAddInsideSubsidiaryDisabled = () => {
     const { insideSubsidiaryCount } = this.limits;
     const insideSubsidiaries = this.getInsideSubsidiariesData();
@@ -303,7 +283,6 @@ class CompanyNetworkForm extends Component {
                         key={index}
                         id="OkycEntIn.companyName"
                         indexes={[index]}
-                        required={this.isInsideSubsidiaryCompanyNameRequired(index)}
                         disabled={this.state.isDontHaveInsideSubsidiary}
                         callback={this.insideSubsidiaryCompanyNameChangeHandle}
                       />
@@ -313,7 +292,6 @@ class CompanyNetworkForm extends Component {
                         key={index}
                         id="OkycEntIn.tradeLicenseNo"
                         indexes={[index]}
-                        required={this.isInsideSubsidiaryTradeLicenseRequired(index)}
                         disabled={this.state.isDontHaveInsideSubsidiary}
                         callback={this.insideSubsidiaryTradeLicenseNoChangeHandle}
                       />
@@ -323,7 +301,6 @@ class CompanyNetworkForm extends Component {
                         key={index}
                         id="OkycEntIn.emirate"
                         indexes={[index]}
-                        required={this.isInsideSubsidiaryEmirateRequired(index)}
                         disabled={this.state.isDontHaveInsideSubsidiary}
                       />
                       {index !== 0 && (
@@ -367,7 +344,6 @@ class CompanyNetworkForm extends Component {
                         key={index}
                         id="OkycEntOut.companyName"
                         indexes={[index]}
-                        required={this.isOutsideSubsidiaryCompanyNameRequired(index)}
                         disabled={this.state.isDontHaveOutsideSubsidiary}
                         callback={this.outsideSubsidiaryCompanyNameChangeHandle}
                       />
@@ -377,7 +353,6 @@ class CompanyNetworkForm extends Component {
                         key={index}
                         id="OkycEntOut.country"
                         indexes={[index]}
-                        required={this.isOutsideSubsidiaryCountryRequired(index)}
                         disabled={this.state.isDontHaveOutsideSubsidiary}
                       />
                       {index !== 0 && (

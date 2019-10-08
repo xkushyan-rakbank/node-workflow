@@ -77,7 +77,6 @@ class SignatoryWealthForm extends Component {
               <TextInput
                 id="SigKycdWlth.others"
                 indexes={[this.props.index]}
-                required={isOtherSourceOfWealthSelected}
                 callback={this.othersChangeHandle}
               />
             </Grid>

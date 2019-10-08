@@ -78,27 +78,29 @@ class CompanyBackgroundForm extends Component {
       isCustomerNameFilled: false,
       isSupplierNameFilled: false,
       isBankNameFilled: false,
-      isDontTradingGoods: false,
-      isDontHaveSuppliers: false,
-      isDontHaveOtherBankAccounts: true
+      isDontTradeGoodsYet: false,
+      isDontHaveSuppliersYet: false,
+      otherBankingRelationshipsExist: true
     };
   }
 
   componentDidMount() {
-    const otherBankingRelationshipsExist = this.getOtherBankingRelationshipsExists();
-    const isDontTradeGoodsYet = this.getIsDontTradeGoodsYet();
-    const isDontHaveSuppliersYet = this.getIsDontHaveSuppliersYet();
-    const customers = this.getTopCustomerData();
-    const suppliers = this.getTopSupplierData();
-    const banks = this.getOtherBankingRelationshipsInfo();
+    const {
+      otherBankingRelationshipsExist,
+      isDontTradeGoodsYet,
+      isDontHaveSuppliersYet,
+      topCustomers,
+      topSuppliers,
+      otherBankDetails
+    } = this.props;
     this.setState(
       {
-        isDontHaveOtherBankAccounts: !otherBankingRelationshipsExist,
-        isDontTradingGoods: isDontTradeGoodsYet,
-        isDontHaveSuppliers: isDontHaveSuppliersYet,
-        isCustomerNameFilled: !!customers[0].name,
-        isSupplierNameFilled: !!suppliers[0].name,
-        isBankNameFilled: !!banks[0].bankName
+        otherBankingRelationshipsExist,
+        isDontTradeGoodsYet,
+        isDontHaveSuppliersYet,
+        isCustomerNameFilled: !!topCustomers[0].name,
+        isSupplierNameFilled: !!topSuppliers[0].name,
+        isBankNameFilled: !!otherBankDetails[0].bankName
       },
       () => {
         const isButtonDisabled = this.isContinueDisabled();
@@ -111,102 +113,30 @@ class CompanyBackgroundForm extends Component {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
     if (
-      prevState.isDontHaveOtherBankAccounts !== this.state.isDontHaveOtherBankAccounts &&
-      this.state.isDontHaveOtherBankAccounts
+      prevState.otherBankingRelationshipsExist !== this.state.otherBankingRelationshipsExist &&
+      this.state.otherBankingRelationshipsExist
     ) {
       this.resetBankAccountValues();
     }
     if (
-      prevState.isDontTradingGoods !== this.state.isDontTradingGoods &&
-      this.state.isDontTradingGoods
+      prevState.isDontTradeGoodsYet !== this.state.isDontTradeGoodsYet &&
+      this.state.isDontTradeGoodsYet
     ) {
       this.props.updateProspect({
         "prospect.orgKYCDetails.topOriginGoodsCountries": [""]
       });
     }
     if (
-      prevState.isDontHaveSuppliers !== this.state.isDontHaveSuppliers &&
-      this.state.isDontHaveSuppliers
+      prevState.isDontHaveSuppliersYet !== this.state.isDontHaveSuppliersYet &&
+      this.state.isDontHaveSuppliersYet
     ) {
       this.props.updateProspect({
-        "prospect.orgKYCDetails.topSuppliers": [this.getEmptyCustomerSupplierItem()]
+        "prospect.orgKYCDetails.topSuppliers": [{ name: "", country: "" }]
       });
     }
   }
 
-  /**
-   * @typedef {Object} CustomerSupplierData
-   * @property {String} name
-   * @property {String} country
-   *
-   * Filed empty item collection
-   * @param {CustomerSupplierData} [item]
-   * @return {CustomerSupplierData}
-   */
-
-  /**
-   * @return {CustomerSupplierData}
-   */
-  getEmptyCustomerSupplierItem() {
-    return {
-      name: "",
-      country: ""
-    };
-  }
-
-  getEmptyOtherBankingItem() {
-    return {
-      bankName: ""
-    };
-  }
-
-  /**
-   * @return {CustomerSupplierData[]}
-   */
-  getTopCustomerData() {
-    return get(this.props.orgKYCDetails, "topCustomers", [this.getEmptyCustomerSupplierItem()]);
-  }
-
-  /**
-   * @return {CustomerSupplierData[]}
-   */
-  getTopSupplierData() {
-    return get(this.props.orgKYCDetails, "topSuppliers", [this.getEmptyCustomerSupplierItem()]);
-  }
-
-  /**
-   * @return {String[]}
-   */
-  getTopOriginGoodsCountries() {
-    return get(this.props.orgKYCDetails, "topOriginGoodsCountries", [""]);
-  }
-
-  getOtherBankingRelationshipsExists() {
-    return get(
-      this.props.orgKYCDetails,
-      "otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
-      false
-    );
-  }
-
-  getIsDontHaveSuppliersYet() {
-    return get(this.props.orgKYCDetails, "isDontHaveSuppliersYet", false);
-  }
-
-  getIsDontTradeGoodsYet() {
-    return get(this.props.orgKYCDetails, "isDontTradeGoodsYet", false);
-  }
-
-  getOtherBankingRelationshipsInfo() {
-    return get(
-      this.props.orgKYCDetails,
-      "otherBankingRelationshipsInfo.otherBankDetails",
-      this.getEmptyOtherBankingItem()
-    );
-  }
-
   resetBankAccountValues() {
-    this.setState({ anotherBankCount: 1 });
     this.props.updateProspect({
       "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": [{ bankName: "" }],
       "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist": false
@@ -219,183 +149,52 @@ class CompanyBackgroundForm extends Component {
 
   topOtherBankNameChangeHandle = value => this.setState({ isBankNameFilled: !!value });
 
-  handleAddCustomerClick = () => {
-    const dataList = this.getTopCustomerData();
-    if (dataList.length < this.limits.customerCount) {
+  handleAddItem = (items, prospect, limit, item) => {
+    if (items.length < limit) {
+      const path = `prospect.orgKYCDetails.${prospect}`;
       this.props.updateProspect({
-        "prospect.orgKYCDetails.topCustomers": [...dataList, this.getEmptyCustomerSupplierItem()]
+        [path]: [...items, item]
       });
     }
   };
 
-  handleRemoveTopCustomer = index => {
-    const dataList = this.getTopCustomerData();
+  handleRemoveItem = (items, index, prospect) => {
+    const dataList = [...items];
     dataList.splice(index, 1);
+    const path = `prospect.orgKYCDetails.${prospect}`;
     this.props.updateProspect({
-      "prospect.orgKYCDetails.topCustomers": [...dataList]
+      [path]: [...dataList]
     });
   };
 
-  handleAddSupplierClick = () => {
-    const dataList = this.getTopSupplierData();
-    if (dataList.length < this.limits.supplierCount) {
-      this.props.updateProspect({
-        "prospect.orgKYCDetails.topSuppliers": [...dataList, this.getEmptyCustomerSupplierItem()]
-      });
-    }
+  handleSwitchCheckbox = (e, prospect) => {
+    const path = `prospect.orgKYCDetails.${prospect}`;
+    this.props.updateProspect({ [path]: e.target.checked });
+    this.setState({ [prospect]: e.target.checked });
   };
 
-  handleRemoveSupplier = index => {
-    const dataList = this.getTopSupplierData();
-    dataList.splice(index, 1);
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.topSuppliers": [...dataList]
-    });
-  };
-
-  handleAddCountryOfOriginClick = () => {
-    const dataList = this.getTopOriginGoodsCountries();
-    if (dataList.length < this.limits.countryOfOriginCount) {
-      this.props.updateProspect({
-        "prospect.orgKYCDetails.topOriginGoodsCountries": [...dataList, ""]
-      });
-    }
-  };
-
-  handleRemoveTopGood = index => {
-    const dataList = this.getTopOriginGoodsCountries();
-    dataList.splice(index, 1);
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.topOriginGoodsCountries": [...dataList]
-    });
-  };
-
-  handleAddAnotherBank = () => {
-    const dataList = this.getOtherBankingRelationshipsInfo();
-    if (dataList.length < this.limits.anotherBankCount) {
-      this.props.updateProspect({
-        "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": [
-          ...dataList,
-          this.getEmptyOtherBankingItem()
-        ]
-      });
-    }
-  };
-
-  handleRemoveBankInfo = index => {
-    const dataList = this.getOtherBankingRelationshipsInfo();
-    dataList.splice(index, 1);
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": [...dataList]
-    });
-  };
-
-  handleSwitchOtherBankAccounts = e => {
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist":
-        e.target.checked
-    });
-    this.setState({ isDontHaveOtherBankAccounts: !e.target.checked });
-  };
-
-  handleSwitchIsDontHaveSuppliersYet = e => {
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.isDontHaveSuppliersYet": e.target.checked
-    });
-    this.setState({ isDontHaveSuppliers: e.target.checked });
-  };
-
-  handleSwitchIsDontTradeGoodsYet = e => {
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.isDontTradeGoodsYet": e.target.checked
-    });
-    this.setState({ isDontTradingGoods: e.target.checked });
-  };
-
-  isTopCustomerNameRequired(index) {
-    return this.getTopCustomerData()[index].name === "";
-  }
-
-  isTopCustomerCountyRequired(index) {
-    return this.getTopCustomerData()[index].country === "";
-  }
-
-  isTopSupplierNameRequired(index) {
-    const { isDontHaveSuppliers } = this.state;
-    return !isDontHaveSuppliers && this.getTopSupplierData()[index].name === "";
-  }
-
-  isTopSupplierCountryRequired(index) {
-    const { isDontHaveSuppliers } = this.state;
-    return !isDontHaveSuppliers && this.getTopSupplierData()[index].country === "";
-  }
-
-  isCountryOriginGoodsRequired(index) {
-    const { isDontTradingGoods } = this.state;
-    const goods = this.getTopOriginGoodsCountries();
-    return !isDontTradingGoods && !goods[index];
-  }
-
-  isOtherBankNameRequired(index) {
-    const { isDontHaveOtherBankAccounts } = this.state;
-    const banks = this.getOtherBankingRelationshipsInfo();
-    return !isDontHaveOtherBankAccounts && !banks[index].bankName;
-  }
-
-  isAddTopCustomerDisabled = () => {
-    const { customerCount } = this.limits;
-    const customers = this.getTopCustomerData();
-    const lastAddedCustomer = customers[customers.length - 1];
-    return (
-      customers.length >= customerCount || !lastAddedCustomer.name || !lastAddedCustomer.country
-    );
-  };
-
-  isAddTopSupplierDisabled = () => {
-    const { isDontHaveSuppliers } = this.state;
-    const { supplierCount } = this.limits;
-    const suppliers = this.getTopSupplierData();
-    const lastAddedSupplier = suppliers[suppliers.length - 1];
-    return (
-      isDontHaveSuppliers ||
-      suppliers.length >= supplierCount ||
-      !lastAddedSupplier.name ||
-      !lastAddedSupplier.country
-    );
-  };
-
-  isAddTopOriginGoodsDisabled = () => {
-    const { isDontTradingGoods } = this.state;
-    const { countryOfOriginCount } = this.limits;
-    const goods = this.getTopOriginGoodsCountries();
-    const lastAddedGood = goods[goods.length - 1];
-    return isDontTradingGoods || goods.length >= countryOfOriginCount || !lastAddedGood;
-  };
-
-  isAddAnotherBankDisabled = () => {
-    const { anotherBankCount } = this.limits;
-    const banks = this.getOtherBankingRelationshipsInfo();
-    const lastAddedBank = banks[banks.length - 1];
-    return banks.length >= anotherBankCount || !lastAddedBank.bankName;
+  isAddButtonDisabled = (limit, items, ...fields) => {
+    const lastAddedItem = items[items.length - 1];
+    const allFieldsFilled = fields.length
+      ? fields.every(item => lastAddedItem[item] !== "")
+      : lastAddedItem;
+    return items.length >= limit || !allFieldsFilled;
   };
 
   isContinueDisabled = () => {
     const {
-      isDontHaveOtherBankAccounts,
-      isDontTradingGoods,
-      isDontHaveSuppliers,
+      otherBankingRelationshipsExist,
+      isDontTradeGoodsYet,
+      isDontHaveSuppliersYet,
       isCustomerNameFilled,
       isSupplierNameFilled,
       isBankNameFilled
     } = this.state;
-    const customers = this.getTopCustomerData();
-    const isTopCustomersFilled = isCustomerNameFilled && customers[0].country;
-    const suppliers = this.getTopSupplierData();
+    const isTopCustomersFilled = isCustomerNameFilled && this.props.topCustomers[0].country;
     const isTopSuppliersFilled =
-      isDontHaveSuppliers || (isSupplierNameFilled && suppliers[0].country);
-    const goods = this.getTopOriginGoodsCountries();
-    const isOriginGoodsFilled = isDontTradingGoods || goods[0];
-    const isAnotherBanksFilled = isDontHaveOtherBankAccounts || isBankNameFilled;
+      isDontHaveSuppliersYet || (isSupplierNameFilled && this.props.topSuppliers[0].country);
+    const isOriginGoodsFilled = isDontTradeGoodsYet || this.props.topOriginGoodsCountries[0];
+    const isAnotherBanksFilled = otherBankingRelationshipsExist || isBankNameFilled;
     return !(
       isTopCustomersFilled &&
       isTopSuppliersFilled &&
@@ -405,20 +204,29 @@ class CompanyBackgroundForm extends Component {
   };
 
   render() {
-    const { isDontHaveSuppliers, isDontTradingGoods, isDontHaveOtherBankAccounts } = this.state;
-    const { classes } = this.props;
+    const {
+      isDontHaveSuppliersYet,
+      isDontTradeGoodsYet,
+      otherBankingRelationshipsExist
+    } = this.state;
+    const {
+      classes,
+      topCustomers,
+      topSuppliers,
+      topOriginGoodsCountries,
+      otherBankDetails
+    } = this.props;
     return (
       <>
         <h4 className={this.props.classes.groupLabel}>Top customers</h4>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
-          {this.getTopCustomerData().map((_, index) => {
+          {topCustomers.map((_, index) => {
             return (
               <React.Fragment key={index}>
                 <Grid item md={index === 0 ? 6 : 5} sm={12}>
                   <TextInput
                     id="OkycTopc.name"
                     indexes={[index]}
-                    required={this.isTopCustomerNameRequired(index)}
                     callback={this.topCustomerNameChangeHandle}
                   />
                 </Grid>
@@ -428,15 +236,10 @@ class CompanyBackgroundForm extends Component {
                   sm={12}
                   className={cx(classes.relative, { [classes.tablet]: index !== 0 })}
                 >
-                  <PureSelect
-                    id="OkycTopc.country"
-                    indexes={[index]}
-                    resetValue={""}
-                    required={this.isTopCustomerCountyRequired(index)}
-                  />
+                  <PureSelect id="OkycTopc.country" indexes={[index]} resetValue={""} />
                   {index !== 0 && (
                     <RemoveButton
-                      onClick={() => this.handleRemoveTopCustomer(index)}
+                      onClick={() => this.handleRemoveItem(topCustomers, index, "topCustomers")}
                       title="Remove"
                     />
                   )}
@@ -446,9 +249,19 @@ class CompanyBackgroundForm extends Component {
           })}
         </Grid>
         <AddButton
-          onClick={this.handleAddCustomerClick}
+          onClick={() =>
+            this.handleAddItem(topCustomers, "topCustomers", this.limits.customerCount, {
+              name: "",
+              country: ""
+            })
+          }
           title="Add another customer"
-          disabled={this.isAddTopCustomerDisabled()}
+          disabled={this.isAddButtonDisabled(
+            this.limits.customerCount,
+            topCustomers,
+            "name",
+            "country"
+          )}
         />
 
         <div className={this.props.classes.divider} />
@@ -456,19 +269,19 @@ class CompanyBackgroundForm extends Component {
         <h4 className={this.props.classes.groupLabel}>Top suppliers</h4>
         <Checkbox
           label="I don't have suppliers yet"
-          value={isDontHaveSuppliers}
-          onChange={e => this.handleSwitchIsDontHaveSuppliersYet(e)}
+          value={isDontHaveSuppliersYet}
+          onChange={e => this.handleSwitchCheckbox(e, "isDontHaveSuppliersYet")}
         />
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
-          {this.getTopSupplierData().map((_, index) => {
+          {topSuppliers.map((_, index) => {
             return (
               <React.Fragment key={index}>
                 <Grid item md={index === 0 ? 6 : 5} sm={12}>
                   <TextInput
                     id="OkycTops.name"
                     indexes={[index]}
-                    required={this.isTopSupplierNameRequired(index)}
-                    disabled={isDontHaveSuppliers}
+                    disabled={isDontHaveSuppliersYet}
+                    required={!isDontHaveSuppliersYet}
                     callback={this.topTopSupplierNameChangeHandle}
                   />
                 </Grid>
@@ -482,11 +295,14 @@ class CompanyBackgroundForm extends Component {
                     id="OkycTops.country"
                     indexes={[index]}
                     resetValue={""}
-                    required={this.isTopSupplierCountryRequired(index)}
-                    disabled={isDontHaveSuppliers}
+                    required={!isDontHaveSuppliersYet}
+                    disabled={isDontHaveSuppliersYet}
                   />
                   {index !== 0 && (
-                    <RemoveButton onClick={() => this.handleRemoveSupplier(index)} title="Remove" />
+                    <RemoveButton
+                      onClick={() => this.handleRemoveItem(topSuppliers, index, "topSuppliers")}
+                      title="Remove"
+                    />
                   )}
                 </Grid>
               </React.Fragment>
@@ -494,21 +310,29 @@ class CompanyBackgroundForm extends Component {
           })}
         </Grid>
         <AddButton
-          onClick={this.handleAddSupplierClick}
+          onClick={() =>
+            this.handleAddItem(topSuppliers, "topSuppliers", this.limits.supplierCount, {
+              name: "",
+              country: ""
+            })
+          }
           title="Add another supplier"
-          disabled={this.isAddTopSupplierDisabled()}
+          disabled={
+            isDontHaveSuppliersYet ||
+            this.isAddButtonDisabled(this.limits.supplierCount, topSuppliers, "name", "country")
+          }
         />
 
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>Top origin of goods</h4>
         <Checkbox
-          value={isDontTradingGoods}
-          onChange={e => this.handleSwitchIsDontTradeGoodsYet(e)}
+          value={isDontTradeGoodsYet}
+          onChange={e => this.handleSwitchCheckbox(e, "isDontTradeGoodsYet")}
           label="I don't trade with goods yet"
         />
         <Grid container direction="column" spacing={3} className={this.props.classes.flexContainer}>
-          {this.getTopOriginGoodsCountries().map((_, index) => {
+          {topOriginGoodsCountries.map((_, index) => {
             return (
               <Grid
                 key={index}
@@ -522,23 +346,42 @@ class CompanyBackgroundForm extends Component {
                   id="Okyc.topOriginGoodsCountries"
                   indexes={[index]}
                   resetValue={""}
-                  excludeValues={this.getTopOriginGoodsCountries().filter(
+                  excludeValues={topOriginGoodsCountries.filter(
                     (_, valueIndex) => valueIndex !== index
                   )}
-                  required={this.isCountryOriginGoodsRequired(index)}
-                  disabled={isDontTradingGoods}
+                  required={!isDontTradeGoodsYet}
+                  disabled={isDontTradeGoodsYet}
                 />
                 {index !== 0 && (
-                  <RemoveButton onClick={() => this.handleRemoveTopGood(index)} title="Remove" />
+                  <RemoveButton
+                    onClick={() =>
+                      this.handleRemoveItem(
+                        topOriginGoodsCountries,
+                        index,
+                        "topOriginGoodsCountries"
+                      )
+                    }
+                    title="Remove"
+                  />
                 )}
               </Grid>
             );
           })}
         </Grid>
         <AddButton
-          onClick={this.handleAddCountryOfOriginClick}
+          onClick={() =>
+            this.handleAddItem(
+              topOriginGoodsCountries,
+              "topOriginGoodsCountries",
+              this.limits.countryOfOriginCount,
+              ""
+            )
+          }
           title="Add another country of origin"
-          disabled={this.isAddTopOriginGoodsDisabled()}
+          disabled={
+            isDontTradeGoodsYet ||
+            this.isAddButtonDisabled(this.limits.countryOfOriginCount, topOriginGoodsCountries)
+          }
         />
 
         <div className={this.props.classes.divider} />
@@ -546,14 +389,14 @@ class CompanyBackgroundForm extends Component {
         <h4 className={this.props.classes.groupLabel}>Relationships with other banks</h4>
         <Checkbox
           label="The company has accounts with other banks, inside or outside the UAE"
-          value={!isDontHaveOtherBankAccounts}
-          onChange={e => this.handleSwitchOtherBankAccounts(e)}
+          value={otherBankingRelationshipsExist}
+          onChange={e => this.handleSwitchCheckbox(e, "otherBankingRelationshipsExist")}
         />
-        {!isDontHaveOtherBankAccounts && (
+        {otherBankingRelationshipsExist && (
           <>
             <Grid container spacing={3} className={this.props.classes.flexContainer}>
               <Grid item sm={12}>
-                {this.getOtherBankingRelationshipsInfo().map((_, index) => {
+                {otherBankDetails.map((_, index) => {
                   return (
                     <React.Fragment key={index}>
                       <Grid
@@ -565,13 +408,19 @@ class CompanyBackgroundForm extends Component {
                         <TextInput
                           id="OkycObriObd.bankName"
                           indexes={[index]}
-                          required={this.isOtherBankNameRequired(index)}
-                          disabled={isDontHaveOtherBankAccounts}
+                          required={otherBankingRelationshipsExist}
+                          disabled={!otherBankingRelationshipsExist}
                           callback={this.topOtherBankNameChangeHandle}
                         />
                         {index !== 0 && (
                           <RemoveButton
-                            onClick={() => this.handleRemoveBankInfo(index)}
+                            onClick={() =>
+                              this.handleRemoveItem(
+                                otherBankDetails,
+                                index,
+                                "otherBankingRelationshipsInfo.otherBankDetails"
+                              )
+                            }
                             title="Remove"
                             classes={{ container: classes.container }}
                           />
@@ -583,9 +432,19 @@ class CompanyBackgroundForm extends Component {
               </Grid>
             </Grid>
             <AddButton
-              onClick={this.handleAddAnotherBank}
+              onClick={() =>
+                this.handleAddItem(
+                  otherBankDetails,
+                  "otherBankingRelationshipsInfo.otherBankDetails",
+                  this.limits.anotherBankCount,
+                  { bankName: "" }
+                )
+              }
               title="Add another bank"
-              disabled={this.isAddAnotherBankDisabled()}
+              disabled={
+                !otherBankingRelationshipsExist ||
+                this.isAddButtonDisabled(this.limits.anotherBankCount, otherBankDetails, "bankName")
+              }
             />
           </>
         )}
@@ -595,7 +454,20 @@ class CompanyBackgroundForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  orgKYCDetails: getOrgKYCDetails(state)
+  orgKYCDetails: getOrgKYCDetails(state),
+  topCustomers: get(getOrgKYCDetails(state), "topCustomers", [{ name: "", country: "" }]),
+  topSuppliers: get(getOrgKYCDetails(state), "topSuppliers", [{ name: "", country: "" }]),
+  topOriginGoodsCountries: get(getOrgKYCDetails(state), "topOriginGoodsCountries", [""]),
+  otherBankingRelationshipsExist: get(
+    getOrgKYCDetails(state),
+    "otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
+    false
+  ),
+  isDontHaveSuppliersYet: get(getOrgKYCDetails(state), "isDontHaveSuppliersYet", false),
+  isDontTradeGoodsYet: get(getOrgKYCDetails(state), "isDontTradeGoodsYet", false),
+  otherBankDetails: get(getOrgKYCDetails(state), "otherBankingRelationshipsInfo.otherBankDetails", [
+    { bankName: "" }
+  ])
 });
 
 const mapDispatchToProps = {
