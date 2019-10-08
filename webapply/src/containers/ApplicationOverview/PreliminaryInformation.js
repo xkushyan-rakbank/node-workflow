@@ -39,14 +39,21 @@ const mockData = [
 const style = {
   answers: {
     borderRadius: "8px",
-    overflow: "auto"
+    overflow: "auto",
+    "@media only screen and (max-width: 991px)": {
+      overflow: "inherit"
+    }
   },
   title: {
     minWidth: "500px",
     padding: "18px 24px",
     fontSize: "16px",
     fontWeight: "600",
-    backgroundColor: "rgba(239, 242, 244, .5)"
+    backgroundColor: "rgba(239, 242, 244, .5)",
+    "@media only screen and (max-width: 991px)": {
+      minWidth: "inherit",
+      fontSize: "14px"
+    }
   },
   note: {
     marginBottom: "50px",
@@ -62,7 +69,11 @@ const style = {
   },
   iconsWrapper: {
     flexWrap: "nowrap",
-    overflowX: "auto"
+    overflowX: "auto",
+    "@media only screen and (max-width: 991px)": {
+      overflowX: "inherit",
+      flexWrap: "wrap"
+    }
   }
 };
 
