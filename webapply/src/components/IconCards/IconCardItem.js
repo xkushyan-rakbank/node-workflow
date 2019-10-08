@@ -18,6 +18,11 @@ const style = {
     textAlign: "center",
     "@media only screen and (max-width: 1300px)": {
       padding: "10px"
+    },
+    "@media only screen and (max-width: 991px)": {
+      flex: "1 1 30%",
+      margin: "5px",
+      padding: "5px"
     }
   },
   iconCardTitle: {
@@ -32,7 +37,10 @@ const style = {
   iconCardText: {
     fontSize: "16px",
     display: "block",
-    width: "100%"
+    width: "100%",
+    "@media only screen and (max-width: 991px)": {
+      fontSize: "14px"
+    }
   },
   iconCardImg: {
     paddingBottom: "20px",
