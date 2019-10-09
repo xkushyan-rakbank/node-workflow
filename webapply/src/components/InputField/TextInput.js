@@ -232,7 +232,7 @@ class Input extends React.Component {
     const { fieldErrors } = this.state;
     const inputProps = this.composeFieldAttrWithPropAttr(fieldAttr(id, config, indexes));
 
-    const isError = !isEmpty(fieldErrors);
+    const isError = !isEmpty(fieldErrors) || this.props.isError;
     const customValidationMessage = this.getCustomValidationMessage();
 
     if (id && config.label) {

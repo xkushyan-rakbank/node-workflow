@@ -7,6 +7,8 @@ export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
 export const UPDATE_ACTION_TYPE = "UPDATE_ACTION_TYPE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
 export const DISPLAY_SCREEN_BASED_ON_VIEW_ID = "DISPLAY_SCREEN_BASED_ON_VIEW_ID";
+export const ADD_NEW_STAKEHOLDER = "ADD_NEW_STAKEHOLDER";
+export const DELETE_STAKEHOLDER = "DELETE_STAKEHOLDER";
 
 export const receiveAppConfig = () => {
   return { type: RECEIVE_APPCONFIG };
@@ -42,4 +44,12 @@ export const updateViewId = viewId => {
 
 export const displayScreenBasedOnViewId = () => {
   return { type: DISPLAY_SCREEN_BASED_ON_VIEW_ID };
+};
+
+export const addNewStakeholder = () => {
+  return { type: ADD_NEW_STAKEHOLDER };
+};
+
+export const deleteStakeholder = stakeholderId => {
+  return { type: DELETE_STAKEHOLDER, stakeholderId };
 };

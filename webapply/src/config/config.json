@@ -4164,13 +4164,13 @@
         {
           "code": "Y",
           "key": "Y",
-          "value": "true",
+          "value": true,
           "displayText": "Yes"
         },
         {
           "code": "N",
           "key": "N",
-          "value": "false",
+          "value": false,
           "displayText": "No"
         }
       ]
@@ -4184,7 +4184,7 @@
       },
       "validationErrors": {
         "required": "Field is required.",
-        "invalid": "Field is invalid.",
+        "invalid": "Shareholders can't hold more than 100% of shares in total",
         "multilineInvalid": null
       },
       "applicable": null,
@@ -4358,14 +4358,14 @@
       "name": "prospect.signatoryInfo[*].kycDetails.residenceCountry",
       "required": true,
       "readonlyFor": [],
-      "default": "AE",
+      "default": "UAE",
       "description": "Defaulted for signatories/POA (isSignatory)",
       "datalistId": "NationalityList",
       "datalist": [
         {
-          "code": "AE",
-          "key": "AE",
-          "value": "AE",
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
           "displayText": "United Arab Emirates"
         },
         {
@@ -7635,7 +7635,7 @@
           ]
         },
         "salutation": "Mr.",
-        "signatoryId": "",
+        "signatoryId": "123",
         "firstName": "",
         "middleName": "",
         "lastName": "",
@@ -7758,7 +7758,7 @@
           ]
         },
         "salutation": "Mr.",
-        "signatoryId": "",
+        "signatoryId": "456",
         "firstName": "",
         "middleName": "",
         "lastName": "",
@@ -7777,7 +7777,7 @@
           "salutation": "Mr.",
           "shareholderPOASignatoryName": "",
           "isSignatory": true,
-          "isShareholder": false,
+          "isShareholder": "",
           "shareHoldingPercentage": 0,
           "dateOfBirth": "",
           "nationality": "",

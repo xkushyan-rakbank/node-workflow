@@ -2,10 +2,10 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import Check from "../../assets/icons/on.png";
 import { updateProspect } from "../../store/actions/appConfig";
 import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
+import Check from "../../assets/icons/on.png";
 import questionMark from "../../assets/icons/question_mark_grey.png";
 
 const styles = {

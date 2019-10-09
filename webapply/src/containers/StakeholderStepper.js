@@ -31,10 +31,6 @@ const styles = {
 };
 
 class StakeholderStepper extends React.Component {
-  static defaultProps = {
-    index: 0
-  };
-
   state = {
     isFinalScreenShown: false,
     step: 1,
