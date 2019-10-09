@@ -26,6 +26,7 @@ class CountryOfResidence extends React.Component {
   render() {
     const { index, isSignatory } = this.props;
     const isOAE = this.isSelectedOAE();
+    console.log(isSignatory);
 
     return (
       <Grid container spacing={3}>
@@ -54,7 +55,7 @@ class CountryOfResidence extends React.Component {
 
 const mapStateToProps = (state, { index }) => ({
   residenceCountry: getInputValueById(state, "SigKycd.residenceCountry", [index]),
-  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index]),
+  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index], false),
   eidNumberInputName: getInputNameById(state, "SigKycdEmid.eidNumber", [index])
 });
 
