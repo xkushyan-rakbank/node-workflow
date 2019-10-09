@@ -15,6 +15,39 @@ trigger:
 #  - releases/*
 
 jobs:
+    - job: filebackup
+      timeoutInMinutes: 120
+      pool:
+       name: Hosted macOS
+#      demands:
+#        - java
+#        - JDK
+      steps:
+      - task: NodeTool@0
+        displayName: 'Use Node 10.x'
+        inputs:
+          versionSpec: 10.x
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "webapplyserver/src/main/resources/appConfig.json",
+                    "target": "onboarding/$(Build.BuildNumber)/files/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: 'Jfrog'
+
     - job: Webapply
       timeoutInMinutes: 120
       pool:
