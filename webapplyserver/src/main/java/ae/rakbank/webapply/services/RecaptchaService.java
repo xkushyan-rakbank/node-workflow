@@ -42,7 +42,7 @@ public class RecaptchaService {
 
 	@PostConstruct
 	public void init() {
-		JsonNode appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
+		JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
 		recaptchaSecret = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSecret").asText();
 		recaptchaEndpoint = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("ReCaptchaUrl").asText()
 				+ appConfigJSON.get("ReCaptchaURIs").get("siteVerifyUri").asText();
