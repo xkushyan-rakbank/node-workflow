@@ -1,12 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
 import DatePicker from "../InputField/DatePicker";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
 import PureSelect from "../InputField/PureSelect";
 import { getInputValueById } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
+import InlineRadioGroup from "../InputField/InlineRadioGroup";
+import InfoTitle from "../InfoTitle";
+
+const styles = {
+  divider: {
+    height: "1px",
+    backgroundColor: "rgba(230, 230, 230, 0.5)",
+    margin: "30px 0 20px"
+  }
+};
 
 class PersonalInformation extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -23,7 +34,7 @@ class PersonalInformation extends React.Component {
   }
 
   render() {
-    const { index, isShareholderACompany } = this.props;
+    const { index, isShareholderACompany, classes } = this.props;
     return (
       <>
         <Grid item container spacing={3}>
@@ -64,6 +75,9 @@ class PersonalInformation extends React.Component {
             />
           </Grid>
         </Grid>
+        <InfoTitle title="The details of this section should be the same as in the person’s passport" />
+        <div className={classes.divider}></div>
+        <InlineRadioGroup id="SigKycd.isPEP" indexes={[index]} />
       </>
     );
   }
@@ -75,7 +89,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { updateProspect };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PersonalInformation);
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PersonalInformation)
+);
