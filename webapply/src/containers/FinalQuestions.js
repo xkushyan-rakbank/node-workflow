@@ -7,6 +7,7 @@ import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard"
 import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryCard";
 import routes from "../routes";
 import { getSignatories } from "../store/selectors/appConfig";
+import BackLink from "../components/Buttons/BackLink";
 
 const style = {
   sectionContainer: {
@@ -17,6 +18,9 @@ const style = {
     color: "#373737",
     margin: "20px 0 130px",
     lineHeight: 1.5
+  },
+  buttonWrap: {
+    marginTop: "0"
   }
 };
 
@@ -43,8 +47,13 @@ class FinalQuestions extends React.Component {
           })}
         </div>
         <div className="linkContainer">
+          <BackLink path={routes.stakeholdersInfo} />
           <Link to={routes.uploadDocuments}>
-            <SubmitButton label="Next Step" justify="flex-end" />
+            <SubmitButton
+              label="Next Step"
+              justify="flex-end"
+              classes={{ buttonWrap: classes.buttonWrap }}
+            />
           </Link>
         </div>
       </>

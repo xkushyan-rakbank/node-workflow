@@ -1682,7 +1682,7 @@
       "placeholder": null,
       "path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].addressFieldDesc",
       "name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].addressFieldDesc",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": []
     },
@@ -1724,7 +1724,7 @@
       "placeholder": null,
       "path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].addressLine1",
       "name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].addressLine1",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "description": "Stores the office shop number",
@@ -1820,7 +1820,7 @@
       "placeholder": null,
       "path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].poBox",
       "name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].poBox",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "description": "Stores the P. O. Box",
@@ -1844,7 +1844,7 @@
       "placeholder": null,
       "path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].emirateCity",
       "name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].emirateCity",
-      "required": false,
+      "required": true,
       "datalistId": "EmirateCityList",
       "readonlyFor": [],
       "datalist": [
@@ -1957,7 +1957,7 @@
       "placeholder": null,
       "path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].typeOfSpaceOccupied.spaceType",
       "name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].typeOfSpaceOccupied.spaceType",
-      "required": false,
+      "required": true,
       "datalistId": "SpaceType",
       "readonlyFor": [],
       "datalist": [
@@ -2727,7 +2727,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.topCustomers[*].name",
       "name": "prospect.orgKYCDetails.topCustomers[*].name",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "80",
@@ -2750,7 +2750,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.topCustomers[*].country",
       "name": "prospect.orgKYCDetails.topCustomers[*].country",
-      "required": false,
+      "required": true,
       "datalistId": "CountryList",
       "readonlyFor": [],
       "datalist": [
@@ -2797,7 +2797,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.topSuppliers[*].name",
       "name": "prospect.orgKYCDetails.topSuppliers[*].name",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "80",
@@ -2820,7 +2820,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.topSuppliers[*].country",
       "name": "prospect.orgKYCDetails.topSuppliers[*].country",
-      "required": false,
+      "required": true,
       "datalistId": "CountryList",
       "readonlyFor": [],
       "datalist": [
@@ -2867,7 +2867,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.topOriginGoodsCountries[*]",
       "name": "prospect.orgKYCDetails.topOriginGoodsCountries[*]",
-      "required": false,
+      "required": true,
       "datalistId": "CountryList",
       "readonlyFor": [],
       "datalist": [
@@ -3179,7 +3179,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails[*].bankName",
       "name": "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails[*].bankName",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "50",
@@ -3224,7 +3224,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.entitiesInUAE[*].companyName",
       "name": "prospect.orgKYCDetails.entitiesInUAE[*].companyName",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "pattern": "^[a-zA-Z0-9 ]*$",
@@ -3247,7 +3247,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.entitiesInUAE[*].emirate",
       "name": "prospect.orgKYCDetails.entitiesInUAE[*].emirate",
-      "required": false,
+      "required": true,
       "datalistId": "EmirateCityList",
       "readonlyFor": [],
       "datalist": [
@@ -3306,7 +3306,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.entitiesInUAE[*].tradeLicenseNo",
       "name": "prospect.orgKYCDetails.entitiesInUAE[*].tradeLicenseNo",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "pattern": "^[a-zA-Z0-9]*$",
@@ -3334,6 +3334,50 @@
       "readonlyFor": [],
       "default": "false"
     },
+    "Okyc.isDontHaveSuppliersYet": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": null,
+      "placeholder": null,
+      "path": "$.prospect.orgKYCDetails.isDontHaveSuppliersYet",
+      "name": "prospect.orgKYCDetails.isDontHaveSuppliersYet",
+      "required": false,
+      "datalistId": null,
+      "readonlyFor": [],
+      "default": "false"
+    },
+    "Okyc.isDontTradeGoodsYet": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": null,
+      "placeholder": null,
+      "path": "$.prospect.orgKYCDetails.isDontTradeGoodsYet",
+      "name": "prospect.orgKYCDetails.isDontTradeGoodsYet",
+      "required": false,
+      "datalistId": null,
+      "readonlyFor": [],
+      "default": "false"
+    },
     "OkycEntOut.companyName": {
       "criteria": {
         "roles": ["customer", "agent"],
@@ -3351,7 +3395,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.entitiesOutsideUAE[*].companyName",
       "name": "prospect.orgKYCDetails.entitiesOutsideUAE[*].companyName",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "pattern": "^[a-zA-Z0-9 ]*$",
@@ -3374,7 +3418,7 @@
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.entitiesOutsideUAE[*].country",
       "name": "prospect.orgKYCDetails.entitiesOutsideUAE[*].country",
-      "required": false,
+      "required": true,
       "datalistId": "CountryExceptEmirateList",
       "readonlyFor": [],
       "datalist": [
@@ -3827,7 +3871,7 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].maritalStatus",
       "name": "prospect.signatoryInfo[*].maritalStatus",
-      "required": false,
+      "required": true,
       "datalistId": "MaritalList",
       "readonlyFor": [],
       "datalist": [
@@ -3842,6 +3886,12 @@
           "key": "S",
           "value": "S",
           "displayText": "Single"
+        },
+        {
+          "code": "O",
+          "key": "O",
+          "value": "O",
+          "displayText": "Others"
         }
       ],
       "description": "Mandatory for signatories/POA. Not required for shareholders.",
@@ -3861,11 +3911,11 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "Specify others",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].maritalStatusOthers",
       "name": "prospect.signatoryInfo[*].maritalStatusOthers",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "50",
@@ -3911,7 +3961,7 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].mothersMaidenName",
       "name": "prospect.signatoryInfo[*].mothersMaidenName",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "description": "Mandatory for signatories/POA. Not required for shareholders.",
@@ -4527,12 +4577,32 @@
         "invalid": "Field is invalid.",
         "multilineInvalid": null
       },
+      "datalist": [
+        {
+          "code": "UG",
+          "key": "UG",
+          "value": "UG",
+          "displayText": "Under Graduate"
+        },
+        {
+          "code": "G",
+          "key": "G",
+          "value": "G",
+          "displayText": "Graduate"
+        },
+        {
+          "code": "PG",
+          "key": "PG",
+          "value": "PG",
+          "displayText": "Post Graduate"
+        }
+      ],
       "applicable": null,
       "label": "Qualification",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].kycDetails.qualification",
       "name": "prospect.signatoryInfo[*].kycDetails.qualification",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "description": "Defaulted as true for signatories/POA (isSignatory)"
@@ -4574,11 +4644,11 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Source of wealth",
+      "label": "Source of funds",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].kycDetails.sourceOfWealth.wealthType",
       "name": "prospect.signatoryInfo[*].kycDetails.sourceOfWealth.wealthType",
-      "required": false,
+      "required": true,
       "datalistId": "WealthType",
       "readonlyFor": [],
       "datalist": [
@@ -4621,11 +4691,11 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Specify other sources of wealth",
+      "label": "Specify other sources of funds",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].kycDetails.sourceOfWealth.others",
       "name": "prospect.signatoryInfo[*].kycDetails.sourceOfWealth.others",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "50",
@@ -4999,21 +5069,33 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].employmentDetails.employmentType",
       "name": "prospect.signatoryInfo[*].employmentDetails.employmentType",
-      "required": false,
+      "required": true,
       "datalistId": "EmploymentType",
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "E-1",
-          "key": "E-1",
-          "value": "E-1",
-          "displayText": "Employment Type 1"
+          "code": "S",
+          "key": "S",
+          "value": "S",
+          "displayText": "Salaried"
         },
         {
-          "code": "E-2",
-          "key": "E-2",
-          "value": "E-2",
-          "displayText": "Employment Type 2"
+          "code": "SE",
+          "key": "SE",
+          "value": "SE",
+          "displayText": "Self-Employed"
+        },
+        {
+          "code": "H",
+          "key": "H",
+          "value": "H",
+          "displayText": "Housewife"
+        },
+        {
+          "code": "O",
+          "key": "O",
+          "value": "O",
+          "displayText": "Other"
         }
       ]
     },
@@ -5030,7 +5112,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "Specify Other",
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].employmentDetails.otherEmploymentType",
       "name": "prospect.signatoryInfo[*].employmentDetails.otherEmploymentType",
@@ -5057,7 +5139,7 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].employmentDetails.designation",
       "name": "prospect.signatoryInfo[*].employmentDetails.designation",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "50",
@@ -5126,11 +5208,32 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].employmentDetails.employerName",
       "name": "prospect.signatoryInfo[*].employmentDetails.employerName",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "50",
       "pattern": "^[a-zA-Z ]*$"
+    },
+    "SigEmpd.isWorkAtTheCompany": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": null,
+      "placeholder": null,
+      "path": "$.prospect.signatoryInfo[*].employmentDetails.isWorkAtTheCompany",
+      "name": "prospect.signatoryInfo[*].employmentDetails.isWorkAtTheCompany",
+      "required": false,
+      "datalistId": null,
+      "readonlyFor": []
     },
     "SigEmpd.occupation": {
       "criteria": {
@@ -5172,7 +5275,7 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].employmentDetails.totalExperienceYrs",
       "name": "prospect.signatoryInfo[*].employmentDetails.totalExperienceYrs",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "min": "0",
@@ -5220,7 +5323,7 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].sameAsCompanyAddress",
       "name": "prospect.signatoryInfo[*].sameAsCompanyAddress",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "default": "false"
@@ -5284,7 +5387,7 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].preferredAddress",
       "name": "prospect.signatoryInfo[*].addressInfo[*].addressDetails[*].preferredAddress",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": []
     },
@@ -7350,7 +7453,8 @@
       "lastModifiedDate": "",
       "createdBy": "",
       "lastModifiedBy": "",
-      "actionType": "",
+      "actionType": "save",
+      "retrieveMode": false,
       "saveType": "",
       "tncAgreed": false,
       "declaration": true
@@ -7503,6 +7607,8 @@
         }
       ],
       "otherEntitiesOutsideUAE": false,
+      "isDontHaveSuppliersYet": false,
+      "isDontTradeGoodsYet": false,
       "entitiesOutsideUAE": [
         {
           "companyName": "",
@@ -7536,7 +7642,7 @@
         "shortName": "",
         "fullName": "Abhi",
         "gender": "Male",
-        "maritalStatus": "Married",
+        "maritalStatus": "",
         "maritalStatusOthers": "",
         "occupation": "",
         "mothersMaidenName": "",
@@ -7548,7 +7654,7 @@
           "salutation": "Mr.",
           "shareholderPOASignatoryName": "",
           "isSignatory": "",
-          "isShareholder": false,
+          "isShareholder": "",
           "shareHoldingPercentage": 0,
           "dateOfBirth": "",
           "nationality": "",
@@ -7572,7 +7678,7 @@
           "qualification": "Under Graduate",
           "experienceInYrs": "",
           "sourceOfWealth": {
-            "wealthType": "Personal Savings",
+            "wealthType": "",
             "others": ""
           }
         },
@@ -7598,6 +7704,7 @@
           "empNo": "",
           "department": "",
           "employerName": "",
+          "isWorkAtTheCompany": false,
           "occupation": "",
           "totalExperienceYrs": 0,
           "employmentStartDate": ""
@@ -7622,7 +7729,7 @@
           }
         ],
         "accountSigningInfo": {
-          "accountSigningType": "",
+          "accountSigningType": "ALL",
           "accountSigningInstn": "",
           "authorityType": ""
         },

@@ -41,8 +41,7 @@ const styles = {
 const IslamicBankingSwitcher = ({ classes, updateProspect, applicationInfo }) => {
   const handleClick = islamicBanking =>
     updateProspect({
-      value: islamicBanking,
-      name: "prospect.applicationInfo.islamicBanking"
+      "prospect.applicationInfo.islamicBanking": islamicBanking
     });
 
   return (

@@ -8,7 +8,7 @@ const style = {
     justifyContent: "center",
     alignItems: "center",
     minWidth: "285px",
-    margin: "10px",
+    margin: "10px 10px 10px 0",
     padding: "27px 20px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",

@@ -13,6 +13,7 @@ import * as appConfigSelectors from "../store/selectors/appConfig";
 import { updateProspect } from "../store/actions/appConfig";
 
 import checkIc from "../assets/icons/check.png";
+import { portraitOrientationQueryIPads } from "../constants/styles";
 
 const style = {
   paperRoot: {
@@ -22,28 +23,37 @@ const style = {
     position: "relative"
   },
   tableContainer: {
-    minWidth: "780px",
-    position: "relative",
-    "@media only screen and (max-height: 920px)": {
-      maxHeight: "480px"
-    }
+    position: "relative"
   },
   tableHead: {
     backgroundColor: "#f7f8f9"
   },
   tableRoot: {
     tableLayout: "fixed",
-    width: "auto",
+    width: "100%",
     borderRadius: "8px",
     position: "relative",
     overflow: "hidden",
     margin: "30px 0",
+    "&.mobileTable": {
+      display: "none"
+    },
+    "@media only screen and (max-width: 1100px)": {
+      display: "none",
+      margin: "0",
+      "& + &": {
+        marginTop: "20px"
+      },
+      "&.mobileTable": {
+        display: "block"
+      }
+    },
     "& th, & td": {
       borderBottom: "none",
       zIndex: "1"
     },
     "& tr:not(:last-child) td": {
-      "&::before": {
+      "&:before": {
         content: "''",
         position: "absolute",
         left: 0,
@@ -51,33 +61,48 @@ const style = {
         margin: "0 auto",
         width: "90%",
         height: "2px",
-        backgroundColor: "#f7f8f9"
+        backgroundColor: "#f7f8f9",
+        display: "block",
+        top: "-2px"
       }
     },
     "& tr:nth-of-type(even) td": {
-      "&::before": {
-        bottom: 2
+      "&:before": {
+        bottom: "2px"
       }
     },
     "& tr:nth-of-type(odd) td": {
-      "&::before": {
-        bottom: -2
+      "&:before": {
+        bottom: "-2px"
       }
     },
     "& th:last-child, & td:last-child": {
-      paddingRight: 0
+      paddingRight: "0",
+      "@media only screen and (max-width: 1100px)": {
+        padding: "0"
+      }
     }
   },
   rootCellName: {
     maxWidth: "180px",
     paddingLeft: "5px",
-    paddingRight: "0"
+    paddingRight: "0",
+    "@media only screen and (max-width: 1100px)": {
+      maxWidth: "inherit",
+      width: "50%"
+    },
+    "@media only screen and (max-width: 991px)": {
+      width: "75%"
+    }
   },
   selectedAccountContainer: {
     position: "absolute",
     zIndex: "1",
     top: "-15px",
     height: "calc(100% + 30px)",
+    "@media only screen and (max-width: 1100px)": {
+      display: "none"
+    },
     "@media only screen and (max-height: 900px)": {
       height: "calc(100% + 30px)"
     },
@@ -103,36 +128,67 @@ const style = {
     color: "#373737",
     fontSize: "14px",
     textAlign: "center",
-    display: "block"
+    display: "block",
+    "@media only screen and (max-width: 1100px)": {
+      lineHeight: "1"
+    }
+  },
+  mobileTable: {
+    display: "none"
   }
 };
 
-const createData = (name, starter, currentAccount, elite) => {
-  return { name, starter, currentAccount, elite };
+const shortNames = {
+  starter: {
+    name: "RAKStarter",
+    ref: "RAKStarter"
+  },
+  currentAccount: {
+    name: "Current Account",
+    ref: "CurrentAccount"
+  },
+  elite: {
+    name: "RAKelite",
+    ref: "RAKElite"
+  }
 };
-
 const mockDataRows = [
-  createData(
-    "Monthly Average Credit Balance",
-    { text: "Zero" },
-    { text: "AED 25,000", info: "or equivalent at entity level" },
-    { text: "AED 500,000", info: "or equivalent at entity level" }
-  ),
-  createData(
-    "Monthly charges for not maintaining average balance",
-    { text: "Zero" },
-    { text: "AED 50" },
-    { text: "AED 250" }
-  ),
-  createData("Monthly Maintenance fees", { text: "AED 99" }, { text: "AED 50" }, { text: "Zero" }),
-  createData("Free Teller Transactions", { text: "-" }, { text: "-" }, { ic: checkIc }),
-  createData("Lifestyle benefits", { text: "-" }, { text: "-" }, { ic: checkIc }),
-  createData(
-    "RAKvalue Package(PLUS and MAX)",
-    { text: "Mandatory", info: "(PLUS - AED 49)" },
-    { text: "Optional" },
-    { text: "Optional" }
-  )
+  {
+    info: "Monthly Average Credit Balance",
+    starter: { text: "Zero" },
+    currentAccount: { text: "AED 25,000", info: "or equivalent at entity level" },
+    elite: { text: "AED 500,000", info: "or equivalent at entity level" }
+  },
+  {
+    info: "Monthly charges for not maintaining average balance",
+    starter: { text: "Zero" },
+    currentAccount: { text: "AED 50" },
+    elite: { text: "AED 250" }
+  },
+  {
+    info: "Monthly Maintenance fees",
+    starter: { text: "AED 99" },
+    currentAccount: { text: "AED 50" },
+    elite: { text: "Zero" }
+  },
+  {
+    info: "Free Teller Transactions",
+    starter: { text: "-" },
+    currentAccount: { text: "-" },
+    elite: { ic: checkIc }
+  },
+  {
+    info: "Lifestyle benefits",
+    starter: { text: "-" },
+    currentAccount: { text: "-" },
+    elite: { ic: checkIc }
+  },
+  {
+    info: "RAKvalue Package(PLUS and MAX)",
+    starter: { text: "Mandatory", info: "(PLUS - AED 49)" },
+    currentAccount: { text: "Optional" },
+    elite: { text: "Optional" }
+  }
 ];
 
 const StyledTableRow = withStyles(() => ({
@@ -140,15 +196,32 @@ const StyledTableRow = withStyles(() => ({
     "& th": {
       fontSize: "14px",
       color: "#888888",
-      padding: "0 5px 0 0px"
+      padding: "0 5px 0 0",
+      "@media only screen and (max-width: 1100px)": {
+        fontSize: "12px"
+      }
     },
     "& td": {
       height: "60px",
       padding: "0",
-      position: "relative"
+      position: "relative",
+      "@media only screen and (max-width: 1360px)": {
+        width: "150px"
+      },
+      "@media only screen and (max-width: 1100px)": {
+        height: "auto"
+      }
     },
     "&:nth-of-type(even)": {
       backgroundColor: "#f7f8f9"
+    },
+    "@media only screen and (max-width: 1100px)": {
+      "&:nth-of-type(even)": {
+        backgroundColor: "#fff"
+      },
+      "&:nth-of-type(odd)": {
+        backgroundColor: "#f7f8f9"
+      }
     }
   }
 }))(TableRow);
@@ -156,7 +229,8 @@ const StyledTableRow = withStyles(() => ({
 const StyledTableHeader = withStyles(() => ({
   root: {
     position: "relative",
-    textAlign: "center"
+    textAlign: "center",
+    color: "red"
   },
   head: {
     color: "#373737",
@@ -166,7 +240,14 @@ const StyledTableHeader = withStyles(() => ({
     padding: 0,
     borderBottom: "none",
     width: "200px",
-    maxWidth: "200px"
+    maxWidth: "200px",
+    "@media only screen and (max-width: 1360px)": {
+      width: "150px"
+    },
+    "@media only screen and (max-width: 1100px)": {
+      height: "auto",
+      fontSize: "14px"
+    }
   }
 }))(TableCell);
 
@@ -175,12 +256,18 @@ const StyledTableCell = withStyles(() => ({
     fontSize: "16px",
     color: "#373737",
     textAlign: "center",
+    "@media only screen and (max-width: 1100px)": {
+      fontSize: "12px"
+    },
     "& span": {
       display: "block"
     },
     "& span + span": {
       fontSize: "12px",
-      color: "#888"
+      color: "#888",
+      "@media only screen and (max-width: 1360px)": {
+        fontSize: "10px"
+      }
     },
     "& button": {
       marginTop: "5px"
@@ -188,7 +275,13 @@ const StyledTableCell = withStyles(() => ({
     "&:hover": {
       "& button": {
         width: "145px",
-        padding: "7px 0"
+        padding: "7px 0",
+        "@media only screen and (max-width: 1100px)": {
+          padding: "3px 0"
+        },
+        [portraitOrientationQueryIPads]: {
+          width: "120px"
+        }
       }
     }
   }
@@ -198,7 +291,9 @@ class TableCompare extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      offset: 380
+      offset: 380,
+      selectedAccountContainerWidth: "190px",
+      selectedAccount: ""
     };
 
     this.RAKStarter = React.createRef();
@@ -211,46 +306,54 @@ class TableCompare extends React.Component {
     this.handleHighlightSelectedAccount(selectedAccount);
   }
 
+  updateDimensionSelectedAccountContainer = () => {
+    const selectedAccountContainerWidth = window
+      .getComputedStyle(this.RAKStarter.current)
+      .getPropertyValue("width");
+    this.setState({
+      selectedAccountContainerWidth: parseInt(selectedAccountContainerWidth) - 10
+    });
+
+    this.handleHighlightSelectedAccount(this.state.selectedAccount);
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensionSelectedAccountContainer);
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensionSelectedAccountContainer);
+    this.updateDimensionSelectedAccountContainer();
+  }
+
   handleHighlightSelectedAccount = selectedAccount => {
     switch (selectedAccount) {
-      case "RAKstarter":
+      case shortNames.starter.name:
         this.setState({
-          offset: this.RAKStarter.current.offsetLeft
+          offset: this.RAKStarter.current.offsetLeft + 5
         });
         break;
-      case "Current Account":
+      case shortNames.currentAccount.name:
         this.setState({
-          offset: this.CurrentAccount.current.offsetLeft
+          offset: this.CurrentAccount.current.offsetLeft + 5
         });
         break;
-      case "RAKelite":
+      case shortNames.elite.name:
         this.setState({
-          offset: this.RAKElite.current.offsetLeft
+          offset: this.RAKElite.current.offsetLeft + 5
         });
         break;
       default:
         this.setState({
-          offset: this.CurrentAccount.current.offsetLeft
+          offset: this.CurrentAccount.current.offsetLeft + 5
         });
     }
   };
 
-  handleClick = accountType => {
+  handleSelectAccount = accountType => {
     const { history, updateProspect } = this.props;
-    updateProspect({
-      value: accountType,
-      name: "prospect.applicationInfo.accountType"
-    });
+    updateProspect({ "prospect.applicationInfo.accountType": accountType });
     history.push("/DetailedAccount");
-  };
-
-  handleScroll = e => {
-    const { currentTarget } = e;
-    // const hasHorizontalScrollbar = currentTarget.scrollWidth < 780;
-    const hasVerticalScrollbar = currentTarget.scrollHeight < 540;
-    if (hasVerticalScrollbar) {
-      e.stopPropagation();
-    }
   };
 
   handleHover = e => {
@@ -275,108 +378,144 @@ class TableCompare extends React.Component {
     );
 
     return (
-      <Paper classes={{ root: classes.paperRoot }} onWheel={this.handleScroll}>
-        <div style={{ overflowX: "auto" }}>
+      <Paper classes={{ root: classes.paperRoot }}>
+        <div>
           <div className={classes.tableContainer}>
             <Paper
               classes={{ root: classes.selectedAccountContainer }}
               style={{
                 left: `${offset}px`,
-                width: this.state.width - 5 || "195px"
+                width: this.state.selectedAccountContainerWidth
               }}
             />
             <Table classes={{ root: classes.tableRoot }}>
               <TableHead style={{ position: "relative" }}>
                 <TableRow classes={{ head: classes.tableHead }}>
                   <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
-                  <StyledTableHeaderWitHoverHandler name="RAKstarter" text="RAKStarter" />
-                  <StyledTableHeaderWitHoverHandler name="Current Account" text="Current Account" />
-                  <StyledTableHeaderWitHoverHandler name="RAKelite" text="RAKelite" />
+                  <StyledTableHeaderWitHoverHandler
+                    name={shortNames.starter.name}
+                    text="RAKStarter"
+                  />
+                  <StyledTableHeaderWitHoverHandler
+                    name={shortNames.currentAccount.name}
+                    text="Current Account"
+                  />
+                  <StyledTableHeaderWitHoverHandler name={shortNames.elite.name} text="RAKelite" />
                 </TableRow>
               </TableHead>
 
               <TableBody>
-                {mockDataRows.map(row => (
-                  <StyledTableRow key={row.name}>
-                    <TableCell
-                      classes={{ root: classes.rootCellName }}
-                      align="right"
-                      component="th"
-                      scope="row"
-                    >
-                      {row.name}
-                    </TableCell>
+                {mockDataRows.map((row, index) => {
+                  const { starter, currentAccount, elite } = row;
+                  return (
+                    <StyledTableRow key={index}>
+                      <TableCell
+                        classes={{ root: classes.rootCellName }}
+                        align="right"
+                        component="th"
+                        scope="row"
+                      >
+                        {row.info}
+                      </TableCell>
 
-                    <StyledTableCellWitHoverHandler name="RAKstarter">
-                      <span>{row.starter.text}</span>
-                      <span>{row.starter.info}</span>
-                      {row.starter.ic && <img src={row.starter.ic} alt="" />}
-                    </StyledTableCellWitHoverHandler>
+                      <StyledTableCellWitHoverHandler name={shortNames.starter.name}>
+                        <span>{starter.text}</span>
+                        <span>{starter.info}</span>
+                        {starter.ic && <img src={starter.ic} alt="" />}
+                      </StyledTableCellWitHoverHandler>
 
-                    <StyledTableCellWitHoverHandler name="Current Account">
-                      <span>{row.currentAccount.text}</span>
-                      <span>{row.currentAccount.info}</span>
-                      {row.currentAccount.ic && <img src={row.currentAccount.ic} alt="" />}
-                    </StyledTableCellWitHoverHandler>
+                      <StyledTableCellWitHoverHandler name={shortNames.currentAccount.name}>
+                        <span>{currentAccount.text}</span>
+                        <span>{currentAccount.info}</span>
+                        {currentAccount.ic && <img src={currentAccount.ic} alt="" />}
+                      </StyledTableCellWitHoverHandler>
 
-                    <StyledTableCellWitHoverHandler name="RAKelite">
-                      <span>{row.elite.text}</span>
-                      <span>{row.elite.info}</span>
-                      {row.elite.ic && <img src={row.elite.ic} alt="" />}
-                    </StyledTableCellWitHoverHandler>
-                  </StyledTableRow>
-                ))}
+                      <StyledTableCellWitHoverHandler name={shortNames.elite.name}>
+                        <span>{elite.text}</span>
+                        <span>{elite.info}</span>
+                        {elite.ic && <img src={elite.ic} alt="" />}
+                      </StyledTableCellWitHoverHandler>
+                    </StyledTableRow>
+                  );
+                })}
 
                 <StyledTableRow>
-                  <TableCell component="th" scope="row">
-                    {" "}
-                  </TableCell>
+                  <TableCell component="th" scope="row" />
 
-                  <StyledTableCell
-                    ref={this.RAKStarter}
-                    data-name="RAKstarter"
-                    onMouseEnter={this.handleHover}
-                  >
-                    <ContainedButton
-                      label="Read more"
-                      handleClick={() => this.handleClick("RAKStarter")}
-                      classes={{
-                        buttonStyle: classes.containedButton,
-                        labelStyle: classes.containedButtonLabelStyle
-                      }}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell
-                    ref={this.CurrentAccount}
-                    data-name="Current Account"
-                    onMouseEnter={this.handleHover}
-                  >
-                    <ContainedButton
-                      label="Read more"
-                      handleClick={() => this.handleClick("Current Account")}
-                      classes={{
-                        buttonStyle: classes.containedButton,
-                        labelStyle: classes.containedButtonLabelStyle
-                      }}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell
-                    ref={this.RAKElite}
-                    data-name="RAKelite"
-                    onMouseEnter={this.handleHover}
-                  >
-                    <ContainedButton
-                      label="Read more"
-                      handleClick={() => this.handleClick("RAKelite")}
-                      classes={{
-                        buttonStyle: classes.containedButton,
-                        labelStyle: classes.containedButtonLabelStyle
-                      }}
-                    />
-                  </StyledTableCell>
+                  {Object.keys(shortNames).map((shortName, index) => {
+                    const { name, ref } = shortNames[shortName];
+                    return (
+                      <StyledTableCell
+                        ref={this[ref]}
+                        data-name={name}
+                        onMouseEnter={this.handleHover}
+                        key={index}
+                      >
+                        <ContainedButton
+                          label="Read more"
+                          handleClick={() => this.handleSelectAccount(name)}
+                          classes={{
+                            buttonStyle: classes.containedButton,
+                            labelStyle: classes.containedButtonLabelStyle
+                          }}
+                        />
+                      </StyledTableCell>
+                    );
+                  })}
                 </StyledTableRow>
               </TableBody>
             </Table>
+
+            {/* Table for small width */}
+            {Object.keys(shortNames).map((typeAccount, index) => {
+              const { name } = shortNames[typeAccount];
+              return (
+                <Table classes={{ root: classes.tableRoot }} className={"mobileTable"} key={index}>
+                  <TableHead style={{ position: "relative" }}>
+                    <TableRow classes={{ head: classes.tableHead }}>
+                      <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
+                      <StyledTableHeaderWitHoverHandler name={typeAccount} text={name} />
+                    </TableRow>
+                  </TableHead>
+
+                  <TableBody>
+                    {mockDataRows.map((row, index) => {
+                      return (
+                        <StyledTableRow key={index}>
+                          <TableCell
+                            classes={{ root: classes.rootCellName }}
+                            align="right"
+                            component="th"
+                            scope="row"
+                          >
+                            {row.info}
+                          </TableCell>
+                          <StyledTableCellWitHoverHandler name={name}>
+                            <span>{row[typeAccount].text}</span>
+                            <span>{row[typeAccount].info}</span>
+                            {row[typeAccount].ic && <img src={row[typeAccount].ic} alt="" />}
+                          </StyledTableCellWitHoverHandler>
+                        </StyledTableRow>
+                      );
+                    })}
+                    <StyledTableRow>
+                      <StyledTableCell />
+
+                      <StyledTableCell data-name={name} onMouseEnter={this.handleHover} key={index}>
+                        <ContainedButton
+                          label="Read more"
+                          handleClick={() => this.handleSelectAccount(name)}
+                          classes={{
+                            buttonStyle: classes.containedButton,
+                            labelStyle: classes.containedButtonLabelStyle
+                          }}
+                        />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  </TableBody>
+                </Table>
+              );
+            })}
           </div>
         </div>
       </Paper>

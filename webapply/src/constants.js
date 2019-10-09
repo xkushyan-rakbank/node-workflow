@@ -21,8 +21,16 @@ import SearchedCompanyDetails from "./components/SearchedAppInfoSteps/CompanyDet
 import CheckList from "./components/SearchedAppInfoSteps/CheckList";
 import Documents from "./components/SearchedAppInfoSteps/Documents";
 import AuditTrail from "./components/SearchedAppInfoSteps/AuditTrail";
-
+import CompanyBackgroundForm from "./components/FinalQuestions/CompanyBackgroundForm";
+import CompanyContactInformationForm from "./components/FinalQuestions/CompanyContactInformationForm";
+import CompanyMailingAddressForm from "./components/FinalQuestions/CompanyMailingAddressForm";
+import CompanyNetworkForm from "./components/FinalQuestions/CompanyNetworkForm";
+import CompanyAnticipatedTransactionsForm from "./components/FinalQuestions/CompanyAnticipatedTransactionsForm";
 import routes from "./routes";
+import SignatoryPersonalInformationForm from "./components/FinalQuestions/SignatoryPersonalInformationForm";
+import SignatoryWealthForm from "./components/FinalQuestions/SignatoryWealthForm";
+import SignatoryMailingAddressForm from "./components/FinalQuestions/SignatoryMailingAddressForm";
+import SignatoryEmploymentDetailsForm from "./components/FinalQuestions/SignatoryEmploymentDetailsForm";
 
 export const stakeHoldersSteps = [
   {
@@ -57,6 +65,57 @@ export const aboutCompanySteps = [
     component: Industry
   },
   { step: 3, title: "Lisence Information", component: LicenseInformation }
+];
+
+export const finalQuestionsSteps = [
+  {
+    step: 1,
+    title: "Business relationships",
+    component: CompanyBackgroundForm
+  },
+  {
+    step: 2,
+    title: "Branches and subsidiaries",
+    component: CompanyNetworkForm
+  },
+  {
+    step: 3,
+    title: "Anticipated transactions",
+    component: CompanyAnticipatedTransactionsForm
+  },
+  {
+    step: 4,
+    title: "Preferred mailing address",
+    component: CompanyMailingAddressForm
+  },
+  {
+    step: 5,
+    title: "Preferred contact information",
+    component: CompanyContactInformationForm
+  }
+];
+
+export const signatoriesSteps = [
+  {
+    step: 1,
+    title: "Personal Information",
+    component: SignatoryPersonalInformationForm
+  },
+  {
+    step: 2,
+    title: "Employment details",
+    component: SignatoryEmploymentDetailsForm
+  },
+  {
+    step: 3,
+    title: "Source of funds",
+    component: SignatoryWealthForm
+  },
+  {
+    step: 4,
+    title: "Preferred mailing address",
+    component: SignatoryMailingAddressForm
+  }
 ];
 
 export const authorityType = [
@@ -188,3 +247,18 @@ export const searchedAppInfoSteps = [
   { step: 3, title: "Documents", component: Documents },
   { step: 4, title: "Audit Trail", component: AuditTrail }
 ];
+
+export const submitApplication = {
+  termCondition: "terms & conditions",
+  termsOfEnrolment: "terms of enrolment",
+  termConditionUrl:
+    "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
+  //TODO: need to update the URL
+  termOfEnrolmentUrl:
+    "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
+  formTitle: "Submit application",
+  formInfo:
+    "And just like that, we have reached the end! Here’s the overview of what you’re applying for.",
+  trueNdCompleteAcknldgelabel: "I confirm that the information provided is true and complete",
+  needCommunicationLabel: "I want to receive marketing and promotional communication from RakBank"
+};

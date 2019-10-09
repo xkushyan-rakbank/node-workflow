@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
-import SectionTitle from "../SectionTitle";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import RemoveButton from "../Buttons/RemoveButton";
@@ -50,10 +48,6 @@ const styles = {
 };
 
 class CompanyNetworkForm extends Component {
-  static defaultProps = {
-    handleContinue: () => {}
-  };
-
   constructor(props) {
     super(props);
 
@@ -65,205 +59,114 @@ class CompanyNetworkForm extends Component {
       insideSubsidiaryCompanyNameFilled: false,
       insideSubsidiaryTradeLicenseNoFilled: false,
       outsideSubsidiaryCompanyNameFilled: false,
-      insideSubsidiaryCount: 1,
-      outsideSubsidiaryCount: 1,
-      isDontHaveInsideSubsidiary: true,
-      isDontHaveOutsideSubsidiary: true
+      otherEntitiesOutsideUAE: true,
+      otherEntitiesInUAE: true
     };
   }
 
+  componentDidMount() {
+    this.setState(
+      {
+        insideSubsidiaryCompanyNameFilled: !!this.props.entitiesInUAE[0].companyName,
+        insideSubsidiaryTradeLicenseNoFilled: !!this.props.entitiesInUAE[0].tradeLicenseNo,
+        outsideSubsidiaryCompanyNameFilled: !!this.props.entitiesOutsideUAE[0].companyName,
+        otherEntitiesOutsideUAE: !this.props.otherEntitiesOutsideUAE,
+        otherEntitiesInUAE: !this.props.otherEntitiesInUAE
+      },
+      () => {
+        const isButtonDisabled = this.isContinueDisabled();
+        this.props.setIsContinueDisabled(isButtonDisabled);
+      }
+    );
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
     if (
-      prevState.isDontHaveInsideSubsidiary !== this.state.isDontHaveInsideSubsidiary &&
-      this.state.isDontHaveInsideSubsidiary
+      prevState.otherEntitiesInUAE !== this.state.otherEntitiesInUAE &&
+      this.state.otherEntitiesInUAE
     ) {
       this.resetInsideSubsidiaryValues();
     }
     if (
-      prevState.isDontHaveOutsideSubsidiary !== this.state.isDontHaveOutsideSubsidiary &&
-      this.state.isDontHaveOutsideSubsidiary
+      prevState.otherEntitiesOutsideUAE !== this.state.otherEntitiesOutsideUAE &&
+      this.state.otherEntitiesOutsideUAE
     ) {
       this.resetOutsideSubsidiaryValues();
     }
   }
 
-  getEmptyInsideSubsidiarysItem() {
-    return {
-      companyName: "",
-      emirate: "",
-      tradeLicenseNo: ""
-    };
-  }
-
-  getEmptyOutsideSubsidiarysItem() {
-    return {
-      companyName: "",
-      country: ""
-    };
-  }
-
-  getInsideSubsidiariesData() {
-    return get(this.props.orgKYCDetails, "entitiesInUAE", [this.getEmptyInsideSubsidiarysItem()]);
-  }
-
-  getOutsideSubsidiariesData() {
-    return get(this.props.orgKYCDetails, "entitiesOutsideUAE", [
-      this.getEmptyOutsideSubsidiarysItem()
-    ]);
-  }
-
   resetInsideSubsidiaryValues() {
-    if (this.state.insideSubsidiaryCount > 1) {
-      this.setState({ insideSubsidiaryCount: 1 });
-    }
     this.props.updateProspect({
       "prospect.orgKYCDetails.entitiesInUAE": [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
     });
   }
 
   resetOutsideSubsidiaryValues() {
-    if (this.state.outsideSubsidiaryCount > 1) {
-      this.setState({ outsideSubsidiaryCount: 1 });
-    }
     this.props.updateProspect({
       "prospect.orgKYCDetails.entitiesOutsideUAE": [{ country: "", companyName: "" }]
     });
   }
 
-  insideSubsidiaryCompanyNameChangeHandle = value =>
-    this.setState({ insideSubsidiaryCompanyNameFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
-  insideSubsidiaryTradeLicenseNoChangeHandle = value =>
-    this.setState({ insideSubsidiaryTradeLicenseNoFilled: !!value });
-
-  outsideSubsidiaryCompanyNameChangeHandle = value =>
-    this.setState({ outsideSubsidiaryCompanyNameFilled: !!value });
-
-  handleAddInsideSubsidiarySwitch = e => {
-    this.props.updateProspect({ "prospect.orgKYCDetails.otherEntitiesInUAE": e.target.checked });
-    this.setState({ isDontHaveInsideSubsidiary: !e.target.checked });
+  handleSwitchCheckbox = (e, prospect) => {
+    const path = `prospect.orgKYCDetails.${prospect}`;
+    this.props.updateProspect({ [path]: e.target.checked });
+    this.setState({ [prospect]: !e.target.checked });
   };
 
-  handleAddInsideSubsidiaryClick = () => {
-    const dataList = this.getInsideSubsidiariesData();
-    if (dataList.length < this.limits.insideSubsidiaryCount) {
+  handleAddItem = (items, prospect, limit, item) => {
+    if (items.length < limit) {
+      const path = `prospect.orgKYCDetails.${prospect}`;
       this.props.updateProspect({
-        "prospect.orgKYCDetails.entitiesInUAE": [...dataList, this.getEmptyInsideSubsidiarysItem()]
+        [path]: [...items, item]
       });
     }
   };
 
-  handleRemoveInsideSubsidiary = index => {
-    const dataList = this.getInsideSubsidiariesData();
+  handleRemoveItem = (items, index, prospect) => {
+    const dataList = [...items];
     dataList.splice(index, 1);
-    this.props.updateProspect({ "prospect.orgKYCDetails.entitiesInUAE": [...dataList] });
-  };
-
-  handleAddOutsideSubsidiarySwitch = e => {
+    const path = `prospect.orgKYCDetails.${prospect}`;
     this.props.updateProspect({
-      "prospect.orgKYCDetails.otherEntitiesOutsideUAE": e.target.checked
+      [path]: [...dataList]
     });
-    this.setState({ isDontHaveOutsideSubsidiary: !e.target.checked });
   };
 
-  handleAddOutsideSubsidiaryClick = () => {
-    const dataList = this.getOutsideSubsidiariesData();
-    if (dataList.length < this.limits.outsideSubsidiaryCount) {
-      this.props.updateProspect({
-        "prospect.orgKYCDetails.entitiesOutsideUAE": [
-          ...dataList,
-          this.getEmptyOutsideSubsidiarysItem()
-        ]
-      });
-    }
-  };
-
-  handleRemoveOutsideSubsidiary = index => {
-    const dataList = this.getOutsideSubsidiariesData();
-    dataList.splice(index, 1);
-    this.props.updateProspect({ "prospect.orgKYCDetails.entitiesOutsideUAE": [...dataList] });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
-  };
-
-  isInsideSubsidiaryCompanyNameRequired(index) {
-    return this.getInsideSubsidiariesData()[index].companyName === "";
-  }
-
-  isInsideSubsidiaryEmirateRequired(index) {
-    return this.getInsideSubsidiariesData()[index].emirate === "";
-  }
-
-  isInsideSubsidiaryTradeLicenseRequired(index) {
-    return this.getInsideSubsidiariesData()[index].tradeLicenseNo === "";
-  }
-
-  isOutsideSubsidiaryCompanyNameRequired(index) {
-    return this.getOutsideSubsidiariesData()[index].companyName === "";
-  }
-
-  isOutsideSubsidiaryCountryRequired(index) {
-    return this.getOutsideSubsidiariesData()[index].country === "";
-  }
-
-  isAddInsideSubsidiaryDisabled = () => {
-    const { insideSubsidiaryCount } = this.limits;
-    const insideSubsidiaries = this.getInsideSubsidiariesData();
-    const lastInsideSubsidiary = insideSubsidiaries[insideSubsidiaries.length - 1];
-    return (
-      insideSubsidiaries.length >= insideSubsidiaryCount ||
-      !lastInsideSubsidiary.companyName ||
-      !lastInsideSubsidiary.emirate ||
-      !lastInsideSubsidiary.tradeLicenseNo
-    );
-  };
-
-  isAddOutsideSubsidiaryDisabled = () => {
-    const { outsideSubsidiaryCount } = this.limits;
-    const outsideSubsidiaries = this.getOutsideSubsidiariesData();
-    const lastOutsideSubsidiary = outsideSubsidiaries[outsideSubsidiaries.length - 1];
-    return (
-      outsideSubsidiaries.length >= outsideSubsidiaryCount ||
-      !lastOutsideSubsidiary.companyName ||
-      !lastOutsideSubsidiary.country
-    );
+  isAddButtonDisabled = (limit, items, ...fields) => {
+    const lastAddedItem = items[items.length - 1];
+    const allFieldsFilled = fields.length
+      ? fields.every(item => lastAddedItem[item] !== "")
+      : lastAddedItem;
+    return items.length >= limit || !allFieldsFilled;
   };
 
   isContinueDisabled = () => {
     const {
-      isDontHaveInsideSubsidiary,
-      isDontHaveOutsideSubsidiary,
+      otherEntitiesOutsideUAE,
+      otherEntitiesInUAE,
       insideSubsidiaryCompanyNameFilled,
       insideSubsidiaryTradeLicenseNoFilled,
       outsideSubsidiaryCompanyNameFilled
     } = this.state;
-    const insideSubsidiaries = this.getInsideSubsidiariesData();
     const isInsideSubsidiariesFilled =
-      isDontHaveInsideSubsidiary ||
-      insideSubsidiaries.length > 1 ||
-      !!(
-        insideSubsidiaryCompanyNameFilled &&
-        insideSubsidiaries[0].emirate &&
-        insideSubsidiaryTradeLicenseNoFilled
-      );
-    const outsideSubsidiaries = this.getOutsideSubsidiariesData();
+      otherEntitiesInUAE ||
+      (insideSubsidiaryCompanyNameFilled &&
+        this.props.entitiesInUAE[0].emirate &&
+        insideSubsidiaryTradeLicenseNoFilled);
     const isOutsideSubsidiariesFilled =
-      isDontHaveOutsideSubsidiary ||
-      outsideSubsidiaries.length > 1 ||
-      !!(outsideSubsidiaryCompanyNameFilled && outsideSubsidiaries[0].country);
+      otherEntitiesOutsideUAE ||
+      (outsideSubsidiaryCompanyNameFilled && this.props.entitiesOutsideUAE[0].country);
     return !(isInsideSubsidiariesFilled && isOutsideSubsidiariesFilled);
   };
 
   render() {
-    const { isDontHaveInsideSubsidiary, isDontHaveOutsideSubsidiary } = this.state;
-    const { classes } = this.props;
+    const { otherEntitiesOutsideUAE, otherEntitiesInUAE } = this.state;
+    const { classes, entitiesInUAE, entitiesOutsideUAE } = this.props;
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Branches and subsidiaries" className={this.props.classes.title} />
-
+      <>
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>
@@ -272,33 +175,33 @@ class CompanyNetworkForm extends Component {
 
         <Checkbox
           label="The company has branches, subsidiaries or other companies in the UAE"
-          value={!isDontHaveInsideSubsidiary}
-          onChange={this.handleAddInsideSubsidiarySwitch}
+          value={!otherEntitiesInUAE}
+          onChange={e => this.handleSwitchCheckbox(e, "otherEntitiesInUAE")}
         />
-        {!isDontHaveInsideSubsidiary && (
+        {!otherEntitiesInUAE && (
           <>
             <Grid container spacing={3} className={this.props.classes.flexContainer}>
-              {this.getInsideSubsidiariesData().map((_, index) => {
+              {entitiesInUAE.map((_, index) => {
                 return (
                   <React.Fragment key={index}>
                     <Grid item sm={12}>
                       <TextInput
                         key={index}
                         id="OkycEntIn.companyName"
+                        storeFlag="insideSubsidiaryCompanyNameFilled"
                         indexes={[index]}
-                        required={this.isInsideSubsidiaryCompanyNameRequired(index)}
-                        disabled={this.state.isDontHaveInsideSubsidiary}
-                        callback={this.insideSubsidiaryCompanyNameChangeHandle}
+                        disabled={otherEntitiesInUAE}
+                        callback={this.callbackHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12}>
                       <TextInput
                         key={index}
                         id="OkycEntIn.tradeLicenseNo"
+                        storeFlag="insideSubsidiaryTradeLicenseNoFilled"
                         indexes={[index]}
-                        required={this.isInsideSubsidiaryTradeLicenseRequired(index)}
-                        disabled={this.state.isDontHaveInsideSubsidiary}
-                        callback={this.insideSubsidiaryTradeLicenseNoChangeHandle}
+                        disabled={otherEntitiesInUAE}
+                        callback={this.callbackHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
@@ -306,12 +209,13 @@ class CompanyNetworkForm extends Component {
                         key={index}
                         id="OkycEntIn.emirate"
                         indexes={[index]}
-                        required={this.isInsideSubsidiaryEmirateRequired(index)}
-                        disabled={this.state.isDontHaveInsideSubsidiary}
+                        disabled={otherEntitiesInUAE}
                       />
                       {index !== 0 && (
                         <RemoveButton
-                          onClick={() => this.handleRemoveInsideSubsidiary(index)}
+                          onClick={() =>
+                            this.handleRemoveItem(entitiesInUAE, index, "entitiesInUAE")
+                          }
                           title="Remove"
                           classes={{ container: classes.container }}
                         />
@@ -322,9 +226,26 @@ class CompanyNetworkForm extends Component {
               })}
             </Grid>
             <AddButton
-              onClick={this.handleAddInsideSubsidiaryClick}
+              onClick={() =>
+                this.handleAddItem(
+                  entitiesInUAE,
+                  "entitiesInUAE",
+                  this.limits.insideSubsidiaryCount,
+                  {
+                    tradeLicenseNo: "",
+                    emirate: "",
+                    companyName: ""
+                  }
+                )
+              }
               title="Add a subsidiary inside the UAE"
-              disabled={this.isAddInsideSubsidiaryDisabled()}
+              disabled={this.isAddButtonDisabled(
+                this.limits.insideSubsidiaryCount,
+                entitiesInUAE,
+                "tradeLicenseNo",
+                "emirate",
+                "companyName"
+              )}
             />
           </>
         )}
@@ -336,23 +257,23 @@ class CompanyNetworkForm extends Component {
         </h4>
         <Checkbox
           label="The company has branches, subsidiaries or other companies outside the UAE"
-          value={!isDontHaveOutsideSubsidiary}
-          onChange={this.handleAddOutsideSubsidiarySwitch}
+          value={!otherEntitiesOutsideUAE}
+          onChange={e => this.handleSwitchCheckbox(e, "otherEntitiesOutsideUAE")}
         />
-        {!isDontHaveOutsideSubsidiary && (
+        {!otherEntitiesOutsideUAE && (
           <>
             <Grid container spacing={3} className={this.props.classes.flexContainer}>
-              {this.getOutsideSubsidiariesData().map((_, index) => {
+              {entitiesOutsideUAE.map((_, index) => {
                 return (
                   <React.Fragment key={index}>
                     <Grid item md={6} sm={12}>
                       <TextInput
                         key={index}
                         id="OkycEntOut.companyName"
+                        storeFlag="outsideSubsidiaryCompanyNameFilled"
                         indexes={[index]}
-                        required={this.isOutsideSubsidiaryCompanyNameRequired(index)}
-                        disabled={this.state.isDontHaveOutsideSubsidiary}
-                        callback={this.outsideSubsidiaryCompanyNameChangeHandle}
+                        disabled={otherEntitiesOutsideUAE}
+                        callback={this.callbackHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
@@ -360,12 +281,13 @@ class CompanyNetworkForm extends Component {
                         key={index}
                         id="OkycEntOut.country"
                         indexes={[index]}
-                        required={this.isOutsideSubsidiaryCountryRequired(index)}
-                        disabled={this.state.isDontHaveOutsideSubsidiary}
+                        disabled={otherEntitiesOutsideUAE}
                       />
                       {index !== 0 && (
                         <RemoveButton
-                          onClick={() => this.handleRemoveOutsideSubsidiary(index)}
+                          onClick={() =>
+                            this.handleRemoveItem(entitiesOutsideUAE, index, "entitiesOutsideUAE")
+                          }
                           title="Remove"
                           classes={{ container: classes.container }}
                         />
@@ -376,23 +298,41 @@ class CompanyNetworkForm extends Component {
               })}
             </Grid>
             <AddButton
-              onClick={this.handleAddOutsideSubsidiaryClick}
+              onClick={() =>
+                this.handleAddItem(
+                  entitiesOutsideUAE,
+                  "entitiesOutsideUAE",
+                  this.limits.outsideSubsidiaryCount,
+                  {
+                    country: "",
+                    companyName: ""
+                  }
+                )
+              }
               title="Add another subsidiary"
-              disabled={this.isAddOutsideSubsidiaryDisabled()}
+              disabled={this.isAddButtonDisabled(
+                this.limits.outsideSubsidiaryCount,
+                entitiesOutsideUAE,
+                "country",
+                "companyName"
+              )}
             />
           </>
         )}
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton disabled={this.isContinueDisabled()} type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  orgKYCDetails: getOrgKYCDetails(state)
+  entitiesInUAE: get(getOrgKYCDetails(state), "entitiesInUAE", [
+    { companyName: "", emirate: "", tradeLicenseNo: "" }
+  ]),
+  otherEntitiesInUAE: get(getOrgKYCDetails(state), "otherEntitiesInUAE", false),
+  entitiesOutsideUAE: get(getOrgKYCDetails(state), "entitiesOutsideUAE", [
+    { companyName: "", country: "" }
+  ]),
+  otherEntitiesOutsideUAE: get(getOrgKYCDetails(state), "otherEntitiesOutsideUAE", false)
 });
 
 const mapDispatchToProps = {

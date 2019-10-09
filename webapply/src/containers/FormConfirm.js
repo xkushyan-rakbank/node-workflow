@@ -7,9 +7,11 @@ import BackLink from "../components/Buttons/BackLink";
 import OtpVerification from "../components/OtpVerification";
 import { withStyles } from "@material-ui/core/styles";
 import ErrorMessage from "../components/ErrorMessage";
+import { displayScreenBasedOnViewId } from "../store/actions/appConfig";
 import { generateOtpCode, verifyOtp } from "../store/actions/otp";
 import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
 import { getOtp } from "../store/selectors/otp";
+import { getApplicationInfo } from "../store/selectors/appConfig";
 import { getInputNameById } from "../store/selectors/input";
 import routes from "../routes";
 
@@ -66,8 +68,13 @@ class FormConfirm extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
-      this.props.history.push("/CompanyInfo");
+      if (this.props.applicationInfo.retrieveMode) {
+        this.props.displayScreenBasedOnViewId();
+      } else {
+        this.props.history.push("/CompanyInfo");
+      }
     }
+
     if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {
       this.resetRegenerateCodeAllowTimeoutId = setTimeout(
         () => this.setState({ isRegenerateCodeAllow: true }),
@@ -155,12 +162,17 @@ const mapStateToProps = state => ({
     state,
     getInputNameById(state, "Aplnt.mobileNo")
   ),
-  emailServerValidation: getInputServerValidityByPath(state, getInputNameById(state, "Aplnt.email"))
+  emailServerValidation: getInputServerValidityByPath(
+    state,
+    getInputNameById(state, "Aplnt.email")
+  ),
+  applicationInfo: getApplicationInfo(state)
 });
 
 const mapDispatchToProps = {
   generateOtpCode,
-  verifyOtp
+  verifyOtp,
+  displayScreenBasedOnViewId
 };
 
 export default withStyles(style)(

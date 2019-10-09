@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import SectionTitle from "../SectionTitle";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
+import { connect } from "react-redux";
+import { getInputValueById } from "../../store/selectors/input";
 
 const styles = {
   title: {
@@ -13,44 +13,85 @@ const styles = {
   flexContainer: {
     marginTop: "0",
     marginBottom: "0"
-  },
-  controlsWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    margin: "20px 0 0"
   }
 };
 
 class SignatoryPersonalInformationForm extends Component {
   static defaultProps = {
-    handleContinue: () => {},
     index: 0
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
+  state = {
+    isMothersMaidenNameFilled: false,
+    isMaritalStatusOthersFilled: false
+  };
+
+  componentDidMount() {
+    const { mothersMaidenName, maritalStatusOthers } = this.props;
+    this.setState(
+      {
+        isMothersMaidenNameFilled: !!mothersMaidenName,
+        isMaritalStatusOthersFilled: !!maritalStatusOthers
+      },
+      () => {
+        const isButtonDisabled = this.isContinueDisabled();
+        this.props.setIsContinueDisabled(isButtonDisabled);
+      }
+    );
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
+
+  isContinueDisabled = () => {
+    const { isMothersMaidenNameFilled, isMaritalStatusOthersFilled } = this.state;
+    const { maritalStatus } = this.props;
+    return !(
+      isMothersMaidenNameFilled &&
+      maritalStatus &&
+      (maritalStatus !== "O" || isMaritalStatusOthersFilled)
+    );
   };
 
   render() {
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Personal Information" className={this.props.classes.title} />
+      <>
         <Grid spacing={3} container className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             <PureSelect id="Sig.maritalStatus" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="Sig.mothersMaidenName" indexes={[this.props.index]} />
+            <TextInput
+              id="Sig.mothersMaidenName"
+              indexes={[this.props.index]}
+              storeFlag="isMothersMaidenNameFilled"
+              callback={this.callbackHandle}
+            />
           </Grid>
+          {this.props.maritalStatus === "O" && (
+            <Grid item md={12} sm={12}>
+              <TextInput
+                id="Sig.maritalStatusOthers"
+                indexes={[this.props.index]}
+                storeFlag="isMaritalStatusOthersFilled"
+                callback={this.callbackHandle}
+              />
+            </Grid>
+          )}
         </Grid>
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }
 
-export default withStyles(styles)(SignatoryPersonalInformationForm);
+const mapStateToProps = state => ({
+  maritalStatus: getInputValueById(state, "Sig.maritalStatus", [0, 0]),
+  mothersMaidenName: getInputValueById(state, "Sig.mothersMaidenName", [0, 0]),
+  maritalStatusOthers: getInputValueById(state, "Sig.maritalStatusOthers", [0, 0])
+});
+
+export default withStyles(styles)(connect(mapStateToProps)(SignatoryPersonalInformationForm));

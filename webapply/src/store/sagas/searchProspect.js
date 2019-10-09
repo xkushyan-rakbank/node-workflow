@@ -5,7 +5,6 @@ import {
   GET_DOCUMENTS,
   getDocumentsSuccess
 } from "../actions/searchProspect";
-import { setInputsErrors } from "./../actions/serverValidation";
 import apiClient from "../../api/apiClient";
 
 function* searchProspectFormSaga(action) {
@@ -27,8 +26,7 @@ function* searchProspectFormSaga(action) {
     const response = yield call(apiClient.search.seaerchApplication, apiUrl, inputParam);
     yield put(searchApplicationsSuccess(response.data));
   } catch (error) {
-    const { errors } = error.response.data;
-    yield put(setInputsErrors(errors));
+    console.log({ error });
   }
 }
 
@@ -42,8 +40,7 @@ function* getDocumentsSaga() {
     const response = yield call(apiClient.search.getDocuments, apiUrl);
     yield put(getDocumentsSuccess(response.data));
   } catch (error) {
-    const { errors } = error.response.data;
-    yield put(setInputsErrors(errors));
+    console.log({ error });
   }
 }
 

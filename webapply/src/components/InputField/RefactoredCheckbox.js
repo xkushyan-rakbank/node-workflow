@@ -77,8 +77,11 @@ const styles = {
 class CustomCheckbox extends React.Component {
   updateProspect = event => {
     const value = event.target.checked;
-    const { name } = this.props;
-    this.props.updateProspect({ [name]: value });
+    const { name, callback } = this.props;
+    this.props.updateProspect({ [name]: value /*, "prospect.signatoryInfo[0].firstName": "" */ });
+    if (callback) {
+      callback(value);
+    }
   };
 
   getDataAttr() {

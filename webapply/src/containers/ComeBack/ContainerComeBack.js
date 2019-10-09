@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 
 const style = {
   centeredContainer: {
-    paddingTop: 90,
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",

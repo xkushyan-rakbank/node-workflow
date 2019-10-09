@@ -4,7 +4,12 @@ import ReactDOM from "react-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import expandMoreIcon from "../assets/icons/arrow-down.png";
-import { sideNavWidthXL, sideNavWidthLG, sideNavWidthMD } from "../constants/styles";
+import {
+  sideNavWidthXL,
+  sideNavWidthLG,
+  sideNavWidthMD,
+  portraitOrientationQueryIPads
+} from "../constants/styles";
 const appRootEl = document.getElementById("root");
 
 const styles = {
@@ -26,6 +31,9 @@ const styles = {
     minHeight: "100vh",
     "@media only screen and (max-width: 1220px)": {
       left: "-10%"
+    },
+    [portraitOrientationQueryIPads]: {
+      left: "-60%"
     }
   },
   buttonContainer: {

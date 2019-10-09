@@ -4,14 +4,9 @@ import { withStyles } from "@material-ui/core/styles";
 import CompanyCard from "../CompanyCard";
 import ContinueButton from "../Buttons/ContinueButton";
 import LinkButton from "../Buttons/LinkButton";
-import CompanyBackgroundForm from "./CompanyBackgroundForm";
-import CollapsedSection from "../CollapsedSection";
-import CompanyAnticipatedTransactionsForm from "./CompanyAnticipatedTransactionsForm";
-import CompanyNetworkForm from "./CompanyNetworkForm";
-import CompanyMailingAddressForm from "./CompanyMailingAddressForm";
-import CompanyContactInformationForm from "./CompanyContactInformationForm";
-import validateForm from "../../utils/validate";
+import StepComponent from "../../components/StepComponent";
 import { getInputValueById } from "../../store/selectors/input";
+import { finalQuestionsSteps } from "../../constants";
 
 const style = {
   buttonStyle: {
@@ -28,100 +23,20 @@ class CompanySummaryCard extends Component {
     super(props);
 
     this.state = {
+      isFinalScreenShown: false,
+      step: 1,
       isExpanded: false,
-      isFilled: false
+      isFilled: false,
+      isContinueDisabled: true
     };
-
-    this.sectionsConfig = [
-      {
-        title: "Business relationships",
-        key: "companyBackground",
-        component: CompanyBackgroundForm
-      },
-      {
-        title: "Branches and subsidiaries",
-        key: "network",
-        component: CompanyNetworkForm
-      },
-      {
-        title: "Anticipated transactions",
-        key: "anticipatedTransactions",
-        component: CompanyAnticipatedTransactionsForm
-      },
-      {
-        title: "Preferred mailing address",
-        key: "mailingAddress",
-        component: CompanyMailingAddressForm
-      },
-      {
-        title: "Preferred contact information",
-        key: "contactInformation",
-        component: CompanyContactInformationForm
-      }
-    ];
-
-    this.sectionsConfig.forEach((item, index) => {
-      item.handler = this.handleContinue(item);
-      item.sectionHeadClickHandler = this.handleSectionHeadClick(item);
-      item.nextSection = this.sectionsConfig[index + 1] || null;
-
-      this.state[item.key] = {
-        isFilled: false,
-        isExpanded: index === 0
-      };
-    });
   }
 
-  handleContinue = section => event => {
-    const errorList = validateForm(event);
-
-    if (errorList.length > 0) {
-      return errorList;
-    }
-
-    this.updateSectionsSate(section);
-  };
-
-  updateSectionsSate({ nextSection, key }) {
-    if (nextSection) {
-      this.setState({
-        [key]: {
-          isExpanded: false,
-          isFilled: true
-        },
-        [nextSection.key]: {
-          isExpanded: true,
-          isFilled: false
-        }
-      });
+  handleContinue = () => {
+    if (this.state.step < finalQuestionsSteps.length) {
+      this.setState(state => ({ step: state.step + 1 }));
     } else {
-      this.setState({
-        [key]: {
-          isExpanded: false,
-          isFilled: true
-        },
-        isExpanded: false,
-        isFilled: true
-      });
+      this.setState({ isFinalScreenShown: true });
     }
-  }
-
-  handleSectionHeadClick = section => () => {
-    this.setState({
-      ...this.sectionsConfig
-        .map(({ key }) => key)
-        .reduce((acc, key) => {
-          acc[key] = {
-            isFilled: this.state[key].isFilled,
-            isExpanded: false
-          };
-          return acc;
-        }, {}),
-      [section.key]: {
-        isFilled: this.state[section.key].isFilled,
-        isExpanded: !this.state[section.key].isExpanded
-      }
-    });
   };
 
   renderControlsContent() {
@@ -140,22 +55,31 @@ class CompanySummaryCard extends Component {
     );
   }
 
+  setIsContinueDisabled = value => this.setState({ isContinueDisabled: value });
+
   render() {
+    const { index } = this.props;
+    const { step, isContinueDisabled } = this.state;
     return (
       <CompanyCard companyName={this.props.companyName} controls={this.renderControlsContent()}>
         {this.state.isExpanded &&
-          this.sectionsConfig.map(item => {
-            const Component = item.component;
+          finalQuestionsSteps.map(item => {
+            const setStep = () => this.setState({ step: item.step });
             return (
-              <CollapsedSection
-                key={item.key}
-                onClick={item.sectionHeadClickHandler}
+              <StepComponent
+                index={index}
+                key={item.step}
+                steps={finalQuestionsSteps}
+                step={item.step}
                 title={item.title}
-                expanded={this.state[item.key].isExpanded}
-                filled={this.state[[item.key]].isFilled}
-              >
-                {Component && <Component handleContinue={item.handler} />}
-              </CollapsedSection>
+                infoTitle={item.infoTitle}
+                active={step === item.step}
+                filled={step > item.step}
+                clickHandler={setStep}
+                handleContinue={this.handleContinue}
+                isContinueDisabled={isContinueDisabled}
+                setIsContinueDisabled={this.setIsContinueDisabled}
+              />
             );
           })}
       </CompanyCard>

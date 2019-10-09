@@ -1,11 +1,9 @@
 package ae.rakbank.webapply.controllers;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +28,11 @@ public class RecaptchaController {
 
 	@PostMapping("/recaptcha/verify")
 	public ResponseEntity<?> verify(@RequestBody Map<String, String> payload, HttpServletRequest request) {
-		logger.info("begin verify recaptcha method");
+		logger.info("begin verify reCAPTCHA method");
 		logger.debug("payload: " + payload);
 		String recaptchaResponse = payload.get("recaptchaToken");
 		String ip = request.getRemoteAddr();
-		String captchaVerifyMessage = captchaService.verifyRecaptcha(ip, recaptchaResponse);
-
-		if (StringUtils.isNotEmpty(captchaVerifyMessage)) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("message", captchaVerifyMessage);
-			return ResponseEntity.badRequest().body(response);
-		}
-
-		return ResponseEntity.ok().build();
+		return captchaService.verifyRecaptcha(ip, recaptchaResponse);
 	}
 
 }

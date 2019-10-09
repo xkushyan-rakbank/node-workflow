@@ -8,7 +8,12 @@ import logo from "./../assets/images/rakbankLogo.png";
 import { withStyles } from "@material-ui/core/styles";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import * as appConfigSelectors from "../store/selectors/appConfig";
-import { sideNavWidthXL, sideNavWidthMD, sideNavWidthSM } from "../constants/styles";
+import {
+  sideNavWidthXL,
+  sideNavWidthMD,
+  sideNavWidthSM,
+  routesToHideHeaderTitle
+} from "../constants/styles";
 
 const styles = {
   header: {
@@ -55,8 +60,6 @@ const styles = {
     width: "100%"
   }
 };
-
-const routesToHideHeaderTitle = [routes.accountsComparison, routes.detailedAccount];
 
 const Header = props => {
   const {

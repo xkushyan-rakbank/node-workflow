@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import check_ic from "../assets/images/check.png";
 import ContinueButton from "./Buttons/ContinueButton";
+import { portraitOrientationQueryIPads } from "../constants/styles";
 
 const style = {
   container: {
@@ -21,7 +22,16 @@ const style = {
     "&:last-child": {
       marginRight: 0
     },
-    "@media only screen and (max-height: 920px)": {
+    "@media only screen and (max-height: 1100px)": {
+      margin: "20px 10px 0 0px"
+    },
+    "@media only screen and (max-width: 1100px)": {
+      padding: "37px 10px 40px"
+    },
+    [portraitOrientationQueryIPads]: {
+      padding: "5px 24px 11px",
+      marginTop: "10px",
+      width: "100%",
       height: "auto"
     }
   },
@@ -53,11 +63,22 @@ const style = {
       "& span": {
         margin: "13px"
       }
+    },
+    [portraitOrientationQueryIPads]: {
+      flexDirection: "row",
+      fontSize: "17px",
+      "& span": {
+        margin: "0px",
+        textAlign: "left"
+      }
     }
   },
   divider: {
     border: "solid 1px #e8e8e8",
-    margin: "30px auto 0"
+    margin: "30px auto 0",
+    [portraitOrientationQueryIPads]: {
+      marginTop: "10px"
+    }
   },
   differences: {
     margin: "28px 0 0 0",

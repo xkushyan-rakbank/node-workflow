@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import SectionTitle from "../SectionTitle";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputNameById, getInputValueById } from "../../store/selectors/input";
@@ -16,11 +14,6 @@ const styles = {
   flexContainer: {
     marginTop: "0",
     marginBottom: "0"
-  },
-  controlsWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    margin: "20px 0 0"
   }
 };
 
@@ -28,11 +21,23 @@ const OTHER_SOURCE_OF_WEALTH = "O";
 
 class SignatoryWealthForm extends Component {
   static defaultProps = {
-    handleContinue: () => {},
     index: 0
   };
 
+  state = {
+    isOtherFilled: false
+  };
+
+  componentDidMount() {
+    this.setState({ isOtherFilled: !!this.props.otherSoursOfWealth }, () => {
+      const isButtonDisabled = this.isContinueDisabled();
+      this.props.setIsContinueDisabled(isButtonDisabled);
+    });
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
     if (
       prevProps.soursOfWealth !== this.props.soursOfWealth &&
       !this.isOtherSourceOfWealthSelected()
@@ -50,40 +55,42 @@ class SignatoryWealthForm extends Component {
     this.props.updateProspect({ [this.props.otherWealthTypeInputName]: value });
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
+
+  isContinueDisabled = () => {
+    return !(
+      (!this.isOtherSourceOfWealthSelected() || this.state.isOtherFilled) &&
+      this.props.soursOfWealth
+    );
   };
 
   render() {
+    const isOtherSourceOfWealthSelected = this.isOtherSourceOfWealthSelected();
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Wealth" className={this.props.classes.title} />
-
+      <>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
-          <Grid item md={6} sm={12}>
+          <Grid item md={12} sm={12}>
             <PureSelect id="SigKycdWlth.wealthType" indexes={[this.props.index]} />
           </Grid>
-          <Grid item md={6} sm={12}>
-            <TextInput
-              id="SigKycdWlth.others"
-              indexes={[this.props.index]}
-              required={this.isOtherSourceOfWealthSelected()}
-              disabled={!this.isOtherSourceOfWealthSelected()}
-            />
-          </Grid>
+          {isOtherSourceOfWealthSelected && (
+            <Grid item md={12} sm={12}>
+              <TextInput
+                id="SigKycdWlth.others"
+                indexes={[this.props.index]}
+                storeFlag="isOtherFilled"
+                callback={this.callbackHandle}
+              />
+            </Grid>
+          )}
         </Grid>
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton type="submit" />
-        </div>
-      </form>
+      </>
     );
   }
 }
 
 const mapStateToProps = (state, { index }) => ({
   soursOfWealth: getInputValueById(state, "SigKycdWlth.wealthType", [index]),
+  otherSoursOfWealth: getInputValueById(state, "SigKycdWlth.others", [index]),
   otherWealthTypeInputName: getInputNameById(state, "SigKycdWlth.others", [index])
 });
 

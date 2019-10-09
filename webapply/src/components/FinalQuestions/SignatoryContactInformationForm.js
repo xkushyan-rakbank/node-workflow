@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import SectionTitle from "../SectionTitle";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContinueButton from "../Buttons/ContinueButton";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
@@ -15,11 +13,6 @@ const styles = {
   flexContainer: {
     marginTop: "0",
     marginBottom: "0"
-  },
-  controlsWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    margin: "20px 0 0"
   }
 };
 
@@ -37,16 +30,9 @@ class SignatoryContactInformationForm extends Component {
     };
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.handleContinue(event);
-  };
-
   render() {
     return (
-      <form noValidate onSubmit={this.handleSubmit}>
-        <SectionTitle title="Preferred contact information" className={this.props.classes.title} />
-
+      <>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             <TextInput
@@ -87,11 +73,7 @@ class SignatoryContactInformationForm extends Component {
             onClick={() => this.setState({ isAddLandlineNumber: true })}
           />
         )}
-
-        <div className={this.props.classes.controlsWrapper}>
-          <ContinueButton type="submit" label="Done" />
-        </div>
-      </form>
+      </>
     );
   }
 }

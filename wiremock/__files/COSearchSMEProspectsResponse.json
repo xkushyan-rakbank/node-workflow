@@ -1,0 +1,112 @@
+{
+    "searchResult": [
+        {
+            "prospectId": "MGHN43MD75",
+            "_links": {
+                "self": {
+                    "href": "/api/v1/banks/RAK/usertypes/{userType}/prospects/MGHN43MD75"
+                }
+            },
+            "status": {
+                "statusType": "Incomplete",
+                "statusCode": "",
+                "statusFlag": "",
+                "statusNotes": "",
+                "statusReason": "",
+                "statusOverAll": "",
+                "reasonNotes": "",
+                "reasonCode": "",
+                "reasonStatus": ""
+            },
+            "preScreeningInfo": {
+                "statusOverAll": "proceed",
+                "screeningResults": [
+                    {
+                        "screeningType": "",
+                        "screeningStatus": "",
+                        "screeningFlag": "",
+                        "screeningNotes": "",
+                        "screeningReason": "",
+                        "reasonNotes": "",
+                        "reasonCode": "",
+                        "reasonStatus": ""
+                    }
+                ]
+            },
+            "auditTrail": [
+                {
+                    "fieldName": "ApplicantDetails",
+                    "modifiedBy": "Customer",
+                    "modifiedDateTime": "06-10-2019 9:30AM"
+                }
+            ],
+            "applicationInfo": {
+                "viewId": "CompanyInfo"
+            },
+            "organizationInfo": {
+                "licenseNumber": "TL-DXB-OD0MTZMG0X",
+                "companyName": "MAGIC STAR PVT LTD"
+            },
+            "applicantInfo": {
+                "fullName": "David Sachin Miller",
+                "email": "D10dulkar@gmail.com",
+                "countryCode": "+91",
+                "mobileNo": "0123456789"
+            }
+        },
+        {
+            "prospectId": "OD0MTZMG0X",
+            "_links": {
+                "self": {
+                    "href": "/api/v1/banks/RAK/usertypes/{userType}/prospects/OD0MTZMG0X"
+                }
+            },
+            "status": {
+                "statusType": "Incomplete",
+                "statusCode": "",
+                "statusFlag": "",
+                "statusNotes": "",
+                "statusReason": "",
+                "statusOverAll": "",
+                "reasonNotes": "",
+                "reasonCode": "",
+                "reasonStatus": ""
+            },
+            "preScreeningInfo": {
+                "statusOverAll": "stop",
+                "screeningResults": [
+                    {
+                        "screeningType": "BL/NL",
+                        "screeningStatus": "",
+                        "screeningFlag": "",
+                        "screeningNotes": "",
+                        "screeningReason": "",
+                        "reasonNotes": "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAKBANK.",
+                        "reasonCode": "",
+                        "reasonStatus": ""
+                    }
+                ]
+            },
+            "auditTrail": [
+                {
+                    "fieldName": "ApplicantDetails",
+                    "modifiedBy": "Customer",
+                    "modifiedDateTime": "06-10-2019 9:30AM"
+                }
+            ],
+            "applicationInfo": {
+                "viewId": "CompanyInfo"
+            },
+            "organizationInfo": {
+                "licenseNumber": "TL-DXB-FUBCJTXDHQ",
+                "companyName": "RED BLUE WHITE PVT LTD"
+            },
+            "applicantInfo": {
+                "fullName": "Sachin Miller",
+                "email": "S10dulkar@gmail.com",
+                "countryCode": "+971",
+                "mobileNo": "9876543210"
+            }
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "0.0.6",
+    "version": "0.0.7",
     "title": "Customer Onboarding At RAK Bank",
     "termsOfService": "http://rakbank.ae/api/terms/",
     "contact": {
@@ -1626,6 +1626,12 @@
           "pattern": "^[0-9]*$",
           "maxLength": 15
         },
+        "email": {
+          "type": "string",
+          "description": "email Id of the applicant",
+          "format": "email",
+          "maxLength": 50
+        },
         "action": {
           "type": "string",
           "description": "send, resend, or verify the OTP",
@@ -2902,6 +2908,10 @@
           "type": "string",
           "description": "same as filename",
           "pattern": "^[a-zA-Z0-9. ]*$"
+        },
+        "documentKey": {
+          "type": "string",
+          "description": "document key is used to store the file in S3"
         },
         "fileName": {
           "type": "string",

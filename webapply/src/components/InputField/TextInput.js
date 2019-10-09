@@ -103,10 +103,10 @@ class Input extends React.Component {
   }
 
   handleChange = event => {
-    const { callback } = this.props;
+    const { callback, storeFlag } = this.props;
     this.setState({ value: event.target.value });
     if (callback) {
-      callback(event.target.value);
+      callback(event.target.value, storeFlag);
     }
   };
 
@@ -281,9 +281,11 @@ class Input extends React.Component {
           {isError && !customValidationMessage && (
             <ErrorMessage error={fieldErrors.error} multiLineError={fieldErrors.multiLineError} />
           )}
+
           {!isNil(serverValidation) && serverValidation.message && (
             <ErrorMessage error={serverValidation.message} />
           )}
+
           {customValidationMessage}
         </div>
       );

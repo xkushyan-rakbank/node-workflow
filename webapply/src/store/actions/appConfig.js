@@ -4,6 +4,9 @@ export const RECEIVE_APPCONFIG_FAIL = "RECEIVE_APPCONFIG_FAIL";
 export const UPDATE_PROSPECT = "UPDATE_PROSPECT";
 export const SET_PROSPECT = "SET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
+export const UPDATE_ACTION_TYPE = "UPDATE_ACTION_TYPE";
+export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
+export const DISPLAY_SCREEN_BASED_ON_VIEW_ID = "DISPLAY_SCREEN_BASED_ON_VIEW_ID";
 
 export const receiveAppConfig = () => {
   return { type: RECEIVE_APPCONFIG };
@@ -27,4 +30,16 @@ export const setProspect = prospect => {
 
 export const updateProspectId = prospectId => {
   return { type: UPDATE_PROSPECT_ID, prospectId };
+};
+
+export const updateActionType = actionType => {
+  return { type: UPDATE_ACTION_TYPE, actionType };
+};
+
+export const updateViewId = viewId => {
+  return { type: UPDATE_VIEW_ID, viewId };
+};
+
+export const displayScreenBasedOnViewId = () => {
+  return { type: DISPLAY_SCREEN_BASED_ON_VIEW_ID };
 };

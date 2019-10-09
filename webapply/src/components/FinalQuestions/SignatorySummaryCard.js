@@ -3,14 +3,9 @@ import { withStyles } from "@material-ui/core/styles";
 import get from "lodash/get";
 import CompanyStakeholderCard from "../CompanyStakeholderCard";
 import ContinueButton from "../Buttons/ContinueButton";
-import CollapsedSection from "../CollapsedSection";
-import SignatoryPersonalInformationForm from "./SignatoryPersonalInformationForm";
-import SignatoryEmploymentDetailsForm from "./SignatoryEmploymentDetailsForm";
-import SignatoryWealthForm from "./SignatoryWealthForm";
-import SignatoryMailingAddressForm from "./SignatoryMailingAddressForm";
-import SignatoryContactInformationForm from "./SignatoryContactInformationForm";
 import LinkButton from "../Buttons/LinkButton";
-import validateForm from "../../utils/validate";
+import StepComponent from "../../components/StepComponent";
+import { signatoriesSteps } from "../../constants";
 
 const styles = {
   card: {
@@ -57,101 +52,21 @@ class SignatorySummaryCard extends Component {
     super(props);
 
     this.state = {
+      isFinalScreenShown: false,
+      step: 1,
       isExpanded: false,
       isFilled: true,
-      isDisabled: true
+      isDisabled: true,
+      isContinueDisabled: false
     };
-
-    this.sectionsConfig = [
-      {
-        title: "Personal Information",
-        key: "personalInformation",
-        component: SignatoryPersonalInformationForm
-      },
-      {
-        title: "Employment details",
-        key: "employmentDetails",
-        component: SignatoryEmploymentDetailsForm
-      },
-      {
-        title: "Wealth",
-        key: "wealth",
-        component: SignatoryWealthForm
-      },
-      {
-        title: "Preferred mailing address",
-        key: "mailingAddress",
-        component: SignatoryMailingAddressForm
-      },
-      {
-        title: "Preferred contact information",
-        key: "contactInformation",
-        component: SignatoryContactInformationForm
-      }
-    ];
-
-    this.sectionsConfig.forEach((item, index) => {
-      item.handler = this.handleContinue(item);
-      item.sectionHeadClickHandler = this.handleSectionHeadClick(item);
-      item.nextSection = this.sectionsConfig[index + 1] || null;
-
-      this.state[item.key] = {
-        isFilled: false,
-        isExpanded: index === 0
-      };
-    });
   }
 
-  handleContinue = section => event => {
-    const errorList = validateForm(event);
-
-    if (errorList.length > 0) {
-      return errorList;
-    }
-
-    this.updateSectionsSate(section);
-  };
-
-  updateSectionsSate({ nextSection, key }) {
-    if (nextSection) {
-      this.setState({
-        [key]: {
-          isExpanded: false,
-          isFilled: true
-        },
-        [nextSection.key]: {
-          isExpanded: true,
-          isFilled: false
-        }
-      });
+  handleContinue = () => {
+    if (this.state.step < signatoriesSteps.length) {
+      this.setState(state => ({ step: state.step + 1 }));
     } else {
-      this.setState({
-        [key]: {
-          isExpanded: false,
-          isFilled: true
-        },
-        isExpanded: false,
-        isFilled: true
-      });
+      this.setState({ isFinalScreenShown: true });
     }
-  }
-
-  handleSectionHeadClick = section => () => {
-    this.setState({
-      ...this.sectionsConfig
-        .map(({ key }) => key)
-        .reduce((acc, key) => {
-          acc[key] = {
-            isFilled: this.state[key].isFilled,
-            isExpanded: false
-          };
-          return acc;
-        }, {}),
-      [section.key]: {
-        isFilled: this.state[section.key].isFilled,
-        isExpanded: !this.state[section.key].isExpanded
-      }
-    });
   };
 
   renderControls() {
@@ -176,6 +91,8 @@ class SignatorySummaryCard extends Component {
       />
     );
   }
+
+  setIsContinueDisabled = value => this.setState({ isContinueDisabled: value });
 
   getShareHoldingPercentage() {
     return Number(get(this.props.signatory, "kycDetails.shareHoldingPercentage", 0));
@@ -206,26 +123,33 @@ class SignatorySummaryCard extends Component {
   }
 
   render() {
+    const { index, signatory } = this.props;
+    const { step, isContinueDisabled } = this.state;
     return (
       <CompanyStakeholderCard
         className={this.props.classes.card}
-        firstName={this.props.signatory.firstName}
-        lastName={this.props.signatory.lastName}
+        firstName={signatory.firstName}
+        lastName={signatory.lastName}
+        fullName={signatory.fullName}
         content={this.renderCardContent()}
       >
         {this.state.isExpanded &&
-          this.sectionsConfig.map(item => {
-            const Component = item.component;
+          signatoriesSteps.map(item => {
+            const setStep = () => this.setState({ step: item.step });
             return (
-              <CollapsedSection
-                key={item.key}
-                onClick={item.sectionHeadClickHandler}
+              <StepComponent
+                index={index}
+                key={item.step}
+                steps={signatoriesSteps}
+                step={item.step}
                 title={item.title}
-                expanded={this.state[item.key].isExpanded}
-                filled={this.state[[item.key]].isFilled}
-              >
-                {Component && <Component handleContinue={item.handler} index={this.props.index} />}
-              </CollapsedSection>
+                active={step === item.step}
+                filled={step > item.step}
+                clickHandler={setStep}
+                handleContinue={this.handleContinue}
+                isContinueDisabled={isContinueDisabled}
+                setIsContinueDisabled={this.setIsContinueDisabled}
+              />
             );
           })}
       </CompanyStakeholderCard>
