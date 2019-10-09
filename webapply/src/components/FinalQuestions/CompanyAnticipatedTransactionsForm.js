@@ -10,6 +10,7 @@ import InfoTitle from "../InfoTitle";
 import isNumber from "lodash/isNumber";
 import isNaN from "lodash/isNaN";
 import { getInputValueById } from "../../store/selectors/input";
+import cx from "classnames";
 
 const styles = {
   title: {
@@ -19,7 +20,7 @@ const styles = {
     marginTop: "15px",
     marginBottom: "7px",
     fontSize: "16px",
-    fontWeight: "600",
+    fontWeight: "400",
     lineHeight: "1.9",
     color: "#373737"
   },
@@ -38,6 +39,14 @@ const styles = {
   },
   disabledInput: {
     backgroundColor: "rgba(242, 242, 242, 0.5)"
+  },
+  infoTitles: {
+    color: "#86868b"
+  },
+  nonCashTitle: {
+    position: "relative",
+    top: "-10px",
+    marginBottom: "10px"
   }
 };
 
@@ -140,15 +149,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
     }
   }
 
-  annualFinTurnoverChangeHandle = value => this.setState({ isAnnualTurnoverFilled: !!value });
-
-  monthlyCashPartChangeHandle = value => this.setState({ isMonthlyCashPartFilled: !!value });
-
-  monthlyNonCashPartChangeHandle = value => this.setState({ isMonthlyNonCashPartFilled: !!value });
-
-  maxCashAmountChangeHandle = value => this.setState({ isMaxCashAmountFilled: !!value });
-
-  maxNonCashAmountChangeHandle = value => this.setState({ isMaxNonCashAmountFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   isContinueDisabled = () => {
     return !(
@@ -169,14 +170,15 @@ class CompanyAnticipatedTransactionsForm extends Component {
               min="0"
               id="Okyc.annualFinTurnoverAmtInAED"
               InputProps={this.commonInputProps}
-              callback={this.annualFinTurnoverChangeHandle}
+              storeFlag="isAnnualTurnoverFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
         </Grid>
 
         <div className={this.props.classes.divider} />
 
-        <h4 className={this.props.classes.groupLabel}>Anticipated monthly transactions</h4>
+        <h4 className={this.props.classes.groupLabel}>Monthly transactions</h4>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item sm={12}>
             <FormControl className="formControl">
@@ -187,7 +189,10 @@ class CompanyAnticipatedTransactionsForm extends Component {
                 InputProps={this.commonInputProps}
                 value={this.getTotalMonthlyCreditsValue()}
               />
-              <InfoTitle title="This section is calculated based on the company’s Annual Financial Turnover" />
+              <InfoTitle
+                classes={{ wrapper: this.props.classes.infoTitles }}
+                title="This section is calculated based on the company’s Annual Financial Turnover"
+              />
             </FormControl>
           </Grid>
           <Grid item md={6} sm={12}>
@@ -196,7 +201,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.partOfTotalInCashMaxValue()}
               id="OkycAntTxnTotCashCr.amountInFigures"
               InputProps={this.commonInputProps}
-              callback={this.monthlyCashPartChangeHandle}
+              storeFlag="isMonthlyCashPartFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -205,7 +211,14 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.partOfTotalInNotCashMaxValue()}
               id="OkycAntTxnTotNonCashCr.amountInFigures"
               InputProps={this.commonInputProps}
-              callback={this.monthlyNonCashPartChangeHandle}
+              storeFlag="isMonthlyNonCashPartFilled"
+              callback={this.callbackHandle}
+            />
+            <InfoTitle
+              classes={{
+                wrapper: cx(this.props.classes.infoTitles, this.props.classes.nonCashTitle)
+              }}
+              title="Non-cash: cheque / EFT / internal transfer / point of sale"
             />
           </Grid>
         </Grid>
@@ -222,7 +235,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.maximumSingleAmountInCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnCashAED"
               InputProps={this.commonInputProps}
-              callback={this.maxCashAmountChangeHandle}
+              storeFlag="isMaxCashAmountFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -231,7 +245,14 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.maximumSingleAmountInNotCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnNonCashAED"
               InputProps={this.commonInputProps}
-              callback={this.maxNonCashAmountChangeHandle}
+              storeFlag="isMaxNonCashAmountFilled"
+              callback={this.callbackHandle}
+            />
+            <InfoTitle
+              classes={{
+                wrapper: cx(this.props.classes.infoTitles, this.props.classes.nonCashTitle)
+              }}
+              title="Non-cash: cheque / EFT / internal transfer / point of sale"
             />
           </Grid>
         </Grid>

@@ -6,8 +6,6 @@ import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputValueById } from "../../store/selectors/input";
-import { getSignatories } from "../../store/selectors/appConfig";
-import get from "lodash/get";
 import { updateProspect } from "../../store/actions/appConfig";
 
 const styles = {
@@ -34,14 +32,11 @@ class SignatoryEmploymentDetailsForm extends Component {
   };
 
   componentDidMount() {
-    const designation = this.getDesignation();
-    const totalExperienceYears = this.getTotalExperienceYears();
-    const employerName = this.getEmployerName();
-    const isWorkAtTheCompany = this.getIsWorkAtCompany();
+    const { designation, employerName, totalExperienceYrs, isWorkAtTheCompany } = this.props;
     this.setState(
       {
         isDesignation: !!designation,
-        isTotalExperienceYearsFilled: !!(totalExperienceYears || totalExperienceYears === 0),
+        isTotalExperienceYearsFilled: totalExperienceYrs || totalExperienceYrs === 0,
         isEmployerNameFilled: !!employerName,
         isWorkAtTheCompany
       },
@@ -57,44 +52,7 @@ class SignatoryEmploymentDetailsForm extends Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
-  getQualification() {
-    return get(this.props.signatoryInfo[this.props.index], "kycDetails.qualification", "");
-  }
-
-  getEmploymentType() {
-    return get(this.props.signatoryInfo[this.props.index], "employmentDetails.employmentType", "");
-  }
-
-  getTotalExperienceYears() {
-    return get(
-      this.props.signatoryInfo[this.props.index],
-      "employmentDetails.totalExperienceYrs",
-      ""
-    );
-  }
-
-  getDesignation() {
-    return get(this.props.signatoryInfo[this.props.index], "employmentDetails.designation", "");
-  }
-
-  getEmployerName() {
-    return get(this.props.signatoryInfo[this.props.index], "employmentDetails.employerName", "");
-  }
-
-  getIsWorkAtCompany() {
-    return get(
-      this.props.signatoryInfo[this.props.index],
-      "employmentDetails.isWorkAtTheCompany",
-      ""
-    );
-  }
-
-  totalExperienceYrsChangeHandle = value =>
-    this.setState({ isTotalExperienceYearsFilled: !!(value || value === 0) });
-
-  designationChangeHandle = value => this.setState({ isDesignation: !!value });
-
-  employerNameChangeHandle = value => this.setState({ isEmployerNameFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!(value || value === 0) });
 
   handleSwitchIsWorkAtCompany = e => {
     const path = `prospect.signatoryInfo[${this.props.index}].employmentDetails.isWorkAtTheCompany`;
@@ -104,29 +62,8 @@ class SignatoryEmploymentDetailsForm extends Component {
     this.setState({ isWorkAtTheCompany: e.target.checked });
   };
 
-  isQualificationRequired() {
-    return this.getQualification() === "";
-  }
-
-  isEmploymentTypeRequired() {
-    return this.getEmployerName() === "";
-  }
-
-  isTotalExperienceYrsRequired() {
-    return this.getTotalExperienceYears() === "";
-  }
-
-  isDesignationRequired() {
-    return this.getDesignation() === "";
-  }
-
-  isEmployerNameRequired() {
-    return this.getEmployerName() === "";
-  }
-
   isContinueDisabled = () => {
-    const qualification = this.getQualification();
-    const employmentType = this.getEmploymentType();
+    const { qualification, employmentType } = this.props;
     const { isDesignation, isTotalExperienceYearsFilled, isEmployerNameFilled } = this.state;
     return !(
       isDesignation &&
@@ -142,29 +79,21 @@ class SignatoryEmploymentDetailsForm extends Component {
       <>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
-            <PureSelect
-              id="SigKycd.qualification"
-              indexes={[this.props.index]}
-              required={this.isQualificationRequired()}
-            />
-            <PureSelect
-              id="SigEmpd.employmentType"
-              indexes={[this.props.index]}
-              required={this.isEmploymentTypeRequired()}
-            />
+            <PureSelect id="SigKycd.qualification" indexes={[this.props.index]} />
+            <PureSelect id="SigEmpd.employmentType" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
               id="SigEmpd.totalExperienceYrs"
               indexes={[this.props.index]}
-              callback={this.totalExperienceYrsChangeHandle}
-              required={this.isTotalExperienceYrsRequired()}
+              storeFlag="isTotalExperienceYearsFilled"
+              callback={this.callbackHandle}
             />
             <TextInput
               id="SigEmpd.designation"
               indexes={[this.props.index]}
-              callback={this.designationChangeHandle}
-              required={this.isDesignationRequired()}
+              storeFlag="isDesignation"
+              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item sm={12}>
@@ -178,8 +107,8 @@ class SignatoryEmploymentDetailsForm extends Component {
             <TextInput
               id="SigEmpd.employerName"
               indexes={[this.props.index]}
-              callback={this.employerNameChangeHandle}
-              required={this.isEmployerNameRequired()}
+              storeFlag="isEmployerNameFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
         </Grid>
@@ -190,7 +119,12 @@ class SignatoryEmploymentDetailsForm extends Component {
 
 const mapStateToProps = state => ({
   companyName: getInputValueById(state, "Org.companyName"),
-  signatoryInfo: getSignatories(state)
+  isWorkAtTheCompany: getInputValueById(state, "SigEmpd.isWorkAtTheCompany", [0, 0]),
+  employerName: getInputValueById(state, "SigEmpd.employerName", [0, 0]),
+  designation: getInputValueById(state, "SigEmpd.designation", [0, 0]),
+  totalExperienceYrs: getInputValueById(state, "SigEmpd.totalExperienceYrs", [0, 0]),
+  employmentType: getInputValueById(state, "SigEmpd.employmentType", [0, 0]),
+  qualification: getInputValueById(state, "SigKycd.qualification", [0, 0])
 });
 
 const mapDispatchToProps = {

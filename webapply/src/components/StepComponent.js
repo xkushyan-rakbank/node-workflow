@@ -7,6 +7,7 @@ import FormWrapper from "./StakeholderStepForms/FormWrapper";
 
 const styles = {
   title: {
+    paddingTop: "20px",
     fontSize: "16px",
     "&>div": {
       width: "4px"
@@ -75,7 +76,7 @@ const StepComponent = props => {
           handleContinue={handleContinue}
           hideContinue={hideContinue}
         >
-          <Form setIsContinueDisabled={setIsContinueDisabled} test="test" index={index} />
+          <Form setIsContinueDisabled={setIsContinueDisabled} index={index} />
         </FormWrapper>
       )}
     </>

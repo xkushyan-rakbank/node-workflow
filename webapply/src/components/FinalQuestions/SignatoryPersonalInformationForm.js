@@ -3,9 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
-import { getSignatories } from "../../store/selectors/appConfig";
 import { connect } from "react-redux";
-import get from "lodash/get";
+import { getInputValueById } from "../../store/selectors/input";
 
 const styles = {
   title: {
@@ -28,8 +27,7 @@ class SignatoryPersonalInformationForm extends Component {
   };
 
   componentDidMount() {
-    const mothersMaidenName = this.getMothersMaidenName();
-    const maritalStatusOthers = this.getMaritalStatusOthers();
+    const { mothersMaidenName, maritalStatusOthers } = this.props;
     this.setState(
       {
         isMothersMaidenNameFilled: !!mothersMaidenName,
@@ -47,38 +45,11 @@ class SignatoryPersonalInformationForm extends Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
-  getMaritalStatus() {
-    return get(this.props.signatoryInfo[this.props.index], "maritalStatus", "");
-  }
-
-  getMaritalStatusOthers() {
-    return get(this.props.signatoryInfo[this.props.index], "maritalStatusOthers", "");
-  }
-
-  isMaritalStatusRequired() {
-    return this.getMaritalStatus() === "";
-  }
-
-  isMaritalStatusOthersRequired() {
-    return this.getMaritalStatusOthers() === "";
-  }
-
-  getMothersMaidenName() {
-    return get(this.props.signatoryInfo[this.props.index], "mothersMaidenName", "");
-  }
-
-  isMothersMaidenNameRequired() {
-    return this.getMothersMaidenName() === "";
-  }
-
-  maritalStatusChangeHandle = value => this.setState({ isMothersMaidenNameFilled: !!value });
-
-  maritalStatusOthersChangeHandle = value =>
-    this.setState({ isMaritalStatusOthersFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   isContinueDisabled = () => {
     const { isMothersMaidenNameFilled, isMaritalStatusOthersFilled } = this.state;
-    const maritalStatus = this.getMaritalStatus();
+    const { maritalStatus } = this.props;
     return !(
       isMothersMaidenNameFilled &&
       maritalStatus &&
@@ -91,27 +62,23 @@ class SignatoryPersonalInformationForm extends Component {
       <>
         <Grid spacing={3} container className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
-            <PureSelect
-              id="Sig.maritalStatus"
-              required={this.isMaritalStatusRequired()}
-              indexes={[this.props.index]}
-            />
+            <PureSelect id="Sig.maritalStatus" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
               id="Sig.mothersMaidenName"
-              required={this.isMothersMaidenNameRequired()}
               indexes={[this.props.index]}
-              callback={this.maritalStatusChangeHandle}
+              storeFlag="isMothersMaidenNameFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
-          {this.getMaritalStatus() === "O" && (
+          {this.props.maritalStatus === "O" && (
             <Grid item md={12} sm={12}>
               <TextInput
                 id="Sig.maritalStatusOthers"
                 indexes={[this.props.index]}
-                required={this.isMaritalStatusOthersRequired()}
-                callback={this.maritalStatusOthersChangeHandle}
+                storeFlag="isMaritalStatusOthersFilled"
+                callback={this.callbackHandle}
               />
             </Grid>
           )}
@@ -122,7 +89,9 @@ class SignatoryPersonalInformationForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  signatoryInfo: getSignatories(state)
+  maritalStatus: getInputValueById(state, "Sig.maritalStatus", [0, 0]),
+  mothersMaidenName: getInputValueById(state, "Sig.mothersMaidenName", [0, 0]),
+  maritalStatusOthers: getInputValueById(state, "Sig.maritalStatusOthers", [0, 0])
 });
 
 export default withStyles(styles)(connect(mapStateToProps)(SignatoryPersonalInformationForm));

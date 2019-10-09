@@ -14,7 +14,7 @@ const style = {
     left: 0,
     top: "-105px",
     width: "auto",
-    padding: "10px 33px"
+    padding: "8px 33px 12px 33px"
   }
 };
 
@@ -39,6 +39,14 @@ class CompanySummaryCard extends Component {
     }
   };
 
+  handleClickStartHere = () => {
+    const { switchExpandedMargin } = this.props;
+    this.setState({ isExpanded: true, isFilled: true });
+    if (switchExpandedMargin) {
+      switchExpandedMargin();
+    }
+  };
+
   renderControlsContent() {
     const { classes } = this.props;
     if (this.state.isExpanded) {
@@ -50,7 +58,7 @@ class CompanySummaryCard extends Component {
       <ContinueButton
         label="Start here"
         classes={{ buttonStyle: classes.buttonStyle }}
-        handleClick={() => this.setState({ isExpanded: true, isFilled: true })}
+        handleClick={this.handleClickStartHere}
       />
     );
   }

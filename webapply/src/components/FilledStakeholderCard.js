@@ -43,7 +43,6 @@ const FilledStakeholderCard = props => {
     changeEditableStep,
     index
   } = props;
-  console.log(props);
   const editStakeholder = () => changeEditableStep(index);
   const renderContent = () => (
     <>

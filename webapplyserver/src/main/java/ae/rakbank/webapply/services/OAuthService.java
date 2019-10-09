@@ -43,7 +43,7 @@ public class OAuthService {
 
 	@PostConstruct
 	public void init() {
-		JsonNode appConfigJSON = fileHelper.loadJSONFile("appConfig.json");
+		JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
 		oAuthUri = appConfigJSON.get("OAuthURIs");
 		oAuthBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("OAuthBaseUrl").asText();
 

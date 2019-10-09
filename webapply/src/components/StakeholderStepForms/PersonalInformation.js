@@ -17,7 +17,6 @@ class PersonalInformation extends React.Component {
         [`prospect.signatoryInfo[${index}].firstName`]: "",
         [`prospect.signatoryInfo[${index}].middleName`]: "",
         [`prospect.signatoryInfo[${index}].lastName`]: "",
-        [`prospect.signatoryInfo[${index}].gender`]: "",
         [`prospect.signatoryInfo[${index}].dateOfBirth`]: null
       });
     }
@@ -25,7 +24,6 @@ class PersonalInformation extends React.Component {
 
   render() {
     const { index, isShareholderACompany } = this.props;
-    console.log(isShareholderACompany);
     return (
       <>
         <Grid item container spacing={3}>

@@ -8,7 +8,6 @@ import { updateProspect } from "../../store/actions/appConfig";
 
 class SignatoryRights extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(prevProps.isSignatory, this.props.isSignatory);
     if (prevProps.isSignatory && !this.props.isSignatory) {
       this.props.updateProspect({
         [`prospect.signatoryInfo[${this.props.index}].accountSigningInfo.authorityType`]: ""
@@ -19,7 +18,7 @@ class SignatoryRights extends React.Component {
   render() {
     return (
       <Grid container>
-        <InlineRadioGroup id="SigKycd.isSignatory" indexes={[0]} />
+        <InlineRadioGroup id="SigKycd.isSignatory" indexes={[this.props.index]} />
         <PureSelect
           disabled={!this.props.isSignatory}
           id="SigAcntSig.authorityType"
