@@ -4565,6 +4565,41 @@
       "datalistId": null,
       "readonlyFor": []
     },
+    "SigKycd.isPEP": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": "This Person or this person's relative (by relation or law) holds/has held a position with the Government/ Government owned company/political organization",
+      "placeholder": null,
+      "path": "$.prospect.signatoryInfo[*].kycDetails.isPEP",
+      "name": "prospect.signatoryInfo[*].kycDetails.isPEP",
+      "required": true,
+      "datalistId": null,
+      "readonlyFor": [],
+      "datalist": [
+        {
+          "code": "N",
+          "key": "N",
+          "value": false,
+          "displayText": "No"
+        },
+        {
+          "code": "Y",
+          "key": "Y",
+          "value": true,
+          "displayText": "Yes"
+        }
+      ]
+    },
     "SigKycd.qualification": {
       "criteria": {
         "roles": ["customer", "agent"],
@@ -7675,6 +7710,7 @@
           },
           "selfGovtPosition": "Currently hold",
           "relativeGovtPosition": "Currently hold",
+          "isPEP": false,
           "qualification": "",
           "experienceInYrs": "",
           "sourceOfWealth": {

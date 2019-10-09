@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 import Avatar from "../../components/Avatar";
 import UploadDocuments from "../../components/UploadDocument/UploadDocument";
-import { getInputValueById } from "../../store/selectors/input";
-
 const style = {
   container: {
     borderRadius: "8px",
@@ -95,9 +92,4 @@ class SignatoriesDocuments extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  // TODO: remove default value "Designit Arabia"
-  companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
-});
-
-export default withStyles(style)(connect(mapStateToProps)(SignatoriesDocuments));
+export default withStyles(style)(SignatoriesDocuments);

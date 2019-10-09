@@ -47,11 +47,10 @@ class RadiobuttonGroup extends React.Component {
   render() {
     const {
       name,
-      value,
+      value = "",
       classes = {},
       config: { datalist = [], required, error, label }
     } = this.props;
-    console.log(this.props);
 
     return (
       <FormControl error={error} required={required} className={classes.wrapper}>
