@@ -131,6 +131,7 @@ class UploadDocuments extends Component {
   }
 
   fileUploadHandler(event) {
+    console.log("inside file uploader");
     call = "";
     call = call + this.props.companyDoc.documentType + this.props.companyDoc.signatoryId;
     call = call.replace(/\s/g, "");
@@ -185,19 +186,34 @@ class UploadDocuments extends Component {
           axios
             .post(
               "http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents",
-              fd,
-              config,
+              {
+                fd,
+                config
+              },
               {
                 cancelToken: this.call.token
               }
             )
-            .catch(function(thrown) {
+            .then(response => {
+              this.setState({
+                enableUpload: false,
+                isUploadSucess: true
+              });
+              console.log(">>>>> 199" + response);
+            })
+            .catch(thrown => {
               if (axios.isCancel(thrown)) {
+                this.setState({
+                  enableUpload: true,
+                  isUploadSucess: false
+                });
+                console.log("Request canceled", thrown.message);
+              } else if (thrown.message === "Network Error") {
+                console.log("inside else if");
                 this.setState({
                   fileError: true,
                   enableUpload: true
                 });
-                console.log("Request canceled", thrown.message);
               } else {
                 this.setState({
                   enableUpload: false,
@@ -206,7 +222,7 @@ class UploadDocuments extends Component {
                 console.log("Request success", thrown.message);
               }
             });
-        }, 10000);
+        }, 1000);
       }
     );
   }
