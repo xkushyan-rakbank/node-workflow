@@ -35,8 +35,8 @@ class FinalQuestions extends React.Component {
       <>
         <h2>Final questions</h2>
         <p className={classes.description}>
-          This final section is required by law, to help us understand the background of the company
-          and that of the stakeholders with signatory rights
+          We’re almost there! Here we ask a bit about the background of the company and that of the
+          signatories. We promise there’s no more questions after this section.
         </p>
         <div className={this.props.classes.sectionContainer}>
           <CompanySummaryCard />
