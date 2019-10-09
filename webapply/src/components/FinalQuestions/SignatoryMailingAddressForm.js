@@ -6,8 +6,6 @@ import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import CustomCheckbox from "../InputField/RefactoredCheckbox";
 import { getInputValueById } from "../../store/selectors/input";
-import { getOrganizationInfo, getSignatories } from "../../store/selectors/appConfig";
-import get from "lodash/get";
 import { updateProspect } from "../../store/actions/appConfig";
 
 const styles = {
@@ -33,14 +31,12 @@ class SignatoryMailingAddressForm extends React.Component {
   };
 
   componentDidMount() {
-    const address = this.getAddressFieldData();
-    const location = this.getLocationData();
-    const boxNumber = this.getBoxNumberData();
+    const { addressFieldDesc, addressLine1, poBox } = this.props;
     this.setState(
       {
-        isAdressFieldFilled: !!address,
-        isLocationFilled: !!location,
-        isBoxNumberFilled: !!boxNumber
+        isAdressFieldFilled: !!addressFieldDesc,
+        isLocationFilled: !!addressLine1,
+        isBoxNumberFilled: !!poBox
       },
       () => {
         const isButtonDisabled = this.isContinueDisabled();
@@ -54,90 +50,39 @@ class SignatoryMailingAddressForm extends React.Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
-  getAddressFieldData() {
-    return get(
-      this.props.signatoryInfo[this.props.index],
-      "addressInfo[0].addressDetails[0].preferredAddress",
-      ""
-    );
-  }
-
-  getLocationData() {
-    return get(
-      this.props.signatoryInfo[this.props.index],
-      "addressInfo[0].addressDetails[0].addressLine1",
-      ""
-    );
-  }
-
-  getBoxNumberData() {
-    return get(
-      this.props.signatoryInfo[this.props.index],
-      "addressInfo[0].addressDetails[0].poBox",
-      ""
-    );
-  }
-
-  getEmirateCityData() {
-    return get(
-      this.props.signatoryInfo[this.props.index],
-      "addressInfo[0].addressDetails[0].emirateCity",
-      ""
-    );
-  }
-
-  getCompanyAddressFieldData() {
-    return get(
-      this.props.organizationInfo,
-      "addressInfo[0].addressDetails[0].addressFieldDesc",
-      ""
-    );
-  }
-
-  getCompanyLocationData() {
-    return get(this.props.organizationInfo, "addressInfo[0].addressDetails[0].addressLine1", "");
-  }
-
-  getCompanyBoxNumberData() {
-    return get(this.props.organizationInfo, "addressInfo[0].addressDetails[0].poBox", "");
-  }
-
-  getCompanyEmirateCityData() {
-    return get(this.props.organizationInfo, "addressInfo[0].addressDetails[0].emirateCity", "");
-  }
-
   checkboxHandleClick = value => {
-    const { index } = this.props;
+    const {
+      index,
+      organizationPoBox,
+      organizationAddressFieldDesc,
+      organizationEmirateCity,
+      organizationAddressLine1
+    } = this.props;
     this.props.updateProspect({
       [`prospect.signatoryInfo[${index}].addressInfo[0].addressDetails[0].preferredAddress`]: value
-        ? this.getCompanyAddressFieldData()
+        ? organizationAddressFieldDesc
         : "",
       [`prospect.signatoryInfo[${index}].addressInfo[0].addressDetails[0].addressLine1`]: value
-        ? this.getCompanyLocationData()
+        ? organizationAddressLine1
         : "",
       [`prospect.signatoryInfo[${index}].addressInfo[0].addressDetails[0].emirateCity`]: value
-        ? this.getCompanyEmirateCityData()
+        ? organizationEmirateCity
         : "",
       [`prospect.signatoryInfo[${index}].addressInfo[0].addressDetails[0].poBox`]: value
-        ? this.getCompanyBoxNumberData()
+        ? organizationPoBox
         : ""
     });
   };
 
-  addressFieldChangeHandle = value => this.setState({ isAdressFieldFilled: !!value });
-
-  locationChangeHandle = value => this.setState({ isLocationFilled: !!value });
-
-  boxNumberChangeHandle = value => this.setState({ isBoxNumberFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   isContinueDisabled = () => {
-    const emirateCity = this.getEmirateCityData();
     return !(
       this.props.sameAsCompanyAddress ||
       (this.state.isAdressFieldFilled &&
         this.state.isLocationFilled &&
         this.state.isBoxNumberFilled &&
-        emirateCity)
+        this.props.emirateCity)
     );
   };
 
@@ -159,7 +104,8 @@ class SignatoryMailingAddressForm extends React.Component {
               indexes={[this.props.index, 0, 0]}
               disabled={sameAsCompanyAddress}
               required={!sameAsCompanyAddress}
-              callback={this.addressFieldChangeHandle}
+              storeFlag="isAdressFieldFilled"
+              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -168,7 +114,8 @@ class SignatoryMailingAddressForm extends React.Component {
               indexes={[this.props.index, 0, 0]}
               disabled={this.props.sameAsCompanyAddress}
               required={!this.props.sameAsCompanyAddress}
-              callback={this.locationChangeHandle}
+              storeFlag="isLocationFilled"
+              callback={this.callbackHandle}
             />
             <PureSelect
               id="SigAddrAdrd.emirateCity"
@@ -183,7 +130,8 @@ class SignatoryMailingAddressForm extends React.Component {
               indexes={[this.props.index, 0, 0]}
               disabled={this.props.sameAsCompanyAddress}
               required={!this.props.sameAsCompanyAddress}
-              callback={this.boxNumberChangeHandle}
+              storeFlag="isBoxNumberFilled"
+              callback={this.callbackHandle}
             />
             <TextInput
               id="SigAddrAdrd.country"
@@ -200,8 +148,14 @@ class SignatoryMailingAddressForm extends React.Component {
 
 const mapStateToProps = (state, { index }) => ({
   sameAsCompanyAddress: getInputValueById(state, "Sig.sameAsCompanyAddress", [index]),
-  organizationInfo: getOrganizationInfo(state),
-  signatoryInfo: getSignatories(state)
+  organizationEmirateCity: getInputValueById(state, "OrgAddrAdrd.emirateCity", [0, 0]),
+  organizationPoBox: getInputValueById(state, "OrgAddrAdrd.poBox", [0, 0]),
+  organizationAddressLine1: getInputValueById(state, "OrgAddrAdrd.addressLine1", [0, 0]),
+  organizationAddressFieldDesc: getInputValueById(state, "OrgAddrAdrd.addressFieldDesc", [0, 0]),
+  emirateCity: getInputValueById(state, "SigAddrAdrd.emirateCity", [index, 0, 0]),
+  poBox: getInputValueById(state, "SigAddrAdrd.poBox", [index, 0, 0]),
+  addressLine1: getInputValueById(state, "SigAddrAdrd.addressLine1", [index, 0, 0]),
+  addressFieldDesc: getInputValueById(state, "SigAddrAdrd.preferredAddress", [index, 0, 0])
 });
 
 const mapDispatchToProps = {

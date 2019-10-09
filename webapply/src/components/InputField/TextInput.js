@@ -103,10 +103,10 @@ class Input extends React.Component {
   }
 
   handleChange = event => {
-    const { callback } = this.props;
+    const { callback, storeFlag } = this.props;
     this.setState({ value: event.target.value });
     if (callback) {
-      callback(event.target.value);
+      callback(event.target.value, storeFlag);
     }
   };
 
@@ -232,7 +232,7 @@ class Input extends React.Component {
     const { fieldErrors } = this.state;
     const inputProps = this.composeFieldAttrWithPropAttr(fieldAttr(id, config, indexes));
 
-    const isError = !isEmpty(fieldErrors);
+    const isError = !isEmpty(fieldErrors) || this.props.isError;
     const customValidationMessage = this.getCustomValidationMessage();
 
     if (id && config.label) {

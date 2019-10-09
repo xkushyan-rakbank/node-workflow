@@ -7,10 +7,6 @@ import { getInputNameById, getInputValueById } from "../../store/selectors/input
 import { updateProspect } from "../../store/actions/appConfig";
 
 class CountryOfResidence extends React.Component {
-  static defaultProps = {
-    index: 0
-  };
-
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.residenceCountry !== this.props.residenceCountry) {
       this.setEidNumberValue(this.isSelectedOAE() ? "784" : "");
@@ -24,7 +20,7 @@ class CountryOfResidence extends React.Component {
   }
 
   isSelectedOAE() {
-    return this.props.residenceCountry === "AE";
+    return this.props.residenceCountry === "UAE";
   }
 
   render() {
@@ -36,7 +32,7 @@ class CountryOfResidence extends React.Component {
         <Grid item md={6} sm={12}>
           <PureSelect
             disabled={isSignatory}
-            defaultValue={isSignatory ? "AE" : undefined}
+            defaultValue="UAE"
             id="SigKycd.residenceCountry"
             indexes={[index]}
           />
@@ -58,7 +54,7 @@ class CountryOfResidence extends React.Component {
 
 const mapStateToProps = (state, { index }) => ({
   residenceCountry: getInputValueById(state, "SigKycd.residenceCountry", [index]),
-  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index]) === "true",
+  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index]),
   eidNumberInputName: getInputNameById(state, "SigKycdEmid.eidNumber", [index])
 });
 

@@ -4,10 +4,8 @@ import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import InfoTitle from "../InfoTitle";
-import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { connect } from "react-redux";
-import { updateProspect } from "../../store/actions/appConfig";
-import get from "lodash/get";
+import { getInputValueById } from "../../store/selectors/input";
 
 const styles = {
   title: {
@@ -25,30 +23,24 @@ const styles = {
 };
 
 class CompanyMailingAddressForm extends Component {
-  static defaultProps = {
-    handleContinue: () => {}
-  };
-
   constructor(props) {
     super(props);
 
     this.state = {
       addressCount: 1,
-      isAdressFieldFilled: false,
+      isAddressFieldFilled: false,
       isLocationFilled: false,
       isBoxNumberFilled: false
     };
   }
 
   componentDidMount() {
-    const address = this.getAddressFieldData();
-    const location = this.getLocationData();
-    const boxNumber = this.getBoxNumberData();
+    const { poBox, addressLine1, addressFieldDesc } = this.props;
     this.setState(
       {
-        isAdressFieldFilled: !!address,
-        isLocationFilled: !!location,
-        isBoxNumberFilled: !!boxNumber
+        isAddressFieldFilled: !!addressFieldDesc,
+        isLocationFilled: !!addressLine1,
+        isBoxNumberFilled: !!poBox
       },
       () => {
         const isButtonDisabled = this.isContinueDisabled();
@@ -62,45 +54,12 @@ class CompanyMailingAddressForm extends Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
-  getAddressFieldData() {
-    return get(
-      this.props.organizationInfo,
-      "addressInfo[0].addressDetails[0].addressFieldDesc",
-      ""
-    );
-  }
-
-  getLocationData() {
-    return get(this.props.organizationInfo, "addressInfo[0].addressDetails[0].addressLine1", "");
-  }
-
-  getBoxNumberData() {
-    return get(this.props.organizationInfo, "addressInfo[0].addressDetails[0].poBox", "");
-  }
-
-  getSpaceTypeData() {
-    return get(
-      this.props.organizationInfo,
-      "addressInfo[0].addressDetails[0].typeOfSpaceOccupied.spaceType",
-      ""
-    );
-  }
-
-  getEmirateCityData() {
-    return get(this.props.organizationInfo, "addressInfo[0].addressDetails[0].emirateCity", "");
-  }
-
-  addressFieldChangeHandle = value => this.setState({ isAdressFieldFilled: !!value });
-
-  locationChangeHandle = value => this.setState({ isLocationFilled: !!value });
-
-  boxNumberChangeHandle = value => this.setState({ isBoxNumberFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   isContinueDisabled = () => {
-    const spaceType = this.getSpaceTypeData();
-    const emirateCity = this.getEmirateCityData();
+    const { spaceType, emirateCity } = this.props;
     return !(
-      this.state.isAdressFieldFilled &&
+      this.state.isAddressFieldFilled &&
       this.state.isLocationFilled &&
       this.state.isBoxNumberFilled &&
       spaceType &&
@@ -123,12 +82,14 @@ class CompanyMailingAddressForm extends Component {
                   <TextInput
                     id="OrgAddrAdrd.addressFieldDesc"
                     indexes={[index, 0]}
-                    callback={this.addressFieldChangeHandle}
+                    storeFlag="isAddressFieldFilled"
+                    callback={this.callbackHandle}
                   />
                   <TextInput
                     id="OrgAddrAdrd.addressLine1"
                     indexes={[index, 0]}
-                    callback={this.locationChangeHandle}
+                    storeFlag="isLocationFilled"
+                    callback={this.callbackHandle}
                   />
                   <PureSelect id="OrgAddrAdrd.emirateCity" indexes={[index, 0]} />
                 </Grid>
@@ -137,7 +98,8 @@ class CompanyMailingAddressForm extends Component {
                   <TextInput
                     id="OrgAddrAdrd.poBox"
                     indexes={[index, 0]}
-                    callback={this.boxNumberChangeHandle}
+                    storeFlag="isBoxNumberFilled"
+                    callback={this.callbackHandle}
                   />
                   <TextInput
                     id="OrgAddrAdrd.country"
@@ -156,16 +118,11 @@ class CompanyMailingAddressForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  organizationInfo: getOrganizationInfo(state)
+  emirateCity: getInputValueById(state, "OrgAddrAdrd.emirateCity", [0, 0]),
+  spaceType: getInputValueById(state, "OrgAddrAdrdSpace.spaceType", [0, 0]),
+  poBox: getInputValueById(state, "OrgAddrAdrd.poBox", [0, 0]),
+  addressLine1: getInputValueById(state, "OrgAddrAdrd.addressLine1", [0, 0]),
+  addressFieldDesc: getInputValueById(state, "OrgAddrAdrd.addressFieldDesc", [0, 0])
 });
 
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CompanyMailingAddressForm)
-);
+export default withStyles(styles)(connect(mapStateToProps)(CompanyMailingAddressForm));

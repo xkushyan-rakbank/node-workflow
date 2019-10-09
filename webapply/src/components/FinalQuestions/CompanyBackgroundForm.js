@@ -61,10 +61,6 @@ const styles = {
 };
 
 class CompanyBackgroundForm extends Component {
-  static defaultProps = {
-    handleContinue: () => {}
-  };
-
   constructor(props) {
     super(props);
 
@@ -143,11 +139,7 @@ class CompanyBackgroundForm extends Component {
     });
   }
 
-  topCustomerNameChangeHandle = value => this.setState({ isCustomerNameFilled: !!value });
-
-  topTopSupplierNameChangeHandle = value => this.setState({ isSupplierNameFilled: !!value });
-
-  topOtherBankNameChangeHandle = value => this.setState({ isBankNameFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   handleAddItem = (items, prospect, limit, item) => {
     if (items.length < limit) {
@@ -194,7 +186,7 @@ class CompanyBackgroundForm extends Component {
     const isTopSuppliersFilled =
       isDontHaveSuppliersYet || (isSupplierNameFilled && this.props.topSuppliers[0].country);
     const isOriginGoodsFilled = isDontTradeGoodsYet || this.props.topOriginGoodsCountries[0];
-    const isAnotherBanksFilled = otherBankingRelationshipsExist || isBankNameFilled;
+    const isAnotherBanksFilled = !otherBankingRelationshipsExist || isBankNameFilled;
     return !(
       isTopCustomersFilled &&
       isTopSuppliersFilled &&
@@ -226,8 +218,9 @@ class CompanyBackgroundForm extends Component {
                 <Grid item md={index === 0 ? 6 : 5} sm={12}>
                   <TextInput
                     id="OkycTopc.name"
+                    storeFlag="isCustomerNameFilled"
                     indexes={[index]}
-                    callback={this.topCustomerNameChangeHandle}
+                    callback={this.callbackHandle}
                   />
                 </Grid>
                 <Grid
@@ -280,9 +273,10 @@ class CompanyBackgroundForm extends Component {
                   <TextInput
                     id="OkycTops.name"
                     indexes={[index]}
+                    storeFlag="isSupplierNameFilled"
                     disabled={isDontHaveSuppliersYet}
                     required={!isDontHaveSuppliersYet}
-                    callback={this.topTopSupplierNameChangeHandle}
+                    callback={this.callbackHandle}
                   />
                 </Grid>
                 <Grid
@@ -408,9 +402,10 @@ class CompanyBackgroundForm extends Component {
                         <TextInput
                           id="OkycObriObd.bankName"
                           indexes={[index]}
+                          storeFlag="isBankNameFilled"
                           required={otherBankingRelationshipsExist}
                           disabled={!otherBankingRelationshipsExist}
-                          callback={this.topOtherBankNameChangeHandle}
+                          callback={this.callbackHandle}
                         />
                         {index !== 0 && (
                           <RemoveButton
@@ -454,7 +449,6 @@ class CompanyBackgroundForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  orgKYCDetails: getOrgKYCDetails(state),
   topCustomers: get(getOrgKYCDetails(state), "topCustomers", [{ name: "", country: "" }]),
   topSuppliers: get(getOrgKYCDetails(state), "topSuppliers", [{ name: "", country: "" }]),
   topOriginGoodsCountries: get(getOrgKYCDetails(state), "topOriginGoodsCountries", [""]),

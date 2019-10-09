@@ -55,7 +55,7 @@ class SignatoryWealthForm extends Component {
     this.props.updateProspect({ [this.props.otherWealthTypeInputName]: value });
   }
 
-  othersChangeHandle = value => this.setState({ isOtherFilled: !!value });
+  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   isContinueDisabled = () => {
     return !(
@@ -77,7 +77,8 @@ class SignatoryWealthForm extends Component {
               <TextInput
                 id="SigKycdWlth.others"
                 indexes={[this.props.index]}
-                callback={this.othersChangeHandle}
+                storeFlag="isOtherFilled"
+                callback={this.callbackHandle}
               />
             </Grid>
           )}
