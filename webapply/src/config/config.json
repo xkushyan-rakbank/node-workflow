@@ -2083,7 +2083,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Primary E-mail",
+      "label": "Primary e-mail address",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.contactDetails.primaryEmail",
       "name": "prospect.organizationInfo.contactDetails.primaryEmail",
@@ -2995,7 +2995,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Part of Total in Cash",
+      "label": "Part of Monthly Total in Cash",
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures",
       "name": "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures",
@@ -3040,7 +3040,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Part of Total in Non-Cash",
+      "label": "Part of Monthly Total in Non-Cash",
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures",
       "name": "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures",
@@ -4164,13 +4164,13 @@
         {
           "code": "Y",
           "key": "Y",
-          "value": "true",
+          "value": true,
           "displayText": "Yes"
         },
         {
           "code": "N",
           "key": "N",
-          "value": "false",
+          "value": false,
           "displayText": "No"
         }
       ]
@@ -4184,7 +4184,7 @@
       },
       "validationErrors": {
         "required": "Field is required.",
-        "invalid": "Field is invalid.",
+        "invalid": "Shareholders can't hold more than 100% of shares in total",
         "multilineInvalid": null
       },
       "applicable": null,
@@ -4358,14 +4358,14 @@
       "name": "prospect.signatoryInfo[*].kycDetails.residenceCountry",
       "required": true,
       "readonlyFor": [],
-      "default": "AE",
+      "default": "UAE",
       "description": "Defaulted for signatories/POA (isSignatory)",
       "datalistId": "NationalityList",
       "datalist": [
         {
-          "code": "AE",
-          "key": "AE",
-          "value": "AE",
+          "code": "UAE",
+          "key": "UAE",
+          "value": "UAE",
           "displayText": "United Arab Emirates"
         },
         {
@@ -4564,6 +4564,41 @@
       "required": false,
       "datalistId": null,
       "readonlyFor": []
+    },
+    "SigKycd.isPEP": {
+      "criteria": {
+        "roles": ["customer", "agent"],
+        "segments": ["sme"],
+        "products": ["checking"],
+        "devices": ["mobile", "tablet", "desktop"]
+      },
+      "validationErrors": {
+        "required": "Field is required.",
+        "invalid": "Field is invalid.",
+        "multilineInvalid": null
+      },
+      "applicable": null,
+      "label": "This Person or this person's relative (by relation or law) holds/has held a position with the Government/ Government owned company/political organization",
+      "placeholder": null,
+      "path": "$.prospect.signatoryInfo[*].kycDetails.isPEP",
+      "name": "prospect.signatoryInfo[*].kycDetails.isPEP",
+      "required": true,
+      "datalistId": null,
+      "readonlyFor": [],
+      "datalist": [
+        {
+          "code": "N",
+          "key": "N",
+          "value": false,
+          "displayText": "No"
+        },
+        {
+          "code": "Y",
+          "key": "Y",
+          "value": true,
+          "displayText": "Yes"
+        }
+      ]
     },
     "SigKycd.qualification": {
       "criteria": {
@@ -7635,7 +7670,7 @@
           ]
         },
         "salutation": "Mr.",
-        "signatoryId": "",
+        "signatoryId": "123",
         "firstName": "",
         "middleName": "",
         "lastName": "",
@@ -7675,7 +7710,8 @@
           },
           "selfGovtPosition": "Currently hold",
           "relativeGovtPosition": "Currently hold",
-          "qualification": "Under Graduate",
+          "isPEP": false,
+          "qualification": "",
           "experienceInYrs": "",
           "sourceOfWealth": {
             "wealthType": "",
@@ -7698,7 +7734,7 @@
           "website": ""
         },
         "employmentDetails": {
-          "employmentType": "Salaried",
+          "employmentType": "",
           "otherEmploymentType": "",
           "designation": "",
           "empNo": "",
@@ -7706,7 +7742,7 @@
           "employerName": "",
           "isWorkAtTheCompany": false,
           "occupation": "",
-          "totalExperienceYrs": 0,
+          "totalExperienceYrs": "",
           "employmentStartDate": ""
         },
         "sameAsCompanyAddress": false,
@@ -7758,7 +7794,7 @@
           ]
         },
         "salutation": "Mr.",
-        "signatoryId": "",
+        "signatoryId": "456",
         "firstName": "",
         "middleName": "",
         "lastName": "",
@@ -7777,7 +7813,7 @@
           "salutation": "Mr.",
           "shareholderPOASignatoryName": "",
           "isSignatory": true,
-          "isShareholder": false,
+          "isShareholder": "",
           "shareHoldingPercentage": 0,
           "dateOfBirth": "",
           "nationality": "",
@@ -7798,7 +7834,7 @@
           },
           "selfGovtPosition": "Currently hold",
           "relativeGovtPosition": "Currently hold",
-          "qualification": "Under Graduate",
+          "qualification": "",
           "experienceInYrs": "",
           "sourceOfWealth": {
             "wealthType": "Personal Savings",
@@ -7821,7 +7857,7 @@
           "website": ""
         },
         "employmentDetails": {
-          "employmentType": "Salaried",
+          "employmentType": "",
           "otherEmploymentType": "",
           "designation": "",
           "empNo": "",

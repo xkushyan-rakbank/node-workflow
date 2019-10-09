@@ -10,6 +10,7 @@ import InfoTitle from "../InfoTitle";
 import isNumber from "lodash/isNumber";
 import isNaN from "lodash/isNaN";
 import { getInputValueById } from "../../store/selectors/input";
+import cx from "classnames";
 
 const styles = {
   title: {
@@ -19,7 +20,7 @@ const styles = {
     marginTop: "15px",
     marginBottom: "7px",
     fontSize: "16px",
-    fontWeight: "600",
+    fontWeight: "400",
     lineHeight: "1.9",
     color: "#373737"
   },
@@ -38,6 +39,14 @@ const styles = {
   },
   disabledInput: {
     backgroundColor: "rgba(242, 242, 242, 0.5)"
+  },
+  infoTitles: {
+    color: "#86868b"
+  },
+  nonCashTitle: {
+    position: "relative",
+    top: "-10px",
+    marginBottom: "10px"
   }
 };
 
@@ -169,7 +178,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
 
         <div className={this.props.classes.divider} />
 
-        <h4 className={this.props.classes.groupLabel}>Anticipated monthly transactions</h4>
+        <h4 className={this.props.classes.groupLabel}>Monthly transactions</h4>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item sm={12}>
             <FormControl className="formControl">
@@ -180,7 +189,10 @@ class CompanyAnticipatedTransactionsForm extends Component {
                 InputProps={this.commonInputProps}
                 value={this.getTotalMonthlyCreditsValue()}
               />
-              <InfoTitle title="This section is calculated based on the company’s Annual Financial Turnover" />
+              <InfoTitle
+                classes={{ wrapper: this.props.classes.infoTitles }}
+                title="This section is calculated based on the company’s Annual Financial Turnover"
+              />
             </FormControl>
           </Grid>
           <Grid item md={6} sm={12}>
@@ -201,6 +213,12 @@ class CompanyAnticipatedTransactionsForm extends Component {
               InputProps={this.commonInputProps}
               storeFlag="isMonthlyNonCashPartFilled"
               callback={this.callbackHandle}
+            />
+            <InfoTitle
+              classes={{
+                wrapper: cx(this.props.classes.infoTitles, this.props.classes.nonCashTitle)
+              }}
+              title="Non-cash: cheque / EFT / internal transfer / point of sale"
             />
           </Grid>
         </Grid>
@@ -229,6 +247,12 @@ class CompanyAnticipatedTransactionsForm extends Component {
               InputProps={this.commonInputProps}
               storeFlag="isMaxNonCashAmountFilled"
               callback={this.callbackHandle}
+            />
+            <InfoTitle
+              classes={{
+                wrapper: cx(this.props.classes.infoTitles, this.props.classes.nonCashTitle)
+              }}
+              title="Non-cash: cheque / EFT / internal transfer / point of sale"
             />
           </Grid>
         </Grid>

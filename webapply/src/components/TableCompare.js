@@ -34,7 +34,7 @@ const style = {
     borderRadius: "8px",
     position: "relative",
     overflow: "hidden",
-    margin: "30px 0",
+    margin: "40px 0 30px 0",
     "&.mobileTable": {
       display: "none"
     },
@@ -117,6 +117,7 @@ const style = {
     border: "1px solid #373737",
     padding: "3px 0",
     width: "120px",
+    fontFamily: "Open Sans",
     "&:hover": {
       backgroundColor: "#000",
       "& span": {
@@ -184,7 +185,7 @@ const mockDataRows = [
     elite: { ic: checkIc }
   },
   {
-    info: "RAKvalue Package(PLUS and MAX)",
+    info: "RAKvalue Package (PLUS and MAX)",
     starter: { text: "Mandatory", info: "(PLUS - AED 49)" },
     currentAccount: { text: "Optional" },
     elite: { text: "Optional" }
@@ -197,6 +198,7 @@ const StyledTableRow = withStyles(() => ({
       fontSize: "14px",
       color: "#888888",
       padding: "0 5px 0 0",
+      fontFamily: "Open Sans",
       "@media only screen and (max-width: 1100px)": {
         fontSize: "12px"
       }
@@ -205,12 +207,14 @@ const StyledTableRow = withStyles(() => ({
       height: "60px",
       padding: "0",
       position: "relative",
-      "@media only screen and (max-width: 1360px)": {
-        width: "150px"
-      },
-      "@media only screen and (max-width: 1100px)": {
-        height: "auto"
-      }
+      fontSize: "16px",
+      fontFamily: "Open Sans"
+      // "@media only screen and (max-width: 1360px)": {
+      //   width: "150px"
+      // },
+      // "@media only screen and (max-width: 1100px)": {
+      //   height: "auto"
+      // }
     },
     "&:nth-of-type(even)": {
       backgroundColor: "#f7f8f9"
@@ -235,6 +239,7 @@ const StyledTableHeader = withStyles(() => ({
   head: {
     color: "#373737",
     fontSize: "16px",
+    fontFamily: "Open Sans",
     fontWeight: "600",
     height: "60px",
     padding: 0,

@@ -5,6 +5,7 @@ import SignatoryRights from "./components/StakeholderStepForms/SignatoryRights";
 import Shareholding from "./components/StakeholderStepForms/Shareholding";
 import Nationality from "./components/StakeholderStepForms/Nationality";
 import CountryOfResidence from "./components/StakeholderStepForms/CountryOfResidence";
+import PreferredContactInformation from "./components/StakeholderStepForms/PreferredContactInformation";
 import AccountDetails from "./components/ServicesStepForms/AccountDetails";
 import SigningPreferences from "./components/ServicesStepForms/SigningPreferences";
 import Channels from "./components/ServicesStepForms/Channels";
@@ -50,6 +51,16 @@ export const stakeHoldersSteps = [
     step: 5,
     title: "Country of residence",
     component: CountryOfResidence
+  },
+  // {
+  //   step: 6,
+  //   title: "Politically Exposed Person (PEP) Questions",
+  //   component: PoliticallyExposedPersonQuestions
+  // },
+  {
+    step: 6,
+    title: "Preferred contact information",
+    component: PreferredContactInformation
   }
 ];
 

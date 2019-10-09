@@ -19,6 +19,13 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     margin: "20px 0 0"
+  },
+  infoTitle: {
+    color: "#86868b"
+  },
+  infoTitleWrap: {
+    position: "relative",
+    top: "65px"
   }
 };
 
@@ -70,10 +77,6 @@ class CompanyMailingAddressForm extends Component {
   render() {
     return (
       <>
-        <Grid container>
-          <InfoTitle title="You guessed it, we will use this section for our communication with you" />
-        </Grid>
-
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           {Array.from(Array(this.state.addressCount).keys()).map(index => {
             return (
@@ -112,6 +115,12 @@ class CompanyMailingAddressForm extends Component {
             );
           })}
         </Grid>
+        <div className={this.props.classes.infoTitleWrap}>
+          <InfoTitle
+            classes={{ wrapper: this.props.classes.infoTitle }}
+            title="You guessed it, we will use this section for our communication with you"
+          />
+        </div>
       </>
     );
   }

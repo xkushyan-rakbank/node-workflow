@@ -8,6 +8,7 @@ const styles = {
     height: "40px",
     borderRadius: "21px ",
     backgroundColor: "#000",
+    fontFamily: "Open Sans, sans-serif",
     fontSize: "18px",
     lineHeight: "normal",
     letterSpacing: "normal",

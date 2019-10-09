@@ -10,7 +10,7 @@
 			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
 		},
 		"prod": {
-			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
+			"s3BaseUrl": ""
 		}
 	},
 	"S3URIs": {

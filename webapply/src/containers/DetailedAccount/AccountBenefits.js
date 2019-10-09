@@ -17,10 +17,10 @@ import * as appConfigSelectors from "../../store/selectors/appConfig";
 
 const style = {
   indent: {
-    marginBottom: "80px",
-    "@media only screen and (max-width: 1300px)": {
-      marginBottom: "0"
-    }
+    marginBottom: "20px"
+    // "@media only screen and (max-width: 1300px)": {
+    //   marginBottom: "0"
+    // }
   },
   notification: {
     width: "100%",
@@ -28,9 +28,11 @@ const style = {
     fontSize: "12px",
     textAlign: "center",
     color: "#888888",
-    "@media only screen and (max-width: 1300px)": {
-      paddingTop: "10px"
-    }
+    top: "calc(100vh - 290px)",
+    position: "absolute"
+    // "@media only screen and (max-width: 1300px)": {
+    //   paddingTop: "10px"
+    // }
   },
   icon: {
     width: "64px",

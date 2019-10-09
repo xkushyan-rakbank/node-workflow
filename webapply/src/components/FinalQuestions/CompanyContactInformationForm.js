@@ -32,6 +32,13 @@ const styles = {
       top: "63px",
       right: "12px"
     }
+  },
+  infoTitle: {
+    color: "#86868b"
+  },
+  infoTitleWrap: {
+    position: "relative",
+    top: "65px"
   }
 };
 
@@ -91,9 +98,6 @@ class CompanyContactInformationForm extends Component {
     const { classes } = this.props;
     return (
       <>
-        <Grid container>
-          <InfoTitle title="Heads up! We can only send chequebooks if you use a phone number from the UAE." />
-        </Grid>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item md={6} sm={12}>
             <TextInput
@@ -126,10 +130,15 @@ class CompanyContactInformationForm extends Component {
             />
           </Grid>
         </Grid>
-
         {!this.state.secondaryPhoneNumber && (
           <AddButton onClick={this.handleSecondaryPhoneBtnSwitch} title="Add a landline number" />
         )}
+        <div className={this.props.classes.infoTitleWrap}>
+          <InfoTitle
+            classes={{ wrapper: this.props.classes.infoTitle }}
+            title="Heads up! We can only send chequebooks if you use a phone number from the UAE."
+          />
+        </div>
       </>
     );
   }

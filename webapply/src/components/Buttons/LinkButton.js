@@ -4,12 +4,14 @@ import cx from "classnames";
 
 const style = {
   editButton: {
+    fontFamily: "Open Sans, sans-serif",
     fontSize: "16px",
     fontWeight: 600,
     color: "#263d4c",
     border: "none",
     backgroundColor: "#ffffff",
-    textDecoration: "underline"
+    textDecoration: "underline",
+    cursor: "pointer"
   }
 };
 

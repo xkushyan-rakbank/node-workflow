@@ -13,7 +13,7 @@ const style = {
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     backgroundColor: "#fff",
-    padding: "37px 24px 40px",
+    padding: "37px 15px 40px",
     boxSizing: "border-box",
     margin: "20px 19px 0 0px",
     display: "flex",
@@ -21,12 +21,6 @@ const style = {
     justifyContent: "space-between",
     "&:last-child": {
       marginRight: 0
-    },
-    "@media only screen and (max-height: 1100px)": {
-      margin: "20px 10px 0 0px"
-    },
-    "@media only screen and (max-width: 1100px)": {
-      padding: "37px 10px 40px"
     },
     [portraitOrientationQueryIPads]: {
       padding: "5px 24px 11px",
@@ -47,17 +41,6 @@ const style = {
       display: "block",
       marginTop: 26,
       width: "100%"
-    },
-    "@media only screen and (max-width: 1420px)": {
-      "& span": {
-        marginTop: "10px",
-        display: "block",
-        minHeight: "44px"
-      },
-      "& img": {
-        width: 50,
-        height: 50
-      }
     },
     "@media only screen and (max-width: 1220px)": {
       "& span": {
@@ -82,28 +65,19 @@ const style = {
   },
   differences: {
     margin: "28px 0 0 0",
-    paddingLeft: "20px",
-    "@media only screen and (max-width: 1420px)": {
-      margin: "15px 0 15px 0"
-    },
+    paddingLeft: "30px",
     "& li": {
       fontSize: "16px",
       color: "#373737",
       listStyle: "none",
       position: "relative",
-      "@media only screen and (max-width: 1420px)": {
-        fontSize: "14px"
-      },
       "& img": {
         position: "absolute",
-        left: -20,
+        left: "-23px",
         top: 3
       },
       "& + li": {
-        marginTop: "16px",
-        "@media only screen and (max-width: 1420px)": {
-          marginTop: "9px"
-        }
+        marginTop: "16px"
       }
     }
   },
@@ -120,6 +94,10 @@ const style = {
     "& span": {
       fontSize: "16px"
     }
+  },
+  continueButtonRoot: {
+    fontFamily: "Open Sans",
+    fontWeight: "600"
   }
 };
 
@@ -158,9 +136,9 @@ const AccountTypeCard = ({
       <ContinueButton
         handleClick={() => handleClick({ scrollToIndex, accountType })}
         name={scrollToIndex}
-      >
-        {buttonText}
-      </ContinueButton>
+        label={buttonText}
+        classes={{ buttonStyle: classes.continueButtonRoot }}
+      />
     </div>
   </div>
 );

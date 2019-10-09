@@ -56,7 +56,7 @@ const style = {
     }
   },
   note: {
-    marginBottom: "50px",
+    marginBottom: "60px",
     fontSize: "12px",
     textAlign: "center",
     color: "#888888",
@@ -65,7 +65,7 @@ const style = {
     }
   },
   cardsWrapper: {
-    padding: "20px 0 10px 0"
+    padding: "30px 0 10px 0"
   },
   iconsWrapper: {
     flexWrap: "nowrap",

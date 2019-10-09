@@ -20,7 +20,7 @@ const styles = {
     marginTop: "15px",
     marginBottom: "7px",
     fontSize: "16px",
-    fontWeight: "600",
+    fontWeight: "400",
     lineHeight: "1.9",
     color: "#373737"
   },
@@ -261,7 +261,7 @@ class CompanyBackgroundForm extends Component {
 
         <h4 className={this.props.classes.groupLabel}>Top suppliers</h4>
         <Checkbox
-          label="I don't have suppliers yet"
+          label="I don't have any suppliers"
           value={isDontHaveSuppliersYet}
           onChange={e => this.handleSwitchCheckbox(e, "isDontHaveSuppliersYet")}
         />
@@ -323,7 +323,7 @@ class CompanyBackgroundForm extends Component {
         <Checkbox
           value={isDontTradeGoodsYet}
           onChange={e => this.handleSwitchCheckbox(e, "isDontTradeGoodsYet")}
-          label="I don't trade with goods yet"
+          label="I don't trade with goods"
         />
         <Grid container direction="column" spacing={3} className={this.props.classes.flexContainer}>
           {topOriginGoodsCountries.map((_, index) => {

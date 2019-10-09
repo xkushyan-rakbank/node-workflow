@@ -1,19 +1,19 @@
 import React from "react";
 import cx from "classnames";
+import get from "lodash/get";
 import { withStyles } from "@material-ui/core";
+import { compose } from "recompose";
+import { connect } from "react-redux";
 import FilledStakeholderCard from "../components/FilledStakeholderCard";
 import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
+import BackLink from "../components/Buttons/BackLink";
 import questionMark from "../assets/icons/question_mark_grey.png";
 // import Button from "@material-ui/core/Button/Button";
 // import { ReactComponent as RightArrowWhite } from "./../assets/icons/whiteArrow.png";
-import BackLink from "../components/Buttons/BackLink";
 import routes from "../routes";
-import { compose } from "recompose";
-import { connect } from "react-redux";
-import { updateProspect } from "../store/actions/appConfig";
-import get from "lodash/get";
+import { updateProspect, addNewStakeholder, deleteStakeholder } from "../store/actions/appConfig";
 
 const style = {
   buttonStyle: {
@@ -48,43 +48,34 @@ const style = {
 class CompanyStakeholders extends React.Component {
   constructor(props) {
     super(props);
-    const stakeholders = [
-      {
-        id: 343453542345,
-        firstName: "Christer",
-        lastName: "Petterson",
-        signatoryRights: true,
-        shareholding: 51
-      }
-    ];
     this.state = {
-      stakeholders,
       isFinalScreenShown: false,
       showNewStakeholder: false,
-      editableStakeholder: stakeholders.length ? null : 0
+      editableStakeholder: null //stakeholders.length ? null : 0
     };
   }
 
   goToFinalQuestions = () => this.props.history.push(routes.finalQuestions);
 
-  showNewStakeholder = () => this.setState({ showNewStakeholder: true, editableStakeholder: null });
+  showNewStakeholder = () => {
+    this.setState({
+      showNewStakeholder: true,
+      editableStakeholder: this.props.stakeholders.length
+    });
+    this.props.addNewStakeholder();
+  };
 
   hideNewStakeholder = () => {
-    const stakeholders = this.state.stakeholders;
-    stakeholders.push(this.state.stakeholders[0]);
+    // const stakeholders = this.props.stakeholders;
+    // stakeholders.push(this.state.stakeholders[0]);
     this.setState({ showNewStakeholder: false, editableStakeholder: null });
   };
 
   changeEditableStep = stakeholderIndex =>
     this.setState({ editableStakeholder: stakeholderIndex, showNewStakeholder: false });
 
-  deleteStakeholder = stakeholderId => {
-    const newStakeholders = this.state.stakeholders.filter(item => item.id !== stakeholderId);
-    this.setState({ stakeholders: newStakeholders });
-  };
-
   render() {
-    const { showNewStakeholder, editableStakeholder } = this.state;
+    const { /*showNewStakeholder,*/ editableStakeholder } = this.state;
     const { stakeholders, classes } = this.props;
 
     return (
@@ -103,7 +94,7 @@ class CompanyStakeholders extends React.Component {
 
         <div>
           {stakeholders.map((item, index) => {
-            const deleteStakeholder = () => this.deleteStakeholder(item.id);
+            const deleteStakeholder = () => this.props.deleteStakeholder(item.signatoryId);
             return editableStakeholder === index ? (
               <StakeholderStepper
                 hideForm={this.hideNewStakeholder}
@@ -121,13 +112,6 @@ class CompanyStakeholders extends React.Component {
             );
           })}
         </div>
-
-        {showNewStakeholder && (
-          <StakeholderStepper
-            hideForm={this.hideNewStakeholder}
-            index={this.state.stakeholders.length}
-          />
-        )}
 
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={this.showNewStakeholder} />
@@ -153,7 +137,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  updateProspect
+  updateProspect,
+  addNewStakeholder,
+  deleteStakeholder
 };
 
 export default compose(
