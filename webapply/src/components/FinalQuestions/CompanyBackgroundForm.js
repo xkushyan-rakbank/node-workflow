@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import get from "lodash/get";
+import { get, last } from "lodash";
 import cx from "classnames";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
@@ -71,38 +71,15 @@ class CompanyBackgroundForm extends Component {
       anotherBankCount: 5
     };
     this.state = {
-      isCustomerNameFilled: false,
-      isSupplierNameFilled: false,
-      isBankNameFilled: false,
       isDontTradeGoodsYet: false,
       isDontHaveSuppliersYet: false,
-      otherBankingRelationshipsExist: true
+      otherBankingRelationshipsExist: false
     };
   }
 
   componentDidMount() {
-    const {
-      otherBankingRelationshipsExist,
-      isDontTradeGoodsYet,
-      isDontHaveSuppliersYet,
-      topCustomers,
-      topSuppliers,
-      otherBankDetails
-    } = this.props;
-    this.setState(
-      {
-        otherBankingRelationshipsExist,
-        isDontTradeGoodsYet,
-        isDontHaveSuppliersYet,
-        isCustomerNameFilled: !!topCustomers[0].name,
-        isSupplierNameFilled: !!topSuppliers[0].name,
-        isBankNameFilled: !!otherBankDetails[0].bankName
-      },
-      () => {
-        const isButtonDisabled = this.isContinueDisabled();
-        this.props.setIsContinueDisabled(isButtonDisabled);
-      }
-    );
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -110,7 +87,7 @@ class CompanyBackgroundForm extends Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
     if (
       prevState.otherBankingRelationshipsExist !== this.state.otherBankingRelationshipsExist &&
-      this.state.otherBankingRelationshipsExist
+      !this.state.otherBankingRelationshipsExist
     ) {
       this.resetBankAccountValues();
     }
@@ -139,8 +116,6 @@ class CompanyBackgroundForm extends Component {
     });
   }
 
-  callbackHandle = (value, name) => this.setState({ [name]: !!value });
-
   handleAddItem = (items, prospect, limit, item) => {
     if (items.length < limit) {
       const path = `prospect.orgKYCDetails.${prospect}`;
@@ -160,9 +135,13 @@ class CompanyBackgroundForm extends Component {
   };
 
   handleSwitchCheckbox = (e, prospect) => {
+    const stateField =
+      prospect === "otherBankingRelationshipsInfo.otherBankingRelationshipsExist"
+        ? "otherBankingRelationshipsExist"
+        : prospect;
     const path = `prospect.orgKYCDetails.${prospect}`;
     this.props.updateProspect({ [path]: e.target.checked });
-    this.setState({ [prospect]: e.target.checked });
+    this.setState({ [stateField]: e.target.checked });
   };
 
   isAddButtonDisabled = (limit, items, ...fields) => {
@@ -173,26 +152,29 @@ class CompanyBackgroundForm extends Component {
     return items.length >= limit || !allFieldsFilled;
   };
 
-  isContinueDisabled = () => {
+  getLastMandatoryFieldValue = () => {
     const {
       otherBankingRelationshipsExist,
+      otherBankDetails,
       isDontTradeGoodsYet,
+      topOriginGoodsCountries,
       isDontHaveSuppliersYet,
-      isCustomerNameFilled,
-      isSupplierNameFilled,
-      isBankNameFilled
-    } = this.state;
-    const isTopCustomersFilled = isCustomerNameFilled && this.props.topCustomers[0].country;
-    const isTopSuppliersFilled =
-      isDontHaveSuppliersYet || (isSupplierNameFilled && this.props.topSuppliers[0].country);
-    const isOriginGoodsFilled = isDontTradeGoodsYet || this.props.topOriginGoodsCountries[0];
-    const isAnotherBanksFilled = !otherBankingRelationshipsExist || isBankNameFilled;
-    return !(
-      isTopCustomersFilled &&
-      isTopSuppliersFilled &&
-      isOriginGoodsFilled &&
-      isAnotherBanksFilled
-    );
+      topSuppliers,
+      topCustomers
+    } = this.props;
+    if (otherBankingRelationshipsExist) {
+      return last(otherBankDetails).bankName;
+    } else if (!isDontTradeGoodsYet) {
+      return last(topOriginGoodsCountries);
+    } else if (!isDontHaveSuppliersYet) {
+      return last(topSuppliers).country;
+    }
+    return last(topCustomers).country;
+  };
+
+  isContinueDisabled = () => {
+    const lastMandatoryFieldValue = this.getLastMandatoryFieldValue();
+    return !lastMandatoryFieldValue;
   };
 
   render() {
@@ -216,12 +198,7 @@ class CompanyBackgroundForm extends Component {
             return (
               <React.Fragment key={index}>
                 <Grid item md={index === 0 ? 6 : 5} sm={12}>
-                  <TextInput
-                    id="OkycTopc.name"
-                    storeFlag="isCustomerNameFilled"
-                    indexes={[index]}
-                    callback={this.callbackHandle}
-                  />
+                  <TextInput id="OkycTopc.name" indexes={[index]} />
                 </Grid>
                 <Grid
                   item
@@ -273,10 +250,8 @@ class CompanyBackgroundForm extends Component {
                   <TextInput
                     id="OkycTops.name"
                     indexes={[index]}
-                    storeFlag="isSupplierNameFilled"
                     disabled={isDontHaveSuppliersYet}
                     required={!isDontHaveSuppliersYet}
-                    callback={this.callbackHandle}
                   />
                 </Grid>
                 <Grid
@@ -384,7 +359,12 @@ class CompanyBackgroundForm extends Component {
         <Checkbox
           label="The company has accounts with other banks, inside or outside the UAE"
           value={otherBankingRelationshipsExist}
-          onChange={e => this.handleSwitchCheckbox(e, "otherBankingRelationshipsExist")}
+          onChange={e =>
+            this.handleSwitchCheckbox(
+              e,
+              "otherBankingRelationshipsInfo.otherBankingRelationshipsExist"
+            )
+          }
         />
         {otherBankingRelationshipsExist && (
           <>
@@ -402,10 +382,8 @@ class CompanyBackgroundForm extends Component {
                         <TextInput
                           id="OkycObriObd.bankName"
                           indexes={[index]}
-                          storeFlag="isBankNameFilled"
                           required={otherBankingRelationshipsExist}
                           disabled={!otherBankingRelationshipsExist}
-                          callback={this.callbackHandle}
                         />
                         {index !== 0 && (
                           <RemoveButton

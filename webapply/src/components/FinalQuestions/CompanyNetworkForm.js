@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import get from "lodash/get";
 import cx from "classnames";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
@@ -11,6 +10,7 @@ import RemoveButton from "../Buttons/RemoveButton";
 import PureSelect from "../InputField/PureSelect";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getOrgKYCDetails } from "../../store/selectors/appConfig";
+import { get, last } from "lodash";
 
 const styles = {
   title: {
@@ -56,28 +56,14 @@ class CompanyNetworkForm extends Component {
       outsideSubsidiaryCount: 5
     };
     this.state = {
-      insideSubsidiaryCompanyNameFilled: false,
-      insideSubsidiaryTradeLicenseNoFilled: false,
-      outsideSubsidiaryCompanyNameFilled: false,
       otherEntitiesOutsideUAE: true,
       otherEntitiesInUAE: true
     };
   }
 
   componentDidMount() {
-    this.setState(
-      {
-        insideSubsidiaryCompanyNameFilled: !!this.props.entitiesInUAE[0].companyName,
-        insideSubsidiaryTradeLicenseNoFilled: !!this.props.entitiesInUAE[0].tradeLicenseNo,
-        outsideSubsidiaryCompanyNameFilled: !!this.props.entitiesOutsideUAE[0].companyName,
-        otherEntitiesOutsideUAE: !this.props.otherEntitiesOutsideUAE,
-        otherEntitiesInUAE: !this.props.otherEntitiesInUAE
-      },
-      () => {
-        const isButtonDisabled = this.isContinueDisabled();
-        this.props.setIsContinueDisabled(isButtonDisabled);
-      }
-    );
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -108,8 +94,6 @@ class CompanyNetworkForm extends Component {
       "prospect.orgKYCDetails.entitiesOutsideUAE": [{ country: "", companyName: "" }]
     });
   }
-
-  callbackHandle = (value, name) => this.setState({ [name]: !!value });
 
   handleSwitchCheckbox = (e, prospect) => {
     const path = `prospect.orgKYCDetails.${prospect}`;
@@ -143,23 +127,24 @@ class CompanyNetworkForm extends Component {
     return items.length >= limit || !allFieldsFilled;
   };
 
-  isContinueDisabled = () => {
+  getLastMandatoryFieldValue = () => {
     const {
-      otherEntitiesOutsideUAE,
       otherEntitiesInUAE,
-      insideSubsidiaryCompanyNameFilled,
-      insideSubsidiaryTradeLicenseNoFilled,
-      outsideSubsidiaryCompanyNameFilled
-    } = this.state;
-    const isInsideSubsidiariesFilled =
-      otherEntitiesInUAE ||
-      (insideSubsidiaryCompanyNameFilled &&
-        this.props.entitiesInUAE[0].emirate &&
-        insideSubsidiaryTradeLicenseNoFilled);
-    const isOutsideSubsidiariesFilled =
-      otherEntitiesOutsideUAE ||
-      (outsideSubsidiaryCompanyNameFilled && this.props.entitiesOutsideUAE[0].country);
-    return !(isInsideSubsidiariesFilled && isOutsideSubsidiariesFilled);
+      otherEntitiesOutsideUAE,
+      entitiesInUAE,
+      entitiesOutsideUAE
+    } = this.props;
+    if (otherEntitiesOutsideUAE) {
+      return !!last(entitiesOutsideUAE).country;
+    } else if (otherEntitiesInUAE) {
+      return !!last(entitiesInUAE).emirate;
+    }
+    return true;
+  };
+
+  isContinueDisabled = () => {
+    const lastMandatoryFieldValue = this.getLastMandatoryFieldValue();
+    return !lastMandatoryFieldValue;
   };
 
   render() {
@@ -188,20 +173,16 @@ class CompanyNetworkForm extends Component {
                       <TextInput
                         key={index}
                         id="OkycEntIn.companyName"
-                        storeFlag="insideSubsidiaryCompanyNameFilled"
                         indexes={[index]}
                         disabled={otherEntitiesInUAE}
-                        callback={this.callbackHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12}>
                       <TextInput
                         key={index}
                         id="OkycEntIn.tradeLicenseNo"
-                        storeFlag="insideSubsidiaryTradeLicenseNoFilled"
                         indexes={[index]}
                         disabled={otherEntitiesInUAE}
-                        callback={this.callbackHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
@@ -270,10 +251,8 @@ class CompanyNetworkForm extends Component {
                       <TextInput
                         key={index}
                         id="OkycEntOut.companyName"
-                        storeFlag="outsideSubsidiaryCompanyNameFilled"
                         indexes={[index]}
                         disabled={otherEntitiesOutsideUAE}
-                        callback={this.callbackHandle}
                       />
                     </Grid>
                     <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
