@@ -7,21 +7,21 @@
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"dev": {
-			"WebApplyBaseUrl": "http://localhost:8080",
+			"WebApplyBaseUrl": "http://conv.rakbankonline.ae/quickapply",
 			"DehBaseUrl": "http://localhost:9091",
 			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"uat": {
-			"WebApplyBaseUrl": "http://localhost:8080",
-			"DehBaseUrl": "http://localhost:9091",
-			"OAuthBaseUrl": "http://localhost:9091",
+			"WebApplyBaseUrl": "https://quickapplyuat.rakbank.ae",
+			"DehBaseUrl": "http://10.15.24.32:8080/corp/rest/v1",
+			"OAuthBaseUrl": "",
 			"ReCaptchaUrl": "https://www.google.com"
 		},
 		"prod": {
-			"WebApplyBaseUrl": "http://localhost:8080",
-			"DehBaseUrl": "http://localhost:9091",
-			"OAuthBaseUrl": "http://localhost:9091",
+			"WebApplyBaseUrl": "https://quickapply.rakbank.ae",
+			"DehBaseUrl": "",
+			"OAuthBaseUrl": "",
 			"ReCaptchaUrl": "https://www.google.com"
 		}
 	},
@@ -39,24 +39,22 @@
 		"prescreeningUri": "/webapply/api/v1/prospects/{prospectId}/screening",
 		"authenticateUserUri": "/webapply/api/v1/users/authenticate",
 		"getDocumentByTitleUri": "/webapply/api/v1/legal/documents/{documentTitle}",
-		"otpUri": "/webapply/api/v1/otp",
-		"recaptchaUri": "/webapply/api/v1/recaptcha/verify"
+		"otpUri": "/webapply/api/v1/otp"
 	},
 	"DehURIs": {
-		"datalistUri": "/api/v1/banks/RAK/usertypes/{userType}/datalist",
-		"createProspectUri": "/api/v1/banks/RAK/usertypes/{userType}/prospects/",
-		"searchProspectUri": "/api/v1/banks/RAK/usertypes/{userType}/prospects/search",
-		"getProspectUri": "/api/v1/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
-		"updateProspectUri": "/api/v1/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
-		"getProspectDocumentsUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
-		"uploadDocumentUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
-		"reuploadDocumentUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents",
-		"getProspectDocumentByIdUri": "/api/v1/banks/RAK/prospects/{prospectId}/documents/{documentId}",
-		"prescreeningUri": "/api/v1/banks/RAK/prospects/{prospectId}/screening",
-		"authenticateUserUri": "/api/v1/banks/RAK/users/authenticate",
-		"getDocumentByTitleUri": "/api/v1/banks/RAK/legal/documents/{documentTitle}",
-		"otpUri": "/api/v1/banks/RAK/otp",
-		"recaptchaUri": "/api/v1/banks/RAK/recaptcha/verify"
+		"datalistUri": "/banks/RAK/usertypes/{userType}/datalist",
+		"createProspectUri": "/banks/RAK/usertypes/{userType}/prospects/",
+		"searchProspectUri": "/banks/RAK/usertypes/{userType}/prospects/search",
+		"getProspectUri": "/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
+		"updateProspectUri": "/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
+		"getProspectDocumentsUri": "/banks/RAK/prospects/{prospectId}/documents",
+		"uploadDocumentUri": "/banks/RAK/prospects/{prospectId}/documents",
+		"reuploadDocumentUri": "/banks/RAK/prospects/{prospectId}/documents",
+		"getProspectDocumentByIdUri": "/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+		"prescreeningUri": "/banks/RAK/prospects/{prospectId}/screening",
+		"authenticateUserUri": "/banks/RAK/users/authenticate",
+		"getDocumentByTitleUri": "/banks/RAK/legal/documents/{documentTitle}",
+		"otpUri": "/banks/RAK/otp"
 	},
 	"OAuthURIs": {
 		"generateTokenUri": "/OAuth/token"

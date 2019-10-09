@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,20 +29,27 @@ public class FileHelper {
 
 	private JsonNode docUploadConfig;
 
-	public JsonNode loadJSONFile(String filename) {
+	public JsonNode loadJSONFile(String filename, boolean fromConfigDirectory) {
 		try {
 			logger.info("loading " + filename);
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			String fileContent = null;
-			if (StringUtils.isNotBlank(EnvUtil.getConfigDir())) {
 
+			File file = new File(EnvUtil.getConfigDir() + filename);
+			if (fromConfigDirectory && file.exists()) {
 				logger.info(String.format("Read JSON file from %s%s", EnvUtil.getConfigDir(), filename));
 
 				fileContent = FileUtils.readFileToString(new File(EnvUtil.getConfigDir() + filename),
 						StandardCharsets.UTF_8);
 			} else {
-				logger.info("Read JSON file from classpath:" + filename);
+				if (fromConfigDirectory) {
+					logger.error(String.format("FileNotFoundException: Read JSON file from %s%s", EnvUtil.getConfigDir(),
+							filename));
+				} else {
+					logger.info("Read JSON file from classpath:" + filename);
+				}
+
 				Resource resource = resourceLoader.getResource("classpath:" + filename);
 				fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
 			}
@@ -56,7 +62,7 @@ public class FileHelper {
 
 	@PostConstruct
 	public void loadConfigFiles() {
-		docUploadConfig = loadJSONFile("DocUploadConfig.json");
+		docUploadConfig = loadJSONFile("DocUploadConfig.json", true);
 	}
 
 	public JsonNode getDocUploadConfigJson() {
