@@ -25,6 +25,8 @@ public class EnvUtil {
 		} else {
 			env = env.toLowerCase();
 		}
+
+		logger.info(String.format("$WEB_APPLY_ENV=%s, $WEB_APPLY_DIR=%s", env, WEB_APPLY_DIR));
 	}
 
 	public static String getEnv() {
