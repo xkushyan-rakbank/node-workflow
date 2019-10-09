@@ -85,6 +85,7 @@ const style = {
     fontSize: "48px",
     lineHeight: "1.17",
     fontWeight: 600,
+    fontFamily: "Open Sans",
     "@media only screen and (max-width: 1300px)": {
       paddingRight: "16px",
       fontSize: "40px"
@@ -100,6 +101,7 @@ const style = {
     marginTop: 20,
     display: "block",
     fontWeight: "normal",
+    fontFamily: "Open Sans",
     "@media only screen and (max-width: 1220px)": {
       paddingRight: "25px"
     }
@@ -112,7 +114,7 @@ const style = {
 const accountInfo = {
   RAKStarter: {
     title: "RAKstarter account",
-    subtitle: "A new zero balance account, for the budding entrepreneurs out there"
+    subtitle: "A zero balance account, for the budding entrepreneurs out there."
   },
   "Current Account": {
     title: "Business Current Account",

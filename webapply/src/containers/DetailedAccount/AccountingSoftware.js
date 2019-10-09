@@ -15,10 +15,7 @@ const style = {
 const AccountingSoftware = ({ classes, accountType }) => (
   <>
     <div className={classes.indent}>
-      <SectionTitleWithInfo
-        title="You run the business. We run with you."
-        info="Scale up with our top accounting solution and business insurance"
-      />
+      <SectionTitleWithInfo title="Get things done with RAKvalue" info="Automate and save time" />
     </div>
     <ExpandedOptionsCards accountType={accountType} />
   </>

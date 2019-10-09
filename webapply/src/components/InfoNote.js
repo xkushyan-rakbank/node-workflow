@@ -6,11 +6,15 @@ const style = {
     fontSize: "12px",
     textAlign: "center",
     color: "#888888",
-    marginTop: "33px",
+    marginTop: "25px",
     display: "block",
-    "@media only screen and (max-width: 1100px)": {
-      marginTop: "16px"
-    }
+    top: "calc(100vh - 290px)",
+    position: "absolute",
+    left: "0",
+    right: "0"
+    // "@media only screen and (max-width: 1100px)": {
+    //   marginTop: "16px"
+    // }
   }
 };
 
