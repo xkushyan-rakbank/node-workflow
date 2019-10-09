@@ -16,10 +16,6 @@ const style = {
     overflow: "auto",
     paddingBottom: "20px",
     marginBottom: "-20px",
-    "@media only screen and (max-width: 1420px)": {
-      marginTop: 10,
-      flexGrow: "1"
-    },
     [portraitOrientationQueryIPads]: {
       flexDirection: "column"
     }

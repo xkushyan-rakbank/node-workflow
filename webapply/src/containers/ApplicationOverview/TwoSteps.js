@@ -31,7 +31,7 @@ const style = {
   title: {
     color: "#373737",
     fontSize: 20,
-    margin: 0,
+    margin: "22px 0 0 0",
     fontWeight: "600"
   },
   info: {

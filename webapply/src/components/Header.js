@@ -23,7 +23,7 @@ const styles = {
     display: "flex",
     zIndex: 12,
     "& img": {
-      width: "120px"
+      width: "140px"
     }
   },
   logoContainer: {

@@ -15,18 +15,21 @@ const style = {
     flexDirection: "column",
     minWidth: "270px",
     maxHeight: "572px",
-    margin: "10px",
     padding: "40px 20px 25px 20px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
-    "@media only screen and (max-width: 1300px)": {
-      padding: "10px 20px 10px 20px"
-    },
-    "@media only screen and (max-height: 800px)": {
-      padding: "10px 20px 10px 20px"
+    marginRight: "20px",
+    "&:last-child": {
+      marginRight: 0
     }
+    // "@media only screen and (max-width: 1300px)": {
+    //   padding: "10px 20px 10px 20px"
+    // },
+    // "@media only screen and (max-height: 800px)": {
+    //   padding: "10px 20px 10px 20px"
+    // }
   },
   title: {
     fontSize: "20px",
@@ -130,7 +133,10 @@ const style = {
     color: "#86868b"
   },
   indent: {
-    marginBottom: "6px"
+    marginBottom: "6px",
+    "& strong": {
+      fontWeight: "600"
+    }
   },
   button: {
     fontSize: "16px",
