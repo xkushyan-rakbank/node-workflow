@@ -15,7 +15,10 @@ const style = {
     left: 0,
     width: "100%",
     transition: "top 400ms",
-    paddingTop: "171px"
+    paddingTop: "171px",
+    "@media only screen and (max-height: 870px)": {
+      paddingTop: "85px"
+    }
   },
   childWrapper: {
     display: "flex",

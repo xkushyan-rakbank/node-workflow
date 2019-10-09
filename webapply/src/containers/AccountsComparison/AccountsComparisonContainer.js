@@ -1,5 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { updateProspect } from "../../store/actions/appConfig";
 
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
@@ -31,6 +33,13 @@ class AccountsComparisonContainer extends React.Component {
         }
       }
     };
+  }
+
+  componentDidMount() {
+    const { updateProspect } = this.props;
+    updateProspect({
+      "prospect.applicationInfo.accountType": ""
+    });
   }
 
   scrollToSection = e => {
@@ -91,4 +100,13 @@ class AccountsComparisonContainer extends React.Component {
   }
 }
 
-export default withStyles(styles)(AccountsComparisonContainer);
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export default withStyles(styles)(
+  connect(
+    null,
+    mapDispatchToProps
+  )(AccountsComparisonContainer)
+);
