@@ -20,7 +20,7 @@ const styles = {
     marginTop: "15px",
     marginBottom: "7px",
     fontSize: "16px",
-    fontWeight: "600",
+    fontWeight: "400",
     lineHeight: "1.9",
     color: "#373737"
   },

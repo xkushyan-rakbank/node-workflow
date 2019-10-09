@@ -8,6 +8,7 @@ import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryC
 import routes from "../routes";
 import { getSignatories } from "../store/selectors/appConfig";
 import BackLink from "../components/Buttons/BackLink";
+import cx from "classnames";
 
 const style = {
   sectionContainer: {
@@ -19,6 +20,9 @@ const style = {
     margin: "20px 0 130px",
     lineHeight: 1.5
   },
+  smallMargin: {
+    margin: "20px 0 40px"
+  },
   buttonWrap: {
     marginTop: "0"
   }
@@ -29,17 +33,24 @@ class FinalQuestions extends React.Component {
     signatories: []
   };
 
+  state = {
+    expandedMargin: true
+  };
+
+  switchExpandedMargin = () => this.setState({ expandedMargin: false });
+
   render() {
     const { classes } = this.props;
+    const { expandedMargin } = this.state;
     return (
       <>
         <h2>Final questions</h2>
-        <p className={classes.description}>
+        <p className={cx(classes.description, { [classes.smallMargin]: !expandedMargin })}>
           We’re almost there! Here we ask a bit about the background of the company and that of the
           signatories. We promise there’s no more questions after this section.
         </p>
         <div className={this.props.classes.sectionContainer}>
-          <CompanySummaryCard />
+          <CompanySummaryCard switchExpandedMargin={this.switchExpandedMargin} />
         </div>
         <div className={this.props.classes.sectionContainer}>
           {this.props.signatories.map((item, index) => {

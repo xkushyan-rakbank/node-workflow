@@ -7,6 +7,7 @@ import FormWrapper from "./StakeholderStepForms/FormWrapper";
 
 const styles = {
   title: {
+    paddingTop: "20px",
     fontSize: "16px",
     "&>div": {
       width: "4px"

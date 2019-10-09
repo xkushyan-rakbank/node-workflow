@@ -2083,7 +2083,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Primary E-mail",
+      "label": "Primary e-mail address",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.contactDetails.primaryEmail",
       "name": "prospect.organizationInfo.contactDetails.primaryEmail",
@@ -2995,7 +2995,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Part of Total in Cash",
+      "label": "Part of Monthly Total in Cash",
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures",
       "name": "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures",
@@ -3040,7 +3040,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": "Part of Total in Non-Cash",
+      "label": "Part of Monthly Total in Non-Cash",
       "placeholder": null,
       "path": "$.prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures",
       "name": "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures",
@@ -7675,7 +7675,7 @@
           },
           "selfGovtPosition": "Currently hold",
           "relativeGovtPosition": "Currently hold",
-          "qualification": "Under Graduate",
+          "qualification": "",
           "experienceInYrs": "",
           "sourceOfWealth": {
             "wealthType": "",
@@ -7698,7 +7698,7 @@
           "website": ""
         },
         "employmentDetails": {
-          "employmentType": "Salaried",
+          "employmentType": "",
           "otherEmploymentType": "",
           "designation": "",
           "empNo": "",
@@ -7706,7 +7706,7 @@
           "employerName": "",
           "isWorkAtTheCompany": false,
           "occupation": "",
-          "totalExperienceYrs": 0,
+          "totalExperienceYrs": "",
           "employmentStartDate": ""
         },
         "sameAsCompanyAddress": false,
@@ -7798,7 +7798,7 @@
           },
           "selfGovtPosition": "Currently hold",
           "relativeGovtPosition": "Currently hold",
-          "qualification": "Under Graduate",
+          "qualification": "",
           "experienceInYrs": "",
           "sourceOfWealth": {
             "wealthType": "Personal Savings",
@@ -7821,7 +7821,7 @@
           "website": ""
         },
         "employmentDetails": {
-          "employmentType": "Salaried",
+          "employmentType": "",
           "otherEmploymentType": "",
           "designation": "",
           "empNo": "",
