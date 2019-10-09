@@ -55,7 +55,7 @@ class FileUploader extends React.Component {
         </p>
         <div className={classes.sectionContainer}>
           <SectionTitle title="Company documents" className={classes.title} />
-          <CompanyDocuments />
+          <CompanyDocuments authUsers={authUsers} />
         </div>
         <div className={classes.sectionContainer}>
           <SectionTitle title="Signatories documents" />

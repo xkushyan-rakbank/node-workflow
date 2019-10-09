@@ -85,16 +85,12 @@ const style = {
 
 class CompanyDocuments extends Component {
   render() {
-    const companyDocuments = this.props.uploadedDoc;
-    let companyDocument;
+    let companyDocuments = this.props.authUsers.uploadedDoc;
     const companyName = this.props.companyName;
+    let companyDocument;
     if (companyDocuments.companyDocuments) {
       companyDocument = companyDocuments.companyDocuments.map((companyDoc, index) => {
-        return (
-          <>
-            <UploadDocument key={index} companyDoc={companyDoc} />
-          </>
-        );
+        return <UploadDocument key={index} companyDoc={companyDoc} />;
       });
     }
 
@@ -116,8 +112,7 @@ class CompanyDocuments extends Component {
 
 const mapStateToProps = state => {
   return {
-    companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia",
-    uploadedDoc: state.uploadedDocs.docs
+    companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
   };
 };
 
