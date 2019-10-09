@@ -24,25 +24,9 @@ class SignatoryMailingAddressForm extends React.Component {
     index: 0
   };
 
-  state = {
-    isAdressFieldFilled: false,
-    isLocationFilled: false,
-    isBoxNumberFilled: false
-  };
-
   componentDidMount() {
-    const { addressFieldDesc, addressLine1, poBox } = this.props;
-    this.setState(
-      {
-        isAdressFieldFilled: !!addressFieldDesc,
-        isLocationFilled: !!addressLine1,
-        isBoxNumberFilled: !!poBox
-      },
-      () => {
-        const isButtonDisabled = this.isContinueDisabled();
-        this.props.setIsContinueDisabled(isButtonDisabled);
-      }
-    );
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -74,16 +58,8 @@ class SignatoryMailingAddressForm extends React.Component {
     });
   };
 
-  callbackHandle = (value, name) => this.setState({ [name]: !!value });
-
   isContinueDisabled = () => {
-    return !(
-      this.props.sameAsCompanyAddress ||
-      (this.state.isAdressFieldFilled &&
-        this.state.isLocationFilled &&
-        this.state.isBoxNumberFilled &&
-        this.props.emirateCity)
-    );
+    return !(this.props.sameAsCompanyAddress ? true : this.props.emirateCity);
   };
 
   render() {
@@ -104,8 +80,6 @@ class SignatoryMailingAddressForm extends React.Component {
               indexes={[this.props.index, 0, 0]}
               disabled={sameAsCompanyAddress}
               required={!sameAsCompanyAddress}
-              storeFlag="isAdressFieldFilled"
-              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -114,8 +88,6 @@ class SignatoryMailingAddressForm extends React.Component {
               indexes={[this.props.index, 0, 0]}
               disabled={this.props.sameAsCompanyAddress}
               required={!this.props.sameAsCompanyAddress}
-              storeFlag="isLocationFilled"
-              callback={this.callbackHandle}
             />
             <PureSelect
               id="SigAddrAdrd.emirateCity"
@@ -130,8 +102,6 @@ class SignatoryMailingAddressForm extends React.Component {
               indexes={[this.props.index, 0, 0]}
               disabled={this.props.sameAsCompanyAddress}
               required={!this.props.sameAsCompanyAddress}
-              storeFlag="isBoxNumberFilled"
-              callback={this.callbackHandle}
             />
             <TextInput
               id="SigAddrAdrd.country"
@@ -152,10 +122,7 @@ const mapStateToProps = (state, { index }) => ({
   organizationPoBox: getInputValueById(state, "OrgAddrAdrd.poBox", [0, 0]),
   organizationAddressLine1: getInputValueById(state, "OrgAddrAdrd.addressLine1", [0, 0]),
   organizationAddressFieldDesc: getInputValueById(state, "OrgAddrAdrd.addressFieldDesc", [0, 0]),
-  emirateCity: getInputValueById(state, "SigAddrAdrd.emirateCity", [index, 0, 0]),
-  poBox: getInputValueById(state, "SigAddrAdrd.poBox", [index, 0, 0]),
-  addressLine1: getInputValueById(state, "SigAddrAdrd.addressLine1", [index, 0, 0]),
-  addressFieldDesc: getInputValueById(state, "SigAddrAdrd.preferredAddress", [index, 0, 0])
+  emirateCity: getInputValueById(state, "SigAddrAdrd.emirateCity", [index, 0, 0])
 });
 
 const mapDispatchToProps = {
