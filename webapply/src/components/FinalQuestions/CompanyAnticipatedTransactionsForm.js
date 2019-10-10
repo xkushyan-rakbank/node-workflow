@@ -11,6 +11,7 @@ import isNumber from "lodash/isNumber";
 import isNaN from "lodash/isNaN";
 import { getInputValueById } from "../../store/selectors/input";
 import cx from "classnames";
+import { isEqual } from "lodash";
 
 const styles = {
   title: {
@@ -71,6 +72,11 @@ class CompanyAnticipatedTransactionsForm extends Component {
   componentDidMount() {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
+  // temporary solution
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {

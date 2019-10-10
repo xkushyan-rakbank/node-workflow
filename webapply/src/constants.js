@@ -22,15 +22,15 @@ import SearchedCompanyDetails from "./components/SearchedAppInfoSteps/CompanyDet
 import CheckList from "./components/SearchedAppInfoSteps/CheckList";
 import Documents from "./components/SearchedAppInfoSteps/Documents";
 import AuditTrail from "./components/SearchedAppInfoSteps/AuditTrail";
-import CompanyBackgroundForm from "./components/FinalQuestions/CompanyBackgroundForm";
-import CompanyContactInformationForm from "./components/FinalQuestions/CompanyContactInformationForm";
-import CompanyMailingAddressForm from "./components/FinalQuestions/CompanyMailingAddressForm";
-import CompanyNetworkForm from "./components/FinalQuestions/CompanyNetworkForm";
+import CompanyBusinessRelationshipsForm from "./components/FinalQuestions/CompanyBusinessRelationshipsForm";
+import CompanyPreferredContactInformationForm from "./components/FinalQuestions/CompanyPreferredContactInformationForm";
+import CompanyPreferredMailingAddressForm from "./components/FinalQuestions/CompanyPreferredMailingAddressForm";
+import CompanyBranchesAndSubsidiariesForm from "./components/FinalQuestions/CompanyBranchesAndSubsidiariesForm";
 import CompanyAnticipatedTransactionsForm from "./components/FinalQuestions/CompanyAnticipatedTransactionsForm";
 import routes from "./routes";
 import SignatoryPersonalInformationForm from "./components/FinalQuestions/SignatoryPersonalInformationForm";
-import SignatoryWealthForm from "./components/FinalQuestions/SignatoryWealthForm";
-import SignatoryMailingAddressForm from "./components/FinalQuestions/SignatoryMailingAddressForm";
+import SignatorySourceOfFundsForm from "./components/FinalQuestions/SignatorySourceOfFundsForm";
+import SignatoryPreferredMailingAddressForm from "./components/FinalQuestions/SignatoryPreferredMailingAddressForm";
 import SignatoryEmploymentDetailsForm from "./components/FinalQuestions/SignatoryEmploymentDetailsForm";
 
 export const stakeHoldersSteps = [
@@ -82,12 +82,12 @@ export const finalQuestionsSteps = [
   {
     step: 1,
     title: "Business relationships",
-    component: CompanyBackgroundForm
+    component: CompanyBusinessRelationshipsForm
   },
   {
     step: 2,
     title: "Branches and subsidiaries",
-    component: CompanyNetworkForm
+    component: CompanyBranchesAndSubsidiariesForm
   },
   {
     step: 3,
@@ -97,12 +97,12 @@ export const finalQuestionsSteps = [
   {
     step: 4,
     title: "Preferred mailing address",
-    component: CompanyMailingAddressForm
+    component: CompanyPreferredMailingAddressForm
   },
   {
     step: 5,
     title: "Preferred contact information",
-    component: CompanyContactInformationForm
+    component: CompanyPreferredContactInformationForm
   }
 ];
 
@@ -120,12 +120,12 @@ export const signatoriesSteps = [
   {
     step: 3,
     title: "Source of funds",
-    component: SignatoryWealthForm
+    component: SignatorySourceOfFundsForm
   },
   {
     step: 4,
     title: "Preferred mailing address",
-    component: SignatoryMailingAddressForm
+    component: SignatoryPreferredMailingAddressForm
   }
 ];
 

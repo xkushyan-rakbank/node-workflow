@@ -10,7 +10,7 @@ import RemoveButton from "../Buttons/RemoveButton";
 import PureSelect from "../InputField/PureSelect";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getOrgKYCDetails } from "../../store/selectors/appConfig";
-import { get, last } from "lodash";
+import { get, isEqual, last } from "lodash";
 
 const styles = {
   title: {
@@ -47,7 +47,7 @@ const styles = {
   }
 };
 
-class CompanyNetworkForm extends Component {
+class CompanyBranchesAndSubsidiariesForm extends Component {
   constructor(props) {
     super(props);
 
@@ -64,6 +64,11 @@ class CompanyNetworkForm extends Component {
   componentDidMount() {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
+  // temporary solution
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -322,5 +327,5 @@ export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(CompanyNetworkForm)
+  )(CompanyBranchesAndSubsidiariesForm)
 );
