@@ -6,8 +6,8 @@ import StepComponent from "../components/StepComponent";
 import StatusLoader from "../components/StatusLoader";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
-import { aboutCompany } from "../store/actions/aboutCompany";
-import { getAboutCompamyInfo } from "../store/selectors/appConfig";
+import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
+import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
 import { aboutCompanySteps } from "../constants";
 import routes from "./../routes";
 
@@ -33,44 +33,41 @@ class AboutCompany extends React.Component {
 
   state = {
     step: 1,
-    completedSteps: []
+    completedSteps: [],
+    completedStep: 0
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.resetStep !== this.props.resetStep && this.props.resetStep) {
+    if (!prevProps.resetStep && this.props.resetStep) {
       this.setState(state => {
         const completedSteps = [...state.completedSteps, state.step];
         const step = state.step + 1;
 
         return {
           step,
-          completedSteps
+          completedSteps,
+          completedStep: state.completedStep + 1
         };
       });
     }
   }
 
   handleContinue = event => {
-    this.props.aboutCompany();
+    this.props.sendProspectToAPI();
   };
 
   handleClick = () => this.props.history.push(routes.stakeholdersInfo);
 
   setStep = item => {
-    if (this.state.completedSteps.includes(item.step)) {
+    if (this.state.completedStep > item.step) {
       this.setState({ step: item.step });
     }
   };
 
-  isFilled = item => {
-    return this.state.completedSteps.includes(item.step);
-  };
-
   render() {
     const { classes, index, loading } = this.props;
-    const { step, completedSteps } = this.state;
-    const disabled = completedSteps.includes(aboutCompanySteps.length);
-
+    const { step, completedStep } = this.state;
+    const disabled = completedStep === aboutCompanySteps.length;
     return (
       <>
         <h2>Tell Us about Your Company</h2>
@@ -89,6 +86,7 @@ class AboutCompany extends React.Component {
           <div className={classes.formContent}>
             {aboutCompanySteps.map(item => {
               const setStep = () => this.setStep(item);
+              const isFilled = this.state.completedStep >= item.step;
               return (
                 <StepComponent
                   index={index}
@@ -97,8 +95,8 @@ class AboutCompany extends React.Component {
                   step={item.step}
                   title={item.title}
                   subTitle={item.infoTitle}
-                  active={step === item.step}
-                  filled={this.isFilled(item)}
+                  activeStep={step === item.step}
+                  filled={isFilled}
                   clickHandler={setStep}
                   handleContinue={this.handleContinue}
                 />
@@ -123,11 +121,11 @@ class AboutCompany extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  ...getAboutCompamyInfo(state)
+  ...getSendProspectToAPIInfo(state)
 });
 
 const mapDispatchToProps = {
-  aboutCompany
+  sendProspectToAPI
 };
 
 export default withStyles(style)(

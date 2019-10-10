@@ -16,7 +16,7 @@ export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
-export const getAboutCompamyInfo = state => state.aboutCompany || {};
+export const getSendProspectToAPIInfo = state => state.sendProspectToAPI || {};
 
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
