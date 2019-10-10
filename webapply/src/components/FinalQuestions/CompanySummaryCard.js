@@ -32,10 +32,12 @@ class CompanySummaryCard extends Component {
   }
 
   handleContinue = () => {
+    const { addFilledSignatoryIndex } = this.props;
     if (this.state.step < finalQuestionsSteps.length) {
       this.setState(state => ({ step: state.step + 1 }));
     } else {
-      this.setState({ isFinalScreenShown: true });
+      this.setState({ isFinalScreenShown: true, isExpanded: false, isFilled: true });
+      addFilledSignatoryIndex(0);
     }
   };
 
