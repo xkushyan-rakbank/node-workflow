@@ -27,34 +27,23 @@ const style = {
 };
 
 class AboutCompany extends React.Component {
-  static defaultProps = {
-    index: 0
-  };
-
   state = {
     step: 1,
-    completedSteps: [],
     completedStep: 0
   };
 
   componentDidUpdate(prevProps) {
     if (!prevProps.resetStep && this.props.resetStep) {
       this.setState(state => {
-        const completedSteps = [...state.completedSteps, state.step];
-        const step = state.step + 1;
+        const nextStep = state.step + 1;
 
         return {
-          step,
-          completedSteps,
-          completedStep: state.completedStep + 1
+          step: nextStep,
+          completedStep: nextStep
         };
       });
     }
   }
-
-  handleContinue = event => {
-    this.props.sendProspectToAPI();
-  };
 
   handleClick = () => this.props.history.push(routes.stakeholdersInfo);
 
@@ -98,7 +87,7 @@ class AboutCompany extends React.Component {
                   activeStep={step === item.step}
                   filled={isFilled}
                   clickHandler={setStep}
-                  handleContinue={this.handleContinue}
+                  handleContinue={this.props.sendProspectToAPI}
                 />
               );
             })}
