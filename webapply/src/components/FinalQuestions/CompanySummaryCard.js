@@ -96,8 +96,7 @@ class CompanySummaryCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  // TODO: remove default value "Designit Arabia"
-  companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
+  companyName: getInputValueById(state, "Org.companyName")
 });
 
 export default withStyles(style)(connect(mapStateToProps)(CompanySummaryCard));
