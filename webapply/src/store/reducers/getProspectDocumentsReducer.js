@@ -7,7 +7,7 @@ const initialState = {
   docs: []
 };
 
-const docUploader = (state = initialState, action) => {
+const retrieveUploader = (state = initialState, action) => {
   switch (action.type) {
     case RETRIEVE_DOC_DETAILS_SUCESS:
       return {
@@ -24,4 +24,4 @@ const docUploader = (state = initialState, action) => {
   }
 };
 
-export default docUploader;
+export default retrieveUploader;
