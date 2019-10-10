@@ -1,4 +1,7 @@
-import { DOC_UPLOADER_SUCESS, DOC_UPLOADER_ERROR } from "../actions/uploadDocActions";
+import {
+  RETRIEVE_DOC_DETAILS_SUCESS,
+  RETRIEVE_DETAILS_ERROR
+} from "../actions/getProspectDocumentsActions";
 
 const initialState = {
   docs: []
@@ -6,12 +9,12 @@ const initialState = {
 
 const docUploader = (state = initialState, action) => {
   switch (action.type) {
-    case DOC_UPLOADER_SUCESS:
+    case RETRIEVE_DOC_DETAILS_SUCESS:
       return {
         ...state,
         docs: action.payload
       };
-    case DOC_UPLOADER_ERROR:
+    case RETRIEVE_DETAILS_ERROR:
       return {
         ...state,
         docs: action.payload

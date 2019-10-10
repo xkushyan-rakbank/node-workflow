@@ -5,7 +5,7 @@ import applicantInfoSaga from "./applicantInfoForm";
 import aboutCompanySaga from "./aboutCompany";
 import otpSaga from "./otp";
 import loginForm from "./loginForm";
-import uploadDoc from "./uploadDoc";
+import uploadDoc from "./getProspectDocumentsSaga";
 import searchProspectSaga from "./searchProspect";
 
 export default function*() {

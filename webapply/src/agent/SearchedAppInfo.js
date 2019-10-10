@@ -10,7 +10,7 @@ import SubmitButton from "../components/Buttons/SubmitButton";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import { history } from "./../store/configureStore";
 import BackLink from "../components/Buttons/BackLink";
-import { docUpload } from "./../store/actions/uploadDocActions";
+import { retrieveDocDetails } from "./../store/actions/getProspectDocumentsActions";
 
 const styles = {
   sectionTitleIndent: {
@@ -41,11 +41,11 @@ class SearchedAppInfo extends React.Component {
 
   componentWillMount() {
     !this.props.checkLoginStatus && history.push(routes.login);
-    this.props.searchResults.length == 0 && history.push(routes.searchProspect);
+    this.props.searchResults.length === 0 && history.push(routes.searchProspect);
   }
 
   componentDidMount() {
-    this.props.docUpload();
+    this.props.retrieveDocDetails();
   }
 
   render() {
@@ -54,7 +54,7 @@ class SearchedAppInfo extends React.Component {
 
     const [prospectInfo] =
       searchResults && searchResults.searchResult
-        ? searchResults.searchResult.filter(item => item.prospectId == "100")
+        ? searchResults.searchResult.filter(item => item.prospectId === "100")
         : [];
 
     return prospectInfo ? (
@@ -110,7 +110,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  docUpload
+  retrieveDocDetails
 };
 
 export default withStyles(styles)(

@@ -7,7 +7,7 @@ import routes from "../routes";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
 import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
-import { docUpload } from "../store/actions/uploadDocActions";
+import { retrieveDocDetails } from "../store/actions/getProspectDocumentsActions";
 import BackLink from "../components/Buttons/BackLink";
 const style = {
   sectionContainer: {
@@ -34,7 +34,7 @@ class FileUploader extends React.Component {
   }
 
   componentDidMount() {
-    this.props.docUpload();
+    this.props.retrieveDocDetails();
   }
 
   render() {
@@ -82,7 +82,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  docUpload
+  retrieveDocDetails
 };
 
 export default withStyles(style)(
