@@ -9,7 +9,7 @@ import applicationStatus from "./applicationStatus";
 import otp from "./otp";
 import login from "./loginForm";
 import authReducer from "./authReducers";
-import docUploadReducer from "./getProspectDocumentsReducer";
+import docUploadReducer from "./getProspectDocuments";
 import searchProspect from "./searchProspect";
 
 /**

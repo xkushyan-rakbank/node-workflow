@@ -1,7 +1,7 @@
 import {
-  RETRIEVE_DOC_DETAILS_SUCESS,
+  RETRIEVE_DOC_DETAILS_SUCCESS,
   RETRIEVE_DETAILS_ERROR
-} from "../actions/getProspectDocumentsActions";
+} from "../actions/getProspectDocuments";
 
 const initialState = {
   docs: []
@@ -9,7 +9,7 @@ const initialState = {
 
 const retrieveUploader = (state = initialState, action) => {
   switch (action.type) {
-    case RETRIEVE_DOC_DETAILS_SUCESS:
+    case RETRIEVE_DOC_DETAILS_SUCCESS:
       return {
         ...state,
         docs: action.payload

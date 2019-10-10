@@ -5,7 +5,8 @@ import applicantInfoSaga from "./applicantInfoForm";
 import aboutCompanySaga from "./aboutCompany";
 import otpSaga from "./otp";
 import loginForm from "./loginForm";
-import uploadDoc from "./getProspectDocumentsSaga";
+import retrieveUploadDoc from "./getProspectDocuments";
+import uploadDocDetails from "./uploadProspectDocuments";
 import searchProspectSaga from "./searchProspect";
 
 export default function*() {
@@ -16,7 +17,8 @@ export default function*() {
     fork(applicantInfoSaga),
     fork(aboutCompanySaga),
     fork(loginForm),
-    fork(uploadDoc),
+    fork(retrieveUploadDoc),
+    fork(uploadDocDetails),
     fork(searchProspectSaga)
   ]);
 }

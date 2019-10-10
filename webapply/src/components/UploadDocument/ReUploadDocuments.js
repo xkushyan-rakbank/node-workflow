@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import CompanyDocuments from "./CompanyDocument";
 import SignatoriesDocuments from "./SignatoriesDocuments";
 import SectionTitle from "../SectionTitle";
-import { retrieveDocDetails } from "../../store/actions/getProspectDocumentsActions";
+import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
 import arrowBack from "./../../assets/icons/backArrow.png";
 
 const style = {

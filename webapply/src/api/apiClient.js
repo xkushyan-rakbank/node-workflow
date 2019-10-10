@@ -89,20 +89,12 @@ export default {
     }
   },
 
-  uploadProspectDocument: {
-    uploadDocuments: () => {
+  uploadProspectDocuments: {
+    uploadDocuments: data => {
       return httpClient.request({
-        // url: "", need to upload the URL after the the doc upload deployed
-        method: "POST"
-      });
-    }
-  },
-
-  reuploadDocument: {
-    uploadDocuments: () => {
-      return httpClient.request({
-        // url: "", need to upload the URL after the the doc upload deployed
-        method: "PUT"
+        url: "http://10.86.251.137:8080/docUploader/banks/RAK/prospects/700/documents",
+        method: "POST",
+        data
       });
     }
   },

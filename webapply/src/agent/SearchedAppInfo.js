@@ -10,7 +10,7 @@ import SubmitButton from "../components/Buttons/SubmitButton";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import { history } from "./../store/configureStore";
 import BackLink from "../components/Buttons/BackLink";
-import { retrieveDocDetails } from "./../store/actions/getProspectDocumentsActions";
+import { retrieveDocDetails } from "./../store/actions/getProspectDocuments";
 
 const styles = {
   sectionTitleIndent: {
