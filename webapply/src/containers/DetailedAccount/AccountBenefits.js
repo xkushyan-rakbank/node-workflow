@@ -1,19 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
-import manager from "../../assets/icons/manager.png";
-import balance from "../../assets/icons/balance.png";
-import availability from "../../assets/icons/availability.png";
-import exchange from "../../assets/icons/exchange.png";
-import transaction from "../../assets/icons/transaction.png";
-import withdrawal from "../../assets/icons/withdrawal.png";
-import processing from "../../assets/icons/processing.png";
-import serviceCenter from "../../assets/icons/service-center.png";
-import lounge from "../../assets/icons/lounge.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../components/HorizontalIconCards/HorizontalIconCardsContainer";
 import HorizontalIconCardItem from "../../components/HorizontalIconCards/HorizontalIconCardItem";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
+import { getIconsByAccount } from "../../constants/icons";
 
 const style = {
   indent: {
@@ -59,6 +51,18 @@ const AccountBenefits = ({ classes, accountType }) => {
   };
 
   const text = getText(accountType);
+  const {
+    availability,
+    balance,
+    processing,
+    transaction,
+    manager,
+    withdrawal,
+    serviceCenter,
+    exchange,
+    lounge
+  } = getIconsByAccount();
+
   return (
     <>
       <div className={classes.indent}>

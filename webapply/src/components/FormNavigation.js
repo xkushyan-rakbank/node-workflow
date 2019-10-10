@@ -4,7 +4,7 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
-import { formStepper, searchProspectStepper } from "./../constants";
+import { formStepper, searchProspectStepper } from "../constants";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import SubmitButton from "./Buttons/SubmitButton";

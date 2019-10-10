@@ -3,11 +3,10 @@ import { withStyles } from "@material-ui/core";
 import overviewRegular from "../../assets/gif/overview_reg.gif";
 import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import overviewElite from "../../assets/gif/overview_elite.gif";
-import interrogation from "../../assets/icons/interrogation.png";
-import signature from "../../assets/icons/signature.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
+import { getIconsByAccount } from "../../constants/icons";
 
 const style = {
   icon: {
@@ -54,6 +53,7 @@ const TwoSteps = ({ classes, accountType, islamicBanking }) => {
     }
     return overviewRegular;
   };
+  const { interrogation, signature } = getIconsByAccount();
 
   return (
     <>
