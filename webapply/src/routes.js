@@ -14,7 +14,7 @@ export default {
   stakeholdersInfo: "/StakeholdersInfo",
   finalQuestions: "/FinalQuestions",
   uploadDocuments: "/UploadDocuments",
-  editApplication: "/EditApplication",
+  reUploadDocuments: "/ReUploadDocuments",
   selectServices: "/SelectServices",
   searchProspect: "/SearchProspect",
   login: "/Login",
