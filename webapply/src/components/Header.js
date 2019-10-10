@@ -4,10 +4,11 @@ import { compose } from "recompose";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import routes from "./../routes";
-import logo from "./../assets/images/rakbankLogo.png";
+import { getIconsByAccount } from "../constants/icons";
 import { withStyles } from "@material-ui/core/styles";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import * as appConfigSelectors from "../store/selectors/appConfig";
+
 import {
   sideNavWidthXL,
   sideNavWidthMD,
@@ -21,10 +22,7 @@ const styles = {
     top: " 0",
     width: " 100%",
     display: "flex",
-    zIndex: 12,
-    "& img": {
-      width: "140px"
-    }
+    zIndex: 12
   },
   logoContainer: {
     boxSizing: "border-box",
@@ -70,6 +68,7 @@ const Header = props => {
     applicationInfo,
     organizationInfo
   } = props;
+  const { logo } = getIconsByAccount();
 
   return (
     <header className={classes.header}>

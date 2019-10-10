@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import CompanyDocuments from "./CompanyDocument";
 import SignatoriesDocuments from "./SignatoriesDocuments";
 import SectionTitle from "../SectionTitle";
-import { docUpload } from "../../store/actions/uploadDocActions";
+import { retrieveDocDetails } from "../../store/actions/getProspectDocumentsActions";
 import arrowBack from "./../../assets/icons/backArrow.png";
 
 const style = {
@@ -69,7 +69,7 @@ const style = {
 
 class EditApplication extends Component {
   componentDidMount() {
-    this.props.docUpload();
+    this.props.retrieveDocDetails();
   }
 
   render() {
@@ -110,7 +110,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  docUpload
+  retrieveDocDetails
 };
 
 export default withStyles(style)(

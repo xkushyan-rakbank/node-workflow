@@ -305,23 +305,3 @@ class UploadDocuments extends Component {
 }
 
 export default withStyles(style)(UploadDocuments);
-
-// const fd = new FormData();
-// // fd.append("file", this.state.selectedFile, fileDetails);
-// fd.append("file", fileDetails);
-// axios
-//   // .post("http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents", fd, config)
-//   .then(res => {
-//     this.setState({
-//       enableUpload: false,
-//       isUploadSucess: false
-//     });
-//     console.log(res);
-//   })
-//   .catch(error => {
-//     console.log(error);
-//     this.setState({
-//       fileError: true,
-//       enableUpload: true
-//     });
-//   });
