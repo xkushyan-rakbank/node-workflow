@@ -2,10 +2,8 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-
+import { getIconsByAccount } from "../../constants/icons";
 import dotsBg from "../../assets/images/dots_bg.png";
-import checkedIc from "../../assets/icons/company-documents.png";
-import bankingIc from "../../assets/icons/banking.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import InfoNote from "../../components/InfoNote";
 
@@ -154,11 +152,12 @@ class ApplicationSubmitted extends React.Component {
   render() {
     const { classes } = this.props;
     const isColumnViewAccounts = mockDataAccountSubmittedInfo.length > 2;
+    const { companyDocuments, banking } = getIconsByAccount();
 
     return (
       <div className={classes.container}>
         <div className={classes.title}>
-          <img src={checkedIc} alt="checked" />
+          <img src={companyDocuments} alt="checked" />
           <SectionTitleWithInfo title="Meet the brand new accounts for Designit Arabia" />
         </div>
 
@@ -195,7 +194,7 @@ class ApplicationSubmitted extends React.Component {
         <div className={classes.divider}>{""}</div>
 
         <div className={classes.result}>
-          <img src={bankingIc} alt="wait call" />
+          <img src={banking} alt="wait call" />
           <Typography align="center" classes={{ root: classes.resultNextStep }}>
             What happens now
           </Typography>

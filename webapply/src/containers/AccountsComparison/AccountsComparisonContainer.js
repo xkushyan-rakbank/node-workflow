@@ -38,7 +38,8 @@ class AccountsComparisonContainer extends React.Component {
   componentDidMount() {
     const { updateProspect } = this.props;
     updateProspect({
-      "prospect.applicationInfo.accountType": ""
+      "prospect.applicationInfo.accountType": "",
+      "prospect.applicationInfo.islamicBanking": false
     });
   }
 

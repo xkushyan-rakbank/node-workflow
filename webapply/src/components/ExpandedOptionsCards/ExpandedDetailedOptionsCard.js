@@ -3,9 +3,8 @@ import cx from "classnames";
 import { withStyles } from "@material-ui/core";
 import { Link } from "@material-ui/core";
 import ContinueButton from "../Buttons/ContainedButton";
-import plus from "../../assets/icons/rak-value-plus.png";
-import max from "../../assets/icons/rak-value-max.png";
 import check from "../../assets/icons/check_outline_ic.png";
+import { getIconsByAccount } from "../../constants/icons";
 
 const style = {
   root: {
@@ -49,8 +48,12 @@ const style = {
     justifyContent: "center",
     alignItems: "center",
     marginBottom: "30px",
+    "& img": {
+      width: "80px",
+      height: "auto"
+    },
     "@media only screen and (max-width: 1300px)": {
-      display: "none"
+      // display: "none"
     }
   },
   name: {
@@ -166,6 +169,8 @@ const ExpandedOptionsDetailedCard = ({
     accountType === "RAKStarter" && value === "RAKvalue PLUS"
       ? "Included in RAKstarter"
       : "Available upgrade";
+
+  const { plus, max } = getIconsByAccount();
 
   return (
     <div className={cx(classes.root, className)}>
