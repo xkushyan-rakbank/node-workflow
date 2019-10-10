@@ -15,31 +15,59 @@ const styles = {
     fontSize: "15px",
     alignItems: "center",
     fontWeight: "600"
+  },
+  errorMsg: {
+    fontWeight: 600,
+    fontSize: "20px",
+    marginBottom: "24px"
   }
 };
 
 const CompanyDetails = props => {
-  const { classes } = props;
+  const { classes, prospectInfo } = props;
+
   return (
     <>
-      <h4 className={classes.title}>Applicant&apos;s Deatil</h4>
-      <Grid container spacing={3}>
-        <Grid item md={6} sm={12}>
-          <div className={classes.companyDetails}>abcd@gmail.com</div>
+      <h4 className={classes.title}>Applicant&apos;s Detail</h4>
+      {prospectInfo.applicantInfo ? (
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <div className={classes.companyDetails}>
+              {prospectInfo.applicantInfo.email && prospectInfo.applicantInfo.email}
+            </div>
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <div className={classes.companyDetails}>
+              {prospectInfo.applicantInfo.countryCode &&
+                prospectInfo.applicantInfo.countryCode +
+                  " " +
+                  prospectInfo.applicantInfo.mobileNo &&
+                prospectInfo.applicantInfo.mobileNo}
+            </div>
+          </Grid>
         </Grid>
-        <Grid item md={6} sm={12}>
-          <div className={classes.companyDetails}>456734567</div>
-        </Grid>
-      </Grid>
+      ) : (
+        <div className={classes.errorMsg}>Applicant details are not found</div>
+      )}
       <h4 className={classes.title}>Company Detail</h4>
-      <Grid container spacing={3}>
-        <Grid item md={6} sm={12}>
-          <div className={classes.companyDetails}>Abc Company Name</div>
+      {prospectInfo.organizationInfo ? (
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <div className={classes.companyDetails}>
+              {prospectInfo.organizationInfo.companyName &&
+                prospectInfo.organizationInfo.companyName}
+            </div>
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <div className={classes.companyDetails}>
+              {prospectInfo.organizationInfo.licenseNumber &&
+                prospectInfo.organizationInfo.licenseNumber}
+            </div>
+          </Grid>
         </Grid>
-        <Grid item md={6} sm={12}>
-          <div className={classes.companyDetails}>Trade Licence Number</div>
-        </Grid>
-      </Grid>
+      ) : (
+        <div className={classes.errorMsg}>Company details are not found</div>
+      )}
     </>
   );
 };

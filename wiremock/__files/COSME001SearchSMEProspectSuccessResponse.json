@@ -28,11 +28,41 @@
           "statusOverAll": "proceed",
           "screeningResults": [
             {
-              "screeningType": "string",
-              "screeningStatus": "string",
+              "screeningType": "Dedupe Check",
+              "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "string",
+              "screeningReason": "No Match Reason",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Blacklist Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "No Match Reason",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Negative List Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "Match",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Risk Rating",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "Risk rating value",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -42,13 +72,22 @@
         "auditTrail": [
           {
             "fieldName": "string",
-            "modifiedBy": "string",
-            "modifiedDateTime": "string"
+            "modifiedBy": "Kapil",
+            "modifiedDateTime": "10/09/2019 11:30:00"
+          },
+          {
+            "fieldName": "string",
+            "modifiedBy": "Sachin",
+            "modifiedDateTime": "12/09/2019 15:30:00"
           }
         ],
         "organizationInfo": {
-          "licenseNumber": "string",
-          "companyName": "string"
+          "licenseNumber": "3456798765789",
+          "companyName": "Gill Pvt. Ltd."
+        },
+        "applicationInfo": {
+          "viewId": "string",
+          "actionType": "save"
         }
       },
       {
@@ -98,8 +137,12 @@
           }
         ],
         "organizationInfo": {
-          "licenseNumber": "string",
-          "companyName": "string"
+          "licenseNumber": "447877565655",
+          "companyName": "Purva Limited"
+        },
+        "applicationInfo": {
+          "viewId": "string",
+          "actionType": "save"
         }
       },
       {
@@ -149,8 +192,12 @@
           }
         ],
         "organizationInfo": {
-          "licenseNumber": "string",
-          "companyName": "string"
+          "licenseNumber": "50978643469",
+          "companyName": "ACC Corporate Limited"
+        },
+        "applicationInfo": {
+          "viewId": "string",
+          "actionType": "save"
         }
       }
     ]

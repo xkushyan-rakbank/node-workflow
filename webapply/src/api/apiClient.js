@@ -89,17 +89,11 @@ export default {
     }
   },
   search: {
-    seaerchApplication: (apiUIrl, data) => {
+    searchApplication: (apiUrl, data) => {
       return httpClient.request({
-        url: apiUIrl,
+        url: apiUrl,
         method: "POST",
         data
-      });
-    },
-    getDocuments: apiUIrl => {
-      return httpClient.request({
-        url: apiUIrl,
-        method: "GET"
       });
     }
   }
