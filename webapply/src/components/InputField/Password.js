@@ -12,7 +12,7 @@ import isEmpty from "lodash/isEmpty";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
 import { updateProspect } from "../../store/actions/appConfig";
-import { fieldAttr } from "./../../constants";
+import { fieldAttr } from "../../constants";
 import { validate } from "./../../utils/validate";
 import combineNestingName from "../../utils/combineNestingName";
 

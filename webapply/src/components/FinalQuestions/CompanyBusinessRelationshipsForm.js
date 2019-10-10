@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { get, last } from "lodash";
+import { get, last, isEqual } from "lodash";
 import cx from "classnames";
 import Checkbox from "../InputField/Checkbox";
 import Grid from "@material-ui/core/Grid";
@@ -60,7 +60,7 @@ const styles = {
   }
 };
 
-class CompanyBackgroundForm extends Component {
+class CompanyBusinessRelationshipsForm extends Component {
   constructor(props) {
     super(props);
 
@@ -80,6 +80,11 @@ class CompanyBackgroundForm extends Component {
   componentDidMount() {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
+  // temporary solution
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -450,5 +455,5 @@ export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(CompanyBackgroundForm)
+  )(CompanyBusinessRelationshipsForm)
 );

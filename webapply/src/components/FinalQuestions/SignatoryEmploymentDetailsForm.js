@@ -7,6 +7,7 @@ import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputValueById } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
+import { isEqual } from "lodash";
 
 const styles = {
   title: {
@@ -32,15 +33,24 @@ class SignatoryEmploymentDetailsForm extends Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
+  // temporary solution
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   handleSwitchIsWorkAtCompany = e => {
-    const path = `prospect.signatoryInfo[${this.props.index}].employmentDetails.isWorkAtTheCompany`;
+    const { index, companyName } = this.props;
+    const checkboxPath = `prospect.signatoryInfo[${index}].employmentDetails.isWorkAtTheCompany`;
+    const fieldPath = `prospect.signatoryInfo[${index}].employmentDetails.employerName`;
+    const employerName = e.target.checked ? companyName : "";
     this.props.updateProspect({
-      [path]: e.target.checked
+      [checkboxPath]: e.target.checked,
+      [fieldPath]: employerName
     });
     this.setState({ isWorkAtTheCompany: e.target.checked });
   };
@@ -74,7 +84,11 @@ class SignatoryEmploymentDetailsForm extends Component {
             />
           </Grid>
           <Grid item sm={12}>
-            <TextInput id="SigEmpd.employerName" indexes={[this.props.index]} />
+            <TextInput
+              id="SigEmpd.employerName"
+              indexes={[this.props.index]}
+              disabled={this.state.isWorkAtTheCompany}
+            />
           </Grid>
         </Grid>
       </>

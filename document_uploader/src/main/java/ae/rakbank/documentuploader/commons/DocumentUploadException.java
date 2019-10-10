@@ -1,6 +1,6 @@
 package ae.rakbank.documentuploader.commons;
 
-public class DocumentUploadException extends RuntimeException {
+public class DocumentUploadException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 

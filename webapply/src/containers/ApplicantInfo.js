@@ -1,6 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
+import Grid from "@material-ui/core/Grid";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
 import ErrorBoundary from "../components/ErrorBoundary";
@@ -21,7 +22,6 @@ import routes from "../routes";
 const styles = {
   reCaptchaContainer: {
     display: "flex",
-    paddingTop: "10px",
     justifyContent: "flex-end"
   }
 };
@@ -88,19 +88,21 @@ class BasicsForm extends React.Component {
             select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="UAE" />}
           />
 
-          <ErrorBoundary className={classes.reCaptchaContainer}>
-            <ReCaptcha
-              onVerify={this.handleReCaptchaVerify}
-              onExpired={this.handleReCaptchaExpired}
-              onError={this.handleReCaptchaError}
-            />
-          </ErrorBoundary>
+          <Grid container direction="row" justify="space-between" alignItems="center">
+            <ErrorBoundary className={classes.reCaptchaContainer}>
+              <ReCaptcha
+                onVerify={this.handleReCaptchaVerify}
+                onExpired={this.handleReCaptchaExpired}
+                onError={this.handleReCaptchaError}
+              />
+            </ErrorBoundary>
 
-          <div className="linkContainer">
-            <BackLink path={routes.detailedAccount} />
+            <div className="linkContainer">
+              <BackLink path={routes.detailedAccount} />
 
-            <SubmitButton label="Next Step" justify="flex-end" disabled={!lastInputValue} />
-          </div>
+              <SubmitButton label="Next Step" justify="flex-end" disabled={!lastInputValue} />
+            </div>
+          </Grid>
         </form>
       </>
     );

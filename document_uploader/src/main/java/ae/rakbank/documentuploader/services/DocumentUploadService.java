@@ -1,18 +1,15 @@
 package ae.rakbank.documentuploader.services;
 
-import java.nio.file.Path;
+import java.io.IOException;
 
-import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+import ae.rakbank.documentuploader.commons.DocumentUploadException;
 
 public interface DocumentUploadService {
 
-    void init();
-
-    String store(MultipartFile file);
-
-    Path load(String filename);
-
-    Resource loadAsResource(String filename);
+	void store(MultipartFile file, JsonNode requestBodyJSON) throws IOException, DocumentUploadException;
 
 }

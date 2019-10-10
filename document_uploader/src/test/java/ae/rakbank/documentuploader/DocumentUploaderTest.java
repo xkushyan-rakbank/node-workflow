@@ -1,10 +1,6 @@
 package ae.rakbank.documentuploader;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -16,8 +12,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import ae.rakbank.documentuploader.commons.DocumentNotFoundException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 
 @RunWith(SpringRunner.class)
@@ -26,26 +25,25 @@ import ae.rakbank.documentuploader.services.DocumentUploadService;
 public class DocumentUploaderTest {
 
 	@Autowired
-	private MockMvc mvc;
+	private MockMvc mockMvc;
 
 	@MockBean
 	private DocumentUploadService docUploadService;
 
 	@Test
 	public void shouldSaveUploadedFile() throws Exception {
-		MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt", "text/plain",
-				"Spring Framework".getBytes());
-		this.mvc.perform(multipart("/banks/RAK/prospects/cosme0001/documents").file(multipartFile))
-				.andExpect(status().isOk());
+		String uri = "/api/v1/banks/RAK/prospects/cosme0001/documents";
+		MockMultipartFile file = new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
 
-		then(this.docUploadService).should().store(multipartFile);
-	}
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectNode fileInfo = objectMapper.createObjectNode();
+		fileInfo.put("documentKey", "SampleDocFromTestCase");
 
-	@Test
-	public void should404WhenMissingFile() throws Exception {
-		given(this.docUploadService.loadAsResource("test.txt")).willThrow(DocumentNotFoundException.class);
+		mockMvc.perform(MockMvcRequestBuilders.multipart(uri).file(file).param("fileInfo", fileInfo.toString()))
+				.andExpect(status().is(200));
 
-		this.mvc.perform(get("/files/test.txt")).andExpect(status().isNotFound());
+		then(this.docUploadService).should().store(file, fileInfo);
+
 	}
 
 }

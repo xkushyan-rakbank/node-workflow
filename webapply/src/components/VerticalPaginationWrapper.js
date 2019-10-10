@@ -17,7 +17,7 @@ const style = {
     transition: "top 400ms",
     paddingTop: "171px",
     "@media only screen and (max-height: 870px)": {
-      paddingTop: "85px"
+      paddingTop: "90px"
     }
   },
   childWrapper: {

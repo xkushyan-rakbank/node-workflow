@@ -6,6 +6,7 @@ import PureSelect from "../InputField/PureSelect";
 import InfoTitle from "../InfoTitle";
 import { connect } from "react-redux";
 import { getInputValueById } from "../../store/selectors/input";
+import { isEqual } from "lodash";
 
 const styles = {
   title: {
@@ -29,7 +30,7 @@ const styles = {
   }
 };
 
-class CompanyMailingAddressForm extends Component {
+class CompanyPreferredMailingAddressForm extends Component {
   constructor(props) {
     super(props);
 
@@ -41,6 +42,11 @@ class CompanyMailingAddressForm extends Component {
   componentDidMount() {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
+  }
+
+  // temporary solution
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -97,4 +103,4 @@ const mapStateToProps = state => ({
   spaceType: getInputValueById(state, "OrgAddrAdrdSpace.spaceType", [0, 0])
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(CompanyMailingAddressForm));
+export default withStyles(styles)(connect(mapStateToProps)(CompanyPreferredMailingAddressForm));

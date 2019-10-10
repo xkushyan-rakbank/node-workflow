@@ -1,4 +1,4 @@
-import { errorType } from "./../constants";
+import { errorType } from "../constants";
 import store from "../store/configureStore";
 import get from "lodash/get";
 
