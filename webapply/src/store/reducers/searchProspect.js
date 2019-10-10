@@ -1,18 +1,12 @@
-import { SEARCH_APPLICATIONS_SUCCESS, SEARCH_APPLICATIONS_FAIL } from "../actions/searchProspect";
+import { SEARCH_APPLICATIONS_SUCCESS } from "../actions/searchProspect";
 
-const initialState = {
-  searchResults: [],
-  currentProspect: ""
+export const initialState = {
+  searchResults: []
 };
 
 const searchProspectReducer = (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_APPLICATIONS_SUCCESS:
-      return {
-        ...state,
-        searchResults: action.payload
-      };
-    case SEARCH_APPLICATIONS_FAIL:
       return {
         ...state,
         searchResults: action.payload

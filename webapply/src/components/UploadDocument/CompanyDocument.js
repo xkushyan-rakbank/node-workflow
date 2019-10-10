@@ -85,10 +85,12 @@ const style = {
 
 class CompanyDocuments extends Component {
   render() {
-    let companyDocuments = this.props.authUsers.uploadedDoc;
+    let companyDocuments = this.props.DocDetails.uploadedDoc;
     const companyName = this.props.companyName;
     let companyDocument;
     if (companyDocuments.companyDocuments) {
+      let companyDocLength = Object.keys(companyDocuments.companyDocuments).length;
+      console.log(companyDocLength);
       companyDocument = companyDocuments.companyDocuments.map((companyDoc, index) => {
         return <UploadDocument key={index} companyDoc={companyDoc} />;
       });

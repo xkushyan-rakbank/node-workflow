@@ -51,26 +51,13 @@ class CompanyContactInformationForm extends Component {
     super(props);
 
     this.state = {
-      secondaryPhoneNumber: false,
-      isPrimaryMobileFilled: false,
-      isPrimaryPhoneFilled: false,
-      isPrimaryEmailFilled: false
+      secondaryPhoneNumber: false
     };
   }
 
   componentDidMount() {
-    const { primaryMobileNo, primaryPhoneNo, primaryEmail } = this.props;
-    this.setState(
-      {
-        isPrimaryMobileFilled: !!primaryMobileNo,
-        isPrimaryPhoneFilled: !!primaryPhoneNo,
-        isPrimaryEmailFilled: !!primaryEmail
-      },
-      () => {
-        const isButtonDisabled = this.isContinueDisabled();
-        this.props.setIsContinueDisabled(isButtonDisabled);
-      }
-    );
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -82,16 +69,8 @@ class CompanyContactInformationForm extends Component {
     this.setState({ secondaryPhoneNumber: !this.state.secondaryPhoneNumber });
   };
 
-  callbackHandle = (value, name) => this.setState({ [name]: !!value });
-
   isContinueDisabled = () => {
-    return !(
-      this.props.primaryMobCountryCode &&
-      this.state.isPrimaryMobileFilled &&
-      this.state.isPrimaryEmailFilled &&
-      (!this.state.secondaryPhoneNumber || this.props.primaryPhoneCountryCode) &&
-      (!this.state.secondaryPhoneNumber || this.state.isPrimaryPhoneFilled)
-    );
+    return !(this.state.secondaryPhoneNumber ? this.props.primaryPhoneNo : this.props.primaryEmail);
   };
 
   render() {
@@ -103,16 +82,12 @@ class CompanyContactInformationForm extends Component {
             <TextInput
               id="OrgCont.primaryMobileNo"
               select={<PureSelect id="OrgCont.primaryMobCountryCode" combinedSelect />}
-              storeFlag="isPrimaryMobileFilled"
-              callback={this.callbackHandle}
             />
             {this.state.secondaryPhoneNumber && (
               <div className={classes.relative}>
                 <TextInput
                   id="OrgCont.primaryPhoneNo"
                   select={<PureSelect id="OrgCont.primaryPhoneCountryCode" combinedSelect />}
-                  storeFlag="isPrimaryPhoneFilled"
-                  callback={this.callbackHandle}
                 />
                 <RemoveButton
                   onClick={this.handleSecondaryPhoneBtnSwitch}
@@ -123,11 +98,7 @@ class CompanyContactInformationForm extends Component {
             )}
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput
-              id="OrgCont.primaryEmail"
-              storeFlag="isPrimaryEmailFilled"
-              callback={this.callbackHandle}
-            />
+            <TextInput id="OrgCont.primaryEmail" />
           </Grid>
         </Grid>
         {!this.state.secondaryPhoneNumber && (
@@ -145,10 +116,7 @@ class CompanyContactInformationForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  primaryMobCountryCode: getInputValueById(state, "OrgCont.primaryMobCountryCode"),
-  primaryMobileNo: getInputValueById(state, "OrgCont.primaryMobileNo"),
   primaryPhoneNo: getInputValueById(state, "OrgCont.primaryPhoneNo"),
-  primaryPhoneCountryCode: getInputValueById(state, "OrgCont.primaryPhoneCountryCode"),
   primaryEmail: getInputValueById(state, "OrgCont.primaryEmail")
 });
 

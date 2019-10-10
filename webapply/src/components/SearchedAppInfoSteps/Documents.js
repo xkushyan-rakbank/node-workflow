@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "../../components/Avatar";
 
@@ -102,6 +101,7 @@ export const mockSignatoriesDocData = [
 
 const Documents = props => {
   const { classes } = props;
+
   return (
     <>
       <h4 className={classes.title}>Company Documents</h4>
@@ -126,7 +126,13 @@ const Documents = props => {
               <div className={classes.checkListData}>{application.uploadStatus}</div>
             </div>
             <div>
-              <Link className={classes.link}>Print / Download</Link>
+              <a
+                index={index}
+                href="http://localhost:9091/webapply/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL"
+                className={classes.link}
+              >
+                Print / Download
+              </a>
             </div>
           </div>
         ))}
@@ -160,7 +166,13 @@ const Documents = props => {
               <div className={classes.checkListData}>{application.uploadStatus}</div>
             </div>
             <div>
-              <Link className={classes.link}>Print / Download</Link>
+              <a
+                index={index}
+                href="http://localhost:9091/webapply/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL"
+                className={classes.link}
+              >
+                Print / Download
+              </a>
             </div>
           </div>
         ))}
@@ -192,7 +204,13 @@ const Documents = props => {
               <div className={classes.checkListData}>{application.uploadStatus}</div>
             </div>
             <div>
-              <Link className={classes.link}>Print / Download</Link>
+              <a
+                index={index}
+                href="http://localhost:9091/webapply/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL"
+                className={classes.link}
+              >
+                Print / Download
+              </a>
             </div>
           </div>
         ))}

@@ -24,15 +24,9 @@ class SignatoryWealthForm extends Component {
     index: 0
   };
 
-  state = {
-    isOtherFilled: false
-  };
-
   componentDidMount() {
-    this.setState({ isOtherFilled: !!this.props.otherSoursOfWealth }, () => {
-      const isButtonDisabled = this.isContinueDisabled();
-      this.props.setIsContinueDisabled(isButtonDisabled);
-    });
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -55,13 +49,10 @@ class SignatoryWealthForm extends Component {
     this.props.updateProspect({ [this.props.otherWealthTypeInputName]: value });
   }
 
-  callbackHandle = (value, name) => this.setState({ [name]: !!value });
-
   isContinueDisabled = () => {
-    return !(
-      (!this.isOtherSourceOfWealthSelected() || this.state.isOtherFilled) &&
-      this.props.soursOfWealth
-    );
+    return !(this.isOtherSourceOfWealthSelected()
+      ? this.props.otherSoursOfWealth
+      : this.props.soursOfWealth);
   };
 
   render() {
@@ -74,12 +65,7 @@ class SignatoryWealthForm extends Component {
           </Grid>
           {isOtherSourceOfWealthSelected && (
             <Grid item md={12} sm={12}>
-              <TextInput
-                id="SigKycdWlth.others"
-                indexes={[this.props.index]}
-                storeFlag="isOtherFilled"
-                callback={this.callbackHandle}
-              />
+              <TextInput id="SigKycdWlth.others" indexes={[this.props.index]} />
             </Grid>
           )}
         </Grid>

@@ -15,7 +15,7 @@ const style = {
       border: "none"
     },
     display: "grid",
-    gridTemplateColumns: "2fr 2fr 1fr",
+    gridTemplateColumns: "1fr 1fr",
     alignItems: "center",
     padding: "24px 20px 19px 30px"
   },
@@ -28,66 +28,45 @@ const style = {
   heading: {
     fontWeight: 600,
     color: "#000"
+  },
+  errorMsg: {
+    fontWeight: 600,
+    fontSize: "20px",
+    marginBottom: "24px"
   }
 };
 
-export const mockAuditTrailData = [
-  {
-    fieldsModified: "Company Name",
-    modifiedBy: "xyz",
-    modifiedOn: "10/09/2019 11:30:00"
-  },
-  {
-    fieldsModified: "PO Box Number",
-    modifiedBy: "abc",
-    modifiedOn: "12/09/2019 15:30:00"
-  }
-];
+const AuditTrail = props => {
+  const { classes, prospectInfo } = props;
 
-class AuditTrail extends React.Component {
-  getIndustryMultiSelect() {
-    return this.props.orgKYCDetails.industryMultiSelect || [];
-  }
-
-  getIndustryValueByIndex(index) {
-    const { industry } = this.getIndustryMultiSelect()[index] || {
-      industry: [""]
-    };
-    const [industryItem] = industry;
-    return industryItem;
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.wrapper}>
-        <div className={classes.applicationRow}>
+  return prospectInfo.auditTrail && prospectInfo.auditTrail.length > 0 ? (
+    <div className={classes.wrapper}>
+      <div className={classes.applicationRow}>
+        <div>
+          <div className={classes.checkListData + " " + classes.heading}>Modified By</div>
+        </div>
+        <div>
+          <div className={classes.checkListData + " " + classes.heading}>Modified On</div>
+        </div>
+      </div>
+      {prospectInfo.auditTrail.map((application, index) => (
+        <div className={classes.applicationRow} key={index}>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Fields Modified</div>
+            <div className={classes.checkListData}>
+              {application.modifiedBy && application.modifiedBy}
+            </div>
           </div>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Modified By</div>
-          </div>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Modified On</div>
+            <div className={classes.checkListData}>
+              {application.modifiedDateTime && application.modifiedDateTime}
+            </div>
           </div>
         </div>
-        {mockAuditTrailData.map((application, index) => (
-          <div className={classes.applicationRow} key={index}>
-            <div>
-              <div className={classes.checkListData}>{application.fieldsModified}</div>
-            </div>
-            <div>
-              <div className={classes.checkListData}>{application.modifiedBy}</div>
-            </div>
-            <div>
-              <div className={classes.checkListData}>{application.modifiedOn}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
+      ))}
+    </div>
+  ) : (
+    <div className={classes.errorMsg}>Fields are not modified yet.</div>
+  );
+};
 
 export default withStyles(style)(AuditTrail);

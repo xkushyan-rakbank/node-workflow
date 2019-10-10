@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+// import { connect } from "react-redux";
 import Avatar from "../../components/Avatar";
 import UploadDocuments from "../../components/UploadDocument/UploadDocument";
+// import { docUploadCount } from "../../store/actions/uploadDocActions"
+
 const style = {
   container: {
     borderRadius: "8px",
@@ -58,13 +61,16 @@ const style = {
 
 class SignatoriesDocuments extends Component {
   render() {
-    let docUploadDetails = this.props.authUsers.uploadedDoc;
-    const authUsers = this.props.authUsers.authUsers;
+    let docUploadDetails = this.props.DocDetails.uploadedDoc;
+    const authUsers = this.props.DocDetails.authUsers;
     const userList = authUsers.map((authUser, index) => {
-      if (this.props.authUsers.uploadedDoc.stakeholdersDocuments) {
-        docUploadDetails = this.props.authUsers.uploadedDoc.stakeholdersDocuments[
+      if (this.props.DocDetails.uploadedDoc.stakeholdersDocuments) {
+        docUploadDetails = this.props.DocDetails.uploadedDoc.stakeholdersDocuments[
           index + "_" + authUser.fullName
         ];
+        let signatoriesDocLength = Object.keys(docUploadDetails).length;
+        // this.props.docUploadCount(docUploadDetails + signatoriesDocLength);
+        console.log("length >>>  " + signatoriesDocLength);
       }
       return (
         <div className={this.props.classes.container} key={authUser.id}>
@@ -92,4 +98,11 @@ class SignatoriesDocuments extends Component {
   }
 }
 
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     docUploadCount: (project) => dispatch(docUploadCount(project))
+//   }
+// }
+
+// export default withStyles(style)(connect(null, mapDispatchToProps)(SignatoriesDocuments));
 export default withStyles(style)(SignatoriesDocuments);

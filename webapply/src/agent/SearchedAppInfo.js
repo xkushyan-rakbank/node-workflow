@@ -10,6 +10,7 @@ import SubmitButton from "../components/Buttons/SubmitButton";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import { history } from "./../store/configureStore";
 import BackLink from "../components/Buttons/BackLink";
+import { docUpload } from "./../store/actions/uploadDocActions";
 
 const styles = {
   sectionTitleIndent: {
@@ -40,29 +41,34 @@ class SearchedAppInfo extends React.Component {
 
   componentWillMount() {
     !this.props.checkLoginStatus && history.push(routes.login);
+    this.props.searchResults.length == 0 && history.push(routes.searchProspect);
   }
 
-  handleContinue = () => {
-    if (this.state.step < searchedAppInfoSteps.length) {
-      this.props.aboutCompany();
-      this.setState(state => ({ step: state.step + 1 }));
-    } else {
-      this.props.history.push(routes.stakeholdersInfo);
-    }
-  };
+  componentDidMount() {
+    this.props.docUpload();
+  }
 
   render() {
-    const { classes, index } = this.props;
+    const { classes, index, searchResults } = this.props;
     const { step } = this.state;
 
-    return (
+    const [prospectInfo] =
+      searchResults && searchResults.searchResult
+        ? searchResults.searchResult.filter(item => item.prospectId == "100")
+        : [];
+
+    return prospectInfo ? (
       <>
         <h2>Application Details</h2>
         <p className="formDescription"></p>
         <CompanyStakeholderCard
           content={
             <>
-              <div className={classes.title}>Applicant&apos;s Name</div>
+              <div className={classes.title}>
+                {prospectInfo.applicantInfo &&
+                  prospectInfo.applicantInfo.fullName &&
+                  prospectInfo.applicantInfo.fullName}
+              </div>
             </>
           }
         >
@@ -80,8 +86,8 @@ class SearchedAppInfo extends React.Component {
                   active={step === item.step}
                   filled={false}
                   clickHandler={setStep}
-                  handleContinue={this.handleContinue}
                   hideContinue={true}
+                  prospectInfo={prospectInfo}
                 />
               );
             })}
@@ -92,6 +98,8 @@ class SearchedAppInfo extends React.Component {
           <SubmitButton label={"Edit"} justify="flex-end" />
         </div>
       </>
+    ) : (
+      <></>
     );
   }
 }
@@ -101,7 +109,9 @@ const mapStateToProps = state => ({
   checkLoginStatus: loginSelector.checkLoginStatus(state)
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  docUpload
+};
 
 export default withStyles(styles)(
   connect(

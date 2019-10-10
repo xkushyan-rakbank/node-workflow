@@ -21,23 +21,9 @@ class SignatoryPersonalInformationForm extends Component {
     index: 0
   };
 
-  state = {
-    isMothersMaidenNameFilled: false,
-    isMaritalStatusOthersFilled: false
-  };
-
   componentDidMount() {
-    const { mothersMaidenName, maritalStatusOthers } = this.props;
-    this.setState(
-      {
-        isMothersMaidenNameFilled: !!mothersMaidenName,
-        isMaritalStatusOthersFilled: !!maritalStatusOthers
-      },
-      () => {
-        const isButtonDisabled = this.isContinueDisabled();
-        this.props.setIsContinueDisabled(isButtonDisabled);
-      }
-    );
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -45,16 +31,10 @@ class SignatoryPersonalInformationForm extends Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
-  callbackHandle = (value, name) => this.setState({ [name]: !!value });
-
   isContinueDisabled = () => {
-    const { isMothersMaidenNameFilled, isMaritalStatusOthersFilled } = this.state;
-    const { maritalStatus } = this.props;
-    return !(
-      isMothersMaidenNameFilled &&
-      maritalStatus &&
-      (maritalStatus !== "O" || isMaritalStatusOthersFilled)
-    );
+    return !(this.props.maritalStatus === "O"
+      ? this.props.maritalStatusOthers
+      : this.props.mothersMaidenName);
   };
 
   render() {
@@ -65,21 +45,11 @@ class SignatoryPersonalInformationForm extends Component {
             <PureSelect id="Sig.maritalStatus" indexes={[this.props.index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput
-              id="Sig.mothersMaidenName"
-              indexes={[this.props.index]}
-              storeFlag="isMothersMaidenNameFilled"
-              callback={this.callbackHandle}
-            />
+            <TextInput id="Sig.mothersMaidenName" indexes={[this.props.index]} />
           </Grid>
           {this.props.maritalStatus === "O" && (
             <Grid item md={12} sm={12}>
-              <TextInput
-                id="Sig.maritalStatusOthers"
-                indexes={[this.props.index]}
-                storeFlag="isMaritalStatusOthersFilled"
-                callback={this.callbackHandle}
-              />
+              <TextInput id="Sig.maritalStatusOthers" indexes={[this.props.index]} />
             </Grid>
           )}
         </Grid>

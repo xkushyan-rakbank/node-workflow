@@ -35,16 +35,10 @@ class FileUploader extends React.Component {
 
   componentDidMount() {
     this.props.docUpload();
-    if (this.state.uploadDocCount === 6) {
-      console.log(this.props.uploadDocCount);
-      this.setState({
-        isDisabled: false
-      });
-    }
   }
 
   render() {
-    const authUsers = this.props;
+    const DocDetails = this.props;
     const { classes } = this.props;
 
     return (
@@ -55,11 +49,11 @@ class FileUploader extends React.Component {
         </p>
         <div className={classes.sectionContainer}>
           <SectionTitle title="Company documents" className={classes.title} />
-          <CompanyDocuments authUsers={authUsers} />
+          <CompanyDocuments DocDetails={DocDetails} />
         </div>
         <div className={classes.sectionContainer}>
           <SectionTitle title="Signatories documents" />
-          <SignatoriesDocuments authUsers={authUsers} />
+          <SignatoriesDocuments DocDetails={DocDetails} />
         </div>
         <div className="linkContainer">
           <BackLink path={routes.finalQuestions} />

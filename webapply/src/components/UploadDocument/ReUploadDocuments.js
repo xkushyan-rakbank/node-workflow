@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import CompanyDocuments from "./CompanyDocument";
 import SignatoriesDocuments from "./SignatoriesDocuments";
-import SectionTitle from "../../components/SectionTitle";
+import SectionTitle from "../SectionTitle";
 import { docUpload } from "../../store/actions/uploadDocActions";
 import arrowBack from "./../../assets/icons/backArrow.png";
 
@@ -73,7 +73,7 @@ class EditApplication extends Component {
   }
 
   render() {
-    const authUsers = this.props;
+    const DocDetails = this.props;
     return (
       <>
         <h3 className={this.props.classes.heading}>Almost done! We need a few extra documents</h3>
@@ -82,11 +82,11 @@ class EditApplication extends Component {
         </p>
         <div className={this.props.classes.sectionContainer}>
           <SectionTitle title="Company documents" className={this.props.classes.title} />
-          <CompanyDocuments />
+          <CompanyDocuments DocDetails={DocDetails} />
         </div>
         <div className={this.props.classes.sectionContainer}>
           <SectionTitle title="Signatories documents" />
-          <SignatoriesDocuments authUsers={authUsers} />
+          <SignatoriesDocuments DocDetails={DocDetails} />
         </div>
         <div className="linkContainer">
           <button className={this.props.classes.BtnBack} justify="flex-end">

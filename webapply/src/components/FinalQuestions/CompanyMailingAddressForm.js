@@ -34,26 +34,13 @@ class CompanyMailingAddressForm extends Component {
     super(props);
 
     this.state = {
-      addressCount: 1,
-      isAddressFieldFilled: false,
-      isLocationFilled: false,
-      isBoxNumberFilled: false
+      addressCount: 1
     };
   }
 
   componentDidMount() {
-    const { poBox, addressLine1, addressFieldDesc } = this.props;
-    this.setState(
-      {
-        isAddressFieldFilled: !!addressFieldDesc,
-        isLocationFilled: !!addressLine1,
-        isBoxNumberFilled: !!poBox
-      },
-      () => {
-        const isButtonDisabled = this.isContinueDisabled();
-        this.props.setIsContinueDisabled(isButtonDisabled);
-      }
-    );
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -61,17 +48,8 @@ class CompanyMailingAddressForm extends Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
-  callbackHandle = (value, name) => this.setState({ [name]: !!value });
-
   isContinueDisabled = () => {
-    const { spaceType, emirateCity } = this.props;
-    return !(
-      this.state.isAddressFieldFilled &&
-      this.state.isLocationFilled &&
-      this.state.isBoxNumberFilled &&
-      spaceType &&
-      emirateCity
-    );
+    return !this.props.emirateCity;
   };
 
   render() {
@@ -82,28 +60,16 @@ class CompanyMailingAddressForm extends Component {
             return (
               <React.Fragment key={index}>
                 <Grid item md={6} sm={12}>
-                  <TextInput
-                    id="OrgAddrAdrd.addressFieldDesc"
-                    indexes={[index, 0]}
-                    storeFlag="isAddressFieldFilled"
-                    callback={this.callbackHandle}
-                  />
-                  <TextInput
-                    id="OrgAddrAdrd.addressLine1"
-                    indexes={[index, 0]}
-                    storeFlag="isLocationFilled"
-                    callback={this.callbackHandle}
-                  />
+                  <TextInput id="OrgAddrAdrd.addressFieldDesc" indexes={[index, 0]} />
+                  <TextInput id="OrgAddrAdrd.addressLine1" indexes={[index, 0]} />
                   <PureSelect id="OrgAddrAdrd.emirateCity" indexes={[index, 0]} />
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <PureSelect id="OrgAddrAdrdSpace.spaceType" indexes={[index, 0]} />
-                  <TextInput
-                    id="OrgAddrAdrd.poBox"
-                    indexes={[index, 0]}
-                    storeFlag="isBoxNumberFilled"
-                    callback={this.callbackHandle}
-                  />
+                  {this.props.spaceType === "O" && (
+                    <TextInput id="OrgAddrAdrdSpace.others" indexes={[index, 0]} />
+                  )}
+                  <TextInput id="OrgAddrAdrd.poBox" indexes={[index, 0]} />
                   <TextInput
                     id="OrgAddrAdrd.country"
                     indexes={[index, 0]}
@@ -128,10 +94,7 @@ class CompanyMailingAddressForm extends Component {
 
 const mapStateToProps = state => ({
   emirateCity: getInputValueById(state, "OrgAddrAdrd.emirateCity", [0, 0]),
-  spaceType: getInputValueById(state, "OrgAddrAdrdSpace.spaceType", [0, 0]),
-  poBox: getInputValueById(state, "OrgAddrAdrd.poBox", [0, 0]),
-  addressLine1: getInputValueById(state, "OrgAddrAdrd.addressLine1", [0, 0]),
-  addressFieldDesc: getInputValueById(state, "OrgAddrAdrd.addressFieldDesc", [0, 0])
+  spaceType: getInputValueById(state, "OrgAddrAdrdSpace.spaceType", [0, 0])
 });
 
 export default withStyles(styles)(connect(mapStateToProps)(CompanyMailingAddressForm));

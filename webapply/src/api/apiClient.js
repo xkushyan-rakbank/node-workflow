@@ -80,26 +80,21 @@ export default {
     }
   },
 
-  uploadDocuments: {
-    uploadDocument: () => {
+  fetchDocument: {
+    retriveDocuments: () => {
       return httpClient.request({
         url: "/webapply/api/v1/banks/RAK/prospects/001/documents",
         method: "GET"
       });
     }
   },
+
   search: {
-    seaerchApplication: (apiUIrl, data) => {
+    searchApplication: (apiUrl, data) => {
       return httpClient.request({
-        url: apiUIrl,
+        url: apiUrl,
         method: "POST",
         data
-      });
-    },
-    getDocuments: apiUIrl => {
-      return httpClient.request({
-        url: apiUIrl,
-        method: "GET"
       });
     }
   }

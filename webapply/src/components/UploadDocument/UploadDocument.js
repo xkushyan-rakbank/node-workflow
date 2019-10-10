@@ -131,11 +131,9 @@ class UploadDocuments extends Component {
   }
 
   fileUploadHandler(event) {
-    console.log("inside file uploader");
     call = "";
     call = call + this.props.companyDoc.documentType + this.props.companyDoc.signatoryId;
     call = call.replace(/\s/g, "");
-    console.log("call$$$ ", call);
     this.call = CancelToken.source();
 
     this.setState(
@@ -182,47 +180,43 @@ class UploadDocuments extends Component {
         };
         const fd = new FormData();
         fd.append("file", fileDetails);
-        setTimeout(() => {
-          axios
-            .post(
-              "http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents",
-              {
-                fd,
-                config
-              },
-              {
-                cancelToken: this.call.token
-              }
-            )
-            .then(response => {
+        axios
+          .post(
+            "http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents",
+            {
+              fd,
+              config
+            },
+            {
+              cancelToken: this.call.token
+            }
+          )
+          .then(response => {
+            this.setState({
+              enableUpload: false,
+              isUploadSucess: true
+            });
+          })
+          .catch(thrown => {
+            if (axios.isCancel(thrown)) {
+              this.setState({
+                enableUpload: true,
+                isUploadSucess: false
+              });
+              console.log("Request canceled", thrown.message);
+            } else if (thrown.message === "Network Error") {
+              console.log("inside else if");
+              this.setState({
+                fileError: true,
+                enableUpload: true
+              });
+            } else {
               this.setState({
                 enableUpload: false,
-                isUploadSucess: true
+                isUploadSucess: false
               });
-              console.log(">>>>> 199" + response);
-            })
-            .catch(thrown => {
-              if (axios.isCancel(thrown)) {
-                this.setState({
-                  enableUpload: true,
-                  isUploadSucess: false
-                });
-                console.log("Request canceled", thrown.message);
-              } else if (thrown.message === "Network Error") {
-                console.log("inside else if");
-                this.setState({
-                  fileError: true,
-                  enableUpload: true
-                });
-              } else {
-                this.setState({
-                  enableUpload: false,
-                  isUploadSucess: false
-                });
-                console.log("Request success", thrown.message);
-              }
-            });
-        }, 1000);
+            }
+          });
       }
     );
   }
@@ -230,7 +224,6 @@ class UploadDocuments extends Component {
   fileUploadCancel(e) {
     call = e;
     call = call.replace(/\s/g, "");
-    console.log("call### ", call);
     this.call.cancel("Operation canceled by the user.");
   }
 

@@ -1,34 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import ContainedButton from "../components/Buttons/ContainedButton";
 import routes from "../routes";
 import { Link } from "react-router-dom";
-
-export const StyledWhiteContainedButton = props => {
-  const Button = withStyles(() => ({
-    buttonStyle: {
-      boxShadow: "none",
-      border: "solid 1px #373737",
-      backgroundColor: "#fff",
-      width: 160,
-      height: 32,
-      padding: "0 10px",
-      "&:hover": {
-        backgroundColor: "#000",
-        "& span": {
-          color: "#fff"
-        }
-      }
-    },
-    labelStyle: {
-      color: "#373737",
-      fontSize: 14,
-      justifyContent: "center"
-    }
-  }))(ContainedButton);
-
-  return <Button {...props} />;
-};
 
 const style = {
   wrapper: {
@@ -50,8 +23,9 @@ const style = {
   fullName: {
     fontSize: "18px",
     fontWeight: 600,
-    lineHeight: 1,
-    color: "#263d4c"
+    lineHeight: "18px",
+    color: "#263d4c",
+    height: "18px"
   },
   companyName: {
     fontSize: "18px",
@@ -62,9 +36,9 @@ const style = {
   },
   account: {
     fontSize: "14px",
-    lineHeight: 1.33,
     color: "#86868b",
-    marginTop: 5
+    marginTop: 5,
+    height: "18px"
   },
   status: {
     borderRadius: "4px",
@@ -85,22 +59,41 @@ const style = {
 const SearchApplicationList = ({ classes, currentApplications }) => {
   return (
     <div className={classes.wrapper}>
-      {currentApplications.map((application, index) => (
-        <Link className={classes.applicationRow} key={index} to={routes.SearchedAppInfo}>
-          <div>
-            <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
-            <div className={classes.account}>{application.applicantInfo.email}</div>
-            <span className={classes.account}>{application.applicantInfo.mobileNo}</span>
-          </div>
-          <div>
-            <div className={classes.companyName}>Comapany name</div>
-            <div className={classes.account}>TL number</div>
-          </div>
-          <div>
-            <span className={classes.status}>{application.status.statusType}</span>
-          </div>
-        </Link>
-      ))}
+      {currentApplications.length > 0 &&
+        currentApplications.map((application, index) => (
+          <Link
+            className={classes.applicationRow}
+            key={index}
+            to={routes.SearchedAppInfo.replace(":prospectId", "100")}
+          >
+            <div>
+              <div className={classes.fullName}>
+                {application.applicantInfo.fullName && application.applicantInfo.fullName}
+              </div>
+              <div className={classes.account}>
+                {application.applicantInfo.email && application.applicantInfo.email}
+              </div>
+              <span className={classes.account}>
+                {application.applicantInfo.mobileNo && application.applicantInfo.mobileNo}
+              </span>
+            </div>
+            <div>
+              <div className={classes.companyName}>
+                {application.organizationInfo.companyName &&
+                  application.organizationInfo.companyName}
+              </div>
+              <div className={classes.account}>
+                {application.organizationInfo.licenseNumber &&
+                  application.organizationInfo.licenseNumber}
+              </div>
+            </div>
+            <div>
+              <span className={classes.status}>
+                {application.status.statusType && application.status.statusType}
+              </span>
+            </div>
+          </Link>
+        ))}
     </div>
   );
 };
