@@ -22,24 +22,25 @@ import org.springframework.web.multipart.MultipartFile;
 import ae.rakbank.documentuploader.commons.AppConfigProps;
 import ae.rakbank.documentuploader.commons.DocumentNotFoundException;
 import ae.rakbank.documentuploader.commons.DocumentUploadException;
+import ae.rakbank.documentuploader.commons.EnvUtil;
 
 @Service
 public class DocumentUploadServiceImpl implements DocumentUploadService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(DocumentUploadServiceImpl.class);
 
-	private final Path rootLocation;
+	private final Path uploadsDir;
 
 	@Autowired
 	public DocumentUploadServiceImpl(AppConfigProps properties) {
-		this.rootLocation = Paths.get(properties.getLocation());
+		this.uploadsDir = Paths.get(EnvUtil.getUploadDir());
 	}
 
 	@Override
 	@PostConstruct
 	public void init() {
 		try {
-			Files.createDirectories(rootLocation);
+			Files.createDirectories(uploadsDir);
 		} catch (IOException e) {
 			throw new DocumentUploadException("Could not initialize storage location", e);
 		}
@@ -48,7 +49,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 	@Override
 	public String store(MultipartFile file) {
 		String filename = StringUtils.cleanPath(file.getOriginalFilename());
-		logger.info("rootLocation="+rootLocation);
+		logger.info("rootLocation=" + uploadsDir);
 		try {
 			if (file.isEmpty()) {
 				throw new DocumentUploadException("Failed to store empty file " + filename);
@@ -59,19 +60,19 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 						"Cannot store file with relative path outside current directory " + filename);
 			}
 			try (InputStream inputStream = file.getInputStream()) {
-				Files.copy(inputStream, this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(inputStream, this.uploadsDir.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
 			}
 		} catch (IOException e) {
 			throw new DocumentUploadException("Failed to store file " + filename, e);
 		}
 
-		logger.info("rootLocation="+rootLocation);
+		logger.info("rootLocation=" + uploadsDir);
 		return filename;
 	}
 
 	@Override
 	public Path load(String filename) {
-		return rootLocation.resolve(filename);
+		return uploadsDir.resolve(filename);
 	}
 
 	@Override

@@ -147,11 +147,12 @@ public class WebApplyController {
 
 		setWebApplyEndpoints(objectMapper, initStateJSON);
 		initStateJSON.set("prospect", getProspect(segment, product));
-		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
+
 		// deep clone the json nodes
 		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
 		JsonNode uiConfigNode = objectMapper.readTree(uiConfig);
 
+		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
 		ObjectNode uiFieldsObjNode = filterUIConfigFieldsByCriteria((ObjectNode) uiConfigNode, segment, product, role,
 				device, datalist);
 
@@ -274,6 +275,8 @@ public class WebApplyController {
 	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws Exception {
 		logger.info("Begin getDatalistJSON() method, segment=" + segment);
 
+		String methodName = "getDatalistJSON()";
+
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
@@ -286,6 +289,8 @@ public class WebApplyController {
 
 			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
 
+			url = uriComponents.toString();
+
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 			headers.setContentType(MediaType.APPLICATION_JSON);
@@ -294,16 +299,28 @@ public class WebApplyController {
 			HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 			logger.debug("GetDataList API request " + request.toString());
 
-			ResponseEntity<JsonNode> response = restTemplate.exchange(uriComponents.toUri(), HttpMethod.GET, request,
-					JsonNode.class);
+			logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
 
-			logger.debug("GetDataList API response " + response.getBody().toString());
+			ResponseEntity<JsonNode> response = null;
 
-			if (!response.getStatusCode().is2xxSuccessful()) {
-				logger.error("call to datalist api failed. HttpStatus=" + response.getStatusCodeValue() + ", response="
-						+ response.getBody().toString());
-			} else {
+			try {
+				response = restTemplate.exchange(url, HttpMethod.GET, request, JsonNode.class);
+			} catch (Exception e) {
+				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+			}
+
+			logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
+					methodName, url, response.getStatusCodeValue(), response.getBody()));
+
+			if (response.getStatusCode().is2xxSuccessful()) {
+				logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+						methodName, url, response.getStatusCodeValue()));
+
 				return response.getBody();
+
+			} else {
+				logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+						methodName, url, response.getStatusCodeValue()));
 			}
 
 		} else {

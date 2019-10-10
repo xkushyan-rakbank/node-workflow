@@ -65,6 +65,8 @@ public class OAuthService {
 
 		logger.info("Begin getOAuthToken()");
 
+		String methodName = "getOAuthToken()";
+
 		ResponseEntity<JsonNode> response = null;
 		if (isAccessTokenExpired()) {
 
@@ -86,11 +88,21 @@ public class OAuthService {
 			String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
 
 			try {
-				response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 
-				logger.debug("GetOAuthToken API response " + response.getBody().toString());
+				logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
+
+				try {
+					response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+				} catch (Exception e) {
+					logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+				}
+
+				logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
+						methodName, url, response.getStatusCodeValue(), response.getBody()));
 
 				if (response.getStatusCode().is2xxSuccessful()) {
+					logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+							methodName, url, response.getStatusCodeValue()));
 					// minus 10 seconds to prevent access_token expire error while calling the API
 					int seconds = response.getBody().get("expires_in").asInt() - 10;
 					LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
@@ -98,8 +110,9 @@ public class OAuthService {
 
 					logger.info("New access_token expires on " + tokenExpiryDateTime.toString());
 				} else {
-					logger.error(String.format("/OAuth/token API response: HttpStatus=[%s], message=[%s]",
-							response.getStatusCodeValue(), response.getBody()));
+					logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+							methodName, url, response.getStatusCodeValue()));
+
 				}
 
 				servletContext.setAttribute("OAuthTokenResponse", response);

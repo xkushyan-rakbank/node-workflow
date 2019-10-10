@@ -60,11 +60,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
     super(props);
 
     this.state = {
-      isAnnualTurnoverFilled: false,
-      isMonthlyCashPartFilled: false,
-      isMonthlyNonCashPartFilled: false,
-      isMaxCashAmountFilled: false,
-      isMaxNonCashAmountFilled: false,
       totalMonthlyCreditsValue: 0
     };
 
@@ -74,26 +69,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
   }
 
   componentDidMount() {
-    const {
-      annualFinancialTurnover,
-      cashAmountInFigures,
-      notCashAmountInFigures,
-      maximumSingleCashAmount,
-      maximumSingleNotCashAmount
-    } = this.props;
-    this.setState(
-      {
-        isAnnualTurnoverFilled: !!annualFinancialTurnover,
-        isMonthlyCashPartFilled: !!cashAmountInFigures,
-        isMonthlyNonCashPartFilled: !!notCashAmountInFigures,
-        isMaxCashAmountFilled: !!maximumSingleCashAmount,
-        isMaxNonCashAmountFilled: !!maximumSingleNotCashAmount
-      },
-      () => {
-        const isButtonDisabled = this.isContinueDisabled();
-        this.props.setIsContinueDisabled(isButtonDisabled);
-      }
-    );
+    const isButtonDisabled = this.isContinueDisabled();
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -149,16 +126,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
     }
   }
 
-  callbackHandle = (value, name) => this.setState({ [name]: !!value });
-
   isContinueDisabled = () => {
-    return !(
-      this.state.isAnnualTurnoverFilled &&
-      this.state.isMonthlyCashPartFilled &&
-      this.state.isMonthlyNonCashPartFilled &&
-      this.state.isMaxCashAmountFilled &&
-      this.state.isMaxNonCashAmountFilled
-    );
+    return !this.props.maximumSingleNotCashAmount;
   };
 
   render() {
@@ -170,8 +139,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
               min="0"
               id="Okyc.annualFinTurnoverAmtInAED"
               InputProps={this.commonInputProps}
-              storeFlag="isAnnualTurnoverFilled"
-              callback={this.callbackHandle}
             />
           </Grid>
         </Grid>
@@ -201,8 +168,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.partOfTotalInCashMaxValue()}
               id="OkycAntTxnTotCashCr.amountInFigures"
               InputProps={this.commonInputProps}
-              storeFlag="isMonthlyCashPartFilled"
-              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -211,8 +176,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.partOfTotalInNotCashMaxValue()}
               id="OkycAntTxnTotNonCashCr.amountInFigures"
               InputProps={this.commonInputProps}
-              storeFlag="isMonthlyNonCashPartFilled"
-              callback={this.callbackHandle}
             />
             <InfoTitle
               classes={{
@@ -235,8 +198,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.maximumSingleAmountInCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnCashAED"
               InputProps={this.commonInputProps}
-              storeFlag="isMaxCashAmountFilled"
-              callback={this.callbackHandle}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -245,8 +206,6 @@ class CompanyAnticipatedTransactionsForm extends Component {
               max={this.maximumSingleAmountInNotCashMaxValue()}
               id="OkycAntTxn.maxAmtSingleTxnNonCashAED"
               InputProps={this.commonInputProps}
-              storeFlag="isMaxNonCashAmountFilled"
-              callback={this.callbackHandle}
             />
             <InfoTitle
               classes={{

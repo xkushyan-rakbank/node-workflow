@@ -28,76 +28,55 @@ const style = {
   heading: {
     fontWeight: 600,
     color: "#000"
+  },
+  errorMsg: {
+    fontWeight: 600,
+    fontSize: "20px",
+    marginBottom: "24px"
   }
 };
 
-export const mockCheckListData = [
-  {
-    checkName: "Dedupe Check",
-    checkResults: "Completed",
-    response: "Step Mismatched Reason"
-  },
-  {
-    checkName: "Blacklist Check",
-    checkResults: "Not Completed",
-    response: ""
-  },
-  {
-    checkName: "Negative List Check",
-    checkResults: "Not Completed",
-    response: ""
-  },
-  {
-    checkName: "Risk Rating",
-    checkResults: "Not Completed",
-    response: "Risk rating value"
-  }
-];
+const CheckList = props => {
+  const { classes, prospectInfo } = props;
 
-class CheckList extends React.Component {
-  getIndustryMultiSelect() {
-    return this.props.orgKYCDetails.industryMultiSelect || [];
-  }
-
-  getIndustryValueByIndex(index) {
-    const { industry } = this.getIndustryMultiSelect()[index] || {
-      industry: [""]
-    };
-    const [industryItem] = industry;
-    return industryItem;
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.wrapper}>
-        <div className={classes.applicationRow}>
+  return prospectInfo.preScreeningInfo &&
+    prospectInfo.preScreeningInfo.screeningResults &&
+    prospectInfo.preScreeningInfo.screeningResults.length > 0 ? (
+    <div className={classes.wrapper}>
+      <div className={classes.applicationRow}>
+        <div>
+          <div className={classes.checkListData + " " + classes.heading}>Check Name</div>
+        </div>
+        <div>
+          <div className={classes.checkListData + " " + classes.heading}>Status</div>
+        </div>
+        <div>
+          <div className={classes.checkListData + " " + classes.heading}>Result/Reason</div>
+        </div>
+      </div>
+      {prospectInfo.preScreeningInfo.screeningResults.map((application, index) => (
+        <div className={classes.applicationRow} key={index}>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Check Name</div>
+            <div className={classes.checkListData}>
+              {application.screeningType && application.screeningType}
+            </div>
           </div>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Status</div>
+            <div className={classes.checkListData}>
+              {application.screeningStatus && application.screeningStatus}
+            </div>
           </div>
           <div>
-            <div className={classes.checkListData + " " + classes.heading}>Result/Reason</div>
+            <div className={classes.checkListData}>
+              {application.screeningReason && application.screeningReason}
+            </div>
           </div>
         </div>
-        {mockCheckListData.map((application, index) => (
-          <div className={classes.applicationRow} key={index}>
-            <div>
-              <div className={classes.checkListData}>{application.checkName}</div>
-            </div>
-            <div>
-              <div className={classes.checkListData}>{application.checkResults}</div>
-            </div>
-            <div>
-              <div className={classes.checkListData}>{application.response}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
+      ))}
+    </div>
+  ) : (
+    <div className={classes.errorMsg}>There is no check list.</div>
+  );
+};
 
 export default withStyles(style)(CheckList);

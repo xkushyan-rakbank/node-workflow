@@ -1,14 +1,12 @@
 {
     "request": {
         "method": "GET",
-        "url": "/webapply/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL"
+        "url": "/banks/RAK/usertypes/sme/datalist"
     },
     "response": {
         "status": 200,
         "headers": {
-            "Content-Type": "application/octet-stream",
-            "Content-Transfer-Encoding":"application/octet-stream",
-            "Content-Disposition":"attachment; filename=MGHN43MD75_TL.pdf",
+            "Content-Type": "application/json",
             "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Methods" : "*",
             "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding, X-Requested-With, X-Authorization",
@@ -16,6 +14,6 @@
             "x-frame-options" : "DENY",
             "x-xss-protection" : "1; mode=block"
         },
-        "bodyFileName": "NewProspect.pdf"
+        "bodyFileName": "COSME21GetSmeDatalistResponse.json"
     }
 }

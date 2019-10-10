@@ -1849,28 +1849,10 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "Dubai",
-          "key": "Dubai",
-          "value": "Dubai",
-          "displayText": "Dubai"
-        },
-        {
           "code": "AD",
           "key": "AD",
           "value": "AD",
           "displayText": "Abu Dhabi"
-        },
-        {
-          "code": "SH",
-          "key": "SH",
-          "value": "SH",
-          "displayText": "Sharjah"
-        },
-        {
-          "code": "F",
-          "key": "F",
-          "value": "F",
-          "displayText": "Fujairah"
         },
         {
           "code": "A",
@@ -1879,10 +1861,52 @@
           "displayText": "Ajman"
         },
         {
+          "code": "AA",
+          "key": "AA",
+          "value": "AA",
+          "displayText": "Al Ain"
+        },
+        {
+          "code": "Dubai",
+          "key": "Dubai",
+          "value": "Dubai",
+          "displayText": "Dubai"
+        },
+        {
+          "code": "F",
+          "key": "F",
+          "value": "F",
+          "displayText": "Fujairah"
+        },
+        {
+          "code": "K",
+          "key": "K",
+          "value": "K",
+          "displayText": "Kalba"
+        },
+        {
+          "code": "KH",
+          "key": "KH",
+          "value": "KH",
+          "displayText": "Khorfakkan"
+        },
+        {
           "code": "RK",
           "key": "RK",
           "value": "RK",
           "displayText": "Ras Al Khaimah"
+        },
+        {
+          "code": "SH",
+          "key": "SH",
+          "value": "SH",
+          "displayText": "Sharjah"
+        },
+        {
+          "code": "U",
+          "key": "U",
+          "value": "U",
+          "displayText": "Umm Al Quwain"
         }
       ],
       "description": "Stores the city",
@@ -1962,16 +1986,40 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "O",
-          "key": "O",
-          "value": "O",
+          "code": "OF",
+          "key": "OF",
+          "value": "OF",
           "displayText": "Office"
         },
         {
-          "code": "CS",
-          "key": "CS",
-          "value": "CS",
-          "displayText": "Coworking Space"
+          "code": "W",
+          "key": "W",
+          "value": "W",
+          "displayText": "Warehouse"
+        },
+        {
+          "code": "K",
+          "key": "K",
+          "value": "K",
+          "displayText": "Kiosk"
+        },
+        {
+          "code": "S",
+          "key": "S",
+          "value": "S",
+          "displayText": "Shop"
+        },
+        {
+          "code": "FD",
+          "key": "FD",
+          "value": "FD",
+          "displayText": "Flexi desk"
+        },
+        {
+          "code": "O",
+          "key": "O",
+          "value": "O",
+          "displayText": "Other"
         }
       ]
     },
@@ -1988,11 +2036,11 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "label": null,
+      "label": "Other(Specify)",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.addressInfo[*].addressDetails[*].typeOfSpaceOccupied.others",
       "name": "prospect.organizationInfo.addressInfo[*].addressDetails[*].typeOfSpaceOccupied.others",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "50",
@@ -2133,7 +2181,7 @@
       "placeholder": null,
       "path": "$.prospect.organizationInfo.contactDetails.primaryPhoneCountryCode",
       "name": "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode",
-      "required": false,
+      "required": true,
       "datalistId": "CountryCode",
       "readonlyFor": [],
       "datalist": [
@@ -3252,28 +3300,10 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "Dubai",
-          "key": "Dubai",
-          "value": "Dubai",
-          "displayText": "Dubai"
-        },
-        {
           "code": "AD",
           "key": "AD",
           "value": "AD",
           "displayText": "Abu Dhabi"
-        },
-        {
-          "code": "SH",
-          "key": "SH",
-          "value": "SH",
-          "displayText": "Sharjah"
-        },
-        {
-          "code": "F",
-          "key": "F",
-          "value": "F",
-          "displayText": "Fujairah"
         },
         {
           "code": "A",
@@ -3282,10 +3312,52 @@
           "displayText": "Ajman"
         },
         {
+          "code": "AA",
+          "key": "AA",
+          "value": "AA",
+          "displayText": "Al Ain"
+        },
+        {
+          "code": "Dubai",
+          "key": "Dubai",
+          "value": "Dubai",
+          "displayText": "Dubai"
+        },
+        {
+          "code": "F",
+          "key": "F",
+          "value": "F",
+          "displayText": "Fujairah"
+        },
+        {
+          "code": "K",
+          "key": "K",
+          "value": "K",
+          "displayText": "Kalba"
+        },
+        {
+          "code": "KH",
+          "key": "KH",
+          "value": "KH",
+          "displayText": "Khorfakkan"
+        },
+        {
           "code": "RK",
           "key": "RK",
           "value": "RK",
           "displayText": "Ras Al Khaimah"
+        },
+        {
+          "code": "SH",
+          "key": "SH",
+          "value": "SH",
+          "displayText": "Sharjah"
+        },
+        {
+          "code": "U",
+          "key": "U",
+          "value": "U",
+          "displayText": "Umm Al Quwain"
         }
       ]
     },
@@ -5151,7 +5223,7 @@
       "placeholder": null,
       "path": "$.prospect.signatoryInfo[*].employmentDetails.otherEmploymentType",
       "name": "prospect.signatoryInfo[*].employmentDetails.otherEmploymentType",
-      "required": false,
+      "required": true,
       "datalistId": null,
       "readonlyFor": [],
       "maxlength": "50",
@@ -5568,28 +5640,10 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "Dubai",
-          "key": "Dubai",
-          "value": "Dubai",
-          "displayText": "Dubai"
-        },
-        {
           "code": "AD",
           "key": "AD",
           "value": "AD",
           "displayText": "Abu Dhabi"
-        },
-        {
-          "code": "SH",
-          "key": "SH",
-          "value": "SH",
-          "displayText": "Sharjah"
-        },
-        {
-          "code": "F",
-          "key": "F",
-          "value": "F",
-          "displayText": "Fujairah"
         },
         {
           "code": "A",
@@ -5598,10 +5652,52 @@
           "displayText": "Ajman"
         },
         {
+          "code": "AA",
+          "key": "AA",
+          "value": "AA",
+          "displayText": "Al Ain"
+        },
+        {
+          "code": "Dubai",
+          "key": "Dubai",
+          "value": "Dubai",
+          "displayText": "Dubai"
+        },
+        {
+          "code": "F",
+          "key": "F",
+          "value": "F",
+          "displayText": "Fujairah"
+        },
+        {
+          "code": "K",
+          "key": "K",
+          "value": "K",
+          "displayText": "Kalba"
+        },
+        {
+          "code": "KH",
+          "key": "KH",
+          "value": "KH",
+          "displayText": "Khorfakkan"
+        },
+        {
           "code": "RK",
           "key": "RK",
           "value": "RK",
           "displayText": "Ras Al Khaimah"
+        },
+        {
+          "code": "SH",
+          "key": "SH",
+          "value": "SH",
+          "displayText": "Sharjah"
+        },
+        {
+          "code": "U",
+          "key": "U",
+          "value": "U",
+          "displayText": "Umm Al Quwain"
         }
       ],
       "description": "Stores the city",
@@ -7695,7 +7791,7 @@
           "nationality": "",
           "dualCitizenship": false,
           "dualCitizenshipCountry": [""],
-          "residenceCountry": "AE",
+          "residenceCountry": "UAE",
           "isUAEResident": false,
           "passportDetails": [
             {
@@ -7819,7 +7915,7 @@
           "nationality": "",
           "dualCitizenship": false,
           "dualCitizenshipCountry": [""],
-          "residenceCountry": "AE",
+          "residenceCountry": "UAE",
           "isUAEResident": false,
           "passportDetails": [
             {
@@ -7837,7 +7933,7 @@
           "qualification": "",
           "experienceInYrs": "",
           "sourceOfWealth": {
-            "wealthType": "Personal Savings",
+            "wealthType": "",
             "others": ""
           }
         },

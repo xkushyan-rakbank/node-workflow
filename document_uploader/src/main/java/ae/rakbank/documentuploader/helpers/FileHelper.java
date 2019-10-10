@@ -44,11 +44,11 @@ public class FileHelper {
 						StandardCharsets.UTF_8);
 			} else {
 				if (fromConfigDirectory) {
-					logger.error(String.format("FileNotFoundException: Read JSON file from %s%s", EnvUtil.getConfigDir(),
-							filename));
-				} else {
-					logger.info("Read JSON file from classpath:" + filename);
+					logger.error(String.format("FileNotFoundException: Read JSON file from %s%s",
+							EnvUtil.getConfigDir(), filename));
 				}
+
+				logger.info("Read JSON file from classpath:" + filename);
 
 				Resource resource = resourceLoader.getResource("classpath:" + filename);
 				fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
