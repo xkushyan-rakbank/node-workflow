@@ -121,7 +121,7 @@ const eliteIconsSet = {
 export const getIconsByAccount = () => {
   const islamicBanking = get(store.getState(), "appConfig.prospect.applicationInfo.islamicBanking");
   const accountType = get(store.getState(), "appConfig.prospect.applicationInfo.accountType");
-  console.log(accountType);
+
   if (islamicBanking) {
     return islamicIconsSet;
   }

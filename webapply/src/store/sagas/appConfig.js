@@ -51,8 +51,10 @@ function* displayScreenBasedOnViewIdSaga() {
   const state = yield select();
   const applicationInfo = getApplicationInfo(state);
 
-  if (applicationInfo.actionType === "submit") {
+  if (applicationInfo.actionType === "submit" && applicationInfo.retrieveMode) {
     yield call(history.push, routes.ApplicationSubmitted);
+  } else if (applicationInfo.actionType === "submit" && !applicationInfo.retrieveMode) {
+    yield call(history.push, applicationInfo.reUploadDocuments);
   } else if (applicationInfo.viewId) {
     yield call(history.push, applicationInfo.viewId);
   }
