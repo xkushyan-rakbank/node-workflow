@@ -15,6 +15,7 @@ import passportConventional from "../assets/icons/conventional/passport-visa.png
 import emiratesIdConventional from "../assets/icons/conventional/emirates-id.png";
 import companyDocumentsConventional from "../assets/icons/conventional/company-documents.png";
 import bankingConventional from "../assets/icons/conventional/banking.png";
+import logoConventional from "../assets/images/rakbankLogo.png";
 
 /* RAKIslamic */
 import balanceIslamic from "../assets/icons/islamic/balance.png";
@@ -35,6 +36,7 @@ import passportIslamic from "../assets/icons/islamic/passport-visa.png";
 import emiratesIdIslamic from "../assets/icons/islamic/emirates-id.png";
 import companyDocumentsIslamic from "../assets/icons/islamic/company-documents.png";
 import bankingIslamic from "../assets/icons/islamic/banking.png";
+import logoIslamic from "../assets/images/rakbankLogoIslamic.png";
 
 /* RAKElite */
 import processingEliteIc from "../assets/icons/elite/processing.png";
@@ -52,6 +54,7 @@ import passportElite from "../assets/icons/elite/passport-visa.png";
 import emiratesIdElite from "../assets/icons/elite/emirates-id.png";
 import companyDocumentsElite from "../assets/icons/elite/company-documents.png";
 import bankingElite from "../assets/icons/elite/banking.png";
+import logoElite from "../assets/images/rakbankLogoElite.png";
 
 /* Conventional*/
 const conventionalIconsSet = {
@@ -67,7 +70,8 @@ const conventionalIconsSet = {
   passport: passportConventional,
   emiratesId: emiratesIdConventional,
   companyDocuments: companyDocumentsConventional,
-  banking: bankingConventional
+  banking: bankingConventional,
+  logo: logoConventional
 };
 
 /* RAKIslamic */
@@ -89,7 +93,8 @@ const islamicIconsSet = {
   passport: passportIslamic,
   emiratesId: emiratesIdIslamic,
   companyDocuments: companyDocumentsIslamic,
-  banking: bankingIslamic
+  banking: bankingIslamic,
+  logo: logoIslamic
 };
 
 /* RAKElite */
@@ -109,7 +114,8 @@ const eliteIconsSet = {
   passport: passportElite,
   emiratesId: emiratesIdElite,
   companyDocuments: companyDocumentsElite,
-  banking: bankingElite
+  banking: bankingElite,
+  logo: logoElite
 };
 
 export const getIconsByAccount = () => {
