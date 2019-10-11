@@ -1,5 +1,5 @@
 import httpClient from "./axiosConfig";
-
+import store from "./../store/configureStore";
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
 
@@ -25,7 +25,7 @@ export default {
   authentication: {
     login: data => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/users/authenticate",
+        url: store.getState().appConfig.endpoints.authenticateUserUri,
         method: "post",
         data
       });
@@ -45,7 +45,7 @@ export default {
   otp: {
     generate: ({ prospectId, countryCode, mobileNo }) => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/otp",
+        url: store.getState().appConfig.endpoints.authenticateUserUri,
         method: "POST",
         data: {
           action: OTP_ACTION_GENERATE,
@@ -57,7 +57,7 @@ export default {
     },
     verify: ({ prospectId, countryCode, mobileNo, otpToken }) => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/otp",
+        url: store.getState().appConfig.endpoints.authenticateUserUri,
         method: "POST",
         data: {
           action: OTP_ACTION_VERIFY,
