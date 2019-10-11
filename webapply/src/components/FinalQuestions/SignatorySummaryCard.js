@@ -65,7 +65,8 @@ class SignatorySummaryCard extends Component {
       filledSignatoriesIndexes,
       addFilledSignatoryIndex,
       index,
-      signatoriesLength
+      signatoriesLength,
+      switchSubmitDisabled
     } = this.props;
     const nextIndex = index + 1;
     if (this.state.step < signatoriesSteps.length) {
@@ -74,6 +75,8 @@ class SignatorySummaryCard extends Component {
       this.setState({ isFinalScreenShown: true, isExpanded: false });
       if (!filledSignatoriesIndexes.includes(nextIndex) && signatoriesLength > nextIndex) {
         addFilledSignatoryIndex(nextIndex);
+      } else if (signatoriesLength === nextIndex) {
+        switchSubmitDisabled();
       }
     }
   };
@@ -115,11 +118,12 @@ class SignatorySummaryCard extends Component {
   }
 
   renderCardContent() {
+    const { signatory: { firstName, lastName, fullName } = {} } = this.props;
     return (
       <div className={this.props.classes.contentBox}>
         <div className={this.props.classes.infoBox}>
           <div className={this.props.classes.name}>
-            {this.props.signatory.firstName} {this.props.signatory.lastName}
+            {firstName && lastName ? `${firstName} ${lastName}` : fullName}
           </div>
           <div className={this.props.classes.signatoryField}>{this.getSignatoryRightsLabel()}</div>
           <div className={this.props.classes.shareholdingField}>{this.getShareholdingLabel()}</div>
@@ -136,8 +140,7 @@ class SignatorySummaryCard extends Component {
       <CompanyStakeholderCard
         className={this.props.classes.card}
         firstName={signatory.firstName}
-        lastName={signatory.lastName}
-        fullName={signatory.fullName}
+        lastName={signatory.lastName ? signatory.lastName : signatory.fullName}
         content={this.renderCardContent()}
       >
         {this.state.isExpanded &&
@@ -150,7 +153,7 @@ class SignatorySummaryCard extends Component {
                 steps={signatoriesSteps}
                 step={item.step}
                 title={item.title}
-                active={step === item.step}
+                activeStep={step === item.step}
                 filled={step > item.step}
                 clickHandler={setStep}
                 handleContinue={this.handleContinue}

@@ -225,6 +225,10 @@ public class WebApplyController {
 					if (fieldConfig.has("shortKeyNames")) {
 						fieldConfig.remove("shortKeyNames");
 					}
+					
+					if (fieldConfig.has("description")) {
+						fieldConfig.remove("description");
+					}
 				}
 			} catch (Exception e) {
 				logger.error("Error while processing UID= " + uid, e);

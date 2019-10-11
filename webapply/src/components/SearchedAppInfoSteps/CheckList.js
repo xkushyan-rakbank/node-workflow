@@ -37,7 +37,7 @@ const style = {
 };
 
 const CheckList = props => {
-  const { classes, prospectInfo } = props;
+  const { classes, prospectInfo = [] } = props;
 
   return prospectInfo.preScreeningInfo &&
     prospectInfo.preScreeningInfo.screeningResults &&
