@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/api/customer-onboarding/v1/banks/RAK/usertypes/retail/prospects/search",
+		"url": "/api/v1/banks/RAK/usertypes/retail/prospects/search",
 		"bodyPatterns": [
 			{
 				"matchesJsonPath": "$[?(@.fname == 'COSME0010')]"

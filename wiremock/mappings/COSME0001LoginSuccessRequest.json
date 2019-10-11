@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/webapply/api/v1/banks/RAK/users/authenticate",
+		"url": "/api/v1/banks/RAK/users/authenticate",
 		"bodyPatterns": [
 			{
 				"matchesJsonPath": "$[?(@.username == 'admin' && @.password == 'admin@100')]"

@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "GET",
-		"url": "/api/customer-onboarding/v1/banks/RAK/prospects/COSME0018/documents/1234"
+		"url": "/api/v1/banks/RAK/prospects/COSME0018/documents/1234"
 	},
 	"response": {
 		"status": 200,

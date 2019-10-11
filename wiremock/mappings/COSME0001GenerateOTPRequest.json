@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/webapply/api/v1/banks/RAK/otp",
+		"url": "/banks/RAK/otp",
 		"bodyPatterns": [
 			{
 				"matchesJsonPath": "$[?(@.mobileNo == '0123456789')]"

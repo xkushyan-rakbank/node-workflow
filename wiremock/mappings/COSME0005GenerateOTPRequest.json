@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/webapply/api/v1/banks/RAK/otp",
+		"url": "/api/v1/banks/RAK/otp",
 		"bodyPatterns": [
 			{
 				"matchesJsonPath": "$[?(@.email == 'no_otp1@email.com')]"

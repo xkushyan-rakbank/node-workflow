@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/api/customer-onboarding/v1/banks/RAK/users/authenticate",
+		"url": "/api/v1/banks/RAK/users/authenticate",
 		"bodyPatterns": [
 			{
 				"matchesJsonPath": "$[?(@.username == 'COSME0007')]"
