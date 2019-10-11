@@ -9,6 +9,7 @@ import AccountCardContainer from "./AccountCardContainer";
 import InfoNote from "../../components/InfoNote";
 import TableCompare from "../../components/TableCompare";
 
+import accountComparisonPoster from "../../assets/images/videoPosters/Account comparison.jpg";
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
 
 const linkToDetailedServiceAndGuide =
@@ -60,6 +61,7 @@ class AccountsComparisonContainer extends React.Component {
       <React.Fragment>
         <VerticalPaginationWrapper
           videoUrl={accountComparisonVideo}
+          posterUrl={accountComparisonPoster}
           indexScrollToSection={this.state.indexScrollToSection}
         >
           <div></div>

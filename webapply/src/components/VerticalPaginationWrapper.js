@@ -128,7 +128,7 @@ class VerticalPaginationWrapper extends React.Component {
   };
 
   render() {
-    const { classes, children, videoUrl } = this.props;
+    const { classes, children, videoUrl, posterUrl } = this.props;
     const { top, nextElementPosition } = this.state;
 
     return (
@@ -138,6 +138,7 @@ class VerticalPaginationWrapper extends React.Component {
             <VideoBackground
               nextElementPosition={nextElementPosition}
               videoUrl={videoUrl}
+              posterUrl={posterUrl}
               handleClick={this.handleClick}
             />
           )}

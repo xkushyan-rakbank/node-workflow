@@ -78,11 +78,50 @@ class BackgroundVideoPlayer extends React.Component {
     appRootEl.removeChild(this.videoBg);
   }
 
+  getPlayedVideos = () => JSON.parse(localStorage.getItem("videoAlreadyPlayed"));
+
+  onEndedVideoPLay = e => {
+    const playedVideos = this.getPlayedVideos();
+    const videoName = e.target.getAttribute("data-name");
+    const updateStore = data => localStorage.setItem("videoAlreadyPlayed", JSON.stringify(data));
+
+    if (playedVideos !== null) {
+      playedVideos.push(videoName);
+      updateStore(playedVideos);
+    } else {
+      updateStore([videoName]);
+    }
+  };
+
+  onLoadedDataVideo = e => {
+    const currentVideoName = e.target.getAttribute("data-name");
+    const videos = this.getPlayedVideos();
+
+    if (videos) {
+      if (!videos.includes(currentVideoName)) {
+        e.target.play();
+      }
+    } else {
+      e.target.play();
+    }
+  };
+
   render() {
-    const { classes, nextElementPosition, videoUrl, handleClick } = this.props;
+    const playedVideos = this.getPlayedVideos();
+    const { classes, nextElementPosition, videoUrl, handleClick, posterUrl } = this.props;
+
     const video = (
       <div style={{ top: `-${100 * nextElementPosition}vh` }} className={classes.container}>
-        <video autoPlay loop muted id="video-background" className={classes.video} key={videoUrl}>
+        <video
+          muted
+          id="video-background"
+          className={classes.video}
+          key={videoUrl}
+          data-name={videoUrl}
+          onEnded={this.onEndedVideoPLay}
+          onLoadedData={this.onLoadedDataVideo}
+          poster={playedVideos && playedVideos.includes(videoUrl) ? posterUrl : ""}
+        >
           <source src={videoUrl} />
         </video>
 

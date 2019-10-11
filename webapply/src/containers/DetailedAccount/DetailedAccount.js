@@ -11,13 +11,18 @@ import getVideoUrl from "../../utils/getVideoUrl";
 
 const DetailedAccount = ({ applicationInfo }) => {
   const { accountType } = applicationInfo;
-  const videoUrl = getVideoUrl(applicationInfo);
+
+  let videoUrl, posterUrl;
+  if (Object.keys(applicationInfo).length) {
+    videoUrl = getVideoUrl(applicationInfo).videoUrl;
+    posterUrl = getVideoUrl(applicationInfo).posterUrl;
+  }
 
   return (
     <>
       {!accountType && <Redirect to="/AccountsComparison" />}
       <IslamicBankingSwitcher />
-      <VerticalPaginationWrapper videoUrl={videoUrl}>
+      <VerticalPaginationWrapper videoUrl={videoUrl} posterUrl={posterUrl}>
         <div></div>
         <AccountBenefits accountType={accountType} />
         <AccountingSoftware accountType={accountType} />
