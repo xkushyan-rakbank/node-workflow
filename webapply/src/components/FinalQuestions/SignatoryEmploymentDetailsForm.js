@@ -44,9 +44,13 @@ class SignatoryEmploymentDetailsForm extends Component {
   }
 
   handleSwitchIsWorkAtCompany = e => {
-    const path = `prospect.signatoryInfo[${this.props.index}].employmentDetails.isWorkAtTheCompany`;
+    const { index, companyName } = this.props;
+    const checkboxPath = `prospect.signatoryInfo[${index}].employmentDetails.isWorkAtTheCompany`;
+    const fieldPath = `prospect.signatoryInfo[${index}].employmentDetails.employerName`;
+    const employerName = e.target.checked ? companyName : "";
     this.props.updateProspect({
-      [path]: e.target.checked
+      [checkboxPath]: e.target.checked,
+      [fieldPath]: employerName
     });
     this.setState({ isWorkAtTheCompany: e.target.checked });
   };
@@ -80,7 +84,11 @@ class SignatoryEmploymentDetailsForm extends Component {
             />
           </Grid>
           <Grid item sm={12}>
-            <TextInput id="SigEmpd.employerName" indexes={[this.props.index]} />
+            <TextInput
+              id="SigEmpd.employerName"
+              indexes={[this.props.index]}
+              disabled={this.state.isWorkAtTheCompany}
+            />
           </Grid>
         </Grid>
       </>

@@ -4,12 +4,12 @@ import appConfig from "./appConfig";
 import reCaptcha from "./reCaptcha";
 import applicantInfoForm from "./applicantInfoForm";
 import serverValidation from "./serverValidation";
-import aboutCompany from "./aboutCompany";
+import sendProspectToAPI from "./sendProspectToAPI";
 import applicationStatus from "./applicationStatus";
 import otp from "./otp";
 import login from "./loginForm";
 import authReducer from "./authReducers";
-import docUploadReducer from "./getProspectDocumentsReducer";
+import docUploadReducer from "./getProspectDocuments";
 import searchProspect from "./searchProspect";
 
 /**
@@ -28,7 +28,7 @@ const reducers = history =>
     serverValidation,
     reCaptcha,
     applicantInfoForm,
-    aboutCompany,
+    sendProspectToAPI,
     applicationStatus,
     login,
     users: authReducer,

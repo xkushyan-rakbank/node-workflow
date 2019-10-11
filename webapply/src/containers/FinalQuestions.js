@@ -34,14 +34,18 @@ class FinalQuestions extends React.Component {
   };
 
   state = {
-    expandedMargin: true
+    expandedMargin: true,
+    filledSignatoriesIndexes: []
   };
 
   switchExpandedMargin = () => this.setState({ expandedMargin: false });
 
+  addFilledSignatoryIndex = index =>
+    this.setState({ filledSignatoriesIndexes: [...this.state.filledSignatoriesIndexes, index] });
+
   render() {
-    const { classes } = this.props;
-    const { expandedMargin } = this.state;
+    const { classes, signatories } = this.props;
+    const { expandedMargin, filledSignatoriesIndexes } = this.state;
     return (
       <>
         <h2>Final questions</h2>
@@ -50,11 +54,23 @@ class FinalQuestions extends React.Component {
           signatories. We promise there’s no more questions after this section.
         </p>
         <div className={this.props.classes.sectionContainer}>
-          <CompanySummaryCard switchExpandedMargin={this.switchExpandedMargin} />
+          <CompanySummaryCard
+            switchExpandedMargin={this.switchExpandedMargin}
+            addFilledSignatoryIndex={this.addFilledSignatoryIndex}
+          />
         </div>
         <div className={this.props.classes.sectionContainer}>
-          {this.props.signatories.map((item, index) => {
-            return <SignatorySummaryCard key={index} signatory={item} index={index} />;
+          {signatories.map((item, index) => {
+            return (
+              <SignatorySummaryCard
+                key={index}
+                signatory={item}
+                index={index}
+                signatoriesLength={signatories.length}
+                addFilledSignatoryIndex={this.addFilledSignatoryIndex}
+                filledSignatoriesIndexes={filledSignatoriesIndexes}
+              />
+            );
           })}
         </div>
         <div className="linkContainer">

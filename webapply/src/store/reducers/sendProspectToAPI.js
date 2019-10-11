@@ -1,33 +1,33 @@
 import {
-  ABOUT_COMPANY_FORM,
-  ABOUT_COMPANY_FORM_SUCCESS,
-  ABOUT_COMPANY_FORM_FAIL,
-  ABOUT_COMPANY_FORM_RESET_STEP
-} from "../actions/aboutCompany";
+  SEND_PROSPECT_TO_API,
+  SEND_PROSPECT_TO_API_SUCCESS,
+  SEND_PROSPECT_TO_API_FAIL,
+  RESET_FORM_STEP
+} from "../actions/sendProspectToAPI";
 
 const initialState = {
   loading: false,
   resetStep: false
 };
 
-const aboutCompanyReducer = (state = initialState, action) => {
+const sendProspectToAPIReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ABOUT_COMPANY_FORM:
+    case SEND_PROSPECT_TO_API:
       return {
         ...state,
         loading: true
       };
-    case ABOUT_COMPANY_FORM_SUCCESS:
+    case SEND_PROSPECT_TO_API_SUCCESS:
       return {
         ...state,
         loading: false
       };
-    case ABOUT_COMPANY_FORM_FAIL:
+    case SEND_PROSPECT_TO_API_FAIL:
       return {
         ...state,
         loading: false
       };
-    case ABOUT_COMPANY_FORM_RESET_STEP:
+    case RESET_FORM_STEP:
       return {
         ...state,
         resetStep: action.resetStep
@@ -37,4 +37,4 @@ const aboutCompanyReducer = (state = initialState, action) => {
   }
 };
 
-export default aboutCompanyReducer;
+export default sendProspectToAPIReducer;

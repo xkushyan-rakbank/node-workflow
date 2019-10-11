@@ -26,7 +26,6 @@ class CountryOfResidence extends React.Component {
   render() {
     const { index, isSignatory } = this.props;
     const isOAE = this.isSelectedOAE();
-    console.log(isSignatory);
 
     return (
       <Grid container spacing={3}>

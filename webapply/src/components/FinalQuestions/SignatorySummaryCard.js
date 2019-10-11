@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import get from "lodash/get";
 import CompanyStakeholderCard from "../CompanyStakeholderCard";
-import ContinueButton from "../Buttons/ContinueButton";
 import LinkButton from "../Buttons/LinkButton";
 import StepComponent from "../../components/StepComponent";
 import { signatoriesSteps } from "../../constants";
@@ -55,40 +54,48 @@ class SignatorySummaryCard extends Component {
       isFinalScreenShown: false,
       step: 1,
       isExpanded: false,
-      isFilled: true,
+      isFilled: false,
       isDisabled: true,
       isContinueDisabled: false
     };
   }
 
   handleContinue = () => {
+    const {
+      filledSignatoriesIndexes,
+      addFilledSignatoryIndex,
+      index,
+      signatoriesLength
+    } = this.props;
+    const nextIndex = index + 1;
     if (this.state.step < signatoriesSteps.length) {
       this.setState(state => ({ step: state.step + 1 }));
     } else {
-      this.setState({ isFinalScreenShown: true });
+      this.setState({ isFinalScreenShown: true, isExpanded: false });
+      if (!filledSignatoriesIndexes.includes(nextIndex) && signatoriesLength > nextIndex) {
+        addFilledSignatoryIndex(nextIndex);
+      }
     }
   };
 
   renderControls() {
+    const { filledSignatoriesIndexes, index } = this.props;
     if (this.state.isExpanded) {
       return null;
     }
 
-    return this.state.isFilled ? (
-      <LinkButton
-        clickHandler={() =>
-          this.setState({
-            isExpanded: true,
-            isFilled: false,
-            isDisabled: false
-          })
-        }
-      />
-    ) : (
-      <ContinueButton
-        handleClick={() => this.setState({ isExpanded: true, isFilled: true, isDisabled: true })}
-        disabled={this.state.isDisabled}
-      />
+    return (
+      (this.state.isFilled || filledSignatoriesIndexes.includes(index)) && (
+        <LinkButton
+          clickHandler={() =>
+            this.setState({
+              isExpanded: true,
+              isFilled: false,
+              isDisabled: false
+            })
+          }
+        />
+      )
     );
   }
 

@@ -32,10 +32,12 @@ class CompanySummaryCard extends Component {
   }
 
   handleContinue = () => {
+    const { addFilledSignatoryIndex } = this.props;
     if (this.state.step < finalQuestionsSteps.length) {
       this.setState(state => ({ step: state.step + 1 }));
     } else {
-      this.setState({ isFinalScreenShown: true });
+      this.setState({ isFinalScreenShown: true, isExpanded: false, isFilled: true });
+      addFilledSignatoryIndex(0);
     }
   };
 
@@ -96,8 +98,7 @@ class CompanySummaryCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  // TODO: remove default value "Designit Arabia"
-  companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
+  companyName: getInputValueById(state, "Org.companyName")
 });
 
 export default withStyles(style)(connect(mapStateToProps)(CompanySummaryCard));

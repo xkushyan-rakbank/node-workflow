@@ -36,7 +36,7 @@ const StepComponent = props => {
   const {
     title,
     filled = false,
-    active,
+    activeStep,
     classes,
     step,
     index,
@@ -51,7 +51,7 @@ const StepComponent = props => {
   const Form = steps[step - 1].component;
 
   const renderTitle = () => {
-    if (active) {
+    if (activeStep) {
       return (
         <SectionTitle title={props.title} subTitle={props.subTitle} className={classes.title} />
       );
@@ -71,7 +71,7 @@ const StepComponent = props => {
       <div className={classes.stepTitleWrapper} onClick={clickHandler}>
         {renderTitle()}
       </div>
-      {active && (
+      {activeStep && (
         <FormWrapper
           isContinueDisabled={isContinueDisabled}
           handleContinue={handleContinue}

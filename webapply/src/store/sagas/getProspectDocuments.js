@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import apiClient from "../../api/apiClient";
-import * as actions from "../actions/getProspectDocumentsActions";
+import * as actions from "../actions/getProspectDocuments";
 
 function* getProspectDocuments() {
   try {

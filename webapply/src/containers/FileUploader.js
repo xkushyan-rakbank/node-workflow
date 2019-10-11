@@ -7,7 +7,7 @@ import routes from "../routes";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
 import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
-import { retrieveDocDetails } from "../store/actions/getProspectDocumentsActions";
+import { retrieveDocDetails } from "../store/actions/getProspectDocuments";
 import BackLink from "../components/Buttons/BackLink";
 const style = {
   sectionContainer: {
@@ -52,7 +52,7 @@ class FileUploader extends React.Component {
           <CompanyDocuments DocDetails={DocDetails} />
         </div>
         <div className={classes.sectionContainer}>
-          <SectionTitle title="Signatories documents" />
+          <SectionTitle title="Stakeholders documents" />
           <SignatoriesDocuments DocDetails={DocDetails} />
         </div>
         <div className="linkContainer">

@@ -187,6 +187,7 @@ public class ApiRequestForwarder {
 	@ResponseBody
 	public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			@RequestBody JsonNode jsonNode, @PathVariable String segment) {
+		
 		logger.info("Begin searchProspect() method");
 
 		logger.debug(String.format("searchProspect() method args, RequestBody=[%s], segment=[%s]", jsonNode.toString(),
