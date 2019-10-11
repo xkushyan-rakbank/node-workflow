@@ -83,7 +83,7 @@ class CompanySummaryCard extends Component {
                 step={item.step}
                 title={item.title}
                 infoTitle={item.infoTitle}
-                active={step === item.step}
+                activeStep={step === item.step}
                 filled={step > item.step}
                 clickHandler={setStep}
                 handleContinue={this.handleContinue}

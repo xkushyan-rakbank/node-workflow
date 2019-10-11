@@ -150,7 +150,7 @@ class SignatorySummaryCard extends Component {
                 steps={signatoriesSteps}
                 step={item.step}
                 title={item.title}
-                active={step === item.step}
+                activeStep={step === item.step}
                 filled={step > item.step}
                 clickHandler={setStep}
                 handleContinue={this.handleContinue}
