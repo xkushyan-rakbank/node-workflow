@@ -288,6 +288,59 @@
 			"response": []
 		},
 		{
+			"name": "Upload Prospect Document",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "26c4abb0-7058-40ea-a5b9-4656c969dc8c",
+						"exec": [
+							"let fileInfo = {\"documentKey\":\"PutSampleDocKey\"}",
+							"",
+							"pm.environment.set('fileInfo', JSON.stringify(fileInfo));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fileInfo",
+							"value": "{{fileInfo}}",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/dhanyakumarkv/Documents/GitRepos/Onboarding/wiremock/WiremockScenarios.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{DocumentUploaderBaseURL}}/docuploader/api/v1/banks/RAK/prospects/cosme0001/documents",
+					"host": [
+						"{{DocumentUploaderBaseURL}}"
+					],
+					"path": [
+						"docuploader",
+						"api",
+						"v1",
+						"banks",
+						"RAK",
+						"prospects",
+						"cosme0001",
+						"documents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Prospect Document By Document Id",
 			"request": {
 				"method": "GET",
@@ -1341,6 +1394,65 @@
 						"{userType}",
 						"prospects",
 						"MGHN43MD75"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Prospect Document",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ed77eb65-9bd1-41cf-a07a-7e476233c6a6",
+						"exec": [
+							"let fileInfo = {\"documentKey\":\"PostSampleDocKey\"}",
+							"",
+							"pm.environment.set('fileInfo', JSON.stringify(fileInfo));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fileInfo",
+							"value": "{{fileInfo}}",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/dhanyakumarkv/Documents/GitRepos/Onboarding/wiremock/README.md"
+						},
+						{
+							"key": "file",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{DocumentUploaderBaseURL}}/docuploader/api/v1/banks/RAK/prospects/cosme0001/documents",
+					"host": [
+						"{{DocumentUploaderBaseURL}}"
+					],
+					"path": [
+						"docuploader",
+						"api",
+						"v1",
+						"banks",
+						"RAK",
+						"prospects",
+						"cosme0001",
+						"documents"
 					]
 				}
 			},
