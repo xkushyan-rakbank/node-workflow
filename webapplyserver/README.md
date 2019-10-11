@@ -5,7 +5,9 @@ Eclipse Project Setup
 3. Create a folder /workspace
 4. Open Eclipse and browser for /workspace
 5. Import projects.. -> maven -> Existing maven projects -> Browse for /Onboarding/webapplyserver --> Click Finish
-6. Right click on Application.java and Run As -> Java Application
+6. Right click on project and maven -> update project
+7. Create WAR file, Right click on pom.xml -> Run As - > Maven Clean and then Maven Install
+8. webapply.war file created under /target folder
 
 API Invocation:
 
