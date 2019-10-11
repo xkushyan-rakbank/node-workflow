@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "POST",
-        "url": "/recaptcha/verify"
+        "url": "/recaptcha/api/siteverify"
     },
     "response": {
         "status": 200,

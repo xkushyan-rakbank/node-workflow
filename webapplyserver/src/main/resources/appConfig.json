@@ -2,9 +2,9 @@
 	"BaseURLs": {
 		"local": {
 			"WebApplyBaseUrl": "http://localhost:8080",
-			"DehBaseUrl": "http://localhost:9091",
-			"OAuthBaseUrl": "http://localhost:9091",
-			"ReCaptchaUrl": "https://www.google.com"
+			"DehBaseUrl": "http://localhost:9091/api/v1",
+			"OAuthBaseUrl": "http://localhost:9091/api/v1",
+			"ReCaptchaUrl": "http://localhost:9091"
 		},
 		"dev": {
 			"WebApplyBaseUrl": "http://conv.rakbankonline.ae/quickapply",

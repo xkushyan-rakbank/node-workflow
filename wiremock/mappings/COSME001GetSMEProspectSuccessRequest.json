@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "GET",
-		"url": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/100",
+		"url": "/api/v1/banks/RAK/usertypes/sme/prospects/100",
 		"bodyPatterns": [			
 		]		
 	},

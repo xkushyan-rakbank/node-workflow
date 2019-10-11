@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "GET",
-		"url": "/api/customer-onboarding/v1/banks/RAK/usertypes/SME/datalist"
+		"url": "/api/v1/banks/RAK/usertypes/SME/datalist"
 	},
 	"response": {
 		"status": 200,	

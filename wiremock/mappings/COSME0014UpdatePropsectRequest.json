@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "PUT",
-    "url": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/COSME0000000000000001",
+    "url": "/api/v1/banks/RAK/usertypes/sme/prospects/COSME0000000000000001",
     "bodyPatterns": [
       {
         "matchesJsonPath": "$.organizationInfo[?(@.companyName !== 'InvalidFields')]"

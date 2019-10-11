@@ -83,7 +83,7 @@ class SearchedAppInfo extends React.Component {
                   step={item.step}
                   title={item.title}
                   subTitle={item.infoTitle}
-                  active={step === item.step}
+                  activeStep={step === item.step}
                   filled={false}
                   clickHandler={setStep}
                   hideContinue={true}

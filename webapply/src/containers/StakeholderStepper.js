@@ -6,6 +6,9 @@ import { stakeHoldersSteps } from "../constants";
 import SuccessFilledStakeholder from "../components/StakeholderStepForms/SuccessFilledStakeholder";
 import StatusLoader from "../components/StatusLoader";
 import LinkButton from "../components/Buttons/LinkButton";
+import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
+import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
+import { connect } from "react-redux";
 
 const styles = {
   title: {
@@ -60,7 +63,7 @@ class StakeholderStepper extends React.Component {
   };
 
   render() {
-    const { classes, index } = this.props;
+    const { classes, index, loading, sendProspectToAPI } = this.props;
     const { step, isFinalScreenShown, confirmation } = this.state;
 
     if (isFinalScreenShown) {
@@ -74,7 +77,7 @@ class StakeholderStepper extends React.Component {
         content={
           <>
             <div className={classes.title}>New Stakeholder</div>
-            <StatusLoader />
+            {loading && <StatusLoader />}
           </>
         }
       >
@@ -89,10 +92,10 @@ class StakeholderStepper extends React.Component {
                 step={item.step}
                 title={item.title}
                 subTitle={item.infoTitle}
-                active={step === item.step}
+                activeStep={step === item.step}
                 filled={step > item.step}
                 clickHandler={setStep}
-                handleContinue={this.handleContinue}
+                handleContinue={sendProspectToAPI}
               />
             );
           })}
@@ -112,4 +115,17 @@ class StakeholderStepper extends React.Component {
   }
 }
 
-export default withStyles(styles)(StakeholderStepper);
+const mapStateToProps = state => ({
+  ...getSendProspectToAPIInfo(state)
+});
+
+const mapDispatchToProps = {
+  sendProspectToAPI
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(StakeholderStepper)
+);

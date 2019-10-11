@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/api/customer-onboarding/v1/banks/RAK/usertypes/sme/prospects",
+		"url": "/api/v1/banks/RAK/usertypes/sme/prospects",
 		"bodyPatterns": [
 			{
 				"matchesJsonPath": "$[?(@.prospectId == 'COSME0013')]"
