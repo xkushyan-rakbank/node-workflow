@@ -50,7 +50,14 @@ const theme = createMuiTheme({
 class App extends React.Component {
   componentDidMount() {
     this.props.receiveAppConfig();
+    this.handlePageReload();
   }
+
+  handlePageReload = () => {
+    window.addEventListener("beforeunload", () => {
+      localStorage.removeItem("videoAlreadyPlayed");
+    });
+  };
 
   render() {
     return (

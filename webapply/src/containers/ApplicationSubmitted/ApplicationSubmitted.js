@@ -156,12 +156,13 @@ class ApplicationSubmitted extends React.Component {
   render() {
     const { classes, AccountSubmittedInfo } = this.props;
     const { companyDocuments, banking } = getIconsByAccount();
-    let customClass; 
-    {AccountSubmittedInfo && AccountSubmittedInfo.length % 2 === 0 ?
-      customClass = classes.accountsNumbersRow : customClass = classes.accountsNumbersColumn;
+    let customClass;
+    {
+      AccountSubmittedInfo && AccountSubmittedInfo.length % 2 === 0
+        ? (customClass = classes.accountsNumbersRow)
+        : (customClass = classes.accountsNumbersColumn);
     }
-    return (
-      AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ?
+    return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
       <div className={classes.container}>
         <div className={classes.title}>
           <img src={companyDocuments} alt="checked" />
@@ -188,8 +189,7 @@ class ApplicationSubmitted extends React.Component {
               </div>
             </div>
           ))}
-          
-        </div> 
+        </div>
         <div className={classes.infoBottom}>
           <InfoNote
             text="Account numbers are provisional and subject to internal approvals. You will be able to make transactions on the accounts once they get activated."
@@ -207,7 +207,7 @@ class ApplicationSubmitted extends React.Component {
           </Typography>
         </div>
       </div>
-      :
+    ) : (
       <div></div>
     );
   }
@@ -219,6 +219,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withStyles(styles)(connect(
-  mapStateToProps
-)(ApplicationSubmitted));
+export default withStyles(styles)(connect(mapStateToProps)(ApplicationSubmitted));
