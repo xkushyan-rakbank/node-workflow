@@ -11,6 +11,7 @@ import login from "./loginForm";
 import authReducer from "./authReducers";
 import docUploadReducer from "./getProspectDocuments";
 import searchProspect from "./searchProspect";
+import retrieveApplicantInfo from "./retrieveApplicantInfo";
 
 /**
  * @typedef {Object} Store
@@ -33,7 +34,8 @@ const reducers = history =>
     login,
     users: authReducer,
     uploadedDocs: docUploadReducer,
-    searchProspect
+    searchProspect,
+    retrieveApplicantInfo
   });
 
 export default reducers;

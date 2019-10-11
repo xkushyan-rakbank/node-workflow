@@ -77,6 +77,22 @@ export default {
         method: "PUT",
         data
       });
+    },
+    get: prospectId => {
+      return httpClient.request({
+        url: `/webapply/api/v1/banks/RAK/usertypes/sme/prospects/${prospectId}`,
+        method: "GET"
+      });
+    }
+  },
+
+  retrieveApplicantInfos: {
+    applicant: data => {
+      return httpClient.request({
+        url: "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/search",
+        method: "post",
+        data
+      });
     }
   },
 

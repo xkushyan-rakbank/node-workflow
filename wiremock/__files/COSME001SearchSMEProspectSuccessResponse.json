@@ -1,205 +1,208 @@
 {
-    "searchResult": [
-      {
-        "prospectId": "100",
-        "_links": {
-          "self": {
-            "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/100"
-          }
-        },
-        "status": {
-          "statusType": "Incomplete",
-          "statusCode": "",
-          "statusFlag": "",
-          "statusNotes": "",
-          "statusReason": "",
-          "statusOverAll": "",
-          "reasonNotes": "",
-          "reasonCode": "",
-          "reasonStatus": ""
-        },
-        "applicantInfo": {
-          "fullName": "Anjali Kesarwani",
-          "email": "akesarwani@abc.com",
-          "countryCode": "+971",
-          "mobileNo": "45689679867"
-        },
-        "preScreeningInfo": {
-          "statusOverAll": "proceed",
-          "screeningResults": [
-            {
-              "screeningType": "Dedupe Check",
-              "screeningStatus": "Completed",
-              "screeningFlag": "string",
-              "screeningNotes": "string",
-              "screeningReason": "No Match Reason",
-              "reasonNotes": "string",
-              "reasonCode": "string",
-              "reasonStatus": "string"
-            },
-            {
-              "screeningType": "Blacklist Check",
-              "screeningStatus": "Completed",
-              "screeningFlag": "string",
-              "screeningNotes": "string",
-              "screeningReason": "No Match Reason",
-              "reasonNotes": "string",
-              "reasonCode": "string",
-              "reasonStatus": "string"
-            },
-            {
-              "screeningType": "Negative List Check",
-              "screeningStatus": "Completed",
-              "screeningFlag": "string",
-              "screeningNotes": "string",
-              "screeningReason": "Match",
-              "reasonNotes": "string",
-              "reasonCode": "string",
-              "reasonStatus": "string"
-            },
-            {
-              "screeningType": "Risk Rating",
-              "screeningStatus": "Completed",
-              "screeningFlag": "string",
-              "screeningNotes": "string",
-              "screeningReason": "Risk rating value",
-              "reasonNotes": "string",
-              "reasonCode": "string",
-              "reasonStatus": "string"
-            }
-          ]
-        },
-        "auditTrail": [
-          {
-            "fieldName": "string",
-            "modifiedBy": "Kapil",
-            "modifiedDateTime": "10/09/2019 11:30:00"
-          },
-          {
-            "fieldName": "string",
-            "modifiedBy": "Sachin",
-            "modifiedDateTime": "12/09/2019 15:30:00"
-          }
-        ],
-        "organizationInfo": {
-          "licenseNumber": "3456798765789",
-          "companyName": "Gill Pvt. Ltd."
-        },
-        "applicationInfo": {
-          "viewId": "string",
-          "actionType": "save"
+  "searchResult": [
+    {
+      "prospectId": "100",
+      "_links": {
+        "self": {
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/100"
         }
       },
-      {
-        "prospectId": "101",
-        "_links": {
-          "self": {
-            "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/101"
-          }
-        },
-        "status": {
-          "statusType": "Dedupe",
-          "statusCode": "",
-          "statusFlag": "",
-          "statusNotes": "",
-          "statusReason": "",
-          "statusOverAll": "",
-          "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within X days to meet you in person and help you out.",
-          "reasonCode": "",
-          "reasonStatus": ""
-        },
-        "applicantInfo": {
-          "fullName": "Anjali Gupta",
-          "email": "agupta@abc.com",
-          "countryCode": "+971",
-          "mobileNo": "345678098"
-        },
-        "preScreeningInfo": {
-          "statusOverAll": "proceed",
-          "screeningResults": [
-            {
-              "screeningType": "string",
-              "screeningStatus": "string",
-              "screeningFlag": "string",
-              "screeningNotes": "string",
-              "screeningReason": "string",
-              "reasonNotes": "string",
-              "reasonCode": "string",
-              "reasonStatus": "string"
-            }
-          ]
-        },
-        "auditTrail": [
-          {
-            "fieldName": "string",
-            "modifiedBy": "string",
-            "modifiedDateTime": "string"
-          }
-        ],
-        "organizationInfo": {
-          "licenseNumber": "447877565655",
-          "companyName": "Purva Limited"
-        },
-        "applicationInfo": {
-          "viewId": "string",
-          "actionType": "save"
-        }
+      "status": {
+        "statusType": "Incomplete",
+        "statusCode": "",
+        "statusFlag": "",
+        "statusNotes": "Incomplete application",
+        "statusReason": "",
+        "statusOverAll": "",
+        "reasonNotes": "",
+        "reasonCode": "",
+        "reasonStatus": ""
       },
-      {
-        "prospectId": "102",
-        "_links": {
-          "self": {
-            "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/102"
-          }
-        },
-        "status": {
-          "statusType": "Blacklisted",
-          "statusCode": "",
-          "statusFlag": "",
-          "statusNotes": "",
-          "statusReason": "",
-          "statusOverAll": "",
-          "reasonNotes": "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAK BANK",
-          "reasonCode": "",
-          "reasonStatus": ""
-        },
-        "applicantInfo": {
-          "fullName": "Anjali Tandon",
-          "email": "atandon@abc.com",
-          "countryCode": "+971",
-          "mobileNo": "6789098789"
-        },
-        "preScreeningInfo": {
-          "statusOverAll": "proceed",
-          "screeningResults": [
-            {
-              "screeningType": "string",
-              "screeningStatus": "string",
-              "screeningFlag": "string",
-              "screeningNotes": "string",
-              "screeningReason": "string",
-              "reasonNotes": "string",
-              "reasonCode": "string",
-              "reasonStatus": "string"
-            }
-          ]
-        },
-        "auditTrail": [
+      "applicantInfo": {
+        "fullName": "Anjali Kesarwani",
+        "email": "akesarwani@abc.com",
+        "countryCode": "+971",
+        "mobileNo": "45689679867"
+      },
+      "preScreeningInfo": {
+        "statusOverAll": "proceed",
+        "screeningResults": [
           {
-            "fieldName": "string",
-            "modifiedBy": "string",
-            "modifiedDateTime": "string"
+            "screeningType": "string",
+            "screeningStatus": "string",
+            "screeningFlag": "string",
+            "screeningNotes": "string",
+            "screeningReason": "string",
+            "reasonNotes": "string",
+            "reasonCode": "string",
+            "reasonStatus": "string"
           }
-        ],
-        "organizationInfo": {
-          "licenseNumber": "50978643469",
-          "companyName": "ACC Corporate Limited"
-        },
-        "applicationInfo": {
-          "viewId": "string",
-          "actionType": "save"
+        ]
+      },
+      "auditTrail": [
+        {
+          "fieldName": "string",
+          "modifiedBy": "string",
+          "modifiedDateTime": "string"
         }
+      ],
+      "organizationInfo": {
+        "licenseNumber": "",
+        "companyName": ""
       }
-    ]
-  }
-  
+    },
+    {
+      "prospectId": "101",
+      "_links": {
+        "self": {
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/101"
+        }
+      },
+      "status": {
+        "statusType": "Upload Documents",
+        "statusCode": "",
+        "statusFlag": "",
+        "statusNotes": "New documents needed",
+        "statusReason": "",
+        "statusOverAll": "",
+        "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within X days to meet you in person and help you out.",
+        "reasonCode": "",
+        "reasonStatus": ""
+      },
+      "applicantInfo": {
+        "fullName": "Anjali Gupta",
+        "email": "agupta@abc.com",
+        "countryCode": "+971",
+        "mobileNo": "345678098"
+      },
+      "preScreeningInfo": {
+        "statusOverAll": "proceed",
+        "screeningResults": [
+          {
+            "screeningType": "string",
+            "screeningStatus": "string",
+            "screeningFlag": "string",
+            "screeningNotes": "string",
+            "screeningReason": "string",
+            "reasonNotes": "string",
+            "reasonCode": "string",
+            "reasonStatus": "string"
+          }
+        ]
+      },
+      "auditTrail": [
+        {
+          "fieldName": "string",
+          "modifiedBy": "string",
+          "modifiedDateTime": "string"
+        }
+      ],
+      "organizationInfo": {
+        "licenseNumber": "xyz",
+        "companyName": "XYZ Pvt.Ltd."
+      }
+    },
+    {
+      "prospectId": "102",
+      "_links": {
+        "self": {
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/102"
+        }
+      },
+      "status": {
+        "statusType": "See Account",
+        "statusCode": "",
+        "statusFlag": "",
+        "statusNotes": "Account activated",
+        "statusReason": "",
+        "statusOverAll": "",
+        "reasonNotes": "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAK BANK",
+        "reasonCode": "",
+        "reasonStatus": ""
+      },
+      "applicantInfo": {
+        "fullName": "Anjali Tandon",
+        "email": "atandon@abc.com",
+        "countryCode": "+971",
+        "mobileNo": "6789098789"
+      },
+      "preScreeningInfo": {
+        "statusOverAll": "proceed",
+        "screeningResults": [
+          {
+            "screeningType": "string",
+            "screeningStatus": "string",
+            "screeningFlag": "string",
+            "screeningNotes": "string",
+            "screeningReason": "string",
+            "reasonNotes": "string",
+            "reasonCode": "string",
+            "reasonStatus": "string"
+          }
+        ]
+      },
+      "auditTrail": [
+        {
+          "fieldName": "string",
+          "modifiedBy": "string",
+          "modifiedDateTime": "string"
+        }
+      ],
+      "organizationInfo": {
+        "licenseNumber": "abc",
+        "companyName": "ABC Pvt. Ltd."
+      }
+    },
+    {
+      "prospectId": "103",
+      "_links": {
+        "self": {
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/103"
+        }
+      },
+      "status": {
+        "statusType": "",
+        "statusCode": "",
+        "statusFlag": "",
+        "statusNotes": "No documents needed",
+        "statusReason": "",
+        "statusOverAll": "",
+        "reasonNotes": "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAK BANK",
+        "reasonCode": "",
+        "reasonStatus": ""
+      },
+      "applicantInfo": {
+        "fullName": "Abhishek Pratap Singh",
+        "email": "atandon@abc.com",
+        "countryCode": "+971",
+        "mobileNo": "6789098789"
+      },
+      "preScreeningInfo": {
+        "statusOverAll": "proceed",
+        "screeningResults": [
+          {
+            "screeningType": "string",
+            "screeningStatus": "string",
+            "screeningFlag": "string",
+            "screeningNotes": "string",
+            "screeningReason": "string",
+            "reasonNotes": "string",
+            "reasonCode": "string",
+            "reasonStatus": "string"
+          }
+        ]
+      },
+      "auditTrail": [
+        {
+          "fieldName": "string",
+          "modifiedBy": "string",
+          "modifiedDateTime": "string"
+        }
+      ],
+      "organizationInfo": {
+        "licenseNumber": "Aappss",
+        "companyName": "Aappss Technologies"
+      }
+    }
+  ]
+}
