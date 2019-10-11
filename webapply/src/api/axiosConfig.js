@@ -3,9 +3,24 @@ import store from "./../store/configureStore";
 import { setInputsErrors } from "./../store/actions/serverValidation";
 import { applicationStatusServerError } from "./../store/actions/applicationStatus";
 
+const LOCALHOST = "localhost";
+const RAKBANKONLINE = "conv.rakbankonline.ae";
+
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_PATH || "http://localhost:8080"
+  baseURL: getBaseURL()
 });
+
+function getBaseURL() {
+  let { host, protocol } = window.location;
+
+  if (host.includes(LOCALHOST)) {
+    return "http://localhost:8080";
+  } else if (host.includes(RAKBANKONLINE)) {
+    return `${protocol}//${host}/quickapply`;
+  } else {
+    return `${protocol}//${host}`;
+  }
+}
 
 /*
  * errors response handling with the Axios interceptor

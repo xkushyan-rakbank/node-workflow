@@ -1,17 +1,24 @@
 import httpClient from "./axiosConfig";
-import config from "../config/config";
 
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
 
+const { pathname } = window.location;
+let queryString = "";
+
+if (pathname.includes("/sme/agent/")) {
+  queryString = "?segment=sme&product=checking&role=agent";
+} else if (pathname.includes("/sme/")) {
+  queryString = "?segment=sme&product=checking&role=customer";
+}
+
 export default {
   config: {
     get: () => {
-      // return httpClient.request({
-      //   method: "GET",
-      //   url: "/webapply/api/state"
-      // });
-      return Promise.resolve({ data: config });
+      return httpClient.request({
+        method: "GET",
+        url: `/webapply/api/v1/config${queryString}`
+      });
     }
   },
 
