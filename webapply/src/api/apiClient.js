@@ -6,7 +6,7 @@ export const OTP_ACTION_VERIFY = "verify";
 const { pathname } = window.location;
 let queryString = "";
 
-if (pathname.includes("/sme/agent/")) {
+if (pathname.includes("/agent/")) {
   queryString = "?segment=sme&product=checking&role=agent";
 } else if (pathname.includes("/sme/")) {
   queryString = "?segment=sme&product=checking&role=customer";
