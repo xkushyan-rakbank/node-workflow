@@ -3,10 +3,11 @@ import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { getIconsByAccount } from "../../constants/icons";
+import { connect } from "react-redux";
 import dotsBg from "../../assets/images/dots_bg.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import InfoNote from "../../components/InfoNote";
-
+import * as accountInfoSelector from "../../store/selectors/appConfig";
 const styles = {
   title: {
     display: "flex",
@@ -48,7 +49,18 @@ const styles = {
       }
     }
   },
+  accountsNumbersRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    "& div + div": {
+      "@media only screen and (max-width: 991px)": {
+        marginTop: "10px"
+      }
+    }
+  },
   accountNumber: {
+    marginBottom: "6px",
     padding: "30px",
     width: "380px",
     borderRadius: "8px",
@@ -101,6 +113,14 @@ const styles = {
       }
     }
   },
+  accountNumberRow: {
+    "@media only screen and (max-width: 991px)": {
+      padding: "5px 30px",
+      "& .number": {
+        fontSize: "20px"
+      }
+    }
+  },
   infoBottom: {
     maxWidth: "443px",
     margin: "0 auto"
@@ -132,44 +152,30 @@ const styles = {
     color: "#373737"
   }
 };
-
-const mockDataAccountSubmittedInfo = [
-  {
-    id: "1234567890001",
-    accountType: "RAKstarter"
-  },
-  {
-    id: "1234567893001",
-    accountType: "RAKstarter"
-  },
-  {
-    id: "1234562850001",
-    accountType: "RAKstarter"
-  }
-];
-
 class ApplicationSubmitted extends React.Component {
   render() {
-    const { classes } = this.props;
-    const isColumnViewAccounts = mockDataAccountSubmittedInfo.length > 2;
+    const { classes, AccountSubmittedInfo } = this.props;
     const { companyDocuments, banking } = getIconsByAccount();
-
+    let customClass; 
+    {AccountSubmittedInfo && AccountSubmittedInfo.length % 2 === 0 ?
+      customClass = classes.accountsNumbersRow : customClass = classes.accountsNumbersColumn;
+    }
     return (
+      AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ?
       <div className={classes.container}>
         <div className={classes.title}>
           <img src={companyDocuments} alt="checked" />
           <SectionTitleWithInfo title="Meet the brand new accounts for Designit Arabia" />
         </div>
-
         <div
           className={cx(classes.accountsNumbers, {
-            [classes.accountsNumbersColumn]: isColumnViewAccounts
+            [customClass]: AccountSubmittedInfo.length
           })}
         >
-          {mockDataAccountSubmittedInfo.map(accountData => (
+          {AccountSubmittedInfo.map(accountData => (
             <div
               className={cx(classes.accountNumber, {
-                [classes.accountNumberColumn]: isColumnViewAccounts
+                [classes.accountNumberRow]: AccountSubmittedInfo.length
               })}
               key={accountData.id}
             >
@@ -177,22 +183,20 @@ class ApplicationSubmitted extends React.Component {
 
               <span className="info">Your AED account number</span>
               <div className="mainInfo">
-                <span className="number">{accountData.id}</span>
-                <span className="typeAccount">{accountData.accountType}</span>
+                <span className="number">{accountData.accountNo}</span>
+                <span className="typeAccount">{accountData.accountCurrencies}</span>
               </div>
             </div>
           ))}
-        </div>
-
+          
+        </div> 
         <div className={classes.infoBottom}>
           <InfoNote
             text="Account numbers are provisional and subject to internal approvals. You will be able to make transactions on the accounts once they get activated."
-            style={{ marginTop: "20px" }}
+            style={{ marginTop: "20px", position: "static" }}
           />
         </div>
-
         <div className={classes.divider}>{""}</div>
-
         <div className={classes.result}>
           <img src={banking} alt="wait call" />
           <Typography align="center" classes={{ root: classes.resultNextStep }}>
@@ -203,8 +207,18 @@ class ApplicationSubmitted extends React.Component {
           </Typography>
         </div>
       </div>
+      :
+      <div></div>
     );
   }
 }
 
-export default withStyles(styles)(ApplicationSubmitted);
+const mapStateToProps = state => {
+  return {
+    AccountSubmittedInfo: accountInfoSelector.getAccountSubmittedInfo(state)
+  };
+};
+
+export default withStyles(styles)(connect(
+  mapStateToProps
+)(ApplicationSubmitted));
