@@ -194,30 +194,38 @@ public class WebApplyController {
 		while (fields.hasNext()) {
 			Entry<String, JsonNode> entry = fields.next();
 			String uid = entry.getKey();
-			ObjectNode fieldConfig = (ObjectNode) entry.getValue();
-			boolean applicable = fieldConfig.has("label") && !fieldConfig.get("label").isNull()
-					&& matchCriteria(fieldConfig, segment, product, role, device);
 
-			if (applicable) {
-				fieldConfig.put("applicable", true);
-				fieldConfig.remove("criteria");
-				uiFields.set(uid, fieldConfig);
+			try {
 
-				if (fieldConfig.has("datalistId") && fieldConfig.get("datalistId").isNull()) {
-					fieldConfig.remove("datalistId");
-				} else {
-					String groupId = fieldConfig.get("datalistId").asText();
-					fieldConfig.set("datalist", datalist.get(groupId));
+				ObjectNode fieldConfig = (ObjectNode) entry.getValue();
+				boolean applicable = fieldConfig.has("label") && !fieldConfig.get("label").isNull()
+						&& matchCriteria(fieldConfig, segment, product, role, device);
+				if (applicable) {
+					fieldConfig.put("applicable", true);
+					fieldConfig.remove("criteria");
+					uiFields.set(uid, fieldConfig);
+
+					if (fieldConfig.has("datalistId")) {
+						if (fieldConfig.get("datalistId").isNull()) {
+							fieldConfig.remove("datalistId");
+						} else {
+							String groupId = fieldConfig.get("datalistId").asText();
+							fieldConfig.set("datalist", datalist.get(groupId));
+						}
+
+					}
+
+					if (fieldConfig.has("readonlyFor") && (fieldConfig.get("readonlyFor").isNull()
+							|| fieldConfig.get("readonlyFor").size() == 0)) {
+						fieldConfig.remove("readonlyFor");
+					}
+
+					if (fieldConfig.has("shortKeyNames")) {
+						fieldConfig.remove("shortKeyNames");
+					}
 				}
-
-				if (fieldConfig.has("readOnlyFor")
-						&& (fieldConfig.get("readOnlyFor").isNull() || fieldConfig.get("readOnlyFor").size() == 0)) {
-					fieldConfig.remove("readOnlyFor");
-				}
-
-				if (fieldConfig.has("shortKeyNames")) {
-					fieldConfig.remove("shortKeyNames");
-				}
+			} catch (Exception e) {
+				logger.error("Error while processing UID= " + uid, e);
 			}
 
 		}
