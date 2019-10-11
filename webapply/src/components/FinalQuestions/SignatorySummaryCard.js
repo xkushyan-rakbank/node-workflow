@@ -118,12 +118,13 @@ class SignatorySummaryCard extends Component {
   }
 
   renderCardContent() {
-    const { signatory: { firstName, lastName } = {} } = this.props;
+    const { signatory: { firstName, lastName, fullName } = {} } = this.props;
+    console.log(lastName);
     return (
       <div className={this.props.classes.contentBox}>
         <div className={this.props.classes.infoBox}>
           <div className={this.props.classes.name}>
-            {firstName} {lastName}
+            {firstName && lastName ? `${firstName} ${lastName}` : fullName}
           </div>
           <div className={this.props.classes.signatoryField}>{this.getSignatoryRightsLabel()}</div>
           <div className={this.props.classes.shareholdingField}>{this.getShareholdingLabel()}</div>
