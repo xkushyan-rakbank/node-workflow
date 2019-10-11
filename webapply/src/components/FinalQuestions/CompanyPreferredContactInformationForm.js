@@ -8,7 +8,6 @@ import PureSelect from "../InputField/PureSelect";
 import InfoTitle from "../InfoTitle";
 import { connect } from "react-redux";
 import { getInputValueById } from "../../store/selectors/input";
-import { isEqual } from "lodash";
 
 const styles = {
   title: {
@@ -59,11 +58,6 @@ class CompanyPreferredContactInformationForm extends Component {
   componentDidMount() {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
-  }
-
-  // temporary solution
-  shouldComponentUpdate(nextProps, nextState) {
-    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {

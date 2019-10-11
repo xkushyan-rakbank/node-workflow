@@ -37,7 +37,7 @@ const style = {
 };
 
 const AuditTrail = props => {
-  const { classes, prospectInfo } = props;
+  const { classes, prospectInfo = [] } = props;
 
   return prospectInfo.auditTrail && prospectInfo.auditTrail.length > 0 ? (
     <div className={classes.wrapper}>

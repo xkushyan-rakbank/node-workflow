@@ -119,7 +119,6 @@ class SignatorySummaryCard extends Component {
 
   renderCardContent() {
     const { signatory: { firstName, lastName, fullName } = {} } = this.props;
-    console.log(lastName);
     return (
       <div className={this.props.classes.contentBox}>
         <div className={this.props.classes.infoBox}>

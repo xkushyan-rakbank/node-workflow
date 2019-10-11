@@ -6,7 +6,6 @@ import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputNameById, getInputValueById } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
-import { isEqual } from "lodash";
 
 const styles = {
   title: {
@@ -28,11 +27,6 @@ class SignatorySourceOfFundsForm extends Component {
   componentDidMount() {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
-  }
-
-  // temporary solution
-  shouldComponentUpdate(nextProps, nextState) {
-    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
