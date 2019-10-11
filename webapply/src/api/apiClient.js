@@ -12,6 +12,14 @@ if (pathname.includes("/agent/")) {
   queryString = "?segment=sme&product=checking&role=customer";
 }
 
+function buildURI(uriName, prospectId, documentKey) {
+  let uri = store.getState().appConfig.endpoints[uriName];
+  uri = uri.replace("{prospectId}", prospectId);
+  uri = uri.replace("{documentKey}", documentKey);
+
+  return uri;
+}
+
 export default {
   config: {
     get: () => {
@@ -25,7 +33,7 @@ export default {
   authentication: {
     login: data => {
       return httpClient.request({
-        url: store.getState().appConfig.endpoints.authenticateUserUri,
+        url: buildURI("authenticateUserUri"),
         method: "post",
         data
       });
@@ -45,7 +53,7 @@ export default {
   otp: {
     generate: ({ prospectId, countryCode, mobileNo }) => {
       return httpClient.request({
-        url: store.getState().appConfig.endpoints.authenticateUserUri,
+        url: buildURI("otpUri"),
         method: "POST",
         data: {
           action: OTP_ACTION_GENERATE,
@@ -57,7 +65,7 @@ export default {
     },
     verify: ({ prospectId, countryCode, mobileNo, otpToken }) => {
       return httpClient.request({
-        url: store.getState().appConfig.endpoints.authenticateUserUri,
+        url: buildURI("otpUri"),
         method: "POST",
         data: {
           action: OTP_ACTION_VERIFY,
@@ -80,7 +88,7 @@ export default {
     },
     update: (prospectId, data) => {
       return httpClient.request({
-        url: `/webapply/api/v1/banks/RAK/usertypes/sme/prospects/${prospectId}`,
+        url: buildURI("updateProspectUri", prospectId),
         method: "PUT",
         data
       });
