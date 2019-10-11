@@ -42,7 +42,7 @@ public class DocumentUploaderTest {
 		mockMvc.perform(MockMvcRequestBuilders.multipart(uri).file(file).param("fileInfo", fileInfo.toString()))
 				.andExpect(status().is(200));
 
-		then(this.docUploadService).should().store(file, fileInfo);
+		then(this.docUploadService).should().store(file, fileInfo, "cosme0001");
 
 	}
 

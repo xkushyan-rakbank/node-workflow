@@ -10,6 +10,6 @@ import ae.rakbank.documentuploader.commons.DocumentUploadException;
 
 public interface DocumentUploadService {
 
-	void store(MultipartFile file, JsonNode requestBodyJSON) throws IOException, DocumentUploadException;
+	void store(MultipartFile file, JsonNode requestBodyJSON, String prospectId) throws IOException, DocumentUploadException;
 
 }

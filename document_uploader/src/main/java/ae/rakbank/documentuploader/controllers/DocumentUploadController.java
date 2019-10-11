@@ -2,6 +2,7 @@ package ae.rakbank.documentuploader.controllers;
 
 import java.io.IOException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,14 +41,40 @@ public class DocumentUploadController {
 		this.docUploadService = docUploadService;
 	}
 
-	@RequestMapping(value = "/banks/RAK/prospects/{prospectId}/documents", method = { RequestMethod.POST,
-			RequestMethod.PUT }, consumes = {
-					MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Object> handleFileUpload(@RequestParam("file") MultipartFile file,
+	@PostMapping(value = "/banks/RAK/prospects/{prospectId}/documents", consumes = {
+			MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Object> handleUploadDocument(@RequestParam("file") MultipartFile file,
 			@RequestParam("fileInfo") String fileInfo, @PathVariable String prospectId) {
 
+		return processUploadRequest(file, fileInfo, prospectId);
+
+	}
+
+	@PutMapping(value = "/banks/RAK/prospects/{prospectId}/documents", consumes = {
+			MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Object> handleReUploadDocument(@RequestParam("file") MultipartFile file,
+			@RequestParam(name = "fileInfo", required = false) String fileInfo, @PathVariable String prospectId) {
+
+		if (StringUtils.isBlank(fileInfo)) {
+
+			logger.error(String.format(
+					"The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s", prospectId,
+					StringUtils.length(fileInfo)));
+
+			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "The 'fileInfo' parameter must not be null or empty",
+					String.format(
+							"The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s",
+							prospectId, StringUtils.length(fileInfo)));
+
+			return new ResponseEntity<Object>(error, null, HttpStatus.BAD_REQUEST);
+		}
+		return processUploadRequest(file, fileInfo, prospectId);
+
+	}
+
+	private ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
 		logger.error(String.format(
-				"[Begin] handleFileUpload() method, prospectId=%s, originalFilename=[%s], filesize=%s, fileInfo= %s",
+				"[Begin] processUploadRequest() method, prospectId=%s, originalFilename=[%s], filesize=%s, fileInfo= %s",
 				prospectId, file.getOriginalFilename(), file.getSize(), fileInfo));
 
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -61,7 +89,6 @@ public class DocumentUploadController {
 			return new ResponseEntity<Object>(error, null, HttpStatus.BAD_REQUEST);
 		}
 		return saveUploadedFile(file, fileInfoJSON, prospectId);
-
 	}
 
 	private ResponseEntity<Object> saveUploadedFile(MultipartFile file, JsonNode fileInfo, String prospectId) {
@@ -72,7 +99,7 @@ public class DocumentUploadController {
 
 		try {
 
-			docUploadService.store(file, fileInfo);
+			docUploadService.store(file, fileInfo, prospectId);
 
 		} catch (DocumentUploadException e) {
 

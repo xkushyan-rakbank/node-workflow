@@ -34,7 +34,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 	}
 
 	@Override
-	public void store(MultipartFile file, JsonNode fileInfo) throws IOException, DocumentUploadException {
+	public void store(MultipartFile file, JsonNode fileInfo, String prospectId)
+			throws IOException, DocumentUploadException {
 		String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
 		String documentKey = fileInfo.get("documentKey").asText() + "."
 				+ FilenameUtils.getExtension(file.getOriginalFilename());
@@ -48,7 +49,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 		}
 		try (InputStream inputStream = file.getInputStream()) {
 			Files.copy(inputStream, this.uploadsDir.resolve(documentKey), StandardCopyOption.REPLACE_EXISTING);
-			logger.info(String.format("File [%s] created/replaced.", this.uploadsDir.resolve(documentKey)));
+			logger.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId,
+					this.uploadsDir.resolve(documentKey)));
 		}
 	}
 
