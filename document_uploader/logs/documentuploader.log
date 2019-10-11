@@ -1,0 +1,47 @@
+2019-10-11 09:40:43,976 INFO o.s.t.c.s.AbstractTestContextBootstrapper [main] Neither @ContextConfiguration nor @ContextHierarchy found for test class [ae.rakbank.documentuploader.DocumentUploaderTest], using SpringBootContextLoader
+2019-10-11 09:40:43,993 INFO o.s.t.c.s.AbstractContextLoader [main] Could not detect default resource locations for test class [ae.rakbank.documentuploader.DocumentUploaderTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2019-10-11 09:40:43,994 INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils [main] Could not detect default configuration classes for test class [ae.rakbank.documentuploader.DocumentUploaderTest]: DocumentUploaderTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2019-10-11 09:40:44,113 INFO o.s.b.t.c.SpringBootTestContextBootstrapper [main] Found @SpringBootConfiguration ae.rakbank.documentuploader.Application for test class ae.rakbank.documentuploader.DocumentUploaderTest
+2019-10-11 09:40:44,215 INFO o.s.t.c.s.AbstractTestContextBootstrapper [main] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2019-10-11 09:40:44,228 INFO o.s.t.c.s.AbstractTestContextBootstrapper [main] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@3e0e1046, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@24c1b2d2, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@7dc19a70, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@508dec2b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@1e4f4a5c, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@37313c65, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@465232e9, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@798162bc, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@1df8da7a, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@23941fb4]
+2019-10-11 09:40:44,532 INFO o.s.b.StartupInfoLogger [main] Starting DocumentUploaderTest on C02Y909RJHCF with PID 7707 (started by dhanyakumarkv in /Users/dhanyakumarkv/Documents/GitRepos/Onboarding/document_uploader)
+2019-10-11 09:40:44,532 DEBUG o.s.b.StartupInfoLogger [main] Running with Spring Boot v2.1.6.RELEASE, Spring v5.1.8.RELEASE
+2019-10-11 09:40:44,534 INFO o.s.b.SpringApplication [main] No active profile set, falling back to default profiles: default
+2019-10-11 09:40:44,554 DEBUG o.s.c.s.AbstractApplicationContext [main] Refreshing org.springframework.web.context.support.GenericWebApplicationContext@1984b1f
+2019-10-11 09:40:45,718 INFO a.r.d.h.FileHelper [main] loading DocUploadConfig.json
+2019-10-11 09:40:45,725 ERROR a.r.d.c.EnvUtil [main] System property 'WEB_APPLY_DIR' not configured, load config files from classpath:
+2019-10-11 09:40:45,725 ERROR a.r.d.c.EnvUtil [main] System property 'WEB_APPLY_ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod
+2019-10-11 09:40:45,726 INFO a.r.d.c.EnvUtil [main] $WEB_APPLY_ENV=local, $WEB_APPLY_DIR=null
+2019-10-11 09:40:45,730 ERROR a.r.d.c.EnvUtil [main] null/config/ not found.
+2019-10-11 09:40:45,730 ERROR a.r.d.c.EnvUtil [main] null/config/ not found.
+2019-10-11 09:40:45,731 ERROR a.r.d.h.FileHelper [main] FileNotFoundException: Read JSON file from DocUploadConfig.json
+2019-10-11 09:40:45,732 INFO a.r.d.h.FileHelper [main] Read JSON file from classpath:DocUploadConfig.json
+2019-10-11 09:40:46,182 DEBUG o.s.w.s.h.SimpleUrlHandlerMapping [main] Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2019-10-11 09:40:46,370 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-10-11 09:40:46,402 DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter [main] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2019-10-11 09:40:46,493 TRACE o.s.w.s.h.AbstractHandlerMethodMapping [main] 
+	a.r.d.c.DocumentUploadController:
+	{POST /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleUploadDocument(MultipartFile,String,String)
+	{PUT /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleReUploadDocument(MultipartFile,String,String)
+2019-10-11 09:40:46,501 TRACE o.s.w.s.h.AbstractHandlerMethodMapping [main] 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ /error}: error(HttpServletRequest)
+	{ /error, produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2019-10-11 09:40:46,505 DEBUG o.s.w.s.h.AbstractHandlerMethodMapping [main] 4 mappings in 'requestMappingHandlerMapping'
+2019-10-11 09:40:46,530 DEBUG o.s.w.s.h.SimpleUrlHandlerMapping [main] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2019-10-11 09:40:46,541 DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver [main] ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2019-10-11 09:40:46,648 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2019-10-11 09:40:46,691 INFO o.s.m.w.MockServletContext [main] Initializing Spring TestDispatcherServlet ''
+2019-10-11 09:40:46,692 INFO o.s.w.s.FrameworkServlet [main] Initializing Servlet ''
+2019-10-11 09:40:46,705 INFO o.s.w.s.FrameworkServlet [main] Completed initialization in 13 ms
+2019-10-11 09:40:46,739 INFO o.s.b.StartupInfoLogger [main] Started DocumentUploaderTest in 2.474 seconds (JVM running for 3.666)
+2019-10-11 09:40:46,791 TRACE o.s.w.s.h.AbstractHandlerMapping [main] Mapped to public org.springframework.http.ResponseEntity<java.lang.Object> ae.rakbank.documentuploader.controllers.DocumentUploadController.handleUploadDocument(org.springframework.web.multipart.MultipartFile,java.lang.String,java.lang.String)
+2019-10-11 09:40:46,808 TRACE o.s.w.m.s.InvocableHandlerMethod [main] Arguments: [org.springframework.mock.web.MockMultipartFile@474821de, {"documentKey":"SampleDocFromTestCase"}, cosme0001]
+2019-10-11 09:40:46,808 ERROR a.r.d.c.DocumentUploadController [main] [Begin] processUploadRequest() method, prospectId=cosme0001, originalFilename=[filename.txt], filesize=8, fileInfo= {"documentKey":"SampleDocFromTestCase"}
+2019-10-11 09:40:46,809 INFO a.r.d.c.DocumentUploadController [main] [Begin] saveUploadedFile() method, prospectId=cosme0001, originalFilename=[filename.txt], filesize=8
+2019-10-11 09:40:46,818 INFO a.r.d.c.DocumentUploadController [main] [End] saveUploadedFile() method, UPLOAD SUCCESS for prospectId=cosme0001, originalFilename=[filename.txt], filesize=8
+2019-10-11 09:40:46,828 DEBUG o.s.w.s.m.m.a.AbstractMessageConverterMethodProcessor [main] Using 'application/json', given [*/*] and supported [application/json]
+2019-10-11 09:40:46,831 TRACE o.s.c.l.LogFormatUtils [main] Writing [{"fileName":"filename.txt"}]
+2019-10-11 09:40:46,901 DEBUG o.s.c.s.AbstractApplicationContext [Thread-3] Closing org.springframework.web.context.support.GenericWebApplicationContext@1984b1f, started on Fri Oct 11 09:40:44 GST 2019
+2019-10-11 09:40:46,903 INFO o.s.s.c.ExecutorConfigurationSupport [Thread-3] Shutting down ExecutorService 'taskScheduler'
+2019-10-11 09:40:46,904 INFO o.s.s.c.ExecutorConfigurationSupport [Thread-3] Shutting down ExecutorService 'applicationTaskExecutor'
