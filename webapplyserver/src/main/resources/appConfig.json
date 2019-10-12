@@ -39,7 +39,8 @@
 		"prescreeningUri": "/webapply/api/v1/prospects/{prospectId}/screening",
 		"authenticateUserUri": "/webapply/api/v1/users/authenticate",
 		"getDocumentByTitleUri": "/webapply/api/v1/legal/documents/{documentTitle}",
-		"otpUri": "/webapply/api/v1/otp"
+		"otpUri": "/webapply/api/v1/otp",
+		"recaptchaUri": "/webapply/api/v1/recaptcha/siteverify"
 	},
 	"DehURIs": {
 		"datalistUri": "/banks/RAK/usertypes/{userType}/datalist",

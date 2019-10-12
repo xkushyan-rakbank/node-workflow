@@ -5,10 +5,14 @@ export const OTP_ACTION_VERIFY = "verify";
 
 const { pathname } = window.location;
 let queryString = "";
-
+let segment = "";
 if (pathname.includes("/agent/")) {
   queryString = "?segment=sme&product=checking&role=agent";
 } else if (pathname.includes("/sme/")) {
+  segment = "sme";
+  queryString = `?segment=${segment}&product=checking&role=customer`;
+} else {
+  segment = "sme";
   queryString = "?segment=sme&product=checking&role=customer";
 }
 
@@ -16,7 +20,7 @@ function buildURI(uriName, prospectId, documentKey) {
   let uri = store.getState().appConfig.endpoints[uriName];
   uri = uri.replace("{prospectId}", prospectId);
   uri = uri.replace("{documentKey}", documentKey);
-
+  uri = uri.replace("{userType}", segment);
   return uri;
 }
 
@@ -25,7 +29,7 @@ export default {
     get: () => {
       return httpClient.request({
         method: "GET",
-        url: `/webapply/api/v1/config${queryString}`
+        url: `webapply/api/v1/config${queryString}`
       });
     }
   },
@@ -43,7 +47,7 @@ export default {
   reCaptcha: {
     verify: recaptchaToken => {
       return httpClient.request({
-        url: "/recaptcha/verify",
+        url: buildURI("recaptchaUri"),
         method: "POST",
         data: { recaptchaToken }
       });
@@ -81,7 +85,7 @@ export default {
   prospect: {
     create: data => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/",
+        url: buildURI("createProspectUri"),
         method: "POST",
         data
       });
@@ -95,7 +99,7 @@ export default {
     },
     get: prospectId => {
       return httpClient.request({
-        url: `/webapply/api/v1/banks/RAK/usertypes/sme/prospects/${prospectId}`,
+        url: buildURI("getProspectUri", prospectId),
         method: "GET"
       });
     }
@@ -104,7 +108,7 @@ export default {
   retrieveApplicantInfos: {
     applicant: data => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/search",
+        url: buildURI("searchProspectUri"),
         method: "post",
         data
       });
@@ -112,18 +116,18 @@ export default {
   },
 
   getProspectDocuments: {
-    retriveDocuments: () => {
+    retriveDocuments: prospectId => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/prospects/001/documents",
+        url: buildURI("getProspectDocumentsUri", prospectId),
         method: "GET"
       });
     }
   },
 
   uploadProspectDocuments: {
-    uploadDocuments: data => {
+    uploadDocuments: (prospectId, data) => {
       return httpClient.request({
-        url: "http://10.86.251.137:8080/docUploader/banks/RAK/prospects/700/documents",
+        url: buildURI("uploadDocumentUri", prospectId),
         method: "POST",
         data
       });
@@ -133,7 +137,7 @@ export default {
   search: {
     searchApplication: (apiUrl, data) => {
       return httpClient.request({
-        url: apiUrl,
+        url: buildURI("searchProspectUri"),
         method: "POST",
         data
       });

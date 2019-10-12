@@ -26,7 +26,7 @@ public class RecaptchaController {
 	@Autowired
 	RecaptchaService captchaService;
 
-	@PostMapping("/recaptcha/verify")
+	@PostMapping("/recaptcha/siteverify")
 	public ResponseEntity<?> verify(@RequestBody Map<String, String> payload, HttpServletRequest request) {
 		logger.info("begin verify reCAPTCHA method");
 		logger.debug("payload: " + payload);
