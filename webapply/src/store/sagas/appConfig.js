@@ -36,7 +36,7 @@ function* updateProspectSaga(action) {
     set(config, name, action.fields[name]);
   }
 
-  yield put(setProspect(config.prospect));
+  yield put(setProspect(config));
 }
 
 function* updateActionTypeSaga({ actionType }) {

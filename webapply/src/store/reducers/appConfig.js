@@ -11,7 +11,9 @@ const initialState = {
   uiConfig: {},
   endpoints: {},
   prospect: {},
-  error: ""
+  error: "",
+  searchInfo: {},
+  login: {}
 };
 
 const appConfigReducer = (state = initialState, action) => {
@@ -37,7 +39,9 @@ const appConfigReducer = (state = initialState, action) => {
     case SET_PROSPECT:
       return {
         ...state,
-        prospect: action.prospect
+        prospect: action.prospect.prospect,
+        searchInfo: action.prospect.searchInfo,
+        login: action.prospect.login
       };
     case UPDATE_PROSPECT_ID:
       return {

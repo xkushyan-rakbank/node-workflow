@@ -135,7 +135,7 @@ export default {
   },
 
   search: {
-    searchApplication: (apiUrl, data) => {
+    searchApplication: data => {
       return httpClient.request({
         url: buildURI("searchProspectUri"),
         method: "POST",
