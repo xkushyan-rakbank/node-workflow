@@ -35,3 +35,5 @@ export const getIsAgentLoggedIn = state => state.login;
 export const getSearchInfo = state => state.appConfig.searchInfo || {};
 
 export const getAccountSubmittedInfo = state => state.appConfig.prospect.accountInfo;
+
+export const getReCaptchaSiteKey = state => state.appConfig.reCaptchaSiteKey;

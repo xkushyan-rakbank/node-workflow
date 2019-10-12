@@ -45,7 +45,7 @@ class SearchedAppInfo extends React.Component {
   }
 
   componentDidMount() {
-    this.props.retrieveDocDetails();
+    //this.props.retrieveDocDetails();
   }
 
   render() {
