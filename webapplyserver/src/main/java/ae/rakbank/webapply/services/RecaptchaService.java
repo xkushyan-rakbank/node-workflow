@@ -65,7 +65,7 @@ public class RecaptchaService {
 			return new ResponseEntity(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		logger.info(String.format("reCAPTCHA Response: HttpStatus=[%s], message=[%s]",
+		logger.info(String.format("reCAPTCHA Response: IP=[%s] HttpStatus=[%s], message=[%s]", ip,
 				recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody()));
 
 		if (recaptchaResponse.getStatusCode().is2xxSuccessful()) {

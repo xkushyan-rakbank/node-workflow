@@ -9,7 +9,6 @@
             "Content-Type": "application/octet-stream",
             "Content-Transfer-Encoding":"application/octet-stream",
             "Content-Disposition":"attachment; filename=MGHN43MD75_TL.pdf",
-            "Access-Control-Allow-Origin" : "*",
             "Access-Control-Allow-Methods" : "*",
             "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding, X-Requested-With, X-Authorization",
             "X-Content-Type-Options" : "nosniff",
