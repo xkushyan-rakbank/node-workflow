@@ -160,6 +160,10 @@ public class WebApplyController {
 
 		initStateJSON.set("uiConfig", uiFieldsObjNode);
 
+		String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey")
+				.asText();
+		initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
+
 		String cacheKey = getCacheKey(segment, product, role, device);
 		String configJSON = initStateJSON.toString();
 		putCache(cacheKey, configJSON);
@@ -225,7 +229,7 @@ public class WebApplyController {
 					if (fieldConfig.has("shortKeyNames")) {
 						fieldConfig.remove("shortKeyNames");
 					}
-					
+
 					if (fieldConfig.has("description")) {
 						fieldConfig.remove("description");
 					}

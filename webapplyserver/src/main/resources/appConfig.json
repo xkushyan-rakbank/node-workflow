@@ -76,7 +76,7 @@
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
 			"OAuthStateMode": "N",
-			"ReCaptchaSiteKey": "",
+			"ReCaptchaSiteKey": "6LeySrQUAAAAAFYLOupmE2A4flQ1hPKLM1_0wusl",
 			"ReCaptchaSecret": ""
 		},
 		"dev": {
