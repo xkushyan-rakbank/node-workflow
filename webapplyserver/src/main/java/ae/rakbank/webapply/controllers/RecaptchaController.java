@@ -32,7 +32,12 @@ public class RecaptchaController {
 		logger.debug("payload: " + payload);
 		String recaptchaResponse = payload.get("recaptchaToken");
 		String ip = request.getRemoteAddr();
-		return captchaService.verifyRecaptcha(ip, recaptchaResponse);
+		ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
+
+		logger.info(String.format("reCAPTCHA Response: HttpStatus=[%s], message=[%s]",
+				captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
+
+		return captchaResponse;
 	}
 
 }
