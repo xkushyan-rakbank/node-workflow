@@ -1,5 +1,4 @@
 import React from "react";
-import cx from "classnames";
 import get from "lodash/get";
 import { withStyles } from "@material-ui/core";
 import { compose } from "recompose";
@@ -9,11 +8,10 @@ import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
-import questionMark from "../assets/icons/question_mark_grey.png";
-// import Button from "@material-ui/core/Button/Button";
-// import { ReactComponent as RightArrowWhite } from "./../assets/icons/whiteArrow.png";
 import routes from "../routes";
 import { updateProspect, addNewStakeholder, deleteStakeholder } from "../store/actions/appConfig";
+import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
+import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
 
 const style = {
   buttonStyle: {
@@ -34,14 +32,6 @@ const style = {
     backgroundColor: "#ffffff",
     flexDirection: "column",
     marginTop: "24px"
-  },
-  infoTitle: {
-    display: "flex",
-    margin: "-20px 0 60px",
-    "&>img": {
-      marginRight: "10px",
-      alignItems: "center"
-    }
   }
 };
 
@@ -51,7 +41,9 @@ class CompanyStakeholders extends React.Component {
     this.state = {
       isFinalScreenShown: false,
       showNewStakeholder: false,
-      editableStakeholder: null //stakeholders.length ? null : 0
+      editableStakeholder: null, //stakeholders.length ? null : 0
+      step: 1,
+      completedStep: 0
     };
   }
 
@@ -66,8 +58,6 @@ class CompanyStakeholders extends React.Component {
   };
 
   hideNewStakeholder = () => {
-    // const stakeholders = this.props.stakeholders;
-    // stakeholders.push(this.state.stakeholders[0]);
     this.setState({ showNewStakeholder: false, editableStakeholder: null });
   };
 
@@ -75,9 +65,9 @@ class CompanyStakeholders extends React.Component {
     this.setState({ editableStakeholder: stakeholderIndex, showNewStakeholder: false });
 
   render() {
-    const { /*showNewStakeholder,*/ editableStakeholder } = this.state;
+    const { editableStakeholder, showNewStakeholder } = this.state;
     const { stakeholders, classes } = this.props;
-
+    const showingAddButton = stakeholders.length < 6;
     return (
       <>
         <h2>Add your company’s stakeholders</h2>
@@ -87,20 +77,19 @@ class CompanyStakeholders extends React.Component {
           to your company.
         </p>
 
-        <div className={cx("smallText", classes.infoTitle)}>
-          <img src={questionMark} alt="" />
-          Who is a stakeholder?
-        </div>
-
         <div>
           {stakeholders.map((item, index) => {
-            const deleteStakeholder = () => this.props.deleteStakeholder(item.signatoryId);
+            const deleteStakeholder = () => {
+              this.props.deleteStakeholder(item.signatoryId);
+              this.setState({ editableStakeholder: null });
+            };
             return editableStakeholder === index ? (
               <StakeholderStepper
                 hideForm={this.hideNewStakeholder}
                 index={editableStakeholder}
                 key={index}
                 deleteStakeholder={deleteStakeholder}
+                showNewStakeholder={showNewStakeholder}
               />
             ) : (
               <FilledStakeholderCard
@@ -113,9 +102,11 @@ class CompanyStakeholders extends React.Component {
           })}
         </div>
 
-        <div className={classes.buttonsWrapper}>
-          <AddStakeholderButton handleClick={this.showNewStakeholder} />
-        </div>
+        {showingAddButton && (
+          <div className={classes.buttonsWrapper}>
+            <AddStakeholderButton handleClick={this.showNewStakeholder} />
+          </div>
+        )}
 
         <div className="linkContainer">
           <BackLink path={routes.companyInfo} />
@@ -124,7 +115,7 @@ class CompanyStakeholders extends React.Component {
             handleClick={this.goToFinalQuestions}
             label="Next Step"
             justify="flex-end"
-            disabled
+            disabled={stakeholders.length < 1 && !!editableStakeholder}
           />
         </div>
       </>
@@ -133,13 +124,15 @@ class CompanyStakeholders extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  stakeholders: get(state, "appConfig.prospect.signatoryInfo", [])
+  stakeholders: get(state, "appConfig.prospect.signatoryInfo", []),
+  ...getSendProspectToAPIInfo(state)
 });
 
 const mapDispatchToProps = {
   updateProspect,
   addNewStakeholder,
-  deleteStakeholder
+  deleteStakeholder,
+  sendProspectToAPI
 };
 
 export default compose(

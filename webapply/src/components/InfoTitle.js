@@ -9,7 +9,7 @@ const styles = {
     fontSize: "12px",
     fontWeight: "normal",
     lineHeight: 1.33,
-    color: "#517085",
+    color: "#86868b",
     marginTop: "10px !important"
   },
   icon: {

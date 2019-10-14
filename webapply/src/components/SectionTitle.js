@@ -16,7 +16,7 @@ const styles = {
     width: "5px",
     height: "24px",
     borderRadius: "2px",
-    backgroundColor: "#517085",
+    backgroundColor: "#373737",
     marginRight: "11px"
   }
 };

@@ -4,19 +4,19 @@ import { withStyles } from "@material-ui/core";
 
 const style = {
   iconWrapper: {
-    width: "26px",
-    height: "26px",
+    width: "40px",
+    height: "40px",
     boxSizing: "border-box",
-    border: "solid 1.5px #16216a",
+    border: "solid 1.5px #e9e9ed",
     borderRadius: "50%",
-    color: "#16216a",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     marginRight: "10px"
   },
   icon: {
-    fontSize: "20px"
+    fontSize: "20px",
+    color: "#000000"
   }
 };
 

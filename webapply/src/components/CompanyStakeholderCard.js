@@ -18,7 +18,7 @@ const style = {
     display: "flex",
     alignItems: "center",
     height: "62px",
-    margin: "20px 35px 20px 25px"
+    margin: "30px 20px"
   },
   greenAvatar: {
     backgroundColor: "#166a2c",
