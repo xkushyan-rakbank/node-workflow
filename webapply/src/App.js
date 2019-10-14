@@ -23,7 +23,7 @@ import MyApplications from "./containers/MyApplications/MyApplications";
 import UploadDocuments from "./containers/FileUploader";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
 import SearchedAppInfo from "./agent/SearchedAppInfo";
-import ReUploadDocuments from "./components/UploadDocument/ReUploadDocuments";
+import ReUploadDocuments from "./containers/ReUploadDocuments";
 import SubmitApplication from "./containers/SubmitApplication";
 
 import routes from "./routes.js";

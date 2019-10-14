@@ -8,7 +8,6 @@ import sendProspectToAPI from "./sendProspectToAPI";
 import applicationStatus from "./applicationStatus";
 import otp from "./otp";
 import login from "./loginForm";
-import authReducer from "./authReducers";
 import docUploadReducer from "./getProspectDocuments";
 import searchProspect from "./searchProspect";
 
@@ -31,7 +30,6 @@ const reducers = history =>
     sendProspectToAPI,
     applicationStatus,
     login,
-    users: authReducer,
     uploadedDocs: docUploadReducer,
     searchProspect
   });

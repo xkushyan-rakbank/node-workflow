@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import { connect } from "react-redux";
+import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
 import companyIconSvg from "../../assets/icons/file.png";
 
 const CancelToken = axios.CancelToken;
@@ -103,7 +105,7 @@ const style = {
     fontWeight: "normal",
     fontStyle: "normal",
     fontStretch: "normal",
-    lineHeight: "1.33",
+    lineHeight: ".6",
     letterSpacing: "normal",
     color: "#ea2925"
   },
@@ -124,7 +126,9 @@ class UploadDocuments extends Component {
       selectedFile: null,
       enableUpload: true,
       fileError: false,
-      isUploadSucess: false
+      isUploadSucess: false,
+      isExcedeed: false,
+      defaultMsg: true
     };
     this.fileUploadHandler = this.fileUploadHandler.bind(this);
     this.fileUploadCancel = this.fileUploadCancel.bind(this);
@@ -140,83 +144,86 @@ class UploadDocuments extends Component {
       {
         selectedFile: event.target.files[0],
         enableUpload: false,
-        isUploadSucess: false
+        isUploadSucess: false,
+        defaultMsg: false
       },
       () => {
-        let config = {
-          onUploadProgress: ProgressEvent => {
-            let progress = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100);
-            let element = document.getElementById("myprogressBar");
-            let progressPercentage = document.getElementById("progressStatus");
-            let width = progress;
-            element.style.width = width + "%";
-            progressPercentage.innerHTML = progress + "%";
-          }
-        };
+        //checking the file size
 
-        let fileDetails = {
-          documentType: this.props.companyDoc.documentType,
-          signatoryId: "",
-          signatoryName: this.props.companyDoc.signatoryName,
-          documentTitle: this.props.companyDoc.documentType,
-          fileName: this.state.selectedFile.name,
-          filePath: "",
-          url: "",
-          fileData: this.state.selectedFile.type,
-          fileFormat: this.state.selectedFile.type,
-          fileSize: this.state.selectedFile.size,
-          fileDescription: this.props.companyDoc.documentType,
-          submittedBy: "",
-          submittedDt: this.state.selectedFile.lastModifiedDate,
-          updatedBy: "",
-          updatedDt: this.state.selectedFile.lastModifiedDate,
-          avsCheckDt: "",
-          avsCheck: false,
-          verified: false,
-          verifiedBy: "",
-          isEncrypted: false,
-          encryptionDetails: "",
-          uploadStatus: ""
-        };
-        const fd = new FormData();
-        fd.append("file", fileDetails);
-        axios
-          .post(
-            "http://10.86.81.7:8080/docUploader/banks/RAK/prospects/700/documents",
-            {
-              fd,
-              config
+        let fileSize = this.state.selectedFile.size;
+        if (fileSize <= 3145728) {
+          //generating dynamic document keys
+
+          let docKey;
+          if (this.props.companyDoc.signatoryName) {
+            docKey =
+              this.props.companyDoc.documentType +
+              this.props.companyDoc.signatoryName +
+              Math.floor(Math.random() * 100000 + 1000);
+          } else {
+            docKey = this.props.companyDoc.documentType + Math.floor(Math.random() * 100000 + 1000);
+          }
+          docKey = docKey.replace(/\s/g, "");
+          let fileInfo = {
+            documentKey: docKey
+          };
+
+          // storing the uploaded file details into form data
+
+          fileInfo = JSON.stringify(fileInfo);
+          const data = new FormData();
+          data.append("fileInfo", fileInfo);
+          data.append("file", this.state.selectedFile);
+          axios({
+            method: "post",
+            url:
+              "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents",
+            data,
+            onUploadProgress: ProgressEvent => {
+              let progress = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100);
+              let element = document.getElementById("myprogressBar");
+              let progressPercentage = document.getElementById("progressStatus");
+              let width = progress;
+              element.style.width = width + "%";
+              element.style.backgroundColor = "#373737";
+              progressPercentage.innerHTML = progress + "%";
             },
-            {
-              cancelToken: this.call.token
-            }
-          )
-          .then(response => {
-            this.setState({
-              enableUpload: false,
-              isUploadSucess: true
-            });
+            cancelToken: this.call.token
           })
-          .catch(thrown => {
-            if (axios.isCancel(thrown)) {
-              this.setState({
-                enableUpload: true,
-                isUploadSucess: false
-              });
-              console.log("Request canceled", thrown.message);
-            } else if (thrown.message === "Network Error") {
-              console.log("inside else if");
-              this.setState({
-                fileError: true,
-                enableUpload: true
-              });
-            } else {
+            .then(response => {
+              console.log(response);
               this.setState({
                 enableUpload: false,
-                isUploadSucess: false
+                isUploadSucess: true
               });
-            }
+            })
+            .catch(thrown => {
+              if (axios.isCancel(thrown)) {
+                this.setState({
+                  enableUpload: true,
+                  isUploadSucess: false,
+                  defaultMsg: true
+                });
+                console.log("Request canceled", thrown.message);
+              } else if (thrown.message === "Network Error") {
+                this.setState({
+                  fileError: true,
+                  enableUpload: true
+                });
+              } else {
+                this.setState({
+                  enableUpload: false,
+                  isUploadSucess: false
+                });
+              }
+            });
+        } else {
+          this.setState({
+            isExcedeed: true,
+            enableUpload: true,
+            defaultMsg: false
           });
+        }
       }
     );
   }
@@ -229,66 +236,34 @@ class UploadDocuments extends Component {
 
   render() {
     const docType = this.props.companyDoc;
-    return (
-      <div className={this.props.classes.fileUploadPlaceholder}>
-        <input
-          style={{ display: "none" }}
-          type="file"
-          onChange={this.fileUploadHandler}
-          ref={fileInput => (this.fileInput = fileInput)}
-          multiple
-        />
-        {this.state.enableUpload ? (
-          <>
-            <div className={this.props.classes.contentBox}>
-              <p className={this.props.classes.uploadedFileName}>{docType.documentType}</p>
-              {this.state.fileError ? (
-                <p className={this.props.classes.ErrorExplanation}>Error explanation goes here</p>
-              ) : (
-                <p className={this.props.classes.fileSizeMessage}>
-                  Supported formats are PDF, JPG and PNG | 3MB maximum size
-                </p>
-              )}
-            </div>
-            <p
-              className={this.props.classes.controlsBox}
-              justify="flex-end"
-              onClick={() => this.fileInput.click()}
-            >
-              Upload
-            </p>
-          </>
-        ) : (
-          <>
-            <div>{this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
-            <div className={this.props.classes.contentBox}>
-              <div className={this.props.classes.uploadFileName}>
-                {this.state.selectedFile.name}
-                <span className={this.props.classes.SignatoryRights}>
-                  {this.state.selectedFile.size} Bytes
-                </span>
+    if (docType.uploadStatus === "" || docType.uploadStatus === "Not Uploaded") {
+      return (
+        <div className={this.props.classes.fileUploadPlaceholder}>
+          <input
+            style={{ display: "none" }}
+            type="file"
+            onChange={this.fileUploadHandler}
+            ref={fileInput => (this.fileInput = fileInput)}
+            multiple
+          />
+          {this.state.enableUpload ? (
+            <>
+              <div className={this.props.classes.contentBox}>
+                <p className={this.props.classes.uploadedFileName}>{docType.documentType}</p>
+                {this.state.fileError ? (
+                  <p className={this.props.classes.ErrorExplanation}>Error explanation goes here</p>
+                ) : null}
+                {this.state.isExcedeed ? (
+                  <p className={this.props.classes.ErrorExplanation}>
+                    File in a multipart request was exceeded
+                  </p>
+                ) : null}
+                {this.state.defaultMsg ? (
+                  <p className={this.props.classes.fileSizeMessage}>
+                    Supported formats are PDF, JPG and PNG | 3MB maximum size
+                  </p>
+                ) : null}
               </div>
-              {this.state.isUploadSucess ? null : (
-                <div className={this.props.classes.uploadFileName}>
-                  <div id="Progress_Status">
-                    <div id="myprogressBar"></div>
-                  </div>
-                  <div id="progressStatus"></div>
-                  <div
-                    className={this.props.classes.cancel}
-                    onClick={() =>
-                      this.fileUploadCancel(
-                        this.props.companyDoc.documentType + this.props.companyDoc.signatoryId
-                      )
-                    }
-                  >
-                    {" "}
-                    X{" "}
-                  </div>
-                </div>
-              )}
-            </div>
-            {this.state.isUploadSucess ? (
               <p
                 className={this.props.classes.controlsBox}
                 justify="flex-end"
@@ -296,12 +271,63 @@ class UploadDocuments extends Component {
               >
                 Upload
               </p>
-            ) : null}
-          </>
-        )}
-      </div>
-    );
+            </>
+          ) : (
+            <>
+              <div>{this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
+              <div className={this.props.classes.contentBox}>
+                <div className={this.props.classes.uploadFileName}>
+                  {this.state.selectedFile.name}
+                  <span className={this.props.classes.SignatoryRights}>
+                    {this.state.selectedFile.size} Bytes
+                  </span>
+                </div>
+                {this.state.isUploadSucess ? null : (
+                  <div className={this.props.classes.uploadFileName}>
+                    <div id="Progress_Status">
+                      <div id="myprogressBar"></div>
+                    </div>
+                    <div id="progressStatus"></div>
+                    <div
+                      className={this.props.classes.cancel}
+                      onClick={() =>
+                        this.fileUploadCancel(
+                          this.props.companyDoc.documentType + this.props.companyDoc.signatoryId
+                        )
+                      }
+                    >
+                      {" "}
+                      X{" "}
+                    </div>
+                  </div>
+                )}
+              </div>
+              {this.state.isUploadSucess ? (
+                <p
+                  className={this.props.classes.controlsBox}
+                  justify="flex-end"
+                  onClick={() => this.fileInput.click()}
+                >
+                  Upload
+                </p>
+              ) : null}
+            </>
+          )}
+        </div>
+      );
+    } else {
+      return <></>;
+    }
   }
 }
 
-export default withStyles(style)(UploadDocuments);
+const mapDispatchToProps = {
+  retrieveDocDetails
+};
+
+export default withStyles(style)(
+  connect(
+    null,
+    mapDispatchToProps
+  )(UploadDocuments)
+);

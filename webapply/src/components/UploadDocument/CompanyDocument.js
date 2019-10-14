@@ -89,8 +89,6 @@ class CompanyDocuments extends Component {
     const companyName = this.props.companyName;
     let companyDocument;
     if (companyDocuments.companyDocuments) {
-      let companyDocLength = Object.keys(companyDocuments.companyDocuments).length;
-      console.log(companyDocLength);
       companyDocument = companyDocuments.companyDocuments.map((companyDoc, index) => {
         return <UploadDocument key={index} companyDoc={companyDoc} />;
       });

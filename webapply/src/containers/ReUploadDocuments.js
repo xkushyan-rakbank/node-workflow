@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import CompanyDocuments from "./CompanyDocument";
-import SignatoriesDocuments from "./SignatoriesDocuments";
-import SectionTitle from "../SectionTitle";
-import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
-import arrowBack from "./../../assets/icons/backArrow.png";
+import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
+import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
+import SectionTitle from "../components/SectionTitle";
+import { retrieveDocDetails } from "../store/actions/getProspectDocuments";
+import * as appConfigSelectors from "../store/selectors/appConfig";
 
 const style = {
   sectionContainer: {
@@ -90,7 +90,7 @@ class EditApplication extends Component {
         </div>
         <div className="linkContainer">
           <button className={this.props.classes.BtnBack} justify="flex-end">
-            <img className={this.props.classes.backIcon} src={arrowBack} alt="back" />
+            {/* <img className={this.props.classes.backIcon} src={arrowBack} alt="back" /> */}
             Back to Applications
           </button>
           <button className={this.props.classes.BtnSubmit} justify="flex-end">
@@ -104,7 +104,7 @@ class EditApplication extends Component {
 
 const mapStateToProps = state => {
   return {
-    authUsers: state.users.authUsers,
+    getSignatories: appConfigSelectors.getSignatories(state),
     uploadedDoc: state.uploadedDocs.docs
   };
 };

@@ -6,7 +6,6 @@ import sendProspectToAPI from "./sendProspectToAPI";
 import otpSaga from "./otp";
 import loginForm from "./loginForm";
 import retrieveUploadDoc from "./getProspectDocuments";
-import uploadDocDetails from "./uploadProspectDocuments";
 import searchProspectSaga from "./searchProspect";
 
 export default function*() {
@@ -18,7 +17,6 @@ export default function*() {
     fork(sendProspectToAPI),
     fork(loginForm),
     fork(retrieveUploadDoc),
-    fork(uploadDocDetails),
     fork(searchProspectSaga)
   ]);
 }

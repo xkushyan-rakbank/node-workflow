@@ -8,6 +8,8 @@ import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
 import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
 import { retrieveDocDetails } from "../store/actions/getProspectDocuments";
+import * as appConfigSelectors from "./../store/selectors/appConfig";
+
 import BackLink from "../components/Buttons/BackLink";
 const style = {
   sectionContainer: {
@@ -40,7 +42,16 @@ class FileUploader extends React.Component {
   render() {
     const DocDetails = this.props;
     const { classes } = this.props;
-
+    // let companyOdcLength;
+    // let StakeholdersDocLength;
+    // if (this.props.uploadedDoc.companyDocuments) {
+    // let companyDocument = this.props.uploadedDoc.companyDocuments;
+    // companyOdcLength = Object.keys(companyDocument).length;
+    // }
+    // if (this.props.uploadedDoc.stakeholdersDocuments) {
+    // let StakeholdersDoc = this.props.uploadedDoc.companyDocuments;
+    // StakeholdersDocLength = Object.keys(StakeholdersDoc.length);
+    // }
     return (
       <>
         <h2>Upload your documents</h2>
@@ -76,8 +87,8 @@ class FileUploader extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    authUsers: state.users.authUsers,
-    uploadedDoc: state.uploadedDocs.docs
+    uploadedDoc: state.uploadedDocs.docs,
+    getSignatories: appConfigSelectors.getSignatories(state)
   };
 };
 
