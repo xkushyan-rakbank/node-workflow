@@ -40,6 +40,19 @@ class StakeholderStepper extends React.Component {
     confirmation: false
   };
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.resetStep && this.props.resetStep) {
+      this.setState(state => {
+        const nextStep = state.step + 1;
+
+        return {
+          step: nextStep,
+          completedStep: nextStep
+        };
+      });
+    }
+  }
+
   handleContinue = () => {
     if (this.state.step < stakeHoldersSteps.length) {
       this.setState(state => ({ step: state.step + 1 }));
@@ -62,8 +75,21 @@ class StakeholderStepper extends React.Component {
     }
   };
 
+  setStep = item => {
+    if (!this.props.showNewStakeholder || this.state.completedStep > item.step) {
+      this.setState({ step: item.step });
+    }
+  };
+
   render() {
-    const { classes, index, loading, sendProspectToAPI } = this.props;
+    const {
+      classes,
+      index,
+      loading,
+      sendProspectToAPI,
+      showNewStakeholder,
+      deleteStakeholder
+    } = this.props;
     const { step, isFinalScreenShown, confirmation } = this.state;
 
     if (isFinalScreenShown) {
@@ -83,7 +109,8 @@ class StakeholderStepper extends React.Component {
       >
         <div className={classes.formContent}>
           {stakeHoldersSteps.map(item => {
-            const setStep = () => this.setState({ step: item.step });
+            const setStep = () => this.setStep(item);
+            const isFilled = showNewStakeholder ? this.state.completedStep >= item.step : true;
             return (
               <StepComponent
                 index={index}
@@ -93,7 +120,7 @@ class StakeholderStepper extends React.Component {
                 title={item.title}
                 subTitle={item.infoTitle}
                 activeStep={step === item.step}
-                filled={step > item.step}
+                filled={isFilled}
                 clickHandler={setStep}
                 handleContinue={sendProspectToAPI}
               />
@@ -101,7 +128,7 @@ class StakeholderStepper extends React.Component {
           })}
         </div>
 
-        {!!this.props.deleteStakeholder && (
+        {!showNewStakeholder && !!deleteStakeholder && (
           <div className={classes.footerPart}>
             <LinkButton
               title={confirmation ? "Are you sure? All Data will be lost" : "Delete Stakeholder"}

@@ -14,6 +14,7 @@ const styles = {
     justifyContent: "flex-start",
     textTransform: "inherit",
     fontSize: "20px",
+    padding: "20px",
     "&:hover": {
       border: 0
     }
