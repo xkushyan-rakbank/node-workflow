@@ -7,6 +7,7 @@ import { history } from "./../store/configureStore";
 import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";
 import Header from "./../components/Header";
+import HeaderTitle from "./../components/HeaderTitle";
 import { applicationStatusReset } from "./../store/actions/applicationStatus";
 import { updateViewId } from "./../store/actions/appConfig";
 import {
@@ -50,19 +51,8 @@ const styles = {
     width: "100%",
     margin: "0 auto",
     padding: ({ location }) =>
-      routerToAddPaddingInSlider.includes(location.pathname) ? "0px 50px 0" : "165px 50px 20px",
-    "@media only screen and (max-width: 1360px)": {
-      maxWidth: "830px",
-      paddingTop: "100px",
-      paddingLeft: "25px",
-      paddingRight: "25px"
-    },
-    "@media only screen and (max-width: 1100px)": {
-      padding: ({ location }) =>
-        routerToAddPaddingInSlider.includes(location.pathname)
-          ? "0px 30px 0 25px"
-          : "165px 30px 20px 25px"
-    }
+      routerToAddPaddingInSlider.includes(location.pathname) ? "0" : "35px 0 0",
+    paddingTop: "35px"
   },
   mainContainerFullHeight: {
     padding: "0 50px 0"
@@ -87,7 +77,7 @@ class FormLayout extends React.Component {
   }
 
   render() {
-    const { children, classes, isProceed, serverError, screeningResults } = this.props;
+    const { children, classes, isProceed, serverError, screeningResults, location } = this.props;
 
     return (
       <React.Fragment>
@@ -97,6 +87,8 @@ class FormLayout extends React.Component {
           <div className={classes.formWrapper}>
             <div className={classes.formInner}>
               <div className={classes.mainContainer}>
+                {!routerToAddPaddingInSlider.includes(location.pathname) && <HeaderTitle />}
+
                 {isProceed ? (
                   children
                 ) : (

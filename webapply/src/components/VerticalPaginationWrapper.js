@@ -14,17 +14,14 @@ const style = {
     position: "absolute",
     left: 0,
     width: "100%",
-    transition: "top 400ms",
-    paddingTop: "171px",
-    "@media only screen and (max-height: 870px)": {
-      paddingTop: "90px"
-    }
+    transition: "top 400ms"
   },
   childWrapper: {
     display: "flex",
     flexDirection: "column",
     height: "100vh",
-    position: "relative"
+    position: "relative",
+    justifyContent: "center"
   },
   paginationDots: {
     position: "absolute",
