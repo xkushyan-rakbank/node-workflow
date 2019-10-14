@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import videoUrl from "../../assets/videos/success_regular.mp4";
+import doneIcon from "../../assets/images/done_icon.png";
 
 const styles = {
   wrapper: {
@@ -21,25 +21,22 @@ const styles = {
   successTitle: {
     fontSize: "18px",
     textAlign: "center",
-    color: "#373737",
-    marginTop: "10px"
+    color: "#373737"
   }
 };
 
 class SuccessFilledStakeholder extends React.Component {
   componentDidMount() {
-    setTimeout(() => {
-      this.props.hideForm();
-    }, 5000);
+    // setTimeout(() => {
+    //   this.props.hideForm();
+    // }, 5000);
   }
 
   render() {
     const { classes, name } = this.props;
     return (
       <div className={classes.wrapper}>
-        <video autoPlay>
-          <source src={videoUrl} />
-        </video>
+        <img src={doneIcon} alt="" className={classes.placeholder} />
         <div className={classes.successTitle}>
           Congrats! You have added
           <br /> <b>{name}</b> as a stakeholder

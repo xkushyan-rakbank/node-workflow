@@ -85,6 +85,7 @@ class CompanyStakeholders extends React.Component {
             };
             return editableStakeholder === index ? (
               <StakeholderStepper
+                {...item}
                 hideForm={this.hideNewStakeholder}
                 index={editableStakeholder}
                 key={index}

@@ -51,11 +51,6 @@ export const stakeHoldersSteps = [
     title: "Country of residence",
     component: CountryOfResidence
   },
-  // {
-  //   step: 6,
-  //   title: "Politically Exposed Person (PEP) Questions",
-  //   component: PoliticallyExposedPersonQuestions
-  // },
   {
     step: 6,
     title: "Preferred contact information",

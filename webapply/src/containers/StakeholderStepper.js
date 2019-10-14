@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
+import { connect } from "react-redux";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import { stakeHoldersSteps } from "../constants";
@@ -8,7 +9,7 @@ import StatusLoader from "../components/StatusLoader";
 import LinkButton from "../components/Buttons/LinkButton";
 import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
 import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
-import { connect } from "react-redux";
+// import FilledInfoCard from "../components/FilledInfoCard";
 
 const styles = {
   title: {
@@ -47,7 +48,8 @@ class StakeholderStepper extends React.Component {
 
         return {
           step: nextStep,
-          completedStep: nextStep
+          completedStep: nextStep,
+          isFinalScreenShown: state.step === stakeHoldersSteps.length
         };
       });
     }
@@ -88,14 +90,16 @@ class StakeholderStepper extends React.Component {
       loading,
       sendProspectToAPI,
       showNewStakeholder,
-      deleteStakeholder
+      deleteStakeholder,
+      firstName,
+      lastName
     } = this.props;
+
     const { step, isFinalScreenShown, confirmation } = this.state;
+    const fullName = `${firstName} ${lastName}`;
 
     if (isFinalScreenShown) {
-      return (
-        <SuccessFilledStakeholder name="Chema Pastrana" hideForm={this.finishStakeholderCreation} />
-      );
+      return <SuccessFilledStakeholder name={fullName} hideForm={this.finishStakeholderCreation} />;
     }
 
     return (
