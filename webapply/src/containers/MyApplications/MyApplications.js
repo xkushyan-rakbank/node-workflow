@@ -52,8 +52,8 @@ const styles = {
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
     gridTemplateRows: "repeat(2, 1fr)",
-    gridColumnGap: 10,
-    gridRowGap: 10,
+    gridColumnGap: 20,
+    gridRowGap: 20,
     marginTop: "45px"
   }
 };
