@@ -9,13 +9,8 @@ import * as prospectInfo from "../store/selectors/retrieveApplicantInfo";
 
 const styles = {
   gridContainer: {
-    marginTop: 4,
-    marginRight: "-20px",
-    marginLeft: "-20px",
-    position: "relative",
-    paddingBottom: "20px",
-    display: "flex",
-    flexWrap: "wrap"
+    flex: "0 0 50%",
+    height: "263px"
   },
   containerBg: {
     position: "absolute",
@@ -26,9 +21,6 @@ const styles = {
   application: {
     position: "relative",
     overflow: "hidden",
-    width: "380px",
-    maxWidth: "380px",
-    height: 263,
     borderRadius: 8,
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     backgroundColor: "#ffffff",
@@ -38,20 +30,8 @@ const styles = {
     display: "inline-flex",
     flexDirection: "column",
     alignItems: "center",
-    margin: "20px 0 0 20px",
-    "@media only screen and (max-width: 1360px)": {
-      flexGrow: "1",
-      maxWidth: "46%"
-    },
-    "@media only screen and (max-width: 991px)": {
-      padding: "20px 10px 5px",
-      height: "230px"
-    },
-    "@media only screen and (max-width: 860px)": {
-      padding: "20px 10px 5px",
-      height: "230px",
-      width: "190px"
-    }
+    width: "100%",
+    height: "100%"
   },
   title: {
     fontWeight: "600",

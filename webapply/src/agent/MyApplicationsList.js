@@ -39,7 +39,7 @@ export const StyledWhiteContainedButton = props => {
 
 const style = {
   wrapper: {
-    marginTop: "24px",
+    marginBottom: "24px",
     borderRadius: "8px",
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     backgroundColor: "#ffffff",

@@ -16,7 +16,8 @@ import MyApplicationsList from "../../agent/MyApplicationsList";
 import MyApplicationsGrid from "../../agent/MyApplicationsGrid";
 
 import { retrieveApplicantInfo } from "../../store/actions/retrieveApplicantInfo";
-import * as getApplicantInfo from "../../store/selectors/retrieveApplicantInfo";
+import { getApplicantInfo } from "../../store/selectors/retrieveApplicantInfo";
+import { getEndpoints } from "../../store/selectors/appConfig";
 
 const styles = {
   rootTitle: {
@@ -42,6 +43,18 @@ const styles = {
         cursor: "pointer"
       }
     }
+  },
+  viewColumn: {
+    flexDirection: "column",
+    marginTop: "45px"
+  },
+  veiwRow: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateRows: "repeat(2, 1fr)",
+    gridColumnGap: 10,
+    gridRowGap: 10,
+    marginTop: "45px"
   }
 };
 
@@ -62,14 +75,17 @@ class MyApplications extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps) {
     const inputParam = {
       fullName: "HappyPath",
       countryCode: "+971" || "",
       mobileNo: "0123456789" || "",
       email: "abc@abc.com" || ""
     };
-    this.props.retrieveApplicantInfo(inputParam);
+
+    if (prevProps.endpoints !== this.props.endpoints) {
+      this.props.retrieveApplicantInfo(inputParam);
+    }
   }
 
   handleChangeView = view => {
@@ -104,20 +120,21 @@ class MyApplications extends React.Component {
           </Box>
         </Grid>
 
-        <Grid container direction="column">
+        <div className={selectedView === "list" ? classes.viewColumn : classes.veiwRow}>
           {selectedView === "list" ? (
             <MyApplicationsList applicantInfo={searchResults} />
           ) : (
             <MyApplicationsGrid applicantInfo={searchResults} />
           )}
-        </Grid>
+        </div>
       </ContainerComeBack>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  searchResults: getApplicantInfo.getApplicantInfo(state)
+  searchResults: getApplicantInfo(state),
+  endpoints: getEndpoints(state)
 });
 
 const mapDispatchToProps = {

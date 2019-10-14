@@ -39,7 +39,7 @@ const appConfigReducer = (state = initialState, action) => {
     case SET_PROSPECT:
       return {
         ...state,
-        prospect: action.prospect.prospect,
+        prospect: action.prospect,
         searchInfo: action.prospect.searchInfo,
         login: action.prospect.login
       };

@@ -11,6 +11,7 @@ function* retrieveApplicantInfoSaga(action) {
       mobileNo: action.payload.mobileNo || "",
       email: action.payload.email || ""
     };
+
     const response = yield call(apiClient.retrieveApplicantInfos.applicant, inputParam);
     yield put(actions.retrieveApplicantInfoSuccess(response.data));
   } catch (error) {
@@ -21,7 +22,6 @@ function* retrieveApplicantInfoSaga(action) {
 function* getProspectIdInfo(action) {
   try {
     const prospectId = action.payload;
-    console.log(action.payload);
     const response = yield call(apiClient.prospect.get, prospectId);
     yield put(setProspect(response.data));
     yield put(displayScreenBasedOnViewId());

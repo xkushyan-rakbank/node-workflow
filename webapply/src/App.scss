@@ -111,6 +111,10 @@ form .MuiGrid-root {
   color: #666666 !important;
 }
 
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #373737 !important;
+}
+
 a {
   text-decoration: none;
   &:hover {
