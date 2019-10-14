@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import ErrorMessage from "../components/ErrorMessage";
-import { submitApplication } from "../constants";
+import { submitApplication } from "../constants/index";
 import routes from "../routes";
 
 const style = {
@@ -128,7 +128,8 @@ class SubmitApplication extends React.Component {
     const [account] = accountInfo;
     const companyName = organizationInfo.companyName || "Company name";
     const accountType = applicationInfo.accountType || "Account type";
-    const currencies = accountInfo.length && account.accountCurrencies.join(" & ");
+    //const currencies = accountInfo.length && account.accountCurrencies.join(" & ");
+    const currencies = accountInfo.length && accountInfo[0].accountCurrencies;
     const stakeholders = signatoryInfo.map(stakeholder => (
       <div key={stakeholder.fullName} className={classes.grayText}>
         {stakeholder.fullName}
@@ -200,7 +201,7 @@ class SubmitApplication extends React.Component {
                     // eslint-disable-next-line react/jsx-no-target-blank
                     target="_blank"
                   >
-                    terms and conditions and{" "}
+                    terms and conditions &{" "}
                   </a>
                   <a
                     href={submitApplication.termOfEnrolmentUrl}

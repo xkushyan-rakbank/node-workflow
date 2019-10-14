@@ -33,7 +33,15 @@ const styles = {
     },
     "@media only screen and (max-width: 1220px)": {
       width: `${sideNavWidthSM}px`,
-      paddingLeft: "20px"
+      paddingLeft: "20px",
+      "& a": {
+        width: "65%",
+        display: "block"
+      },
+      "& img": {
+        width: "100%",
+        height: "auto"
+      }
     }
   },
   headerTitle: {

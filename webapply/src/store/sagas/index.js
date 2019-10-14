@@ -7,6 +7,7 @@ import otpSaga from "./otp";
 import loginForm from "./loginForm";
 import retrieveUploadDoc from "./getProspectDocuments";
 import searchProspectSaga from "./searchProspect";
+import retrieveApplicantInfo from "./retrieveApplicantInfo";
 
 export default function*() {
   yield all([
@@ -17,6 +18,7 @@ export default function*() {
     fork(sendProspectToAPI),
     fork(loginForm),
     fork(retrieveUploadDoc),
-    fork(searchProspectSaga)
+    fork(searchProspectSaga),
+    fork(retrieveApplicantInfo)
   ]);
 }

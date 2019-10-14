@@ -37,9 +37,9 @@ const style = {
 };
 
 const AuditTrail = props => {
-  const { classes, prospectInfo } = props;
+  const { classes, prospectInfo = [] } = props;
 
-  return prospectInfo.auditTrail && prospectInfo.auditTrail.length > 0 ? (
+  return prospectInfo.applicationInfo ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div>
@@ -49,20 +49,22 @@ const AuditTrail = props => {
           <div className={classes.checkListData + " " + classes.heading}>Modified On</div>
         </div>
       </div>
-      {prospectInfo.auditTrail.map((application, index) => (
-        <div className={classes.applicationRow} key={index}>
-          <div>
-            <div className={classes.checkListData}>
-              {application.modifiedBy && application.modifiedBy}
-            </div>
-          </div>
-          <div>
-            <div className={classes.checkListData}>
-              {application.modifiedDateTime && application.modifiedDateTime}
-            </div>
+      <div className={classes.applicationRow}>
+        <div>
+          <div className={classes.checkListData}>
+            {prospectInfo.applicationInfo.lastModifiedBy != ""
+              ? prospectInfo.applicationInfo.lastModifiedBy
+              : prospectInfo.applicationInfo.createdBy}
           </div>
         </div>
-      ))}
+        <div>
+          <div className={classes.checkListData}>
+            {prospectInfo.applicationInfo.lastModifiedDate != ""
+              ? prospectInfo.applicationInfo.lastModifiedDate
+              : prospectInfo.applicationInfo.createdDate}
+          </div>
+        </div>
+      </div>
     </div>
   ) : (
     <div className={classes.errorMsg}>Fields are not modified yet.</div>

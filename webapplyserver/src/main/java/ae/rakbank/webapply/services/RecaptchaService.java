@@ -7,11 +7,9 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.commons.RecaptchaUtil;
 import ae.rakbank.webapply.helpers.FileHelper;
@@ -31,10 +30,8 @@ public class RecaptchaService {
 	@Autowired
 	FileHelper fileHelper;
 
-	@Value("${google.recaptcha.secret}")
 	String recaptchaSecret;
 
-	@Value("${google.recaptcha.endpoint}")
 	String recaptchaEndpoint;
 
 	@Autowired
@@ -49,47 +46,51 @@ public class RecaptchaService {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ResponseEntity<?> verifyRecaptcha(String ip, String recaptchaResponse) {
+	public ResponseEntity<?> verifyRecaptcha(String ip, String recaptchaToken) {
 		Map<String, String> body = new HashMap<>();
 		body.put("secret", recaptchaSecret);
-		body.put("response", recaptchaResponse);
+		body.put("response", recaptchaToken);
 		body.put("remoteip", ip);
 		logger.debug("Request body for recaptcha: {}", body);
-		ResponseEntity<Map> recaptchaResponseEntity = restTemplateBuilder.build().postForEntity(
-				recaptchaEndpoint + "?secret={secret}&response={response}&remoteip={remoteip}", body, Map.class, body);
-		logger.debug("Response from recaptcha: {}", recaptchaResponseEntity);
 
-		String errorMessage = "";
-		if (recaptchaResponseEntity.getStatusCode().is5xxServerError()) {
-			errorMessage = "SERVER_ERROR";
-		} else {
-			Map<String, Object> responseBody = recaptchaResponseEntity.getBody();
+		ResponseEntity<Map> recaptchaResponse = null;
+		try {
+			recaptchaResponse = restTemplateBuilder.build().postForEntity(
+					recaptchaEndpoint + "?secret={secret}&response={response}&remoteip={remoteip}", body, Map.class,
+					body);
+		} catch (Exception e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", recaptchaEndpoint, e.getMessage()), e);
+			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+					"Unable to call endpoint " + recaptchaEndpoint, e);
+			return new ResponseEntity(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		logger.info(String.format("reCAPTCHA Response: IP=[%s] HttpStatus=[%s], message=[%s]", ip,
+				recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody()));
+
+		if (recaptchaResponse.getStatusCode().is2xxSuccessful()) {
+			return ResponseEntity.ok().build();
+		} else if (recaptchaResponse.getStatusCode().is4xxClientError()) {
+			Map<String, Object> responseBody = recaptchaResponse.getBody();
 			boolean recaptchaSucess = (Boolean) responseBody.get("success");
 			if (!recaptchaSucess) {
 				List<String> errorCodes = (List) responseBody.get("error-codes");
-				errorMessage = errorCodes.stream().map(s -> RecaptchaUtil.RECAPTCHA_ERROR_CODE.get(s))
+				String errorMessage = errorCodes.stream().map(s -> RecaptchaUtil.RECAPTCHA_ERROR_CODE.get(s))
 						.collect(Collectors.joining(", "));
-			}
-		}
 
-		if (StringUtils.isBlank(errorMessage)) {
-			logger.debug("reCAPTCHA Response:  HttpStatus: 200, Message: OK");
-			return ResponseEntity.ok().build();
-		} else {
-			logger.error("reCAPTCHA verification failed");
-			Map<String, Object> response = new HashMap<>();
-			response.put("errorType", "ReCaptchaError");
-
-			if ("SERVER_ERROR".equalsIgnoreCase(errorMessage)) {
-				response.put("message", "Internal Server Error");
-				logger.error("reCAPTCHA verification failed, HttpStatus=500, response: " + response);
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-			} else {
+				Map<String, Object> response = new HashMap<>();
+				response.put("errorType", "ReCaptchaError");
 				response.put("message", errorMessage);
-				logger.error("reCAPTCHA verification failed, HttpStatus=400, response: " + response);
+
 				return ResponseEntity.badRequest().body(response);
 			}
+		} else if (recaptchaResponse.getStatusCode().is5xxServerError()) {
+			Map<String, Object> response = new HashMap<>();
+			response.put("errorType", "ReCaptchaError");
+			response.put("message", "Internal Server Error");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
+		return recaptchaResponse;
 
 	}
 }

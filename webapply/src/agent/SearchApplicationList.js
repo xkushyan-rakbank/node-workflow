@@ -12,9 +12,6 @@ const style = {
   },
   applicationRow: {
     borderBottom: "1px solid #e6e6e6",
-    "&:last-of-type": {
-      border: "none"
-    },
     display: "grid",
     gridTemplateColumns: "2fr 2fr 1fr",
     alignItems: "center",
@@ -53,12 +50,32 @@ const style = {
     lineHeight: 1.14,
     textAlign: "center",
     color: "#b5b5bb"
+  },
+  heading: {
+    fontSize: "18px",
+    fontWeight: 600,
+    lineHeight: "18px",
+    color: "#263d4c",
+    height: "18px"
   }
 };
 
 const SearchApplicationList = ({ classes, currentApplications }) => {
   return (
     <div className={classes.wrapper}>
+      {currentApplications.length > 0 && (
+        <div className={classes.applicationRow}>
+          <div>
+            <div className={classes.heading}>Applicant&apos;s Detail</div>
+          </div>
+          <div>
+            <div className={classes.heading}>Company Detail</div>
+          </div>
+          <div>
+            <div className={classes.heading}>Status</div>
+          </div>
+        </div>
+      )}
       {currentApplications.length > 0 &&
         currentApplications.map((application, index) => (
           <Link
@@ -74,7 +91,8 @@ const SearchApplicationList = ({ classes, currentApplications }) => {
                 {application.applicantInfo.email && application.applicantInfo.email}
               </div>
               <span className={classes.account}>
-                {application.applicantInfo.mobileNo && application.applicantInfo.mobileNo}
+                {application.applicantInfo.mobileNo &&
+                  application.applicantInfo.countryCode + " " + application.applicantInfo.mobileNo}
               </span>
             </div>
             <div>

@@ -26,13 +26,18 @@ public class RecaptchaController {
 	@Autowired
 	RecaptchaService captchaService;
 
-	@PostMapping("/recaptcha/verify")
+	@PostMapping("/recaptcha/siteverify")
 	public ResponseEntity<?> verify(@RequestBody Map<String, String> payload, HttpServletRequest request) {
 		logger.info("begin verify reCAPTCHA method");
 		logger.debug("payload: " + payload);
 		String recaptchaResponse = payload.get("recaptchaToken");
 		String ip = request.getRemoteAddr();
-		return captchaService.verifyRecaptcha(ip, recaptchaResponse);
+		ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
+
+		logger.info(String.format("reCAPTCHA Response: HttpStatus=[%s], message=[%s]",
+				captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
+
+		return captchaResponse;
 	}
 
 }

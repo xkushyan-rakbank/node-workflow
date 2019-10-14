@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "POST",
-		"url": "/api/customer-onboarding/v1/banks/RAK/prospects/COSME0017/documents",
+		"url": "/api/v1/banks/RAK/prospects/COSME0017/documents",
 		"bodyPatterns": [
 			{
 				"matchesJsonPath": "$[?(@.documentTitle == 'COSME0017')]"

@@ -1,7 +1,7 @@
 {
 	"request": {
 		"method": "GET",
-		"url": "/webapply/api/v1/banks/RAK/prospects/001/documents"
+		"url": "/api/v1/banks/RAK/prospects/001/documents"
 	},
 	"response": {
 		"status": 200,

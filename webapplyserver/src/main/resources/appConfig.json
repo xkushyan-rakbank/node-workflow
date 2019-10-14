@@ -2,9 +2,9 @@
 	"BaseURLs": {
 		"local": {
 			"WebApplyBaseUrl": "http://localhost:8080",
-			"DehBaseUrl": "http://localhost:9091",
-			"OAuthBaseUrl": "http://localhost:9091",
-			"ReCaptchaUrl": "https://www.google.com"
+			"DehBaseUrl": "http://localhost:9091/api/v1",
+			"OAuthBaseUrl": "http://localhost:9091/api/v1",
+			"ReCaptchaUrl": "http://localhost:9091"
 		},
 		"dev": {
 			"WebApplyBaseUrl": "http://conv.rakbankonline.ae/quickapply",
@@ -35,11 +35,12 @@
 		"getProspectDocumentsUri": "/webapply/api/v1/prospects/{prospectId}/documents",
 		"uploadDocumentUri": "/webapply/api/v1/prospects/{prospectId}/documents",
 		"reuploadDocumentUri": "/webapply/api/v1/prospects/{prospectId}/documents",
-		"getDocumentByIdUri": "/webapply/api/v1/prospects/{prospectId}/documents/{documentId}",
+		"getDocumentByIdUri": "/webapply/api/v1/prospects/{prospectId}/documents/{documentKey}",
 		"prescreeningUri": "/webapply/api/v1/prospects/{prospectId}/screening",
 		"authenticateUserUri": "/webapply/api/v1/users/authenticate",
 		"getDocumentByTitleUri": "/webapply/api/v1/legal/documents/{documentTitle}",
-		"otpUri": "/webapply/api/v1/otp"
+		"otpUri": "/webapply/api/v1/otp",
+		"recaptchaUri": "/webapply/api/v1/recaptcha/siteverify"
 	},
 	"DehURIs": {
 		"datalistUri": "/banks/RAK/usertypes/{userType}/datalist",
@@ -75,7 +76,7 @@
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
 			"OAuthStateMode": "N",
-			"ReCaptchaSiteKey": "",
+			"ReCaptchaSiteKey": "6LeySrQUAAAAAFYLOupmE2A4flQ1hPKLM1_0wusl",
 			"ReCaptchaSecret": ""
 		},
 		"dev": {

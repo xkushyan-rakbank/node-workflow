@@ -24,7 +24,7 @@ const styles = {
 };
 
 const CompanyDetails = props => {
-  const { classes, prospectInfo } = props;
+  const { classes, prospectInfo = [] } = props;
 
   return (
     <>

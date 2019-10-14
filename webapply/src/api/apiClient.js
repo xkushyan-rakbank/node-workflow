@@ -1,24 +1,43 @@
 import httpClient from "./axiosConfig";
-import config from "../config/config";
-
+import store from "./../store/configureStore";
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
+
+const { pathname } = window.location;
+let queryString = "";
+let segment = "";
+if (pathname.includes("/agent/")) {
+  queryString = "?segment=sme&product=checking&role=agent";
+} else if (pathname.includes("/sme/")) {
+  segment = "sme";
+  queryString = `?segment=${segment}&product=checking&role=customer`;
+} else {
+  segment = "sme";
+  queryString = "?segment=sme&product=checking&role=customer";
+}
+
+function buildURI(uriName, prospectId, documentKey) {
+  let uri = store.getState().appConfig.endpoints[uriName];
+  uri = uri.replace("{prospectId}", prospectId);
+  uri = uri.replace("{documentKey}", documentKey);
+  uri = uri.replace("{userType}", segment);
+  return uri;
+}
 
 export default {
   config: {
     get: () => {
-      // return httpClient.request({
-      //   method: "GET",
-      //   url: "/webapply/api/state"
-      // });
-      return Promise.resolve({ data: config });
+      return httpClient.request({
+        method: "GET",
+        url: `webapply/api/v1/config${queryString}`
+      });
     }
   },
 
   authentication: {
     login: data => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/users/authenticate",
+        url: buildURI("authenticateUserUri"),
         method: "post",
         data
       });
@@ -28,7 +47,7 @@ export default {
   reCaptcha: {
     verify: recaptchaToken => {
       return httpClient.request({
-        url: "/recaptcha/verify",
+        url: buildURI("recaptchaUri"),
         method: "POST",
         data: { recaptchaToken }
       });
@@ -38,7 +57,7 @@ export default {
   otp: {
     generate: ({ prospectId, countryCode, mobileNo }) => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/otp",
+        url: buildURI("otpUri"),
         method: "POST",
         data: {
           action: OTP_ACTION_GENERATE,
@@ -50,7 +69,7 @@ export default {
     },
     verify: ({ prospectId, countryCode, mobileNo, otpToken }) => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/otp",
+        url: buildURI("otpUri"),
         method: "POST",
         data: {
           action: OTP_ACTION_VERIFY,
@@ -66,33 +85,59 @@ export default {
   prospect: {
     create: data => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/",
+        url: buildURI("createProspectUri"),
         method: "POST",
         data
       });
     },
     update: (prospectId, data) => {
       return httpClient.request({
-        url: `/webapply/api/v1/banks/RAK/usertypes/sme/prospects/${prospectId}`,
+        url: buildURI("updateProspectUri", prospectId),
         method: "PUT",
+        data
+      });
+    },
+    get: prospectId => {
+      return httpClient.request({
+        url: buildURI("getProspectUri", prospectId),
+        method: "GET"
+      });
+    }
+  },
+
+  retrieveApplicantInfos: {
+    applicant: data => {
+      return httpClient.request({
+        url: buildURI("searchProspectUri"),
+        method: "post",
         data
       });
     }
   },
 
   getProspectDocuments: {
-    retriveDocuments: () => {
+    retriveDocuments: prospectId => {
       return httpClient.request({
-        url: "/webapply/api/v1/banks/RAK/prospects/001/documents",
+        url: buildURI("getProspectDocumentsUri", prospectId),
         method: "GET"
       });
     }
   },
 
-  search: {
-    searchApplication: (apiUrl, data) => {
+  uploadProspectDocuments: {
+    uploadDocuments: (prospectId, data) => {
       return httpClient.request({
-        url: apiUrl,
+        url: buildURI("uploadDocumentUri", prospectId),
+        method: "POST",
+        data
+      });
+    }
+  },
+
+  search: {
+    searchApplication: data => {
+      return httpClient.request({
+        url: buildURI("searchProspectUri"),
         method: "POST",
         data
       });

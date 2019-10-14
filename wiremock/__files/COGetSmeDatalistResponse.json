@@ -1,0 +1,758 @@
+{
+	"countryCode": [
+		{
+			"code": "UAE",
+			"key": "UAE",
+			"value": "UAE",
+			"displayText": "+971"
+		},
+		{
+			"code": "EUR",
+			"key": "EUR",
+			"value": "EUR",
+			"displayText": "+992"
+		},
+		{
+			"code": "UA",
+			"key": "UA",
+			"value": "UA",
+			"displayText": "+380"
+		},
+		{
+			"code": "GB",
+			"key": "GB",
+			"value": "GB",
+			"displayText": "+391"
+		}
+	],
+	"applyOnbehalf": [
+		{
+			"code": "option1",
+			"key": "option1",
+			"value": "option1",
+			"displayText": "Option 1"
+		},
+		{
+			"code": "option2",
+			"key": "option2",
+			"value": "option2",
+			"displayText": "Option 2"
+		}
+	],
+	"accountCurrencies": [
+		{
+			"code": "AED",
+			"key": "AED",
+			"value": "AED",
+			"displayText": "AED"
+		},
+		{
+			"code": "USD",
+			"key": "USD",
+			"value": "USD",
+			"displayText": "USD"
+		},
+		{
+			"code": "EUR",
+			"key": "EUR",
+			"value": "EUR",
+			"displayText": "EUR"
+		},
+		{
+			"code": "GBP",
+			"key": "GBP",
+			"value": "GBP",
+			"displayText": "GBP"
+		}
+	],
+	"branchCity": [
+		{
+			"code": "Abu Dhabi",
+			"key": "Abu Dhabi",
+			"value": "Abu Dhabi",
+			"displayText": "Abu Dhabi"
+		},
+		{
+			"code": "Ajman",
+			"key": "Ajman",
+			"value": "Ajman",
+			"displayText": "Ajman"
+		},
+		{
+			"code": "Al Ain",
+			"key": "Al Ain",
+			"value": "Al Ain",
+			"displayText": "Al Ain"
+		},
+		{
+			"code": "Dubai",
+			"key": "Dubai",
+			"value": "Dubai",
+			"displayText": "Dubai"
+		},
+		{
+			"code": "Fujairah",
+			"key": "Fujairah",
+			"value": "Fujairah",
+			"displayText": "Fujairah"
+		},
+		{
+			"code": "Kalba",
+			"key": "Kalba",
+			"value": "Kalba",
+			"displayText": "Kalba"
+		},
+		{
+			"code": "Khorfakkan",
+			"key": "Khorfakkan",
+			"value": "Khorfakkan",
+			"displayText": "Khorfakkan"
+		},
+		{
+			"code": "Ras Al Khaimah",
+			"key": "Ras Al Khaimah",
+			"value": "Ras Al Khaimah",
+			"displayText": "Ras Al Khaimah"
+		},
+		{
+			"code": "Sharjah",
+			"key": "Sharjah",
+			"value": "Sharjah",
+			"displayText": "Sharjah"
+		},
+		{
+			"code": "Umm Al Quwain",
+			"key": "Umm Al Quwain",
+			"value": "Umm Al Quwain",
+			"displayText": "Umm Al Quwain"
+		}
+	],
+	"branchID": [
+		{
+			"code": "branchId1",
+			"key": "branchId1",
+			"value": "branchId1",
+			"displayText": "branchId1"
+		},
+		{
+			"code": "branchId2",
+			"key": "branchId2",
+			"value": "branchId2",
+			"displayText": "branchId2"
+		},
+		{
+			"code": "branchId3",
+			"key": "branchId3",
+			"value": "branchId3",
+			"displayText": "branchId3"
+		},
+		{
+			"code": "branchId4",
+			"key": "branchId4",
+			"value": "branchId4",
+			"displayText": "branchId4"
+		}
+	],
+	"countryOfIncorporation": [
+		{
+			"code": "AF",
+			"key": "AF",
+			"value": "AF",
+			"displayText": "Afghanistan"
+		},
+		{
+			"code": "AL",
+			"key": "AL",
+			"value": "AL",
+			"displayText": "Albania"
+		}
+	],
+	"licenseIssuingAuthority": [
+		{
+			"code": "option1",
+			"key": "option1",
+			"value": "option1",
+			"displayText": "Some option 1"
+		},
+		{
+			"code": "option2",
+			"key": "option2",
+			"value": "option2",
+			"displayText": "Some option 1"
+		}
+	],
+	"emirateCity": [
+		{
+			"code": "AD",
+			"key": "AD",
+			"value": "AD",
+			"displayText": "Abu Dhabi"
+		},
+		{
+			"code": "A",
+			"key": "A",
+			"value": "A",
+			"displayText": "Ajman"
+		},
+		{
+			"code": "AA",
+			"key": "AA",
+			"value": "AA",
+			"displayText": "Al Ain"
+		},
+		{
+			"code": "Dubai",
+			"key": "Dubai",
+			"value": "Dubai",
+			"displayText": "Dubai"
+		},
+		{
+			"code": "F",
+			"key": "F",
+			"value": "F",
+			"displayText": "Fujairah"
+		},
+		{
+			"code": "K",
+			"key": "K",
+			"value": "K",
+			"displayText": "Kalba"
+		},
+		{
+			"code": "KH",
+			"key": "KH",
+			"value": "KH",
+			"displayText": "Khorfakkan"
+		},
+		{
+			"code": "RK",
+			"key": "RK",
+			"value": "RK",
+			"displayText": "Ras Al Khaimah"
+		},
+		{
+			"code": "SH",
+			"key": "SH",
+			"value": "SH",
+			"displayText": "Sharjah"
+		},
+		{
+			"code": "U",
+			"key": "U",
+			"value": "U",
+			"displayText": "Umm Al Quwain"
+		}
+	],
+	"country": [
+		{
+			"code": "AE",
+			"key": "AE",
+			"value": "AE",
+			"displayText": "Emirate"
+		},
+		{
+			"code": "USA",
+			"key": "USA",
+			"value": "USA",
+			"displayText": "United States"
+		},
+		{
+			"code": "UA",
+			"key": "UA",
+			"value": "UA",
+			"displayText": "Ukraine"
+		},
+		{
+			"code": "GB",
+			"key": "GB",
+			"value": "GB",
+			"displayText": "Great Britain"
+		}
+	],
+	"spaceType": [
+		{
+			"code": "OF",
+			"key": "OF",
+			"value": "OF",
+			"displayText": "Office"
+		},
+		{
+			"code": "W",
+			"key": "W",
+			"value": "W",
+			"displayText": "Warehouse"
+		},
+		{
+			"code": "K",
+			"key": "K",
+			"value": "K",
+			"displayText": "Kiosk"
+		},
+		{
+			"code": "S",
+			"key": "S",
+			"value": "S",
+			"displayText": "Shop"
+		},
+		{
+			"code": "FD",
+			"key": "FD",
+			"value": "FD",
+			"displayText": "Flexi desk"
+		},
+		{
+			"code": "O",
+			"key": "O",
+			"value": "O",
+			"displayText": "Other"
+		}
+	],
+	"primaryMobCountryCode": [
+		{
+			"code": "UAE",
+			"key": "UAE",
+			"value": "UAE",
+			"displayText": "+971"
+		},
+		{
+			"code": "EUR",
+			"key": "EUR",
+			"value": "EUR",
+			"displayText": "+992"
+		},
+		{
+			"code": "UA",
+			"key": "UA",
+			"value": "UA",
+			"displayText": "+380"
+		},
+		{
+			"code": "GB",
+			"key": "GB",
+			"value": "GB",
+			"displayText": "+391"
+		}
+	],
+	"primaryPhoneCountryCode": [
+		{
+			"code": "UAE",
+			"key": "UAE",
+			"value": "UAE",
+			"displayText": "+971"
+		},
+		{
+			"code": "EUR",
+			"key": "EUR",
+			"value": "EUR",
+			"displayText": "+992"
+		},
+		{
+			"code": "UA",
+			"key": "UA",
+			"value": "UA",
+			"displayText": "+380"
+		},
+		{
+			"code": "GB",
+			"key": "GB",
+			"value": "GB",
+			"displayText": "+391"
+		}
+	],
+	"secondaryPhoneCountryCode": [
+		{
+			"code": "UAE",
+			"key": "UAE",
+			"value": "UAE",
+			"displayText": "+971"
+		},
+		{
+			"code": "EUR",
+			"key": "EUR",
+			"value": "EUR",
+			"displayText": "+992"
+		},
+		{
+			"code": "UA",
+			"key": "UA",
+			"value": "UA",
+			"displayText": "+380"
+		},
+		{
+			"code": "GB",
+			"key": "GB",
+			"value": "GB",
+			"displayText": "+391"
+		}
+	],
+	"secondaryMobileCountryCode": [
+		{
+			"code": "UAE",
+			"key": "UAE",
+			"value": "UAE",
+			"displayText": "+971"
+		},
+		{
+			"code": "EUR",
+			"key": "EUR",
+			"value": "EUR",
+			"displayText": "+992"
+		},
+		{
+			"code": "UA",
+			"key": "UA",
+			"value": "UA",
+			"displayText": "+380"
+		},
+		{
+			"code": "GB",
+			"key": "GB",
+			"value": "GB",
+			"displayText": "+391"
+		}
+	],
+	"constitutionType": [
+		{
+			"code": "LTD",
+			"key": "LTD",
+			"value": "LTD",
+			"displayText": "LTD Company"
+		},
+		{
+			"code": "DAC",
+			"key": "DAC",
+			"value": "DAC",
+			"displayText": "DAC Company"
+		},
+		{
+			"code": "PLC",
+			"key": "PLC",
+			"value": "PLC",
+			"displayText": "PLC Company"
+		}
+	],
+	"companyCategory": [
+		{
+			"code": "CharitableTrust",
+			"key": "CharitableTrust",
+			"value": "Charitable Trustd",
+			"displayText": "Charitable Trust",
+			"subCategory": [
+				{
+					"code": "EIPO",
+					"key": "EIPO",
+					"value": "Educational Institute - Private owned",
+					"displayText": "Educational Institute - Private owned"
+				}
+			]
+		},
+		{
+			"code": "EIGO",
+			"key": "EIGO",
+			"value": "Educational Institute - Government owned",
+			"displayText": "Educational Institute - Government owned"
+		},
+		{
+			"code": "EIPO",
+			"key": "EIPO",
+			"value": "Educational Institute - Private owned",
+			"displayText": "Educational Institute - Private owned"
+		},
+		{
+			"code": "FCPL",
+			"key": "FCPL",
+			"value": "Foreign company - Private Limited",
+			"displayText": "Foreign company - Private Limited"
+		}
+	],
+	"topOriginGoodsCountries": [
+		{
+			"code": "AE",
+			"key": "AE",
+			"value": "AE",
+			"displayText": "Emirate"
+		},
+		{
+			"code": "USA",
+			"key": "USA",
+			"value": "USA",
+			"displayText": "United States"
+		},
+		{
+			"code": "UA",
+			"key": "UA",
+			"value": "UA",
+			"displayText": "Ukraine"
+		},
+		{
+			"code": "GB",
+			"key": "GB",
+			"value": "GB",
+			"displayText": "Great Britain"
+		}
+	],
+	"industry": [
+		{
+			"code": "Energy Equipment & Services",
+			"key": "Energy Equipment & Services",
+			"value": "Energy Equipment & Services",
+			"displayText": "Energy Equipment & Services",
+			"subCategory": [
+				{
+					"code": "Oil&GasDrilling",
+					"key": "Oil&GasDrilling",
+					"value": "Oil&GasDrilling",
+					"displayText": "Oil & Gas Drilling"
+				},
+				{
+					"code": "Oil&GasEquipment&Services",
+					"key": "Oil&GasEquipment&Services",
+					"value": "Oil&GasEquipment&Services",
+					"displayText": "Oil & Gas Equipment & Services"
+				}
+			]
+		},
+		{
+			"code": "OGC&F",
+			"key": "OGC&F",
+			"value": "Oil, Gas & Consumable Fuels",
+			"displayText": "Oil, Gas & Consumable Fuels",
+			"subCategory": [
+				{
+					"code": "IntegratedOil&Gas",
+					"key": "IntegratedOil&Gas",
+					"value": "IntegratedOil&Gas",
+					"displayText": "Integrated Oil & Gas"
+				},
+				{
+					"code": "Oil&GasExploration&Production",
+					"key": "Oil&GasExploration&Production",
+					"value": "Oil&GasExploration&Production",
+					"displayText": "Oil & Gas Exploration & Production"
+				}
+			]
+		}
+	],
+	"emirate": [
+		{
+			"code": "AD",
+			"key": "AD",
+			"value": "AD",
+			"displayText": "Abu Dhabi"
+		},
+		{
+			"code": "A",
+			"key": "A",
+			"value": "A",
+			"displayText": "Ajman"
+		},
+		{
+			"code": "AA",
+			"key": "AA",
+			"value": "AA",
+			"displayText": "Al Ain"
+		},
+		{
+			"code": "Dubai",
+			"key": "Dubai",
+			"value": "Dubai",
+			"displayText": "Dubai"
+		},
+		{
+			"code": "F",
+			"key": "F",
+			"value": "F",
+			"displayText": "Fujairah"
+		},
+		{
+			"code": "K",
+			"key": "K",
+			"value": "K",
+			"displayText": "Kalba"
+		},
+		{
+			"code": "KH",
+			"key": "KH",
+			"value": "KH",
+			"displayText": "Khorfakkan"
+		},
+		{
+			"code": "RK",
+			"key": "RK",
+			"value": "RK",
+			"displayText": "Ras Al Khaimah"
+		},
+		{
+			"code": "SH",
+			"key": "SH",
+			"value": "SH",
+			"displayText": "Sharjah"
+		},
+		{
+			"code": "U",
+			"key": "U",
+			"value": "U",
+			"displayText": "Umm Al Quwain"
+		}
+	],
+	"gender": [
+		{
+			"code": "Male",
+			"key": "Male",
+			"value": "Male",
+			"displayText": "Mr."
+		},
+		{
+			"code": "Female",
+			"key": "Female",
+			"value": "Female",
+			"displayText": "Mrs."
+		}
+	],
+	"maritalStatus": [
+		{
+			"code": "M",
+			"key": "M",
+			"value": "M",
+			"displayText": "Married"
+		},
+		{
+			"code": "S",
+			"key": "S",
+			"value": "S",
+			"displayText": "Single"
+		},
+		{
+			"code": "O",
+			"key": "O",
+			"value": "O",
+			"displayText": "Others"
+		}
+	],
+	"YesNoList": [
+		{
+			"code": "Y",
+			"key": "Y",
+			"value": true,
+			"displayText": "Yes"
+		},
+		{
+			"code": "N",
+			"key": "N",
+			"value": false,
+			"displayText": "No"
+		}
+	],
+	"nationality": [
+		{
+			"code": "AE",
+			"key": "AE",
+			"value": "AE",
+			"displayText": "United Arab Emirates"
+		},
+		{
+			"code": "SP",
+			"key": "SP",
+			"value": "SP",
+			"displayText": "Spain"
+		},
+		{
+			"code": "ITA",
+			"key": "ITA",
+			"value": "ITA",
+			"displayText": "Italy"
+		},
+		{
+			"code": "USA",
+			"key": "USA",
+			"value": "USA",
+			"displayText": "USA"
+		}
+	],
+	"qualification": [
+		{
+			"code": "UG",
+			"key": "UG",
+			"value": "UG",
+			"displayText": "Under Graduate"
+		},
+		{
+			"code": "G",
+			"key": "G",
+			"value": "G",
+			"displayText": "Graduate"
+		},
+		{
+			"code": "PG",
+			"key": "PG",
+			"value": "PG",
+			"displayText": "Post Graduate"
+		}
+	],
+	"wealthType": [
+		{
+			"code": "M",
+			"key": "M",
+			"value": "M",
+			"displayText": "Money"
+		},
+		{
+			"code": "RE",
+			"key": "RE",
+			"value": "RE",
+			"displayText": "Real Estate"
+		},
+		{
+			"code": "ORG",
+			"key": "ORG",
+			"value": "ORG",
+			"displayText": "Organizations"
+		},
+		{
+			"code": "O",
+			"key": "O",
+			"value": "O",
+			"displayText": "Other"
+		}
+	],
+	"employmentType": [
+		{
+			"code": "S",
+			"key": "S",
+			"value": "S",
+			"displayText": "Salaried"
+		},
+		{
+			"code": "SE",
+			"key": "SE",
+			"value": "SE",
+			"displayText": "Self-Employed"
+		},
+		{
+			"code": "H",
+			"key": "H",
+			"value": "H",
+			"displayText": "Housewife"
+		},
+		{
+			"code": "O",
+			"key": "O",
+			"value": "O",
+			"displayText": "Other"
+		}
+	],
+	"authorityType": [
+		{
+			"code": "SP",
+			"key": "SP",
+			"value": "SP",
+			"displayText": "Sole Proprietor"
+		},
+		{
+			"code": "PP",
+			"key": "PP",
+			"value": "PP",
+			"displayText": "Partial Proprietor"
+		}
+	]
+}

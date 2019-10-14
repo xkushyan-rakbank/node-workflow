@@ -46,7 +46,7 @@ const StepComponent = props => {
     hideContinue,
     isContinueDisabled,
     setIsContinueDisabled,
-    prospectInfo = []
+    prospectInfo
   } = props;
   const Form = steps[step - 1].component;
 

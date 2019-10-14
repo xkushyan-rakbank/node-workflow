@@ -63,68 +63,73 @@ const AccountBenefits = ({ classes, accountType }) => {
     lounge
   } = getIconsByAccount();
 
+  const mockData = {
+    RAKStarter: [
+      { key: 1, text: "No minimum balance required", icon: balance, alt: "balance" },
+      { key: 2, text: "Available in AED, USD, EUR, GBP", icon: availability, alt: "availability" },
+      {
+        key: 3,
+        text: "Preferential transaction fees through Digital Banking",
+        icon: transaction,
+        alt: "transaction"
+      },
+      { key: 4, text: "Dedicated Relationship Manager", icon: manager, alt: "manager" }
+    ],
+    "Current Account": [
+      { key: 1, text: "A low minimum balance", icon: balance, alt: "balance" },
+      { key: 2, text: "Available in AED, USD, EUR, GBP", icon: availability, alt: "availability" },
+      {
+        key: 3,
+        text: "Preferential transaction fees through Digital Banking",
+        icon: transaction,
+        alt: "transaction"
+      },
+      { key: 4, text: "Dedicated Relationship Manager", icon: manager, alt: "manager" }
+    ],
+    RAKelite: [
+      {
+        key: 1,
+        text: "Fast track processing of all your banking requests",
+        icon: processing,
+        alt: "processing"
+      },
+      {
+        key: 2,
+        text: "Preferential transaction fees through Digital Banking",
+        icon: withdrawal,
+        alt: "withdrawal"
+      },
+      {
+        key: 3,
+        text: "Exclusive RAKelite service centers",
+        icon: serviceCenter,
+        alt: "serviceCenter"
+      },
+      { key: 4, text: "Preferential exchange rates", icon: exchange, alt: "exchange" },
+      {
+        key: 5,
+        text: "Free lounges, golf courses and valet services worldwide",
+        icon: lounge,
+        alt: "lounge"
+      },
+      { key: 6, text: "Dedicated Relationship Manager", icon: manager, alt: "manager" }
+    ]
+  };
+
+  const data = accountType ? mockData[accountType] : [];
+
   return (
     <>
       <div className={classes.indent}>
         <SectionTitleWithInfo title={text} />
       </div>
-      {accountType === "RAKStarter" && (
-        <HorizontalIconCardsContainer>
-          <HorizontalIconCardItem text="No minimum balance required">
-            <img className={classes.icon} src={balance} alt="balance" />
+      <HorizontalIconCardsContainer>
+        {data.map(item => (
+          <HorizontalIconCardItem key={item.key} text={item.text}>
+            <img className={classes.icon} src={item.icon} alt={item.alt} />
           </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Available in AED, USD, EUR, GBP">
-            <img className={classes.icon} src={availability} alt="availability" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Preferential transaction fees through Digital Banking">
-            <img className={classes.icon} src={transaction} alt="transaction" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Dedicated Relationship Manager">
-            <img className={classes.icon} src={manager} alt="manager" />
-          </HorizontalIconCardItem>
-          <div className={classes.notification}>
-            *Companies older than 12 months are not eligible for the RAKstarter account
-          </div>
-        </HorizontalIconCardsContainer>
-      )}
-      {accountType === "Current Account" && (
-        <HorizontalIconCardsContainer>
-          <HorizontalIconCardItem minWidth="260px" text="A low minimum balance">
-            <img className={classes.icon} src={balance} alt="balance" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Available in AED, USD, EUR, GBP">
-            <img className={classes.icon} src={availability} alt="availability" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Preferential transaction fees through Digital Banking">
-            <img className={classes.icon} src={transaction} alt="transaction" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Dedicated Relationship Manager">
-            <img className={classes.icon} src={manager} alt="manager" />
-          </HorizontalIconCardItem>
-        </HorizontalIconCardsContainer>
-      )}
-      {accountType === "RAKelite" && (
-        <HorizontalIconCardsContainer>
-          <HorizontalIconCardItem text="Fast track processing of all your banking requests">
-            <img className={classes.icon} src={processing} alt="processing" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Preferential transaction fees through Digital Banking">
-            <img className={classes.icon} src={withdrawal} alt="withdrawal" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Exclusive RAKelite service centers">
-            <img className={classes.icon} src={serviceCenter} alt="service-center" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Preferential exchange rates">
-            <img className={classes.icon} src={exchange} alt="exchange" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Free lounges, golf courses and valet services worldwide">
-            <img className={classes.icon} src={lounge} alt="lounge" />
-          </HorizontalIconCardItem>
-          <HorizontalIconCardItem text="Dedicated Relationship Manager">
-            <img className={classes.icon} src={manager} alt="manager" />
-          </HorizontalIconCardItem>
-        </HorizontalIconCardsContainer>
-      )}
+        ))}
+      </HorizontalIconCardsContainer>
     </>
   );
 };

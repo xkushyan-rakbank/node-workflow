@@ -22,6 +22,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,7 @@ import ae.rakbank.webapply.helpers.CookieHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.OAuthService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class WebApplyController {
@@ -158,6 +160,10 @@ public class WebApplyController {
 
 		initStateJSON.set("uiConfig", uiFieldsObjNode);
 
+		String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey")
+				.asText();
+		initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
+
 		String cacheKey = getCacheKey(segment, product, role, device);
 		String configJSON = initStateJSON.toString();
 		putCache(cacheKey, configJSON);
@@ -194,30 +200,42 @@ public class WebApplyController {
 		while (fields.hasNext()) {
 			Entry<String, JsonNode> entry = fields.next();
 			String uid = entry.getKey();
-			ObjectNode fieldConfig = (ObjectNode) entry.getValue();
-			boolean applicable = fieldConfig.has("label") && !fieldConfig.get("label").isNull()
-					&& matchCriteria(fieldConfig, segment, product, role, device);
 
-			if (applicable) {
-				fieldConfig.put("applicable", true);
-				fieldConfig.remove("criteria");
-				uiFields.set(uid, fieldConfig);
+			try {
 
-				if (fieldConfig.has("datalistId") && fieldConfig.get("datalistId").isNull()) {
-					fieldConfig.remove("datalistId");
-				} else {
-					String groupId = fieldConfig.get("datalistId").asText();
-					fieldConfig.set("datalist", datalist.get(groupId));
+				ObjectNode fieldConfig = (ObjectNode) entry.getValue();
+				boolean applicable = fieldConfig.has("label") && !fieldConfig.get("label").isNull()
+						&& matchCriteria(fieldConfig, segment, product, role, device);
+				if (applicable) {
+					fieldConfig.put("applicable", true);
+					fieldConfig.remove("criteria");
+					uiFields.set(uid, fieldConfig);
+
+					if (fieldConfig.has("datalistId")) {
+						if (fieldConfig.get("datalistId").isNull()) {
+							fieldConfig.remove("datalistId");
+						} else {
+							String groupId = fieldConfig.get("datalistId").asText();
+							fieldConfig.set("datalist", datalist.get(groupId));
+						}
+
+					}
+
+					if (fieldConfig.has("readonlyFor") && (fieldConfig.get("readonlyFor").isNull()
+							|| fieldConfig.get("readonlyFor").size() == 0)) {
+						fieldConfig.remove("readonlyFor");
+					}
+
+					if (fieldConfig.has("shortKeyNames")) {
+						fieldConfig.remove("shortKeyNames");
+					}
+
+					if (fieldConfig.has("description")) {
+						fieldConfig.remove("description");
+					}
 				}
-
-				if (fieldConfig.has("readOnlyFor")
-						&& (fieldConfig.get("readOnlyFor").isNull() || fieldConfig.get("readOnlyFor").size() == 0)) {
-					fieldConfig.remove("readOnlyFor");
-				}
-
-				if (fieldConfig.has("shortKeyNames")) {
-					fieldConfig.remove("shortKeyNames");
-				}
+			} catch (Exception e) {
+				logger.error("Error while processing UID= " + uid, e);
 			}
 
 		}

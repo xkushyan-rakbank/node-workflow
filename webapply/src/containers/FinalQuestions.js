@@ -35,17 +35,18 @@ class FinalQuestions extends React.Component {
 
   state = {
     expandedMargin: true,
-    filledSignatoriesIndexes: []
+    filledSignatoriesIndexes: [],
+    isSubmitDisabled: true
   };
-
-  switchExpandedMargin = () => this.setState({ expandedMargin: false });
 
   addFilledSignatoryIndex = index =>
     this.setState({ filledSignatoriesIndexes: [...this.state.filledSignatoriesIndexes, index] });
 
+  switchStateBooleanField = field => this.setState({ [field]: !this.state[field] });
+
   render() {
     const { classes, signatories } = this.props;
-    const { expandedMargin, filledSignatoriesIndexes } = this.state;
+    const { expandedMargin, filledSignatoriesIndexes, isSubmitDisabled } = this.state;
     return (
       <>
         <h2>Final questions</h2>
@@ -55,7 +56,7 @@ class FinalQuestions extends React.Component {
         </p>
         <div className={this.props.classes.sectionContainer}>
           <CompanySummaryCard
-            switchExpandedMargin={this.switchExpandedMargin}
+            switchExpandedMargin={() => this.switchStateBooleanField("expandedMargin")}
             addFilledSignatoryIndex={this.addFilledSignatoryIndex}
           />
         </div>
@@ -66,6 +67,7 @@ class FinalQuestions extends React.Component {
                 key={index}
                 signatory={item}
                 index={index}
+                switchSubmitDisabled={() => this.switchStateBooleanField("isSubmitDisabled")}
                 signatoriesLength={signatories.length}
                 addFilledSignatoryIndex={this.addFilledSignatoryIndex}
                 filledSignatoriesIndexes={filledSignatoriesIndexes}
@@ -80,6 +82,7 @@ class FinalQuestions extends React.Component {
               label="Next Step"
               justify="flex-end"
               classes={{ buttonWrap: classes.buttonWrap }}
+              disabled={isSubmitDisabled}
             />
           </Link>
         </div>

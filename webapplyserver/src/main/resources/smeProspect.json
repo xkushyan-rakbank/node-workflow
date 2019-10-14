@@ -1,10 +1,10 @@
 {
 	"applicantInfo": {
 		"fullName": "",
-		"email": "user@example.com",
+		"email": "",
 		"countryCode": "",
 		"mobileNo": "",
-		"applyOnbehalf": true
+		"applyOnbehalf": false
 	},
 	"generalInfo": {
 		"prospectId": "",
@@ -13,56 +13,56 @@
 				"href": ""
 			}
 		},
-		"cifId": 0,
+		"cifId": "",
 		"customerType": "",
 		"dsaId": "",
 		"groupId": "",
 		"groupName": "",
 		"rmCode": "",
 		"accountManagerId": "",
-		"isPoliticallyExposed": "N"
+		"isPoliticallyExposed": ""
 	},
 	"applicationInfo": {
 		"viewId": "",
-		"islamicBanking": true,
-		"accountType": "RAKStarter",
-		"rakValuePackage": "RAKvalue PLUS",
+		"islamicBanking": false,
+		"accountType": "",
+		"rakValuePackage": "",
 		"leadNumber": "",
 		"riskScore": "",
 		"srNumber": "",
-		"channelId": "Bank to confirm on the LOVs",
-		"channelType": "Mobile",
+		"channelId": "",
+		"channelType": "",
 		"createdDate": "",
 		"lastModifiedDate": "",
 		"createdBy": "",
 		"lastModifiedBy": "",
-		"actionType": "Save",
-		"saveType": "auto",
+		"actionType": "",
+		"saveType": "",
 		"tncAgreed": false,
-		"declaration": true
+		"declaration": false
 	},
 	"accountInfo": [
 		{
-			"branchId": "LOVs will be fetched from datalist API",
-			"accountType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
-			"accountSubType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
+			"branchId": "",
+			"accountType": "",
+			"accountSubType": "",
 			"accountNo": "",
 			"accountCurrencies": [
 				""
 			],
-			"accountCurrency": "AED",
-			"accountPurpose": "Bank to confirm on the LOVs",
-			"debitCardApplied": true,
-			"chequeBookApplied": true,
-			"eStatements": true,
+			"accountCurrency": "",
+			"accountPurpose": "",
+			"debitCardApplied": false,
+			"chequeBookApplied": false,
+			"eStatements": false,
 			"mailStatements": false,
-			"receiveInterest": true,
-			"deliverByCourier": true
+			"receiveInterest": false,
+			"deliverByCourier": false
 		}
 	],
 	"organizationInfo": {
 		"screeningInfo": {
-			"statusOverAll": "proceed",
+			"statusOverAll": "",
 			"screeningResults": [
 				{
 					"screeningType": "",
@@ -76,28 +76,28 @@
 				}
 			]
 		},
-		"branchCity": "LOVs to be confirmed by Bank",
-		"branchID": "LOVs to be confirmed by Bank",
-		"countryOfIncorporation": "AE",
+		"branchCity": "",
+		"branchID": "",
+		"countryOfIncorporation": "",
 		"companyName": "",
 		"shortName": "",
-		"dateOfIncorporation": "2019-10-09",
+		"dateOfIncorporation": "",
 		"numberOfEmployees": 0,
-		"licenseType": "Trade License",
+		"licenseType": "",
 		"licenseTypeOther": "",
-		"licenseIssuingAuthority": "LOVs to be confirmed by Bank",
+		"licenseIssuingAuthority": "",
 		"licenseNumber": "",
-		"licenseIssueDate": "2019-10-09",
-		"licenseExpiryDate": "2019-10-09",
+		"licenseIssueDate": "",
+		"licenseExpiryDate": "",
 		"vatRegistrationNumber": "",
 		"addressInfo": [
 			{
-				"typeOfAddress": "Registered Address/Head office",
-				"officeAddressDifferent": "No",
+				"typeOfAddress": "",
+				"officeAddressDifferent": "",
 				"addressDetails": [
 					{
-						"addressFieldDesc": "Registered Address/Head office",
-						"preferredAddress": "Yes",
+						"addressFieldDesc": "",
+						"preferredAddress": "",
 						"addressLine1": "",
 						"addressLine2": "",
 						"addressLine3": "",
@@ -106,7 +106,7 @@
 						"emirateCity": "",
 						"country": "",
 						"typeOfSpaceOccupied": {
-							"spaceType": "Office",
+							"spaceType": "",
 							"others": ""
 						}
 					}
@@ -116,7 +116,7 @@
 		"contactDetails": {
 			"primaryMobileNo": "",
 			"primaryMobCountryCode": "",
-			"primaryEmail": "user@example.com",
+			"primaryEmail": "",
 			"primaryPhoneNo": "",
 			"primaryPhoneCountryCode": "",
 			"fax": "",
@@ -125,7 +125,7 @@
 			"secondaryPhoneCountryCode": "",
 			"secondaryMobileNo": "",
 			"secondaryMobileCountryCode": "",
-			"secondaryEmail": "user@example.com",
+			"secondaryEmail": "",
 			"website": ""
 		},
 		"contactDetailsForTxnReconfirming": [
@@ -138,33 +138,33 @@
 		]
 	},
 	"orgKYCDetails": {
-		"businessUnit": "PBD",
-		"constitutionType": "Proprietorship",
-		"companyCategory": "Charitable Trust",
+		"businessUnit": "",
+		"constitutionType": "",
+		"companyCategory": "",
 		"annualFinTurnoverAmtInAED": "",
 		"yearsInBusiness": 0,
 		"topCustomers": [
 			{
 				"name": "",
-				"country": "LOVs to be fetched from datalist API"
+				"country": ""
 			}
 		],
 		"topSuppliers": [
 			{
 				"name": "",
-				"country": "LOVs to be fetched from datalist API"
+				"country": ""
 			}
 		],
 		"topOriginGoodsCountries": [
-			"LOVs to be fetched from datalist API"
+			""
 		],
 		"industryMultiSelect": [
 			{
 				"industry": [
-					"LOVs to be shared by Bank"
+					""
 				],
 				"subCategory": [
-					"LOVs to be shared by Bank"
+					""
 				]
 			}
 		],
@@ -193,7 +193,7 @@
 		"entitiesInUAE": [
 			{
 				"companyName": "",
-				"emirate": "LOVs to be fetched from data list API",
+				"emirate": "",
 				"tradeLicenseNo": ""
 			}
 		],
@@ -201,7 +201,7 @@
 		"entitiesOutsideUAE": [
 			{
 				"companyName": "",
-				"country": "LOVs to be fetched from data list API"
+				"country": ""
 			}
 		],
 		"isShareholderACompany": false
@@ -209,7 +209,7 @@
 	"signatoryInfo": [
 		{
 			"screeningInfo": {
-				"statusOverAll": "proceed",
+				"statusOverAll": "",
 				"screeningResults": [
 					{
 						"screeningType": "",
@@ -223,15 +223,15 @@
 					}
 				]
 			},
-			"salutation": "Mr.",
+			"salutation": "",
 			"signatoryId": "",
 			"firstName": "",
 			"middleName": "",
 			"lastName": "",
 			"shortName": "",
 			"fullName": "",
-			"gender": "Male",
-			"maritalStatus": "Married",
+			"gender": "",
+			"maritalStatus": "",
 			"maritalStatusOthers": "",
 			"occupation": "",
 			"mothersMaidenName": "",
@@ -240,44 +240,44 @@
 			"employmentStatus": "",
 			"kycVerified": false,
 			"kycDetails": {
-				"salutation": "Mr.",
+				"salutation": "",
 				"shareholderPOASignatoryName": "",
 				"isSignatory": false,
 				"isShareholder": false,
 				"shareHoldingPercentage": 0,
-				"dateOfBirth": "2019-10-09",
+				"dateOfBirth": "",
 				"nationality": "",
 				"dualCitizenship": false,
 				"dualCitizenshipCountry": [
-					"LOVs to be fetched from datalist API"
+					""
 				],
-				"residenceCountry": "AE",
+				"residenceCountry": "",
 				"isUAEResident": false,
 				"passportDetails": [
 					{
 						"passportNumber": "",
-						"passportExpiryDate": "2019-10-09",
+						"passportExpiryDate": "",
 						"diplomatPassport": false
 					}
 				],
 				"emirateIdDetails": {
 					"eidNumber": "",
-					"eidExpiryDt": "2019-10-09"
+					"eidExpiryDt": ""
 				},
-				"selfGovtPosition": "Currently hold",
-				"relativeGovtPosition": "Currently hold",
+				"selfGovtPosition": "",
+				"relativeGovtPosition": "",
 				"isPEP": false,
-				"qualification": "Under Graduate",
+				"qualification": "",
 				"experienceInYrs": "",
 				"sourceOfWealth": {
-					"wealthType": "Personal Savings",
+					"wealthType": "",
 					"others": ""
 				}
 			},
 			"contactDetails": {
 				"primaryMobileNo": "",
 				"primaryMobCountryCode": "",
-				"primaryEmail": "user@example.com",
+				"primaryEmail": "",
 				"primaryPhoneNo": "",
 				"primaryPhoneCountryCode": "",
 				"fax": "",
@@ -286,11 +286,11 @@
 				"secondaryPhoneCountryCode": "",
 				"secondaryMobileNo": "",
 				"secondaryMobileCountryCode": "",
-				"secondaryEmail": "user@example.com",
+				"secondaryEmail": "",
 				"website": ""
 			},
 			"employmentDetails": {
-				"employmentType": "Salaried",
+				"employmentType": "",
 				"otherEmploymentType": "",
 				"designation": "",
 				"empNo": "",
@@ -298,16 +298,16 @@
 				"employerName": "",
 				"occupation": "",
 				"totalExperienceYrs": 0,
-				"employmentStartDate": "2019-10-09"
+				"employmentStartDate": ""
 			},
 			"sameAsCompanyAddress": false,
 			"addressInfo": [
 				{
-					"typeOfAddress": "Residence Address",
+					"typeOfAddress": "",
 					"addressDetails": [
 						{
-							"addressFieldDesc": "Residence Address",
-							"preferredAddress": "Yes",
+							"addressFieldDesc": "",
+							"preferredAddress": "",
 							"addressLine1": "",
 							"addressLine2": "",
 							"addressLine3": "",
@@ -320,12 +320,12 @@
 				}
 			],
 			"accountSigningInfo": {
-				"accountSigningType": "Any of us",
+				"accountSigningType": "",
 				"accountSigningInstn": "",
-				"authorityType": "SP - Sole Proprietor"
+				"authorityType": ""
 			},
 			"debitCardInfo": {
-				"issueDebitCard": true,
+				"issueDebitCard": false,
 				"authSignatoryDetails": {
 					"fullNameOnPassport": "",
 					"nameOnDebitCard": ""
@@ -337,13 +337,13 @@
 		"mobileInstructions": false,
 		"marketingSMS": false,
 		"doNotDisturbHours": "",
-		"weeklyBalanceNotification": "Sunday",
+		"weeklyBalanceNotification": "",
 		"monthlyBalanceNotification": 0
 	},
 	"documents": {
 		"companyDocuments": [
 			{
-				"documentType": "Passport",
+				"documentType": "",
 				"signatoryId": "",
 				"signatoryName": "",
 				"documentTitle": "",
@@ -352,7 +352,7 @@
 				"filePath": "",
 				"url": "",
 				"fileData": "",
-				"fileFormat": "application/pdf",
+				"fileFormat": "",
 				"fileSize": 0,
 				"fileDescription": "",
 				"submittedBy": "",
@@ -364,9 +364,9 @@
 				"verified": false,
 				"verifiedBy": "",
 				"isEncrypted": false,
-				"required": true,
+				"required": false,
 				"encryptionDetails": "",
-				"uploadStatus": "NotUploaded"
+				"uploadStatus": ""
 			}
 		],
 		"stakeholdersDocuments": {
@@ -394,7 +394,7 @@
 						"verified": false,
 						"verifiedBy": "",
 						"isEncrypted": false,
-						"required": true,
+						"required": false,
 						"encryptionDetails": "",
 						"uploadStatus": ""
 					}

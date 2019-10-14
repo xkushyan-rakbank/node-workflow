@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import * as appConfigSelector from "./../../store/selectors/appConfig";
 
 const PUB_KEY = process.env.REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY || " ";
 
@@ -15,7 +17,7 @@ class ReCaptchaNotRobot extends React.PureComponent {
     this.rootRef = React.createRef();
     this.reCaptchaId = 0;
     this.options = {
-      sitekey: PUB_KEY,
+      sitekey: this.props.reCaptchaSiteKey || PUB_KEY,
       size: "normal",
       callback: props.onVerify,
       "expired-callback": props.onExpired,
@@ -32,10 +34,19 @@ class ReCaptchaNotRobot extends React.PureComponent {
   }
 
   render() {
-    const { onVerify, onExpired, onError, grecaptcha, ...rest } = this.props;
+    const { onVerify, onExpired, onError, grecaptcha, reCaptchaSiteKey, ...rest } = this.props;
 
     return <div {...rest} ref={this.rootRef} className="g-recaptcha" />;
   }
 }
 
-export default ReCaptchaNotRobot;
+const mapStateToProps = state => ({
+  reCaptchaSiteKey: appConfigSelector.getReCaptchaSiteKey(state)
+});
+
+const mapDispatchToProps = {};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReCaptchaNotRobot);

@@ -43,7 +43,7 @@
     "server:mock": "cd ../wiremock/ && java -jar wiremock-standalone-2.24.1.jar",
     "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "eslint": "eslint src/",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

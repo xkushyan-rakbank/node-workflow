@@ -1,6 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import ContainedButton from "../components/Buttons/ContainedButton";
+import { getProspectInfo } from "../store/actions/retrieveApplicantInfo";
+import * as prospectInfo from "../store/selectors/retrieveApplicantInfo";
 
 export const StyledWhiteContainedButton = props => {
   const Button = withStyles(() => ({
@@ -47,19 +50,10 @@ const style = {
     "&:last-of-type": {
       border: "none"
     },
-    display: "flex",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
     alignItems: "center",
-    padding: "24px 20px 19px 30px",
-    "& > div": {
-      flexGrow: 1,
-      "@media only screen and (max-width: 991px)": {
-        flexGrow: "inherit"
-      }
-    },
-    "@media only screen and (max-width: 991px)": {
-      padding: "12px 10px 10px 15px",
-      justifyContent: "space-between"
-    }
+    padding: "24px 20px 19px 30px"
   },
   companyName: {
     fontSize: "16px",
@@ -89,29 +83,64 @@ const style = {
   }
 };
 
-const MyApplicationsList = ({ classes, currentApplications }) => {
-  return (
-    <div className={classes.wrapper}>
-      {currentApplications.map((application, index) => (
-        <div className={classes.applicationRow} key={index}>
-          <div>
-            <div className={classes.companyName}>{application.companyName}</div>
-            <div className={classes.account}>{application.account}</div>
-          </div>
-          <div>
-            <span className={classes.status}>{application.status}</span>
-          </div>
-          <div className={classes.action}>
-            {application.action.status ? (
-              <StyledWhiteContainedButton label={application.action.text} />
-            ) : (
-              application.action.text
-            )}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
+class MyApplicationsList extends React.Component {
+  getProspectDetails = prospectId => {
+    this.props.getProspectInfo(prospectId);
+  };
 
-export default withStyles(style)(MyApplicationsList);
+  render() {
+    const { classes, applicantInfo = {} } = this.props;
+    let info;
+    if (Object.entries(applicantInfo).length !== 0) {
+      info = applicantInfo.map((applications, index) => {
+        const cmpName = applications.organizationInfo.companyName;
+        return (
+          <div className={classes.wrapper} key={index}>
+            <div className={classes.applicationRow}>
+              {cmpName ? (
+                <div>
+                  <div className={classes.companyName}>
+                    {applications.organizationInfo.companyName}
+                  </div>
+                  <div className={classes.account}>{applications.organizationInfo.companyName}</div>
+                </div>
+              ) : (
+                <div>
+                  <div className={classes.companyName}>{applications.applicantInfo.fullName}</div>
+                  <div className={classes.account}>{applications.applicantInfo.email}</div>
+                </div>
+              )}
+              <div>
+                <span className={classes.status}>{applications.status.statusNotes}</span>
+              </div>
+              <div className={classes.action}>
+                {applications.status.statusType ? (
+                  <StyledWhiteContainedButton
+                    label={applications.status.statusType}
+                    handleClick={() => this.getProspectDetails(applications.prospectId)}
+                  />
+                ) : (
+                  <span>{applications.status.statusNotes}</span>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      });
+    }
+
+    return <>{info}</>;
+  }
+}
+const mapStateToProps = state => ({
+  searchResults: prospectInfo.getApplicantProspectInfo(state)
+});
+const mapDispatchToProps = {
+  getProspectInfo
+};
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(MyApplicationsList)
+);

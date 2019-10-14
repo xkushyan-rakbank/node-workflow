@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -11,9 +12,11 @@ import grid_ic from "../../assets/icons/grid_grey_ic.png";
 import grid_white_ic from "../../assets/icons/grid_white_ic.png";
 
 import ContainerComeBack from "../ComeBack/ContainerComeBack";
-import { mockDataMyCurrentApplication } from "../../agent/MyApplications";
 import MyApplicationsList from "../../agent/MyApplicationsList";
 import MyApplicationsGrid from "../../agent/MyApplicationsGrid";
+
+import { retrieveApplicantInfo } from "../../store/actions/retrieveApplicantInfo";
+import * as getApplicantInfo from "../../store/selectors/retrieveApplicantInfo";
 
 const styles = {
   rootTitle: {
@@ -59,12 +62,22 @@ class MyApplications extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const inputParam = {
+      fullName: "HappyPath",
+      countryCode: "+971" || "",
+      mobileNo: "0123456789" || "",
+      email: "abc@abc.com" || ""
+    };
+    this.props.retrieveApplicantInfo(inputParam);
+  }
+
   handleChangeView = view => {
     this.setState({ selectedView: view });
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, searchResults } = this.props;
     const { selectedView } = this.state;
 
     return (
@@ -93,9 +106,9 @@ class MyApplications extends React.Component {
 
         <Grid container direction="column">
           {selectedView === "list" ? (
-            <MyApplicationsList currentApplications={mockDataMyCurrentApplication} />
+            <MyApplicationsList applicantInfo={searchResults} />
           ) : (
-            <MyApplicationsGrid currentApplications={mockDataMyCurrentApplication} />
+            <MyApplicationsGrid applicantInfo={searchResults} />
           )}
         </Grid>
       </ContainerComeBack>
@@ -103,4 +116,17 @@ class MyApplications extends React.Component {
   }
 }
 
-export default withStyles(styles)(MyApplications);
+const mapStateToProps = state => ({
+  searchResults: getApplicantInfo.getApplicantInfo(state)
+});
+
+const mapDispatchToProps = {
+  retrieveApplicantInfo
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(MyApplications)
+);
