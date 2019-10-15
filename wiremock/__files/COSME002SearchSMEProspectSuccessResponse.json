@@ -1,0 +1,332 @@
+{
+  "searchResult": [
+    {
+      "prospectId": "100",
+      "_links": {
+        "self": {
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/100"
+        }
+      },
+      "status": {
+        "statusType": "Upload Documents",
+        "statusCode": "",
+        "statusFlag": "",
+        "statusNotes": "New documents needed",
+        "statusReason": "",
+        "statusOverAll": "",
+        "reasonNotes": "",
+        "reasonCode": "",
+        "reasonStatus": ""
+      },
+      "applicantInfo": {
+        "fullName": "Anjali Kesarwani",
+        "email": "akesarwani@abc.com",
+        "countryCode": "+971",
+        "mobileNo": "3456234578"
+      },
+      "applicationInfo": {
+        "createdDate": "string",
+        "lastModifiedDate": "12:10:2019",
+        "createdBy": "string",
+        "lastModifiedBy": "Kapil",
+        "viewId": "/ApplicationSubmitted",
+        "actionType": "Save"
+      },
+      "signatoryInfo": [
+        {
+          "signatoryId": "string",
+          "fullName": "Abhi",
+          "screeningInfo": {
+            "statusOverAll": "proceed",
+            "screeningResults": [
+              {
+                "screeningType": "Dedupe Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Blacklist Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Negative List Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Match",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Risk Rating",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Risk rating value",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              }
+            ]
+          }
+        },
+        {
+          "signatoryId": "string",
+          "fullName": "Bhakta",
+          "screeningInfo": {
+            "statusOverAll": "proceed",
+            "screeningResults": [
+              {
+                "screeningType": "Dedupe Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Blacklist Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Negative List Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Match",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Risk Rating",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Risk rating value",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              }
+            ]
+          }
+        }
+      ],
+      "organizationInfo": {
+        "licenseNumber": "3456798765789",
+        "companyName": "Gill Pvt. Ltd.",
+        "screeningInfo": {
+          "statusOverAll": "proceed",
+          "screeningResults": [
+            {
+              "screeningType": "Dedupe Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "No Match Reason",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Blacklist Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "No Match Reason",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Negative List Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "Match",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Risk Rating",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "Risk rating value",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "prospectId": "101",
+      "_links": {
+        "self": {
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/101"
+        }
+      },
+      "status": {
+        "statusType":"Incomplete",
+        "statusCode": "",
+        "statusFlag": "",
+        "statusNotes": "Incomplete application",
+        "statusReason": "",
+        "statusOverAll": "",
+        "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within X days to meet you in person and help you out.",
+        "reasonCode": "",
+        "reasonStatus": ""
+      },
+      "applicantInfo": {
+        "fullName": "Anjali Gupta",
+        "email": "agupta@abc.com",
+        "countryCode": "+971",
+        "mobileNo": "4534567895"
+      },
+      "applicationInfo": {
+        "createdDate": "string",
+        "lastModifiedDate": "string",
+        "createdBy": "string",
+        "lastModifiedBy": "string",
+        "viewId": "/ApplicationSubmitted",
+        "actionType": "Save"
+      },
+      "signatoryInfo": [
+        {
+          "signatoryId": "string",
+          "fullName": "string",
+          "screeningInfo": {
+            "statusOverAll": "proceed",
+            "screeningResults": [
+              {
+                "screeningType": "string",
+                "screeningStatus": "string",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "string",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              }
+            ]
+          }
+        }
+      ],
+      "organizationInfo": {
+        "licenseNumber": "447877565655",
+        "companyName": "Purva Limited",
+        "screeningInfo": {
+          "statusOverAll": "proceed",
+          "screeningResults": [
+            {
+              "screeningType": "string",
+              "screeningStatus": "string",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "string",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "prospectId": "102",
+      "_links": {
+        "self": {
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/102"
+        }
+      },
+      "status": {
+        "statusType": "See Account",
+        "statusCode": "",
+        "statusFlag": "",
+        "statusNotes": "Account activated",
+        "statusReason": "",
+        "statusOverAll": "",
+        "reasonNotes": "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAK BANK",
+        "reasonCode": "",
+        "reasonStatus": ""
+      },
+      "applicantInfo": {
+        "fullName": "Anjali Tandon",
+        "email": "atandon@abc.com",
+        "countryCode": "+971",
+        "mobileNo": "4509452367"
+      },
+      "applicationInfo": {
+        "createdDate": "string",
+        "lastModifiedDate": "string",
+        "createdBy": "string",
+        "lastModifiedBy": "string",
+        "viewId": "/ApplicationSubmitted",
+        "actionType": "Save"
+      },
+      "signatoryInfo": [
+        {
+          "signatoryId": "string",
+          "fullName": "string",
+          "screeningInfo": {
+            "statusOverAll": "proceed",
+            "screeningResults": [
+              {
+                "screeningType": "string",
+                "screeningStatus": "string",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "string",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              }
+            ]
+          }
+        }
+      ],
+      "organizationInfo": {
+        "licenseNumber": "50978643469",
+        "companyName": "ACC Corporate Limited",
+        "screeningInfo": {
+          "statusOverAll": "proceed",
+          "screeningResults": [
+            {
+              "screeningType": "string",
+              "screeningStatus": "string",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "string",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

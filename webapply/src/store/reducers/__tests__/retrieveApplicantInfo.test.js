@@ -1,7 +1,8 @@
-import { initialState, reducer } from "../../store/reducers/retrieveApplicantInfo";
-import * as retrieveApplicantInfo from "./../../src/store/actions/retrieveApplicantInfo";
+import { initialState } from "./../retrieveApplicantInfo";
+import retrieveApplicantInfoReducer from "./../retrieveApplicantInfo";
+import * as retrieveApplicantActions from "../../actions/retrieveApplicantInfo";
 
-describe("retrieveApplicantInfo", () => {
+describe("retrieveApplicantInfoReducer", () => {
   afterEach(jest.resetAllMocks);
 
   describe("initialState", () => {
@@ -75,11 +76,12 @@ describe("retrieveApplicantInfo", () => {
       let state;
 
       beforeAll(() => {
-        state = reducer(
+        state = retrieveApplicantInfoReducer(
           initialState,
-          retrieveApplicantInfo.retrieveApplicantInfoSuccess(searchApplicationsSuccessParamObj)
+          retrieveApplicantActions.retrieveApplicantInfoSuccess(searchApplicationsSuccessParamObj)
         );
       });
+
       it("should update store value", () => {
         const { searchResults } = state;
         expect(searchResults).toEqual(searchApplicationsSuccessParamObj);

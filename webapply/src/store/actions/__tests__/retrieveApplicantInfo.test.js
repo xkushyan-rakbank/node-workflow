@@ -1,4 +1,4 @@
-import * as ActionTypes from "../../store/actions/retrieveApplicantInfo";
+import * as ActionTypes from "./../retrieveApplicantInfo";
 
 describe("retrieveApplicantInfo", () => {
   describe("ActionTypes", () => {
