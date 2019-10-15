@@ -19,5 +19,5 @@ export default {
   searchProspect: "/SearchProspect",
   login: "/Login",
   SubmitApplication: "/SubmitApplication",
-  SearchedAppInfo: "/SearchedAppInfo/100"
+  SearchedAppInfo: "/SearchedAppInfo/:id"
 };

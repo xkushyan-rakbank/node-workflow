@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import routes from "../routes";
 import { Link } from "react-router-dom";
 
 const style = {
@@ -61,6 +60,7 @@ const style = {
 };
 
 const SearchApplicationList = ({ classes, currentApplications }) => {
+  const id = 100; //remove it
   return (
     <div className={classes.wrapper}>
       {currentApplications.length > 0 && (
@@ -78,11 +78,7 @@ const SearchApplicationList = ({ classes, currentApplications }) => {
       )}
       {currentApplications.length > 0 &&
         currentApplications.map((application, index) => (
-          <Link
-            className={classes.applicationRow}
-            key={index}
-            to={routes.SearchedAppInfo.replace(":prospectId", "100")}
-          >
+          <Link className={classes.applicationRow} key={index} to={`/SearchedAppInfo/${id}`}>
             <div>
               <div className={classes.fullName}>
                 {application.applicantInfo.fullName && application.applicantInfo.fullName}

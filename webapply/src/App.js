@@ -1,6 +1,5 @@
 import React from "react";
-import { Switch } from "react-router-dom";
-import Route from "./components/Route";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -87,9 +86,9 @@ class App extends React.Component {
                 component={ComeBackVerification}
               />
               <Route exact path={routes.MyApplications} component={MyApplications} />
-              <Route exact path={routes.SearchedAppInfo} component={SearchedAppInfo} />
+              <Route path={routes.SearchedAppInfo} component={SearchedAppInfo} />
               <Route exact path={routes.SubmitApplication} component={SubmitApplication} />
-              <Route path="*" />
+              <Redirect to={routes.accountsComparison} />
             </Switch>
           </FormLayout>
         </ConnectedRouter>
