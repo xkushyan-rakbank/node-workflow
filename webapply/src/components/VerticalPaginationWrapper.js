@@ -8,7 +8,7 @@ const style = {
   paginationWrapper: {
     position: "relative",
     height: "100vh",
-    overflow: "hidden"
+    overflowY: "hidden"
   },
   paginationContent: {
     position: "absolute",

@@ -267,3 +267,9 @@ export const submitApplication = {
   trueNdCompleteAcknldgelabel: "I confirm that the information provided is true and complete",
   needCommunicationLabel: "I want to receive marketing and promotional communication from RakBank"
 };
+
+export const accountsNames = {
+  starter: "RAKStarter",
+  currentAccount: "Current Account",
+  elite: "RAKelite"
+};

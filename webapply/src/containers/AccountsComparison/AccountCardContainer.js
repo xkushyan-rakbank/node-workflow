@@ -7,6 +7,7 @@ import startups_ic from "../../assets/icons/startups_ic.png";
 import businesses_ic from "../../assets/icons/growing_businesses_ic.png";
 import established_businesses_ic from "../../assets/icons/established_businesses_ic.png";
 import { portraitOrientationQueryIPads } from "../../constants/styles";
+import { accountsNames } from "../../constants";
 
 const style = {
   cardsContainer: {
@@ -37,7 +38,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
         ]}
         buttonText="RAKstarter"
         scrollToIndex={scrollToIndex}
-        accountType="RAKstarter"
+        accountType={accountsNames.starter}
         handleClick={handleClick}
       />
       <AccountTypeCard
@@ -50,7 +51,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
         ]}
         buttonText="Current Account"
         scrollToIndex={scrollToIndex}
-        accountType="Current Account"
+        accountType={accountsNames.currentAccount}
         handleClick={handleClick}
       />
       <AccountTypeCard
@@ -63,7 +64,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
         ]}
         buttonText="RAKelite"
         scrollToIndex={scrollToIndex}
-        accountType="RAKelite"
+        accountType={accountsNames.elite}
         handleClick={handleClick}
       />
     </div>
