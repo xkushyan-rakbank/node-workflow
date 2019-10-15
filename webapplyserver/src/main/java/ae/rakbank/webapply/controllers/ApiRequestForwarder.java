@@ -107,6 +107,8 @@ public class ApiRequestForwarder {
 				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
 					return captchaResponse;
 				}
+
+				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
 			}
 
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
@@ -189,7 +191,7 @@ public class ApiRequestForwarder {
 	@ResponseBody
 	public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			@RequestBody JsonNode jsonNode, @PathVariable String segment) {
-		
+
 		logger.info("Begin searchProspect() method");
 
 		logger.debug(String.format("searchProspect() method args, RequestBody=[%s], segment=[%s]", jsonNode.toString(),
@@ -426,6 +428,8 @@ public class ApiRequestForwarder {
 				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
 					return captchaResponse;
 				}
+
+				((ObjectNode) requestJSON).remove("recaptchaToken");
 			}
 
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
