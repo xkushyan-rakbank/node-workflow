@@ -75,17 +75,21 @@ class MyApplications extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidMount() {
     const inputParam = {
-      fullName: "HappyPath",
-      countryCode: "+971" || "",
-      mobileNo: "0123456789" || "",
-      email: "abc@abc.com" || ""
+      fname: "abhishek",
+      countryCode: "+971",
+      mobileNo: "0123456789",
+      leadNumber: "ABCD",
+      tradeLicenseNo: "TL100",
+      email: "abc@abc.com",
+      eidNumber: ""
     };
+    this.props.retrieveApplicantInfo(inputParam);
 
-    if (prevProps.endpoints !== this.props.endpoints) {
-      this.props.retrieveApplicantInfo(inputParam);
-    }
+    // if (prevProps.endpoints !== this.props.endpoints) {
+    //   this.props.retrieveApplicantInfo(inputParam);
+    // }
   }
 
   handleChangeView = view => {

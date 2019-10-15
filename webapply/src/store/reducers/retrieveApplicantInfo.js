@@ -3,9 +3,8 @@ import {
   RETRIEVE_APPLICANT_INFO_FAIL
 } from "../actions/retrieveApplicantInfo";
 
-const initialState = {
-  searchResults: [],
-  prospectResults: []
+export const initialState = {
+  searchResults: []
 };
 
 const retrieveApplicantInfoReducer = (state = initialState, action) => {

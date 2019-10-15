@@ -5,7 +5,7 @@ import apiClient from "../../api/apiClient";
 function* searchProspectFormSaga(action) {
   try {
     const inputParam = {
-      fname: action.payload.fname || "",
+      fullName: action.payload.fname || "",
       countryCode: action.payload.countryCode || "",
       mobileNo: action.payload.mobileNo || "",
       leadNumber: action.payload.leadNumber || "",

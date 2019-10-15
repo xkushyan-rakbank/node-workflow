@@ -6,10 +6,13 @@ import apiClient from "../../api/apiClient";
 function* retrieveApplicantInfoSaga(action) {
   try {
     const inputParam = {
-      fullName: action.payload.fullName || "",
+      fname: action.payload.fname || "",
       countryCode: action.payload.countryCode || "",
       mobileNo: action.payload.mobileNo || "",
-      email: action.payload.email || ""
+      leadNumber: action.payload.leadNumber || "",
+      tradeLicenseNo: action.payload.tradeLicenseNo || "",
+      email: action.payload.email || "",
+      eidNumber: ""
     };
 
     const response = yield call(apiClient.retrieveApplicantInfos.applicant, inputParam);
