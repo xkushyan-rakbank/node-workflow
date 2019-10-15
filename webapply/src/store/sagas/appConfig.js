@@ -36,7 +36,7 @@ function* updateProspectSaga(action) {
     set(config, name, action.fields[name]);
   }
 
-  yield put(setProspect(config.prospect));
+  yield put(setProspect(config));
 }
 
 function* updateActionTypeSaga({ actionType }) {
@@ -65,7 +65,7 @@ function* addNewStakeholderSaga() {
   const config = cloneDeep(state.appConfig);
   config.prospect.signatoryInfo.push({});
 
-  yield put(setProspect(config.prospect));
+  yield put(setProspect(config));
 }
 
 function* deleteStakeholderSaga(action) {
@@ -77,7 +77,7 @@ function* deleteStakeholderSaga(action) {
 
   config.prospect.signatoryInfo = updatedSignatories;
 
-  yield put(setProspect(config.prospect));
+  yield put(setProspect(config));
 }
 
 export default function* appConfigSaga() {

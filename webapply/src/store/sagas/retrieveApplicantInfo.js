@@ -23,7 +23,8 @@ function* getProspectIdInfo(action) {
   try {
     const prospectId = action.payload;
     const response = yield call(apiClient.prospect.get, prospectId);
-    yield put(setProspect(response.data));
+    const config = { prospect: response.data };
+    yield put(setProspect(config));
     yield put(displayScreenBasedOnViewId());
   } catch (error) {
     console.log(error);

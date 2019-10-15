@@ -1,8 +1,8 @@
 import * as actions from "../actions/loginForm";
 
-const initialState = {
+export const initialState = {
   loginStatus: false,
-  loginResponse: []
+  loginResponse: {}
 };
 
 const loginFormReducer = (state = initialState, action) => {

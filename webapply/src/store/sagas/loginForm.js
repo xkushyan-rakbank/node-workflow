@@ -5,7 +5,7 @@ import * as actions from "../actions/loginForm";
 import apiClient from "../../api/apiClient";
 import routes from "./../../routes";
 
-function* loginFormSaga(action) {
+export function* loginFormSaga(action) {
   try {
     const param = {
       username: action.payload.userName || "",

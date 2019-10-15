@@ -1,7 +1,6 @@
 {
-    "success": true,
-    "loginMsg": "Login successful",
-    "agentName": "Kapil Verma",
-    "agentRole": "",
-    "deptName": ""
+    "agentName": "string",
+    "agentId": "string",
+    "agentRole": "string",
+    "deptName": "string"
 }
