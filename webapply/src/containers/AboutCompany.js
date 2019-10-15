@@ -39,7 +39,7 @@ class AboutCompany extends React.Component {
 
         return {
           step: nextStep,
-          completedStep: nextStep
+          completedStep: state.step
         };
       });
     }
@@ -57,6 +57,8 @@ class AboutCompany extends React.Component {
     const { classes, index, loading } = this.props;
     const { step, completedStep } = this.state;
     const disabled = completedStep === aboutCompanySteps.length;
+    console.log("completedStep", completedStep);
+    console.log("aboutCompanySteps.length", aboutCompanySteps.length);
     return (
       <>
         <h2>Tell Us about Your Company</h2>

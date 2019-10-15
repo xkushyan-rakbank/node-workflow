@@ -1,12 +1,5 @@
 import * as actions from "../actions/reCaptcha";
 
-/**
- * @typedef {Object} ReCaptcha
- * @property {Boolean} isPending
- * @property {Boolean} isVerified
- * @property {String} token
- * @property {String} error
- */
 const initialState = {
   isPending: false,
   isVerified: false,

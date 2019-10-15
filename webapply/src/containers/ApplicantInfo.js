@@ -32,9 +32,9 @@ class BasicsForm extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
-      this.props.verifyToken();
-    }
+    // if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
+    //   this.props.verifyToken();
+    // }
     // if (
     //   prevProps.prospectId !== this.props.prospectId &&
     //   this.props.prospectId
