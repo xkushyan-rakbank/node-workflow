@@ -142,7 +142,7 @@ const Documents = props => {
       <div className={classes.contentWrapper}>
         <Avatar firstName="Anjali" lastName="Tandon" />
         <div className={classes.userInfo}>
-          <div className={classes.nameField}>Anjali Tandon</div>
+          <div className={classes.nameField}>Abhi</div>
         </div>
       </div>
       <div className={classes.wrapper}>
@@ -180,7 +180,7 @@ const Documents = props => {
       <div className={classes.contentWrapper}>
         <Avatar firstName="Aanchal" lastName="Tandon" />
         <div className={classes.userInfo}>
-          <div className={classes.nameField}>Aanchal Tandon</div>
+          <div className={classes.nameField}>Bhakta</div>
         </div>
       </div>
       <div className={classes.wrapper}>
