@@ -162,7 +162,10 @@ public class WebApplyController {
 
 		String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey")
 				.asText();
+		JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
 		initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
+		initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
+		initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
 
 		String cacheKey = getCacheKey(segment, product, role, device);
 		String configJSON = initStateJSON.toString();
