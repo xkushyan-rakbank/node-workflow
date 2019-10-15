@@ -5650,7 +5650,7 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": "This Person or this person's relative (by relation or law) holds/has held a position with the Government/ Government owned company/political organization",
+		"label": "This Person, or a relative of this person by relation or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country.",
 		"placeholder": null,
 		"path": "$.prospect.signatoryInfo[*].kycDetails.isPEP",
 		"name": "prospect.signatoryInfo[*].kycDetails.isPEP",

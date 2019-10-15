@@ -26,8 +26,8 @@ export const updateProspect = fields => {
   return { type: UPDATE_PROSPECT, fields };
 };
 
-export const setProspect = prospect => {
-  return { type: SET_PROSPECT, prospect };
+export const setProspect = payload => {
+  return { type: SET_PROSPECT, payload };
 };
 
 export const updateProspectId = prospectId => {

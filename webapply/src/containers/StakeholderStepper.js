@@ -55,14 +55,6 @@ class StakeholderStepper extends React.Component {
     }
   }
 
-  handleContinue = () => {
-    if (this.state.step < stakeHoldersSteps.length) {
-      this.setState(state => ({ step: state.step + 1 }));
-    } else {
-      this.setState({ isFinalScreenShown: true });
-    }
-  };
-
   finishStakeholderCreation = () => {
     this.props.hideForm();
     this.setState({ isFinalScreenShown: false });

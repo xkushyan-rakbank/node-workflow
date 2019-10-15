@@ -36,7 +36,7 @@ function* updateProspectSaga(action) {
     set(config, name, action.fields[name]);
   }
 
-  yield put(setProspect(config.prospect));
+  yield put(setProspect(config));
 }
 
 function* updateActionTypeSaga({ actionType }) {
@@ -61,7 +61,6 @@ function* displayScreenBasedOnViewIdSaga() {
 }
 
 function* addNewStakeholderSaga() {
-  console.log("addNewStakeholderSaga");
   const state = yield select();
   const config = cloneDeep(state.appConfig);
   config.prospect.signatoryInfo.push({});
