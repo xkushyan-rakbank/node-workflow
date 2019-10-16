@@ -119,6 +119,8 @@ const style = {
   }
 };
 
+const uri = "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents";
+
 class UploadDocuments extends Component {
   constructor(props) {
     super(props);
@@ -176,8 +178,7 @@ class UploadDocuments extends Component {
           data.append("file", this.state.selectedFile);
           axios({
             method: "post",
-            url:
-              "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents",
+            url: uri,
             data,
             onUploadProgress: ProgressEvent => {
               let progress = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100);

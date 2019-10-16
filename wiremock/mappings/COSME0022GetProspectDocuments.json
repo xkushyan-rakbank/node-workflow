@@ -5,6 +5,9 @@
   },
   "response": {
     "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
     "bodyFileName": "COSME0022GetProspectDocumentsResponse.json"
   }
 }

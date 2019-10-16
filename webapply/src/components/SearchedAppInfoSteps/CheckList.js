@@ -92,7 +92,7 @@ const CheckList = props => {
       )}
       {prospectInfo.signatoryInfo && prospectInfo.signatoryInfo.length > 0 ? (
         prospectInfo.signatoryInfo.map((signatory, index) => (
-          <>
+          <div key={index}>
             <h4 key={index} className={classes.title}>
               {signatory.fullName && signatory.fullName}
             </h4>
@@ -131,7 +131,7 @@ const CheckList = props => {
                   </div>
                 ))}
             </div>
-          </>
+          </div>
         ))
       ) : (
         <div className={classes.errorMsg}>Signatory check list is not available.</div>

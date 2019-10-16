@@ -52,14 +52,14 @@ const AuditTrail = props => {
       <div className={classes.applicationRow}>
         <div>
           <div className={classes.checkListData}>
-            {prospectInfo.applicationInfo.lastModifiedBy != ""
+            {prospectInfo.applicationInfo.lastModifiedBy !== ""
               ? prospectInfo.applicationInfo.lastModifiedBy
               : prospectInfo.applicationInfo.createdBy}
           </div>
         </div>
         <div>
           <div className={classes.checkListData}>
-            {prospectInfo.applicationInfo.lastModifiedDate != ""
+            {prospectInfo.applicationInfo.lastModifiedDate !== ""
               ? prospectInfo.applicationInfo.lastModifiedDate
               : prospectInfo.applicationInfo.createdDate}
           </div>

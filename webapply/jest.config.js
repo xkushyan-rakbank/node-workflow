@@ -20,9 +20,14 @@ module.exports = {
 
   setupFiles: ["./src/setupTests.js"],
 
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
 
-  testPathIgnorePatterns: ["/node_modules/", "./src/setupTests.js", "./src/constants"],
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "./src/setupTests.js",
+    "./src/constants",
+    "./src/assets"
+  ],
 
   coverageThreshold: {
     global: {
@@ -31,6 +36,11 @@ module.exports = {
       functions: 80,
       lines: 80
     }
+  },
+
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js"
   }
 };
 
