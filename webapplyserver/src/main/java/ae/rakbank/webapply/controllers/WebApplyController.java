@@ -250,29 +250,31 @@ public class WebApplyController {
 	}
 
 	private boolean matchCriteria(JsonNode fieldConfig, String segment, String product, String role, String device) {
+		if (fieldConfig.has("criteria")) {
+			JsonNode criteria = fieldConfig.get("criteria");
 
-		JsonNode criteria = fieldConfig.get("criteria");
+			List<String> roles = new ArrayList<>();
+			((ArrayNode) criteria.get("roles")).forEach(node -> roles.add(node.asText()));
 
-		List<String> roles = new ArrayList<>();
-		((ArrayNode) criteria.get("roles")).forEach(node -> roles.add(node.asText()));
+			List<String> segments = new ArrayList<>();
+			((ArrayNode) criteria.get("segments")).forEach(node -> segments.add(node.asText()));
 
-		List<String> segments = new ArrayList<>();
-		((ArrayNode) criteria.get("segments")).forEach(node -> segments.add(node.asText()));
+			List<String> products = new ArrayList<>();
+			((ArrayNode) criteria.get("products")).forEach(node -> products.add(node.asText()));
 
-		List<String> products = new ArrayList<>();
-		((ArrayNode) criteria.get("products")).forEach(node -> products.add(node.asText()));
+			List<String> devices = new ArrayList<>();
+			((ArrayNode) criteria.get("devices")).forEach(node -> devices.add(node.asText()));
 
-		List<String> devices = new ArrayList<>();
-		((ArrayNode) criteria.get("devices")).forEach(node -> devices.add(node.asText()));
+			if (roles.contains(role) && segments.contains(segment) && products.contains(product)
+					&& devices.contains(device)) {
+				return true;
+			}
 
-		if (roles.contains(role) && segments.contains(segment) && products.contains(product)
-				&& devices.contains(device)) {
-			return true;
+			logger.info("End matchCriteria() method");
+
 		}
 
-		logger.info("End matchCriteria() method");
-
-		return false;
+		return true;
 	}
 
 	private String getCachedData(String key) {
