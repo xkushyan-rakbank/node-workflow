@@ -1,10 +1,13 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import apiClient from "../../api/apiClient";
+import { getProspectId } from "../selectors/appConfig";
 import * as actions from "../actions/getProspectDocuments";
 
 function* getProspectDocuments() {
   try {
-    const response = yield call(apiClient.getProspectDocuments.retriveDocuments);
+    const state = yield select();
+    const prospectID = getProspectId(state) || "001"; // remove hardcoded ID
+    const response = yield call(apiClient.getProspectDocuments.retriveDocuments, prospectID);
     if (response.status === 200) {
       yield put(actions.retrieveDocDetailssSuccess(response.data));
     } else {
