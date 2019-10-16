@@ -14,14 +14,20 @@ const style = {
     position: "absolute",
     left: 0,
     width: "100%",
-    transition: "top 400ms"
+    transition: "top 400ms",
+    paddingTop: "170px",
+    "@media only screen and (max-height: 900px)": {
+      paddingTop: "0px"
+    }
   },
   childWrapper: {
     display: "flex",
     flexDirection: "column",
     height: "100vh",
     position: "relative",
-    justifyContent: "center"
+    "@media only screen and (max-height: 900px)": {
+      justifyContent: "center"
+    }
   },
   paginationDots: {
     position: "absolute",

@@ -12,9 +12,6 @@ const style = {
     minWidth: "550px",
     border: "none",
     boxShadow: "none",
-    "@media only screen and (max-width: 991px)": {
-      minWidth: "inherit"
-    },
     "&:not(:last-child)": {
       borderBottom: 0
     },
@@ -33,17 +30,11 @@ const style = {
     minHeight: 60,
     "&$expanded": {
       minHeight: 60
-    },
-    "@media only screen and (max-width: 991px)": {
-      minHeight: 30
     }
   },
   summaryContent: {
     width: "calc(100% - 100px)",
     overflow: "hidden",
-    "@media only screen and (max-width: 991px)": {
-      margin: "0"
-    },
     "&$expanded": {
       margin: "12px 0"
     }
@@ -53,10 +44,7 @@ const style = {
     borderTop: "1px solid rgba(239, 242, 244, .5)",
     borderBottom: "1px solid rgba(239, 242, 244, .5)",
     fontSize: "16px",
-    backgroundColor: "#fff",
-    "@media only screen and (max-width: 991px)": {
-      padding: "8px"
-    }
+    backgroundColor: "#fff"
   },
   iconSize: {
     width: "24px",
@@ -70,9 +58,8 @@ const style = {
   text: {
     paddingBottom: "5px",
     fontSize: "16px",
-    "@media only screen and (max-width: 991px)": {
-      fontSize: "12px",
-      lineHeight: "15px"
+    "@media only screen and (max-height: 991px)": {
+      lineHeight: "16px"
     }
   },
   textEllipsis: {

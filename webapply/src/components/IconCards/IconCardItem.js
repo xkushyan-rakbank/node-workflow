@@ -15,38 +15,21 @@ const style = {
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
-    textAlign: "center",
-    "@media only screen and (max-width: 1300px)": {
-      padding: "10px"
-    },
-    "@media only screen and (max-width: 991px)": {
-      flex: "1 1 30%",
-      margin: "5px",
-      padding: "5px"
-    }
+    textAlign: "center"
   },
   iconCardTitle: {
     paddingTop: "2px",
     paddingBottom: "20px",
     fontSize: "18px",
-    fontWeight: "600",
-    "@media only screen and (max-width: 1300px)": {
-      paddingBottom: "10px"
-    }
+    fontWeight: "600"
   },
   iconCardText: {
     fontSize: "16px",
     display: "block",
-    width: "100%",
-    "@media only screen and (max-width: 991px)": {
-      fontSize: "14px"
-    }
+    width: "100%"
   },
   iconCardImg: {
     paddingBottom: "20px",
-    "@media only screen and (max-width: 1300px)": {
-      paddingBottom: "10px"
-    },
     "& img": {
       width: 60
     }
