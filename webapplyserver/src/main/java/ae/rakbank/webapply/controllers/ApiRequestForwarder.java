@@ -121,8 +121,32 @@ public class ApiRequestForwarder {
 			logger.info("Call createProspect endpoint: " + uriComponents.toString());
 
 			try {
-				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
-						"createSMEProspect()", "createProspectUri", MediaType.APPLICATION_JSON, segment, null);
+				ResponseEntity<?> createProspectResponse = invokeApiEndpoint(httpRequest, httpResponse,
+						uriComponents.toString(), HttpMethod.POST, request, "createSMEProspect()", "createProspectUri",
+						MediaType.APPLICATION_JSON, segment, null);
+
+				if (createProspectResponse.getStatusCode().is2xxSuccessful()) {
+					String prospectId = ((JsonNode) createProspectResponse.getBody()).get("prospectId").asText();
+					logger.info("Send OTP for prospectId:" + prospectId);
+					ObjectMapper objectMapper = new ObjectMapper();
+					ObjectNode otpRequest = objectMapper.createObjectNode();
+					otpRequest.put("prospectId", prospectId);
+					otpRequest.put("countryCode", prospectId);
+					otpRequest.put("mobileNo", prospectId);
+					otpRequest.put("action", "generate");
+					ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, otpRequest,
+							servletRequest);
+
+					if (otpResponse.getStatusCode().is2xxSuccessful()) {
+						return createProspectResponse;
+					} else {
+						return otpResponse;
+					}
+
+				} else {
+					return createProspectResponse;
+				}
+
 			} catch (Exception e) {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
 						e);
