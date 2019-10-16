@@ -30,6 +30,7 @@ instance.interceptors.response.use(
     return response;
   },
   function(error) {
+    console.log({ error });
     const {
       status,
       data: { errors }

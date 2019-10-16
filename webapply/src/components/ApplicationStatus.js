@@ -1,8 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import regularIcon from "./../assets/gif/callback_regular.gif";
-import declineIcon from "./../assets/gif/declined_regular.gif";
-import { applicationStatus } from "../constants";
 
 const styles = {
   appStatus: {
@@ -30,12 +28,12 @@ const styles = {
 
 class ApplicationStatus extends React.Component {
   render() {
-    const { classes, errorReason, serverError } = this.props;
+    const { classes, errorReason } = this.props;
 
     return (
       <div className={classes.appStatus}>
-        <img src={serverError ? declineIcon : regularIcon} alt="error" />
-        <p>{serverError ? applicationStatus.serverError.reason : errorReason.screeningReason}</p>
+        <img src={regularIcon} alt="error" />
+        <p>{errorReason.screeningReason}</p>
       </div>
     );
   }

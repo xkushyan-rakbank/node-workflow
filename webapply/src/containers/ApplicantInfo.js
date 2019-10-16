@@ -8,7 +8,6 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
-// import ErrorMessageAlert from "../components/ErrorMessageAlert";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import { updateActionType } from "../store/actions/appConfig";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
@@ -77,8 +76,6 @@ class BasicsForm extends React.Component {
         <p className="formDescription">
           First things first, you need a login, so you can come back to your application later.
         </p>
-
-        {/* <ErrorMessageAlert /> */}
 
         <form noValidate onSubmit={this.submitForm}>
           <TextInput id="Aplnt.fullName" />

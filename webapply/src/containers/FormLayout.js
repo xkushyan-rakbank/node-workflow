@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { history } from "./../store/configureStore";
 import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";
+import ErrorMessageAlert from "../components/ErrorMessageAlert";
 import Header from "./../components/Header";
 import HeaderTitle from "./../components/HeaderTitle";
 import { applicationStatusReset } from "./../store/actions/applicationStatus";
@@ -89,11 +90,9 @@ class FormLayout extends React.Component {
               <div className={classes.mainContainer}>
                 {!routerToAddPaddingInSlider.includes(location.pathname) && <HeaderTitle />}
 
-                {isProceed ? (
-                  children
-                ) : (
-                  <ApplicationStatus serverError={serverError} errorReason={screeningResults} />
-                )}
+                {serverError && <ErrorMessageAlert serverError />}
+
+                {isProceed ? children : <ApplicationStatus errorReason={screeningResults} />}
               </div>
             </div>
           </div>

@@ -4,7 +4,7 @@ import * as actions from "../actions/getProspectDocuments";
 
 function* getProspectDocuments() {
   try {
-    const response = yield call(apiClient.getProspectDocuments.retriveDocuments);
+    const response = yield call(apiClient.getProspectDocuments.retriveDocuments, "001");
     if (response.status === 200) {
       yield put(actions.retrieveDocDetailssSuccess(response.data));
     } else {

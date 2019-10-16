@@ -35,6 +35,12 @@ class FileUploader extends React.Component {
     };
   }
 
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.endpoints !== this.props.endpoints) {
+  //     this.props.retrieveDocDetails();
+  //   }
+  // }
+
   componentDidMount() {
     this.props.retrieveDocDetails();
   }
@@ -88,7 +94,8 @@ class FileUploader extends React.Component {
 const mapStateToProps = state => {
   return {
     uploadedDoc: state.uploadedDocs.docs,
-    getSignatories: appConfigSelectors.getSignatories(state)
+    getSignatories: appConfigSelectors.getSignatories(state),
+    endpoints: appConfigSelectors.getEndpoints(state)
   };
 };
 
