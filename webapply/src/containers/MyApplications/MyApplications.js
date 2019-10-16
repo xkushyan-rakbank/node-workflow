@@ -75,9 +75,9 @@ class MyApplications extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps) {
     const inputParam = {
-      fname: "abhishek",
+      fullName: "abhishek",
       countryCode: "+971",
       mobileNo: "0123456789",
       leadNumber: "ABCD",
@@ -85,11 +85,9 @@ class MyApplications extends React.Component {
       email: "abc@abc.com",
       eidNumber: ""
     };
-    this.props.retrieveApplicantInfo(inputParam);
-
-    // if (prevProps.endpoints !== this.props.endpoints) {
-    //   this.props.retrieveApplicantInfo(inputParam);
-    // }
+    if (prevProps.endpoints !== this.props.endpoints) {
+      this.props.retrieveApplicantInfo(inputParam);
+    }
   }
 
   handleChangeView = view => {

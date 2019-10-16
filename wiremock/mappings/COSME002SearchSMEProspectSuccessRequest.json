@@ -4,7 +4,7 @@
 		"url": "/api/v1/banks/RAK/usertypes/sme/prospects/search",
 		"bodyPatterns": [
 			{
-				"matchesJsonPath": "$[?(@.fname == 'abhishek' || (@.countryCode == '+971' && @.mobileNo == '0123456789') || @.leadNumber == 'ABCD' || @.tradeLicenseNo == 'TL100' || @.email == 'abc@abc.com' || @.eidNumber == '')]"
+				"matchesJsonPath": "$[?(@.fullName == 'abhishek' || (@.countryCode == '+971' && @.mobileNo == '0123456789') || @.leadNumber == 'ABCD' || @.tradeLicenseNo == 'TL100' || @.email == 'abc@abc.com' || @.eidNumber == '')]"
 			}
 		]
 	},
