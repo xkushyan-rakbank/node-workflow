@@ -89,7 +89,8 @@ public class WebApplyController {
 	@GetMapping(value = "/config", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Object> getWebApplyConfig(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestParam String segment, @RequestParam String product, @RequestParam String role,
+			@RequestParam(required = false, defaultValue = "") String segment,
+			@RequestParam(required = false, defaultValue = "") String product, @RequestParam String role,
 			@RequestParam(required = false, defaultValue = "desktop") String device) throws Exception {
 		logger.info("Begin getWebApplyConfig() method");
 
@@ -254,19 +255,28 @@ public class WebApplyController {
 			JsonNode criteria = fieldConfig.get("criteria");
 
 			List<String> roles = new ArrayList<>();
-			((ArrayNode) criteria.get("roles")).forEach(node -> roles.add(node.asText()));
+			if (criteria.has("roles")) {
+				((ArrayNode) criteria.get("roles")).forEach(node -> roles.add(node.asText()));
+			}
 
 			List<String> segments = new ArrayList<>();
-			((ArrayNode) criteria.get("segments")).forEach(node -> segments.add(node.asText()));
+			if (criteria.has("segments")) {
+				((ArrayNode) criteria.get("segments")).forEach(node -> segments.add(node.asText()));
+			}
 
 			List<String> products = new ArrayList<>();
-			((ArrayNode) criteria.get("products")).forEach(node -> products.add(node.asText()));
+			if (criteria.has("products")) {
+				((ArrayNode) criteria.get("products")).forEach(node -> products.add(node.asText()));
+			}
 
 			List<String> devices = new ArrayList<>();
-			((ArrayNode) criteria.get("devices")).forEach(node -> devices.add(node.asText()));
+			if (criteria.has("devices")) {
+				((ArrayNode) criteria.get("devices")).forEach(node -> devices.add(node.asText()));
+			}
 
-			if (roles.contains(role) && segments.contains(segment) && products.contains(product)
-					&& devices.contains(device)) {
+			if ((roles.contains(role) || roles.isEmpty()) && (segments.contains(segment) || segments.isEmpty())
+					&& (products.contains(product) || products.isEmpty())
+					&& (devices.contains(device) || devices.isEmpty())) {
 				return true;
 			}
 
