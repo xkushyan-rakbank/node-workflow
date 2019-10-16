@@ -203,8 +203,7 @@
 				"companyName": "",
 				"country": ""
 			}
-		],
-		"isShareholderACompany": false
+		]
 	},
 	"signatoryInfo": [
 		{
@@ -240,6 +239,7 @@
 			"employmentStatus": "",
 			"kycVerified": false,
 			"kycDetails": {
+				"isShareholderACompany": false,
 				"salutation": "",
 				"shareholderPOASignatoryName": "",
 				"isSignatory": false,
