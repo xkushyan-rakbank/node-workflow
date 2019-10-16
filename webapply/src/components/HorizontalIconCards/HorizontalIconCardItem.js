@@ -4,10 +4,10 @@ import { withStyles } from "@material-ui/core";
 const style = {
   iconCardWrapper: {
     display: "flex",
-    flex: "1 1",
     justifyContent: "center",
     alignItems: "center",
-    minWidth: "285px",
+    width: "380px",
+    height: "122px",
     margin: "10px 10px 10px 0",
     padding: "27px 20px",
     border: "solid 1px #e8e8e8",
@@ -15,21 +15,13 @@ const style = {
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
     textAlign: "center",
-    "@media only screen and (max-width: 1300px)": {
-      padding: "5px 20px"
-    },
-    "@media only screen and (max-height: 800px)": {
-      margin: "5px"
-    }
+    boxSizing: "border-box"
   },
   iconCardText: {
     display: "flex",
     flex: "1 1",
     fontSize: "16px",
-    textAlign: "left",
-    "@media only screen and (max-height: 800px)": {
-      fontSize: "14px"
-    }
+    textAlign: "left"
   },
   iconCardImg: {
     display: "flex",

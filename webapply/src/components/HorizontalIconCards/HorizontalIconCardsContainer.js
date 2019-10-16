@@ -5,8 +5,8 @@ const style = {
   iconsWrapper: {
     display: "flex",
     flexWrap: "wrap",
-    overflowX: "auto",
-    overflowY: "hidden"
+    alignContent: "baseline",
+    minHeight: "388px"
   }
 };
 

@@ -13,7 +13,7 @@ const DetailedAccount = ({ applicationInfo }) => {
   const { accountType } = applicationInfo;
 
   let videoUrl, posterUrl;
-  if (Object.keys(applicationInfo).length) {
+  if (Object.keys(applicationInfo).length && accountType.length) {
     videoUrl = getVideoUrl(applicationInfo).videoUrl;
     posterUrl = getVideoUrl(applicationInfo).posterUrl;
   }

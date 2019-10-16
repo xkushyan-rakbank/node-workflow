@@ -7,6 +7,7 @@ import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
 import { getIconsByAccount } from "../../constants/icons";
+import { accountsNames } from "../../constants";
 
 const style = {
   icon: {
@@ -36,20 +37,15 @@ const style = {
   info: {
     color: "#373737",
     fontSize: 18
-  },
-  overview: {
-    "@media only screen and (max-width: 1300px)": {
-      display: "none"
-    }
   }
 };
 
 const TwoSteps = ({ classes, accountType, islamicBanking }) => {
   const getGifUrl = () => {
-    if (accountType === "RAKelite") {
-      return overviewElite;
-    } else if (islamicBanking) {
+    if (islamicBanking) {
       return overviewIslamic;
+    } else if (accountType === accountsNames.elite) {
+      return overviewElite;
     }
     return overviewRegular;
   };

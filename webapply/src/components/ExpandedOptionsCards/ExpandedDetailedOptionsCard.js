@@ -23,24 +23,11 @@ const style = {
     "&:last-child": {
       marginRight: 0
     }
-    // "@media only screen and (max-width: 1300px)": {
-    //   padding: "10px 20px 10px 20px"
-    // },
-    // "@media only screen and (max-height: 800px)": {
-    //   padding: "10px 20px 10px 20px"
-    // }
   },
   title: {
     fontSize: "20px",
     borderBottom: "solid 1px #e8e8e8",
-    paddingBottom: "30px",
-    "@media only screen and (max-width: 1300px)": {
-      paddingBottom: "10px",
-      fontSize: "18px"
-    },
-    "@media only screen and (max-height: 800px)": {
-      paddingBottom: "10px"
-    }
+    paddingBottom: "30px"
   },
   icon: {
     display: "flex",
@@ -51,9 +38,6 @@ const style = {
     "& img": {
       width: "80px",
       height: "auto"
-    },
-    "@media only screen and (max-width: 1300px)": {
-      // display: "none"
     }
   },
   name: {
@@ -67,9 +51,6 @@ const style = {
     textAlign: "center",
     "& span": {
       marginLeft: "5px"
-    },
-    "@media only screen and (max-width: 1300px)": {
-      paddingTop: "10px"
     }
   },
   options: {
@@ -79,17 +60,8 @@ const style = {
       position: "relative",
       listStyleType: "none"
     },
-    "@media only screen and (max-width: 1300px)": {
-      "& li": {
-        fontSize: "16px"
-      },
-      margin: "5px 0"
-    },
     "& > li:not(:last-child)": {
-      marginBottom: "20px",
-      "@media only screen and (max-width: 1300px)": {
-        marginBottom: "5px"
-      }
+      marginBottom: "20px"
     }
   },
   listIcon: {
@@ -111,9 +83,6 @@ const style = {
       width: "6px",
       height: "1px",
       backgroundColor: "#000"
-    },
-    "@media only screen and (max-width: 1300px)": {
-      display: "none"
     }
   },
   link: {
@@ -123,10 +92,7 @@ const style = {
   },
   linkWrapper: {
     paddingBottom: "40px",
-    borderBottom: "solid 1px #e8e8e8",
-    "@media only screen and (max-width: 1300px)": {
-      paddingBottom: "10px"
-    }
+    borderBottom: "solid 1px #e8e8e8"
   },
   upgrade: {
     paddingTop: "5px",
