@@ -1,12 +1,9 @@
 {
 	"request": {
-		"method": "POST",
-		"url": "/api/v1/banks/RAK/usertypes/sme/prospects/search",
-		"bodyPatterns": [
-			{
-				"matchesJsonPath": "$[?(@.fullName == 'abhishek' || (@.countryCode == '+971' && @.mobileNo == '0123456789') || @.leadNumber == 'ABCD' || @.tradeLicenseNo == 'TL100' || @.email == 'abc@abc.com' || @.eidNumber == '')]"
-			}
-		]
+		"method": "GET",
+		"url": "/api/v1/banks/RAK/usertypes/sme/prospects/102",
+		"bodyPatterns": [			
+		]		
 	},
 	"response": {
 		"status": 200,
@@ -18,6 +15,6 @@
             "x-frame-options" : "DENY",
             "x-xss-protection" : "1; mode=block"
         },		
-		"bodyFileName": "COSME002SearchSMEProspectSuccessResponse.json"
+		"bodyFileName": "COSME003GetSMEProspectSuccessResponse.json"
 	}
 }

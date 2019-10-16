@@ -6,7 +6,7 @@ import apiClient from "../../api/apiClient";
 function* retrieveApplicantInfoSaga(action) {
   try {
     const inputParam = {
-      fname: action.payload.fname || "",
+      fullName: action.payload.fullName || "",
       countryCode: action.payload.countryCode || "",
       mobileNo: action.payload.mobileNo || "",
       leadNumber: action.payload.leadNumber || "",
