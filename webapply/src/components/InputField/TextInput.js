@@ -24,6 +24,9 @@ const styles = {
     "& fieldset": {
       borderRadius: "8px !important",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#373737"
     }
   },
   disabled: {
@@ -32,24 +35,31 @@ const styles = {
   selectCombined: {
     flexDirection: "row !important",
     margin: "12px 0 24px !important",
+    position: "relative",
     "& > div": {
       margin: "0 !important",
       "&:first-child": {
         "& fieldset": {
-          borderRight: 0,
+          border: 0,
           borderTopRightRadius: " 0 !important",
-          borderBottomRightRadius: " 0 !important",
-          borderTopLeftRadius: " 8px !important",
-          borderBottomLeftRadius: " 8px !important"
+          borderBottomRightRadius: " 0 !important"
         }
       },
       "&:last-child": {
-        flex: "1",
-        "& fieldset": {
-          borderTopLeftRadius: "0 !important",
-          borderBottomLeftRadius: "0 !important"
-        }
+        flex: "1"
       }
+    },
+    "& label": {
+      transform: "translate(114px, 20px) scale(1)"
+    },
+    "& label.MuiInputLabel-outlined.MuiInputLabel-shrink": {
+      transform: "translate(114px, -6px) scale(0.75)"
+    },
+    "& legend": {
+      marginLeft: 102
+    },
+    "& input": {
+      paddingLeft: 107
     }
   },
   selectCombinedError: {

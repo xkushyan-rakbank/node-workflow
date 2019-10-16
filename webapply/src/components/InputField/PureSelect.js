@@ -32,8 +32,9 @@ const styles = {
       transform: " translate(0, -50%)"
     },
     "& fieldset": {
-      // target style IE11
+      // borderRight: "1px solid #dddddd !important",
       "@media all and (-ms-high-contrast: active), (-ms-high-contrast: none)": {
+        // target style IE11
         top: "0"
       }
     }
@@ -48,7 +49,7 @@ const styles = {
       backgroundColor: " #ddd",
       right: " 56px",
       top: 0,
-      zIndex: "-1"
+      zIndex: "1"
     },
     "& > div:first-child": {
       paddingRight: "56px"
@@ -64,14 +65,24 @@ const styles = {
   },
   selectFieldCombined: {
     width: "93px !important",
+    height: "100%",
+    position: "absolute",
+    zIndex: 1,
     "& label": {
       maxWidth: "unset"
     },
     "& fieldset": {
-      borderColor: "rgba(194, 194, 194, 0.56)"
+      borderColor: "transparent",
+      borderRight: "1px solid #dddddd !important"
     },
     "& svg": {
       right: "10px"
+    },
+    "& input": {
+      paddingLeft: 0
+    },
+    "& legend": {
+      marginLeft: 0
     }
   },
   chips: {
