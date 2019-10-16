@@ -130,6 +130,8 @@ const AccountInfo = ({ classes, accountType, history }) => {
   const { location: { pathname } = {} } = history;
   const handleClick = path => history.push(path);
   const isApplicationOverview = pathname === "/ApplicationOverview";
+  const isMyApplications = pathname === "/MyApplications";
+
   return (
     <div className={classes.contentContainer}>
       {accountType && pathname !== "/ApplicationOverview" ? (
@@ -156,6 +158,8 @@ const AccountInfo = ({ classes, accountType, history }) => {
         <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
           {isApplicationOverview
             ? "Opening an account has never been this simple."
+            : isMyApplications
+            ? "Your  applications, at a glance"
             : "All businesses start with an account. Get yours now."}
           {isApplicationOverview && (
             <SubmitButton
@@ -241,7 +245,8 @@ class FormNavigation extends React.Component {
     const showAccountInfo = new Set([
       "/AccountsComparison",
       "/DetailedAccount",
-      "/ApplicationOverview"
+      "/ApplicationOverview",
+      "/MyApplications"
     ]).has(location.pathname);
     const backgroundImage = getBgImage(accountType, islamicBanking);
 
