@@ -89,8 +89,9 @@ public class WebApplyController {
 	@GetMapping(value = "/config", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Object> getWebApplyConfig(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestParam(required = false, defaultValue = "") String segment,
-			@RequestParam(required = false, defaultValue = "") String product, @RequestParam String role,
+			@RequestParam(required = false, defaultValue = "unknown") String segment,
+			@RequestParam(required = false, defaultValue = "unknown") String product,
+			@RequestParam(required = false, defaultValue = "unknown") String role,
 			@RequestParam(required = false, defaultValue = "desktop") String device) throws Exception {
 		logger.info("Begin getWebApplyConfig() method");
 
