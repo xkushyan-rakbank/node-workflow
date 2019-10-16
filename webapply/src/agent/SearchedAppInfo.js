@@ -11,6 +11,7 @@ import * as loginSelector from "./../store/selectors/loginSelector";
 import { history } from "./../store/configureStore";
 import BackLink from "../components/Buttons/BackLink";
 import { retrieveDocDetails } from "./../store/actions/getProspectDocuments";
+import { getProspectInfo } from "./../store/actions/retrieveApplicantInfo";
 
 const styles = {
   sectionTitleIndent: {
@@ -45,8 +46,12 @@ class SearchedAppInfo extends React.Component {
   }
 
   componentDidMount() {
-    //this.props.retrieveDocDetails();
+    this.props.retrieveDocDetails();
   }
+
+  redirectUserPage = () => {
+    this.props.getProspectInfo(this.props.match.params.id);
+  };
 
   render() {
     const { classes, index, searchResults, match } = this.props;
@@ -95,7 +100,7 @@ class SearchedAppInfo extends React.Component {
         </CompanyStakeholderCard>
         <div className="linkContainer">
           <BackLink path={routes.searchProspect} />
-          <SubmitButton label={"Edit"} justify="flex-end" />
+          <SubmitButton label={"Edit"} justify="flex-end" handleClick={this.redirectUserPage} />
         </div>
       </>
     ) : (
@@ -110,7 +115,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  retrieveDocDetails
+  retrieveDocDetails,
+  getProspectInfo
 };
 
 export default withStyles(styles)(

@@ -9234,6 +9234,7 @@
 			"invalid": "Field is invalid.",
 			"multilineInvalid": null
 		},
+		"title": "This is the name of the person who had registered.",
 		"applicable": null,
 		"label": "Applicant Name",
 		"placeholder": null,
@@ -9405,6 +9406,7 @@
 			"invalid": "Field is invalid.",
 			"multilineInvalid": null
 		},
+		"title": "This is the email id of the person who had registered.",
 		"applicable": null,
 		"label": "E-mail Address",
 		"placeholder": null,
