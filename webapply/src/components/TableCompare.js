@@ -41,7 +41,7 @@ const style = {
     zIndex: "1",
     top: "-15px",
     height: "calc(100% + 30px)",
-    transition: "left .5s ease",
+    transition: "left .25s ease",
     "@media only screen and (max-height: 900px)": {
       height: "calc(100% + 30px)"
     },

@@ -4,7 +4,7 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
-import { formStepper, searchProspectStepper } from "../constants";
+import { accountsNames, formStepper, searchProspectStepper } from "../constants";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import SubmitButton from "./Buttons/SubmitButton";
@@ -74,7 +74,8 @@ const style = {
     justifyContent: "space-between",
     "@media only screen and (max-width: 1300px)": {
       marginLeft: 40,
-      width: "auto"
+      width: "auto",
+      paddingRight: "25px"
     },
     "@media only screen and (max-width: 1220px)": {
       marginLeft: 20
@@ -130,6 +131,8 @@ const AccountInfo = ({ classes, accountType, history }) => {
   const { location: { pathname } = {} } = history;
   const handleClick = path => history.push(path);
   const isApplicationOverview = pathname === "/ApplicationOverview";
+  const isMyApplications = pathname === "/MyApplications";
+
   return (
     <div className={classes.contentContainer}>
       {accountType && pathname !== "/ApplicationOverview" ? (
@@ -156,6 +159,8 @@ const AccountInfo = ({ classes, accountType, history }) => {
         <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
           {isApplicationOverview
             ? "Opening an account has never been this simple."
+            : isMyApplications
+            ? "Your  applications, at a glance"
             : "All businesses start with an account. Get yours now."}
           {isApplicationOverview && (
             <SubmitButton
@@ -198,7 +203,7 @@ const FormStepper = ({ step, path, checkLoginStatus }) =>
 
 const getBgImage = (accountType, islamicBanking) => {
   const bgImageUrl =
-    accountType === "RAKelite"
+    accountType === accountsNames.elite
       ? "bg-blob-brown.png"
       : islamicBanking
       ? "bg-blob-green.png"
@@ -241,7 +246,8 @@ class FormNavigation extends React.Component {
     const showAccountInfo = new Set([
       "/AccountsComparison",
       "/DetailedAccount",
-      "/ApplicationOverview"
+      "/ApplicationOverview",
+      "/MyApplications"
     ]).has(location.pathname);
     const backgroundImage = getBgImage(accountType, islamicBanking);
 
