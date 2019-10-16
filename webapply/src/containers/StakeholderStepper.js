@@ -9,7 +9,6 @@ import StatusLoader from "../components/StatusLoader";
 import LinkButton from "../components/Buttons/LinkButton";
 import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
 import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
-// import FilledInfoCard from "../components/FilledInfoCard";
 
 const styles = {
   title: {
@@ -31,6 +30,16 @@ const styles = {
   button: {
     fontSize: "16px",
     color: "#c00000"
+  },
+  userInfo: {
+    display: "flex",
+    flex: 1
+  },
+  nameField: {
+    fontSize: "20px",
+    fontWeight: "600",
+    lineHeight: "1.4",
+    marginLeft: "20px"
   }
 };
 
@@ -38,7 +47,8 @@ class StakeholderStepper extends React.Component {
   state = {
     isFinalScreenShown: false,
     step: 1,
-    confirmation: false
+    confirmation: false,
+    isStatusShown: false
   };
 
   componentDidUpdate(prevProps) {
@@ -48,8 +58,9 @@ class StakeholderStepper extends React.Component {
 
         return {
           step: nextStep,
-          completedStep: nextStep,
-          isFinalScreenShown: state.step === stakeHoldersSteps.length
+          completedStep: state.step,
+          isFinalScreenShown: state.step === stakeHoldersSteps.length,
+          isStatusShown: true
         };
       });
     }
@@ -62,7 +73,7 @@ class StakeholderStepper extends React.Component {
 
   deleteHandler = () => {
     if (this.state.confirmation) {
-      this.setState({ confirmation: true });
+      this.setState({ confirmation: false });
       this.props.deleteStakeholder();
     } else {
       this.setState({ confirmation: true });
@@ -75,11 +86,21 @@ class StakeholderStepper extends React.Component {
     }
   };
 
+  renderContent = () => {
+    const { classes, firstName, lastName, loading } = this.props;
+    const { isStatusShown } = this.state;
+    return (
+      <div className={classes.userInfo}>
+        <div className={classes.nameField}>{`${firstName} ${lastName}`}</div>
+        {isStatusShown && <StatusLoader loading={loading} />}
+      </div>
+    );
+  };
+
   render() {
     const {
       classes,
       index,
-      loading,
       sendProspectToAPI,
       showNewStakeholder,
       deleteStakeholder,
@@ -96,12 +117,9 @@ class StakeholderStepper extends React.Component {
 
     return (
       <CompanyStakeholderCard
-        content={
-          <>
-            <div className={classes.title}>New Stakeholder</div>
-            {loading && <StatusLoader />}
-          </>
-        }
+        content={this.state.isStatusShown && this.renderContent()}
+        firstName={this.state.isStatusShown ? firstName : "New Stakeholder"}
+        lastName={this.state.isStatusShown ? lastName : ""}
       >
         <div className={classes.formContent}>
           {stakeHoldersSteps.map(item => {

@@ -36,21 +36,21 @@ const FilledStakeholderCard = props => {
   const {
     firstName,
     middleName,
-    fullName,
+    lastName,
     signatoryRights,
-    shareholding,
     classes,
     changeEditableStep,
-    index
+    index,
+    kycDetails: { shareHoldingPercentage } = {}
   } = props;
 
   const editStakeholder = () => changeEditableStep(index);
   const renderContent = () => (
     <>
       <div className={classes.userInfo}>
-        <div className={classes.nameField}>{`${firstName} ${middleName} ${fullName}`}</div>
+        <div className={classes.nameField}>{`${firstName} ${middleName} ${lastName}`}</div>
         {signatoryRights && <div className={classes.signatoryField}>Signatory Rights</div>}
-        <div className={classes.shareholdingField}>{`Shareholding ${shareholding}%`}</div>
+        <div className={classes.shareholdingField}>{`Shareholding ${shareHoldingPercentage}%`}</div>
       </div>
 
       <LinkButton clickHandler={editStakeholder} />
@@ -59,7 +59,7 @@ const FilledStakeholderCard = props => {
   return (
     <CompanyStakeholderCard
       firstName={firstName}
-      lastName={fullName}
+      lastName={lastName}
       content={renderContent()}
       className={classes.indent}
     />
