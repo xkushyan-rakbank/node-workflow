@@ -71,7 +71,7 @@ const Header = props => {
         <div>
           <img src={logo} alt="rak bank" />
         </div>
-        {isShowAccountType && <span className={classes.accountType}>{accountTypeText}</span>}
+        {isShowAccountType ? <span className={classes.accountType}>{accountTypeText}</span> : null}
       </Link>
     </header>
   );
