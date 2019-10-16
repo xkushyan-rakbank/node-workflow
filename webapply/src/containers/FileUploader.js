@@ -35,14 +35,13 @@ class FileUploader extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.endpoints !== this.props.endpoints) {
-      this.props.retrieveDocDetails();
-    }
+  componentDidMount() {
+    this.props.retrieveDocDetails();
   }
 
   render() {
     const DocDetails = this.props;
+    console.log(this.props.getSignatories);
     const { classes } = this.props;
     // let companyOdcLength;
     // let StakeholdersDocLength;
