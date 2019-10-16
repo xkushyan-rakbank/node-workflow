@@ -10,9 +10,6 @@ import { getIconsByAccount } from "../../constants/icons";
 const style = {
   indent: {
     marginBottom: "20px"
-    // "@media only screen and (max-width: 1300px)": {
-    //   marginBottom: "0"
-    // }
   },
   notification: {
     width: "100%",
@@ -22,9 +19,6 @@ const style = {
     color: "#888888",
     top: "calc(100vh - 290px)",
     position: "absolute"
-    // "@media only screen and (max-width: 1300px)": {
-    //   paddingTop: "10px"
-    // }
   },
   icon: {
     width: "64px",
