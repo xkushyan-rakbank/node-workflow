@@ -92,7 +92,8 @@ const style = {
   },
   linkWrapper: {
     paddingBottom: "40px",
-    borderBottom: "solid 1px #e8e8e8"
+    borderBottom: "solid 1px #e8e8e8",
+    fontWeight: "600"
   },
   upgrade: {
     paddingTop: "5px",
