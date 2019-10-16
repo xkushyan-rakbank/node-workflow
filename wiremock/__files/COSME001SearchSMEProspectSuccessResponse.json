@@ -208,25 +208,104 @@
       },
       "applicationInfo": {
         "createdDate": "string",
-        "lastModifiedDate": "string",
+        "lastModifiedDate": "12:10:2019",
         "createdBy": "string",
-        "lastModifiedBy": "string",
+        "lastModifiedBy": "Anil",
         "viewId": "/ApplicationSubmitted",
         "actionType": "Save"
       },
       "signatoryInfo": [
         {
           "signatoryId": "string",
-          "fullName": "string",
+          "fullName": "Nitin",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
               {
-                "screeningType": "string",
-                "screeningStatus": "string",
+                "screeningType": "Dedupe Check",
+                "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Blacklist Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Negative List Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Match",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Risk Rating",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Risk rating value",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              }
+            ]
+          }
+        },
+        {
+          "signatoryId": "string",
+          "fullName": "Rahul",
+          "screeningInfo": {
+            "statusOverAll": "proceed",
+            "screeningResults": [
+              {
+                "screeningType": "Dedupe Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Blacklist Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Negative List Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Match",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Risk Rating",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Risk rating value",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -236,17 +315,47 @@
         }
       ],
       "organizationInfo": {
-        "licenseNumber": "447877565655",
+        "licenseNumber": "3456798765789",
         "companyName": "Purva Limited",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [
             {
-              "screeningType": "string",
-              "screeningStatus": "string",
+              "screeningType": "Dedupe Check",
+              "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "string",
+              "screeningReason": "No Match Reason",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Blacklist Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "No Match Reason",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Negative List Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "Match",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Risk Rating",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "Risk rating value",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -281,25 +390,104 @@
       },
       "applicationInfo": {
         "createdDate": "string",
-        "lastModifiedDate": "string",
+        "lastModifiedDate": "12:10:2019",
         "createdBy": "string",
-        "lastModifiedBy": "string",
+        "lastModifiedBy": "Sachin",
         "viewId": "/ApplicationSubmitted",
         "actionType": "Save"
       },
       "signatoryInfo": [
         {
           "signatoryId": "string",
-          "fullName": "string",
+          "fullName": "Abhilasha",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
               {
-                "screeningType": "string",
-                "screeningStatus": "string",
+                "screeningType": "Dedupe Check",
+                "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Blacklist Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Negative List Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Match",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Risk Rating",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Risk rating value",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              }
+            ]
+          }
+        },
+        {
+          "signatoryId": "string",
+          "fullName": "Ankita",
+          "screeningInfo": {
+            "statusOverAll": "proceed",
+            "screeningResults": [
+              {
+                "screeningType": "Dedupe Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Blacklist Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "No Match Reason",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Negative List Check",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Match",
+                "reasonNotes": "string",
+                "reasonCode": "string",
+                "reasonStatus": "string"
+              },
+              {
+                "screeningType": "Risk Rating",
+                "screeningStatus": "Completed",
+                "screeningFlag": "string",
+                "screeningNotes": "string",
+                "screeningReason": "Risk rating value",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -309,17 +497,47 @@
         }
       ],
       "organizationInfo": {
-        "licenseNumber": "50978643469",
+        "licenseNumber": "3456798765789",
         "companyName": "ACC Corporate Limited",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [
             {
-              "screeningType": "string",
-              "screeningStatus": "string",
+              "screeningType": "Dedupe Check",
+              "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "string",
+              "screeningReason": "No Match Reason",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Blacklist Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "No Match Reason",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Negative List Check",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "Match",
+              "reasonNotes": "string",
+              "reasonCode": "string",
+              "reasonStatus": "string"
+            },
+            {
+              "screeningType": "Risk Rating",
+              "screeningStatus": "Completed",
+              "screeningFlag": "string",
+              "screeningNotes": "string",
+              "screeningReason": "Risk rating value",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"

@@ -13,7 +13,7 @@ import * as appConfigSelectors from "../store/selectors/appConfig";
 import { updateProspect } from "../store/actions/appConfig";
 
 import checkIc from "../assets/icons/check.png";
-import { portraitOrientationQueryIPads } from "../constants/styles";
+import { accountsNames } from "../constants";
 
 const style = {
   paperRoot: {
@@ -28,69 +28,10 @@ const style = {
   tableHead: {
     backgroundColor: "#f7f8f9"
   },
-  tableRoot: {
-    tableLayout: "fixed",
-    width: "100%",
-    borderRadius: "8px",
-    position: "relative",
-    overflow: "hidden",
-    margin: "40px 0 30px 0",
-    "&.mobileTable": {
-      display: "none"
-    },
-    "@media only screen and (max-width: 1100px)": {
-      display: "none",
-      margin: "0",
-      "& + &": {
-        marginTop: "20px"
-      },
-      "&.mobileTable": {
-        display: "block"
-      }
-    },
-    "& th, & td": {
-      borderBottom: "none",
-      zIndex: "1"
-    },
-    "& tr:not(:last-child) td": {
-      "&:before": {
-        content: "''",
-        position: "absolute",
-        left: 0,
-        right: 0,
-        margin: "0 auto",
-        width: "90%",
-        height: "2px",
-        backgroundColor: "#f7f8f9",
-        display: "block",
-        top: "-2px"
-      }
-    },
-    "& tr:nth-of-type(even) td": {
-      "&:before": {
-        bottom: "2px"
-      }
-    },
-    "& tr:nth-of-type(odd) td": {
-      "&:before": {
-        bottom: "-2px"
-      }
-    },
-    "& th:last-child, & td:last-child": {
-      paddingRight: "0",
-      "@media only screen and (max-width: 1100px)": {
-        padding: "0"
-      }
-    }
-  },
   rootCellName: {
     maxWidth: "180px",
     paddingLeft: "5px",
     paddingRight: "0",
-    "@media only screen and (max-width: 1100px)": {
-      maxWidth: "inherit",
-      width: "50%"
-    },
     "@media only screen and (max-width: 991px)": {
       width: "75%"
     }
@@ -100,15 +41,14 @@ const style = {
     zIndex: "1",
     top: "-15px",
     height: "calc(100% + 30px)",
-    "@media only screen and (max-width: 1100px)": {
-      display: "none"
-    },
+    transition: "left .5s ease",
     "@media only screen and (max-height: 900px)": {
       height: "calc(100% + 30px)"
     },
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
-    border: "solid 1px #e8e8e8"
+    border: "solid 1px #e8e8e8",
+    backgroundColor: "#fff"
   },
   containedButton: {
     boxShadow: "none",
@@ -129,27 +69,21 @@ const style = {
     color: "#373737",
     fontSize: "14px",
     textAlign: "center",
-    display: "block",
-    "@media only screen and (max-width: 1100px)": {
-      lineHeight: "1"
-    }
-  },
-  mobileTable: {
-    display: "none"
+    display: "block"
   }
 };
 
 const shortNames = {
   starter: {
-    name: "RAKStarter",
+    name: accountsNames.starter,
     ref: "RAKStarter"
   },
   currentAccount: {
-    name: "Current Account",
+    name: accountsNames.currentAccount,
     ref: "CurrentAccount"
   },
   elite: {
-    name: "RAKelite",
+    name: accountsNames.elite,
     ref: "RAKElite"
   }
 };
@@ -198,10 +132,7 @@ const StyledTableRow = withStyles(() => ({
       fontSize: "14px",
       color: "#888888",
       padding: "0 5px 0 0",
-      fontFamily: "Open Sans",
-      "@media only screen and (max-width: 1100px)": {
-        fontSize: "12px"
-      }
+      fontFamily: "Open Sans"
     },
     "& td": {
       height: "60px",
@@ -209,23 +140,9 @@ const StyledTableRow = withStyles(() => ({
       position: "relative",
       fontSize: "16px",
       fontFamily: "Open Sans"
-      // "@media only screen and (max-width: 1360px)": {
-      //   width: "150px"
-      // },
-      // "@media only screen and (max-width: 1100px)": {
-      //   height: "auto"
-      // }
     },
     "&:nth-of-type(even)": {
       backgroundColor: "#f7f8f9"
-    },
-    "@media only screen and (max-width: 1100px)": {
-      "&:nth-of-type(even)": {
-        backgroundColor: "#fff"
-      },
-      "&:nth-of-type(odd)": {
-        backgroundColor: "#f7f8f9"
-      }
     }
   }
 }))(TableRow);
@@ -233,8 +150,7 @@ const StyledTableRow = withStyles(() => ({
 const StyledTableHeader = withStyles(() => ({
   root: {
     position: "relative",
-    textAlign: "center",
-    color: "red"
+    textAlign: "center"
   },
   head: {
     color: "#373737",
@@ -244,14 +160,10 @@ const StyledTableHeader = withStyles(() => ({
     height: "60px",
     padding: 0,
     borderBottom: "none",
-    width: "200px",
-    maxWidth: "200px",
+    width: "190px",
+    maxWidth: "190px",
     "@media only screen and (max-width: 1360px)": {
       width: "150px"
-    },
-    "@media only screen and (max-width: 1100px)": {
-      height: "auto",
-      fontSize: "14px"
     }
   }
 }))(TableCell);
@@ -261,33 +173,15 @@ const StyledTableCell = withStyles(() => ({
     fontSize: "16px",
     color: "#373737",
     textAlign: "center",
-    "@media only screen and (max-width: 1100px)": {
-      fontSize: "12px"
-    },
     "& span": {
       display: "block"
     },
     "& span + span": {
       fontSize: "12px",
-      color: "#888",
-      "@media only screen and (max-width: 1360px)": {
-        fontSize: "10px"
-      }
+      color: "#888"
     },
     "& button": {
       marginTop: "5px"
-    },
-    "&:hover": {
-      "& button": {
-        width: "145px",
-        padding: "7px 0",
-        "@media only screen and (max-width: 1100px)": {
-          padding: "3px 0"
-        },
-        [portraitOrientationQueryIPads]: {
-          width: "120px"
-        }
-      }
     }
   }
 }))(TableCell);
@@ -333,24 +227,28 @@ class TableCompare extends React.Component {
 
   handleHighlightSelectedAccount = selectedAccount => {
     switch (selectedAccount) {
-      case shortNames.starter.name:
+      case accountsNames.starter:
         this.setState({
-          offset: this.RAKStarter.current.offsetLeft + 5
+          offset: this.RAKStarter.current.offsetLeft + 5,
+          selectedCurrentColumn: 2
         });
         break;
-      case shortNames.currentAccount.name:
+      case accountsNames.currentAccount:
         this.setState({
-          offset: this.CurrentAccount.current.offsetLeft + 5
+          offset: this.CurrentAccount.current.offsetLeft + 5,
+          selectedCurrentColumn: 3
         });
         break;
-      case shortNames.elite.name:
+      case accountsNames.elite:
         this.setState({
-          offset: this.RAKElite.current.offsetLeft + 5
+          offset: this.RAKElite.current.offsetLeft + 5,
+          selectedCurrentColumn: 4
         });
         break;
       default:
         this.setState({
-          offset: this.CurrentAccount.current.offsetLeft + 5
+          offset: this.CurrentAccount.current.offsetLeft + 5,
+          selectedCurrentColumn: 2
         });
     }
   };
@@ -363,12 +261,75 @@ class TableCompare extends React.Component {
 
   handleHover = e => {
     const { currentTarget } = e;
-    this.handleHighlightSelectedAccount(currentTarget.dataset.name);
+    const { name } = currentTarget.dataset;
+    this.handleHighlightSelectedAccount(name);
   };
 
   render() {
     const { classes } = this.props;
     const { offset } = this.state;
+
+    const TableWithStyles = withStyles(() => ({
+      root: {
+        tableLayout: "fixed",
+        width: "780px",
+        maxWidth: "780px",
+        borderRadius: "8px",
+        position: "relative",
+        overflow: "hidden",
+        margin: "40px 0 30px 0",
+        "& th, & td": {
+          borderBottom: "none",
+          zIndex: "1"
+        },
+        "& tr:not(:last-child) td": {
+          "&:before": {
+            content: "''",
+            position: "absolute",
+            left: 0,
+            right: 0,
+            margin: "0 auto",
+            width: "90%",
+            height: "2px",
+            backgroundColor: "#f7f8f9",
+            display: "block",
+            top: "-1px"
+          }
+        },
+        "& tr:nth-of-type(even) td": {
+          "&:before": {
+            bottom: "0px"
+          }
+        },
+        "& tr:nth-of-type(odd) td": {
+          "&:before": {
+            bottom: "0px"
+          }
+        },
+        "& th:last-child, & td:last-child": {
+          paddingRight: "0"
+        },
+        /* style for current selected account */
+        [`& tr>:nth-child(${this.state.selectedCurrentColumn})`]: {
+          fontWeight: "bold",
+          "& span:first-child": {
+            fontWeight: "600"
+          },
+          "& span:last-child": {
+            fontWeight: "400"
+          },
+          "& button": {
+            width: "150px",
+            height: "40px",
+            backgroundColor: "#000",
+            "& span:first-child": {
+              color: "#fff",
+              fontSize: "16px"
+            }
+          }
+        }
+      }
+    }))(Table);
 
     const StyledTableHeaderWitHoverHandler = ({ name, text }) => (
       <StyledTableHeader data-name={name} onMouseEnter={this.handleHover}>
@@ -376,9 +337,11 @@ class TableCompare extends React.Component {
       </StyledTableHeader>
     );
 
-    const StyledTableCellWitHoverHandler = ({ name, ...props }) => (
+    const StyledTableCellWitHoverHandler = ({ name, account: { text, info, ic }, ...props }) => (
       <StyledTableCell data-name={name} {...props} onMouseEnter={this.handleHover}>
-        {props.children}
+        <span>{text}</span>
+        <span>{info}</span>
+        {ic && <img src={ic} alt="" />}
       </StyledTableCell>
     );
 
@@ -388,24 +351,24 @@ class TableCompare extends React.Component {
           <div className={classes.tableContainer}>
             <Paper
               classes={{ root: classes.selectedAccountContainer }}
-              style={{
-                left: `${offset}px`,
-                width: this.state.selectedAccountContainerWidth
-              }}
+              style={{ left: `${offset}px`, width: this.state.selectedAccountContainerWidth }}
             />
-            <Table classes={{ root: classes.tableRoot }}>
+            <TableWithStyles
+              classes={{ root: classes.tableRoot }}
+              currentcolumn={this.state.selectedCurrentColumn}
+            >
               <TableHead style={{ position: "relative" }}>
                 <TableRow classes={{ head: classes.tableHead }}>
-                  <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
+                  <StyledTableHeader> </StyledTableHeader>
                   <StyledTableHeaderWitHoverHandler
-                    name={shortNames.starter.name}
-                    text="RAKStarter"
+                    text="RAKstarter"
+                    name={accountsNames.starter}
                   />
                   <StyledTableHeaderWitHoverHandler
-                    name={shortNames.currentAccount.name}
                     text="Current Account"
+                    name={accountsNames.currentAccount}
                   />
-                  <StyledTableHeaderWitHoverHandler name={shortNames.elite.name} text="RAKelite" />
+                  <StyledTableHeaderWitHoverHandler text="RAKelite" name={accountsNames.elite} />
                 </TableRow>
               </TableHead>
 
@@ -423,23 +386,15 @@ class TableCompare extends React.Component {
                         {row.info}
                       </TableCell>
 
-                      <StyledTableCellWitHoverHandler name={shortNames.starter.name}>
-                        <span>{starter.text}</span>
-                        <span>{starter.info}</span>
-                        {starter.ic && <img src={starter.ic} alt="" />}
-                      </StyledTableCellWitHoverHandler>
-
-                      <StyledTableCellWitHoverHandler name={shortNames.currentAccount.name}>
-                        <span>{currentAccount.text}</span>
-                        <span>{currentAccount.info}</span>
-                        {currentAccount.ic && <img src={currentAccount.ic} alt="" />}
-                      </StyledTableCellWitHoverHandler>
-
-                      <StyledTableCellWitHoverHandler name={shortNames.elite.name}>
-                        <span>{elite.text}</span>
-                        <span>{elite.info}</span>
-                        {elite.ic && <img src={elite.ic} alt="" />}
-                      </StyledTableCellWitHoverHandler>
+                      <StyledTableCellWitHoverHandler
+                        name={accountsNames.starter}
+                        account={starter}
+                      />
+                      <StyledTableCellWitHoverHandler
+                        name={accountsNames.currentAccount}
+                        account={currentAccount}
+                      />
+                      <StyledTableCellWitHoverHandler name={accountsNames.elite} account={elite} />
                     </StyledTableRow>
                   );
                 })}
@@ -469,58 +424,7 @@ class TableCompare extends React.Component {
                   })}
                 </StyledTableRow>
               </TableBody>
-            </Table>
-
-            {/* Table for small width */}
-            {Object.keys(shortNames).map((typeAccount, index) => {
-              const { name } = shortNames[typeAccount];
-              return (
-                <Table classes={{ root: classes.tableRoot }} className={"mobileTable"} key={index}>
-                  <TableHead style={{ position: "relative" }}>
-                    <TableRow classes={{ head: classes.tableHead }}>
-                      <StyledTableHeader style={{ width: 180 }}> </StyledTableHeader>
-                      <StyledTableHeaderWitHoverHandler name={typeAccount} text={name} />
-                    </TableRow>
-                  </TableHead>
-
-                  <TableBody>
-                    {mockDataRows.map((row, index) => {
-                      return (
-                        <StyledTableRow key={index}>
-                          <TableCell
-                            classes={{ root: classes.rootCellName }}
-                            align="right"
-                            component="th"
-                            scope="row"
-                          >
-                            {row.info}
-                          </TableCell>
-                          <StyledTableCellWitHoverHandler name={name}>
-                            <span>{row[typeAccount].text}</span>
-                            <span>{row[typeAccount].info}</span>
-                            {row[typeAccount].ic && <img src={row[typeAccount].ic} alt="" />}
-                          </StyledTableCellWitHoverHandler>
-                        </StyledTableRow>
-                      );
-                    })}
-                    <StyledTableRow>
-                      <StyledTableCell />
-
-                      <StyledTableCell data-name={name} onMouseEnter={this.handleHover} key={index}>
-                        <ContainedButton
-                          label="Read more"
-                          handleClick={() => this.handleSelectAccount(name)}
-                          classes={{
-                            buttonStyle: classes.containedButton,
-                            labelStyle: classes.containedButtonLabelStyle
-                          }}
-                        />
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  </TableBody>
-                </Table>
-              );
-            })}
+            </TableWithStyles>
           </div>
         </div>
       </Paper>

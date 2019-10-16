@@ -60,7 +60,6 @@ const style = {
 };
 
 const SearchApplicationList = ({ classes, currentApplications }) => {
-  const id = 100; //remove it
   return (
     <div className={classes.wrapper}>
       {currentApplications.length > 0 && (
@@ -78,7 +77,11 @@ const SearchApplicationList = ({ classes, currentApplications }) => {
       )}
       {currentApplications.length > 0 &&
         currentApplications.map((application, index) => (
-          <Link className={classes.applicationRow} key={index} to={`/SearchedAppInfo/${id}`}>
+          <Link
+            className={classes.applicationRow}
+            key={index}
+            to={`/SearchedAppInfo/${application.prospectId}`}
+          >
             <div>
               <div className={classes.fullName}>
                 {application.applicantInfo.fullName && application.applicantInfo.fullName}

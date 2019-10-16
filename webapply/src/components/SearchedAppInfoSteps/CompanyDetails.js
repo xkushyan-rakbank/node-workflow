@@ -41,8 +41,7 @@ const CompanyDetails = props => {
               {prospectInfo.applicantInfo.countryCode &&
                 prospectInfo.applicantInfo.countryCode +
                   " " +
-                  prospectInfo.applicantInfo.mobileNo &&
-                prospectInfo.applicantInfo.mobileNo}
+                  (prospectInfo.applicantInfo.mobileNo && prospectInfo.applicantInfo.mobileNo)}
             </div>
           </Grid>
         </Grid>

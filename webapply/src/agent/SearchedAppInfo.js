@@ -49,12 +49,12 @@ class SearchedAppInfo extends React.Component {
   }
 
   render() {
-    const { classes, index, searchResults } = this.props;
+    const { classes, index, searchResults, match } = this.props;
     const { step } = this.state;
 
     const [prospectInfo] =
       searchResults && searchResults.searchResult
-        ? searchResults.searchResult.filter(item => item.prospectId === "100")
+        ? searchResults.searchResult.filter(item => item.prospectId === match.params.id)
         : [];
 
     return prospectInfo ? (
