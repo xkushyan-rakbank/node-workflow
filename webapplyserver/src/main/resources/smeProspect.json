@@ -257,7 +257,9 @@
 					{
 						"passportNumber": "",
 						"passportExpiryDate": "",
-						"diplomatPassport": false
+						"country": "",
+						"diplomatPassport": false,
+						"hasAnotherCitizenship": false
 					}
 				],
 				"emirateIdDetails": {
