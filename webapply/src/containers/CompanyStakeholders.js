@@ -9,7 +9,8 @@ import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
 import routes from "../routes";
-import { updateProspect, addNewStakeholder, deleteStakeholder } from "../store/actions/appConfig";
+import { updateProspect } from "../store/actions/appConfig";
+import { addNewStakeholder, deleteStakeholder } from "../store/actions/stakeholders";
 import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
 import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
 
@@ -41,7 +42,7 @@ class CompanyStakeholders extends React.Component {
     this.state = {
       isFinalScreenShown: false,
       showNewStakeholder: false,
-      editableStakeholder: null, //stakeholders.length ? null : 0
+      editableStakeholder: null,
       step: 1,
       completedStep: 0
     };

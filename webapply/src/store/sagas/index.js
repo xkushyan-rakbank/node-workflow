@@ -8,6 +8,7 @@ import loginForm from "./loginForm";
 import retrieveUploadDoc from "./getProspectDocuments";
 import searchProspectSaga from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
+import stakeholders from "./stakeholders";
 
 export default function*() {
   yield all([
@@ -19,6 +20,7 @@ export default function*() {
     fork(loginForm),
     fork(retrieveUploadDoc),
     fork(searchProspectSaga),
-    fork(retrieveApplicantInfo)
+    fork(retrieveApplicantInfo),
+    fork(stakeholders)
   ]);
 }
