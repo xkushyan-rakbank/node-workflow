@@ -8,6 +8,7 @@ import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
 import { getIconsByAccount } from "../../constants/icons";
 import { accountsNames } from "../../constants";
+import HeaderTitle from "../../components/HeaderTitle";
 
 const style = {
   icon: {
@@ -53,6 +54,7 @@ const TwoSteps = ({ classes, accountType, islamicBanking }) => {
 
   return (
     <>
+      <HeaderTitle />
       <div className={classes.firstGroup}>
         <div className={classes.indent}>
           <SectionTitleWithInfo title="Two easy steps" />

@@ -6,6 +6,8 @@ import HorizontalIconCardsContainer from "../../components/HorizontalIconCards/H
 import HorizontalIconCardItem from "../../components/HorizontalIconCards/HorizontalIconCardItem";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 import { getIconsByAccount } from "../../constants/icons";
+import InfoNote from "../../components/InfoNote";
+import { accountsNames } from "../../constants";
 
 const style = {
   indent: {
@@ -112,6 +114,15 @@ const AccountBenefits = ({ classes, accountType }) => {
 
   const data = accountType ? mockData[accountType] : [];
 
+  const isShowInfoNote = accountType === accountsNames.starter;
+  const styleInfoNotes = {
+    position: "absolute",
+    marginTop: "0",
+    bottom: "65px",
+    left: "0px",
+    right: "0px"
+  };
+
   return (
     <>
       <div className={classes.indent}>
@@ -123,6 +134,12 @@ const AccountBenefits = ({ classes, accountType }) => {
             <img className={classes.icon} src={item.icon} alt={item.alt} />
           </HorizontalIconCardItem>
         ))}
+        {isShowInfoNote && (
+          <InfoNote
+            style={{ ...styleInfoNotes }}
+            text="*Companies older than 12 months are not eligible for the RAKstarter account"
+          />
+        )}
       </HorizontalIconCardsContainer>
     </>
   );

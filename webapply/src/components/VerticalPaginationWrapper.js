@@ -14,19 +14,24 @@ const style = {
     position: "absolute",
     left: 0,
     width: "100%",
-    transition: "top 400ms",
-    paddingTop: "170px",
-    "@media only screen and (max-height: 900px)": {
-      paddingTop: "0px"
-    }
+    transition: "top 400ms"
   },
   childWrapper: {
     display: "flex",
     flexDirection: "column",
     height: "100vh",
     position: "relative",
+    paddingTop: "170px",
+    boxSizing: "border-box",
     "@media only screen and (max-height: 900px)": {
-      justifyContent: "center"
+      justifyContent: "center",
+      paddingTop: "0px"
+    }
+  },
+  childWrapperWithHeader: {
+    paddingTop: "35px",
+    "@media only screen and (max-height: 900px)": {
+      justifyContent: "flex-start"
     }
   },
   paginationDots: {
@@ -147,7 +152,13 @@ class VerticalPaginationWrapper extends React.Component {
           )}
           <div style={{ top }} className={classes.paginationContent}>
             {React.Children.map(children, child => (
-              <div className={classes.childWrapper}>{child}</div>
+              <div
+                className={cx(classes.childWrapper, {
+                  [classes.childWrapperWithHeader]: child.props.withHeader
+                })}
+              >
+                {child}
+              </div>
             ))}
           </div>
         </div>

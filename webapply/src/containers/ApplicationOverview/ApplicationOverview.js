@@ -10,7 +10,7 @@ const ApplicationOverview = ({ applicationInfo }) => {
   const { accountType, islamicBanking } = applicationInfo;
   return (
     <VerticalPaginationWrapper>
-      <TwoSteps accountType={accountType} islamicBanking={islamicBanking} />
+      <TwoSteps accountType={accountType} islamicBanking={islamicBanking} withHeader />
       <PreliminaryInformation />
     </VerticalPaginationWrapper>
   );

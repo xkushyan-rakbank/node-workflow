@@ -124,6 +124,12 @@ const accountInfo = {
   RAKelite: {
     title: "RAKelite  business account",
     subtitle: "Our most exclusive account, for our most exclusive clients."
+  },
+  comeBackLogin: {
+    title: "Good to see you back!"
+  },
+  comeBackVerification: {
+    title: "Confirm that it's you"
   }
 };
 
@@ -132,6 +138,8 @@ const AccountInfo = ({ classes, accountType, history }) => {
   const handleClick = path => history.push(path);
   const isApplicationOverview = pathname === "/ApplicationOverview";
   const isMyApplications = pathname === "/MyApplications";
+  const isComeBackLogin = pathname === "/ComeBackLogin";
+  const isComeBackVerification = pathname === "/ComeBackVerification";
 
   return (
     <div className={classes.contentContainer}>
@@ -161,6 +169,10 @@ const AccountInfo = ({ classes, accountType, history }) => {
             ? "Opening an account has never been this simple."
             : isMyApplications
             ? "Your  applications, at a glance"
+            : isComeBackLogin
+            ? "Good to see you back!"
+            : isComeBackVerification
+            ? "Confirm that it's you"
             : "All businesses start with an account. Get yours now."}
           {isApplicationOverview && (
             <SubmitButton
@@ -247,7 +259,9 @@ class FormNavigation extends React.Component {
       "/AccountsComparison",
       "/DetailedAccount",
       "/ApplicationOverview",
-      "/MyApplications"
+      "/MyApplications",
+      "/ComeBackLogin",
+      "/ComeBackVerification"
     ]).has(location.pathname);
     const backgroundImage = getBgImage(accountType, islamicBanking);
 

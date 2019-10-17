@@ -14,8 +14,9 @@ function* generateOtp() {
      */
     const payload = {
       prospectId: appConfigSelectors.getProspectId(state),
-      mobileNo: applicantInfo.mobileNo || "0123456789",
-      countryCode: applicantInfo.countryCode
+      mobileNo: applicantInfo.mobileNo,
+      countryCode: applicantInfo.countryCode,
+      email: applicantInfo.email
     };
     const { data } = yield call(apiClient.otp.generate, payload);
     yield put(otpActions.generateCodeSuccess(data));

@@ -12,6 +12,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,11 +74,22 @@ public class WebApplyController {
 
 	private JsonNode smeProspectJSON = null;
 
+	private String[] roles = { "customer", "agent" };
+
+	private String[] products = { "RAKstarter", "Current Account", "RAKelite" };
+
+	private String[] segments = { "sme", "retail" };
+
+	private String[] devices = { "desktop", "mobile", "tablet" };
+
+	private ObjectNode defaultDatalist = null;
+
 	@PostConstruct
 	public void initAppState() {
 		uiConfigJSON = fileHelper.getUIConfigJSON();
 		appConfigJSON = fileHelper.getAppConfigJSON();
 		smeProspectJSON = fileHelper.getSMEProspectJSON();
+		defaultDatalist = new ObjectMapper().createObjectNode();
 
 		try {
 			loadAppInitialState();
@@ -86,14 +98,37 @@ public class WebApplyController {
 		}
 	}
 
+	private String validCriteriaParams(String segment, String product, String role, String device) {
+		if (StringUtils.isNotBlank(segment) && !ArrayUtils.contains(segments, segment)) {
+			return String.format("'%s' is invalid, allowed values [%s]", segment, ArrayUtils.toString(segments));
+		}
+		if (StringUtils.isNotBlank(product) && !ArrayUtils.contains(products, product)) {
+			return String.format("'%s' is invalid, allowed values [%s]", product, ArrayUtils.toString(products));
+		}
+		if (StringUtils.isNotBlank(role) && !ArrayUtils.contains(roles, role)) {
+			return String.format("'%s' is invalid, allowed values [%s]", role, ArrayUtils.toString(roles));
+		}
+		if (StringUtils.isNotBlank(device) && !ArrayUtils.contains(devices, device)) {
+			return String.format("'%s' is invalid, allowed values [%s]", device, ArrayUtils.toString(devices));
+		}
+
+		return null;
+	}
+
 	@GetMapping(value = "/config", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Object> getWebApplyConfig(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestParam(required = false, defaultValue = "unknown") String segment,
-			@RequestParam(required = false, defaultValue = "unknown") String product,
-			@RequestParam(required = false, defaultValue = "unknown") String role,
+			@RequestParam(required = false, defaultValue = "") String segment,
+			@RequestParam(required = false, defaultValue = "") String product, @RequestParam String role,
 			@RequestParam(required = false, defaultValue = "desktop") String device) throws Exception {
 		logger.info("Begin getWebApplyConfig() method");
+
+		String invalidCriteriaError = validCriteriaParams(segment, product, role, device);
+		if (StringUtils.isNotBlank(invalidCriteriaError)) {
+			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid segment, product or role.",
+					invalidCriteriaError);
+			return new ResponseEntity<Object>(error, null, HttpStatus.BAD_REQUEST);
+		}
 
 		HttpHeaders headers = new HttpHeaders();
 		csrfTokenHelper.createCSRFToken(httpRequest, headers);
@@ -126,15 +161,25 @@ public class WebApplyController {
 		// (Assumption) WebApply & MobileApply will have same set of fields otherwise
 		// add "mobile" to devices array
 		String[] devices = { "desktop" };
+		String[] segments = { "sme" };
+		String[] products = { "RAKstarter", "Current Account", "RAKelite" };
+		String[] roles = { "customer", "agent" };
 		for (String device : devices) {
-			try {
-				buildAppInitialState("sme", "checking", "customer", device);
-				buildAppInitialState("sme", "checking", "agent", device);
+			for (String segment : segments) {
+				for (String product : products) {
+					for (String role : roles) {
+						try {
+							buildAppInitialState(segment, product, role, device);
 
-			} catch (Exception e) {
-				logger.error("unable to load/reload configs", e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-				return new ResponseEntity<Object>(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+						} catch (Exception e) {
+							logger.error(String.format(
+									"unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[5s]",
+									device, segment, product, role));
+							ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+							return new ResponseEntity<Object>(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+						}
+					}
+				}
 			}
 		}
 
@@ -149,18 +194,8 @@ public class WebApplyController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
 
-		setWebApplyEndpoints(objectMapper, initStateJSON);
+		setWebApplyEndpoints(objectMapper, initStateJSON, role);
 		initStateJSON.set("prospect", getProspect(segment, product));
-
-		// deep clone the json nodes
-		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
-		JsonNode uiConfigNode = objectMapper.readTree(uiConfig);
-
-		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
-		ObjectNode uiFieldsObjNode = filterUIConfigFieldsByCriteria((ObjectNode) uiConfigNode, segment, product, role,
-				device, datalist);
-
-		initStateJSON.set("uiConfig", uiFieldsObjNode);
 
 		String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey")
 				.asText();
@@ -168,6 +203,22 @@ public class WebApplyController {
 		initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
 		initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
 		initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
+
+		// deep clone the json nodes
+		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
+		JsonNode uiConfigNode = objectMapper.readTree(uiConfig);
+
+		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
+
+		if (datalist == null || datalist.size() == 0) {
+			logger.error("datalist is null or no elements found in datalist object");
+			throw new Exception("datalist is null or no elements found in datalist object");
+		}
+
+		ObjectNode uiFieldsObjNode = filterUIConfigFieldsByCriteria((ObjectNode) uiConfigNode, segment, product, role,
+				device, datalist);
+
+		initStateJSON.set("uiConfig", uiFieldsObjNode);
 
 		String cacheKey = getCacheKey(segment, product, role, device);
 		String configJSON = initStateJSON.toString();
@@ -179,7 +230,8 @@ public class WebApplyController {
 
 	}
 
-	private void setWebApplyEndpoints(ObjectMapper objectMapper, ObjectNode initStateJSON) {
+	private void setWebApplyEndpoints(ObjectMapper objectMapper, ObjectNode initStateJSON, String role) {
+
 		logger.info("Begin setWebApplyEndpoints() method");
 		ObjectNode endpointsJSON = objectMapper.createObjectNode();
 		endpointsJSON.put("baseUrl",
@@ -191,6 +243,13 @@ public class WebApplyController {
 			endpointsJSON.set(uriName, webApplyURIs.get(uriName));
 		}
 
+		// remove agent specific URIs
+		String[] agentURIs = { "searchProspectUri", "authenticateUserUri" };
+		if (StringUtils.isBlank(role) || StringUtils.equalsIgnoreCase("customer", role)) {
+			for (String uri : agentURIs) {
+				endpointsJSON.remove(uri);
+			}
+		}
 		initStateJSON.set("endpoints", endpointsJSON);
 		logger.info("End setWebApplyEndpoints() method");
 	}
@@ -219,7 +278,7 @@ public class WebApplyController {
 					if (fieldConfig.has("datalistId")) {
 						if (fieldConfig.get("datalistId").isNull()) {
 							fieldConfig.remove("datalistId");
-						} else {
+						} else if (datalist != null) {
 							String groupId = fieldConfig.get("datalistId").asText();
 							fieldConfig.set("datalist", datalist.get(groupId));
 						}
@@ -254,34 +313,51 @@ public class WebApplyController {
 	private boolean matchCriteria(JsonNode fieldConfig, String segment, String product, String role, String device) {
 		if (fieldConfig.has("criteria")) {
 			JsonNode criteria = fieldConfig.get("criteria");
+			boolean roleMatched = true;
+			boolean segmentMatched = true;
+			boolean productMatched = true;
+			boolean deviceMatched = true;
 
-			List<String> roles = new ArrayList<>();
 			if (criteria.has("roles")) {
+				List<String> roles = new ArrayList<>();
 				((ArrayNode) criteria.get("roles")).forEach(node -> roles.add(node.asText()));
+				if (roles.isEmpty() || (StringUtils.isNotBlank(role) && roles.contains(role))) {
+					roleMatched = true;
+				} else {
+					roleMatched = false;
+				}
 			}
 
-			List<String> segments = new ArrayList<>();
 			if (criteria.has("segments")) {
+				List<String> segments = new ArrayList<>();
 				((ArrayNode) criteria.get("segments")).forEach(node -> segments.add(node.asText()));
+				if (segments.isEmpty() || (StringUtils.isNotBlank(segment) && segments.contains(segment))) {
+					segmentMatched = true;
+				} else {
+					segmentMatched = false;
+				}
 			}
 
-			List<String> products = new ArrayList<>();
 			if (criteria.has("products")) {
+				List<String> products = new ArrayList<>();
 				((ArrayNode) criteria.get("products")).forEach(node -> products.add(node.asText()));
+				if (products.isEmpty() || (StringUtils.isNotBlank(product) && products.contains(product))) {
+					productMatched = true;
+				} else {
+					productMatched = false;
+				}
 			}
 
-			List<String> devices = new ArrayList<>();
 			if (criteria.has("devices")) {
+				List<String> devices = new ArrayList<>();
 				((ArrayNode) criteria.get("devices")).forEach(node -> devices.add(node.asText()));
+				if (devices.isEmpty() || (StringUtils.isNotBlank(device) && devices.contains(device))) {
+					deviceMatched = true;
+				} else {
+					deviceMatched = false;
+				}
 			}
-
-			if ((roles.contains(role) || roles.isEmpty()) && (segments.contains(segment) || segments.isEmpty())
-					&& (products.contains(product) || products.isEmpty())
-					&& (devices.contains(device) || devices.isEmpty())) {
-				return true;
-			}
-
-			logger.info("End matchCriteria() method");
+			return roleMatched && segmentMatched && productMatched && deviceMatched;
 
 		}
 
@@ -308,6 +384,11 @@ public class WebApplyController {
 
 	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws Exception {
 		logger.info("Begin getDatalistJSON() method, segment=" + segment);
+
+		if (StringUtils.isBlank(segment)) {
+			logger.info("segment is null, return defaultDatalist");
+			return defaultDatalist;
+		}
 
 		String methodName = "getDatalistJSON()";
 
@@ -343,14 +424,15 @@ public class WebApplyController {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 			}
 
+			JsonNode datalist = response.getBody();
 			logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
-					methodName, url, response.getStatusCodeValue(), response.getBody()));
+					methodName, url, response.getStatusCodeValue(), datalist));
 
 			if (response.getStatusCode().is2xxSuccessful()) {
 				logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
 						methodName, url, response.getStatusCodeValue()));
-
-				return response.getBody();
+				populateDefaultDatalist(datalist);
+				return datalist;
 
 			} else {
 				logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
@@ -365,7 +447,14 @@ public class WebApplyController {
 		return null;
 	}
 
+	private void populateDefaultDatalist(JsonNode datalist) {
+		if (datalist != null) {
+			defaultDatalist.set("countryCode", datalist.get("countryCode"));
+		}
+		logger.info("defaultDatalist size = " + defaultDatalist.size());
+	}
+
 	private String getCacheKey(String segment, String product, String role, String device) {
-		return String.join("_", segment, product, role, device).toUpperCase();
+		return String.join("_", segment, product, role, device).toUpperCase().replace(" ", "_");
 	}
 }

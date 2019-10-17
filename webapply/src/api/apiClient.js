@@ -7,7 +7,7 @@ const { pathname } = window.location;
 let queryString = "";
 let segment = "";
 if (pathname.includes("/agent/")) {
-  queryString = "?segment=sme&product=checking&role=agent";
+  queryString = "?role=agent";
 } else if (pathname.includes("/sme/")) {
   segment = "sme";
   queryString = `?segment=${segment}&product=checking&role=customer`;

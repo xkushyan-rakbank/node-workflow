@@ -35,7 +35,6 @@
 	},
 	"WebApplyURIs": {
 		"appConfigUri": "/webapply/api/v1/config",
-		"datalistUri": "/webapply/api/v1/usertypes/{userType}/datalist",
 		"createProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/",
 		"searchProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/search",
 		"getProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/{prospectId}",
@@ -44,11 +43,8 @@
 		"uploadDocumentUri": "/webapply/api/v1/prospects/{prospectId}/documents",
 		"reuploadDocumentUri": "/webapply/api/v1/prospects/{prospectId}/documents",
 		"getDocumentByIdUri": "/webapply/api/v1/prospects/{prospectId}/documents/{documentKey}",
-		"prescreeningUri": "/webapply/api/v1/prospects/{prospectId}/screening",
 		"authenticateUserUri": "/webapply/api/v1/users/authenticate",
-		"getDocumentByTitleUri": "/webapply/api/v1/legal/documents/{documentTitle}",
-		"otpUri": "/webapply/api/v1/otp",
-		"recaptchaUri": "/webapply/api/v1/recaptcha/siteverify"
+		"otpUri": "/webapply/api/v1/otp"
 	},
 	"DehURIs": {
 		"datalistUri": "/banks/RAK/usertypes/{userType}/datalist",
