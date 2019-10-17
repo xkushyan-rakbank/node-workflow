@@ -9,7 +9,10 @@ import ApplicationStatus from "../components/ApplicationStatus";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
 import Header from "./../components/Header";
 import HeaderTitle from "./../components/HeaderTitle";
-import { applicationStatusReset } from "./../store/actions/applicationStatus";
+import {
+  applicationStatusReset,
+  applicationStatusServerError
+} from "./../store/actions/applicationStatus";
 import { updateViewId } from "./../store/actions/appConfig";
 import {
   getProceedStatus,
@@ -77,6 +80,8 @@ class FormLayout extends React.Component {
     }
   }
 
+  handleClick = () => this.props.applicationStatusReset();
+
   render() {
     const { children, classes, isProceed, serverError, screeningResults, location } = this.props;
 
@@ -90,7 +95,7 @@ class FormLayout extends React.Component {
               <div className={classes.mainContainer}>
                 {!routerToAddPaddingInSlider.includes(location.pathname) && <HeaderTitle />}
 
-                {serverError && <ErrorMessageAlert serverError />}
+                <ErrorMessageAlert isVisible={serverError} handleClick={this.handleClick} />
 
                 {isProceed ? children : <ApplicationStatus errorReason={screeningResults} />}
               </div>
@@ -110,6 +115,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   applicationStatusReset,
+  applicationStatusServerError,
   updateViewId
 };
 

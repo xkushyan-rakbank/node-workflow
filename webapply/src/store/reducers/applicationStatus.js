@@ -21,8 +21,7 @@ const applicationStatusReducer = (state = initialState, action) => {
     case APPLICATION_STATUS_SERVER_ERROR:
       return {
         ...state,
-        serverErorr: true,
-        isProceed: false
+        serverErorr: true
       };
     case APPLICATION_STATUS_STOP:
       return {

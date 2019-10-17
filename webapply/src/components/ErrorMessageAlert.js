@@ -18,10 +18,14 @@ const style = {
     display: "flex",
     color: "#373737",
     transform: "translate(120%, 0)",
-    transition: "transform 0.3s ease"
+    opacity: "0",
+    visible: "hidden",
+    transition: "all 0.4s ease"
   },
   errorAlertActive: {
-    transform: "translate(0, 0)"
+    transform: "translate(0, 0)",
+    opacity: "1",
+    visible: "visible"
   },
   icon: {
     width: "86px",
@@ -65,8 +69,11 @@ const style = {
   }
 };
 
-const ErrorMessageAlert = ({ classes, serverError }) => {
-  const errorAlertActive = serverError && classes.errorAlertActive;
+const ErrorMessageAlert = props => {
+  const { isVisible, classes } = props;
+  const errorAlertActive = isVisible && classes.errorAlertActive;
+
+  const closeErrorAlert = () => props.handleClick();
 
   return (
     <div className={cx(classes.errorAlert, errorAlertActive)}>
@@ -79,7 +86,12 @@ const ErrorMessageAlert = ({ classes, serverError }) => {
         <p className={classes.errorDescription}>Somthing to do with your data not being saved.</p>
       </div>
 
-      <img src={closeIcon} alt="closeIcon" className={classes.closeIcon} />
+      <img
+        src={closeIcon}
+        alt="closeIcon"
+        className={classes.closeIcon}
+        onClick={closeErrorAlert}
+      />
     </div>
   );
 };
