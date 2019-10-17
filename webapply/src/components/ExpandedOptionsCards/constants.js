@@ -20,7 +20,7 @@ export const mockData = [
         text: "One stop business solution <strong>Advanced</strong>",
         items: ["Automated accounting", "Smart invoicing", "Integrated VAT solution"]
       },
-      { text: "Business insurance" },
+      { text: "Business insurance <strong>Advanced</strong>" },
       { text: "Host of other banking benefits" }
     ],
     isIncluded: false,

@@ -18,7 +18,7 @@ const style = {
 const UserAvatar = props => {
   const { firstName = "", lastName = "", classes } = props;
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
-  return initials ? (
+  return initials && firstName !== "New Stakeholder" ? (
     <Avatar className={classes.greenAvatar}>{initials}</Avatar>
   ) : (
     <Avatar className={classes.emptyAvatar} />

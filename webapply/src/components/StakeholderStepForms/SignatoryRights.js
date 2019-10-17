@@ -21,6 +21,7 @@ class SignatoryRights extends React.Component {
         <InlineRadioGroup id="SigKycd.isSignatory" indexes={[this.props.index]} />
         <PureSelect
           disabled={!this.props.isSignatory}
+          required={this.props.isSignatory}
           id="SigAcntSig.authorityType"
           indexes={[this.props.index]}
         />

@@ -39,7 +39,11 @@ class PersonalInformation extends React.Component {
       <>
         <Grid item container spacing={3}>
           <Grid item sm={12} className="mb-25 mt-25">
-            <CustomCheckbox id="Okyc.isShareholderACompany" withQuestion />
+            <CustomCheckbox
+              id="Okyc.isShareholderACompany"
+              indexes={[this.props.index]}
+              withQuestion
+            />
           </Grid>
         </Grid>
         <Grid item container spacing={3}>
@@ -83,8 +87,8 @@ class PersonalInformation extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isShareholderACompany: getInputValueById(state, "Okyc.isShareholderACompany")
+const mapStateToProps = (state, { index }) => ({
+  isShareholderACompany: getInputValueById(state, "Okyc.isShareholderACompany", [index])
 });
 
 const mapDispatchToProps = { updateProspect };

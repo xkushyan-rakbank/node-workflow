@@ -70,7 +70,7 @@ const AccountBenefits = ({ classes, accountType }) => {
       { key: 4, text: "Dedicated Relationship Manager", icon: manager, alt: "manager" }
     ],
     "Current Account": [
-      { key: 1, text: "A low minimum balance", icon: balance, alt: "balance" },
+      { key: 1, text: "Low minimum balance required", icon: balance, alt: "balance" },
       { key: 2, text: "Available in AED, USD, EUR, GBP", icon: availability, alt: "availability" },
       {
         key: 3,
@@ -89,7 +89,7 @@ const AccountBenefits = ({ classes, accountType }) => {
       },
       {
         key: 2,
-        text: "Preferential transaction fees through Digital Banking",
+        text: "Enhanced daily withdrawal limits",
         icon: withdrawal,
         alt: "withdrawal"
       },
