@@ -48,7 +48,7 @@ class AccountsComparisonContainer extends React.Component {
     const { scrollToIndex: index, accountType } = e;
     this.setState({
       indexScrollToSection: {
-        currentTarget: { name: index }
+        currentTarget: { name: index.toString() }
       },
       selectedAccount: accountType
     });
