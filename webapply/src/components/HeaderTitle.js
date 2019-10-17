@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import * as appConfigSelectors from "../store/selectors/appConfig";
+import { accountsNames } from "../constants";
+import router from "../routes";
 
 const styles = {
   headerTitle: {
-    display: "flex",
-    flex: "1 1 auto",
     backgroundColor: "#fff",
     marginBottom: "115px",
     "& span": {
@@ -33,25 +33,54 @@ const styles = {
 const HeaderTitle = props => {
   const {
     classes,
-    location,
-    checkLoginStatus,
-    getAgentName,
-    applicationInfo,
-    organizationInfo
+    location: { pathname },
+    applicationInfo: { islamicBanking, accountType },
+    organizationInfo: { companyName }
   } = props;
+
+  let selectedAccountTypeName = "";
+  switch (accountType) {
+    case accountsNames.elite:
+      selectedAccountTypeName = "RAKelite";
+      break;
+    case accountsNames.starter:
+      selectedAccountTypeName = "RAKstarter";
+      break;
+    case accountsNames.currentAccount:
+      selectedAccountTypeName = "Current Account";
+      break;
+    default:
+      selectedAccountTypeName = "RAKstarter";
+  }
+
+  const organizationName = companyName ? (
+    <>
+      for <span>{companyName}</span>
+    </>
+  ) : null;
+  const isHideCompanyName = pathname === router.applicationOverview;
+
+  let portalTitle = "";
+  const routesToShowPortalTitle = new Set([
+    router.login,
+    router.comeBackLoginVerification,
+    router.MyApplications
+  ]);
+  if (routesToShowPortalTitle.has(pathname)) portalTitle = "RAK Application Portal";
+
   return (
     <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
-        {checkLoginStatus ? (
-          <span>{getAgentName}</span>
-        ) : (
-          location.pathname !== "/Login" && (
-            <span>
-              {applicationInfo.rakValuePackage}
-              <span> {organizationInfo.companyName}</span>
-            </span>
-          )
-        )}
+        <span>
+          {portalTitle.length ? (
+            portalTitle
+          ) : (
+            <>
+              {selectedAccountTypeName} {islamicBanking && "islamic"} application{" "}
+              {!isHideCompanyName && organizationName}
+            </>
+          )}
+        </span>
       </div>
     </div>
   );
