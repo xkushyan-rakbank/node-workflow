@@ -111,6 +111,10 @@ form .MuiGrid-root {
   color: #666666 !important;
 }
 
+.MuiFormLabel-root.Mui-focused {
+  color: #373733 !important;
+}
+
 a {
   text-decoration: none;
   &:hover {
