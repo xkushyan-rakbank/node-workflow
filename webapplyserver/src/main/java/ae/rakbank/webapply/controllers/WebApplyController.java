@@ -76,7 +76,7 @@ public class WebApplyController {
 
 	private String[] roles = { "customer", "agent" };
 
-	private String[] products = { "checking" };
+	private String[] products = { "RAKstarter", "Current Account", "RAKelite" };
 
 	private String[] segments = { "sme", "retail" };
 
@@ -161,15 +161,25 @@ public class WebApplyController {
 		// (Assumption) WebApply & MobileApply will have same set of fields otherwise
 		// add "mobile" to devices array
 		String[] devices = { "desktop" };
+		String[] segments = { "sme" };
+		String[] products = { "RAKstarter", "Current Account", "RAKelite" };
+		String[] roles = { "customer", "agent" };
 		for (String device : devices) {
-			try {
-				buildAppInitialState("sme", "checking", "customer", device);
-				buildAppInitialState("sme", "checking", "agent", device);
+			for (String segment : segments) {
+				for (String product : products) {
+					for (String role : roles) {
+						try {
+							buildAppInitialState(segment, product, role, device);
 
-			} catch (Exception e) {
-				logger.error("unable to load/reload configs", e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-				return new ResponseEntity<Object>(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+						} catch (Exception e) {
+							logger.error(String.format(
+									"unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[5s]",
+									device, segment, product, role));
+							ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+							return new ResponseEntity<Object>(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+						}
+					}
+				}
 			}
 		}
 
@@ -303,41 +313,51 @@ public class WebApplyController {
 	private boolean matchCriteria(JsonNode fieldConfig, String segment, String product, String role, String device) {
 		if (fieldConfig.has("criteria")) {
 			JsonNode criteria = fieldConfig.get("criteria");
+			boolean roleMatched = true;
+			boolean segmentMatched = true;
+			boolean productMatched = true;
+			boolean deviceMatched = true;
 
-			if ((criteria.has("roles") && StringUtils.isBlank(role))
-					|| (criteria.has("segments") && StringUtils.isBlank(segment))
-					|| (criteria.has("products") && StringUtils.isBlank(product))
-					|| (criteria.has("devices") && StringUtils.isBlank(device))) {
-				return false;
-			}
-
-			List<String> roles = new ArrayList<>();
 			if (criteria.has("roles")) {
+				List<String> roles = new ArrayList<>();
 				((ArrayNode) criteria.get("roles")).forEach(node -> roles.add(node.asText()));
+				if (roles.isEmpty() || (StringUtils.isNotBlank(role) && roles.contains(role))) {
+					roleMatched = true;
+				} else {
+					roleMatched = false;
+				}
 			}
 
-			List<String> segments = new ArrayList<>();
 			if (criteria.has("segments")) {
+				List<String> segments = new ArrayList<>();
 				((ArrayNode) criteria.get("segments")).forEach(node -> segments.add(node.asText()));
+				if (segments.isEmpty() || (StringUtils.isNotBlank(segment) && segments.contains(segment))) {
+					segmentMatched = true;
+				} else {
+					segmentMatched = false;
+				}
 			}
 
-			List<String> products = new ArrayList<>();
 			if (criteria.has("products")) {
+				List<String> products = new ArrayList<>();
 				((ArrayNode) criteria.get("products")).forEach(node -> products.add(node.asText()));
+				if (products.isEmpty() || (StringUtils.isNotBlank(product) && products.contains(product))) {
+					productMatched = true;
+				} else {
+					productMatched = false;
+				}
 			}
 
-			List<String> devices = new ArrayList<>();
 			if (criteria.has("devices")) {
+				List<String> devices = new ArrayList<>();
 				((ArrayNode) criteria.get("devices")).forEach(node -> devices.add(node.asText()));
+				if (devices.isEmpty() || (StringUtils.isNotBlank(device) && devices.contains(device))) {
+					deviceMatched = true;
+				} else {
+					deviceMatched = false;
+				}
 			}
-
-			if ((roles.contains(role) || roles.isEmpty()) && (segments.contains(segment) || segments.isEmpty())
-					&& (products.contains(product) || products.isEmpty())
-					&& (devices.contains(device) || devices.isEmpty())) {
-				return true;
-			}
-
-			logger.info("End matchCriteria() method");
+			return roleMatched && segmentMatched && productMatched && deviceMatched;
 
 		}
 
@@ -435,6 +455,6 @@ public class WebApplyController {
 	}
 
 	private String getCacheKey(String segment, String product, String role, String device) {
-		return String.join("_", segment, product, role, device).toUpperCase();
+		return String.join("_", segment, product, role, device).toUpperCase().replace(" ", "_");
 	}
 }
