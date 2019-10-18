@@ -6,10 +6,10 @@ export const OTP_ACTION_VERIFY = "verify";
 
 const { pathname } = window.location;
 let queryString = "";
-let segment = "";
 
 function buildURI(uriName, prospectId, documentKey) {
   let uri = store.getState().appConfig.endpoints[uriName];
+  const segment = pathname.includes("/agent/") ? "agent" : "sme";
   uri = uri.replace("{prospectId}", prospectId);
   uri = uri.replace("{documentKey}", documentKey);
   uri = uri.replace("{userType}", segment);
