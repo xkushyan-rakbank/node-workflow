@@ -5,7 +5,6 @@ export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
 
 const { pathname } = window.location;
-
 let queryString = "";
 let segment = "";
 
