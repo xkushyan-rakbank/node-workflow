@@ -1,19 +1,13 @@
 import httpClient from "./axiosConfig";
 import store from "./../store/configureStore";
+import isEmpty from "lodash/isEmpty";
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
 
 const { pathname } = window.location;
-console.log(pathname);
+
 let queryString = "";
 let segment = "";
-
-if (pathname.includes("/agent/")) {
-  queryString = "?role=agent";
-} else if (pathname.includes("/sme/")) {
-  segment = "sme";
-  queryString = `?segment=${segment}&role=customer`;
-}
 
 function buildURI(uriName, prospectId, documentKey) {
   let uri = store.getState().appConfig.endpoints[uriName];
@@ -23,18 +17,33 @@ function buildURI(uriName, prospectId, documentKey) {
   return uri;
 }
 
+function getQueryString(product, segment) {
+  const role = pathname.includes("/agent/") ? "agent" : "customer";
+  if (product && segment) {
+    queryString = `?segment=${segment}&product=${product}&role=${role}`;
+  } else {
+    console.log(!isEmpty(store.getState().appConfig.endpoints));
+    const product = !isEmpty(store.getState().appConfig.endpoints)
+      ? store.getState().appConfig.prospect.applicationInfo.accountType
+      : null;
+    const segment = pathname.includes("/agent/") ? "agent" : "sme";
+
+    if (product) {
+      queryString = `?segment=${segment}&product=${product}&role=${role}`;
+    } else {
+      queryString = `?segment=${segment}&role=${role}`;
+    }
+  }
+  return queryString;
+}
+
 export default {
   config: {
-    get: () => {
+    load: (product, segment) => {
+      const query = getQueryString(product, segment);
       return httpClient.request({
         method: "GET",
-        url: `webapply/api/v1/config${queryString}`
-      });
-    },
-    reload: () => {
-      return httpClient.request({
-        method: "GET",
-        url: `webapply/api/v1/config${queryString}`
+        url: `webapply/api/v1/config${query}`
       });
     }
   },

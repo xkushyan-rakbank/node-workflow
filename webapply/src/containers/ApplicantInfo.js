@@ -12,6 +12,7 @@ import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import { updateActionType } from "../store/actions/appConfig";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
+import { receiveAppConfig } from "./../store/actions/appConfig";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import * as otpSelectors from "../store/selectors/otp";
@@ -30,6 +31,10 @@ class BasicsForm extends React.Component {
   static defaultProps = {
     setToken: () => {}
   };
+
+  componentDidMount() {
+    this.props.receiveAppConfig();
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     // if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
@@ -127,7 +132,8 @@ const mapDispatchToProps = {
   setVerified,
   verifyToken,
   applicantInfoForm,
-  updateActionType
+  updateActionType,
+  receiveAppConfig
 };
 
 export default withStyles(styles)(

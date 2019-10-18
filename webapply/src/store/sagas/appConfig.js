@@ -18,10 +18,21 @@ import { getApplicationInfo } from "../selectors/appConfig";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 import routes from "./../../routes";
+import isEmpty from "lodash/isEmpty";
 
 function* receiveAppConfigSaga() {
   try {
-    const response = yield call(apiClient.config.get);
+    const state = yield select();
+    let response = null;
+
+    if (!isEmpty(state.appConfig.endpoints)) {
+      const product = state.appConfig.prospect.applicationInfo.accountType;
+      const segment = window.location.pathname.includes("/agent/") ? "agent" : "sme";
+      response = yield call(apiClient.config.load, product, segment);
+    } else {
+      response = yield call(apiClient.config.load);
+    }
+
     yield put(receiveAppConfigSuccess(response.data));
   } catch (error) {
     yield put(receiveAppConfigFail(error));
