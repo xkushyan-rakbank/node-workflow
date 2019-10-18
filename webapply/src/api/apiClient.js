@@ -22,7 +22,6 @@ function getQueryString(product, segment) {
   if (product && segment) {
     queryString = `?segment=${segment}&product=${product}&role=${role}`;
   } else {
-    console.log(!isEmpty(store.getState().appConfig.endpoints));
     const product = !isEmpty(store.getState().appConfig.endpoints)
       ? store.getState().appConfig.prospect.applicationInfo.accountType
       : null;
