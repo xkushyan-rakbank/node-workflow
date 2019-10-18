@@ -77,6 +77,14 @@ class VerticalPaginationWrapper extends React.Component {
     this.timeStamp = new Date();
   }
 
+  componentDidMount() {
+    document.body.style.overflow = "hidden";
+  }
+
+  componentWillUnmount() {
+    document.body.style.overflow = "";
+  }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.indexScrollToSection) {
       this.handleClick(nextProps.indexScrollToSection);
