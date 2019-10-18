@@ -4,16 +4,15 @@ export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
 
 const { pathname } = window.location;
+console.log(pathname);
 let queryString = "";
 let segment = "";
+
 if (pathname.includes("/agent/")) {
   queryString = "?role=agent";
 } else if (pathname.includes("/sme/")) {
   segment = "sme";
-  queryString = `?segment=${segment}&product=checking&role=customer`;
-} else {
-  segment = "sme";
-  queryString = "?segment=sme&product=checking&role=customer";
+  queryString = `?segment=${segment}&role=customer`;
 }
 
 function buildURI(uriName, prospectId, documentKey) {
@@ -27,6 +26,12 @@ function buildURI(uriName, prospectId, documentKey) {
 export default {
   config: {
     get: () => {
+      return httpClient.request({
+        method: "GET",
+        url: `webapply/api/v1/config${queryString}`
+      });
+    },
+    reload: () => {
       return httpClient.request({
         method: "GET",
         url: `webapply/api/v1/config${queryString}`
