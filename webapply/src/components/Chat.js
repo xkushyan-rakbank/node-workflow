@@ -40,6 +40,9 @@ const style = {
       color: "#fff",
       marginLeft: "5px"
     },
+    "& a + a": {
+      marginLeft: "0px"
+    },
     "& img": {
       width: "30px",
       height: "30px"
@@ -51,9 +54,11 @@ const Chat = ({ classes }) => {
   return (
     <div className={classes.chat}>
       <div className={classes.chatInner}>
-        <span>
-          <img src={chatIcon} alt="chat" />
-        </span>
+        <a href="/">
+          <span>
+            <img src={chatIcon} alt="chat" />
+          </span>
+        </a>
         <a href="/"> Chat with Us</a>
       </div>
     </div>
