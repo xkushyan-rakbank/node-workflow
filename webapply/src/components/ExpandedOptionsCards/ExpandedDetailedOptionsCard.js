@@ -133,7 +133,7 @@ const ExpandedOptionsDetailedCard = ({
   selectService
 }) => {
   const renderTitle = () =>
-    accountType === "RAKStarter" && value === "RAKvalue PLUS"
+    accountType === "RAKstarter" && value === "RAKvalue PLUS"
       ? "Included in RAKstarter"
       : "Available upgrade";
 

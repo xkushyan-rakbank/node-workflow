@@ -21,7 +21,7 @@ const getDataAsObject = (videoUrl, posterUrl) => ({ videoUrl, posterUrl });
 const getVideoUrl = applicationInfo => {
   const { islamicBanking, accountType } = applicationInfo;
 
-  if (accountType === "RAKStarter") {
+  if (accountType === "RAKstarter") {
     return islamicBanking
       ? getDataAsObject(RAKstarterIslamicVideo, RAKstarterIslamicVideoPoster)
       : getDataAsObject(RAKstarterVideo, RAKstarterVideoPoster);

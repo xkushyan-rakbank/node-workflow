@@ -269,7 +269,7 @@ export const submitApplication = {
 };
 
 export const accountsNames = {
-  starter: "RAKStarter",
+  starter: "RAKstarter",
   currentAccount: "Current Account",
   elite: "RAKelite"
 };

@@ -76,7 +76,7 @@ const style = {
 const shortNames = {
   starter: {
     name: accountsNames.starter,
-    ref: "RAKStarter"
+    ref: "RAKstarter"
   },
   currentAccount: {
     name: accountsNames.currentAccount,
@@ -195,7 +195,7 @@ class TableCompare extends React.Component {
       selectedAccount: ""
     };
 
-    this.RAKStarter = React.createRef();
+    this.RAKstarter = React.createRef();
     this.CurrentAccount = React.createRef();
     this.RAKElite = React.createRef();
   }
@@ -207,7 +207,7 @@ class TableCompare extends React.Component {
 
   updateDimensionSelectedAccountContainer = () => {
     const selectedAccountContainerWidth = window
-      .getComputedStyle(this.RAKStarter.current)
+      .getComputedStyle(this.RAKstarter.current)
       .getPropertyValue("width");
     this.setState({
       selectedAccountContainerWidth: parseInt(selectedAccountContainerWidth) - 10
@@ -229,7 +229,7 @@ class TableCompare extends React.Component {
     switch (selectedAccount) {
       case accountsNames.starter:
         this.setState({
-          offset: this.RAKStarter.current.offsetLeft + 5,
+          offset: this.RAKstarter.current.offsetLeft + 5,
           selectedCurrentColumn: 2
         });
         break;

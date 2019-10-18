@@ -113,7 +113,7 @@ const style = {
 };
 
 const accountInfo = {
-  RAKStarter: {
+  RAKstarter: {
     title: "RAKstarter account",
     subtitle: "A zero balance account, for the budding entrepreneurs out there."
   },

@@ -125,7 +125,7 @@ export const getIconsByAccount = () => {
   if (islamicBanking) {
     return islamicIconsSet;
   }
-  if (accountType === "RAKStarter" || accountType === "Current Account" || accountType === "") {
+  if (accountType === "RAKstarter" || accountType === "Current Account" || accountType === "") {
     return conventionalIconsSet;
   } else {
     return eliteIconsSet;

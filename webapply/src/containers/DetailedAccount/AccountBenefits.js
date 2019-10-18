@@ -35,7 +35,7 @@ const style = {
 const AccountBenefits = ({ classes, accountType }) => {
   const getText = accountType => {
     switch (accountType) {
-      case "RAKStarter":
+      case "RAKstarter":
         return "Unmatched benefits to make banking stress-free";
       case "Current Account":
         return "Unmatched benefits for an unmatched price";
@@ -60,7 +60,7 @@ const AccountBenefits = ({ classes, accountType }) => {
   } = getIconsByAccount();
 
   const mockData = {
-    RAKStarter: [
+    RAKstarter: [
       { key: 1, text: "No minimum balance required", icon: balance, alt: "balance" },
       { key: 2, text: "Available in AED, USD, EUR, GBP", icon: availability, alt: "availability" },
       {
