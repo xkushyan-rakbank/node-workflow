@@ -2,7 +2,7 @@ import { all, put, takeEvery, select } from "redux-saga/effects";
 import {
   ADD_NEW_STAKEHOLDER,
   DELETE_STAKEHOLDER,
-  SET_DUAL_CITIZENSHIP
+  HANDLE_CITIZENSHIP
 } from "../actions/stakeholders";
 import { setProspect } from "../actions/appConfig";
 import cloneDeep from "lodash/cloneDeep";
@@ -27,15 +27,25 @@ function* deleteStakeholderSaga(action) {
   yield put(setProspect(config));
 }
 
-function* setDualCitizenshipSaga(action) {
-  console.log(action);
+function* handleCitizenshipSaga(action) {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
-  if (!action.citizenship) {
-    config.prospect.signatoryInfo[action.index].kycDetails.dualCitizenshipCountry = [{}];
+  let passportDetails = config.prospect.signatoryInfo[action.index].kycDetails.passportDetails;
+  if (action.value) {
+    if (passportDetails.length < 5) {
+      passportDetails.push({});
+    }
+    if (action.passportIndex === 0) {
+      config.prospect.signatoryInfo[action.index].kycDetails.dualCitizenship = action.value;
+    }
   }
-  // config.prospect.signatoryInfo.push({});
-  console.log(config.prospect.signatoryInfo[action.index]);
+  /*else {
+    const updatedPassportDetails = passportDetails.filter(
+      (item, index) => index !== action.passportIndex
+    );
+    passportDetails = updatedPassportDetails;
+  }*/
+
   yield put(setProspect(config));
 }
 
@@ -43,6 +53,6 @@ export default function* appConfigSaga() {
   yield all([
     takeEvery(ADD_NEW_STAKEHOLDER, addNewStakeholderSaga),
     takeEvery(DELETE_STAKEHOLDER, deleteStakeholderSaga),
-    takeEvery(SET_DUAL_CITIZENSHIP, setDualCitizenshipSaga)
+    takeEvery(HANDLE_CITIZENSHIP, handleCitizenshipSaga)
   ]);
 }

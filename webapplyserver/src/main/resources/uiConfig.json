@@ -5571,6 +5571,41 @@
 		"readonlyFor": [],
 		"default": "false"
 	},
+	"SigKycd.hasAnotherCitizenship": {
+		"criteria": {
+			"roles": [
+				"customer",
+				"agent"
+			],
+			"segments": [
+				"sme"
+			],
+			"products": [
+				"",
+				"Current Account",
+				"RAKelite"
+			],
+			"devices": [
+				"mobile",
+				"tablet",
+				"desktop"
+			]
+		},
+		"validationErrors": {
+			"required": "Field is required.",
+			"invalid": "Field is invalid.",
+			"multilineInvalid": null
+		},
+		"applicable": null,
+		"label": "This person has another citizenship",
+		"placeholder": null,
+		"path": "$.prospect.signatoryInfo[*].kycDetails.passportDetails[*].hasAnotherCitizenship",
+		"name": "prospect.signatoryInfo[*].kycDetails.passportDetails[*].hasAnotherCitizenship",
+		"required": false,
+		"datalistId": null,
+		"readonlyFor": [],
+		"default": "false"
+	},
 	"SigKycd.dualCitizenshipCountry": {
 		"criteria": {
 			"roles": [

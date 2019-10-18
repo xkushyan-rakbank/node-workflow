@@ -26,7 +26,8 @@ function* receiveAppConfigSaga() {
     let response = null;
 
     if (!isEmpty(endpoints)) {
-      const product = getApplicationInfo.accountType;
+      // const product = getApplicationInfo.accountType;
+      const product = "RAKelite";
       const segment = pathname.includes("/agent/") ? "agent" : "sme";
       response = yield call(apiClient.config.load, product, segment);
     } else {
