@@ -83,7 +83,7 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "webapplyserver/src/main/resources/appConfig.json",
+                    "pattern": "webapplyserver/src/main/resources/appConfig.json","document_uploader/src/main/resources/DocUploadConfig.json",
                     "target": "onboarding/$(Build.BuildNumber)/files/"
                 }
               ]
