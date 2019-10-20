@@ -132,14 +132,14 @@ public class OAuthService {
 		requestJSON.set("grant_type", oAuthConfigs.get("OAuthGrantType"));
 		requestJSON.set("client_id", oAuthConfigs.get("OAuthClientId"));
 		requestJSON.set("client_secret", oAuthConfigs.get("OAuthCleintSecret"));
-		requestJSON.set("BANK_ID", oAuthConfigs.get("OAuthBankId"));
-		requestJSON.set("CHANNEL_ID", oAuthConfigs.get("OAuthChannelId"));
+		requestJSON.set("bank_id", oAuthConfigs.get("OAuthBankId"));
+		requestJSON.set("channel_id", oAuthConfigs.get("OAuthChannelId"));
 		requestJSON.set("username", oAuthConfigs.get("OAuthUsername"));
 		requestJSON.set("password", oAuthConfigs.get("OAuthPassword"));
-		requestJSON.set("LANGUAGE_ID", oAuthConfigs.get("OAuthLangId"));
-		requestJSON.set("LOGIN_FLAG", oAuthConfigs.get("OAuthLoginFlag"));
-		requestJSON.set("LOGIN_TYPE", oAuthConfigs.get("OAuthLoginType"));
-		requestJSON.set("STATEMODE", oAuthConfigs.get("OAuthStateMode"));
+		requestJSON.set("language_id", oAuthConfigs.get("OAuthLangId"));
+		requestJSON.set("login_flag", oAuthConfigs.get("OAuthLoginFlag"));
+		requestJSON.set("login_type", oAuthConfigs.get("OAuthLoginType"));
+		requestJSON.set("statemode", oAuthConfigs.get("OAuthStateMode"));
 		return requestJSON;
 	}
 }
