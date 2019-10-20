@@ -138,7 +138,7 @@ class UploadDocuments extends Component {
 
   fileUploadHandler(event) {
     call = "";
-    call = call + this.props.companyDoc.documentType + this.props.companyDoc.signatoryId;
+    call = call + this.props.documents.documentType + this.props.documents.signatoryId;
     call = call.replace(/\s/g, "");
     this.call = CancelToken.source();
 
@@ -157,13 +157,13 @@ class UploadDocuments extends Component {
           //generating dynamic document keys
 
           let docKey;
-          if (this.props.companyDoc.signatoryName) {
+          if (this.props.documents.signatoryName) {
             docKey =
-              this.props.companyDoc.documentType +
-              this.props.companyDoc.signatoryName +
+              this.props.documents.documentType +
+              this.props.documents.signatoryName +
               Math.floor(Math.random() * 100000 + 1000);
           } else {
-            docKey = this.props.companyDoc.documentType + Math.floor(Math.random() * 100000 + 1000);
+            docKey = this.props.documents.documentType + Math.floor(Math.random() * 100000 + 1000);
           }
           docKey = docKey.replace(/\s/g, "");
           let fileInfo = {
@@ -236,7 +236,9 @@ class UploadDocuments extends Component {
   }
 
   render() {
-    const docType = this.props.companyDoc;
+    const docType = this.props.documents;
+    console.log(docType);
+    // return false;
     if (docType.uploadStatus === "" || docType.uploadStatus === "Not Uploaded") {
       return (
         <div className={this.props.classes.fileUploadPlaceholder}>
@@ -293,7 +295,7 @@ class UploadDocuments extends Component {
                       className={this.props.classes.cancel}
                       onClick={() =>
                         this.fileUploadCancel(
-                          this.props.companyDoc.documentType + this.props.companyDoc.signatoryId
+                          this.props.documents.documentType + this.props.documents.signatoryId
                         )
                       }
                     >

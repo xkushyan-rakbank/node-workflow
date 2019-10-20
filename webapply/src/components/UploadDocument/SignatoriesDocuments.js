@@ -60,29 +60,32 @@ const style = {
 class SignatoriesDocuments extends Component {
   render() {
     let docUploadDetails = this.props.DocDetails.uploadedDoc;
-    const authUsers = this.props.DocDetails.getSignatories;
-    const userList = authUsers.map((authUser, index) => {
+    const signatoryDocuments = this.props.DocDetails.getSignatories;
+    const userList = signatoryDocuments.map((signatoryDocuments, index) => {
       if (this.props.DocDetails.uploadedDoc.stakeholdersDocuments) {
         docUploadDetails = this.props.DocDetails.uploadedDoc.stakeholdersDocuments[
-          index + "_" + authUser.fullName
+          index + "_" + signatoryDocuments.fullName
         ];
       }
       return (
         <div className={this.props.classes.container} key={index}>
           <div className={this.props.classes.contentWrapper}>
-            <Avatar firstName={authUser.fullName} lastName={authUser.fullName} />
+            <Avatar
+              firstName={signatoryDocuments.fullName}
+              lastName={signatoryDocuments.fullName}
+            />
             <div className={this.props.classes.userInfo}>
-              <div className={this.props.classes.nameField}>{authUser.fullName}</div>
-              <div className={this.props.classes.SignatoryRights}>{authUser.roles}</div>
+              <div className={this.props.classes.nameField}>{signatoryDocuments.fullName}</div>
+              <div className={this.props.classes.SignatoryRights}>{signatoryDocuments.roles}</div>
               <div className={this.props.classes.shareholdingField}>
-                Shareholding {authUser.Shareholding}
+                Shareholding {signatoryDocuments.Shareholding}
               </div>
             </div>
           </div>
           {docUploadDetails.length &&
-            docUploadDetails.map((companyDoc, index) => {
-              if (authUser.fullName === companyDoc.signatoryName) {
-                return <UploadDocuments key={index} companyDoc={companyDoc} />;
+            docUploadDetails.map((documents, index) => {
+              if (signatoryDocuments.fullName === documents.signatoryName) {
+                return <UploadDocuments key={index} documents={documents} />;
               }
               return null;
             })}

@@ -89,8 +89,8 @@ class CompanyDocuments extends Component {
     const companyName = this.props.companyName;
     let companyDocument;
     if (companyDocuments.companyDocuments) {
-      companyDocument = companyDocuments.companyDocuments.map((companyDoc, index) => {
-        return <UploadDocument key={index} companyDoc={companyDoc} />;
+      companyDocument = companyDocuments.companyDocuments.map((documents, index) => {
+        return <UploadDocument key={index} documents={documents} />;
       });
     }
 
