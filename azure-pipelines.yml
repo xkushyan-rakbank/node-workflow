@@ -61,8 +61,7 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/Wiremock'
           ArtifactName: 'Wiremock'
 
-jobs:
-    - job: filebackup
+     - job: filebackup
       timeoutInMinutes: 120
       pool:
        name: Hosted macOS
