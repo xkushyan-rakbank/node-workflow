@@ -57,6 +57,9 @@ public class WebApplyController {
 	@Value("${build.date}")
 	private String buildDate;
 
+	@Value("${app.name}")
+	private String appName;
+
 	@Autowired
 	ServletContext servletContext;
 
@@ -126,6 +129,9 @@ public class WebApplyController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode response = objectMapper.createObjectNode();
 		response.put("buildDate", buildDate);
+		if (!EnvUtil.isProd()) {
+			response.put("project", appName);
+		}
 		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
 
