@@ -237,8 +237,6 @@ class UploadDocuments extends Component {
 
   render() {
     const docType = this.props.documents;
-    console.log(docType);
-    // return false;
     if (docType.uploadStatus === "" || docType.uploadStatus === "Not Uploaded") {
       return (
         <div className={this.props.classes.fileUploadPlaceholder}>

@@ -140,7 +140,8 @@ const AccountInfo = ({ classes, accountType, history }) => {
   const isMyApplications = pathname === "/MyApplications";
   const isComeBackLogin = pathname === "/ComeBackLogin";
   const isComeBackVerification = pathname === "/ComeBackVerification";
-
+  const isReUploadDocuments = pathname === "/ReUploadDocuments";
+  console.log(isReUploadDocuments);
   return (
     <div className={classes.contentContainer}>
       {accountType && pathname !== "/ApplicationOverview" ? (
@@ -166,11 +167,13 @@ const AccountInfo = ({ classes, accountType, history }) => {
       ) : (
         <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
           {isApplicationOverview
-            ? "Opening an account has never been this simple."
+            ? "Opening an account has never been this simple. saas"
             : isMyApplications
             ? "Your  applications, at a glance"
             : isComeBackLogin
             ? "Good to see you back!"
+            : isReUploadDocuments
+            ? "Edit your application"
             : isComeBackVerification
             ? "Confirm that it's you"
             : "All businesses start with an account. Get yours now."}
@@ -261,7 +264,8 @@ class FormNavigation extends React.Component {
       "/ApplicationOverview",
       "/MyApplications",
       "/ComeBackLogin",
-      "/ComeBackVerification"
+      "/ComeBackVerification",
+      "/ReUploadDocuments"
     ]).has(location.pathname);
     const backgroundImage = getBgImage(accountType, islamicBanking);
 

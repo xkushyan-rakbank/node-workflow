@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "POST",
-    "url": "/api/v1/OAuth/token"
+    "url": "/api/v1/oauth/token"
   },
   "response": {
     "status": 200,
