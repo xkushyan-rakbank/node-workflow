@@ -57,6 +57,9 @@ public class ECSS3Factory {
 	 */
 	public String seEcsNamespace = null; // use default namespace
 
+	/* a unique object name to store */
+	public static final String S3_OBJECT = "";
+
 	@PostConstruct
 	public void initAppState() {
 		JsonNode docUploadConfig = fileHelper.getDocUploadConfigJson();
@@ -67,9 +70,6 @@ public class ECSS3Factory {
 		s3Url = docUploadConfig.get("BaseURLs").get(EnvUtil.getEnv()).get("s3BaseUrl").asText()
 				+ otherConfigs.get("s3Uri").asText();
 	}
-
-	/* a unique object name to store */
-	public static final String S3_OBJECT = "workshop-object";
 
 	public S3Client getS3Client() throws URISyntaxException {
 		// for client-side load balancing
@@ -86,7 +86,7 @@ public class ECSS3Factory {
 
 		return client;
 	}
-	
+
 	public String getS3Bucket() {
 		return s3Bucket;
 	}
