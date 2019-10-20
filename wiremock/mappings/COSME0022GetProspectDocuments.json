@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/api/v1/banks/RAK/prospects/001/documents"
+    "url": "/api/v1/banks/RAK/prospects/COSME0000000000000001/documents"
   },
   "response": {
     "status": 200,

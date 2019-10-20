@@ -6,7 +6,7 @@ import * as actions from "../actions/getProspectDocuments";
 function* getProspectDocuments() {
   try {
     const state = yield select();
-    const prospectID = getProspectId(state) || "001"; // remove hardcoded ID
+    const prospectID = getProspectId(state) || "COSME0000000000000001";
     const response = yield call(apiClient.getProspectDocuments.retriveDocuments, prospectID);
     if (response.status === 200) {
       yield put(actions.retrieveDocDetailssSuccess(response.data));

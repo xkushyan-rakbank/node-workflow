@@ -7,6 +7,8 @@ import companyIconSvg from "../../assets/icons/file.png";
 
 const CancelToken = axios.CancelToken;
 let call;
+const uri = "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents";
+
 const style = {
   fileUploadPlaceholder: {
     height: "50px",
@@ -118,8 +120,6 @@ const style = {
     float: "right"
   }
 };
-
-const uri = "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents";
 
 class UploadDocuments extends Component {
   constructor(props) {
@@ -254,7 +254,9 @@ class UploadDocuments extends Component {
               <div className={this.props.classes.contentBox}>
                 <p className={this.props.classes.uploadedFileName}>{docType.documentType}</p>
                 {this.state.fileError ? (
-                  <p className={this.props.classes.ErrorExplanation}>Error explanation goes here</p>
+                  <p className={this.props.classes.ErrorExplanation}>
+                    File in a multipart request was exceeded
+                  </p>
                 ) : null}
                 {this.state.isExcedeed ? (
                   <p className={this.props.classes.ErrorExplanation}>

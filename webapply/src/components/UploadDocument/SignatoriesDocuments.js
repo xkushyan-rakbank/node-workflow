@@ -60,37 +60,48 @@ const style = {
 class SignatoriesDocuments extends Component {
   render() {
     let docUploadDetails = this.props.DocDetails.uploadedDoc;
-    const signatoryDocuments = this.props.DocDetails.getSignatories;
-    const userList = signatoryDocuments.map((signatoryDocuments, index) => {
+    const signatoryDocument = this.props.DocDetails.getSignatories;
+    const userList = signatoryDocument.map((signatoryDocuments, index) => {
       if (this.props.DocDetails.uploadedDoc.stakeholdersDocuments) {
         docUploadDetails = this.props.DocDetails.uploadedDoc.stakeholdersDocuments[
-          index + "_" + signatoryDocuments.fullName
+          index + "_" + signatoryDocuments.firstName
         ];
       }
-      return (
-        <div className={this.props.classes.container} key={index}>
-          <div className={this.props.classes.contentWrapper}>
-            <Avatar
-              firstName={signatoryDocuments.fullName}
-              lastName={signatoryDocuments.fullName}
-            />
-            <div className={this.props.classes.userInfo}>
-              <div className={this.props.classes.nameField}>{signatoryDocuments.fullName}</div>
-              <div className={this.props.classes.SignatoryRights}>{signatoryDocuments.roles}</div>
-              <div className={this.props.classes.shareholdingField}>
-                Shareholding {signatoryDocuments.Shareholding}
+      if (docUploadDetails) {
+        return (
+          <div className={this.props.classes.container} key={index}>
+            <div className={this.props.classes.contentWrapper}>
+              <Avatar
+                firstName={signatoryDocuments.firstName}
+                lastName={signatoryDocuments.lastName}
+              />
+              <div className={this.props.classes.userInfo}>
+                <div className={this.props.classes.nameField}>{signatoryDocuments.firstName}</div>
+                <div className={this.props.classes.SignatoryRights}>{signatoryDocuments.roles}</div>
+                <div className={this.props.classes.shareholdingField}>
+                  {signatoryDocuments.kycDetails.shareHoldingPercentage ? (
+                    <>
+                      Shareholding
+                      {signatoryDocuments.kycDetails.shareHoldingPercentage} %
+                    </>
+                  ) : (
+                    <>No shareholding</>
+                  )}
+                </div>
               </div>
             </div>
+            {docUploadDetails.length &&
+              docUploadDetails.map((documents, index) => {
+                if (signatoryDocuments.firstName === documents.signatoryName) {
+                  return <UploadDocuments key={index} documents={documents} />;
+                }
+                return null;
+              })}
           </div>
-          {docUploadDetails.length &&
-            docUploadDetails.map((documents, index) => {
-              if (signatoryDocuments.fullName === documents.signatoryName) {
-                return <UploadDocuments key={index} documents={documents} />;
-              }
-              return null;
-            })}
-        </div>
-      );
+        );
+      } else {
+        return null;
+      }
     });
     return <>{userList}</>;
   }
