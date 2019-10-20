@@ -60,6 +60,25 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/Wiremock'
           ArtifactName: 'Wiremock'
+    - job: File_Upload
+      timeoutInMinutes: 120
+      pool:
+        name: Hosted macOS
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload'
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "document_uploader/src/main/resources/DocUploadConfig.json","	
+webapplyserver/src/main/resources/appConfig.json",
+                    "target": "onboarding/$(Build.BuildNumber)/Files/"
+                }
+              ]
+            }
+          collectBuildInfo: true
 
     - job: Webapply
       timeoutInMinutes: 120
