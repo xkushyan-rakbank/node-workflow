@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -52,6 +53,9 @@ import ae.rakbank.webapply.services.OAuthService;
 public class WebApplyController {
 
 	private static final Logger logger = LoggerFactory.getLogger(WebApplyController.class);
+
+	@Value("${build.date}")
+	private String buildDate;
 
 	@Autowired
 	ServletContext servletContext;
@@ -113,6 +117,16 @@ public class WebApplyController {
 		}
 
 		return null;
+	}
+
+	@GetMapping(value = "/health", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Object> health() {
+		HttpHeaders headers = new HttpHeaders();
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectNode response = objectMapper.createObjectNode();
+		response.put("buildDate", buildDate);
+		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/config", produces = "application/json")
