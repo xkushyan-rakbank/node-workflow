@@ -39,7 +39,7 @@
 	</root>
 
 	<!-- LOG "com.baeldung*" at TRACE level -->
-	<logger name="ae.rakbank" level="info">
+	<logger name="ae.rakbank" level="debug">
 		<appender-ref ref="Console" />
 		<appender-ref ref="RollingFile" />
 	</logger>
