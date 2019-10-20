@@ -6,16 +6,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +28,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.documentuploader.commons.ApiError;
 import ae.rakbank.documentuploader.commons.DocumentUploadException;
+import ae.rakbank.documentuploader.commons.EnvUtil;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 
 @CrossOrigin
@@ -34,11 +38,30 @@ public class DocumentUploadController {
 
 	private static final Logger logger = LoggerFactory.getLogger(DocumentUploadController.class);
 
+	@Value("${build.date}")
+	private String buildDate;
+
+	@Value("${app.name}")
+	private String appName;
+
 	private final DocumentUploadService docUploadService;
 
 	@Autowired
 	public DocumentUploadController(DocumentUploadService docUploadService) {
 		this.docUploadService = docUploadService;
+	}
+
+	@GetMapping(value = "/health", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Object> health() {
+		HttpHeaders headers = new HttpHeaders();
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectNode response = objectMapper.createObjectNode();
+		response.put("buildDate", buildDate);
+		if (!EnvUtil.isProd()) {
+			response.put("project", appName);
+		}
+		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/banks/RAK/prospects/{prospectId}/documents", consumes = {
