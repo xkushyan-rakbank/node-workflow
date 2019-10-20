@@ -60,6 +60,7 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/Wiremock'
           ArtifactName: 'Wiremock'
+
     - job: File_Upload
       timeoutInMinutes: 120
       pool:
@@ -72,14 +73,17 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "document_uploader/src/main/resources/DocUploadConfig.json","	
-webapplyserver/src/main/resources/appConfig.json",
+                    "pattern": "document_uploader/src/main/resources/DocUploadConfig.json","webapplyserver/src/main/resources/appConfig.json",
                     "target": "onboarding/$(Build.BuildNumber)/Files/"
                 }
               ]
             }
           collectBuildInfo: true
-
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+        displayName: 'Publish Build Info to Artifactory'
+        inputs:
+          artifactoryService: 'Jfrog'
+          
     - job: Webapply
       timeoutInMinutes: 120
       pool:
