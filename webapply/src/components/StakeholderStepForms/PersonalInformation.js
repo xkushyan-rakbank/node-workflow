@@ -25,11 +25,7 @@ const PersonalInformation = props => {
     <>
       <Grid item container spacing={3}>
         <Grid item sm={12} className="mb-25 mt-25">
-          <CustomCheckbox
-            id="Okyc.isShareholderACompany"
-            indexes={[this.props.index]}
-            withQuestion
-          />
+          <CustomCheckbox id="Okyc.isShareholderACompany" indexes={[index]} withQuestion />
         </Grid>
       </Grid>
       <Grid item container spacing={3}>

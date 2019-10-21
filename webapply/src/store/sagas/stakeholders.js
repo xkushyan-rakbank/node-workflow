@@ -49,7 +49,6 @@ function* handleCitizenshipSaga(action) {
 }
 
 function* formatPersonalInformationSaga(action) {
-  console.log("formatPersonalInformationSaga");
   const state = yield select();
   const config = cloneDeep(state.appConfig);
 
@@ -67,21 +66,6 @@ function* formatPersonalInformationSaga(action) {
 
     yield put(sendProspectToAPI());
   }
-  /*  if (!kycDetails.dualCitizenship) {
-      kycDetails.passportDetails = [kycDetails.passportDetails[0]];
-    } else {
-      const activeNationalityIndexes = [0];
-      kycDetails.passportDetails.forEach(
-        (nationality, index) =>
-          nationality.hasAnotherCitizenship && activeNationalityIndexes.push(index + 1)
-      );
-      kycDetails.passportDetails = kycDetails.passportDetails.filter((nat, idx) =>
-        activeNationalityIndexes.includes(idx)
-      );
-    }
-    yield put(setProspect(config));
-
-    yield put(sendProspectToAPI());*/
 }
 
 function* formatNationalitySaga(action) {
