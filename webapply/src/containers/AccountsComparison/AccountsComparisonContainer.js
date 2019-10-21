@@ -11,9 +11,7 @@ import TableCompare from "../../components/TableCompare";
 
 import accountComparisonPoster from "../../assets/images/videoPosters/Account comparison.jpg";
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
-
-const linkToDetailedServiceAndGuide =
-  "https://rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
 
 const styles = {
   externalLink: {
@@ -55,7 +53,7 @@ class AccountsComparisonContainer extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, servicePricingGuideUrl } = this.props;
 
     return (
       <React.Fragment>
@@ -64,7 +62,7 @@ class AccountsComparisonContainer extends React.Component {
           posterUrl={accountComparisonPoster}
           indexScrollToSection={this.state.indexScrollToSection}
         >
-          <div></div>
+          <div> </div>
           <div>
             <SectionTitleWithInfo
               title="Business accounts for every business stage"
@@ -89,7 +87,7 @@ class AccountsComparisonContainer extends React.Component {
                     className={classes.externalLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    href={linkToDetailedServiceAndGuide}
+                    href={servicePricingGuideUrl}
                   >
                     here
                   </a>
@@ -103,13 +101,16 @@ class AccountsComparisonContainer extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  servicePricingGuideUrl: appConfigSelectors.getServicePricingGuideUrl(state)
+});
 const mapDispatchToProps = {
   updateProspect
 };
 
 export default withStyles(styles)(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(AccountsComparisonContainer)
 );
