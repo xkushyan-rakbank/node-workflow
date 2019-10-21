@@ -25,11 +25,20 @@ const Nationality = props => {
       <Grid container spacing={3}>
         {passportDetails.map((item, passportIndex) => {
           const citizenshipHandler = value => handleCitizenship(index, value, passportIndex);
+          const calcDisabling = () =>
+            get(passportDetails[0], "hasAnotherCitizenship")
+              ? !get(passportDetails[passportIndex - 1], "hasAnotherCitizenship")
+              : true;
+          const disabled = passportIndex === 0 ? false : calcDisabling();
           return (
             <React.Fragment key={passportIndex}>
               <Grid item sm={12} className={classes.divider} />
               <Grid item md={6} sm={12}>
-                <Select id="SigKycd.nationality" indexes={[index, passportIndex]} />
+                <Select
+                  id="SigKycd.nationality"
+                  indexes={[index, passportIndex]}
+                  disabled={disabled}
+                />
                 {passportIndex < 4 && (
                   <Checkbox
                     id="SigKycd.hasAnotherCitizenship"
@@ -39,7 +48,11 @@ const Nationality = props => {
                 )}
               </Grid>
               <Grid item md={6} sm={12}>
-                <Input id="SigKycdPspd.passportNumber" indexes={[index, passportIndex]} />
+                <Input
+                  id="SigKycdPspd.passportNumber"
+                  indexes={[index, passportIndex]}
+                  disabled={disabled}
+                />
                 <Checkbox id="SigKycdPspd.diplomatPassport" indexes={[index, passportIndex]} />
               </Grid>
             </React.Fragment>

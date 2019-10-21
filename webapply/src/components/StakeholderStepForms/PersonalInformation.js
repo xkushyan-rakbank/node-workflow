@@ -19,73 +19,54 @@ const styles = {
   }
 };
 
-class PersonalInformation extends React.Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.isShareholderACompany && this.props.isShareholderACompany) {
-      const index = this.props.index;
-
-      this.props.updateProspect({
-        [`prospect.signatoryInfo[${index}].firstName`]: "",
-        [`prospect.signatoryInfo[${index}].middleName`]: "",
-        [`prospect.signatoryInfo[${index}].lastName`]: "",
-        [`prospect.signatoryInfo[${index}].dateOfBirth`]: null
-      });
-    }
-  }
-
-  render() {
-    const { index, isShareholderACompany, classes } = this.props;
-    return (
-      <>
-        <Grid item container spacing={3}>
-          <Grid item sm={12} className="mb-25 mt-25">
-            <CustomCheckbox
-              id="Okyc.isShareholderACompany"
-              indexes={[this.props.index]}
-              withQuestion
-            />
-          </Grid>
+const PersonalInformation = props => {
+  const { index, isShareholderACompany, classes } = props;
+  return (
+    <>
+      <Grid item container spacing={3}>
+        <Grid item sm={12} className="mb-25 mt-25">
+          <CustomCheckbox
+            id="Okyc.isShareholderACompany"
+            indexes={[this.props.index]}
+            withQuestion
+          />
         </Grid>
-        <Grid item container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <TextInput
-              id="Sig.firstName"
-              indexes={[index]}
-              disabled={isShareholderACompany}
-              select={
-                <PureSelect
-                  id="Sig.gender"
-                  indexes={[index]}
-                  combinedSelect
-                  defaultValue="Male"
-                  disabled={isShareholderACompany}
-                />
-              }
-            />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            <TextInput id="Sig.middleName" indexes={[index]} disabled={isShareholderACompany} />
-          </Grid>
+      </Grid>
+      <Grid item container spacing={3}>
+        <Grid item md={6} sm={12}>
+          <TextInput
+            id="Sig.firstName"
+            indexes={[index]}
+            disabled={isShareholderACompany}
+            select={
+              <PureSelect
+                id="Sig.gender"
+                indexes={[index]}
+                combinedSelect
+                defaultValue="Male"
+                disabled={isShareholderACompany}
+              />
+            }
+          />
         </Grid>
-        <Grid item container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <TextInput id="Sig.lastName" indexes={[index]} disabled={isShareholderACompany} />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            <DatePicker
-              id="SigKycd.dateOfBirth"
-              indexes={[index]}
-              disabled={isShareholderACompany}
-            />
-          </Grid>
+        <Grid item md={6} sm={12}>
+          <TextInput id="Sig.middleName" indexes={[index]} disabled={isShareholderACompany} />
         </Grid>
-        <InfoTitle title="The details of this section should be the same as in the person’s passport" />
-        <div className={classes.divider}></div>
-        <InlineRadioGroup id="SigKycd.isPEP" indexes={[index]} />
-      </>
-    );
-  }
-}
+      </Grid>
+      <Grid item container spacing={3}>
+        <Grid item md={6} sm={12}>
+          <TextInput id="Sig.lastName" indexes={[index]} disabled={isShareholderACompany} />
+        </Grid>
+        <Grid item md={6} sm={12}>
+          <DatePicker id="SigKycd.dateOfBirth" indexes={[index]} disabled={isShareholderACompany} />
+        </Grid>
+      </Grid>
+      <InfoTitle title="The details of this section should be the same as in the person’s passport" />
+      <div className={classes.divider} />
+      <InlineRadioGroup id="SigKycd.isPEP" indexes={[index]} />
+    </>
+  );
+};
 
 const mapStateToProps = (state, { index }) => ({
   isShareholderACompany: getInputValueById(state, "Okyc.isShareholderACompany", [index])

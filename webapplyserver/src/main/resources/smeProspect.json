@@ -246,7 +246,6 @@
 				"isShareholder": false,
 				"shareHoldingPercentage": 0,
 				"dateOfBirth": "",
-				"nationality": "",
 				"dualCitizenship": false,
 				"dualCitizenshipCountry": [
 					""
@@ -255,6 +254,7 @@
 				"isUAEResident": false,
 				"passportDetails": [
 					{
+						"nationality": "",
 						"passportNumber": "",
 						"passportExpiryDate": "",
 						"country": "",
