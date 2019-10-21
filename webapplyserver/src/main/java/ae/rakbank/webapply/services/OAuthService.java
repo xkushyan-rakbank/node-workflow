@@ -89,7 +89,8 @@ public class OAuthService {
 
 			try {
 
-				logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
+				logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request=[%s] ", methodName, url,
+						request.getBody().toString()));
 
 				try {
 					response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
@@ -97,7 +98,7 @@ public class OAuthService {
 					logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				}
 
-				logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
+				logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
 						methodName, url, response.getStatusCodeValue(), response.getBody()));
 
 				if (response.getStatusCode().is2xxSuccessful()) {
@@ -129,17 +130,17 @@ public class OAuthService {
 	private ObjectNode buildOAuthRequest(ObjectMapper objectMapper) {
 		ObjectNode requestJSON = objectMapper.createObjectNode();
 
-		requestJSON.set("grant_type", oAuthConfigs.get("OAuthGrantType"));
-		requestJSON.set("client_id", oAuthConfigs.get("OAuthClientId"));
-		requestJSON.set("client_secret", oAuthConfigs.get("OAuthCleintSecret"));
-		requestJSON.set("BANK_ID", oAuthConfigs.get("OAuthBankId"));
-		requestJSON.set("CHANNEL_ID", oAuthConfigs.get("OAuthChannelId"));
-		requestJSON.set("username", oAuthConfigs.get("OAuthUsername"));
-		requestJSON.set("password", oAuthConfigs.get("OAuthPassword"));
-		requestJSON.set("LANGUAGE_ID", oAuthConfigs.get("OAuthLangId"));
-		requestJSON.set("LOGIN_FLAG", oAuthConfigs.get("OAuthLoginFlag"));
-		requestJSON.set("LOGIN_TYPE", oAuthConfigs.get("OAuthLoginType"));
-		requestJSON.set("STATEMODE", oAuthConfigs.get("OAuthStateMode"));
+		requestJSON.put("grant_type", oAuthConfigs.get("OAuthGrantType").asText());
+		requestJSON.put("client_id", oAuthConfigs.get("OAuthClientId").asText());
+		requestJSON.put("client_secret", oAuthConfigs.get("OAuthCleintSecret").asText());
+		requestJSON.put("bank_id", oAuthConfigs.get("OAuthBankId").asText());
+		requestJSON.put("channel_id", oAuthConfigs.get("OAuthChannelId").asText());
+		requestJSON.put("username", oAuthConfigs.get("OAuthUsername").asText());
+		requestJSON.put("password", oAuthConfigs.get("OAuthPassword").asText());
+		requestJSON.put("language_id", oAuthConfigs.get("OAuthLangId").asText());
+		requestJSON.put("login_flag", oAuthConfigs.get("OAuthLoginFlag").asText());
+		requestJSON.put("login_type", oAuthConfigs.get("OAuthLoginType").asText());
+		requestJSON.put("statemode", oAuthConfigs.get("OAuthStateMode").asText());
 		return requestJSON;
 	}
 }

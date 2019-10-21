@@ -4,6 +4,7 @@ import cx from "classnames";
 
 import VideoBackground from "./BackgroundVideoPlayer";
 
+const transitionDuration = 400;
 const style = {
   paginationWrapper: {
     position: "relative",
@@ -14,7 +15,7 @@ const style = {
     position: "absolute",
     left: 0,
     width: "100%",
-    transition: "top 400ms"
+    transition: `top ${transitionDuration}ms`
   },
   childWrapper: {
     display: "flex",
@@ -74,7 +75,11 @@ class VerticalPaginationWrapper extends React.Component {
       nextElementPosition: 0,
       currentElement: "0"
     };
-    this.timeStamp = new Date();
+
+    this.prevTime = new Date().getTime();
+    this.scrollings = [];
+    this.isCanScroll = true;
+    this.timeOutScroll = () => {};
   }
 
   componentDidMount() {
@@ -110,27 +115,55 @@ class VerticalPaginationWrapper extends React.Component {
     return buttons;
   };
 
+  getAverage(elements, number) {
+    let sum = 0;
+    const lastElements = elements.slice(Math.max(elements.length - number, 1));
+    lastElements.map(element => (sum = sum + element));
+
+    return Math.ceil(sum / number);
+  }
+
   handleWheel = e => {
     const { currentElement } = this.state;
     const { children } = this.props;
-    const now = new Date();
     const offset = e.deltaY < 0 ? -1 : 1;
     const nextElementPosition = parseInt(currentElement) + offset;
 
-    if (
-      now - this.timeStamp < 500 ||
-      nextElementPosition < 0 ||
-      nextElementPosition > children.length - 1
-    ) {
+    if (nextElementPosition < 0 || nextElementPosition > children.length - 1) {
       return;
     }
 
-    this.timeStamp = now;
-    this.scrollToPosition(nextElementPosition, nextElementPosition.toString());
+    const delta = -e.deltaY || -e.detail;
+    const timeNow = new Date().getTime();
+
+    if (this.scrollings.length > 149) this.scrollings.shift();
+
+    this.scrollings.push(Math.abs(delta));
+
+    const timeDiff = timeNow - this.prevTime;
+    this.prevTime = timeNow;
+
+    if (timeDiff > 200) this.scrollings = [];
+
+    if (this.isCanScroll) {
+      const averageEnd = this.getAverage(this.scrollings, 10);
+      const averageMiddle = this.getAverage(this.scrollings, 70);
+      const isAccelerating = averageEnd >= averageMiddle;
+
+      if (isAccelerating) {
+        this.scrollToPosition(nextElementPosition, nextElementPosition.toString());
+      }
+    }
   };
 
   scrollToPosition = (nextElementPosition, currentElement) => {
     const top = `calc(100vh *-${nextElementPosition})`;
+
+    this.isCanScroll = false;
+
+    clearTimeout(this.timeOutScroll);
+    this.timeOutScroll = setTimeout(() => (this.isCanScroll = true), transitionDuration * 2);
+
     this.setState({
       top,
       nextElementPosition,
