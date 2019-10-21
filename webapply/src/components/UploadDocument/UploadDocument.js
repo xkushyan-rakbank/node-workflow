@@ -4,10 +4,12 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
 import companyIconSvg from "../../assets/icons/file.png";
+// import apiClient from "../../api/apiClient";
 
 const CancelToken = axios.CancelToken;
 let call;
 const uri = "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents";
+// let uri = apiClient.uploadProspectDocuments.uploadDocuments;
 
 const style = {
   fileUploadPlaceholder: {
@@ -250,7 +252,12 @@ class UploadDocuments extends Component {
           {this.state.enableUpload ? (
             <>
               <div className={this.props.classes.contentBox}>
-                <p className={this.props.classes.uploadedFileName}>{docType.documentType}</p>
+                <p className={this.props.classes.uploadedFileName}>
+                  {docType.documentType}
+                  {this.props.documents.required ? (
+                    <span className={this.props.classes.ErrorExplanation}> *</span>
+                  ) : null}
+                </p>
                 {this.state.fileError ? (
                   <p className={this.props.classes.ErrorExplanation}>
                     File in a multipart request was exceeded
