@@ -447,13 +447,14 @@ public class WebApplyController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.set("Authorization", "Bearer " + oauthResponse.getBody().get("access_token").asText());
+			JsonNode authBody = oauthResponse.getBody();
+			headers.set("Authorization", authBody.get("token_type").asText() + " " + authBody.get("access_token").asText());
 
 			HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 
 			logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
-			
-			logger.info(String.format("Endpoint=[%s], request=%s", url,request.toString()));
+
+			logger.info(String.format("Endpoint=[%s], request=%s", url, request.toString()));
 
 			ResponseEntity<JsonNode> response = null;
 
