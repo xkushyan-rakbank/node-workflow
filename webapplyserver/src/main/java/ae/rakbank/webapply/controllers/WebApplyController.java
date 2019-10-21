@@ -450,9 +450,10 @@ public class WebApplyController {
 			headers.set("Authorization", "Bearer " + oauthResponse.getBody().get("access_token").asText());
 
 			HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
-			logger.debug("GetDataList API request " + request.toString());
 
 			logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
+			
+			logger.info(String.format("Endpoint=[%s], request=%s", url,request.toString()));
 
 			ResponseEntity<JsonNode> response = null;
 
@@ -463,7 +464,7 @@ public class WebApplyController {
 			}
 
 			JsonNode datalist = response.getBody();
-			logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
+			logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
 					methodName, url, response.getStatusCodeValue(), datalist));
 
 			if (response.getStatusCode().is2xxSuccessful()) {
