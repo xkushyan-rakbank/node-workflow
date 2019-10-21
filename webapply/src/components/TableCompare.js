@@ -192,7 +192,7 @@ class TableCompare extends React.Component {
     this.state = {
       offset: 380,
       selectedAccountContainerWidth: "190px",
-      selectedAccount: ""
+      selectedAccount: accountsNames.currentAccount
     };
 
     this.RAKstarter = React.createRef();
@@ -226,6 +226,10 @@ class TableCompare extends React.Component {
   }
 
   handleHighlightSelectedAccount = selectedAccount => {
+    if (selectedAccount === this.state.selectedAccount) {
+      return;
+    }
+
     switch (selectedAccount) {
       case accountsNames.starter:
         this.setState({
