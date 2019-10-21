@@ -11,6 +11,7 @@ import ContainedButton from "./Buttons/ContainedButton";
 import { connect } from "react-redux";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import { updateProspect } from "../store/actions/appConfig";
+import { updateAccountType } from "../store/actions/selectedAccountInfo";
 
 import checkIc from "../assets/icons/check.png";
 import { accountsNames } from "../constants";
@@ -258,7 +259,8 @@ class TableCompare extends React.Component {
   };
 
   handleSelectAccount = accountType => {
-    const { history, updateProspect } = this.props;
+    const { history, updateProspect, updateAccountType } = this.props;
+    updateAccountType(accountType);
     updateProspect({ "prospect.applicationInfo.accountType": accountType });
     history.push("/DetailedAccount");
   };
@@ -441,7 +443,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  updateProspect
+  updateProspect,
+  updateAccountType
 };
 
 export default withRouter(

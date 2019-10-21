@@ -11,6 +11,7 @@ import login from "./loginForm";
 import docUploadReducer from "./getProspectDocuments";
 import searchProspect from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
+import selectedAccountInfo from "./selectedAccountInfo";
 
 const reducers = history =>
   combineReducers({
@@ -24,7 +25,8 @@ const reducers = history =>
     login,
     uploadedDocs: docUploadReducer,
     searchProspect,
-    retrieveApplicantInfo
+    retrieveApplicantInfo,
+    selectedAccountInfo
   });
 
 export default reducers;
