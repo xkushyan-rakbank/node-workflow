@@ -62,7 +62,7 @@
 		"otpUri": "/banks/RAK/otp"
 	},
 	"OAuthURIs": {
-		"generateTokenUri": "/OAuth/token"
+		"generateTokenUri": "/oauth/token"
 	},
 	"ReCaptchaURIs": {
 		"siteVerifyUri": "/recaptcha/api/siteverify"
