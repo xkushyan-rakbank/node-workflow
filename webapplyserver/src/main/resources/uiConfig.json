@@ -3720,7 +3720,7 @@
 		"path": "$.prospect.orgKYCDetails.industryMultiSelect[*].subCategory[*]",
 		"name": "prospect.orgKYCDetails.industryMultiSelect[*].subCategory[*]",
 		"required": false,
-		"datalistId": "subCategory",
+		"datalistId": null,
 		"readonlyFor": [],
 		"datalist": null
 	},
