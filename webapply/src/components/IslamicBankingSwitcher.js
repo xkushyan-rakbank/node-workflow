@@ -4,6 +4,8 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button/Button";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import { updateProspect } from "../store/actions/appConfig";
+import { updateIslamicType } from "../store/actions/selectedAccountInfo";
+
 import { connect } from "react-redux";
 import cx from "classnames";
 
@@ -38,11 +40,19 @@ const styles = {
     color: "#ffffff"
   }
 };
-const IslamicBankingSwitcher = ({ classes, updateProspect, applicationInfo }) => {
-  const handleClick = islamicBanking =>
+const IslamicBankingSwitcher = ({
+  classes,
+  updateProspect,
+  applicationInfo,
+  updateIslamicType
+}) => {
+  const handleClick = islamicBanking => {
     updateProspect({
       "prospect.applicationInfo.islamicBanking": islamicBanking
     });
+
+    updateIslamicType(islamicBanking);
+  };
 
   return (
     <ButtonGroup
@@ -82,7 +92,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  updateProspect
+  updateProspect,
+  updateIslamicType
 };
 
 export default withStyles(styles)(

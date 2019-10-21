@@ -14,13 +14,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.FileHelper;
@@ -61,13 +61,6 @@ public class OAuthService {
 		return true;
 	}
 
-	private MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
-		MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-		mappingJackson2HttpMessageConverter
-				.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_FORM_URLENCODED));
-		return mappingJackson2HttpMessageConverter;
-	}
-
 	@SuppressWarnings("unchecked")
 	public ResponseEntity<JsonNode> getOAuthToken() {
 
@@ -82,18 +75,16 @@ public class OAuthService {
 
 			RestTemplate restTemplate = new RestTemplate();
 
-			restTemplate.getMessageConverters().add(getMappingJackson2HttpMessageConverter());
-
 			ObjectMapper objectMapper = new ObjectMapper();
-			ObjectNode requestJSON = buildOAuthRequest(objectMapper);
+			MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper);
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-			HttpEntity<JsonNode> request = new HttpEntity<>(requestJSON, headers);
+			HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
 
-			logger.debug("GetOAuthToken API request " + request.toString());
+			logger.info("GetOAuthToken API request " + request.toString());
 
 			String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
 
@@ -108,7 +99,7 @@ public class OAuthService {
 					logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				}
 
-				logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
+				logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
 						methodName, url, response.getStatusCodeValue(), response.getBody()));
 
 				if (response.getStatusCode().is2xxSuccessful()) {
@@ -137,20 +128,20 @@ public class OAuthService {
 
 	}
 
-	private ObjectNode buildOAuthRequest(ObjectMapper objectMapper) {
-		ObjectNode requestJSON = objectMapper.createObjectNode();
+	private MultiValueMap<String, String> buildOAuthRequest(ObjectMapper objectMapper) {
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 
-		requestJSON.put("grant_type", oAuthConfigs.get("OAuthGrantType").asText());
-		requestJSON.put("client_id", oAuthConfigs.get("OAuthClientId").asText());
-		requestJSON.put("client_secret", oAuthConfigs.get("OAuthCleintSecret").asText());
-		requestJSON.put("bank_id", oAuthConfigs.get("OAuthBankId").asText());
-		requestJSON.put("channel_id", oAuthConfigs.get("OAuthChannelId").asText());
-		requestJSON.put("username", oAuthConfigs.get("OAuthUsername").asText());
-		requestJSON.put("password", oAuthConfigs.get("OAuthPassword").asText());
-		requestJSON.put("language_id", oAuthConfigs.get("OAuthLangId").asText());
-		requestJSON.put("login_flag", oAuthConfigs.get("OAuthLoginFlag").asText());
-		requestJSON.put("login_type", oAuthConfigs.get("OAuthLoginType").asText());
-		requestJSON.put("statemode", oAuthConfigs.get("OAuthStateMode").asText());
-		return requestJSON;
+		map.add("grant_type", oAuthConfigs.get("OAuthGrantType").asText());
+		map.add("client_id", oAuthConfigs.get("OAuthClientId").asText());
+		map.add("client_secret", oAuthConfigs.get("OAuthCleintSecret").asText());
+		map.add("bank_id", oAuthConfigs.get("OAuthBankId").asText());
+		map.add("channel_id", oAuthConfigs.get("OAuthChannelId").asText());
+		map.add("username", oAuthConfigs.get("OAuthUsername").asText());
+		map.add("password", oAuthConfigs.get("OAuthPassword").asText());
+		map.add("language_id", oAuthConfigs.get("OAuthLangId").asText());
+		map.add("login_flag", oAuthConfigs.get("OAuthLoginFlag").asText());
+		map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());
+		map.add("statemode", oAuthConfigs.get("OAuthStateMode").asText());
+		return map;
 	}
 }

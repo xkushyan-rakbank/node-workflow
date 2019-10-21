@@ -510,8 +510,8 @@ public class ApiRequestForwarder {
 		if (mediaType != null) {
 			headers.setContentType(mediaType);
 		}
-
-		headers.set("Authorization", "Bearer " + oauthResponse.getBody().get("access_token").asText());
+		JsonNode authBody = oauthResponse.getBody();
+		headers.set("Authorization", authBody.get("token_type").asText() + " " + authBody.get("access_token").asText());
 
 		return new HttpEntity<>(requestBodyJSON, headers);
 	}
@@ -520,6 +520,9 @@ public class ApiRequestForwarder {
 			String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId,
 			MediaType mediaType, String segment, String prospectId) {
 		logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", operationId, url));
+
+		logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request:[%s]", operationId, url,
+				request.toString()));
 
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<?> response = null;
@@ -533,7 +536,7 @@ public class ApiRequestForwarder {
 		HttpHeaders headers = new HttpHeaders();
 		headers.addAll(response.getHeaders());
 
-		logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]", operationId,
+		logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]", operationId,
 				url, response.getStatusCodeValue(), response.getBody()));
 
 		if (response.getStatusCode().is2xxSuccessful()) {

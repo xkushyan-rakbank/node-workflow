@@ -1,0 +1,10 @@
+{
+    "body": "-----BEGIN RSA PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnRqgjHPU8M8TyI4KbaNm\ncX4+CrP896H2vLDDdUT24VACncpmZ4zdWPgBL4QOk6gYHHyH0jdsj82NRPJ6Z9JL\nfvW3GcG6tDkHC51X+srUEJKGxClbXZj5Lq+4xFPii/ujdZ5Yw1vjy4lqQyETKB16\nLZmzKe0Bji7J6iqQb6bfqxJIQH6LgDwNhL5eCz4ODbjupZkgtzVseRwfKxv96NOU\njoje+1sn3x2RKjKo2zZCMqNt+GGUW60v59DkwdfwAI2DbDrvv1o9YmJFPOYiWLdH\nYgANeG/E02nZDL8RknwItXJmxnpS2TjCilmSbXbLRalzj3w4jVngxzZVC81HqxxT\nHwIDAQAB\n-----END RSA PUBLIC KEY-----\n",
+    "status": {
+        "message": "Public key",
+        "code": "Y",
+        "errorCode": null,
+        "apiCode": null,
+        "internalMessage": null
+    }
+}

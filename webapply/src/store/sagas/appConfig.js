@@ -14,6 +14,7 @@ import {
 import apiClient from "../../api/apiClient";
 import { history } from "./../configureStore";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
+import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 import routes from "./../../routes";
@@ -30,8 +31,11 @@ function* receiveAppConfigSaga() {
       : pathname.substring(1, pathname.lastIndexOf("/"));
 
     if (!isEmpty(endpoints)) {
+      const selectedAccountData = getSelectedAccountInfo(state);
       const product = getApplicationInfo.accountType;
       response = yield call(apiClient.config.load, product, segment);
+      const { applicationInfo } = response.data.prospect;
+      response.data.prospect = Object.assign(applicationInfo, ...selectedAccountData);
     } else {
       response = yield call(apiClient.config.load, null, segment);
     }

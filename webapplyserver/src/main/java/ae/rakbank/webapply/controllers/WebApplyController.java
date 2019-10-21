@@ -193,7 +193,7 @@ public class WebApplyController {
 
 						} catch (Exception e) {
 							logger.error(String.format(
-									"unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[5s]",
+									"unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[%s]",
 									device, segment, product, role));
 							ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
 							return new ResponseEntity<Object>(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -224,6 +224,15 @@ public class WebApplyController {
 		initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
 		initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
 
+		ResponseEntity<?> pkResponse = getRSAPublicKey();
+		if (pkResponse.getStatusCode().is2xxSuccessful()) {
+			initStateJSON.put("rsaPublicKey", ((JsonNode) pkResponse.getBody()).get("body").asText());
+		} else {
+			logger.error(String.format("error in GET RSA Public Key. HttpStatus=%s, response=%s",
+					pkResponse.getStatusCodeValue(), pkResponse.getBody().toString()));
+			throw new Exception(String.format("error in GET RSA Public Key. HttpStatus=%s, response=%s",
+					pkResponse.getStatusCodeValue(), pkResponse.getBody().toString()));
+		}
 		// deep clone the json nodes
 		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
 		JsonNode uiConfigNode = objectMapper.readTree(uiConfig);
@@ -438,12 +447,14 @@ public class WebApplyController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.set("Authorization", "Bearer " + oauthResponse.getBody().get("access_token").asText());
+			JsonNode authBody = oauthResponse.getBody();
+			headers.set("Authorization", authBody.get("token_type").asText() + " " + authBody.get("access_token").asText());
 
 			HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
-			logger.debug("GetDataList API request " + request.toString());
 
 			logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
+
+			logger.info(String.format("Endpoint=[%s], request=%s", url, request.toString()));
 
 			ResponseEntity<JsonNode> response = null;
 
@@ -454,7 +465,7 @@ public class WebApplyController {
 			}
 
 			JsonNode datalist = response.getBody();
-			logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
+			logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
 					methodName, url, response.getStatusCodeValue(), datalist));
 
 			if (response.getStatusCode().is2xxSuccessful()) {
@@ -474,6 +485,28 @@ public class WebApplyController {
 		}
 		logger.info("End getDatalistJSON() method, segment=" + segment);
 		return null;
+	}
+
+	private ResponseEntity<?> getRSAPublicKey() {
+		logger.info("Begin getRSAPublicKey()");
+		String baseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("RSAPublicKeyUrl").asText();
+		JsonNode uris = appConfigJSON.get("RSAPublicKeyURIs");
+		String url = baseUrl + uris.get("rsaPublicKeyUri").asText();
+
+		HttpHeaders headers = new HttpHeaders();
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<JsonNode> reqEntity = new HttpEntity<>(null, headers);
+		ResponseEntity<JsonNode> response = null;
+		try {
+			response = restTemplate.exchange(url, HttpMethod.GET, reqEntity, JsonNode.class);
+		} catch (Exception e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+					"Unable to call endpoint " + url, e);
+			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		logger.info("END getRSAPublicKey()");
+		return response;
 	}
 
 	private void populateDefaultDatalist(JsonNode datalist) {
