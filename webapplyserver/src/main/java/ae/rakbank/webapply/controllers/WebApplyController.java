@@ -2,7 +2,6 @@ package ae.rakbank.webapply.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -444,11 +443,7 @@ public class WebApplyController {
 
 			url = uriComponents.toString();
 
-			HttpHeaders headers = new HttpHeaders();
-			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			JsonNode authBody = oauthResponse.getBody();
-			headers.set("Authorization", authBody.get("token_type").asText() + " " + authBody.get("access_token").asText());
+			HttpHeaders headers = oauthClient.getOAuthHeaders(oauthResponse, MediaType.APPLICATION_JSON);
 
 			HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 

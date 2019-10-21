@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.FileHelper;
@@ -143,5 +144,29 @@ public class OAuthService {
 		map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());
 		map.add("statemode", oAuthConfigs.get("OAuthStateMode").asText());
 		return map;
+	}
+
+	public HttpHeaders getOAuthHeaders(ResponseEntity<JsonNode> oauthResponse, MediaType mediaType) {
+		HttpHeaders headers = new HttpHeaders();
+		JsonNode authBody = oauthResponse.getBody();
+		headers.set("Authorization", authBody.get("access_token").asText());
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+		if (mediaType != null) {
+			headers.setContentType(mediaType);
+		} else {
+			headers.setContentType(MediaType.APPLICATION_JSON);
+		}
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectNode channelContext = objectMapper.createObjectNode();
+		ObjectNode authorizationDetails = objectMapper.createObjectNode();
+		authorizationDetails.put("primaryAccessCode", oAuthConfigs.get("OAuthPassword").asText());
+		authorizationDetails.put("secondaryAccessCode", "");
+		authorizationDetails.put("userId", oAuthConfigs.get("OAuthUsername").asText());
+
+		channelContext.set("authorizationDetails", authorizationDetails);
+		headers.set("ChannelContext", channelContext.toString());
+		return headers;
 	}
 }

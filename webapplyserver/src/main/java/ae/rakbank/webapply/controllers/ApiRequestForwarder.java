@@ -1,7 +1,5 @@
 package ae.rakbank.webapply.controllers;
 
-import java.util.Collections;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -498,20 +496,13 @@ public class ApiRequestForwarder {
 
 	private HttpEntity<JsonNode> getHttpEntityRequest(HttpServletRequest httpRequest, JsonNode requestBodyJSON,
 			ResponseEntity<JsonNode> oauthResponse, MediaType mediaType) {
-		HttpHeaders headers = new HttpHeaders();
 		/*
 		 * Enumeration<String> enumeration = httpRequest.getHeaderNames(); while
 		 * (enumeration.hasMoreElements()) { String headerName =
 		 * enumeration.nextElement(); String headerValue =
 		 * httpRequest.getHeader(headerName); headers.add(headerName, headerValue); }
 		 */
-
-		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		if (mediaType != null) {
-			headers.setContentType(mediaType);
-		}
-		JsonNode authBody = oauthResponse.getBody();
-		headers.set("Authorization", authBody.get("token_type").asText() + " " + authBody.get("access_token").asText());
+		HttpHeaders headers = oauthClient.getOAuthHeaders(oauthResponse, mediaType);
 
 		return new HttpEntity<>(requestBodyJSON, headers);
 	}
