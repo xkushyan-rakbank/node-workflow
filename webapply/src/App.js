@@ -56,7 +56,7 @@ class App extends React.Component {
     this.props.receiveAppConfig();
     this.handlePageReload();
 
-    // this.props.prospectAutoSave();
+    this.props.prospectAutoSave();
   }
 
   componentDidUpdate(prevProps) {

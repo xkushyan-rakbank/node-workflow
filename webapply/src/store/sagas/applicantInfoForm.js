@@ -2,7 +2,7 @@ import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { APPLICANT_INFO_FORM, applicantInfoFormSuccess } from "../actions/applicantInfoForm";
 import { history } from "./../configureStore";
 import cloneDeep from "lodash/cloneDeep";
-import * as appConfigActions from "../actions/appConfig";
+import { updateProspectId } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import apiClient from "../../api/apiClient";
 
@@ -22,7 +22,7 @@ function* applicantInfoFormSaga() {
 
     yield put(applicantInfoFormSuccess());
 
-    yield put(appConfigActions.updateProspectId(prospectId));
+    yield put(updateProspectId(prospectId));
 
     yield call(history.push, routes.verifyOtp);
     yield put(resetInputsErrors());

@@ -29,9 +29,16 @@ function* sendProspectToAPISaga() {
 }
 
 function* prospectAutoSaveSaga() {
-  while (true) {
-    const { data } = yield take("APPLICANT_INFO_FORM_SUCCESS");
-    console.log("data", data);
+  try {
+    const { prospectId } = yield take("UPDATE_PROSPECT_ID");
+    while (prospectId) {
+      const state = yield select();
+      const prospect = getProspect(state);
+      yield call(apiClient.prospect.update, prospectId, prospect);
+      yield delay(40000);
+    }
+  } finally {
+    console.log("sws");
   }
 }
 
