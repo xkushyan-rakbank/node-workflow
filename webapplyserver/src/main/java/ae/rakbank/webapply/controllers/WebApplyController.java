@@ -300,7 +300,16 @@ public class WebApplyController {
 							fieldConfig.remove("datalistId");
 						} else if (datalist != null) {
 							String groupId = fieldConfig.get("datalistId").asText();
-							fieldConfig.set("datalist", datalist.get(groupId));
+
+							if (datalist.has(groupId)) {
+								fieldConfig.set("datalist", datalist.get(groupId));
+							} else {
+								String label = fieldConfig.get("label").asText();
+								throw new Exception(String.format(
+										"LOVs not found in getDatalist API response for datalistId=[%s], label=[%s]",
+										groupId, label));
+							}
+
 						}
 
 					}

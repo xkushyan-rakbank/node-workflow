@@ -79,7 +79,7 @@ public class OAuthService {
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
 			HttpEntity<JsonNode> request = new HttpEntity<>(requestJSON, headers);
 
@@ -89,7 +89,7 @@ public class OAuthService {
 
 			try {
 
-				logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request=[%s] ", methodName, url,
+				logger.debug(String.format("Invoke API from %s method, Endpoint=[%s], request=[%s] ", methodName, url,
 						request.getBody().toString()));
 
 				try {
@@ -98,7 +98,7 @@ public class OAuthService {
 					logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				}
 
-				logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
+				logger.debug(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
 						methodName, url, response.getStatusCodeValue(), response.getBody()));
 
 				if (response.getStatusCode().is2xxSuccessful()) {
