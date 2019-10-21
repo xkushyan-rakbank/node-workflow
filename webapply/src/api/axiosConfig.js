@@ -1,7 +1,11 @@
 import axios from "axios";
 import store from "./../store/configureStore";
 import { setInputsErrors } from "./../store/actions/serverValidation";
-import { applicationStatusServerError } from "./../store/actions/applicationStatus";
+import {
+  applicationStatusServerError,
+  applicationStatusProceed,
+  applicationStatusStop
+} from "./../store/actions/applicationStatus";
 
 const LOCALHOST = "localhost";
 const RAKBANKONLINE = "conv.rakbankonline.ae";
@@ -27,6 +31,16 @@ function getBaseURL() {
  */
 instance.interceptors.response.use(
   function(response) {
+    const {
+      data: { preScreening }
+    } = response;
+
+    if (preScreening && preScreening.statusOverAll === "stop") {
+      store.dispatch(applicationStatusStop(preScreening.screeningResults));
+    } else {
+      store.dispatch(applicationStatusProceed());
+    }
+
     return response;
   },
   function(error) {
