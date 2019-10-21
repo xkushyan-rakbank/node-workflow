@@ -25,6 +25,7 @@ import SearchedAppInfo from "./agent/SearchedAppInfo";
 import ReUploadDocuments from "./containers/ReUploadDocuments";
 import SubmitApplication from "./containers/SubmitApplication";
 import { receiveAppConfig } from "./store/actions/appConfig";
+import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 import { getEndpoints } from "./store/selectors/appConfig";
 import routes from "./routes.js";
 import "./App.scss";
@@ -51,9 +52,11 @@ class App extends React.Component {
     renderChildren: false
   };
 
-  async componentDidMount() {
-    await this.props.receiveAppConfig();
+  componentDidMount() {
+    this.props.receiveAppConfig();
     this.handlePageReload();
+
+    // this.props.prospectAutoSave();
   }
 
   componentDidUpdate(prevProps) {
@@ -68,48 +71,42 @@ class App extends React.Component {
     });
   };
   render() {
-    const { renderChildren } = this.state;
+    // const { renderChildren } = this.state; // return in future
     return (
       <>
-        {renderChildren && (
-          <MuiThemeProvider theme={theme}>
-            <ConnectedRouter history={history}>
-              <FormLayout>
-                <Switch>
-                  <Route
-                    exact
-                    path={routes.ApplicationSubmitted}
-                    component={ApplicationSubmitted}
-                  />
-                  <Route exact path={routes.accountsComparison} component={AccountsComparison} />
-                  <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
-                  <Route exact path={routes.verifyOtp} component={FormConfirm} />
-                  <Route exact path={routes.companyInfo} component={AboutCompany} />
-                  <Route exact path={routes.login} component={Login} />
-                  <Route exact path={routes.searchProspect} component={SearchProspect} />
-                  <Route exact path={routes.stakeholdersInfo} component={CompanyStakeholders} />
-                  <Route exact path={routes.finalQuestions} component={FinalQuestions} />
-                  <Route exact path={routes.uploadDocuments} component={UploadDocuments} />
-                  <Route exact path={routes.reUploadDocuments} component={ReUploadDocuments} />
-                  <Route exact path={routes.selectServices} component={SelectServices} />
+        <MuiThemeProvider theme={theme}>
+          <ConnectedRouter history={history}>
+            <FormLayout>
+              <Switch>
+                <Route exact path={routes.ApplicationSubmitted} component={ApplicationSubmitted} />
+                <Route exact path={routes.accountsComparison} component={AccountsComparison} />
+                <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
+                <Route exact path={routes.verifyOtp} component={FormConfirm} />
+                <Route exact path={routes.companyInfo} component={AboutCompany} />
+                <Route exact path={routes.login} component={Login} />
+                <Route exact path={routes.searchProspect} component={SearchProspect} />
+                <Route exact path={routes.stakeholdersInfo} component={CompanyStakeholders} />
+                <Route exact path={routes.finalQuestions} component={FinalQuestions} />
+                <Route exact path={routes.uploadDocuments} component={UploadDocuments} />
+                <Route exact path={routes.reUploadDocuments} component={ReUploadDocuments} />
+                <Route exact path={routes.selectServices} component={SelectServices} />
 
-                  <Route exact path={routes.applicationOverview} component={ApplicationOverview} />
-                  <Route exact path={routes.detailedAccount} component={DetailedAccount} />
-                  <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
-                  <Route
-                    exact
-                    path={routes.comeBackLoginVerification}
-                    component={ComeBackVerification}
-                  />
-                  <Route exact path={routes.MyApplications} component={MyApplications} />
-                  <Route path={routes.SearchedAppInfo} component={SearchedAppInfo} />
-                  <Route exact path={routes.SubmitApplication} component={SubmitApplication} />
-                  <Redirect to={routes.accountsComparison} />
-                </Switch>
-              </FormLayout>
-            </ConnectedRouter>
-          </MuiThemeProvider>
-        )}
+                <Route exact path={routes.applicationOverview} component={ApplicationOverview} />
+                <Route exact path={routes.detailedAccount} component={DetailedAccount} />
+                <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
+                <Route
+                  exact
+                  path={routes.comeBackLoginVerification}
+                  component={ComeBackVerification}
+                />
+                <Route exact path={routes.MyApplications} component={MyApplications} />
+                <Route path={routes.SearchedAppInfo} component={SearchedAppInfo} />
+                <Route exact path={routes.SubmitApplication} component={SubmitApplication} />
+                <Redirect to={routes.accountsComparison} />
+              </Switch>
+            </FormLayout>
+          </ConnectedRouter>
+        </MuiThemeProvider>
       </>
     );
   }
@@ -122,7 +119,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  receiveAppConfig
+  receiveAppConfig,
+  prospectAutoSave
 };
 
 export default connect(

@@ -141,7 +141,6 @@ const AccountInfo = ({ classes, accountType, history }) => {
   const isComeBackLogin = pathname === "/ComeBackLogin";
   const isComeBackVerification = pathname === "/ComeBackVerification";
   const isReUploadDocuments = pathname === "/ReUploadDocuments";
-  console.log(isReUploadDocuments);
   return (
     <div className={classes.contentContainer}>
       {accountType && pathname !== "/ApplicationOverview" ? (

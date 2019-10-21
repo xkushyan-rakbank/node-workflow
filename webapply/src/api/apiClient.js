@@ -12,6 +12,7 @@ function buildURI(uriName, prospectId, documentKey) {
   const segment = pathname.includes("/agent/")
     ? ""
     : pathname.substring(1, pathname.lastIndexOf("/"));
+
   uri = uri.replace("{prospectId}", prospectId);
   uri = uri.replace("{documentKey}", documentKey);
   uri = uri.replace("{userType}", segment);
@@ -26,9 +27,6 @@ function getQueryString(product, segment) {
     const product = !isEmpty(store.getState().appConfig.endpoints)
       ? store.getState().appConfig.prospect.applicationInfo.accountType
       : null;
-    const segment = pathname.includes("/agent/")
-      ? ""
-      : pathname.substring(1, pathname.lastIndexOf("/"));
 
     if (product) {
       queryString = `?segment=${segment}&product=${product}&role=${role}`;

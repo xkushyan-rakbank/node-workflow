@@ -1,9 +1,10 @@
-import { all, put, call, delay, select, takeLatest } from "redux-saga/effects";
+import { all, put, call, delay, select, takeLatest, take } from "redux-saga/effects";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
   sendProspectToAPIFail,
-  resetFormStep
+  resetFormStep,
+  PROSPECT_AUTO_SAVE
 } from "../actions/sendProspectToAPI";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
@@ -27,6 +28,14 @@ function* sendProspectToAPISaga() {
   }
 }
 
+function* prospectAutoSaveSaga() {
+  while (true) {
+    const { data } = yield take("APPLICANT_INFO_FORM_SUCCESS");
+    console.log("data", data);
+  }
+}
+
 export default function* sendProspectToAPI() {
   yield all([takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga)]);
+  yield all([takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveSaga)]);
 }

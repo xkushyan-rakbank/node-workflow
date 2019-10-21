@@ -7,6 +7,7 @@ export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
 export const UPDATE_ACTION_TYPE = "UPDATE_ACTION_TYPE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
 export const DISPLAY_SCREEN_BASED_ON_VIEW_ID = "DISPLAY_SCREEN_BASED_ON_VIEW_ID";
+export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
 
 export const receiveAppConfig = () => {
   return { type: RECEIVE_APPCONFIG };
@@ -42,4 +43,8 @@ export const updateViewId = viewId => {
 
 export const displayScreenBasedOnViewId = () => {
   return { type: DISPLAY_SCREEN_BASED_ON_VIEW_ID };
+};
+
+export const updateSaveType = saveType => {
+  return { type: UPDATE_SAVE_TYPE, saveType };
 };

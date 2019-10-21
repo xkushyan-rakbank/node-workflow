@@ -8,7 +8,8 @@ import {
   updateProspect,
   UPDATE_ACTION_TYPE,
   UPDATE_VIEW_ID,
-  DISPLAY_SCREEN_BASED_ON_VIEW_ID
+  DISPLAY_SCREEN_BASED_ON_VIEW_ID,
+  UPDATE_SAVE_TYPE
 } from "../actions/appConfig";
 import apiClient from "../../api/apiClient";
 import { history } from "./../configureStore";
@@ -24,14 +25,15 @@ function* receiveAppConfigSaga() {
     const endpoints = getEndpoints(state);
     const pathname = window.location.pathname;
     let response = null;
+    const segment = pathname.includes("/agent/")
+      ? ""
+      : pathname.substring(1, pathname.lastIndexOf("/"));
 
     if (!isEmpty(endpoints)) {
       const product = getApplicationInfo.accountType;
-      // const product = "RAKelite";
-      const segment = pathname.includes("/agent/") ? "agent" : "sme";
       response = yield call(apiClient.config.load, product, segment);
     } else {
-      response = yield call(apiClient.config.load);
+      response = yield call(apiClient.config.load, null, segment);
     }
 
     yield put(receiveAppConfigSuccess(response.data));
@@ -43,20 +45,11 @@ function* receiveAppConfigSaga() {
 function* updateProspectSaga(action) {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
-  console.log(action.fields);
   for (let name in action.fields) {
     set(config, name, action.fields[name]);
   }
 
   yield put(setProspect(config));
-}
-
-function* updateActionTypeSaga({ actionType }) {
-  yield put(updateProspect({ "prospect.applicationInfo.actionType": actionType }));
-}
-
-function* updateViewIdSaga({ viewId }) {
-  yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
 }
 
 function* displayScreenBasedOnViewIdSaga() {
@@ -72,12 +65,25 @@ function* displayScreenBasedOnViewIdSaga() {
   }
 }
 
+function* updateActionTypeSaga({ actionType }) {
+  yield put(updateProspect({ "prospect.applicationInfo.actionType": actionType }));
+}
+
+function* updateViewIdSaga({ viewId }) {
+  yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
+}
+
+function* updateSaveTypeSaga({ saveType }) {
+  yield put(updateProspect({ "prospect.applicationInfo.saveType": saveType }));
+}
+
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
     takeEvery(UPDATE_PROSPECT, updateProspectSaga),
+    takeEvery(DISPLAY_SCREEN_BASED_ON_VIEW_ID, displayScreenBasedOnViewIdSaga),
     takeEvery(UPDATE_ACTION_TYPE, updateActionTypeSaga),
     takeEvery(UPDATE_VIEW_ID, updateViewIdSaga),
-    takeEvery(DISPLAY_SCREEN_BASED_ON_VIEW_ID, displayScreenBasedOnViewIdSaga)
+    takeEvery(UPDATE_SAVE_TYPE, updateSaveTypeSaga)
   ]);
 }
