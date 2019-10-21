@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -60,6 +61,13 @@ public class OAuthService {
 		return true;
 	}
 
+	private MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
+		MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+		mappingJackson2HttpMessageConverter
+				.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_FORM_URLENCODED));
+		return mappingJackson2HttpMessageConverter;
+	}
+
 	@SuppressWarnings("unchecked")
 	public ResponseEntity<JsonNode> getOAuthToken() {
 
@@ -73,6 +81,8 @@ public class OAuthService {
 			logger.info("access token not found or expired. Call /OAuth/token to get new access_token");
 
 			RestTemplate restTemplate = new RestTemplate();
+
+			restTemplate.getMessageConverters().add(getMappingJackson2HttpMessageConverter());
 
 			ObjectMapper objectMapper = new ObjectMapper();
 			ObjectNode requestJSON = buildOAuthRequest(objectMapper);
