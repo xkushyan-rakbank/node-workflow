@@ -106,6 +106,7 @@ class DatePicker extends React.Component {
         {config.label && (
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
+              {...attrs}
               autoOk
               minDate={minDate}
               disableFuture={disableFuture}
@@ -117,8 +118,8 @@ class DatePicker extends React.Component {
               variant="inline"
               format="dd/MM/yyyy"
               inputVariant="outlined"
-              placeholder="__/__/____"
-              mask="__/__/____"
+              placeholder="DD/MM/YYYY"
+              mask="DD/MM/YYYY"
               maskChar="_"
               className={classes.datePicker}
               value={value || null}
@@ -132,7 +133,6 @@ class DatePicker extends React.Component {
                 "aria-label": "change date"
               }}
               autoComplete="off"
-              {...attrs}
             />
           </MuiPickersUtilsProvider>
         )}
