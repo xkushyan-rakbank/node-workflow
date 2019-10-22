@@ -313,9 +313,12 @@ public class WebApplyController {
 								fieldConfig.set("datalist", datalist.get(groupId));
 							} else {
 								String label = fieldConfig.get("label").asText();
-								throw new Exception(String.format(
+								logger.error(String.format(
 										"LOVs not found in getDatalist API response for datalistId=[%s], label=[%s]",
 										groupId, label));
+//								throw new Exception(String.format(
+//										"LOVs not found in getDatalist API response for datalistId=[%s], label=[%s]",
+//										groupId, label));
 							}
 
 						}
