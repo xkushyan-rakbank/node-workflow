@@ -43,12 +43,12 @@ public class FileHelper {
 					logger.error(String.format("FileNotFoundException: Read JSON file from %s%s",
 							EnvUtil.getConfigDir(), filename));
 				}
-				
+
 				logger.info("Read JSON file from classpath:" + filename);
 
 				Resource resource = resourceLoader.getResource("classpath:" + filename);
 				fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
-				
+
 			}
 			return objectMapper.readTree(fileContent);
 		} catch (IOException e) {
@@ -67,6 +67,10 @@ public class FileHelper {
 
 	public JsonNode getSMEProspectJSON() {
 		return loadJSONFile("smeProspect.json", false);
+	}
+
+	public JsonNode getDatalistJSON() {
+		return loadJSONFile("datalist.json", false);
 	}
 
 }

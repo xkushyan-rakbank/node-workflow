@@ -96,7 +96,7 @@ public class WebApplyController {
 		appConfigJSON = fileHelper.getAppConfigJSON();
 		smeProspectJSON = fileHelper.getSMEProspectJSON();
 		defaultDatalist = new ObjectMapper().createObjectNode();
-
+		defaultDatalist.setAll((ObjectNode) fileHelper.getDatalistJSON());
 		try {
 			loadAppInitialState();
 		} catch (Exception e) {
@@ -473,7 +473,8 @@ public class WebApplyController {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 			}
 
-			JsonNode datalist = response.getBody();
+			ObjectNode datalist = (ObjectNode) response.getBody();
+			datalist.setAll((ObjectNode) fileHelper.getDatalistJSON());
 			logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
 					methodName, url, response.getStatusCodeValue(), datalist));
 
