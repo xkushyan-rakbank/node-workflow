@@ -1,0 +1,16 @@
+{
+	"YesNoList": [
+		{
+			"code": "Y",
+			"key": "Y",
+			"value": true,
+			"displayText": "Yes"
+		},
+		{
+			"code": "N",
+			"key": "N",
+			"value": false,
+			"displayText": "No"
+		}
+	]
+}

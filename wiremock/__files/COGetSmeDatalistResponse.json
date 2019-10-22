@@ -629,20 +629,6 @@
 			"displayText": "Others"
 		}
 	],
-	"YesNoList": [
-		{
-			"code": "Y",
-			"key": "Y",
-			"value": true,
-			"displayText": "Yes"
-		},
-		{
-			"code": "N",
-			"key": "N",
-			"value": false,
-			"displayText": "No"
-		}
-	],
 	"nationality": [
 		{
 			"code": "AE",
