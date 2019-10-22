@@ -43,16 +43,22 @@ class FileUploader extends React.Component {
     const DocDetails = this.props;
     console.log(this.props.getSignatories);
     const { classes } = this.props;
-    // let companyOdcLength;
-    // let StakeholdersDocLength;
-    // if (this.props.uploadedDoc.companyDocuments) {
-    // let companyDocument = this.props.uploadedDoc.companyDocuments;
-    // companyOdcLength = Object.keys(companyDocument).length;
-    // }
-    // if (this.props.uploadedDoc.stakeholdersDocuments) {
-    // let StakeholdersDoc = this.props.uploadedDoc.companyDocuments;
-    // StakeholdersDocLength = Object.keys(StakeholdersDoc.length);
-    // }
+    let companyOdcLength;
+    let StakeholdersDocLength;
+    let UploadDocCount;
+    if (this.props.uploadedDoc.companyDocuments) {
+      let companyDocument = this.props.uploadedDoc.companyDocuments;
+      companyOdcLength = Object.keys(companyDocument).length;
+      UploadDocCount = +companyOdcLength;
+    }
+    if (this.props.uploadedDoc.stakeholdersDocuments) {
+      let StakeholdersDoc = this.props.uploadedDoc.companyDocuments;
+      StakeholdersDocLength = StakeholdersDoc.length;
+      UploadDocCount = UploadDocCount + StakeholdersDocLength;
+    }
+
+    console.log(UploadDocCount);
+
     return (
       <>
         <h2>Upload your documents</h2>
