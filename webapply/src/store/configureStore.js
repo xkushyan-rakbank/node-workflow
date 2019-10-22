@@ -13,7 +13,10 @@ const configureStore = (initialState, browserHistory) => {
   const routermw = routerMiddleware(browserHistory);
   const sagaMiddleware = createSagaMiddleware();
 
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancers =
+    (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 45 })) ||
+    compose;
 
   const store = createStore(
     reducers(history),

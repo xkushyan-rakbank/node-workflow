@@ -42,7 +42,6 @@ function* receiveAppConfigSaga() {
     } else {
       response = yield call(apiClient.config.load, null, segment);
     }
-
     yield put(receiveAppConfigSuccess(response.data));
     yield put(updateProspect(applicationInfoFields));
   } catch (error) {

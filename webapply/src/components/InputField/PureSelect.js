@@ -116,6 +116,7 @@ class PureSelect extends React.Component {
 
   componentDidMount() {
     this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
+
     if (!isUndefined(this.props.defaultValue) && !this.props.value) {
       this.props.updateProspect({ [this.props.name]: this.props.defaultValue });
     }
@@ -126,6 +127,9 @@ class PureSelect extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!isUndefined(this.props.defaultValue) && !this.props.value) {
+      this.props.updateProspect({ [this.props.name]: this.props.defaultValue });
+    }
     if (isEmpty(prevProps.config) && !isEmpty(this.props.config)) {
       this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
     }
