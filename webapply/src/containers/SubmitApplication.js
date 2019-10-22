@@ -96,7 +96,7 @@ class SubmitApplication extends React.Component {
 
   handleClick = () => {
     const { history } = this.props;
-    history.push("/ApplicationSubmitted");
+    history.push(routes.ApplicationSubmitted);
   };
 
   chkIsError = () => {

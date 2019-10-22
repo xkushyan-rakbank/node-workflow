@@ -68,7 +68,7 @@ class FormConfirm extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
-      this.props.history.push("/CompanyInfo");
+      this.props.history.push(routes.companyInfo);
     }
 
     if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {

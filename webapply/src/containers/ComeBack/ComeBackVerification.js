@@ -89,7 +89,7 @@ class ComeBackVerification extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
-      this.props.history.push("/MyApplications");
+      this.props.history.push(routes.MyApplications);
     }
 
     if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {

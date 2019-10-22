@@ -4,9 +4,10 @@ import { createBrowserHistory } from "history";
 import reducers from "./reducers";
 import rootSaga from "./sagas";
 import { routerMiddleware } from "connected-react-router";
-import { basename } from "./../routes";
+//import { basename } from "./../routes";
 
-export const history = createBrowserHistory(basename);
+// export const history = createBrowserHistory(basename);
+export const history = createBrowserHistory();
 
 const configureStore = (initialState, browserHistory) => {
   const routermw = routerMiddleware(browserHistory);

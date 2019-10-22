@@ -12,7 +12,7 @@ const initialState = {
   endpoints: {},
   prospect: {},
   error: "",
-  searchInfo: {},
+  searchInfo: { segment: "sme" },
   login: {}
 };
 

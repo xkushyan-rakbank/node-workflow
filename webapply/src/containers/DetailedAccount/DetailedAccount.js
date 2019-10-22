@@ -8,6 +8,7 @@ import AccountBenefits from "./AccountBenefits";
 import AccountingSoftware from "./AccountingSoftware";
 
 import getVideoUrl from "../../utils/getVideoUrl";
+import routes from "../../routes";
 
 const DetailedAccount = ({ applicationInfo }) => {
   const { accountType } = applicationInfo;
@@ -20,7 +21,7 @@ const DetailedAccount = ({ applicationInfo }) => {
 
   return (
     <>
-      {!accountType && <Redirect to="/AccountsComparison" />}
+      {!accountType && <Redirect to={routes.accountsComparison} />}
       <IslamicBankingSwitcher />
       <VerticalPaginationWrapper videoUrl={videoUrl} posterUrl={posterUrl}>
         <div></div>

@@ -1,23 +1,26 @@
-export const basename = { basename: "/sme" };
+//export const basename = { basename: "/sme" };
+
+const smeBaseName = "/sme";
+const agentBaseName = "/agent";
 
 export default {
-  ApplicationSubmitted: "/ApplicationSubmitted",
-  MyApplications: "/MyApplications",
-  comeBackLoginVerification: "/ComeBackVerification",
-  comeBackLogin: "/ComeBackLogin",
-  accountsComparison: "/AccountsComparison",
-  applicationOverview: "/ApplicationOverview",
-  detailedAccount: "/DetailedAccount",
-  applicantInfo: "/ApplicantInfo",
-  verifyOtp: "/VerifyOTP",
-  companyInfo: "/CompanyInfo",
-  stakeholdersInfo: "/StakeholdersInfo",
-  finalQuestions: "/FinalQuestions",
-  uploadDocuments: "/UploadDocuments",
-  reUploadDocuments: "/ReUploadDocuments",
-  selectServices: "/SelectServices",
-  searchProspect: "/SearchProspect",
-  login: "/Login",
-  SubmitApplication: "/SubmitApplication",
-  SearchedAppInfo: "/SearchedAppInfo/:id"
+  ApplicationSubmitted: smeBaseName + "/ApplicationSubmitted",
+  MyApplications: smeBaseName + "/MyApplications",
+  comeBackLoginVerification: smeBaseName + "/ComeBackVerification",
+  comeBackLogin: smeBaseName + "/ComeBackLogin",
+  accountsComparison: smeBaseName + "/AccountsComparison",
+  applicationOverview: smeBaseName + "/ApplicationOverview",
+  detailedAccount: smeBaseName + "/DetailedAccount",
+  applicantInfo: smeBaseName + "/ApplicantInfo",
+  verifyOtp: smeBaseName + "/VerifyOTP",
+  companyInfo: smeBaseName + "/CompanyInfo",
+  stakeholdersInfo: smeBaseName + "/StakeholdersInfo",
+  finalQuestions: smeBaseName + "/FinalQuestions",
+  uploadDocuments: smeBaseName + "/UploadDocuments",
+  reUploadDocuments: smeBaseName + "/ReUploadDocuments",
+  selectServices: smeBaseName + "/SelectServices",
+  searchProspect: agentBaseName + "/SearchProspect",
+  login: agentBaseName + "/Login",
+  SubmitApplication: smeBaseName + "/SubmitApplication",
+  SearchedAppInfo: agentBaseName + "/SearchedAppInfo/:id"
 };

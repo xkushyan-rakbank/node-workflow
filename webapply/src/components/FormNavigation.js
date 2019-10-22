@@ -16,6 +16,8 @@ import {
   sideNavWidthSM,
   portraitOrientationQueryIPads
 } from "../constants/styles";
+import routes from "../routes";
+import isEmpty from "lodash/isEmpty";
 
 const style = {
   formNav: {
@@ -136,14 +138,16 @@ const accountInfo = {
 const AccountInfo = ({ classes, accountType, history }) => {
   const { location: { pathname } = {} } = history;
   const handleClick = path => history.push(path);
-  const isApplicationOverview = pathname === "/ApplicationOverview";
-  const isMyApplications = pathname === "/MyApplications";
-  const isComeBackLogin = pathname === "/ComeBackLogin";
-  const isComeBackVerification = pathname === "/ComeBackVerification";
-  const isReUploadDocuments = pathname === "/ReUploadDocuments";
+
+  const isApplicationOverview = pathname === routes.applicationOverview;
+  const isMyApplications = pathname === routes.MyApplications;
+  const isComeBackLogin = pathname === routes.comeBackLogin;
+  const isComeBackVerification = pathname === routes.comeBackLoginVerification;
+  const isReUploadDocuments = pathname === routes.reUploadDocuments;
+
   return (
     <div className={classes.contentContainer}>
-      {accountType && pathname !== "/ApplicationOverview" ? (
+      {accountType && pathname !== routes.applicationOverview ? (
         <>
           <div>
             <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
@@ -160,7 +164,7 @@ const AccountInfo = ({ classes, accountType, history }) => {
           <SubmitButton
             justify="flex-start"
             label="Apply now"
-            handleClick={() => handleClick("/ApplicationOverview")}
+            handleClick={() => handleClick(routes.applicationOverview)}
           />
         </>
       ) : (
@@ -180,7 +184,7 @@ const AccountInfo = ({ classes, accountType, history }) => {
             <SubmitButton
               justify="flex-start"
               label="Start application"
-              handleClick={() => handleClick("/ApplicantInfo")}
+              handleClick={() => handleClick(routes.applicantInfo)}
               classes={{ nextButton: classes.nextButton }}
             />
           )}
@@ -256,15 +260,15 @@ class FormNavigation extends React.Component {
   render() {
     const { applicationInfo = {}, location, classes, history, checkLoginStatus } = this.props;
     const { step } = this.state;
-    const { accountType, islamicBanking } = applicationInfo;
+    const { accountType, islamicBanking } = !isEmpty(applicationInfo) && applicationInfo;
     const showAccountInfo = new Set([
-      "/AccountsComparison",
-      "/DetailedAccount",
-      "/ApplicationOverview",
-      "/MyApplications",
-      "/ComeBackLogin",
-      "/ComeBackVerification",
-      "/ReUploadDocuments"
+      routes.accountsComparison,
+      routes.detailedAccount,
+      routes.applicationOverview,
+      routes.MyApplications,
+      routes.comeBackLogin,
+      routes.comeBackLoginVerification,
+      routes.reUploadDocuments
     ]).has(location.pathname);
     const backgroundImage = getBgImage(accountType, islamicBanking);
 
@@ -273,18 +277,22 @@ class FormNavigation extends React.Component {
         {showAccountInfo ? (
           <AccountInfo classes={classes} accountType={accountType} history={history} />
         ) : (
-          location.pathname !== "/Login" && (
+          location.pathname !== routes.login && (
             <FormStepper step={step} path={location.pathname} checkLoginStatus={checkLoginStatus} />
           )
         )}
-        {!checkLoginStatus && <Chat />}
+        {!(checkLoginStatus || location.pathname == routes.login) && <Chat />}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  applicationInfo: state.appConfig.prospect.applicationInfo,
+  applicationInfo:
+    state.appConfig &&
+    state.appConfig.prospect &&
+    state.appConfig.prospect.applicationInfo &&
+    state.appConfig.prospect.applicationInfo,
   checkLoginStatus: loginSelector.checkLoginStatus(state)
 });
 

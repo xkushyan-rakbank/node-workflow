@@ -9759,17 +9759,10 @@
 	"Search.fullName": {
 		"criteria": {
 			"roles": [
-				"customer",
 				"agent"
 			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
+			"segments": [],
+			"products": [],
 			"devices": [
 				"mobile",
 				"tablet",
@@ -9796,17 +9789,10 @@
 	"Search.countryCode": {
 		"criteria": {
 			"roles": [
-				"customer",
 				"agent"
 			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
+			"segments": [],
+			"products": [],
 			"devices": [
 				"mobile",
 				"tablet",
@@ -9833,17 +9819,10 @@
 	"Search.mobileNo": {
 		"criteria": {
 			"roles": [
-				"customer",
 				"agent"
 			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
+			"segments": [],
+			"products": [],
 			"devices": [
 				"mobile",
 				"tablet",
@@ -9870,17 +9849,10 @@
 	"Search.raktrackNumber": {
 		"criteria": {
 			"roles": [
-				"customer",
 				"agent"
 			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
+			"segments": [],
+			"products": [],
 			"devices": [
 				"mobile",
 				"tablet",
@@ -9905,17 +9877,10 @@
 	"Search.tradeLicenseNo": {
 		"criteria": {
 			"roles": [
-				"customer",
 				"agent"
 			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
+			"segments": [],
+			"products": [],
 			"devices": [
 				"mobile",
 				"tablet",
@@ -9941,17 +9906,10 @@
 	"Search.email": {
 		"criteria": {
 			"roles": [
-				"customer",
 				"agent"
 			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
+			"segments": [],
+			"products": [],
 			"devices": [
 				"mobile",
 				"tablet",

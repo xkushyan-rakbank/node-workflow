@@ -15,6 +15,7 @@ import { updateAccountType } from "../store/actions/selectedAccountInfo";
 
 import checkIc from "../assets/icons/check.png";
 import { accountsNames } from "../constants";
+import routes from "../routes";
 
 const style = {
   paperRoot: {
@@ -262,7 +263,7 @@ class TableCompare extends React.Component {
     const { history, updateProspect, updateAccountType } = this.props;
     updateAccountType(accountType);
     updateProspect({ "prospect.applicationInfo.accountType": accountType });
-    history.push("/DetailedAccount");
+    history.push(routes.detailedAccount);
   };
 
   handleHover = e => {

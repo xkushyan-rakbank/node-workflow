@@ -10,7 +10,7 @@ let queryString = "";
 function buildURI(uriName, prospectId, documentKey) {
   let uri = store.getState().appConfig.endpoints[uriName];
   const segment = pathname.includes("/agent/")
-    ? ""
+    ? store.getState().appConfig.searchInfo.segment
     : pathname.substring(1, pathname.lastIndexOf("/"));
 
   uri = uri.replace("{prospectId}", prospectId);

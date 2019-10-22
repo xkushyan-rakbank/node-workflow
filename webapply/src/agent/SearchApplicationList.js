@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import routes from "../routes";
 
 const style = {
   wrapper: {
@@ -80,7 +81,7 @@ const SearchApplicationList = ({ classes, currentApplications }) => {
           <Link
             className={classes.applicationRow}
             key={index}
-            to={`/SearchedAppInfo/${application.prospectId}`}
+            to={`${routes.SearchedAppInfo.replace(":id", application.prospectId)}`}
           >
             <div>
               <div className={classes.fullName}>

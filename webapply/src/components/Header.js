@@ -78,7 +78,11 @@ const Header = props => {
 };
 
 const mapStateToProps = state => ({
-  applicationInfo: state.appConfig.prospect.applicationInfo
+  applicationInfo:
+    state.appConfig &&
+    state.appConfig.prospect &&
+    state.appConfig.prospect.applicationInfo &&
+    state.appConfig.prospect.applicationInfo
 });
 
 export default compose(
