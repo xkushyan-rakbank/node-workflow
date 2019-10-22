@@ -1,8 +1,7 @@
 import * as actions from "../actions/selectedAccountInfo";
-import { accountsNames } from "../../constants";
 
 export const initialState = {
-  accountType: accountsNames.currentAccount,
+  accountType: "",
   islamicBanking: false
 };
 
