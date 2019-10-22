@@ -2,7 +2,6 @@ package ae.rakbank.webapply.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -163,7 +162,7 @@ public class WebApplyController {
 		}
 		String webApplyConfig = null;
 		try {
-			webApplyConfig = buildAppInitialState(segment, product, role, device);
+			webApplyConfig = buildAppInitialState(segment, product, role, device, null);
 		} catch (IOException e) {
 			logger.error("error occured while loading config files", e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
@@ -184,12 +183,18 @@ public class WebApplyController {
 		String[] segments = { "sme" };
 		String[] products = { "RAKstarter", "Current Account", "RAKelite" };
 		String[] roles = { "customer", "agent" };
-		for (String device : devices) {
-			for (String segment : segments) {
+		for (String segment : segments) {
+			JsonNode datalistJSON = null;
+			try {
+				datalistJSON = getDatalistJSON(segment);
+			} catch (Exception e1) {
+				logger.info("error in getDatalistJSON() method", e1);
+			}
+			for (String device : devices) {
 				for (String product : products) {
 					for (String role : roles) {
 						try {
-							buildAppInitialState(segment, product, role, device);
+							buildAppInitialState(segment, product, role, device, datalistJSON);
 
 						} catch (Exception e) {
 							logger.error(String.format(
@@ -209,7 +214,8 @@ public class WebApplyController {
 		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
 
-	private String buildAppInitialState(String segment, String product, String role, String device) throws Exception {
+	private String buildAppInitialState(String segment, String product, String role, String device,
+			JsonNode datalistBySegment) throws Exception {
 		logger.info("Begin buildAppInitialState() method");
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
@@ -237,7 +243,11 @@ public class WebApplyController {
 		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
 		JsonNode uiConfigNode = objectMapper.readTree(uiConfig);
 
-		JsonNode datalist = getDatalistJSON(segment, initStateJSON);
+		JsonNode datalist = datalistBySegment;
+		if (datalistBySegment == null || datalistBySegment.size() == 0) {
+			// fetch datalist by segment if not loaded by loadAppInitialState
+			datalist = getDatalistJSON(segment);
+		}
 
 		if (datalist == null || datalist.size() == 0) {
 			logger.error("datalist is null or no elements found in datalist object");
@@ -314,9 +324,12 @@ public class WebApplyController {
 								fieldConfig.set("datalist", datalist.get(groupId));
 							} else {
 								String label = fieldConfig.get("label").asText();
-								throw new Exception(String.format(
+								logger.error(String.format(
 										"LOVs not found in getDatalist API response for datalistId=[%s], label=[%s]",
 										groupId, label));
+//								throw new Exception(String.format(
+//										"LOVs not found in getDatalist API response for datalistId=[%s], label=[%s]",
+//										groupId, label));
 							}
 
 						}
@@ -420,7 +433,7 @@ public class WebApplyController {
 		return null;
 	}
 
-	private JsonNode getDatalistJSON(String segment, JsonNode initStateJSON) throws Exception {
+	private JsonNode getDatalistJSON(String segment) throws Exception {
 		logger.info("Begin getDatalistJSON() method, segment=" + segment);
 
 		if (StringUtils.isBlank(segment)) {
@@ -444,11 +457,7 @@ public class WebApplyController {
 
 			url = uriComponents.toString();
 
-			HttpHeaders headers = new HttpHeaders();
-			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			JsonNode authBody = oauthResponse.getBody();
-			headers.set("Authorization", authBody.get("token_type").asText() + " " + authBody.get("access_token").asText());
+			HttpHeaders headers = oauthClient.getOAuthHeaders(oauthResponse, MediaType.APPLICATION_JSON);
 
 			HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 

@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.FileHelper;
@@ -71,55 +72,64 @@ public class OAuthService {
 		ResponseEntity<JsonNode> response = null;
 		if (isAccessTokenExpired()) {
 
-			logger.info("access token not found or expired. Call /OAuth/token to get new access_token");
+			int retryCounter = 0;
+			while (retryCounter <= 3) {
+				retryCounter++;
+				logger.info("access token not found or expired. Call /OAuth/token to get new access_token, retry# "
+						+ retryCounter);
 
-			RestTemplate restTemplate = new RestTemplate();
+				RestTemplate restTemplate = new RestTemplate();
 
-			ObjectMapper objectMapper = new ObjectMapper();
-			MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper);
+				ObjectMapper objectMapper = new ObjectMapper();
+				MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper);
 
-			HttpHeaders headers = new HttpHeaders();
-			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+				HttpHeaders headers = new HttpHeaders();
+				headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+				headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-			HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
+				HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
 
-			logger.info("GetOAuthToken API request " + request.toString());
-
-			String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
-
-			try {
-
-				logger.debug(String.format("Invoke API from %s method, Endpoint=[%s], request=[%s] ", methodName, url,
-						request.getBody().toString()));
+				String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
 
 				try {
-					response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+
+					logger.info(String.format("Invoke API from %s method, Endpoint=[%s], retryCount=%s, request=[%s] ",
+							methodName, url, retryCounter, request.getBody().toString()));
+
+					try {
+						response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+					} catch (Exception e) {
+						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+					}
+
+					logger.info(String.format(
+							"API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s], retryCounter=%s",
+							methodName, url, response.getStatusCodeValue(), response.getBody(), retryCounter));
+
+					if (response.getStatusCode().is2xxSuccessful()) {
+						logger.info(String.format(
+								"API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s], retryCount=%s",
+								methodName, url, response.getStatusCodeValue(), retryCounter));
+						// minus 10 seconds to prevent access_token expire error while calling the API
+						int seconds = response.getBody().get("expires_in").asInt() - 10;
+						LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
+						servletContext.setAttribute("OAuthTokenValidUntil", tokenExpiryDateTime);
+
+						logger.info("New access_token expires on " + tokenExpiryDateTime.toString());
+
+						servletContext.setAttribute("OAuthTokenResponse", response);
+
+						break;
+					} else {
+						logger.error(String.format(
+								"API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s], retryCount=%s",
+								methodName, url, response.getStatusCodeValue(), retryCounter));
+					}
+
 				} catch (Exception e) {
-					logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+					logger.error("error occured while invoking oauth api", e);
 				}
 
-				logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
-						methodName, url, response.getStatusCodeValue(), response.getBody()));
-
-				if (response.getStatusCode().is2xxSuccessful()) {
-					logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-							methodName, url, response.getStatusCodeValue()));
-					// minus 10 seconds to prevent access_token expire error while calling the API
-					int seconds = response.getBody().get("expires_in").asInt() - 10;
-					LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
-					servletContext.setAttribute("OAuthTokenValidUntil", tokenExpiryDateTime);
-
-					logger.info("New access_token expires on " + tokenExpiryDateTime.toString());
-				} else {
-					logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-							methodName, url, response.getStatusCodeValue()));
-
-				}
-
-				servletContext.setAttribute("OAuthTokenResponse", response);
-			} catch (Exception e) {
-				logger.error("error occured while invoking oauth api", e);
 			}
 
 		}
@@ -143,5 +153,29 @@ public class OAuthService {
 		map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());
 		map.add("statemode", oAuthConfigs.get("OAuthStateMode").asText());
 		return map;
+	}
+
+	public HttpHeaders getOAuthHeaders(ResponseEntity<JsonNode> oauthResponse, MediaType mediaType) {
+		HttpHeaders headers = new HttpHeaders();
+		JsonNode authBody = oauthResponse.getBody();
+		headers.set("Authorization", authBody.get("access_token").asText());
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+		if (mediaType != null) {
+			headers.setContentType(mediaType);
+		} else {
+			headers.setContentType(MediaType.APPLICATION_JSON);
+		}
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectNode channelContext = objectMapper.createObjectNode();
+		ObjectNode authorizationDetails = objectMapper.createObjectNode();
+		authorizationDetails.put("primaryAccessCode", oAuthConfigs.get("OAuthPassword").asText());
+		authorizationDetails.put("secondaryAccessCode", "");
+		authorizationDetails.put("userId", oAuthConfigs.get("OAuthUsername").asText());
+
+		channelContext.set("authorizationDetails", authorizationDetails);
+		headers.set("ChannelContext", channelContext.toString());
+		return headers;
 	}
 }

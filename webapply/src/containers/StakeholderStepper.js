@@ -3,11 +3,12 @@ import { withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
-import { stakeHoldersSteps } from "../constants";
 import SuccessFilledStakeholder from "../components/StakeholderStepForms/SuccessFilledStakeholder";
 import StatusLoader from "../components/StatusLoader";
 import LinkButton from "../components/Buttons/LinkButton";
+import { stakeHoldersSteps } from "../constants";
 import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
+import { formatPersonalInformation, formatNationality } from "../store/actions/stakeholders";
 import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
 
 const styles = {
@@ -101,7 +102,6 @@ class StakeholderStepper extends React.Component {
     const {
       classes,
       index,
-      sendProspectToAPI,
       showNewStakeholder,
       deleteStakeholder,
       firstName,
@@ -125,6 +125,18 @@ class StakeholderStepper extends React.Component {
           {stakeHoldersSteps.map(item => {
             const setStep = () => this.setStep(item);
             const isFilled = showNewStakeholder ? this.state.completedStep >= item.step : true;
+
+            const handleContinue = () => {
+              switch (item.title) {
+                case "Personal Information":
+                  return this.props.formatPersonalInformation(this.props.index);
+                case "Nationality":
+                  return this.props.formatNationality(this.props.index);
+                default:
+                  return this.props.sendProspectToAPI();
+              }
+            };
+
             return (
               <StepComponent
                 index={index}
@@ -136,7 +148,7 @@ class StakeholderStepper extends React.Component {
                 activeStep={step === item.step}
                 filled={isFilled}
                 clickHandler={setStep}
-                handleContinue={sendProspectToAPI}
+                handleContinue={handleContinue}
               />
             );
           })}
@@ -161,7 +173,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI
+  sendProspectToAPI,
+  formatPersonalInformation,
+  formatNationality
 };
 
 export default withStyles(styles)(

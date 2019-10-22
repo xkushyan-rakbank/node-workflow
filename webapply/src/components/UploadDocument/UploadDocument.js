@@ -4,10 +4,11 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
 import companyIconSvg from "../../assets/icons/file.png";
-// import apiClient from "../../api/apiClient";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
 
 const CancelToken = axios.CancelToken;
 let call;
+let uploadDocUri;
 const uri = "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents";
 // let uri = apiClient.uploadProspectDocuments.uploadDocuments;
 
@@ -238,6 +239,9 @@ class UploadDocuments extends Component {
   }
 
   render() {
+    uploadDocUri = this.props.uploadDocsEndpoints;
+    uploadDocUri = uploadDocUri.baseUrl + uploadDocUri.uploadDocumentUri;
+    console.log(uploadDocUri);
     const docType = this.props.documents;
     if (docType.uploadStatus === "" || docType.uploadStatus === "Not Uploaded") {
       return (
@@ -335,9 +339,13 @@ const mapDispatchToProps = {
   retrieveDocDetails
 };
 
+const mapStateToProps = state => ({
+  uploadDocsEndpoints: appConfigSelectors.getEndpoints(state)
+});
+
 export default withStyles(style)(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(UploadDocuments)
 );

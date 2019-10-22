@@ -28,9 +28,11 @@ const styles = {
 
 class SuccessFilledStakeholder extends React.Component {
   componentDidMount() {
-    setTimeout(() => {
-      this.props.hideForm();
-    }, 5000);
+    this.intervalId = setInterval(this.props.hideForm, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
 
   render() {

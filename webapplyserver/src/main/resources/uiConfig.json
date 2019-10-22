@@ -146,7 +146,7 @@
 		"name": "prospect.applicantInfo.applyOnbehalf",
 		"required": false,
 		"readonlyFor": [],
-		"datalistId": "applyOnbehalf",
+		"datalistId": null,
 		"description": "apply on behalf of someone's company",
 		"datalist": null
 	},
@@ -2748,7 +2748,7 @@
 		"path": "$.prospect.organizationInfo.contactDetails.primaryMobCountryCode",
 		"name": "prospect.organizationInfo.contactDetails.primaryMobCountryCode",
 		"required": true,
-		"datalistId": "primaryMobCountryCode",
+		"datalistId": "countryCode",
 		"readonlyFor": [],
 		"maxlength": "60",
 		"pattern": "^[0-9]*$",
@@ -2857,7 +2857,7 @@
 		"path": "$.prospect.organizationInfo.contactDetails.primaryPhoneCountryCode",
 		"name": "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode",
 		"required": true,
-		"datalistId": "primaryPhoneCountryCode",
+		"datalistId": "countryCode",
 		"readonlyFor": [],
 		"datalist": null,
 		"maxlength": "60",
@@ -3002,7 +3002,7 @@
 		"path": "$.prospect.organizationInfo.contactDetails.secondaryPhoneCountryCode",
 		"name": "prospect.organizationInfo.contactDetails.secondaryPhoneCountryCode",
 		"required": false,
-		"datalistId": "secondaryPhoneCountryCode",
+		"datalistId": "countryCode",
 		"readonlyFor": [],
 		"datalist": null,
 		"maxlength": "60",
@@ -3075,7 +3075,7 @@
 		"path": "$.prospect.organizationInfo.contactDetails.secondaryMobileCountryCode",
 		"name": "prospect.organizationInfo.contactDetails.secondaryMobileCountryCode",
 		"required": false,
-		"datalistId": "secondaryMobileCountryCode",
+		"datalistId": "countryCode",
 		"readonlyFor": [],
 		"maxlength": "60",
 		"pattern": "^[0-9]*$",
@@ -3223,7 +3223,7 @@
 		"readonlyFor": [],
 		"maxlength": "60",
 		"pattern": "^[0-9]*$",
-		"datalistId": "primaryMobCountryCode",
+		"datalistId": "countryCode",
 		"datalist": null
 	},
 	"OrgContReconf.primaryPhoneNo": {
@@ -3296,7 +3296,7 @@
 		"readonlyFor": [],
 		"maxlength": "60",
 		"pattern": "^[0-9]*$",
-		"datalistId": "primaryPhoneCountryCode",
+		"datalistId": "countryCode",
 		"datalist": null
 	},
 	"Okyc.businessUnit": {
@@ -3650,7 +3650,7 @@
 		"path": "$.prospect.orgKYCDetails.topOriginGoodsCountries[*]",
 		"name": "prospect.orgKYCDetails.topOriginGoodsCountries[*]",
 		"required": true,
-		"datalistId": "topOriginGoodsCountries",
+		"datalistId": "country",
 		"readonlyFor": [],
 		"datalist": null
 	},
@@ -4391,7 +4391,7 @@
 		"label": "This stakeholder is a company",
 		"placeholder": null,
 		"path": "$.prospect.signatoryInfo[*].kycDetails.isShareholderACompany",
-		"name": ".prospect.signatoryInfo[*].kycDetails.isShareholderACompany",
+		"name": "prospect.signatoryInfo[*].kycDetails.isShareholderACompany",
 		"required": true,
 		"datalistId": null,
 		"readonlyFor": [],
@@ -5527,13 +5527,13 @@
 		"applicable": null,
 		"label": "Nationality",
 		"placeholder": null,
-		"path": "$.prospect.signatoryInfo[*].kycDetails.nationality",
-		"name": "prospect.signatoryInfo[*].kycDetails.nationality",
+		"path": "$.prospect.signatoryInfo[*].kycDetails.passportDetails[*].nationality",
+		"name": "prospect.signatoryInfo[*].kycDetails.passportDetails[*].nationality",
 		"required": true,
 		"readonlyFor": [],
 		"maxlength": "50",
 		"pattern": "^[a-zA-Z]*$",
-		"datalistId": "nationality",
+		"datalistId": "country",
 		"datalist": null
 	},
 	"SigKycd.dualCitizenship": {
@@ -5638,7 +5638,7 @@
 		"name": "prospect.signatoryInfo[*].kycDetails.dualCitizenshipCountry[*]",
 		"required": false,
 		"readonlyFor": [],
-		"datalistId": "nationality",
+		"datalistId": "country",
 		"datalist": null
 	},
 	"SigKycd.residenceCountry": {
@@ -5675,7 +5675,7 @@
 		"readonlyFor": [],
 		"default": "UAE",
 		"description": "Defaulted for signatories/POA (isSignatory)",
-		"datalistId": "nationality",
+		"datalistId": "country",
 		"datalist": null
 	},
 	"SigKycd.isUAEResident": {

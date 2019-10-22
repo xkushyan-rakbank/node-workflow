@@ -1,0 +1,252 @@
+{
+    "signatoryInfo": [
+        {
+            "screeningInfo": {
+                "statusOverAll": "",
+                "screeningResults": [
+                    {
+                        "screeningType": "",
+                        "screeningStatus": "",
+                        "screeningFlag": "",
+                        "screeningNotes": "",
+                        "screeningReason": "",
+                        "reasonNotes": "",
+                        "reasonCode": "",
+                        "reasonStatus": ""
+                    }
+                ]
+            },
+            "salutation": "",
+            "signatoryId": "",
+            "firstName": "Abhi",
+            "middleName": "",
+            "lastName": "Abhi",
+            "shortName": "",
+            "fullName": "",
+            "gender": "",
+            "maritalStatus": "",
+            "maritalStatusOthers": "",
+            "occupation": "",
+            "mothersMaidenName": "",
+            "numberOfDependants": 0,
+            "highestEducationAttained": "",
+            "employmentStatus": "",
+            "kycVerified": null,
+            "kycDetails": {
+                "salutation": "",
+                "shareholderPOASignatoryName": "",
+                "isSignatory": null,
+                "isShareholder": null,
+                "shareHoldingPercentage": 0,
+                "dateOfBirth": "",
+                "nationality": "",
+                "dualCitizenship": null,
+                "dualCitizenshipCountry": [
+                    ""
+                ],
+                "residenceCountry": "",
+                "isUAEResident": null,
+                "passportDetails": [
+                    {
+                        "passportNumber": "",
+                        "passportExpiryDate": "",
+                        "diplomatPassport": null
+                    }
+                ],
+                "emirateIdDetails": {
+                    "eidNumber": "",
+                    "eidExpiryDt": ""
+                },
+                "selfGovtPosition": "",
+                "relativeGovtPosition": "",
+                "qualification": "",
+                "experienceInYrs": "",
+                "sourceOfWealth": {
+                    "wealthType": "",
+                    "others": ""
+                }
+            },
+            "contactDetails": {
+                "primaryMobileNo": "",
+                "primaryMobCountryCode": "",
+                "primaryEmail": "",
+                "primaryPhoneNo": "",
+                "primaryPhoneCountryCode": "",
+                "fax": "",
+                "faxCountryCode": "",
+                "secondaryPhoneNo": "",
+                "secondaryPhoneCountryCode": "",
+                "secondaryMobileNo": "",
+                "secondaryMobileCountryCode": "",
+                "secondaryEmail": "",
+                "website": ""
+            },
+            "employmentDetails": {
+                "employmentType": "",
+                "otherEmploymentType": "",
+                "designation": "",
+                "empNo": "",
+                "department": "",
+                "employerName": "",
+                "occupation": "",
+                "totalExperienceYrs": 0,
+                "employmentStartDate": ""
+            },
+            "sameAsCompanyAddress": null,
+            "addressInfo": [
+                {
+                    "typeOfAddress": "",
+                    "addressDetails": [
+                        {
+                            "addressFieldDesc": "",
+                            "preferredAddress": "",
+                            "addressLine1": "",
+                            "addressLine2": "",
+                            "addressLine3": "",
+                            "addressLine4": "",
+                            "poBox": "",
+                            "emirateCity": "",
+                            "country": ""
+                        }
+                    ]
+                }
+            ],
+            "accountSigningInfo": {
+                "accountSigningType": "",
+                "accountSigningInstn": "",
+                "authorityType": ""
+            },
+            "debitCardInfo": {
+                "issueDebitCard": null,
+                "authSignatoryDetails": {
+                    "fullNameOnPassport": "",
+                    "nameOnDebitCard": ""
+                }
+            }
+        },
+        {
+            "screeningInfo": {
+                "statusOverAll": "",
+                "screeningResults": [
+                    {
+                        "screeningType": "",
+                        "screeningStatus": "",
+                        "screeningFlag": "",
+                        "screeningNotes": "",
+                        "screeningReason": "",
+                        "reasonNotes": "",
+                        "reasonCode": "",
+                        "reasonStatus": ""
+                    }
+                ]
+            },
+            "salutation": "",
+            "signatoryId": "",
+            "firstName": "Bhakta",
+            "middleName": "",
+            "lastName": "Dash",
+            "shortName": "",
+            "fullName": "",
+            "gender": "",
+            "maritalStatus": "",
+            "maritalStatusOthers": "",
+            "occupation": "",
+            "mothersMaidenName": "",
+            "numberOfDependants": 0,
+            "highestEducationAttained": "",
+            "employmentStatus": "",
+            "kycVerified": null,
+            "kycDetails": {
+                "salutation": "",
+                "shareholderPOASignatoryName": "",
+                "isSignatory": null,
+                "isShareholder": null,
+                "shareHoldingPercentage": 0,
+                "dateOfBirth": "",
+                "nationality": "",
+                "dualCitizenship": null,
+                "dualCitizenshipCountry": [
+                    ""
+                ],
+                "residenceCountry": "",
+                "isUAEResident": null,
+                "passportDetails": [
+                    {
+                        "passportNumber": "",
+                        "passportExpiryDate": "",
+                        "diplomatPassport": null
+                    }
+                ],
+                "emirateIdDetails": {
+                    "eidNumber": "",
+                    "eidExpiryDt": ""
+                },
+                "selfGovtPosition": "",
+                "relativeGovtPosition": "",
+                "qualification": "",
+                "experienceInYrs": "",
+                "sourceOfWealth": {
+                    "wealthType": "",
+                    "others": ""
+                }
+            },
+            "contactDetails": {
+                "primaryMobileNo": "",
+                "primaryMobCountryCode": "",
+                "primaryEmail": "",
+                "primaryPhoneNo": "",
+                "primaryPhoneCountryCode": "",
+                "fax": "",
+                "faxCountryCode": "",
+                "secondaryPhoneNo": "",
+                "secondaryPhoneCountryCode": "",
+                "secondaryMobileNo": "",
+                "secondaryMobileCountryCode": "",
+                "secondaryEmail": "",
+                "website": ""
+            },
+            "employmentDetails": {
+                "employmentType": "",
+                "otherEmploymentType": "",
+                "designation": "",
+                "empNo": "",
+                "department": "",
+                "employerName": "",
+                "occupation": "",
+                "totalExperienceYrs": 0,
+                "employmentStartDate": ""
+            },
+            "sameAsCompanyAddress": null,
+            "addressInfo": [
+                {
+                    "typeOfAddress": "",
+                    "addressDetails": [
+                        {
+                            "addressFieldDesc": "",
+                            "preferredAddress": "",
+                            "addressLine1": "",
+                            "addressLine2": "",
+                            "addressLine3": "",
+                            "addressLine4": "",
+                            "poBox": "",
+                            "emirateCity": "",
+                            "country": ""
+                        }
+                    ]
+                }
+            ],
+            "accountSigningInfo": {
+                "accountSigningType": "",
+                "accountSigningInstn": "",
+                "authorityType": ""
+            },
+            "debitCardInfo": {
+                "issueDebitCard": null,
+                "authSignatoryDetails": {
+                    "fullNameOnPassport": "",
+                    "nameOnDebitCard": ""
+                }
+            }
+        }
+    ]
+}
