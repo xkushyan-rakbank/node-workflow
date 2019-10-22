@@ -229,6 +229,8 @@ public class WebApplyController {
 		initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
 		initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
 		initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
+		initStateJSON.put("rakValuePlusReadMoreUrl", baseUrls.get("RAKvaluePlusReadMoreUrl").asText());
+		initStateJSON.put("rakValueMaxReadMoreUrl", baseUrls.get("RAKvalueMaxReadMoreUrl").asText());
 
 		ResponseEntity<?> pkResponse = getRSAPublicKey();
 		if (pkResponse.getStatusCode().is2xxSuccessful()) {
