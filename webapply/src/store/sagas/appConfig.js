@@ -29,18 +29,22 @@ function* receiveAppConfigSaga() {
     const segment = pathname.includes("/agent/")
       ? ""
       : pathname.substring(1, pathname.lastIndexOf("/"));
+    const { accountType, islamicBanking } = getSelectedAccountInfo(state);
+
+    const applicationInfoFields = {
+      ["prospect.applicationInfo.accountType"]: accountType,
+      ["prospect.applicationInfo.islamicBanking"]: islamicBanking
+    };
 
     if (!isEmpty(endpoints)) {
-      const selectedAccountData = getSelectedAccountInfo(state);
       const product = getApplicationInfo.accountType;
       response = yield call(apiClient.config.load, product, segment);
-      const { applicationInfo } = response.data.prospect;
-      response.data.prospect = Object.assign(applicationInfo, ...selectedAccountData);
     } else {
       response = yield call(apiClient.config.load, null, segment);
     }
 
     yield put(receiveAppConfigSuccess(response.data));
+    yield put(updateProspect(applicationInfoFields));
   } catch (error) {
     yield put(receiveAppConfigFail(error));
   }
