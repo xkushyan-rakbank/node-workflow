@@ -281,7 +281,7 @@ class FormNavigation extends React.Component {
             <FormStepper step={step} path={location.pathname} checkLoginStatus={checkLoginStatus} />
           )
         )}
-        {!(checkLoginStatus || location.pathname == routes.login) && <Chat />}
+        {!(checkLoginStatus || location.pathname === routes.login) && <Chat />}
       </div>
     );
   }

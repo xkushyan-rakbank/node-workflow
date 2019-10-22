@@ -19,6 +19,11 @@ const loginFormReducer = (state = initialState, action) => {
         loginResponse: action.payload,
         loginStatus: false
       };
+    case actions.LOGOUT:
+      return {
+        ...state,
+        loginStatus: false
+      };
     default:
       return state;
   }

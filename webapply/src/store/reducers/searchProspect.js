@@ -1,4 +1,5 @@
 import { SEARCH_APPLICATIONS_SUCCESS } from "../actions/searchProspect";
+import { LOGOUT } from "../actions/loginForm";
 
 export const initialState = {
   searchResults: []
@@ -10,6 +11,11 @@ const searchProspectReducer = (state = initialState, action) => {
       return {
         ...state,
         searchResults: action.payload
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        searchResults: []
       };
     default:
       return state;

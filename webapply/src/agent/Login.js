@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import ErrorBoundary from "../components/ErrorBoundary";
 import TextInput from "../components/InputField/TextInput";
@@ -62,14 +63,22 @@ class Login extends React.Component {
 
           <TextInput id="login.password" type="password" />
 
-          <ErrorBoundary className={classes.reCaptchaContainer}>
-            <ReCaptcha
-              onVerify={this.handleReCaptchaVerify}
-              onExpired={this.handleReCaptchaExpired}
-              onError={this.handleReCaptchaError}
-            />
-          </ErrorBoundary>
-          <SubmitButton label="Next Step" justify="flex-end" disabled={!password || !userName} />
+          <Grid container direction="row" justify="space-between" alignItems="center">
+            <ErrorBoundary className={classes.reCaptchaContainer}>
+              <ReCaptcha
+                onVerify={this.handleReCaptchaVerify}
+                onExpired={this.handleReCaptchaExpired}
+                onError={this.handleReCaptchaError}
+              />
+            </ErrorBoundary>
+            <div className="linkContainer">
+              <SubmitButton
+                label="Next Step"
+                justify="flex-end"
+                disabled={!password || !userName}
+              />
+            </div>
+          </Grid>
         </form>
       </div>
     );

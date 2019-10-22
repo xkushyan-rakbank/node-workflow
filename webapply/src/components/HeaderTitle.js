@@ -7,6 +7,9 @@ import * as loginSelector from "./../store/selectors/loginSelector";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import { accountsNames } from "../constants";
 import router from "../routes";
+import { logout } from "./../store/actions/loginForm";
+import routes from "../routes";
+import { history } from "./../store/configureStore";
 
 const styles = {
   headerTitle: {
@@ -27,6 +30,11 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     width: "100%"
+  },
+  logout: {
+    float: "right",
+    marginTop: "-20px",
+    cursor: "pointer"
   }
 };
 
@@ -35,7 +43,9 @@ const HeaderTitle = props => {
     classes,
     location: { pathname },
     applicationInfo: { islamicBanking, accountType },
-    organizationInfo: { companyName }
+    organizationInfo: { companyName },
+    checkLoginStatus,
+    getAgentName
   } = props;
 
   let selectedAccountTypeName = "";
@@ -68,12 +78,24 @@ const HeaderTitle = props => {
   ]);
   if (routesToShowPortalTitle.has(pathname)) portalTitle = "RAK Application Portal";
 
+  const agentLogout = () => {
+    props.logout();
+    history.push(routes.login);
+  };
+
   return (
     <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
         <span>
           {portalTitle.length ? (
             portalTitle
+          ) : checkLoginStatus ? (
+            <>
+              <div>{getAgentName}</div>
+              <div className={classes.logout} onClick={() => agentLogout()}>
+                Logout
+              </div>
+            </>
           ) : (
             <>
               {selectedAccountTypeName} {islamicBanking && "islamic"} application{" "}
@@ -93,8 +115,15 @@ const mapStateToProps = state => ({
   organizationInfo: appConfigSelectors.getOrganizationInfo(state)
 });
 
+const mapDispatchToProps = {
+  logout
+};
+
 export default compose(
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withStyles(styles),
   withRouter
 )(HeaderTitle);
