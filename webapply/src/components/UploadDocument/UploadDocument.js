@@ -9,8 +9,7 @@ import * as appConfigSelectors from "../../store/selectors/appConfig";
 const CancelToken = axios.CancelToken;
 let call;
 let uploadDocUri;
-const uri = "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents";
-// let uri = apiClient.uploadProspectDocuments.uploadDocuments;
+// const uri = "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents";
 
 const style = {
   fileUploadPlaceholder: {
@@ -181,7 +180,7 @@ class UploadDocuments extends Component {
           data.append("file", this.state.selectedFile);
           axios({
             method: "post",
-            url: uri,
+            url: uploadDocUri,
             data,
             onUploadProgress: ProgressEvent => {
               let progress = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100);
@@ -239,8 +238,9 @@ class UploadDocuments extends Component {
   }
 
   render() {
+    let endPoint = "/webapply/api/v1/prospects/" + this.props.prospectID + "/documents";
     uploadDocUri = this.props.uploadDocsEndpoints;
-    uploadDocUri = uploadDocUri.baseUrl + uploadDocUri.uploadDocumentUri;
+    uploadDocUri = uploadDocUri.baseUrl + endPoint;
     console.log(uploadDocUri);
     const docType = this.props.documents;
     if (docType.uploadStatus === "" || docType.uploadStatus === "Not Uploaded") {
@@ -340,7 +340,8 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = state => ({
-  uploadDocsEndpoints: appConfigSelectors.getEndpoints(state)
+  uploadDocsEndpoints: appConfigSelectors.getEndpoints(state),
+  prospectID: appConfigSelectors.getProspectId(state)
 });
 
 export default withStyles(style)(
