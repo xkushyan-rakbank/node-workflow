@@ -82,7 +82,7 @@ public class ApiRequestForwarder {
 
 		logger.info("Begin createSMEProspect() method");
 
-		logger.debug(String.format("createSMEProspect() method args, RequestBody=[%s], segment=[%s]",
+		logger.info(String.format("createSMEProspect() method args, RequestBody=[%s], segment=[%s]",
 				requestBodyJSON.toString(), segment));
 
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
@@ -101,6 +101,9 @@ public class ApiRequestForwarder {
 					logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
 							captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
 				}
+
+				logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
+						oauthResponse.getStatusCodeValue(), ip));
 
 				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
 					return captchaResponse;

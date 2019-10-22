@@ -54,12 +54,17 @@ public class RecaptchaService {
 		logger.debug("Request body for recaptcha: {}", body);
 
 		ResponseEntity<Map> recaptchaResponse = null;
+		String url = recaptchaEndpoint + "?secret={secret}&response={response}&remoteip={remoteip}";
 		try {
-			recaptchaResponse = restTemplateBuilder.build().postForEntity(
-					recaptchaEndpoint + "?secret={secret}&response={response}&remoteip={remoteip}", body, Map.class,
-					body);
+			logger.info(String.format("Endpoint=[%s], Request=[%s]", url, body));
+			
+			recaptchaResponse = restTemplateBuilder.build().postForEntity(url, body, Map.class, body);
+			
+			logger.info(String.format("Endpoint=[%s], HttpStatus=[%s], Response=[%s]", url,
+					recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody()));
+			
 		} catch (Exception e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", recaptchaEndpoint, e.getMessage()), e);
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"Unable to call endpoint " + recaptchaEndpoint, e);
 			return new ResponseEntity(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
