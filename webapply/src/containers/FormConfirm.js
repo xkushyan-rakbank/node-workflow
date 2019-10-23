@@ -144,6 +144,9 @@ class FormConfirm extends React.Component {
               </span>
             </span>
           </div>
+          {this.state.loginAttempt > 3 && (
+            <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again" />
+          )}
           <div className="linkContainer">
             <BackLink path={routes.applicantInfo} />
 

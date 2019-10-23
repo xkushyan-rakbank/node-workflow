@@ -53,11 +53,17 @@ const style = {
   },
   link: {
     textDecoration: "underline",
-    cursor: "pointer"
+    cursor: "pointer",
+    opacity: 1,
+    visibility: "visible"
   },
   linkDisabled: {
     opacity: "0.5",
     cursor: "not-allowed"
+  },
+  linkHide: {
+    opacity: 0,
+    visibility: "hidden"
   }
 };
 
@@ -157,7 +163,8 @@ class ComeBackVerification extends React.Component {
               <span
                 onClick={this.handleSendNewCodeLinkClick}
                 className={cx(classes.link, {
-                  [classes.linkDisabled]: !this.state.isRegenerateCodeAllow
+                  [classes.linkDisabled]: !this.state.isRegenerateCodeAllow,
+                  [classes.linkHide]: this.state.loginAttempt > 3
                 })}
               >
                 Send a new code

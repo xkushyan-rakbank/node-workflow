@@ -17,7 +17,6 @@ function* generateOtp() {
       email: applicantInfo.email,
       recaptchaToken: state.reCaptcha.token
     };
-    console.log("payload", payload);
 
     const { data } = yield call(apiClient.otp.generate, payload);
     yield put(otpActions.generateCodeSuccess(data));

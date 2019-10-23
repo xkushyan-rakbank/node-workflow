@@ -61,7 +61,7 @@ export default {
   },
 
   otp: {
-    generate: ({ prospectId, countryCode, mobileNo }) => {
+    generate: ({ prospectId, countryCode, mobileNo, recaptchaToken }) => {
       return httpClient.request({
         url: buildURI("otpUri"),
         method: "POST",
@@ -69,7 +69,8 @@ export default {
           action: OTP_ACTION_GENERATE,
           prospectId,
           countryCode,
-          mobileNo
+          mobileNo,
+          recaptchaToken
         }
       });
     },
