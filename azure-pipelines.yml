@@ -239,7 +239,7 @@ jobs:
           cd document_uploader
           mvn clean test -Dtest=ae.rakbank.documentuploader.DocumentUploaderTest
         displayName: 'JUnit test cases'
-        enabled: true
+        enabled: false
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:
