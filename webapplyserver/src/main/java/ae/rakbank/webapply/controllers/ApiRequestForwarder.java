@@ -1,5 +1,7 @@
 package ae.rakbank.webapply.controllers;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -512,7 +516,7 @@ public class ApiRequestForwarder {
 
 	private ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId,
-			MediaType mediaType, String segment, String prospectId) {
+			MediaType mediaType, String segment, String prospectId) throws IOException {
 		logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", operationId, url));
 
 		logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request:[%s]", operationId, url,
@@ -520,12 +524,23 @@ public class ApiRequestForwarder {
 
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<?> response = null;
-		if (MediaType.APPLICATION_JSON.equals(mediaType)) {
-			response = restTemplate.exchange(url, httpMethod, request, JsonNode.class);
-		} else {
-			response = restTemplate.exchange(url, httpMethod, request, Resource.class);
+		try {
+			if (MediaType.APPLICATION_JSON.equals(mediaType)) {
+				response = restTemplate.exchange(url, httpMethod, request, JsonNode.class);
+			} else {
+				response = restTemplate.exchange(url, httpMethod, request, Resource.class);
+			}
+		} catch (HttpClientErrorException e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
+					e.getResponseBodyAsString()), e);
+			JsonNode badReqResponse = new ObjectMapper().readTree(e.getResponseBodyAsString());
+			return new ResponseEntity<Object>(badReqResponse, null, HttpStatus.BAD_REQUEST);
+		} catch (HttpServerErrorException e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getStatusCode()), e);
+			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+					e.getResponseBodyAsString(), e);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 		// ResponseEntity headers is immutable, so create new HttpHeaders object
 		HttpHeaders headers = new HttpHeaders();
 		headers.addAll(response.getHeaders());
