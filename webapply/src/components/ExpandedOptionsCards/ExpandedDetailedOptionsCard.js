@@ -172,7 +172,7 @@ const ExpandedOptionsDetailedCard = ({
         </ul>
       )}
       <div className={classes.linkWrapper}>
-        <Link href={href} className={classes.link}>
+        <Link href={href} className={classes.link} target="_blank">
           Read more
         </Link>
       </div>

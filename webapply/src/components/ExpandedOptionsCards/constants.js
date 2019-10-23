@@ -11,7 +11,6 @@ export const mockData = [
     isIncluded: true,
     cost: 49,
     value: "RAKvalue PLUS",
-    href: "#",
     buttonLabel: "Keep PLUS"
   },
   {
@@ -26,7 +25,6 @@ export const mockData = [
     isIncluded: false,
     cost: 149,
     value: "RAKvalue MAX",
-    href: "#",
     buttonLabel: "Upgrade to MAX"
   }
 ];
