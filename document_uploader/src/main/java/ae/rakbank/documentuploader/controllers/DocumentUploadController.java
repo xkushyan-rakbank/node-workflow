@@ -89,7 +89,7 @@ public class DocumentUploadController {
 							"The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s",
 							prospectId, StringUtils.length(fileInfo)));
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 		}
 		return processUploadRequest(file, fileInfo, prospectId);
 
@@ -109,7 +109,7 @@ public class DocumentUploadController {
 
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "fileInfo is not valid JSON string", e.getMessage(),
 					e);
-			return new ResponseEntity<Object>(error, null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 		}
 		return saveUploadedFile(file, fileInfoJSON, prospectId);
 	}
@@ -131,7 +131,7 @@ public class DocumentUploadController {
 					prospectId, file.getOriginalFilename(), file.getSize()));
 
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getMessage(), e.getMessage(), e);
-			return new ResponseEntity<Object>(error, null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 
 		} catch (IOException e) {
 
@@ -140,7 +140,7 @@ public class DocumentUploadController {
 					prospectId, file.getOriginalFilename(), file.getSize()));
 
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error", e.getMessage(), e);
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 

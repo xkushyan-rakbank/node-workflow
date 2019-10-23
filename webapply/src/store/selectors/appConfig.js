@@ -41,3 +41,10 @@ export const getAccountSubmittedInfo = state => state.appConfig.prospect.account
 export const getReCaptchaSiteKey = state => state.appConfig.reCaptchaSiteKey;
 
 export const getServicePricingGuideUrl = state => state.appConfig.servicePricingGuideUrl;
+
+export const getUrlsReadMore = state => ({
+  rakValuePlusReadMoreUrl: state.appConfig.rakValuePlusReadMoreUrl,
+  rakValueMaxReadMoreUrl: state.appConfig.rakValueMaxReadMoreUrl,
+  rakValuePlusIslamicReadMoreUrl: state.appConfig.rakValuePlusIslamicReadMoreUrl,
+  rakValueMaxIslamicReadMoreUrl: state.appConfig.rakValueMaxIslamicReadMoreUrl
+});

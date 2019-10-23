@@ -146,7 +146,7 @@ public class WebApplyController {
 		if (StringUtils.isNotBlank(invalidCriteriaError)) {
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid segment, product or role.",
 					invalidCriteriaError);
-			return new ResponseEntity<Object>(error, null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 		}
 
 		HttpHeaders headers = new HttpHeaders();
@@ -166,7 +166,7 @@ public class WebApplyController {
 		} catch (IOException e) {
 			logger.error("error occured while loading config files", e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return new ResponseEntity<Object>(webApplyConfig, headers, HttpStatus.OK);
@@ -201,7 +201,7 @@ public class WebApplyController {
 									"unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[%s]",
 									device, segment, product, role));
 							ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-							return new ResponseEntity<Object>(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+							return new ResponseEntity<Object>(error.toJson(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
 						}
 					}
 				}
@@ -517,7 +517,7 @@ public class WebApplyController {
 			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"Unable to call endpoint " + url, e);
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		logger.info("END getRSAPublicKey()");
 		return response;

@@ -12,5 +12,6 @@ public class RecaptchaUtil {
 		RECAPTCHA_ERROR_CODE.put("missing-input-response", "The response parameter is missing");
 		RECAPTCHA_ERROR_CODE.put("invalid-input-response", "The response parameter is invalid or malformed");
 		RECAPTCHA_ERROR_CODE.put("bad-request", "The request is invalid or malformed");
+		RECAPTCHA_ERROR_CODE.put("timeout-or-duplicate", "The recaptcha token is time out or duplicate");
 	}
 }
