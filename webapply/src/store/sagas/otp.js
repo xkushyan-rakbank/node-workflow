@@ -9,15 +9,16 @@ function* generateOtp() {
   try {
     const state = yield select();
     const applicantInfo = appConfigSelectors.getApplicantInfo(state);
-    /**
-     * @type {ApiOtpPayload}
-     */
+
     const payload = {
       prospectId: appConfigSelectors.getProspectId(state),
       mobileNo: applicantInfo.mobileNo,
       countryCode: applicantInfo.countryCode,
-      email: applicantInfo.email
+      email: applicantInfo.email,
+      recaptchaToken: state.reCaptcha.token
     };
+    console.log("payload", payload);
+
     const { data } = yield call(apiClient.otp.generate, payload);
     yield put(otpActions.generateCodeSuccess(data));
   } catch (error) {
@@ -31,16 +32,11 @@ function* generateOtp() {
   }
 }
 
-/**
- * @param {String} otpToken
- */
 function* verifyOtp({ payload: otpToken }) {
   try {
     const state = yield select();
     const applicantInfo = appConfigSelectors.getApplicantInfo(state);
-    /**
-     * @type {ApiOtpPayload}
-     */
+
     const payload = {
       prospectId: appConfigSelectors.getProspectId(state),
       mobileNo: applicantInfo.mobileNo,

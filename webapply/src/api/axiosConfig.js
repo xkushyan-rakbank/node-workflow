@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "./../store/configureStore";
+import isEmpty from "lodash/isEmpty";
 import { setInputsErrors } from "./../store/actions/serverValidation";
 import {
   applicationStatusServerError,
@@ -17,7 +18,9 @@ const instance = axios.create({
 function getBaseURL() {
   let { host, protocol } = window.location;
 
-  if (host.includes(LOCALHOST)) {
+  if (!!store && !isEmpty(store.getState().appConfig.endpoints)) {
+    return store.getState().appConfig.endpoints["baseUrl"];
+  } else if (host.includes(LOCALHOST)) {
     return "http://localhost:8080";
   } else if (host.includes(RAKBANKONLINE)) {
     return `${protocol}//${host}/quickapply`;
@@ -50,9 +53,9 @@ instance.interceptors.response.use(
       data: { errors }
     } = error.response;
 
-    if (status === 400 || error.response) {
+    if (status === 400) {
       store.dispatch(setInputsErrors(errors));
-    } else if (status === 500 || error.request) {
+    } else if (status === 500) {
       store.dispatch(applicationStatusServerError());
     } else {
       console.log({ error });

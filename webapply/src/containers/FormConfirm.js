@@ -57,7 +57,8 @@ class FormConfirm extends React.Component {
       code: Array(6).fill(""),
       invalid: false,
       isValidCode: false,
-      isRegenerateCodeAllow: true
+      isRegenerateCodeAllow: true,
+      loginAttempt: 0
     };
     this.regenerateCodeDelay = 10 * 1000;
   }
@@ -102,11 +103,17 @@ class FormConfirm extends React.Component {
   };
 
   handleSendNewCodeLinkClick = () => {
+    this.setState({ loginAttempt: this.state.loginAttempt + 1 });
+
     if (!this.state.isRegenerateCodeAllow) {
       return;
     }
+
     this.setState({ isRegenerateCodeAllow: false, isValidCode: false });
-    this.props.generateOtpCode();
+
+    if (this.state.loginAttempt < 3) {
+      this.props.generateOtpCode();
+    }
   };
 
   render() {

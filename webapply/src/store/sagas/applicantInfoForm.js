@@ -4,6 +4,7 @@ import { history } from "./../configureStore";
 import cloneDeep from "lodash/cloneDeep";
 import { updateProspectId } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
+import { setVerified } from "../actions/reCaptcha";
 import apiClient from "../../api/apiClient";
 
 import routes from "./../../routes";
@@ -21,6 +22,7 @@ function* applicantInfoFormSaga() {
     } = yield call(apiClient.prospect.create, config.prospect);
 
     yield put(applicantInfoFormSuccess());
+    yield put(setVerified(true));
 
     yield put(updateProspectId(prospectId));
 

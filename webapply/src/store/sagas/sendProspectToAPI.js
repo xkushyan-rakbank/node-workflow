@@ -61,7 +61,8 @@ function* prospectAutoSaveFlow() {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
 
     // wait for the user stop action
-    const { actionType } = yield take("UPDATE_ACTION_TYPE"); // need some action
+    const { actionType } = yield take("UPDATE_ACTION_TYPE");
+
     if (actionType === "submit") {
       // this will cause the forked bgSyncAutoSave task to jump into its finally block
       yield cancel(bgSyncAutoSave);

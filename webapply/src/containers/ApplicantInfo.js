@@ -9,10 +9,10 @@ import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
-import { updateActionType } from "../store/actions/appConfig";
+
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
-import { receiveAppConfig } from "./../store/actions/appConfig";
+import { receiveAppConfig, updateActionType } from "./../store/actions/appConfig";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import * as otpSelectors from "../store/selectors/otp";
@@ -36,17 +36,7 @@ class BasicsForm extends React.Component {
     this.props.receiveAppConfig();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
-    //   this.props.verifyToken();
-    // }
-    // if (
-    //   prevProps.prospectId !== this.props.prospectId &&
-    //   this.props.prospectId
-    // ) {
-    //   // its not handle case when user navigate back from next page "OTPVerification"
-    //   this.props.generateOtpCode();
-    // }
+  componentDidUpdate(prevProps) {
     // if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
     //   this.props.history.push(routes.verifyOtp);
     // }
@@ -74,7 +64,8 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const { classes, lastInputValue } = this.props;
+    const { classes, lastInputValue, reCaptchaToken } = this.props;
+
     return (
       <>
         <h2>Let’s Start with the Basics</h2>
@@ -105,7 +96,11 @@ class BasicsForm extends React.Component {
             <div className="linkContainer">
               <BackLink path={routes.detailedAccount} />
 
-              <SubmitButton label="Next Step" justify="flex-end" disabled={!lastInputValue} />
+              <SubmitButton
+                label="Next Step"
+                justify="flex-end"
+                disabled={!lastInputValue || !reCaptchaToken}
+              />
             </div>
           </Grid>
         </form>
@@ -123,7 +118,6 @@ const mapStateToProps = state => ({
   serverError: appConfigSelectors.getServerErrorStatus(state),
   screeningResults: appConfigSelectors.getScreeningResults(state),
   applicationInfo: appConfigSelectors.getApplicationInfo(state)
-  // isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),
 });
 
 const mapDispatchToProps = {

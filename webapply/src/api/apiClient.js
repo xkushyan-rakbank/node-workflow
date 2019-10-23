@@ -16,8 +16,7 @@ function buildURI(uriName, prospectId, documentKey) {
   uri = uri.replace("{prospectId}", prospectId);
   uri = uri.replace("{documentKey}", documentKey);
   uri = uri.replace("{userType}", segment);
-  console.log("segment", segment);
-  console.log("uri", uri);
+
   return uri;
 }
 
@@ -57,16 +56,6 @@ export default {
         url: buildURI("authenticateUserUri"),
         method: "post",
         data
-      });
-    }
-  },
-
-  reCaptcha: {
-    verify: recaptchaToken => {
-      return httpClient.request({
-        url: buildURI("recaptchaUri"),
-        method: "POST",
-        data: { recaptchaToken }
       });
     }
   },
