@@ -15,7 +15,7 @@ trigger:
 #  - releases/*
 
 jobs:
-     - job: Webapply
+    - job: Webapply
       timeoutInMinutes: 120
       pool:
         name: Hosted macOS
