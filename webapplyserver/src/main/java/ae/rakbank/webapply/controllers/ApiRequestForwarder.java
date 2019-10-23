@@ -79,7 +79,7 @@ public class ApiRequestForwarder {
 		dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
 	}
 
-	@PostMapping(value = "/usertypes/{segment}/prospects/", produces = "application/json", consumes = "application/json")
+	@PostMapping(value = "/usertypes/{segment}/prospects", produces = "application/json", consumes = "application/json")
 	@ResponseBody
 	public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			@RequestBody JsonNode requestBodyJSON, @PathVariable String segment, HttpServletRequest servletRequest) {

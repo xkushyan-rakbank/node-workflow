@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "POST",
-    "url": "/api/v1/banks/RAK/usertypes/sme/prospects/",
+    "url": "/api/v1/banks/RAK/usertypes/sme/prospects",
     "bodyPatterns": [
       {
         "matchesJsonPath": "$.applicantInfo[?(@.fullName == 'VerifyOTP')]"
