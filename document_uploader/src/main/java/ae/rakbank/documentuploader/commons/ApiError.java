@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ApiError {
 
@@ -80,6 +84,21 @@ public class ApiError {
 			return exception;
 		}
 		return null;
+	}
+
+	public JsonNode toJson() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectNode errorResponse = objectMapper.createObjectNode();
+		errorResponse.put("errorType", "Internal Server Error");
+		ArrayNode errors = objectMapper.createArrayNode();
+		ObjectNode error = objectMapper.createObjectNode();
+		error.put("errorType", "Internal Server Error");
+		error.put("message", message);
+		error.put("developerText", debugMessage);
+		error.put("exception", exception);
+		errors.add(error);
+		errorResponse.set("errors", errors);
+		return errorResponse;
 	}
 
 }

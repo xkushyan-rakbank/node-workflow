@@ -4,7 +4,7 @@
 			"WebApplyBaseUrl": "http://localhost:8080",
 			"DehBaseUrl": "http://localhost:9091/api/v1",
 			"OAuthBaseUrl": "http://localhost:9091/api/v1",
-			"ReCaptchaUrl": "http://localhost:9091",
+			"ReCaptchaUrl": "https://www.google.com",
 			"RSAPublicKeyUrl": "http://localhost:9091",
 			"RAKvaluePlusReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"RAKvalueMaxReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
@@ -103,8 +103,8 @@
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
 			"OAuthStateMode": "N",
-			"ReCaptchaSiteKey": "6LeySrQUAAAAAFYLOupmE2A4flQ1hPKLM1_0wusl",
-			"ReCaptchaSecret": ""
+			"ReCaptchaSiteKey": "6LcypLgUAAAAAMQvT4SqSDCbJ7JFYY7x0OGJTpTm",
+			"ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R"
 		},
 		"dev": {
 			"OAuthGrantType": "password",

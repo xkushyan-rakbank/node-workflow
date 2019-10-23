@@ -153,7 +153,7 @@ public class ApiRequestForwarder {
 						e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
@@ -164,7 +164,7 @@ public class ApiRequestForwarder {
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -198,7 +198,7 @@ public class ApiRequestForwarder {
 						e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
@@ -208,7 +208,7 @@ public class ApiRequestForwarder {
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -242,7 +242,7 @@ public class ApiRequestForwarder {
 						e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
@@ -252,7 +252,7 @@ public class ApiRequestForwarder {
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -284,7 +284,7 @@ public class ApiRequestForwarder {
 						e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
@@ -294,7 +294,7 @@ public class ApiRequestForwarder {
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -328,7 +328,7 @@ public class ApiRequestForwarder {
 						e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
@@ -338,7 +338,7 @@ public class ApiRequestForwarder {
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -370,7 +370,7 @@ public class ApiRequestForwarder {
 						e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
@@ -381,7 +381,7 @@ public class ApiRequestForwarder {
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -410,7 +410,7 @@ public class ApiRequestForwarder {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 						"Unable to call endpoint " + url, e);
-				return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
@@ -420,7 +420,7 @@ public class ApiRequestForwarder {
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -449,7 +449,7 @@ public class ApiRequestForwarder {
 						ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required.",
 								"recaptchaToken is required.");
 
-						return new ResponseEntity<Object>(error, null, HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 					}
 
 					String recaptchaResponse = requestJSON.get("recaptchaToken").asText();
@@ -483,7 +483,7 @@ public class ApiRequestForwarder {
 				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 						"Unable to call endpoint " + url, e);
-				return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		} else {
@@ -493,7 +493,7 @@ public class ApiRequestForwarder {
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

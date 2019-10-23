@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.commons.ErrorResponse;
 import ae.rakbank.webapply.commons.RecaptchaUtil;
 import ae.rakbank.webapply.helpers.FileHelper;
 
@@ -57,43 +59,44 @@ public class RecaptchaService {
 		String url = recaptchaEndpoint + "?secret={secret}&response={response}&remoteip={remoteip}";
 		try {
 			logger.info(String.format("Endpoint=[%s], Request=[%s]", url, body));
-			
+
 			recaptchaResponse = restTemplateBuilder.build().postForEntity(url, body, Map.class, body);
-			
-			logger.info(String.format("Endpoint=[%s], HttpStatus=[%s], Response=[%s]", url,
-					recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody()));
-			
+
+			logger.info(String.format("Endpoint=[%s], HttpStatus=[%s], verified=[%s]", url,
+					recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody().get("success")));
+
 		} catch (Exception e) {
 			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					"Unable to call endpoint " + recaptchaEndpoint, e);
-			return new ResponseEntity(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		logger.info(String.format("reCAPTCHA Response: IP=[%s] HttpStatus=[%s], message=[%s]", ip,
-				recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody()));
+		Map<String, Object> responseBody = recaptchaResponse.getBody();
+		boolean recaptchaTokenVerified = (Boolean) responseBody.get("success");
 
-		if (recaptchaResponse.getStatusCode().is2xxSuccessful()) {
+		logger.info(String.format("reCAPTCHA Response: IP=[%s] HttpStatus=[%s], tokenVerified=%s, response=[%s]", ip,
+				recaptchaResponse.getStatusCodeValue(), recaptchaTokenVerified, recaptchaResponse.getBody()));
+
+		if (recaptchaResponse.getStatusCode().is2xxSuccessful() && recaptchaTokenVerified) {
 			return ResponseEntity.ok().build();
-		} else if (recaptchaResponse.getStatusCode().is4xxClientError()) {
-			Map<String, Object> responseBody = recaptchaResponse.getBody();
-			boolean recaptchaSucess = (Boolean) responseBody.get("success");
-			if (!recaptchaSucess) {
-				List<String> errorCodes = (List) responseBody.get("error-codes");
-				String errorMessage = errorCodes.stream().map(s -> RecaptchaUtil.RECAPTCHA_ERROR_CODE.get(s))
-						.collect(Collectors.joining(", "));
-
-				Map<String, Object> response = new HashMap<>();
-				response.put("errorType", "ReCaptchaError");
-				response.put("message", errorMessage);
-
-				return ResponseEntity.badRequest().body(response);
-			}
 		} else if (recaptchaResponse.getStatusCode().is5xxServerError()) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("errorType", "ReCaptchaError");
-			response.put("message", "Internal Server Error");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+
+			JsonNode errorResponse = ErrorResponse.createJsonResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+					"ReCaptchaError", "Internal Server Error", null, null);
+
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+		} else if (recaptchaResponse.getStatusCode().is4xxClientError() || !recaptchaTokenVerified) {
+			List<String> errorCodes = (List) responseBody.get("error-codes");
+			String errorMessage = errorCodes.stream().map(s -> RecaptchaUtil.RECAPTCHA_ERROR_CODE.get(s))
+					.collect(Collectors.joining(", "));
+
+			errorMessage = StringUtils.defaultIfBlank(errorMessage, "The request is invalid or malformed");
+
+			JsonNode errorResponse = ErrorResponse.createJsonResponse(HttpStatus.BAD_REQUEST, "ReCaptchaError",
+					errorMessage, errorMessage, null);
+
+			return ResponseEntity.badRequest().body(errorResponse);
 		}
 		return recaptchaResponse;
 
