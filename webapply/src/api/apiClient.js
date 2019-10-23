@@ -9,7 +9,7 @@ let queryString = "";
 function buildURI(uriName, prospectId, documentKey) {
   const { pathname } = window.location;
   let uri = store.getState().appConfig.endpoints[uriName];
-  const segment = pathname.includes("/agent/")
+  const segment = pathname.includes("/agent")
     ? store.getState().appConfig.searchInfo.segment
     : pathname.substring(1, pathname.lastIndexOf("/"));
 
@@ -22,7 +22,7 @@ function buildURI(uriName, prospectId, documentKey) {
 
 function getQueryString(product, segment) {
   const { pathname } = window.location;
-  const role = pathname.includes("/agent/") ? "agent" : "customer";
+  const role = pathname.includes("/agent") ? "agent" : "customer";
   if (product && segment) {
     queryString = `?segment=${segment}&product=${product}&role=${role}`;
   } else {

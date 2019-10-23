@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -136,7 +138,7 @@ public class WebApplyController {
 
 	@GetMapping(value = "/config", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Object> getWebApplyConfig(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+	public ResponseEntity<JsonNode> getWebApplyConfig(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			@RequestParam(required = false, defaultValue = "") String segment,
 			@RequestParam(required = false, defaultValue = "") String product, @RequestParam String role,
 			@RequestParam(required = false, defaultValue = "desktop") String device) throws Exception {
@@ -146,7 +148,7 @@ public class WebApplyController {
 		if (StringUtils.isNotBlank(invalidCriteriaError)) {
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid segment, product or role.",
 					invalidCriteriaError);
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 		}
 
 		HttpHeaders headers = new HttpHeaders();
@@ -157,24 +159,34 @@ public class WebApplyController {
 		String cachedValue = getCachedData(cacheKey);
 		if (StringUtils.isNotBlank(cachedValue)) {
 			logger.info("cached data found for key - " + cacheKey);
-			return new ResponseEntity<Object>(cachedValue, headers, HttpStatus.OK);
-
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode cachedJson = mapper.readTree(cachedValue);
+			return new ResponseEntity<JsonNode>(cachedJson, headers, HttpStatus.OK);
 		}
-		String webApplyConfig = null;
+
+		ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);
+		JsonNode datalistJSON = null;
+		if (datalistResponse.getStatusCode().is2xxSuccessful()) {
+			datalistJSON = datalistResponse.getBody();
+		} else {
+			return datalistResponse;
+		}
+
+		JsonNode webApplyConfig = null;
 		try {
-			webApplyConfig = buildAppInitialState(segment, product, role, device, null);
+			webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON);
 		} catch (IOException e) {
 			logger.error("error occured while loading config files", e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<Object>(webApplyConfig, headers, HttpStatus.OK);
+		return new ResponseEntity<JsonNode>(webApplyConfig, headers, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/config/reload", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Object> loadAppInitialState() {
+	public ResponseEntity<JsonNode> loadAppInitialState() {
 		logger.info("reload config files and cache again");
 		HttpHeaders headers = new HttpHeaders();
 		// (Assumption) WebApply & MobileApply will have same set of fields otherwise
@@ -184,12 +196,14 @@ public class WebApplyController {
 		String[] products = { "RAKstarter", "Current Account", "RAKelite" };
 		String[] roles = { "customer", "agent" };
 		for (String segment : segments) {
+			ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);
 			JsonNode datalistJSON = null;
-			try {
-				datalistJSON = getDatalistJSON(segment);
-			} catch (Exception e1) {
-				logger.info("error in getDatalistJSON() method", e1);
+			if (datalistResponse.getStatusCode().is2xxSuccessful()) {
+				datalistJSON = datalistResponse.getBody();
+			} else {
+				return datalistResponse;
 			}
+
 			for (String device : devices) {
 				for (String product : products) {
 					for (String role : roles) {
@@ -201,7 +215,8 @@ public class WebApplyController {
 									"unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[%s]",
 									device, segment, product, role));
 							ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-							return new ResponseEntity<Object>(error.toJson(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
+							return new ResponseEntity<JsonNode>(error.toJson(), headers,
+									HttpStatus.INTERNAL_SERVER_ERROR);
 						}
 					}
 				}
@@ -211,11 +226,11 @@ public class WebApplyController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode response = objectMapper.createObjectNode();
 		response.put("message", "reload configs successful");
-		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
+		return new ResponseEntity<JsonNode>(response, headers, HttpStatus.OK);
 	}
 
-	private String buildAppInitialState(String segment, String product, String role, String device,
-			JsonNode datalistBySegment) throws Exception {
+	private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist)
+			throws Exception {
 		logger.info("Begin buildAppInitialState() method");
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode initStateJSON = objectMapper.createObjectNode();
@@ -247,17 +262,6 @@ public class WebApplyController {
 		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
 		JsonNode uiConfigNode = objectMapper.readTree(uiConfig);
 
-		JsonNode datalist = datalistBySegment;
-		if (datalistBySegment == null || datalistBySegment.size() == 0) {
-			// fetch datalist by segment if not loaded by loadAppInitialState
-			datalist = getDatalistJSON(segment);
-		}
-
-		if (datalist == null || datalist.size() == 0) {
-			logger.error("datalist is null or no elements found in datalist object");
-			throw new Exception("datalist is null or no elements found in datalist object");
-		}
-
 		ObjectNode uiFieldsObjNode = filterUIConfigFieldsByCriteria((ObjectNode) uiConfigNode, segment, product, role,
 				device, datalist);
 
@@ -269,7 +273,7 @@ public class WebApplyController {
 
 		logger.info("End buildAppInitialState() method");
 
-		return initStateJSON.toString();
+		return initStateJSON;
 
 	}
 
@@ -437,12 +441,12 @@ public class WebApplyController {
 		return null;
 	}
 
-	private JsonNode getDatalistJSON(String segment) throws Exception {
+	private ResponseEntity<JsonNode> getDatalistJSON(String segment) {
 		logger.info("Begin getDatalistJSON() method, segment=" + segment);
 
 		if (StringUtils.isBlank(segment)) {
 			logger.info("segment is null, return defaultDatalist");
-			return defaultDatalist;
+			return new ResponseEntity<JsonNode>(defaultDatalist, null, HttpStatus.NO_CONTENT);
 		}
 
 		String methodName = "getDatalistJSON()";
@@ -473,32 +477,33 @@ public class WebApplyController {
 
 			try {
 				response = restTemplate.exchange(url, HttpMethod.GET, request, JsonNode.class);
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+			} catch (HttpClientErrorException e) {
+				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
+						e.getResponseBodyAsString()), e);
+				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
+						e.getResponseBodyAsString(), e);
+				return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+			} catch (HttpServerErrorException e) {
+				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
+						e.getResponseBodyAsString()), e);
+				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+						e.getResponseBodyAsString(), e);
+				return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 			ObjectNode datalist = (ObjectNode) response.getBody();
 			datalist.setAll((ObjectNode) fileHelper.getDatalistJSON());
+			populateDefaultDatalist(datalist);
+
 			logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
 					methodName, url, response.getStatusCodeValue(), datalist));
 
-			if (response.getStatusCode().is2xxSuccessful()) {
-				logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-						methodName, url, response.getStatusCodeValue()));
-				populateDefaultDatalist(datalist);
-				return datalist;
-
-			} else {
-				logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-						methodName, url, response.getStatusCodeValue()));
-			}
+			return new ResponseEntity<JsonNode>(datalist, null, HttpStatus.NO_CONTENT);
 
 		} else {
 			logger.error("Unable to call datalist API due to oauth error.");
-			throw new Exception("Unable to call datalist API due to oauth error.");
+			return oauthResponse;
 		}
-		logger.info("End getDatalistJSON() method, segment=" + segment);
-		return null;
 	}
 
 	private ResponseEntity<?> getRSAPublicKey() {
@@ -513,10 +518,17 @@ public class WebApplyController {
 		ResponseEntity<JsonNode> response = null;
 		try {
 			response = restTemplate.exchange(url, HttpMethod.GET, reqEntity, JsonNode.class);
-		} catch (Exception e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+		} catch (HttpClientErrorException e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
+					e.getResponseBodyAsString()), e);
+			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
+					e.getResponseBodyAsString(), e);
+			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+		} catch (HttpServerErrorException e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s],response=", url, e.getRawStatusCode(),
+					e.getResponseBodyAsString()), e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"Unable to call endpoint " + url, e);
+					e.getResponseBodyAsString(), e);
 			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		logger.info("END getRSAPublicKey()");

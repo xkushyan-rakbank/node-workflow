@@ -55,7 +55,7 @@
 	},
 	"WebApplyURIs": {
 		"appConfigUri": "/webapply/api/v1/config",
-		"createProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/",
+		"createProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects",
 		"searchProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/search",
 		"getProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/{prospectId}",
 		"updateProspectUri": "/webapply/api/v1/usertypes/sme/prospects/{prospectId}",
@@ -68,7 +68,7 @@
 	},
 	"DehURIs": {
 		"datalistUri": "/banks/RAK/usertypes/{userType}/datalist",
-		"createProspectUri": "/banks/RAK/usertypes/{userType}/prospects/",
+		"createProspectUri": "/banks/RAK/usertypes/{userType}/prospects",
 		"searchProspectUri": "/banks/RAK/usertypes/{userType}/prospects/search",
 		"getProspectUri": "/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
 		"updateProspectUri": "/banks/RAK/usertypes/{userType}/prospects/{prospectId}",

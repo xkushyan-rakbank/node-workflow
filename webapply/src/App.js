@@ -36,7 +36,7 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: "#16216a"
+      main: "#000000"
     },
     secondary: {
       main: "#517085"
@@ -83,6 +83,7 @@ class App extends React.Component {
                 <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
                 <Route exact path={routes.verifyOtp} component={FormConfirm} />
                 <Route exact path={routes.companyInfo} component={AboutCompany} />
+                <Route exact path="/agent" render={() => <Redirect to={routes.login} />} />
                 <Route exact path={routes.login} component={Login} />
                 <Route exact path={routes.searchProspect} component={SearchProspect} />
                 <Route exact path={routes.stakeholdersInfo} component={CompanyStakeholders} />

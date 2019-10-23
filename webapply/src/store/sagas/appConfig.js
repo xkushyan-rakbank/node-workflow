@@ -26,7 +26,7 @@ function* receiveAppConfigSaga() {
     const endpoints = getEndpoints(state);
     const pathname = window.location.pathname;
     let response = null;
-    const segment = pathname.includes("/agent/")
+    const segment = pathname.includes("/agent")
       ? state.login.loginStatus
         ? state.appConfig.searchInfo.segment
         : ""
