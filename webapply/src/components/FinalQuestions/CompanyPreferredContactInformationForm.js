@@ -81,7 +81,9 @@ class CompanyPreferredContactInformationForm extends Component {
           <Grid item md={6} sm={12}>
             <TextInput
               id="OrgCont.primaryMobileNo"
-              select={<PureSelect id="OrgCont.primaryMobCountryCode" combinedSelect />}
+              select={
+                <PureSelect id="OrgCont.primaryMobCountryCode" defaultValue="UAE" combinedSelect />
+              }
             />
             {this.state.secondaryPhoneNumber && (
               <div className={classes.relative}>
