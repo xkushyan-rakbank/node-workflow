@@ -12,6 +12,7 @@ import { history } from "./../store/configureStore";
 import BackLink from "../components/Buttons/BackLink";
 import { retrieveDocDetails } from "./../store/actions/getProspectDocuments";
 import { getProspectInfo } from "./../store/actions/retrieveApplicantInfo";
+import { receiveAppConfig } from "./../store/actions/appConfig";
 
 const styles = {
   sectionTitleIndent: {
@@ -50,6 +51,7 @@ class SearchedAppInfo extends React.Component {
   }
 
   redirectUserPage = () => {
+    this.props.receiveAppConfig();
     this.props.getProspectInfo(this.props.match.params.id);
   };
 
@@ -116,7 +118,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   retrieveDocDetails,
-  getProspectInfo
+  getProspectInfo,
+  receiveAppConfig
 };
 
 export default withStyles(styles)(

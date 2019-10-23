@@ -1,6 +1,11 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { SEARCH_APPLICATIONS, searchApplicationsSuccess } from "../actions/searchProspect";
+import {
+  SEARCH_APPLICATIONS,
+  FORMAT_SEARCH_LIST,
+  searchApplicationsSuccess
+} from "../actions/searchProspect";
 import apiClient from "../../api/apiClient";
+import { updateProspect } from "../actions/appConfig";
 
 function* searchProspectFormSaga(action) {
   try {
@@ -19,7 +24,19 @@ function* searchProspectFormSaga(action) {
     console.log({ error });
   }
 }
+function* formatSearchListSaga() {
+  const clearedSearchDetail = {
+    ["searchInfo.fname"]: "",
+    ["searchInfo.countryCode"]: "",
+    ["searchInfo.mobileNo"]: "",
+    ["searchInfo.leadNumber"]: "",
+    ["searchInfo.tradeLicenseNo"]: "",
+    ["searchInfo.email"]: ""
+  };
+  yield put(updateProspect(clearedSearchDetail));
+}
 
 export default function* searchProspectSaga() {
   yield all([takeLatest(SEARCH_APPLICATIONS, searchProspectFormSaga)]);
+  yield all([takeLatest(FORMAT_SEARCH_LIST, formatSearchListSaga)]);
 }

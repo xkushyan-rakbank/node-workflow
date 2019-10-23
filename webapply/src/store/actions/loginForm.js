@@ -4,6 +4,8 @@ export const LOGIN_INFO_FORM_FAIL = "LOGIN_INFO_FORM_FAIL";
 
 export const LOGOUT = "LOGOUT";
 
+export const FORMAT_LOGIN = "FORMAT_LOGIN";
+
 /**
  * @param {Boolean} payload
  * @return {{payload: Boolean, type: String}}
@@ -24,7 +26,9 @@ export const loginInfoFormFail = error => {
 };
 
 export const logout = () => {
-  return {
-    type: LOGOUT
-  };
+  return { type: LOGOUT };
+};
+
+export const formatLogin = () => {
+  return { type: FORMAT_LOGIN };
 };

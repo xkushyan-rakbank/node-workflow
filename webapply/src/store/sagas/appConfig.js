@@ -27,7 +27,9 @@ function* receiveAppConfigSaga() {
     const pathname = window.location.pathname;
     let response = null;
     const segment = pathname.includes("/agent/")
-      ? ""
+      ? state.login.loginStatus
+        ? state.appConfig.searchInfo.segment
+        : ""
       : pathname.substring(1, pathname.lastIndexOf("/"));
     const { accountType, islamicBanking } = getSelectedAccountInfo(state);
 
@@ -63,12 +65,14 @@ function* displayScreenBasedOnViewIdSaga() {
   const state = yield select();
   const applicationInfo = getApplicationInfo(state);
 
+  const prefix = "/sme";
+
   if (applicationInfo.actionType === "submit" && applicationInfo.retrieveMode) {
-    yield call(history.push, routes.ApplicationSubmitted);
+    yield call(history.push, prefix + routes.ApplicationSubmitted);
   } else if (applicationInfo.actionType === "submit" && !applicationInfo.retrieveMode) {
-    yield call(history.push, applicationInfo.reUploadDocuments);
+    yield call(history.push, prefix + applicationInfo.reUploadDocuments);
   } else if (applicationInfo.viewId) {
-    yield call(history.push, applicationInfo.viewId);
+    yield call(history.push, prefix + applicationInfo.viewId);
   }
 }
 
@@ -77,7 +81,12 @@ function* updateActionTypeSaga({ actionType }) {
 }
 
 function* updateViewIdSaga({ viewId }) {
-  yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
+  console.log("update view id", viewId.replace("/sme", "").replace("/agent", ""));
+  yield put(
+    updateProspect({
+      "prospect.applicationInfo.viewId": viewId.replace("/sme", "").replace("/agent", "")
+    })
+  );
 }
 
 function* updateSaveTypeSaga({ saveType }) {

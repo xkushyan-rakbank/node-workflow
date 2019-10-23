@@ -7,7 +7,8 @@ import * as loginSelector from "./../store/selectors/loginSelector";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import { accountsNames } from "../constants";
 import router from "../routes";
-import { logout } from "./../store/actions/loginForm";
+import { logout, formatLogin } from "./../store/actions/loginForm";
+import { formatSearchList } from "./../store/actions/searchProspect";
 import routes from "../routes";
 import { history } from "./../store/configureStore";
 
@@ -80,6 +81,8 @@ const HeaderTitle = props => {
 
   const agentLogout = () => {
     props.logout();
+    props.formatLogin();
+    props.formatSearchList();
     history.push(routes.login);
   };
 
@@ -116,7 +119,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  logout
+  logout,
+  formatLogin,
+  formatSearchList
 };
 
 export default compose(
