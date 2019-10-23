@@ -8,6 +8,7 @@ import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
+import ConfirmDialog from "../components/ConfirmDialod";
 import routes from "../routes";
 import { updateProspect } from "../store/actions/appConfig";
 import { addNewStakeholder, deleteStakeholder } from "../store/actions/stakeholders";
@@ -44,31 +45,65 @@ class CompanyStakeholders extends React.Component {
       showNewStakeholder: false,
       editableStakeholder: null,
       step: 1,
-      completedStep: 0
+      completedStep: 0,
+      isOpenConfirmDialog: false,
+      callback: undefined
     };
   }
 
   goToFinalQuestions = () => this.props.history.push(routes.finalQuestions);
 
+  handleShowNewStakeholder = () => {
+    if (Number.isInteger(this.state.editableStakeholder)) {
+      return this.openConfirmDialog(this.showNewStakeholder);
+    } else {
+      this.showNewStakeholder();
+    }
+  };
+
   showNewStakeholder = () => {
     this.setState({
       showNewStakeholder: true,
-      editableStakeholder: this.props.stakeholders.length
+      editableStakeholder: this.props.stakeholders.length,
+      isOpenConfirmDialog: false
     });
     this.props.addNewStakeholder();
+  };
+
+  openConfirmDialog = callback => {
+    this.setState({ isOpenConfirmDialog: true, callback });
+  };
+
+  closeConfirmDialog = () => {
+    this.setState({ isOpenConfirmDialog: false, callback: undefined });
   };
 
   hideNewStakeholder = () => {
     this.setState({ showNewStakeholder: false, editableStakeholder: null });
   };
 
+  handleChange = stakeholderIndex => {
+    if (Number.isInteger(this.state.editableStakeholder)) {
+      return this.openConfirmDialog(() => {
+        this.changeEditableStep(stakeholderIndex);
+      });
+    } else {
+      this.changeEditableStep(stakeholderIndex);
+    }
+  };
+
   changeEditableStep = stakeholderIndex =>
-    this.setState({ editableStakeholder: stakeholderIndex, showNewStakeholder: false });
+    this.setState({
+      editableStakeholder: stakeholderIndex,
+      showNewStakeholder: false,
+      isOpenConfirmDialog: false
+    });
 
   render() {
     const { editableStakeholder, showNewStakeholder } = this.state;
     const { stakeholders, classes } = this.props;
     const showingAddButton = stakeholders.length < 6;
+
     return (
       <>
         <h2>Add your company’s stakeholders</h2>
@@ -97,7 +132,7 @@ class CompanyStakeholders extends React.Component {
               <FilledStakeholderCard
                 {...item}
                 index={index}
-                changeEditableStep={this.changeEditableStep}
+                changeEditableStep={this.handleChange}
                 key={`${item.id}-${index}`}
               />
             );
@@ -106,7 +141,7 @@ class CompanyStakeholders extends React.Component {
 
         {showingAddButton && (
           <div className={classes.buttonsWrapper}>
-            <AddStakeholderButton handleClick={this.showNewStakeholder} />
+            <AddStakeholderButton handleClick={this.handleShowNewStakeholder} />
           </div>
         )}
 
@@ -120,6 +155,11 @@ class CompanyStakeholders extends React.Component {
             disabled={stakeholders.length < 1 && !!editableStakeholder}
           />
         </div>
+        <ConfirmDialog
+          isOpen={this.state.isOpenConfirmDialog}
+          handleSuccess={this.state.callback}
+          handleClose={this.closeConfirmDialog}
+        />
       </>
     );
   }

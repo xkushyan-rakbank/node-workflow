@@ -21,9 +21,9 @@ function* addNewStakeholderSaga() {
 function* deleteStakeholderSaga(action) {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
-  const updatedSignatories = config.prospect.signatoryInfo.filter(
-    item => item.signatoryId !== action.stakeholderId
-  );
+  const updatedSignatories = action.stakeholderId
+    ? config.prospect.signatoryInfo.filter(item => item.signatoryId !== action.stakeholderId)
+    : config.prospect.signatoryInfo.splice(-1, 1);
 
   config.prospect.signatoryInfo = updatedSignatories;
 
@@ -63,9 +63,8 @@ function* formatPersonalInformationSaga(action) {
       [`prospect.signatoryInfo[${index}].dateOfBirth`]: null
     };
     yield put(updateProspect(clearedPersonalInfo));
-
-    yield put(sendProspectToAPI());
   }
+  yield put(sendProspectToAPI());
 }
 
 function* formatNationalitySaga(action) {
