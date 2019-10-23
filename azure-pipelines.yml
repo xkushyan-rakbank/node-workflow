@@ -234,6 +234,12 @@ jobs:
           mvn clean install
         displayName: 'Buildling Document Uploader Application'
         enabled: true
+      
+      - bash : |
+          cd document_uploader
+          mvn clean test -Dtest=ae.rakbank.documentuploader.DocumentUploaderTest
+        displayName: 'JUnit test cases'
+        enabled: true
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:
