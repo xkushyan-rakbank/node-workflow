@@ -103,12 +103,14 @@ public class OAuthService {
 					try {
 						response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 					} catch (HttpClientErrorException e) {
-						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getRawStatusCode()));
+						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+								e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 						ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
 								e.getResponseBodyAsString(), e);
 						return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 					} catch (HttpServerErrorException e) {
-						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+								e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 						ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 								e.getResponseBodyAsString(), e);
 						return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);

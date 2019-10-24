@@ -15,6 +15,8 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -48,7 +50,7 @@ public class RecaptchaService {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ResponseEntity<?> verifyRecaptcha(String ip, String recaptchaToken) {
+	public ResponseEntity<JsonNode> verifyRecaptcha(String ip, String recaptchaToken) {
 		Map<String, String> body = new HashMap<>();
 		body.put("secret", recaptchaSecret);
 		body.put("response", recaptchaToken);
@@ -65,11 +67,18 @@ public class RecaptchaService {
 			logger.info(String.format("Endpoint=[%s], HttpStatus=[%s], verified=[%s]", url,
 					recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody().get("success")));
 
-		} catch (Exception e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+		} catch (HttpClientErrorException e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+					e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
+					e.getResponseBodyAsString(), e);
+			return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+		} catch (HttpServerErrorException e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+					e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"Unable to call endpoint " + recaptchaEndpoint, e);
-			return new ResponseEntity(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+					e.getResponseBodyAsString(), e);
+			return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		Map<String, Object> responseBody = recaptchaResponse.getBody();
@@ -98,7 +107,7 @@ public class RecaptchaService {
 
 			return ResponseEntity.badRequest().body(errorResponse);
 		}
-		return recaptchaResponse;
+		return null;
 
 	}
 }

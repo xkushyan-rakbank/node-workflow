@@ -531,12 +531,13 @@ public class ApiRequestForwarder {
 				response = restTemplate.exchange(url, httpMethod, request, Resource.class);
 			}
 		} catch (HttpClientErrorException e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
 					e.getResponseBodyAsString()), e);
 			JsonNode badReqResponse = new ObjectMapper().readTree(e.getResponseBodyAsString());
 			return new ResponseEntity<Object>(badReqResponse, null, HttpStatus.BAD_REQUEST);
 		} catch (HttpServerErrorException e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getStatusCode()), e);
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
+					e.getResponseBodyAsString()), e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					e.getResponseBodyAsString(), e);
 			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);

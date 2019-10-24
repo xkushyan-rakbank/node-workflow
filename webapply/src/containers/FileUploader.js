@@ -31,7 +31,7 @@ class FileUploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDisabled: false
+      isDisabled: true
     };
   }
 
@@ -41,7 +41,6 @@ class FileUploader extends React.Component {
 
   render() {
     const DocDetails = this.props;
-    console.log(this.props.getSignatories);
     const { classes } = this.props;
     let companyOdcLength;
     let StakeholdersDocLength;
@@ -52,8 +51,13 @@ class FileUploader extends React.Component {
       UploadDocCount = +companyOdcLength;
     }
     if (this.props.uploadedDoc.stakeholdersDocuments) {
-      let StakeholdersDoc = this.props.uploadedDoc.companyDocuments;
-      StakeholdersDocLength = StakeholdersDoc.length;
+      let StakeholdersDoc = this.props.uploadedDoc.stakeholdersDocuments;
+      StakeholdersDocLength = Object.keys(StakeholdersDoc)
+        .map(campusName => {
+          const campus = StakeholdersDoc[campusName];
+          return Object.keys(campus).length;
+        })
+        .reduce((p, c) => p + c, 0);
       UploadDocCount = UploadDocCount + StakeholdersDocLength;
     }
 

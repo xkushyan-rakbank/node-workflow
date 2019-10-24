@@ -9,7 +9,6 @@ import * as appConfigSelectors from "../../store/selectors/appConfig";
 const CancelToken = axios.CancelToken;
 let call;
 let uploadDocUri;
-// const uri = "https://conv.rakbankonline.ae/quickapply/webapply/api/v1/prospects/1000/documents";
 
 const style = {
   fileUploadPlaceholder: {
