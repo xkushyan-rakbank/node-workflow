@@ -7,36 +7,36 @@
       "applyOnbehalf": true
     },
     "generalInfo": {
-      "prospectId": "string",
+      "prospectId": "",
       "_links": {
         "self": {
-          "href": "string"
+          "href": ""
         }
       },
       "cifId": 0,
-      "customerType": "string",
-      "dsaId": "string",
-      "groupId": "string",
-      "groupName": "string",
-      "rmCode": "string",
-      "accountManagerId": "string",
+      "customerType": "",
+      "dsaId": "",
+      "groupId": "",
+      "groupName": "",
+      "rmCode": "",
+      "accountManagerId": "",
       "isPoliticallyExposed": "N"
     },
     "applicationInfo": {
-      "segment": "string",
-      "viewId": "string",
+      "segment": "",
+      "viewId": "",
       "islamicBanking": true,
       "accountType": "RAKStarter",
       "rakValuePackage": "RAKvalue PLUS",
-      "leadNumber": "string",
-      "riskScore": "string",
-      "srNumber": "string",
+      "leadNumber": "",
+      "riskScore": "",
+      "srNumber": "",
       "channelId": "Bank to confirm on the LOVs",
       "channelType": "Mobile",
-      "createdDate": "string",
-      "lastModifiedDate": "string",
-      "createdBy": "string",
-      "lastModifiedBy": "string",
+      "createdDate": "",
+      "lastModifiedDate": "",
+      "createdBy": "",
+      "lastModifiedBy": "",
       "actionType": "Save",
       "saveType": "auto",
       "tncAgreed": false,
@@ -44,12 +44,12 @@
     },
     "accountInfo": [
       {
-        "branchId": "LOVs will be fetched from datalist API",
+        "branchId": "",
         "accountType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
         "accountSubType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
-        "accountNo": "string",
+        "accountNo": "",
         "accountCurrencies": [
-          "string"
+          ""
         ],
         "accountCurrency": "AED",
         "accountPurpose": "Bank to confirm on the LOVs",
@@ -66,26 +66,26 @@
         "statusOverAll": "proceed",
         "screeningResults": [
           {
-            "screeningType": "string",
-            "screeningStatus": "string",
-            "screeningFlag": "string",
-            "screeningNotes": "string",
-            "screeningReason": "string",
-            "reasonNotes": "string",
-            "reasonCode": "string",
-            "reasonStatus": "string"
+            "screeningType": "",
+            "screeningStatus": "",
+            "screeningFlag": "",
+            "screeningNotes": "",
+            "screeningReason": "",
+            "reasonNotes": "",
+            "reasonCode": "",
+            "reasonStatus": ""
           }
         ]
       },
       "branchCity": "LOVs to be confirmed by Bank",
       "branchID": "LOVs to be confirmed by Bank",
       "countryOfIncorporation": "AE",
-      "companyName": "wiprotechnologies",
-      "shortName": "wipro",
+      "companyName": "ABC COM",
+      "shortName": "ABC",
       "dateOfIncorporation": "2019-10-23",
       "numberOfEmployees": 0,
       "licenseType": "Trade License",
-      "licenseTypeOther": "string",
+      "licenseTypeOther": "",
       "licenseIssuingAuthority": "LOVs to be confirmed by Bank",
       "licenseNumber": "23456789",
       "licenseIssueDate": "2019-10-23",
@@ -108,7 +108,7 @@
               "country": "U.A.E",
               "typeOfSpaceOccupied": {
                 "spaceType": "Office",
-                "others": "string"
+                "others": ""
               }
             }
           ]
@@ -127,7 +127,7 @@
         "secondaryMobileNo": "5641283955",
         "secondaryMobileCountryCode": "971",
         "secondaryEmail": "dulkar10@gmail.com",
-        "website": "string"
+        "website": ""
       },
       "contactDetailsForTxnReconfirming": [
         {
@@ -142,30 +142,30 @@
       "businessUnit": "PBD",
       "constitutionType": "Proprietorship",
       "companyCategory": "Charitable Trust",
-      "annualFinTurnoverAmtInAED": "string",
+      "annualFinTurnoverAmtInAED": "",
       "yearsInBusiness": 0,
       "topCustomers": [
         {
           "name": "RAKBANK",
-          "country": "LOVs to be fetched from datalist API"
+          "country": ""
         }
       ],
       "topSuppliers": [
         {
-          "name": "WIPRO",
-          "country": "LOVs to be fetched from datalist API"
+          "name": "ABC COM",
+          "country": ""
         }
       ],
       "topOriginGoodsCountries": [
-        "LOVs to be fetched from datalist API"
+        ""
       ],
       "industryMultiSelect": [
         {
           "industry": [
-            "LOVs to be shared by Bank"
+            ""
           ],
           "subCategory": [
-            "LOVs to be shared by Bank"
+            ""
           ]
         }
       ],
@@ -193,16 +193,16 @@
       "otherEntitiesInUAE": false,
       "entitiesInUAE": [
         {
-          "companyName": "WIPRO",
-          "emirate": "LOVs to be fetched from data list API",
+          "companyName": "ABC COM",
+          "emirate": "",
           "tradeLicenseNo": "23456789"
         }
       ],
       "otherEntitiesOutsideUAE": false,
       "entitiesOutsideUAE": [
         {
-          "companyName": "wipro",
-          "country": "LOVs to be fetched from data list API"
+          "companyName": "ABC COM",
+          "country": ""
         }
       ],
       "isShareholderACompany": false
@@ -213,19 +213,19 @@
           "statusOverAll": "proceed",
           "screeningResults": [
             {
-              "screeningType": "string",
-              "screeningStatus": "string",
-              "screeningFlag": "string",
-              "screeningNotes": "string",
-              "screeningReason": "string",
-              "reasonNotes": "string",
-              "reasonCode": "string",
-              "reasonStatus": "string"
+              "screeningType": "",
+              "screeningStatus": "",
+              "screeningFlag": "",
+              "screeningNotes": "",
+              "screeningReason": "",
+              "reasonNotes": "",
+              "reasonCode": "",
+              "reasonStatus": ""
             }
           ]
         },
         "salutation": "Mr.",
-        "signatoryId": "string",
+        "signatoryId": "",
         "firstName": "David",
         "middleName": "Sachin",
         "lastName": "Miller",
@@ -242,16 +242,16 @@
         "kycVerified": false,
         "kycDetails": {
           "salutation": "Mr.",
-          "shareholderPOASignatoryName": "string",
+          "shareholderPOASignatoryName": "",
           "isShareholderACompany": false,
           "isSignatory": false,
           "isShareholder": false,
           "shareHoldingPercentage": 0,
           "dateOfBirth": "2019-10-23",
-          "nationality": "string",
+          "nationality": "",
           "dualCitizenship": false,
           "dualCitizenshipCountry": [
-            "LOVs to be fetched from datalist API"
+            ""
           ],
           "residenceCountry": "AE",
           "isUAEResident": false,
@@ -272,10 +272,10 @@
           "relativeGovtPosition": "Currently hold",
           "isPEP": false,
           "qualification": "Under Graduate",
-          "experienceInYrs": "string",
+          "experienceInYrs": "",
           "sourceOfWealth": {
             "wealthType": "Personal Savings",
-            "others": "string"
+            "others": ""
           }
         },
         "contactDetails": {
@@ -291,16 +291,16 @@
           "secondaryMobileNo": "5641283955",
           "secondaryMobileCountryCode": "971",
           "secondaryEmail": "dulkar10@gmail.com",
-          "website": "string"
+          "website": ""
         },
         "employmentDetails": {
           "employmentType": "Salaried",
-          "otherEmploymentType": "string",
+          "otherEmploymentType": "",
           "designation": "Manager",
           "empNo": "2000356",
           "department": "Digital",
           "employerName": "David",
-          "occupation": "string",
+          "occupation": "",
           "totalExperienceYrs": 0,
           "employmentStartDate": "2019-10-23"
         },
@@ -325,7 +325,7 @@
         ],
         "accountSigningInfo": {
           "accountSigningType": "Any of us",
-          "accountSigningInstn": "string",
+          "accountSigningInstn": "",
           "authorityType": "SP - Sole Proprietor"
         },
         "debitCardInfo": {
@@ -340,7 +340,7 @@
     "channelServicesInfo": {
       "mobileInstructions": false,
       "marketingSMS": false,
-      "doNotDisturbHours": "string",
+      "doNotDisturbHours": "",
       "weeklyBalanceNotification": "Sunday",
       "monthlyBalanceNotification": 0
     },
@@ -348,28 +348,28 @@
       "companyDocuments": [
         {
           "documentType": "Passport",
-          "signatoryId": "string",
-          "signatoryName": "string",
-          "documentTitle": "string",
-          "documentKey": "string",
-          "fileName": "string",
-          "filePath": "string",
-          "url": "string",
-          "fileData": "string",
+          "signatoryId": "",
+          "signatoryName": "",
+          "documentTitle": "",
+          "documentKey": "",
+          "fileName": "",
+          "filePath": "",
+          "url": "",
+          "fileData": "",
           "fileFormat": "application/pdf",
           "fileSize": 0,
-          "fileDescription": "string",
-          "submittedBy": "string",
-          "submittedDt": "string",
-          "updatedBy": "string",
-          "updatedDt": "string",
-          "avsCheckDt": "string",
+          "fileDescription": "",
+          "submittedBy": "",
+          "submittedDt": "",
+          "updatedBy": "",
+          "updatedDt": "",
+          "avsCheckDt": "",
           "avsCheck": false,
           "verified": false,
-          "verifiedBy": "string",
+          "verifiedBy": "",
           "isEncrypted": false,
           "required": true,
-          "encryptionDetails": "string",
+          "encryptionDetails": "",
           "uploadStatus": "NotUploaded"
         }
       ],
@@ -378,28 +378,28 @@
           "documents": [
             {
               "documentType": "Passport",
-              "signatoryId": "string",
-              "signatoryName": "string",
-              "documentTitle": "string",
-              "documentKey": "string",
-              "fileName": "string",
-              "filePath": "string",
-              "url": "string",
-              "fileData": "string",
+              "signatoryId": "",
+              "signatoryName": "",
+              "documentTitle": "",
+              "documentKey": "",
+              "fileName": "",
+              "filePath": "",
+              "url": "",
+              "fileData": "",
               "fileFormat": "application/pdf",
               "fileSize": 0,
-              "fileDescription": "string",
-              "submittedBy": "string",
-              "submittedDt": "string",
-              "updatedBy": "string",
-              "updatedDt": "string",
-              "avsCheckDt": "string",
+              "fileDescription": "",
+              "submittedBy": "",
+              "submittedDt": "",
+              "updatedBy": "",
+              "updatedDt": "",
+              "avsCheckDt": "",
               "avsCheck": false,
               "verified": false,
-              "verifiedBy": "string",
+              "verifiedBy": "",
               "isEncrypted": false,
               "required": true,
-              "encryptionDetails": "string",
+              "encryptionDetails": "",
               "uploadStatus": "NotUploaded"
             }
           ]
@@ -407,21 +407,21 @@
       }
     },
     "prospectStatusInfo": {
-      "statusType": "string",
-      "statusCode": "string",
-      "statusFlag": "string",
-      "statusNotes": "string",
-      "statusReason": "string",
-      "statusOverAll": "string",
-      "reasonNotes": "string",
-      "reasonCode": "string",
-      "reasonStatus": "string"
+      "statusType": "",
+      "statusCode": "",
+      "statusFlag": "",
+      "statusNotes": "",
+      "statusReason": "",
+      "statusOverAll": "",
+      "reasonNotes": "",
+      "reasonCode": "",
+      "reasonStatus": ""
     },
     "freeFieldsInfo": {
-      "freeField1": "string",
-      "freeField2": "string",
-      "freeField3": "string",
-      "freeField4": "string",
-      "freeField5": "string"
+      "freeField1": "",
+      "freeField2": "",
+      "freeField3": "",
+      "freeField4": "",
+      "freeField5": ""
     }
   }
