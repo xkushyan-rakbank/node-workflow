@@ -1,20 +1,19 @@
 {
-    "errorType": "FieldsValidation",
-    "errors": [
-      {
-        "fieldPath": "$.username",
-        "code": "INVALID",
-        "errorType": "InvalidField",
-        "message": "Username is invalid, no special characters allowed",
-        "developerText": ""
-      },
-      {
-        "fieldPath": "$.password",
-        "code": "INVALID",
-        "errorType": "InvalidField",
-        "message": "password is required.",
-        "developerText": ""
-      }
-    ]
-  }
-  
+  "errorType": "FieldsValidation",
+  "errors": [
+    {
+      "fieldPath": "$.userName",
+      "code": "INVALID",
+      "errorType": "InvalidField",
+      "message": "Username is invalid, no special characters allowed",
+      "developerText": ""
+    },
+    {
+      "fieldPath": "$.password",
+      "code": "INVALID",
+      "errorType": "InvalidField",
+      "message": "password is required.",
+      "developerText": ""
+    }
+  ]
+}

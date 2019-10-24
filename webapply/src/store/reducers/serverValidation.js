@@ -36,9 +36,16 @@ const serverErrorsReducer = (state = initialState, action) => {
 };
 
 export function composeInputKeyFromValidationData(validationData) {
+  const USERNAME = "userName";
+  const PASSWORD = "password";
+
   const replaced = validationData.fieldPath.replace("$.", "").replace("$", "");
 
-  return replaced.startsWith("prospect.") ? replaced : `prospect.${replaced}`;
+  return replaced.startsWith("prospect.")
+    ? replaced
+    : replaced.includes(USERNAME) || replaced.includes(PASSWORD)
+    ? `login.${replaced}`
+    : `prospect.${replaced}`;
 }
 
 export default serverErrorsReducer;
