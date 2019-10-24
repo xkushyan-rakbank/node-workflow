@@ -33,7 +33,9 @@ class BasicsForm extends React.Component {
   };
 
   componentDidMount() {
-    this.props.receiveAppConfig();
+    if (!this.props.prospectId) {
+      this.props.receiveAppConfig();
+    }
   }
 
   componentDidUpdate(prevProps) {
