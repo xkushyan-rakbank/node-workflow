@@ -338,66 +338,8 @@
 		"monthlyBalanceNotification": 0
 	},
 	"documents": {
-		"companyDocuments": [
-			{
-				"documentType": "",
-				"signatoryId": "",
-				"signatoryName": "",
-				"documentTitle": "",
-				"documentKey": "",
-				"fileName": "",
-				"filePath": "",
-				"url": "",
-				"fileData": "",
-				"fileFormat": "",
-				"fileSize": 0,
-				"fileDescription": "",
-				"submittedBy": "",
-				"submittedDt": "",
-				"updatedBy": "",
-				"updatedDt": "",
-				"avsCheckDt": "",
-				"avsCheck": false,
-				"verified": false,
-				"verifiedBy": "",
-				"isEncrypted": false,
-				"required": false,
-				"encryptionDetails": "",
-				"uploadStatus": ""
-			}
-		],
-		"stakeholdersDocuments": {
-			"index_stakeholderName": {
-				"documents": [
-					{
-						"documentType": "",
-						"signatoryId": "",
-						"signatoryName": "",
-						"documentTitle": "",
-						"documentKey": "",
-						"fileName": "",
-						"filePath": "",
-						"url": "",
-						"fileData": "",
-						"fileFormat": "",
-						"fileSize": 0,
-						"fileDescription": "",
-						"submittedBy": "",
-						"submittedDt": "",
-						"updatedBy": "",
-						"updatedDt": "",
-						"avsCheckDt": "",
-						"avsCheck": false,
-						"verified": false,
-						"verifiedBy": "",
-						"isEncrypted": false,
-						"required": false,
-						"encryptionDetails": "",
-						"uploadStatus": ""
-					}
-				]
-			}
-		}
+		"companyDocuments": [],
+		"stakeholdersDocuments": null
 	},
 	"prospectStatusInfo": {
 		"statusType": "",
