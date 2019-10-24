@@ -17,6 +17,7 @@ import {
   resetFormStep,
   PROSPECT_AUTO_SAVE
 } from "../actions/sendProspectToAPI";
+import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import apiClient from "../../api/apiClient";
@@ -58,6 +59,7 @@ function* prospectAutoSave() {
 
 function* prospectAutoSaveFlow() {
   while (yield take("START_PROSPECT_AUTO_SAVE")) {
+    yield put(updateSaveType("auto"));
     const bgSyncAutoSave = yield fork(prospectAutoSave);
     const { actionType } = yield take("UPDATE_ACTION_TYPE");
 
