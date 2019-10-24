@@ -1,4 +1,5 @@
 import * as actions from "../actions/serverValidation";
+import routes from "./../../routes";
 
 const initialState = {
   inputs: {}
@@ -36,16 +37,18 @@ const serverErrorsReducer = (state = initialState, action) => {
 };
 
 export function composeInputKeyFromValidationData(validationData) {
-  const USERNAME = "userName";
-  const PASSWORD = "password";
-
+  const pathname = window.location.pathname;
   const replaced = validationData.fieldPath.replace("$.", "").replace("$", "");
 
-  return replaced.startsWith("prospect.")
-    ? replaced
-    : replaced.includes(USERNAME) || replaced.includes(PASSWORD)
-    ? `login.${replaced}`
-    : `prospect.${replaced}`;
+  if (replaced.startsWith("prospect.")) {
+    return replaced;
+  } else if (pathname.includes(routes.login)) {
+    return `login.${replaced}`;
+  } else if (pathname.includes(routes.searchProspect)) {
+    return `searchInfo.${replaced}`;
+  } else {
+    return `prospect.${replaced}`;
+  }
 }
 
 export default serverErrorsReducer;
