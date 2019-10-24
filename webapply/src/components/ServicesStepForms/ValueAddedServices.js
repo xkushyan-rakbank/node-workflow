@@ -5,6 +5,9 @@ import { withStyles } from "@material-ui/core";
 import ExpandedDetailedOptionsCard from "../ExpandedOptionsCards/ExpandedDetailedOptionsCard";
 import { mockData } from "../ExpandedOptionsCards/constants";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
+import { getUrlReadMore } from "../ExpandedOptionsCards/ExpandedOptionsCards";
+import { getSelectedAccountInfo } from "../../store/selectors/selectedAccountInfo";
+import { getUrlsReadMore } from "../../store/selectors/appConfig";
 
 const style = {
   formWrapper: {
@@ -12,6 +15,7 @@ const style = {
   },
   cardsWrapper: {
     border: "none",
+    borderRadius: "0",
     boxShadow: "none",
     margin: 0,
     "&:first-of-type": {
@@ -22,7 +26,7 @@ const style = {
 
 class ValueAddedServices extends React.Component {
   render() {
-    const { classes, accountType } = this.props;
+    const { classes, accountType, readMoreUrls, selectedAccountInfo } = this.props;
     return (
       <div className={classes.formWrapper}>
         {mockData.map(({ optionList, isIncluded, cost, value, href, buttonLabel }) => (
@@ -32,7 +36,7 @@ class ValueAddedServices extends React.Component {
             isIncluded={isIncluded}
             cost={cost}
             value={value}
-            href={href}
+            href={getUrlReadMore(readMoreUrls, selectedAccountInfo, value)}
             accountType={accountType}
             className={classes.cardsWrapper}
             buttonLabel={buttonLabel}
@@ -45,7 +49,9 @@ class ValueAddedServices extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  applicationInfo: appConfigSelectors.getApplicationInfo(state)
+  applicationInfo: appConfigSelectors.getApplicationInfo(state),
+  readMoreUrls: getUrlsReadMore(state),
+  selectedAccountInfo: getSelectedAccountInfo(state)
 });
 
 export default compose(

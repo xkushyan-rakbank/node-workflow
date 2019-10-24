@@ -34,7 +34,7 @@ class AccountDetails extends React.Component {
     const { classes, islamicBanking } = this.props;
     return (
       <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
-        <div className={cx("text", classes.sectionLabel)}>Top customers</div>
+        <div className={cx("text", classes.sectionLabel)}>Select currencies</div>
         <CheckboxGroup id="Acnt.accountCurrencies" indexes={[0]} />
 
         <div className={cx("text", classes.topDivider, classes.sectionLabel)}>Select branch</div>

@@ -3,11 +3,10 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   wrapper: {
-    margin: "24px 0 14px",
-    fontSize: "20px",
+    margin: "24px 0 10px",
+    fontSize: "16px",
     lineHeight: 1.5,
-    color: "#373737",
-    fontWeight: 600
+    color: "#373737"
   },
   divider: {
     width: "5px",
@@ -18,8 +17,7 @@ const styles = {
   }
 };
 
-const Subtitle = props => {
-  const { classes, title } = props;
+const Subtitle = ({ classes, title }) => {
   return <div className={classes.wrapper}>{title}</div>;
 };
 

@@ -1,34 +1,47 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
+import cx from "classnames";
 import Subtitle from "../Subtitle";
 import FormWrapper from "../StakeholderStepForms/FormWrapper";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InfoTitle from "../InfoTitle";
 import PureSelect from "../InputField/PureSelect";
 import TextInput from "../InputField/TextInput";
 import Grid from "@material-ui/core/Grid";
 import AddButton from "../Buttons/AddButton";
+import Divider from "../Divider";
+import RadioButton from "../InputField/RadioButton";
 
 const style = {
   formWrapper: {
     margin: 0
   },
-  radio: {
-    color: "#517085"
-  },
   contactsTitle: {
     display: "flex",
-    justifyContent: "space-between"
+    flexDirection: "column"
   },
   addButton: {
     marginTop: "12px"
   },
-  radioLabel: {
-    "& > span": {
-      fontSize: "14px"
+  textArea: {
+    resize: "none",
+    width: "328px",
+    padding: "16px",
+    height: "80px",
+    borderRadius: "8px",
+    border: "solid 1px rgba(194, 194, 194, 0.56)",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    boxSizing: "border-box",
+    outline: "none",
+    fontFamily: "Open Sans",
+    fontSize: "12px",
+    color: "#000",
+    "&::placeholder": {
+      color: "#666"
     }
+  },
+  gridGroup: {
+    alignItems: "baseline"
   }
 };
 
@@ -52,31 +65,29 @@ class SigningPreferences extends React.Component {
         <Subtitle title="Signing transactions" />
 
         <RadioGroup name="signing_transactions">
-          <div className="box-group-grid">
-            <FormControlLabel
-              value="all"
-              control={<Radio color="secondary" classes={{ root: classes.radio }} />}
-              className={classes.radioLabel}
-              label="All of us must sign"
-            />
-            <FormControlLabel
-              value="any"
-              control={<Radio color="secondary" classes={{ root: classes.radio }} />}
-              className={classes.radioLabel}
-              label="Any of us can sign"
-            />
-            <FormControlLabel
-              value="other"
-              control={<Radio color="secondary" classes={{ root: classes.radio }} />}
-              className={classes.radioLabel}
-              label="Other (please specify)"
+          <div className={cx("box-group-grid", classes.gridGroup)}>
+            <RadioButton value="any" label="Any of us can sign" />
+            <RadioButton value="other" label="Other (please specify)" />
+            <RadioButton value="all" label="All of us must sign" />
+            <textarea
+              className={classes.textArea}
+              placeholder="Please specify (Maxium 120 characters)"
+              maxLength="120"
             />
           </div>
         </RadioGroup>
 
+        <Divider />
+
         <div className={classes.contactsTitle}>
           <Subtitle title="Contacts for re-confirming transactions" />
-          <InfoTitle title="Maximum two people" />
+          <InfoTitle
+            title="You can have up to two contacts"
+            styles={{
+              marginTop: "2px",
+              marginBottom: "6px"
+            }}
+          />
         </div>
 
         {this.state.contactPersons.map((person, index) => (
