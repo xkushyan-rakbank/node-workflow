@@ -13,9 +13,9 @@ function* applicantInfoFormSaga() {
   try {
     const state = yield select();
     const config = cloneDeep(state.appConfig);
-    const token = state.reCaptcha.token;
+    // const token = state.reCaptcha.token;
 
-    config.prospect["recaptchaToken"] = token;
+    // config.prospect["recaptchaToken"] = token;
 
     const {
       data: { prospectId }

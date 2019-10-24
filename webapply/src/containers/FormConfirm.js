@@ -176,8 +176,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  generateOtpCode,
   verifyOtp,
+  generateOtpCode,
   displayScreenBasedOnViewId
 };
 

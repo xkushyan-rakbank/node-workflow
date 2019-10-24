@@ -6,7 +6,7 @@ import StepComponent from "../components/StepComponent";
 import StatusLoader from "../components/StatusLoader";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
-import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
+import { sendProspectToAPI, startProspectAutoSave } from "../store/actions/sendProspectToAPI";
 import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
 import { aboutCompanySteps } from "../constants";
 import routes from "./../routes";
@@ -31,6 +31,10 @@ class AboutCompany extends React.Component {
     step: 1,
     completedStep: 0
   };
+
+  componentDidMount() {
+    this.props.startProspectAutoSave();
+  }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.resetStep && this.props.resetStep) {
@@ -114,7 +118,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI
+  sendProspectToAPI,
+  startProspectAutoSave
 };
 
 export default withStyles(style)(

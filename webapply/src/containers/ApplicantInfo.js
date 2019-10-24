@@ -13,7 +13,7 @@ import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
 import { receiveAppConfig, updateActionType } from "./../store/actions/appConfig";
-import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
+// import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import * as otpSelectors from "../store/selectors/otp";
 import * as inputSelectors from "../store/selectors/input";
@@ -64,7 +64,7 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const { classes, lastInputValue, reCaptchaToken } = this.props;
+    const { classes, lastInputValue } = this.props;
 
     return (
       <>
@@ -96,11 +96,7 @@ class BasicsForm extends React.Component {
             <div className="linkContainer">
               <BackLink path={routes.detailedAccount} />
 
-              <SubmitButton
-                label="Next Step"
-                justify="flex-end"
-                disabled={!lastInputValue || !reCaptchaToken}
-              />
+              <SubmitButton label="Next Step" justify="flex-end" disabled={!lastInputValue} />
             </div>
           </Grid>
         </form>
@@ -112,7 +108,7 @@ class BasicsForm extends React.Component {
 const mapStateToProps = state => ({
   prospectId: appConfigSelectors.getProspectId(state),
   otp: otpSelectors.getOtp(state),
-  reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
+  // reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
   lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
   isProceed: appConfigSelectors.getProceedStatus(state),
   serverError: appConfigSelectors.getServerErrorStatus(state),
