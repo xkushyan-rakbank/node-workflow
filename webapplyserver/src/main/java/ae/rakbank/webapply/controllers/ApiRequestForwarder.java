@@ -115,7 +115,7 @@ public class ApiRequestForwarder {
 
 				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
 			} else {
-				//commented to make test the application on DEV env.
+				// commented to make test the application on DEV env.
 //				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
 //						"recaptchaToken is required");
 //
@@ -612,8 +612,10 @@ public class ApiRequestForwarder {
 
 			UriComponents uriComponents = UriComponentsBuilder.fromUriString(getProspectUri).buildAndExpand(segment,
 					prospectIdValue);
-
-			((ObjectNode) parent.get("_links").get("self")).put("href", uriComponents.toString());
+			
+			if (parent.has("_links") && parent.get("_links").has("self")) {
+				((ObjectNode) parent.get("_links").get("self")).put("href", uriComponents.toString());
+			}
 
 		} else if (StringUtils.contains(endpoint, "documents") && parent.has("documentKey")) {
 			String documentKey = parent.get("documentKey").asText();

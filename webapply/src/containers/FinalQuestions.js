@@ -1,7 +1,6 @@
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard";
 import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryCard";
@@ -38,6 +37,8 @@ class FinalQuestions extends React.Component {
     filledSignatoriesIndexes: [],
     isSubmitDisabled: true
   };
+
+  goToUploadDocument = () => this.props.history.push(routes.uploadDocuments);
 
   addFilledSignatoryIndex = index =>
     this.setState({ filledSignatoriesIndexes: [...this.state.filledSignatoriesIndexes, index] });
@@ -77,14 +78,13 @@ class FinalQuestions extends React.Component {
         </div>
         <div className="linkContainer">
           <BackLink path={routes.stakeholdersInfo} />
-          <Link to={routes.uploadDocuments}>
-            <SubmitButton
-              label="Next Step"
-              justify="flex-end"
-              classes={{ buttonWrap: classes.buttonWrap }}
-              disabled={isSubmitDisabled}
-            />
-          </Link>
+          <SubmitButton
+            handleClick={this.goToUploadDocument}
+            label="Next Step"
+            justify="flex-end"
+            classes={{ buttonWrap: classes.buttonWrap }}
+            disabled={isSubmitDisabled}
+          />
         </div>
       </>
     );
