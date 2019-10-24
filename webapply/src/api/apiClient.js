@@ -130,16 +130,6 @@ export default {
     }
   },
 
-  uploadProspectDocuments: {
-    uploadDocuments: (prospectId, data) => {
-      return httpClient.request({
-        url: buildURI("uploadDocumentUri", prospectId),
-        method: "POST",
-        data
-      });
-    }
-  },
-
   search: {
     searchApplication: data => {
       return httpClient.request({
