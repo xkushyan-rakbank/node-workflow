@@ -42,13 +42,12 @@ function* sendProspectToAPISaga() {
 function* prospectAutoSave() {
   try {
     while (true) {
-      console.log("run");
       const state = yield select();
       const prospect = getProspect(state);
       const prospectId = getProspectId(state);
 
       yield call(apiClient.prospect.update, prospectId, prospect);
-      yield delay(4000);
+      yield delay(40000);
     }
   } finally {
     if (yield cancelled()) {
