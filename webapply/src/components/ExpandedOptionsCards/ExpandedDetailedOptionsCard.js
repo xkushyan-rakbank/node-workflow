@@ -14,7 +14,7 @@ const style = {
     flexDirection: "column",
     minWidth: "270px",
     maxHeight: "572px",
-    padding: "40px 20px 25px 20px",
+    padding: "40px 30px 25px 30px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
@@ -46,6 +46,7 @@ const style = {
   },
   cost: {
     paddingTop: "25px",
+    paddingBottom: "15px",
     fontSize: "14px",
     fontWeight: 600,
     textAlign: "center",
@@ -54,7 +55,7 @@ const style = {
     }
   },
   options: {
-    paddingLeft: "20px",
+    paddingLeft: "25px",
     fontSize: "16px",
     "& li": {
       position: "relative",

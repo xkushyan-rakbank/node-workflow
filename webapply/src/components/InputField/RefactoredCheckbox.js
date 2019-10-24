@@ -7,6 +7,7 @@ import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import Check from "../../assets/icons/on.png";
 import questionMark from "../../assets/icons/question_mark_grey.png";
+import infoIc from "../../assets/icons/info.png";
 
 const styles = {
   checkboxWrapper: {
@@ -37,7 +38,7 @@ const styles = {
     display: "inline-block",
     width: "20px",
     height: "20px",
-    border: "solid 2px #373737",
+    border: "solid 1px #373737",
     borderRadius: "8px",
     transition: "all 150ms",
     position: "relative",
@@ -58,7 +59,7 @@ const styles = {
     fontWeight: "400"
   },
   doubleLabel: {
-    marginLeft: "17px"
+    marginLeft: "10px"
   },
   firstRow: {
     fontSize: "14px",
@@ -67,7 +68,14 @@ const styles = {
   },
   secondRow: {
     fontSize: "12px",
-    color: "#a4a4a4"
+    color: "#a4a4a4",
+    display: "flex",
+    marginTop: "5px",
+    "& img": {
+      width: "16px",
+      height: "16px",
+      marginRight: "5px"
+    }
   },
   questionIcon: {
     marginLeft: "10px"
@@ -91,32 +99,39 @@ class CustomCheckbox extends React.Component {
   }
 
   render() {
-    const { config, classes, value = false, withQuestion } = this.props;
+    const { config, classes, value = false, withQuestion, style } = this.props;
     return (
-      <label className={classes.checkboxWrapper}>
-        <div className={classes.checkboxContainer}>
-          <input
-            {...this.getDataAttr()}
-            type="checkbox"
-            value={value}
-            onChange={this.updateProspect}
-            checked={value}
-            className={classes.hiddenCheckbox}
-          />
-          <div className={classes.styledCheckbox}>
-            {value && <img src={Check} alt="check icon" />}
+      <div style={{ ...style }}>
+        <label className={classes.checkboxWrapper}>
+          <div className={classes.checkboxContainer}>
+            <input
+              {...this.getDataAttr()}
+              type="checkbox"
+              value={value}
+              onChange={this.updateProspect}
+              checked={value}
+              className={classes.hiddenCheckbox}
+            />
+            <div className={classes.styledCheckbox}>
+              {value && <img src={Check} alt="check icon" />}
+            </div>
           </div>
-        </div>
-        {config.title ? (
-          <div className={classes.doubleLabel}>
-            <div className={classes.firstRow}>{config.label}</div>
-            <div className={classes.secondRow}>{config.title}</div>
+          {config.title ? (
+            <div className={classes.doubleLabel}>
+              <div className={classes.firstRow}>{config.label}</div>
+            </div>
+          ) : (
+            <span className={classes.label}>{config.label}</span>
+          )}
+          {withQuestion && <img src={questionMark} alt="" className={classes.questionIcon} />}
+        </label>
+        {config.title && (
+          <div className={classes.secondRow}>
+            <img src={infoIc} alt="info" />
+            {config.title}
           </div>
-        ) : (
-          <span className={classes.label}>{config.label}</span>
         )}
-        {withQuestion && <img src={questionMark} alt="" className={classes.questionIcon} />}
-      </label>
+      </div>
     );
   }
 }

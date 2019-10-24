@@ -20,7 +20,7 @@ const style = {
   }
 };
 
-const getUrlReadMore = (urls, selectedAccountInfo, value) => {
+export const getUrlReadMore = (urls, selectedAccountInfo, value) => {
   const {
     rakValuePlusIslamicReadMoreUrl,
     rakValueMaxIslamicReadMoreUrl,

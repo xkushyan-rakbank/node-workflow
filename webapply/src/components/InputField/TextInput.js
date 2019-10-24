@@ -34,7 +34,7 @@ const styles = {
   },
   selectCombined: {
     flexDirection: "row !important",
-    margin: "12px 0 24px !important",
+    margin: "12px 0 20px !important",
     position: "relative",
     "& > div": {
       margin: "0 !important",
@@ -69,7 +69,7 @@ const styles = {
     }
   },
   selectCombinedWrapper: {
-    marginBottom: "24px"
+    marginBottom: "20px"
   },
   regularWrapper: {
     margin: "12px 0 20px !important",

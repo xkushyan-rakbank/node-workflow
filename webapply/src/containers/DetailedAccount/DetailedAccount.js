@@ -24,7 +24,7 @@ const DetailedAccount = ({ applicationInfo }) => {
       {!accountType && <Redirect to={routes.accountsComparison} />}
       <IslamicBankingSwitcher />
       <VerticalPaginationWrapper videoUrl={videoUrl} posterUrl={posterUrl}>
-        <div></div>
+        <div> </div>
         <AccountBenefits accountType={accountType} />
         <AccountingSoftware accountType={accountType} />
       </VerticalPaginationWrapper>
