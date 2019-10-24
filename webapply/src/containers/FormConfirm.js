@@ -7,7 +7,7 @@ import BackLink from "../components/Buttons/BackLink";
 import OtpVerification from "../components/OtpVerification";
 import { withStyles } from "@material-ui/core/styles";
 import ErrorMessage from "../components/ErrorMessage";
-import { displayScreenBasedOnViewId } from "../store/actions/appConfig";
+import { displayScreenBasedOnViewId, updateSaveType } from "../store/actions/appConfig";
 import { generateOtpCode, verifyOtp } from "../store/actions/otp";
 import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
 import { getOtp } from "../store/selectors/otp";
@@ -69,6 +69,7 @@ class FormConfirm extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
+      this.props.updateSaveType("next");
       this.props.history.push(routes.companyInfo);
     }
 
@@ -177,6 +178,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   verifyOtp,
+  updateSaveType,
   generateOtpCode,
   displayScreenBasedOnViewId
 };

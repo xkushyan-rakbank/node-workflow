@@ -30,6 +30,7 @@ function* sendProspectToAPISaga() {
 
     yield call(apiClient.prospect.update, prospectID, prospect);
     yield put(sendProspectToAPISuccess());
+    yield put(updateSaveType("continue"));
     yield put(resetFormStep({ resetStep: true }));
     yield put(resetInputsErrors());
     yield delay(500);
@@ -48,6 +49,7 @@ function* prospectAutoSave() {
       const prospectId = getProspectId(state);
 
       yield call(apiClient.prospect.update, prospectId, prospect);
+      yield put(updateSaveType("auto"));
       yield delay(40000);
     }
   } finally {
@@ -59,7 +61,6 @@ function* prospectAutoSave() {
 
 function* prospectAutoSaveFlow() {
   while (yield take("START_PROSPECT_AUTO_SAVE")) {
-    yield put(updateSaveType("auto"));
     const bgSyncAutoSave = yield fork(prospectAutoSave);
     const { actionType } = yield take("UPDATE_ACTION_TYPE");
 

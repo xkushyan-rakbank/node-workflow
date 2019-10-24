@@ -2,9 +2,10 @@ import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { APPLICANT_INFO_FORM, applicantInfoFormSuccess } from "../actions/applicantInfoForm";
 import { history } from "./../configureStore";
 import cloneDeep from "lodash/cloneDeep";
-import { updateProspectId } from "../actions/appConfig";
+import { updateProspectId, updateSaveType } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { setVerified } from "../actions/reCaptcha";
+
 import apiClient from "../../api/apiClient";
 
 import routes from "./../../routes";
@@ -25,6 +26,7 @@ function* applicantInfoFormSaga() {
     yield put(setVerified(true));
 
     yield put(updateProspectId(prospectId));
+    yield put(updateSaveType("next"));
 
     yield call(history.push, routes.verifyOtp);
     yield put(resetInputsErrors());
