@@ -57,14 +57,11 @@ function* prospectAutoSave() {
 }
 
 function* prospectAutoSaveFlow() {
-  while (yield take("UPDATE_PROSPECT_ID")) {
+  while (yield take("START_PROSPECT_AUTO_SAVE")) {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
-
-    // wait for the user stop action
     const { actionType } = yield take("UPDATE_ACTION_TYPE");
 
     if (actionType === "submit") {
-      // this will cause the forked bgSyncAutoSave task to jump into its finally block
       yield cancel(bgSyncAutoSave);
     }
   }

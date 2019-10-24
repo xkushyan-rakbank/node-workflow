@@ -3,6 +3,7 @@ export const SEND_PROSPECT_TO_API_SUCCESS = "SEND_PROSPECT_TO_API_SUCCESS";
 export const SEND_PROSPECT_TO_API_FAIL = "SEND_PROSPECT_TO_API_FAIL";
 export const RESET_FORM_STEP = "RESET_FORM_STEP";
 export const PROSPECT_AUTO_SAVE = "PROSPECT_AUTO_SAVE";
+export const START_PROSPECT_AUTO_SAVE = "PROSPECT_AUTO_SAVE";
 
 export const sendProspectToAPI = () => {
   return { type: SEND_PROSPECT_TO_API };
@@ -22,4 +23,8 @@ export const resetFormStep = ({ resetStep }) => {
 
 export const prospectAutoSave = () => {
   return { type: PROSPECT_AUTO_SAVE };
+};
+
+export const startProspectAutoSave = () => {
+  return { type: START_PROSPECT_AUTO_SAVE };
 };
