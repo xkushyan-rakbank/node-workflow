@@ -81,7 +81,7 @@ class BasicsForm extends React.Component {
           <TextInput
             id="Aplnt.mobileNo"
             selectId="Aplnt.countryCode"
-            select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="UAE" />}
+            select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="971" />}
           />
 
           <Grid container direction="row" justify="space-between" alignItems="center">

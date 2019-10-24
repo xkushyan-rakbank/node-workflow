@@ -274,7 +274,7 @@ class PureSelect extends React.Component {
             options
               .filter(item => !excludeValues.includes(item.value))
               .map(option => (
-                <MenuItem key={option.key} value={option.value}>
+                <MenuItem key={option.key} value={option.key}>
                   {multiple ? (
                     <>
                       <ListItemText primary={option.displayText} />
