@@ -41,7 +41,11 @@ const style = {
     }
   },
   gridGroup: {
-    alignItems: "baseline"
+    alignItems: "baseline",
+    width: "100%"
+  },
+  radioGroup: {
+    flexDirection: "initial"
   }
 };
 
@@ -64,7 +68,7 @@ class SigningPreferences extends React.Component {
       <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
         <Subtitle title="Signing transactions" />
 
-        <RadioGroup name="signing_transactions">
+        <RadioGroup name="signing_transactions" classes={{ root: classes.radioGroup }}>
           <div className={cx("box-group-grid", classes.gridGroup)}>
             <RadioButton value="any" label="Any of us can sign" />
             <RadioButton value="other" label="Other (please specify)" />
