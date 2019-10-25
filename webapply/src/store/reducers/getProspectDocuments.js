@@ -19,6 +19,28 @@ const retrieveUploader = (state = initialState, action) => {
         ...state,
         docs: action.payload
       };
+    // case UPLOAD_SUCCESS:
+    //   console.log(state.docs.companyDocuments)
+    //   return {
+    //     ...state,
+    //       // ...state.docs.companyDocuments,
+    //       // [action.payload.document]: {
+    //       //   ...state.docs.companyDocuments[action.payload.document],
+    //       //   uploadStatus: state.docs.companyDocuments
+    //[action.payload.document].uploadStatus + "Updated"
+    //       // }
+    //       docs: {
+    //         ...state.docs,
+    //         companyDocuments: {
+    //           ...state.docs.companyDocuments,
+    //           [action.payload.document]: {
+    //             ...state.docs.companyDocuments[action.payload.document],
+    //             uploadStatus: state.docs.companyDocuments
+    //[action.payload.document].uploadStatus + "Updated"
+    //           }
+    //         }
+    //       }
+    //   }
     default:
       return state;
   }

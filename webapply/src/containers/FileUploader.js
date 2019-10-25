@@ -42,26 +42,29 @@ class FileUploader extends React.Component {
   render() {
     const DocDetails = this.props;
     const { classes } = this.props;
-    let companyOdcLength;
-    let StakeholdersDocLength;
-    let UploadDocCount;
-    if (this.props.uploadedDoc.companyDocuments) {
-      let companyDocument = this.props.uploadedDoc.companyDocuments;
-      companyOdcLength = Object.keys(companyDocument).length;
-      UploadDocCount = +companyOdcLength;
-    }
-    if (this.props.uploadedDoc.stakeholdersDocuments) {
-      let StakeholdersDoc = this.props.uploadedDoc.stakeholdersDocuments;
-      StakeholdersDocLength = Object.keys(StakeholdersDoc)
-        .map(campusName => {
-          const campus = StakeholdersDoc[campusName];
-          return Object.keys(campus).length;
-        })
-        .reduce((p, c) => p + c, 0);
-      UploadDocCount = UploadDocCount + StakeholdersDocLength;
-    }
+    // if (DocDetails.documents) {
+    //   DocDetail = DocDetails.documents;
+    // }
+    // let companyOdcLength;
+    // let StakeholdersDocLength;
+    // let UploadDocCount;
+    // if (this.props.uploadedDoc.companyDocuments) {
+    //   let companyDocument = this.props.uploadedDoc.companyDocuments;
+    //   companyOdcLength = Object.keys(companyDocument).length;
+    //   UploadDocCount = +companyOdcLength;
+    // }
+    // if (this.props.uploadedDoc.stakeholdersDocuments) {
+    //   let StakeholdersDoc = this.props.uploadedDoc.stakeholdersDocuments;
+    //   StakeholdersDocLength = Object.keys(StakeholdersDoc)
+    //     .map(campusName => {
+    //       const campus = StakeholdersDoc[campusName];
+    //       return Object.keys(campus).length;
+    //     })
+    //     .reduce((p, c) => p + c, 0);
+    //   UploadDocCount = UploadDocCount + StakeholdersDocLength;
+    // }
 
-    console.log(UploadDocCount);
+    // console.log(UploadDocCount);
 
     return (
       <>
@@ -69,14 +72,21 @@ class FileUploader extends React.Component {
         <p className="formDescription">
           Remember we asked you to have the papers ready? Now it’s time to upload them.
         </p>
-        <div className={classes.sectionContainer}>
-          <SectionTitle title="Company documents" className={classes.title} />
-          <CompanyDocuments DocDetails={DocDetails} />
-        </div>
-        <div className={classes.sectionContainer}>
-          <SectionTitle title="Stakeholders documents" />
-          <SignatoriesDocuments DocDetails={DocDetails} />
-        </div>
+        {this.props.documents ? (
+          <>
+            <div className={classes.sectionContainer}>
+              <SectionTitle title="Company documents" className={classes.title} />
+              <CompanyDocuments DocDetails={DocDetails} />
+            </div>
+            {this.props.documents.stakeholdersDocuments ? (
+              <div className={classes.sectionContainer}>
+                <SectionTitle title="Stakeholders documents" />
+                <SignatoriesDocuments DocDetails={DocDetails} />
+              </div>
+            ) : null}
+          </>
+        ) : null}
+
         <div className="linkContainer">
           <BackLink path={routes.finalQuestions} />
           {this.state.isDisabled ? (
@@ -98,7 +108,7 @@ class FileUploader extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    uploadedDoc: state.uploadedDocs.docs,
+    documents: appConfigSelectors.getProspectDocuments(state),
     getSignatories: appConfigSelectors.getSignatories(state),
     endpoints: appConfigSelectors.getEndpoints(state)
   };

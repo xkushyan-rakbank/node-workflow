@@ -6,6 +6,8 @@ import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocume
 import SectionTitle from "../components/SectionTitle";
 import { retrieveDocDetails } from "../store/actions/getProspectDocuments";
 import * as appConfigSelectors from "../store/selectors/appConfig";
+import arrowBack from "../assets/icons/backArrow.png";
+import { Link } from "react-router-dom";
 
 const style = {
   sectionContainer: {
@@ -84,15 +86,19 @@ class EditApplication extends Component {
           <SectionTitle title="Company documents" className={this.props.classes.title} />
           <CompanyDocuments DocDetails={DocDetails} />
         </div>
-        <div className={this.props.classes.sectionContainer}>
-          <SectionTitle title="Signatories documents" />
-          <SignatoriesDocuments DocDetails={DocDetails} />
-        </div>
+        {this.props.uploadedDoc.stakeholdersDocuments ? (
+          <div className={this.props.classes.sectionContainer}>
+            <SectionTitle title="Signatories documents" />
+            <SignatoriesDocuments DocDetails={DocDetails} />
+          </div>
+        ) : null}
         <div className="linkContainer">
-          <button className={this.props.classes.BtnBack} justify="flex-end">
-            {/* <img className={this.props.classes.backIcon} src={arrowBack} alt="back" /> */}
-            Back to Applications
-          </button>
+          <Link to="">
+            <button className={this.props.classes.BtnBack} justify="flex-end">
+              <img className={this.props.classes.backIcon} src={arrowBack} alt="back" />
+              Back to Applications
+            </button>
+          </Link>
           <button className={this.props.classes.BtnSubmit} justify="flex-end">
             Submit documents
           </button>
