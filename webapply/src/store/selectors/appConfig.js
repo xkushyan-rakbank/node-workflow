@@ -48,3 +48,5 @@ export const getUrlsReadMore = state => ({
   rakValuePlusIslamicReadMoreUrl: state.appConfig.rakValuePlusIslamicReadMoreUrl,
   rakValueMaxIslamicReadMoreUrl: state.appConfig.rakValueMaxIslamicReadMoreUrl
 });
+
+export const getProspectDocuments = state => state.appConfig.prospect.documents;

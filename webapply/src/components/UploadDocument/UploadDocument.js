@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { connect } from "react-redux";
-import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
+import { retrieveDocDetails, docUploadSuccess } from "../../store/actions/getProspectDocuments";
 import companyIconSvg from "../../assets/icons/file.png";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 
@@ -138,6 +138,7 @@ class UploadDocuments extends Component {
   }
 
   fileUploadHandler(event) {
+    this.props.docUploadSuccess(this.props);
     call = "";
     call = call + this.props.documents.documentType + this.props.documents.signatoryId;
     call = call.replace(/\s/g, "");
@@ -240,7 +241,6 @@ class UploadDocuments extends Component {
     let endPoint = "/webapply/api/v1/prospects/" + this.props.prospectID + "/documents";
     uploadDocUri = this.props.uploadDocsEndpoints;
     uploadDocUri = uploadDocUri.baseUrl + endPoint;
-    console.log(uploadDocUri);
     const docType = this.props.documents;
     if (docType.uploadStatus === "" || docType.uploadStatus === "Not Uploaded") {
       return (
@@ -335,7 +335,8 @@ class UploadDocuments extends Component {
 }
 
 const mapDispatchToProps = {
-  retrieveDocDetails
+  retrieveDocDetails,
+  docUploadSuccess
 };
 
 const mapStateToProps = state => ({

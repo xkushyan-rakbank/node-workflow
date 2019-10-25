@@ -60,10 +60,12 @@ const style = {
 class SignatoriesDocuments extends Component {
   render() {
     let docUploadDetails = this.props.DocDetails.uploadedDoc;
+    console.log(this.props.DocDetails);
     const signatoryDocument = this.props.DocDetails.getSignatories;
+    // console.log(signatoryDocument)
     const userList = signatoryDocument.map((signatoryDocuments, index) => {
-      if (this.props.DocDetails.uploadedDoc.stakeholdersDocuments) {
-        docUploadDetails = this.props.DocDetails.uploadedDoc.stakeholdersDocuments[
+      if (this.props.DocDetails.documents.stakeholdersDocuments) {
+        docUploadDetails = this.props.DocDetails.documents.stakeholdersDocuments[
           index + "_" + signatoryDocuments.firstName
         ];
       }
