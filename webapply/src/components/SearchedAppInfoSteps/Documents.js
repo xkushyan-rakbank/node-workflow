@@ -187,8 +187,8 @@ const Documents = props => {
                   <div className={classes.checkListData + " " + classes.heading}>Actions</div>
                 </div>
               </div>
-              {docs.stakeholdersDocuments[index + "_" + (user.fullName && user.fullName)].map(
-                (doc, index) => (
+              {docs.stakeholdersDocuments[index + "_" + user.fullName] &&
+                docs.stakeholdersDocuments[index + "_" + user.fullName].map((doc, index) => (
                   <div className={classes.applicationRow} key={index}>
                     <div>
                       <div className={classes.checkListData}>
@@ -214,8 +214,7 @@ const Documents = props => {
                       </div>
                     )}
                   </div>
-                )
-              )}
+                ))}
             </div>
           </div>
         ))
@@ -228,7 +227,7 @@ const Documents = props => {
 
 const mapStateToProps = state => {
   return {
-    docs: state.uploadedDocs.docs,
+    docs: appConfigSelector.getProspectDocuments(state),
     getEndpointsUrl: appConfigSelector.getEndpoints(state)
   };
 };
