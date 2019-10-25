@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "../../components/Avatar";
+import * as appConfigSelector from "./../../store/selectors/appConfig";
 
 const styles = {
   documents: {
@@ -65,6 +67,11 @@ const styles = {
     flexDirection: "column",
     flex: 1,
     margin: "0 16px"
+  },
+  errorMsg: {
+    fontWeight: 600,
+    fontSize: "20px",
+    marginBottom: "24px"
   }
 };
 
@@ -100,123 +107,136 @@ export const mockSignatoriesDocData = [
 ];
 
 const Documents = props => {
-  const { classes } = props;
+  const { classes, docs, prospectInfo, getEndpointsUrl } = props;
+
+  const signatoryInfo = prospectInfo.signatoryInfo;
+
+  const documentBaseUrl =
+    getEndpointsUrl &&
+    (getEndpointsUrl.baseUrl && getEndpointsUrl.baseUrl) +
+      (getEndpointsUrl.getDocumentByIdUri && getEndpointsUrl.getDocumentByIdUri);
+
+  const dummyProspectId = "MGHN43MD75";
+  const dummyDocumentKey = "MGHN43MD75_TL";
 
   return (
     <>
       <h4 className={classes.title}>Company Documents</h4>
-      <div className={classes.wrapper}>
-        <div className={classes.applicationRow}>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
+      {docs && docs.companyDocuments && docs.companyDocuments.length > 0 ? (
+        <div className={classes.wrapper}>
+          <div className={classes.applicationRow}>
+            <div>
+              <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
+            </div>
+            <div>
+              <div className={classes.checkListData + " " + classes.heading}>Upload Status</div>
+            </div>
+            <div>
+              <div className={classes.checkListData + " " + classes.heading}>Actions</div>
+            </div>
           </div>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Upload Status</div>
-          </div>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Actions</div>
-          </div>
+          {docs.companyDocuments.map((application, index) => (
+            <div className={classes.applicationRow} key={index}>
+              <div>
+                <div className={classes.checkListData}>{application.documentType}</div>
+              </div>
+              <div>
+                <div className={classes.checkListData}>{application.uploadStatus}</div>
+              </div>
+              <div>
+                <a
+                  index={index}
+                  href={documentBaseUrl
+                    .replace("{prospectId}", dummyProspectId)
+                    .replace("{documentKey}", dummyDocumentKey)}
+                  className={classes.link}
+                >
+                  Print / Download
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
-        {mockCompanyDocData.map((application, index) => (
-          <div className={classes.applicationRow} key={index}>
-            <div>
-              <div className={classes.checkListData}>{application.documentTitle}</div>
-            </div>
-            <div>
-              <div className={classes.checkListData}>{application.uploadStatus}</div>
-            </div>
-            <div>
-              <a
-                index={index}
-                href="http://localhost:9091/webapply/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL"
-                className={classes.link}
-              >
-                Print / Download
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
+      ) : (
+        <div className={classes.errorMsg}>Company documents are not found</div>
+      )}
       <br />
       <h4 className={classes.title}>Stakeholder Documents</h4>
-      <div className={classes.contentWrapper}>
-        <Avatar firstName="Anjali" lastName="Tandon" />
-        <div className={classes.userInfo}>
-          <div className={classes.nameField}>Abhi</div>
-        </div>
-      </div>
-      <div className={classes.wrapper}>
-        <div className={classes.applicationRow}>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
-          </div>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Upload Status</div>
-          </div>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Actions</div>
-          </div>
-        </div>
-        {mockSignatoriesDocData.map((application, index) => (
-          <div className={classes.applicationRow} key={index}>
-            <div>
-              <div className={classes.checkListData}>{application.documentTitle}</div>
+      {docs && docs.stakeholdersDocuments && Object.keys(docs.stakeholdersDocuments).length != 0 ? (
+        signatoryInfo &&
+        signatoryInfo.length > 0 &&
+        signatoryInfo.map((user, index) => (
+          <div key={index}>
+            <div className={classes.contentWrapper}>
+              <Avatar firstName={user.fullName && user.fullName} />
+              <div className={classes.userInfo}>
+                <div className={classes.nameField}>{user.fullName && user.fullName}</div>
+              </div>
             </div>
-            <div>
-              <div className={classes.checkListData}>{application.uploadStatus}</div>
-            </div>
-            <div>
-              <a
-                index={index}
-                href="http://localhost:9091/webapply/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL"
-                className={classes.link}
-              >
-                Print / Download
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className={classes.contentWrapper}>
-        <Avatar firstName="Aanchal" lastName="Tandon" />
-        <div className={classes.userInfo}>
-          <div className={classes.nameField}>Bhakta</div>
-        </div>
-      </div>
-      <div className={classes.wrapper}>
-        <div className={classes.applicationRow}>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Document Title</div>
-          </div>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Upload Status</div>
-          </div>
-          <div>
-            <div className={classes.checkListData + " " + classes.heading}>Actions</div>
-          </div>
-        </div>
-        {mockSignatoriesDocData.map((application, index) => (
-          <div className={classes.applicationRow} key={index}>
-            <div>
-              <div className={classes.checkListData}>{application.documentTitle}</div>
-            </div>
-            <div>
-              <div className={classes.checkListData}>{application.uploadStatus}</div>
-            </div>
-            <div>
-              <a
-                index={index}
-                href="http://localhost:9091/webapply/api/v1/banks/RAK/prospects/MGHN43MD75/documents/MGHN43MD75_TL"
-                className={classes.link}
-              >
-                Print / Download
-              </a>
+            <div className={classes.wrapper}>
+              <div className={classes.applicationRow}>
+                <div>
+                  <div className={classes.checkListData + " " + classes.heading}>
+                    Document Title
+                  </div>
+                </div>
+                <div>
+                  <div className={classes.checkListData + " " + classes.heading}>Upload Status</div>
+                </div>
+                <div>
+                  <div className={classes.checkListData + " " + classes.heading}>Actions</div>
+                </div>
+              </div>
+              {docs.stakeholdersDocuments[index + "_" + user.fullName] &&
+                docs.stakeholdersDocuments[index + "_" + user.fullName].map((doc, index) => (
+                  <div className={classes.applicationRow} key={index}>
+                    <div>
+                      <div className={classes.checkListData}>
+                        {doc.documentType && doc.documentType}
+                      </div>
+                    </div>
+                    <div>
+                      <div className={classes.checkListData}>
+                        {doc.uploadStatus && doc.uploadStatus}
+                      </div>
+                    </div>
+                    {doc.uploadStatus !== "NotUploaded" && (
+                      <div>
+                        <a
+                          index={index}
+                          href={documentBaseUrl
+                            .replace("{prospectId}", dummyProspectId)
+                            .replace("{documentKey}", dummyDocumentKey)}
+                          className={classes.link}
+                        >
+                          Print / Download
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                ))}
             </div>
           </div>
-        ))}
-      </div>
+        ))
+      ) : (
+        <div className={classes.errorMsg}>Stakeholder documents are not found</div>
+      )}
     </>
   );
 };
 
-export default withStyles(styles)(Documents);
+const mapStateToProps = state => {
+  return {
+    docs: appConfigSelector.getProspectDocuments(state),
+    getEndpointsUrl: appConfigSelector.getEndpoints(state)
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Documents)
+);

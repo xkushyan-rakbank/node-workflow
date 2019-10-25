@@ -176,7 +176,7 @@
                 "isEncrypted": false,
                 "required": true,
                 "encryptionDetails": "",
-                "uploadStatus": ""
+                "uploadStatus": "NotUploaded"
             }
         ]
     }

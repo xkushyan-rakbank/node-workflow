@@ -1,0 +1,20 @@
+{
+	"request": {
+		"method": "GET",
+		"url": "/api/v1/banks/RAK/usertypes/sme/prospects/COSME0000000000000001",
+		"bodyPatterns": [			
+		]		
+	},
+	"response": {
+		"status": 200,
+        "headers": {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods" : "*",
+            "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding, X-Requested-With, X-Authorization",
+            "X-Content-Type-Options" : "nosniff",
+            "x-frame-options" : "DENY",
+            "x-xss-protection" : "1; mode=block"
+        },		
+		"bodyFileName": "COSME002GetSMEProspectSuccessResponse.json"
+	}
+}
