@@ -1,6 +1,7 @@
 import { initialState } from "./../../reducers/searchProspect";
 import searchProspectReducer from "./../../reducers/searchProspect";
 import * as searchProspectActions from "./../../actions/searchProspect";
+import * as loginFormActions from "./../../actions/loginForm";
 
 describe("searchProspectReducer", () => {
   afterEach(jest.resetAllMocks);
@@ -86,6 +87,22 @@ describe("searchProspectReducer", () => {
       it("should update store value", () => {
         const { searchResults } = state;
         expect(searchResults).toEqual(searchApplicationsSuccessParamObj);
+      });
+    });
+
+    describe("on 'LOGOUT'", () => {
+      const logoutParamObj = {
+        searchResult: []
+      };
+      let state;
+
+      beforeAll(() => {
+        state = searchProspectReducer(initialState, loginFormActions.logout(logoutParamObj));
+      });
+
+      it("should update store value", () => {
+        const { searchResults } = state;
+        expect(searchResults).toEqual(logoutParamObj.searchResult);
       });
     });
   });

@@ -11,6 +11,12 @@ describe("login-form", () => {
     it("should have a proper name for 'LOGIN_INFO_FORM_FAIL'", () => {
       expect(loginFormActions.LOGIN_INFO_FORM_FAIL).toBe("LOGIN_INFO_FORM_FAIL");
     });
+    it("should have a proper name for 'LOGOUT'", () => {
+      expect(loginFormActions.LOGOUT).toBe("LOGOUT");
+    });
+    it("should have a proper name for 'FORMAT_LOGIN'", () => {
+      expect(loginFormActions.FORMAT_LOGIN).toBe("FORMAT_LOGIN");
+    });
   });
 
   describe("actions", () => {
@@ -45,6 +51,20 @@ describe("login-form", () => {
         const { payload } = loginFormActions.loginInfoFormSuccess(loginInfoFormSuccessParamObj);
 
         expect(payload).toBe(loginInfoFormSuccessParamObj);
+      });
+    });
+
+    describe("logout", () => {
+      it("should return an action with type of 'LOGOUT'", () => {
+        const { type } = loginFormActions.logout();
+        expect(type).toBe(loginFormActions.LOGOUT);
+      });
+    });
+
+    describe("formatLogin", () => {
+      it("should return an action with type of 'FORMAT_LOGIN'", () => {
+        const { type } = loginFormActions.formatLogin();
+        expect(type).toBe(loginFormActions.FORMAT_LOGIN);
       });
     });
   });

@@ -16,7 +16,7 @@ const loginFormReducer = (state = initialState, action) => {
     case actions.LOGIN_INFO_FORM_FAIL:
       return {
         ...state,
-        loginResponse: action.payload,
+        loginResponse: action.error,
         loginStatus: false
       };
     case actions.LOGOUT:

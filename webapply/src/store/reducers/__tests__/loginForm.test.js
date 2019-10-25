@@ -39,5 +39,55 @@ describe("loginFormReducer", () => {
         expect(loginResponse).toEqual(loginInfoFormSuccessParamObj);
       });
     });
+
+    describe("on 'LOGIN_INFO_FORM_FAIL'", () => {
+      const loginInfoFormFailParamObj = {
+        errorType: "FieldsValidation",
+        errors: [
+          {
+            fieldPath: "$.userName",
+            code: "INVALID",
+            errorType: "InvalidField",
+            message: "Username is invalid, no special characters allowed",
+            developerText: ""
+          },
+          {
+            fieldPath: "$.password",
+            code: "INVALID",
+            errorType: "InvalidField",
+            message: "password is required.",
+            developerText: ""
+          }
+        ]
+      };
+      let state;
+
+      beforeAll(() => {
+        state = loginFormReducer(
+          initialState,
+          loginFormActions.loginInfoFormFail(loginInfoFormFailParamObj)
+        );
+      });
+
+      it("should update store value", () => {
+        const { loginResponse, loginStatus } = state;
+        expect(loginResponse).toEqual(loginInfoFormFailParamObj);
+
+        expect(loginStatus).toEqual(false);
+      });
+    });
+
+    describe("on 'LOGOUT'", () => {
+      let state;
+
+      beforeAll(() => {
+        state = loginFormReducer(initialState, loginFormActions.logout());
+      });
+
+      it("should update store value", () => {
+        const { loginStatus } = state;
+        expect(loginStatus).toEqual(false);
+      });
+    });
   });
 });
