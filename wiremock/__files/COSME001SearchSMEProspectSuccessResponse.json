@@ -1,10 +1,10 @@
 {
   "searchResult": [
     {
-      "prospectId": "100",
+      "prospectId": "COSME0000000000000001",
       "_links": {
         "self": {
-          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/100"
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/COSME0000000000000001"
         }
       },
       "status": {
@@ -183,10 +183,10 @@
       }
     },
     {
-      "prospectId": "101",
+      "prospectId": "COSME0000000000000001",
       "_links": {
         "self": {
-          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/101"
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/COSME0000000000000001"
         }
       },
       "status": {
@@ -365,10 +365,10 @@
       }
     },
     {
-      "prospectId": "102",
+      "prospectId": "COSME0000000000000001",
       "_links": {
         "self": {
-          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/102"
+          "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/COSME0000000000000001"
         }
       },
       "status": {

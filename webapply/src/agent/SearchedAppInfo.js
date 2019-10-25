@@ -12,7 +12,7 @@ import { history } from "./../store/configureStore";
 import BackLink from "../components/Buttons/BackLink";
 import { retrieveDocDetails } from "./../store/actions/getProspectDocuments";
 import { getProspectInfo } from "./../store/actions/retrieveApplicantInfo";
-import { receiveAppConfig } from "./../store/actions/appConfig";
+import { receiveAppConfig, updateProspectId } from "./../store/actions/appConfig";
 
 const styles = {
   sectionTitleIndent: {
@@ -47,6 +47,7 @@ class SearchedAppInfo extends React.Component {
   }
 
   componentDidMount() {
+    this.props.updateProspectId(this.props.match.params.id);
     this.props.retrieveDocDetails();
   }
 
@@ -119,7 +120,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   retrieveDocDetails,
   getProspectInfo,
-  receiveAppConfig
+  receiveAppConfig,
+  updateProspectId
 };
 
 export default withStyles(styles)(
