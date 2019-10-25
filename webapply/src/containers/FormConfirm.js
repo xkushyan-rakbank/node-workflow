@@ -65,6 +65,7 @@ class FormConfirm extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.resetRegenerateCodeAllowTimeoutId);
+    this.setState({ loginAttempt: 0 });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
