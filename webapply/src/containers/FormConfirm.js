@@ -81,7 +81,10 @@ class FormConfirm extends React.Component {
     }
   }
 
-  handleClick = () => this.props.history.push(routes.companyInfo);
+  handleClick = () => {
+    this.props.updateSaveType("next");
+    this.props.history.push(routes.companyInfo);
+  };
 
   getFullCode() {
     return this.state.code.join("");
