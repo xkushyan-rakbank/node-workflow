@@ -53,7 +53,7 @@ class Login extends React.Component {
   };
 
   render() {
-    const { classes, userName, password } = this.props;
+    const { classes, reCaptchaToken, userName, password } = this.props;
     return (
       <div className={classes.baseForm}>
         <h2>Login</h2>
@@ -75,7 +75,7 @@ class Login extends React.Component {
               <SubmitButton
                 label="Next Step"
                 justify="flex-end"
-                disabled={!password || !userName}
+                disabled={!password || !userName || !reCaptchaToken}
               />
             </div>
           </Grid>
@@ -87,7 +87,6 @@ class Login extends React.Component {
 
 const mapStateToProps = state => ({
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
-  // isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state),
   userName: inputSelectors.getInputValueById(state, "login.userName"),
   password: inputSelectors.getInputValueById(state, "login.password"),
   inputParam: appConfigSelector.getLoginParam(state)
