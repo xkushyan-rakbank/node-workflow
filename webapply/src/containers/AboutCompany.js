@@ -40,7 +40,6 @@ class AboutCompany extends React.Component {
     if (!prevProps.resetStep && this.props.resetStep) {
       this.setState(state => {
         const nextStep = state.step + 1;
-
         return {
           step: nextStep,
           completedStep: state.step
@@ -52,7 +51,7 @@ class AboutCompany extends React.Component {
   handleClick = () => this.props.history.push(routes.stakeholdersInfo);
 
   setStep = item => {
-    if (this.state.completedStep > item.step) {
+    if (this.state.completedStep >= item.step) {
       this.setState({ step: item.step });
     }
   };

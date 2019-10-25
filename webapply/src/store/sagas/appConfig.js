@@ -81,7 +81,6 @@ function* updateActionTypeSaga({ actionType }) {
 }
 
 function* updateViewIdSaga({ viewId }) {
-  console.log("update view id", viewId.replace("/sme", "").replace("/agent", ""));
   yield put(
     updateProspect({
       "prospect.applicationInfo.viewId": viewId.replace("/sme", "").replace("/agent", "")
