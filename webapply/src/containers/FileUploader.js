@@ -28,13 +28,6 @@ const style = {
   }
 };
 class FileUploader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isDisabled: true
-    };
-  }
-
   componentDidMount() {
     this.props.retrieveDocDetails();
   }
@@ -42,29 +35,40 @@ class FileUploader extends React.Component {
   render() {
     const DocDetails = this.props;
     const { classes } = this.props;
-    // if (DocDetails.documents) {
-    //   DocDetail = DocDetails.documents;
-    // }
-    // let companyOdcLength;
-    // let StakeholdersDocLength;
-    // let UploadDocCount;
-    // if (this.props.uploadedDoc.companyDocuments) {
-    //   let companyDocument = this.props.uploadedDoc.companyDocuments;
-    //   companyOdcLength = Object.keys(companyDocument).length;
-    //   UploadDocCount = +companyOdcLength;
-    // }
-    // if (this.props.uploadedDoc.stakeholdersDocuments) {
-    //   let StakeholdersDoc = this.props.uploadedDoc.stakeholdersDocuments;
-    //   StakeholdersDocLength = Object.keys(StakeholdersDoc)
-    //     .map(campusName => {
-    //       const campus = StakeholdersDoc[campusName];
-    //       return Object.keys(campus).length;
-    //     })
-    //     .reduce((p, c) => p + c, 0);
-    //   UploadDocCount = UploadDocCount + StakeholdersDocLength;
-    // }
 
-    // console.log(UploadDocCount);
+    let companyOdcLength, StakeholdersDocLength, UploadDocCount, campus;
+    let uploadedDocsCount = 0;
+    if (this.props.documents) {
+      let companyDocument = this.props.documents.companyDocuments;
+      if (companyDocument) {
+        companyOdcLength = Object.keys(companyDocument).length;
+        UploadDocCount = +companyOdcLength;
+        // to check which documents uploaded
+        companyDocument.map((documents, index) => {
+          if (documents.uploadStatus === "Updated") {
+            return (uploadedDocsCount = uploadedDocsCount + 1);
+          }
+        });
+      }
+      let StakeholdersDoc = this.props.documents.stakeholdersDocuments;
+      if (StakeholdersDoc) {
+        StakeholdersDocLength = Object.keys(StakeholdersDoc)
+          .map(campusName => {
+            campus = StakeholdersDoc[campusName];
+            // to check which documents uploaded
+            campus.map((docUploaded, index) => {
+              if (docUploaded.uploadStatus === "Updated") {
+                return (uploadedDocsCount = uploadedDocsCount + 1);
+              }
+            });
+            return Object.keys(campus).length;
+          })
+          .reduce((p, c) => p + c, 0);
+        UploadDocCount = UploadDocCount + StakeholdersDocLength;
+      }
+    }
+
+    console.log(uploadedDocsCount);
 
     return (
       <>
@@ -89,7 +93,7 @@ class FileUploader extends React.Component {
 
         <div className="linkContainer">
           <BackLink path={routes.finalQuestions} />
-          {this.state.isDisabled ? (
+          {UploadDocCount === uploadedDocsCount ? (
             <SubmitButton label="Next Step" justify="flex-end" disabled={true} />
           ) : (
             <Link to={routes.selectServices}>

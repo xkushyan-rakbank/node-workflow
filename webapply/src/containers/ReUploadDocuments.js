@@ -76,6 +76,40 @@ class EditApplication extends Component {
 
   render() {
     const DocDetails = this.props;
+    let companyOdcLength, StakeholdersDocLength, UploadDocCount, campus;
+    let uploadedDocsCount = 0;
+    if (this.props.documents) {
+      let companyDocument = this.props.documents.companyDocuments;
+      if (companyDocument) {
+        companyOdcLength = Object.keys(companyDocument).length;
+        UploadDocCount = +companyOdcLength;
+        // to check which documents uploaded
+        companyDocument.map((documents, index) => {
+          if (documents.uploadStatus === "Updated") {
+            return (uploadedDocsCount = uploadedDocsCount + 1);
+          }
+        });
+      }
+      let StakeholdersDoc = this.props.documents.stakeholdersDocuments;
+      if (StakeholdersDoc) {
+        StakeholdersDocLength = Object.keys(StakeholdersDoc)
+          .map(campusName => {
+            campus = StakeholdersDoc[campusName];
+            // to check which documents uploaded
+            campus.map((docUploaded, index) => {
+              if (docUploaded.uploadStatus === "Updated") {
+                return (uploadedDocsCount = uploadedDocsCount + 1);
+              }
+            });
+            return Object.keys(campus).length;
+          })
+          .reduce((p, c) => p + c, 0);
+        UploadDocCount = UploadDocCount + StakeholdersDocLength;
+      }
+    }
+
+    console.log(uploadedDocsCount);
+
     return (
       <>
         <h3 className={this.props.classes.heading}>Almost done! We need a few extra documents</h3>
@@ -103,9 +137,17 @@ class EditApplication extends Component {
               Back to Applications
             </button>
           </Link>
-          <button className={this.props.classes.BtnSubmit} justify="flex-end">
-            Submit documents
-          </button>
+          {UploadDocCount === uploadedDocsCount ? (
+            <>
+              <button className={this.props.classes.BtnSubmit} justify="flex-end">
+                Submit documents
+              </button>
+            </>
+          ) : (
+            <button className={this.props.classes.BtnSubmit} justify="flex-end" disabled={true}>
+              Submit documents
+            </button>
+          )}
         </div>
       </>
     );

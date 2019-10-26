@@ -194,7 +194,6 @@ class UploadDocuments extends Component {
             cancelToken: this.call.token
           })
             .then(response => {
-              console.log(response);
               this.setState({
                 enableUpload: false,
                 isUploadSucess: true
@@ -238,8 +237,6 @@ class UploadDocuments extends Component {
   }
 
   render() {
-    console.log(this.props);
-
     let endPoint = "/webapply/api/v1/prospects/" + this.props.prospectID + "/documents";
     uploadDocUri = this.props.uploadDocsEndpoints;
     uploadDocUri = uploadDocUri.baseUrl + endPoint;
