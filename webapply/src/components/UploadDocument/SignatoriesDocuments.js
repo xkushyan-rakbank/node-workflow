@@ -60,10 +60,10 @@ const style = {
 class SignatoriesDocuments extends Component {
   render() {
     let docUploadDetails = this.props.DocDetails.uploadedDoc;
-    console.log(this.props.DocDetails);
     const signatoryDocument = this.props.DocDetails.getSignatories;
-    // console.log(signatoryDocument)
+    let signatoryDocIndex;
     const userList = signatoryDocument.map((signatoryDocuments, index) => {
+      signatoryDocIndex = index;
       if (this.props.DocDetails.documents.stakeholdersDocuments) {
         docUploadDetails = this.props.DocDetails.documents.stakeholdersDocuments[
           index + "_" + signatoryDocuments.firstName
@@ -95,7 +95,16 @@ class SignatoriesDocuments extends Component {
             {docUploadDetails.length &&
               docUploadDetails.map((documents, index) => {
                 if (signatoryDocuments.firstName === documents.signatoryName) {
-                  return <UploadDocuments key={index} documents={documents} />;
+                  return (
+                    <UploadDocuments
+                      key={index}
+                      documents={documents}
+                      signatoryDocIndex={signatoryDocIndex}
+                      index={index}
+                      type="stakeholdersDocuments"
+                      docUploadDetails={docUploadDetails}
+                    />
+                  );
                 }
                 return null;
               })}

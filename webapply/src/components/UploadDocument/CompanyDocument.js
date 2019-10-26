@@ -90,7 +90,9 @@ class CompanyDocuments extends Component {
     let companyDocument;
     if (companyDocuments) {
       companyDocument = companyDocuments.map((documents, index) => {
-        return <UploadDocument key={index} documents={documents} />;
+        return (
+          <UploadDocument key={index} documents={documents} index={index} type="companyDocument" />
+        );
       });
     }
 

@@ -82,15 +82,19 @@ class EditApplication extends Component {
         <p className="formDescription">
           Some of the documents were not valid. Please take a look and reupload.
         </p>
-        <div className={this.props.classes.sectionContainer}>
-          <SectionTitle title="Company documents" className={this.props.classes.title} />
-          <CompanyDocuments DocDetails={DocDetails} />
-        </div>
-        {this.props.uploadedDoc.stakeholdersDocuments ? (
-          <div className={this.props.classes.sectionContainer}>
-            <SectionTitle title="Signatories documents" />
-            <SignatoriesDocuments DocDetails={DocDetails} />
-          </div>
+        {this.props.documents ? (
+          <>
+            <div className={this.props.classes.sectionContainer}>
+              <SectionTitle title="Company documents" className={this.props.classes.title} />
+              <CompanyDocuments DocDetails={DocDetails} />
+            </div>
+            {this.props.documents.stakeholdersDocuments ? (
+              <div className={this.props.classes.sectionContainer}>
+                <SectionTitle title="Stakeholders documents" />
+                <SignatoriesDocuments DocDetails={DocDetails} />
+              </div>
+            ) : null}
+          </>
         ) : null}
         <div className="linkContainer">
           <Link to="">
@@ -111,7 +115,7 @@ class EditApplication extends Component {
 const mapStateToProps = state => {
   return {
     getSignatories: appConfigSelectors.getSignatories(state),
-    uploadedDoc: state.uploadedDocs.docs
+    documents: appConfigSelectors.getProspectDocuments(state)
   };
 };
 

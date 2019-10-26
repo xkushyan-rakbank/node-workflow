@@ -8,7 +8,6 @@ import sendProspectToAPI from "./sendProspectToAPI";
 import applicationStatus from "./applicationStatus";
 import otp from "./otp";
 import login from "./loginForm";
-import docUploadReducer from "./getProspectDocuments";
 import searchProspect from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import selectedAccountInfo from "./selectedAccountInfo";
@@ -23,7 +22,6 @@ const reducers = history =>
     sendProspectToAPI,
     applicationStatus,
     login,
-    uploadedDocs: docUploadReducer,
     searchProspect,
     retrieveApplicantInfo,
     selectedAccountInfo

@@ -238,6 +238,8 @@ class UploadDocuments extends Component {
   }
 
   render() {
+    console.log(this.props);
+
     let endPoint = "/webapply/api/v1/prospects/" + this.props.prospectID + "/documents";
     uploadDocUri = this.props.uploadDocsEndpoints;
     uploadDocUri = uploadDocUri.baseUrl + endPoint;
