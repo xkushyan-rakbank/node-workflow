@@ -2,11 +2,14 @@ package ae.rakbank.documentuploader.s3;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+
+import javax.activation.MimetypesFileTypeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -40,7 +43,7 @@ public class S3FileUploader {
 	@Scheduled(cron = "0 0/5 * * * ?")
 	public void uploadFilesToS3Bucket() throws InterruptedException {
 		logger.info("[Begin] uploadFilesToS3Bucket() method");
-		
+
 		Path scannedDocsDir = Paths.get(EnvUtil.getScannedDocsDir());
 		long totalDocs = 0;
 
@@ -75,13 +78,23 @@ public class S3FileUploader {
 				try {
 					fileData = FileUtils.readFileToByteArray(file);
 
+					MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+					String mimeType = fileTypeMap.getContentType(file.getName());
+
 					// create the object in S3 bucket
-					s3.putObject(ecsS3Factory.getS3Bucket(), objectKey, fileData, null);
+					s3.putObject(ecsS3Factory.getS3Bucket(), objectKey, fileData, mimeType);
 
 					logger.info(String.format("created object [%s/%s] for file [%s]", ecsS3Factory.getS3Bucket(),
 							objectKey, file.getName()));
 
 					moveFileFromScannedDocsToS3Object(path, file);
+
+					// read the object from the demo bucket
+					InputStream objectStream = s3.readObject(ecsS3Factory.getS3Bucket(), objectKey, InputStream.class);
+					FileUtils.copyInputStreamToFile(objectStream,
+							new File(EnvUtil.getScannedDocsDir() + "/download_" + objectKey + ".txt"));
+					logger.info("S3 object downloaded to " + EnvUtil.getScannedDocsDir() + "/download_" + objectKey
+							+ ".txt");
 
 				} catch (IOException e) {
 					logger.error("unable to read file contents into byte[]", e);
