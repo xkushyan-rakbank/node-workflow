@@ -112,13 +112,13 @@ const style = {
     letterSpacing: "normal",
     color: "#ea2925"
   },
+
   cancel: {
-    width: "14px",
-    border: "solid 1.5px #373737",
-    textAlign: "center",
-    borderRadius: "66px",
-    display: "inline-block",
-    float: "right"
+    borderRadius: "25px",
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    border: "solid 1px #e8e8e8",
+    backgroundColor: "#ffffff",
+    padding: "0 6px"
   }
 };
 
@@ -138,7 +138,6 @@ class UploadDocuments extends Component {
   }
 
   fileUploadHandler(event) {
-    this.props.docUploadSuccess(this.props);
     call = "";
     call = call + this.props.documents.documentType + this.props.documents.signatoryId;
     call = call.replace(/\s/g, "");
@@ -151,6 +150,7 @@ class UploadDocuments extends Component {
         isUploadSucess: false,
         defaultMsg: false
       },
+
       () => {
         //checking the file size
 
@@ -196,8 +196,9 @@ class UploadDocuments extends Component {
             .then(response => {
               this.setState({
                 enableUpload: false,
-                isUploadSucess: true
+                isUploadSucess: false
               });
+              this.props.docUploadSuccess(this.props);
             })
             .catch(thrown => {
               if (axios.isCancel(thrown)) {
@@ -231,6 +232,11 @@ class UploadDocuments extends Component {
   }
 
   fileUploadCancel(e) {
+    this.setState({
+      enableUpload: true,
+      isUploadSucess: false,
+      defaultMsg: true
+    });
     call = e;
     call = call.replace(/\s/g, "");
     this.call.cancel("Operation canceled by the user.");
@@ -300,29 +306,21 @@ class UploadDocuments extends Component {
                       <div id="myprogressBar"></div>
                     </div>
                     <div id="progressStatus"></div>
-                    <div
-                      className={this.props.classes.cancel}
-                      onClick={() =>
-                        this.fileUploadCancel(
-                          this.props.documents.documentType + this.props.documents.signatoryId
-                        )
-                      }
-                    >
-                      {" "}
-                      X{" "}
-                    </div>
                   </div>
                 )}
               </div>
-              {this.state.isUploadSucess ? (
-                <p
-                  className={this.props.classes.controlsBox}
-                  justify="flex-end"
-                  onClick={() => this.fileInput.click()}
-                >
-                  Upload
-                </p>
-              ) : null}
+
+              <p
+                className={this.props.classes.cancel}
+                justify="flex-end"
+                onClick={() =>
+                  this.fileUploadCancel(
+                    this.props.documents.documentType + this.props.documents.signatoryId
+                  )
+                }
+              >
+                X
+              </p>
             </>
           )}
         </div>
