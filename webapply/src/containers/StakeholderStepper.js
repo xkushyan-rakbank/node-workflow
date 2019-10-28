@@ -103,8 +103,8 @@ class StakeholderStepper extends React.Component {
       >
         <div className={classes.formContent}>
           {stakeHoldersSteps.map(item => {
-            const setStep = () => this.props.handleChangeStep(item);
             const isFilled = isNewStakeholder ? completedStep >= item.step : true;
+            const setStep = () => (isFilled ? this.props.handleChangeStep(item) : {});
 
             const handleContinue = () => {
               switch (item.title) {

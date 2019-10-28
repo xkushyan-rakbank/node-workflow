@@ -24,14 +24,15 @@ function* searchProspectFormSaga(action) {
     console.error({ error });
   }
 }
+
 function* formatSearchListSaga() {
   const clearedSearchDetail = {
-    ["searchInfo.fname"]: "",
-    ["searchInfo.countryCode"]: "",
-    ["searchInfo.mobileNo"]: "",
-    ["searchInfo.leadNumber"]: "",
-    ["searchInfo.tradeLicenseNo"]: "",
-    ["searchInfo.email"]: ""
+    "searchInfo.fname": "",
+    "searchInfo.countryCode": "",
+    "searchInfo.mobileNo": "",
+    "searchInfo.leadNumber": "",
+    "searchInfo.tradeLicenseNo": "",
+    "searchInfo.email": ""
   };
   yield put(updateProspect(clearedSearchDetail));
 }

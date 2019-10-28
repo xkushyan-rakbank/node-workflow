@@ -10,6 +10,7 @@ export const UPDATE_ACTION_TYPE = "UPDATE_ACTION_TYPE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
 export const DISPLAY_SCREEN_BASED_ON_VIEW_ID = "DISPLAY_SCREEN_BASED_ON_VIEW_ID";
 export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
+export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
 
 export const receiveAppConfig = () => {
   return { type: RECEIVE_APPCONFIG };
@@ -57,4 +58,8 @@ export const displayScreenBasedOnViewId = () => {
 
 export const updateSaveType = saveType => {
   return { type: UPDATE_SAVE_TYPE, saveType };
+};
+
+export const saveProspectModel = prospectModel => {
+  return { type: SAVE_PROSPECT_MODEL, prospectModel };
 };

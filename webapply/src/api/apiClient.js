@@ -74,6 +74,7 @@ export default {
         }
       });
     },
+
     verify: ({ prospectId, countryCode, mobileNo, otpToken }) => {
       return httpClient.request({
         url: buildURI("otpUri"),

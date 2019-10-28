@@ -1,4 +1,7 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
+import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty";
 import {
   RECEIVE_APPCONFIG,
   receiveAppConfigSuccess,
@@ -11,17 +14,15 @@ import {
   UPDATE_ACTION_TYPE,
   UPDATE_VIEW_ID,
   DISPLAY_SCREEN_BASED_ON_VIEW_ID,
-  UPDATE_SAVE_TYPE
+  UPDATE_SAVE_TYPE,
+  saveProspectModel
 } from "../actions/appConfig";
 import apiClient from "../../api/apiClient";
 import { history } from "./../configureStore";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
-import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
-import routes from "./../../routes";
-import isEmpty from "lodash/isEmpty";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
+import routes from "./../../routes";
 
 function* receiveAppConfigSaga() {
   try {
@@ -37,8 +38,8 @@ function* receiveAppConfigSaga() {
     const { accountType, islamicBanking } = getSelectedAccountInfo(state);
 
     const applicationInfoFields = {
-      ["prospect.applicationInfo.accountType"]: accountType,
-      ["prospect.applicationInfo.islamicBanking"]: islamicBanking
+      "prospect.applicationInfo.accountType": accountType,
+      "prospect.applicationInfo.islamicBanking": islamicBanking
     };
 
     if (!isEmpty(endpoints)) {
@@ -47,9 +48,15 @@ function* receiveAppConfigSaga() {
     } else {
       response = yield call(apiClient.config.load, null, segment);
     }
-    yield put(receiveAppConfigSuccess(response.data));
+
+    const config = cloneDeep(response.data);
+    const prospectModel = cloneDeep(config.prospect);
+    config.prospect.signatoryInfo = [];
+
+    yield put(saveProspectModel(prospectModel));
+    yield put(receiveAppConfigSuccess(config));
     yield put(updateProspect(applicationInfoFields));
-    yield put(sendProspectToAPISuccess(response.data.prospect));
+    yield put(sendProspectToAPISuccess(config.prospect));
   } catch (error) {
     yield put(receiveAppConfigFail(error));
   }

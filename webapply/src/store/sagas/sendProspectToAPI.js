@@ -66,7 +66,7 @@ function* prospectAutoSave() {
   }
 }
 
-function* prospectAutoSaveFlow() {
+function* prospectAutoSaveFlowSaga() {
   while (yield take("START_PROSPECT_AUTO_SAVE")) {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
     const { actionType } = yield take("UPDATE_ACTION_TYPE");
@@ -78,6 +78,8 @@ function* prospectAutoSaveFlow() {
 }
 
 export default function* sendProspectToAPI() {
-  yield all([takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga)]);
-  yield all([takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlow)]);
+  yield all([
+    takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
+    takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga)
+  ]);
 }

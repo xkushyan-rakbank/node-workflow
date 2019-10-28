@@ -44,7 +44,8 @@ function* addNewStakeholderSaga() {
 function* createNewStakeholderSaga() {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
-  config.prospect.signatoryInfo.push({});
+  const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
+  config.prospect.signatoryInfo.push(signatoryInfoModel);
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
   yield put(changeEditableStakeholder(editableStakeholder));
   yield put(setConfig(config));
