@@ -5,7 +5,6 @@ import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import StatusLoader from "../components/StatusLoader";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import BackLink from "../components/Buttons/BackLink";
 import { sendProspectToAPI, startProspectAutoSave } from "../store/actions/sendProspectToAPI";
 import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
 import { aboutCompanySteps } from "../constants";
@@ -98,8 +97,6 @@ class AboutCompany extends React.Component {
         </CompanyStakeholderCard>
 
         <div className="linkContainer">
-          <BackLink path={routes.verifyOtp} />
-
           <SubmitButton
             label="Next Step"
             justify="flex-end"

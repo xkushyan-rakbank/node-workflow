@@ -3,7 +3,6 @@ import cx from "classnames";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import BackLink from "../components/Buttons/BackLink";
 import OtpVerification from "../components/OtpVerification";
 import { withStyles } from "@material-ui/core/styles";
 import ErrorMessage from "../components/ErrorMessage";
@@ -149,15 +148,12 @@ class FormConfirm extends React.Component {
           {this.state.loginAttempt > 3 && (
             <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again" />
           )}
-          <div className="linkContainer">
-            <BackLink path={routes.applicantInfo} />
 
-            <SubmitButton
-              disabled={!this.state.isValidCode || this.props.otp.isPending}
-              label={this.props.otp.isPending ? "Verify..." : "Next Step"}
-              justify="flex-end"
-            />
-          </div>
+          <SubmitButton
+            disabled={!this.state.isValidCode || this.props.otp.isPending}
+            label={this.props.otp.isPending ? "Verify..." : "Next Step"}
+            justify="flex-end"
+          />
         </form>
       </>
     );
