@@ -69,10 +69,10 @@ class FormConfirm extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
-    //   this.props.updateSaveType("next");
-    //   this.props.history.push(routes.companyInfo);
-    // }
+    if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
+      this.props.updateSaveType("next");
+      this.props.history.push(routes.companyInfo);
+    }
 
     if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {
       this.resetRegenerateCodeAllowTimeoutId = setTimeout(
@@ -81,11 +81,6 @@ class FormConfirm extends React.Component {
       );
     }
   }
-
-  handleClick = () => {
-    this.props.updateSaveType("next");
-    this.props.history.push(routes.companyInfo);
-  };
 
   getFullCode() {
     return this.state.code.join("");
@@ -158,10 +153,9 @@ class FormConfirm extends React.Component {
             <BackLink path={routes.applicantInfo} />
 
             <SubmitButton
-              disabled={!this.state.isValidCode}
+              disabled={!this.state.isValidCode || this.props.otp.isPending}
               label={this.props.otp.isPending ? "Verify..." : "Next Step"}
               justify="flex-end"
-              handleClick={this.handleClick}
             />
           </div>
         </form>
