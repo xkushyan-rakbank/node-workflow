@@ -28,9 +28,18 @@ function* updateProspectDocuments(payload) {
     indexValue = payload.payload.index;
   }
 
+  // update the store value after getting the response
+
   if (docDetails === "companyDocument") {
     clearedPersonalInfo = {
-      [`prospect.documents.companyDocuments[${indexValue}].uploadStatus`]: "Updated"
+      [`prospect.documents.companyDocuments[${indexValue}].uploadStatus`]: "Updated",
+      [`prospect.documents.companyDocuments[${indexValue}].documentTitle`]: payload.payload
+        .documents.documentType,
+      [`prospect.documents.companyDocuments[${indexValue}].fileName`]: payload.docDetails.name,
+      [`prospect.documents.companyDocuments[${indexValue}].fileSize`]: payload.docDetails.size,
+      [`prospect.documents.companyDocuments[${indexValue}].submittedDt`]: payload.docDetails
+        .lastModifiedDate,
+      [`prospect.documents.companyDocuments[${indexValue}].fileFormat`]: payload.docDetails.type
     };
   } else if (docDetails === "stakeholdersDocuments") {
     signatoryDocIndex = payload.payload.signatoryDocIndex;
@@ -38,7 +47,22 @@ function* updateProspectDocuments(payload) {
     clearedPersonalInfo = {
       [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
         "_" +
-        signatoryIndexName}][${indexValue}].uploadStatus`]: "Updated"
+        signatoryIndexName}][${indexValue}].uploadStatus`]: "Updated",
+      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+        "_" +
+        signatoryIndexName}][${indexValue}].documentTitle`]: payload.payload.documents.documentType,
+      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+        "_" +
+        signatoryIndexName}][${indexValue}].fileName`]: payload.docDetails.name,
+      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+        "_" +
+        signatoryIndexName}][${indexValue}].fileSize`]: payload.docDetails.size,
+      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+        "_" +
+        signatoryIndexName}][${indexValue}].submittedDt`]: payload.docDetails.lastModifiedDate,
+      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+        "_" +
+        signatoryIndexName}][${indexValue}].fileFormat`]: payload.docDetails.type
     };
   }
 
