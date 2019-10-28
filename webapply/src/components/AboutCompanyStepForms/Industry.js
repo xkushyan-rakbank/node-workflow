@@ -11,32 +11,22 @@ import {
 } from "../../store/selectors/input";
 import InfoTitle from "../InfoTitle";
 import { updateProspect } from "../../store/actions/appConfig";
+import { getOptionsForSubId } from "../../utils/getInputSubOptions";
 
 class Industry extends React.Component {
   componentDidUpdate(prevProps) {
     const { industryValue, industryConfig, industrySubCatName } = this.props;
     if (prevProps.industryValue.length > industryValue.length) {
-      const subOptionsConfig = this.renderOptionsForSubId(industryValue, industryConfig);
+      const subOptionsConfig = getOptionsForSubId(industryValue, industryConfig);
       const subOptionsValues = subOptionsConfig.map(option => option.value);
 
       this.props.updateProspect({ [industrySubCatName]: subOptionsValues });
     }
   }
 
-  renderOptionsForSubId = (value, valueConfig) => {
-    if (value) {
-      const optionsArr = valueConfig.datalist.filter(item => value.includes(item.value));
-
-      const subOptionsArr = optionsArr
-        .map(item => item.subCategory)
-        .reduce((acc, curr) => [...acc, ...curr], []);
-      return subOptionsArr;
-    }
-  };
-
   render() {
     const { industryValue, industryConfig } = this.props;
-    const subOptions = this.renderOptionsForSubId(industryValue, industryConfig);
+    const subOptions = getOptionsForSubId(industryValue, industryConfig);
 
     return (
       <Grid container spacing={3}>
