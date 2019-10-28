@@ -247,7 +247,7 @@ class UploadDocuments extends Component {
     uploadDocUri = this.props.uploadDocsEndpoints;
     uploadDocUri = uploadDocUri.baseUrl + endPoint;
     const docType = this.props.documents;
-    if (docType.uploadStatus === "" || docType.uploadStatus === "Not Uploaded") {
+    if (docType.uploadStatus === "Not Uploaded" || docType.uploadStatus === "") {
       return (
         <div className={this.props.classes.fileUploadPlaceholder}>
           <input
@@ -260,16 +260,9 @@ class UploadDocuments extends Component {
           {this.state.enableUpload ? (
             <>
               <div className={this.props.classes.contentBox}>
-                <p className={this.props.classes.uploadedFileName}>
-                  {docType.documentType}
-                  {this.props.documents.required ? (
-                    <span className={this.props.classes.ErrorExplanation}> *</span>
-                  ) : null}
-                </p>
+                <p className={this.props.classes.uploadedFileName}>{docType.documentType}</p>
                 {this.state.fileError ? (
-                  <p className={this.props.classes.ErrorExplanation}>
-                    File in a multipart request was exceeded
-                  </p>
+                  <p className={this.props.classes.ErrorExplanation}>Error while uploading</p>
                 ) : null}
                 {this.state.isExcedeed ? (
                   <p className={this.props.classes.ErrorExplanation}>
