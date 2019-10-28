@@ -12,7 +12,7 @@ function* verifyToken() {
     yield call(apiClient.reCaptcha.verify, getReCaptchaToken(state));
     yield put(actions.setVerified(true));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     yield put(actions.setError(get(error, "data.message") || get(error, "message")));
   }
 }

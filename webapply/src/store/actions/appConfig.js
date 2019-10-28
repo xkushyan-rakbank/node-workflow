@@ -2,7 +2,9 @@ export const RECEIVE_APPCONFIG = "RECEIVE_APPCONFIG";
 export const RECEIVE_APPCONFIG_SUCCESS = "RECEIVE_APPCONFIG_SUCCESS";
 export const RECEIVE_APPCONFIG_FAIL = "RECEIVE_APPCONFIG_FAIL";
 export const UPDATE_PROSPECT = "UPDATE_PROSPECT";
+export const SET_CONFIG = "SET_CONFIG";
 export const SET_PROSPECT = "SET_PROSPECT";
+export const RESET_PROSPECT = "RESET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
 export const UPDATE_ACTION_TYPE = "UPDATE_ACTION_TYPE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
@@ -25,8 +27,16 @@ export const updateProspect = fields => {
   return { type: UPDATE_PROSPECT, fields };
 };
 
-export const setProspect = payload => {
-  return { type: SET_PROSPECT, payload };
+export const setConfig = payload => {
+  return { type: SET_CONFIG, payload };
+};
+
+export const setProspect = prospect => {
+  return { type: SET_PROSPECT, prospect };
+};
+
+export const resetProspect = () => {
+  return { type: RESET_PROSPECT };
 };
 
 export const updateProspectId = prospectId => {

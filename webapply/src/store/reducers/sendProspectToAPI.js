@@ -7,7 +7,8 @@ import {
 
 const initialState = {
   loading: false,
-  resetStep: false
+  resetStep: false,
+  prospectCopy: {}
 };
 
 const sendProspectToAPIReducer = (state = initialState, action) => {
@@ -20,7 +21,8 @@ const sendProspectToAPIReducer = (state = initialState, action) => {
     case SEND_PROSPECT_TO_API_SUCCESS:
       return {
         ...state,
-        loading: false
+        loading: false,
+        prospectCopy: action.prospectCopy
       };
     case SEND_PROSPECT_TO_API_FAIL:
       return {

@@ -24,7 +24,7 @@ export function* loginFormSaga(action) {
       yield put(actions.loginInfoFormFail());
     }
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 }
 

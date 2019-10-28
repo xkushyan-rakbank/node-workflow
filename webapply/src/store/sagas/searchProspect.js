@@ -21,7 +21,7 @@ function* searchProspectFormSaga(action) {
     const response = yield call(apiClient.search.searchApplication, inputParam);
     yield put(searchApplicationsSuccess(response.data));
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 }
 function* formatSearchListSaga() {

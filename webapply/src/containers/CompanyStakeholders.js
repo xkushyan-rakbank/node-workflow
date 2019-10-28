@@ -1,8 +1,9 @@
 import React from "react";
 import get from "lodash/get";
-import { withStyles } from "@material-ui/core";
+import uniqueId from "lodash/uniqueId";
 import { compose } from "recompose";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core";
 import FilledStakeholderCard from "../components/FilledStakeholderCard";
 import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
@@ -10,8 +11,14 @@ import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
 import ConfirmDialog from "../components/ConfirmDialod";
 import routes from "../routes";
-import { updateProspect } from "../store/actions/appConfig";
-import { addNewStakeholder, deleteStakeholder } from "../store/actions/stakeholders";
+import {
+  addNewStakeholder,
+  deleteStakeholder,
+  editStakeholder,
+  openConfirmDialog,
+  closeConfirmDialog,
+  confirmHandler
+} from "../store/actions/stakeholders";
 import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
 import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
 
@@ -37,144 +44,92 @@ const style = {
   }
 };
 
-class CompanyStakeholders extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isFinalScreenShown: false,
-      showNewStakeholder: false,
-      editableStakeholder: null,
-      step: 1,
-      completedStep: 0,
-      isOpenConfirmDialog: false,
-      callback: undefined
-    };
-  }
+const CompanyStakeholders = props => {
+  const goToFinalQuestions = () => props.history.push(routes.finalQuestions);
+  const {
+    stakeholders,
+    editableStakeholder,
+    classes,
+    isConfirmDialogOpen,
+    isNewStakeholder
+  } = props;
+  const showingAddButton = stakeholders.length < 6;
 
-  goToFinalQuestions = () => this.props.history.push(routes.finalQuestions);
+  return (
+    <>
+      <h2>Add your company’s stakeholders</h2>
+      <p className="formDescription">
+        Now we need to know about those who have a say in your company. This includes shareholders,
+        signatories and some others. Check our guide below to see which one applies to your company.
+      </p>
 
-  handleShowNewStakeholder = () => {
-    if (Number.isInteger(this.state.editableStakeholder)) {
-      return this.openConfirmDialog(this.showNewStakeholder);
-    } else {
-      this.showNewStakeholder();
-    }
-  };
+      <div>
+        {stakeholders.map((item, index) => {
+          const handleDeleteStakeholder = () => {
+            props.deleteStakeholder(item.signatoryId);
+          };
+          const key = uniqueId(index);
+          const editStakeholderHandler = () => props.editStakeholder(index);
+          return editableStakeholder === index ? (
+            <StakeholderStepper
+              {...item}
+              key={key}
+              index={editableStakeholder}
+              deleteStakeholder={handleDeleteStakeholder}
+              isNewStakeholder={isNewStakeholder}
+            />
+          ) : (
+            <FilledStakeholderCard
+              {...item}
+              key={key}
+              index={index}
+              changeEditableStep={editStakeholderHandler}
+            />
+          );
+        })}
+      </div>
 
-  showNewStakeholder = () => {
-    this.setState({
-      showNewStakeholder: true,
-      editableStakeholder: this.props.stakeholders.length,
-      isOpenConfirmDialog: false
-    });
-    this.props.addNewStakeholder();
-  };
-
-  openConfirmDialog = callback => {
-    this.setState({ isOpenConfirmDialog: true, callback });
-  };
-
-  closeConfirmDialog = () => {
-    this.setState({ isOpenConfirmDialog: false, callback: undefined });
-  };
-
-  hideNewStakeholder = () => {
-    this.setState({ showNewStakeholder: false, editableStakeholder: null });
-  };
-
-  handleChange = stakeholderIndex => {
-    if (Number.isInteger(this.state.editableStakeholder)) {
-      return this.openConfirmDialog(() => {
-        this.changeEditableStep(stakeholderIndex);
-      });
-    } else {
-      this.changeEditableStep(stakeholderIndex);
-    }
-  };
-
-  changeEditableStep = stakeholderIndex =>
-    this.setState({
-      editableStakeholder: stakeholderIndex,
-      showNewStakeholder: false,
-      isOpenConfirmDialog: false
-    });
-
-  render() {
-    const { editableStakeholder, showNewStakeholder } = this.state;
-    const { stakeholders, classes } = this.props;
-    const showingAddButton = stakeholders.length < 6;
-
-    return (
-      <>
-        <h2>Add your company’s stakeholders</h2>
-        <p className="formDescription">
-          Now we need to know about those who have a say in your company. This includes
-          shareholders, signatories and some others. Check our guide below to see which one applies
-          to your company.
-        </p>
-
-        <div>
-          {stakeholders.map((item, index) => {
-            const deleteStakeholder = () => {
-              this.props.deleteStakeholder(item.signatoryId);
-              this.setState({ editableStakeholder: null });
-            };
-            return editableStakeholder === index ? (
-              <StakeholderStepper
-                {...item}
-                hideForm={this.hideNewStakeholder}
-                index={editableStakeholder}
-                key={index}
-                deleteStakeholder={deleteStakeholder}
-                showNewStakeholder={showNewStakeholder}
-              />
-            ) : (
-              <FilledStakeholderCard
-                {...item}
-                index={index}
-                changeEditableStep={this.handleChange}
-                key={`${item.id}-${index}`}
-              />
-            );
-          })}
+      {showingAddButton && (
+        <div className={classes.buttonsWrapper}>
+          <AddStakeholderButton handleClick={props.addNewStakeholder} />
         </div>
+      )}
 
-        {showingAddButton && (
-          <div className={classes.buttonsWrapper}>
-            <AddStakeholderButton handleClick={this.handleShowNewStakeholder} />
-          </div>
-        )}
+      <div className="linkContainer">
+        <BackLink path={routes.companyInfo} />
 
-        <div className="linkContainer">
-          <BackLink path={routes.companyInfo} />
-
-          <SubmitButton
-            handleClick={this.goToFinalQuestions}
-            label="Next Step"
-            justify="flex-end"
-            disabled={stakeholders.length < 1 && !!editableStakeholder}
-          />
-        </div>
-        <ConfirmDialog
-          isOpen={this.state.isOpenConfirmDialog}
-          handleSuccess={this.state.callback}
-          handleClose={this.closeConfirmDialog}
+        <SubmitButton
+          handleClick={goToFinalQuestions}
+          label="Next Step"
+          justify="flex-end"
+          disabled={stakeholders.length < 1 && !!editableStakeholder}
         />
-      </>
-    );
-  }
-}
+      </div>
+      <ConfirmDialog
+        isOpen={isConfirmDialogOpen}
+        handler={props.confirmHandler}
+        handleClose={props.closeConfirmDialog}
+      />
+    </>
+  );
+};
 
 const mapStateToProps = state => ({
+  isNewStakeholder: state.stakeholders.isNewStakeholder,
+  isConfirmDialogOpen: state.stakeholders.isConfirmDialogOpen,
+  editableStakeholder: state.stakeholders.editableStakeholder,
   stakeholders: get(state, "appConfig.prospect.signatoryInfo", []),
   ...getSendProspectToAPIInfo(state)
 });
 
 const mapDispatchToProps = {
-  updateProspect,
   addNewStakeholder,
   deleteStakeholder,
-  sendProspectToAPI
+  sendProspectToAPI,
+  openConfirmDialog,
+  confirmHandler,
+  closeConfirmDialog,
+  editStakeholder
 };
 
 export default compose(

@@ -31,7 +31,7 @@ function* applicantInfoFormSaga() {
     yield call(history.push, routes.verifyOtp);
     yield put(resetInputsErrors());
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

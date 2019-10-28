@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import * as actions from "../actions/retrieveApplicantInfo";
-import { displayScreenBasedOnViewId, setProspect } from "../actions/appConfig";
+import { displayScreenBasedOnViewId, setConfig } from "../actions/appConfig";
 import apiClient from "../../api/apiClient";
 
 function* retrieveApplicantInfoSaga(action) {
@@ -18,7 +18,7 @@ function* retrieveApplicantInfoSaga(action) {
     const response = yield call(apiClient.retrieveApplicantInfos.applicant, inputParam);
     yield put(actions.retrieveApplicantInfoSuccess(response.data));
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -27,10 +27,10 @@ function* getProspectIdInfo(action) {
     const prospectId = action.payload;
     const response = yield call(apiClient.prospect.get, prospectId);
     const config = { prospect: response.data };
-    yield put(setProspect(config));
+    yield put(setConfig(config));
     yield put(displayScreenBasedOnViewId());
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

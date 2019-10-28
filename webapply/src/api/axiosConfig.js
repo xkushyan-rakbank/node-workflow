@@ -47,7 +47,7 @@ instance.interceptors.response.use(
     return response;
   },
   function(error) {
-    console.log({ error });
+    console.error({ error });
     const {
       status,
       data: { errors }
@@ -58,7 +58,7 @@ instance.interceptors.response.use(
     } else if (status === 500) {
       store.dispatch(applicationStatusServerError());
     } else {
-      console.log({ error });
+      console.error({ error });
     }
     return Promise.reject(error);
   }

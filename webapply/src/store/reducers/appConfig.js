@@ -3,6 +3,7 @@ import {
   RECEIVE_APPCONFIG_SUCCESS,
   RECEIVE_APPCONFIG_FAIL,
   UPDATE_PROSPECT_ID,
+  SET_CONFIG,
   SET_PROSPECT
 } from "../actions/appConfig";
 
@@ -36,10 +37,15 @@ const appConfigReducer = (state = initialState, action) => {
         loading: false,
         error: "error"
       };
-    case SET_PROSPECT:
+    case SET_CONFIG:
       return {
         ...state,
         ...action.payload
+      };
+    case SET_PROSPECT:
+      return {
+        ...state,
+        prospect: action.prospect
       };
     case UPDATE_PROSPECT_ID:
       return {

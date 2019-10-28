@@ -9,8 +9,8 @@ export const sendProspectToAPI = () => {
   return { type: SEND_PROSPECT_TO_API };
 };
 
-export const sendProspectToAPISuccess = () => {
-  return { type: SEND_PROSPECT_TO_API_SUCCESS };
+export const sendProspectToAPISuccess = prospectCopy => {
+  return { type: SEND_PROSPECT_TO_API_SUCCESS, prospectCopy };
 };
 
 export const sendProspectToAPIFail = () => {

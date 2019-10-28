@@ -10,6 +10,7 @@ import {
   cancelled,
   fork
 } from "redux-saga/effects";
+import isUndefined from "lodash/isUndefined";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -20,6 +21,7 @@ import {
 import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
+import { handleChangeStep } from "../actions/stakeholders";
 import apiClient from "../../api/apiClient";
 
 function* sendProspectToAPISaga() {
@@ -29,14 +31,18 @@ function* sendProspectToAPISaga() {
     const prospectID = getProspectId(state) || "COSME0000000000000001"; // remove hardcoded ID
 
     yield call(apiClient.prospect.update, prospectID, prospect);
-    yield put(sendProspectToAPISuccess());
+    yield put(sendProspectToAPISuccess(prospect));
     yield put(updateSaveType("continue"));
     yield put(resetFormStep({ resetStep: true }));
     yield put(resetInputsErrors());
     yield delay(500);
     yield put(resetFormStep({ resetStep: false }));
+
+    if (!isUndefined(state.stakeholders.editableStakeholder)) {
+      yield put(handleChangeStep());
+    }
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
     yield call(sendProspectToAPIFail());
   }
 }
@@ -50,6 +56,7 @@ function* prospectAutoSave() {
 
       yield call(apiClient.prospect.update, prospectId, prospect);
       yield put(updateSaveType("auto"));
+      yield put(sendProspectToAPISuccess(prospect));
       yield delay(40000);
     }
   } finally {
