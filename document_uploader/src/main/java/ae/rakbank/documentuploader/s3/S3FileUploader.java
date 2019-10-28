@@ -2,13 +2,11 @@ package ae.rakbank.documentuploader.s3;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Map;
 
 import javax.activation.MimetypesFileTypeMap;
 
@@ -23,9 +21,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.emc.object.s3.S3Client;
-import com.emc.object.s3.S3ObjectMetadata;
-import com.emc.object.s3.bean.GetObjectResult;
-import com.emc.object.s3.request.GetObjectRequest;
 
 import ae.rakbank.documentuploader.commons.EnvUtil;
 
@@ -92,27 +87,6 @@ public class S3FileUploader {
 							objectKey, file.getName()));
 
 					moveFileFromScannedDocsToS3Object(path, file);
-
-					// read the object from the demo bucket
-					InputStream objectStream = s3.readObject(ecsS3Factory.getS3Bucket(), objectKey, InputStream.class);
-					FileUtils.copyInputStreamToFile(objectStream,
-							new File(EnvUtil.getScannedDocsDir() + "download_" + objectKey + ".txt"));
-					logger.info("S3 object downloaded to " + EnvUtil.getScannedDocsDir() + "download_" + objectKey
-							+ ".txt");
-
-					// read the specified object from the demo bucket
-					GetObjectRequest req = new GetObjectRequest(ecsS3Factory.getS3Bucket(), objectKey);
-					GetObjectResult object = s3.getObject(req, String.class);
-
-					// get the metadata for the object
-					S3ObjectMetadata metadata = object.getObjectMetadata();
-
-					// print out the object key/value and metadata for validation
-					System.out.println(String.format("Metadata for [%s/%s]", ecsS3Factory.getS3Bucket(), objectKey));
-					Map<String, String> metadataList = metadata.getUserMetadata();
-					for (Map.Entry<String, String> entry : metadataList.entrySet()) {
-						System.out.println(String.format("    %s = %s", entry.getKey(), entry.getValue()));
-					}
 
 				} catch (IOException e) {
 					logger.error("unable to read file contents into byte[]", e);
