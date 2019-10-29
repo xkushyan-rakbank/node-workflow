@@ -1,33 +1,17 @@
 import axios from "axios";
 import store from "./../store/configureStore";
-import isEmpty from "lodash/isEmpty";
 import { setInputsErrors } from "./../store/actions/serverValidation";
+import { setError } from "./../store/actions/reCaptcha";
 import {
   applicationStatusServerError,
   applicationStatusProceed,
   applicationStatusStop
 } from "./../store/actions/applicationStatus";
-
-const LOCALHOST = "localhost";
-const RAKBANKONLINE = "conv.rakbankonline.ae";
+import getBaseURL from "./../utils/getBaseURL";
 
 const instance = axios.create({
   baseURL: getBaseURL()
 });
-
-function getBaseURL() {
-  let { host, protocol } = window.location;
-
-  if (!!store && !isEmpty(store.getState().appConfig.endpoints)) {
-    return store.getState().appConfig.endpoints["baseUrl"];
-  } else if (host.includes(LOCALHOST)) {
-    return "http://localhost:8080";
-  } else if (host.includes(RAKBANKONLINE)) {
-    return `${protocol}//${host}/quickapply`;
-  } else {
-    return `${protocol}//${host}`;
-  }
-}
 
 /*
  * errors response handling with the Axios interceptor
@@ -47,18 +31,22 @@ instance.interceptors.response.use(
     return response;
   },
   function(error) {
-    console.log({ error });
+    console.error({ error });
     const {
       status,
-      data: { errors }
+      data: { errors, errorType }
     } = error.response;
 
     if (status === 400) {
-      store.dispatch(setInputsErrors(errors));
+      if (errorType === "ReCaptchaError") {
+        store.dispatch(setError(errors));
+      } else {
+        store.dispatch(setInputsErrors(errors));
+      }
     } else if (status === 500) {
       store.dispatch(applicationStatusServerError());
     } else {
-      console.log({ error });
+      console.error({ error });
     }
     return Promise.reject(error);
   }

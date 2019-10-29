@@ -10,7 +10,7 @@ import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 
-import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
+import { setToken, setVerified } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
 import { receiveAppConfig, updateActionType } from "./../store/actions/appConfig";
 import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
@@ -19,6 +19,8 @@ import * as otpSelectors from "../store/selectors/otp";
 import * as inputSelectors from "../store/selectors/input";
 import validateForm from "../utils/validate";
 import routes from "../routes";
+import httpClient from "./../api/axiosConfig";
+import getBaseURL from "./../utils/getBaseURL";
 
 const styles = {
   reCaptchaContainer: {
@@ -34,15 +36,17 @@ class BasicsForm extends React.Component {
 
   componentDidMount() {
     if (!this.props.prospectId) {
+      httpClient.defaults.baseURL = getBaseURL();
+
       this.props.receiveAppConfig();
     }
   }
 
-  componentDidUpdate(prevProps) {
-    // if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
-    //   this.props.history.push(routes.verifyOtp);
-    // }
-  }
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
+  //     this.props.verifyToken();
+  //   }
+  // }
 
   submitForm = event => {
     event.preventDefault();
@@ -67,7 +71,7 @@ class BasicsForm extends React.Component {
 
   render() {
     const { classes, lastInputValue, reCaptchaToken } = this.props;
-    console.log(reCaptchaToken);
+
     return (
       <>
         <h2>Let’s Start with the Basics</h2>
@@ -126,7 +130,6 @@ const mapDispatchToProps = {
   generateOtpCode,
   setToken,
   setVerified,
-  verifyToken,
   applicantInfoForm,
   updateActionType,
   receiveAppConfig

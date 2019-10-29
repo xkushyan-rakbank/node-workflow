@@ -208,9 +208,11 @@ class PureSelect extends React.Component {
 
   renderValueForMultiple = selected => (
     <div className={this.props.classes.chips}>
-      {selected.map(value => (
-        <Chip key={value} label={value} className={this.props.classes.chip} />
-      ))}
+      {selected.map(value => {
+        console.log(value);
+
+        return <Chip key={value} label={value} className={this.props.classes.chip} />;
+      })}
     </div>
   );
 
