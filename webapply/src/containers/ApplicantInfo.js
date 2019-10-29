@@ -8,6 +8,7 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
+import ErrorMessage from "../components/ErrorMessage";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
 import { setToken, setVerified } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
@@ -50,6 +51,12 @@ class BasicsForm extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
+      this.props.history.push(routes.verifyOtp);
+    }
+  }
+
   submitForm = event => {
     event.preventDefault();
     const errorList = validateForm(event);
@@ -73,7 +80,7 @@ class BasicsForm extends React.Component {
 
   render() {
     const { classes, lastInputValue, reCaptchaToken, reCaptchaErrors } = this.props;
-    console.log(reCaptchaErrors);
+
     return (
       <>
         <h2>Let’s Start with the Basics</h2>
@@ -106,10 +113,11 @@ class BasicsForm extends React.Component {
                 onError={this.handleReCaptchaError}
               />
             </ErrorBoundary>
+
             {reCaptchaErrors &&
               reCaptchaErrors.map((error, index) => (
                 <div key={index} className={classes.reCaptchaError}>
-                  {error.message}
+                  <ErrorMessage error={error.message} />
                 </div>
               ))}
 

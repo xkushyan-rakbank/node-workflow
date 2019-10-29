@@ -2967,20 +2967,20 @@
       "readonlyFor": [],
       "datalist": [
         {
-          "code": "Energy Equipment & Services",
-          "key": "Energy Equipment & Services",
-          "value": "Energy Equipment & Services",
+          "code": "Energy Equipment & ServicesCode111",
+          "key": "ENS",
+          "value": "Energy Equipment & ServicesValue",
           "displayText": "Energy Equipment & Services",
           "subCategory": [
             {
               "code": "Oil&GasDrilling",
-              "key": "Oil&GasDrilling",
+              "key": "OGD",
               "value": "Oil&GasDrilling",
               "displayText": "Oil & Gas Drilling"
             },
             {
               "code": "Oil&GasEquipment&Services",
-              "key": "Oil&GasEquipment&Services",
+              "key": "OGES",
               "value": "Oil&GasEquipment&Services",
               "displayText": "Oil & Gas Equipment & Services"
             }
@@ -2994,13 +2994,13 @@
           "subCategory": [
             {
               "code": "IntegratedOil&Gas",
-              "key": "IntegratedOil&Gas",
+              "key": "IOG",
               "value": "IntegratedOil&Gas",
               "displayText": "Integrated Oil & Gas"
             },
             {
               "code": "Oil&GasExploration&Production",
-              "key": "Oil&GasExploration&Production",
+              "key": "IOGP",
               "value": "Oil&GasExploration&Production",
               "displayText": "Oil & Gas Exploration & Production"
             }

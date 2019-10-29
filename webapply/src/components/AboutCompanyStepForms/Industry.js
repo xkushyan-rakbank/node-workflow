@@ -28,6 +28,8 @@ class Industry extends React.Component {
     const { industryValue, industryConfig } = this.props;
     const subOptions = getOptionsForSubId(industryValue, industryConfig);
 
+    console.log("industryValue", industryValue);
+
     return (
       <Grid container spacing={3}>
         <Grid item md={6} sm={12}>

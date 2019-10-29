@@ -206,15 +206,16 @@ class PureSelect extends React.Component {
     return {};
   }
 
-  renderValueForMultiple = selected => (
-    <div className={this.props.classes.chips}>
-      {selected.map(value => {
-        console.log(value);
-
-        return <Chip key={value} label={value} className={this.props.classes.chip} />;
-      })}
-    </div>
-  );
+  renderValueForMultiple = selected => {
+    console.log(selected);
+    return (
+      <div className={this.props.classes.chips}>
+        {selected.map(value => (
+          <Chip key={value} label={value} className={this.props.classes.chip} />
+        ))}
+      </div>
+    );
+  };
 
   render() {
     const { fieldErrors } = this.state;
@@ -280,7 +281,7 @@ class PureSelect extends React.Component {
                   {multiple ? (
                     <>
                       <ListItemText primary={option.displayText} />
-                      <Checkbox checked={value.indexOf(option.value) > -1} />
+                      <Checkbox checked={value.indexOf(option.key) > -1} />
                     </>
                   ) : (
                     option.displayText
