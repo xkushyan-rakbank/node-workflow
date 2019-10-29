@@ -109,6 +109,7 @@ const CompanyStakeholders = props => {
         isOpen={isConfirmDialogOpen}
         handler={props.confirmHandler}
         handleClose={props.closeConfirmDialog}
+        id="Stakeholder.message"
       />
     </>
   );

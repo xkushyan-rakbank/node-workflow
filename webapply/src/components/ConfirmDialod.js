@@ -5,6 +5,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { withStyles } from "@material-ui/core";
+import { compose } from "recompose";
+import { connect } from "react-redux";
+import { getMessageById } from "../store/selectors/message";
 
 const styles = {
   container: {
@@ -55,16 +58,7 @@ const styles = {
 };
 
 const ConfirmDialog = props => {
-  const {
-    classes,
-    title = "Are you sure?",
-    content = "Lorem ipsum dolor sit amet, malesuada mauris amet nulla velit odio cursus, natoque donec luctus integer culpa risus sed ea.",
-    cancelLabel = "Cancel",
-    successLabel = "Yes, I'm sure",
-    handleClose,
-    isOpen,
-    handler
-  } = props;
+  const { classes, message, handleClose, isOpen, handler } = props;
   return (
     <Dialog
       open={isOpen}
@@ -73,9 +67,9 @@ const ConfirmDialog = props => {
       classes={{ container: classes.container, paper: classes.paper }}
     >
       <DialogTitle id="draggable-dialog-title" classes={{ root: classes.title }}>
-        {title}
+        Are you sure?
       </DialogTitle>
-      <DialogContent classes={{ root: classes.content }}>{content}</DialogContent>
+      <DialogContent classes={{ root: classes.content }}>{message}</DialogContent>
       <div className={classes.divider} />
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         <Button
@@ -85,7 +79,7 @@ const ConfirmDialog = props => {
           className={classes.actionButton}
           value={false}
         >
-          {cancelLabel}
+          Cancel
         </Button>
         <Button
           onClick={handler}
@@ -94,11 +88,21 @@ const ConfirmDialog = props => {
           className={classes.actionButton}
           value={true}
         >
-          {successLabel}
+          Yes, I&apos;m sure
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default withStyles(styles)(ConfirmDialog);
+const mapStateToProps = (state, { id }) => ({
+  message: getMessageById(state, id)
+});
+
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    {}
+  )
+)(ConfirmDialog);
