@@ -13,9 +13,6 @@ const instance = axios.create({
   baseURL: getBaseURL()
 });
 
-/*
- * errors response handling with the Axios interceptor
- */
 instance.interceptors.response.use(
   function(response) {
     const {
@@ -31,7 +28,6 @@ instance.interceptors.response.use(
     return response;
   },
   function(error) {
-    console.error({ error });
     const {
       status,
       data: { errors, errorType }

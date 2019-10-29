@@ -3,9 +3,9 @@ export const getOptionsForSubId = (value, valueConfig, notIncludesValue) => {
     let optionsArr = [];
 
     if (notIncludesValue) {
-      optionsArr = valueConfig.datalist.filter(item => value === item.value);
+      optionsArr = valueConfig.datalist.filter(item => value === item.key);
     } else {
-      optionsArr = valueConfig.datalist.filter(item => value.includes(item.value));
+      optionsArr = valueConfig.datalist.filter(item => value.includes(item.key));
     }
 
     const subOptionsArr = optionsArr

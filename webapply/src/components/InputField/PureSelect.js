@@ -207,7 +207,6 @@ class PureSelect extends React.Component {
   }
 
   renderValueForMultiple = selected => {
-    console.log(selected);
     return (
       <div className={this.props.classes.chips}>
         {selected.map(value => (
@@ -275,7 +274,7 @@ class PureSelect extends React.Component {
 
           {options &&
             options
-              .filter(item => !excludeValues.includes(item.value))
+              .filter(item => !excludeValues.includes(item.key))
               .map(option => (
                 <MenuItem key={option.key} value={option.key}>
                   {multiple ? (

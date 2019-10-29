@@ -18,7 +18,7 @@ class Industry extends React.Component {
     const { industryValue, industryConfig, industrySubCatName } = this.props;
     if (prevProps.industryValue.length > industryValue.length) {
       const subOptionsConfig = getOptionsForSubId(industryValue, industryConfig);
-      const subOptionsValues = subOptionsConfig.map(option => option.value);
+      const subOptionsValues = subOptionsConfig.map(option => option.key);
 
       this.props.updateProspect({ [industrySubCatName]: subOptionsValues });
     }
@@ -27,8 +27,6 @@ class Industry extends React.Component {
   render() {
     const { industryValue, industryConfig } = this.props;
     const subOptions = getOptionsForSubId(industryValue, industryConfig);
-
-    console.log("industryValue", industryValue);
 
     return (
       <Grid container spacing={3}>

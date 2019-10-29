@@ -30,7 +30,7 @@ function getQueryString(product, segment) {
     const product = !isEmpty(store.getState().appConfig.endpoints)
       ? store.getState().appConfig.prospect.applicationInfo.accountType
       : null;
-    // const product = "RAKelite"
+    // const product = "RAKelite";
 
     if (product) {
       queryString = `?segment=${segment}&product=${product}&role=${role}`;
