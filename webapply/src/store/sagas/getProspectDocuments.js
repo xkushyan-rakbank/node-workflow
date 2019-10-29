@@ -3,7 +3,7 @@ import apiClient from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
 import * as actions from "../actions/getProspectDocuments";
 import cloneDeep from "lodash/cloneDeep";
-import { updateProspect, setProspect } from "../actions/appConfig";
+import { updateProspect } from "../actions/appConfig";
 
 function* getProspectDocuments() {
   const state = yield select();
@@ -13,11 +13,11 @@ function* getProspectDocuments() {
     const response = yield call(apiClient.getProspectDocuments.retriveDocuments, prospectID);
     if (response.status === 200) {
       config.prospect.documents = response.data;
-      yield put(setProspect(config));
+      yield put(updateProspect(config));
     }
   } catch (error) {
     config.prospect.documents = error;
-    yield put(setProspect(config));
+    yield put(updateProspect(config));
   }
 }
 

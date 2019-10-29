@@ -155,7 +155,6 @@ class UploadDocuments extends Component {
 
       () => {
         //checking the file size
-        this.props.docUploadSuccess(this.props, this.state.selectedFile);
 
         let fileSize = this.state.selectedFile.size;
         if (fileSize <= uploadFileSizeMax * 1048576) {
@@ -209,7 +208,7 @@ class UploadDocuments extends Component {
                   enableUpload: false,
                   isUploadSucess: false
                 });
-                // this.props.docUploadSuccess(this.props);
+                this.props.docUploadSuccess(this.props, this.state.selectedFile);
               })
               .catch(thrown => {
                 if (axios.isCancel(thrown)) {
@@ -265,7 +264,7 @@ class UploadDocuments extends Component {
     uploadDocUri = this.props.uploadDocsEndpoints;
     uploadDocUri = uploadDocUri.baseUrl + endPoint;
     const docType = this.props.documents;
-    if (docType.uploadStatus === "Not Uploaded" || docType.uploadStatus === "") {
+    if (docType.uploadStatus !== "Not Uploaded") {
       return (
         <div className={this.props.classes.fileUploadPlaceholder}>
           <input
