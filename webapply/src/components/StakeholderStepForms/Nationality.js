@@ -63,14 +63,16 @@ const Nationality = props => {
   );
 };
 
-const mapStateToProps = (state, { index }) => ({
-  isDualCitizenship: getInputValueById(state, "SigKycd.hasAnotherCitizenship", [index, 0]),
-  passportDetails: get(
-    state,
-    `appConfig.prospect.signatoryInfo[${index}].kycDetails.passportDetails`,
-    []
-  )
-});
+const mapStateToProps = (state, { index }) => {
+  return {
+    isDualCitizenship: getInputValueById(state, "SigKycd.hasAnotherCitizenship", [index, 0]),
+    passportDetails: get(
+      state,
+      `appConfig.prospect.signatoryInfo[${index}].kycDetails.passportDetails`,
+      []
+    )
+  };
+};
 
 const mapDispatchToProps = {
   updateProspect,

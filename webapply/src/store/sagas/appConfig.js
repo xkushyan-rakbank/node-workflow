@@ -1,24 +1,28 @@
-import { all, call, put, takeLatest, takeEvery, select } from "redux-saga/effects";
+import { all, call, put, takeLatest, select } from "redux-saga/effects";
+import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty";
 import {
   RECEIVE_APPCONFIG,
   receiveAppConfigSuccess,
   receiveAppConfigFail,
   UPDATE_PROSPECT,
+  RESET_PROSPECT,
+  setConfig,
   setProspect,
   updateProspect,
   UPDATE_ACTION_TYPE,
   UPDATE_VIEW_ID,
   DISPLAY_SCREEN_BASED_ON_VIEW_ID,
-  UPDATE_SAVE_TYPE
+  UPDATE_SAVE_TYPE,
+  saveProspectModel
 } from "../actions/appConfig";
 import apiClient from "../../api/apiClient";
 import { history } from "./../configureStore";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
-import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
+import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import routes from "./../../routes";
-import isEmpty from "lodash/isEmpty";
 
 function* receiveAppConfigSaga() {
   try {
@@ -34,8 +38,8 @@ function* receiveAppConfigSaga() {
     const { accountType, islamicBanking } = getSelectedAccountInfo(state);
 
     const applicationInfoFields = {
-      ["prospect.applicationInfo.accountType"]: accountType,
-      ["prospect.applicationInfo.islamicBanking"]: islamicBanking
+      "prospect.applicationInfo.accountType": accountType,
+      "prospect.applicationInfo.islamicBanking": islamicBanking
     };
 
     if (!isEmpty(endpoints)) {
@@ -44,8 +48,15 @@ function* receiveAppConfigSaga() {
     } else {
       response = yield call(apiClient.config.load, null, segment);
     }
-    yield put(receiveAppConfigSuccess(response.data));
+
+    const config = cloneDeep(response.data);
+    const prospectModel = cloneDeep(config.prospect);
+    config.prospect.signatoryInfo = [];
+
+    yield put(saveProspectModel(prospectModel));
+    yield put(receiveAppConfigSuccess(config));
     yield put(updateProspect(applicationInfoFields));
+    yield put(sendProspectToAPISuccess(config.prospect));
   } catch (error) {
     yield put(receiveAppConfigFail(error));
   }
@@ -58,7 +69,7 @@ function* updateProspectSaga(action) {
     set(config, name, action.fields[name]);
   }
 
-  yield put(setProspect(config));
+  yield put(setConfig(config));
 }
 
 function* displayScreenBasedOnViewIdSaga() {
@@ -80,6 +91,13 @@ function* updateActionTypeSaga({ actionType }) {
   yield put(updateProspect({ "prospect.applicationInfo.actionType": actionType }));
 }
 
+function* resetProspectSaga() {
+  const state = yield select();
+  const prospect = state.sendProspectToAPI.prospectCopy;
+
+  yield put(setProspect(prospect));
+}
+
 function* updateViewIdSaga({ viewId }) {
   yield put(
     updateProspect({
@@ -95,10 +113,11 @@ function* updateSaveTypeSaga({ saveType }) {
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
-    takeEvery(UPDATE_PROSPECT, updateProspectSaga),
-    takeEvery(DISPLAY_SCREEN_BASED_ON_VIEW_ID, displayScreenBasedOnViewIdSaga),
-    takeEvery(UPDATE_ACTION_TYPE, updateActionTypeSaga),
-    takeEvery(UPDATE_VIEW_ID, updateViewIdSaga),
-    takeEvery(UPDATE_SAVE_TYPE, updateSaveTypeSaga)
+    takeLatest(UPDATE_PROSPECT, updateProspectSaga),
+    takeLatest(DISPLAY_SCREEN_BASED_ON_VIEW_ID, displayScreenBasedOnViewIdSaga),
+    takeLatest(UPDATE_ACTION_TYPE, updateActionTypeSaga),
+    takeLatest(UPDATE_VIEW_ID, updateViewIdSaga),
+    takeLatest(UPDATE_SAVE_TYPE, updateSaveTypeSaga),
+    takeLatest(RESET_PROSPECT, resetProspectSaga)
   ]);
 }

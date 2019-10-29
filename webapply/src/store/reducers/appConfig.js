@@ -3,7 +3,9 @@ import {
   RECEIVE_APPCONFIG_SUCCESS,
   RECEIVE_APPCONFIG_FAIL,
   UPDATE_PROSPECT_ID,
-  SET_PROSPECT
+  SET_CONFIG,
+  SET_PROSPECT,
+  SAVE_PROSPECT_MODEL
 } from "../actions/appConfig";
 
 const initialState = {
@@ -13,7 +15,8 @@ const initialState = {
   prospect: {},
   error: "",
   searchInfo: { segment: "sme" },
-  login: {}
+  login: {},
+  prospectModel: {}
 };
 
 const appConfigReducer = (state = initialState, action) => {
@@ -36,10 +39,15 @@ const appConfigReducer = (state = initialState, action) => {
         loading: false,
         error: "error"
       };
-    case SET_PROSPECT:
+    case SET_CONFIG:
       return {
         ...state,
         ...action.payload
+      };
+    case SET_PROSPECT:
+      return {
+        ...state,
+        prospect: action.prospect
       };
     case UPDATE_PROSPECT_ID:
       return {
@@ -51,6 +59,11 @@ const appConfigReducer = (state = initialState, action) => {
             prospectId: action.prospectId
           }
         }
+      };
+    case SAVE_PROSPECT_MODEL:
+      return {
+        ...state,
+        prospectModel: action.prospectModel
       };
     default:
       return state;

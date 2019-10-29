@@ -1737,7 +1737,7 @@
 		"datalist": null,
 		"description": "get the values from datalist API"
 	},
-	"Org.branchID": {
+	"Org.subCategory": {
 		"criteria": {
 			"roles": [
 				"customer",

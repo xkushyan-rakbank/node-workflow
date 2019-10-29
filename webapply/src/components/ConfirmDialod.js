@@ -61,9 +61,9 @@ const ConfirmDialog = props => {
     content = "Lorem ipsum dolor sit amet, malesuada mauris amet nulla velit odio cursus, natoque donec luctus integer culpa risus sed ea.",
     cancelLabel = "Cancel",
     successLabel = "Yes, I'm sure",
-    handleSuccess,
     handleClose,
-    isOpen
+    isOpen,
+    handler
   } = props;
   return (
     <Dialog
@@ -79,18 +79,20 @@ const ConfirmDialog = props => {
       <div className={classes.divider} />
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         <Button
-          onClick={handleClose}
+          onClick={handler}
           color="primary"
           variant="outlined"
           className={classes.actionButton}
+          value={false}
         >
           {cancelLabel}
         </Button>
         <Button
-          onClick={handleSuccess}
+          onClick={handler}
           color="primary"
           variant="contained"
           className={classes.actionButton}
+          value={true}
         >
           {successLabel}
         </Button>

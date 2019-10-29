@@ -67,64 +67,204 @@
 	],
 	"branchCity": [
 		{
-			"code": "Abu Dhabi",
-			"key": "Abu Dhabi",
-			"value": "Abu Dhabi",
-			"displayText": "Abu Dhabi"
+            "code": "AD",
+            "key": "AD",
+            "value": "AD",
+            "displayText": "Abu Dhabi",
+            "subCategory": [
+                {
+                  "code": "Abu Dhabi 1",
+                  "key": "Abu Dhabi 1",
+                  "value": "Abu Dhabi 1",
+                  "displayText": "Abu Dhabi 1"
+                },
+                {
+                  "code": "Abu Dhabi 2",
+                  "key": "Abu Dhabi 2",
+                  "value": "Abu Dhabi 2",
+                  "displayText": "Abu Dhabi 2"
+                }
+            ]
+        },
+		{
+            "code": "A",
+            "key": "A",
+            "value": "A",
+            "displayText": "Ajman",
+            "subCategory": [
+                {
+                  "code": "Ajman 1",
+                  "key": "Ajman 1",
+                  "value": "Ajman 1",
+                  "displayText": "Ajman 1"
+                },
+                {
+                  "code": "Ajman 2",
+                  "key": "Ajman 2",
+                  "value": "Ajman 2",
+                  "displayText": "Ajman 2"
+                }
+            ]
 		},
 		{
-			"code": "Ajman",
-			"key": "Ajman",
-			"value": "Ajman",
-			"displayText": "Ajman"
+            "code": "AA",
+            "key": "AA",
+            "value": "AA",
+            "displayText": "Al Ain",
+            "subCategory": [
+                {
+                  "code": "Al Ain 1",
+                  "key": "Al Ain 1",
+                  "value": "Al Ain 1",
+                  "displayText": "Al Ain 1"
+                },
+                {
+                  "code": "Al Ain 2",
+                  "key": "Al Ain 2",
+                  "value": "Al Ain 2",
+                  "displayText": "Al Ain 2"
+                }
+            ]
 		},
 		{
-			"code": "Al Ain",
-			"key": "Al Ain",
-			"value": "Al Ain",
-			"displayText": "Al Ain"
+            "code": "Dubai",
+            "key": "Dubai",
+            "value": "Dubai",
+            "displayText": "Dubai",
+            "subCategory": [
+                {
+                  "code": "Dubai 1",
+                  "key": "Dubai 1",
+                  "value": "Dubai 1",
+                  "displayText": "Dubai 1"
+                },
+                {
+                  "code": "Dubai 2",
+                  "key": "Dubai 2",
+                  "value": "Dubai 2",
+                  "displayText": "Dubai 2"
+                }
+            ]
 		},
 		{
-			"code": "Dubai",
-			"key": "Dubai",
-			"value": "Dubai",
-			"displayText": "Dubai"
+            "code": "F",
+            "key": "F",
+            "value": "F",
+            "displayText": "Fujairah",
+            "subCategory": [
+                {
+                  "code": "Fujairah 1",
+                  "key": "Fujairah 1",
+                  "value": "Fujairah 1",
+                  "displayText": "Fujairah 1"
+                },
+                {
+                  "code": "Fujairah 2",
+                  "key": "Fujairah 2",
+                  "value": "Fujairah 2",
+                  "displayText": "Fujairah 2"
+                }
+            ]
 		},
 		{
-			"code": "Fujairah",
-			"key": "Fujairah",
-			"value": "Fujairah",
-			"displayText": "Fujairah"
+            "code": "K",
+            "key": "K",
+            "value": "K",
+            "displayText": "Kalba",
+            "subCategory": [
+                {
+                  "code": "Kalba 1",
+                  "key": "Kalba 1",
+                  "value": "Kalba 1",
+                  "displayText": "Kalba 1"
+                },
+                {
+                  "code": "Kalba 2",
+                  "key": "Kalba 2",
+                  "value": "Kalba 2",
+                  "displayText": "Kalba 2"
+                }
+            ]
 		},
 		{
-			"code": "Kalba",
-			"key": "Kalba",
-			"value": "Kalba",
-			"displayText": "Kalba"
+            "code": "KH",
+            "key": "KH",
+            "value": "KH",
+            "displayText": "Khorfakkan",
+            "subCategory": [
+                {
+                  "code": "Khorfakkan 1",
+                  "key": "Khorfakkan 1",
+                  "value": "Khorfakkan 1",
+                  "displayText": "Khorfakkan 1"
+                },
+                {
+                  "code": "Khorfakkan 2",
+                  "key": "Khorfakkan 2",
+                  "value": "Khorfakkan 2",
+                  "displayText": "Khorfakkan 2"
+                }
+            ]
 		},
 		{
-			"code": "Khorfakkan",
-			"key": "Khorfakkan",
-			"value": "Khorfakkan",
-			"displayText": "Khorfakkan"
+            "code": "RK",
+            "key": "RK",
+            "value": "RK",
+            "displayText": "Ras Al Khaimah",
+            "subCategory": [
+                {
+                  "code": "Ras Al Khaimah 1",
+                  "key": "Ras Al Khaimah 1",
+                  "value": "Ras Al Khaimah 1",
+                  "displayText": "Ras Al Khaimah 1"
+                },
+                {
+                  "code": "Ras Al Khaimah 2",
+                  "key": "Ras Al Khaimah 2",
+                  "value": "Ras Al Khaimah 2",
+                  "displayText": "Ras Al Khaimah 2"
+                }
+            ]
 		},
 		{
-			"code": "Ras Al Khaimah",
-			"key": "Ras Al Khaimah",
-			"value": "Ras Al Khaimah",
-			"displayText": "Ras Al Khaimah"
+            "code": "SH",
+            "key": "SH",
+            "value": "SH",
+            "displayText": "Sharjah",
+            "subCategory": [
+                {
+                  "code": "Sharjah 1",
+                  "key": "Sharjah 1",
+                  "value": "Sharjah 1",
+                  "displayText": "Sharjah 1"
+                },
+                {
+                  "code": "Sharjah 2",
+                  "key": "Sharjah 2",
+                  "value": "Sharjah 2",
+                  "displayText": "Sharjah 2"
+                }
+            ]
 		},
 		{
-			"code": "Sharjah",
-			"key": "Sharjah",
-			"value": "Sharjah",
-			"displayText": "Sharjah"
-		},
-		{
-			"code": "Umm Al Quwain",
-			"key": "Umm Al Quwain",
-			"value": "Umm Al Quwain",
-			"displayText": "Umm Al Quwain"
+            "code": "U",
+            "key": "U",
+            "value": "U",
+            "displayText": "Umm Al Quwain",
+            "subCategory": [
+                {
+                  "code": "Umm Al Quwain 1",
+                  "key": "Umm Al Quwain 1",
+                  "value": "Umm Al Quwain 1",
+                  "displayText": "Umm Al Quwain 1"
+                },
+                {
+                  "code": "Umm Al Quwain 2",
+                  "key": "Umm Al Quwain 2",
+                  "value": "Umm Al Quwain 2",
+                  "displayText": "Umm Al Quwain 2"
+                }
+            ]
 		}
 	],
 	"branchID": [

@@ -1,21 +1,74 @@
-import { all, put, takeEvery, select } from "redux-saga/effects";
+import { all, put, takeEvery, select, take, delay } from "redux-saga/effects";
 import {
   ADD_NEW_STAKEHOLDER,
+  CREATE_NEW_STAKEHOLDER,
+  EDIT_STAKEHOLDER,
   DELETE_STAKEHOLDER,
   HANDLE_CITIZENSHIP,
   FORMAT_PERSONAL_INFORMATION,
-  FORMAT_NATIONALITY
+  FORMAT_NATIONALITY,
+  HANDLE_CHANGE_STEP,
+  createNewStakeholder,
+  changeEditableStakeholder,
+  openConfirmDialog,
+  closeConfirmDialog,
+  changeStep
 } from "../actions/stakeholders";
-import { updateProspect, setProspect } from "../actions/appConfig";
+import { updateProspect, setConfig, resetProspect } from "../actions/appConfig";
 import { sendProspectToAPI } from "../actions/sendProspectToAPI";
 import cloneDeep from "lodash/cloneDeep";
+import isUndefined from "lodash/isUndefined";
+import get from "lodash/get";
+import { stakeHoldersSteps } from "../../constants";
 
 function* addNewStakeholderSaga() {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
-  config.prospect.signatoryInfo.push({});
+  const stakeholderInfo = state.stakeholders;
 
-  yield put(setProspect(config));
+  if (isUndefined(stakeholderInfo.editableStakeholder)) {
+    yield put(createNewStakeholder());
+  } else {
+    yield put(openConfirmDialog());
+    const { result } = yield take("CONFIRM_HANDLER");
+    const value = JSON.parse(result.currentTarget.value);
+    if (value) {
+      yield put(resetProspect());
+      delay(500);
+      yield put(createNewStakeholder());
+    } else {
+      yield put(closeConfirmDialog());
+    }
+  }
+}
+
+function* createNewStakeholderSaga() {
+  const state = yield select();
+  const config = cloneDeep(state.appConfig);
+  const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
+  config.prospect.signatoryInfo.push(signatoryInfoModel);
+  const editableStakeholder = config.prospect.signatoryInfo.length - 1;
+  yield put(changeEditableStakeholder(editableStakeholder));
+  yield put(setConfig(config));
+}
+
+function* editStakeholderSaga(action) {
+  const state = yield select();
+  const stakeholderInfo = state.stakeholders;
+
+  if (isUndefined(stakeholderInfo.editableStakeholder)) {
+    yield put(changeEditableStakeholder(action.index));
+  } else {
+    yield put(openConfirmDialog());
+    const { result } = yield take("CONFIRM_HANDLER");
+    const value = JSON.parse(result.currentTarget.value);
+    if (value) {
+      yield put(resetProspect());
+      delay(500);
+      yield put(changeEditableStakeholder(action.index));
+    } else {
+      yield put(closeConfirmDialog());
+    }
+  }
 }
 
 function* deleteStakeholderSaga(action) {
@@ -27,7 +80,8 @@ function* deleteStakeholderSaga(action) {
 
   config.prospect.signatoryInfo = updatedSignatories;
 
-  yield put(setProspect(config));
+  yield put(setConfig(config));
+  yield put(changeEditableStakeholder());
 }
 
 function* handleCitizenshipSaga(action) {
@@ -45,7 +99,7 @@ function* handleCitizenshipSaga(action) {
     }
   }
 
-  yield put(setProspect(config));
+  yield put(setConfig(config));
 }
 
 function* formatPersonalInformationSaga(action) {
@@ -84,17 +138,35 @@ function* formatNationalitySaga(action) {
       activeNationalityIndexes.includes(idx)
     );
   }
-  yield put(setProspect(config));
+  yield put(setConfig(config));
 
   yield put(sendProspectToAPI());
+}
+
+function* handleChangeStepSaga(action) {
+  const state = yield select();
+  const stakeholderInfo = state.stakeholders;
+  if (stakeholderInfo.step === stakeHoldersSteps.length) {
+    yield put(changeStep({ isFinalScreenShown: true }));
+  } else {
+    const step = get(action.step, "step", stakeholderInfo.step + 1);
+    const completedStep = stakeholderInfo.isNewStakeholder
+      ? stakeholderInfo.step
+      : stakeHoldersSteps.length;
+    const isStatusShown = true;
+    yield put(changeStep({ step, completedStep, isStatusShown }));
+  }
 }
 
 export default function* appConfigSaga() {
   yield all([
     takeEvery(ADD_NEW_STAKEHOLDER, addNewStakeholderSaga),
+    takeEvery(CREATE_NEW_STAKEHOLDER, createNewStakeholderSaga),
+    takeEvery(EDIT_STAKEHOLDER, editStakeholderSaga),
     takeEvery(DELETE_STAKEHOLDER, deleteStakeholderSaga),
     takeEvery(HANDLE_CITIZENSHIP, handleCitizenshipSaga),
     takeEvery(FORMAT_PERSONAL_INFORMATION, formatPersonalInformationSaga),
-    takeEvery(FORMAT_NATIONALITY, formatNationalitySaga)
+    takeEvery(FORMAT_NATIONALITY, formatNationalitySaga),
+    takeEvery(HANDLE_CHANGE_STEP, handleChangeStepSaga)
   ]);
 }

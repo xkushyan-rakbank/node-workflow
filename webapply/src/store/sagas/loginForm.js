@@ -24,14 +24,14 @@ export function* loginFormSaga(action) {
       yield put(actions.loginInfoFormFail());
     }
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 }
 
 function* formatLoginSaga() {
   const clearedLoginDetail = {
-    ["login.userName"]: "",
-    ["login.password"]: ""
+    "login.username": "",
+    "login.password": ""
   };
   yield put(updateProspect(clearedLoginDetail));
 }

@@ -21,17 +21,18 @@ function* searchProspectFormSaga(action) {
     const response = yield call(apiClient.search.searchApplication, inputParam);
     yield put(searchApplicationsSuccess(response.data));
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 }
+
 function* formatSearchListSaga() {
   const clearedSearchDetail = {
-    ["searchInfo.fname"]: "",
-    ["searchInfo.countryCode"]: "",
-    ["searchInfo.mobileNo"]: "",
-    ["searchInfo.leadNumber"]: "",
-    ["searchInfo.tradeLicenseNo"]: "",
-    ["searchInfo.email"]: ""
+    "searchInfo.fname": "",
+    "searchInfo.countryCode": "",
+    "searchInfo.mobileNo": "",
+    "searchInfo.leadNumber": "",
+    "searchInfo.tradeLicenseNo": "",
+    "searchInfo.email": ""
   };
   yield put(updateProspect(clearedSearchDetail));
 }

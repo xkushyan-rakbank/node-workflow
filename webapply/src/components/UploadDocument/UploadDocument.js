@@ -9,6 +9,7 @@ import * as appConfigSelectors from "../../store/selectors/appConfig";
 const CancelToken = axios.CancelToken;
 let call;
 let uploadDocUri;
+const uploadFileSizeMax = 5;
 
 const style = {
   fileUploadPlaceholder: {
@@ -131,7 +132,8 @@ class UploadDocuments extends Component {
       fileError: false,
       isUploadSucess: false,
       isExcedeed: false,
-      defaultMsg: true
+      defaultMsg: true,
+      isSupported: false
     };
     this.fileUploadHandler = this.fileUploadHandler.bind(this);
     this.fileUploadCancel = this.fileUploadCancel.bind(this);
@@ -155,71 +157,86 @@ class UploadDocuments extends Component {
         //checking the file size
 
         let fileSize = this.state.selectedFile.size;
-        if (fileSize <= 3145728) {
-          //generating dynamic document keys
+        if (fileSize <= uploadFileSizeMax * 1048576) {
+          //verify the file type
+          if (
+            this.state.selectedFile.type === "image/png" ||
+            this.state.selectedFile.type === "image/jpeg" ||
+            this.state.selectedFile.type === "application/pdf" ||
+            this.state.selectedFile.type === "application/txt"
+          ) {
+            //generating dynamic document keys
 
-          let docKey;
-          if (this.props.documents.signatoryName) {
-            docKey =
-              this.props.documents.documentType +
-              this.props.documents.signatoryName +
-              Math.floor(Math.random() * 100000 + 1000);
-          } else {
-            docKey = this.props.documents.documentType + Math.floor(Math.random() * 100000 + 1000);
-          }
-          docKey = docKey.replace(/\s/g, "");
-          let fileInfo = {
-            documentKey: docKey
-          };
+            let docKey;
+            if (this.props.documents.signatoryName) {
+              docKey =
+                this.props.documents.documentType +
+                this.props.documents.signatoryName +
+                Math.floor(Math.random() * 100000 + 1000);
+            } else {
+              docKey =
+                this.props.documents.documentType + Math.floor(Math.random() * 100000 + 1000);
+            }
+            docKey = docKey.replace(/\s/g, "");
+            let fileInfo = {
+              documentKey: docKey
+            };
 
-          // storing the uploaded file details into form data
+            // storing the uploaded file details into form data
 
-          fileInfo = JSON.stringify(fileInfo);
-          const data = new FormData();
-          data.append("fileInfo", fileInfo);
-          data.append("file", this.state.selectedFile);
-          axios({
-            method: "post",
-            url: uploadDocUri,
-            data,
-            onUploadProgress: ProgressEvent => {
-              let progress = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100);
-              let element = document.getElementById("myprogressBar");
-              let progressPercentage = document.getElementById("progressStatus");
-              let width = progress;
-              element.style.width = width + "%";
-              element.style.backgroundColor = "#373737";
-              progressPercentage.innerHTML = progress + "%";
-            },
-            cancelToken: this.call.token
-          })
-            .then(response => {
-              this.setState({
-                enableUpload: false,
-                isUploadSucess: false
-              });
-              this.props.docUploadSuccess(this.props);
+            fileInfo = JSON.stringify(fileInfo);
+            const data = new FormData();
+            data.append("fileInfo", fileInfo);
+            data.append("file", this.state.selectedFile);
+            axios({
+              method: "post",
+              url: uploadDocUri,
+              data,
+              onUploadProgress: ProgressEvent => {
+                let progress = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100);
+                let element = document.getElementById("myprogressBar");
+                let progressPercentage = document.getElementById("progressStatus");
+                let width = progress;
+                element.style.width = width + "%";
+                element.style.backgroundColor = "#373737";
+                progressPercentage.innerHTML = progress + "%";
+              },
+              cancelToken: this.call.token
             })
-            .catch(thrown => {
-              if (axios.isCancel(thrown)) {
-                this.setState({
-                  enableUpload: true,
-                  isUploadSucess: false,
-                  defaultMsg: true
-                });
-                console.log("Request canceled", thrown.message);
-              } else if (thrown.message === "Network Error") {
-                this.setState({
-                  fileError: true,
-                  enableUpload: true
-                });
-              } else {
+              .then(response => {
                 this.setState({
                   enableUpload: false,
                   isUploadSucess: false
                 });
-              }
+                this.props.docUploadSuccess(this.props, this.state.selectedFile);
+              })
+              .catch(thrown => {
+                if (axios.isCancel(thrown)) {
+                  this.setState({
+                    enableUpload: true,
+                    isUploadSucess: false,
+                    defaultMsg: true
+                  });
+                  console.log("Request canceled", thrown.message);
+                } else if (thrown.message === "Network Error") {
+                  this.setState({
+                    fileError: true,
+                    enableUpload: true
+                  });
+                } else {
+                  this.setState({
+                    enableUpload: false,
+                    isUploadSucess: false
+                  });
+                }
+              });
+          } else {
+            this.setState({
+              isSupported: true,
+              enableUpload: true
             });
+            return false;
+          }
         } else {
           this.setState({
             isExcedeed: true,
@@ -247,7 +264,7 @@ class UploadDocuments extends Component {
     uploadDocUri = this.props.uploadDocsEndpoints;
     uploadDocUri = uploadDocUri.baseUrl + endPoint;
     const docType = this.props.documents;
-    if (docType.uploadStatus === "Not Uploaded" || docType.uploadStatus === "") {
+    if (docType.uploadStatus !== "Not Uploaded") {
       return (
         <div className={this.props.classes.fileUploadPlaceholder}>
           <input
@@ -266,12 +283,19 @@ class UploadDocuments extends Component {
                 ) : null}
                 {this.state.isExcedeed ? (
                   <p className={this.props.classes.ErrorExplanation}>
-                    File in a multipart request was exceeded
+                    File size exceeded (5Mb maximum)
                   </p>
+                ) : null}
+                {this.state.isSupported ? (
+                  <>
+                    <p className={this.props.classes.ErrorExplanation}>
+                      Supported formats are PDF, JPG and PNG
+                    </p>
+                  </>
                 ) : null}
                 {this.state.defaultMsg ? (
                   <p className={this.props.classes.fileSizeMessage}>
-                    Supported formats are PDF, JPG and PNG | 3MB maximum size
+                    Supported formats are PDF, JPG and PNG | {uploadFileSizeMax}MB maximum size
                   </p>
                 ) : null}
               </div>

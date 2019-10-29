@@ -9,7 +9,6 @@ import PureSelect from "../components/InputField/PureSelect";
 import TextInput from "../components/InputField/TextInput";
 import ReCaptcha from "../components/ReCaptcha/ReCaptcha";
 import { applicantInfoForm } from "../store/actions/applicantInfoForm";
-
 import { setToken, setVerified } from "../store/actions/reCaptcha";
 import { generateOtpCode } from "../store/actions/otp";
 import { receiveAppConfig, updateActionType } from "./../store/actions/appConfig";
@@ -26,6 +25,15 @@ const styles = {
   reCaptchaContainer: {
     display: "flex",
     justifyContent: "flex-end"
+  },
+  reCaptchaErrorContainer: {
+    position: "relative"
+  },
+  reCaptchaError: {
+    position: "absolute",
+    bottom: "0",
+    fontSize: "12px",
+    color: "#ea2b1e"
   }
 };
 
@@ -41,12 +49,6 @@ class BasicsForm extends React.Component {
       this.props.receiveAppConfig();
     }
   }
-
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
-  //     this.props.verifyToken();
-  //   }
-  // }
 
   submitForm = event => {
     event.preventDefault();
@@ -70,8 +72,8 @@ class BasicsForm extends React.Component {
   };
 
   render() {
-    const { classes, lastInputValue, reCaptchaToken } = this.props;
-
+    const { classes, lastInputValue, reCaptchaToken, reCaptchaErrors } = this.props;
+    console.log(reCaptchaErrors);
     return (
       <>
         <h2>Let’s Start with the Basics</h2>
@@ -90,7 +92,13 @@ class BasicsForm extends React.Component {
             select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="971" />}
           />
 
-          <Grid container direction="row" justify="space-between" alignItems="center">
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            className={classes.reCaptchaErrorContainer}
+          >
             <ErrorBoundary className={classes.reCaptchaContainer}>
               <ReCaptcha
                 onVerify={this.handleReCaptchaVerify}
@@ -98,6 +106,12 @@ class BasicsForm extends React.Component {
                 onError={this.handleReCaptchaError}
               />
             </ErrorBoundary>
+            {reCaptchaErrors &&
+              reCaptchaErrors.map((error, index) => (
+                <div key={index} className={classes.reCaptchaError}>
+                  {error.message}
+                </div>
+              ))}
 
             <div className="linkContainer">
               <BackLink path={routes.detailedAccount} />
@@ -119,6 +133,7 @@ const mapStateToProps = state => ({
   prospectId: appConfigSelectors.getProspectId(state),
   otp: otpSelectors.getOtp(state),
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
+  reCaptchaErrors: reCaptchaSelectors.getReCaptchaError(state),
   lastInputValue: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
   isProceed: appConfigSelectors.getProceedStatus(state),
   serverError: appConfigSelectors.getServerErrorStatus(state),

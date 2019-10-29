@@ -8,6 +8,7 @@ import dotsBg from "../../assets/images/dots_bg.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import InfoNote from "../../components/InfoNote";
 import * as accountInfoSelector from "../../store/selectors/appConfig";
+
 const styles = {
   title: {
     display: "flex",
@@ -152,6 +153,7 @@ const styles = {
     color: "#373737"
   }
 };
+
 class ApplicationSubmitted extends React.Component {
   render() {
     const { classes, AccountSubmittedInfo } = this.props;
