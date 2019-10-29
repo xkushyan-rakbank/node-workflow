@@ -1130,7 +1130,7 @@
 		"placeholder": null,
 		"path": "$.prospect.accountInfo[*].accountCurrencies",
 		"name": "prospect.accountInfo[*].accountCurrencies",
-		"required": false,
+		"required": true,
 		"datalistId": "accountCurrencies",
 		"readonlyFor": [],
 		"datalist": null,

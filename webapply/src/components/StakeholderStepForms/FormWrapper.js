@@ -1,8 +1,11 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import cx from "classnames";
+import { connect } from "react-redux";
+import { compose } from "recompose";
 import ContinueButton from "../Buttons/ContinueButton";
 import validateForm from "../../utils/validate";
+import { updateValidationErrors } from "../../store/actions/validationErrors";
 
 const styles = {
   formWrapper: {
@@ -24,6 +27,8 @@ const FormWrapper = props => {
     event.preventDefault();
     const errorList = validateForm(event);
 
+    props.updateValidationErrors(errorList);
+
     if (!errorList.length) {
       props.handleContinue();
     }
@@ -44,4 +49,14 @@ const FormWrapper = props => {
   );
 };
 
-export default withStyles(styles)(FormWrapper);
+const mapDispatchToProps = {
+  updateValidationErrors
+};
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  withStyles(styles)
+)(FormWrapper);
