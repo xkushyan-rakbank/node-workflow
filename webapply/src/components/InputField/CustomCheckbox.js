@@ -5,7 +5,7 @@ import CheckedIcon from "../../assets/icons/on.png";
 import UncheckedIcon from "../../assets/icons/off.png";
 
 const CustomCheckbox = props => {
-  const { value, label, handleChange, checked, id, style } = props;
+  const { value, label, handleChange, checked, id, style, required } = props;
   return (
     <FormControlLabel
       style={{ ...style }}
@@ -17,7 +17,7 @@ const CustomCheckbox = props => {
           checked={checked}
           onChange={handleChange}
           id={id}
-          required
+          required={required}
         />
       }
       label={label}

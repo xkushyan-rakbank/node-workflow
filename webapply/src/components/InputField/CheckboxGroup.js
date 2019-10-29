@@ -65,7 +65,12 @@ class CheckboxGroup extends React.Component {
         required={required}
       >
         <div className={cx("box-group-grid", classes.checkboxesWrapper)}>
-          <CustomCheckbox checked={!!value.length} id={attrId} style={{ display: "none" }} />
+          <CustomCheckbox
+            checked={!!value.length}
+            id={attrId}
+            style={{ display: "none" }}
+            required
+          />
 
           {datalist.map(item => (
             <CustomCheckbox
