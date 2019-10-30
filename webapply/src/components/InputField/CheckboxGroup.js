@@ -83,8 +83,9 @@ class CheckboxGroup extends React.Component {
           ))}
         </div>
 
-        {(value.length && this.state.isChanged) ||
-          (hasValidError && <ErrorMessage error={validationErrors.required} />)}
+        {(value.length === 0 && this.state.isChanged) || (hasValidError && value.length === 0) ? (
+          <ErrorMessage error={validationErrors.required} />
+        ) : null}
         {!!title && <InfoTitle title={title} />}
       </FormControl>
     );
