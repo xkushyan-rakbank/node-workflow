@@ -3215,7 +3215,7 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": "+971",
+		"label": "",
 		"placeholder": null,
 		"path": "$.prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryMobCountryCode",
 		"name": "prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryMobCountryCode",
@@ -3288,7 +3288,7 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": "+971",
+		"label": "",
 		"placeholder": null,
 		"path": "$.prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryPhoneCountryCode",
 		"name": "prospect.organizationInfo.contactDetailsForTxnReconfirming[*].primaryPhoneCountryCode",

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import cx from "classnames";
 import Subtitle from "../Subtitle";
@@ -11,6 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import AddButton from "../Buttons/AddButton";
 import Divider from "../Divider";
 import RadioButton from "../InputField/RadioButton";
+import * as inputSelectors from "../../store/selectors/input";
 
 const style = {
   formWrapper: {
@@ -63,7 +65,7 @@ class SigningPreferences extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, fullName = "" } = this.props;
     return (
       <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
         <Subtitle title="Signing transactions" />
@@ -102,11 +104,13 @@ class SigningPreferences extends React.Component {
                 <TextInput
                   id="OrgContReconf.primaryMobileNo"
                   indexes={[index]}
+                  required={!!fullName.length}
                   select={
                     <PureSelect
                       id="OrgContReconf.primaryMobCountryCode"
                       indexes={[index]}
                       combinedSelect
+                      defaultValue="971"
                     />
                   }
                 />
@@ -115,11 +119,13 @@ class SigningPreferences extends React.Component {
                 <TextInput
                   id="OrgContReconf.primaryPhoneNo"
                   indexes={[index]}
+                  required={!!fullName.length}
                   select={
                     <PureSelect
                       id="OrgContReconf.primaryPhoneCountryCode"
                       indexes={[index]}
                       combinedSelect
+                      defaultValue="971"
                     />
                   }
                 />
@@ -138,4 +144,8 @@ class SigningPreferences extends React.Component {
   }
 }
 
-export default withStyles(style)(SigningPreferences);
+const mapStateToProps = state => ({
+  fullName: inputSelectors.getInputValueById(state, "Sig.fullName", [0])
+});
+
+export default withStyles(style)(connect(mapStateToProps)(SigningPreferences));
