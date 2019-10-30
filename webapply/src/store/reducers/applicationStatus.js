@@ -8,7 +8,8 @@ import {
 const initialState = {
   isProceed: true,
   serverErorr: false,
-  screeningResults: {}
+  screeningResults: {},
+  uiError: false
 };
 
 const applicationStatusReducer = (state = initialState, action) => {

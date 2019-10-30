@@ -49,7 +49,8 @@ const theme = createMuiTheme({
 
 class App extends React.Component {
   state = {
-    renderChildren: false
+    renderChildren: false,
+    hasError: false
   };
 
   componentDidMount() {
