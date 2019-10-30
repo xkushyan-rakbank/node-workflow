@@ -82,5 +82,9 @@ public class FileHelper {
 	public JsonNode getDatalistJSON() {
 		return loadJSONFile("datalist.json", false);
 	}
+	
+	public JsonNode getRSAPublicKeyJSON() {
+		return loadJSONFile("RSAPublicKey.json", true);
+	}
 
 }

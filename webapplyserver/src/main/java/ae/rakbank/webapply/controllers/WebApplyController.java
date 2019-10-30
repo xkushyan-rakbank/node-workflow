@@ -248,7 +248,12 @@ public class WebApplyController {
 		initStateJSON.put("rakValueMaxReadMoreUrl", baseUrls.get("RAKvalueMaxReadMoreUrl").asText());
 		initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
 		initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
-		initStateJSON.put("rsaPublicKey", getRSAPublicKey());
+
+		JsonNode rsaPublicKey = getRSAPublicKey();
+
+		if (rsaPublicKey != null && rsaPublicKey.has("body")) {
+			initStateJSON.put("rsaPublicKey", rsaPublicKey.get("body").asText());
+		}
 
 		// deep clone the json nodes
 		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
@@ -498,10 +503,9 @@ public class WebApplyController {
 		}
 	}
 
-	private String getRSAPublicKey() {
+	private JsonNode getRSAPublicKey() {
 		logger.info("Begin getRSAPublicKey()");
-		String filename = appConfigJSON.get("RSAPublicKeyFilename").asText();
-		return fileHelper.loadFileContents(filename);
+		return fileHelper.getRSAPublicKeyJSON();
 	}
 
 	private void populateDefaultDatalist(JsonNode datalist) {
