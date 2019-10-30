@@ -57,6 +57,16 @@ public class FileHelper {
 		return null;
 	}
 
+	public String loadFileContents(String filename) {
+		File file = new File(EnvUtil.getConfigDir() + filename);
+		try {
+			return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			logger.error("Unable to read contents from " + EnvUtil.getConfigDir() + filename, e);
+		}
+		return null;
+	}
+
 	public JsonNode getUIConfigJSON() {
 		return loadJSONFile("uiConfig.json", false);
 	}

@@ -248,16 +248,8 @@ public class WebApplyController {
 		initStateJSON.put("rakValueMaxReadMoreUrl", baseUrls.get("RAKvalueMaxReadMoreUrl").asText());
 		initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
 		initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
+		initStateJSON.put("rsaPublicKey", getRSAPublicKey());
 
-		ResponseEntity<?> pkResponse = getRSAPublicKey();
-		if (pkResponse.getStatusCode().is2xxSuccessful()) {
-			initStateJSON.put("rsaPublicKey", ((JsonNode) pkResponse.getBody()).get("body").asText());
-		} else {
-			logger.error(String.format("error in GET RSA Public Key. HttpStatus=%s, response=%s",
-					pkResponse.getStatusCodeValue(), pkResponse.getBody().toString()));
-			throw new Exception(String.format("error in GET RSA Public Key. HttpStatus=%s, response=%s",
-					pkResponse.getStatusCodeValue(), pkResponse.getBody().toString()));
-		}
 		// deep clone the json nodes
 		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
 		JsonNode uiConfigNode = objectMapper.readTree(uiConfig);
@@ -506,33 +498,10 @@ public class WebApplyController {
 		}
 	}
 
-	private ResponseEntity<?> getRSAPublicKey() {
+	private String getRSAPublicKey() {
 		logger.info("Begin getRSAPublicKey()");
-		String baseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("RSAPublicKeyUrl").asText();
-		JsonNode uris = appConfigJSON.get("RSAPublicKeyURIs");
-		String url = baseUrl + uris.get("rsaPublicKeyUri").asText();
-
-		HttpHeaders headers = new HttpHeaders();
-		RestTemplate restTemplate = new RestTemplate();
-		HttpEntity<JsonNode> reqEntity = new HttpEntity<>(null, headers);
-		ResponseEntity<JsonNode> response = null;
-		try {
-			response = restTemplate.exchange(url, HttpMethod.GET, reqEntity, JsonNode.class);
-		} catch (HttpClientErrorException e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
-					e.getResponseBodyAsString()), e);
-			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
-					e.getResponseBodyAsString(), e);
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
-		} catch (HttpServerErrorException e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s],response=", url, e.getRawStatusCode(),
-					e.getResponseBodyAsString()), e);
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					e.getResponseBodyAsString(), e);
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		logger.info("END getRSAPublicKey()");
-		return response;
+		String filename = appConfigJSON.get("RSAPublicKeyFilename").asText();
+		return fileHelper.loadFileContents(filename);
 	}
 
 	private void populateDefaultDatalist(JsonNode datalist) {
