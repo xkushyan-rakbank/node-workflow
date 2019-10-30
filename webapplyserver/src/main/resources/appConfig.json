@@ -1,11 +1,10 @@
 {
 	"BaseURLs": {
 		"local": {
-			"WebApplyBaseUrl": "http://localhost:8080",
+			"WebApplyBaseUrl": "http://conv.rakbankonline.ae/quickapply",
 			"DehBaseUrl": "http://localhost:9091/api/v1",
 			"OAuthBaseUrl": "http://localhost:9091/api/v1",
 			"ReCaptchaUrl": "https://www.google.com",
-			"RSAPublicKeyUrl": "http://localhost:9091",
 			"RAKvaluePlusReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"RAKvalueMaxReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"RAKvaluePlusIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
@@ -18,11 +17,10 @@
 			"DehBaseUrl": "http://localhost:9091",
 			"OAuthBaseUrl": "http://localhost:9091",
 			"ReCaptchaUrl": "https://www.google.com",
-			"RSAPublicKeyUrl": "https://dev.skiply.ae",
 			"RAKvaluePlusReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"RAKvalueMaxReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"RAKvaluePlusIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
-			"RAKvalueMaxIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",			
+			"RAKvalueMaxIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"TermsConditionsUrl": "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
 			"ServicePricingGuideUrl": "https://revamp.rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA"
 		},
@@ -31,11 +29,10 @@
 			"DehBaseUrl": "http://10.15.24.32:8080/corp/rest/v1",
 			"OAuthBaseUrl": "",
 			"ReCaptchaUrl": "https://www.google.com",
-			"RSAPublicKeyUrl": "https://dev.skiply.ae",
 			"RAKvaluePlusReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"RAKvalueMaxReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"RAKvaluePlusIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
-			"RAKvalueMaxIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",			
+			"RAKvalueMaxIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/hidden/rvc/new-features",
 			"TermsConditionsUrl": "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
 			"ServicePricingGuideUrl": "https://revamp.rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA"
 		},
@@ -44,11 +41,10 @@
 			"DehBaseUrl": "",
 			"OAuthBaseUrl": "",
 			"ReCaptchaUrl": "https://www.google.com",
-			"RSAPublicKeyUrl": "",
 			"RAKvaluePlusReadMoreUrl": "",
 			"RAKvalueMaxReadMoreUrl": "",
 			"RAKvaluePlusIslamicReadMoreUrl": "",
-			"RAKvalueMaxIslamicReadMoreUrl": "",			
+			"RAKvalueMaxIslamicReadMoreUrl": "",
 			"TermsConditionsUrl": "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
 			"ServicePricingGuideUrl": "https://rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA"
 		}
@@ -104,7 +100,8 @@
 			"OAuthLoginType": "1",
 			"OAuthStateMode": "N",
 			"ReCaptchaSiteKey": "6LcypLgUAAAAAMQvT4SqSDCbJ7JFYY7x0OGJTpTm",
-			"ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R"
+			"ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R",
+			"RSAPublicKeyFilename": "RSAPublicKey.txt"
 		},
 		"dev": {
 			"OAuthGrantType": "password",
@@ -119,7 +116,8 @@
 			"OAuthLoginType": "1",
 			"OAuthStateMode": "N",
 			"ReCaptchaSiteKey": "",
-			"ReCaptchaSecret": ""
+			"ReCaptchaSecret": "",
+			"RSAPublicKeyFilename": ""
 		},
 		"uat": {
 			"OAuthGrantType": "password",
@@ -134,7 +132,8 @@
 			"OAuthLoginType": "1",
 			"OAuthStateMode": "N",
 			"ReCaptchaSiteKey": "",
-			"ReCaptchaSecret": ""
+			"ReCaptchaSecret": "",
+			"RSAPublicKeyFilename": ""
 		},
 		"prod": {
 			"OAuthGrantType": "password",
@@ -149,7 +148,8 @@
 			"OAuthLoginType": "1",
 			"OAuthStateMode": "N",
 			"ReCaptchaSiteKey": "",
-			"ReCaptchaSecret": ""
+			"ReCaptchaSecret": "",
+			"RSAPublicKeyFilename": ""
 		}
 	}
 }

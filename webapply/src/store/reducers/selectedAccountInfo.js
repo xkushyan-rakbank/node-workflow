@@ -1,6 +1,6 @@
 import * as actions from "../actions/selectedAccountInfo";
 
-export const initialState = {
+const initialState = {
   accountType: "",
   islamicBanking: false
 };

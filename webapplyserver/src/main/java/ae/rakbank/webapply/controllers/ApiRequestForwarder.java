@@ -116,10 +116,10 @@ public class ApiRequestForwarder {
 				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
 			} else {
 				// commented to make test the application on DEV env.
-//				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
-//						"recaptchaToken is required");
-//
-//				return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
+						"recaptchaToken is required");
+
+				return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 			}
 
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,

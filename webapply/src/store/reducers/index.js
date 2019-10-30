@@ -12,6 +12,7 @@ import searchProspect from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import selectedAccountInfo from "./selectedAccountInfo";
 import stakeholders from "./stakeholders";
+import validationErrors from "./validationErrors";
 
 const reducers = history =>
   combineReducers({
@@ -26,7 +27,8 @@ const reducers = history =>
     searchProspect,
     retrieveApplicantInfo,
     selectedAccountInfo,
-    stakeholders
+    stakeholders,
+    validationErrors
   });
 
 export default reducers;
