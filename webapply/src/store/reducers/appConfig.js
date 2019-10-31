@@ -8,7 +8,7 @@ import {
   SAVE_PROSPECT_MODEL
 } from "../actions/appConfig";
 
-const initialState = {
+export const initialState = {
   loading: false,
   uiConfig: {},
   endpoints: {},
