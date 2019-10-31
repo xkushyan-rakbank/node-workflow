@@ -1,7 +1,6 @@
 import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core";
-import removeIcon from "../../assets/icons/remove_icon.png";
 
 const style = {
   container: {
@@ -27,17 +26,13 @@ const style = {
     }
   },
   text: {
-    fontSize: "14px",
-    lineHeight: "1.71",
-    color: "#373737",
-    fontWeight: 400,
+    fontSize: "16px",
+    lineHeight: "1.5",
+    color: "#86868b",
+    fontWeight: 600,
     fontStyle: "normal",
-    fontStretch: "normal"
-  },
-  icon: {
-    width: "24px",
-    height: "24px",
-    marginRight: "9px"
+    fontStretch: "normal",
+    textDecoration: "underline"
   }
 };
 
@@ -45,7 +40,6 @@ const RemoveButton = props => {
   const { classes, title = "Remove", className, ...rest } = props;
   return (
     <button className={cx(classes.container, className)} type="button" {...rest}>
-      <img src={removeIcon} alt="remove" className={classes.icon} />
       <span className={classes.text}>{title}</span>
     </button>
   );

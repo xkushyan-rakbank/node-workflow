@@ -62,8 +62,13 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
   }
 
   componentDidMount() {
+    const { setIsContinueDisabled, otherEntitiesOutsideUAE, otherEntitiesInUAE } = this.props;
+    this.setState({
+      otherEntitiesOutsideUAE: !otherEntitiesOutsideUAE,
+      otherEntitiesInUAE: !otherEntitiesInUAE
+    });
     const isButtonDisabled = this.isContinueDisabled();
-    this.props.setIsContinueDisabled(isButtonDisabled);
+    setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -148,6 +153,7 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
   };
 
   render() {
+    const { insideSubsidiaryCount, outsideSubsidiaryCount } = this.limits;
     const { otherEntitiesOutsideUAE, otherEntitiesInUAE } = this.state;
     const { classes, entitiesInUAE, entitiesOutsideUAE } = this.props;
     return (
@@ -197,7 +203,7 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
                           onClick={() =>
                             this.handleRemoveItem(entitiesInUAE, index, "entitiesInUAE")
                           }
-                          title="Remove"
+                          title="Delete"
                           classes={{ container: classes.container }}
                         />
                       )}
@@ -206,28 +212,30 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
                 );
               })}
             </Grid>
-            <AddButton
-              onClick={() =>
-                this.handleAddItem(
-                  entitiesInUAE,
-                  "entitiesInUAE",
+            {entitiesInUAE.length < insideSubsidiaryCount && (
+              <AddButton
+                onClick={() =>
+                  this.handleAddItem(
+                    entitiesInUAE,
+                    "entitiesInUAE",
+                    this.limits.insideSubsidiaryCount,
+                    {
+                      tradeLicenseNo: "",
+                      emirate: "",
+                      companyName: ""
+                    }
+                  )
+                }
+                title="Add a subsidiary inside the UAE"
+                disabled={this.isAddButtonDisabled(
                   this.limits.insideSubsidiaryCount,
-                  {
-                    tradeLicenseNo: "",
-                    emirate: "",
-                    companyName: ""
-                  }
-                )
-              }
-              title="Add a subsidiary inside the UAE"
-              disabled={this.isAddButtonDisabled(
-                this.limits.insideSubsidiaryCount,
-                entitiesInUAE,
-                "tradeLicenseNo",
-                "emirate",
-                "companyName"
-              )}
-            />
+                  entitiesInUAE,
+                  "tradeLicenseNo",
+                  "emirate",
+                  "companyName"
+                )}
+              />
+            )}
           </>
         )}
 
@@ -267,7 +275,7 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
                           onClick={() =>
                             this.handleRemoveItem(entitiesOutsideUAE, index, "entitiesOutsideUAE")
                           }
-                          title="Remove"
+                          title="Delete"
                           classes={{ container: classes.container }}
                         />
                       )}
@@ -276,26 +284,28 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
                 );
               })}
             </Grid>
-            <AddButton
-              onClick={() =>
-                this.handleAddItem(
-                  entitiesOutsideUAE,
-                  "entitiesOutsideUAE",
+            {entitiesOutsideUAE.length < outsideSubsidiaryCount && (
+              <AddButton
+                onClick={() =>
+                  this.handleAddItem(
+                    entitiesOutsideUAE,
+                    "entitiesOutsideUAE",
+                    this.limits.outsideSubsidiaryCount,
+                    {
+                      country: "",
+                      companyName: ""
+                    }
+                  )
+                }
+                title="Add another subsidiary"
+                disabled={this.isAddButtonDisabled(
                   this.limits.outsideSubsidiaryCount,
-                  {
-                    country: "",
-                    companyName: ""
-                  }
-                )
-              }
-              title="Add another subsidiary"
-              disabled={this.isAddButtonDisabled(
-                this.limits.outsideSubsidiaryCount,
-                entitiesOutsideUAE,
-                "country",
-                "companyName"
-              )}
-            />
+                  entitiesOutsideUAE,
+                  "country",
+                  "companyName"
+                )}
+              />
+            )}
           </>
         )}
       </>
