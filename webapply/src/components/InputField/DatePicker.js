@@ -56,9 +56,12 @@ class DatePicker extends React.Component {
     this.setState({ fieldErrors: {} });
   };
 
-  updateProspect = dateValue => {
+  updateProspect = (dateValue, stringValue) => {
     const { name } = this.props;
-    this.props.updateProspect({ [name]: dateValue, name });
+    if (!dateValue || dateValue.toString() !== "Invalid Date") {
+      console.log(dateValue);
+      this.props.updateProspect({ [name]: dateValue, name });
+    }
   };
 
   composeInputProps() {
@@ -73,7 +76,8 @@ class DatePicker extends React.Component {
     });
   };
 
-  handleFocus = () => {
+  handleFocus = event => {
+    console.log(event.target.value);
     this.resetFieldErrors();
   };
 
@@ -119,14 +123,9 @@ class DatePicker extends React.Component {
               format="dd/MM/yyyy"
               inputVariant="outlined"
               placeholder="DD/MM/YYYY"
-              mask="DD/MM/YYYY"
-              maskChar="_"
               className={classes.datePicker}
               value={value || null}
-              onAccept={this.handleAccept}
-              onFocus={this.handleFocus}
               onChange={this.updateProspect}
-              onBlur={this.handleBlur}
               error={isError}
               inputProps={inputProps}
               KeyboardButtonProps={{

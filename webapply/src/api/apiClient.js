@@ -1,6 +1,6 @@
 import httpClient from "./axiosConfig";
 import store from "./../store/configureStore";
-import isEmpty from "lodash/isEmpty";
+// import isEmpty from "lodash/isEmpty";
 
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
@@ -27,10 +27,10 @@ function getQueryString(product, segment) {
   if (product && segment) {
     queryString = `?segment=${segment}&product=${product}&role=${role}`;
   } else {
-    const product = !isEmpty(store.getState().appConfig.endpoints)
-      ? store.getState().appConfig.prospect.applicationInfo.accountType
-      : null;
-
+    // const product = !isEmpty(store.getState().appConfig.endpoints)
+    //   ? store.getState().appConfig.prospect.applicationInfo.accountType
+    //   : null;
+    const product = "RAKelite";
     if (product) {
       queryString = `?segment=${segment}&product=${product}&role=${role}`;
     } else {

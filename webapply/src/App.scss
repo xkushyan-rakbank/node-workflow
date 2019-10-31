@@ -123,7 +123,11 @@ a {
 }
 
 .MuiSelect-select.Mui-disabled {
-  background-color: #c6c6c6;
+  background-color: #f9f9f9;
+}
+
+.MuiButton-contained.Mui-disabled {
+  background-color: #c6c6cc !important;
 }
 
 .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline {
