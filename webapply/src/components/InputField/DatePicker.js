@@ -110,7 +110,7 @@ class DatePicker extends React.Component {
     const isError = !isEmpty(fieldErrors);
     const attrs = fieldAttr(id, config, indexes);
     const inputProps = this.composeInputProps();
-    console.log(fieldErrors);
+
     return (
       <FormControl className="formControl">
         {config.label && (
