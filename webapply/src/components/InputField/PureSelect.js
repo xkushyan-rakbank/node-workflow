@@ -65,7 +65,6 @@ const styles = {
   },
   selectFieldCombined: {
     width: "93px !important",
-    height: "100%",
     position: "absolute",
     zIndex: 1,
     "& label": {
@@ -83,6 +82,9 @@ const styles = {
     },
     "& legend": {
       marginLeft: 0
+    },
+    "& .MuiSelect-select.Mui-disabled": {
+      backgroundColor: "transparent !important"
     }
   },
   chips: {

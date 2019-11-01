@@ -1,6 +1,7 @@
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import DateFnsUtils from "@date-io/date-fns";
+import { isValid } from "date-fns";
 import FormControl from "@material-ui/core/FormControl";
 import { compose } from "recompose";
 import { connect } from "react-redux";
@@ -59,7 +60,6 @@ class DatePicker extends React.Component {
   updateProspect = (dateValue, stringValue) => {
     const { name } = this.props;
     if (!dateValue || dateValue.toString() !== "Invalid Date") {
-      console.log(dateValue);
       this.props.updateProspect({ [name]: dateValue, name });
     }
   };
@@ -71,17 +71,22 @@ class DatePicker extends React.Component {
   }
 
   fieldValidation = () => {
+    const invalidDateMessage = !isValid(new Date(this.inputRef.current.value))
+      ? "Invalid Date Format"
+      : null;
+
     this.setState({
-      fieldErrors: validate(this.inputRef.current, this.props.config)
+      fieldErrors: validate(this.inputRef.current, this.props.config) || {
+        error: invalidDateMessage
+      }
     });
   };
 
-  handleFocus = event => {
-    console.log(event.target.value);
+  handleFocus = () => {
     this.resetFieldErrors();
   };
 
-  handleAccept = date => {
+  handleAccept = () => {
     this.resetFieldErrors();
   };
 
@@ -98,13 +103,14 @@ class DatePicker extends React.Component {
       indexes,
       disableFuture,
       disabled,
-      minDate = new Date("01-01-1000")
+      minDate = new Date("01-01-1950")
     } = this.props;
     const { fieldErrors } = this.state;
+
     const isError = !isEmpty(fieldErrors);
     const attrs = fieldAttr(id, config, indexes);
     const inputProps = this.composeInputProps();
-
+    console.log(fieldErrors);
     return (
       <FormControl className="formControl">
         {config.label && (
@@ -112,26 +118,31 @@ class DatePicker extends React.Component {
             <KeyboardDatePicker
               {...attrs}
               autoOk
+              autoComplete="off"
+              className={classes.datePicker}
               minDate={minDate}
-              disableFuture={disableFuture}
+              maxDate={new Date()}
               disabled={disabled}
+              disableFuture={disableFuture}
               name={config.name}
               label={config.label || ""}
               disableToolbar
               margin="normal"
               variant="inline"
-              format="dd/MM/yyyy"
+              format="MM/dd/yyyy"
               inputVariant="outlined"
-              placeholder="DD/MM/YYYY"
-              className={classes.datePicker}
+              placeholder="__/__/____"
               value={value || null}
               onChange={this.updateProspect}
+              onAccept={this.handleAccept}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              onClose={this.handleClose}
               error={isError}
               inputProps={inputProps}
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}
-              autoComplete="off"
             />
           </MuiPickersUtilsProvider>
         )}
