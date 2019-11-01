@@ -71,14 +71,12 @@ class DatePicker extends React.Component {
   }
 
   fieldValidation = () => {
-    const invalidDateMessage = !isValid(new Date(this.inputRef.current.value))
-      ? "Invalid Date Format"
-      : null;
+    const invalidDateMessage = !isValid(new Date(this.inputRef.current.value)) && {
+      error: "Invalid Date Format"
+    };
 
     this.setState({
-      fieldErrors: validate(this.inputRef.current, this.props.config) || {
-        error: invalidDateMessage
-      }
+      fieldErrors: validate(this.inputRef.current, this.props.config) || invalidDateMessage
     });
   };
 
@@ -106,7 +104,6 @@ class DatePicker extends React.Component {
       minDate = new Date("01-01-1950")
     } = this.props;
     const { fieldErrors } = this.state;
-
     const isError = !isEmpty(fieldErrors);
     const attrs = fieldAttr(id, config, indexes);
     const inputProps = this.composeInputProps();
@@ -129,7 +126,7 @@ class DatePicker extends React.Component {
               disableToolbar
               margin="normal"
               variant="inline"
-              format="MM/dd/yyyy"
+              format="dd/MM/yyyy"
               inputVariant="outlined"
               placeholder="__/__/____"
               value={value || null}
