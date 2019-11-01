@@ -142,6 +142,7 @@ class SignatorySummaryCard extends Component {
         firstName={signatory.firstName}
         lastName={signatory.lastName ? signatory.lastName : signatory.fullName}
         content={this.renderCardContent()}
+        index={index}
       >
         {this.state.isExpanded &&
           signatoriesSteps.map(item => {
