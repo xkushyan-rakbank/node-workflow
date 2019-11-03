@@ -51,10 +51,7 @@ const theme = createMuiTheme({
 
 const tagManagerArgs = {
   gtmId: "GTM-PPZWHLS",
-  dataLayer: {
-    userId: "001",
-    userProject: "project"
-  }
+  dataLayerName: "PageDataLayer"
 };
 
 class App extends React.Component {
@@ -66,7 +63,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.receiveAppConfig();
     this.handlePageReload();
-
+    TagManager.initialize(tagManagerArgs);
     this.props.prospectAutoSave();
   }
 
@@ -82,7 +79,6 @@ class App extends React.Component {
     });
   };
   render() {
-    console.log(TagManager);
     TagManager.initialize(tagManagerArgs);
     // const { renderChildren } = this.state; // return in future
     return (
