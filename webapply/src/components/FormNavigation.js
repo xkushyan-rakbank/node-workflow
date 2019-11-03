@@ -43,12 +43,12 @@ const style = {
     "& ul": {
       margin: "0",
       padding: "5px 0 0 20px",
-      marginLeft: "80px",
+      marginLeft: "40px",
       height: "271px",
       overflowY: "auto",
       direction: "rtl",
-      "@media only screen and (max-width: 1300px)": {
-        marginLeft: "40px"
+      "@media only screen and (max-width: 1250px)": {
+        marginLeft: "20px"
       },
       "&::-webkit-scrollbar": {
         width: "2px",
@@ -63,7 +63,11 @@ const style = {
         outline: "1px solid red"
       },
       "& li": {
-        direction: "ltr"
+        direction: "ltr",
+        paddingLeft: "40px",
+        "@media only screen and (max-width: 1250px)": {
+          paddingLeft: "20px"
+        }
       }
     }
   },

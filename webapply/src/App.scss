@@ -126,6 +126,15 @@ a {
   background-color: #f9f9f9;
 }
 
+.MuiButton-contained.Mui-disabled {
+  background-color: #c6c6cc !important;
+}
+
+.MuiFormHelperText-root {
+  color: #ea2b1e !important;
+  font-family: "Open Sans", sans-serif;
+}
+
 .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline {
   border-color: rgba(194, 194, 194, 0.56) !important;
 }

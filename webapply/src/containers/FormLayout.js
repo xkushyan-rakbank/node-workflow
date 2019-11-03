@@ -66,9 +66,23 @@ const styles = {
 class FormLayout extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = { hasUiError: false };
+
     history.listen((location, action) => {
       this.props.applicationStatusReset();
+      this.setState({ hasUiError: false });
     });
+  }
+
+  static getDerivedStateFromError(error) {
+    if (process.env.NODE_ENV === "production") {
+      return { hasUiError: true };
+    }
+  }
+
+  componentDidCatch(error, info, event) {
+    console.error(error);
   }
 
   componentDidUpdate(prevProps) {
@@ -84,6 +98,7 @@ class FormLayout extends React.Component {
 
   render() {
     const { children, classes, isProceed, serverError, screeningResults, location } = this.props;
+    const { hasUiError } = this.state;
 
     return (
       <React.Fragment>
@@ -97,7 +112,13 @@ class FormLayout extends React.Component {
 
                 <ErrorMessageAlert isVisible={serverError} handleClick={this.handleClick} />
 
-                {isProceed ? children : <ApplicationStatus errorReason={screeningResults} />}
+                {!isProceed ? (
+                  <ApplicationStatus errorReason={screeningResults} />
+                ) : hasUiError ? (
+                  <ApplicationStatus uiError={true} />
+                ) : (
+                  children
+                )}
               </div>
             </div>
           </div>

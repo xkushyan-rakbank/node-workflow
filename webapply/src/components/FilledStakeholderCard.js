@@ -62,6 +62,7 @@ const FilledStakeholderCard = props => {
       lastName={lastName}
       content={renderContent()}
       className={classes.indent}
+      index={index}
     />
   );
 };

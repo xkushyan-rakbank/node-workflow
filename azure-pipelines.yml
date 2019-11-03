@@ -36,7 +36,11 @@ jobs:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
         enabled: true
-
+      - bash : |
+          cd webapply
+          npm run test
+        displayName: 'Junit Test cases'
+        enabled: false
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:
