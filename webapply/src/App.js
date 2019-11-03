@@ -49,6 +49,8 @@ const theme = createMuiTheme({
   }
 });
 
+// Added GTM ID
+
 const tagManagerArgs = {
   gtmId: "GTM-PPZWHLS",
   dataLayerName: "PageDataLayer"

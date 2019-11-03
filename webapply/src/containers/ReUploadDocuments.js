@@ -97,6 +97,8 @@ class EditApplication extends Component {
         companyDocument.map((documents, index) => {
           if (documents.uploadStatus === "Updated") {
             return (uploadedDocsCount = uploadedDocsCount + 1);
+          } else {
+            return null;
           }
         });
       }
@@ -109,6 +111,8 @@ class EditApplication extends Component {
             campus.map((docUploaded, index) => {
               if (docUploaded.uploadStatus === "Updated") {
                 return (uploadedDocsCount = uploadedDocsCount + 1);
+              } else {
+                return null;
               }
             });
             return Object.keys(campus).length;
