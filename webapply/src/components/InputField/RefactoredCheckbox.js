@@ -2,11 +2,11 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import { updateProspect } from "../../store/actions/appConfig";
+import HelpTooltip from "../HelpTooltip";
 import { defineDynamicInputId } from "../../constants";
+import { updateProspect } from "../../store/actions/appConfig";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import Check from "../../assets/icons/on.png";
-import questionMark from "../../assets/icons/question_mark_grey.png";
 import infoIc from "../../assets/icons/info.png";
 
 const styles = {
@@ -77,13 +77,14 @@ const styles = {
       marginRight: "5px"
     }
   },
-  questionIcon: {
-    marginLeft: "10px"
+  labelWrapper: {
+    display: "flex"
   }
 };
 
 class CustomCheckbox extends React.Component {
   updateProspect = event => {
+    event.stopPropagation();
     const value = event.target.checked;
     const { name, callback } = this.props;
     this.props.updateProspect({ [name]: value });
@@ -102,29 +103,38 @@ class CustomCheckbox extends React.Component {
     const { config, classes, value = false, withQuestion, style } = this.props;
     return (
       <div style={{ ...style }}>
-        <label className={classes.checkboxWrapper}>
-          <div className={classes.checkboxContainer}>
-            <input
-              {...this.getDataAttr()}
-              type="checkbox"
-              value={value}
-              onChange={this.updateProspect}
-              checked={value}
-              className={classes.hiddenCheckbox}
+        <div className={classes.labelWrapper}>
+          <label className={classes.checkboxWrapper}>
+            <div className={classes.checkboxContainer}>
+              <input
+                {...this.getDataAttr()}
+                type="checkbox"
+                value={value}
+                onChange={this.updateProspect}
+                checked={value}
+                className={classes.hiddenCheckbox}
+              />
+              <div className={classes.styledCheckbox}>
+                {value && <img src={Check} alt="check icon" />}
+              </div>
+            </div>
+            {config.title ? (
+              <div className={classes.doubleLabel}>
+                <div className={classes.firstRow}>{config.label}</div>
+              </div>
+            ) : (
+              <span className={classes.label}>{config.label}</span>
+            )}
+          </label>
+
+          {withQuestion && (
+            <HelpTooltip
+              message={
+                "Lorem ipsum dolor sit amet, consectet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              }
             />
-            <div className={classes.styledCheckbox}>
-              {value && <img src={Check} alt="check icon" />}
-            </div>
-          </div>
-          {config.title ? (
-            <div className={classes.doubleLabel}>
-              <div className={classes.firstRow}>{config.label}</div>
-            </div>
-          ) : (
-            <span className={classes.label}>{config.label}</span>
           )}
-          {withQuestion && <img src={questionMark} alt="" className={classes.questionIcon} />}
-        </label>
+        </div>
         {config.title && (
           <div className={classes.secondRow}>
             <img src={infoIc} alt="info" />

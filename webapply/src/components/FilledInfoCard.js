@@ -12,11 +12,11 @@ const style = {
 };
 
 const FilledInfoCard = props => {
-  const { firstName, lastName, content, classes } = props;
+  const { firstName, lastName, content, classes, index } = props;
 
   return (
     <div className={classes.contentWrapper}>
-      <Avatar firstName={firstName} lastName={lastName} />
+      <Avatar firstName={firstName} lastName={lastName} index={index} />
       {content}
     </div>
   );

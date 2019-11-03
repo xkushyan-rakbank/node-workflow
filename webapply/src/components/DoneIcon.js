@@ -1,28 +1,16 @@
 import React from "react";
-import cx from "classnames";
 import { withStyles } from "@material-ui/core";
-import DoneIcon from "@material-ui/icons/Done";
+import doneIcon from "./../assets/icons/Add.png";
 
 const styles = {
-  iconWrapper: {
-    border: "1.5px solid #517085",
-    borderRadius: "50%",
-    width: "22px",
-    fontSize: "22px",
-    color: "#517085",
-    height: "22px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  doneIcon: {
-    fontSize: "13px"
+  icon: {
+    width: "24px"
   }
 };
 
 const Icon = ({ classes, className }) => (
-  <div className={cx(classes.iconWrapper, className)}>
-    <DoneIcon className={classes.doneIcon} />
+  <div>
+    <img src={doneIcon} className={classes.icon} alt="doneIcon" />
   </div>
 );
 

@@ -84,7 +84,8 @@ class StakeholderStepper extends React.Component {
       step,
       isFinalScreenShown,
       isStatusShown,
-      completedStep
+      completedStep,
+      orderIndex
     } = this.props;
     const { confirmation } = this.state;
     const fullName = `${firstName} ${lastName}`;
@@ -100,6 +101,7 @@ class StakeholderStepper extends React.Component {
         content={isStatusShown && this.renderContent()}
         firstName={isStatusShown ? firstName : "New Stakeholder"}
         lastName={isStatusShown ? lastName : ""}
+        index={orderIndex}
       >
         <div className={classes.formContent}>
           {stakeHoldersSteps.map(item => {

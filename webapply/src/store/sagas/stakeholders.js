@@ -146,7 +146,7 @@ function* formatNationalitySaga(action) {
 function* handleChangeStepSaga(action) {
   const state = yield select();
   const stakeholderInfo = state.stakeholders;
-  if (stakeholderInfo.step === stakeHoldersSteps.length) {
+  if (stakeholderInfo.step === stakeHoldersSteps.length && !get(action.step, "step")) {
     yield put(changeStep({ isFinalScreenShown: true }));
   } else {
     const step = get(action.step, "step", stakeholderInfo.step + 1);

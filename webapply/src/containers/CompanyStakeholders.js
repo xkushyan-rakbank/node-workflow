@@ -1,5 +1,4 @@
 import React from "react";
-import get from "lodash/get";
 import uniqueId from "lodash/uniqueId";
 import { compose } from "recompose";
 import { connect } from "react-redux";
@@ -21,6 +20,11 @@ import {
 } from "../store/actions/stakeholders";
 import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
 import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
+import {
+  stakeholders as stakeholdersSelector,
+  stakeholdersState,
+  percentageSelector
+} from "../store/selectors/stakeholder";
 
 const style = {
   buttonStyle: {
@@ -51,9 +55,12 @@ const CompanyStakeholders = props => {
     editableStakeholder,
     classes,
     isConfirmDialogOpen,
-    isNewStakeholder
+    isNewStakeholder,
+    percentage
   } = props;
   const showingAddButton = stakeholders.length < 6;
+  const lowPercentage = percentage < 100;
+  const disableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || lowPercentage;
 
   return (
     <>
@@ -77,6 +84,7 @@ const CompanyStakeholders = props => {
               index={editableStakeholder}
               deleteStakeholder={handleDeleteStakeholder}
               isNewStakeholder={isNewStakeholder}
+              orderIndex={index}
             />
           ) : (
             <FilledStakeholderCard
@@ -95,6 +103,13 @@ const CompanyStakeholders = props => {
         </div>
       )}
 
+      {lowPercentage && (
+        <div>
+          {`Shareholders ${percentage}% is less than 100%, either add a new stakeholder or edit 
+        the shareholding % for the added stakeholders.`}
+        </div>
+      )}
+
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
 
@@ -102,7 +117,7 @@ const CompanyStakeholders = props => {
           handleClick={goToFinalQuestions}
           label="Next Step"
           justify="flex-end"
-          disabled={stakeholders.length < 1 && !!editableStakeholder}
+          disabled={disableNextStep}
         />
       </div>
       <ConfirmDialog
@@ -115,13 +130,17 @@ const CompanyStakeholders = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  isNewStakeholder: state.stakeholders.isNewStakeholder,
-  isConfirmDialogOpen: state.stakeholders.isConfirmDialogOpen,
-  editableStakeholder: state.stakeholders.editableStakeholder,
-  stakeholders: get(state, "appConfig.prospect.signatoryInfo", []),
-  ...getSendProspectToAPIInfo(state)
-});
+const mapStateToProps = state => {
+  const { isNewStakeholder, isConfirmDialogOpen, editableStakeholder } = stakeholdersState(state);
+  return {
+    isNewStakeholder,
+    isConfirmDialogOpen,
+    editableStakeholder,
+    stakeholders: stakeholdersSelector(state),
+    percentage: percentageSelector(state),
+    ...getSendProspectToAPIInfo(state)
+  };
+};
 
 const mapDispatchToProps = {
   addNewStakeholder,
