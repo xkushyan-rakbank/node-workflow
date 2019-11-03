@@ -27,7 +27,7 @@ public class FileHelper {
 
 	public JsonNode loadJSONFile(String filename, boolean fromConfigDirectory) {
 		try {
-			logger.info("loading " + filename);
+			logger.info("read file: " + filename);
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			String fileContent = null;
@@ -51,7 +51,7 @@ public class FileHelper {
 
 			}
 			return objectMapper.readTree(fileContent);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("error loading " + filename, e);
 		}
 		return null;
@@ -82,7 +82,7 @@ public class FileHelper {
 	public JsonNode getDatalistJSON() {
 		return loadJSONFile("datalist.json", false);
 	}
-	
+
 	public JsonNode getRSAPublicKeyJSON() {
 		return loadJSONFile("RSAPublicKey.json", true);
 	}
