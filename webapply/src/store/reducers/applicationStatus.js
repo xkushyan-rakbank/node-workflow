@@ -5,7 +5,7 @@ import {
   APPLICATION_STATUS_RESET
 } from "./../actions/applicationStatus";
 
-const initialState = {
+export const initialState = {
   isProceed: true,
   serverErorr: false,
   screeningResults: {},

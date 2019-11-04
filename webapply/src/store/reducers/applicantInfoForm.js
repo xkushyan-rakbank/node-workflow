@@ -3,7 +3,7 @@ import {
   APPLICANT_INFO_FORM_FAIL
 } from "../actions/applicantInfoForm";
 
-const initialState = {
+export const initialState = {
   loading: false
 };
 

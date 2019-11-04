@@ -11,8 +11,8 @@ export const retrieveApplicantInfoSuccess = payload => {
   return { type: RETRIEVE_APPLICANT_INFO_SUCCESS, payload };
 };
 
-export const retrieveApplicantInfoFail = error => {
-  return { type: RETRIEVE_APPLICANT_INFO_FAIL, error };
+export const retrieveApplicantInfoFail = payload => {
+  return { type: RETRIEVE_APPLICANT_INFO_FAIL, payload };
 };
 
 export const getProspectInfo = payload => {
