@@ -292,7 +292,8 @@
 				"employerName": "",
 				"occupation": "",
 				"totalExperienceYrs": 0,
-				"employmentStartDate": ""
+				"employmentStartDate": "",
+				"isWorkAtTheCompany": false
 			},
 			"sameAsCompanyAddress": false,
 			"addressInfo": [

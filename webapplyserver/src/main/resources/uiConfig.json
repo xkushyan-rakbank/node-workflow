@@ -6849,7 +6849,7 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": null,
+		"label": "This Person works at ",
 		"placeholder": null,
 		"path": "$.prospect.signatoryInfo[*].employmentDetails.isWorkAtTheCompany",
 		"name": "prospect.signatoryInfo[*].employmentDetails.isWorkAtTheCompany",
