@@ -87,5 +87,18 @@ describe("retrieveApplicantInfoReducer", () => {
         expect(searchResults).toEqual(searchApplicationsSuccessParamObj);
       });
     });
+
+    describe("retrieveApplicantInfoFail", () => {
+      const testError = "test Error";
+
+      it(" should update isProceed and screeningResults", () => {
+        const state = retrieveApplicantInfoReducer(
+          initialState,
+          retrieveApplicantActions.retrieveApplicantInfoFail(testError)
+        );
+        const { searchResults } = state;
+        expect(searchResults).toBe(testError);
+      });
+    });
   });
 });

@@ -1,6 +1,6 @@
 import * as actions from "../actions/validationErrors";
 
-const initialState = [{}];
+export const initialState = [{}];
 
 const validationErrorsReducer = (state = initialState, action) => {
   switch (action.type) {

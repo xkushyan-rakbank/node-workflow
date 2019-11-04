@@ -11,7 +11,7 @@ import {
   saveProspectModel
 } from "../../actions/appConfig";
 
-describe("advance-against-salary-reducer", () => {
+describe("appconfig reducer", () => {
   afterEach(jest.resetAllMocks);
 
   describe("initialState", () => {
@@ -102,6 +102,14 @@ describe("advance-against-salary-reducer", () => {
         const state = appConfigReducer(initialState, saveProspectModel(testData));
         const { prospectModel } = state;
         expect(prospectModel).toBe(testData);
+      });
+    });
+
+    describe("on default", () => {
+      it("should return intialState", () => {
+        const mockAction = { type: undefined };
+        const state = appConfigReducer(initialState, mockAction);
+        expect(state).toBe(initialState);
       });
     });
   });
