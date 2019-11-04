@@ -5,7 +5,7 @@ import {
   RESET_FORM_STEP
 } from "../actions/sendProspectToAPI";
 
-const initialState = {
+export const initialState = {
   loading: false,
   resetStep: false,
   prospectCopy: {}
