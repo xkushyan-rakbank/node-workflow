@@ -8,6 +8,7 @@ import { retrieveDocDetails } from "../store/actions/getProspectDocuments";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import arrowBack from "../assets/icons/backArrow.png";
 import { Link } from "react-router-dom";
+import TagManager from "react-gtm-module";
 
 const style = {
   sectionContainer: {
@@ -69,9 +70,18 @@ const style = {
   }
 };
 
+const tagManagerArgs = {
+  dataLayer: {
+    userId: "001",
+    userProject: "ReUploadDocument",
+    page: "ReUploadDocuments"
+  }
+};
+
 class EditApplication extends Component {
   componentDidMount() {
     this.props.retrieveDocDetails();
+    TagManager.dataLayer(tagManagerArgs);
   }
 
   render() {
@@ -87,6 +97,8 @@ class EditApplication extends Component {
         companyDocument.map((documents, index) => {
           if (documents.uploadStatus === "Updated") {
             return (uploadedDocsCount = uploadedDocsCount + 1);
+          } else {
+            return null;
           }
         });
       }
@@ -99,6 +111,8 @@ class EditApplication extends Component {
             campus.map((docUploaded, index) => {
               if (docUploaded.uploadStatus === "Updated") {
                 return (uploadedDocsCount = uploadedDocsCount + 1);
+              } else {
+                return null;
               }
             });
             return Object.keys(campus).length;
@@ -107,8 +121,6 @@ class EditApplication extends Component {
         UploadDocCount = UploadDocCount + StakeholdersDocLength;
       }
     }
-
-    console.log(uploadedDocsCount);
 
     return (
       <>

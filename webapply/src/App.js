@@ -30,6 +30,8 @@ import { getEndpoints } from "./store/selectors/appConfig";
 import routes from "./routes.js";
 import "./App.scss";
 
+import TagManager from "react-gtm-module";
+
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true
@@ -47,6 +49,13 @@ const theme = createMuiTheme({
   }
 });
 
+// Added GTM ID
+
+const tagManagerArgs = {
+  gtmId: "GTM-PPZWHLS",
+  dataLayerName: "PageDataLayer"
+};
+
 class App extends React.Component {
   state = {
     renderChildren: false,
@@ -56,7 +65,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.receiveAppConfig();
     this.handlePageReload();
-
+    TagManager.initialize(tagManagerArgs);
     this.props.prospectAutoSave();
   }
 
@@ -72,6 +81,7 @@ class App extends React.Component {
     });
   };
   render() {
+    TagManager.initialize(tagManagerArgs);
     // const { renderChildren } = this.state; // return in future
     return (
       <>

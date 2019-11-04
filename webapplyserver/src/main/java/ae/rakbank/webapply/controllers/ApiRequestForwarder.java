@@ -142,8 +142,9 @@ public class ApiRequestForwarder {
 					ObjectMapper objectMapper = new ObjectMapper();
 					ObjectNode otpRequest = objectMapper.createObjectNode();
 					otpRequest.put("prospectId", prospectId);
-					otpRequest.put("countryCode", prospectId);
-					otpRequest.put("mobileNo", prospectId);
+					otpRequest.put("countryCode", requestBodyJSON.get("applicantInfo").get("countryCode").asText());
+					otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
+					otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
 					otpRequest.put("action", "generate");
 					ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, otpRequest,
 							servletRequest, true);
