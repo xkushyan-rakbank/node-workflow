@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { get, last } from "lodash";
 import cx from "classnames";
-import Checkbox from "../InputField/Checkbox";
+import CustomCheckbox from "../InputField/RefactoredCheckbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
@@ -70,61 +70,16 @@ class CompanyBusinessRelationshipsForm extends Component {
       countryOfOriginCount: 5,
       anotherBankCount: 5
     };
-    this.state = {
-      isDontTradeGoodsYet: false,
-      isDontHaveSuppliersYet: false,
-      otherBankingRelationshipsExist: false
-    };
   }
 
   componentDidMount() {
-    const {
-      setIsContinueDisabled,
-      otherBankingRelationshipsExist,
-      isDontHaveSuppliersYet,
-      isDontTradeGoodsYet
-    } = this.props;
-    this.setState({
-      isDontTradeGoodsYet,
-      isDontHaveSuppliersYet,
-      otherBankingRelationshipsExist
-    });
     const isButtonDisabled = this.isContinueDisabled();
-    setIsContinueDisabled(isButtonDisabled);
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
-    if (
-      prevState.otherBankingRelationshipsExist !== this.state.otherBankingRelationshipsExist &&
-      !this.state.otherBankingRelationshipsExist
-    ) {
-      this.resetBankAccountValues();
-    }
-    if (
-      prevState.isDontTradeGoodsYet !== this.state.isDontTradeGoodsYet &&
-      this.state.isDontTradeGoodsYet
-    ) {
-      this.props.updateProspect({
-        "prospect.orgKYCDetails.topOriginGoodsCountries": [""]
-      });
-    }
-    if (
-      prevState.isDontHaveSuppliersYet !== this.state.isDontHaveSuppliersYet &&
-      this.state.isDontHaveSuppliersYet
-    ) {
-      this.props.updateProspect({
-        "prospect.orgKYCDetails.topSuppliers": [{ name: "", country: "" }]
-      });
-    }
-  }
-
-  resetBankAccountValues() {
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": [{ bankName: "" }],
-      "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist": false
-    });
   }
 
   handleAddItem = (items, prospect, limit, item) => {
@@ -145,14 +100,24 @@ class CompanyBusinessRelationshipsForm extends Component {
     });
   };
 
-  handleSwitchCheckbox = (e, prospect) => {
-    const stateField =
-      prospect === "otherBankingRelationshipsInfo.otherBankingRelationshipsExist"
-        ? "otherBankingRelationshipsExist"
-        : prospect;
-    const path = `prospect.orgKYCDetails.${prospect}`;
-    this.props.updateProspect({ [path]: e.target.checked });
-    this.setState({ [stateField]: e.target.checked });
+  checkboxCallback = (value, id) => {
+    if (value) {
+      if (id === "Okyc.isDontHaveSuppliersYet_") {
+        this.props.updateProspect({
+          "prospect.orgKYCDetails.topSuppliers": [{ name: "", country: "" }]
+        });
+      } else if (id === "Okyc.isDontTradeGoodsYet_") {
+        this.props.updateProspect({
+          "prospect.orgKYCDetails.topOriginGoodsCountries": [""]
+        });
+      } else if (id === "OkycObri.otherBankingRelationshipsExist_") {
+        this.props.updateProspect({
+          "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": [
+            { bankName: "" }
+          ]
+        });
+      }
+    }
   };
 
   isAddButtonDisabled = (limit, items, ...fields) => {
@@ -191,16 +156,15 @@ class CompanyBusinessRelationshipsForm extends Component {
   render() {
     const { customerCount, supplierCount, countryOfOriginCount, anotherBankCount } = this.limits;
     const {
-      isDontHaveSuppliersYet,
-      isDontTradeGoodsYet,
-      otherBankingRelationshipsExist
-    } = this.state;
-    const {
       classes,
       topCustomers,
       topSuppliers,
       topOriginGoodsCountries,
-      otherBankDetails
+      otherBankDetails,
+      isDontTradeGoodsYet,
+      isDontHaveSuppliersYet,
+      otherBankingRelationshipsExist,
+      index
     } = this.props;
     return (
       <>
@@ -251,10 +215,10 @@ class CompanyBusinessRelationshipsForm extends Component {
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>Top suppliers</h4>
-        <Checkbox
-          label="I don't have any suppliers"
-          value={isDontHaveSuppliersYet}
-          onChange={e => this.handleSwitchCheckbox(e, "isDontHaveSuppliersYet")}
+        <CustomCheckbox
+          id="Okyc.isDontHaveSuppliersYet"
+          indexes={[index]}
+          callback={this.checkboxCallback}
         />
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           {topSuppliers.map((_, index) => {
@@ -311,10 +275,10 @@ class CompanyBusinessRelationshipsForm extends Component {
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>Top origin of goods</h4>
-        <Checkbox
-          value={isDontTradeGoodsYet}
-          onChange={e => this.handleSwitchCheckbox(e, "isDontTradeGoodsYet")}
-          label="I don't trade with goods"
+        <CustomCheckbox
+          id="Okyc.isDontTradeGoodsYet"
+          indexes={[index]}
+          callback={this.checkboxCallback}
         />
         <Grid container direction="column" spacing={3} className={this.props.classes.flexContainer}>
           {topOriginGoodsCountries.map((_, index) => {
@@ -374,15 +338,10 @@ class CompanyBusinessRelationshipsForm extends Component {
         <div className={this.props.classes.divider} />
 
         <h4 className={this.props.classes.groupLabel}>Relationships with other banks</h4>
-        <Checkbox
-          label="The company has accounts with other banks, inside or outside the UAE"
-          value={otherBankingRelationshipsExist}
-          onChange={e =>
-            this.handleSwitchCheckbox(
-              e,
-              "otherBankingRelationshipsInfo.otherBankingRelationshipsExist"
-            )
-          }
+        <CustomCheckbox
+          id="OkycObri.otherBankingRelationshipsExist"
+          indexes={[index]}
+          callback={this.checkboxCallback}
         />
         {otherBankingRelationshipsExist && (
           <>

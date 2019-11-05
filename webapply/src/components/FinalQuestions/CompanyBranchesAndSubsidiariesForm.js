@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
-import Checkbox from "../InputField/Checkbox";
+import CustomCheckbox from "../InputField/RefactoredCheckbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
@@ -55,55 +55,32 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
       insideSubsidiaryCount: 5,
       outsideSubsidiaryCount: 5
     };
-    this.state = {
-      otherEntitiesOutsideUAE: true,
-      otherEntitiesInUAE: true
-    };
   }
 
   componentDidMount() {
-    const { setIsContinueDisabled, otherEntitiesOutsideUAE, otherEntitiesInUAE } = this.props;
-    this.setState({
-      otherEntitiesOutsideUAE: !otherEntitiesOutsideUAE,
-      otherEntitiesInUAE: !otherEntitiesInUAE
-    });
     const isButtonDisabled = this.isContinueDisabled();
-    setIsContinueDisabled(isButtonDisabled);
+    this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
-    if (
-      prevState.otherEntitiesInUAE !== this.state.otherEntitiesInUAE &&
-      this.state.otherEntitiesInUAE
-    ) {
-      this.resetInsideSubsidiaryValues();
+  }
+
+  checkboxCallback = (value, id) => {
+    if (value) {
+      if (id === "Okyc.otherEntitiesInUAE_") {
+        this.props.updateProspect({
+          "prospect.orgKYCDetails.entitiesInUAE": [
+            { tradeLicenseNo: "", emirate: "", companyName: "" }
+          ]
+        });
+      } else if (id === "Okyc.otherEntitiesOutsideUAE_") {
+        this.props.updateProspect({
+          "prospect.orgKYCDetails.entitiesOutsideUAE": [{ country: "", companyName: "" }]
+        });
+      }
     }
-    if (
-      prevState.otherEntitiesOutsideUAE !== this.state.otherEntitiesOutsideUAE &&
-      this.state.otherEntitiesOutsideUAE
-    ) {
-      this.resetOutsideSubsidiaryValues();
-    }
-  }
-
-  resetInsideSubsidiaryValues() {
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.entitiesInUAE": [{ tradeLicenseNo: "", emirate: "", companyName: "" }]
-    });
-  }
-
-  resetOutsideSubsidiaryValues() {
-    this.props.updateProspect({
-      "prospect.orgKYCDetails.entitiesOutsideUAE": [{ country: "", companyName: "" }]
-    });
-  }
-
-  handleSwitchCheckbox = (e, prospect) => {
-    const path = `prospect.orgKYCDetails.${prospect}`;
-    this.props.updateProspect({ [path]: e.target.checked });
-    this.setState({ [prospect]: !e.target.checked });
   };
 
   handleAddItem = (items, prospect, limit, item) => {
@@ -154,8 +131,14 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
 
   render() {
     const { insideSubsidiaryCount, outsideSubsidiaryCount } = this.limits;
-    const { otherEntitiesOutsideUAE, otherEntitiesInUAE } = this.state;
-    const { classes, entitiesInUAE, entitiesOutsideUAE } = this.props;
+    const {
+      classes,
+      index,
+      entitiesInUAE,
+      entitiesOutsideUAE,
+      otherEntitiesOutsideUAE,
+      otherEntitiesInUAE
+    } = this.props;
     return (
       <>
         <div className={this.props.classes.divider} />
@@ -164,40 +147,25 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
           Branches or subsidiaries or other companies in the UAE
         </h4>
 
-        <Checkbox
-          label="The company has branches, subsidiaries or other companies in the UAE"
-          value={!otherEntitiesInUAE}
-          onChange={e => this.handleSwitchCheckbox(e, "otherEntitiesInUAE")}
+        <CustomCheckbox
+          id="Okyc.otherEntitiesInUAE"
+          indexes={[index]}
+          callback={this.checkboxCallback}
         />
-        {!otherEntitiesInUAE && (
+        {otherEntitiesInUAE && (
           <>
             <Grid container spacing={3} className={this.props.classes.flexContainer}>
               {entitiesInUAE.map((_, index) => {
                 return (
                   <React.Fragment key={index}>
                     <Grid item sm={12}>
-                      <TextInput
-                        key={index}
-                        id="OkycEntIn.companyName"
-                        indexes={[index]}
-                        disabled={otherEntitiesInUAE}
-                      />
+                      <TextInput key={index} id="OkycEntIn.companyName" indexes={[index]} />
                     </Grid>
                     <Grid item md={6} sm={12}>
-                      <TextInput
-                        key={index}
-                        id="OkycEntIn.tradeLicenseNo"
-                        indexes={[index]}
-                        disabled={otherEntitiesInUAE}
-                      />
+                      <TextInput key={index} id="OkycEntIn.tradeLicenseNo" indexes={[index]} />
                     </Grid>
                     <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
-                      <PureSelect
-                        key={index}
-                        id="OkycEntIn.emirate"
-                        indexes={[index]}
-                        disabled={otherEntitiesInUAE}
-                      />
+                      <PureSelect key={index} id="OkycEntIn.emirate" indexes={[index]} />
                       {index !== 0 && (
                         <RemoveButton
                           onClick={() =>
@@ -244,32 +212,22 @@ class CompanyBranchesAndSubsidiariesForm extends Component {
         <h4 className={this.props.classes.groupLabel}>
           Branches or subsidiaries or other companies outside the UAE
         </h4>
-        <Checkbox
-          label="The company has branches, subsidiaries or other companies outside the UAE"
-          value={!otherEntitiesOutsideUAE}
-          onChange={e => this.handleSwitchCheckbox(e, "otherEntitiesOutsideUAE")}
+        <CustomCheckbox
+          id="Okyc.otherEntitiesOutsideUAE"
+          indexes={[index]}
+          callback={this.checkboxCallback}
         />
-        {!otherEntitiesOutsideUAE && (
+        {otherEntitiesOutsideUAE && (
           <>
             <Grid container spacing={3} className={this.props.classes.flexContainer}>
               {entitiesOutsideUAE.map((_, index) => {
                 return (
                   <React.Fragment key={index}>
                     <Grid item md={6} sm={12}>
-                      <TextInput
-                        key={index}
-                        id="OkycEntOut.companyName"
-                        indexes={[index]}
-                        disabled={otherEntitiesOutsideUAE}
-                      />
+                      <TextInput key={index} id="OkycEntOut.companyName" indexes={[index]} />
                     </Grid>
                     <Grid item md={6} sm={12} className={cx({ [classes.relative]: index !== 0 })}>
-                      <PureSelect
-                        key={index}
-                        id="OkycEntOut.country"
-                        indexes={[index]}
-                        disabled={otherEntitiesOutsideUAE}
-                      />
+                      <PureSelect key={index} id="OkycEntOut.country" indexes={[index]} />
                       {index !== 0 && (
                         <RemoveButton
                           onClick={() =>

@@ -93,7 +93,7 @@ class CustomCheckbox extends React.Component {
     const { name, callback } = this.props;
     this.props.updateProspect({ [name]: value });
     if (callback) {
-      callback(value);
+      callback(value, event.target.id);
     }
   };
 

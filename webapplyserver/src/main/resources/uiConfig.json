@@ -3998,11 +3998,11 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": null,
+		"label": "The company has accounts with other banks, inside or outside the UAE",
 		"placeholder": null,
 		"path": "$.prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
 		"name": "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
-		"required": true,
+		"required": false,
 		"datalistId": null,
 		"readonlyFor": [],
 		"default": "false"
@@ -4069,7 +4069,7 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": null,
+		"label": "The company has branches, subsidiaries or other companies in the UAE",
 		"placeholder": null,
 		"path": "$.prospect.orgKYCDetails.otherEntitiesInUAE",
 		"name": "prospect.orgKYCDetails.otherEntitiesInUAE",
@@ -4211,7 +4211,7 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": null,
+		"label": "The company has branches, subsidiaries or other companies outside the UAE",
 		"placeholder": null,
 		"path": "$.prospect.orgKYCDetails.otherEntitiesOutsideUAE",
 		"name": "prospect.orgKYCDetails.otherEntitiesOutsideUAE",
@@ -4246,7 +4246,7 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": null,
+		"label": "I don't have any suppliers",
 		"placeholder": null,
 		"path": "$.prospect.orgKYCDetails.isDontHaveSuppliersYet",
 		"name": "prospect.orgKYCDetails.isDontHaveSuppliersYet",
@@ -4281,7 +4281,7 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": null,
+		"label": "I don't trade with goods",
 		"placeholder": null,
 		"path": "$.prospect.orgKYCDetails.isDontTradeGoodsYet",
 		"name": "prospect.orgKYCDetails.isDontTradeGoodsYet",
