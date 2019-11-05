@@ -38,8 +38,9 @@ jobs:
         enabled: true
       - bash : |
           cd webapply
+          npm install redux-mock-store --save-dev
           npm test
-        displayName: 'Junit Test cases'
+        displayName: 'Jest Test cases'
         enabled: false
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
