@@ -17,7 +17,7 @@ import * as reCaptchaSelectors from "../store/selectors/reCaptcha";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import * as otpSelectors from "../store/selectors/otp";
 import * as inputSelectors from "../store/selectors/input";
-import validateForm from "../utils/validate";
+import { validateForm } from "../utils/validate";
 import routes from "../routes";
 import httpClient from "./../api/axiosConfig";
 import getBaseURL from "./../utils/getBaseURL";
@@ -49,9 +49,15 @@ class BasicsForm extends React.Component {
 
       this.props.receiveAppConfig();
     }
+
+    // Array.from(document.getElementsByTagName('input')).forEach( input => {
+    //   // ...
+    // });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    // detectRequeredFields();
+
     if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
       this.props.history.push(routes.verifyOtp);
     }

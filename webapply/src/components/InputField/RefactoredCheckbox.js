@@ -83,6 +83,9 @@ const styles = {
   },
   questionIcon: {
     marginLeft: "10px"
+  },
+  labelWrapper: {
+    display: "flex"
   }
 };
 

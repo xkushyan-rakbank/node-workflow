@@ -1,7 +1,7 @@
 import * as actions from "../actions/serverValidation";
 import routes from "./../../routes";
 
-const initialState = {
+export const initialState = {
   inputs: {}
 };
 

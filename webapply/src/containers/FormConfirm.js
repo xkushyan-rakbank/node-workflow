@@ -10,7 +10,7 @@ import { displayScreenBasedOnViewId, updateSaveType } from "../store/actions/app
 import { generateOtpCode, verifyOtp } from "../store/actions/otp";
 import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
 import { getOtp } from "../store/selectors/otp";
-import { getApplicationInfo } from "../store/selectors/appConfig";
+import { getApplicationInfo, getApplicantInfo } from "../store/selectors/appConfig";
 import { getInputNameById } from "../store/selectors/input";
 import routes from "../routes";
 
@@ -118,13 +118,15 @@ class FormConfirm extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, applicantInfo } = this.props;
+    console.log(applicantInfo.countryCode);
+    const codeSentTo = applicantInfo.countryCode === "971" ? "phone" : "email";
     return (
       <>
         <h2>Confirm It’s You</h2>
         <p className={classes.formDescription}>
-          We have sent you a verification code. Please input the six digits below, to cofirm this is
-          you.
+          We have sent you a verification code to {codeSentTo} . Please input the six digits below,
+          to cofirm this is you.
         </p>
         <form noValidate onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">
@@ -170,7 +172,8 @@ const mapStateToProps = state => ({
     state,
     getInputNameById(state, "Aplnt.email")
   ),
-  applicationInfo: getApplicationInfo(state)
+  applicationInfo: getApplicationInfo(state),
+  applicantInfo: getApplicantInfo(state)
 });
 
 const mapDispatchToProps = {

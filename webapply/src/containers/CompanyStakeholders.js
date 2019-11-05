@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core";
 import FilledStakeholderCard from "../components/FilledStakeholderCard";
 import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
+import ErrorMessage from "../components/ErrorMessage";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
 import ConfirmDialog from "../components/ConfirmDialod";
@@ -61,6 +62,8 @@ const CompanyStakeholders = props => {
   const showingAddButton = stakeholders.length < 6;
   const lowPercentage = percentage < 100;
   const disableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || lowPercentage;
+  const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
+   or edit the shareholding % for the added stakeholders.`;
 
   return (
     <>
@@ -103,12 +106,7 @@ const CompanyStakeholders = props => {
         </div>
       )}
 
-      {lowPercentage && (
-        <div>
-          {`Shareholders ${percentage}% is less than 100%, either add a new stakeholder or edit 
-        the shareholding % for the added stakeholders.`}
-        </div>
-      )}
+      {!!stakeholders.length && lowPercentage && <ErrorMessage error={errorMessage} />}
 
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />

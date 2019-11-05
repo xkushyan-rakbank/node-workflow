@@ -60,117 +60,189 @@ const style = {
   }
 };
 
-const getStatusDebitCardApplied = props => {
-  const {
-    accountSigningInfo: { accountSigningType, authorityType },
-    accountCurrencies,
-    debitCardApplied: { name, value }
-  } = props;
+const updateValueCheckBox = (name, prevValue, newValue, props) => {
+  if (newValue !== prevValue) {
+    props.updateProspect({ [name]: newValue });
+  }
+};
 
-  const accountSigningTypeAnyOfUs = accountSigningType === "Any of us";
+const getSelectedTypeCurrency = props => {
+  const { accountCurrencies } = props;
   const isSelectedLocalCurrency = accountCurrencies.includes("AED");
   const isSelectForeignCurrencyAndLocal =
     isSelectedLocalCurrency || (isSelectedLocalCurrency && accountCurrencies.length > 1);
   const isSelectOnlyForeignCurrency = !isSelectedLocalCurrency && accountCurrencies.length >= 1;
 
-  const updateValue = newValue => {
-    if (newValue !== value) {
-      props.updateProspect({ [name]: newValue });
-    }
+  return {
+    isSelectedLocalCurrency,
+    isSelectForeignCurrencyAndLocal,
+    isSelectOnlyForeignCurrency
   };
+};
+
+const getStatusChequeBookApplied = props => {
+  const {
+    primaryMobCountryCode,
+    primaryPhoneCountryCode,
+    chequeBook: { name, value }
+  } = props;
+
+  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
+    props
+  );
+
+  const mobCountryCode = "971";
+  const basedMobileNumberForCompany = new Set([primaryMobCountryCode, primaryPhoneCountryCode]);
+  const isSelectedLocalMobilePhone = basedMobileNumberForCompany.has(mobCountryCode);
+
+  if (isSelectForeignCurrencyAndLocal || isSelectedLocalMobilePhone) {
+    updateValueCheckBox(name, value, true, props);
+    return { isDisabledChequeBook: true };
+  }
+
+  if (isSelectOnlyForeignCurrency || !isSelectedLocalMobilePhone) {
+    return { isDisabledChequeBook: false };
+  }
+
+  return { isDisabledChequeBook: false };
+};
+
+const getStatusDebitCardApplied = props => {
+  const {
+    accountSigningInfo: { accountSigningType, authorityType },
+    debitCardApplied: { name, value }
+  } = props;
+
+  const accountSigningTypeAnyOfUs = accountSigningType === "Any of us";
+
+  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
+    props
+  );
 
   if (isSelectOnlyForeignCurrency || !accountSigningTypeAnyOfUs) {
-    updateValue(false);
-    return { isDisabled: true };
+    updateValueCheckBox(name, value, false, props);
+    return { isDisabledDebitCard: true };
   }
 
   if (authorityType === "SP" || isSelectForeignCurrencyAndLocal) {
-    updateValue(true);
-    return { isDisabled: true };
+    updateValueCheckBox(name, value, true, props);
+    return { isDisabledDebitCard: true };
   }
 
-  updateValue(accountSigningTypeAnyOfUs);
-  return { isDisabled: accountSigningTypeAnyOfUs };
+  updateValueCheckBox(name, value, accountSigningTypeAnyOfUs, props);
+  return { isDisabledDebitCard: accountSigningTypeAnyOfUs };
 };
 
-const AccountDetails = props => {
-  const { classes, goToNext, stakeholders } = props;
-  const { isDisabled } = getStatusDebitCardApplied(props);
-  const isHasSignatories = stakeholders.some(stakeholder =>
-    get(stakeholder, "kycDetails.isSignatory")
-  );
+class AccountDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedTypeStatementsID: "" };
+  }
 
-  return (
-    <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-      <div className={classes.contactsTitle}>
-        <Subtitle title="Debit Cards" />
-      </div>
+  render() {
+    const { classes, goToNext, stakeholders } = this.props;
+    const { isDisabledDebitCard } = getStatusDebitCardApplied(this.props);
+    const { isDisabledChequeBook } = getStatusChequeBookApplied(this.props);
 
-      <Checkbox
-        id="Acnt.debitCardApplied"
-        indexes={[0]}
-        style={{ marginTop: "10px" }}
-        disabled={isDisabled}
-      />
+    const isHasSignatories = stakeholders.some(stakeholder =>
+      get(stakeholder, "kycDetails.isSignatory")
+    );
 
-      {isHasSignatories && (
-        <>
-          <div className={classes.signatoryLabel}>Signatory name</div>
-          <InfoTitle
-            title="Names on debit cards have a limit of 19 characters"
-            styles={{ marginTop: "0" }}
+    const onChangeBankStatements = e => {
+      const { id } = e.target;
+      const { selectedTypeStatementsID } = this.state;
+      this.props.updateProspect({ [selectedTypeStatementsID]: false });
+
+      this.setState({ selectedTypeStatementsID: id });
+      this.props.updateProspect({ [id]: true });
+    };
+
+    return (
+      <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
+        <div className={classes.contactsTitle}>
+          <Subtitle title="Debit Cards" />
+        </div>
+
+        <Checkbox
+          id="Acnt.debitCardApplied"
+          indexes={[0]}
+          style={{ marginTop: "10px" }}
+          disabled={isDisabledDebitCard}
+        />
+
+        {isHasSignatories && (
+          <>
+            <div className={classes.signatoryLabel}>Signatory name</div>
+            <InfoTitle
+              title="Names on debit cards have a limit of 19 characters"
+              styles={{ marginTop: "0" }}
+            />
+
+            <div className={classes.signatoryNamesContainer}>
+              {stakeholders.map((stakeholder, index) => {
+                const { firstName, lastName } = stakeholder;
+                const isSignatory = get(stakeholder, "kycDetails.isSignatory");
+
+                return isSignatory ? (
+                  <div className={classes.signatoryName} key={index}>
+                    <span>{`${firstName} ${lastName}`}</span>
+                    <TextInput
+                      id="SigDbtcAuths.nameOnDebitCard"
+                      indexes={[index]}
+                      classes={{ regularWrapper: classes.selectCombined, input: classes.input }}
+                    />
+                  </div>
+                ) : null;
+              })}
+            </div>
+          </>
+        )}
+
+        <Divider styles={{ marginBottom: "0" }} />
+
+        <div className={classes.contactsTitle}>
+          <Subtitle title="Cheque book" />
+        </div>
+        <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} disabled={isDisabledChequeBook} />
+
+        <Divider styles={{ marginBottom: "0" }} />
+
+        <Subtitle title="Bank statements" />
+
+        <RadioGroup name="BankStatements" onChange={onChangeBankStatements}>
+          <RadioButton
+            value={this.props.eStatements.value}
+            checked={this.props.eStatements.value}
+            label={this.props.eStatements.config.label}
+            id={this.props.eStatements.name}
           />
+          <RadioButton
+            value={this.props.mailStatements.value}
+            checked={this.props.mailStatements.value}
+            label={this.props.mailStatements.config.label}
+            id={this.props.mailStatements.name}
+          />
+        </RadioGroup>
 
-          <div className={classes.signatoryNamesContainer}>
-            {stakeholders.map((stakeholder, index) => {
-              const { firstName, lastName } = stakeholder;
-              const isSignatory = get(stakeholder, "kycDetails.isSignatory");
-
-              return isSignatory ? (
-                <div className={classes.signatoryName} key={index}>
-                  <span>{`${firstName} ${lastName}`}</span>
-                  <TextInput
-                    id="SigDbtcAuths.nameOnDebitCard"
-                    indexes={[index]}
-                    classes={{ regularWrapper: classes.selectCombined, input: classes.input }}
-                  />
-                </div>
-              ) : null;
-            })}
-          </div>
-        </>
-      )}
-
-      <Divider styles={{ marginBottom: "0" }} />
-
-      <div className={classes.contactsTitle}>
-        <Subtitle title="Cheque book" />
-      </div>
-      <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} />
-
-      <Divider styles={{ marginBottom: "0" }} />
-
-      <Subtitle title="Bank statements" />
-      {/*<Checkbox id="Acnt.eStatements" indexes={[0]} />*/}
-      {/*<Checkbox id="Acnt.mailStatements" indexes={[0]} />*/}
-      <RadioGroup name="Bank statements">
-        <RadioButton value="any" label="I want online bank statements" />
-        <RadioButton value="any 3" label="I want paper statements (monthly charges apply)" />
-      </RadioGroup>
-
-      <InfoTitle
-        title="These will be mailed by courier to your preferred address"
-        styles={{ position: "absolute", bottom: "11px" }}
-      />
-    </FormWrapper>
-  );
-};
+        <InfoTitle
+          title="These will be mailed by courier to your preferred address"
+          styles={{ position: "absolute", bottom: "11px" }}
+        />
+      </FormWrapper>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   ...appConfigSelectors.getSignatories(state)[0],
   accountCurrencies: getInputValueById(state, "Acnt.accountCurrencies", [0]),
   debitCardApplied: getGeneralInputProps(state, "Acnt.debitCardApplied", [0]),
-  stakeholders: stakeholdersSelector(state)
+  chequeBook: getGeneralInputProps(state, "Acnt.chequeBookApplied", [0]),
+  eStatements: getGeneralInputProps(state, "Acnt.eStatements", [0]),
+  mailStatements: getGeneralInputProps(state, "Acnt.mailStatements", [0]),
+  stakeholders: stakeholdersSelector(state),
+  primaryMobCountryCode: getInputValueById(state, "OrgCont.primaryMobCountryCode"),
+  primaryPhoneCountryCode: getInputValueById(state, "OrgCont.primaryPhoneCountryCode")
 });
 
 const mapDispatchToProps = {

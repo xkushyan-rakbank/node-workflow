@@ -6,7 +6,7 @@ import SearchButton from "../components/Buttons/SearchButton";
 import PureSelect from "../components/InputField/PureSelect";
 import Grid from "@material-ui/core/Grid";
 import SearchResult from "./SearchResult";
-import validateForm from "../utils/validate";
+import { validateForm } from "../utils/validate";
 import { searchApplications } from "./../store/actions/searchProspect";
 import * as inputSelectors from "./../store/selectors/input";
 import * as appConfigSelectors from "./../store/selectors/appConfig";

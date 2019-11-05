@@ -31,16 +31,17 @@ jobs:
       - bash : |
           cd webapply
           npm install
-          PUBLIC_URL=/quickapply npm run build
+          npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
         enabled: true
       - bash : |
           cd webapply
+          npm install redux-mock-store --save-dev
           npm test
-        displayName: 'Junit Test cases'
-        enabled: false
+        displayName: 'Jest Test cases'
+        enabled: true
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:

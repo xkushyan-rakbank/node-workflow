@@ -5,7 +5,6 @@ import { avatarColors } from "../constants/assets";
 
 const style = {
   greenAvatar: {
-    // backgroundColor: "#166a2c",
     width: "40px",
     fontSize: "14px",
     fontWeight: 600

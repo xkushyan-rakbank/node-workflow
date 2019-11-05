@@ -6,7 +6,7 @@
 console.log('@@@ webapply'); // eslint-disable-line
 
 module.exports = {
-  collectCoverage: false,
+  collectCoverage: true,
 
   collectCoverageFrom: ["src/**/*.js", "!src/**/index.js", "!**/constants/**"],
 

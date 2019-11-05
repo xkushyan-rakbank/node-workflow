@@ -47,18 +47,6 @@ export const validate = (field, fieldConfig) => {
       const errors = validationErrorMessages(errorConfig);
       return errors;
     }
-
-    // If a number field is over the max
-    if (validity.rangeOverflow) {
-      const errors = validationErrorMessages(errorConfig);
-      return errors;
-    }
-
-    // If a number field is below the min
-    if (validity.rangeUnderflow) {
-      const errors = validationErrorMessages(errorConfig);
-      return errors;
-    }
   }
 };
 
@@ -76,7 +64,7 @@ const validationErrorMessages = errorConfig => {
   }
 };
 
-const validateForm = event => {
+export const validateForm = event => {
   const fields = event.target.elements;
   const config = get(store.getState(), "appConfig.uiConfig");
   const errorList = [];
@@ -92,5 +80,3 @@ const validateForm = event => {
 
   return errorList;
 };
-
-export default validateForm;
