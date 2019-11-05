@@ -60,42 +60,84 @@ const style = {
   }
 };
 
-const getStatusDebitCardApplied = props => {
-  const {
-    accountSigningInfo: { accountSigningType, authorityType },
-    accountCurrencies,
-    debitCardApplied: { name, value }
-  } = props;
+const updateValueCheckBox = (name, prevValue, newValue, props) => {
+  if (newValue !== prevValue) {
+    props.updateProspect({ [name]: newValue });
+  }
+};
 
-  const accountSigningTypeAnyOfUs = accountSigningType === "Any of us";
+const getSelectedTypeCurrency = props => {
+  const { accountCurrencies } = props;
   const isSelectedLocalCurrency = accountCurrencies.includes("AED");
   const isSelectForeignCurrencyAndLocal =
     isSelectedLocalCurrency || (isSelectedLocalCurrency && accountCurrencies.length > 1);
   const isSelectOnlyForeignCurrency = !isSelectedLocalCurrency && accountCurrencies.length >= 1;
 
-  const updateValue = newValue => {
-    if (newValue !== value) {
-      props.updateProspect({ [name]: newValue });
-    }
+  return {
+    isSelectedLocalCurrency,
+    isSelectForeignCurrencyAndLocal,
+    isSelectOnlyForeignCurrency
   };
+};
+
+const getStatusChequeBookApplied = props => {
+  const {
+    primaryMobCountryCode,
+    primaryPhoneCountryCode,
+    chequeBook: { name, value }
+  } = props;
+
+  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
+    props
+  );
+
+  const mobCountryCode = "971";
+  const basedMobileNumberForCompany = new Set([primaryMobCountryCode, primaryPhoneCountryCode]);
+  const isSelectedLocalMobilePhone = basedMobileNumberForCompany.has(mobCountryCode);
+
+  if (isSelectForeignCurrencyAndLocal || isSelectedLocalMobilePhone) {
+    updateValueCheckBox(name, value, true, props);
+    return { isDisabledChequeBook: true };
+  }
+
+  if (isSelectOnlyForeignCurrency || !isSelectedLocalMobilePhone) {
+    return { isDisabledChequeBook: false };
+  }
+
+  return { isDisabledChequeBook: false };
+};
+
+const getStatusDebitCardApplied = props => {
+  const {
+    accountSigningInfo: { accountSigningType, authorityType },
+    debitCardApplied: { name, value }
+  } = props;
+
+  const accountSigningTypeAnyOfUs = accountSigningType === "Any of us";
+
+  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
+    props
+  );
 
   if (isSelectOnlyForeignCurrency || !accountSigningTypeAnyOfUs) {
-    updateValue(false);
-    return { isDisabled: true };
+    updateValueCheckBox(name, value, false, props);
+    return { isDisabledDebitCard: true };
   }
 
   if (authorityType === "SP" || isSelectForeignCurrencyAndLocal) {
-    updateValue(true);
-    return { isDisabled: true };
+    updateValueCheckBox(name, value, true, props);
+    return { isDisabledDebitCard: true };
   }
 
-  updateValue(accountSigningTypeAnyOfUs);
-  return { isDisabled: accountSigningTypeAnyOfUs };
+  updateValueCheckBox(name, value, accountSigningTypeAnyOfUs, props);
+  return { isDisabledDebitCard: accountSigningTypeAnyOfUs };
 };
 
 const AccountDetails = props => {
   const { classes, goToNext, stakeholders } = props;
-  const { isDisabled } = getStatusDebitCardApplied(props);
+  const { isDisabledDebitCard } = getStatusDebitCardApplied(props);
+  const { isDisabledChequeBook } = getStatusChequeBookApplied(props);
+
   const isHasSignatories = stakeholders.some(stakeholder =>
     get(stakeholder, "kycDetails.isSignatory")
   );
@@ -110,7 +152,7 @@ const AccountDetails = props => {
         id="Acnt.debitCardApplied"
         indexes={[0]}
         style={{ marginTop: "10px" }}
-        disabled={isDisabled}
+        disabled={isDisabledDebitCard}
       />
 
       {isHasSignatories && (
@@ -146,7 +188,7 @@ const AccountDetails = props => {
       <div className={classes.contactsTitle}>
         <Subtitle title="Cheque book" />
       </div>
-      <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} />
+      <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} disabled={isDisabledChequeBook} />
 
       <Divider styles={{ marginBottom: "0" }} />
 
@@ -170,7 +212,10 @@ const mapStateToProps = state => ({
   ...appConfigSelectors.getSignatories(state)[0],
   accountCurrencies: getInputValueById(state, "Acnt.accountCurrencies", [0]),
   debitCardApplied: getGeneralInputProps(state, "Acnt.debitCardApplied", [0]),
-  stakeholders: stakeholdersSelector(state)
+  chequeBook: getGeneralInputProps(state, "Acnt.chequeBookApplied", [0]),
+  stakeholders: stakeholdersSelector(state),
+  primaryMobCountryCode: getInputValueById(state, "OrgCont.primaryMobCountryCode"),
+  primaryPhoneCountryCode: getInputValueById(state, "OrgCont.primaryPhoneCountryCode")
 });
 
 const mapDispatchToProps = {

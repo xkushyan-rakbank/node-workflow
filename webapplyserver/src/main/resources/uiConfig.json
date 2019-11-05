@@ -7576,8 +7576,8 @@
 		"required": true,
 		"datalistId": null,
 		"readonlyFor": [],
-		"maxlength": "19",
-		"pattern": "^[a-zA-Z ]*$"
+		"maxlength": "500",
+		"pattern": "^[a-zA-Z ]{1,19}$"
 	},
 	"Chnl.mobileInstructions": {
 		"criteria": {
