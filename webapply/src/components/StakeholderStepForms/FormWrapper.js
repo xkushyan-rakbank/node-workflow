@@ -4,7 +4,7 @@ import cx from "classnames";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import ContinueButton from "../Buttons/ContinueButton";
-import validateForm from "../../utils/validate";
+import { validateForm } from "../../utils/validate";
 import { updateValidationErrors } from "../../store/actions/validationErrors";
 
 const styles = {
