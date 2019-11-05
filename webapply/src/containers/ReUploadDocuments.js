@@ -1,18 +1,22 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
-import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
-import SectionTitle from "../components/SectionTitle";
-import { retrieveDocDetails } from "../store/actions/getProspectDocuments";
-import * as appConfigSelectors from "../store/selectors/appConfig";
 import arrowBack from "../assets/icons/backArrow.png";
 import { Link } from "react-router-dom";
 import TagManager from "react-gtm-module";
+import closeBtn from "../assets/images/close.png";
 
 const style = {
   sectionContainer: {
-    marginBottom: "40px"
+    padding: "23px",
+    margin: "20px 0",
+    borderRadius: "8px",
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    border: "solid 1px #e8e8e8",
+    backgroundColor: "#ffffff"
+  },
+  sectionContainerTitle: {
+    verticalAlign: "super",
+    paddingLeft: "29px"
   },
   title: {
     marginTop: "20px",
@@ -70,6 +74,8 @@ const style = {
   }
 };
 
+// GTM tag manager data layers
+
 const tagManagerArgs = {
   dataLayer: {
     userId: "001",
@@ -79,69 +85,70 @@ const tagManagerArgs = {
 };
 
 class EditApplication extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedFile: null
+    };
+    this.fileUploadHandler = this.fileUploadHandler.bind(this);
+  }
+
   componentDidMount() {
-    this.props.retrieveDocDetails();
     TagManager.dataLayer(tagManagerArgs);
   }
 
-  render() {
-    const DocDetails = this.props;
-    let companyOdcLength, StakeholdersDocLength, UploadDocCount, campus;
-    let uploadedDocsCount = 0;
-    if (this.props.documents) {
-      let companyDocument = this.props.documents.companyDocuments;
-      if (companyDocument) {
-        companyOdcLength = Object.keys(companyDocument).length;
-        UploadDocCount = +companyOdcLength;
-        // to check which documents uploaded
-        companyDocument.map((documents, index) => {
-          if (documents.uploadStatus === "Updated") {
-            return (uploadedDocsCount = uploadedDocsCount + 1);
-          } else {
-            return null;
-          }
-        });
-      }
-      let StakeholdersDoc = this.props.documents.stakeholdersDocuments;
-      if (StakeholdersDoc) {
-        StakeholdersDocLength = Object.keys(StakeholdersDoc)
-          .map(campusName => {
-            campus = StakeholdersDoc[campusName];
-            // to check which documents uploaded
-            campus.map((docUploaded, index) => {
-              if (docUploaded.uploadStatus === "Updated") {
-                return (uploadedDocsCount = uploadedDocsCount + 1);
-              } else {
-                return null;
-              }
-            });
-            return Object.keys(campus).length;
-          })
-          .reduce((p, c) => p + c, 0);
-        UploadDocCount = UploadDocCount + StakeholdersDocLength;
-      }
-    }
+  // code for file uploader
 
+  fileUploadHandler(event) {
+    this.setState(
+      {
+        selectedFile: event.target.files[0]
+      },
+
+      () => {
+        //checking the file size
+        console.log(this.state.selectedFile);
+        // let fileSize = this.state.selectedFile.size;
+        //verify the file type
+        if (
+          this.state.selectedFile.type === "image/png" ||
+          this.state.selectedFile.type === "image/jpeg" ||
+          this.state.selectedFile.type === "application/pdf" ||
+          this.state.selectedFile.type === "application/txt"
+        ) {
+          console.log("validation validated");
+        }
+      }
+    );
+  }
+
+  render() {
     return (
       <>
+        {/* file uploader button */}
+        <input
+          style={{ display: "none" }}
+          type="file"
+          onChange={this.fileUploadHandler}
+          ref={fileInput => (this.fileInput = fileInput)}
+          multiple
+        />
         <h3 className={this.props.classes.heading}>Almost done! We need a few extra documents</h3>
         <p className="formDescription">
-          Some of the documents were not valid. Please take a look and reupload.
+          One our agents asked you for some more documents? Please upload them here.
         </p>
-        {this.props.documents ? (
-          <>
-            <div className={this.props.classes.sectionContainer}>
-              <SectionTitle title="Company documents" className={this.props.classes.title} />
-              <CompanyDocuments DocDetails={DocDetails} />
-            </div>
-            {this.props.documents.stakeholdersDocuments ? (
-              <div className={this.props.classes.sectionContainer}>
-                <SectionTitle title="Stakeholders documents" />
-                <SignatoriesDocuments DocDetails={DocDetails} />
-              </div>
-            ) : null}
-          </>
-        ) : null}
+        {this.state.selectedFile ? (
+          <div className={this.props.classes.sectionContainer}>
+            <img src={closeBtn} alt="closeBtn" onClick={() => this.fileInput.click()} />
+            <span className={this.props.classes.sectionContainerTitle}>Add another document</span>
+          </div>
+        ) : (
+          <div className={this.props.classes.sectionContainer}>
+            <img src={closeBtn} alt="closeBtn" onClick={() => this.fileInput.click()} />
+            <span className={this.props.classes.sectionContainerTitle}>Upload document</span>
+          </div>
+        )}
+
         <div className="linkContainer">
           <Link to="">
             <button className={this.props.classes.BtnBack} justify="flex-end">
@@ -149,37 +156,13 @@ class EditApplication extends Component {
               Back to Applications
             </button>
           </Link>
-          {UploadDocCount === uploadedDocsCount ? (
-            <>
-              <button className={this.props.classes.BtnSubmit} justify="flex-end">
-                Submit documents
-              </button>
-            </>
-          ) : (
-            <button className={this.props.classes.BtnSubmit} justify="flex-end" disabled={true}>
-              Submit documents
-            </button>
-          )}
+          <button className={this.props.classes.BtnSubmit} justify="flex-end" disabled={true}>
+            Submit documents
+          </button>
         </div>
       </>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    getSignatories: appConfigSelectors.getSignatories(state),
-    documents: appConfigSelectors.getProspectDocuments(state)
-  };
-};
-
-const mapDispatchToProps = {
-  retrieveDocDetails
-};
-
-export default withStyles(style)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(EditApplication)
-);
+export default withStyles(style)(EditApplication);
