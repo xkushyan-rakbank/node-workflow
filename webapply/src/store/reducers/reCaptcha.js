@@ -1,6 +1,6 @@
 import * as actions from "../actions/reCaptcha";
 
-const initialState = {
+export const initialState = {
   isPending: false,
   isVerified: false,
   token: "",

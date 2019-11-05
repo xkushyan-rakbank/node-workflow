@@ -46,7 +46,7 @@ const styles = {
     }
   },
   container: {
-    top: "18px",
+    top: "15px",
     right: "-100px",
     "@media only screen and (max-width: 959px)": {
       top: "70px",
@@ -78,8 +78,19 @@ class CompanyBusinessRelationshipsForm extends Component {
   }
 
   componentDidMount() {
+    const {
+      setIsContinueDisabled,
+      otherBankingRelationshipsExist,
+      isDontHaveSuppliersYet,
+      isDontTradeGoodsYet
+    } = this.props;
+    this.setState({
+      isDontTradeGoodsYet,
+      isDontHaveSuppliersYet,
+      otherBankingRelationshipsExist
+    });
     const isButtonDisabled = this.isContinueDisabled();
-    this.props.setIsContinueDisabled(isButtonDisabled);
+    setIsContinueDisabled(isButtonDisabled);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -178,6 +189,7 @@ class CompanyBusinessRelationshipsForm extends Component {
   };
 
   render() {
+    const { customerCount, supplierCount, countryOfOriginCount, anotherBankCount } = this.limits;
     const {
       isDontHaveSuppliersYet,
       isDontTradeGoodsYet,
@@ -210,7 +222,7 @@ class CompanyBusinessRelationshipsForm extends Component {
                   {index !== 0 && (
                     <RemoveButton
                       onClick={() => this.handleRemoveItem(topCustomers, index, "topCustomers")}
-                      title="Remove"
+                      title="Delete"
                     />
                   )}
                 </Grid>
@@ -218,21 +230,23 @@ class CompanyBusinessRelationshipsForm extends Component {
             );
           })}
         </Grid>
-        <AddButton
-          onClick={() =>
-            this.handleAddItem(topCustomers, "topCustomers", this.limits.customerCount, {
-              name: "",
-              country: ""
-            })
-          }
-          title="Add another customer"
-          disabled={this.isAddButtonDisabled(
-            this.limits.customerCount,
-            topCustomers,
-            "name",
-            "country"
-          )}
-        />
+        {topCustomers.length < customerCount && (
+          <AddButton
+            onClick={() =>
+              this.handleAddItem(topCustomers, "topCustomers", this.limits.customerCount, {
+                name: "",
+                country: ""
+              })
+            }
+            title="Add another customer"
+            disabled={this.isAddButtonDisabled(
+              this.limits.customerCount,
+              topCustomers,
+              "name",
+              "country"
+            )}
+          />
+        )}
 
         <div className={this.props.classes.divider} />
 
@@ -270,7 +284,7 @@ class CompanyBusinessRelationshipsForm extends Component {
                   {index !== 0 && (
                     <RemoveButton
                       onClick={() => this.handleRemoveItem(topSuppliers, index, "topSuppliers")}
-                      title="Remove"
+                      title="Delete"
                     />
                   )}
                 </Grid>
@@ -278,19 +292,21 @@ class CompanyBusinessRelationshipsForm extends Component {
             );
           })}
         </Grid>
-        <AddButton
-          onClick={() =>
-            this.handleAddItem(topSuppliers, "topSuppliers", this.limits.supplierCount, {
-              name: "",
-              country: ""
-            })
-          }
-          title="Add another supplier"
-          disabled={
-            isDontHaveSuppliersYet ||
-            this.isAddButtonDisabled(this.limits.supplierCount, topSuppliers, "name", "country")
-          }
-        />
+        {topSuppliers.length < supplierCount && (
+          <AddButton
+            onClick={() =>
+              this.handleAddItem(topSuppliers, "topSuppliers", this.limits.supplierCount, {
+                name: "",
+                country: ""
+              })
+            }
+            title="Add another supplier"
+            disabled={
+              isDontHaveSuppliersYet ||
+              this.isAddButtonDisabled(this.limits.supplierCount, topSuppliers, "name", "country")
+            }
+          />
+        )}
 
         <div className={this.props.classes.divider} />
 
@@ -330,28 +346,30 @@ class CompanyBusinessRelationshipsForm extends Component {
                         "topOriginGoodsCountries"
                       )
                     }
-                    title="Remove"
+                    title="Delete"
                   />
                 )}
               </Grid>
             );
           })}
         </Grid>
-        <AddButton
-          onClick={() =>
-            this.handleAddItem(
-              topOriginGoodsCountries,
-              "topOriginGoodsCountries",
-              this.limits.countryOfOriginCount,
-              ""
-            )
-          }
-          title="Add another country of origin"
-          disabled={
-            isDontTradeGoodsYet ||
-            this.isAddButtonDisabled(this.limits.countryOfOriginCount, topOriginGoodsCountries)
-          }
-        />
+        {topOriginGoodsCountries.length < countryOfOriginCount && (
+          <AddButton
+            onClick={() =>
+              this.handleAddItem(
+                topOriginGoodsCountries,
+                "topOriginGoodsCountries",
+                this.limits.countryOfOriginCount,
+                ""
+              )
+            }
+            title="Add another country of origin"
+            disabled={
+              isDontTradeGoodsYet ||
+              this.isAddButtonDisabled(this.limits.countryOfOriginCount, topOriginGoodsCountries)
+            }
+          />
+        )}
 
         <div className={this.props.classes.divider} />
 
@@ -394,7 +412,7 @@ class CompanyBusinessRelationshipsForm extends Component {
                                 "otherBankingRelationshipsInfo.otherBankDetails"
                               )
                             }
-                            title="Remove"
+                            title="Delete"
                             classes={{ container: classes.container }}
                           />
                         )}
@@ -404,21 +422,27 @@ class CompanyBusinessRelationshipsForm extends Component {
                 })}
               </Grid>
             </Grid>
-            <AddButton
-              onClick={() =>
-                this.handleAddItem(
-                  otherBankDetails,
-                  "otherBankingRelationshipsInfo.otherBankDetails",
-                  this.limits.anotherBankCount,
-                  { bankName: "" }
-                )
-              }
-              title="Add another bank"
-              disabled={
-                !otherBankingRelationshipsExist ||
-                this.isAddButtonDisabled(this.limits.anotherBankCount, otherBankDetails, "bankName")
-              }
-            />
+            {otherBankDetails.length < anotherBankCount && (
+              <AddButton
+                onClick={() =>
+                  this.handleAddItem(
+                    otherBankDetails,
+                    "otherBankingRelationshipsInfo.otherBankDetails",
+                    this.limits.anotherBankCount,
+                    { bankName: "" }
+                  )
+                }
+                title="Add another bank"
+                disabled={
+                  !otherBankingRelationshipsExist ||
+                  this.isAddButtonDisabled(
+                    this.limits.anotherBankCount,
+                    otherBankDetails,
+                    "bankName"
+                  )
+                }
+              />
+            )}
           </>
         )}
       </>

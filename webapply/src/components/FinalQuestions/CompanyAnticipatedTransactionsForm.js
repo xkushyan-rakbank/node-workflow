@@ -11,6 +11,7 @@ import isNumber from "lodash/isNumber";
 import isNaN from "lodash/isNaN";
 import { getInputValueById } from "../../store/selectors/input";
 import cx from "classnames";
+import ErrorMessage from "../ErrorMessage";
 
 const styles = {
   title: {
@@ -63,6 +64,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
       totalMonthlyCreditsValue: 0
     };
 
+    // this.isMaxValueError = false;
+
     this.commonInputProps = {
       endAdornment: <InputAdornment position="end">{this.props.companyCurrency}</InputAdornment>
     };
@@ -96,33 +99,25 @@ class CompanyAnticipatedTransactionsForm extends Component {
     return `${monthFinancialTurnover.toFixed(0)} in Total Monthly Credits`;
   }
 
-  partOfTotalInCashMaxValue() {
+  getMonthlyTotalMinimalValue(value) {
+    if (!value) {
+      return 0;
+    }
     if (this.getMonthFinancialTurnover() > 0) {
-      return (
-        this.getMonthFinancialTurnover() - this.getNumberOrZero(this.props.notCashAmountInFigures)
-      );
+      return this.getMonthFinancialTurnover() - value;
     }
   }
 
-  partOfTotalInNotCashMaxValue() {
+  getMonthlyTotalMaximumValue(value) {
     if (this.getMonthFinancialTurnover() > 0) {
-      return (
-        this.getMonthFinancialTurnover() - this.getNumberOrZero(this.props.cashAmountInFigures)
-      );
+      return this.getMonthFinancialTurnover() - value;
     }
   }
 
-  maximumSingleAmountInCashMaxValue() {
+  getAnticipatedTransactionMaximumValue(value) {
     const allAmount = this.getNumberOrZero(this.props.annualFinancialTurnover);
     if (allAmount > 0) {
-      return allAmount - this.getNumberOrZero(this.props.maximumSingleNotCashAmount);
-    }
-  }
-
-  maximumSingleAmountInNotCashMaxValue() {
-    const allAmount = this.getNumberOrZero(this.props.annualFinancialTurnover);
-    if (allAmount > 0) {
-      return allAmount - this.getNumberOrZero(this.props.maximumSingleCashAmount);
+      return allAmount - this.getNumberOrZero(value);
     }
   }
 
@@ -130,13 +125,60 @@ class CompanyAnticipatedTransactionsForm extends Component {
     return !this.props.maximumSingleNotCashAmount;
   };
 
+  customValidationMessageMonthlyTotalValue = ({ isFocused, inputRef }) => {
+    const { annualFinancialTurnover, cashAmountInFigures, notCashAmountInFigures } = this.props;
+    const elementValue = inputRef.value;
+    const secondElementValue =
+      inputRef.id === "OkycAntTxnTotNonCashCr.amountInFigures"
+        ? cashAmountInFigures
+        : notCashAmountInFigures;
+    const isValid =
+      !(annualFinancialTurnover && secondElementValue && inputRef.value) ||
+      +elementValue + +secondElementValue === this.getMonthFinancialTurnover();
+    if (!isFocused && !isValid) {
+      return (
+        <ErrorMessage error="Sum of Monthly Total in cash and non-cash should be equal to Total Monthly Credits" />
+      );
+    }
+    return null;
+  };
+
+  customValidationMessageMaxTransactionValue = ({ isFocused, inputRef }) => {
+    const {
+      annualFinancialTurnover,
+      maximumSingleCashAmount,
+      maximumSingleNotCashAmount
+    } = this.props;
+    const elementValue = inputRef.value;
+    const secondElementValue =
+      inputRef.id === "OkycAntTxn.maxAmtSingleTxnNonCashAED"
+        ? maximumSingleCashAmount
+        : maximumSingleNotCashAmount;
+    const isValid =
+      !(annualFinancialTurnover && secondElementValue) ||
+      +elementValue + +secondElementValue <= annualFinancialTurnover;
+    if (!isFocused && !isValid) {
+      return (
+        <ErrorMessage error="Total of maximum amount in cash and non-cash should NOT exceed Annual Financial Turnover" />
+      );
+    }
+    return null;
+  };
+
   render() {
+    const {
+      cashAmountInFigures,
+      notCashAmountInFigures,
+      maximumSingleCashAmount,
+      maximumSingleNotCashAmount
+    } = this.props;
     return (
       <>
         <Grid container spacing={3} className={this.props.classes.flexContainer}>
           <Grid item sm={12}>
             <TextInput
               min="0"
+              step=".01"
               id="Okyc.annualFinTurnoverAmtInAED"
               InputProps={this.commonInputProps}
             />
@@ -164,16 +206,18 @@ class CompanyAnticipatedTransactionsForm extends Component {
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
-              min="0"
-              max={this.partOfTotalInCashMaxValue()}
+              min={this.getMonthlyTotalMinimalValue(notCashAmountInFigures)}
+              max={this.getMonthlyTotalMaximumValue(notCashAmountInFigures)}
+              customValidationMessage={this.customValidationMessageMonthlyTotalValue}
               id="OkycAntTxnTotCashCr.amountInFigures"
               InputProps={this.commonInputProps}
             />
           </Grid>
           <Grid item md={6} sm={12}>
             <TextInput
-              min="0"
-              max={this.partOfTotalInNotCashMaxValue()}
+              min={this.getMonthlyTotalMinimalValue(cashAmountInFigures)}
+              max={this.getMonthlyTotalMaximumValue(cashAmountInFigures)}
+              customValidationMessage={this.customValidationMessageMonthlyTotalValue}
               id="OkycAntTxnTotNonCashCr.amountInFigures"
               InputProps={this.commonInputProps}
             />
@@ -195,7 +239,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
           <Grid item md={6} sm={12}>
             <TextInput
               min="0"
-              max={this.maximumSingleAmountInCashMaxValue()}
+              max={this.getAnticipatedTransactionMaximumValue(maximumSingleNotCashAmount)}
+              customValidationMessage={this.customValidationMessageMaxTransactionValue}
               id="OkycAntTxn.maxAmtSingleTxnCashAED"
               InputProps={this.commonInputProps}
             />
@@ -203,7 +248,8 @@ class CompanyAnticipatedTransactionsForm extends Component {
           <Grid item md={6} sm={12}>
             <TextInput
               min="0"
-              max={this.maximumSingleAmountInNotCashMaxValue()}
+              max={this.getAnticipatedTransactionMaximumValue(maximumSingleCashAmount)}
+              customValidationMessage={this.customValidationMessageMaxTransactionValue}
               id="OkycAntTxn.maxAmtSingleTxnNonCashAED"
               InputProps={this.commonInputProps}
             />

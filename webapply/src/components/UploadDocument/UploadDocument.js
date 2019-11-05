@@ -264,7 +264,7 @@ class UploadDocuments extends Component {
     uploadDocUri = this.props.uploadDocsEndpoints;
     uploadDocUri = uploadDocUri.baseUrl + endPoint;
     const docType = this.props.documents;
-    if (docType.uploadStatus !== "Not Uploaded") {
+    if (docType.uploadStatus !== "NotUploaded") {
       return (
         <div className={this.props.classes.fileUploadPlaceholder}>
           <input

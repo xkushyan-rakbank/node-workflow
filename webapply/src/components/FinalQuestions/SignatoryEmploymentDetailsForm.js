@@ -28,6 +28,8 @@ class SignatoryEmploymentDetailsForm extends Component {
   };
 
   componentDidMount() {
+    const { isWorkAtTheCompany } = this.props;
+    this.setState({ isWorkAtTheCompany });
     const isButtonDisabled = this.isContinueDisabled();
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
@@ -93,7 +95,8 @@ class SignatoryEmploymentDetailsForm extends Component {
 const mapStateToProps = state => ({
   companyName: getInputValueById(state, "Org.companyName"),
   employerName: getInputValueById(state, "SigEmpd.employerName", [0, 0]),
-  employmentType: getInputValueById(state, "SigEmpd.employmentType", [0, 0])
+  employmentType: getInputValueById(state, "SigEmpd.employmentType", [0, 0]),
+  isWorkAtTheCompany: getInputValueById(state, "SigEmpd.isWorkAtTheCompany", [0, 0])
 });
 
 const mapDispatchToProps = {

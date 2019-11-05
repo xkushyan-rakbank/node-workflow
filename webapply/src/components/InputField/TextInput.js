@@ -285,7 +285,10 @@ class Input extends React.Component {
           </FormGroup>
 
           {isError && !customValidationMessage && (
-            <ErrorMessage error={fieldErrors.error} multiLineError={fieldErrors.multiLineError} />
+            <ErrorMessage
+              error={fieldErrors && fieldErrors.error}
+              multiLineError={fieldErrors && fieldErrors.multiLineError}
+            />
           )}
 
           {!isNil(serverValidation) && serverValidation.message && (
