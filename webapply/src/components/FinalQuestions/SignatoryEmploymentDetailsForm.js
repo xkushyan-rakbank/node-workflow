@@ -92,11 +92,11 @@ class SignatoryEmploymentDetailsForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, { index }) => ({
   companyName: getInputValueById(state, "Org.companyName"),
-  employerName: getInputValueById(state, "SigEmpd.employerName", [0, 0]),
-  employmentType: getInputValueById(state, "SigEmpd.employmentType", [0, 0]),
-  isWorkAtTheCompany: getInputValueById(state, "SigEmpd.isWorkAtTheCompany", [0, 0])
+  employerName: getInputValueById(state, "SigEmpd.employerName", [index, 0]),
+  employmentType: getInputValueById(state, "SigEmpd.employmentType", [index, 0]),
+  isWorkAtTheCompany: getInputValueById(state, "SigEmpd.isWorkAtTheCompany", [index, 0])
 });
 
 const mapDispatchToProps = {

@@ -58,10 +58,10 @@ class SignatoryPersonalInformationForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  maritalStatus: getInputValueById(state, "Sig.maritalStatus", [0, 0]),
-  mothersMaidenName: getInputValueById(state, "Sig.mothersMaidenName", [0, 0]),
-  maritalStatusOthers: getInputValueById(state, "Sig.maritalStatusOthers", [0, 0])
+const mapStateToProps = (state, { index }) => ({
+  maritalStatus: getInputValueById(state, "Sig.maritalStatus", [index, 0]),
+  mothersMaidenName: getInputValueById(state, "Sig.mothersMaidenName", [index, 0]),
+  maritalStatusOthers: getInputValueById(state, "Sig.maritalStatusOthers", [index, 0])
 });
 
 export default withStyles(styles)(connect(mapStateToProps)(SignatoryPersonalInformationForm));
