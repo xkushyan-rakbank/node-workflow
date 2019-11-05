@@ -142,6 +142,11 @@ const AccountDetails = props => {
     get(stakeholder, "kycDetails.isSignatory")
   );
 
+  const onChangeBankStatements = e => {
+    const { id } = e.target;
+    props.updateProspect({ [id]: true });
+  };
+
   return (
     <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
       <div className={classes.contactsTitle}>
@@ -193,11 +198,20 @@ const AccountDetails = props => {
       <Divider styles={{ marginBottom: "0" }} />
 
       <Subtitle title="Bank statements" />
-      {/*<Checkbox id="Acnt.eStatements" indexes={[0]} />*/}
-      {/*<Checkbox id="Acnt.mailStatements" indexes={[0]} />*/}
-      <RadioGroup name="Bank statements">
-        <RadioButton value="any" label="I want online bank statements" />
-        <RadioButton value="any 3" label="I want paper statements (monthly charges apply)" />
+
+      <RadioGroup name="BankStatements" onChange={onChangeBankStatements}>
+        <RadioButton
+          value={props.eStatements.value}
+          checked={props.eStatements.value}
+          label={props.eStatements.config.label}
+          id={props.eStatements.name}
+        />
+        <RadioButton
+          value={props.mailStatements.value}
+          checked={props.mailStatements.value}
+          label={props.mailStatements.config.label}
+          id={props.mailStatements.name}
+        />
       </RadioGroup>
 
       <InfoTitle
@@ -213,6 +227,8 @@ const mapStateToProps = state => ({
   accountCurrencies: getInputValueById(state, "Acnt.accountCurrencies", [0]),
   debitCardApplied: getGeneralInputProps(state, "Acnt.debitCardApplied", [0]),
   chequeBook: getGeneralInputProps(state, "Acnt.chequeBookApplied", [0]),
+  eStatements: getGeneralInputProps(state, "Acnt.eStatements", [0]),
+  mailStatements: getGeneralInputProps(state, "Acnt.mailStatements", [0]),
   stakeholders: stakeholdersSelector(state),
   primaryMobCountryCode: getInputValueById(state, "OrgCont.primaryMobCountryCode"),
   primaryPhoneCountryCode: getInputValueById(state, "OrgCont.primaryPhoneCountryCode")
