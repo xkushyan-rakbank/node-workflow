@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import cx from "classnames";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import HelpTooltip from "../HelpTooltip";
@@ -64,7 +65,10 @@ const styles = {
   firstRow: {
     fontSize: "14px",
     lineHeight: 1.71,
-    color: "#373737"
+    color: "#373737",
+    "&.disabled": {
+      color: "#00000061"
+    }
   },
   secondRow: {
     fontSize: "12px",
@@ -77,8 +81,8 @@ const styles = {
       marginRight: "5px"
     }
   },
-  labelWrapper: {
-    display: "flex"
+  questionIcon: {
+    marginLeft: "10px"
   }
 };
 
@@ -100,7 +104,7 @@ class CustomCheckbox extends React.Component {
   }
 
   render() {
-    const { config, classes, value = false, withQuestion, style } = this.props;
+    const { config, classes, value = false, withQuestion, style, disabled } = this.props;
     return (
       <div style={{ ...style }}>
         <div className={classes.labelWrapper}>
@@ -113,6 +117,7 @@ class CustomCheckbox extends React.Component {
                 onChange={this.updateProspect}
                 checked={value}
                 className={classes.hiddenCheckbox}
+                disabled={disabled}
               />
               <div className={classes.styledCheckbox}>
                 {value && <img src={Check} alt="check icon" />}
@@ -120,7 +125,7 @@ class CustomCheckbox extends React.Component {
             </div>
             {config.title ? (
               <div className={classes.doubleLabel}>
-                <div className={classes.firstRow}>{config.label}</div>
+                <div className={cx(classes.firstRow, { disabled })}>{config.label}</div>
               </div>
             ) : (
               <span className={classes.label}>{config.label}</span>

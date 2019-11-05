@@ -1,18 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
-import cx from "classnames";
+import get from "lodash/get";
+import Grid from "@material-ui/core/Grid";
+
 import Subtitle from "../Subtitle";
 import FormWrapper from "../StakeholderStepForms/FormWrapper";
-import RadioGroup from "@material-ui/core/RadioGroup";
 import InfoTitle from "../InfoTitle";
 import PureSelect from "../InputField/PureSelect";
 import TextInput from "../InputField/TextInput";
-import Grid from "@material-ui/core/Grid";
 import AddButton from "../Buttons/AddButton";
 import Divider from "../Divider";
-import RadioButton from "../InputField/RadioButton";
+import RadioGroup from "../InputField/RadioGroupButtons";
+import TextArea from "../InputField/TextArea";
+
 import * as inputSelectors from "../../store/selectors/input";
+import { getGeneralInputProps } from "../../store/selectors/input";
+import { updateProspect } from "../../store/actions/appConfig";
 
 const style = {
   formWrapper: {
@@ -24,30 +28,6 @@ const style = {
   },
   addButton: {
     marginTop: "12px"
-  },
-  textArea: {
-    resize: "none",
-    width: "328px",
-    padding: "16px",
-    height: "80px",
-    borderRadius: "8px",
-    border: "solid 1px rgba(194, 194, 194, 0.56)",
-    backgroundColor: "rgba(255, 255, 255, 0.5)",
-    boxSizing: "border-box",
-    outline: "none",
-    fontFamily: "Open Sans",
-    fontSize: "12px",
-    color: "#000",
-    "&::placeholder": {
-      color: "#666"
-    }
-  },
-  gridGroup: {
-    alignItems: "baseline",
-    width: "100%"
-  },
-  radioGroup: {
-    flexDirection: "initial"
   }
 };
 
@@ -64,23 +44,25 @@ class SigningPreferences extends React.Component {
     }
   };
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const accountSigningType = get(prevProps, "accountSigningType.value");
+    const { value } = this.props.accountSigningType;
+
+    if (accountSigningType === "Others" && value !== "Others") {
+      this.props.updateProspect({ [this.props.accountSigningInstn.name]: "" });
+    }
+  }
+
   render() {
-    const { classes, fullName = "" } = this.props;
+    const { classes, accountSigningType, fullName = "" } = this.props;
+    const { contactPersons } = this.state;
+
     return (
       <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
-        <Subtitle title="Signing transactions" />
-
-        <RadioGroup name="signing_transactions" classes={{ root: classes.radioGroup }}>
-          <div className={cx("box-group-grid", classes.gridGroup)}>
-            <RadioButton value="any" label="Any of us can sign" />
-            <RadioButton value="other" label="Other (please specify)" />
-            <RadioButton value="all" label="All of us must sign" />
-            <textarea
-              className={classes.textArea}
-              placeholder="Please specify (Maxium 120 characters)"
-              maxLength="120"
-            />
-          </div>
+        <RadioGroup id="SigAcntSig.accountSigningType" indexes={[0]}>
+          {accountSigningType.value === "Others" && (
+            <TextArea id="SigAcntSig.accountSigningInstn" indexes={[0]} />
+          )}
         </RadioGroup>
 
         <Divider />
@@ -96,7 +78,7 @@ class SigningPreferences extends React.Component {
           />
         </div>
 
-        {this.state.contactPersons.map((person, index) => (
+        {contactPersons.map((person, index) => (
           <React.Fragment key={index}>
             <TextInput id="Sig.fullName" indexes={[index]} />
             <Grid container spacing={3}>
@@ -145,7 +127,18 @@ class SigningPreferences extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  accountSigningType: getGeneralInputProps(state, "SigAcntSig.accountSigningType", [0]),
+  accountSigningInstn: getGeneralInputProps(state, "SigAcntSig.accountSigningInstn", [0]),
   fullName: inputSelectors.getInputValueById(state, "Sig.fullName", [0])
 });
 
-export default withStyles(style)(connect(mapStateToProps)(SigningPreferences));
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SigningPreferences)
+);

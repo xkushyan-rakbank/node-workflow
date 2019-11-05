@@ -7392,12 +7392,12 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": null,
+		"label": "Signing transactions",
 		"placeholder": null,
 		"path": "$.prospect.signatoryInfo[*].accountSigningInfo.accountSigningType",
 		"name": "prospect.signatoryInfo[*].accountSigningInfo.accountSigningType",
-		"required": false,
-		"datalistId": null,
+		"required": true,
+		"datalistId": "accountSigningType",
 		"readonlyFor": []
 	},
 	"SigAcntSig.accountSigningInstn": {
@@ -7426,15 +7426,15 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": null,
-		"placeholder": null,
+		"label": "",
+		"placeholder": "Please specify (Maxium 120 characters)",
 		"path": "$.prospect.signatoryInfo[*].accountSigningInfo.accountSigningInstn",
 		"name": "prospect.signatoryInfo[*].accountSigningInfo.accountSigningInstn",
-		"required": false,
+		"required": true,
 		"datalistId": null,
 		"readonlyFor": [],
 		"description": "freetext if accountSigningType is Other. Finacle field mapping to be checked. To be checked with Vartika.",
-		"maxlength": "500",
+		"maxlength": "120",
 		"pattern": "^[a-zA-Z ]*$"
 	},
 	"SigAcntSig.authorityType": {
@@ -7573,10 +7573,10 @@
 		"placeholder": null,
 		"path": "$.prospect.signatoryInfo[*].debitCardInfo.authSignatoryDetails.nameOnDebitCard",
 		"name": "prospect.signatoryInfo[*].debitCardInfo.authSignatoryDetails.nameOnDebitCard",
-		"required": false,
+		"required": true,
 		"datalistId": null,
 		"readonlyFor": [],
-		"maxlength": "80",
+		"maxlength": "19",
 		"pattern": "^[a-zA-Z ]*$"
 	},
 	"Chnl.mobileInstructions": {

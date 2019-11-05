@@ -21,7 +21,7 @@ const style = {
 };
 
 const RadioButton = props => {
-  const { value, label, classes } = props;
+  const { value, label, classes, id, checked } = props;
 
   return (
     <FormControlLabel
@@ -31,6 +31,8 @@ const RadioButton = props => {
           classes={{ root: classes.radio }}
           checkedIcon={<img src={CheckedIcon} alt="checked icon" />}
           icon={<img src={UncheckedIcon} alt="check icon" />}
+          id={id}
+          checked={checked}
         />
       }
       classes={{ label: classes.radioLabel }}
