@@ -38,7 +38,7 @@ jobs:
         enabled: true
       - bash : |
           cd webapply
-          npm run test
+          npm test
         displayName: 'Junit Test cases'
         enabled: false
       - task: CopyFiles@2
