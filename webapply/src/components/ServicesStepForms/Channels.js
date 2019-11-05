@@ -133,94 +133,105 @@ const getStatusDebitCardApplied = props => {
   return { isDisabledDebitCard: accountSigningTypeAnyOfUs };
 };
 
-const AccountDetails = props => {
-  const { classes, goToNext, stakeholders } = props;
-  const { isDisabledDebitCard } = getStatusDebitCardApplied(props);
-  const { isDisabledChequeBook } = getStatusChequeBookApplied(props);
+class AccountDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedTypeStatementsID: "" };
+  }
 
-  const isHasSignatories = stakeholders.some(stakeholder =>
-    get(stakeholder, "kycDetails.isSignatory")
-  );
+  render() {
+    const { classes, goToNext, stakeholders } = this.props;
+    const { isDisabledDebitCard } = getStatusDebitCardApplied(this.props);
+    const { isDisabledChequeBook } = getStatusChequeBookApplied(this.props);
 
-  const onChangeBankStatements = e => {
-    const { id } = e.target;
-    props.updateProspect({ [id]: true });
-  };
+    const isHasSignatories = stakeholders.some(stakeholder =>
+      get(stakeholder, "kycDetails.isSignatory")
+    );
 
-  return (
-    <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-      <div className={classes.contactsTitle}>
-        <Subtitle title="Debit Cards" />
-      </div>
+    const onChangeBankStatements = e => {
+      const { id } = e.target;
+      const { selectedTypeStatementsID } = this.state;
+      this.props.updateProspect({ [selectedTypeStatementsID]: false });
 
-      <Checkbox
-        id="Acnt.debitCardApplied"
-        indexes={[0]}
-        style={{ marginTop: "10px" }}
-        disabled={isDisabledDebitCard}
-      />
+      this.setState({ selectedTypeStatementsID: id });
+      this.props.updateProspect({ [id]: true });
+    };
 
-      {isHasSignatories && (
-        <>
-          <div className={classes.signatoryLabel}>Signatory name</div>
-          <InfoTitle
-            title="Names on debit cards have a limit of 19 characters"
-            styles={{ marginTop: "0" }}
+    return (
+      <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
+        <div className={classes.contactsTitle}>
+          <Subtitle title="Debit Cards" />
+        </div>
+
+        <Checkbox
+          id="Acnt.debitCardApplied"
+          indexes={[0]}
+          style={{ marginTop: "10px" }}
+          disabled={isDisabledDebitCard}
+        />
+
+        {isHasSignatories && (
+          <>
+            <div className={classes.signatoryLabel}>Signatory name</div>
+            <InfoTitle
+              title="Names on debit cards have a limit of 19 characters"
+              styles={{ marginTop: "0" }}
+            />
+
+            <div className={classes.signatoryNamesContainer}>
+              {stakeholders.map((stakeholder, index) => {
+                const { firstName, lastName } = stakeholder;
+                const isSignatory = get(stakeholder, "kycDetails.isSignatory");
+
+                return isSignatory ? (
+                  <div className={classes.signatoryName} key={index}>
+                    <span>{`${firstName} ${lastName}`}</span>
+                    <TextInput
+                      id="SigDbtcAuths.nameOnDebitCard"
+                      indexes={[index]}
+                      classes={{ regularWrapper: classes.selectCombined, input: classes.input }}
+                    />
+                  </div>
+                ) : null;
+              })}
+            </div>
+          </>
+        )}
+
+        <Divider styles={{ marginBottom: "0" }} />
+
+        <div className={classes.contactsTitle}>
+          <Subtitle title="Cheque book" />
+        </div>
+        <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} disabled={isDisabledChequeBook} />
+
+        <Divider styles={{ marginBottom: "0" }} />
+
+        <Subtitle title="Bank statements" />
+
+        <RadioGroup name="BankStatements" onChange={onChangeBankStatements}>
+          <RadioButton
+            value={this.props.eStatements.value}
+            checked={this.props.eStatements.value}
+            label={this.props.eStatements.config.label}
+            id={this.props.eStatements.name}
           />
+          <RadioButton
+            value={this.props.mailStatements.value}
+            checked={this.props.mailStatements.value}
+            label={this.props.mailStatements.config.label}
+            id={this.props.mailStatements.name}
+          />
+        </RadioGroup>
 
-          <div className={classes.signatoryNamesContainer}>
-            {stakeholders.map((stakeholder, index) => {
-              const { firstName, lastName } = stakeholder;
-              const isSignatory = get(stakeholder, "kycDetails.isSignatory");
-
-              return isSignatory ? (
-                <div className={classes.signatoryName} key={index}>
-                  <span>{`${firstName} ${lastName}`}</span>
-                  <TextInput
-                    id="SigDbtcAuths.nameOnDebitCard"
-                    indexes={[index]}
-                    classes={{ regularWrapper: classes.selectCombined, input: classes.input }}
-                  />
-                </div>
-              ) : null;
-            })}
-          </div>
-        </>
-      )}
-
-      <Divider styles={{ marginBottom: "0" }} />
-
-      <div className={classes.contactsTitle}>
-        <Subtitle title="Cheque book" />
-      </div>
-      <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} disabled={isDisabledChequeBook} />
-
-      <Divider styles={{ marginBottom: "0" }} />
-
-      <Subtitle title="Bank statements" />
-
-      <RadioGroup name="BankStatements" onChange={onChangeBankStatements}>
-        <RadioButton
-          value={props.eStatements.value}
-          checked={props.eStatements.value}
-          label={props.eStatements.config.label}
-          id={props.eStatements.name}
+        <InfoTitle
+          title="These will be mailed by courier to your preferred address"
+          styles={{ position: "absolute", bottom: "11px" }}
         />
-        <RadioButton
-          value={props.mailStatements.value}
-          checked={props.mailStatements.value}
-          label={props.mailStatements.config.label}
-          id={props.mailStatements.name}
-        />
-      </RadioGroup>
-
-      <InfoTitle
-        title="These will be mailed by courier to your preferred address"
-        styles={{ position: "absolute", bottom: "11px" }}
-      />
-    </FormWrapper>
-  );
-};
+      </FormWrapper>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   ...appConfigSelectors.getSignatories(state)[0],
