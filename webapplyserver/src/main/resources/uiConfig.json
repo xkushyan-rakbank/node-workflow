@@ -3437,8 +3437,7 @@
 		"required": true,
 		"datalistId": null,
 		"readonlyFor": [],
-		"format": "amount",
-		"pattern": "^[0-9]*$"
+		"pattern": "^[0-9]{1,10}([.][0-9]{1,2})?$"
 	},
 	"Okyc.yearsInBusiness": {
 		"criteria": {
