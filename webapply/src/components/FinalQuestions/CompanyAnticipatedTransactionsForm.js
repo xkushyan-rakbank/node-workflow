@@ -137,7 +137,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
       +elementValue + +secondElementValue === this.getMonthFinancialTurnover();
     if (!isFocused && !isValid) {
       return (
-        <ErrorMessage error="The sum of the monthly credits in cash and non-cash should be equal to the amount in the field for Total monthly credits" />
+        <ErrorMessage error="Sum of Monthly Total in cash and non-cash should be equal to Total Monthly Credits" />
       );
     }
     return null;
@@ -159,7 +159,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
       +elementValue + +secondElementValue <= annualFinancialTurnover;
     if (!isFocused && !isValid) {
       return (
-        <ErrorMessage error="The total of the maximum amount expected in a single transactions done in Cash and Non-cash should not exceeds the Annual Financial Turnover" />
+        <ErrorMessage error="Total of maximum amount in cash and non-cash should NOT exceed Annual Financial Turnover" />
       );
     }
     return null;
@@ -178,6 +178,7 @@ class CompanyAnticipatedTransactionsForm extends Component {
           <Grid item sm={12}>
             <TextInput
               min="0"
+              step=".01"
               id="Okyc.annualFinTurnoverAmtInAED"
               InputProps={this.commonInputProps}
             />
