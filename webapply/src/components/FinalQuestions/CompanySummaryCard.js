@@ -6,6 +6,8 @@ import ContinueButton from "../Buttons/ContinueButton";
 import LinkButton from "../Buttons/LinkButton";
 import StepComponent from "../../components/StepComponent";
 import { getInputValueById } from "../../store/selectors/input";
+import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
+import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
 import { finalQuestionsSteps } from "../../constants";
 
 const style = {
@@ -23,23 +25,31 @@ class CompanySummaryCard extends Component {
     super(props);
 
     this.state = {
-      isFinalScreenShown: false,
       step: 1,
+      completedStep: 0,
       isExpanded: false,
       isFilled: false,
       isContinueDisabled: true
     };
   }
 
-  handleContinue = () => {
-    const { addFilledSignatoryIndex } = this.props;
-    if (this.state.step < finalQuestionsSteps.length) {
-      this.setState(state => ({ step: state.step + 1 }));
-    } else {
-      this.setState({ isFinalScreenShown: true, isExpanded: false, isFilled: true });
-      addFilledSignatoryIndex(0);
+  componentDidUpdate(prevProps) {
+    if (!prevProps.resetStep && this.props.resetStep && this.state.isExpanded) {
+      this.setState(state => {
+        const nextStep = state.step + 1;
+        let finalStepState = {};
+        if (nextStep > finalQuestionsSteps.length) {
+          finalStepState = { isExpanded: false, isFilled: true };
+          this.props.addFilledSignatoryIndex(0);
+        }
+        return {
+          step: nextStep,
+          completedStep: state.step,
+          ...finalStepState
+        };
+      });
     }
-  };
+  }
 
   handleClickStartHere = () => {
     const { switchExpandedMargin } = this.props;
@@ -65,6 +75,12 @@ class CompanySummaryCard extends Component {
     );
   }
 
+  setStep = item => {
+    if (this.state.completedStep >= item.step) {
+      this.setState({ step: item.step });
+    }
+  };
+
   setIsContinueDisabled = value => this.setState({ isContinueDisabled: value });
 
   render() {
@@ -74,7 +90,8 @@ class CompanySummaryCard extends Component {
       <CompanyCard companyName={this.props.companyName} controls={this.renderControlsContent()}>
         {this.state.isExpanded &&
           finalQuestionsSteps.map(item => {
-            const setStep = () => this.setState({ step: item.step });
+            const setStep = () => this.setStep(item);
+            const isFilled = this.state.completedStep >= item.step;
             return (
               <StepComponent
                 index={index}
@@ -84,11 +101,11 @@ class CompanySummaryCard extends Component {
                 title={item.title}
                 infoTitle={item.infoTitle}
                 activeStep={step === item.step}
-                filled={step > item.step}
+                filled={isFilled}
                 clickHandler={setStep}
-                handleContinue={this.handleContinue}
                 isContinueDisabled={isContinueDisabled}
                 setIsContinueDisabled={this.setIsContinueDisabled}
+                handleContinue={this.props.sendProspectToAPI}
               />
             );
           })}
@@ -98,7 +115,17 @@ class CompanySummaryCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  companyName: getInputValueById(state, "Org.companyName")
+  companyName: getInputValueById(state, "Org.companyName"),
+  ...getSendProspectToAPIInfo(state)
 });
 
-export default withStyles(style)(connect(mapStateToProps)(CompanySummaryCard));
+const mapDispatchToProps = {
+  sendProspectToAPI
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(CompanySummaryCard)
+);
