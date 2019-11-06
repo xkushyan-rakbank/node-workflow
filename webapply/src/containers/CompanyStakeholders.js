@@ -70,7 +70,8 @@ const CompanyStakeholders = props => {
       <h2>Add your company’s stakeholders</h2>
       <p className="formDescription">
         Now we need to know about those who have a say in your company. This includes shareholders,
-        signatories and some others. Check our guide below to see which one applies to your company.
+        signatories/power of attorney. Check our guide below to see which one applies to your
+        company.
       </p>
 
       <div>
