@@ -36,7 +36,7 @@ const LicenseInformation = () => {
           <TextInput id="Okyc.yearsInBusiness" max={maxYearsInBusiness} />
         </Grid>
       </Grid>
-      <InfoTitle title="This should be the same as in your Trade License" />
+      <InfoTitle title="These details be the same as in your Trade License" />
     </>
   );
 };

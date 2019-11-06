@@ -4,6 +4,9 @@ import arrowBack from "../assets/icons/backArrow.png";
 import { Link } from "react-router-dom";
 import TagManager from "react-gtm-module";
 import closeBtn from "../assets/images/close.png";
+import companyIconSvg from "../assets/icons/file.png";
+
+const uploadFileSizeMax = 5;
 
 const style = {
   sectionContainer: {
@@ -21,10 +24,6 @@ const style = {
   title: {
     marginTop: "20px",
     marginBottom: "20px"
-  },
-  Rectangle: {
-    width: "622px",
-    height: "940px"
   },
   heading: {
     fontSize: "24px",
@@ -71,6 +70,38 @@ const style = {
   },
   backIcon: {
     verticalAlign: "middle"
+  },
+  uploadFileName: {
+    fontSize: "12px",
+    fontWeight: "600",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "1.17",
+    letterSpacing: "normal",
+    color: "#373737",
+    paddingLeft: "5px"
+  },
+  contentBox: {
+    alignItems: "center",
+    flexGrow: "1",
+    paddingLeft: "18px"
+  },
+  fileUploadPlaceholder: {
+    display: "flex",
+    alignItems: "center",
+    padding: "23px",
+    cursor: "pointer",
+    borderRadius: "8px",
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    border: "solid 1px #e8e8e8",
+    backgroundColor: "#ffffff"
+  },
+  cancel: {
+    borderRadius: "25px",
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    border: "solid 1px #e8e8e8",
+    backgroundColor: "#ffffff",
+    padding: "0 6px"
   }
 };
 
@@ -88,18 +119,18 @@ class EditApplication extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFile: null
+      selectedFile: null,
+      isExcedeed: false
     };
     this.fileUploadHandler = this.fileUploadHandler.bind(this);
-  }
-
-  componentDidMount() {
-    TagManager.dataLayer(tagManagerArgs);
   }
 
   // code for file uploader
 
   fileUploadHandler(event) {
+    // GTM datalayer
+    TagManager.dataLayer(tagManagerArgs);
+
     this.setState(
       {
         selectedFile: event.target.files[0]
@@ -107,16 +138,21 @@ class EditApplication extends Component {
 
       () => {
         //checking the file size
-        console.log(this.state.selectedFile);
-        // let fileSize = this.state.selectedFile.size;
-        //verify the file type
-        if (
-          this.state.selectedFile.type === "image/png" ||
-          this.state.selectedFile.type === "image/jpeg" ||
-          this.state.selectedFile.type === "application/pdf" ||
-          this.state.selectedFile.type === "application/txt"
-        ) {
-          console.log("validation validated");
+        let fileSize = this.state.selectedFile.size;
+        if (fileSize <= uploadFileSizeMax * 1048576) {
+          //verify the file type
+          if (
+            this.state.selectedFile.type === "image/png" ||
+            this.state.selectedFile.type === "image/jpeg" ||
+            this.state.selectedFile.type === "application/pdf" ||
+            this.state.selectedFile.type === "application/txt"
+          ) {
+            console.log("validation validated");
+          }
+        } else {
+          this.setState({
+            isExcedeed: true
+          });
         }
       }
     );
@@ -137,18 +173,37 @@ class EditApplication extends Component {
         <p className="formDescription">
           One our agents asked you for some more documents? Please upload them here.
         </p>
-        {this.state.selectedFile ? (
-          <div className={this.props.classes.sectionContainer}>
-            <img src={closeBtn} alt="closeBtn" onClick={() => this.fileInput.click()} />
-            <span className={this.props.classes.sectionContainerTitle}>Add another document</span>
+        <div className={this.props.classes.fileUploadPlaceholder}>
+          <div>{this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
+          <div className={this.props.classes.contentBox}>
+            <div className={this.props.classes.uploadFileName}>
+              {/* {this.state.selectedFile.name} */} bla bla
+              <span className={this.props.classes.SignatoryRights}>
+                {/* {this.state.selectedFile.size} */}
+                Bytes
+              </span>
+            </div>
+            {/* {this.state.isUploadSucess ? null : ( */}
+            <div className={this.props.classes.uploadFileName}>
+              <div id="Progress_Status">
+                <div id="myprogressBar"></div>
+              </div>
+              <div id="progressStatus"></div>
+            </div>
+            {/* )} */}
           </div>
-        ) : (
-          <div className={this.props.classes.sectionContainer}>
-            <img src={closeBtn} alt="closeBtn" onClick={() => this.fileInput.click()} />
-            <span className={this.props.classes.sectionContainerTitle}>Upload document</span>
+          <div className={this.props.classes.cancel} justify="flex-end">
+            {" "}
+            X{" "}
           </div>
-        )}
+        </div>
 
+        <div className={this.props.classes.sectionContainer}>
+          <img src={closeBtn} alt="closeBtn" onClick={() => this.fileInput.click()} />
+          <span className={this.props.classes.sectionContainerTitle}>
+            {this.state.selectedFile ? <> Add another document</> : <>Upload document</>}
+          </span>
+        </div>
         <div className="linkContainer">
           <Link to="">
             <button className={this.props.classes.BtnBack} justify="flex-end">
