@@ -96,7 +96,7 @@ class CustomCheckbox extends React.Component {
     const { name, callback } = this.props;
     this.props.updateProspect({ [name]: value });
     if (callback) {
-      callback(value);
+      callback(value, event.target.id);
     }
   };
 
@@ -107,7 +107,7 @@ class CustomCheckbox extends React.Component {
   }
 
   render() {
-    const { config, classes, value = false, withQuestion, style, disabled } = this.props;
+    const { config, classes, value = false, withQuestion, style, disabled, label } = this.props;
     return (
       <div style={{ ...style }}>
         <div className={classes.labelWrapper}>
@@ -131,7 +131,7 @@ class CustomCheckbox extends React.Component {
                 <div className={cx(classes.firstRow, { disabled })}>{config.label}</div>
               </div>
             ) : (
-              <span className={classes.label}>{config.label}</span>
+              <span className={classes.label}>{label || config.label}</span>
             )}
           </label>
 

@@ -1,0 +1,20 @@
+{
+    "errorType": "FieldsValidation",
+    "errors": [
+      {
+        "fieldPath": "$.email",
+        "code": "INVALID",
+        "errorType": "InvalidField",
+        "message": "Email is invalid",
+        "developerText": ""
+      },
+      {
+        "fieldPath": "$.mobileNo",
+        "code": "INVALID",
+        "errorType": "InvalidField",
+        "message": "Mobile number should be 10 digits, no speacial characters allowed.",
+        "developerText": ""
+      }
+    ]
+  }
+  

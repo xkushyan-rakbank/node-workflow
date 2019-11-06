@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Checkbox from "../InputField/Checkbox";
+import CustomCheckbox from "../InputField/RefactoredCheckbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
@@ -23,10 +23,6 @@ class SignatoryEmploymentDetailsForm extends Component {
     index: 0
   };
 
-  state = {
-    isWorkAtTheCompany: false
-  };
-
   componentDidMount() {
     const { isWorkAtTheCompany } = this.props;
     this.setState({ isWorkAtTheCompany });
@@ -39,16 +35,15 @@ class SignatoryEmploymentDetailsForm extends Component {
     this.props.setIsContinueDisabled(isButtonDisabled);
   }
 
-  handleSwitchIsWorkAtCompany = e => {
+  checkboxHandleClick = value => {
     const { index, companyName } = this.props;
     const checkboxPath = `prospect.signatoryInfo[${index}].employmentDetails.isWorkAtTheCompany`;
     const fieldPath = `prospect.signatoryInfo[${index}].employmentDetails.employerName`;
-    const employerName = e.target.checked ? companyName : "";
+    const employerName = value ? companyName : "";
     this.props.updateProspect({
-      [checkboxPath]: e.target.checked,
+      [checkboxPath]: value,
       [fieldPath]: employerName
     });
-    this.setState({ isWorkAtTheCompany: e.target.checked });
   };
 
   isContinueDisabled = () => {
@@ -56,35 +51,33 @@ class SignatoryEmploymentDetailsForm extends Component {
   };
 
   render() {
+    const { index, classes, employmentType, companyName, isWorkAtTheCompany } = this.props;
     return (
       <>
-        <Grid container spacing={3} className={this.props.classes.flexContainer}>
+        <Grid container spacing={3} className={classes.flexContainer}>
           <Grid item md={6} sm={12}>
-            <PureSelect id="SigKycd.qualification" indexes={[this.props.index]} />
-            <PureSelect id="SigEmpd.employmentType" indexes={[this.props.index]} />
+            <PureSelect id="SigKycd.qualification" indexes={[index]} />
+            <PureSelect id="SigEmpd.employmentType" indexes={[index]} />
           </Grid>
           <Grid item md={6} sm={12}>
-            <TextInput id="SigEmpd.totalExperienceYrs" indexes={[this.props.index]} />
-            <TextInput id="SigEmpd.designation" indexes={[this.props.index]} />
+            <TextInput id="SigEmpd.totalExperienceYrs" indexes={[index]} />
+            <TextInput id="SigEmpd.designation" indexes={[index]} />
           </Grid>
-          {this.props.employmentType === "O" && (
+          {employmentType === "O" && (
             <Grid item md={12} sm={12}>
-              <TextInput id="SigEmpd.otherEmploymentType" indexes={[this.props.index]} />
+              <TextInput id="SigEmpd.otherEmploymentType" indexes={[index]} />
             </Grid>
           )}
           <Grid item sm={12}>
-            <Checkbox
-              value={this.state.isWorkAtTheCompany}
-              onChange={e => this.handleSwitchIsWorkAtCompany(e)}
-              label={`This Person works at ${this.props.companyName}`}
+            <CustomCheckbox
+              id="SigEmpd.isWorkAtTheCompany"
+              indexes={[index]}
+              callback={this.checkboxHandleClick}
+              label={`This Person works at ${companyName}`}
             />
           </Grid>
           <Grid item sm={12}>
-            <TextInput
-              id="SigEmpd.employerName"
-              indexes={[this.props.index]}
-              disabled={this.state.isWorkAtTheCompany}
-            />
+            <TextInput id="SigEmpd.employerName" indexes={[index]} disabled={isWorkAtTheCompany} />
           </Grid>
         </Grid>
       </>
@@ -92,11 +85,11 @@ class SignatoryEmploymentDetailsForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, { index }) => ({
   companyName: getInputValueById(state, "Org.companyName"),
-  employerName: getInputValueById(state, "SigEmpd.employerName", [0, 0]),
-  employmentType: getInputValueById(state, "SigEmpd.employmentType", [0, 0]),
-  isWorkAtTheCompany: getInputValueById(state, "SigEmpd.isWorkAtTheCompany", [0, 0])
+  employerName: getInputValueById(state, "SigEmpd.employerName", [index, 0]),
+  employmentType: getInputValueById(state, "SigEmpd.employmentType", [index, 0]),
+  isWorkAtTheCompany: getInputValueById(state, "SigEmpd.isWorkAtTheCompany", [index, 0])
 });
 
 const mapDispatchToProps = {

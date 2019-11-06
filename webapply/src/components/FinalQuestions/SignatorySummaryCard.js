@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import get from "lodash/get";
 import CompanyStakeholderCard from "../CompanyStakeholderCard";
 import LinkButton from "../Buttons/LinkButton";
 import StepComponent from "../../components/StepComponent";
 import { signatoriesSteps } from "../../constants";
+import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
+import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 
 const styles = {
   card: {
@@ -51,35 +54,31 @@ class SignatorySummaryCard extends Component {
     super(props);
 
     this.state = {
-      isFinalScreenShown: false,
       step: 1,
       isExpanded: false,
-      isFilled: false,
       isDisabled: true,
       isContinueDisabled: false
     };
   }
 
-  handleContinue = () => {
-    const {
-      filledSignatoriesIndexes,
-      addFilledSignatoryIndex,
-      index,
-      signatoriesLength,
-      switchSubmitDisabled
-    } = this.props;
-    const nextIndex = index + 1;
-    if (this.state.step < signatoriesSteps.length) {
-      this.setState(state => ({ step: state.step + 1 }));
-    } else {
-      this.setState({ isFinalScreenShown: true, isExpanded: false });
-      if (!filledSignatoriesIndexes.includes(nextIndex) && signatoriesLength > nextIndex) {
-        addFilledSignatoryIndex(nextIndex);
-      } else if (signatoriesLength === nextIndex) {
-        switchSubmitDisabled();
-      }
+  componentDidUpdate(prevProps) {
+    const { addFilledSignatoryIndex, index } = this.props;
+    if (!prevProps.resetStep && this.props.resetStep && this.state.isExpanded) {
+      this.setState(state => {
+        const nextStep = state.step + 1;
+        let finalStepState = {};
+        if (nextStep > signatoriesSteps.length) {
+          finalStepState = { isExpanded: false };
+          addFilledSignatoryIndex(index + 1);
+        }
+        return {
+          step: nextStep,
+          completedStep: state.step,
+          ...finalStepState
+        };
+      });
     }
-  };
+  }
 
   renderControls() {
     const { filledSignatoriesIndexes, index } = this.props;
@@ -88,12 +87,11 @@ class SignatorySummaryCard extends Component {
     }
 
     return (
-      (this.state.isFilled || filledSignatoriesIndexes.includes(index)) && (
+      filledSignatoriesIndexes.includes(index) && (
         <LinkButton
           clickHandler={() =>
             this.setState({
               isExpanded: true,
-              isFilled: false,
               isDisabled: false
             })
           }
@@ -133,6 +131,12 @@ class SignatorySummaryCard extends Component {
     );
   }
 
+  setStep = item => {
+    if (this.state.completedStep >= item.step) {
+      this.setState({ step: item.step });
+    }
+  };
+
   render() {
     const { index, signatory } = this.props;
     const { step, isContinueDisabled } = this.state;
@@ -146,7 +150,8 @@ class SignatorySummaryCard extends Component {
       >
         {this.state.isExpanded &&
           signatoriesSteps.map(item => {
-            const setStep = () => this.setState({ step: item.step });
+            const setStep = () => this.setStep(item);
+            const isFilled = this.state.completedStep >= item.step;
             return (
               <StepComponent
                 index={index}
@@ -155,9 +160,9 @@ class SignatorySummaryCard extends Component {
                 step={item.step}
                 title={item.title}
                 activeStep={step === item.step}
-                filled={step > item.step}
+                filled={isFilled}
                 clickHandler={setStep}
-                handleContinue={this.handleContinue}
+                handleContinue={this.props.sendProspectToAPI}
                 isContinueDisabled={isContinueDisabled}
                 setIsContinueDisabled={this.setIsContinueDisabled}
               />
@@ -168,4 +173,17 @@ class SignatorySummaryCard extends Component {
   }
 }
 
-export default withStyles(styles)(SignatorySummaryCard);
+const mapStateToProps = state => ({
+  ...getSendProspectToAPIInfo(state)
+});
+
+const mapDispatchToProps = {
+  sendProspectToAPI
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SignatorySummaryCard)
+);

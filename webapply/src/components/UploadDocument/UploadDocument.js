@@ -68,7 +68,6 @@ const style = {
     paddingLeft: "16px",
     paddingRight: "16px"
   },
-
   uploadFileName: {
     fontSize: "12px",
     fontWeight: "600",

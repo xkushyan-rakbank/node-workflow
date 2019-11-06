@@ -7,7 +7,7 @@ const style = {
     display: "flex",
     alignItems: "center",
     height: "62px",
-    margin: "30px 20px"
+    margin: "30px 32px 30px 20px"
   }
 };
 

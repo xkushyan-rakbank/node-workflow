@@ -1,13 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import cx from "classnames";
 import ContainerComeBack from "./ContainerComeBack";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
-import arrowBackIc from "../../assets/icons/backArrow.png";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 import OtpVerification from "../../components/OtpVerification";
 import ErrorMessage from "../../components/ErrorMessage";
@@ -86,11 +83,12 @@ class ComeBackVerification extends React.Component {
       isRegenerateCodeAllow: true,
       loginAttempt: 0
     };
-    this.regenerateCodeDelay = 1 * 1000;
+    this.regenerateCodeDelay = 10 * 1000;
   }
 
   componentWillUnmount() {
     clearTimeout(this.resetRegenerateCodeAllowTimeoutId);
+    this.setState({ loginAttempt: 0 });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -112,7 +110,6 @@ class ComeBackVerification extends React.Component {
 
   handleSendNewCodeLinkClick = () => {
     this.setState({ loginAttempt: this.state.loginAttempt + 1 });
-    console.log("attempt", this.state.loginAttempt);
     if (!this.state.isRegenerateCodeAllow) {
       return;
     }
@@ -153,50 +150,34 @@ class ComeBackVerification extends React.Component {
 
         <form noValidate onSubmit={this.submitForm} className={classes.form}>
           <div>
-            <Grid container item xs={12} direction="row">
+            <Grid container item xs={12} direction="row" justify="flex-start">
               <OtpVerification onChange={this.isCodeValueValid} />
             </Grid>
             {this.state.invalid && <ErrorMessage error="Invalid code" />}
             {this.props.otp.verificationError && <ErrorMessage error="Code verification failed" />}
+            {this.state.loginAttempt > 3 && (
+              <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again" />
+            )}
             <span>
               Didn’t get the code?{" "}
               <span
                 onClick={this.handleSendNewCodeLinkClick}
                 className={cx(classes.link, {
-                  [classes.linkDisabled]: !this.state.isRegenerateCodeAllow,
-                  [classes.linkHide]: this.state.loginAttempt > 3
+                  [classes.linkDisabled]: !this.state.isRegenerateCodeAllow
+                  //[classes.linkHide]: this.state.loginAttempt > 3
                 })}
               >
                 Send a new code
               </span>
             </span>
           </div>
-          {this.state.loginAttempt > 3 && (
-            <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again" />
-          )}
-          <Grid
-            container
-            direction="row"
-            className={classes.actions}
-            alignItems="center"
-            justify="flex-end"
-          >
-            <div className={classes.goBackContainer}>
-              <img src={arrowBackIc} alt="step to back" />
-              <Link to={routes.comeBackLogin}>
-                <Typography element="span" variant="subtitle1" classes={{ root: classes.goBack }}>
-                  Go back
-                </Typography>
-              </Link>
-            </div>
 
-            <SubmitButton
-              disabled={!this.state.isValidCode || this.props.otp.isPending}
-              label="Next Step"
-              justify="flex-end"
-              containerExtraStyles={{ width: "auto", margin: 0 }}
-            />
-          </Grid>
+          <SubmitButton
+            disabled={!this.state.isValidCode || this.props.otp.isPending}
+            label="Next Step"
+            justify="flex-end"
+            containerExtraStyles={{ width: "auto", margin: 0 }}
+          />
         </form>
       </ContainerComeBack>
     );
