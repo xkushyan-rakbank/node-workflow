@@ -1364,7 +1364,7 @@
         "invalid": "Field is invalid.",
         "multilineInvalid": null
       },
-      "title": "This should be the same as in your Trade License",
+      "title": "These details be the same as in your Trade License",
       "applicable": null,
       "label": "Company Name",
       "placeholder": null,
@@ -1609,7 +1609,7 @@
         "multilineInvalid": null
       },
       "applicable": null,
-      "title": "This should be the same as your TRN number of UAE",
+      "title": "These details be the same as your TRN number of UAE",
       "label": "VAT registration number (Optional)",
       "placeholder": null,
       "path": "$.prospect.organizationInfo.vatRegistrationNumber",
