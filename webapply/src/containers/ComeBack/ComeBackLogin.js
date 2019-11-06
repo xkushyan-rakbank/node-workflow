@@ -9,7 +9,7 @@ import TextHelpWithLink from "../../components/TextHelpWithLink";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import ErrorBoundary from "../../components/ErrorBoundary";
-import { setToken, setVerified, verifyToken } from "../../store/actions/reCaptcha";
+import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import * as reCaptchaSelectors from "../../store/selectors/reCaptcha";
 import * as otpSelectors from "../../store/selectors/otp";
@@ -59,15 +59,6 @@ class ComeBackLogin extends React.Component {
     if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
       this.props.history.push(routes.comeBackLoginVerification);
     }
-    if (prevProps.reCaptchaToken !== this.props.reCaptchaToken && this.props.reCaptchaToken) {
-      this.props.verifyToken();
-    }
-    // if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {
-    //   this.resetRegenerateCodeAllowTimeoutId = setTimeout(
-    //     () => this.setState({ isRegenerateCodeAllow: true }),
-    //     this.regenerateCodeDelay
-    //   );
-    // }
   }
 
   handleReCaptchaVerify = token => {
@@ -84,7 +75,7 @@ class ComeBackLogin extends React.Component {
   };
 
   render() {
-    const { classes, email, mobileNo, countryCode, isReCaptchaVerified } = this.props;
+    const { classes, email, mobileNo, countryCode, reCaptchaToken } = this.props;
     return (
       <ContainerComeBack>
         <SectionTitleWithInfo
@@ -119,7 +110,7 @@ class ComeBackLogin extends React.Component {
           <SubmitButton
             label="Next"
             justify="flex-end"
-            disabled={!email || !countryCode || !mobileNo || !isReCaptchaVerified}
+            disabled={!email || !countryCode || !mobileNo || !reCaptchaToken}
           />
         </form>
       </ContainerComeBack>
@@ -132,16 +123,13 @@ const mapStateToProps = state => ({
   reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
   email: inputSelectors.getInputValueById(state, "Aplnt.email"),
   mobileNo: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
-  countryCode: inputSelectors.getInputValueById(state, "Aplnt.countryCode"),
-  isReCaptchaVerified: reCaptchaSelectors.getReCaptchaVerified(state)
-  //inputParam: appConfigSelector.getApplicationInfo(state)
+  countryCode: inputSelectors.getInputValueById(state, "Aplnt.countryCode")
 });
 
 const mapDispatchToProps = {
   generateOtpCode,
   setToken,
-  setVerified,
-  verifyToken
+  setVerified
 };
 
 export default withStyles(styles)(
