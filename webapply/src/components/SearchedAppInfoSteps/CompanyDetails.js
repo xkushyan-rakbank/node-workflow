@@ -9,6 +9,11 @@ const styles = {
     color: "#86868b",
     height: "60px"
   },
+  email: {
+    fontSize: "14px",
+    lineHeight: 1.33,
+    color: "#86868b"
+  },
   title: {
     marginTop: "0px",
     color: "#373737",
@@ -47,6 +52,18 @@ const CompanyDetails = props => {
         </Grid>
       ) : (
         <div className={classes.errorMsg}>Applicant details are not found</div>
+      )}
+      <h4 className={classes.title}>RAKtrack Lead Reference Number</h4>
+      {prospectInfo.organizationInfo ? (
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <div className={classes.companyDetails}>
+              {prospectInfo.organizationInfo.leadNumber && prospectInfo.organizationInfo.leadNumber}
+            </div>
+          </Grid>
+        </Grid>
+      ) : (
+        <div className={classes.errorMsg}>RAKtrack lead refernce number is not generated.</div>
       )}
       <h4 className={classes.title}>Company Detail</h4>
       {prospectInfo.organizationInfo ? (

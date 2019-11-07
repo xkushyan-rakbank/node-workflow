@@ -26,7 +26,7 @@
 		"datalistId": null,
 		"readonlyFor": [],
 		"description": "name of the applicant",
-		"maxlength": "240",
+		"maxlength": "79",
 		"pattern": "^[a-zA-Z\\s]*$"
 	},
 	"Aplnt.email": {
@@ -9773,7 +9773,6 @@
 			"invalid": "Field is invalid.",
 			"multilineInvalid": null
 		},
-		"title": "This is the name of the person who had registered.",
 		"applicable": null,
 		"label": "Applicant Name",
 		"placeholder": null,
@@ -9782,7 +9781,7 @@
 		"datalistId": null,
 		"readonlyFor": [],
 		"description": "name of the applicant",
-		"maxlength": "240",
+		"maxlength": "79",
 		"pattern": "^[a-zA-Z]*$"
 	},
 	"Search.countryCode": {
@@ -9864,14 +9863,14 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": "RAKTrack Lead Number",
+		"label": "RAKtrack Lead Reference Number",
 		"placeholder": null,
 		"path": "$.searchInfo.raktrackNumber",
 		"name": "searchInfo.raktrackNumber",
 		"datalistId": null,
 		"readonlyFor": [],
 		"description": "lead Number of the applicant",
-		"maxlength": "50"
+		"maxlength": "20"
 	},
 	"Search.tradeLicenseNo": {
 		"criteria": {
@@ -9920,7 +9919,6 @@
 			"invalid": "Field is invalid.",
 			"multilineInvalid": null
 		},
-		"title": "This is the email id of the person who had registered.",
 		"applicable": null,
 		"label": "E-mail Address",
 		"placeholder": null,

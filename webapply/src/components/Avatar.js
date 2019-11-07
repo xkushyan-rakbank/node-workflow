@@ -13,10 +13,13 @@ const style = {
     backgroundColor: "#ffffff",
     border: "solid 1px #d3d8db",
     width: "40px"
+  },
+  defaultAvatar: {
+    width: "20px"
   }
 };
 const UserAvatar = props => {
-  const { firstName = "", lastName = "", classes, index } = props;
+  const { firstName = "", lastName = "", classes, index, defaultAvatarIcon } = props;
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
   const style =
     index === 5
@@ -27,7 +30,11 @@ const UserAvatar = props => {
       {initials}
     </Avatar>
   ) : (
-    <Avatar className={classes.emptyAvatar} />
+    <Avatar className={classes.emptyAvatar}>
+      {defaultAvatarIcon && (
+        <img src={defaultAvatarIcon} alt="defaultIcon" className={classes.defaultAvatar} />
+      )}
+    </Avatar>
   );
 };
 

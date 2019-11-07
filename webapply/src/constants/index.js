@@ -17,7 +17,6 @@ import accountDetails from "../assets/icons/account_details.png";
 import signingPreferences from "../assets/icons/signing_preferences.png";
 import channels from "../assets/icons/channels.png";
 import valueAddedServices from "../assets/icons/value_added_services.png";
-import decline from "../assets/gif/declined_regular.gif";
 import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDetails";
 import CheckList from "../components/SearchedAppInfoSteps/CheckList";
 import Documents from "../components/SearchedAppInfoSteps/Documents";
@@ -32,6 +31,8 @@ import SignatoryPersonalInformationForm from "../components/FinalQuestions/Signa
 import SignatorySourceOfFundsForm from "../components/FinalQuestions/SignatorySourceOfFundsForm";
 import SignatoryPreferredMailingAddressForm from "../components/FinalQuestions/SignatoryPreferredMailingAddressForm";
 import SignatoryEmploymentDetailsForm from "../components/FinalQuestions/SignatoryEmploymentDetailsForm";
+import callbackRegular from "./../assets/gif/callback_regular.gif";
+import declinedRegular from "./../assets/gif/declined_regular.gif";
 
 export const stakeHoldersSteps = [
   {
@@ -230,14 +231,6 @@ export const servicesSteps = [
 
 export const digitRegExp = new RegExp("^[0-9]$");
 
-export const applicationStatus = {
-  serverError: {
-    reason:
-      "We're sorry, a server error occurred. Please wait a bit and try again. Thank you for your interest in RAKBANK.",
-    icon: decline
-  }
-};
-
 export const searchedAppInfoSteps = [
   {
     step: 1,
@@ -272,4 +265,31 @@ export const accountsNames = {
   starter: "RAKstarter",
   currentAccount: "Current Account",
   elite: "RAKelite"
+};
+
+export const applicationStatus = {
+  dedupe: {
+    icon: callbackRegular,
+    text:
+      "It looks like we already know you and have your details! Let us save you time. We will call you back within X days to meet you in person and help you out."
+  },
+  virtualCurrencies: {
+    icon: declinedRegular,
+    text:
+      "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAKBANK."
+  },
+  blNlMatch: {
+    icon: declinedRegular,
+    text:
+      "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAKBANK."
+  },
+  notEligible: {
+    icon: declinedRegular,
+    text:
+      "Oops, this product is not for you. Our RAKstarter account is for companies operating for less than a year. But don’t worry, we have other products suited for you."
+  },
+  uiError: {
+    icon: declinedRegular,
+    text: ""
+  }
 };
