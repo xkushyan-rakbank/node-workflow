@@ -22,7 +22,9 @@ const style = {
     fontWeight: 600,
     lineHeight: "18px",
     color: "#263d4c",
-    height: "18px"
+    minHeight: "18px",
+    marginRight: "5px",
+    wordBreak: "break-word"
   },
   companyName: {
     fontSize: "18px",
@@ -35,14 +37,17 @@ const style = {
     fontSize: "14px",
     color: "#86868b",
     marginTop: 5,
-    height: "18px"
+    minHeight: "18px",
+    marginRight: "5px",
+    wordBreak: "break-word"
   },
   status: {
     borderRadius: "4px",
     backgroundColor: "#e9e9ed",
     fontSize: "14px",
     color: "#373737",
-    padding: "3px 5px"
+    padding: "3px 5px",
+    display: "inline-block"
   },
   action: {
     fontSize: "14px",
@@ -56,7 +61,7 @@ const style = {
     fontWeight: 600,
     lineHeight: "18px",
     color: "#263d4c",
-    height: "18px"
+    minHeight: "18px"
   }
 };
 
@@ -84,31 +89,49 @@ const SearchApplicationList = ({ classes, currentApplications }) => {
             to={`${routes.SearchedAppInfo.replace(":id", application.prospectId)}`}
           >
             <div>
-              <div className={classes.fullName}>
-                {application.applicantInfo.fullName && application.applicantInfo.fullName}
-              </div>
-              <div className={classes.account}>
-                {application.applicantInfo.email && application.applicantInfo.email}
-              </div>
+              {application.applicantInfo && (
+                <>
+                  <div className={classes.fullName}>
+                    {application.applicantInfo.fullName && application.applicantInfo.fullName}
+                  </div>
+                  <div className={classes.account}>
+                    {application.applicantInfo.email && application.applicantInfo.email}
+                  </div>
+                  <span className={classes.account}>
+                    {application.applicantInfo.mobileNo &&
+                      application.applicantInfo.countryCode +
+                        " " +
+                        application.applicantInfo.mobileNo}
+                  </span>
+                </>
+              )}
               <span className={classes.account}>
-                {application.applicantInfo.mobileNo &&
-                  application.applicantInfo.countryCode + " " + application.applicantInfo.mobileNo}
+                <br />
+                {application.organizationInfo &&
+                  application.organizationInfo.leadNumber &&
+                  "Lead No. - " + application.organizationInfo.leadNumber}
               </span>
             </div>
             <div>
-              <div className={classes.companyName}>
-                {application.organizationInfo.companyName &&
-                  application.organizationInfo.companyName}
-              </div>
-              <div className={classes.account}>
-                {application.organizationInfo.licenseNumber &&
-                  application.organizationInfo.licenseNumber}
-              </div>
+              {application.organizationInfo && (
+                <>
+                  <div className={classes.companyName}>
+                    {application.organizationInfo.companyName &&
+                      application.organizationInfo.companyName}
+                  </div>
+                  <div className={classes.account}>
+                    {application.organizationInfo.licenseNumber &&
+                      "TL No. - " + application.organizationInfo.licenseNumber}
+                  </div>
+                </>
+              )}
             </div>
             <div>
-              <span className={classes.status}>
-                {application.status.statusType && application.status.statusType}
-              </span>
+              <div className={classes.status}>
+                {application.status &&
+                  application.status.statusType &&
+                  application.status.statusType}
+              </div>
             </div>
           </Link>
         ))}

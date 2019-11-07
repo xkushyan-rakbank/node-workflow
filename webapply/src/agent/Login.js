@@ -55,7 +55,7 @@ class Login extends React.Component {
   render() {
     const { classes, reCaptchaToken, userName, password } = this.props;
     return (
-      <div className={classes.baseForm}>
+      <div>
         <h2>Login</h2>
 
         <form noValidate onSubmit={this.submitForm}>
