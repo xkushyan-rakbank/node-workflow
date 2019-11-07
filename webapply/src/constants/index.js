@@ -203,7 +203,8 @@ export const searchProspectStepper = [
   {
     step: 1,
     title: "Search Applications",
-    path: routes.searchProspect
+    path: routes.searchProspect,
+    titleInfo: ""
   }
 ];
 
@@ -212,20 +213,23 @@ export const servicesSteps = [
     step: 1,
     title: "Account details",
     component: AccountDetails,
-    icon: accountDetails
+    icon: accountDetails,
+    titleInfo: ""
   },
   {
     step: 2,
     title: "Signing preferences",
     component: SigningPreferences,
-    icon: signingPreferences
+    icon: signingPreferences,
+    titleInfo: ""
   },
-  { step: 3, title: "Channels", component: Channels, icon: channels },
+  { step: 3, title: "Channels", component: Channels, icon: channels, titleInfo: "" },
   {
     step: 4,
     title: "Value added services",
     component: ValueAddedServices,
-    icon: valueAddedServices
+    icon: valueAddedServices,
+    titleInfo: "RAKvalue package available to AED account only"
   }
 ];
 
