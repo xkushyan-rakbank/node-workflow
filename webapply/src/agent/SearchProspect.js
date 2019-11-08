@@ -14,11 +14,10 @@ import * as loginSelector from "./../store/selectors/loginSelector";
 import * as getSearchResult from "./../store/selectors/searchProspect";
 import { history } from "./../store/configureStore";
 import routes from "../routes";
-import InfoTitle from "./../components/InfoTitle";
 
 const styles = {
   baseForm: {
-    maxWidth: "612px"
+    marginBottom: "20px"
   },
   infoTitle: {
     marginTop: "-14px !important"
@@ -62,10 +61,6 @@ class SearchProspect extends React.Component {
                 id="Search.mobileNo"
                 selectId="Search.countryCode"
                 select={<PureSelect id="Search.countryCode" combinedSelect defaultValue="UAE" />}
-              />
-              <InfoTitle
-                className={classes.infoTitle}
-                title="This is the contact no. of the person who had registered."
               />
             </Grid>
             <Grid item md={6} sm={12}>

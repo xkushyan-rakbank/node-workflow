@@ -8,6 +8,7 @@ import PureSelect from "../InputField/PureSelect";
 import InfoTitle from "../InfoTitle";
 import { connect } from "react-redux";
 import { getInputValueById } from "../../store/selectors/input";
+import { updateProspect } from "../../store/actions/appConfig";
 
 const styles = {
   title: {
@@ -42,6 +43,8 @@ const styles = {
   }
 };
 
+const UAEPhoneCode = "971";
+
 class CompanyPreferredContactInformationForm extends Component {
   static defaultProps = {
     handleContinue: () => {}
@@ -73,6 +76,15 @@ class CompanyPreferredContactInformationForm extends Component {
     return !(this.state.secondaryPhoneNumber ? this.props.primaryPhoneNo : this.props.primaryEmail);
   };
 
+  handleCurrencyCountryChange = value => {
+    const { chequeBookApplied, updateProspect } = this.props;
+    if (value !== UAEPhoneCode && chequeBookApplied) {
+      updateProspect({
+        ["prospect.accountInfo[0].chequeBookApplied"]: false
+      });
+    }
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -82,7 +94,12 @@ class CompanyPreferredContactInformationForm extends Component {
             <TextInput
               id="OrgCont.primaryMobileNo"
               select={
-                <PureSelect id="OrgCont.primaryMobCountryCode" defaultValue="971" combinedSelect />
+                <PureSelect
+                  id="OrgCont.primaryMobCountryCode"
+                  defaultValue={UAEPhoneCode}
+                  callback={this.handleCurrencyCountryChange}
+                  combinedSelect
+                />
               }
             />
             {this.state.secondaryPhoneNumber && (
@@ -92,7 +109,7 @@ class CompanyPreferredContactInformationForm extends Component {
                   select={
                     <PureSelect
                       id="OrgCont.primaryPhoneCountryCode"
-                      defaultValue="971"
+                      defaultValue={UAEPhoneCode}
                       combinedSelect
                     />
                   }
@@ -125,7 +142,17 @@ class CompanyPreferredContactInformationForm extends Component {
 
 const mapStateToProps = state => ({
   primaryPhoneNo: getInputValueById(state, "OrgCont.primaryPhoneNo"),
-  primaryEmail: getInputValueById(state, "OrgCont.primaryEmail")
+  primaryEmail: getInputValueById(state, "OrgCont.primaryEmail"),
+  chequeBookApplied: getInputValueById(state, "Acnt.chequeBookApplied", [0])
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(CompanyPreferredContactInformationForm));
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(CompanyPreferredContactInformationForm)
+);

@@ -11,7 +11,10 @@ export const mockData = [
     isIncluded: true,
     cost: 49,
     value: "RAKvalue PLUS",
-    buttonLabel: "Keep PLUS"
+    buttonLabel: "Keep PLUS",
+    notSelectedLabel: "Upgrade to PLUS",
+    disabledLabelForForeignCurrency: "Not Applicable",
+    _id: "RAKvalue PLUS"
   },
   {
     optionList: [
@@ -25,6 +28,9 @@ export const mockData = [
     isIncluded: false,
     cost: 149,
     value: "RAKvalue MAX",
-    buttonLabel: "Upgrade to MAX"
+    buttonLabel: "Keep MAX",
+    notSelectedLabel: "Upgrade to MAX",
+    disabledLabelForForeignCurrency: "Not Applicable",
+    _id: "RAKvalue MAX"
   }
 ];
