@@ -44,10 +44,6 @@ class AboutCompany extends React.Component {
     this.props.startProspectAutoSave();
   }
 
-  componentWillUnmount() {
-    this.setState({ isEligibleUser: false });
-  }
-
   componentDidUpdate(prevProps) {
     if (!prevProps.resetStep && this.props.resetStep) {
       this.setState(state => {

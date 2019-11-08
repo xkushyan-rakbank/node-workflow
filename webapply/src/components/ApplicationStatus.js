@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import routes from "./../routes";
+import declinedRegular from "./../assets/gif/declined_regular.gif";
 
 const styles = {
   appStatus: {
@@ -47,12 +48,13 @@ const styles = {
 
 class ApplicationStatus extends React.Component {
   render() {
-    const { classes, status, linkToProducts } = this.props;
+    const { classes, status, linkToProducts, statusFromServer } = this.props;
+
     return (
       <div className={classes.appStatus}>
-        <img src={status.icon} alt="error" />
+        <img src={status.icon || declinedRegular} alt="error" />
         <div className={classes.message}>
-          <p>{status.text}</p>
+          <p>{statusFromServer ? statusFromServer.screeningReason : status.text}</p>
           {linkToProducts && (
             <Link to={routes.accountsComparison} className={classes.appStatusLink}>
               See products

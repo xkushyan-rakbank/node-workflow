@@ -20,6 +20,7 @@ import {
   getScreeningResults
 } from "../store/selectors/appConfig";
 import { routerToAddPaddingInSlider } from "../constants/styles";
+import { applicationStatus } from "./../constants/index";
 
 const styles = {
   formLayout: {
@@ -113,9 +114,9 @@ class FormLayout extends React.Component {
                 <ErrorMessageAlert isVisible={serverError} handleClick={this.handleClick} />
 
                 {!isProceed ? (
-                  <ApplicationStatus errorReason={screeningResults} />
+                  <ApplicationStatus statusFromServer={screeningResults} />
                 ) : hasUiError ? (
-                  <ApplicationStatus uiError={true} />
+                  <ApplicationStatus status={applicationStatus.uiError} />
                 ) : (
                   children
                 )}
