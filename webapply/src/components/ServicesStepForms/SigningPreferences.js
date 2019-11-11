@@ -32,15 +32,12 @@ const style = {
 };
 
 class SigningPreferences extends React.Component {
-  state = {
-    contactPersons: [""]
-  };
-
   handleAddPerson = () => {
-    const contactPersons = this.state.contactPersons;
-    if (contactPersons.length === 1) {
-      contactPersons.push("");
-      this.setState({ contactPersons });
+    const { signatoryInfo, signInfoFullNameInput, updateProspect } = this.props;
+
+    if (signatoryInfo.length === 1) {
+      const path = signInfoFullNameInput.config.name.replace("*", signatoryInfo.length);
+      updateProspect({ [path]: "" });
     }
   };
 
@@ -54,9 +51,8 @@ class SigningPreferences extends React.Component {
   }
 
   render() {
-    const { classes, accountSigningType, signatoryInfo = [] } = this.props;
+    const { classes, accountSigningType, signatoryInfo, goToNext } = this.props;
 
-    const { contactPersons } = this.state;
     const getValueInput = index => {
       if (signatoryInfo[index]) {
         return signatoryInfo[index].fullName;
@@ -64,9 +60,50 @@ class SigningPreferences extends React.Component {
       return "";
     };
 
+    const contactGroup = (index = 0) => (
+      <React.Fragment key={index}>
+        <TextInput id="Sig.fullName" indexes={[index]} />
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <TextInput
+              id="OrgContReconf.primaryMobileNo"
+              indexes={[index]}
+              required={!!getValueInput(index)}
+              select={
+                <PureSelect
+                  id="OrgContReconf.primaryMobCountryCode"
+                  indexes={[index]}
+                  combinedSelect
+                  defaultValue="971"
+                />
+              }
+            />
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <TextInput
+              id="OrgContReconf.primaryPhoneNo"
+              indexes={[index]}
+              select={
+                <PureSelect
+                  id="OrgContReconf.primaryPhoneCountryCode"
+                  indexes={[index]}
+                  combinedSelect
+                  defaultValue="971"
+                />
+              }
+            />
+          </Grid>
+        </Grid>
+      </React.Fragment>
+    );
+
     return (
-      <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
-        <RadioGroup id="SigAcntSig.accountSigningType" indexes={[0]}>
+      <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
+        <RadioGroup
+          id="SigAcntSig.accountSigningType"
+          indexes={[0]}
+          helpMessage="text help TODO replace text"
+        >
           {accountSigningType.value === "Others" && (
             <TextArea id="SigAcntSig.accountSigningInstn" indexes={[0]} />
           )}
@@ -77,50 +114,15 @@ class SigningPreferences extends React.Component {
         <div className={classes.contactsTitle}>
           <Subtitle title="Contacts for re-confirming transactions" />
           <InfoTitle
+            typeInfo
             title="You can have up to two contacts"
-            styles={{
-              marginTop: "2px",
-              marginBottom: "6px"
-            }}
+            styles={{ marginTop: "2px", marginBottom: "6px" }}
           />
         </div>
 
-        {contactPersons.map((person, index) => (
-          <React.Fragment key={index}>
-            <TextInput id="Sig.fullName" indexes={[index]} />
-            <Grid container spacing={3}>
-              <Grid item md={6} sm={12}>
-                <TextInput
-                  id="OrgContReconf.primaryMobileNo"
-                  indexes={[index]}
-                  required={!!getValueInput(index)}
-                  select={
-                    <PureSelect
-                      id="OrgContReconf.primaryMobCountryCode"
-                      indexes={[index]}
-                      combinedSelect
-                      defaultValue="971"
-                    />
-                  }
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <TextInput
-                  id="OrgContReconf.primaryPhoneNo"
-                  indexes={[index]}
-                  select={
-                    <PureSelect
-                      id="OrgContReconf.primaryPhoneCountryCode"
-                      indexes={[index]}
-                      combinedSelect
-                      defaultValue="971"
-                    />
-                  }
-                />
-              </Grid>
-            </Grid>
-          </React.Fragment>
-        ))}
+        {signatoryInfo.length
+          ? signatoryInfo.map((person, index) => contactGroup(index))
+          : contactGroup()}
 
         <AddButton
           title="Add another person"
@@ -133,9 +135,10 @@ class SigningPreferences extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  signatoryInfo: appConfigSelectors.getSignatories(state),
+  signInfoFullNameInput: getGeneralInputProps(state, "Sig.fullName", [0]),
   accountSigningType: getGeneralInputProps(state, "SigAcntSig.accountSigningType", [0]),
-  accountSigningInstn: getGeneralInputProps(state, "SigAcntSig.accountSigningInstn", [0]),
-  signatoryInfo: appConfigSelectors.getSignatories(state)
+  accountSigningInstn: getGeneralInputProps(state, "SigAcntSig.accountSigningInstn", [0])
 });
 
 const mapDispatchToProps = {
