@@ -44,7 +44,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -54,7 +54,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -64,7 +64,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Match",
+                "screeningReason": "Match - Your name is matched",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -74,7 +74,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Risk rating value",
+                "screeningReason": "",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -93,7 +93,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -103,7 +103,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -113,7 +113,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Match",
+                "screeningReason": "Match - Your name is matched",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -123,7 +123,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Risk rating value",
+                "screeningReason": "",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -144,7 +144,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "No Match Reason",
+              "screeningReason": "No Match",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -154,7 +154,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "No Match Reason",
+              "screeningReason": "No Match",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -164,7 +164,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "Match",
+              "screeningReason": "Match - Your name is matched",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -174,7 +174,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "Risk rating value",
+              "screeningReason": "",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -227,7 +227,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -237,7 +237,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -247,7 +247,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Match",
+                "screeningReason": "Match - Your name is matched",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -257,7 +257,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Risk rating value",
+                "screeningReason": "",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -276,7 +276,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -286,7 +286,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -296,7 +296,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Match",
+                "screeningReason": "Match - Your name is matched",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -306,7 +306,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Risk rating value",
+                "screeningReason": "",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -327,7 +327,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "No Match Reason",
+              "screeningReason": "No Match",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -337,7 +337,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "No Match Reason",
+              "screeningReason": "No Match",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -347,7 +347,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "Match",
+              "screeningReason": "Match - Your name is matched",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -357,7 +357,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "Risk rating value",
+              "screeningReason": "",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -410,7 +410,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -420,7 +420,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -430,7 +430,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Match",
+                "screeningReason": "Match - Your name is matched",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -440,7 +440,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Risk rating value",
+                "screeningReason": "",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -459,7 +459,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -469,7 +469,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "No Match Reason",
+                "screeningReason": "No Match",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -479,7 +479,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Match",
+                "screeningReason": "Match - Your name is matched",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -489,7 +489,7 @@
                 "screeningStatus": "Completed",
                 "screeningFlag": "string",
                 "screeningNotes": "string",
-                "screeningReason": "Risk rating value",
+                "screeningReason": "",
                 "reasonNotes": "string",
                 "reasonCode": "string",
                 "reasonStatus": "string"
@@ -510,7 +510,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "No Match Reason",
+              "screeningReason": "No Match",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -520,7 +520,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "No Match Reason",
+              "screeningReason": "No Match",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -530,7 +530,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "Match",
+              "screeningReason": "Match - Your name is matched",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
@@ -540,7 +540,7 @@
               "screeningStatus": "Completed",
               "screeningFlag": "string",
               "screeningNotes": "string",
-              "screeningReason": "Risk rating value",
+              "screeningReason": "",
               "reasonNotes": "string",
               "reasonCode": "string",
               "reasonStatus": "string"
