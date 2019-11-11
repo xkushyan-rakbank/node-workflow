@@ -1,8 +1,0 @@
-FROM amazonlinux:latest as skiply-awsbase-lib
-RUN yum update && echo "y" | yum install java
-RUN echo "y" | yum install maven
-RUN java -version
-RUN mvn -v
-WORKDIR /app
-COPY . /app
-RUN mvn clean install
