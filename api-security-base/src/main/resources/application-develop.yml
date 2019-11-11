@@ -1,0 +1,9 @@
+
+apisecurity:
+  data:
+    encryption:
+      enabled: true
+      keystore:
+        file: D:/Workspace/Project/CodeSetup/Security/Skiply_Projects/api-security-base/src/main/resources/skiply.p12
+        alias: skiply
+        password: skiply@123!
