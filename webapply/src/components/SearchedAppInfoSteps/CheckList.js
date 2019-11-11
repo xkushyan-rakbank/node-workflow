@@ -1,5 +1,7 @@
 import React from "react";
+import get from "lodash/get";
 import { withStyles } from "@material-ui/core/styles";
+import Avatar from "../../components/Avatar";
 
 const style = {
   wrapper: {
@@ -23,7 +25,8 @@ const style = {
     fontSize: "14px",
     lineHeight: 1.33,
     color: "#86868b",
-    marginTop: 5
+    marginTop: 5,
+    wordBreak: "break-word"
   },
   heading: {
     fontWeight: 600,
@@ -40,6 +43,30 @@ const style = {
     fontSize: "15px",
     alignItems: "center",
     fontWeight: "600"
+  },
+  errorMsgInsideTable: {
+    fontSize: "16px",
+    fontWeight: 600,
+    marginBottom: "0px",
+    padding: "20px 20px 20px 30px"
+  },
+  contentWrapper: {
+    display: "flex",
+    alignItems: "center",
+    height: "62px",
+    margin: "20px 35px 20px 25px"
+  },
+  nameField: {
+    fontSize: "18px",
+    fontWeight: 600,
+    lineHeight: 1.33,
+    color: "#373737"
+  },
+  userInfo: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    margin: "0 16px"
   }
 };
 
@@ -48,11 +75,8 @@ const CheckList = props => {
 
   return (
     <>
-      <h4 className={classes.title}>Organization</h4>
-      {prospectInfo.organizationInfo &&
-      prospectInfo.organizationInfo.screeningInfo &&
-      prospectInfo.organizationInfo.screeningInfo.screeningResults &&
-      prospectInfo.organizationInfo.screeningInfo.screeningResults.length > 0 ? (
+      <h4 className={classes.title}>Company</h4>
+      {get(prospectInfo, "organizationInfo.screeningInfo.screeningResults", []).length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div>
@@ -69,34 +93,32 @@ const CheckList = props => {
             (application, index) => (
               <div className={classes.applicationRow} key={index}>
                 <div>
-                  <div className={classes.checkListData}>
-                    {application.screeningType && application.screeningType}
-                  </div>
+                  <div className={classes.checkListData}>{application.screeningType}</div>
                 </div>
                 <div>
-                  <div className={classes.checkListData}>
-                    {application.screeningStatus && application.screeningStatus}
-                  </div>
+                  <div className={classes.checkListData}>{application.screeningStatus}</div>
                 </div>
                 <div>
-                  <div className={classes.checkListData}>
-                    {application.screeningReason && application.screeningReason}
-                  </div>
+                  <div className={classes.checkListData}>{application.screeningReason}</div>
                 </div>
               </div>
             )
           )}
         </div>
       ) : (
-        <div className={classes.errorMsg}>Organization check list is not available.</div>
+        <div className={classes.errorMsg}>Company check list is not available.</div>
       )}
-      {prospectInfo.signatoryInfo && prospectInfo.signatoryInfo.length > 0 ? (
+      <h4 className={classes.title}>Stakeholder</h4>
+      {get(prospectInfo, "signatoryInfo", []).length ? (
         prospectInfo.signatoryInfo.map((signatory, index) => (
           <div key={index}>
-            <h4 key={index} className={classes.title}>
-              {signatory.fullName && signatory.fullName}
-            </h4>
-            <div className={classes.wrapper} key={index}>
+            <div className={classes.contentWrapper}>
+              <Avatar firstName={signatory.fullName} />
+              <div className={classes.userInfo}>
+                <div className={classes.nameField}>{signatory.fullName}</div>
+              </div>
+            </div>
+            <div className={classes.wrapper}>
               <div className={classes.applicationRow}>
                 <div>
                   <div className={classes.checkListData + " " + classes.heading}>Check Name</div>
@@ -108,33 +130,30 @@ const CheckList = props => {
                   <div className={classes.checkListData + " " + classes.heading}>Result/Reason</div>
                 </div>
               </div>
-              {signatory.screeningInfo &&
-                signatory.screeningInfo.screeningResults &&
-                signatory.screeningInfo.screeningResults.length > 0 &&
+              {get(signatory, "screeningInfo.screeningResults", []).length ? (
                 signatory.screeningInfo.screeningResults.map((application, index) => (
                   <div className={classes.applicationRow} key={index}>
                     <div>
-                      <div className={classes.checkListData}>
-                        {application.screeningType && application.screeningType}
-                      </div>
+                      <div className={classes.checkListData}>{application.screeningType}</div>
                     </div>
                     <div>
-                      <div className={classes.checkListData}>
-                        {application.screeningStatus && application.screeningStatus}
-                      </div>
+                      <div className={classes.checkListData}>{application.screeningStatus}</div>
                     </div>
                     <div>
-                      <div className={classes.checkListData}>
-                        {application.screeningReason && application.screeningReason}
-                      </div>
+                      <div className={classes.checkListData}>{application.screeningReason}</div>
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className={classes.errorMsgInsideTable}>
+                  Check list is not available for this stakeholder.
+                </div>
+              )}
             </div>
           </div>
         ))
       ) : (
-        <div className={classes.errorMsg}>Signatory check list is not available.</div>
+        <div className={classes.errorMsg}>Stakeholder check list is not available.</div>
       )}
     </>
   );

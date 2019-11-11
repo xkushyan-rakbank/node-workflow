@@ -15,7 +15,7 @@ import * as appConfigSelector from "../store/selectors/appConfig";
 
 const styles = {
   baseForm: {
-    maxWidth: "612px"
+    marginTop: "135px"
   },
   reCaptchaContainer: {
     display: "flex",
@@ -55,7 +55,7 @@ class Login extends React.Component {
   render() {
     const { classes, reCaptchaToken, userName, password } = this.props;
     return (
-      <div>
+      <div className={classes.baseForm}>
         <h2>Login</h2>
 
         <form noValidate onSubmit={this.submitForm}>

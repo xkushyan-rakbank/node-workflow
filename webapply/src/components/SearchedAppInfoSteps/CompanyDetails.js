@@ -37,52 +37,43 @@ const CompanyDetails = props => {
       {prospectInfo.applicantInfo ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <div className={classes.companyDetails}>
-              {prospectInfo.applicantInfo.email && prospectInfo.applicantInfo.email}
-            </div>
+            <div className={classes.companyDetails}>{prospectInfo.applicantInfo.email}</div>
           </Grid>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
-              {prospectInfo.applicantInfo.countryCode &&
-                prospectInfo.applicantInfo.countryCode +
-                  " " +
-                  (prospectInfo.applicantInfo.mobileNo && prospectInfo.applicantInfo.mobileNo)}
+              {prospectInfo.applicantInfo.countryCode + " " + prospectInfo.applicantInfo.mobileNo}
             </div>
           </Grid>
         </Grid>
       ) : (
-        <div className={classes.errorMsg}>Applicant details are not found</div>
+        <div className={classes.errorMsg}>Applicant details are not found.</div>
       )}
       <h4 className={classes.title}>RAKtrack Lead Reference Number</h4>
-      {prospectInfo.organizationInfo ? (
+      {prospectInfo.organizationInfo && prospectInfo.organizationInfo.leadNumber ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <div className={classes.companyDetails}>
-              {prospectInfo.organizationInfo.leadNumber && prospectInfo.organizationInfo.leadNumber}
-            </div>
+            <div className={classes.companyDetails}>{prospectInfo.organizationInfo.leadNumber}</div>
           </Grid>
         </Grid>
       ) : (
-        <div className={classes.errorMsg}>RAKtrack lead refernce number is not generated.</div>
+        <div className={classes.errorMsg}>RAKtrack lead reference number is not generated.</div>
       )}
       <h4 className={classes.title}>Company Detail</h4>
       {prospectInfo.organizationInfo ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
-              {prospectInfo.organizationInfo.companyName &&
-                prospectInfo.organizationInfo.companyName}
+              {prospectInfo.organizationInfo.companyName}
             </div>
           </Grid>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
-              {prospectInfo.organizationInfo.licenseNumber &&
-                prospectInfo.organizationInfo.licenseNumber}
+              {prospectInfo.organizationInfo.licenseNumber}
             </div>
           </Grid>
         </Grid>
       ) : (
-        <div className={classes.errorMsg}>Company details are not found</div>
+        <div className={classes.errorMsg}>Company details are not found.</div>
       )}
     </>
   );

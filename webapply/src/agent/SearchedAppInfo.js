@@ -13,6 +13,7 @@ import BackLink from "../components/Buttons/BackLink";
 import { retrieveDocDetails } from "./../store/actions/getProspectDocuments";
 import { getProspectInfo } from "./../store/actions/retrieveApplicantInfo";
 import { receiveAppConfig, updateProspectId } from "./../store/actions/appConfig";
+import ConfirmDialog from "../components/ConfirmDialod";
 
 const styles = {
   sectionTitleIndent: {
@@ -38,7 +39,8 @@ class SearchedAppInfo extends React.Component {
   };
 
   state = {
-    step: 1
+    step: 1,
+    editClicked: false
   };
 
   componentWillMount() {
@@ -52,18 +54,27 @@ class SearchedAppInfo extends React.Component {
   }
 
   redirectUserPage = () => {
+    this.setState({ editClicked: true });
+  };
+
+  confirmHandler = () => {
+    alert("yes");
     this.props.receiveAppConfig();
     this.props.getProspectInfo(this.props.match.params.id);
   };
 
+  closeConfirmDialog = () => {
+    this.setState({ editClicked: false });
+    alert("no");
+  };
+
   render() {
     const { classes, index, searchResults, match } = this.props;
-    const { step } = this.state;
+    const { step, editClicked } = this.state;
 
-    const [prospectInfo] =
-      searchResults && searchResults.searchResult
-        ? searchResults.searchResult.filter(item => item.prospectId === match.params.id)
-        : [];
+    const [prospectInfo] = searchResults.searchResult
+      ? searchResults.searchResult.filter(item => item.prospectId === match.params.id)
+      : [];
 
     return prospectInfo ? (
       <>
@@ -73,9 +84,7 @@ class SearchedAppInfo extends React.Component {
           content={
             <>
               <div className={classes.title}>
-                {prospectInfo.applicantInfo &&
-                  prospectInfo.applicantInfo.fullName &&
-                  prospectInfo.applicantInfo.fullName}
+                {prospectInfo.applicantInfo && prospectInfo.applicantInfo.fullName}
               </div>
             </>
           }
@@ -105,6 +114,14 @@ class SearchedAppInfo extends React.Component {
           <BackLink path={routes.searchProspect} />
           <SubmitButton label={"Edit"} justify="flex-end" handleClick={this.redirectUserPage} />
         </div>
+        {editClicked && (
+          <ConfirmDialog
+            isOpen={true}
+            handler={this.confirmHandler}
+            handleClose={this.closeConfirmDialog}
+            id="Search.editMessage"
+          />
+        )}
       </>
     ) : (
       <></>

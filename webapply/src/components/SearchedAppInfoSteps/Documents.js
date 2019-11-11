@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "../../components/Avatar";
@@ -107,22 +108,19 @@ export const mockSignatoriesDocData = [
 ];
 
 const Documents = props => {
-  const { classes, docs, prospectInfo, getEndpointsUrl } = props;
+  const { classes, docs, prospectInfo, endpointsUrl } = props;
 
   const signatoryInfo = prospectInfo.signatoryInfo;
 
-  const documentBaseUrl =
-    getEndpointsUrl &&
-    (getEndpointsUrl.baseUrl && getEndpointsUrl.baseUrl) +
-      (getEndpointsUrl.getDocumentByIdUri && getEndpointsUrl.getDocumentByIdUri);
+  const documentBaseUrl = `${endpointsUrl.baseUrl1 || ""}${endpointsUrl.getDocumentByIdUri1 || ""}`;
 
   const dummyProspectId = "MGHN43MD75";
   const dummyDocumentKey = "MGHN43MD75_TL";
 
   return (
     <>
-      <h4 className={classes.title}>Company Documents</h4>
-      {docs && docs.companyDocuments && docs.companyDocuments.length > 0 ? (
+      <h4 className={classes.title}>Company</h4>
+      {get(docs, "companyDocuments", []).length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div>
@@ -158,19 +156,18 @@ const Documents = props => {
           ))}
         </div>
       ) : (
-        <div className={classes.errorMsg}>Company documents are not found</div>
+        <div className={classes.errorMsg}>Company documents are not found.</div>
       )}
       <br />
-      <h4 className={classes.title}>Stakeholder Documents</h4>
-      {docs && docs.stakeholdersDocuments && Object.keys(docs.stakeholdersDocuments).length != 0 ? (
-        signatoryInfo &&
+      <h4 className={classes.title}>Stakeholder</h4>
+      {get(docs, "stakeholdersDocuments") && Object.keys(docs.stakeholdersDocuments).length ? (
         signatoryInfo.length > 0 &&
         signatoryInfo.map((user, index) => (
           <div key={index}>
             <div className={classes.contentWrapper}>
-              <Avatar firstName={user.fullName && user.fullName} />
+              <Avatar firstName={user.fullName} />
               <div className={classes.userInfo}>
-                <div className={classes.nameField}>{user.fullName && user.fullName}</div>
+                <div className={classes.nameField}>{user.fullName}</div>
               </div>
             </div>
             <div className={classes.wrapper}>
@@ -191,14 +188,10 @@ const Documents = props => {
                 docs.stakeholdersDocuments[index + "_" + user.fullName].map((doc, index) => (
                   <div className={classes.applicationRow} key={index}>
                     <div>
-                      <div className={classes.checkListData}>
-                        {doc.documentType && doc.documentType}
-                      </div>
+                      <div className={classes.checkListData}>{doc.documentType}</div>
                     </div>
                     <div>
-                      <div className={classes.checkListData}>
-                        {doc.uploadStatus && doc.uploadStatus}
-                      </div>
+                      <div className={classes.checkListData}>{doc.uploadStatus}</div>
                     </div>
                     {doc.uploadStatus !== "NotUploaded" && (
                       <div>
@@ -219,7 +212,7 @@ const Documents = props => {
           </div>
         ))
       ) : (
-        <div className={classes.errorMsg}>Stakeholder documents are not found</div>
+        <div className={classes.errorMsg}>Stakeholder documents are not found.</div>
       )}
     </>
   );
@@ -228,7 +221,7 @@ const Documents = props => {
 const mapStateToProps = state => {
   return {
     docs: appConfigSelector.getProspectDocuments(state),
-    getEndpointsUrl: appConfigSelector.getEndpoints(state)
+    endpointsUrl: appConfigSelector.getEndpoints(state)
   };
 };
 

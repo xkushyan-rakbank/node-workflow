@@ -82,7 +82,7 @@ class SearchProspect extends React.Component {
               disabled={!fullName && !mobileNo && !raktrackNumber && !email && !tradeLicenseNo}
             />
           </div>
-          {searchResults.searchResult && searchResults.searchResult.length > 0 && (
+          {searchResults.searchResult && (
             <SearchResult searchResults={searchResults.searchResult} />
           )}
         </form>

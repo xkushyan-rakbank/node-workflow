@@ -6,7 +6,11 @@ class SearchResult extends React.Component {
     return (
       <>
         <h2>Search Results</h2>
-        <SearchApplicationList currentApplications={this.props.searchResults} />
+        {this.props.searchResults.length > 0 ? (
+          <SearchApplicationList currentApplications={this.props.searchResults} />
+        ) : (
+          <div>No Record Found</div>
+        )}
       </>
     );
   }
