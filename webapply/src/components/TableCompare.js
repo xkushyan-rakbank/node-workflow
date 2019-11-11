@@ -192,7 +192,7 @@ class TableCompare extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      offset: 380,
+      offset: 395,
       selectedAccountContainerWidth: "190px",
       selectedAccount: accountsNames.currentAccount
     };
@@ -236,24 +236,28 @@ class TableCompare extends React.Component {
       case accountsNames.starter:
         this.setState({
           offset: this.RAKstarter.current.offsetLeft + 5,
+          selectedAccount,
           selectedCurrentColumn: 2
         });
         break;
       case accountsNames.currentAccount:
         this.setState({
           offset: this.CurrentAccount.current.offsetLeft + 5,
+          selectedAccount,
           selectedCurrentColumn: 3
         });
         break;
       case accountsNames.elite:
         this.setState({
           offset: this.RAKElite.current.offsetLeft + 5,
+          selectedAccount,
           selectedCurrentColumn: 4
         });
         break;
       default:
         this.setState({
           offset: this.CurrentAccount.current.offsetLeft + 5,
+          selectedAccount,
           selectedCurrentColumn: 2
         });
     }
