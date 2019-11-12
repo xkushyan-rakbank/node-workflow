@@ -6,7 +6,6 @@ import cx from "classnames";
 
 import { mockData } from "../../ExpandedOptionsCards/constants";
 import { getSelectedTypeCurrency } from "../../../utils/SelectServices";
-import * as appConfigSelectors from "../../../store/selectors/appConfig";
 import { getSelectedAccountInfo } from "../../../store/selectors/selectedAccountInfo";
 import { getUrlsReadMore } from "../../../store/selectors/appConfig";
 import { updateProspect } from "../../../store/actions/appConfig";
@@ -111,7 +110,6 @@ class ValueAddedServices extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  applicationInfo: appConfigSelectors.getApplicationInfo(state),
   readMoreUrls: getUrlsReadMore(state),
   rakValuePackage: getGeneralInputProps(state, "Appl.rakValuePackage"),
   accountCurrencies: getInputValueById(state, "Acnt.accountCurrencies", [0]),
