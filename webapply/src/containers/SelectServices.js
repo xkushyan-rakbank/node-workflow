@@ -66,8 +66,7 @@ class SelectServices extends React.Component {
   }
 
   render() {
-    const { classes, accountCurrencies } = this.props;
-    const { isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(accountCurrencies);
+    const { classes } = this.props;
 
     return this.state.step === 6 ? (
       <SubmitApplication />
@@ -89,7 +88,6 @@ class SelectServices extends React.Component {
                   step={stepData}
                   activeStep={this.state.step}
                   setStep={this.setStep}
-                  isShowTitleInfo={this.state.step === 4 && isSelectOnlyForeignCurrency}
                 />
                 {this.state.step === item.step && (
                   <div

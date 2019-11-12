@@ -9,7 +9,7 @@ import PreferredContactInformation from "../components/StakeholderStepForms/Pref
 import AccountDetails from "../components/ServicesStepForms/AccountDetails";
 import SigningPreferences from "../components/ServicesStepForms/SigningPreferences";
 import Channels from "../components/ServicesStepForms/Channels";
-import ValueAddedServices from "../components/ServicesStepForms/ValueAddedServices";
+import ValueAddedServices from "../components/ServicesStepForms/ValueAddedServices/ValueAddedServices";
 import CompanyDetails from "../components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "../components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";
@@ -213,23 +213,20 @@ export const servicesSteps = [
     step: 1,
     title: "Account details",
     component: AccountDetails,
-    icon: accountDetails,
-    titleInfo: ""
+    icon: accountDetails
   },
   {
     step: 2,
     title: "Signing preferences",
     component: SigningPreferences,
-    icon: signingPreferences,
-    titleInfo: ""
+    icon: signingPreferences
   },
   { step: 3, title: "Channels", component: Channels, icon: channels, titleInfo: "" },
   {
     step: 4,
     title: "Value added services",
     component: ValueAddedServices,
-    icon: valueAddedServices,
-    titleInfo: "RAKvalue package available to AED account only"
+    icon: valueAddedServices
   }
 ];
 
