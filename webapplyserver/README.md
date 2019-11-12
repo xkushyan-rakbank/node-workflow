@@ -54,7 +54,7 @@ Open Issues / Refactor:
 1. Request/Response are logged with INFO level to help developers to troubleshoot issues with APIs. 
 Change the log statements to logger.debug to avoid logging prospect information.
 
-2. Refactor: RecaptchaController is obsolete now as the reCAPTCHA verification is done before invoked before createProspect, agent authentication and send OTP.  
+2. RecaptchaController is obsolete now as the reCAPTCHA verification is done before invoked before createProspect, agent authentication and send OTP.  
 
 3. CookieHelper, CSRFTokenHelper will become obsolete once the API security is integrated with WebApplyServer.
 
