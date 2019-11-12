@@ -1,4 +1,4 @@
-const style = {
+const styled = {
   paperRoot: {
     marginTop: "5px",
     boxSizing: "border-box",
@@ -107,4 +107,4 @@ const style = {
   }
 };
 
-export default style;
+export default styled;

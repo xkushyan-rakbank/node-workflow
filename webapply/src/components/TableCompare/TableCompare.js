@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -14,7 +15,7 @@ import { updateProspect } from "../../store/actions/appConfig";
 import { updateAccountType } from "../../store/actions/selectedAccountInfo";
 import { accountsNames } from "../../constants/index";
 import { shortNames, mockDataRows, initialValue } from "./constants";
-import style from "./styled";
+import styled from "./styled";
 import routes from "../../routes";
 
 class TableCompare extends React.Component {
@@ -293,11 +294,11 @@ const mapDispatchToProps = {
   updateAccountType
 };
 
-export default withRouter(
-  withStyles(style)(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(TableCompare)
-  )
-);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  withStyles(styled),
+  withRouter
+)(TableCompare);
