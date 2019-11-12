@@ -1,54 +1,30 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
-
-const styles = {
-  companyDetails: {
-    fontSize: "14px",
-    lineHeight: 1.33,
-    color: "#86868b",
-    height: "60px"
-  },
-  email: {
-    fontSize: "14px",
-    lineHeight: 1.33,
-    color: "#86868b"
-  },
-  title: {
-    marginTop: "0px",
-    color: "#373737",
-    fontSize: "15px",
-    alignItems: "center",
-    fontWeight: "600"
-  },
-  errorMsg: {
-    fontWeight: 600,
-    fontSize: "20px",
-    marginBottom: "24px"
-  }
-};
+import { styles } from "./style";
+import { titles, errorMsgs } from "./constants";
 
 const CompanyDetails = props => {
   const { classes, prospectInfo = [] } = props;
+  const contactNo = `${prospectInfo.applicantInfo.countryCode} 
+  ${prospectInfo.applicantInfo.mobileNo}`;
 
   return (
     <>
-      <h4 className={classes.title}>Applicant&apos;s Detail</h4>
+      <h4 className={classes.title}>{titles.APPLICANT_DETAIL_TITLE}</h4>
       {prospectInfo.applicantInfo ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>{prospectInfo.applicantInfo.email}</div>
           </Grid>
           <Grid item md={6} sm={12}>
-            <div className={classes.companyDetails}>
-              {prospectInfo.applicantInfo.countryCode + " " + prospectInfo.applicantInfo.mobileNo}
-            </div>
+            <div className={classes.companyDetails}>{contactNo}</div>
           </Grid>
         </Grid>
       ) : (
-        <div className={classes.errorMsg}>Applicant details are not found.</div>
+        <div className={classes.errorMsg}>{errorMsgs.APPLICANT_DETAIL_ERROR}</div>
       )}
-      <h4 className={classes.title}>RAKtrack Lead Reference Number</h4>
+      <h4 className={classes.title}>{titles.RAKTRACK_LEAD_REFERENCE_TITLE}</h4>
       {prospectInfo.organizationInfo && prospectInfo.organizationInfo.leadNumber ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
@@ -56,9 +32,9 @@ const CompanyDetails = props => {
           </Grid>
         </Grid>
       ) : (
-        <div className={classes.errorMsg}>RAKtrack lead reference number is not generated.</div>
+        <div className={classes.errorMsg}>{errorMsgs.RAKTRACK_LEAD_REFERENCE_ERROR}</div>
       )}
-      <h4 className={classes.title}>Company Detail</h4>
+      <h4 className={classes.title}>{titles.COMPANY_DETAIL_TITLE}</h4>
       {prospectInfo.organizationInfo ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
@@ -73,7 +49,7 @@ const CompanyDetails = props => {
           </Grid>
         </Grid>
       ) : (
-        <div className={classes.errorMsg}>Company details are not found.</div>
+        <div className={classes.errorMsg}>{errorMsgs.COMPANY_DETAIL_ERROR}</div>
       )}
     </>
   );
