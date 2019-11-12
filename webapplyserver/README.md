@@ -25,3 +25,13 @@ JBoss EAP Deployment:
 3. Copy webapply.war to /jboss-eap-7.2.0/standalone/deployments/
 4. Start the server from /jboss-eap-7.2/bin/ 
 5. Use ./standalone.sh on Mac and ./standalone.bat on Windows to start the server and deploy the war
+
+Important Class Files:
+1. WebApplyController : This class provides an API to load/reload configuration for WebApply (FrontEnd). 
+On startup, configuration is loaded based on criteria like role, segment, product and device and final configuration is stored in 
+ServletContext in JSON format. DEH API GET Datalist is invoked and LOVs are updated in configuration based on datalistId value.
+
+2. ApiRequestForwarder: A wrapper class for DEH APIs, WebApply (FrontEnd) invokes APIs provided by this class, 
+requests are forwarded to DEH APIs and response sent back to WebApply(FrontEnd)
+
+3. FileHelper: This class loads file(s) from classpath or pre-defined directory.  
