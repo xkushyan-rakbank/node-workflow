@@ -1,5 +1,5 @@
 import React from "react";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import cx from "classnames";
@@ -14,7 +14,7 @@ import { accountsNames } from "../../../constants/index";
 import ExpandedDetailedOptionsCard from "../../ExpandedOptionsCards/ExpandedDetailedOptionsCard";
 import { getUrlReadMore } from "../../ExpandedOptionsCards/ExpandedOptionsCards";
 
-import style from "./styled";
+import { styled } from "./styled";
 
 class ValueAddedServices extends React.Component {
   handleSelectValue = selectedService => {
@@ -121,7 +121,7 @@ const mapDispatchToProps = {
 };
 
 export default compose(
-  withStyles(style),
+  withStyles(styled),
   connect(
     mapStateToProps,
     mapDispatchToProps

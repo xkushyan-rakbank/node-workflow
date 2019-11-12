@@ -1,4 +1,4 @@
-export default {
+export const styled = {
   formWrapper: {
     display: "flex"
   },

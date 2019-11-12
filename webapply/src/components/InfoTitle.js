@@ -1,8 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
-import infoIc from "../assets/icons/info.png";
-import infoIcYellow from "../assets/icons/infoYellow.png";
+import infoIc from "../assets/icons/info.svg";
+import infoIcYellow from "../assets/icons/infoYellow.svg";
 
 const styles = {
   wrapper: {
