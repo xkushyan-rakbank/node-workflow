@@ -8,7 +8,12 @@ const CompanyDetails = () => {
     <>
       <Grid container spacing={3}>
         <Grid item md={6} sm={12}>
-          <TextInput id="Org.companyName" />
+          <TextInput
+            id="Org.companyName"
+            withContexualHelp
+            placement="right"
+            contexualHelpText="wedwed wed wed wewed ewwdwe"
+          />
         </Grid>
         <Grid item md={6} sm={12}>
           <PureSelect id="Okyc.companyCategory" />
