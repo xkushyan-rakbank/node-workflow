@@ -25,5 +25,14 @@ Important Class Files:
 2. S3FileUploader : a task class which runs every 5 minutes to upload files from <WEB_APPLY_DIR>/scanned_docs to S3 bucket and then moves the file(s) to <WEB_APPLY_DIR>/s3_objects for archive/purge.
 3. ECSS3Factory: prepares S3Config object with configuration values from DocUploadConfig.json and then creates a S3Client
 4. FileHelper: This class loads file(s) from classpath or pre-defined directory.
-5. ApiError and ErrorResponse : a helper class to convert exception and/or error response to JSON.
+5. ApiError : a helper class to convert exception and/or error response to JSON.
 6. EnvUtil : reads the value of environment variables like WEB_APPLY_ENV (local, dev, uat, test or prod) and WEB_APPLY_DIR (a directory path for config files)
+
+Config Files:
+1. DocUploadConfig.json : contains S3 bucket details
+2. application.properties: contains config for file size limit
+
+Open Issues / Refactor:
+1. JUnit tests are pending as mentioned in DEV tasks.
+2. PUT method has issue in binding the RequestParam (fileInfo), use POST method until this issue is fixed.
+3. Remove @CrossOrigin from Controller class once the development is done.
