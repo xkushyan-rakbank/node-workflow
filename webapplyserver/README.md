@@ -39,7 +39,9 @@ It invokes the OAuthService again if the access token is expired.
 
 4. FileHelper: This class loads file(s) from classpath or pre-defined directory.
 
-5. EnvUtil : reads the value of environment variables like WEB_APPLY_ENV (local, dev, uat, test or prod) and WEB_APPLY_DIR (a directory path of config files)
+5. ApiError and ErrorResponse : a helper class to convert exception and/or error response to JSON.
+
+6. EnvUtil : reads the value of environment variables like WEB_APPLY_ENV (local, dev, uat, test or prod) and WEB_APPLY_DIR (a directory path of config files)
 
 Config Files:
 1. uiConfig.json : cotains UI configuration for WebApply, loaded from classpath
