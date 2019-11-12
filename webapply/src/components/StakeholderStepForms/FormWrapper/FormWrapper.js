@@ -2,22 +2,11 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import cx from "classnames";
 import { connect } from "react-redux";
-import { compose } from "recompose";
-import ContinueButton from "../Buttons/ContinueButton";
-import { validateForm } from "../../utils/validate";
-import { updateValidationErrors } from "../../store/actions/validationErrors";
-
-const styles = {
-  formWrapper: {
-    margin: "0 20px"
-  },
-  buttonWrapper: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "flex-end",
-    margin: "40px 0"
-  }
-};
+import { compose } from "redux";
+import ContinueButton from "../../Buttons/ContinueButton";
+import { validateForm } from "../../../utils/validate";
+import { updateValidationErrors } from "../../../store/actions/validationErrors";
+import styles from "./styled";
 
 const FormWrapper = props => {
   const hideContinue = props.hideContinue ? props.hideContinue : false;

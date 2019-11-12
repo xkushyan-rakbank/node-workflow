@@ -5,7 +5,7 @@ import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
 
 import Subtitle from "../Subtitle";
-import FormWrapper from "../StakeholderStepForms/FormWrapper";
+import FormWrapper from "../StakeholderStepForms/FormWrapper/FormWrapper";
 import InfoTitle from "../InfoTitle";
 import PureSelect from "../InputField/PureSelect";
 import TextInput from "../InputField/TextInput";

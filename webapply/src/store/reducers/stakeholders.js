@@ -4,7 +4,8 @@ import {
   CLOSE_CONFIRM_DIALOG,
   CHANGE_EDITABLE_STAKEHOLDER,
   CHANGE_STEP,
-  FINISH_STAKEHOLDER_EDIT
+  FINISH_STAKEHOLDER_EDIT,
+  EDIT_STAKEHOLDER
 } from "../actions/stakeholders";
 
 export const initialState = {
@@ -24,7 +25,8 @@ const stakeholders = (state = initialState, action) => {
       return {
         ...state,
         isNewStakeholder: true,
-        step: initialState.step
+        step: initialState.step,
+        completedStep: initialState.completedStep
       };
     case OPEN_CONFIRM_DIALOG:
       return {
@@ -53,6 +55,11 @@ const stakeholders = (state = initialState, action) => {
         ...state,
         isFinalScreenShown: false,
         editableStakeholder: undefined
+      };
+    case EDIT_STAKEHOLDER:
+      return {
+        ...state,
+        isNewStakeholder: false
       };
     default:
       return state;

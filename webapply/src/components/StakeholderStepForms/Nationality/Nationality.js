@@ -3,20 +3,13 @@ import get from "lodash/get";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Select from "../InputField/PureSelect";
-import Input from "../InputField/TextInput";
-import Checkbox from "../InputField/RefactoredCheckbox";
-import { getInputValueById } from "../../store/selectors/input";
-import { updateProspect } from "../../store/actions/appConfig";
-import { handleCitizenship } from "../../store/actions/stakeholders";
-
-const styles = {
-  divider: {
-    marginTop: "30px",
-    marginBottom: "15px",
-    borderBottom: "solid 1px rgba(230, 230, 230, 0.5)"
-  }
-};
+import Select from "../../InputField/PureSelect";
+import Input from "../../InputField/TextInput";
+import Checkbox from "../../InputField/RefactoredCheckbox";
+import { getInputValueById } from "../../../store/selectors/input";
+import { updateProspect } from "../../../store/actions/appConfig";
+import { handleCitizenship } from "../../../store/actions/stakeholders";
+import styles from "./styled";
 
 const Nationality = props => {
   const { classes, index, passportDetails, handleCitizenship } = props;

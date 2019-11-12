@@ -1,53 +1,21 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
-import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
-import StepComponent from "../components/StepComponent";
-import SuccessFilledStakeholder from "../components/StakeholderStepForms/SuccessFilledStakeholder";
-import StatusLoader from "../components/StatusLoader";
-import LinkButton from "../components/Buttons/LinkButton";
-import { stakeHoldersSteps } from "../constants";
-import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
+import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
+import StepComponent from "../../components/StepComponent";
+import SuccessFilledStakeholder from "../../components/StakeholderStepForms/SuccessFilledStakeholder/SuccessFilledStakeholder";
+import StatusLoader from "../../components/StatusLoader";
+import LinkButton from "../../components/Buttons/LinkButton";
+import { stakeHoldersSteps } from "./constants";
+import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
 import {
   formatPersonalInformation,
   formatNationality,
   finishStakeholderEdit,
   handleChangeStep
-} from "../store/actions/stakeholders";
-import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
-
-const styles = {
-  title: {
-    marginLeft: "24px",
-    fontSize: "20px",
-    fontWeight: 600,
-    color: "#373737"
-  },
-  formContent: {
-    borderTop: "1px solid rgba(230, 230, 230, 0.5)"
-  },
-  footerPart: {
-    borderTop: "1px solid rgba(230, 230, 230, 0.5)",
-    opacity: 0.62,
-    lineHeight: 1.5,
-    textAlign: "center",
-    padding: "12px"
-  },
-  button: {
-    fontSize: "16px",
-    color: "#c00000"
-  },
-  userInfo: {
-    display: "flex",
-    flex: 1
-  },
-  nameField: {
-    fontSize: "20px",
-    fontWeight: "600",
-    lineHeight: "1.4",
-    marginLeft: "20px"
-  }
-};
+} from "../../store/actions/stakeholders";
+import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
+import styles from "./styled";
 
 class StakeholderStepper extends React.Component {
   state = {
@@ -105,7 +73,7 @@ class StakeholderStepper extends React.Component {
       >
         <div className={classes.formContent}>
           {stakeHoldersSteps.map(item => {
-            const isFilled = isNewStakeholder ? completedStep >= item.step : true;
+            const isFilled = isNewStakeholder ? completedStep >= item.step - 1 : true;
             const setStep = () => (isFilled ? this.props.handleChangeStep(item) : {});
 
             const handleContinue = () => {

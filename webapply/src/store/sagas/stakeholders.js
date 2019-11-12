@@ -19,7 +19,7 @@ import { sendProspectToAPI } from "../actions/sendProspectToAPI";
 import cloneDeep from "lodash/cloneDeep";
 import isUndefined from "lodash/isUndefined";
 import get from "lodash/get";
-import { stakeHoldersSteps } from "../../constants";
+import { stakeHoldersSteps } from "../../containers/StakeholderStepper/constants";
 
 function* addNewStakeholderSaga() {
   const state = yield select();
@@ -146,13 +146,18 @@ function* formatNationalitySaga(action) {
 function* handleChangeStepSaga(action) {
   const state = yield select();
   const stakeholderInfo = state.stakeholders;
-  if (stakeholderInfo.step === stakeHoldersSteps.length && !get(action.step, "step")) {
-    yield put(changeStep({ isFinalScreenShown: true }));
+  const currentStep = get(action.step, "step");
+  let step = currentStep || stakeholderInfo.step + 1;
+
+  if (stakeholderInfo.step === stakeHoldersSteps.length && !currentStep) {
+    yield put(changeStep({ isFinalScreenShown: true, isNewStakeholder: false }));
   } else {
-    const step = get(action.step, "step", stakeholderInfo.step + 1);
-    const completedStep = stakeholderInfo.isNewStakeholder
-      ? stakeholderInfo.step
-      : stakeHoldersSteps.length;
+    let completedStep = null;
+    if (stakeholderInfo.isNewStakeholder) {
+      completedStep = currentStep ? stakeholderInfo.completedStep : stakeholderInfo.step;
+    } else {
+      completedStep = stakeHoldersSteps.length;
+    }
     const isStatusShown = true;
     yield put(changeStep({ step, completedStep, isStatusShown }));
   }

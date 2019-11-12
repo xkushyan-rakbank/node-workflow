@@ -1,16 +1,16 @@
 import React from "react";
 import uniqueId from "lodash/uniqueId";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
-import FilledStakeholderCard from "../components/FilledStakeholderCard";
-import StakeholderStepper from "./StakeholderStepper";
-import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
-import ErrorMessage from "../components/ErrorMessage";
-import SubmitButton from "../components/Buttons/SubmitButton";
-import BackLink from "../components/Buttons/BackLink";
-import ConfirmDialog from "../components/ConfirmDialod";
-import routes from "../routes";
+import FilledStakeholderCard from "../../components/FilledStakeholderCard";
+import StakeholderStepper from "../StakeholderStepper/StakeholderStepper";
+import AddStakeholderButton from "../../components/Buttons/AddStakeholderButton";
+import ErrorMessage from "../../components/ErrorMessage";
+import SubmitButton from "../../components/Buttons/SubmitButton";
+import BackLink from "../../components/Buttons/BackLink";
+import ConfirmDialog from "../../components/ConfirmDialod";
+import routes from "../../routes";
 import {
   addNewStakeholder,
   deleteStakeholder,
@@ -18,36 +18,15 @@ import {
   openConfirmDialog,
   closeConfirmDialog,
   confirmHandler
-} from "../store/actions/stakeholders";
-import { getSendProspectToAPIInfo } from "../store/selectors/appConfig";
-import { sendProspectToAPI } from "../store/actions/sendProspectToAPI";
+} from "../../store/actions/stakeholders";
+import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
+import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import {
   stakeholders as stakeholdersSelector,
   stakeholdersState,
   percentageSelector
-} from "../store/selectors/stakeholder";
-
-const style = {
-  buttonStyle: {
-    width: "346px",
-    height: "56px",
-    borderRadius: "28px",
-    textTransform: "none",
-    fontSize: "18px",
-    padding: "0 20px 0 32px",
-    fontWeight: "normal",
-    letterSpacing: "normal",
-    justifyContent: "space-between"
-  },
-  buttonsWrapper: {
-    borderRadius: "8px",
-    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
-    border: "solid 1px #e8e8e8",
-    backgroundColor: "#ffffff",
-    flexDirection: "column",
-    marginTop: "24px"
-  }
-};
+} from "../../store/selectors/stakeholder";
+import styles from "./styled";
 
 const CompanyStakeholders = props => {
   const goToFinalQuestions = () => props.history.push(routes.finalQuestions);
@@ -152,7 +131,7 @@ const mapDispatchToProps = {
 };
 
 export default compose(
-  withStyles(style),
+  withStyles(styles),
   connect(
     mapStateToProps,
     mapDispatchToProps
