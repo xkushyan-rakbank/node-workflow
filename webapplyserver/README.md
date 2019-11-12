@@ -39,6 +39,8 @@ It invokes the OAuthService again if the access token is expired.
 
 4. FileHelper: This class loads file(s) from classpath or pre-defined directory.
 
+5. EnvUtil : reads the value of environment variables like WEB_APPLY_ENV (local, dev, uat, test or prod) and WEB_APPLY_DIR (a directory path of config files)
+
 Config Files:
 1. uiConfig.json : cotains UI configuration for WebApply, loaded from classpath
 2. appConfig.json : contains endpoints for APIs and key-value pairs for OAuth, reCAPTCHA. This file loaded from filepath <WEB_APPLY_DIR>/config/
@@ -55,3 +57,5 @@ Change the log statements to logger.debug to avoid logging prospect information.
 3. CookieHelper, CSRFTokenHelper will become obsolete once the API security is integrated with WebApplyServer.
 
 4. JUnit tests are pending as mentioned in DEV tasks.
+
+5. logback-spring.xml: a logger configuration file, currently logs written to server.log instead of application log file. This works fine when the application is run as standalone or with embedded servlet container.
