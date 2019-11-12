@@ -298,3 +298,8 @@ export const applicationStatus = {
       "It`s our fault, not yours. We`ve have been notified of the problem. In the meantime, try refreshing or see the JavaScript console for technical details."
   }
 };
+
+export const contexualHelpMessages = {
+  companyName:
+    " if the Company's name is more than 30 characters long, than an abbreviation needs to be entered and that this abbreviation will appear in all Bank records including Cheque Books."
+};

@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
+import { contexualHelpMessages } from "./../../constants/index";
 
 const CompanyDetails = () => {
   return (
@@ -12,7 +13,7 @@ const CompanyDetails = () => {
             id="Org.companyName"
             withContexualHelp
             placement="right"
-            contexualHelpText="wedwed wed wed wewed ewwdwe"
+            contexualHelpText={contexualHelpMessages.companyName}
           />
         </Grid>
         <Grid item md={6} sm={12}>
