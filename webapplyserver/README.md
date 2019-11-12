@@ -56,7 +56,7 @@ Change the log statements to logger.debug to avoid logging prospect information.
 
 2. RecaptchaController is obsolete now as the reCAPTCHA verification is done before invoked before createProspect, agent authentication and send OTP.  
 
-3. CookieHelper, CSRFTokenHelper will become obsolete once the API security is integrated with WebApplyServer.
+3. CookieHelper, CSRFTokenHelper will become obsolete once the API security is integrated with WebApplyServer. This requires code refactoring.
 
 4. JUnit tests are pending as mentioned in DEV tasks.
 
