@@ -7,7 +7,7 @@ import VerticalPaginationWrapper from "../../components/VerticalPaginationWrappe
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import AccountCardContainer from "./AccountCardContainer";
 import InfoNote from "../../components/InfoNote";
-import TableCompare from "../../components/TableCompare";
+import TableCompare from "../../components/TableCompare/TableCompare";
 
 import accountComparisonPoster from "../../assets/images/videoPosters/Account comparison.jpg";
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";

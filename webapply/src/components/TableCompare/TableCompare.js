@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -7,200 +8,25 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import ContainedButton from "./Buttons/ContainedButton";
-import { connect } from "react-redux";
-import * as appConfigSelectors from "../store/selectors/appConfig";
-import { updateProspect } from "../store/actions/appConfig";
-import { updateAccountType } from "../store/actions/selectedAccountInfo";
-
-import checkIc from "../assets/icons/check.png";
-import { accountsNames } from "../constants";
-import routes from "../routes";
-
-const style = {
-  paperRoot: {
-    marginTop: "5px",
-    boxSizing: "border-box",
-    boxShadow: "none",
-    position: "relative"
-  },
-  tableContainer: {
-    position: "relative"
-  },
-  tableHead: {
-    backgroundColor: "#f7f8f9"
-  },
-  rootCellName: {
-    maxWidth: "180px",
-    paddingLeft: "5px",
-    paddingRight: "0",
-    "@media only screen and (max-width: 991px)": {
-      width: "75%"
-    }
-  },
-  selectedAccountContainer: {
-    position: "absolute",
-    zIndex: "1",
-    top: "-15px",
-    height: "calc(100% + 30px)",
-    transition: "left .25s ease",
-    "@media only screen and (max-height: 900px)": {
-      height: "calc(100% + 30px)"
-    },
-    borderRadius: "8px",
-    boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
-    border: "solid 1px #e8e8e8",
-    backgroundColor: "#fff"
-  },
-  containedButton: {
-    boxShadow: "none",
-    backgroundColor: "#fff",
-    height: "auto",
-    border: "1px solid #373737",
-    padding: "3px 0",
-    width: "120px",
-    fontFamily: "Open Sans",
-    "&:hover": {
-      backgroundColor: "#000",
-      "& span": {
-        color: "#fff"
-      }
-    }
-  },
-  containedButtonLabelStyle: {
-    color: "#373737",
-    fontSize: "14px",
-    textAlign: "center",
-    display: "block"
-  }
-};
-
-const shortNames = {
-  starter: {
-    name: accountsNames.starter,
-    ref: "RAKstarter"
-  },
-  currentAccount: {
-    name: accountsNames.currentAccount,
-    ref: "CurrentAccount"
-  },
-  elite: {
-    name: accountsNames.elite,
-    ref: "RAKElite"
-  }
-};
-const mockDataRows = [
-  {
-    info: "Monthly Average Credit Balance",
-    starter: { text: "Zero" },
-    currentAccount: { text: "AED 25,000", info: "or equivalent at entity level" },
-    elite: { text: "AED 500,000", info: "or equivalent at entity level" }
-  },
-  {
-    info: "Monthly charges for not maintaining average balance",
-    starter: { text: "Zero" },
-    currentAccount: { text: "AED 50" },
-    elite: { text: "AED 250" }
-  },
-  {
-    info: "Monthly Maintenance fees",
-    starter: { text: "AED 99" },
-    currentAccount: { text: "AED 50" },
-    elite: { text: "Zero" }
-  },
-  {
-    info: "Free Teller Transactions",
-    starter: { text: "-" },
-    currentAccount: { text: "-" },
-    elite: { ic: checkIc }
-  },
-  {
-    info: "Lifestyle benefits",
-    starter: { text: "-" },
-    currentAccount: { text: "-" },
-    elite: { ic: checkIc }
-  },
-  {
-    info: "RAKvalue Package (PLUS and MAX)",
-    starter: { text: "Mandatory", info: "(PLUS - AED 49)" },
-    currentAccount: { text: "Optional" },
-    elite: { text: "Optional" }
-  }
-];
-
-const StyledTableRow = withStyles(() => ({
-  root: {
-    "& th": {
-      fontSize: "14px",
-      color: "#888888",
-      padding: "0 5px 0 0",
-      fontFamily: "Open Sans"
-    },
-    "& td": {
-      height: "60px",
-      padding: "0",
-      position: "relative",
-      fontSize: "16px",
-      fontFamily: "Open Sans"
-    },
-    "&:nth-of-type(even)": {
-      backgroundColor: "#f7f8f9"
-    }
-  }
-}))(TableRow);
-
-const StyledTableHeader = withStyles(() => ({
-  root: {
-    position: "relative",
-    textAlign: "center"
-  },
-  head: {
-    color: "#373737",
-    fontSize: "16px",
-    fontFamily: "Open Sans",
-    fontWeight: "600",
-    height: "60px",
-    padding: 0,
-    borderBottom: "none",
-    width: "190px",
-    maxWidth: "190px",
-    "@media only screen and (max-width: 1360px)": {
-      width: "150px"
-    }
-  }
-}))(TableCell);
-
-const StyledTableCell = withStyles(() => ({
-  root: {
-    fontSize: "16px",
-    color: "#373737",
-    textAlign: "center",
-    "& span": {
-      display: "block"
-    },
-    "& span + span": {
-      fontSize: "12px",
-      color: "#888"
-    },
-    "& button": {
-      marginTop: "5px"
-    }
-  }
-}))(TableCell);
+import ContainedButton from "../Buttons/ContainedButton";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
+import { updateAccountType } from "../../store/actions/selectedAccountInfo";
+import { accountsNames } from "../../constants/index";
+import { shortNames, mockDataRows, initialValue } from "./constants";
+import style from "./styled";
+import routes from "../../routes";
 
 class TableCompare extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      offset: 395,
-      selectedAccountContainerWidth: "190px",
-      selectedAccount: accountsNames.currentAccount
-    };
+  state = {
+    offset: initialValue.offset,
+    selectedAccountContainerWidth: initialValue.selectedAccountContainerWidth,
+    selectedAccount: accountsNames.currentAccount
+  };
 
-    this.RAKstarter = React.createRef();
-    this.CurrentAccount = React.createRef();
-    this.RAKElite = React.createRef();
-  }
+  RAKstarter = React.createRef();
+  CurrentAccount = React.createRef();
+  RAKElite = React.createRef();
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { selectedAccount } = nextProps;
@@ -343,17 +169,26 @@ class TableCompare extends React.Component {
     }))(Table);
 
     const StyledTableHeaderWitHoverHandler = ({ name, text }) => (
-      <StyledTableHeader data-name={name} onMouseEnter={this.handleHover}>
+      <TableCell
+        data-name={name}
+        onMouseEnter={this.handleHover}
+        classes={{ root: classes.tableHeaderCellRoot, head: classes.tableHeaderCellHead }}
+      >
         {text}
-      </StyledTableHeader>
+      </TableCell>
     );
 
     const StyledTableCellWitHoverHandler = ({ name, account: { text, info, ic }, ...props }) => (
-      <StyledTableCell data-name={name} {...props} onMouseEnter={this.handleHover}>
+      <TableCell
+        data-name={name}
+        {...props}
+        onMouseEnter={this.handleHover}
+        classes={{ root: classes.tableCellRoot }}
+      >
         <span>{text}</span>
         <span>{info}</span>
         {ic && <img src={ic} alt="" />}
-      </StyledTableCell>
+      </TableCell>
     );
 
     return (
@@ -370,7 +205,12 @@ class TableCompare extends React.Component {
             >
               <TableHead style={{ position: "relative" }}>
                 <TableRow classes={{ head: classes.tableHead }}>
-                  <StyledTableHeader> </StyledTableHeader>
+                  <TableCell
+                    classes={{
+                      root: classes.tableHeaderCellRoot,
+                      head: classes.tableHeaderCellHead
+                    }}
+                  />
                   <StyledTableHeaderWitHoverHandler
                     text="RAKstarter"
                     name={accountsNames.starter}
@@ -387,7 +227,7 @@ class TableCompare extends React.Component {
                 {mockDataRows.map((row, index) => {
                   const { starter, currentAccount, elite } = row;
                   return (
-                    <StyledTableRow key={index}>
+                    <TableRow classes={{ root: classes.tableRowRoot }} key={index}>
                       <TableCell
                         classes={{ root: classes.rootCellName }}
                         align="right"
@@ -406,21 +246,22 @@ class TableCompare extends React.Component {
                         account={currentAccount}
                       />
                       <StyledTableCellWitHoverHandler name={accountsNames.elite} account={elite} />
-                    </StyledTableRow>
+                    </TableRow>
                   );
                 })}
 
-                <StyledTableRow>
+                <TableRow classes={{ root: classes.tableRowRoot }}>
                   <TableCell component="th" scope="row" />
 
                   {Object.keys(shortNames).map((shortName, index) => {
                     const { name, ref } = shortNames[shortName];
                     return (
-                      <StyledTableCell
+                      <TableCell
                         ref={this[ref]}
                         data-name={name}
                         onMouseEnter={this.handleHover}
                         key={index}
+                        classes={{ root: classes.tableCellRoot }}
                       >
                         <ContainedButton
                           label="Read more"
@@ -430,10 +271,10 @@ class TableCompare extends React.Component {
                             labelStyle: classes.containedButtonLabelStyle
                           }}
                         />
-                      </StyledTableCell>
+                      </TableCell>
                     );
                   })}
-                </StyledTableRow>
+                </TableRow>
               </TableBody>
             </TableWithStyles>
           </div>
