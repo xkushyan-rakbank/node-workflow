@@ -15,10 +15,6 @@ const styles = {
 };
 
 class Login extends React.Component {
-  static defaultProps = {
-    setToken: () => {}
-  };
-
   submitForm = event => {
     event.preventDefault();
     this.props.loginInfoForm(this.props.inputParam);
