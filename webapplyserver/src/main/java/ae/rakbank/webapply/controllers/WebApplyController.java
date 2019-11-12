@@ -287,13 +287,13 @@ public class WebApplyController {
 			endpointsJSON.set(uriName, webApplyURIs.get(uriName));
 		}
 
-		// remove agent specific URIs
-		String[] agentURIs = { "searchProspectUri", "authenticateUserUri" };
+    // remove agent specific URIs
+		String[] agentURIs = { "authenticateUserUri" };
 		if (StringUtils.isBlank(role) || StringUtils.equalsIgnoreCase("customer", role)) {
 			for (String uri : agentURIs) {
 				endpointsJSON.remove(uri);
 			}
-		}
+    }
 		initStateJSON.set("endpoints", endpointsJSON);
 		logger.info("End setWebApplyEndpoints() method");
 	}
