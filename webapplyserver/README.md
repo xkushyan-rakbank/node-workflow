@@ -34,4 +34,24 @@ ServletContext in JSON format. DEH API GET Datalist is invoked and LOVs are upda
 2. ApiRequestForwarder: A wrapper class for DEH APIs, WebApply (FrontEnd) invokes APIs provided by this class, 
 requests are forwarded to DEH APIs and response sent back to WebApply(FrontEnd)
 
-3. FileHelper: This class loads file(s) from classpath or pre-defined directory.  
+3. OAuthService: This class invokes OAuthService to get the access token and stores in ServletContext for reuse. 
+It invokes the OAuthService again if the access token is expired.
+
+4. FileHelper: This class loads file(s) from classpath or pre-defined directory.
+
+Config Files:
+1. uiConfig.json : cotains UI configuration for WebApply, loaded from classpath
+2. appConfig.json : contains endpoints for APIs and key-value pairs for OAuth, reCAPTCHA. This file loaded from filepath <WEB_APPLY_DIR>/config/
+3. smeProspect.json: contains SME project object with default values, loaded from classpath
+4. datalist.json: A placeholder to store LOVs which are provided by DEH GET Datalist API,loaded from classpath
+5. RSAPublicKey.json:  contains RSA public key for encryption/decryption. This file loaded from filepath <WEB_APPLY_DIR>/config/
+
+Open Issues / Refactor:
+1. Request/Response are logged with INFO level to help developers to troubleshoot issues with APIs. 
+Change the log statements to logger.debug to avoid logging prospect information.
+
+2. Refactor: RecaptchaController is obsolete now as the reCAPTCHA verification is done before invoked before createProspect, agent authentication and send OTP.  
+
+3. CookieHelper, CSRFTokenHelper will become obsolete once the API security is integrated with WebApplyServer.
+
+4. JUnit tests are pending as mentioned in DEV tasks.
