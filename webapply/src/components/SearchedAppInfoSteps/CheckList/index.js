@@ -43,7 +43,7 @@ const CheckList = ({ classes, prospectInfo = {} }) => {
         <div className={classes.errorMsg}>{errorMsgs.COMPANY_CHECKLIST_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
-      {get(prospectInfo, "signatoryInfo", []).length ? (
+      {(prospectInfo.signatoryInfo || []).length ? (
         prospectInfo.signatoryInfo.map(signatory => (
           <div key={signatory.signatoryId}>
             <div className={classes.contentWrapper}>

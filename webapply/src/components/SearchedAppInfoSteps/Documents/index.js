@@ -55,8 +55,8 @@ const Documents = ({ classes, docs, prospectInfo, endpointsUrl }) => {
       )}
       <br />
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
-      {get(docs, "stakeholdersDocuments").length ? (
-        signatoryInfo.length > 0 &&
+      {Object.keys(docs.stakeholdersDocuments).length ? (
+        signatoryInfo.length &&
         signatoryInfo.map((user, index) => (
           <div key={index}>
             <div className={classes.contentWrapper}>
