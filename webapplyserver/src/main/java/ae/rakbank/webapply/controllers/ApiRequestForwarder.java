@@ -42,7 +42,6 @@ import ae.rakbank.webapply.helpers.CSRFTokenHelper;
 import ae.rakbank.webapply.helpers.CookieHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.OAuthService;
-import ae.rakbank.webapply.services.RecaptchaService;
 
 @CrossOrigin
 @RestController
@@ -56,9 +55,6 @@ public class ApiRequestForwarder {
 
 	@Autowired
 	OAuthService oauthClient;
-
-	@Autowired
-	RecaptchaService captchaService;
 
 	@Autowired
 	CSRFTokenHelper csrfTokenHelper;
@@ -92,36 +88,6 @@ public class ApiRequestForwarder {
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
-
-			if (requestBodyJSON.has("recaptchaToken")) {
-				logger.info("Validate reCAPTCHA before saving applicant info.");
-				String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
-				String ip = servletRequest.getRemoteAddr();
-				ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
-
-				if (captchaResponse.getStatusCode().is2xxSuccessful()) {
-					logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
-				} else {
-					logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
-							captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
-				}
-
-				logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
-						oauthResponse.getStatusCodeValue(), ip));
-
-				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
-					return captchaResponse;
-				}
-
-				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
-			} else {
-				// commented to make test the application on DEV env.
-				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
-						"recaptchaToken is required");
-
-				return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
-			}
-
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
 					MediaType.APPLICATION_JSON);
 
@@ -146,8 +112,7 @@ public class ApiRequestForwarder {
 					otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
 					otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
 					otpRequest.put("action", "generate");
-					ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, otpRequest,
-							servletRequest, true);
+					ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, otpRequest, servletRequest);
 
 					if (otpResponse.getStatusCode().is2xxSuccessful()) {
 						return createProspectResponse;
@@ -409,34 +374,6 @@ public class ApiRequestForwarder {
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			if (requestBodyJSON.has("recaptchaToken")) {
-				logger.info("Validate reCAPTCHA before saving applicant info.");
-				String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
-				String ip = httpRequest.getRemoteAddr();
-				ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
-
-				if (captchaResponse.getStatusCode().is2xxSuccessful()) {
-					logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
-				} else {
-					logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
-							captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
-				}
-
-				logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
-						oauthResponse.getStatusCodeValue(), ip));
-
-				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
-					return captchaResponse;
-				}
-
-				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
-			} else {
-				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
-						"recaptchaToken is required");
-
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
-			}
-
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
 					MediaType.APPLICATION_JSON);
 
@@ -466,50 +403,15 @@ public class ApiRequestForwarder {
 	@PostMapping(value = "/otp", produces = "application/json", consumes = "application/json")
 	@ResponseBody
 	public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestBody JsonNode requestJSON, HttpServletRequest servletRequest, boolean captchaVerified) {
+			@RequestBody JsonNode requestJSON, HttpServletRequest servletRequest) {
 
-		logger.info(
-				String.format("Begin generateVerifyOTP() method, action=[%s], captchaVerified=%s, hasRecaptchaToken=%s",
-						requestJSON.get("action").asText(), captchaVerified, requestJSON.has("recaptchaToken")));
+		logger.info( String.format("Begin generateVerifyOTP() method, action=[%s]", requestJSON.get("action").asText()));
 
 		logger.debug(String.format("generateVerifyOTP() method args, RequestBody=[%s], ", requestJSON.toString()));
 
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
-
-			if (!captchaVerified) {
-				String action = requestJSON.get("action").asText();
-				// verify captcha before sending OTP
-				if (StringUtils.equalsIgnoreCase(action, "generate")) {
-					logger.info("begin verify recaptcha method");
-
-					if (requestJSON.has("recaptchaToken")) {
-
-						String recaptchaResponse = requestJSON.get("recaptchaToken").asText();
-						String ip = servletRequest.getRemoteAddr();
-						ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
-
-						if (captchaResponse.getStatusCode().is2xxSuccessful()) {
-							logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
-						} else {
-							logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
-									captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
-						}
-
-						if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
-							return captchaResponse;
-						}
-
-						((ObjectNode) requestJSON).remove("recaptchaToken");
-					} else {
-						ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required.",
-								"recaptchaToken is required.");
-
-						return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
-					}
-				}
-			}
 
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
 					MediaType.APPLICATION_JSON);
