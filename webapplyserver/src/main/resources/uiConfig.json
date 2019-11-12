@@ -1881,7 +1881,7 @@
 		"datalistId": null,
 		"readonlyFor": [],
 		"pattern": "^[a-zA-Z0-9 ]*$",
-		"maxlength": "50"
+		"maxlength": "30"
 	},
 	"Org.shortName": {
 		"criteria": {
