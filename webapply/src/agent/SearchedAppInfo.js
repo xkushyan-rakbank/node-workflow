@@ -58,14 +58,12 @@ class SearchedAppInfo extends React.Component {
   };
 
   confirmHandler = () => {
-    alert("yes");
     this.props.receiveAppConfig();
     this.props.getProspectInfo(this.props.match.params.id);
   };
 
   closeConfirmDialog = () => {
     this.setState({ editClicked: false });
-    alert("no");
   };
 
   render() {

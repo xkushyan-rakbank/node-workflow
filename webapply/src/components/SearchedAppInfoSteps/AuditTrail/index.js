@@ -3,8 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { style } from "./style";
 import { titles, errorMsgs } from "./constants";
 
-const AuditTrail = props => {
-  const { classes, prospectInfo = [] } = props;
+const AuditTrail = ({ classes, prospectInfo = {} }) => {
   const headingClassName = `${classes.checkListData} ${classes.heading}`;
   return prospectInfo.applicationInfo ? (
     <div className={classes.wrapper}>

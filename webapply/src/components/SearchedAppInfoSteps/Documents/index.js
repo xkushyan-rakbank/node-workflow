@@ -7,9 +7,7 @@ import * as appConfigSelector from "./../../../store/selectors/appConfig";
 import { style } from "./style";
 import { titles, errorMsgs, DUMMY_PROSPECT_ID, DUMMY_DOCUMENT_KEY } from "./constants";
 
-const Documents = props => {
-  const { classes, docs, prospectInfo, endpointsUrl } = props;
-
+const Documents = ({ classes, docs, prospectInfo, endpointsUrl }) => {
   const signatoryInfo = prospectInfo.signatoryInfo;
 
   const documentBaseUrl = `${endpointsUrl.baseUrl || ""}${endpointsUrl.getDocumentByIdUri || ""}`;

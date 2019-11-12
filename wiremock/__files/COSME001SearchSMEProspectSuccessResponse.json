@@ -34,7 +34,7 @@
       },
       "signatoryInfo": [
         {
-          "signatoryId": "string",
+          "signatoryId": "1",
           "fullName": "Abhi",
           "screeningInfo": {
             "statusOverAll": "proceed",
@@ -83,7 +83,7 @@
           }
         },
         {
-          "signatoryId": "string",
+          "signatoryId": "2",
           "fullName": "Bhakta",
           "screeningInfo": {
             "statusOverAll": "proceed",
@@ -217,7 +217,7 @@
       },
       "signatoryInfo": [
         {
-          "signatoryId": "string",
+          "signatoryId": "1",
           "fullName": "Nitin",
           "screeningInfo": {
             "statusOverAll": "proceed",
@@ -266,7 +266,7 @@
           }
         },
         {
-          "signatoryId": "string",
+          "signatoryId": "2",
           "fullName": "Rahul",
           "screeningInfo": {
             "statusOverAll": "proceed",
@@ -400,7 +400,7 @@
       },
       "signatoryInfo": [
         {
-          "signatoryId": "string",
+          "signatoryId": "1",
           "fullName": "Abhilasha",
           "screeningInfo": {
             "statusOverAll": "proceed",
@@ -449,7 +449,7 @@
           }
         },
         {
-          "signatoryId": "string",
+          "signatoryId": "2",
           "fullName": "Ankita",
           "screeningInfo": {
             "statusOverAll": "proceed",

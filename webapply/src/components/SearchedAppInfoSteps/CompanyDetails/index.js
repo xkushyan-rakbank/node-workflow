@@ -4,8 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { styles } from "./style";
 import { titles, errorMsgs } from "./constants";
 
-const CompanyDetails = props => {
-  const { classes, prospectInfo = [] } = props;
+const CompanyDetails = ({ classes, prospectInfo = {} }) => {
   const contactNo = `${prospectInfo.applicantInfo.countryCode} 
   ${prospectInfo.applicantInfo.mobileNo}`;
 

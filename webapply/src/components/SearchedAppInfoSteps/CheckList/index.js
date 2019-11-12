@@ -5,8 +5,7 @@ import Avatar from "../../../components/Avatar";
 import { style } from "./style";
 import { titles, errorMsgs } from "./constants";
 
-const CheckList = props => {
-  const { classes, prospectInfo = [] } = props;
+const CheckList = ({ classes, prospectInfo = {} }) => {
   const headingClassName = `${classes.checkListData} ${classes.heading}`;
   return (
     <>
@@ -45,8 +44,8 @@ const CheckList = props => {
       )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
       {get(prospectInfo, "signatoryInfo", []).length ? (
-        prospectInfo.signatoryInfo.map((signatory, index) => (
-          <div key={index}>
+        prospectInfo.signatoryInfo.map(signatory => (
+          <div key={signatory.signatoryId}>
             <div className={classes.contentWrapper}>
               <Avatar firstName={signatory.fullName} />
               <div className={classes.userInfo}>
