@@ -7,7 +7,7 @@ import Nationality from "../components/StakeholderStepForms/Nationality";
 import CountryOfResidence from "../components/StakeholderStepForms/CountryOfResidence";
 import PreferredContactInformation from "../components/StakeholderStepForms/PreferredContactInformation";
 import AccountDetails from "../components/ServicesStepForms/AccountDetails";
-import SigningPreferences from "../components/ServicesStepForms/SigningPreferences";
+import SigningPreferences from "../components/ServicesStepForms/SigningPreferences/SigningPreferences";
 import Channels from "../components/ServicesStepForms/Channels";
 import ValueAddedServices from "../components/ServicesStepForms/ValueAddedServices/ValueAddedServices";
 import CompanyDetails from "../components/AboutCompanyStepForms/CompanyDetails";

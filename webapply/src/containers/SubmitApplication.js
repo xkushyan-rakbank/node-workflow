@@ -203,8 +203,9 @@ class SubmitApplication extends React.Component {
                     // eslint-disable-next-line react/jsx-no-target-blank
                     target="_blank"
                   >
-                    terms and conditions &{" "}
-                  </a>
+                    terms and conditions
+                  </a>{" "}
+                  &{" "}
                   <a
                     href={submitApplication.termOfEnrolmentUrl}
                     onClick={this.termsEnrolmentClicked}

@@ -1,30 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
-import { compose } from "recompose";
+import { compose } from "redux";
 import omit from "lodash/omit";
 import { withStyles } from "@material-ui/core";
-import SubmitApplication from "./SubmitApplication";
-import ServicesStepTitle from "../components/ServicesStepTitle";
-import BackLink from "../components/Buttons/BackLink";
-import SubmitButton from "../components/Buttons/SubmitButton";
-import { servicesSteps, accountsNames } from "../constants";
-import { getSelectedAccountInfo } from "../store/selectors/selectedAccountInfo";
-import { updateAccountType } from "../store/actions/selectedAccountInfo";
-import routes from "../routes";
-import { getInputValueById } from "../store/selectors/input";
-import { getSelectedTypeCurrency } from "../utils/SelectServices";
 
-const style = {
-  stepWrapper: { marginBottom: "20px" },
-  formWrapper: {
-    borderTop: "1px solid rgba(230, 230, 230, 0.5)",
-    padding: "6px 20px"
-  },
-  valueAddedServices: {
-    padding: 0
-  }
-};
+import SubmitApplication from "../SubmitApplication";
+import ServicesStepTitle from "../../components/ServicesStepTitle";
+import BackLink from "../../components/Buttons/BackLink";
+import SubmitButton from "../../components/Buttons/SubmitButton";
+
+import { servicesSteps, accountsNames } from "../../constants/index";
+import { getSelectedAccountInfo } from "../../store/selectors/selectedAccountInfo";
+import { updateAccountType } from "../../store/actions/selectedAccountInfo";
+import { getInputValueById } from "../../store/selectors/input";
+import { getSelectedTypeCurrency } from "../../utils/SelectServices";
+import routes from "../../routes";
+
+import { styled } from "./styled";
 
 class SelectServices extends React.Component {
   state = {
@@ -67,8 +60,11 @@ class SelectServices extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { step, canSubmit } = this.state;
+    const goToSubmitStep = 5;
+    const submitApplicationStep = 6;
 
-    return this.state.step === 6 ? (
+    return step === submitApplicationStep ? (
       <SubmitApplication />
     ) : (
       <>
@@ -79,23 +75,20 @@ class SelectServices extends React.Component {
         </p>
 
         <div>
-          {servicesSteps.map(item => {
-            const Component = item.component;
-            const stepData = omit(item, "component");
+          {servicesSteps.map(serviceStep => {
+            const Component = serviceStep.component;
+            const stepData = omit(serviceStep, "component");
+
             return (
-              <div key={item.title} className={cx("paper", classes.stepWrapper)}>
-                <ServicesStepTitle
-                  step={stepData}
-                  activeStep={this.state.step}
-                  setStep={this.setStep}
-                />
-                {this.state.step === item.step && (
+              <div key={serviceStep.title} className={cx("paper", classes.stepWrapper)}>
+                <ServicesStepTitle step={stepData} activeStep={step} setStep={this.setStep} />
+                {step === serviceStep.step && (
                   <div
                     className={cx(classes.formWrapper, {
-                      [classes.valueAddedServices]: this.state.step === 5
+                      [classes.valueAddedServices]: step === goToSubmitStep
                     })}
                   >
-                    <Component goToNext={this.handleContinue} activeStep={this.state.step} />
+                    <Component goToNext={this.handleContinue} activeStep={step} />
                   </div>
                 )}
               </div>
@@ -106,11 +99,11 @@ class SelectServices extends React.Component {
         <div className="linkContainer">
           <BackLink path={routes.uploadDocuments} />
           <SubmitButton
-            handleClick={() => this.setStep(this.state.step + 1)}
-            label={this.state.step === 5 ? "Go to submit" : "Next Step"}
+            handleClick={() => this.setStep(step + 1)}
+            label={step === goToSubmitStep ? "Go to submit" : "Next Step"}
             justify="flex-end"
             classes={{ buttonWrap: classes.buttonWrap }}
-            disabled={!this.state.canSubmit}
+            disabled={!canSubmit}
           />
         </div>
       </>
@@ -129,7 +122,7 @@ const mapDispatchToProps = {
 };
 
 export default compose(
-  withStyles(style),
+  withStyles(styled),
   connect(
     mapStateToProps,
     mapDispatchToProps
