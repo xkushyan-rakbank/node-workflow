@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   documents: {
     fontSize: "14px",
     lineHeight: 1.33,

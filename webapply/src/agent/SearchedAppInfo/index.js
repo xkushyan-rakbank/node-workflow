@@ -1,37 +1,22 @@
 import React from "react";
+import get from "lodash/get";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import * as getSearchResult from "./../store/selectors/searchProspect";
-import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
-import StepComponent from "../components/StepComponent";
-import { searchedAppInfoSteps } from "../constants";
-import routes from "../routes";
-import SubmitButton from "../components/Buttons/SubmitButton";
-import * as loginSelector from "./../store/selectors/loginSelector";
-import { history } from "./../store/configureStore";
-import BackLink from "../components/Buttons/BackLink";
-import { retrieveDocDetails } from "./../store/actions/getProspectDocuments";
-import { getProspectInfo } from "./../store/actions/retrieveApplicantInfo";
-import { receiveAppConfig, updateProspectId } from "./../store/actions/appConfig";
-import ConfirmDialog from "../components/ConfirmDialod";
-
-const styles = {
-  sectionTitleIndent: {
-    marginBottom: "24px"
-  },
-  topIndent: {
-    marginTop: "40px"
-  },
-  title: {
-    marginLeft: "20px",
-    fontSize: "20px",
-    fontWeight: 600,
-    color: "#373737"
-  },
-  buttonContainer: {
-    float: "right"
-  }
-};
+import * as searchResultSelector from "./../../store/selectors/searchProspect";
+import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
+import StepComponent from "../../components/StepComponent";
+import { searchedAppInfoSteps } from "../../constants";
+import routes from "../../routes";
+import SubmitButton from "../../components/Buttons/SubmitButton";
+import * as loginSelector from "./../../store/selectors/loginSelector";
+import { history } from "./../../store/configureStore";
+import BackLink from "../../components/Buttons/BackLink";
+import { retrieveDocDetails } from "./../../store/actions/getProspectDocuments";
+import { getProspectInfo } from "./../../store/actions/retrieveApplicantInfo";
+import { receiveAppConfig, updateProspectId } from "./../../store/actions/appConfig";
+import ConfirmDialog from "../../components/ConfirmDialod";
+import { styles } from "./styled";
+import { titles } from "./constants";
 
 class SearchedAppInfo extends React.Component {
   static defaultProps = {
@@ -58,8 +43,8 @@ class SearchedAppInfo extends React.Component {
   };
 
   confirmHandler = () => {
-    this.props.receiveAppConfig();
-    this.props.getProspectInfo(this.props.match.params.id);
+    // this.props.receiveAppConfig();
+    // this.props.getProspectInfo(this.props.match.params.id);
   };
 
   closeConfirmDialog = () => {
@@ -70,20 +55,18 @@ class SearchedAppInfo extends React.Component {
     const { classes, index, searchResults, match } = this.props;
     const { step, editClicked } = this.state;
 
-    const [prospectInfo] = searchResults.searchResult
-      ? searchResults.searchResult.filter(item => item.prospectId === match.params.id)
-      : [];
+    const prospectInfo = searchResults.searchResult
+      ? searchResults.searchResult.find(item => item.prospectId === match.params.id)
+      : {};
 
     return prospectInfo ? (
       <>
-        <h2>Application Details</h2>
+        <h2>{titles.APPLICATION_DETAILS_TITLE}</h2>
         <p className="formDescription"></p>
         <CompanyStakeholderCard
           content={
             <>
-              <div className={classes.title}>
-                {prospectInfo.applicantInfo && prospectInfo.applicantInfo.fullName}
-              </div>
+              <div className={classes.title}>{get(prospectInfo, "applicantInfo.fullName", "")}</div>
             </>
           }
         >
@@ -110,7 +93,7 @@ class SearchedAppInfo extends React.Component {
         </CompanyStakeholderCard>
         <div className="linkContainer">
           <BackLink path={routes.searchProspect} />
-          <SubmitButton label={"Edit"} justify="flex-end" handleClick={this.redirectUserPage} />
+          <SubmitButton label="Edit" justify="flex-end" handleClick={this.redirectUserPage} />
         </div>
         {editClicked && (
           <ConfirmDialog
@@ -128,7 +111,7 @@ class SearchedAppInfo extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  searchResults: getSearchResult.getSearchResult(state),
+  searchResults: searchResultSelector.getSearchResult(state),
   checkLoginStatus: loginSelector.checkLoginStatus(state)
 });
 

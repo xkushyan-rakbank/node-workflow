@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "../../../components/Avatar";
 import * as appConfigSelector from "./../../../store/selectors/appConfig";
-import { style } from "./style";
+import { styles } from "./styled";
 import { titles, errorMsgs, DUMMY_PROSPECT_ID, DUMMY_DOCUMENT_KEY } from "./constants";
 
 const Documents = ({ classes, docs, prospectInfo, endpointsUrl }) => {
@@ -120,7 +120,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {};
 
-export default withStyles(style)(
+export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
