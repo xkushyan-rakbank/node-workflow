@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Input, CustomSelect } from "./../../components/Form";
 import { emailRegex, nameRegex } from "./../../utils/validation";
 import { countryCodeOptions } from "./../../constants/options";
+import SubmitButton from "./../../components/Buttons/SubmitButton";
 
 const AplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -11,7 +12,8 @@ const AplicantInfoSchema = Yup.object({
     .matches(nameRegex, "This is not a valid name"),
   email: Yup.string()
     .required("You need to provide Email address")
-    .matches(emailRegex, "This is not a valid Email address")
+    .matches(emailRegex, "This is not a valid Email address"),
+  countryCode: Yup.string().required("Select country code")
 });
 
 const initialValues = {
@@ -45,7 +47,9 @@ export const ApplicantInfo = () => {
 
             <Field name="countryCode" options={countryCodeOptions} component={CustomSelect} />
 
-            <button type="submit">Submit</button>
+            <div className="linkContainer">
+              <SubmitButton label="Next Step" justify="flex-end" />
+            </div>
           </Form>
         )}
       </Formik>

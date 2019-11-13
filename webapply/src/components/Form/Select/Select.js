@@ -1,13 +1,14 @@
 import React from "react";
+import cx from "classnames";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import { ErrorMessage, InfoTitle } from "./../../Notifications";
 import { withStyles } from "@material-ui/core/styles";
-
-const styles = {};
+import { styles } from "./styled";
 
 function SelectComponent({
   classes,
@@ -24,6 +25,7 @@ function SelectComponent({
 }) {
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
+  const error = errors[field.name] && touched[field.name];
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
@@ -39,6 +41,8 @@ function SelectComponent({
         {...props}
         input={<OutlinedInput labelWidth={labelWidth} />}
         IconComponent={KeyboardArrowDownIcon}
+        className={cx(classes.selectField, classes.selectFieldBasic)}
+        error={error}
       >
         <MenuItem value=""></MenuItem>
         {options.map(option => (
@@ -47,6 +51,10 @@ function SelectComponent({
           </MenuItem>
         ))}
       </Select>
+
+      {error && <ErrorMessage error={errors[field.name]} />}
+
+      {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>
   );
 }
