@@ -36,7 +36,7 @@ public class FileHelper {
 				logger.info(String.format("Read JSON file from %s%s", EnvUtil.getConfigDir(), filename));
 
 				fileContent = FileUtils.readFileToString(new File(EnvUtil.getConfigDir() + filename),
-						StandardCharsets.UTF_8);
+						String.valueOf(StandardCharsets.UTF_8));
 			} else {
 
 				if (fromConfigDirectory) {
@@ -60,7 +60,7 @@ public class FileHelper {
 	public String loadFileContents(String filename) {
 		File file = new File(EnvUtil.getConfigDir() + filename);
 		try {
-			return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+			return FileUtils.readFileToString(file, String.valueOf(StandardCharsets.UTF_8));
 		} catch (IOException e) {
 			logger.error("Unable to read contents from " + EnvUtil.getConfigDir() + filename, e);
 		}

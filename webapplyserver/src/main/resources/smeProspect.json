@@ -56,18 +56,7 @@
 	"organizationInfo": {
 		"screeningInfo": {
 			"statusOverAll": "",
-			"screeningResults": [
-				{
-					"screeningType": "",
-					"screeningStatus": "",
-					"screeningFlag": "",
-					"screeningNotes": "",
-					"screeningReason": "",
-					"reasonNotes": "",
-					"reasonCode": "",
-					"reasonStatus": ""
-				}
-			]
+			"screeningResults": []
 		},
 		"branchCity": "",
 		"branchID": "",

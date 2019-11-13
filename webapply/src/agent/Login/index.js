@@ -1,27 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import TextInput from "../components/InputField/TextInput";
-import SubmitButton from "../components/Buttons/SubmitButton";
-import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
-import { loginInfoForm } from "../store/actions/loginForm";
-import * as inputSelectors from "../store/selectors/input";
-import * as appConfigSelector from "../store/selectors/appConfig";
+import { withStyles } from "@material-ui/core/styles";
+import TextInput from "../../components/InputField/TextInput";
+import SubmitButton from "../../components/Buttons/SubmitButton";
+import { loginInfoForm } from "../../store/actions/loginForm";
+import * as inputSelectors from "../../store/selectors/input";
+import * as appConfigSelector from "../../store/selectors/appConfig";
+import { styles } from "./styled";
+import { titles } from "./constants";
 
 class Login extends React.Component {
-  static defaultProps = {
-    setToken: () => {}
-  };
-
   submitForm = event => {
     event.preventDefault();
     this.props.loginInfoForm(this.props.inputParam);
   };
 
   render() {
-    const { userName, password } = this.props;
+    const { classes, userName, password } = this.props;
     return (
-      <div>
-        <h2>Login</h2>
+      <div className={classes.baseForm}>
+        <h2>{titles.LOGIN_TITLE}</h2>
 
         <form noValidate onSubmit={this.submitForm}>
           <TextInput id="login.userName" />
@@ -43,12 +41,12 @@ const mapStateToProps = state => ({
   inputParam: appConfigSelector.getLoginParam(state)
 });
 const mapDispatchToProps = {
-  setToken,
-  setVerified,
-  verifyToken,
   loginInfoForm
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Login)
+);
