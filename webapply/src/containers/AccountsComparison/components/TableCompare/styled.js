@@ -162,6 +162,9 @@ const styled = {
         fontSize: "16px"
       }
     }
+  },
+  relative: {
+    position: "relative"
   }
 };
 

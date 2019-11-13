@@ -1,5 +1,5 @@
-import { accountsNames } from "../../constants";
-import checkIc from "../../assets/icons/check.svg";
+import { accountsNames } from "../../../../constants/index";
+import checkIc from "../../../../assets/icons/check.svg";
 
 export const shortNames = {
   starter: {
