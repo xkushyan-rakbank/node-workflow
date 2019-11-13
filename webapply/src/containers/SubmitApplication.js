@@ -9,7 +9,7 @@ import * as appConfigSelectors from "../store/selectors/appConfig";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import ErrorMessage from "../components/ErrorMessage";
+import { ErrorMessage } from "./../components/Notifications";
 import { submitApplication } from "../constants/index";
 import routes from "../routes";
 
@@ -148,7 +148,7 @@ class SubmitApplication extends React.Component {
     const isOnlineBankingApplied = accountInfo.length && account.eStatements;
     const rakValuePackage = applicationInfo.rakValuePackage || "RAKvalue package";
     const { isInformationProvided, areTermsAgreed, needCommunication, isError } = this.state;
-    const chkboxErrorMessage = `Please click the ${submitApplication.termCondition} 
+    const chkboxErrorMessage = `Please click the ${submitApplication.termCondition}
       and ${submitApplication.termsOfEnrolment}`;
 
     return (

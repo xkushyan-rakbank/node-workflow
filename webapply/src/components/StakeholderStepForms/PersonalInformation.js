@@ -9,7 +9,7 @@ import PureSelect from "../InputField/PureSelect";
 import { getInputValueById } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
 import InlineRadioGroup from "../InputField/InlineRadioGroup";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 
 const styles = {
   divider: {

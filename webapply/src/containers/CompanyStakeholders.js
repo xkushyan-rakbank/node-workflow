@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core";
 import FilledStakeholderCard from "../components/FilledStakeholderCard";
 import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
-import ErrorMessage from "../components/ErrorMessage";
+import { ErrorMessage } from "./../components/Notifications";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import BackLink from "../components/Buttons/BackLink";
 import ConfirmDialog from "../components/ConfirmDialod";

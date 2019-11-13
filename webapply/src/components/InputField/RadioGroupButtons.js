@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import RadioButton from "../InputField/RadioButton";
 import Subtitle from "../Subtitle";
-import ErrorMessage from "../ErrorMessage";
+import { ErrorMessage } from "./../Notifications";
 
 import { updateProspect } from "../../store/actions/appConfig";
 import { getValidationErrors } from "../../store/selectors/validationErrors";

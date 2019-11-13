@@ -6,7 +6,7 @@ import { getValidationErrors } from "../../store/selectors/validationErrors";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
 
-import ErrorMessage from "../ErrorMessage";
+import { ErrorMessage } from "../Notifications";
 
 const styles = {
   textArea: {

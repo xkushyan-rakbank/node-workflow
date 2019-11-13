@@ -5,7 +5,7 @@ import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputValueById } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 
 const PreferredContactInformation = props => {
   const { isSignatory, index } = props;

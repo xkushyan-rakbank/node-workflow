@@ -7,7 +7,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Subtitle from "../Subtitle";
 import Checkbox from "../InputField/RefactoredCheckbox";
 import FormWrapper from "../StakeholderStepForms/FormWrapper";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 import TextInput from "../InputField/TextInput";
 import RadioButton from "../InputField/RadioButton";
 import Divider from "../Divider";

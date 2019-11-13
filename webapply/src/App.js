@@ -4,7 +4,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { history } from "./store/configureStore";
-import ApplicantInfo from "./containers/ApplicantInfo";
+import { ApplicantInfo } from "./containers/AplicantInfo/ApplicantInfo";
 import Login from "./agent/Login";
 import AboutCompany from "./containers/AboutCompany";
 import CompanyStakeholders from "./containers/CompanyStakeholders";
