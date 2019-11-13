@@ -1,28 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import TextInput from "../components/InputField/TextInput";
-import SearchButton from "../components/Buttons/SearchButton";
-import PureSelect from "../components/InputField/PureSelect";
+import TextInput from "../../components/InputField/TextInput";
+import SearchButton from "../../components/Buttons/SearchButton";
+import PureSelect from "../../components/InputField/PureSelect";
 import Grid from "@material-ui/core/Grid";
-import SearchResult from "./SearchResult";
-import { validateForm } from "../utils/validate";
-import { searchApplications } from "./../store/actions/searchProspect";
-import * as inputSelectors from "./../store/selectors/input";
-import * as appConfigSelectors from "./../store/selectors/appConfig";
-import * as loginSelector from "./../store/selectors/loginSelector";
-import * as getSearchResult from "./../store/selectors/searchProspect";
-import { history } from "./../store/configureStore";
-import routes from "../routes";
-
-const styles = {
-  baseForm: {
-    marginBottom: "20px"
-  },
-  infoTitle: {
-    marginTop: "-14px !important"
-  }
-};
+import SearchResult from "./../SearchResult/index";
+import { validateForm } from "../../utils/validate";
+import { searchApplications } from "./../../store/actions/searchProspect";
+import * as inputSelectors from "./../../store/selectors/input";
+import * as appConfigSelectors from "./../../store/selectors/appConfig";
+import * as loginSelector from "./../../store/selectors/loginSelector";
+import * as getSearchResult from "./../../store/selectors/searchProspect";
+import { history } from "./../../store/configureStore";
+import routes from "../../routes";
+import { styles } from "./styled";
+import { titles } from "./constants";
 
 class SearchProspect extends React.Component {
   componentWillMount() {
@@ -51,7 +44,7 @@ class SearchProspect extends React.Component {
 
     return (
       <div className={classes.baseForm}>
-        <h2>Search Application</h2>
+        <h2>{titles.SEARCH_APPLICATION_TITLE}</h2>
 
         <form onSubmit={this.handleSubmit} noValidate>
           <TextInput id="Search.fullName" />

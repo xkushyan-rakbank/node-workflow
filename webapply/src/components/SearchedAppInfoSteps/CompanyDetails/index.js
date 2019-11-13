@@ -1,12 +1,13 @@
 import React from "react";
+import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
-import { styles } from "./style";
+import { styles } from "./styled";
 import { titles, errorMsgs } from "./constants";
 
 const CompanyDetails = ({ classes, prospectInfo = {} }) => {
-  const contactNo = `${prospectInfo.applicantInfo.countryCode} 
-  ${prospectInfo.applicantInfo.mobileNo}`;
+  const contactNo = `${get(prospectInfo, "applicantInfo.countryCode", "")} 
+  ${get(prospectInfo, "applicantInfo.mobileNo", "")}`;
 
   return (
     <>
@@ -24,7 +25,7 @@ const CompanyDetails = ({ classes, prospectInfo = {} }) => {
         <div className={classes.errorMsg}>{errorMsgs.APPLICANT_DETAIL_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.RAKTRACK_LEAD_REFERENCE_TITLE}</h4>
-      {prospectInfo.organizationInfo && prospectInfo.organizationInfo.leadNumber ? (
+      {get(prospectInfo, "organizationInfo.leadNumber") ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>{prospectInfo.organizationInfo.leadNumber}</div>

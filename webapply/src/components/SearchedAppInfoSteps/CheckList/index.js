@@ -2,7 +2,7 @@ import React from "react";
 import get from "lodash/get";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "../../../components/Avatar";
-import { style } from "./style";
+import { styles } from "./styled";
 import { titles, errorMsgs } from "./constants";
 
 const CheckList = ({ classes, prospectInfo = {} }) => {
@@ -91,4 +91,4 @@ const CheckList = ({ classes, prospectInfo = {} }) => {
   );
 };
 
-export default withStyles(style)(CheckList);
+export default withStyles(styles)(CheckList);

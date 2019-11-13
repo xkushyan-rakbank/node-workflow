@@ -1,24 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import TextInput from "../components/InputField/TextInput";
-import SubmitButton from "../components/Buttons/SubmitButton";
-import { setToken, setVerified, verifyToken } from "../store/actions/reCaptcha";
-import { loginInfoForm } from "../store/actions/loginForm";
-import * as inputSelectors from "../store/selectors/input";
-import * as appConfigSelector from "../store/selectors/appConfig";
-
-const styles = {
-  baseForm: {
-    marginTop: "135px"
-  }
-};
+import TextInput from "../../components/InputField/TextInput";
+import SubmitButton from "../../components/Buttons/SubmitButton";
+import { loginInfoForm } from "../../store/actions/loginForm";
+import * as inputSelectors from "../../store/selectors/input";
+import * as appConfigSelector from "../../store/selectors/appConfig";
+import { styles } from "./styled";
+import { titles } from "./constants";
 
 class Login extends React.Component {
-  static defaultProps = {
-    setToken: () => {}
-  };
-
   submitForm = event => {
     event.preventDefault();
     this.props.loginInfoForm(this.props.inputParam);
@@ -28,7 +19,7 @@ class Login extends React.Component {
     const { classes, userName, password } = this.props;
     return (
       <div className={classes.baseForm}>
-        <h2>Login</h2>
+        <h2>{titles.LOGIN_TITLE}</h2>
 
         <form noValidate onSubmit={this.submitForm}>
           <TextInput id="login.userName" />
@@ -50,9 +41,6 @@ const mapStateToProps = state => ({
   inputParam: appConfigSelector.getLoginParam(state)
 });
 const mapDispatchToProps = {
-  setToken,
-  setVerified,
-  verifyToken,
   loginInfoForm
 };
 

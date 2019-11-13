@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { style } from "./style";
+import { styles } from "./styled";
 import { titles, errorMsgs } from "./constants";
 
 const AuditTrail = ({ classes, prospectInfo = {} }) => {
@@ -37,4 +37,4 @@ const AuditTrail = ({ classes, prospectInfo = {} }) => {
   );
 };
 
-export default withStyles(style)(AuditTrail);
+export default withStyles(styles)(AuditTrail);
