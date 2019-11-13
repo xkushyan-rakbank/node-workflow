@@ -25,14 +25,16 @@ const styles = {
   title: {
     fontSize: "20px",
     fontWeight: 600,
-    color: "#373737"
+    color: "#373737",
+    display: "flex",
+    flexDirection: "column"
   },
   editButton: {
     margin: "0 40px 0 auto"
   }
 };
 
-const ServicesStepTitle = ({ step, activeStep, classes, setStep }) => {
+const ServicesStepTitle = ({ step, activeStep, classes, setStep, titleInfo, isShowTitleInfo }) => {
   const doneStep = step.step < activeStep;
   const editStep = () => setStep(step.step);
   return (
@@ -40,7 +42,10 @@ const ServicesStepTitle = ({ step, activeStep, classes, setStep }) => {
       <div className={classes.icon}>
         <img src={step.icon} alt="" />
       </div>
-      <div className={classes.title}>{step.title}</div>
+      <div className={classes.title}>
+        {step.title}
+        {isShowTitleInfo && <span>{step.titleInfo}</span>}
+      </div>
 
       {doneStep && <LinkButton className={classes.editButton} clickHandler={editStep} />}
     </div>

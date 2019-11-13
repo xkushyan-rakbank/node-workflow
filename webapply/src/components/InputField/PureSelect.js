@@ -198,8 +198,12 @@ class PureSelect extends React.Component {
   };
 
   updateProspect = event => {
+    const { name, updateProspect, callback } = this.props;
     this.setState({ fieldErrors: {} });
-    this.props.updateProspect({ [this.props.name]: event.target.value });
+    updateProspect({ [name]: event.target.value });
+    if (callback) {
+      callback(event.target.value);
+    }
   };
 
   handleBlur = () => this.checkInputValidity();

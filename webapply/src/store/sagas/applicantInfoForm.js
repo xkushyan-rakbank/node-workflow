@@ -9,15 +9,10 @@ import { setVerified } from "../actions/reCaptcha";
 
 import apiClient from "../../api/apiClient";
 
-// import routes from "./../../routes";
-
 function* applicantInfoFormSaga() {
   try {
     const state = yield select();
     const config = cloneDeep(state.appConfig);
-    const token = state.reCaptcha.token;
-
-    config.prospect["recaptchaToken"] = token;
 
     const {
       data: { prospectId }

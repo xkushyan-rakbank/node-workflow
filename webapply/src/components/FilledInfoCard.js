@@ -7,16 +7,21 @@ const style = {
     display: "flex",
     alignItems: "center",
     height: "62px",
-    margin: "30px 20px"
+    margin: "30px 32px 30px 20px"
   }
 };
 
 const FilledInfoCard = props => {
-  const { firstName, lastName, content, classes, index } = props;
+  const { firstName, lastName, content, classes, index, defaultAvatarIcon } = props;
 
   return (
     <div className={classes.contentWrapper}>
-      <Avatar firstName={firstName} lastName={lastName} index={index} />
+      <Avatar
+        firstName={firstName}
+        lastName={lastName}
+        index={index}
+        defaultAvatarIcon={defaultAvatarIcon}
+      />
       {content}
     </div>
   );

@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
-import regularIcon from "./../assets/gif/callback_regular.gif";
-import declined from "./../assets/gif/declined_regular.gif";
+import routes from "./../routes";
+import declinedRegular from "./../assets/gif/declined_regular.gif";
 
 const styles = {
   appStatus: {
@@ -27,28 +28,37 @@ const styles = {
     "& > p": {
       fontSize: "16px"
     }
+  },
+  appStatusLink: {
+    color: "#373737",
+    width: 120,
+    border: "solid 1px #373737",
+    padding: "3px 0",
+    fontSize: 14,
+    margin: "20px auto 0",
+    borderRadius: 21,
+    display: "block",
+    transition: "all 0.2s ease",
+    "&:hover": {
+      backgroundColor: "#373737",
+      color: "#fff"
+    }
   }
 };
 
 class ApplicationStatus extends React.Component {
   render() {
-    const { classes, errorReason, uiError } = this.props;
-    const icon = uiError ? declined : regularIcon;
+    const { classes, status, linkToProducts, statusFromServer } = this.props;
 
     return (
       <div className={classes.appStatus}>
-        <img src={icon} alt="error" />
+        <img src={status.icon || declinedRegular} alt="error" />
         <div className={classes.message}>
-          {uiError ? (
-            <>
-              <h3>Oops...</h3>
-              <p>
-                It`s our fault, not yours. We`ve have been notified of the problem. In the meantime,
-                try refreshing or see the JavaScript console for technical details.
-              </p>
-            </>
-          ) : (
-            <p>{errorReason.screeningReason}</p>
+          <p>{statusFromServer ? statusFromServer.screeningReason : status.text}</p>
+          {linkToProducts && (
+            <Link to={routes.accountsComparison} className={classes.appStatusLink}>
+              See products
+            </Link>
           )}
         </div>
       </div>

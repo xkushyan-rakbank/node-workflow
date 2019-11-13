@@ -131,7 +131,10 @@ const ExpandedOptionsDetailedCard = ({
   accountType,
   className,
   buttonLabel,
-  selectService
+  selectService,
+  handleClick,
+  disabled,
+  id
 }) => {
   const renderTitle = () =>
     accountType === "RAKstarter" && value === "RAKvalue PLUS"
@@ -183,7 +186,12 @@ const ExpandedOptionsDetailedCard = ({
       </div>
       <div className={classes.upgrade}>
         {selectService ? (
-          <ContinueButton className={classes.button} label={buttonLabel} />
+          <ContinueButton
+            disabled={disabled}
+            label={buttonLabel}
+            className={classes.button}
+            handleClick={() => handleClick(id)}
+          />
         ) : (
           renderTitle()
         )}

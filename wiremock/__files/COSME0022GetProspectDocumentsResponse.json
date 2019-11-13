@@ -22,7 +22,7 @@
             "isEncrypted": false,
             "required": true,
             "encryptionDetails": "",
-            "uploadStatus": ""
+            "uploadStatus": "Uploaded"
         },
         {
             "documentType": "MOA",
@@ -46,7 +46,7 @@
             "isEncrypted": false,
             "required": true,
             "encryptionDetails": "",
-            "uploadStatus": ""
+            "uploadStatus": "Uploaded"
         }
     ],
     "stakeholdersDocuments": {
@@ -74,7 +74,7 @@
                 "isEncrypted": false,
                 "required": true,
                 "encryptionDetails": "",
-                "uploadStatus": ""
+                "uploadStatus": "NotUploaded"
             },
             {
                 "documentType": "Emirates Id",
@@ -99,7 +99,7 @@
                 "isEncrypted": false,
                 "required": true,
                 "encryptionDetails": "",
-                "uploadStatus": ""
+                "uploadStatus": "Uploaded"
             }
         ],
         "1_Bhakta": [
@@ -126,7 +126,7 @@
                 "isEncrypted": false,
                 "required": true,
                 "encryptionDetails": "",
-                "uploadStatus": ""
+                "uploadStatus": "Uploaded"
             },
             {
                 "documentType": "Emirates Id",

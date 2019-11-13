@@ -17,10 +17,16 @@ const style = {
 };
 
 const CompanyStakeholderCard = props => {
-  const { firstName, lastName, content, classes, className, index } = props;
+  const { firstName, lastName, content, classes, className, index, defaultAvatarIcon } = props;
   return (
     <div className={cx(classes.wrapper, className)}>
-      <FilledInfoCard firstName={firstName} lastName={lastName} content={content} index={index} />
+      <FilledInfoCard
+        firstName={firstName}
+        lastName={lastName}
+        content={content}
+        index={index}
+        defaultAvatarIcon={defaultAvatarIcon}
+      />
       {props.children}
     </div>
   );

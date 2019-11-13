@@ -51,7 +51,9 @@ function* receiveAppConfigSaga() {
 
     const config = cloneDeep(response.data);
     const prospectModel = cloneDeep(config.prospect);
-    config.prospect.signatoryInfo = [];
+    if (config.prospect) {
+      config.prospect.signatoryInfo = [];
+    }
 
     yield put(saveProspectModel(prospectModel));
     yield put(receiveAppConfigSuccess(config));

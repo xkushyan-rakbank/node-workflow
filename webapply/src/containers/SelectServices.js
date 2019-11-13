@@ -1,10 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
 import cx from "classnames";
+import { compose } from "recompose";
 import omit from "lodash/omit";
 import { withStyles } from "@material-ui/core";
 import SubmitApplication from "./SubmitApplication";
 import ServicesStepTitle from "../components/ServicesStepTitle";
-import { servicesSteps } from "../constants";
+import BackLink from "../components/Buttons/BackLink";
+import SubmitButton from "../components/Buttons/SubmitButton";
+import { servicesSteps, accountsNames } from "../constants";
+import { getSelectedAccountInfo } from "../store/selectors/selectedAccountInfo";
+import { updateAccountType } from "../store/actions/selectedAccountInfo";
+import routes from "../routes";
+import { getInputValueById } from "../store/selectors/input";
+import { getSelectedTypeCurrency } from "../utils/SelectServices";
 
 const style = {
   stepWrapper: { marginBottom: "20px" },
@@ -35,9 +44,32 @@ class SelectServices extends React.Component {
 
   goToFinish = () => this.setState({ canSubmit: true });
 
+  componentDidUpdate() {
+    const { step, canSubmit } = this.state;
+    const { accountType, rakValuePackage, accountCurrencies } = this.props;
+    const { isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(accountCurrencies);
+
+    if (step === servicesSteps.length && !canSubmit) {
+      if (accountType === accountsNames.starter) {
+        if (rakValuePackage || isSelectOnlyForeignCurrency) {
+          this.setState({
+            canSubmit: true
+          });
+        }
+        return;
+      }
+
+      this.setState({
+        canSubmit: true
+      });
+    }
+  }
+
   render() {
-    const { classes } = this.props;
-    return this.state.canSubmit ? (
+    const { classes, accountCurrencies } = this.props;
+    const { isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(accountCurrencies);
+
+    return this.state.step === 6 ? (
       <SubmitApplication />
     ) : (
       <>
@@ -57,11 +89,12 @@ class SelectServices extends React.Component {
                   step={stepData}
                   activeStep={this.state.step}
                   setStep={this.setStep}
+                  isShowTitleInfo={this.state.step === 4 && isSelectOnlyForeignCurrency}
                 />
                 {this.state.step === item.step && (
                   <div
                     className={cx(classes.formWrapper, {
-                      [classes.valueAddedServices]: this.state.step === 4
+                      [classes.valueAddedServices]: this.state.step === 5
                     })}
                   >
                     <Component goToNext={this.handleContinue} activeStep={this.state.step} />
@@ -71,9 +104,36 @@ class SelectServices extends React.Component {
             );
           })}
         </div>
+
+        <div className="linkContainer">
+          <BackLink path={routes.uploadDocuments} />
+          <SubmitButton
+            handleClick={() => this.setStep(this.state.step + 1)}
+            label={this.state.step === 5 ? "Go to submit" : "Next Step"}
+            justify="flex-end"
+            classes={{ buttonWrap: classes.buttonWrap }}
+            disabled={!this.state.canSubmit}
+          />
+        </div>
       </>
     );
   }
 }
 
-export default withStyles(style)(SelectServices);
+const mapStateToProps = state => ({
+  accountType: getSelectedAccountInfo(state).accountType,
+  rakValuePackage: getInputValueById(state, "Appl.rakValuePackage"),
+  accountCurrencies: getInputValueById(state, "Acnt.accountCurrencies", [0])
+});
+
+const mapDispatchToProps = {
+  updateAccountType
+};
+
+export default compose(
+  withStyles(style),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(SelectServices);

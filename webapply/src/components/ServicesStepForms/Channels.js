@@ -17,6 +17,7 @@ import { getGeneralInputProps } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 import { stakeholders as stakeholdersSelector } from "../../store/selectors/stakeholder";
+import { getSelectedTypeCurrency } from "../../utils/SelectServices";
 
 const style = {
   formWrapper: {
@@ -66,29 +67,16 @@ const updateValueCheckBox = (name, prevValue, newValue, props) => {
   }
 };
 
-const getSelectedTypeCurrency = props => {
-  const { accountCurrencies } = props;
-  const isSelectedLocalCurrency = accountCurrencies.includes("AED");
-  const isSelectForeignCurrencyAndLocal =
-    isSelectedLocalCurrency || (isSelectedLocalCurrency && accountCurrencies.length > 1);
-  const isSelectOnlyForeignCurrency = !isSelectedLocalCurrency && accountCurrencies.length >= 1;
-
-  return {
-    isSelectedLocalCurrency,
-    isSelectForeignCurrencyAndLocal,
-    isSelectOnlyForeignCurrency
-  };
-};
-
 const getStatusChequeBookApplied = props => {
   const {
     primaryMobCountryCode,
     primaryPhoneCountryCode,
-    chequeBook: { name, value }
+    chequeBook: { name, value },
+    accountCurrencies
   } = props;
 
   const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
-    props
+    accountCurrencies
   );
 
   const mobCountryCode = "971";
@@ -110,13 +98,14 @@ const getStatusChequeBookApplied = props => {
 const getStatusDebitCardApplied = props => {
   const {
     accountSigningInfo: { accountSigningType, authorityType },
-    debitCardApplied: { name, value }
+    debitCardApplied: { name, value },
+    accountCurrencies
   } = props;
 
   const accountSigningTypeAnyOfUs = accountSigningType === "Any of us";
 
   const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
-    props
+    accountCurrencies
   );
 
   if (isSelectOnlyForeignCurrency || !accountSigningTypeAnyOfUs) {

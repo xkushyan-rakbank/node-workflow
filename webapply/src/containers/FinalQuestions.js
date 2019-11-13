@@ -34,20 +34,26 @@ class FinalQuestions extends React.Component {
 
   state = {
     expandedMargin: true,
-    filledSignatoriesIndexes: [],
-    isSubmitDisabled: true
+    filledSignatoriesIndexes: []
   };
 
   goToUploadDocument = () => this.props.history.push(routes.uploadDocuments);
 
-  addFilledSignatoryIndex = index =>
-    this.setState({ filledSignatoriesIndexes: [...this.state.filledSignatoriesIndexes, index] });
+  addFilledSignatoryIndex = index => {
+    const { filledSignatoriesIndexes } = this.state;
+    if (!filledSignatoriesIndexes.includes(index)) {
+      this.setState({ filledSignatoriesIndexes: [...filledSignatoriesIndexes, index] });
+    }
+  };
+
+  isSubmitDisabled = () =>
+    !(this.state.filledSignatoriesIndexes.length > this.props.signatories.length);
 
   switchStateBooleanField = field => this.setState({ [field]: !this.state[field] });
 
   render() {
     const { classes, signatories } = this.props;
-    const { expandedMargin, filledSignatoriesIndexes, isSubmitDisabled } = this.state;
+    const { expandedMargin, filledSignatoriesIndexes } = this.state;
     return (
       <>
         <h2>Final questions</h2>
@@ -68,8 +74,6 @@ class FinalQuestions extends React.Component {
                 key={index}
                 signatory={item}
                 index={index}
-                switchSubmitDisabled={() => this.switchStateBooleanField("isSubmitDisabled")}
-                signatoriesLength={signatories.length}
                 addFilledSignatoryIndex={this.addFilledSignatoryIndex}
                 filledSignatoriesIndexes={filledSignatoriesIndexes}
               />
@@ -83,7 +87,7 @@ class FinalQuestions extends React.Component {
             label="Next Step"
             justify="flex-end"
             classes={{ buttonWrap: classes.buttonWrap }}
-            disabled={isSubmitDisabled}
+            disabled={this.isSubmitDisabled()}
           />
         </div>
       </>

@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import arrowBack from "../assets/icons/backArrow.png";
-import { Link } from "react-router-dom";
 import TagManager from "react-gtm-module";
+import { connect } from "react-redux";
 import closeBtn from "../assets/images/close.png";
 import companyIconSvg from "../assets/icons/file.png";
+import {
+  retrieveDocDetails,
+  extraDocUploadSuccess,
+  deleteExtraDocUploadSuccess
+} from "../store/actions/getProspectDocuments";
+import * as appConfigSelectors from "./../store/selectors/appConfig";
 
 const uploadFileSizeMax = 5;
-
+const maxExtraDocUpload = 7;
 const style = {
   sectionContainer: {
     padding: "23px",
@@ -52,6 +57,22 @@ const style = {
     outline: "transparent",
     cursor: "pointer"
   },
+  BtnSubmitDisable: {
+    width: "239px",
+    height: "56px",
+    borderRadius: "28px",
+    backgroundColor: "#c6c6cc",
+    fontSize: "18px",
+    fontWeight: "600",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "1.33",
+    letterSpacing: "normal",
+    textAlign: "center",
+    color: "#ffffff",
+    marginTop: "22px",
+    outline: "transparent"
+  },
   BtnBack: {
     fontSize: "14px",
     fontWeight: "600",
@@ -94,7 +115,8 @@ const style = {
     borderRadius: "8px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
     border: "solid 1px #e8e8e8",
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    marginBottom: "20px"
   },
   cancel: {
     borderRadius: "25px",
@@ -102,6 +124,9 @@ const style = {
     border: "solid 1px #e8e8e8",
     backgroundColor: "#ffffff",
     padding: "0 6px"
+  },
+  fileSize: {
+    paddingLeft: "23px"
   }
 };
 
@@ -109,9 +134,8 @@ const style = {
 
 const tagManagerArgs = {
   dataLayer: {
-    userId: "001",
-    userProject: "ReUploadDocument",
-    page: "ReUploadDocuments"
+    ProductName: "Barca Credit Card",
+    event: "MobilePage"
   }
 };
 
@@ -123,20 +147,49 @@ class EditApplication extends Component {
       isExcedeed: false
     };
     this.fileUploadHandler = this.fileUploadHandler.bind(this);
+    this.fileUploadCancel = this.fileUploadCancel.bind(this);
   }
 
+  componentDidMount() {
+    TagManager.dataLayer(tagManagerArgs);
+    this.props.retrieveDocDetails();
+  }
   // code for file uploader
 
   fileUploadHandler(event) {
-    // GTM datalayer
-    TagManager.dataLayer(tagManagerArgs);
-
     this.setState(
       {
         selectedFile: event.target.files[0]
       },
 
       () => {
+        // update uploaded file details
+
+        let fileDetails = {
+          documentType: "others",
+          signatoryId: "",
+          documentTitle: "",
+          fileName: this.state.selectedFile.name,
+          filePath: "",
+          url: "",
+          fileData: "",
+          fileFormat: this.state.selectedFile.type,
+          fileSize: this.state.selectedFile.size,
+          fileDescription: "",
+          submittedBy: "",
+          submittedDt: "",
+          updatedBy: "",
+          updatedDt: Date(),
+          avsCheckDt: "",
+          avsCheck: false,
+          verified: false,
+          verifiedBy: "",
+          isEncrypted: false,
+          required: "",
+          encryptionDetails: "",
+          uploadStatus: "Uploaded"
+        };
+
         //checking the file size
         let fileSize = this.state.selectedFile.size;
         if (fileSize <= uploadFileSizeMax * 1048576) {
@@ -147,18 +200,58 @@ class EditApplication extends Component {
             this.state.selectedFile.type === "application/pdf" ||
             this.state.selectedFile.type === "application/txt"
           ) {
-            console.log("validation validated");
+            this.props.extraDocUploadSuccess(fileDetails);
           }
-        } else {
-          this.setState({
-            isExcedeed: true
-          });
         }
       }
     );
   }
 
+  fileUploadCancel(index) {
+    this.props.deleteExtraDocUploadSuccess(index);
+  }
+
   render() {
+    let otherDocuments, companyDocumentLength;
+    if (this.props.documents) {
+      let companyDocument = this.props.documents.companyDocuments;
+      if (companyDocument) {
+        companyDocumentLength = Object.keys(companyDocument).length;
+        otherDocuments = companyDocument.map((documents, index) => {
+          if (documents.documentType === "others") {
+            return (
+              <div className={this.props.classes.fileUploadPlaceholder} key={index} id={index}>
+                <div>{this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
+                <div className={this.props.classes.contentBox}>
+                  <div className={this.props.classes.uploadFileName}>
+                    {" "}
+                    {documents.fileName}
+                    <span className={this.props.classes.fileSize}>{documents.fileSize} Bytes </span>
+                  </div>
+                  <div className={this.props.classes.uploadFileName}>
+                    <div id="Progress_Status">
+                      <div id="myprogressBar"></div>
+                    </div>
+                    <div id="progressStatus"></div>
+                  </div>
+                  {/* )} */}
+                </div>
+                <div
+                  className={this.props.classes.cancel}
+                  justify="flex-end"
+                  onClick={() => this.fileUploadCancel(index)}
+                >
+                  X
+                </div>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        });
+      }
+    }
+
     return (
       <>
         {/* file uploader button */}
@@ -173,45 +266,24 @@ class EditApplication extends Component {
         <p className="formDescription">
           One our agents asked you for some more documents? Please upload them here.
         </p>
-        <div className={this.props.classes.fileUploadPlaceholder}>
-          <div>{this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
-          <div className={this.props.classes.contentBox}>
-            <div className={this.props.classes.uploadFileName}>
-              {/* {this.state.selectedFile.name} */} bla bla
-              <span className={this.props.classes.SignatoryRights}>
-                {/* {this.state.selectedFile.size} */}
-                Bytes
-              </span>
-            </div>
-            {/* {this.state.isUploadSucess ? null : ( */}
-            <div className={this.props.classes.uploadFileName}>
-              <div id="Progress_Status">
-                <div id="myprogressBar"></div>
-              </div>
-              <div id="progressStatus"></div>
-            </div>
-            {/* )} */}
+        {otherDocuments}
+        {companyDocumentLength < maxExtraDocUpload ? (
+          <div className={this.props.classes.sectionContainer}>
+            <img src={closeBtn} alt="closeBtn" onClick={() => this.fileInput.click()} />
+            <span className={this.props.classes.sectionContainerTitle}>
+              {companyDocumentLength === 0 ? <> Add another document</> : <>Upload document</>}
+            </span>
           </div>
-          <div className={this.props.classes.cancel} justify="flex-end">
-            {" "}
-            X{" "}
-          </div>
-        </div>
-
-        <div className={this.props.classes.sectionContainer}>
-          <img src={closeBtn} alt="closeBtn" onClick={() => this.fileInput.click()} />
-          <span className={this.props.classes.sectionContainerTitle}>
-            {this.state.selectedFile ? <> Add another document</> : <>Upload document</>}
-          </span>
-        </div>
+        ) : null}
         <div className="linkContainer">
-          <Link to="">
-            <button className={this.props.classes.BtnBack} justify="flex-end">
-              <img className={this.props.classes.backIcon} src={arrowBack} alt="back" />
-              Back to Applications
-            </button>
-          </Link>
-          <button className={this.props.classes.BtnSubmit} justify="flex-end" disabled={true}>
+          {/* <button className={this.props.classes.BtnSubmit} justify="flex-end" disabled={true}>
+            Submit documents
+          </button> */}
+          <button
+            className={this.props.classes.BtnSubmitDisable}
+            justify="flex-end"
+            disabled={true}
+          >
             Submit documents
           </button>
         </div>
@@ -220,4 +292,21 @@ class EditApplication extends Component {
   }
 }
 
-export default withStyles(style)(EditApplication);
+const mapStateToProps = state => {
+  return {
+    documents: appConfigSelectors.getProspectDocuments(state)
+  };
+};
+
+const mapDispatchToProps = {
+  retrieveDocDetails,
+  extraDocUploadSuccess,
+  deleteExtraDocUploadSuccess
+};
+
+export default withStyles(style)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(EditApplication)
+);

@@ -26,7 +26,7 @@
 		"datalistId": null,
 		"readonlyFor": [],
 		"description": "name of the applicant",
-		"maxlength": "240",
+		"maxlength": "79",
 		"pattern": "^[a-zA-Z\\s]*$"
 	},
 	"Aplnt.email": {
@@ -572,6 +572,41 @@
 		"datalistId": null,
 		"readonlyFor": [],
 		"description": "calculate risk score in pre screenig step"
+	},
+	"Appl.rakValuePackage": {
+		"criteria": {
+			"roles": [
+				"customer",
+				"agent"
+			],
+			"segments": [
+				"sme"
+			],
+			"products": [
+				"RAKstarter",
+				"Current Account",
+				"RAKelite"
+			],
+			"devices": [
+				"mobile",
+				"tablet",
+				"desktop"
+			]
+		},
+		"validationErrors": {
+			"required": "Field is required.",
+			"invalid": "Field is invalid.",
+			"multilineInvalid": null
+		},
+		"applicable": null,
+		"label": "Value added services",
+		"placeholder": null,
+		"path": "$.prospect.applicationInfo.rakValuePackage",
+		"name": "prospect.applicationInfo.rakValuePackage",
+		"required": true,
+		"datalistId": null,
+		"readonlyFor": [],
+		"description": "value added services"
 	},
 	"Appl.srNumber": {
 		"criteria": {
@@ -9773,7 +9808,6 @@
 			"invalid": "Field is invalid.",
 			"multilineInvalid": null
 		},
-		"title": "This is the name of the person who had registered.",
 		"applicable": null,
 		"label": "Applicant Name",
 		"placeholder": null,
@@ -9782,7 +9816,7 @@
 		"datalistId": null,
 		"readonlyFor": [],
 		"description": "name of the applicant",
-		"maxlength": "240",
+		"maxlength": "79",
 		"pattern": "^[a-zA-Z]*$"
 	},
 	"Search.countryCode": {
@@ -9864,14 +9898,14 @@
 			"multilineInvalid": null
 		},
 		"applicable": null,
-		"label": "RAKTrack Lead Number",
+		"label": "RAKtrack Lead Reference Number",
 		"placeholder": null,
 		"path": "$.searchInfo.raktrackNumber",
 		"name": "searchInfo.raktrackNumber",
 		"datalistId": null,
 		"readonlyFor": [],
 		"description": "lead Number of the applicant",
-		"maxlength": "50"
+		"maxlength": "20"
 	},
 	"Search.tradeLicenseNo": {
 		"criteria": {
@@ -9920,7 +9954,6 @@
 			"invalid": "Field is invalid.",
 			"multilineInvalid": null
 		},
-		"title": "This is the email id of the person who had registered.",
 		"applicable": null,
 		"label": "E-mail Address",
 		"placeholder": null,

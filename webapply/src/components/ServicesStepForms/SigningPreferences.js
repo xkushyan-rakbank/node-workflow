@@ -14,7 +14,7 @@ import Divider from "../Divider";
 import RadioGroup from "../InputField/RadioGroupButtons";
 import TextArea from "../InputField/TextArea";
 
-import * as inputSelectors from "../../store/selectors/input";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
 
@@ -54,8 +54,15 @@ class SigningPreferences extends React.Component {
   }
 
   render() {
-    const { classes, accountSigningType, fullName = "" } = this.props;
+    const { classes, accountSigningType, signatoryInfo = [] } = this.props;
+
     const { contactPersons } = this.state;
+    const getValueInput = index => {
+      if (signatoryInfo[index]) {
+        return signatoryInfo[index].fullName;
+      }
+      return "";
+    };
 
     return (
       <FormWrapper className={classes.formWrapper} handleContinue={this.props.goToNext}>
@@ -86,7 +93,7 @@ class SigningPreferences extends React.Component {
                 <TextInput
                   id="OrgContReconf.primaryMobileNo"
                   indexes={[index]}
-                  required={!!fullName.length}
+                  required={!!getValueInput(index)}
                   select={
                     <PureSelect
                       id="OrgContReconf.primaryMobCountryCode"
@@ -101,7 +108,6 @@ class SigningPreferences extends React.Component {
                 <TextInput
                   id="OrgContReconf.primaryPhoneNo"
                   indexes={[index]}
-                  required={!!fullName.length}
                   select={
                     <PureSelect
                       id="OrgContReconf.primaryPhoneCountryCode"
@@ -129,7 +135,7 @@ class SigningPreferences extends React.Component {
 const mapStateToProps = state => ({
   accountSigningType: getGeneralInputProps(state, "SigAcntSig.accountSigningType", [0]),
   accountSigningInstn: getGeneralInputProps(state, "SigAcntSig.accountSigningInstn", [0]),
-  fullName: inputSelectors.getInputValueById(state, "Sig.fullName", [0])
+  signatoryInfo: appConfigSelectors.getSignatories(state)
 });
 
 const mapDispatchToProps = {
