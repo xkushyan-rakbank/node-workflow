@@ -26,7 +26,8 @@ const stakeholders = (state = initialState, action) => {
         ...state,
         isNewStakeholder: true,
         step: initialState.step,
-        completedStep: initialState.completedStep
+        completedStep: initialState.completedStep,
+        isFinalScreenShown: false
       };
     case OPEN_CONFIRM_DIALOG:
       return {

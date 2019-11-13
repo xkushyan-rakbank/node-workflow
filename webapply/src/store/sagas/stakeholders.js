@@ -33,7 +33,6 @@ function* addNewStakeholderSaga() {
     const value = JSON.parse(result.currentTarget.value);
     if (value) {
       yield put(resetProspect());
-      delay(500);
       yield put(createNewStakeholder());
     } else {
       yield put(closeConfirmDialog());
@@ -159,7 +158,7 @@ function* handleChangeStepSaga(action) {
       completedStep = stakeHoldersSteps.length;
     }
     const isStatusShown = true;
-    yield put(changeStep({ step, completedStep, isStatusShown }));
+    yield put(changeStep({ step, completedStep, isStatusShown, isFinalScreenShown: false }));
   }
 }
 

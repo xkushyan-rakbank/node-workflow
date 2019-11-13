@@ -1,4 +1,6 @@
-const styles = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   formWrapper: {
     margin: "0 20px"
   },
@@ -8,6 +10,4 @@ const styles = {
     justifyContent: "flex-end",
     margin: "40px 0"
   }
-};
-
-export default styles;
+});

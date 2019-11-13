@@ -1,4 +1,6 @@
-const styles = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   title: {
     marginLeft: "24px",
     fontSize: "20px",
@@ -29,6 +31,4 @@ const styles = {
     lineHeight: "1.4",
     marginLeft: "20px"
   }
-};
-
-export default styles;
+});

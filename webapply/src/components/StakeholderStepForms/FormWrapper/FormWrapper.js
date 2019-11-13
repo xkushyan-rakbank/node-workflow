@@ -1,16 +1,15 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
 import cx from "classnames";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import ContinueButton from "../../Buttons/ContinueButton";
 import { validateForm } from "../../../utils/validate";
 import { updateValidationErrors } from "../../../store/actions/validationErrors";
-import styles from "./styled";
+import { useStyles } from "./styled";
 
 const FormWrapper = props => {
+  const classes = useStyles();
   const hideContinue = props.hideContinue ? props.hideContinue : false;
-  const isContinueDisabled = !!props.isContinueDisabled;
 
   const submitForm = event => {
     event.preventDefault();
@@ -23,15 +22,11 @@ const FormWrapper = props => {
     }
   };
   return (
-    <form
-      noValidate
-      className={cx(props.classes.formWrapper, props.className)}
-      onSubmit={submitForm}
-    >
+    <form noValidate className={cx(classes.formWrapper, props.className)} onSubmit={submitForm}>
       {props.children}
       {!hideContinue && (
-        <div className={props.classes.buttonWrapper}>
-          <ContinueButton disabled={isContinueDisabled} type="submit" />
+        <div className={classes.buttonWrapper}>
+          <ContinueButton disabled={!!props.isContinueDisabled} type="submit" />
         </div>
       )}
     </form>
@@ -46,6 +41,5 @@ export default compose(
   connect(
     null,
     mapDispatchToProps
-  ),
-  withStyles(styles)
+  )
 )(FormWrapper);

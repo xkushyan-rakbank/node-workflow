@@ -5,26 +5,33 @@ import Nationality from "../../components/StakeholderStepForms/Nationality/Natio
 import CountryOfResidence from "../../components/StakeholderStepForms/CountryOfResidence";
 import PreferredContactInformation from "../../components/StakeholderStepForms/PreferredContactInformation";
 
+export const STEP_1 = 1;
+export const STEP_2 = 2;
+export const STEP_3 = 3;
+export const STEP_4 = 4;
+export const STEP_5 = 5;
+export const STEP_6 = 6;
+
 export const stakeHoldersSteps = [
   {
-    step: 1,
+    step: STEP_1,
     title: "Personal Information",
     component: PersonalInformation
   },
   {
-    step: 2,
+    step: STEP_2,
     title: "Signatory Rights",
     component: SignatoryRights
   },
-  { step: 3, title: "Shareholding", component: Shareholding },
-  { step: 4, title: "Nationality", component: Nationality },
+  { step: STEP_3, title: "Shareholding", component: Shareholding },
+  { step: STEP_4, title: "Nationality", component: Nationality },
   {
-    step: 5,
+    step: STEP_5,
     title: "Country of residence",
     component: CountryOfResidence
   },
   {
-    step: 6,
+    step: STEP_6,
     title: "Preferred contact information",
     component: PreferredContactInformation
   }

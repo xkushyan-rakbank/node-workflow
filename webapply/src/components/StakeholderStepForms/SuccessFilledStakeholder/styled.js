@@ -1,4 +1,6 @@
-const styles = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   wrapper: {
     width: "100%",
     height: "275px",
@@ -8,7 +10,8 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "column"
+    flexDirection: "column",
+    marginBottom: "24px"
   },
   placeholder: {
     marginBottom: "22px",
@@ -20,6 +23,4 @@ const styles = {
     color: "#373737",
     marginTop: "10px"
   }
-};
-
-export default styles;
+});
