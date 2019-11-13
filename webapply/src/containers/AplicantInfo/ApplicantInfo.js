@@ -3,6 +3,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { Input, CustomSelect } from "./../../components/Form";
 import { emailRegex, nameRegex } from "./../../utils/validation";
+import { countryCodeOptions } from "./../../constants/options";
 
 const AplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -12,33 +13,6 @@ const AplicantInfoSchema = Yup.object({
     .required("You need to provide Email address")
     .matches(emailRegex, "This is not a valid Email address")
 });
-
-const countryCodeOptions = [
-  {
-    code: "UAE",
-    key: "971",
-    value: "UAE",
-    label: "+971"
-  },
-  {
-    code: "EUR",
-    key: "992",
-    value: "EUR",
-    label: "+992"
-  },
-  {
-    code: "UA",
-    key: "380",
-    value: "UA",
-    label: "+380"
-  },
-  {
-    code: "GB",
-    key: "391",
-    value: "GB",
-    label: "+391"
-  }
-];
 
 const initialValues = {
   fullName: "",
