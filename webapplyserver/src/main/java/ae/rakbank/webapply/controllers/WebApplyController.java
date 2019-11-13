@@ -143,7 +143,7 @@ public class WebApplyController {
 			@RequestParam(required = false, defaultValue = "") String product, @RequestParam String role,
 			@RequestParam(required = false, defaultValue = "desktop") String device) throws Exception {
 		logger.info("Begin getWebApplyConfig() method");
-
+		
 		String invalidCriteriaError = validCriteriaParams(segment, product, role, device);
 		if (StringUtils.isNotBlank(invalidCriteriaError)) {
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid segment, product or role.",
@@ -174,7 +174,7 @@ public class WebApplyController {
 
 		JsonNode webApplyConfig = null;
 		try {
-			webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON);
+			webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON, httpRequest.getAttribute("authorizationToken"));
 		} catch (IOException e) {
 			logger.error("error occured while loading config files", e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
@@ -208,7 +208,7 @@ public class WebApplyController {
 				for (String product : products) {
 					for (String role : roles) {
 						try {
-							buildAppInitialState(segment, product, role, device, datalistJSON);
+							buildAppInitialState(segment, product, role, device, datalistJSON, null);
 
 						} catch (Exception e) {
 							logger.error(String.format(
@@ -229,7 +229,7 @@ public class WebApplyController {
 		return new ResponseEntity<JsonNode>(response, headers, HttpStatus.OK);
 	}
 
-	private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist)
+	private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist, Object authToken)
 			throws Exception {
 		logger.info("Begin buildAppInitialState() method");
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -254,6 +254,11 @@ public class WebApplyController {
 		if (rsaPublicKey != null && rsaPublicKey.has("body")) {
 			initStateJSON.put("rsaPublicKey", rsaPublicKey.get("body").asText());
 		}
+		
+		if (authToken != null && authToken !="") {
+			initStateJSON.put("authorizationToken", authToken.toString());
+		}
+		
 
 		// deep clone the json nodes
 		String uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
