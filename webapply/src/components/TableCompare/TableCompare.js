@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
+import cx from "classnames";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -105,86 +106,31 @@ class TableCompare extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { offset } = this.state;
+    const { offset, selectedCurrentColumn, selectedAccountContainerWidth } = this.state;
 
-    const TableWithStyles = withStyles(() => ({
-      root: {
-        tableLayout: "fixed",
-        width: "780px",
-        maxWidth: "780px",
-        borderRadius: "8px",
-        position: "relative",
-        overflow: "hidden",
-        margin: "40px 0 30px 0",
-        "& th, & td": {
-          borderBottom: "none",
-          zIndex: "1"
-        },
-        "& tr:not(:last-child) td": {
-          "&:before": {
-            content: "''",
-            position: "absolute",
-            left: 0,
-            right: 0,
-            margin: "0 auto",
-            width: "90%",
-            height: "2px",
-            backgroundColor: "#f7f8f9",
-            display: "block",
-            top: "-1px"
-          }
-        },
-        "& tr:nth-of-type(even) td": {
-          "&:before": {
-            bottom: "0px"
-          }
-        },
-        "& tr:nth-of-type(odd) td": {
-          "&:before": {
-            bottom: "0px"
-          }
-        },
-        "& th:last-child, & td:last-child": {
-          paddingRight: "0"
-        },
-        /* style for current selected account */
-        [`& tr>:nth-child(${this.state.selectedCurrentColumn})`]: {
-          fontWeight: "bold",
-          "& span:first-child": {
-            fontWeight: "600"
-          },
-          "& span:last-child": {
-            fontWeight: "400"
-          },
-          "& button": {
-            width: "150px",
-            height: "40px",
-            backgroundColor: "#000",
-            "& span:first-child": {
-              color: "#fff",
-              fontSize: "16px"
-            }
-          }
-        }
-      }
-    }))(Table);
-
-    const StyledTableHeaderWitHoverHandler = ({ name, text }) => (
+    const StyledTableHeaderWitHoverHandler = ({ name, text, order }) => (
       <TableCell
         data-name={name}
         onMouseEnter={this.handleHover}
         classes={{ root: classes.tableHeaderCellRoot, head: classes.tableHeaderCellHead }}
+        className={cx({ [classes.tableCellActive]: order === selectedCurrentColumn })}
       >
         {text}
       </TableCell>
     );
 
-    const StyledTableCellWitHoverHandler = ({ name, account: { text, info, ic }, ...props }) => (
+    const StyledTableCellWitHoverHandler = ({
+      name,
+      account: { text, info, ic },
+      order,
+      ...props
+    }) => (
       <TableCell
         data-name={name}
         {...props}
         onMouseEnter={this.handleHover}
         classes={{ root: classes.tableCellRoot }}
+        className={cx({ [classes.tableCellActive]: order === selectedCurrentColumn })}
       >
         <span>{text}</span>
         <span>{info}</span>
@@ -198,12 +144,9 @@ class TableCompare extends React.Component {
           <div className={classes.tableContainer}>
             <Paper
               classes={{ root: classes.selectedAccountContainer }}
-              style={{ left: `${offset}px`, width: this.state.selectedAccountContainerWidth }}
+              style={{ left: `${offset}px`, width: selectedAccountContainerWidth }}
             />
-            <TableWithStyles
-              classes={{ root: classes.tableRoot }}
-              currentcolumn={this.state.selectedCurrentColumn}
-            >
+            <Table classes={{ root: classes.tableRoot }}>
               <TableHead style={{ position: "relative" }}>
                 <TableRow classes={{ head: classes.tableHead }}>
                   <TableCell
@@ -215,12 +158,18 @@ class TableCompare extends React.Component {
                   <StyledTableHeaderWitHoverHandler
                     text="RAKstarter"
                     name={accountsNames.starter}
+                    order={2}
                   />
                   <StyledTableHeaderWitHoverHandler
                     text="Current Account"
                     name={accountsNames.currentAccount}
+                    order={3}
                   />
-                  <StyledTableHeaderWitHoverHandler text="RAKelite" name={accountsNames.elite} />
+                  <StyledTableHeaderWitHoverHandler
+                    text="RAKelite"
+                    name={accountsNames.elite}
+                    order={4}
+                  />
                 </TableRow>
               </TableHead>
 
@@ -234,6 +183,7 @@ class TableCompare extends React.Component {
                         align="right"
                         component="th"
                         scope="row"
+                        className={cx({ [classes.tableCellActive]: selectedCurrentColumn === 1 })}
                       >
                         {row.info}
                       </TableCell>
@@ -241,21 +191,28 @@ class TableCompare extends React.Component {
                       <StyledTableCellWitHoverHandler
                         name={accountsNames.starter}
                         account={starter}
+                        index={index}
+                        order={2}
                       />
                       <StyledTableCellWitHoverHandler
                         name={accountsNames.currentAccount}
                         account={currentAccount}
+                        index={index}
+                        order={3}
                       />
-                      <StyledTableCellWitHoverHandler name={accountsNames.elite} account={elite} />
+                      <StyledTableCellWitHoverHandler
+                        order={4}
+                        name={accountsNames.elite}
+                        account={elite}
+                      />
                     </TableRow>
                   );
                 })}
 
                 <TableRow classes={{ root: classes.tableRowRoot }}>
                   <TableCell component="th" scope="row" />
-
-                  {Object.keys(shortNames).map((shortName, index) => {
-                    const { name, ref } = shortNames[shortName];
+                  {Object.entries(shortNames).map(([type, value], index) => {
+                    const { name, ref } = value;
                     return (
                       <TableCell
                         ref={this[ref]}
@@ -263,6 +220,9 @@ class TableCompare extends React.Component {
                         onMouseEnter={this.handleHover}
                         key={index}
                         classes={{ root: classes.tableCellRoot }}
+                        className={cx({
+                          [classes.tableCellActive]: selectedCurrentColumn === index + 2
+                        })}
                       >
                         <ContainedButton
                           label="Read more"
@@ -277,7 +237,7 @@ class TableCompare extends React.Component {
                   })}
                 </TableRow>
               </TableBody>
-            </TableWithStyles>
+            </Table>
           </div>
         </div>
       </Paper>

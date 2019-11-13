@@ -104,6 +104,64 @@ const styled = {
     "& button": {
       marginTop: "5px"
     }
+  },
+  tableRoot: {
+    tableLayout: "fixed",
+    width: "780px",
+    maxWidth: "780px",
+    borderRadius: "8px",
+    position: "relative",
+    overflow: "hidden",
+    margin: "40px 0 30px 0",
+    "& th, & td": {
+      borderBottom: "none",
+      zIndex: "1"
+    },
+    "& tr:not(:last-child) td": {
+      "&:before": {
+        content: "''",
+        position: "absolute",
+        left: 0,
+        right: 0,
+        margin: "0 auto",
+        width: "90%",
+        height: "2px",
+        backgroundColor: "#f7f8f9",
+        display: "block",
+        top: "-1px"
+      }
+    },
+    "& tr:nth-of-type(even) td": {
+      "&:before": {
+        bottom: "0px"
+      }
+    },
+    "& tr:nth-of-type(odd) td": {
+      "&:before": {
+        bottom: "0px"
+      }
+    },
+    "& th:last-child, & td:last-child": {
+      paddingRight: "0"
+    }
+  },
+  tableCellActive: {
+    fontWeight: "bold",
+    "& span:first-child": {
+      fontWeight: "600"
+    },
+    "& span:last-child": {
+      fontWeight: "400"
+    },
+    "& button": {
+      width: "150px",
+      height: "40px",
+      backgroundColor: "#000",
+      "& span:first-child": {
+        color: "#fff",
+        fontSize: "16px"
+      }
+    }
   }
 };
 
