@@ -3,7 +3,7 @@ import apiClient from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
 import * as actions from "../actions/getProspectDocuments";
 import cloneDeep from "lodash/cloneDeep";
-import { updateProspect } from "../actions/appConfig";
+import { updateProspect, setConfig } from "../actions/appConfig";
 
 function* getProspectDocuments() {
   const state = yield select();
@@ -32,7 +32,7 @@ function* updateProspectDocuments(payload) {
 
   if (docDetails === "companyDocument") {
     clearedPersonalInfo = {
-      [`prospect.documents.companyDocuments[${indexValue}].uploadStatus`]: "Updated",
+      [`prospect.documents.companyDocuments[${indexValue}].uploadStatus`]: "Uploaded",
       [`prospect.documents.companyDocuments[${indexValue}].documentTitle`]: payload.payload
         .documents.documentType,
       [`prospect.documents.companyDocuments[${indexValue}].fileName`]: payload.docDetails.name,
@@ -69,9 +69,25 @@ function* updateProspectDocuments(payload) {
   yield put(updateProspect(clearedPersonalInfo));
 }
 
+function* updateExtraProspectDocuments(action) {
+  const state = yield select();
+  let config = cloneDeep(state.appConfig);
+  config.prospect.documents.companyDocuments.push(action.payload);
+  yield put(setConfig(config));
+}
+
+function* deleteExtraProspectDocuments(action) {
+  const state = yield select();
+  let config = cloneDeep(state.appConfig);
+  config.prospect.documents.companyDocuments.splice(action.payload);
+  yield put(setConfig(config));
+}
+
 export default function* appConfigSaga() {
   yield all([
     takeLatest(actions.RETRIEVE_DOC_UPLOADER, getProspectDocuments),
-    takeLatest(actions.UPLOAD_SUCCESS, updateProspectDocuments)
+    takeLatest(actions.UPLOAD_SUCCESS, updateProspectDocuments),
+    takeLatest(actions.EXTRA_DOC_UPLOAD_SUCCESS, updateExtraProspectDocuments),
+    takeLatest(actions.DELETE_EXTRA_DOC_UPLOAD_SUCCESS, deleteExtraProspectDocuments)
   ]);
 }

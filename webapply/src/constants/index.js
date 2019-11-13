@@ -17,10 +17,10 @@ import accountDetails from "../assets/icons/account_details.png";
 import signingPreferences from "../assets/icons/signing_preferences.png";
 import channels from "../assets/icons/channels.png";
 import valueAddedServices from "../assets/icons/value_added_services.png";
-import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDetails";
-import CheckList from "../components/SearchedAppInfoSteps/CheckList";
-import Documents from "../components/SearchedAppInfoSteps/Documents";
-import AuditTrail from "../components/SearchedAppInfoSteps/AuditTrail";
+import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDetails/index";
+import CheckList from "../components/SearchedAppInfoSteps/CheckList/index";
+import Documents from "../components/SearchedAppInfoSteps/Documents/index";
+import AuditTrail from "../components/SearchedAppInfoSteps/AuditTrail/index";
 import CompanyBusinessRelationshipsForm from "../components/FinalQuestions/CompanyBusinessRelationshipsForm";
 import CompanyPreferredContactInformationForm from "../components/FinalQuestions/CompanyPreferredContactInformationForm";
 import CompanyPreferredMailingAddressForm from "../components/FinalQuestions/CompanyPreferredMailingAddressForm";
@@ -203,7 +203,8 @@ export const searchProspectStepper = [
   {
     step: 1,
     title: "Search Applications",
-    path: routes.searchProspect
+    path: routes.searchProspect,
+    titleInfo: ""
   }
 ];
 
@@ -212,20 +213,23 @@ export const servicesSteps = [
     step: 1,
     title: "Account details",
     component: AccountDetails,
-    icon: accountDetails
+    icon: accountDetails,
+    titleInfo: ""
   },
   {
     step: 2,
     title: "Signing preferences",
     component: SigningPreferences,
-    icon: signingPreferences
+    icon: signingPreferences,
+    titleInfo: ""
   },
-  { step: 3, title: "Channels", component: Channels, icon: channels },
+  { step: 3, title: "Channels", component: Channels, icon: channels, titleInfo: "" },
   {
     step: 4,
     title: "Value added services",
     component: ValueAddedServices,
-    icon: valueAddedServices
+    icon: valueAddedServices,
+    titleInfo: "RAKvalue package available to AED account only"
   }
 ];
 
@@ -290,6 +294,7 @@ export const applicationStatus = {
   },
   uiError: {
     icon: declinedRegular,
-    text: ""
+    text:
+      "It`s our fault, not yours. We`ve have been notified of the problem. In the meantime, try refreshing or see the JavaScript console for technical details."
   }
 };

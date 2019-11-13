@@ -72,8 +72,6 @@ class FileUploader extends React.Component {
       }
     }
 
-    console.log(uploadedDocsCount);
-
     return (
       <>
         <h2>Upload your documents</h2>

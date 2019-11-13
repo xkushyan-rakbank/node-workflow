@@ -573,6 +573,41 @@
 		"readonlyFor": [],
 		"description": "calculate risk score in pre screenig step"
 	},
+	"Appl.rakValuePackage": {
+		"criteria": {
+			"roles": [
+				"customer",
+				"agent"
+			],
+			"segments": [
+				"sme"
+			],
+			"products": [
+				"RAKstarter",
+				"Current Account",
+				"RAKelite"
+			],
+			"devices": [
+				"mobile",
+				"tablet",
+				"desktop"
+			]
+		},
+		"validationErrors": {
+			"required": "Field is required.",
+			"invalid": "Field is invalid.",
+			"multilineInvalid": null
+		},
+		"applicable": null,
+		"label": "Value added services",
+		"placeholder": null,
+		"path": "$.prospect.applicationInfo.rakValuePackage",
+		"name": "prospect.applicationInfo.rakValuePackage",
+		"required": true,
+		"datalistId": null,
+		"readonlyFor": [],
+		"description": "value added services"
+	},
 	"Appl.srNumber": {
 		"criteria": {
 			"roles": [
@@ -9930,6 +9965,21 @@
 		"description": "email Id of the applicant",
 		"format": "email",
 		"maxlength": "50"
+	},
+	"Search.editMessage": {
+		"criteria": {
+			"roles": [
+				"agent"
+			],
+			"segments": [],
+			"products": [],
+			"devices": [
+				"mobile",
+				"tablet",
+				"desktop"
+			]
+		},
+		"message": "Editing the application will result in re-performing the pre-screening checks and might change the results."
 	},
 	"login.userName": {
 		"criteria": {
