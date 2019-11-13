@@ -1,20 +1,17 @@
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
-import TableCompare from "./TableCompare";
-import { updateAccountType } from "../../../../store/actions/selectedAccountInfo";
-import { updateProspect } from "../../../../store/actions/appConfig";
-import { getApplicationInfo } from "../../../../store/selectors/appConfig";
+import { updateProspect } from "../../store/actions/appConfig";
+import { getServicePricingGuideUrl } from "../../store/selectors/appConfig";
 import { withStyles } from "@material-ui/core/styles/index";
+import AccountsComparison from "./AccountsComparison";
 import styled from "./styled";
 
 const mapStateToProps = state => ({
-  applicationInfo: getApplicationInfo(state)
+  servicePricingGuideUrl: getServicePricingGuideUrl(state)
 });
-
 const mapDispatchToProps = {
-  updateProspect,
-  updateAccountType
+  updateProspect
 };
 
 export default compose(
@@ -24,4 +21,4 @@ export default compose(
   ),
   withStyles(styled),
   withRouter
-)(TableCompare);
+)(AccountsComparison);
