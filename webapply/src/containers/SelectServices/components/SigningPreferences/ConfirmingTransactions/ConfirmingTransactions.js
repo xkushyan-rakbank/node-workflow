@@ -1,8 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 
-import Subtitle from "../../../Subtitle";
-import InfoTitle from "../../../InfoTitle";
+import Subtitle from "../../../../../components/Subtitle";
+import InfoTitle from "../../../../../components/InfoTitle";
 
 import { styled } from "./styled";
 

@@ -4,15 +4,15 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import cx from "classnames";
 
-import { mockData } from "../../ExpandedOptionsCards/constants";
-import { getSelectedTypeCurrency } from "../../../utils/SelectServices";
-import { getSelectedAccountInfo } from "../../../store/selectors/selectedAccountInfo";
-import { getUrlsReadMore } from "../../../store/selectors/appConfig";
-import { updateProspect } from "../../../store/actions/appConfig";
-import { getGeneralInputProps, getInputValueById } from "../../../store/selectors/input";
-import { accountsNames } from "../../../constants/index";
-import ExpandedDetailedOptionsCard from "../../ExpandedOptionsCards/ExpandedDetailedOptionsCard";
-import { getUrlReadMore } from "../../ExpandedOptionsCards/ExpandedOptionsCards";
+import { mockData } from "../../../../components/ExpandedOptionsCards/constants";
+import { getSelectedTypeCurrency } from "../../../../utils/SelectServices";
+import { getSelectedAccountInfo } from "../../../../store/selectors/selectedAccountInfo";
+import { getUrlsReadMore } from "../../../../store/selectors/appConfig";
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { getGeneralInputProps, getInputValueById } from "../../../../store/selectors/input";
+import { accountsNames } from "../../../../constants/index";
+import ExpandedDetailedOptionsCard from "../../../../components/ExpandedOptionsCards/ExpandedDetailedOptionsCard";
+import { getUrlReadMore } from "../../../../components/ExpandedOptionsCards/ExpandedOptionsCards";
 
 import { styled } from "./styled";
 

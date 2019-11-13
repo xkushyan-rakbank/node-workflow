@@ -4,20 +4,20 @@ import { connect } from "react-redux";
 import get from "lodash/get";
 import RadioGroup from "@material-ui/core/RadioGroup";
 
-import Subtitle from "../Subtitle";
-import Checkbox from "../InputField/RefactoredCheckbox";
-import FormWrapper from "../StakeholderStepForms/FormWrapper";
-import InfoTitle from "../InfoTitle";
-import TextInput from "../InputField/TextInput";
-import RadioButton from "../InputField/RadioButton";
-import Divider from "../Divider";
+import Subtitle from "../../../../components/Subtitle";
+import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
+import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper";
+import InfoTitle from "../../../../components/InfoTitle";
+import TextInput from "../../../../components/InputField/TextInput";
+import RadioButton from "../../../../components/InputField/RadioButton";
+import Divider from "../../../../components/Divider";
 
-import { getInputValueById } from "../../store/selectors/input";
-import { getGeneralInputProps } from "../../store/selectors/input";
-import { updateProspect } from "../../store/actions/appConfig";
-import * as appConfigSelectors from "../../store/selectors/appConfig";
-import { stakeholders as stakeholdersSelector } from "../../store/selectors/stakeholder";
-import { getSelectedTypeCurrency } from "../../utils/SelectServices";
+import { getInputValueById } from "../../../../store/selectors/input";
+import { getGeneralInputProps } from "../../../../store/selectors/input";
+import { updateProspect } from "../../../../store/actions/appConfig";
+import * as appConfigSelectors from "../../../../store/selectors/appConfig";
+import { stakeholders as stakeholdersSelector } from "../../../../store/selectors/stakeholder";
+import { getSelectedTypeCurrency } from "../../../../utils/SelectServices";
 
 const style = {
   formWrapper: {

@@ -1,8 +1,8 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 
-import TextInput from "../../InputField/TextInput";
-import PureSelect from "../../InputField/PureSelect";
+import TextInput from "../../../../components/InputField/TextInput";
+import PureSelect from "../../../../components/InputField/PureSelect";
 
 const ContactGroup = ({ index, isRequired }) => {
   return (

@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import get from "lodash/get";
 
-import * as appConfigSelectors from "../../../store/selectors/appConfig";
-import { getGeneralInputProps } from "../../../store/selectors/input";
-import { updateProspect } from "../../../store/actions/appConfig";
+import * as appConfigSelectors from "../../../../store/selectors/appConfig";
+import { getGeneralInputProps } from "../../../../store/selectors/input";
+import { updateProspect } from "../../../../store/actions/appConfig";
 
-import FormWrapper from "../../StakeholderStepForms/FormWrapper";
-import AddButton from "../../Buttons/AddButton";
-import Divider from "../../Divider";
+import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper";
+import AddButton from "../../../../components/Buttons/AddButton";
+import Divider from "../../../../components/Divider";
 import ConfirmingTransactions from "./ConfirmingTransactions/ConfirmingTransactions";
 import ContactGroup from "./ContactGroup";
 import SigningTransactions from "./SigningTransactions/SigningTransactions";

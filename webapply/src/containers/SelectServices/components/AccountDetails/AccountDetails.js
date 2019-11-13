@@ -6,12 +6,12 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { getInputValueById, getFieldConfigById } from "../../store/selectors/input";
-import Checkbox from "../InputField/RefactoredCheckbox";
-import CheckboxGroup from "../InputField/CheckboxGroup";
-import FormWrapper from "../StakeholderStepForms/FormWrapper";
-import PureSelect from "../InputField/PureSelect";
-import { getOptionsForSubId } from "../../utils/getInputSubOptions";
+import { getInputValueById, getFieldConfigById } from "../../../../store/selectors/input";
+import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
+import CheckboxGroup from "../../../../components/InputField/CheckboxGroup";
+import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper";
+import PureSelect from "../../../../components/InputField/PureSelect";
+import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
 
 const style = {
   formWrapper: {

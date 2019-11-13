@@ -58,6 +58,11 @@ class SelectServices extends React.Component {
     }
   }
 
+  componentDidMount() {
+    // TODO remove componentDidMount
+    this.props.updateAccountType(accountsNames.currentAccount);
+  }
+
   render() {
     const { classes } = this.props;
     const { step, canSubmit } = this.state;

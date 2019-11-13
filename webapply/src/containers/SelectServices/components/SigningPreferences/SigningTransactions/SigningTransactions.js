@@ -1,8 +1,8 @@
 import React from "react";
 
 import { accountSigningNameOther } from "../SigningPreferences";
-import RadioGroup from "../../../InputField/RadioGroupButtons";
-import TextArea from "../../../InputField/TextArea";
+import RadioGroup from "../../../../../components/InputField/RadioGroupButtons";
+import TextArea from "../../../../../components/InputField/TextArea";
 
 const SigningTransactions = ({ accountSigningType }) => {
   const indexes = [0];
