@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
@@ -19,9 +19,27 @@ import { styled } from "./styled";
 
 export const accountSigningNameOther = "Others";
 
-class SigningPreferences extends React.Component {
-  handleAddPerson = () => {
-    const { signatoryInfo, signInfoFullNameInput, updateProspect } = this.props;
+const SigningPreferences = props => {
+  const {
+    classes,
+    signatoryInfo,
+    accountSigningType,
+    accountSigningInstn,
+    goToNext,
+    updateProspect
+  } = props;
+  const authorityToSignType = get(props, "accountSigningType.value");
+
+  useEffect(() => {
+    if (authorityToSignType !== accountSigningNameOther) {
+      updateProspect({ [accountSigningInstn.name]: "" });
+    }
+  }, [authorityToSignType, updateProspect, accountSigningInstn.name]);
+
+  const getValueInput = (index, signatoryInfo) => get(signatoryInfo[index], "fullName", "");
+
+  const handleAddPerson = () => {
+    const { signInfoFullNameInput } = props;
     const signatoriesTotal = signatoryInfo.length;
 
     if (signatoriesTotal === 1) {
@@ -30,53 +48,34 @@ class SigningPreferences extends React.Component {
     }
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const {
-      updateProspect,
-      accountSigningInstn,
-      accountSigningType: { value }
-    } = this.props;
-    const accountSigningType = get(prevProps, "accountSigningType.value");
+  return (
+    <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
+      <SigningTransactions accountSigningType={accountSigningType} />
 
-    if (accountSigningType === accountSigningNameOther && value !== accountSigningNameOther) {
-      updateProspect({ [accountSigningInstn.name]: "" });
-    }
-  }
+      <Divider />
 
-  getValueInput = (index, signatoryInfo) => get(signatoryInfo[index], "fullName", "");
+      <ConfirmingTransactions />
 
-  render() {
-    const { classes, accountSigningType, signatoryInfo, goToNext } = this.props;
+      {signatoryInfo.length ? (
+        signatoryInfo.map((person, index) => (
+          <ContactGroup
+            key={index}
+            index={index}
+            isRequired={getValueInput(index, signatoryInfo)}
+          />
+        ))
+      ) : (
+        <ContactGroup index={0} />
+      )}
 
-    return (
-      <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-        <SigningTransactions accountSigningType={accountSigningType} />
-
-        <Divider />
-
-        <ConfirmingTransactions />
-
-        {signatoryInfo.length ? (
-          signatoryInfo.map((person, index) => (
-            <ContactGroup
-              key={index}
-              index={index}
-              isRequired={this.getValueInput(index, signatoryInfo)}
-            />
-          ))
-        ) : (
-          <ContactGroup index={0} />
-        )}
-
-        <AddButton
-          title="Add another person"
-          onClick={this.handleAddPerson}
-          className={classes.addButton}
-        />
-      </FormWrapper>
-    );
-  }
-}
+      <AddButton
+        title="Add another person"
+        onClick={handleAddPerson}
+        className={classes.addButton}
+      />
+    </FormWrapper>
+  );
+};
 
 const mapStateToProps = state => ({
   signatoryInfo: appConfigSelectors.getSignatories(state),
