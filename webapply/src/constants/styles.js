@@ -11,5 +11,6 @@ export const portraitOrientationQueryIPads =
 export const routerToAddPaddingInSlider = [
   routes.accountsComparison,
   routes.detailedAccount,
-  routes.applicationOverview
+  routes.applicationOverview,
+  routes.login
 ];
