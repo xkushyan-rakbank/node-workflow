@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { history } from "./store/configureStore";
@@ -27,12 +28,16 @@ import routes from "./routes.js";
 import { tagManagerArgs } from "./constants/gtm";
 import { theme } from "./theme";
 import "./App.scss";
+import { receiveAppConfig } from "./store/actions/appConfig";
+import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
+import { getEndpoints } from "./store/selectors/appConfig";
 
 import TagManager from "react-gtm-module";
 
 class App extends React.Component {
   componentDidMount() {
     this.handlePageReload();
+    this.props.receiveAppConfig();
     TagManager.initialize(tagManagerArgs);
   }
 
@@ -84,4 +89,18 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    endpoints: getEndpoints(state)
+  };
+};
+
+const mapDispatchToProps = {
+  receiveAppConfig,
+  prospectAutoSave
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

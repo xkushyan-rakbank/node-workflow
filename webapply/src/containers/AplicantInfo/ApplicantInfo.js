@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { Input, CustomSelect } from "./../../components/Form";
@@ -6,6 +7,8 @@ import { EMAIL_REGEX, NAME_REGEX } from "./../../utils/validation";
 import { countryCodeOptions } from "./../../constants/options";
 import SubmitButton from "./../../components/Buttons/SubmitButton";
 import { prospect } from "./../../constants/config";
+import { receiveAppConfig } from "./../../store/actions/appConfig";
+import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 
 const AplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -18,10 +21,14 @@ const AplicantInfoSchema = Yup.object({
   mobileNo: Yup.string().required("You need to provide mobile number")
 });
 
-export const ApplicantInfo = () => {
-  const onSubmit = values => {
-    console.log("values", values);
-  };
+const ApplicantInfoPage = props => {
+  const { receiveAppConfig, applicantInfoForm } = props;
+
+  const onSubmit = values => applicantInfoForm(values);
+
+  useEffect(() => {
+    receiveAppConfig();
+  }, [receiveAppConfig]);
 
   return (
     <>
@@ -59,3 +66,13 @@ export const ApplicantInfo = () => {
     </>
   );
 };
+
+const mapDispatchToProps = {
+  receiveAppConfig,
+  applicantInfoForm
+};
+
+export const ApplicantInfo = connect(
+  null,
+  mapDispatchToProps
+)(ApplicantInfoPage);
