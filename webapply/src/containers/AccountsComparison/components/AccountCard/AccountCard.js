@@ -1,31 +1,14 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import AccountTypeCard from "../../../../components/AccountTypeCard";
+import startups_ic from "../../../../assets/icons/startups_ic.png";
+import businesses_ic from "../../../../assets/icons/growing_businesses_ic.png";
+import established_businesses_ic from "../../../../assets/icons/established_businesses_ic.png";
+import { accountsNames } from "../../../../constants/index";
+import styled from "./styled";
+import { SCROLL_TO_INDEX } from "./constants";
 
-import AccountTypeCard from "../../../components/AccountTypeCard";
-
-import startups_ic from "../../../assets/icons/startups_ic.png";
-import businesses_ic from "../../../assets/icons/growing_businesses_ic.png";
-import established_businesses_ic from "../../../assets/icons/established_businesses_ic.png";
-import { portraitOrientationQueryIPads } from "../../../constants/styles";
-import { accountsNames } from "../../../constants/index";
-
-const style = {
-  cardsContainer: {
-    display: "flex",
-    flexWrap: "nowrap",
-    marginTop: 20,
-    overflow: "auto",
-    paddingBottom: "20px",
-    marginBottom: "-20px",
-    [portraitOrientationQueryIPads]: {
-      flexDirection: "column"
-    }
-  }
-};
-
-const AccountCardContainer = ({ classes, handleClick }) => {
-  const scrollToIndex = 2;
-
+const AccountCard = ({ classes, handleClick }) => {
   return (
     <div className={classes.cardsContainer}>
       <AccountTypeCard
@@ -37,7 +20,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
           "Dedicated Relationship Manager"
         ]}
         buttonText="RAKstarter"
-        scrollToIndex={scrollToIndex}
+        scrollToIndex={SCROLL_TO_INDEX}
         accountType={accountsNames.starter}
         handleClick={handleClick}
       />
@@ -50,7 +33,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
           "Dedicated Relationship Manager "
         ]}
         buttonText="Current Account"
-        scrollToIndex={scrollToIndex}
+        scrollToIndex={SCROLL_TO_INDEX}
         accountType={accountsNames.currentAccount}
         handleClick={handleClick}
       />
@@ -63,7 +46,7 @@ const AccountCardContainer = ({ classes, handleClick }) => {
           "Dedicated Relationship Manager"
         ]}
         buttonText="RAKelite"
-        scrollToIndex={scrollToIndex}
+        scrollToIndex={SCROLL_TO_INDEX}
         accountType={accountsNames.elite}
         handleClick={handleClick}
       />
@@ -71,4 +54,4 @@ const AccountCardContainer = ({ classes, handleClick }) => {
   );
 };
 
-export default withStyles(style)(AccountCardContainer);
+export default withStyles(styled)(AccountCard);
