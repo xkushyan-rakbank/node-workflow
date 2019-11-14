@@ -9,7 +9,7 @@ import PreferredContactInformation from "../components/StakeholderStepForms/Pref
 import AccountDetails from "../containers/SelectServices/components/AccountDetails";
 import SigningPreferences from "../containers/SelectServices/components/SigningPreferences";
 import Channels from "../containers/SelectServices/components/Channels";
-import ValueAddedServices from "../containers/SelectServices/components/ValueAddedServices/ValueAddedServices";
+import ValueAddedServices from "../containers/SelectServices/components/ValueAddedServices";
 import CompanyDetails from "../components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "../components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";

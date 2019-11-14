@@ -1,4 +1,6 @@
-export const styled = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const styles = makeStyles({
   formWrapper: {
     display: "flex"
   },
@@ -19,4 +21,4 @@ export const styled = {
     textAlign: "center",
     color: "#a4a4a4"
   }
-};
+});
