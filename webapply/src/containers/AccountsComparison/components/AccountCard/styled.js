@@ -1,6 +1,7 @@
 import { portraitOrientationQueryIPads } from "../../../../constants/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
-const styled = {
+export const styles = makeStyles({
   cardsContainer: {
     display: "flex",
     flexWrap: "nowrap",
@@ -12,6 +13,4 @@ const styled = {
       flexDirection: "column"
     }
   }
-};
-
-export default styled;
+});

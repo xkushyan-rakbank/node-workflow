@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
-import AccountCardContainer from "./components/AccountCard/AccountCard";
+import AccountCard from "./components/AccountCard";
 import InfoNote from "../../components/InfoNote";
 import TableCompare from "./components/TableCompare";
 import accountComparisonPoster from "../../assets/images/videoPosters/Account comparison.jpg";
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
+import { styles } from "./styled";
 
-const AccountsComparison = ({ classes, servicePricingGuideUrl }) => {
+const AccountsComparison = ({ servicePricingGuideUrl }) => {
   const [selectedAccount, setSelectedAccount] = useState("Current Account");
   const [indexScrollToSection, setIndexScrollToSection] = useState({ currentTarget: { name: 0 } });
+  const classes = styles();
 
   const scrollToSection = e => {
     const { scrollToIndex: index, accountType } = e;
@@ -30,7 +32,7 @@ const AccountsComparison = ({ classes, servicePricingGuideUrl }) => {
             title="Business accounts for every business stage"
             info="Available in both conventional and islamic variants"
           />
-          <AccountCardContainer handleClick={scrollToSection} />
+          <AccountCard handleClick={scrollToSection} />
           <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
         </div>
 

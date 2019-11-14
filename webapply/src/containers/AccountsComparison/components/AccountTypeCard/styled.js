@@ -1,10 +1,7 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import check_ic from "../assets/images/check.png";
-import ContinueButton from "./Buttons/ContinueButton";
-import { portraitOrientationQueryIPads } from "../constants/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import { portraitOrientationQueryIPads } from "../../../../constants/styles";
 
-const style = {
+export const styles = makeStyles({
   container: {
     border: "solid 1px #e8e8e8",
     width: "247px",
@@ -99,48 +96,4 @@ const style = {
     fontFamily: "Open Sans",
     fontWeight: "600"
   }
-};
-
-const AccountTypeCard = ({
-  iconSrc,
-  title,
-  differences,
-  buttonText,
-  classes,
-  handleClick,
-  scrollToIndex,
-  accountType
-}) => (
-  <div className={classes.container}>
-    <div>
-      <div className={classes.header}>
-        <div>
-          <img src={iconSrc} alt={title} />
-        </div>
-        <span>{title}</span>
-      </div>
-      <div className={classes.divider}> </div>
-      <div className={classes.differencesContainer}>
-        <ul className={classes.differences}>
-          {differences.map((difference, index) => (
-            <li key={index}>
-              <img src={check_ic} alt="check icon" />
-              {difference}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-
-    <div className={classes.buttonWrapper}>
-      <ContinueButton
-        handleClick={() => handleClick({ scrollToIndex, accountType })}
-        name={scrollToIndex}
-        label={buttonText}
-        classes={{ buttonStyle: classes.continueButtonRoot }}
-      />
-    </div>
-  </div>
-);
-
-export default withStyles(style)(AccountTypeCard);
+});

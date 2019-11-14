@@ -5,8 +5,6 @@ import TableCompare from "./TableCompare";
 import { updateAccountType } from "../../../../store/actions/selectedAccountInfo";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { getApplicationInfo } from "../../../../store/selectors/appConfig";
-import { withStyles } from "@material-ui/core/styles/index";
-import styled from "./styled";
 
 const mapStateToProps = state => ({
   applicationInfo: getApplicationInfo(state)
@@ -22,6 +20,5 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
-  withStyles(styled),
   withRouter
 )(TableCompare);

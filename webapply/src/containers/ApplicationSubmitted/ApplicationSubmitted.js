@@ -6,7 +6,7 @@ import { getIconsByAccount } from "../../constants/icons";
 import { connect } from "react-redux";
 import dotsBg from "../../assets/images/dots_bg.png";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
-import InfoNote from "../../components/InfoNote";
+import InfoNote from "../../components/InfoNote/InfoNote";
 import * as accountInfoSelector from "../../store/selectors/appConfig";
 
 const styles = {

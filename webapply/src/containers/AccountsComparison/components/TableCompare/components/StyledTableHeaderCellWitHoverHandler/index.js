@@ -1,0 +1,3 @@
+import StyledTableHeaderCellWitHoverHandler from "./StyledTableHeaderWitHoverHandler";
+
+export default StyledTableHeaderCellWitHoverHandler;

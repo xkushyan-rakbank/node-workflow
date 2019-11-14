@@ -1,12 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const styles = makeStyles({
-  container: {
-    display: "flex",
-    flexDirection: "column"
-  },
-  externalLink: {
+  note: {
+    fontSize: "12px",
+    textAlign: "center",
     color: "#888888",
-    textDecoration: "underline"
+    marginTop: "25px",
+    display: "block"
   }
 });

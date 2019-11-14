@@ -1,14 +1,14 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import AccountTypeCard from "../../../../components/AccountTypeCard";
+import AccountTypeCard from "../AccountTypeCard";
 import startups_ic from "../../../../assets/icons/startups_ic.png";
 import businesses_ic from "../../../../assets/icons/growing_businesses_ic.png";
 import established_businesses_ic from "../../../../assets/icons/established_businesses_ic.png";
 import { accountsNames } from "../../../../constants/index";
-import styled from "./styled";
+import { styles } from "./styled";
 import { SCROLL_TO_INDEX } from "./constants";
 
-const AccountCard = ({ classes, handleClick }) => {
+const AccountCard = ({ handleClick }) => {
+  const classes = styles();
   return (
     <div className={classes.cardsContainer}>
       <AccountTypeCard
@@ -54,4 +54,4 @@ const AccountCard = ({ classes, handleClick }) => {
   );
 };
 
-export default withStyles(styled)(AccountCard);
+export default AccountCard;
