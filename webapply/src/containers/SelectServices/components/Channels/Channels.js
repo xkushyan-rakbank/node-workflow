@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
 import get from "lodash/get";
@@ -8,9 +8,9 @@ import Subtitle from "../../../../components/Subtitle";
 import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper";
 import InfoTitle from "../../../../components/InfoTitle";
-import TextInput from "../../../../components/InputField/TextInput";
 import RadioButton from "../../../../components/InputField/RadioButton";
 import Divider from "../../../../components/Divider";
+import SignatoriesList from "./SignatoriesList";
 
 import { getInputValueById } from "../../../../store/selectors/input";
 import { getGeneralInputProps } from "../../../../store/selectors/input";
@@ -19,51 +19,11 @@ import * as appConfigSelectors from "../../../../store/selectors/appConfig";
 import { stakeholders as stakeholdersSelector } from "../../../../store/selectors/stakeholder";
 import { getSelectedTypeCurrency } from "../../../../utils/SelectServices";
 
-const style = {
-  formWrapper: {
-    margin: 0,
-    position: "relative"
-  },
-  contactsTitle: {
-    display: "flex",
-    justifyContent: "space-between"
-  },
-  signatoryLabel: {
-    fontSize: "14px",
-    fontWeight: 600,
-    marginTop: "40px",
-    lineHeight: 2.14,
-    color: "#373737"
-  },
-  signatoryNamesContainer: {
-    display: "flex",
-    flexDirection: "column",
-    marginTop: "12px",
-    "& div + div": {
-      marginTop: "20px"
-    }
-  },
-  signatoryName: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    "& span": {
-      fontSize: "14px",
-      fontFamily: "Open Sans"
-    }
-  },
-  selectCombined: {
-    margin: "0 !important",
-    width: "360px",
-    "& input": {
-      fontWeight: "600"
-    }
-  }
-};
+import { styled } from "./styled";
 
-const updateValueCheckBox = (name, prevValue, newValue, props) => {
+const updateValueCheckBox = (name, prevValue, newValue, updateProspect) => {
   if (newValue !== prevValue) {
-    props.updateProspect({ [name]: newValue });
+    updateProspect({ [name]: newValue });
   }
 };
 
@@ -72,7 +32,8 @@ const getStatusChequeBookApplied = props => {
     primaryMobCountryCode,
     primaryPhoneCountryCode,
     chequeBook: { name, value },
-    accountCurrencies
+    accountCurrencies,
+    updateProspect
   } = props;
 
   const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
@@ -84,7 +45,7 @@ const getStatusChequeBookApplied = props => {
   const isSelectedLocalMobilePhone = basedMobileNumberForCompany.has(mobCountryCode);
 
   if (isSelectForeignCurrencyAndLocal || isSelectedLocalMobilePhone) {
-    updateValueCheckBox(name, value, true, props);
+    updateValueCheckBox(name, value, true, updateProspect);
     return { isDisabledChequeBook: true };
   }
 
@@ -99,128 +60,101 @@ const getStatusDebitCardApplied = props => {
   const {
     accountSigningInfo: { accountSigningType, authorityType },
     debitCardApplied: { name, value },
-    accountCurrencies
+    accountCurrencies,
+    updateProspect
   } = props;
+  const selectedSigningTypesAny = "Any of us";
+  const authorityTypeSP = "SP";
 
-  const accountSigningTypeAnyOfUs = accountSigningType === "Any of us";
+  const accountSigningTypeAnyOfUs = accountSigningType === selectedSigningTypesAny;
 
   const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
     accountCurrencies
   );
 
   if (isSelectOnlyForeignCurrency || !accountSigningTypeAnyOfUs) {
-    updateValueCheckBox(name, value, false, props);
+    updateValueCheckBox(name, value, false, updateProspect);
     return { isDisabledDebitCard: true };
   }
 
-  if (authorityType === "SP" || isSelectForeignCurrencyAndLocal) {
-    updateValueCheckBox(name, value, true, props);
+  if (authorityType === authorityTypeSP || isSelectForeignCurrencyAndLocal) {
+    updateValueCheckBox(name, value, true, updateProspect);
     return { isDisabledDebitCard: true };
   }
 
-  updateValueCheckBox(name, value, accountSigningTypeAnyOfUs, props);
+  updateValueCheckBox(name, value, accountSigningTypeAnyOfUs, updateProspect);
   return { isDisabledDebitCard: accountSigningTypeAnyOfUs };
 };
 
-class AccountDetails extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedTypeStatementsID: "" };
-  }
+const AccountDetails = props => {
+  const { classes, goToNext, stakeholders, eStatements, mailStatements, updateProspect } = props;
+  const [selectedTypeStatementsID, setSelectedTypeStatementsID] = useState("");
 
-  render() {
-    const { classes, goToNext, stakeholders } = this.props;
-    const { isDisabledDebitCard } = getStatusDebitCardApplied(this.props);
-    const { isDisabledChequeBook } = getStatusChequeBookApplied(this.props);
+  const { isDisabledDebitCard } = getStatusDebitCardApplied(props);
+  const { isDisabledChequeBook } = getStatusChequeBookApplied(props);
 
-    const isHasSignatories = stakeholders.some(stakeholder =>
-      get(stakeholder, "kycDetails.isSignatory")
-    );
+  const isHasSignatories = stakeholders.some(stakeholder =>
+    get(stakeholder, "kycDetails.isSignatory")
+  );
 
-    const onChangeBankStatements = e => {
-      const { id } = e.target;
-      const { selectedTypeStatementsID } = this.state;
-      this.props.updateProspect({ [selectedTypeStatementsID]: false });
+  const onChangeBankStatements = e => {
+    const { id } = e.target;
+    updateProspect({ [selectedTypeStatementsID]: false });
+    updateProspect({ [id]: true });
+    setSelectedTypeStatementsID(id);
+  };
+  const inputIdIndex = [0];
 
-      this.setState({ selectedTypeStatementsID: id });
-      this.props.updateProspect({ [id]: true });
-    };
+  return (
+    <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
+      <div className={classes.contactsTitle}>
+        <Subtitle title="Debit Cards" />
+      </div>
+      <Checkbox
+        id="Acnt.debitCardApplied"
+        indexes={inputIdIndex}
+        classes={{ labelWrapper: classes.cardAppliedCheckbox }}
+        disabled={isDisabledDebitCard}
+      />
 
-    return (
-      <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-        <div className={classes.contactsTitle}>
-          <Subtitle title="Debit Cards" />
-        </div>
+      {isHasSignatories && <SignatoriesList stakeholders={stakeholders} />}
 
-        <Checkbox
-          id="Acnt.debitCardApplied"
-          indexes={[0]}
-          style={{ marginTop: "10px" }}
-          disabled={isDisabledDebitCard}
+      <Divider classes={{ divider: classes.divider }} />
+
+      <div className={classes.contactsTitle}>
+        <Subtitle title="Cheque book" />
+      </div>
+      <Checkbox
+        id="Acnt.chequeBookApplied"
+        indexes={inputIdIndex}
+        disabled={isDisabledChequeBook}
+      />
+
+      <Divider classes={{ divider: classes.divider }} />
+
+      <Subtitle title="Bank statements" />
+      <RadioGroup name="BankStatements" onChange={onChangeBankStatements}>
+        <RadioButton
+          value={eStatements.value}
+          checked={eStatements.value}
+          label={eStatements.config.label}
+          id={eStatements.name}
         />
-
-        {isHasSignatories && (
-          <>
-            <div className={classes.signatoryLabel}>Signatory name</div>
-            <InfoTitle
-              title="Names on debit cards have a limit of 19 characters"
-              styles={{ marginTop: "0" }}
-            />
-
-            <div className={classes.signatoryNamesContainer}>
-              {stakeholders.map((stakeholder, index) => {
-                const { firstName, lastName } = stakeholder;
-                const isSignatory = get(stakeholder, "kycDetails.isSignatory");
-
-                return isSignatory ? (
-                  <div className={classes.signatoryName} key={index}>
-                    <span>{`${firstName} ${lastName}`}</span>
-                    <TextInput
-                      id="SigDbtcAuths.nameOnDebitCard"
-                      indexes={[index]}
-                      classes={{ regularWrapper: classes.selectCombined, input: classes.input }}
-                    />
-                  </div>
-                ) : null;
-              })}
-            </div>
-          </>
-        )}
-
-        <Divider styles={{ marginBottom: "0" }} />
-
-        <div className={classes.contactsTitle}>
-          <Subtitle title="Cheque book" />
-        </div>
-        <Checkbox id="Acnt.chequeBookApplied" indexes={[0]} disabled={isDisabledChequeBook} />
-
-        <Divider styles={{ marginBottom: "0" }} />
-
-        <Subtitle title="Bank statements" />
-
-        <RadioGroup name="BankStatements" onChange={onChangeBankStatements}>
-          <RadioButton
-            value={this.props.eStatements.value}
-            checked={this.props.eStatements.value}
-            label={this.props.eStatements.config.label}
-            id={this.props.eStatements.name}
-          />
-          <RadioButton
-            value={this.props.mailStatements.value}
-            checked={this.props.mailStatements.value}
-            label={this.props.mailStatements.config.label}
-            id={this.props.mailStatements.name}
-          />
-        </RadioGroup>
-
-        <InfoTitle
-          title="These will be mailed by courier to your preferred address"
-          styles={{ position: "absolute", bottom: "11px" }}
+        <RadioButton
+          value={mailStatements.value}
+          checked={mailStatements.value}
+          label={mailStatements.config.label}
+          id={mailStatements.name}
         />
-      </FormWrapper>
-    );
-  }
-}
+      </RadioGroup>
+
+      <InfoTitle
+        title="These will be mailed by courier to your preferred address"
+        classes={{ wrapper: classes.infoTitle }}
+      />
+    </FormWrapper>
+  );
+};
 
 const mapStateToProps = state => ({
   ...appConfigSelectors.getSignatories(state)[0],
@@ -238,7 +172,7 @@ const mapDispatchToProps = {
   updateProspect
 };
 
-export default withStyles(style)(
+export default withStyles(styled)(
   connect(
     mapStateToProps,
     mapDispatchToProps
