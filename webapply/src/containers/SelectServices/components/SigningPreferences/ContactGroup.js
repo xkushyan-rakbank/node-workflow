@@ -1,12 +1,15 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import get from "lodash/get";
 
 import TextInput from "../../../../components/InputField/TextInput";
 import PureSelect from "../../../../components/InputField/PureSelect";
 
-const ContactGroup = ({ index, isRequired }) => {
-  return (
-    <>
+const getValueInput = (index, signatoryInfo) => get(signatoryInfo[index], "fullName", "");
+
+export const ContactGroup = ({ signatoryInfo = [""] }) => {
+  return signatoryInfo.map((person, index) => (
+    <React.Fragment key={index}>
       <TextInput id="Sig.fullName" indexes={[index]} />
 
       <Grid container spacing={3}>
@@ -14,7 +17,7 @@ const ContactGroup = ({ index, isRequired }) => {
           <TextInput
             id="OrgContReconf.primaryMobileNo"
             indexes={[index]}
-            required={!!isRequired}
+            isRequired={!!getValueInput(index, signatoryInfo)}
             select={
               <PureSelect
                 id="OrgContReconf.primaryMobCountryCode"
@@ -41,8 +44,6 @@ const ContactGroup = ({ index, isRequired }) => {
           />
         </Grid>
       </Grid>
-    </>
-  );
+    </React.Fragment>
+  ));
 };
-
-export default ContactGroup;

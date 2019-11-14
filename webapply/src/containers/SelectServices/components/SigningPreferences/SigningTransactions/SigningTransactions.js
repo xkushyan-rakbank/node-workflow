@@ -1,6 +1,7 @@
 import React from "react";
 
-import { accountSigningNameOther } from "../SigningPreferences";
+import { accountSigningNameOther } from "../../../constants";
+
 import RadioGroup from "../../../../../components/InputField/RadioGroupButtons";
 import TextArea from "../../../../../components/InputField/TextArea";
 
