@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
-import { connect } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { history } from "./store/configureStore";
 import { ApplicantInfo } from "./containers/AplicantInfo/ApplicantInfo";
@@ -24,9 +23,6 @@ import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationS
 import SearchedAppInfo from "./agent/SearchedAppInfo/index";
 import ReUploadDocuments from "./containers/ReUploadDocuments";
 import SubmitApplication from "./containers/SubmitApplication";
-import { receiveAppConfig } from "./store/actions/appConfig";
-import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
-import { getEndpoints } from "./store/selectors/appConfig";
 import routes from "./routes.js";
 import "./App.scss";
 
@@ -63,16 +59,8 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.props.receiveAppConfig();
     this.handlePageReload();
     TagManager.initialize(tagManagerArgs);
-    this.props.prospectAutoSave();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.endpoints !== this.props.endpoints) {
-      this.setState({ renderChildren: true });
-    }
   }
 
   handlePageReload = () => {
@@ -82,7 +70,6 @@ class App extends React.Component {
   };
   render() {
     TagManager.initialize(tagManagerArgs);
-    // const { renderChildren } = this.state; // return in future
     return (
       <>
         <MuiThemeProvider theme={theme}>
@@ -124,18 +111,4 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    endpoints: getEndpoints(state)
-  };
-};
-
-const mapDispatchToProps = {
-  receiveAppConfig,
-  prospectAutoSave
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default App;

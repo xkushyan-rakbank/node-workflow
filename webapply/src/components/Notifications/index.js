@@ -1,2 +1,2 @@
-export * from "./ErrorMessage/ErrorMessage";
-export * from "./InfoTitle/InfoTitle";
+export { ErrorMessage } from "./ErrorMessage/ErrorMessage";
+export { InfoTitle } from "./InfoTitle/InfoTitle";

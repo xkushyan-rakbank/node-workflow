@@ -1,15 +1,13 @@
 import httpClient from "./axiosConfig";
 import store from "./../store/configureStore";
-import isEmpty from "lodash/isEmpty";
+import { endpoints } from "./../constants/config";
 
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
 
-let queryString = "";
-
 function buildURI(uriName, prospectId, documentKey) {
   const { pathname } = window.location;
-  let uri = store.getState().appConfig.endpoints[uriName];
+  let uri = endpoints[uriName];
   const segment = pathname.includes("/agent")
     ? store.getState().appConfig.searchInfo.segment
     : pathname.substring(1, pathname.lastIndexOf("/"));
@@ -21,36 +19,7 @@ function buildURI(uriName, prospectId, documentKey) {
   return uri;
 }
 
-function getQueryString(product, segment) {
-  const { pathname } = window.location;
-  const role = pathname.includes("/agent") ? "agent" : "customer";
-  if (product && segment) {
-    queryString = `?segment=${segment}&product=${product}&role=${role}`;
-  } else {
-    const product = !isEmpty(store.getState().appConfig.endpoints)
-      ? store.getState().appConfig.prospect.applicationInfo.accountType
-      : null;
-    // const product = "RAKelite";
-    if (product) {
-      queryString = `?segment=${segment}&product=${product}&role=${role}`;
-    } else {
-      queryString = `?segment=${segment}&role=${role}`;
-    }
-  }
-  return queryString;
-}
-
 export default {
-  config: {
-    load: (product, segment) => {
-      const query = getQueryString(product, segment);
-      return httpClient.request({
-        method: "GET",
-        url: `webapply/api/v1/config${query}`
-      });
-    }
-  },
-
   authentication: {
     login: data => {
       return httpClient.request({

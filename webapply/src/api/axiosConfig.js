@@ -7,7 +7,19 @@ import {
   applicationStatusProceed,
   applicationStatusStop
 } from "./../store/actions/applicationStatus";
-import getBaseURL from "./../utils/getBaseURL";
+
+const getBaseURL = () => {
+  switch (process.env.NODE_ENV) {
+    case "development":
+      return "http://conv.rakbankonline.ae/quickapply";
+
+    case "production":
+      return "http://conv.rakbankonline.ae/quickapply";
+
+    default:
+      return "http://conv.rakbankonline.ae/quickapply";
+  }
+};
 
 const instance = axios.create({
   baseURL: getBaseURL()

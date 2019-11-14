@@ -1,2 +1,2 @@
-export * from "./Input/Input";
-export * from "./Select/Select";
+export { Input } from "./Input/Input";
+export { CustomSelect } from "./Select/Select";
