@@ -8,7 +8,7 @@ import CountryOfResidence from "../components/StakeholderStepForms/CountryOfResi
 import PreferredContactInformation from "../components/StakeholderStepForms/PreferredContactInformation";
 import AccountDetails from "../containers/SelectServices/components/AccountDetails";
 import SigningPreferences from "../containers/SelectServices/components/SigningPreferences";
-import Channels from "../containers/SelectServices/components/Channels/Channels";
+import Channels from "../containers/SelectServices/components/Channels";
 import ValueAddedServices from "../containers/SelectServices/components/ValueAddedServices/ValueAddedServices";
 import CompanyDetails from "../components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "../components/AboutCompanyStepForms/Industry";
