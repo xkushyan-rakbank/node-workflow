@@ -6,7 +6,7 @@ import Shareholding from "../components/StakeholderStepForms/Shareholding";
 import Nationality from "../components/StakeholderStepForms/Nationality";
 import CountryOfResidence from "../components/StakeholderStepForms/CountryOfResidence";
 import PreferredContactInformation from "../components/StakeholderStepForms/PreferredContactInformation";
-import AccountDetails from "../containers/SelectServices/components/AccountDetails/AccountDetails";
+import AccountDetails from "../containers/SelectServices/components/AccountDetails";
 import SigningPreferences from "../containers/SelectServices/components/SigningPreferences/SigningPreferences";
 import Channels from "../containers/SelectServices/components/Channels/Channels";
 import ValueAddedServices from "../containers/SelectServices/components/ValueAddedServices/ValueAddedServices";

@@ -1,13 +1,8 @@
 import React from "react";
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
-import { getInputValueById, getFieldConfigById } from "../../../../store/selectors/input";
 
 import CheckboxGroup from "../../../../components/InputField/CheckboxGroup";
 import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
@@ -16,31 +11,30 @@ import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper
 import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
 
-import { styled } from "./styled";
+import { styles } from "./styled";
+import { inputIdIndex, inputIdIndexes } from "../../constants";
 
-const AccountDetails = props => {
-  const { classes, islamicBanking, branchCityValue, branchCityConfig, goToNext } = props;
+export const AccountDetails = props => {
+  const { islamicBanking, branchCityValue, branchCityConfig, goToNext } = props;
   const subOptions = getOptionsForSubId(branchCityValue, branchCityConfig, true);
-
-  const index = [0];
-  const indexes = [0, 0];
+  const classes = styles();
 
   return (
     <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
       <Subtitle title="Select currencies" />
-      <CheckboxGroup id="Acnt.accountCurrencies" indexes={index} />
+      <CheckboxGroup id="Acnt.accountCurrencies" indexes={inputIdIndex} />
 
       <Divider />
 
       <Subtitle title="Select branch" />
       <Grid container spacing={3}>
         <Grid item md={6} sm={12}>
-          <PureSelect id="Org.branchCity" indexes={indexes} />
+          <PureSelect id="Org.branchCity" indexes={inputIdIndexes} />
         </Grid>
         <Grid item md={6} sm={12}>
           <PureSelect
             id="Org.subCategory"
-            indexes={indexes}
+            indexes={inputIdIndexes}
             subOptions={subOptions}
             disabled={isEmpty(branchCityValue)}
           />
@@ -51,20 +45,9 @@ const AccountDetails = props => {
         <>
           <Divider />
           <Subtitle title="Select interest" />
-          <Checkbox id="Acnt.receiveInterest" indexes={index} />
+          <Checkbox id="Acnt.receiveInterest" indexes={inputIdIndex} />
         </>
       )}
     </FormWrapper>
   );
 };
-
-const mapStateToProps = state => ({
-  islamicBanking: get(state.appConfig, "prospect.applicationInfo.islamicBanking"),
-  branchCityValue: getInputValueById(state, "Org.branchCity", [0, 0]),
-  branchCityConfig: getFieldConfigById(state, "Org.branchCity")
-});
-
-export default compose(
-  withStyles(styled),
-  connect(mapStateToProps)
-)(AccountDetails);
