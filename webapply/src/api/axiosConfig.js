@@ -8,30 +8,21 @@ import {
   applicationStatusStop
 } from "./../store/actions/applicationStatus";
 
-const getBaseURL = () => {
-  switch (process.env.NODE_ENV) {
-    case "development":
-      return "http://conv.rakbankonline.ae/quickapply";
+const STOP = "stop";
 
-    case "production":
-      return "http://conv.rakbankonline.ae/quickapply";
-
-    default:
-      return "http://conv.rakbankonline.ae/quickapply";
-  }
-};
+const getBaseURL = () => process.env.BASE_URL || "http://conv.rakbankonline.ae/quickapply";
 
 const instance = axios.create({
   baseURL: getBaseURL()
 });
 
 instance.interceptors.response.use(
-  function(response) {
+  response => {
     const {
       data: { preScreening }
     } = response;
 
-    if (preScreening && preScreening.statusOverAll === "stop") {
+    if (preScreening && preScreening.statusOverAll === STOP) {
       store.dispatch(applicationStatusStop(preScreening.screeningResults));
     } else {
       store.dispatch(applicationStatusProceed());
@@ -39,7 +30,7 @@ instance.interceptors.response.use(
 
     return response;
   },
-  function(error) {
+  error => {
     const {
       status,
       data: { errors, errorType }
@@ -51,10 +42,8 @@ instance.interceptors.response.use(
       } else {
         store.dispatch(setInputsErrors(errors));
       }
-    } else if (status === 500) {
-      store.dispatch(applicationStatusServerError());
     } else {
-      console.error({ error });
+      store.dispatch(applicationStatusServerError());
     }
     return Promise.reject(error);
   }

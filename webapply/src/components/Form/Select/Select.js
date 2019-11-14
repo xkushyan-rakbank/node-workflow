@@ -44,7 +44,6 @@ function SelectComponent({
         className={cx(classes.selectField, classes.selectFieldBasic)}
         error={error}
       >
-        <MenuItem value=""></MenuItem>
         {options.map(option => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import { history } from "./store/configureStore";
 import { ApplicantInfo } from "./containers/AplicantInfo/ApplicantInfo";
 import Login from "./agent/Login";
@@ -24,40 +24,13 @@ import SearchedAppInfo from "./agent/SearchedAppInfo/index";
 import ReUploadDocuments from "./containers/ReUploadDocuments";
 import SubmitApplication from "./containers/SubmitApplication";
 import routes from "./routes.js";
+import { tagManagerArgs } from "./constants/gtm";
+import { theme } from "./theme";
 import "./App.scss";
 
 import TagManager from "react-gtm-module";
 
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true
-  },
-  palette: {
-    primary: {
-      main: "#000000"
-    },
-    secondary: {
-      main: "#517085"
-    },
-    action: {
-      disabledBackground: "#d3d8db"
-    }
-  }
-});
-
-// Added GTM ID
-
-const tagManagerArgs = {
-  gtmId: "GTM-PPZWHLS",
-  dataLayerName: "PageDataLayer"
-};
-
 class App extends React.Component {
-  state = {
-    renderChildren: false,
-    hasError: false
-  };
-
   componentDidMount() {
     this.handlePageReload();
     TagManager.initialize(tagManagerArgs);

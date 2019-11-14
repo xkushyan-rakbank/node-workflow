@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
+
 import {
   RECEIVE_APPCONFIG,
   receiveAppConfigSuccess,
@@ -17,9 +17,9 @@ import {
   UPDATE_SAVE_TYPE,
   saveProspectModel
 } from "../actions/appConfig";
-import apiClient from "../../api/apiClient";
+
 import { history } from "./../configureStore";
-import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
+import { getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import routes from "./../../routes";
@@ -27,14 +27,14 @@ import routes from "./../../routes";
 function* receiveAppConfigSaga() {
   try {
     const state = yield select();
-    const endpoints = getEndpoints(state);
-    const pathname = window.location.pathname;
+    // const endpoints = getEndpoints(state);
+    // const pathname = window.location.pathname;
     let response = null;
-    const segment = pathname.includes("/agent")
-      ? state.login.loginStatus
-        ? state.appConfig.searchInfo.segment
-        : ""
-      : pathname.substring(1, pathname.lastIndexOf("/"));
+    // const segment = pathname.includes("/agent")
+    //   ? state.login.loginStatus
+    //     ? state.appConfig.searchInfo.segment
+    //     : ""
+    //   : pathname.substring(1, pathname.lastIndexOf("/"));
     const { accountType, islamicBanking } = getSelectedAccountInfo(state);
 
     const applicationInfoFields = {
@@ -42,23 +42,23 @@ function* receiveAppConfigSaga() {
       "prospect.applicationInfo.islamicBanking": islamicBanking
     };
 
-    if (!isEmpty(endpoints)) {
-      const product = getApplicationInfo.accountType;
-      response = yield call(apiClient.config.load, product, segment);
-    } else {
-      response = yield call(apiClient.config.load, null, segment);
-    }
+    // if (!isEmpty(endpoints)) {
+    //   const product = getApplicationInfo.accountType;
+    //   // response = yield call(config.load, product, segment);
+    // } else {
+    //   // response = yield call(config.load, null, segment);
+    // }
 
-    const config = cloneDeep(response.data);
-    const prospectModel = cloneDeep(config.prospect);
-    if (config.prospect) {
-      config.prospect.signatoryInfo = [];
+    const newConfig = cloneDeep(response.data);
+    const prospectModel = cloneDeep(newConfig.prospect);
+    if (newConfig.prospect) {
+      newConfig.prospect.signatoryInfo = [];
     }
 
     yield put(saveProspectModel(prospectModel));
-    yield put(receiveAppConfigSuccess(config));
+    yield put(receiveAppConfigSuccess(newConfig));
     yield put(updateProspect(applicationInfoFields));
-    yield put(sendProspectToAPISuccess(config.prospect));
+    yield put(sendProspectToAPISuccess(newConfig.prospect));
   } catch (error) {
     yield put(receiveAppConfigFail(error));
   }
@@ -66,12 +66,12 @@ function* receiveAppConfigSaga() {
 
 function* updateProspectSaga(action) {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const newConfig = cloneDeep(state.appConfig);
   for (let name in action.fields) {
-    set(config, name, action.fields[name]);
+    set(newConfig, name, action.fields[name]);
   }
 
-  yield put(setConfig(config));
+  yield put(setConfig(newConfig));
 }
 
 function* displayScreenBasedOnViewIdSaga() {

@@ -1,13 +1,13 @@
 export const endpoints = {
   baseUrl: "http://conv.rakbankonline.ae/quickapply",
   appConfigUri: "/webapply/api/v1/config",
-  createProspectUri: "/webapply/api/v1/usertypes/{userType}/prospects",
-  getProspectUri: "/webapply/api/v1/usertypes/{userType}/prospects/{prospectId}",
-  updateProspectUri: "/webapply/api/v1/usertypes/sme/prospects/{prospectId}",
-  getProspectDocumentsUri: "/webapply/api/v1/prospects/{prospectId}/documents",
-  uploadDocumentUri: "/webapply/api/v1/prospects/{prospectId}/documents",
-  reuploadDocumentUri: "/webapply/api/v1/prospects/{prospectId}/documents",
-  getDocumentByIdUri: "/webapply/api/v1/prospects/{prospectId}/documents/{documentKey}",
+  createProspectUri: "/webapply/api/v1/usertypes/:userType/prospects",
+  getProspectUri: "/webapply/api/v1/usertypes/:userType/prospects/:prospectId",
+  updateProspectUri: "/webapply/api/v1/usertypes/sme/prospects/:prospectId",
+  getProspectDocumentsUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  uploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  reuploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  getDocumentByIdUri: "/webapply/api/v1/prospects/:prospectId/documents/:documentKey",
   otpUri: "/webapply/api/v1/otp"
 };
 

@@ -7,7 +7,7 @@ import { resetInputsErrors } from "./../actions/serverValidation";
 import { generateOtpCode } from "./../actions/otp";
 import { setVerified } from "../actions/reCaptcha";
 
-import apiClient from "../../api/apiClient";
+import { prospect } from "../../api/apiClient";
 
 function* applicantInfoFormSaga() {
   try {
@@ -16,7 +16,7 @@ function* applicantInfoFormSaga() {
 
     const {
       data: { prospectId }
-    } = yield call(apiClient.prospect.create, config.prospect);
+    } = yield call(prospect.create, config.prospect);
 
     yield put(applicantInfoFormSuccess());
     yield put(setVerified(true));

@@ -241,65 +241,62 @@ class Input extends React.Component {
     const isError = !isEmpty(fieldErrors) || this.props.isError;
     const customValidationMessage = this.getCustomValidationMessage();
 
-    if (id && config.label) {
-      return (
-        <div
+    return (
+      <div
+        className={cx({
+          [classes.selectCombinedWrapper]: select,
+          [classes.regularWrapper]: !select
+        })}
+      >
+        <FormGroup
           className={cx({
-            [classes.selectCombinedWrapper]: select,
-            [classes.regularWrapper]: !select
+            [classes.selectCombined]: select,
+            [classes.selectCombinedError]: isError
           })}
         >
-          <FormGroup
-            className={cx({
-              [classes.selectCombined]: select,
-              [classes.selectCombinedError]: isError
-            })}
-          >
-            {select}
-            <FormControl className="formControl">
-              <TextField
-                value={this.state.value}
-                onChange={this.handleChange}
-                InputProps={{
-                  ...InputProps,
-                  inputProps
-                }}
-                placeholder={placeholder}
-                InputLabelProps={{
-                  shrink: this.isLabelShrink(),
-                  ...InputLabelProps
-                }}
-                disabled={disabled}
-                variant="outlined"
-                label={config.label}
-                className={cx(classes.textField, className, {
-                  [classes.disabled]: disabled
-                })}
-                onBlur={this.handleOnBlur}
-                error={isError}
-                onFocus={this.handleFocus}
-              />
-
-              {!!config.title && <InfoTitle title={config.title} />}
-            </FormControl>
-          </FormGroup>
-
-          {isError && !customValidationMessage && (
-            <ErrorMessage
-              error={fieldErrors && fieldErrors.error}
-              multiLineError={fieldErrors && fieldErrors.multiLineError}
+          {select}
+          <FormControl className="formControl">
+            <TextField
+              value={this.state.value}
+              onChange={this.handleChange}
+              InputProps={{
+                ...InputProps,
+                inputProps
+              }}
+              placeholder={placeholder}
+              InputLabelProps={{
+                shrink: this.isLabelShrink(),
+                ...InputLabelProps
+              }}
+              disabled={disabled}
+              variant="outlined"
+              label={config.label}
+              className={cx(classes.textField, className, {
+                [classes.disabled]: disabled
+              })}
+              onBlur={this.handleOnBlur}
+              error={isError}
+              onFocus={this.handleFocus}
             />
-          )}
 
-          {!isNil(serverValidation) && serverValidation.message && (
-            <ErrorMessage error={serverValidation.message} />
-          )}
+            {!!config.title && <InfoTitle title={config.title} />}
+          </FormControl>
+        </FormGroup>
 
-          {customValidationMessage}
-        </div>
-      );
-    }
-    return null;
+        {isError && !customValidationMessage && (
+          <ErrorMessage
+            error={fieldErrors && fieldErrors.error}
+            multiLineError={fieldErrors && fieldErrors.multiLineError}
+          />
+        )}
+
+        {!isNil(serverValidation) && serverValidation.message && (
+          <ErrorMessage error={serverValidation.message} />
+        )}
+
+        {customValidationMessage}
+      </div>
+    );
   }
 }
 
