@@ -1,14 +1,13 @@
 import React from "react";
-import AccountTypeCard from "../AccountTypeCard";
-import { styles } from "./styled";
+import { AccountTypeCard } from "../AccountTypeCard";
+import { useStyles } from "./styled";
 import { accountTypesDescription, SECTION_INDEX } from "./constants";
 
-const AccountCard = ({ handleClick }) => {
-  const classes = styles();
+export const AccountCardComponent = ({ handleClick }) => {
+  const classes = useStyles();
   return (
     <div className={classes.cardsContainer}>
-      {accountTypesDescription.map(accountType => {
-        const { name, icon, title, description, buttonText } = accountType;
+      {accountTypesDescription.map(({ name, icon, title, description, buttonText }) => {
         return (
           <AccountTypeCard
             key={name}
@@ -25,5 +24,3 @@ const AccountCard = ({ handleClick }) => {
     </div>
   );
 };
-
-export default AccountCard;

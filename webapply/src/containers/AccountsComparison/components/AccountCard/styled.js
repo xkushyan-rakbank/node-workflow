@@ -1,7 +1,7 @@
 import { portraitOrientationQueryIPads } from "../../../../constants/styles";
 import { makeStyles } from "@material-ui/core/styles";
 
-export const styles = makeStyles({
+export const useStyles = makeStyles({
   cardsContainer: {
     display: "flex",
     flexWrap: "nowrap",

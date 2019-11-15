@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { portraitOrientationQueryIPads } from "../../../../constants/styles";
 
-export const styles = makeStyles({
+export const useStyles = makeStyles({
   container: {
     border: "solid 1px #e8e8e8",
     width: "247px",

@@ -4,17 +4,21 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import ContainedButton from "../../../../../../components/Buttons/ContainedButton";
-import StyledTableCellWitHoverHandler from "../StyledTableCellWitHoverHandler";
-import { styles } from "./styled";
+import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
+import { useStyles } from "./styled";
 import { mockDataRows, accountTypes } from "../../constants";
 import { FIRST_ROW_POSITION, TABLE_POSITION_OFFSET } from "./constants";
 
-const StyledTableBody = ({ selectedCurrentColumn, handleSelectAccount, handleHover, refs }) => {
-  const classes = styles();
+export const StyledTableBodyComponent = ({
+  selectedCurrentColumn,
+  handleSelectAccount,
+  handleHover,
+  refs
+}) => {
+  const classes = useStyles();
   return (
     <TableBody>
-      {mockDataRows.map((row, index) => {
-        const { starter, currentAccount, elite } = row;
+      {mockDataRows.map(({ starter, currentAccount, elite, info }, index) => {
         return (
           <TableRow classes={{ root: classes.tableRowRoot }} key={index}>
             <TableCell
@@ -26,7 +30,7 @@ const StyledTableBody = ({ selectedCurrentColumn, handleSelectAccount, handleHov
                 [classes.tableCellActive]: selectedCurrentColumn === FIRST_ROW_POSITION
               })}
             >
-              {row.info}
+              {info}
             </TableCell>
 
             <StyledTableCellWitHoverHandler
@@ -84,5 +88,3 @@ const StyledTableBody = ({ selectedCurrentColumn, handleSelectAccount, handleHov
     </TableBody>
   );
 };
-
-export default StyledTableBody;

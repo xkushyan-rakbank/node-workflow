@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
-import TableCompare from "./TableCompare";
+import { TableCompareComponent } from "./TableCompare";
 import { updateAccountType } from "../../../../store/actions/selectedAccountInfo";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { getApplicationInfo } from "../../../../store/selectors/appConfig";
@@ -15,10 +15,10 @@ const mapDispatchToProps = {
   updateAccountType
 };
 
-export default compose(
+export const TableCompare = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
   withRouter
-)(TableCompare);
+)(TableCompareComponent);

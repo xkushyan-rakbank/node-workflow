@@ -1,9 +1,9 @@
 import React from "react";
 import check_ic from "../../../../assets/images/check.png";
 import ContinueButton from "../../../../components/Buttons/ContinueButton";
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
-const AccountTypeCard = ({
+export const AccountTypeCardComponent = ({
   iconSrc,
   title,
   description,
@@ -12,7 +12,7 @@ const AccountTypeCard = ({
   scrollToIndex,
   accountType
 }) => {
-  const classes = styles();
+  const classes = useStyles();
   return (
     <div className={classes.container}>
       <div>
@@ -46,5 +46,3 @@ const AccountTypeCard = ({
     </div>
   );
 };
-
-export default AccountTypeCard;

@@ -1,3 +1,3 @@
-import StyledTableBody from "./StyledTableBody";
+import { StyledTableBodyComponent } from "./StyledTableBody";
 
-export default StyledTableBody;
+export const StyledTableBody = StyledTableBodyComponent;

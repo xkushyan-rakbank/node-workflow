@@ -1,13 +1,11 @@
 import React from "react";
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
-const InfoNote = ({ text, ...props }) => {
-  const classes = styles();
+export const InfoNoteComponent = ({ text, ...props }) => {
+  const classes = useStyles();
   return (
     <span className={classes.note} {...props}>
       {text}
     </span>
   );
 };
-
-export default InfoNote;

@@ -2,12 +2,12 @@ import React from "react";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import StyledTableHeaderCellWitHoverHandler from "../StyledTableHeaderCellWitHoverHandler";
-import { styles } from "./styled";
+import { StyledTableHeaderCellWitHoverHandler } from "../StyledTableHeaderCellWitHoverHandler";
+import { useStyles } from "./styled";
 import { accountTypes } from "../../constants";
 
-const StyledTableHeader = ({ selectedCurrentColumn, handleHover }) => {
-  const classes = styles();
+export const StyledTableHeaderComponent = ({ selectedCurrentColumn, handleHover }) => {
+  const classes = useStyles();
   return (
     <TableHead classes={{ root: classes.relative }}>
       <TableRow classes={{ head: classes.tableHead }}>
@@ -42,5 +42,3 @@ const StyledTableHeader = ({ selectedCurrentColumn, handleHover }) => {
     </TableHead>
   );
 };
-
-export default StyledTableHeader;

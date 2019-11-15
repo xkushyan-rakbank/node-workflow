@@ -1,16 +1,16 @@
 import React from "react";
 import cx from "classnames";
 import TableCell from "@material-ui/core/TableCell";
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
-const StyledTableHeaderCellWitHoverHandler = ({
+export const StyledTableHeaderCellWitHoverHandlerComponent = ({
   name,
   text,
   order,
   selectedCurrentColumn,
   handleHover
 }) => {
-  const classes = styles();
+  const classes = useStyles();
   return (
     <TableCell
       data-name={name}
@@ -22,5 +22,3 @@ const StyledTableHeaderCellWitHoverHandler = ({
     </TableCell>
   );
 };
-
-export default StyledTableHeaderCellWitHoverHandler;

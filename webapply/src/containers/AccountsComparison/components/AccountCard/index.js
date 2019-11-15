@@ -1,3 +1,3 @@
-import AccountCard from "./AccountCard";
+import { AccountCardComponent } from "./AccountCard";
 
-export default AccountCard;
+export const AccountCard = AccountCardComponent;

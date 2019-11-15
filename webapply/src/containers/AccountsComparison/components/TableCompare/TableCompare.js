@@ -1,13 +1,18 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Table from "@material-ui/core/Table";
 import Paper from "@material-ui/core/Paper";
-import StyledTableHeader from "./components/StyledTableHeader";
-import StyledTableBody from "./components/StyledTableBody";
+import { StyledTableHeader } from "./components/StyledTableHeader";
+import { StyledTableBody } from "./components/StyledTableBody";
 import { sizes, accountTypes } from "./constants";
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 import routes from "../../../../routes";
 
-const TableCompare = ({ history, updateProspect, updateAccountType, selectedAccount }) => {
+export const TableCompareComponent = ({
+  history,
+  updateProspect,
+  updateAccountType,
+  selectedAccount
+}) => {
   const { INITIAL_OFFSET, SELECTED_ELEM_WIDTH, OFFSET } = sizes;
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedAccountContainerWidth, setSelectedAccountContainerWidth] = useState(
@@ -15,7 +20,7 @@ const TableCompare = ({ history, updateProspect, updateAccountType, selectedAcco
   );
   const [activeAccount, setActiveAccount] = useState(accountTypes.currentAccount.position);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
-  const classes = styles();
+  const classes = useStyles();
 
   const RAKstarter = useRef(null);
   const CurrentAccount = useRef(null);
@@ -103,5 +108,3 @@ const TableCompare = ({ history, updateProspect, updateAccountType, selectedAcco
     </Paper>
   );
 };
-
-export default TableCompare;

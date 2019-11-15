@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
-import AccountCard from "./components/AccountCard";
-import InfoNote from "../../components/InfoNote";
-import TableCompare from "./components/TableCompare";
+import { AccountCard } from "./components/AccountCard";
+import { InfoNote } from "../../components/InfoNote";
+import { TableCompare } from "./components/TableCompare";
 import accountComparisonPoster from "../../assets/images/videoPosters/Account comparison.jpg";
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 import { INITIAL_SECTION_POSITION } from "./constants";
 
-const AccountsComparison = ({ servicePricingGuideUrl }) => {
+export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const [selectedAccount, setSelectedAccount] = useState("Current Account");
   const [indexScrollToSection, setIndexScrollToSection] = useState({
     currentTarget: { name: INITIAL_SECTION_POSITION }
   });
-  const classes = styles();
+  const classes = useStyles();
 
   const scrollToSection = e => {
     const { scrollToIndex: index, accountType } = e;
@@ -66,5 +66,3 @@ const AccountsComparison = ({ servicePricingGuideUrl }) => {
     </div>
   );
 };
-
-export default AccountsComparison;
