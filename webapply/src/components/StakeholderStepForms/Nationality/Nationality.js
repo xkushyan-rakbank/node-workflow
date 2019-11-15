@@ -18,9 +18,8 @@ const Nationality = ({ index, passportDetails, handleCitizenship }) => {
     return passportDetails.map((item, passportIndex) => {
       const citizenshipHandler = value => handleCitizenship(index, value, passportIndex);
       const calcDisabling = () =>
-        get(passportDetails[0], "hasAnotherCitizenship")
-          ? !get(passportDetails[passportIndex - 1], "hasAnotherCitizenship")
-          : true;
+        !get(passportDetails[0], "hasAnotherCitizenship") ||
+        !get(passportDetails[passportIndex - 1], "hasAnotherCitizenship");
       const disabled = passportIndex === 0 ? false : calcDisabling();
 
       return (
