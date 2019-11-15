@@ -5,7 +5,8 @@ import {
   CHANGE_EDITABLE_STAKEHOLDER,
   CHANGE_STEP,
   FINISH_STAKEHOLDER_EDIT,
-  EDIT_STAKEHOLDER
+  EDIT_STAKEHOLDER,
+  UPDATE_STAKEHOLDERS_IDS
 } from "../actions/stakeholders";
 
 export const initialState = {
@@ -16,7 +17,8 @@ export const initialState = {
   step: 1,
   confirmation: false,
   isStatusShown: false,
-  completedStep: 0
+  completedStep: 0,
+  stakeholdersIds: []
 };
 
 const stakeholders = (state = initialState, action) => {
@@ -61,6 +63,11 @@ const stakeholders = (state = initialState, action) => {
       return {
         ...state,
         isNewStakeholder: false
+      };
+    case UPDATE_STAKEHOLDERS_IDS:
+      return {
+        ...state,
+        stakeholdersIds: action.stakeholdersIds
       };
     default:
       return state;

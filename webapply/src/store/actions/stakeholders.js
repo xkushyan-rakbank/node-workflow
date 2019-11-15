@@ -12,6 +12,7 @@ export const EDIT_STAKEHOLDER = "EDIT_STAKEHOLDER";
 export const HANDLE_CHANGE_STEP = "HANDLE_CHANGE_STEP";
 export const CHANGE_STEP = "CHANGE_STEP";
 export const FINISH_STAKEHOLDER_EDIT = "FINISH_STAKEHOLDER_EDIT";
+export const UPDATE_STAKEHOLDERS_IDS = "UPDATE_STAKEHOLDERS_IDS";
 
 export const addNewStakeholder = () => {
   return { type: ADD_NEW_STAKEHOLDER };
@@ -67,4 +68,8 @@ export const changeStep = step => {
 
 export const finishStakeholderEdit = () => {
   return { type: FINISH_STAKEHOLDER_EDIT };
+};
+
+export const updateStakeholdersIds = stakeholdersIds => {
+  return { type: UPDATE_STAKEHOLDERS_IDS, stakeholdersIds };
 };

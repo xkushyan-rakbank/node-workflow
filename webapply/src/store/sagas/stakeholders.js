@@ -1,4 +1,4 @@
-import { all, put, takeEvery, select, take, delay } from "redux-saga/effects";
+import { all, put, takeEvery, select, take } from "redux-saga/effects";
 import {
   ADD_NEW_STAKEHOLDER,
   CREATE_NEW_STAKEHOLDER,
@@ -12,13 +12,15 @@ import {
   changeEditableStakeholder,
   openConfirmDialog,
   closeConfirmDialog,
-  changeStep
+  changeStep,
+  updateStakeholdersIds
 } from "../actions/stakeholders";
 import { updateProspect, setConfig, resetProspect } from "../actions/appConfig";
 import { sendProspectToAPI } from "../actions/sendProspectToAPI";
 import cloneDeep from "lodash/cloneDeep";
 import isUndefined from "lodash/isUndefined";
 import get from "lodash/get";
+import uniqueId from "lodash/uniqueId";
 import { stakeHoldersSteps } from "../../containers/StakeholderStepper/constants";
 
 function* addNewStakeholderSaga() {
@@ -43,9 +45,15 @@ function* addNewStakeholderSaga() {
 function* createNewStakeholderSaga() {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
+  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
+  const stakeholderId = uniqueId(new Date().getTime());
+  stakeholdersIds.push(stakeholderId);
+
   const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
   config.prospect.signatoryInfo.push(signatoryInfoModel);
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
+
+  yield put(updateStakeholdersIds(stakeholdersIds));
   yield put(changeEditableStakeholder(editableStakeholder));
   yield put(setConfig(config));
 }
@@ -62,7 +70,6 @@ function* editStakeholderSaga(action) {
     const value = JSON.parse(result.currentTarget.value);
     if (value) {
       yield put(resetProspect());
-      delay(500);
       yield put(changeEditableStakeholder(action.index));
     } else {
       yield put(closeConfirmDialog());
@@ -73,13 +80,14 @@ function* editStakeholderSaga(action) {
 function* deleteStakeholderSaga(action) {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
-  const updatedSignatories = action.stakeholderId
-    ? config.prospect.signatoryInfo.filter(item => item.signatoryId !== action.stakeholderId)
-    : config.prospect.signatoryInfo.splice(-1, 1);
+  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
+  const stakeholderIndex = stakeholdersIds.indexOf(action.stakeholderId);
 
-  config.prospect.signatoryInfo = updatedSignatories;
-
+  config.prospect.signatoryInfo.splice(stakeholderIndex, 1);
   yield put(setConfig(config));
+
+  stakeholdersIds.splice(stakeholderIndex, 1);
+  yield put(updateStakeholdersIds(stakeholdersIds));
   yield put(changeEditableStakeholder());
 }
 

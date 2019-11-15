@@ -21,6 +21,7 @@ const StakeholderStepper = props => {
   const [confirmation, setConfirmation] = useState(false);
 
   const {
+    id,
     index,
     isNewStakeholder,
     firstName,
@@ -37,7 +38,7 @@ const StakeholderStepper = props => {
   const deleteHandler = () => {
     if (confirmation) {
       setConfirmation(false);
-      props.deleteStakeholder();
+      props.deleteStakeholder(id);
     } else {
       setConfirmation(true);
     }

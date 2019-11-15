@@ -1,5 +1,4 @@
 import React from "react";
-import uniqueId from "lodash/uniqueId";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
@@ -22,7 +21,7 @@ import {
 import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
 import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import {
-  stakeholders as stakeholdersSelector,
+  stakeholdersSelector,
   stakeholdersState,
   percentageSelector
 } from "../../store/selectors/stakeholder";
@@ -45,31 +44,8 @@ const CompanyStakeholders = props => {
   const disableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || lowPercentage;
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
    or edit the shareholding % for the added stakeholders.`;
-
-  const renderStakeholder = (item, index) => {
-    const handleDeleteStakeholder = () => {
-      props.deleteStakeholder(item.signatoryId);
-    };
-    const key = uniqueId(index);
-    const editStakeholderHandler = () => props.editStakeholder(index);
-    return editableStakeholder === index ? (
-      <StakeholderStepper
-        {...item}
-        key={key}
-        index={editableStakeholder}
-        deleteStakeholder={handleDeleteStakeholder}
-        isNewStakeholder={isNewStakeholder}
-        orderIndex={index}
-      />
-    ) : (
-      <FilledStakeholderCard
-        {...item}
-        key={key}
-        index={index}
-        changeEditableStep={editStakeholderHandler}
-      />
-    );
-  };
+  const handleDeleteStakeholder = id => props.deleteStakeholder(id);
+  const editStakeholderHandler = index => props.editStakeholder(index);
 
   return (
     <>
@@ -80,7 +56,27 @@ const CompanyStakeholders = props => {
         company.
       </p>
 
-      <div>{stakeholders.map(renderStakeholder)}</div>
+      <div>
+        {stakeholders.map((item, index) => {
+          return editableStakeholder === index ? (
+            <StakeholderStepper
+              {...item}
+              key={item.id}
+              index={editableStakeholder}
+              deleteStakeholder={handleDeleteStakeholder}
+              isNewStakeholder={isNewStakeholder}
+              orderIndex={index}
+            />
+          ) : (
+            <FilledStakeholderCard
+              {...item}
+              key={item.id}
+              index={index}
+              changeEditableStep={editStakeholderHandler}
+            />
+          );
+        })}
+      </div>
 
       {showingAddButton && (
         <div className={classes.buttonsWrapper}>
@@ -111,11 +107,17 @@ const CompanyStakeholders = props => {
 };
 
 const mapStateToProps = state => {
-  const { isNewStakeholder, isConfirmDialogOpen, editableStakeholder } = stakeholdersState(state);
+  const {
+    isNewStakeholder,
+    isConfirmDialogOpen,
+    editableStakeholder,
+    stakeholdersIds
+  } = stakeholdersState(state);
   return {
     isNewStakeholder,
     isConfirmDialogOpen,
     editableStakeholder,
+    stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
     percentage: percentageSelector(state),
     ...getSendProspectToAPIInfo(state)
