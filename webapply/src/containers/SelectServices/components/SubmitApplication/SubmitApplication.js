@@ -4,16 +4,16 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 
-import { submitApplication } from "../constants/index";
-import * as appConfigSelectors from "../store/selectors/appConfig";
-import routes from "../routes";
-import brief from "../assets/icons/brief.png";
+import { submitApplication } from "../../../../constants/index";
+import * as appConfigSelectors from "../../../../store/selectors/appConfig";
+import routes from "../../../../routes";
+import brief from "../../../../assets/icons/brief.png";
 
-import Checkbox from "../components/InputField/Checkbox";
-import Button from "../components/Buttons/SubmitButton";
-import BackLink from "../components/Buttons/BackLink";
-import FormTitle from "../components/FormTitle";
-import ErrorMessage from "../components/ErrorMessage";
+import Checkbox from "../../../../components/InputField/Checkbox";
+import Button from "../../../../components/Buttons/SubmitButton";
+import BackLink from "../../../../components/Buttons/BackLink";
+import FormTitle from "../../../../components/FormTitle";
+import ErrorMessage from "../../../../components/ErrorMessage";
 
 const style = {
   checkboxesWrapper: {

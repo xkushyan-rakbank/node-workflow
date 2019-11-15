@@ -23,7 +23,7 @@ import UploadDocuments from "./containers/FileUploader";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
 import SearchedAppInfo from "./agent/SearchedAppInfo/index";
 import ReUploadDocuments from "./containers/ReUploadDocuments";
-import SubmitApplication from "./containers/SubmitApplication";
+import SubmitApplication from "./containers/SelectServices/components/SubmitApplication/SubmitApplication";
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 import { getEndpoints } from "./store/selectors/appConfig";

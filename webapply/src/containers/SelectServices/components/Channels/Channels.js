@@ -10,7 +10,7 @@ import RadioButton from "../../../../components/InputField/RadioButton";
 import Divider from "../../../../components/Divider";
 import SignatoriesList from "./SignatoriesList";
 
-import { inputIdIndex } from "../../constants";
+import { INPUT_ID_INDEX } from "../../constants";
 import { getStatusDebitCardApplied, getStatusChequeBookApplied } from "./utils";
 
 import { style } from "./styled";
@@ -41,7 +41,7 @@ export const AccountDetails = props => {
       </div>
       <Checkbox
         id="Acnt.debitCardApplied"
-        indexes={inputIdIndex}
+        indexes={INPUT_ID_INDEX}
         classes={{ labelWrapper: classes.cardAppliedCheckbox }}
         disabled={isDisabledDebitCard}
       />
@@ -55,7 +55,7 @@ export const AccountDetails = props => {
       </div>
       <Checkbox
         id="Acnt.chequeBookApplied"
-        indexes={inputIdIndex}
+        indexes={INPUT_ID_INDEX}
         disabled={isDisabledChequeBook}
       />
 

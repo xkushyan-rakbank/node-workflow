@@ -12,7 +12,7 @@ import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
 
 import { styles } from "./styled";
-import { inputIdIndex, inputIdIndexes } from "../../constants";
+import { INPUT_ID_INDEX, INPUT_ID_INDEXES } from "../../constants";
 
 export const AccountDetails = props => {
   const { islamicBanking, branchCityValue, branchCityConfig, goToNext } = props;
@@ -22,19 +22,19 @@ export const AccountDetails = props => {
   return (
     <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
       <Subtitle title="Select currencies" />
-      <CheckboxGroup id="Acnt.accountCurrencies" indexes={inputIdIndex} />
+      <CheckboxGroup id="Acnt.accountCurrencies" indexes={INPUT_ID_INDEX} />
 
       <Divider />
 
       <Subtitle title="Select branch" />
       <Grid container spacing={3}>
         <Grid item md={6} sm={12}>
-          <PureSelect id="Org.branchCity" indexes={inputIdIndexes} />
+          <PureSelect id="Org.branchCity" indexes={INPUT_ID_INDEXES} />
         </Grid>
         <Grid item md={6} sm={12}>
           <PureSelect
             id="Org.subCategory"
-            indexes={inputIdIndexes}
+            indexes={INPUT_ID_INDEXES}
             subOptions={subOptions}
             disabled={isEmpty(branchCityValue)}
           />
@@ -45,7 +45,7 @@ export const AccountDetails = props => {
         <>
           <Divider />
           <Subtitle title="Select interest" />
-          <Checkbox id="Acnt.receiveInterest" indexes={inputIdIndex} />
+          <Checkbox id="Acnt.receiveInterest" indexes={INPUT_ID_INDEX} />
         </>
       )}
     </FormWrapper>

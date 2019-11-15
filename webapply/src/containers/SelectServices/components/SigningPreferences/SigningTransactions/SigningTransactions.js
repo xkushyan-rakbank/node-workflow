@@ -1,18 +1,18 @@
 import React from "react";
 
-import { accountSigningNameOther, inputIdIndex } from "../../../constants";
+import { ACCOUNTS_SIGNING_NAME_OTHER, INPUT_ID_INDEX } from "../../../constants";
 
 import RadioGroup from "../../../../../components/InputField/RadioGroupButtons";
 import TextArea from "../../../../../components/InputField/TextArea";
 
 const SigningTransactions = ({ accountSigningType }) => (
   <RadioGroup
-    indexes={inputIdIndex}
+    indexes={INPUT_ID_INDEX}
     id="SigAcntSig.accountSigningType"
     helpMessage="text help TODO replace text"
   >
-    {accountSigningType.value === accountSigningNameOther && (
-      <TextArea id="SigAcntSig.accountSigningInstn" indexes={inputIdIndex} />
+    {accountSigningType.value === ACCOUNTS_SIGNING_NAME_OTHER && (
+      <TextArea id="SigAcntSig.accountSigningInstn" indexes={INPUT_ID_INDEX} />
     )}
   </RadioGroup>
 );

@@ -3,7 +3,7 @@ import omit from "lodash/omit";
 import cx from "classnames";
 
 import { servicesSteps } from "../../../../constants/index";
-import { goToSubmitStep } from "../../constants";
+import { GO_TO_SUBMIT_STEP } from "../../constants";
 
 import ServicesStepTitle from "../../../../components/ServicesStepTitle";
 
@@ -23,7 +23,7 @@ export const ServicesSteps = ({ step, setStep, handleContinue }) => {
           {step === serviceStep.step && (
             <div
               className={cx(classes.formWrapper, {
-                [classes.valueAddedServices]: step === goToSubmitStep
+                [classes.valueAddedServices]: step === GO_TO_SUBMIT_STEP
               })}
             >
               <Component goToNext={handleContinue} activeStep={step} />

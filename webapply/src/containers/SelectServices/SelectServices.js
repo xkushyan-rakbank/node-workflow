@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import BackLink from "../../components/Buttons/BackLink";
 import SubmitButton from "../../components/Buttons/SubmitButton";
-import SubmitApplication from "../SubmitApplication";
+import SubmitApplication from "./components/SubmitApplication/SubmitApplication";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 
 import routes from "../../routes";
 import { getSelectedTypeCurrency } from "../../utils/SelectServices";
 import { servicesSteps, accountsNames } from "../../constants/index";
-import { goToSubmitStep, submitApplicationStep } from "./constants";
+import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP } from "./constants";
 
 import { styles } from "./styled";
 
@@ -40,7 +40,7 @@ export const SelectServices = props => {
     }
   }, [step, accountType, rakValuePackage, accountCurrencies]);
 
-  return step === submitApplicationStep ? (
+  return step === SUBMIT_APPLICATION_STEP ? (
     <SubmitApplication />
   ) : (
     <>
@@ -56,7 +56,7 @@ export const SelectServices = props => {
         <BackLink path={routes.uploadDocuments} />
         <SubmitButton
           handleClick={setNextStep}
-          label={step === goToSubmitStep ? "Go to submit" : "Next Step"}
+          label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
           justify="flex-end"
           disabled={!canSubmit}
         />

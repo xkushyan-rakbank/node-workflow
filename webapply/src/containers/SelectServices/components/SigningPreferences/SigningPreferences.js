@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import get from "lodash/get";
 
-import { accountSigningNameOther } from "../../constants";
+import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper";
 import AddButton from "../../../../components/Buttons/AddButton";
@@ -24,7 +24,7 @@ export const SigningPreferences = props => {
 
   const authorityToSignType = get(props, "accountSigningType.value");
   useEffect(() => {
-    if (authorityToSignType !== accountSigningNameOther) {
+    if (authorityToSignType !== ACCOUNTS_SIGNING_NAME_OTHER) {
       updateProspect({ [accountSigningInstn.name]: "" });
     }
   }, [authorityToSignType, updateProspect, accountSigningInstn.name]);
