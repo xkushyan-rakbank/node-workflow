@@ -6,8 +6,8 @@ import TableCell from "@material-ui/core/TableCell";
 import ContainedButton from "../../../../../../components/Buttons/ContainedButton";
 import StyledTableCellWitHoverHandler from "../StyledTableCellWitHoverHandler";
 import { styles } from "./styled";
-import { accountsNames } from "../../../../../../constants";
-import { mockDataRows, shortNames } from "../../constants";
+import { mockDataRows, accountTypes } from "../../constants";
+import { FIRST_ROW_POSITION, TABLE_POSITION_OFFSET } from "./constants";
 
 const StyledTableBody = ({ selectedCurrentColumn, handleSelectAccount, handleHover, refs }) => {
   const classes = styles();
@@ -22,7 +22,9 @@ const StyledTableBody = ({ selectedCurrentColumn, handleSelectAccount, handleHov
               align="right"
               component="th"
               scope="row"
-              className={cx({ [classes.tableCellActive]: selectedCurrentColumn === 1 })}
+              className={cx({
+                [classes.tableCellActive]: selectedCurrentColumn === FIRST_ROW_POSITION
+              })}
             >
               {row.info}
             </TableCell>
@@ -30,25 +32,23 @@ const StyledTableBody = ({ selectedCurrentColumn, handleSelectAccount, handleHov
             <StyledTableCellWitHoverHandler
               selectedCurrentColumn={selectedCurrentColumn}
               handleHover={handleHover}
-              name={accountsNames.starter}
+              name={accountTypes.starter.name}
               account={starter}
-              index={index}
-              order={2}
+              order={accountTypes.starter.position}
             />
             <StyledTableCellWitHoverHandler
               selectedCurrentColumn={selectedCurrentColumn}
               handleHover={handleHover}
-              name={accountsNames.currentAccount}
+              name={accountTypes.currentAccount.name}
               account={currentAccount}
-              index={index}
-              order={3}
+              order={accountTypes.currentAccount.position}
             />
             <StyledTableCellWitHoverHandler
               selectedCurrentColumn={selectedCurrentColumn}
               handleHover={handleHover}
-              order={4}
-              name={accountsNames.elite}
+              name={accountTypes.elite.name}
               account={elite}
+              order={accountTypes.elite.position}
             />
           </TableRow>
         );
@@ -56,7 +56,7 @@ const StyledTableBody = ({ selectedCurrentColumn, handleSelectAccount, handleHov
 
       <TableRow classes={{ root: classes.tableRowRoot }}>
         <TableCell component="th" scope="row" />
-        {Object.entries(shortNames).map(([type, value], index) => {
+        {Object.entries(accountTypes).map(([type, value], index) => {
           const { name } = value;
           return (
             <TableCell
@@ -66,7 +66,7 @@ const StyledTableBody = ({ selectedCurrentColumn, handleSelectAccount, handleHov
               key={index}
               classes={{ root: classes.tableCellRoot }}
               className={cx({
-                [classes.tableCellActive]: selectedCurrentColumn === index + 2
+                [classes.tableCellActive]: selectedCurrentColumn === index + TABLE_POSITION_OFFSET
               })}
             >
               <ContainedButton

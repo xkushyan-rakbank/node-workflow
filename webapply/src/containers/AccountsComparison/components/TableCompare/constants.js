@@ -1,20 +1,5 @@
-import { accountsNames } from "../../../../constants/index";
+import { accountsNames } from "../../../../constants";
 import checkIc from "../../../../assets/icons/check.svg";
-
-export const shortNames = {
-  starter: {
-    name: accountsNames.starter,
-    ref: "RAKstarter"
-  },
-  currentAccount: {
-    name: accountsNames.currentAccount,
-    ref: "CurrentAccount"
-  },
-  elite: {
-    name: accountsNames.elite,
-    ref: "RAKElite"
-  }
-};
 
 export const mockDataRows = [
   {
@@ -55,7 +40,23 @@ export const mockDataRows = [
   }
 ];
 
-export const initialValue = {
-  offset: 395,
-  selectedAccountContainerWidth: "190px"
+export const accountTypes = {
+  starter: {
+    name: accountsNames.starter,
+    position: 2
+  },
+  currentAccount: {
+    name: accountsNames.currentAccount,
+    position: 3
+  },
+  elite: {
+    name: accountsNames.elite,
+    position: 4
+  }
+};
+
+export const sizes = {
+  INITIAL_OFFSET: 395,
+  SELECTED_ELEM_WIDTH: "190px",
+  OFFSET: 5
 };

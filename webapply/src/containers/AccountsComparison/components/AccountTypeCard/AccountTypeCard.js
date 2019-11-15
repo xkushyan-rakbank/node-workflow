@@ -6,7 +6,7 @@ import { styles } from "./styled";
 const AccountTypeCard = ({
   iconSrc,
   title,
-  differences,
+  description,
   buttonText,
   handleClick,
   scrollToIndex,
@@ -25,7 +25,7 @@ const AccountTypeCard = ({
         <div className={classes.divider}> </div>
         <div className={classes.differencesContainer}>
           <ul className={classes.differences}>
-            {differences.map((difference, index) => (
+            {description.map((difference, index) => (
               <li key={index}>
                 <img src={check_ic} alt="check icon" />
                 {difference}

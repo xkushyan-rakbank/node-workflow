@@ -3,17 +3,17 @@ import Table from "@material-ui/core/Table";
 import Paper from "@material-ui/core/Paper";
 import StyledTableHeader from "./components/StyledTableHeader";
 import StyledTableBody from "./components/StyledTableBody";
-import { accountsNames } from "../../../../constants/index";
-import { initialValue } from "./constants";
+import { sizes, accountTypes } from "./constants";
 import { styles } from "./styled";
 import routes from "../../../../routes";
 
 const TableCompare = ({ history, updateProspect, updateAccountType, selectedAccount }) => {
-  const [offset, setOffset] = useState(initialValue.offset);
+  const { INITIAL_OFFSET, SELECTED_ELEM_WIDTH, OFFSET } = sizes;
+  const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedAccountContainerWidth, setSelectedAccountContainerWidth] = useState(
-    initialValue.selectedAccountContainerWidth
+    SELECTED_ELEM_WIDTH
   );
-  const [activeAccount, setActiveAccount] = useState(2);
+  const [activeAccount, setActiveAccount] = useState(accountTypes.currentAccount.position);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
   const classes = styles();
 
@@ -25,16 +25,14 @@ const TableCompare = ({ history, updateProspect, updateAccountType, selectedAcco
 
   useEffect(() => {
     const updateDimensionSelectedAccountContainer = () => {
-      const selectedAccountContainerWidth = window
-        .getComputedStyle(RAKstarter.current)
-        .getPropertyValue("width");
-      setSelectedAccountContainerWidth(parseInt(selectedAccountContainerWidth) - 10);
+      const accountContainerWidth = RAKstarter.current.clientWidth - OFFSET * 2;
+      setSelectedAccountContainerWidth(accountContainerWidth);
     };
     updateDimensionSelectedAccountContainer();
     return () => {
       window.removeEventListener("resize", updateDimensionSelectedAccountContainer);
     };
-  }, []);
+  }, [OFFSET]);
 
   useEffect(() => {
     highlightSelectedAccount(selectedAccount);
@@ -46,25 +44,25 @@ const TableCompare = ({ history, updateProspect, updateAccountType, selectedAcco
     }
 
     switch (account) {
-      case accountsNames.starter:
-        setOffset(RAKstarter.current.offsetLeft + 5);
+      case accountTypes.starter.name:
+        setOffset(RAKstarter.current.offsetLeft + OFFSET);
         setActiveAccount(account);
-        setSelectedCurrentColumn(2);
+        setSelectedCurrentColumn(accountTypes.starter.position);
         break;
-      case accountsNames.currentAccount:
-        setOffset(CurrentAccount.current.offsetLeft + 5);
+      case accountTypes.currentAccount.name:
+        setOffset(CurrentAccount.current.offsetLeft + OFFSET);
         setActiveAccount(account);
-        setSelectedCurrentColumn(3);
+        setSelectedCurrentColumn(accountTypes.currentAccount.position);
         break;
-      case accountsNames.elite:
-        setOffset(RAKElite.current.offsetLeft + 5);
+      case accountTypes.elite.name:
+        setOffset(RAKElite.current.offsetLeft + OFFSET);
         setActiveAccount(account);
-        setSelectedCurrentColumn(4);
+        setSelectedCurrentColumn(accountTypes.elite.position);
         break;
       default:
-        setOffset(CurrentAccount.current.offsetLeft + 5);
+        setOffset(CurrentAccount.current.offsetLeft + OFFSET);
         setActiveAccount(account);
-        setSelectedCurrentColumn(2);
+        setSelectedCurrentColumn(accountTypes.currentAccount.position);
     }
   }
 

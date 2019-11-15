@@ -4,7 +4,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import StyledTableHeaderCellWitHoverHandler from "../StyledTableHeaderCellWitHoverHandler";
 import { styles } from "./styled";
-import { accountsNames } from "../../../../../../constants";
+import { accountTypes } from "../../constants";
 
 const StyledTableHeader = ({ selectedCurrentColumn, handleHover }) => {
   const classes = styles();
@@ -21,22 +21,22 @@ const StyledTableHeader = ({ selectedCurrentColumn, handleHover }) => {
           selectedCurrentColumn={selectedCurrentColumn}
           handleHover={handleHover}
           text="RAKstarter"
-          name={accountsNames.starter}
-          order={2}
+          name={accountTypes.starter.name}
+          order={accountTypes.starter.position}
         />
         <StyledTableHeaderCellWitHoverHandler
           selectedCurrentColumn={selectedCurrentColumn}
           handleHover={handleHover}
           text="Current Account"
-          name={accountsNames.currentAccount}
-          order={3}
+          name={accountTypes.currentAccount.name}
+          order={accountTypes.currentAccount.position}
         />
         <StyledTableHeaderCellWitHoverHandler
           selectedCurrentColumn={selectedCurrentColumn}
           handleHover={handleHover}
           text="RAKelite"
-          name={accountsNames.elite}
-          order={4}
+          name={accountTypes.elite.name}
+          order={accountTypes.elite.position}
         />
       </TableRow>
     </TableHead>

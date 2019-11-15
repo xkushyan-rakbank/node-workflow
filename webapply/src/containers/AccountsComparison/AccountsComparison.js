@@ -7,10 +7,13 @@ import TableCompare from "./components/TableCompare";
 import accountComparisonPoster from "../../assets/images/videoPosters/Account comparison.jpg";
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
 import { styles } from "./styled";
+import { INITIAL_SECTION_POSITION } from "./constants";
 
 const AccountsComparison = ({ servicePricingGuideUrl }) => {
   const [selectedAccount, setSelectedAccount] = useState("Current Account");
-  const [indexScrollToSection, setIndexScrollToSection] = useState({ currentTarget: { name: 0 } });
+  const [indexScrollToSection, setIndexScrollToSection] = useState({
+    currentTarget: { name: INITIAL_SECTION_POSITION }
+  });
   const classes = styles();
 
   const scrollToSection = e => {
