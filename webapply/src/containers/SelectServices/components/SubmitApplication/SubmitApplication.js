@@ -1,39 +1,17 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { compose } from "redux";
 
 import { submitApplication } from "../../../../constants/index";
-import * as appConfigSelectors from "../../../../store/selectors/appConfig";
 import routes from "../../../../routes";
 
-import Checkbox from "../../../../components/InputField/Checkbox";
 import Button from "../../../../components/Buttons/SubmitButton";
 import BackLink from "../../../../components/Buttons/BackLink";
 import FormTitle from "../../../../components/FormTitle";
 import ErrorMessage from "../../../../components/ErrorMessage";
 
 import { CompanyCard } from "./CompanyCard/CompanyCard";
+import { BlockConfirm } from "./BlockConfirm/BlockConfirm";
 
-// TODO refactor styles
-const style = {
-  checkboxesWrapper: {
-    "&>label": {
-      marginBottom: "20px"
-    }
-  },
-  listItem: {
-    display: "block"
-  },
-  grayText: {
-    fontSize: "14px",
-    lineHeight: 1.29,
-    color: "#86868b"
-  }
-};
-
-class SubmitApplication extends React.Component {
+export default class SubmitApplication extends React.Component {
   state = {
     isInformationProvided: false,
     areTermsAgreed: false,
@@ -79,23 +57,18 @@ class SubmitApplication extends React.Component {
 
   render() {
     const {
-      classes,
       applicationInfo,
       accountInfo,
       signatoryInfo,
       organizationInfo,
       isAgentLoggedIn
     } = this.props;
+
     const [account] = accountInfo;
     const companyName = organizationInfo.companyName || "Company name";
     const accountType = applicationInfo.accountType || "Account type";
-    //const currencies = accountInfo.length && account.accountCurrencies.join(" & ");
+
     const currencies = accountInfo.length && accountInfo[0].accountCurrencies;
-    const stakeholders = signatoryInfo.map(stakeholder => (
-      <div key={stakeholder.fullName} className={classes.grayText}>
-        {stakeholder.fullName}
-      </div>
-    ));
     const accntSignInType =
       signatoryInfo[0] &&
       signatoryInfo[0].accountSigningInfo &&
@@ -120,7 +93,6 @@ class SubmitApplication extends React.Component {
           companyName={companyName}
           accountType={accountType}
           signatoryInfo={signatoryInfo}
-          stakeholders={stakeholders}
           currencies={currencies}
           accntSignInMsg={accntSignInMsg}
           isDebitCardApplied={isDebitCardApplied}
@@ -128,56 +100,18 @@ class SubmitApplication extends React.Component {
           isOnlineBankingApplied={isOnlineBankingApplied}
           rakValuePackage={rakValuePackage}
         />
-
-        {isAgentLoggedIn && (
-          <div className={classes.checkboxesWrapper}>
-            <Checkbox
-              value={isInformationProvided}
-              name="isInformationProvided"
-              label={submitApplication.trueNdCompleteAcknldgelabel}
-              className={classes.listItem}
-              onChange={this.handleChange}
-            />
-            <Checkbox
-              value={areTermsAgreed}
-              name="areTermsAgreed"
-              label={
-                <span>
-                  I agree with RakBank’s{" "}
-                  <a
-                    href={submitApplication.termConditionUrl}
-                    onClick={this.tncClicked}
-                    // eslint-disable-next-line react/jsx-no-target-blank
-                    target="_blank"
-                  >
-                    terms and conditions
-                  </a>{" "}
-                  &{" "}
-                  <a
-                    href={submitApplication.termOfEnrolmentUrl}
-                    onClick={this.termsEnrolmentClicked}
-                    // eslint-disable-next-line react/jsx-no-target-blank
-                    target="_blank"
-                  >
-                    terms and enrollment
-                  </a>
-                </span>
-              }
-              className={classes.listItem}
-              onChange={this.handleChange}
-            />
-            <Checkbox
-              value={needCommunication}
-              name="needCommunication"
-              label={submitApplication.needCommunicationLabel}
-              className={classes.listItem}
-              onChange={this.handleChange}
-            />
-          </div>
-        )}
-
+        {/* TODO refactor props*/}
+        <BlockConfirm
+          isAgentLoggedIn={isAgentLoggedIn}
+          isInformationProvided={isInformationProvided}
+          onChange={this.handleChange}
+          tncClicked={this.tncClicked}
+          areTermsAgreed={areTermsAgreed}
+          termsEnrolmentClicked={this.termsEnrolmentClicked}
+          needCommunication={needCommunication}
+        />
         {isError && <ErrorMessage error={chkboxErrorMessage} />}
-
+        {/*TODO replace linkContainer*/}
         <div className="linkContainer">
           <BackLink path={routes.selectServices} />
           <Button
@@ -191,17 +125,3 @@ class SubmitApplication extends React.Component {
     );
   }
 }
-// TODO MOVE TO INDEX
-const mapStateToProps = state => ({
-  applicationInfo: appConfigSelectors.getApplicationInfo(state),
-  accountInfo: appConfigSelectors.getAccountInfo(state),
-  signatoryInfo: appConfigSelectors.getSignatories(state),
-  organizationInfo: appConfigSelectors.getOrganizationInfo(state),
-  isAgentLoggedIn: appConfigSelectors.getIsAgentLoggedIn(state)
-});
-// TODO MOVE TO INDEX
-export default compose(
-  connect(mapStateToProps),
-  withStyles(style),
-  withRouter
-)(SubmitApplication);

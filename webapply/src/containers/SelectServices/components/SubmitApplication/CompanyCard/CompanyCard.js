@@ -10,7 +10,6 @@ export const CompanyCard = ({
   companyName,
   accountType,
   signatoryInfo,
-  stakeholders,
   accntSignInMsg,
   isDebitCardApplied,
   isChequeBookApplied,
@@ -28,11 +27,16 @@ export const CompanyCard = ({
       <div className={classes.grayText}>{accountType}</div>
 
       <Divider classes={{ divider: classes.divider }} />
-
+      {/* TODO refactor signatoryInfo.length > 0*/}
       {signatoryInfo.length > 0 && (
         <div className={classes.indent}>
           <div className={classes.secondaryTitle}>Company Stakeholders</div>
-          {stakeholders}
+
+          {signatoryInfo.map(stakeholder => (
+            <div key={stakeholder.fullName} className={classes.grayText}>
+              {stakeholder.fullName}
+            </div>
+          ))}
         </div>
       )}
 
