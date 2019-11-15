@@ -1,7 +1,5 @@
 import React from "react";
-import { compose } from "redux";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core";
 import FilledStakeholderCard from "../../components/FilledStakeholderCard";
 import StakeholderStepper from "../StakeholderStepper/StakeholderStepper";
 import AddStakeholderButton from "../../components/Buttons/AddStakeholderButton";
@@ -25,16 +23,16 @@ import {
   stakeholdersState,
   percentageSelector
 } from "../../store/selectors/stakeholder";
-import styles from "./styled";
+import { useStyles } from "./styled";
 
 const MAX_STAKEHOLDERS_LENGTH = 6;
 
 const CompanyStakeholders = props => {
+  const classes = useStyles();
   const goToFinalQuestions = () => props.history.push(routes.finalQuestions);
   const {
     stakeholders,
     editableStakeholder,
-    classes,
     isConfirmDialogOpen,
     isNewStakeholder,
     percentage
@@ -134,10 +132,7 @@ const mapDispatchToProps = {
   editStakeholder
 };
 
-export default compose(
-  withStyles(styles),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(CompanyStakeholders);

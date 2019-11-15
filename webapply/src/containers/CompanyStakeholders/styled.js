@@ -1,4 +1,6 @@
-const styles = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   buttonStyle: {
     width: "346px",
     height: "56px",
@@ -18,6 +20,4 @@ const styles = {
     flexDirection: "column",
     marginTop: "24px"
   }
-};
-
-export default styles;
+});
