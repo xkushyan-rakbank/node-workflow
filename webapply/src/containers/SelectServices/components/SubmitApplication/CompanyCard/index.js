@@ -38,7 +38,7 @@ export const CompanyCard = ({
       <div className={classes.grayText}>{accountType}</div>
 
       <Divider classes={{ divider: classes.divider }} />
-      {/* TODO refactor signatoryInfo.length > 0*/}
+
       {signatoryInfo.length ? (
         <div className={classes.indent}>
           <div className={classes.secondaryTitle}>Company Stakeholders</div>
