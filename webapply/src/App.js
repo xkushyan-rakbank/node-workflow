@@ -12,7 +12,7 @@ import FinalQuestions from "./containers/FinalQuestions";
 import FormConfirm from "./containers/FormConfirm";
 import FormLayout from "./containers/FormLayout";
 import SearchProspect from "./agent/SearchProspect/index";
-import SelectServices from "./containers/SelectServices/SelectServices";
+import SelectServices from "./containers/SelectServices";
 import AccountsComparison from "./containers/AccountsComparison/AccountsComparison";
 import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOverview";
 import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
