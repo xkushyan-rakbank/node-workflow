@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const styles = makeStyles({
+export const useStyles = makeStyles({
   stepWrapper: {
     marginBottom: "20px",
     borderRadius: "8px",

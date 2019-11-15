@@ -6,7 +6,7 @@ import { getGeneralInputProps } from "../../../../store/selectors/input";
 import { stakeholders as stakeholdersSelector } from "../../../../store/selectors/stakeholder";
 import { updateProspect } from "../../../../store/actions/appConfig";
 
-import { AccountDetails } from "./Channels";
+import { ChannelsComponent } from "./Channels";
 
 const mapStateToProps = state => ({
   ...appConfigSelectors.getSignatories(state)[0],
@@ -24,7 +24,7 @@ const mapDispatchToProps = {
   updateProspect
 };
 
-export default connect(
+export const Channels = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountDetails);
+)(ChannelsComponent);

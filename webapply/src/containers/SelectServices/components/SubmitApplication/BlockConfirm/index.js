@@ -2,7 +2,7 @@ import React from "react";
 
 import Checkbox from "../../../../../components/InputField/Checkbox";
 
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 import { submitApplication } from "../../../../../constants";
 
 export const BlockConfirm = ({
@@ -12,7 +12,7 @@ export const BlockConfirm = ({
   termsEnrolmentClicked,
   checkBoxValues: { isInformationProvided, needCommunication, areTermsAgreed }
 }) => {
-  const classes = styles();
+  const classes = useStyles();
 
   return (
     <>

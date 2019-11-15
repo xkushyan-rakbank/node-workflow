@@ -1,4 +1,6 @@
-export const styled = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   infoTitle: {
     marginTop: "0"
   },
@@ -33,4 +35,4 @@ export const styled = {
       fontWeight: "600"
     }
   }
-};
+});

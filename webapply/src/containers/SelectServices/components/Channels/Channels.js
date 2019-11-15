@@ -8,17 +8,17 @@ import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper
 import InfoTitle from "../../../../components/InfoTitle";
 import RadioButton from "../../../../components/InputField/RadioButton";
 import Divider from "../../../../components/Divider";
-import SignatoriesList from "./SignatoriesList";
+import { SignatoriesList } from "./SignatoriesList";
 
 import { INPUT_ID_INDEX } from "../../constants";
 import { getStatusDebitCardApplied, getStatusChequeBookApplied } from "./utils";
 
-import { style } from "./styled";
+import { useStyles } from "./styled";
 
-export const AccountDetails = props => {
+export const ChannelsComponent = props => {
   const { goToNext, stakeholders, eStatements, mailStatements, updateProspect } = props;
   const [selectedTypeStatementsID, setSelectedTypeStatementsID] = useState("");
-  const classes = style();
+  const classes = useStyles();
 
   const { isDisabledDebitCard } = getStatusDebitCardApplied(props);
   const { isDisabledChequeBook } = getStatusChequeBookApplied(props);

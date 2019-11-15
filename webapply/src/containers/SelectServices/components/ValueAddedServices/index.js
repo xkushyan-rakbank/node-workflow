@@ -6,7 +6,7 @@ import { getGeneralInputProps, getInputValueById } from "../../../../store/selec
 import { getSelectedAccountInfo } from "../../../../store/selectors/selectedAccountInfo";
 import { updateProspect } from "../../../../store/actions/appConfig";
 
-import { ValueAddedServices } from "./ValueAddedServices";
+import { ValueAddedServicesComponent } from "./ValueAddedServices";
 
 const mapStateToProps = state => ({
   readMoreUrls: getUrlsReadMore(state),
@@ -19,9 +19,9 @@ const mapDispatchToProps = {
   updateProspect
 };
 
-export default compose(
+export const ValueAddedServices = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )
-)(ValueAddedServices);
+)(ValueAddedServicesComponent);

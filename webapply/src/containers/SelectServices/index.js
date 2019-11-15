@@ -5,7 +5,7 @@ import { getInputValueById } from "../../store/selectors/input";
 import { updateAccountType } from "../../store/actions/selectedAccountInfo";
 import { getSelectedAccountInfo } from "../../store/selectors/selectedAccountInfo";
 
-import { SelectServices } from "./SelectServices";
+import { SelectServicesComponent } from "./SelectServices";
 
 const mapStateToProps = state => ({
   accountType: getSelectedAccountInfo(state).accountType,
@@ -15,9 +15,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { updateAccountType };
 
-export default compose(
+export const SelectServices = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )
-)(SelectServices);
+)(SelectServicesComponent);

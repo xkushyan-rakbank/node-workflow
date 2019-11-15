@@ -2,8 +2,8 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import get from "lodash/get";
 
-import TextInput from "../../../../components/InputField/TextInput";
-import PureSelect from "../../../../components/InputField/PureSelect";
+import TextInput from "../../../../../components/InputField/TextInput";
+import PureSelect from "../../../../../components/InputField/PureSelect";
 
 const getValueInput = (index, signatoryInfo) => get(signatoryInfo[index], "fullName", "");
 

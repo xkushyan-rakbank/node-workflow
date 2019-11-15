@@ -9,12 +9,12 @@ import { getButtonText } from "./utils";
 import ExpandedDetailedOptionsCard from "../../../../components/ExpandedOptionsCards/ExpandedDetailedOptionsCard";
 import { getUrlReadMore } from "../../../../components/ExpandedOptionsCards/ExpandedOptionsCards";
 
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
-export const ValueAddedServices = props => {
+export const ValueAddedServicesComponent = props => {
   const { accountType, readMoreUrls, rakValuePackage, accountCurrencies, updateProspect } = props;
   const { isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(accountCurrencies);
-  const classes = styles();
+  const classes = useStyles();
 
   const handleSelectValue = selectedService => {
     const {

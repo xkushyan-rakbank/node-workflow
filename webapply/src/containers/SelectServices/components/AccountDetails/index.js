@@ -2,7 +2,7 @@ import get from "lodash/get";
 import { compose } from "redux";
 import { connect } from "react-redux";
 
-import { AccountDetails } from "./AccountDetails";
+import { AccountDetailsComponent } from "./AccountDetails";
 import { getInputValueById, getFieldConfigById } from "../../../../store/selectors/input";
 
 const mapStateToProps = state => ({
@@ -11,4 +11,4 @@ const mapStateToProps = state => ({
   branchCityConfig: getFieldConfigById(state, "Org.branchCity")
 });
 
-export default compose(connect(mapStateToProps))(AccountDetails);
+export const AccountDetails = compose(connect(mapStateToProps))(AccountDetailsComponent);

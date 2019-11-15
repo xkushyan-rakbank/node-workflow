@@ -7,10 +7,10 @@ import { GO_TO_SUBMIT_STEP } from "../../constants";
 
 import ServicesStepTitle from "../../../../components/ServicesStepTitle";
 
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
 export const ServicesSteps = ({ step, setStep, handleContinue }) => {
-  const classes = styles();
+  const classes = useStyles();
 
   return servicesSteps.map(serviceStep => {
     const Component = serviceStep.component;

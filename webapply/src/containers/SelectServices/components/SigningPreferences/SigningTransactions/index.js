@@ -5,7 +5,7 @@ import { ACCOUNTS_SIGNING_NAME_OTHER, INPUT_ID_INDEX } from "../../../constants"
 import RadioGroup from "../../../../../components/InputField/RadioGroupButtons";
 import TextArea from "../../../../../components/InputField/TextArea";
 
-const SigningTransactions = ({ accountSigningType }) => (
+export const SigningTransactions = ({ accountSigningType }) => (
   <RadioGroup
     indexes={INPUT_ID_INDEX}
     id="SigAcntSig.accountSigningType"
@@ -16,5 +16,3 @@ const SigningTransactions = ({ accountSigningType }) => (
     )}
   </RadioGroup>
 );
-
-export default SigningTransactions;

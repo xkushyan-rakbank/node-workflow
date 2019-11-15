@@ -6,13 +6,13 @@ import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper";
 import AddButton from "../../../../components/Buttons/AddButton";
 import Divider from "../../../../components/Divider";
-import ConfirmingTransactions from "./ConfirmingTransactions/ConfirmingTransactions";
-import SigningTransactions from "./SigningTransactions/SigningTransactions";
+import { ConfirmingTransactions } from "./ConfirmingTransactions";
+import { SigningTransactions } from "./SigningTransactions";
 import { ContactGroup } from "./ContactGroup";
 
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
-export const SigningPreferences = props => {
+export const SigningPreferencesComponent = props => {
   const {
     signatoryInfo,
     accountSigningType,
@@ -20,7 +20,7 @@ export const SigningPreferences = props => {
     goToNext,
     updateProspect
   } = props;
-  const classes = styles();
+  const classes = useStyles();
 
   const authorityToSignType = get(props, "accountSigningType.value");
   useEffect(() => {

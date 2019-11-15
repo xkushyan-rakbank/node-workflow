@@ -11,13 +11,13 @@ import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper
 import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
 
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 import { INPUT_ID_INDEX, INPUT_ID_INDEXES } from "../../constants";
 
-export const AccountDetails = props => {
+export const AccountDetailsComponent = props => {
   const { islamicBanking, branchCityValue, branchCityConfig, goToNext } = props;
   const subOptions = getOptionsForSubId(branchCityValue, branchCityConfig, true);
-  const classes = styles();
+  const classes = useStyles();
 
   return (
     <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>

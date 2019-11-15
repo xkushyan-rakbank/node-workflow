@@ -6,7 +6,7 @@ import { ACCOUNTS_SIGNING_NAME_ALL } from "../../../constants";
 import Divider from "../../../../../components/Divider";
 
 import brief from "../../../../../assets/icons/brief.png";
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
 export const CompanyCard = ({
   companyName = "Company name",
@@ -14,7 +14,7 @@ export const CompanyCard = ({
   signatoryInfo,
   account
 }) => {
-  const classes = styles();
+  const classes = useStyles();
   const accountType = get(applicationInfo, "accountType");
   const rakValuePackage = get(applicationInfo, "rakValuePackage");
 

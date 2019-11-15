@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const styles = makeStyles({
+export const useStyles = makeStyles({
   checkboxesWrapper: {
     "&>label": {
       marginBottom: "20px"

@@ -1,13 +1,14 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
 import get from "lodash/get";
 
 import InfoTitle from "../../../../../components/InfoTitle";
 import TextInput from "../../../../../components/InputField/TextInput";
 
-import { styled } from "./styled";
+import { useStyles } from "./styled";
 
-const SignatoriesList = ({ classes, stakeholders }) => {
+export const SignatoriesList = ({ stakeholders }) => {
+  const classes = useStyles();
+
   return (
     <>
       <div className={classes.signatoryLabel}>Signatory name</div>
@@ -36,5 +37,3 @@ const SignatoriesList = ({ classes, stakeholders }) => {
     </>
   );
 };
-
-export default withStyles(styled)(SignatoriesList);

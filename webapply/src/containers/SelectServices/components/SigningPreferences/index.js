@@ -5,7 +5,7 @@ import * as appConfigSelectors from "../../../../store/selectors/appConfig";
 import { getGeneralInputProps } from "../../../../store/selectors/input";
 import { updateProspect } from "../../../../store/actions/appConfig";
 
-import { SigningPreferences } from "./SigningPreferences";
+import { SigningPreferencesComponent } from "./SigningPreferences";
 
 const mapStateToProps = state => ({
   signatoryInfo: appConfigSelectors.getSignatories(state),
@@ -18,9 +18,9 @@ const mapDispatchToProps = {
   updateProspect
 };
 
-export default compose(
+export const SigningPreferences = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
   )
-)(SigningPreferences);
+)(SigningPreferencesComponent);

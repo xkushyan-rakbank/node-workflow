@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import BackLink from "../../components/Buttons/BackLink";
 import SubmitButton from "../../components/Buttons/SubmitButton";
-import SubmitApplication from "./components/SubmitApplication/";
+import { SubmitApplication } from "./components/SubmitApplication";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 
 import routes from "../../routes";
@@ -10,10 +10,10 @@ import { getSelectedTypeCurrency } from "../../utils/SelectServices";
 import { servicesSteps, accountsNames } from "../../constants/index";
 import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP } from "./constants";
 
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
-export const SelectServices = props => {
-  const classes = styles();
+export const SelectServicesComponent = props => {
+  const classes = useStyles();
   const [step, setStep] = useState(1);
   const [canSubmit, setCanSubmit] = useState(false);
   const { accountType, rakValuePackage, accountCurrencies } = props;

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const style = makeStyles({
+export const useStyles = makeStyles({
   formWrapper: {
     margin: 0,
     position: "relative"

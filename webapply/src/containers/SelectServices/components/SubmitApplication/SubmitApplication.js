@@ -7,10 +7,10 @@ import Button from "../../../../components/Buttons/SubmitButton";
 import BackLink from "../../../../components/Buttons/BackLink";
 import FormTitle from "../../../../components/FormTitle";
 import ErrorMessage from "../../../../components/ErrorMessage";
-import { CompanyCard } from "./CompanyCard/CompanyCard";
-import { BlockConfirm } from "./BlockConfirm/BlockConfirm";
+import { CompanyCard } from "./CompanyCard";
+import { BlockConfirm } from "./BlockConfirm";
 
-export const SubmitApplication = props => {
+export const SubmitApplicationComponent = props => {
   const [checkBoxValues, setIsInformationProvided] = useState({
     isInformationProvided: false,
     areTermsAgreed: false,
