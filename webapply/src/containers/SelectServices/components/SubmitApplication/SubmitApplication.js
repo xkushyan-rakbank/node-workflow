@@ -2,12 +2,11 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose } from "recompose";
+import { compose } from "redux";
 
 import { submitApplication } from "../../../../constants/index";
 import * as appConfigSelectors from "../../../../store/selectors/appConfig";
 import routes from "../../../../routes";
-import brief from "../../../../assets/icons/brief.png";
 
 import Checkbox from "../../../../components/InputField/Checkbox";
 import Button from "../../../../components/Buttons/SubmitButton";
@@ -15,62 +14,22 @@ import BackLink from "../../../../components/Buttons/BackLink";
 import FormTitle from "../../../../components/FormTitle";
 import ErrorMessage from "../../../../components/ErrorMessage";
 
+import { CompanyCard } from "./CompanyCard/CompanyCard";
+
+// TODO refactor styles
 const style = {
   checkboxesWrapper: {
     "&>label": {
       marginBottom: "20px"
     }
   },
-  divider: {
-    margin: "26.5px 0 23.5px",
-    borderTop: "1px solid rgba(230, 230, 230, 0.5)",
-    marginBottom: "24px"
-  },
   listItem: {
     display: "block"
-  },
-  card: {
-    minHeight: "236px",
-    margin: "auto auto 40px",
-    padding: "40px 20px 42px 20px",
-    textAlign: "center",
-    borderRadius: "8px",
-    boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#ffffff",
-    backgroundImage: "linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0))"
-  },
-  icon: {
-    width: "37px",
-    height: "37px",
-    border: "solid 1.5px #e9e9ed",
-    borderRadius: "50%",
-    margin: "auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    "&>svg": {
-      fontSize: "20px"
-    }
-  },
-  mainTitle: {
-    fontSize: "20px",
-    fontWeight: 600,
-    lineHeight: 1.4,
-    color: "#373737"
-  },
-  secondaryTitle: {
-    fontSize: "14px",
-    fontWeight: 600,
-    lineHeight: 1.29,
-    color: "#263d4c"
   },
   grayText: {
     fontSize: "14px",
     lineHeight: 1.29,
     color: "#86868b"
-  },
-  indent: {
-    marginBottom: "15px"
   }
 };
 
@@ -156,32 +115,20 @@ class SubmitApplication extends React.Component {
     return (
       <>
         <FormTitle title={submitApplication.formTitle} info={submitApplication.formInfo} />
-        <div className={classes.card}>
-          <div className={classes.icon}>
-            <img src={brief} alt="brief" width={24} height={24} />
-          </div>
-          <div className={classes.mainTitle}>{companyName}</div>
-          <div className={classes.grayText}>{accountType}</div>
-          <div className={classes.divider} />
-          {signatoryInfo.length > 0 && (
-            <div className={classes.indent}>
-              <div className={classes.secondaryTitle}>Company Stakeholders</div>
-              {stakeholders}
-            </div>
-          )}
-          <div className={classes.secondaryTitle}>Services selected</div>
-          <div className={classes.grayText}>{currencies}</div>
-          {/* TODO not implemented yet */}
-          <div className={classes.grayText}>{accntSignInMsg}</div>
-          {isDebitCardApplied && (
-            <div className={classes.grayText}>Debit cards for all signatories</div>
-          )}
-          {isChequeBookApplied && (
-            <div className={classes.grayText}>Cheque book for the company</div>
-          )}
-          {isOnlineBankingApplied && <div className={classes.grayText}>Online bank statements</div>}
-          <div className={classes.grayText}>{rakValuePackage}</div>
-        </div>
+        {/* TODO refactor props*/}
+        <CompanyCard
+          companyName={companyName}
+          accountType={accountType}
+          signatoryInfo={signatoryInfo}
+          stakeholders={stakeholders}
+          currencies={currencies}
+          accntSignInMsg={accntSignInMsg}
+          isDebitCardApplied={isDebitCardApplied}
+          isChequeBookApplied={isChequeBookApplied}
+          isOnlineBankingApplied={isOnlineBankingApplied}
+          rakValuePackage={rakValuePackage}
+        />
+
         {isAgentLoggedIn && (
           <div className={classes.checkboxesWrapper}>
             <Checkbox
@@ -228,7 +175,9 @@ class SubmitApplication extends React.Component {
             />
           </div>
         )}
+
         {isError && <ErrorMessage error={chkboxErrorMessage} />}
+
         <div className="linkContainer">
           <BackLink path={routes.selectServices} />
           <Button
@@ -242,7 +191,7 @@ class SubmitApplication extends React.Component {
     );
   }
 }
-
+// TODO MOVE TO INDEX
 const mapStateToProps = state => ({
   applicationInfo: appConfigSelectors.getApplicationInfo(state),
   accountInfo: appConfigSelectors.getAccountInfo(state),
@@ -250,7 +199,7 @@ const mapStateToProps = state => ({
   organizationInfo: appConfigSelectors.getOrganizationInfo(state),
   isAgentLoggedIn: appConfigSelectors.getIsAgentLoggedIn(state)
 });
-
+// TODO MOVE TO INDEX
 export default compose(
   connect(mapStateToProps),
   withStyles(style),
