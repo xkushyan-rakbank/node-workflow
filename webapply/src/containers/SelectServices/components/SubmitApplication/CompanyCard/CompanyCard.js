@@ -1,23 +1,34 @@
 import React from "react";
+import get from "lodash/get";
 
-import brief from "../../../../../assets/icons/brief.png";
+import { ACCOUNTS_SIGNING_NAME_ALL } from "../../../constants";
 
 import Divider from "../../../../../components/Divider";
 
+import brief from "../../../../../assets/icons/brief.png";
 import { styles } from "./styled";
-// TODO refactor accept props
+
 export const CompanyCard = ({
-  companyName,
-  accountType,
+  companyName = "Company name",
+  applicationInfo,
   signatoryInfo,
-  accntSignInMsg,
-  isDebitCardApplied,
-  isChequeBookApplied,
-  isOnlineBankingApplied,
-  rakValuePackage,
-  currencies
+  account
 }) => {
   const classes = styles();
+  const accountType = get(applicationInfo, "accountType");
+  const rakValuePackage = get(applicationInfo, "rakValuePackage");
+
+  const currencies = get(account, "accountCurrencies");
+  const isDebitCardApplied = get(account, "debitCardApplied");
+  const isChequeBookApplied = get(account, "chequeBookApplied");
+  const isOnlineBankingApplied = get(account, "eStatements");
+
+  const accntSignInType = get(signatoryInfo[0], "accountSigningInfo.accountSigningType");
+  let accntSignInMsg;
+  if (accntSignInType === ACCOUNTS_SIGNING_NAME_ALL) {
+    accntSignInMsg = "Any of you can sign";
+  }
+
   return (
     <div className={classes.card}>
       <div className={classes.icon}>
@@ -28,7 +39,7 @@ export const CompanyCard = ({
 
       <Divider classes={{ divider: classes.divider }} />
       {/* TODO refactor signatoryInfo.length > 0*/}
-      {signatoryInfo.length > 0 && (
+      {signatoryInfo.length ? (
         <div className={classes.indent}>
           <div className={classes.secondaryTitle}>Company Stakeholders</div>
 
@@ -38,11 +49,11 @@ export const CompanyCard = ({
             </div>
           ))}
         </div>
-      )}
+      ) : null}
 
       <div className={classes.secondaryTitle}>Services selected</div>
       <div className={classes.grayText}>{currencies}</div>
-      {/* TODO not implemented yet */}
+
       <div className={classes.grayText}>{accntSignInMsg}</div>
       {isDebitCardApplied && (
         <div className={classes.grayText}>Debit cards for all signatories</div>

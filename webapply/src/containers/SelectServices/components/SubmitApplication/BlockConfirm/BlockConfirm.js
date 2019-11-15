@@ -4,15 +4,13 @@ import Checkbox from "../../../../../components/InputField/Checkbox";
 
 import { styles } from "./styled";
 import { submitApplication } from "../../../../../constants";
-// TODO refactor props
+
 export const BlockConfirm = ({
   isAgentLoggedIn,
-  isInformationProvided,
   onChange,
-  areTermsAgreed,
   tncClicked,
   termsEnrolmentClicked,
-  needCommunication
+  checkBoxValues: { isInformationProvided, needCommunication, areTermsAgreed }
 }) => {
   const classes = styles();
 

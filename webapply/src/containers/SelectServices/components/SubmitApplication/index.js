@@ -3,7 +3,7 @@ import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 
 import * as appConfigSelectors from "../../../../store/selectors/appConfig";
-import SubmitApplication from "./SubmitApplication";
+import { SubmitApplication } from "./SubmitApplication";
 
 const mapStateToProps = state => ({
   applicationInfo: appConfigSelectors.getApplicationInfo(state),
