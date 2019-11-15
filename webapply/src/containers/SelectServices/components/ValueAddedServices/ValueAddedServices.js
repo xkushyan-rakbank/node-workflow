@@ -1,10 +1,10 @@
 import React from "react";
 import cx from "classnames";
 
+import { mockData } from "../../../../components/ExpandedOptionsCards/constants";
 import { accountsNames } from "../../../../constants/index";
 import { getSelectedTypeCurrency } from "../../../../utils/SelectServices";
 import { getButtonText } from "./utils";
-import { mockData } from "../../../../components/ExpandedOptionsCards/constants";
 
 import ExpandedDetailedOptionsCard from "../../../../components/ExpandedOptionsCards/ExpandedDetailedOptionsCard";
 import { getUrlReadMore } from "../../../../components/ExpandedOptionsCards/ExpandedOptionsCards";

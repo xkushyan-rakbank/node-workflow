@@ -22,9 +22,9 @@ export const SelectServices = props => {
   const handleContinue = () => {
     if (step < servicesSteps.length) {
       setNextStep();
-    } else {
-      setCanSubmit(true);
+      return;
     }
+    setCanSubmit(true);
   };
 
   useEffect(() => {
