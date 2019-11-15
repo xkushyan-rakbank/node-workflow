@@ -43,8 +43,7 @@ function* receiveAppConfigSaga() {
     };
 
     if (!isEmpty(endpoints)) {
-      // const product = getApplicationInfo.accountType;
-      const product = "RAKelite";
+      const product = getApplicationInfo.accountType;
 
       response = yield call(apiClient.config.load, product, segment);
     } else {
