@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import { getInputValueById, getFieldConfigById } from "../../store/selectors/input";
 import Checkbox from "../InputField/RefactoredCheckbox";
 import CheckboxGroup from "../InputField/CheckboxGroup";
-import FormWrapper from "../StakeholderStepForms/FormWrapper";
+import FormWrapper from "../StakeholderStepForms/FormWrapper/FormWrapper";
 import PureSelect from "../InputField/PureSelect";
 import { getOptionsForSubId } from "../../utils/getInputSubOptions";
 

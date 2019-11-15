@@ -23,6 +23,7 @@ import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import routes from "./../../routes";
+import { updateStakeholdersIds } from "../actions/stakeholders";
 
 function* receiveAppConfigSaga() {
   try {
@@ -96,8 +97,13 @@ function* updateActionTypeSaga({ actionType }) {
 function* resetProspectSaga() {
   const state = yield select();
   const prospect = state.sendProspectToAPI.prospectCopy;
-
+  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
   yield put(setProspect(prospect));
+
+  if (prospect.signatoryInfo.length !== stakeholdersIds.length) {
+    stakeholdersIds.pop();
+    yield put(updateStakeholdersIds(stakeholdersIds));
+  }
 }
 
 function* updateViewIdSaga({ viewId }) {
