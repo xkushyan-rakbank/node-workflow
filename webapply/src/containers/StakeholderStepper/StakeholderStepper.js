@@ -66,23 +66,25 @@ const StakeholderStepper = props => {
     ? { content: renderContent(), firstName, lastName }
     : { firstName: "New Stakeholder", lastName: "" };
 
+  const isFilled = itemStep => !isNewStakeholder || completedStep >= itemStep - 1;
+  const handleSetStep = item => (isFilled(item.step) ? props.handleChangeStep(item) : {});
+  const continueHandler = (itemStep, index) => {
+    switch (itemStep) {
+      case STEP_1:
+        return props.formatPersonalInformation(index);
+      case STEP_4:
+        return props.formatNationality(index);
+      default:
+        return props.sendProspectToAPI();
+    }
+  };
+
   return (
     <CompanyStakeholderCard {...cardProps} index={orderIndex}>
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => {
-          const isFilled = isNewStakeholder ? completedStep >= item.step - 1 : true;
-          const setStep = () => (isFilled ? props.handleChangeStep(item) : {});
-
-          const handleContinue = () => {
-            switch (item.step) {
-              case STEP_1:
-                return props.formatPersonalInformation(index);
-              case STEP_4:
-                return props.formatNationality(index);
-              default:
-                return props.sendProspectToAPI();
-            }
-          };
+          const setStep = () => handleSetStep(item);
+          const handleContinue = () => continueHandler(item.step, index);
 
           return (
             <StepComponent

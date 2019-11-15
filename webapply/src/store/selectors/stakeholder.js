@@ -15,14 +15,11 @@ export const stakeholdersSelector = createSelector(
     }))
 );
 
-export const percentageSelector = createSelector(
-  stakeholders,
-  stakeholders =>
-    stakeholders.length
-      ? stakeholders.reduce(
-          (previousValue, currentValue) =>
-            previousValue + +currentValue.kycDetails.shareHoldingPercentage,
-          0
-        )
-      : 0
-);
+export const percentageSelector = state => {
+  const stakeholdersList = stakeholders(state);
+  return stakeholdersList.reduce(
+    (previousValue, currentValue) =>
+      previousValue + +currentValue.kycDetails.shareHoldingPercentage,
+    0
+  );
+};

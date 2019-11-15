@@ -46,7 +46,7 @@ function* createNewStakeholderSaga() {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
   const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
-  const stakeholderId = uniqueId(new Date().getTime());
+  const stakeholderId = uniqueId();
   stakeholdersIds.push(stakeholderId);
 
   const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
