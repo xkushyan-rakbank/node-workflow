@@ -1,4 +1,6 @@
-export const styled = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   formWrapper: {
     margin: 0,
     position: "relative"
@@ -17,4 +19,4 @@ export const styled = {
   cardAppliedCheckbox: {
     marginTop: "10px"
   }
-};
+});

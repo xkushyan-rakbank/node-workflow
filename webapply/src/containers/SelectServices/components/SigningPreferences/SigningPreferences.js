@@ -1,42 +1,33 @@
 import React, { useEffect } from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core";
 import get from "lodash/get";
 
-import * as appConfigSelectors from "../../../../store/selectors/appConfig";
-import { getGeneralInputProps } from "../../../../store/selectors/input";
-import { updateProspect } from "../../../../store/actions/appConfig";
+import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper";
 import AddButton from "../../../../components/Buttons/AddButton";
 import Divider from "../../../../components/Divider";
-import ConfirmingTransactions from "./ConfirmingTransactions/ConfirmingTransactions";
-import ContactGroup from "./ContactGroup";
-import SigningTransactions from "./SigningTransactions/SigningTransactions";
+import { ConfirmingTransactions } from "./ConfirmingTransactions";
+import { SigningTransactions } from "./SigningTransactions";
+import { ContactGroup } from "./ContactGroup";
 
-import { styled } from "./styled";
+import { useStyles } from "./styled";
 
-export const accountSigningNameOther = "Others";
-
-const SigningPreferences = props => {
+export const SigningPreferencesComponent = props => {
   const {
-    classes,
     signatoryInfo,
     accountSigningType,
     accountSigningInstn,
     goToNext,
     updateProspect
   } = props;
-  const authorityToSignType = get(props, "accountSigningType.value");
+  const classes = useStyles();
 
+  const authorityToSignType = get(props, "accountSigningType.value");
   useEffect(() => {
-    if (authorityToSignType !== accountSigningNameOther) {
+    if (authorityToSignType !== ACCOUNTS_SIGNING_NAME_OTHER) {
       updateProspect({ [accountSigningInstn.name]: "" });
     }
   }, [authorityToSignType, updateProspect, accountSigningInstn.name]);
-
-  const getValueInput = (index, signatoryInfo) => get(signatoryInfo[index], "fullName", "");
 
   const handleAddPerson = () => {
     const { signInfoFullNameInput } = props;
@@ -53,21 +44,9 @@ const SigningPreferences = props => {
       <SigningTransactions accountSigningType={accountSigningType} />
 
       <Divider />
-
       <ConfirmingTransactions />
 
-      {signatoryInfo.length ? (
-        signatoryInfo.map((person, index) => (
-          <ContactGroup
-            key={index}
-            index={index}
-            isRequired={getValueInput(index, signatoryInfo)}
-          />
-        ))
-      ) : (
-        <ContactGroup index={0} />
-      )}
-
+      <ContactGroup signatoryInfo={signatoryInfo} />
       <AddButton
         title="Add another person"
         onClick={handleAddPerson}
@@ -76,22 +55,3 @@ const SigningPreferences = props => {
     </FormWrapper>
   );
 };
-
-const mapStateToProps = state => ({
-  signatoryInfo: appConfigSelectors.getSignatories(state),
-  signInfoFullNameInput: getGeneralInputProps(state, "Sig.fullName", [0]),
-  accountSigningType: getGeneralInputProps(state, "SigAcntSig.accountSigningType", [0]),
-  accountSigningInstn: getGeneralInputProps(state, "SigAcntSig.accountSigningInstn", [0])
-});
-
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export default compose(
-  withStyles(styled),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(SigningPreferences);
