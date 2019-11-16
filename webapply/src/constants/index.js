@@ -1,9 +1,9 @@
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
-import AccountDetails from "../components/ServicesStepForms/AccountDetails";
-import SigningPreferences from "../components/ServicesStepForms/SigningPreferences";
-import Channels from "../components/ServicesStepForms/Channels";
-import ValueAddedServices from "../components/ServicesStepForms/ValueAddedServices";
+import { AccountDetails } from "../containers/SelectServices/components/AccountDetails";
+import { SigningPreferences } from "../containers/SelectServices/components/SigningPreferences";
+import { Channels } from "../containers/SelectServices/components/Channels";
+import { ValueAddedServices } from "../containers/SelectServices/components/ValueAddedServices";
 import CompanyDetails from "../components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "../components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";
@@ -182,23 +182,20 @@ export const servicesSteps = [
     step: 1,
     title: "Account details",
     component: AccountDetails,
-    icon: accountDetails,
-    titleInfo: ""
+    icon: accountDetails
   },
   {
     step: 2,
     title: "Signing preferences",
     component: SigningPreferences,
-    icon: signingPreferences,
-    titleInfo: ""
+    icon: signingPreferences
   },
   { step: 3, title: "Channels", component: Channels, icon: channels, titleInfo: "" },
   {
     step: 4,
     title: "Value added services",
     component: ValueAddedServices,
-    icon: valueAddedServices,
-    titleInfo: "RAKvalue package available to AED account only"
+    icon: valueAddedServices
   }
 ];
 
