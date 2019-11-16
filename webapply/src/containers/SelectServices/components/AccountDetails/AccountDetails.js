@@ -7,7 +7,7 @@ import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
 import CheckboxGroup from "../../../../components/InputField/CheckboxGroup";
 import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
 import PureSelect from "../../../../components/InputField/PureSelect";
-import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper";
+import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
 import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
 

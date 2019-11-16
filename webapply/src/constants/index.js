@@ -1,11 +1,5 @@
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
-import PersonalInformation from "../components/StakeholderStepForms/PersonalInformation";
-import SignatoryRights from "../components/StakeholderStepForms/SignatoryRights";
-import Shareholding from "../components/StakeholderStepForms/Shareholding";
-import Nationality from "../components/StakeholderStepForms/Nationality";
-import CountryOfResidence from "../components/StakeholderStepForms/CountryOfResidence";
-import PreferredContactInformation from "../components/StakeholderStepForms/PreferredContactInformation";
 import { AccountDetails } from "../containers/SelectServices/components/AccountDetails";
 import { SigningPreferences } from "../containers/SelectServices/components/SigningPreferences";
 import { Channels } from "../containers/SelectServices/components/Channels";
@@ -33,31 +27,6 @@ import SignatoryPreferredMailingAddressForm from "../components/FinalQuestions/S
 import SignatoryEmploymentDetailsForm from "../components/FinalQuestions/SignatoryEmploymentDetailsForm";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
-
-export const stakeHoldersSteps = [
-  {
-    step: 1,
-    title: "Personal Information",
-    component: PersonalInformation
-  },
-  {
-    step: 2,
-    title: "Signatory Rights",
-    component: SignatoryRights
-  },
-  { step: 3, title: "Shareholding", component: Shareholding },
-  { step: 4, title: "Nationality", component: Nationality },
-  {
-    step: 5,
-    title: "Country of residence",
-    component: CountryOfResidence
-  },
-  {
-    step: 6,
-    title: "Preferred contact information",
-    component: PreferredContactInformation
-  }
-];
 
 export const aboutCompanySteps = [
   {

@@ -26,7 +26,7 @@ const PreferredContactInformation = props => {
               <PureSelect
                 id="SigCont.primaryMobCountryCode"
                 indexes={[index]}
-                defaultValue="UAE"
+                defaultValue="971"
                 combinedSelect
                 disabled={!isSignatory}
               />
@@ -42,7 +42,7 @@ const PreferredContactInformation = props => {
               <PureSelect
                 id="SigCont.primaryPhoneCountryCode"
                 indexes={[index]}
-                defaultValue="UAE"
+                defaultValue="971"
                 combinedSelect
                 disabled={!isSignatory}
               />

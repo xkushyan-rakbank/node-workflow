@@ -1,26 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core";
-import TextInput from "../InputField/TextInput";
-import DatePicker from "../InputField/DatePicker";
-import CustomCheckbox from "../InputField/RefactoredCheckbox";
-import PureSelect from "../InputField/PureSelect";
-import { getInputValueById } from "../../store/selectors/input";
-import { updateProspect } from "../../store/actions/appConfig";
-import InlineRadioGroup from "../InputField/InlineRadioGroup";
-import InfoTitle from "../InfoTitle";
-
-const styles = {
-  divider: {
-    height: "1px",
-    backgroundColor: "rgba(230, 230, 230, 0.5)",
-    margin: "30px 0 20px"
-  }
-};
+import TextInput from "../../InputField/TextInput";
+import DatePicker from "../../InputField/DatePicker";
+import CustomCheckbox from "../../InputField/RefactoredCheckbox";
+import PureSelect from "../../InputField/PureSelect";
+import { getInputValueById } from "../../../store/selectors/input";
+import { updateProspect } from "../../../store/actions/appConfig";
+import InlineRadioGroup from "../../InputField/InlineRadioGroup";
+import InfoTitle from "../../InfoTitle";
+import { useStyles } from "./styled";
 
 const PersonalInformation = props => {
-  const { index, isShareholderACompany, classes } = props;
+  const classes = useStyles();
+  const { index, isShareholderACompany } = props;
   return (
     <>
       <Grid item container spacing={3}>
@@ -70,9 +63,7 @@ const mapStateToProps = (state, { index }) => ({
 
 const mapDispatchToProps = { updateProspect };
 
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(PersonalInformation)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PersonalInformation);
