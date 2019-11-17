@@ -264,3 +264,5 @@ export const applicationStatus = {
       "It`s our fault, not yours. We`ve have been notified of the problem. In the meantime, try refreshing or see the JavaScript console for technical details."
   }
 };
+
+export const IS_RECAPTCHA_ENABLE = false;

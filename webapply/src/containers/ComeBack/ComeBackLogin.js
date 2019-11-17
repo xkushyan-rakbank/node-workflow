@@ -1,50 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
+
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import TextInput from "../../components/InputField/TextInput";
 import PureSelect from "../../components/InputField/PureSelect";
 import TextHelpWithLink from "../../components/TextHelpWithLink";
 import SubmitButton from "../../components/Buttons/SubmitButton";
-// import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
-// import ErrorBoundary from "../../components/ErrorBoundary";
-// import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
+import ErrorBoundary from "../../components/ErrorBoundary";
+import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
-// import * as reCaptchaSelectors from "../../store/selectors/reCaptcha";
+import { getReCaptchaToken } from "../../store/selectors/reCaptcha";
 import { isOtpGenerated } from "../../store/selectors/otp";
 import { getInputValueById } from "../../store/selectors/input";
 import routes from "./../../routes";
-import { history } from "./../../store/configureStore";
+import { IS_RECAPTCHA_ENABLE } from "../../constants";
 import { useStyles } from "./styled";
 
-const ComeBackLogin = props => {
+const ComeBackLogin = ({
+  history,
+  email,
+  mobileNo,
+  countryCode,
+  generateOtpCode,
+  isOtpGenerated,
+  setToken = () => {},
+  setVerified
+}) => {
   const classes = useStyles();
-  // static defaultProps = {
-  //   setToken: () => {}
-  // };
-
-  const submitForm = event => {
-    event.preventDefault();
-    generateOtpCode();
-  };
+  const submitForm = useCallback(
+    event => {
+      event.preventDefault();
+      generateOtpCode();
+    },
+    [generateOtpCode]
+  );
+  const handleReCaptchaVerify = useCallback(
+    token => {
+      setToken(token);
+    },
+    [setToken]
+  );
+  const handleVerifiedFailed = useCallback(() => {
+    setVerified(false);
+  }, [setVerified]);
 
   useEffect(() => {
-    isOtpGenerated && history.push(routes.comeBackLoginVerification);
-  });
+    if (isOtpGenerated) {
+      history.push(routes.comeBackLoginVerification);
+    }
+  }, [history, isOtpGenerated]);
 
-  // handleReCaptchaVerify = token => {
-  //   this.props.setToken(token);
-  // };
-
-  // handleReCaptchaExpired = () => {
-  //   this.props.setVerified(false);
-  // };
-
-  // handleReCaptchaError = error => {
-  //   console.error(error);
-  //   this.props.setVerified(false);
-  // };
-
-  const { email, mobileNo, countryCode, generateOtpCode, isOtpGenerated } = props;
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
@@ -64,13 +70,15 @@ const ComeBackLogin = props => {
           <TextHelpWithLink text="Can’t remember your login?" linkText="Chat with us" linkTo="#" />
         </div>
 
-        {/* <ErrorBoundary className={classes.reCaptchaContainer}>
+        {IS_RECAPTCHA_ENABLE && (
+          <ErrorBoundary className={classes.reCaptchaContainer}>
             <ReCaptcha
-              onVerify={this.handleReCaptchaVerify}
-              onExpired={this.handleReCaptchaExpired}
-              onError={this.handleReCaptchaError}
+              onVerify={handleReCaptchaVerify}
+              onExpired={handleVerifiedFailed}
+              onError={handleVerifiedFailed}
             />
-          </ErrorBoundary> */}
+          </ErrorBoundary>
+        )}
 
         <SubmitButton
           label="Next"
@@ -84,16 +92,16 @@ const ComeBackLogin = props => {
 
 const mapStateToProps = state => ({
   isOtpGenerated: isOtpGenerated(state),
-  // reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
+  reCaptchaToken: getReCaptchaToken(state),
   email: getInputValueById(state, "Aplnt.email"),
   mobileNo: getInputValueById(state, "Aplnt.mobileNo"),
   countryCode: getInputValueById(state, "Aplnt.countryCode")
 });
 
 const mapDispatchToProps = {
-  generateOtpCode
-  // setToken,
-  // setVerified
+  generateOtpCode,
+  setToken,
+  setVerified
 };
 
 export default connect(
