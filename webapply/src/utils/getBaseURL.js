@@ -1,4 +1,4 @@
-import store from "./../store/configureStore";
+import { store } from "./../store";
 import isEmpty from "lodash/isEmpty";
 
 const LOCALHOST = "localhost";

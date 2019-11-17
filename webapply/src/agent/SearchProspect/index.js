@@ -12,14 +12,15 @@ import * as inputSelectors from "./../../store/selectors/input";
 import * as appConfigSelectors from "./../../store/selectors/appConfig";
 import * as loginSelector from "./../../store/selectors/loginSelector";
 import * as getSearchResult from "./../../store/selectors/searchProspect";
-import { history } from "./../../store/configureStore";
 import routes from "../../routes";
 import { styles } from "./styled";
 import { titles } from "./constants";
 
 class SearchProspect extends React.Component {
-  componentWillMount() {
-    !this.props.checkLoginStatus && history.push(routes.login);
+  UNSAFE_componentWillMount() {
+    if (!this.props.checkLoginStatus) {
+      return this.props.history.push(routes.login);
+    }
   }
 
   handleSubmit = event => {

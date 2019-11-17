@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "./../store/configureStore";
+import { store } from "./../store";
 import { setInputsErrors } from "./../store/actions/serverValidation";
 import { setError } from "./../store/actions/reCaptcha";
 import {

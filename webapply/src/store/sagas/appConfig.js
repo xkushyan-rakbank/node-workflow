@@ -18,7 +18,7 @@ import {
   saveProspectModel
 } from "../actions/appConfig";
 import apiClient from "../../api/apiClient";
-import { history } from "./../configureStore";
+import { history } from "./..";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";

@@ -3,7 +3,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import { history } from "./../store/configureStore";
 import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
@@ -70,7 +69,7 @@ class FormLayout extends React.Component {
 
     this.state = { hasUiError: false };
 
-    history.listen((location, action) => {
+    props.history.listen((location, action) => {
       this.props.applicationStatusReset();
       this.setState({ hasUiError: false });
     });

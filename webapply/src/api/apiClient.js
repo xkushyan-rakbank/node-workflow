@@ -1,5 +1,5 @@
 import httpClient from "./axiosConfig";
-import store from "./../store/configureStore";
+import { store } from "./../store";
 import isEmpty from "lodash/isEmpty";
 
 export const OTP_ACTION_GENERATE = "generate";
