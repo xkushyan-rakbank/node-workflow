@@ -9,7 +9,8 @@ import { routerMiddleware } from "connected-react-router";
 
 const persistConfig = {
   key: "root",
-  storage
+  storage,
+  blacklist: ["router"]
 };
 
 export const configureStore = (initialState, history) => {
