@@ -19,7 +19,7 @@ import { titles } from "./constants";
 class SearchProspect extends React.Component {
   UNSAFE_componentWillMount() {
     if (!this.props.checkLoginStatus) {
-      return this.props.history.push(routes.login);
+      this.props.history.push(routes.login);
     }
   }
 
