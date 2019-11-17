@@ -31,7 +31,7 @@ class SearchedAppInfo extends React.Component {
     if (!this.props.checkLoginStatus) {
       return this.props.history.push(routes.login);
     }
-    if (!this.props.searchResults.length) {
+    if (!Object.keys(this.props.searchResults)) {
       return this.props.history.push(routes.searchProspect);
     }
   }
