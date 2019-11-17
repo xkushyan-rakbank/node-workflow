@@ -14,8 +14,8 @@ function* generateOtp() {
       prospectId: appConfigSelectors.getProspectId(state),
       mobileNo: applicantInfo.mobileNo,
       countryCode: applicantInfo.countryCode,
-      email: applicantInfo.email,
-      recaptchaToken: state.reCaptcha.token
+      email: applicantInfo.email
+      // recaptchaToken: state.reCaptcha.token
     };
 
     const { data } = yield call(apiClient.otp.generate, payload);

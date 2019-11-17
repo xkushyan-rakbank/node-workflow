@@ -1,140 +1,102 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import ContainerComeBack from "./ContainerComeBack";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import TextInput from "../../components/InputField/TextInput";
 import PureSelect from "../../components/InputField/PureSelect";
 import TextHelpWithLink from "../../components/TextHelpWithLink";
 import SubmitButton from "../../components/Buttons/SubmitButton";
-import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
-import ErrorBoundary from "../../components/ErrorBoundary";
-import { setToken, setVerified } from "../../store/actions/reCaptcha";
+// import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
+// import ErrorBoundary from "../../components/ErrorBoundary";
+// import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
-import * as reCaptchaSelectors from "../../store/selectors/reCaptcha";
-import * as otpSelectors from "../../store/selectors/otp";
-import * as inputSelectors from "../../store/selectors/input";
+// import * as reCaptchaSelectors from "../../store/selectors/reCaptcha";
+import { isOtpGenerated } from "../../store/selectors/otp";
+import { getInputValueById } from "../../store/selectors/input";
 import routes from "./../../routes";
+import { history } from "./../../store/configureStore";
+import { useStyles } from "./styled";
 
-const styles = {
-  form: {
-    width: "100%",
-    height: 500,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    "@media only screen and (max-height: 768px)": {
-      height: 350
-    }
-  },
-  reCaptchaContainer: {
-    display: "flex",
-    paddingTop: "10px",
-    justifyContent: "flex-end"
-  }
-};
+const ComeBackLogin = props => {
+  const classes = useStyles();
+  // static defaultProps = {
+  //   setToken: () => {}
+  // };
 
-class ComeBackLogin extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      code: Array(6).fill(""),
-      invalid: false,
-      isValidCode: false,
-      isRegenerateCodeAllow: true
-    };
-    this.regenerateCodeDelay = 10 * 1000;
-  }
-
-  static defaultProps = {
-    setToken: () => {}
-  };
-
-  submitForm = event => {
+  const submitForm = event => {
     event.preventDefault();
-    this.props.generateOtpCode();
+    generateOtpCode();
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.otp.isGenerated && this.props.otp.isGenerated) {
-      this.props.history.push(routes.comeBackLoginVerification);
-    }
-  }
+  useEffect(() => {
+    isOtpGenerated && history.push(routes.comeBackLoginVerification);
+  });
 
-  handleReCaptchaVerify = token => {
-    this.props.setToken(token);
-  };
+  // handleReCaptchaVerify = token => {
+  //   this.props.setToken(token);
+  // };
 
-  handleReCaptchaExpired = () => {
-    this.props.setVerified(false);
-  };
+  // handleReCaptchaExpired = () => {
+  //   this.props.setVerified(false);
+  // };
 
-  handleReCaptchaError = error => {
-    console.error(error);
-    this.props.setVerified(false);
-  };
+  // handleReCaptchaError = error => {
+  //   console.error(error);
+  //   this.props.setVerified(false);
+  // };
 
-  render() {
-    const { classes, email, mobileNo, countryCode, reCaptchaToken } = this.props;
-    return (
-      <ContainerComeBack>
-        <SectionTitleWithInfo
-          title="Wondering about your application? You came to the right place."
-          info="Please enter the login you used when you first applied"
-        />
+  const { email, mobileNo, countryCode, generateOtpCode, isOtpGenerated } = props;
+  return (
+    <div className={classes.centeredContainer}>
+      <SectionTitleWithInfo
+        title="Wondering about your application? You came to the right place."
+        info="Please enter the login you used when you first applied"
+      />
 
-        <form noValidate onSubmit={this.submitForm} className={classes.form}>
-          <div>
-            <TextInput id="Aplnt.email" />
-            <TextInput
-              id="Aplnt.mobileNo"
-              selectId="Aplnt.countryCode"
-              select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="UAE" />}
-            />
+      <form noValidate onSubmit={submitForm} className={classes.form}>
+        <div>
+          <TextInput id="Aplnt.email" />
+          <TextInput
+            id="Aplnt.mobileNo"
+            selectId="Aplnt.countryCode"
+            select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="UAE" />}
+          />
 
-            <TextHelpWithLink
-              text="Can’t remember your login?"
-              linkText="Chat with us"
-              linkTo="#"
-            />
-          </div>
+          <TextHelpWithLink text="Can’t remember your login?" linkText="Chat with us" linkTo="#" />
+        </div>
 
-          <ErrorBoundary className={classes.reCaptchaContainer}>
+        {/* <ErrorBoundary className={classes.reCaptchaContainer}>
             <ReCaptcha
               onVerify={this.handleReCaptchaVerify}
               onExpired={this.handleReCaptchaExpired}
               onError={this.handleReCaptchaError}
             />
-          </ErrorBoundary>
+          </ErrorBoundary> */}
 
-          <SubmitButton
-            label="Next"
-            justify="flex-end"
-            disabled={!email || !countryCode || !mobileNo || !reCaptchaToken}
-          />
-        </form>
-      </ContainerComeBack>
-    );
-  }
-}
+        <SubmitButton
+          label="Next"
+          justify="flex-end"
+          disabled={!email || !countryCode || !mobileNo}
+        />
+      </form>
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({
-  otp: otpSelectors.getOtp(state),
-  reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
-  email: inputSelectors.getInputValueById(state, "Aplnt.email"),
-  mobileNo: inputSelectors.getInputValueById(state, "Aplnt.mobileNo"),
-  countryCode: inputSelectors.getInputValueById(state, "Aplnt.countryCode")
+  isOtpGenerated: isOtpGenerated(state),
+  // reCaptchaToken: reCaptchaSelectors.getReCaptchaToken(state),
+  email: getInputValueById(state, "Aplnt.email"),
+  mobileNo: getInputValueById(state, "Aplnt.mobileNo"),
+  countryCode: getInputValueById(state, "Aplnt.countryCode")
 });
 
 const mapDispatchToProps = {
-  generateOtpCode,
-  setToken,
-  setVerified
+  generateOtpCode
+  // setToken,
+  // setVerified
 };
 
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ComeBackLogin)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComeBackLogin);
