@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
-import ContainerComeBack from "./ContainerComeBack";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 import OtpVerification from "../../components/OtpVerification";
@@ -14,175 +12,87 @@ import { getOtp } from "../../store/selectors/otp";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getInputNameById } from "../../store/selectors/input";
 import routes from "../../routes";
+import { history } from "./../../store/configureStore";
+import { useStyles } from "./styled";
+import { titles, errorMsgs } from "./constants";
 
-const style = {
-  form: {
-    width: "100%",
-    height: 450,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    "@media only screen and (max-height: 768px)": {
-      height: 390
+const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp }) => {
+  const classes = useStyles();
+
+  const [code, setCode] = useState(Array(6).fill(""));
+  const [isValidCode, setIsValidCode] = useState(false);
+  const [isRegenerateCodeAllow, setIsRegenerateCodeAllow] = useState(true);
+  const [loginAttempt, setLoginAttempt] = useState(0);
+
+  useEffect(() => {
+    if (otp.isVerified) {
+      history.push(routes.MyApplications);
     }
-  },
-  goBackContainer: {
-    marginRight: 50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  goBackArrow: {
-    marginRight: 5,
-    "& img": {
-      marginRight: 5
-    }
-  },
-  goBack: {
-    color: "#373737",
-    lineHeight: "1.29",
-    fontWeight: "600",
-    textDecoration: "underline",
-    fontSize: "14px",
-    "&:hover": {
-      textDecoration: "none"
-    }
-  },
-  link: {
-    textDecoration: "underline",
-    cursor: "pointer",
-    opacity: 1,
-    visibility: "visible"
-  },
-  linkDisabled: {
-    opacity: "0.5",
-    cursor: "not-allowed"
-  },
-  linkHide: {
-    opacity: 0,
-    visibility: "hidden"
-  }
-};
+  }, [otp]);
 
-const verificationMsg = {
-  UAE: {
-    title: "We have sent you a verification code on registered mobile number"
-  },
-  NonUAE: {
-    title: "We have sent you a verification code on registered email address"
-  }
-};
-
-class ComeBackVerification extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      code: Array(6).fill(""),
-      invalid: false,
-      isValidCode: false,
-      isRegenerateCodeAllow: true,
-      loginAttempt: 0
-    };
-    this.regenerateCodeDelay = 10 * 1000;
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.resetRegenerateCodeAllowTimeoutId);
-    this.setState({ loginAttempt: 0 });
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
-      this.props.history.push(routes.MyApplications);
-    }
-
-    if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {
-      this.resetRegenerateCodeAllowTimeoutId = setTimeout(
-        () => this.setState({ isRegenerateCodeAllow: true }),
-        this.regenerateCodeDelay
-      );
-    }
-  }
-
-  getFullCode() {
-    return this.state.code.join("");
-  }
-
-  handleSendNewCodeLinkClick = () => {
-    this.setState({ loginAttempt: this.state.loginAttempt + 1 });
-    if (!this.state.isRegenerateCodeAllow) {
-      return;
-    }
-    this.setState({ isRegenerateCodeAllow: false, isValidCode: false });
-    if (this.state.loginAttempt < 3) {
-      this.props.generateOtpCode();
-    }
+  const getFullCode = () => {
+    return code.join("");
   };
 
-  submitForm = e => {
+  const handleSendNewCodeLinkClick = useCallback(() => {
+    const newLoginAttempt = loginAttempt + 1;
+    setLoginAttempt(newLoginAttempt);
+    if (loginAttempt < 3) {
+      generateOtpCode();
+    } else {
+      setIsRegenerateCodeAllow(false);
+    }
+  }, [loginAttempt, generateOtpCode]);
+
+  const submitForm = e => {
     e.preventDefault();
-    // if (this.isCodeValueValid()) {
-    this.props.verifyOtp(this.getFullCode());
-    // } else {
-    // TODO handle incorrect input code from server
-    //   this.setState({ invalid: true });
-    // }
+    verifyOtp(getFullCode());
   };
 
-  isCodeValueValid = ({ isValid, code }) => {
-    this.setState({ isValidCode: isValid, code });
+  const isCodeValueValid = ({ isValid, code }) => {
+    setIsValidCode(isValid);
+    setCode(code);
   };
 
-  render() {
-    const { classes, inputParam } = this.props;
+  let title = "";
+  inputParam.countryCode === "UAE"
+    ? (title = titles.UAE_VERIFICATION_MESSAGE)
+    : (title = titles.NON_UAE_VERIFICATION_MESSAGE);
 
-    let title = "";
-    inputParam.countryCode === "UAE"
-      ? (title = verificationMsg["UAE"].title)
-      : (title = verificationMsg["NonUAE"].title);
+  return (
+    <div className={classes.centeredContainer}>
+      <SectionTitleWithInfo title={title} info={titles.SUB_TITLE} />
 
-    return (
-      <ContainerComeBack>
-        <SectionTitleWithInfo
-          title={title}
-          info="Please enter the six digits below, to confirm this is you"
-        />
-
-        <form noValidate onSubmit={this.submitForm} className={classes.form}>
-          <div>
-            <Grid container item xs={12} direction="row" justify="flex-start">
-              <OtpVerification onChange={this.isCodeValueValid} />
-            </Grid>
-            {this.state.invalid && <ErrorMessage error="Invalid code" />}
-            {this.props.otp.verificationError && <ErrorMessage error="Code verification failed" />}
-            {this.state.loginAttempt > 3 && (
-              <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again" />
-            )}
-            <span>
-              Didn’t get the code?{" "}
-              <span
-                onClick={this.handleSendNewCodeLinkClick}
-                className={cx(classes.link, {
-                  [classes.linkDisabled]: !this.state.isRegenerateCodeAllow
-                  //[classes.linkHide]: this.state.loginAttempt > 3
-                })}
-              >
-                Send a new code
-              </span>
+      <form noValidate onSubmit={submitForm} className={classes.verificationForm}>
+        <div>
+          <Grid container item xs={12} direction="row" justify="flex-start">
+            <OtpVerification onChange={isCodeValueValid} />
+          </Grid>
+          {otp.verificationError && <ErrorMessage error={errorMsgs.VERIFICATION_ERROR} />}
+          {loginAttempt > 3 && <ErrorMessage error={errorMsgs.LOGIN_ATTEMPT_ERROR} />}
+          <span>
+            Didn’t get the code?
+            <span
+              onClick={handleSendNewCodeLinkClick}
+              className={cx(classes.link, {
+                [classes.linkDisabled]: !isRegenerateCodeAllow
+              })}
+            >
+              Send a new code
             </span>
-          </div>
+          </span>
+        </div>
 
-          <SubmitButton
-            disabled={!this.state.isValidCode || this.props.otp.isPending}
-            label="Next Step"
-            justify="flex-end"
-            containerExtraStyles={{ width: "auto", margin: 0 }}
-          />
-        </form>
-      </ContainerComeBack>
-    );
-  }
-}
+        <SubmitButton
+          disabled={!isValidCode || otp.isPending}
+          label="Next Step"
+          justify="flex-end"
+          containerExtraStyles={{ width: "auto", margin: 0 }}
+        />
+      </form>
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({
   otp: getOtp(state),
@@ -202,9 +112,7 @@ const mapDispatchToProps = {
   verifyOtp
 };
 
-export default withStyles(style)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ComeBackVerification)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComeBackVerification);
