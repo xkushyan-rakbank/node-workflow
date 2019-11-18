@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { Input, CustomSelect, InputGroup } from "./../../components/Form";
-import { EMAIL_REGEX, NAME_REGEX } from "./../../utils/validation";
+import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { countryCodeOptions } from "./../../constants/options";
 import SubmitButton from "./../../components/Buttons/SubmitButton";
 import { prospect } from "./../../constants/config";
@@ -18,7 +18,9 @@ const AplicantInfoSchema = Yup.object({
     .required("You need to provide Email address")
     .matches(EMAIL_REGEX, "This is not a valid Email address"),
   countryCode: Yup.string().required("Select country code"),
-  mobileNo: Yup.string().required("You need to provide mobile number")
+  mobileNo: Yup.string()
+    .required("You need to provide mobile number")
+    .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
 const ApplicantInfoPage = props => {

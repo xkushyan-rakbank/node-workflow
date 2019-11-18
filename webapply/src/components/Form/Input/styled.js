@@ -19,7 +19,8 @@ export const useStyles = makeStyles({
     margin: "12px 0 20px",
     position: "relative",
     "& > div": {
-      width: "auto"
+      width: "auto",
+      margin: "0 !important"
     },
     "& div::after": {
       opacity: 0
