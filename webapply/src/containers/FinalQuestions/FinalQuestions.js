@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SubmitButton from "../../components/Buttons/SubmitButton";
-import CompanySummaryCard from "./components/CompanySummaryCard/CompanySummaryCard";
+import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import SignatorySummaryCard from "./components/SignatorySummaryCard/SignatorySummaryCard";
 import routes from "../../routes";
 import BackLink from "../../components/Buttons/BackLink";
