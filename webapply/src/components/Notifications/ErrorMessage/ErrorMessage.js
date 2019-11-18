@@ -5,7 +5,7 @@ import { style } from "./styled";
 
 const ErrorMessageComponent = ({ error, classes }) => (
   <div className={classes.error}>
-    <div className="flexAlignCenter">
+    <div className={classes.errorContainer}>
       <img src={ErrorIcon} alt="error" />
       <p>{error}</p>
     </div>

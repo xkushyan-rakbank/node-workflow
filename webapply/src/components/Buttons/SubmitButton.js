@@ -9,6 +9,7 @@ const styles = {
   },
   buttonWrapWithBackLink: {},
   nextButton: {
+    width: "192px",
     fontWeight: 600,
     letterSpacing: "normal",
     "&:disabled": {

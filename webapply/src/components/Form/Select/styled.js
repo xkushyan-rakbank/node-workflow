@@ -1,4 +1,6 @@
-export const styles = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   selectField: {
     "& svg": {
       fontSize: " 18px",
@@ -24,11 +26,8 @@ export const styles = {
       top: 0,
       zIndex: "1"
     },
-    "& > div:first-child": {
-      paddingRight: "56px"
-    },
     "& fieldset": {
-      borderRadius: "8px !important",
+      borderRadius: "8px ",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
     },
     "& svg": {
@@ -67,4 +66,4 @@ export const styles = {
   chip: {
     margin: 2
   }
-};
+});

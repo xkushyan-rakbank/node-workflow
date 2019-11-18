@@ -1,12 +1,10 @@
 import React from "react";
 import FormControl from "@material-ui/core/FormControl";
-import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { ErrorMessage, InfoTitle } from "./../../Notifications";
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
-function InputComponent({
-  classes,
+export const Input = ({
   disabled,
   placeholder,
   label,
@@ -14,7 +12,8 @@ function InputComponent({
   infoTitle,
   form: { errors, touched },
   ...props
-}) {
+}) => {
+  const classes = useStyles();
   const error = errors[field.name] && touched[field.name];
 
   return (
@@ -37,6 +36,4 @@ function InputComponent({
       </FormControl>
     </>
   );
-}
-
-export const Input = withStyles(styles)(InputComponent);
+};

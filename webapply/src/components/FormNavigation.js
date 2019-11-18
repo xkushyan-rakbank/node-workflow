@@ -7,7 +7,7 @@ import Chat from "./Chat";
 import { accountsNames, formStepper, searchProspectStepper } from "../constants";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import SubmitButton from "./Buttons/SubmitButton";
+import ContainedButton from "./Buttons/ContainedButton";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import {
   sideNavWidthXL,
@@ -78,6 +78,7 @@ const style = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    alignItems: "flex-start",
     "@media only screen and (max-width: 1300px)": {
       marginLeft: 40,
       width: "auto",
@@ -165,34 +166,37 @@ const AccountInfo = ({ classes, accountType, history }) => {
               {accountInfo[accountType].subtitle}
             </Typography>
           </div>
-          <SubmitButton
+          <ContainedButton
+            withRightArrow
             justify="flex-start"
             label="Apply now"
             handleClick={() => handleClick(routes.applicationOverview)}
           />
         </>
       ) : (
-        <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-          {isApplicationOverview
-            ? "Opening an account has never been this simple. saas"
-            : isMyApplications
-            ? "Your  applications, at a glance"
-            : isComeBackLogin
-            ? "Good to see you back!"
-            : isReUploadDocuments
-            ? "Edit your application"
-            : isComeBackVerification
-            ? "Confirm that it's you"
-            : "All businesses start with an account. Get yours now."}
+        <>
+          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+            {isApplicationOverview
+              ? "Opening an account has never been this simple. saas"
+              : isMyApplications
+              ? "Your  applications, at a glance"
+              : isComeBackLogin
+              ? "Good to see you back!"
+              : isReUploadDocuments
+              ? "Edit your application"
+              : isComeBackVerification
+              ? "Confirm that it's you"
+              : "All businesses start with an account. Get yours now."}
+          </Typography>
           {isApplicationOverview && (
-            <SubmitButton
+            <ContainedButton
+              withRightArrow
               justify="flex-start"
               label="Start application"
               handleClick={() => handleClick(routes.applicantInfo)}
-              classes={{ nextButton: classes.nextButton }}
             />
           )}
-        </Typography>
+        </>
       )}
     </div>
   );

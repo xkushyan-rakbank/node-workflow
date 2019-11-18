@@ -7,11 +7,10 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { ErrorMessage, InfoTitle } from "./../../Notifications";
-import { withStyles } from "@material-ui/core/styles";
-import { styles } from "./styled";
+import { useStyles } from "./styled";
 
-function SelectComponent({
-  classes,
+export const CustomSelect = ({
+  extractId = option => option.value,
   disabled,
   placeholder,
   options,
@@ -21,8 +20,10 @@ function SelectComponent({
   form: { errors, touched },
   form,
   isMulti = false,
+  shrink = true,
   ...props
-}) {
+}) => {
+  const classes = useStyles();
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   const error = errors[field.name] && touched[field.name];
@@ -33,8 +34,8 @@ function SelectComponent({
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <InputLabel ref={inputLabel} classes={{ shrink: classes.inputLabel }}>
-        Select
+      <InputLabel ref={inputLabel} shrink={shrink}>
+        {label}
       </InputLabel>
       <Select
         {...field}
@@ -45,7 +46,7 @@ function SelectComponent({
         error={error}
       >
         {options.map(option => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem key={extractId(option)} value={extractId(option)}>
             {option.label}
           </MenuItem>
         ))}
@@ -56,6 +57,4 @@ function SelectComponent({
       {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>
   );
-}
-
-export const CustomSelect = withStyles(styles)(SelectComponent);
+};

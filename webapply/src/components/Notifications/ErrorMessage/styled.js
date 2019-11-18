@@ -1,7 +1,7 @@
 export const style = {
   error: {
     fontSize: "12px",
-    marginTop: "10px !important",
+    marginTop: "10px",
     position: "relative",
     "& p": {
       lineHeight: "1",
@@ -12,11 +12,9 @@ export const style = {
       marginRight: "5px"
     }
   },
-  multiLineError: {
-    position: "absolute",
-    right: "-21px",
-    top: "-47px",
-    fontSize: "18px",
-    color: "#ea2b1e"
+  errorContainer: {
+    marginTop: "10px",
+    display: "flex",
+    alignItems: "center"
   }
 };

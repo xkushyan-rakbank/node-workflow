@@ -1,3 +1,5 @@
+import { countryCodeOptions } from "./options";
+
 export const endpoints = {
   baseUrl: "http://conv.rakbankonline.ae/quickapply",
   appConfigUri: "/webapply/api/v1/config",
@@ -15,7 +17,7 @@ export const prospect = {
   applicantInfo: {
     fullName: "",
     email: "",
-    countryCode: "",
+    countryCode: countryCodeOptions[0].key,
     mobileNo: ""
   },
   generalInfo: {

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { Input, CustomSelect } from "./../../components/Form";
+import { Input, CustomSelect, InputGroup } from "./../../components/Form";
 import { EMAIL_REGEX, NAME_REGEX } from "./../../utils/validation";
 import { countryCodeOptions } from "./../../constants/options";
 import SubmitButton from "./../../components/Buttons/SubmitButton";
@@ -48,17 +48,25 @@ const ApplicantInfoPage = props => {
 
             <Field name="email" label="Your E-mail Address" placeholder="Email" component={Input} />
 
-            <Field name="countryCode" options={countryCodeOptions} component={CustomSelect} />
+            <InputGroup>
+              <Field
+                name="countryCode"
+                options={countryCodeOptions}
+                component={CustomSelect}
+                extractId={option => option.key}
+                shrink={false}
+              />
 
-            <Field
-              name="mobileNo"
-              label="Your Mobile Number"
-              placeholder="Mobile Number"
-              component={Input}
-            />
+              <Field
+                name="mobileNo"
+                label="Your Mobile Number"
+                placeholder="Mobile Number"
+                component={Input}
+              />
+            </InputGroup>
 
             <div className="linkContainer">
-              <SubmitButton justify="flex-end" label="Next" />
+              <SubmitButton justify="flex-end" label="Next Step" />
             </div>
           </Form>
         )}
