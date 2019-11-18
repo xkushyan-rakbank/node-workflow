@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import get from "lodash/get";
-import CompanyStakeholderCard from "../CompanyStakeholderCard";
-import LinkButton from "../Buttons/LinkButton";
-import StepComponent from "../../components/StepComponent";
-import { signatoriesSteps } from "../../constants";
-import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
-import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
+import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
+import LinkButton from "../../../../components/Buttons/LinkButton";
+import StepComponent from "../../../../components/StepComponent";
+import { signatoriesSteps } from "../../../../constants/index";
+import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
+import { sendProspectToAPI } from "../../../../store/actions/sendProspectToAPI";
 
 const styles = {
   card: {

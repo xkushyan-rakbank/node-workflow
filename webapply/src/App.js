@@ -8,7 +8,7 @@ import ApplicantInfo from "./containers/ApplicantInfo";
 import Login from "./agent/Login/index";
 import AboutCompany from "./containers/AboutCompany";
 import CompanyStakeholders from "./containers/CompanyStakeholders/CompanyStakeholders";
-import FinalQuestions from "./containers/FinalQuestions";
+import { FinalQuestions } from "./containers/FinalQuestions";
 import FormConfirm from "./containers/FormConfirm";
 import FormLayout from "./containers/FormLayout";
 import SearchProspect from "./agent/SearchProspect/index";
