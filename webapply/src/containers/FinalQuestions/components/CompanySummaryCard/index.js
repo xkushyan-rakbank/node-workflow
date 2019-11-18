@@ -1,6 +1,6 @@
+import { connect } from "react-redux";
 import { sendProspectToAPI } from "../../../../store/actions/sendProspectToAPI";
 import { getInputValueById } from "../../../../store/selectors/input";
-import { connect } from "react-redux";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import { CompanySummaryCardComponent } from "./CompanySummaryCard";
 

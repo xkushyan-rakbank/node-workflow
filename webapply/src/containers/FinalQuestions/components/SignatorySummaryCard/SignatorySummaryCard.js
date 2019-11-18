@@ -1,189 +1,121 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from "react";
 import get from "lodash/get";
 import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
 import LinkButton from "../../../../components/Buttons/LinkButton";
 import StepComponent from "../../../../components/StepComponent";
-import { signatoriesSteps } from "../../../../constants/index";
-import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
-import { sendProspectToAPI } from "../../../../store/actions/sendProspectToAPI";
+import { usePreviousHook } from "../../../../utils/usePreviousHook";
+import { useStyles } from "./styled";
+import {
+  signatoriesSteps,
+  INITIAL_SIGNATORY_STEP,
+  SHARE_HOLDING_PERCENTAGE_PATH,
+  AUTHORITY_TYPE_PATH
+} from "./constants";
 
-const styles = {
-  card: {
-    marginBottom: "20px"
-  },
-  contentBox: {
-    display: "flex",
-    flexGrow: "1",
-    paddingLeft: "25px"
-  },
-  infoBox: {
-    flexGrow: "1"
-  },
-  name: {
-    fontSize: "18px",
-    fontWeight: "600",
-    lineHeight: "1.33",
-    color: "#373737"
-  },
-  signatoryField: {
-    fontSize: "14px",
-    lineHeight: "1.71",
-    color: "#517085"
-  },
-  shareholdingField: {
-    opacity: 0.5,
-    fontSize: "12px",
-    lineHeight: 1.33,
-    color: "#263d4c"
-  },
-  controlsBox: {
-    display: "flex",
-    alignItems: "center"
-  }
-};
+export const SignatorySummaryCardComponent = ({
+  resetStep,
+  addFilledSignatoryIndex,
+  sendProspectToAPI,
+  index,
+  signatory,
+  filledSignatoriesIndexes,
+  signatory: { firstName, lastName, fullName } = {}
+}) => {
+  const [step, setStep] = useState(INITIAL_SIGNATORY_STEP);
+  const [completedStep, setCompletedStep] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isContinueDisabled, setIsContinueDisabled] = useState(true);
+  const prevResetStep = usePreviousHook(resetStep);
+  const classes = useStyles();
 
-class SignatorySummaryCard extends Component {
-  static defaultProps = {
-    signatory: {},
-    index: 0
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      step: 1,
-      isExpanded: false,
-      isDisabled: true,
-      isContinueDisabled: false
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    const { addFilledSignatoryIndex, index } = this.props;
-    if (!prevProps.resetStep && this.props.resetStep && this.state.isExpanded) {
-      this.setState(state => {
-        const nextStep = state.step + 1;
-        let finalStepState = {};
-        if (nextStep > signatoriesSteps.length) {
-          finalStepState = { isExpanded: false };
-          addFilledSignatoryIndex(index + 1);
-        }
-        return {
-          step: nextStep,
-          completedStep: state.step,
-          ...finalStepState
-        };
-      });
+  useEffect(() => {
+    if (prevResetStep || !resetStep || !isExpanded) {
+      return;
     }
-  }
+    const nextStep = step + 1;
+    setStep(nextStep);
+    setCompletedStep(step);
+    if (nextStep > signatoriesSteps.length) {
+      setIsExpanded(false);
+      addFilledSignatoryIndex(index + 1);
+    }
+  }, [resetStep, isExpanded, addFilledSignatoryIndex, step, prevResetStep, index]);
 
-  renderControls() {
-    const { filledSignatoriesIndexes, index } = this.props;
-    if (this.state.isExpanded) {
+  const renderControls = () => {
+    if (isExpanded) {
       return null;
     }
 
     return (
       filledSignatoriesIndexes.includes(index) && (
         <LinkButton
-          clickHandler={() =>
-            this.setState({
-              isExpanded: true,
-              isDisabled: false
-            })
-          }
+          clickHandler={() => {
+            setIsExpanded(true);
+          }}
         />
       )
     );
-  }
+  };
 
-  setIsContinueDisabled = value => this.setState({ isContinueDisabled: value });
+  const getShareHoldingPercentage = () => Number(get(signatory, SHARE_HOLDING_PERCENTAGE_PATH, 0));
 
-  getShareHoldingPercentage() {
-    return Number(get(this.props.signatory, "kycDetails.shareHoldingPercentage", 0));
-  }
-
-  getShareholdingLabel() {
-    const percentage = this.getShareHoldingPercentage();
+  const getShareholdingLabel = () => {
+    const percentage = getShareHoldingPercentage();
     return percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding";
-  }
+  };
 
-  getSignatoryRightsLabel() {
-    return get(this.props.signatory, "accountSigningInfo.authorityType");
-  }
+  const getSignatoryRightsLabel = () => {
+    return get(signatory, AUTHORITY_TYPE_PATH);
+  };
 
-  renderCardContent() {
-    const { signatory: { firstName, lastName, fullName } = {} } = this.props;
+  const renderCardContent = () => {
     return (
-      <div className={this.props.classes.contentBox}>
-        <div className={this.props.classes.infoBox}>
-          <div className={this.props.classes.name}>
+      <div className={classes.contentBox}>
+        <div className={classes.infoBox}>
+          <div className={classes.name}>
             {firstName && lastName ? `${firstName} ${lastName}` : fullName}
           </div>
-          <div className={this.props.classes.signatoryField}>{this.getSignatoryRightsLabel()}</div>
-          <div className={this.props.classes.shareholdingField}>{this.getShareholdingLabel()}</div>
+          <div className={classes.signatoryField}>{getSignatoryRightsLabel()}</div>
+          <div className={classes.shareholdingField}>{getShareholdingLabel()}</div>
         </div>
-        <div className={this.props.classes.controlsBox}>{this.renderControls()}</div>
+        <div className={classes.controlsBox}>{renderControls()}</div>
       </div>
     );
-  }
+  };
 
-  setStep = item => {
-    if (this.state.completedStep >= item.step) {
+  const changeStep = item => {
+    if (completedStep >= item.step) {
       this.setState({ step: item.step });
     }
   };
 
-  render() {
-    const { index, signatory } = this.props;
-    const { step, isContinueDisabled } = this.state;
-    return (
-      <CompanyStakeholderCard
-        className={this.props.classes.card}
-        firstName={signatory.firstName}
-        lastName={signatory.lastName ? signatory.lastName : signatory.fullName}
-        content={this.renderCardContent()}
-        index={index}
-      >
-        {this.state.isExpanded &&
-          signatoriesSteps.map(item => {
-            const setStep = () => this.setStep(item);
-            const isFilled = this.state.completedStep >= item.step;
-            return (
-              <StepComponent
-                index={index}
-                key={item.step}
-                steps={signatoriesSteps}
-                step={item.step}
-                title={item.title}
-                activeStep={step === item.step}
-                filled={isFilled}
-                clickHandler={setStep}
-                handleContinue={this.props.sendProspectToAPI}
-                isContinueDisabled={isContinueDisabled}
-                setIsContinueDisabled={this.setIsContinueDisabled}
-              />
-            );
-          })}
-      </CompanyStakeholderCard>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  ...getSendProspectToAPIInfo(state)
-});
-
-const mapDispatchToProps = {
-  sendProspectToAPI
+  return (
+    <CompanyStakeholderCard
+      className={classes.card}
+      firstName={signatory.firstName}
+      lastName={signatory.lastName ? signatory.lastName : signatory.fullName}
+      content={renderCardContent()}
+      index={index}
+    >
+      {isExpanded &&
+        signatoriesSteps.map(item => {
+          const isFilled = completedStep >= item.step;
+          return (
+            <StepComponent
+              index={index}
+              key={item.step}
+              steps={signatoriesSteps}
+              step={item.step}
+              title={item.title}
+              activeStep={step === item.step}
+              filled={isFilled}
+              clickHandler={changeStep}
+              handleContinue={sendProspectToAPI}
+              isContinueDisabled={isContinueDisabled}
+              setIsContinueDisabled={setIsContinueDisabled}
+            />
+          );
+        })}
+    </CompanyStakeholderCard>
+  );
 };
-
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(SignatorySummaryCard)
-);

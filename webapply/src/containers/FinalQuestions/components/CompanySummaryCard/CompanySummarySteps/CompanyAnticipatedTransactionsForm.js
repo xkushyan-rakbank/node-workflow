@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import TextInput from "../InputField/TextInput";
+import TextInput from "../../../../../components/InputField/TextInput";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
-import InfoTitle from "../InfoTitle";
+import InfoTitle from "../../../../../components/InfoTitle";
 import isNumber from "lodash/isNumber";
 import isNaN from "lodash/isNaN";
-import { getInputValueById } from "../../store/selectors/input";
+import { getInputValueById } from "../../../../../store/selectors/input";
 import cx from "classnames";
-import ErrorMessage from "../ErrorMessage";
+import ErrorMessage from "../../../../../components/ErrorMessage";
 
 const styles = {
   title: {

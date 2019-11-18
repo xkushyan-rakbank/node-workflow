@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
-import SignatorySummaryCard from "./components/SignatorySummaryCard/SignatorySummaryCard";
+import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import routes from "../../routes";
 import BackLink from "../../components/Buttons/BackLink";
 import cx from "classnames";

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import TextInput from "../InputField/TextInput";
-import PureSelect from "../InputField/PureSelect";
-import InfoTitle from "../InfoTitle";
+import TextInput from "../../../../../components/InputField/TextInput";
+import PureSelect from "../../../../../components/InputField/PureSelect";
+import InfoTitle from "../../../../../components/InfoTitle";
 import { connect } from "react-redux";
-import { getInputValueById } from "../../store/selectors/input";
+import { getInputValueById } from "../../../../../store/selectors/input";
 
 const styles = {
   title: {

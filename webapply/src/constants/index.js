@@ -16,10 +16,6 @@ import CheckList from "../components/SearchedAppInfoSteps/CheckList/index";
 import Documents from "../components/SearchedAppInfoSteps/Documents/index";
 import AuditTrail from "../components/SearchedAppInfoSteps/AuditTrail/index";
 import routes from "../routes";
-import SignatoryPersonalInformationForm from "../components/FinalQuestions/SignatoryPersonalInformationForm";
-import SignatorySourceOfFundsForm from "../components/FinalQuestions/SignatorySourceOfFundsForm";
-import SignatoryPreferredMailingAddressForm from "../components/FinalQuestions/SignatoryPreferredMailingAddressForm";
-import SignatoryEmploymentDetailsForm from "../components/FinalQuestions/SignatoryEmploymentDetailsForm";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
 
@@ -35,29 +31,6 @@ export const aboutCompanySteps = [
     component: Industry
   },
   { step: 3, title: "Licence Information", component: LicenseInformation }
-];
-
-export const signatoriesSteps = [
-  {
-    step: 1,
-    title: "Personal Information",
-    component: SignatoryPersonalInformationForm
-  },
-  {
-    step: 2,
-    title: "Employment details",
-    component: SignatoryEmploymentDetailsForm
-  },
-  {
-    step: 3,
-    title: "Source of funds",
-    component: SignatorySourceOfFundsForm
-  },
-  {
-    step: 4,
-    title: "Preferred mailing address",
-    component: SignatoryPreferredMailingAddressForm
-  }
 ];
 
 export const authorityType = [

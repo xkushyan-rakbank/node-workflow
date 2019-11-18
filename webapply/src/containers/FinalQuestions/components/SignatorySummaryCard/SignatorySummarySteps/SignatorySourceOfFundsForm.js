@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import TextInput from "../InputField/TextInput";
-import PureSelect from "../InputField/PureSelect";
-import { getInputNameById, getInputValueById } from "../../store/selectors/input";
-import { updateProspect } from "../../store/actions/appConfig";
+import TextInput from "../../../../../components/InputField/TextInput";
+import PureSelect from "../../../../../components/InputField/PureSelect";
+import { getInputNameById, getInputValueById } from "../../../../../store/selectors/input";
+import { updateProspect } from "../../../../../store/actions/appConfig";
 
 const styles = {
   title: {
