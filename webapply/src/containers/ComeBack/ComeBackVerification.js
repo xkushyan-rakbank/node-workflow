@@ -13,7 +13,7 @@ import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getInputNameById } from "../../store/selectors/input";
 import routes from "../../routes";
 import { useStyles } from "./styled";
-import { titles, errorMsgs, MAX_ATTEMPT_ALLOWED } from "./constants";
+import { COUNTRY_CODE, MAX_ATTEMPT_ALLOWED } from "./constants";
 
 const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, history }) => {
   const classes = useStyles();
@@ -29,10 +29,6 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
     }
   }, [history, otp]);
 
-  const getFullCode = () => {
-    return code.join("");
-  };
-
   const handleSendNewCodeLinkClick = useCallback(() => {
     const newLoginAttempt = loginAttempt + 1;
     setLoginAttempt(newLoginAttempt);
@@ -43,33 +39,42 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
     }
   }, [loginAttempt, generateOtpCode]);
 
-  const submitForm = e => {
-    e.preventDefault();
-    verifyOtp(getFullCode());
-  };
+  const submitForm = useCallback(
+    e => {
+      e.preventDefault();
+      verifyOtp(code.join(""));
+    },
+    [verifyOtp, code]
+  );
 
-  const isCodeValueValid = ({ isValid, code }) => {
-    setIsValidCode(isValid);
-    setCode(code);
-  };
+  const isCodeValueValid = useCallback(
+    ({ isValid, code }) => {
+      setIsValidCode(isValid);
+      setCode(code);
+    },
+    [setIsValidCode, setCode]
+  );
 
   let title = "";
-  inputParam.countryCode === "UAE"
-    ? (title = titles.UAE_VERIFICATION_MESSAGE)
-    : (title = titles.NON_UAE_VERIFICATION_MESSAGE);
+  inputParam.countryCode === COUNTRY_CODE
+    ? (title = "We have sent you a verification code on registered mobile number")
+    : (title = "We have sent you a verification code on registered email address");
 
   return (
     <div className={classes.centeredContainer}>
-      <SectionTitleWithInfo title={title} info={titles.SUB_TITLE} />
+      <SectionTitleWithInfo
+        title={title}
+        info="Please enter the six digits below, to confirm this is you"
+      />
 
       <form noValidate onSubmit={submitForm} className={classes.verificationForm}>
         <div>
           <Grid container item xs={12} direction="row" justify="flex-start">
             <OtpVerification onChange={isCodeValueValid} />
           </Grid>
-          {otp.verificationError && <ErrorMessage error={errorMsgs.VERIFICATION_ERROR} />}
+          {otp.verificationError && <ErrorMessage error="Code verification failed" />}
           {loginAttempt > MAX_ATTEMPT_ALLOWED && (
-            <ErrorMessage error={errorMsgs.LOGIN_ATTEMPT_ERROR} />
+            <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again." />
           )}
           <span>
             Didn’t get the code?
