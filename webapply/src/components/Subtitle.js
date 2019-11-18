@@ -1,12 +1,14 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import HelpTooltip from "./HelpTooltip";
 
 const styles = {
   wrapper: {
     margin: "24px 0 10px",
     fontSize: "16px",
     lineHeight: 1.5,
-    color: "#373737"
+    color: "#373737",
+    display: "flex"
   },
   divider: {
     width: "5px",
@@ -17,8 +19,12 @@ const styles = {
   }
 };
 
-const Subtitle = ({ classes, title }) => {
-  return <div className={classes.wrapper}>{title}</div>;
+const Subtitle = ({ classes, title, helpMessage }) => {
+  return (
+    <div className={classes.wrapper}>
+      {title} {helpMessage && <HelpTooltip message={helpMessage} />}
+    </div>
+  );
 };
 
 export default withStyles(styles)(Subtitle);

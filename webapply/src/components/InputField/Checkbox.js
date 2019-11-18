@@ -55,7 +55,11 @@ const style = {
     lineHeight: "24px",
     color: "#373737",
     "& a": {
-      color: "#373737"
+      color: "#373737",
+      textDecoration: "underline",
+      "&:hover": {
+        textDecoration: "none"
+      }
     }
   }
 };

@@ -1,15 +1,9 @@
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
-import PersonalInformation from "../components/StakeholderStepForms/PersonalInformation";
-import SignatoryRights from "../components/StakeholderStepForms/SignatoryRights";
-import Shareholding from "../components/StakeholderStepForms/Shareholding";
-import Nationality from "../components/StakeholderStepForms/Nationality";
-import CountryOfResidence from "../components/StakeholderStepForms/CountryOfResidence";
-import PreferredContactInformation from "../components/StakeholderStepForms/PreferredContactInformation";
-import AccountDetails from "../components/ServicesStepForms/AccountDetails";
-import SigningPreferences from "../components/ServicesStepForms/SigningPreferences";
-import Channels from "../components/ServicesStepForms/Channels";
-import ValueAddedServices from "../components/ServicesStepForms/ValueAddedServices";
+import { AccountDetails } from "../containers/SelectServices/components/AccountDetails";
+import { SigningPreferences } from "../containers/SelectServices/components/SigningPreferences";
+import { Channels } from "../containers/SelectServices/components/Channels";
+import { ValueAddedServices } from "../containers/SelectServices/components/ValueAddedServices";
 import CompanyDetails from "../components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "../components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";
@@ -33,31 +27,6 @@ import SignatoryPreferredMailingAddressForm from "../components/FinalQuestions/S
 import SignatoryEmploymentDetailsForm from "../components/FinalQuestions/SignatoryEmploymentDetailsForm";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
-
-export const stakeHoldersSteps = [
-  {
-    step: 1,
-    title: "Personal Information",
-    component: PersonalInformation
-  },
-  {
-    step: 2,
-    title: "Signatory Rights",
-    component: SignatoryRights
-  },
-  { step: 3, title: "Shareholding", component: Shareholding },
-  { step: 4, title: "Nationality", component: Nationality },
-  {
-    step: 5,
-    title: "Country of residence",
-    component: CountryOfResidence
-  },
-  {
-    step: 6,
-    title: "Preferred contact information",
-    component: PreferredContactInformation
-  }
-];
 
 export const aboutCompanySteps = [
   {
@@ -213,23 +182,20 @@ export const servicesSteps = [
     step: 1,
     title: "Account details",
     component: AccountDetails,
-    icon: accountDetails,
-    titleInfo: ""
+    icon: accountDetails
   },
   {
     step: 2,
     title: "Signing preferences",
     component: SigningPreferences,
-    icon: signingPreferences,
-    titleInfo: ""
+    icon: signingPreferences
   },
   { step: 3, title: "Channels", component: Channels, icon: channels, titleInfo: "" },
   {
     step: 4,
     title: "Value added services",
     component: ValueAddedServices,
-    icon: valueAddedServices,
-    titleInfo: "RAKvalue package available to AED account only"
+    icon: valueAddedServices
   }
 ];
 
@@ -298,3 +264,5 @@ export const applicationStatus = {
       "It`s our fault, not yours. We`ve have been notified of the problem. In the meantime, try refreshing or see the JavaScript console for technical details."
   }
 };
+
+export const IS_RECAPTCHA_ENABLE = false;

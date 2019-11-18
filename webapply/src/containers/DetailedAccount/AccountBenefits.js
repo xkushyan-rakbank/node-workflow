@@ -6,7 +6,7 @@ import HorizontalIconCardsContainer from "../../components/HorizontalIconCards/H
 import HorizontalIconCardItem from "../../components/HorizontalIconCards/HorizontalIconCardItem";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 import { getIconsByAccount } from "../../constants/icons";
-import InfoNote from "../../components/InfoNote";
+import { InfoNote } from "../../components/InfoNote";
 import { accountsNames } from "../../constants";
 
 const style = {

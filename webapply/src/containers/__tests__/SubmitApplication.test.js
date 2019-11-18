@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import configureStore from "redux-mock-store";
 
-import SubmitApplication from "../SubmitApplication";
+import SubmitApplication from "../SelectServices/components/SubmitApplication/SubmitApplication";
 
 describe("SubmitApplication", () => {
   const initialState = {

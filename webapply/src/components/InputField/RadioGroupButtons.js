@@ -45,7 +45,8 @@ class RadioGroupButtons extends React.Component {
       id,
       indexes,
       config: { datalist = [], validationErrors = {}, required, label },
-      errorList
+      errorList,
+      helpMessage
     } = this.props;
     const { selectedValue } = this.state;
     const attrId = defineDynamicInputId(id, indexes);
@@ -53,7 +54,7 @@ class RadioGroupButtons extends React.Component {
 
     return (
       <RadioGroup classes={{ root: classes.radioGroup }} onChange={this.onChange}>
-        <Subtitle title={label} />
+        <Subtitle title={label} helpMessage={helpMessage} />
 
         <div className={cx("box-group-grid", classes.gridGroup)}>
           <input

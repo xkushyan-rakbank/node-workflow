@@ -9,14 +9,16 @@ function* generateOtp() {
   try {
     const state = yield select();
     const applicantInfo = appConfigSelectors.getApplicantInfo(state);
-
     const payload = {
       prospectId: appConfigSelectors.getProspectId(state),
       mobileNo: applicantInfo.mobileNo,
       countryCode: applicantInfo.countryCode,
-      email: applicantInfo.email,
-      recaptchaToken: state.reCaptcha.token
+      email: applicantInfo.email
     };
+
+    if (state.reCaptcha.token) {
+      payload.recaptchaToken = state.reCaptcha.token;
+    }
 
     const { data } = yield call(otp.generate, payload);
     yield put(otpActions.generateCodeSuccess(data));
