@@ -12,11 +12,10 @@ import { getOtp } from "../../store/selectors/otp";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getInputNameById } from "../../store/selectors/input";
 import routes from "../../routes";
-import { history } from "./../../store/configureStore";
 import { useStyles } from "./styled";
 import { titles, errorMsgs, MAX_ATTEMPT_ALLOWED } from "./constants";
 
-const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp }) => {
+const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, history }) => {
   const classes = useStyles();
 
   const [code, setCode] = useState(Array(6).fill(""));
@@ -28,7 +27,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp }) =
     if (otp.isVerified) {
       history.push(routes.MyApplications);
     }
-  }, [otp]);
+  }, [history, otp]);
 
   const getFullCode = () => {
     return code.join("");
