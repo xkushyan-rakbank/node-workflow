@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
+import { Layout, LayoutContext } from "../components/Layout";
 import Header from "./../components/Header";
 import HeaderTitle from "./../components/HeaderTitle";
 import {
@@ -101,10 +102,14 @@ class FormLayout extends React.Component {
     const { hasUiError } = this.state;
 
     return (
-      <React.Fragment>
+      <Layout>
         <Header />
         <div className={classes.formLayout}>
-          <FormNavigation />
+          <LayoutContext.Consumer>
+            {({ accountType, islamicBanking }) => (
+              <FormNavigation accountType={accountType} islamicBanking={islamicBanking} />
+            )}
+          </LayoutContext.Consumer>
           <div className={classes.formWrapper}>
             <div className={classes.formInner}>
               <div className={classes.mainContainer}>
@@ -123,7 +128,7 @@ class FormLayout extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </Layout>
     );
   }
 }

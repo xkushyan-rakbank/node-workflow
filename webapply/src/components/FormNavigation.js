@@ -17,7 +17,6 @@ import {
   portraitOrientationQueryIPads
 } from "../constants/styles";
 import routes from "../routes";
-import isEmpty from "lodash/isEmpty";
 
 const style = {
   formNav: {
@@ -262,9 +261,15 @@ class FormNavigation extends React.Component {
   }
 
   render() {
-    const { applicationInfo = {}, location, classes, history, checkLoginStatus } = this.props;
+    const {
+      accountType,
+      islamicBanking,
+      location,
+      classes,
+      history,
+      checkLoginStatus
+    } = this.props;
     const { step } = this.state;
-    const { accountType, islamicBanking } = !isEmpty(applicationInfo) && applicationInfo;
     const showAccountInfo = new Set([
       routes.accountsComparison,
       routes.detailedAccount,
@@ -292,11 +297,6 @@ class FormNavigation extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  applicationInfo:
-    state.appConfig &&
-    state.appConfig.prospect &&
-    state.appConfig.prospect.applicationInfo &&
-    state.appConfig.prospect.applicationInfo,
   checkLoginStatus: loginSelector.checkLoginStatus(state)
 });
 
