@@ -26,17 +26,44 @@ export const useStyles = makeStyles({
     },
     "& > div:first-child": {
       width: "90px",
+      position: "absolute",
+      zIndex: 1,
       "& fieldset": {
+        borderColor: "transparent",
+        borderRight: "1px solid #dddddd",
         borderTopRightRadius: "0",
-        borderBottomRightRadius: "0",
-        borderRight: " 0"
+        borderBottomRightRadius: "0"
+      },
+      "& label": {
+        maxWidth: "unset"
+      },
+      "& svg": {
+        right: "10px"
+      },
+      "& input": {
+        paddingLeft: 0
+      },
+      "& legend": {
+        marginLeft: 0
+      },
+      "& .MuiSelect-select.Mui-disabled": {
+        backgroundColor: "transparent"
       }
     },
     "& > div:last-child": {
       flex: 1,
-      "& fieldset": {
-        borderTopLeftRadius: "0",
-        borderBottomLeftRadius: "0"
+      position: "relative",
+      "& label": {
+        transform: "translate(114px, 20px) scale(1)"
+      },
+      "& label.MuiInputLabel-outlined.MuiInputLabel-shrink": {
+        transform: "translate(114px, -6px) scale(0.75)"
+      },
+      "& legend": {
+        marginLeft: 102
+      },
+      "& input": {
+        paddingLeft: 107
       }
     }
   }
