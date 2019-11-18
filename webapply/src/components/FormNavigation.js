@@ -74,7 +74,6 @@ const style = {
   contentContainer: {
     width: 340,
     marginLeft: 80,
-    height: 323,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -94,6 +93,7 @@ const style = {
     lineHeight: "1.17",
     fontWeight: 600,
     fontFamily: "Open Sans",
+    marginBottom: "50px",
     "@media only screen and (max-width: 1300px)": {
       paddingRight: "16px",
       fontSize: "40px"
@@ -106,7 +106,7 @@ const style = {
     fontSize: "16px",
     lineHeight: "1.5",
     color: "#fff",
-    marginTop: 20,
+    marginBottom: 50,
     display: "block",
     fontWeight: "normal",
     fontFamily: "Open Sans",
