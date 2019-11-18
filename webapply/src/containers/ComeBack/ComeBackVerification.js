@@ -14,7 +14,7 @@ import { getInputNameById } from "../../store/selectors/input";
 import routes from "../../routes";
 import { history } from "./../../store/configureStore";
 import { useStyles } from "./styled";
-import { titles, errorMsgs } from "./constants";
+import { titles, errorMsgs, MAX_ATTEMPT_ALLOWED } from "./constants";
 
 const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp }) => {
   const classes = useStyles();
@@ -37,7 +37,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp }) =
   const handleSendNewCodeLinkClick = useCallback(() => {
     const newLoginAttempt = loginAttempt + 1;
     setLoginAttempt(newLoginAttempt);
-    if (loginAttempt < 3) {
+    if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode();
     } else {
       setIsRegenerateCodeAllow(false);
@@ -69,7 +69,9 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp }) =
             <OtpVerification onChange={isCodeValueValid} />
           </Grid>
           {otp.verificationError && <ErrorMessage error={errorMsgs.VERIFICATION_ERROR} />}
-          {loginAttempt > 3 && <ErrorMessage error={errorMsgs.LOGIN_ATTEMPT_ERROR} />}
+          {loginAttempt > MAX_ATTEMPT_ALLOWED && (
+            <ErrorMessage error={errorMsgs.LOGIN_ATTEMPT_ERROR} />
+          )}
           <span>
             Didn’t get the code?
             <span

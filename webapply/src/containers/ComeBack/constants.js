@@ -9,3 +9,5 @@ export const errorMsgs = {
   LOGIN_ATTEMPT_ERROR:
     "You have exceeded your maximum attempt. Please come back later and try again."
 };
+
+export const MAX_ATTEMPT_ALLOWED = 3;
