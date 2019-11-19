@@ -4,7 +4,7 @@ import { AccountDetails } from "../containers/SelectServices/components/AccountD
 import { SigningPreferences } from "../containers/SelectServices/components/SigningPreferences";
 import { Channels } from "../containers/SelectServices/components/Channels";
 import { ValueAddedServices } from "../containers/SelectServices/components/ValueAddedServices";
-import CompanyDetails from "../components/AboutCompanyStepForms/CompanyDetails";
+import { CompanyDetails } from "../components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "../components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";
 import accountDetails from "../assets/icons/account_details.png";
