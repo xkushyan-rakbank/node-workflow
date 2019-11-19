@@ -1,7 +1,7 @@
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import Grid from "@material-ui/core/Grid";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
@@ -21,6 +21,34 @@ const AccountDetailsSchema = Yup.object({
   accountCurrencies: Yup.array().required("At least one checkbox is required") // TODO change text
 });
 
+//TODO remove
+const options = [
+  {
+    code: "AED",
+    displayText: "AED",
+    key: "AED",
+    value: "AED"
+  },
+  {
+    code: "USD",
+    displayText: "USD",
+    key: "USD",
+    value: "USD"
+  },
+  {
+    code: "EUR",
+    displayText: "EUR",
+    key: "EUR",
+    value: "EUR"
+  },
+  {
+    code: "GBP",
+    displayText: "GBP",
+    key: "GBP",
+    value: "GBP"
+  }
+];
+
 export const AccountDetailsComponent = props => {
   const { islamicBanking, branchCityValue, branchCityConfig, goToNext } = props;
   const subOptions = getOptionsForSubId(branchCityValue, branchCityConfig, true);
@@ -33,47 +61,25 @@ export const AccountDetailsComponent = props => {
   return (
     <>
       <Formik
-        initialValues={{
-          // TODO refactor
-          checkboxGroup: [],
-          singleCheckbox: false
-        }}
+        initialValues={{ accountCurrencies: [] }}
         validationSchema={AccountDetailsSchema}
         onSubmit={onSubmit}
       >
-        {() => (
+        {({ values, errors, ...props }) => (
           <Form>
-            <Field
+            <Subtitle title="Select currencies" />
+            <CheckboxGroup
+              options={options}
+              id="accountCurrencies"
               name="accountCurrencies"
-              // TODO remove hardcoded options
-              options={[
-                {
-                  code: "AED",
-                  displayText: "AED",
-                  key: "AED",
-                  value: "AED"
-                },
-                {
-                  code: "USD",
-                  displayText: "USD",
-                  key: "USD",
-                  value: "USD"
-                },
-                {
-                  code: "EUR",
-                  displayText: "EUR",
-                  key: "EUR",
-                  value: "EUR"
-                },
-                {
-                  code: "GBP",
-                  displayText: "GBP",
-                  key: "GBP",
-                  value: "GBP"
-                }
-              ]}
-              component={CheckboxGroup}
+              errors={errors.accountCurrencies}
+              value={values.accountCurrencies}
+              title="You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval."
             />
+
+            <Divider />
+
+            <Subtitle title="Select branch" />
 
             <div className={classes.buttonWrapper}>
               <ContinueButton type="submit" />
@@ -83,11 +89,6 @@ export const AccountDetailsComponent = props => {
       </Formik>
 
       <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-        <Subtitle title="Select currencies" />
-        <CheckboxGroup id="Acnt.accountCurrencies" indexes={INPUT_ID_INDEX} />
-
-        <Divider />
-
         <Subtitle title="Select branch" />
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
