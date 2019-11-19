@@ -4,9 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
+import { prospect } from "./../../../../constants/config";
 import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
 
-import CheckboxGroup from "../../../../components/InputField/CheckboxGroup";
+import { CheckboxGroup } from "../../../../components/InputField/CheckboxGroup";
 import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
 import PureSelect from "../../../../components/InputField/PureSelect";
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
@@ -18,44 +19,21 @@ import { useStyles } from "./styled";
 import { INPUT_ID_INDEX, INPUT_ID_INDEXES } from "../../constants";
 
 const AccountDetailsSchema = Yup.object({
-  accountCurrencies: Yup.array().required("At least one checkbox is required") // TODO change text
+  accountCurrencies: Yup.array().required("Field is required")
 });
 
-//TODO remove
-const options = [
-  {
-    code: "AED",
-    displayText: "AED",
-    key: "AED",
-    value: "AED"
-  },
-  {
-    code: "USD",
-    displayText: "USD",
-    key: "USD",
-    value: "USD"
-  },
-  {
-    code: "EUR",
-    displayText: "EUR",
-    key: "EUR",
-    value: "EUR"
-  },
-  {
-    code: "GBP",
-    displayText: "GBP",
-    key: "GBP",
-    value: "GBP"
-  }
-];
+const INFO_TITLE =
+  "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval.";
 
 export const AccountDetailsComponent = props => {
   const { islamicBanking, branchCityValue, branchCityConfig, goToNext } = props;
   const subOptions = getOptionsForSubId(branchCityValue, branchCityConfig, true);
   const classes = useStyles();
+  const { accountCurrencies } = prospect.accountInfo[INPUT_ID_INDEX];
 
   const onSubmit = values => {
-    console.log(values);
+    // TODO continue
+    // console.log(values);
   };
 
   return (
@@ -65,16 +43,16 @@ export const AccountDetailsComponent = props => {
         validationSchema={AccountDetailsSchema}
         onSubmit={onSubmit}
       >
-        {({ values, errors, ...props }) => (
+        {({ values, errors }) => (
           <Form>
             <Subtitle title="Select currencies" />
             <CheckboxGroup
-              options={options}
+              options={accountCurrencies}
               id="accountCurrencies"
               name="accountCurrencies"
               errors={errors.accountCurrencies}
               value={values.accountCurrencies}
-              title="You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval."
+              title={INFO_TITLE}
             />
 
             <Divider />
@@ -89,6 +67,7 @@ export const AccountDetailsComponent = props => {
       </Formik>
 
       <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
+        {/* TODO continue migrate to formik */}
         <Subtitle title="Select branch" />
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
