@@ -1,7 +1,7 @@
 import CompanyAnticipatedTransactionsForm from "./CompanySummarySteps/CompanyAnticipatedTransactionsForm";
 import CompanyPreferredMailingAddressForm from "./CompanySummarySteps/CompanyPreferredMailingAddressForm";
 import CompanyPreferredContactInformationForm from "./CompanySummarySteps/CompanyPreferredContactInformationForm";
-import CompanyBusinessRelationshipsForm from "./CompanySummarySteps/CompanyBusinessRelationshipsForm";
+import { CompanyBusinessRelationships } from "./CompanySummarySteps/CompanyBusinessRelationships";
 import CompanyBranchesAndSubsidiariesForm from "./CompanySummarySteps/CompanyBranchesAndSubsidiariesForm";
 
 export const INITIAL_COMPANY_STEP = 1;
@@ -11,7 +11,7 @@ export const finalQuestionsSteps = [
   {
     step: 1,
     title: "Business relationships",
-    component: CompanyBusinessRelationshipsForm
+    component: CompanyBusinessRelationships
   },
   {
     step: 2,

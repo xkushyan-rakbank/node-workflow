@@ -1,0 +1,6 @@
+export const limits = {
+  CUSTOMER_COUNT: 5,
+  SUPPLIER_COUNT: 5,
+  COUNTRY_OF_ORIGIN_COUNT: 5,
+  ANOTHER_BANK_COUNT: 5
+};

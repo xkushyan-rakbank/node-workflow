@@ -19,7 +19,7 @@ export const CompanySummaryCardComponent = ({
   const [completedStep, setCompletedStep] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-  const [isContinueDisabled, setIsContinueDisabled] = useState(true);
+  const [isContinueDisabled, setIsContinueDisabled] = useState(false);
   const prevResetStep = usePreviousHook(resetStep);
   const classes = useStyles();
 
@@ -50,7 +50,12 @@ export const CompanySummaryCardComponent = ({
       return null;
     }
     return isFilled ? (
-      <LinkButton clickHandler={() => this.setState({ isExpanded: true, isFilled: false })} />
+      <LinkButton
+        clickHandler={() => {
+          setIsExpanded(true);
+          setIsFilled(false);
+        }}
+      />
     ) : (
       <ContinueButton
         label="Start here"
@@ -70,7 +75,6 @@ export const CompanySummaryCardComponent = ({
     <CompanyCard companyName={companyName} controls={renderControlsContent()}>
       {isExpanded &&
         finalQuestionsSteps.map(item => {
-          const isFilled = completedStep >= item.step;
           return (
             <StepComponent
               index={index}
@@ -80,7 +84,7 @@ export const CompanySummaryCardComponent = ({
               title={item.title}
               infoTitle={item.infoTitle}
               activeStep={step === item.step}
-              filled={isFilled}
+              filled={completedStep >= item.step}
               clickHandler={changeStep}
               isContinueDisabled={isContinueDisabled}
               setIsContinueDisabled={setIsContinueDisabled}
