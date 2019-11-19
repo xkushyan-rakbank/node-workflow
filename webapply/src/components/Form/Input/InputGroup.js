@@ -5,10 +5,8 @@ import { useStyles } from "./styled";
 export const InputGroup = props => {
   const classes = useStyles();
   return (
-    <>
-      <FormGroup row className={classes.selectCombined}>
-        {props.children}
-      </FormGroup>
-    </>
+    <FormGroup row className={classes.selectCombined}>
+      {props.children}
+    </FormGroup>
   );
 };
