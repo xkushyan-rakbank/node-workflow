@@ -9,7 +9,6 @@ import { useStyles } from "./styled";
 
 const Login = ({ userName, password, loginInfoForm, inputParam }) => {
   const classes = useStyles();
-  // const { userName, password, loginInfoForm, inputParam } = props;
   const submitForm = useCallback(
     event => {
       event.preventDefault();
