@@ -1,5 +1,4 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import cloneDeep from "lodash/cloneDeep";
 import { history } from "./../configureStore";
 import { APPLICANT_INFO_FORM, applicantInfoFormSuccess } from "../actions/applicantInfoForm";
 import { updateProspectId, updateSaveType } from "../actions/appConfig";
@@ -12,8 +11,7 @@ import routes from "./../../routes";
 
 function* applicantInfoFormSaga(action) {
   try {
-    const prospectCopied = cloneDeep(initialProspect);
-    const prospectUpdated = { ...prospectCopied, applicantInfo: action.data };
+    const prospectUpdated = { ...initialProspect, applicantInfo: action.data };
 
     const {
       data: { prospectId }
