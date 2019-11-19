@@ -5,7 +5,7 @@ import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";
 import RemoveButton from "../Buttons/RemoveButton";
 import PureSelect from "../InputField/PureSelect";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 import { connect } from "react-redux";
 import { getInputValueById } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";

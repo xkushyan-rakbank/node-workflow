@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 
 import Subtitle from "../Subtitle";
 import FormWrapper from "../StakeholderStepForms/FormWrapper";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 import PureSelect from "../InputField/PureSelect";
 import TextInput from "../InputField/TextInput";
 import AddButton from "../Buttons/AddButton";

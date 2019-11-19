@@ -9966,6 +9966,21 @@
 		"format": "email",
 		"maxlength": "50"
 	},
+	"Search.editMessage": {
+		"criteria": {
+			"roles": [
+				"agent"
+			],
+			"segments": [],
+			"products": [],
+			"devices": [
+				"mobile",
+				"tablet",
+				"desktop"
+			]
+		},
+		"message": "Editing the application will result in re-performing the pre-screening checks and might change the results."
+	},
 	"login.userName": {
 		"criteria": {
 			"roles": [

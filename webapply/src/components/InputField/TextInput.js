@@ -10,10 +10,10 @@ import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";
 import isBoolean from "lodash/isBoolean";
 import isNil from "lodash/isNil";
-import InfoTitle from "./../InfoTitle";
-import ErrorMessage from "./../ErrorMessage";
-import { ContexualHelp } from "./../ContexualHelp/ContexualHelp";
+import { InfoTitle } from "./../Notifications";
+import { ErrorMessage } from "./../Notifications";
 import { updateProspect } from "../../store/actions/appConfig";
+import { ContexualHelp } from "./../ContexualHelp/ContexualHelp";
 import { fieldAttr } from "../../constants";
 import { validate } from "./../../utils/validate";
 import { getGeneralInputProps } from "../../store/selectors/input";
@@ -243,7 +243,6 @@ class Input extends React.Component {
 
     const isError = !isEmpty(fieldErrors) || this.props.isError;
     const customValidationMessage = this.getCustomValidationMessage();
-
     if (id && config.label) {
       return (
         <div

@@ -5,7 +5,7 @@ import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { getInputValueById } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 
 const PreferredContactInformation = props => {
   const { isSignatory, index } = props;
@@ -26,7 +26,7 @@ const PreferredContactInformation = props => {
               <PureSelect
                 id="SigCont.primaryMobCountryCode"
                 indexes={[index]}
-                defaultValue="UAE"
+                defaultValue="971"
                 combinedSelect
                 disabled={!isSignatory}
               />
@@ -42,7 +42,7 @@ const PreferredContactInformation = props => {
               <PureSelect
                 id="SigCont.primaryPhoneCountryCode"
                 indexes={[index]}
-                defaultValue="UAE"
+                defaultValue="971"
                 combinedSelect
                 disabled={!isSignatory}
               />

@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import OtpVerification from "../components/OtpVerification";
 import { withStyles } from "@material-ui/core/styles";
-import ErrorMessage from "../components/ErrorMessage";
+import { ErrorMessage } from "./../components/Notifications";
 import { displayScreenBasedOnViewId, updateSaveType } from "../store/actions/appConfig";
 import { generateOtpCode, verifyOtp } from "../store/actions/otp";
 import { getInputServerValidityByPath } from "../store/selectors/serverValidation";

@@ -1,22 +1,18 @@
-import { all, call, put, takeLatest, select } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import { history } from "./../configureStore";
 import * as actions from "../actions/loginForm";
 import { updateProspect } from "../actions/appConfig";
 
-import apiClient from "../../api/apiClient";
+import { authentication } from "../../api/apiClient";
 import routes from "./../../routes";
 
 export function* loginFormSaga(action) {
   try {
-    const state = yield select();
-    const recaptchaToken = state.reCaptcha && state.reCaptcha.token && state.reCaptcha.token;
-
     const param = {
       username: action.payload.userName || "",
-      password: action.payload.password || "",
-      recaptchaToken
+      password: action.payload.password || ""
     };
-    const response = yield call(apiClient.authentication.login, param);
+    const response = yield call(authentication.login, param);
     if (response.status === 200) {
       yield put(actions.loginInfoFormSuccess(response.data));
       yield call(history.push, routes.searchProspect);

@@ -1,15 +1,9 @@
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
-import PersonalInformation from "../components/StakeholderStepForms/PersonalInformation";
-import SignatoryRights from "../components/StakeholderStepForms/SignatoryRights";
-import Shareholding from "../components/StakeholderStepForms/Shareholding";
-import Nationality from "../components/StakeholderStepForms/Nationality";
-import CountryOfResidence from "../components/StakeholderStepForms/CountryOfResidence";
-import PreferredContactInformation from "../components/StakeholderStepForms/PreferredContactInformation";
-import AccountDetails from "../components/ServicesStepForms/AccountDetails";
-import SigningPreferences from "../components/ServicesStepForms/SigningPreferences";
-import Channels from "../components/ServicesStepForms/Channels";
-import ValueAddedServices from "../components/ServicesStepForms/ValueAddedServices";
+import { AccountDetails } from "../containers/SelectServices/components/AccountDetails";
+import { SigningPreferences } from "../containers/SelectServices/components/SigningPreferences";
+import { Channels } from "../containers/SelectServices/components/Channels";
+import { ValueAddedServices } from "../containers/SelectServices/components/ValueAddedServices";
 import CompanyDetails from "../components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "../components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";
@@ -17,10 +11,10 @@ import accountDetails from "../assets/icons/account_details.png";
 import signingPreferences from "../assets/icons/signing_preferences.png";
 import channels from "../assets/icons/channels.png";
 import valueAddedServices from "../assets/icons/value_added_services.png";
-import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDetails";
-import CheckList from "../components/SearchedAppInfoSteps/CheckList";
-import Documents from "../components/SearchedAppInfoSteps/Documents";
-import AuditTrail from "../components/SearchedAppInfoSteps/AuditTrail";
+import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDetails/index";
+import CheckList from "../components/SearchedAppInfoSteps/CheckList/index";
+import Documents from "../components/SearchedAppInfoSteps/Documents/index";
+import AuditTrail from "../components/SearchedAppInfoSteps/AuditTrail/index";
 import CompanyBusinessRelationshipsForm from "../components/FinalQuestions/CompanyBusinessRelationshipsForm";
 import CompanyPreferredContactInformationForm from "../components/FinalQuestions/CompanyPreferredContactInformationForm";
 import CompanyPreferredMailingAddressForm from "../components/FinalQuestions/CompanyPreferredMailingAddressForm";
@@ -33,31 +27,6 @@ import SignatoryPreferredMailingAddressForm from "../components/FinalQuestions/S
 import SignatoryEmploymentDetailsForm from "../components/FinalQuestions/SignatoryEmploymentDetailsForm";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
-
-export const stakeHoldersSteps = [
-  {
-    step: 1,
-    title: "Personal Information",
-    component: PersonalInformation
-  },
-  {
-    step: 2,
-    title: "Signatory Rights",
-    component: SignatoryRights
-  },
-  { step: 3, title: "Shareholding", component: Shareholding },
-  { step: 4, title: "Nationality", component: Nationality },
-  {
-    step: 5,
-    title: "Country of residence",
-    component: CountryOfResidence
-  },
-  {
-    step: 6,
-    title: "Preferred contact information",
-    component: PreferredContactInformation
-  }
-];
 
 export const aboutCompanySteps = [
   {
@@ -213,23 +182,20 @@ export const servicesSteps = [
     step: 1,
     title: "Account details",
     component: AccountDetails,
-    icon: accountDetails,
-    titleInfo: ""
+    icon: accountDetails
   },
   {
     step: 2,
     title: "Signing preferences",
     component: SigningPreferences,
-    icon: signingPreferences,
-    titleInfo: ""
+    icon: signingPreferences
   },
   { step: 3, title: "Channels", component: Channels, icon: channels, titleInfo: "" },
   {
     step: 4,
     title: "Value added services",
     component: ValueAddedServices,
-    icon: valueAddedServices,
-    titleInfo: "RAKvalue package available to AED account only"
+    icon: valueAddedServices
   }
 ];
 
@@ -303,3 +269,4 @@ export const contexualHelpMessages = {
   companyName:
     " if the Company's name is more than 30 characters long, than an abbreviation needs to be entered and that this abbreviation will appear in all Bank records including Cheque Books."
 };
+export const IS_RECAPTCHA_ENABLE = false;

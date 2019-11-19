@@ -1,6 +1,6 @@
 import { all, call, put, select, takeLatest, delay } from "redux-saga/effects";
 import get from "lodash/get";
-import apiClient from "../../api/apiClient";
+import { otp } from "../../api/apiClient";
 import * as appConfigSelectors from "../selectors/appConfig";
 import * as serverValidationActions from "../actions/serverValidation";
 import * as otpActions from "../actions/otp";
@@ -9,16 +9,18 @@ function* generateOtp() {
   try {
     const state = yield select();
     const applicantInfo = appConfigSelectors.getApplicantInfo(state);
-
     const payload = {
       prospectId: appConfigSelectors.getProspectId(state),
       mobileNo: applicantInfo.mobileNo,
       countryCode: applicantInfo.countryCode,
-      email: applicantInfo.email,
-      recaptchaToken: state.reCaptcha.token
+      email: applicantInfo.email
     };
 
-    const { data } = yield call(apiClient.otp.generate, payload);
+    if (state.reCaptcha.token) {
+      payload.recaptchaToken = state.reCaptcha.token;
+    }
+
+    const { data } = yield call(otp.generate, payload);
     yield put(otpActions.generateCodeSuccess(data));
   } catch (error) {
     yield put(otpActions.setOtpPendingRequest(false));
@@ -42,7 +44,7 @@ function* verifyOtp({ payload: otpToken }) {
       countryCode: applicantInfo.countryCode,
       otpToken
     };
-    const { data } = yield call(apiClient.otp.verify, payload);
+    const { data } = yield call(otp.verify, payload);
     // TODO: only for develop - remove
     yield delay(Math.random() > 0.5 ? 2000 : 1000);
     if (data.verified) {

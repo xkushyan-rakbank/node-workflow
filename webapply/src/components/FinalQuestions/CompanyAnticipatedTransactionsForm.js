@@ -6,12 +6,12 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import TextInput from "../InputField/TextInput";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 import isNumber from "lodash/isNumber";
 import isNaN from "lodash/isNaN";
 import { getInputValueById } from "../../store/selectors/input";
 import cx from "classnames";
-import ErrorMessage from "../ErrorMessage";
+import { ErrorMessage } from "../Notifications";
 
 const styles = {
   title: {

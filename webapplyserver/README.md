@@ -60,4 +60,10 @@ Change the log statements to logger.debug to avoid logging prospect information.
 
 4. JUnit tests are pending as mentioned in DEV tasks.
 
-5. logback-spring.xml: a logger configuration file, currently logs written to server.log instead of application log file. This works fine when the application is run as standalone or with embedded servlet container.
+5. logback-spring.xml: a logger configuration file, currently logs written to server.log instead of application log file. 
+This works fine when the application is run as standalone or with embedded servlet container.
+
+6. DocumentUploader Base URL is different from WebApplyServer APIs. This needs small code change in WebApplyServer:
+    a. Add DocumentUploaderBaseUrl in appConfig.json under BaseURLs
+    b. Add docUploaderBaseUrl field in endpoints. Refer Line#281 in WebApplyController
+    c. Make the code change in Frontend to invoke the correct endpoint.

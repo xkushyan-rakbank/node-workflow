@@ -8,7 +8,7 @@ import { defineDynamicInputId } from "../../constants";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import Check from "../../assets/icons/on.png";
-import infoIc from "../../assets/icons/info.png";
+import infoIc from "../../assets/icons/info.svg";
 
 const styles = {
   checkboxWrapper: {

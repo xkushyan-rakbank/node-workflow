@@ -34,7 +34,7 @@ const styles = {
   }
 };
 
-const ServicesStepTitle = ({ step, activeStep, classes, setStep, titleInfo, isShowTitleInfo }) => {
+const ServicesStepTitle = ({ step, activeStep, classes, setStep }) => {
   const doneStep = step.step < activeStep;
   const editStep = () => setStep(step.step);
   return (
@@ -42,10 +42,7 @@ const ServicesStepTitle = ({ step, activeStep, classes, setStep, titleInfo, isSh
       <div className={classes.icon}>
         <img src={step.icon} alt="" />
       </div>
-      <div className={classes.title}>
-        {step.title}
-        {isShowTitleInfo && <span>{step.titleInfo}</span>}
-      </div>
+      <div className={classes.title}>{step.title}</div>
 
       {doneStep && <LinkButton className={classes.editButton} clickHandler={editStep} />}
     </div>
