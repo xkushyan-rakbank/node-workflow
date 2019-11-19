@@ -6,7 +6,7 @@ import { submitApplication } from "../../../../constants/index";
 import Button from "../../../../components/Buttons/SubmitButton";
 import BackLink from "../../../../components/Buttons/BackLink";
 import FormTitle from "../../../../components/FormTitle";
-import ErrorMessage from "../../../../components/ErrorMessage";
+import { ErrorMessage } from "../../../../components/Notifications";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 
@@ -55,7 +55,7 @@ export const SubmitApplicationComponent = props => {
   const { applicationInfo, accountInfo, signatoryInfo, organizationInfo, isAgentLoggedIn } = props;
   const [account] = accountInfo;
 
-  const chkboxErrorMessage = `Please click the ${submitApplication.termCondition} 
+  const chkboxErrorMessage = `Please click the ${submitApplication.termCondition}
     and ${submitApplication.termsOfEnrolment}`;
 
   return (

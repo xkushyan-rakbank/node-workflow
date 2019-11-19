@@ -9,6 +9,7 @@ const styles = {
   },
   buttonWrapWithBackLink: {},
   nextButton: {
+    width: "192px",
     fontWeight: 600,
     letterSpacing: "normal",
     "&:disabled": {
@@ -18,7 +19,7 @@ const styles = {
 };
 
 const SubmitButton = props => {
-  const { disabled = false, classes, label, handleClick, justify, containerExtraStyles } = props;
+  const { disabled = false, classes, label, justify, containerExtraStyles } = props;
   return (
     <Grid
       container
@@ -34,7 +35,6 @@ const SubmitButton = props => {
         disabled={disabled}
         label={label}
         className={classes.nextButton}
-        handleClick={handleClick}
       />
     </Grid>
   );

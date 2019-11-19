@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import DatePicker from "../InputField/DatePicker";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 
 const LicenseInformation = () => {
   const maxYearsInBusiness = new Date().getFullYear();

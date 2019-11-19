@@ -1,22 +1,17 @@
-import { all, call, put, select, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import { APPLICANT_INFO_FORM, applicantInfoFormSuccess } from "../actions/applicantInfoForm";
-
-import cloneDeep from "lodash/cloneDeep";
 import { updateProspectId, updateSaveType } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { generateOtpCode } from "./../actions/otp";
 import { setVerified } from "../actions/reCaptcha";
 
-import apiClient from "../../api/apiClient";
+import { prospect } from "../../api/apiClient";
 
-function* applicantInfoFormSaga() {
+function* applicantInfoFormSaga(action) {
   try {
-    const state = yield select();
-    const config = cloneDeep(state.appConfig);
-
     const {
       data: { prospectId }
-    } = yield call(apiClient.prospect.create, config.prospect);
+    } = yield call(prospect.create, action.data);
 
     yield put(applicantInfoFormSuccess());
     yield put(setVerified(true));

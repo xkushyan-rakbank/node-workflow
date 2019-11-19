@@ -9,8 +9,10 @@ import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import { getValidationErrors } from "../../store/selectors/validationErrors";
 import { updateProspect } from "../../store/actions/appConfig";
+import { ErrorMessage } from "./../Notifications";
 // import ErrorMessage from "../ErrorMessage";
 import CustomCheckbox from "./CustomCheckbox";
+import { InfoTitle } from "./../Notifications";
 // import InfoTitle from "../InfoTitle";
 
 const style = {

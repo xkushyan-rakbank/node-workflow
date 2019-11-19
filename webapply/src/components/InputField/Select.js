@@ -7,7 +7,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { withStyles } from "@material-ui/core/styles";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "../Notifications";
 
 const style = {
   selectField: {
