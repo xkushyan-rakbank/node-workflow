@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
 import StepComponent from "../../components/StepComponent";
+import { StepComponent as StepComponentFormik } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
 import SuccessFilledStakeholder from "../../components/StakeholderStepForms/SuccessFilledStakeholder/SuccessFilledStakeholder";
 import StatusLoader from "../../components/StatusLoader";
 import LinkButton from "../../components/Buttons/LinkButton";
@@ -85,6 +86,23 @@ const StakeholderStepper = props => {
         {stakeHoldersSteps.map(item => {
           const setStep = () => handleSetStep(item);
           const handleContinue = () => continueHandler(item.step, index);
+
+          if (item.step === STEP_1) {
+            return (
+              <StepComponentFormik
+                index={index}
+                key={item.step}
+                steps={stakeHoldersSteps}
+                step={item.step}
+                title={item.title}
+                subTitle={item.infoTitle}
+                activeStep={step === item.step}
+                filled={isFilled}
+                clickHandler={setStep}
+                handleContinue={handleContinue}
+              />
+            );
+          }
 
           return (
             <StepComponent
