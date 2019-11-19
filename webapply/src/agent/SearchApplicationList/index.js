@@ -1,12 +1,12 @@
 import React from "react";
 import get from "lodash/get";
-import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
-import { styles } from "./styled";
 import { titles } from "./constants";
+import { useStyles } from "./styled";
 
-const SearchApplicationList = ({ classes, currentApplications }) => {
+const SearchApplicationList = ({ currentApplications }) => {
+  const classes = useStyles();
   return (
     <div className={classes.wrapper}>
       {currentApplications.length && (
@@ -64,4 +64,4 @@ const SearchApplicationList = ({ classes, currentApplications }) => {
   );
 };
 
-export default withStyles(styles)(SearchApplicationList);
+export default SearchApplicationList;
