@@ -3,10 +3,10 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import { history } from "./../store/configureStore";
 import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
+import { Layout, LayoutContext } from "../components/Layout";
 import Header from "./../components/Header";
 import HeaderTitle from "./../components/HeaderTitle";
 import {
@@ -67,7 +67,7 @@ class FormLayout extends React.Component {
   constructor(props) {
     super(props);
 
-    history.listen((location, action) => {
+    props.history.listen((location, action) => {
       this.props.applicationStatusReset();
     });
   }
@@ -87,10 +87,12 @@ class FormLayout extends React.Component {
     const { children, classes, isProceed, serverError, screeningResults, location } = this.props;
 
     return (
-      <React.Fragment>
+      <Layout>
         <Header />
         <div className={classes.formLayout}>
-          <FormNavigation />
+          <LayoutContext.Consumer>
+            {({ accountType }) => <FormNavigation accountType={accountType} />}
+          </LayoutContext.Consumer>
           <div className={classes.formWrapper}>
             <div className={classes.formInner}>
               <div className={classes.mainContainer}>
@@ -103,7 +105,7 @@ class FormLayout extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </Layout>
     );
   }
 }

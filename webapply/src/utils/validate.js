@@ -1,5 +1,5 @@
 import { errorType } from "../constants";
-import store from "../store/configureStore";
+import { store } from "../store";
 import get from "lodash/get";
 
 export const validate = (field, fieldConfig) => {

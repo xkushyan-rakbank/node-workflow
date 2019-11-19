@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { history } from "./../configureStore";
+import { history } from "./..";
 import { APPLICANT_INFO_FORM, applicantInfoFormSuccess } from "../actions/applicantInfoForm";
 import { updateProspectId, updateProspect, updateSaveType } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";

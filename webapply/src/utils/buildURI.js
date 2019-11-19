@@ -1,6 +1,6 @@
 import { generatePath } from "react-router";
 import isEmpty from "lodash/isEmpty";
-import store from "./../store/configureStore";
+import { store } from "./../store";
 import { endpoints } from "./../constants/config";
 
 export const buildURI = (uriName, prospectId, documentKey) => {

@@ -10,7 +10,6 @@ import router from "../routes";
 import { logout, formatLogin } from "./../store/actions/loginForm";
 import { formatSearchList } from "./../store/actions/searchProspect";
 import routes from "../routes";
-import { history } from "./../store/configureStore";
 
 const styles = {
   headerTitle: {
@@ -83,7 +82,7 @@ const HeaderTitle = props => {
     props.logout();
     props.formatLogin();
     props.formatSearchList();
-    history.push(routes.login);
+    props.history.push(routes.login);
   };
 
   return (
