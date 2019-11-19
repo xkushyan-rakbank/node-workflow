@@ -22,16 +22,16 @@ import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { handleChangeStep } from "../actions/stakeholders";
-import apiClient from "../../api/apiClient";
+import { prospect } from "../../api/apiClient";
 
 function* sendProspectToAPISaga() {
   try {
     const state = yield select();
-    const prospect = getProspect(state);
-    const prospectID = getProspectId(state) || "COSME0000000000000001"; // remove hardcoded ID
+    const newProspect = getProspect(state);
+    const prospectID = "COSME0000000000000001"; // remove hardcoded ID
 
-    yield call(apiClient.prospect.update, prospectID, prospect);
-    yield put(sendProspectToAPISuccess(prospect));
+    yield call(prospect.update, prospectID, newProspect);
+    yield put(sendProspectToAPISuccess(newProspect));
     yield put(updateSaveType("continue"));
     yield put(resetFormStep({ resetStep: true }));
     yield put(resetInputsErrors());
@@ -51,12 +51,12 @@ function* prospectAutoSave() {
   try {
     while (true) {
       const state = yield select();
-      const prospect = getProspect(state);
+      const newProspect = getProspect(state);
       const prospectId = getProspectId(state);
 
-      yield call(apiClient.prospect.update, prospectId, prospect);
+      yield call(prospect.update, prospectId, newProspect);
       yield put(updateSaveType("auto"));
-      yield put(sendProspectToAPISuccess(prospect));
+      yield put(sendProspectToAPISuccess(newProspect));
       yield delay(40000);
     }
   } finally {

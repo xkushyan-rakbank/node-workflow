@@ -6,7 +6,7 @@ import get from "lodash/get";
 import { getSignatories } from "../../store/selectors/appConfig";
 import { getInputNameById, getInputValueById } from "../../store/selectors/input";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import ErrorMessage from "../ErrorMessage";
+import { ErrorMessage } from "./../Notifications";
 import { updateProspect } from "../../store/actions/appConfig";
 import InlineRadioGroup from "../InputField/InlineRadioGroup";
 

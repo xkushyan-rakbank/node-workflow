@@ -1,11 +1,11 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
 import { connect } from "react-redux";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ConnectedRouter } from "connected-react-router";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import { history } from "./store/configureStore";
-import ApplicantInfo from "./containers/ApplicantInfo";
-import Login from "./agent/Login/index";
+import { ApplicantInfo } from "./containers/AplicantInfo/ApplicantInfo";
+import Login from "./agent/Login";
 import AboutCompany from "./containers/AboutCompany";
 import CompanyStakeholders from "./containers/CompanyStakeholders/CompanyStakeholders";
 import { FinalQuestions } from "./containers/FinalQuestions";
@@ -23,56 +23,22 @@ import UploadDocuments from "./containers/FileUploader";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
 import SearchedAppInfo from "./agent/SearchedAppInfo/index";
 import ReUploadDocuments from "./containers/ReUploadDocuments";
+import routes from "./routes.js";
+import { tagManagerArgs } from "./constants/gtm";
+import { theme } from "./theme";
+import "./App.scss";
 import { SubmitApplication } from "./containers/SelectServices/components/SubmitApplication";
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 import { getEndpoints } from "./store/selectors/appConfig";
-import routes from "./routes.js";
-import "./App.scss";
 
 import TagManager from "react-gtm-module";
 
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true
-  },
-  palette: {
-    primary: {
-      main: "#000000"
-    },
-    secondary: {
-      main: "#517085"
-    },
-    action: {
-      disabledBackground: "#d3d8db"
-    }
-  }
-});
-
-// Added GTM ID
-
-const tagManagerArgs = {
-  gtmId: "GTM-PPZWHLS",
-  dataLayerName: "PageDataLayer"
-};
-
 class App extends React.Component {
-  state = {
-    renderChildren: false,
-    hasError: false
-  };
-
   componentDidMount() {
-    this.props.receiveAppConfig();
     this.handlePageReload();
+    this.props.receiveAppConfig();
     TagManager.initialize(tagManagerArgs);
-    this.props.prospectAutoSave();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.endpoints !== this.props.endpoints) {
-      this.setState({ renderChildren: true });
-    }
   }
 
   handlePageReload = () => {
@@ -82,7 +48,6 @@ class App extends React.Component {
   };
   render() {
     TagManager.initialize(tagManagerArgs);
-    // const { renderChildren } = this.state; // return in future
     return (
       <>
         <MuiThemeProvider theme={theme}>

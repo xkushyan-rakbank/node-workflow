@@ -6,13 +6,12 @@ import rightArrowWhite from "./../../assets/icons/whiteArrow.png";
 
 const styles = {
   buttonStyle: {
-    width: "192px",
     height: "56px",
     borderRadius: "28px ",
     outline: "none ",
     fontSize: "18px",
     textTransform: "none",
-    padding: "0 25px",
+    padding: "0 36px",
     backgroundColor: "#000",
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.7)"
@@ -23,6 +22,7 @@ const styles = {
     }
   },
   labelStyle: {
+    fontSize: "18px",
     textAlign: "left",
     color: "#ffffff",
     justifyContent: "space-between"
