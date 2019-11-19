@@ -1,16 +1,30 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
-import { createBrowserHistory } from "history";
+import { persistStore, persistReducer, createTransform } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import omit from "lodash/omit";
+
 import reducers from "./reducers";
 import rootSaga from "./sagas";
 import { routerMiddleware } from "connected-react-router";
-//import { basename } from "./../routes";
 
-// export const history = createBrowserHistory(basename);
-export const history = createBrowserHistory();
+const blacklistTransform = createTransform((inboundState, key) => {
+  if (key === "appConfig") {
+    return omit(inboundState, ["login"]);
+  }
 
-const configureStore = (initialState, browserHistory) => {
-  const routermw = routerMiddleware(browserHistory);
+  return inboundState;
+});
+
+const persistConfig = {
+  key: "root",
+  storage,
+  blacklist: ["router", "login", "searchProspect"],
+  transforms: [blacklistTransform]
+};
+
+export const configureStore = (initialState, history) => {
+  const routermw = routerMiddleware(history);
   const sagaMiddleware = createSagaMiddleware();
 
   const composeEnhancers =
@@ -19,7 +33,7 @@ const configureStore = (initialState, browserHistory) => {
     compose;
 
   const store = createStore(
-    reducers(history),
+    persistReducer(persistConfig, reducers(history)),
     initialState,
     composeEnhancers(
       applyMiddleware(routermw),
@@ -28,8 +42,7 @@ const configureStore = (initialState, browserHistory) => {
   );
 
   sagaMiddleware.run(rootSaga);
+  const persistor = persistStore(store);
 
-  return store;
+  return { store, persistor };
 };
-
-export default configureStore({}, history);

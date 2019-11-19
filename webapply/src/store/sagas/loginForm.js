@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { history } from "./../configureStore";
+import { history } from "./..";
 import * as actions from "../actions/loginForm";
 import { updateProspect } from "../actions/appConfig";
 
