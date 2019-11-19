@@ -46,7 +46,13 @@ const ApplicantInfoPage = props => {
       >
         {() => (
           <Form>
-            <Field name="fullName" label="Your Name" placeholder="Your Name" component={Input} />
+            <Field
+              name="fullName"
+              label="Your Name"
+              placeholder="Your Name"
+              component={Input}
+              contexualHelpText="edwedwedw"
+            />
 
             <Field name="email" label="Your E-mail Address" placeholder="Email" component={Input} />
 

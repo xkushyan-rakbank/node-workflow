@@ -13,7 +13,7 @@ import isNil from "lodash/isNil";
 import { InfoTitle } from "./../Notifications";
 import { ErrorMessage } from "./../Notifications";
 import { updateProspect } from "../../store/actions/appConfig";
-import { ContexualHelp } from "./../ContexualHelp/ContexualHelp";
+import { ContexualHelp } from "./../Notifications";
 import { fieldAttr } from "../../constants";
 import { validate } from "./../../utils/validate";
 import { getGeneralInputProps } from "../../store/selectors/input";

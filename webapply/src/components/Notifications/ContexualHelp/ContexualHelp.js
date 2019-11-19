@@ -5,7 +5,7 @@ import { useStyles } from "./styled";
 export const ContexualHelp = ({ children, placement = "left", title = "" }) => {
   const classes = useStyles();
   return (
-    <Tooltip disableHoverListener classes={classes} placement={placement} title={title}>
+    <Tooltip classes={classes} placement={placement} title={title}>
       {children}
     </Tooltip>
   );
