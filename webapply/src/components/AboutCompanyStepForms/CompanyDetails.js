@@ -4,7 +4,7 @@ import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { contexualHelpMessages } from "./../../constants/index";
 
-const CompanyDetails = () => (
+export const CompanyDetails = () => (
   <>
     <Grid container spacing={3}>
       <Grid item md={6} sm={12}>
@@ -29,5 +29,3 @@ const CompanyDetails = () => (
     </Grid>
   </>
 );
-
-export default CompanyDetails;
