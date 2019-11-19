@@ -55,15 +55,14 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
     [setIsValidCode, setCode]
   );
 
-  let title = "";
-  inputParam.countryCode === COUNTRY_CODE
-    ? (title = "We have sent you a verification code on registered mobile number")
-    : (title = "We have sent you a verification code on registered email address");
-
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
-        title={title}
+        title={
+          inputParam.countryCode === COUNTRY_CODE
+            ? "We have sent you a verification code on registered mobile number"
+            : "We have sent you a verification code on registered email address"
+        }
         info="Please enter the six digits below, to confirm this is you"
       />
 
