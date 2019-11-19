@@ -265,8 +265,4 @@ export const applicationStatus = {
   }
 };
 
-export const contexualHelpMessages = {
-  companyName:
-    " if the Company's name is more than 30 characters long, than an abbreviation needs to be entered and that this abbreviation will appear in all Bank records including Cheque Books."
-};
 export const IS_RECAPTCHA_ENABLE = false;

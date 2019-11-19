@@ -2,7 +2,6 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
-import { contexualHelpMessages } from "./../../constants/index";
 
 export const CompanyDetails = () => (
   <>
@@ -12,7 +11,7 @@ export const CompanyDetails = () => (
           id="Org.companyName"
           withContexualHelp
           placement="right"
-          contexualHelpText={contexualHelpMessages.companyName}
+          contexualHelpText="if the Company's name is more than 30 characters long, than an abbreviation needs to be entered and that this abbreviation will appear in all Bank records including Cheque Books."
         />
       </Grid>
       <Grid item md={6} sm={12}>
