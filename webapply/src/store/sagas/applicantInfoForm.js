@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { history } from "./../configureStore";
 import { APPLICANT_INFO_FORM, applicantInfoFormSuccess } from "../actions/applicantInfoForm";
-import { updateProspectId, updateSaveType } from "../actions/appConfig";
+import { updateProspectId, updateProspect, updateSaveType } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { generateOtpCode } from "./../actions/otp";
 import { setVerified } from "../actions/reCaptcha";
@@ -12,6 +12,8 @@ import routes from "./../../routes";
 function* applicantInfoFormSaga(action) {
   try {
     const prospectUpdated = { ...initialProspect, applicantInfo: action.data };
+
+    yield put(updateProspect({ prospect: prospectUpdated }));
 
     const {
       data: { prospectId }
