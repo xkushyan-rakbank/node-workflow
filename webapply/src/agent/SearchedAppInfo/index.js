@@ -9,7 +9,6 @@ import { searchedAppInfoSteps } from "../../constants";
 import routes from "../../routes";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 import * as loginSelector from "./../../store/selectors/loginSelector";
-import { history } from "./../../store/configureStore";
 import BackLink from "../../components/Buttons/BackLink";
 import { retrieveDocDetails } from "./../../store/actions/getProspectDocuments";
 import { getProspectInfo } from "./../../store/actions/retrieveApplicantInfo";
@@ -28,9 +27,10 @@ class SearchedAppInfo extends React.Component {
     editClicked: false
   };
 
-  componentWillMount() {
-    !this.props.checkLoginStatus && history.push(routes.login);
-    this.props.searchResults.length === 0 && history.push(routes.searchProspect);
+  UNSAFE_componentWillMount() {
+    if (!this.props.checkLoginStatus) {
+      this.props.history.push(routes.login);
+    }
   }
 
   componentDidMount() {
