@@ -1,19 +1,12 @@
 import React from "react";
 import Tooltip from "@material-ui/core/Tooltip";
-import { useStylesArrow } from "./styled";
+import { useStyles } from "./styled";
 
-function ContexualHelp(props) {
-  const { arrow, ...classes } = useStylesArrow();
+export const ContexualHelp = ({ children, placement = "left", title = "" }) => {
+  const classes = useStyles();
   return (
-    <Tooltip
-      disableHoverListener
-      classes={classes}
-      placement={props.placement}
-      title={props.title || ""}
-    >
-      {props.children}
+    <Tooltip disableHoverListener classes={classes} placement={placement} title={title}>
+      {children}
     </Tooltip>
   );
-}
-
-export default ContexualHelp;
+};

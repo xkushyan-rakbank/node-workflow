@@ -12,7 +12,7 @@ import isBoolean from "lodash/isBoolean";
 import isNil from "lodash/isNil";
 import InfoTitle from "./../InfoTitle";
 import ErrorMessage from "./../ErrorMessage";
-import ContexualHelp from "./../ContexualHelp/ContexualHelp";
+import { ContexualHelp } from "./../ContexualHelp/ContexualHelp";
 import { updateProspect } from "../../store/actions/appConfig";
 import { fieldAttr } from "../../constants";
 import { validate } from "./../../utils/validate";
@@ -236,8 +236,7 @@ class Input extends React.Component {
       serverValidation,
       select,
       placement,
-      contexualHelpText,
-      withContexualHelp
+      contexualHelpText
     } = this.props;
     const { fieldErrors } = this.state;
     const inputProps = this.composeFieldAttrWithPropAttr(fieldAttr(id, config, indexes));
@@ -262,7 +261,7 @@ class Input extends React.Component {
             {select}
             <FormControl className="formControl">
               <ContexualHelp
-                open={withContexualHelp}
+                open={contexualHelpText}
                 title={contexualHelpText}
                 placement={placement}
               >

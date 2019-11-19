@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-function arrowGenerator(color) {
+const arrowGenerator = color => {
   return {
     "&[x-placement*='bottom'] $tooltip": {
       "&::before": {
@@ -28,7 +28,7 @@ function arrowGenerator(color) {
     },
     "&[x-placement*='left'] $tooltip": {
       "&::before": {
-        bottom: 0,
+        top: "20px",
         left: "auto",
         right: "-6px",
         transform: "rotate(-135deg)",
@@ -37,9 +37,9 @@ function arrowGenerator(color) {
       }
     }
   };
-}
+};
 
-export const useStylesArrow = makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   tooltip: {
     position: "relative",
     backgroundColor: theme.palette.common.white,
