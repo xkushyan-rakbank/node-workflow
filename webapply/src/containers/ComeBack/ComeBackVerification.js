@@ -5,7 +5,7 @@ import cx from "classnames";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 import OtpVerification from "../../components/OtpVerification";
-import ErrorMessage from "../../components/ErrorMessage";
+import { ErrorMessage } from "../../components/Notifications";
 import { generateOtpCode, verifyOtp } from "../../store/actions/otp";
 import { getInputServerValidityByPath } from "../../store/selectors/serverValidation";
 import { getOtp } from "../../store/selectors/otp";

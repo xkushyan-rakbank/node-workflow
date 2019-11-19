@@ -4,7 +4,7 @@ import {
   FORMAT_SEARCH_LIST,
   searchApplicationsSuccess
 } from "../actions/searchProspect";
-import apiClient from "../../api/apiClient";
+import { search } from "../../api/apiClient";
 import { updateProspect } from "../actions/appConfig";
 
 function* searchProspectFormSaga(action) {
@@ -18,7 +18,7 @@ function* searchProspectFormSaga(action) {
       email: action.payload.email || "",
       eidNumber: ""
     };
-    const response = yield call(apiClient.search.searchApplication, inputParam);
+    const response = yield call(search.searchApplication, inputParam);
     yield put(searchApplicationsSuccess(response.data));
   } catch (error) {
     console.error({ error });

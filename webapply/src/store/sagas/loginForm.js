@@ -3,7 +3,7 @@ import { history } from "./..";
 import * as actions from "../actions/loginForm";
 import { updateProspect } from "../actions/appConfig";
 
-import apiClient from "../../api/apiClient";
+import { authentication } from "../../api/apiClient";
 import routes from "./../../routes";
 
 export function* loginFormSaga(action) {
@@ -12,7 +12,7 @@ export function* loginFormSaga(action) {
       username: action.payload.userName || "",
       password: action.payload.password || ""
     };
-    const response = yield call(apiClient.authentication.login, param);
+    const response = yield call(authentication.login, param);
     if (response.status === 200) {
       yield put(actions.loginInfoFormSuccess(response.data));
       yield call(history.push, routes.searchProspect);
