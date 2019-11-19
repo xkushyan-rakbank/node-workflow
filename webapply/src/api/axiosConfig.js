@@ -7,19 +7,22 @@ import {
   applicationStatusProceed,
   applicationStatusStop
 } from "./../store/actions/applicationStatus";
-import getBaseURL from "./../utils/getBaseURL";
+
+const STOP = "stop";
+
+const getBaseURL = () => process.env.BASE_URL || "http://conv.rakbankonline.ae/quickapply";
 
 const instance = axios.create({
   baseURL: getBaseURL()
 });
 
 instance.interceptors.response.use(
-  function(response) {
+  response => {
     const {
       data: { preScreening }
     } = response;
 
-    if (preScreening && preScreening.statusOverAll === "stop") {
+    if (preScreening && preScreening.statusOverAll === STOP) {
       store.dispatch(applicationStatusStop(preScreening.screeningResults));
     } else {
       store.dispatch(applicationStatusProceed());
@@ -27,7 +30,7 @@ instance.interceptors.response.use(
 
     return response;
   },
-  function(error) {
+  error => {
     const {
       status,
       data: { errors, errorType }
@@ -39,10 +42,8 @@ instance.interceptors.response.use(
       } else {
         store.dispatch(setInputsErrors(errors));
       }
-    } else if (status === 500) {
-      store.dispatch(applicationStatusServerError());
     } else {
-      console.error({ error });
+      store.dispatch(applicationStatusServerError());
     }
     return Promise.reject(error);
   }

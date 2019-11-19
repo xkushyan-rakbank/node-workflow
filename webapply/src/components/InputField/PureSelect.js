@@ -9,7 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { withStyles } from "@material-ui/core/styles";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 import { updateProspect } from "../../store/actions/appConfig";
 import { connect } from "react-redux";
 import { validate } from "../../utils/validate";
@@ -19,7 +19,7 @@ import isBoolean from "lodash/isBoolean";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import ListItemText from "@material-ui/core/ListItemText";
-import ErrorMessage from "../ErrorMessage";
+import { ErrorMessage } from "./../Notifications";
 import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
 

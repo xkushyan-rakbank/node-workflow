@@ -9,9 +9,9 @@ import { defineDynamicInputId } from "../../constants";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import { getValidationErrors } from "../../store/selectors/validationErrors";
 import { updateProspect } from "../../store/actions/appConfig";
-import ErrorMessage from "../ErrorMessage";
+import { ErrorMessage } from "./../Notifications";
 import CustomCheckbox from "./CustomCheckbox";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 
 const style = {
   formControl: {
