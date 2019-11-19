@@ -2,6 +2,8 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { connect } from "react-redux";
+import get from "lodash/get";
+
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
 import { accountsNames, formStepper, searchProspectStepper } from "../constants";
@@ -263,7 +265,7 @@ class FormNavigation extends React.Component {
   render() {
     const {
       accountType,
-      islamicBanking,
+      applicationInfo: { islamicBanking },
       location,
       classes,
       history,
@@ -297,6 +299,7 @@ class FormNavigation extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  applicationInfo: get(state, "appConfig.prospect.applicationInfo", {}),
   checkLoginStatus: loginSelector.checkLoginStatus(state)
 });
 

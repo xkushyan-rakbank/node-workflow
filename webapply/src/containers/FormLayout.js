@@ -106,9 +106,7 @@ class FormLayout extends React.Component {
         <Header />
         <div className={classes.formLayout}>
           <LayoutContext.Consumer>
-            {({ accountType, islamicBanking }) => (
-              <FormNavigation accountType={accountType} islamicBanking={islamicBanking} />
-            )}
+            {({ accountType }) => <FormNavigation accountType={accountType} />}
           </LayoutContext.Consumer>
           <div className={classes.formWrapper}>
             <div className={classes.formInner}>

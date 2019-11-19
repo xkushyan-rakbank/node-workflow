@@ -2,23 +2,18 @@ import React, { createContext, useState, useMemo } from "react";
 
 export const LayoutContext = createContext({
   accountType: null,
-  islamicBanking: false,
-  changeAccountType: () => {},
-  setIslamicBanking: () => {}
+  changeAccountType: () => {}
 });
 
 export const Layout = ({ children }) => {
-  const [islamicBanking, setIslamicBanking] = useState(false);
   const [accountType, changeAccountType] = useState(null);
 
   const context = useMemo(
     () => ({
       accountType,
-      islamicBanking,
-      changeAccountType,
-      setIslamicBanking
+      changeAccountType
     }),
-    [accountType, islamicBanking]
+    [accountType]
   );
 
   return <LayoutContext.Provider value={context}>{children}</LayoutContext.Provider>;
