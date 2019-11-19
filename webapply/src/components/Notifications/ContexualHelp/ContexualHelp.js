@@ -5,15 +5,13 @@ import { useStyles } from "./styled";
 export const ContexualHelp = ({ children, title = "", placement = "left" }) => {
   const classes = useStyles();
 
+  if (!title) {
+    return children;
+  }
+
   return (
-    <>
-      {title ? (
-        <Tooltip disableHoverListener classes={classes} placement={placement} title={title}>
-          {children}
-        </Tooltip>
-      ) : (
-        children
-      )}
-    </>
+    <Tooltip disableHoverListener classes={classes} placement={placement} title={title}>
+      {children}
+    </Tooltip>
   );
 };
