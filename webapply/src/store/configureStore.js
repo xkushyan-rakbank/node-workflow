@@ -10,7 +10,7 @@ import { routerMiddleware } from "connected-react-router";
 
 const blacklistTransform = createTransform((inboundState, key) => {
   if (key === "appConfig") {
-    return omit(inboundState, ["login"]);
+    return omit(inboundState, ["login", "endpoints"]);
   }
 
   return inboundState;
