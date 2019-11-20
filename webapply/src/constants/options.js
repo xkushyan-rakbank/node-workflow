@@ -24,3 +24,30 @@ export const countryCodeOptions = [
     label: "+391"
   }
 ];
+
+export const accountCurrencies = [
+  {
+    code: "AED",
+    displayText: "AED",
+    key: "AED",
+    value: "AED"
+  },
+  {
+    code: "USD",
+    displayText: "USD",
+    key: "USD",
+    value: "USD"
+  },
+  {
+    code: "EUR",
+    displayText: "EUR",
+    key: "EUR",
+    value: "EUR"
+  },
+  {
+    code: "GBP",
+    displayText: "GBP",
+    key: "GBP",
+    value: "GBP"
+  }
+];

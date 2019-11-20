@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import { prospect } from "./../../../../constants/config";
 import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
 
 import { CheckboxGroup } from "../../../../components/Form";
@@ -17,6 +16,7 @@ import ContinueButton from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
 import { INPUT_ID_INDEX, INPUT_ID_INDEXES } from "../../constants";
+import { accountCurrencies } from "../../../../constants/options";
 
 const AccountDetailsSchema = Yup.object({
   accountCurrencies: Yup.array().required("Field is required")
@@ -33,7 +33,6 @@ export const AccountDetailsComponent = ({
 }) => {
   const subOptions = getOptionsForSubId(branchCityValue, branchCityConfig, true);
   const classes = useStyles();
-  const { accountCurrencies } = prospect.accountInfo[INPUT_ID_INDEX];
 
   const onSubmit = values => {
     // TODO continue
