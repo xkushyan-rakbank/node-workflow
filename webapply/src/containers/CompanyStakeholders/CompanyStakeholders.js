@@ -39,9 +39,9 @@ const CompanyStakeholders = props => {
     editStakeholder: editHandler,
     deleteStakeholder: deleteHandler
   } = props;
-  const showingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
+  const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
   const isLowPercentage = percentage < 100;
-  const disableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || isLowPercentage;
+  const isDisableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || isLowPercentage;
 
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
    or edit the shareholding % for the added stakeholders.`;
@@ -80,7 +80,7 @@ const CompanyStakeholders = props => {
         })}
       </div>
 
-      {showingAddButton && (
+      {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={props.addNewStakeholder} />
         </div>
@@ -95,7 +95,7 @@ const CompanyStakeholders = props => {
           handleClick={goToFinalQuestions}
           label="Next Step"
           justify="flex-end"
-          disabled={disableNextStep}
+          disabled={isDisableNextStep}
         />
       </div>
       <ConfirmDialog
