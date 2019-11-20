@@ -268,8 +268,7 @@ class FormNavigation extends React.Component {
 
   render() {
     const {
-      accountType,
-      applicationInfo: { islamicBanking },
+      applicationInfo: { islamicBanking, accountType },
       location,
       classes,
       history,
