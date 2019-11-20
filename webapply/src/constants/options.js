@@ -51,3 +51,24 @@ export const accountCurrencies = [
     value: "GBP"
   }
 ];
+
+export const genderOptions = [
+  {
+    code: "Mr.",
+    key: "Mr.",
+    value: "Mr.",
+    label: "Mr."
+  },
+  {
+    code: "Mrs.",
+    key: "Mrs.",
+    value: "Mrs.",
+    label: "Mrs."
+  },
+  {
+    code: "Ms.",
+    key: "Ms.",
+    value: "Ms.",
+    label: "Ms."
+  }
+];
