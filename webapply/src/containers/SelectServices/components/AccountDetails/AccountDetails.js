@@ -52,7 +52,7 @@ export const AccountDetailsComponent = ({
             <Field
               options={accountCurrencies}
               name="accountCurrencies"
-              title={INFO_TITLE}
+              infoTitle={INFO_TITLE}
               component={CheckboxGroup}
             />
 

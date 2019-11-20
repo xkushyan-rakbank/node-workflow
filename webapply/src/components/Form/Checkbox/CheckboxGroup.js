@@ -1,5 +1,5 @@
 import React from "react";
-import get from "lodash/get";
+import FormControl from "@material-ui/core/FormControl";
 
 import { CustomCheckbox } from "./CustomCheckbox";
 import { InfoTitle } from "../../Notifications/index";
@@ -7,28 +7,27 @@ import { ErrorMessage } from "../../Notifications/index";
 
 import { useStyles } from "./styled";
 
-export const CheckboxGroup = ({ id, options, title, field, form }) => {
+export const CheckboxGroup = ({
+  id,
+  options,
+  infoTitle,
+  field,
+  form,
+  form: { errors, touched }
+}) => {
   const classes = useStyles();
-  const { name, onChange } = field;
-  const error = get(form, `errors[${name}]`, "");
+  const isError = errors[field.name] && touched[field.name];
 
   return (
-    <div>
+    <FormControl className={classes.formControl}>
       <div className={classes.checkboxesWrapper}>
         {options.map(({ key, value, displayText }) => (
-          <CustomCheckbox
-            id={name}
-            name={name}
-            key={key}
-            value={value}
-            label={displayText}
-            onChange={onChange}
-          />
+          <CustomCheckbox key={key} value={value} label={displayText} {...field} />
         ))}
       </div>
 
-      {error && <ErrorMessage error={error} />}
-      {title && <InfoTitle title={title} />}
-    </div>
+      {isError && <ErrorMessage error={errors[field.name]} />}
+      {infoTitle && <InfoTitle title={infoTitle} />}
+    </FormControl>
   );
 };
