@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core";
 import DoneIcon from "./DoneIcon";
 import SectionTitle from "./SectionTitle";
 import LinkButton from "./Buttons/LinkButton";
+import FormWrapper from "./StakeholderStepForms/FormWrapper/FormWrapper";
 
 const styles = {
   title: {
@@ -35,18 +36,22 @@ const StepComponent = props => {
   const {
     title,
     filled = false,
-    isActiveStep,
+    activeStep,
     classes,
+    step,
     index,
     clickHandler,
     handleContinue,
+    steps,
+    hideContinue,
+    isContinueDisabled,
     setIsContinueDisabled,
-    prospectInfo,
-    stepForm: Form
+    prospectInfo
   } = props;
+  const Form = steps[step - 1].component;
 
   const renderTitle = () => {
-    if (isActiveStep) {
+    if (activeStep) {
       return (
         <SectionTitle title={props.title} subTitle={props.subTitle} className={classes.title} />
       );
@@ -66,13 +71,18 @@ const StepComponent = props => {
       <div className={classes.stepTitleWrapper} onClick={clickHandler}>
         {renderTitle()}
       </div>
-      {isActiveStep && (
-        <Form
-          setIsContinueDisabled={setIsContinueDisabled}
-          index={index}
-          prospectInfo={prospectInfo}
+      {activeStep && (
+        <FormWrapper
+          isContinueDisabled={isContinueDisabled}
           handleContinue={handleContinue}
-        />
+          hideContinue={hideContinue}
+        >
+          <Form
+            setIsContinueDisabled={setIsContinueDisabled}
+            index={index}
+            prospectInfo={prospectInfo}
+          />
+        </FormWrapper>
       )}
     </>
   );

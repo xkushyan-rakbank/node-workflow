@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CompanyCard from "../../../../components/CompanyCard";
 import ContinueButton from "../../../../components/Buttons/ContinueButton";
 import LinkButton from "../../../../components/Buttons/LinkButton";
-import StepComponent from "../../../../components/StepComponent";
+import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { finalQuestionsSteps, INITIAL_COMPANY_STEP, INITIAL_SIGNATORY_STEP } from "./constants";
 import { usePreviousHook } from "../../../../utils/usePreviousHook";
 import { useStyles } from "./styled";
@@ -74,6 +74,8 @@ export const CompanySummaryCardComponent = ({
     <CompanyCard companyName={companyName} controls={renderControlsContent()}>
       {isExpanded &&
         finalQuestionsSteps.map(item => {
+          const stepIndex = item.step - 1;
+          const stepForm = finalQuestionsSteps[stepIndex].component;
           return (
             <StepComponent
               index={index}
@@ -85,6 +87,7 @@ export const CompanySummaryCardComponent = ({
               isActiveStep={step === item.step}
               filled={completedStep >= item.step}
               clickHandler={changeStep}
+              stepForm={stepForm}
             />
           );
         })}

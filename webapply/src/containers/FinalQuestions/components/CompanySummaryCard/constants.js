@@ -7,29 +7,35 @@ import CompanyBranchesAndSubsidiariesForm from "./CompanySummarySteps/CompanyBra
 export const INITIAL_COMPANY_STEP = 1;
 export const INITIAL_SIGNATORY_STEP = 0;
 
+export const STEP_1 = 1;
+export const STEP_2 = 2;
+export const STEP_3 = 3;
+export const STEP_4 = 4;
+export const STEP_5 = 5;
+
 export const finalQuestionsSteps = [
   {
-    step: 1,
+    step: STEP_1,
     title: "Business relationships",
     component: CompanyBusinessRelationships
   },
   {
-    step: 2,
+    step: STEP_2,
     title: "Branches and subsidiaries",
     component: CompanyBranchesAndSubsidiariesForm
   },
   {
-    step: 3,
+    step: STEP_3,
     title: "Anticipated transactions",
     component: CompanyAnticipatedTransactionsForm
   },
   {
-    step: 4,
+    step: STEP_4,
     title: "Preferred mailing address",
     component: CompanyPreferredMailingAddressForm
   },
   {
-    step: 5,
+    step: STEP_5,
     title: "Preferred contact information",
     component: CompanyPreferredContactInformationForm
   }
