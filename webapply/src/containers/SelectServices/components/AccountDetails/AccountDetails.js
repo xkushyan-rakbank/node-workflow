@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { prospect } from "./../../../../constants/config";
 import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
 
-import { CheckboxGroup } from "../../../../components/InputField/CheckboxGroup";
+import { CheckboxGroup } from "../../../../components/Form";
 import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
 import PureSelect from "../../../../components/InputField/PureSelect";
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
@@ -25,8 +25,12 @@ const AccountDetailsSchema = Yup.object({
 const INFO_TITLE =
   "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval.";
 
-export const AccountDetailsComponent = props => {
-  const { islamicBanking, branchCityValue, branchCityConfig, goToNext } = props;
+export const AccountDetailsComponent = ({
+  islamicBanking,
+  branchCityValue,
+  branchCityConfig,
+  goToNext
+}) => {
   const subOptions = getOptionsForSubId(branchCityValue, branchCityConfig, true);
   const classes = useStyles();
   const { accountCurrencies } = prospect.accountInfo[INPUT_ID_INDEX];

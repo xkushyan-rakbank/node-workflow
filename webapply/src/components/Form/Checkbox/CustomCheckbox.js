@@ -2,8 +2,8 @@ import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import CheckedIcon from "../../assets/icons/on.svg";
-import UncheckedIcon from "../../assets/icons/off.svg";
+import CheckedIcon from "../../../assets/icons/on.svg";
+import UncheckedIcon from "../../../assets/icons/off.svg";
 
 const CustomCheckbox = ({ id, label, style, value, field }) => {
   const { name, onChange } = field;
