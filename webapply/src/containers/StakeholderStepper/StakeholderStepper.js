@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+
 import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
 import StepComponent from "../../components/StepComponent";
+import { StepComponent as StepComponentFormik } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
 import SuccessFilledStakeholder from "../../components/StakeholderStepForms/SuccessFilledStakeholder/SuccessFilledStakeholder";
 import StatusLoader from "../../components/StatusLoader";
 import LinkButton from "../../components/Buttons/LinkButton";
@@ -16,59 +18,71 @@ import {
 import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import { useStyles } from "./styled";
 
-const StakeholderStepper = props => {
+const StakeholderStepper = ({
+  id,
+  index,
+  isNewStakeholder,
+  firstName,
+  lastName,
+  step,
+  isFinalScreenShown,
+  isStatusShown,
+  completedStep,
+  orderIndex,
+  loading: isStatusLoading,
+  finishStakeholderEdit,
+  ...props
+}) => {
   const classes = useStyles();
-  const [confirmation, setConfirmation] = useState(false);
+  const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
+  const [finalScreenIsShown, changeFinalScreenDisplay] = React.useState(false);
 
-  const {
-    id,
-    index,
-    isNewStakeholder,
-    firstName,
-    lastName,
-    step,
-    isFinalScreenShown,
-    isStatusShown,
-    completedStep,
-    orderIndex,
-    loading,
-    finishStakeholderEdit
-  } = props;
+  useEffect(() => {
+    if (isFinalScreenShown) {
+      changeFinalScreenDisplay(true);
+      setInterval(() => {
+        changeFinalScreenDisplay(false);
+        finishStakeholderEdit();
+      }, 5000);
+    }
+  }, [isFinalScreenShown, finishStakeholderEdit]);
 
   const deleteHandler = () => {
-    if (confirmation) {
-      setConfirmation(false);
+    if (isDisplayConfirmation) {
+      setIsDisplayConfirmation(false);
       props.deleteStakeholder(id);
     } else {
-      setConfirmation(true);
+      setIsDisplayConfirmation(true);
     }
   };
 
   const renderContent = () => {
     return (
       <div className={classes.userInfo}>
-        <div className={classes.nameField}>{`${firstName} ${lastName}`}</div>
-        {isStatusShown && <StatusLoader loading={loading} />}
+        <div className={classes.nameField}>
+          {firstName} {lastName}
+        </div>
+        {isStatusShown && <StatusLoader loading={isStatusLoading} />}
       </div>
     );
   };
 
-  if (isFinalScreenShown) {
-    return (
-      <SuccessFilledStakeholder
-        name={`${firstName} ${lastName}`}
-        hideForm={finishStakeholderEdit}
-      />
-    );
+  if (finalScreenIsShown) {
+    return <SuccessFilledStakeholder name={`${firstName} ${lastName}`} />;
   }
 
   const cardProps = isStatusShown
     ? { content: renderContent(), firstName, lastName }
     : { firstName: "New Stakeholder", lastName: "" };
 
-  const isFilled = itemStep => !isNewStakeholder || completedStep >= itemStep - 1;
-  const handleSetStep = item => (isFilled(item.step) ? props.handleChangeStep(item) : {});
-  const continueHandler = (itemStep, index) => {
+  const isFilled = itemStep => isNewStakeholder && completedStep >= itemStep - 1;
+  const createSetStepHandler = item => () => {
+    if (isFilled(item.step)) {
+      props.handleChangeStep(item);
+    }
+  };
+
+  const createContinueHandler = itemStep => () => {
     switch (itemStep) {
       case STEP_1:
         return props.formatPersonalInformation(index);
@@ -83,30 +97,47 @@ const StakeholderStepper = props => {
     <CompanyStakeholderCard {...cardProps} index={orderIndex}>
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => {
-          const setStep = () => handleSetStep(item);
-          const handleContinue = () => continueHandler(item.step, index);
+          const stepIndex = item.step - 1;
+          const stepForm = stakeHoldersSteps[stepIndex].component;
+
+          if (item.step === STEP_1) {
+            return (
+              <StepComponentFormik
+                index={index}
+                key={item.step}
+                title={item.title}
+                subTitle={item.infoTitle}
+                isActiveStep={step === item.step}
+                isFilled={isFilled}
+                clickHandler={createSetStepHandler(item)}
+                handleContinue={createContinueHandler(item.step)}
+                stepForm={stepForm}
+              />
+            );
+          }
 
           return (
             <StepComponent
               index={index}
               key={item.step}
-              steps={stakeHoldersSteps}
-              step={item.step}
               title={item.title}
               subTitle={item.infoTitle}
               activeStep={step === item.step}
               filled={isFilled}
-              clickHandler={setStep}
-              handleContinue={handleContinue}
+              clickHandler={createSetStepHandler(item)}
+              handleContinue={createContinueHandler(item.step)}
+              stepForm={stepForm}
             />
           );
         })}
       </div>
 
-      {!isNewStakeholder && !!props.deleteStakeholder && (
+      {!isNewStakeholder && props.deleteStakeholder && (
         <div className={classes.footerPart}>
           <LinkButton
-            title={confirmation ? "Are you sure? All Data will be lost" : "Delete Stakeholder"}
+            title={
+              isDisplayConfirmation ? "Are you sure? All Data will be lost" : "Delete Stakeholder"
+            }
             className={classes.button}
             clickHandler={deleteHandler}
           />
@@ -116,15 +147,13 @@ const StakeholderStepper = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    step: state.stakeholders.step,
-    completedStep: state.stakeholders.completedStep,
-    isFinalScreenShown: state.stakeholders.isFinalScreenShown,
-    isStatusShown: state.stakeholders.isStatusShown,
-    ...getSendProspectToAPIInfo(state)
-  };
-};
+const mapStateToProps = state => ({
+  step: state.stakeholders.step,
+  completedStep: state.stakeholders.completedStep,
+  isFinalScreenShown: state.stakeholders.isFinalScreenShown,
+  isStatusShown: state.stakeholders.isStatusShown,
+  ...getSendProspectToAPIInfo(state)
+});
 
 const mapDispatchToProps = {
   sendProspectToAPI,
