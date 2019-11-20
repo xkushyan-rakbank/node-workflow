@@ -1,7 +1,7 @@
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import Grid from "@material-ui/core/Grid";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
@@ -46,16 +46,14 @@ export const AccountDetailsComponent = ({
         validationSchema={AccountDetailsSchema}
         onSubmit={onSubmit}
       >
-        {({ values, errors }) => (
+        {() => (
           <Form>
             <Subtitle title="Select currencies" />
-            <CheckboxGroup
+            <Field
               options={accountCurrencies}
-              id="accountCurrencies"
               name="accountCurrencies"
-              errors={errors.accountCurrencies}
-              value={values.accountCurrencies}
               title={INFO_TITLE}
+              component={CheckboxGroup}
             />
 
             <Divider />
