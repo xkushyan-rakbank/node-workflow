@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import FilledStakeholderCard from "../../components/FilledStakeholderCard";
 import StakeholderStepper from "../StakeholderStepper/StakeholderStepper";
@@ -40,8 +40,8 @@ const CompanyStakeholders = props => {
     deleteStakeholder: deleteHandler
   } = props;
   const showingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
-  const lowPercentage = percentage < 100;
-  const disableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || lowPercentage;
+  const isLowPercentage = percentage < 100;
+  const disableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || isLowPercentage;
 
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
    or edit the shareholding % for the added stakeholders.`;
@@ -49,35 +49,6 @@ const CompanyStakeholders = props => {
   const editStakeholderHandler = useCallback(index => editHandler(index), [editHandler]);
   const handleDeleteStakeholder = useCallback(id => deleteHandler(id), [deleteHandler]);
 
-  const memoizedPassportDetails = useMemo(
-    () =>
-      stakeholders.map((item, index) => {
-        return editableStakeholder === index ? (
-          <StakeholderStepper
-            {...item}
-            key={item.id}
-            index={editableStakeholder}
-            deleteStakeholder={handleDeleteStakeholder}
-            isNewStakeholder={isNewStakeholder}
-            orderIndex={index}
-          />
-        ) : (
-          <FilledStakeholderCard
-            {...item}
-            key={item.id}
-            index={index}
-            changeEditableStep={editStakeholderHandler}
-          />
-        );
-      }),
-    [
-      editableStakeholder,
-      stakeholders,
-      handleDeleteStakeholder,
-      editStakeholderHandler,
-      isNewStakeholder
-    ]
-  );
   return (
     <>
       <h2>Add your company’s stakeholders</h2>
@@ -87,7 +58,27 @@ const CompanyStakeholders = props => {
         company.
       </p>
 
-      <div>{memoizedPassportDetails}</div>
+      <div>
+        {stakeholders.map((item, index) => {
+          return editableStakeholder === index ? (
+            <StakeholderStepper
+              {...item}
+              key={item.id}
+              index={editableStakeholder}
+              deleteStakeholder={handleDeleteStakeholder}
+              isNewStakeholder={isNewStakeholder}
+              orderIndex={index}
+            />
+          ) : (
+            <FilledStakeholderCard
+              {...item}
+              key={item.id}
+              index={index}
+              changeEditableStep={editStakeholderHandler}
+            />
+          );
+        })}
+      </div>
 
       {showingAddButton && (
         <div className={classes.buttonsWrapper}>
@@ -95,7 +86,7 @@ const CompanyStakeholders = props => {
         </div>
       )}
 
-      {!!stakeholders.length && lowPercentage && <ErrorMessage error={errorMessage} />}
+      {!!stakeholders.length && isLowPercentage && <ErrorMessage error={errorMessage} />}
 
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
