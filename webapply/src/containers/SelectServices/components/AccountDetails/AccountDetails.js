@@ -1,29 +1,34 @@
-import React from "react";
-import isEmpty from "lodash/isEmpty";
+import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { getOptionsForSubId } from "../../../../utils/getInputSubOptions";
-
-import { CheckboxGroup } from "../../../../components/Form";
+import { CheckboxGroup, CustomSelect } from "../../../../components/Form";
 import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
-import PureSelect from "../../../../components/InputField/PureSelect";
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
 import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
 import ContinueButton from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
-import { INPUT_ID_INDEX, INPUT_ID_INDEXES } from "../../constants";
-import { accountCurrencies } from "../../../../constants/options";
-
-const AccountDetailsSchema = Yup.object({
-  accountCurrencies: Yup.array().required("Field is required")
-});
+import { INPUT_ID_INDEX } from "../../constants";
+import { accountCurrencies, emiratesCities } from "../../../../constants/options";
 
 const INFO_TITLE =
   "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval.";
+const getSubCategory = branchCityKey => {
+  if (!branchCityKey) {
+    return [];
+  }
+  const emirate = emiratesCities.find(emirate => emirate.code === branchCityKey);
+  return emirate.subCategory;
+};
+
+const AccountDetailsSchema = Yup.object({
+  accountCurrencies: Yup.array().required("Field is required"),
+  branchCity: Yup.string().required("Field is required"),
+  subCategory: Yup.string().required("Field is required")
+});
 
 export const AccountDetailsComponent = ({
   islamicBanking,
@@ -31,7 +36,6 @@ export const AccountDetailsComponent = ({
   branchCityConfig,
   goToNext
 }) => {
-  const subOptions = getOptionsForSubId(branchCityValue, branchCityConfig, true);
   const classes = useStyles();
 
   const onSubmit = values => {
@@ -39,51 +43,82 @@ export const AccountDetailsComponent = ({
     // console.log(values);
   };
 
+  const [branchCity, setBranchCity] = useState("");
+
+  let setFieldValue;
+  const clearValueBranch = (value, cb) => {
+    setBranchCity(value);
+    setFieldValue = cb;
+  };
+
+  useEffect(() => {
+    console.log("sssss");
+    setFieldValue("subCategory", "");
+  }, [branchCity, setFieldValue]);
+
   return (
     <>
       <Formik
-        initialValues={{ accountCurrencies: [] }}
+        initialValues={{
+          accountCurrencies: [],
+          branchCity: "",
+          subCategory: ""
+        }}
         validationSchema={AccountDetailsSchema}
         onSubmit={onSubmit}
       >
-        {() => (
-          <Form>
-            <Subtitle title="Select currencies" />
-            <Field
-              options={accountCurrencies}
-              name="accountCurrencies"
-              infoTitle={INFO_TITLE}
-              component={CheckboxGroup}
-            />
+        {({ values, setFieldValue }) => {
+          clearValueBranch(values.branchCity, setFieldValue);
+          return (
+            <Form>
+              <Subtitle title="Select currencies" />
+              <Field
+                options={accountCurrencies}
+                name="accountCurrencies"
+                infoTitle={INFO_TITLE}
+                component={CheckboxGroup}
+              />
 
-            <Divider />
+              <Divider />
 
-            <Subtitle title="Select branch" />
+              <Subtitle title="Select branch" />
+              <Grid container spacing={3}>
+                <Grid item md={6} sm={12}>
+                  {/* TODO fix placeholder shrink prop*/}
+                  <Field
+                    name="branchCity"
+                    options={emiratesCities}
+                    extractId={option => option.key}
+                    label="Emirate / City"
+                    placeholder="Emirate / City"
+                    component={CustomSelect}
+                    shrink={true}
+                  />
+                </Grid>
+                <Grid item md={6} sm={12}>
+                  {/* TODO fix placeholder shrink prop*/}
+                  <Field
+                    name="subCategory"
+                    options={getSubCategory(values["branchCity"])}
+                    label="Branch"
+                    placeholder="Branch"
+                    extractId={option => option.key}
+                    component={CustomSelect}
+                    shrink={true}
+                  />
+                </Grid>
+              </Grid>
 
-            <div className={classes.buttonWrapper}>
-              <ContinueButton type="submit" />
-            </div>
-          </Form>
-        )}
+              <div className={classes.buttonWrapper}>
+                <ContinueButton type="submit" />
+              </div>
+            </Form>
+          );
+        }}
       </Formik>
 
       <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
         {/* TODO continue migrate to formik */}
-        <Subtitle title="Select branch" />
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <PureSelect id="Org.branchCity" indexes={INPUT_ID_INDEXES} />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            <PureSelect
-              id="Org.subCategory"
-              indexes={INPUT_ID_INDEXES}
-              subOptions={subOptions}
-              disabled={isEmpty(branchCityValue)}
-            />
-          </Grid>
-        </Grid>
-
         {!islamicBanking && (
           <>
             <Divider />
