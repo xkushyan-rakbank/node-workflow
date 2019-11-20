@@ -12,7 +12,7 @@ import { genderOptions } from "../../../constants/options";
 import { useStyles } from "./styled";
 import ContinueButton from "../../Buttons/ContinueButton";
 
-const PersonalInformationSchema = Yup.object().shape({
+const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("kycDetails.isShareholderACompany", {
     is: false,
     then: Yup.string().required("Required")
@@ -41,8 +41,8 @@ export const PersonalInformation = props => {
           isPEP: ""
         }
       }}
-      onSubmit={values => handleContinue(values)}
-      validationSchema={PersonalInformationSchema}
+      onSubmit={handleContinue}
+      validationSchema={personalInformationSchema}
     >
       {props => {
         const isShareholderACompany = checkIsShareholderACompany(props.value);

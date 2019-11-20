@@ -4,29 +4,26 @@ import SectionTitle from "../../SectionTitle";
 import LinkButton from "../../Buttons/LinkButton";
 import { useStyles } from "./styled";
 
-export const StepComponent = props => {
+export const StepComponent = ({
+  title,
+  subTitle,
+  isFilled = false,
+  isActiveStep,
+  index,
+  clickHandler,
+  setIsContinueDisabled,
+  prospectInfo,
+  handleContinue,
+  stepForm
+}) => {
   const classes = useStyles();
-  const {
-    title,
-    filled = false,
-    activeStep,
-    step,
-    index,
-    clickHandler,
-    steps,
-    setIsContinueDisabled,
-    prospectInfo,
-    handleContinue
-  } = props;
-  const Form = steps[step - 1].component;
+  const Form = stepForm;
 
   const renderTitle = () => {
-    if (activeStep) {
-      return (
-        <SectionTitle title={props.title} subTitle={props.subTitle} className={classes.title} />
-      );
+    if (isActiveStep) {
+      return <SectionTitle title={title} subTitle={subTitle} className={classes.title} />;
     }
-    return filled ? (
+    return isFilled ? (
       <div className={classes.filledTitle}>
         <LinkButton title={title} className={classes.linkTitle} />
         <DoneIcon />
@@ -41,7 +38,7 @@ export const StepComponent = props => {
       <div className={classes.stepTitleWrapper} onClick={clickHandler}>
         {renderTitle()}
       </div>
-      {activeStep && (
+      {isActiveStep && (
         <Form
           setIsContinueDisabled={setIsContinueDisabled}
           index={index}

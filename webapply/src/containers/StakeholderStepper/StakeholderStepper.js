@@ -17,39 +17,40 @@ import {
 import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import { useStyles } from "./styled";
 
-const StakeholderStepper = props => {
+const StakeholderStepper = ({
+  id,
+  index,
+  isNewStakeholder,
+  firstName,
+  lastName,
+  step,
+  isFinalScreenShown,
+  isStatusShown,
+  completedStep,
+  orderIndex,
+  loading: isStatusLoading,
+  finishStakeholderEdit,
+  ...props
+}) => {
   const classes = useStyles();
-  const [confirmation, setConfirmation] = useState(false);
-
-  const {
-    id,
-    index,
-    isNewStakeholder,
-    firstName,
-    lastName,
-    step,
-    isFinalScreenShown,
-    isStatusShown,
-    completedStep,
-    orderIndex,
-    loading,
-    finishStakeholderEdit
-  } = props;
+  const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
 
   const deleteHandler = () => {
-    if (confirmation) {
-      setConfirmation(false);
+    if (isDisplayConfirmation) {
+      setIsDisplayConfirmation(false);
       props.deleteStakeholder(id);
     } else {
-      setConfirmation(true);
+      setIsDisplayConfirmation(true);
     }
   };
 
   const renderContent = () => {
     return (
       <div className={classes.userInfo}>
-        <div className={classes.nameField}>{`${firstName} ${lastName}`}</div>
-        {isStatusShown && <StatusLoader loading={loading} />}
+        <div className={classes.nameField}>
+          {firstName} {lastName}
+        </div>
+        {isStatusShown && <StatusLoader loading={isStatusLoading} />}
       </div>
     );
   };
@@ -58,7 +59,7 @@ const StakeholderStepper = props => {
     return (
       <SuccessFilledStakeholder
         name={`${firstName} ${lastName}`}
-        hideForm={finishStakeholderEdit}
+        onHideForm={finishStakeholderEdit}
       />
     );
   }
@@ -68,8 +69,10 @@ const StakeholderStepper = props => {
     : { firstName: "New Stakeholder", lastName: "" };
 
   const isFilled = itemStep => !isNewStakeholder || completedStep >= itemStep - 1;
-  const handleSetStep = item => (isFilled(item.step) ? props.handleChangeStep(item) : {});
-  const continueHandler = (itemStep, index) => {
+  const createSetStepHandler = item => () =>
+    isFilled(item.step) ? props.handleChangeStep(item) : {};
+
+  const createContinueHandler = itemStep => () => {
     switch (itemStep) {
       case STEP_1:
         return props.formatPersonalInformation(index);
@@ -84,22 +87,23 @@ const StakeholderStepper = props => {
     <CompanyStakeholderCard {...cardProps} index={orderIndex}>
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => {
-          const setStep = () => handleSetStep(item);
-          const handleContinue = () => continueHandler(item.step, index);
+          // const setStep = () => handleSetStep(item);
+          // const handleContinueFunction = () => handleContinue(item.step);
+          const stepIndex = item.step - 1;
+          const stepForm = stakeHoldersSteps[stepIndex].component;
 
           if (item.step === STEP_1) {
             return (
               <StepComponentFormik
                 index={index}
                 key={item.step}
-                steps={stakeHoldersSteps}
-                step={item.step}
                 title={item.title}
                 subTitle={item.infoTitle}
-                activeStep={step === item.step}
-                filled={isFilled}
-                clickHandler={setStep}
-                handleContinue={handleContinue}
+                isActiveStep={step === item.step}
+                isFilled={isFilled}
+                clickHandler={createSetStepHandler(item)}
+                handleContinue={createContinueHandler(item.step)}
+                stepForm={stepForm}
               />
             );
           }
@@ -108,23 +112,24 @@ const StakeholderStepper = props => {
             <StepComponent
               index={index}
               key={item.step}
-              steps={stakeHoldersSteps}
-              step={item.step}
               title={item.title}
               subTitle={item.infoTitle}
               activeStep={step === item.step}
               filled={isFilled}
-              clickHandler={setStep}
-              handleContinue={handleContinue}
+              clickHandler={createSetStepHandler(item)}
+              handleContinue={createContinueHandler(item.step)}
+              stepForm={stepForm}
             />
           );
         })}
       </div>
 
-      {!isNewStakeholder && !!props.deleteStakeholder && (
+      {!isNewStakeholder && props.deleteStakeholder && (
         <div className={classes.footerPart}>
           <LinkButton
-            title={confirmation ? "Are you sure? All Data will be lost" : "Delete Stakeholder"}
+            title={
+              isDisplayConfirmation ? "Are you sure? All Data will be lost" : "Delete Stakeholder"
+            }
             className={classes.button}
             clickHandler={deleteHandler}
           />

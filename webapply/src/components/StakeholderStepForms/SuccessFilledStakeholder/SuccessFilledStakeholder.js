@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import videoUrl from "../../../assets/videos/success_regular.mp4";
 import { useStyles } from "./styled";
 
-const SuccessFilledStakeholder = ({ name, hideForm }) => {
+const SuccessFilledStakeholder = ({ name, onHideForm }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    const intervalId = setInterval(hideForm, 5000);
+    const intervalId = setInterval(onHideForm, 5000);
     return () => {
       clearInterval(intervalId);
     };
