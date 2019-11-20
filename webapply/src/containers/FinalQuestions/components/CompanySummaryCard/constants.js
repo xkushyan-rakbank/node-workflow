@@ -4,9 +4,6 @@ import CompanyPreferredContactInformationForm from "./CompanySummarySteps/Compan
 import { CompanyBusinessRelationships } from "./CompanySummarySteps/CompanyBusinessRelationships";
 import CompanyBranchesAndSubsidiariesForm from "./CompanySummarySteps/CompanyBranchesAndSubsidiariesForm";
 
-export const INITIAL_COMPANY_STEP = 1;
-export const INITIAL_SIGNATORY_STEP = 0;
-
 export const STEP_1 = 1;
 export const STEP_2 = 2;
 export const STEP_3 = 3;

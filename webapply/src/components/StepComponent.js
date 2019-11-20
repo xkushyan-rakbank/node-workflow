@@ -38,17 +38,15 @@ const StepComponent = props => {
     filled = false,
     activeStep,
     classes,
-    step,
     index,
     clickHandler,
     handleContinue,
-    steps,
     hideContinue,
     isContinueDisabled,
     setIsContinueDisabled,
-    prospectInfo
+    prospectInfo,
+    stepForm: Form
   } = props;
-  const Form = steps[step - 1].component;
 
   const renderTitle = () => {
     if (activeStep) {
