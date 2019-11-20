@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { Input, CustomSelect, InputGroup } from "./../../components/Form";
+// import Autocomplete from "../../components/Form/Select/SelectAutocomplete/SelectAutocomplete";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 import { countryCodeOptions } from "./../../constants/options";
@@ -66,6 +67,21 @@ const ApplicantInfoPage = props => {
                 component={Input}
               />
             </InputGroup>
+
+            <Field
+              name="countryCode2"
+              label="Country"
+              options={countryCodeOptions}
+              component={CustomSelect}
+              multiple
+            />
+
+            {/* <Field
+              name="countryCode3"
+              label="Country"
+              options={countryCodeOptions}
+              component={CustomSelect}
+            /> */}
 
             <div className="linkContainer">
               <SubmitButton justify="flex-end" label="Next Step" />

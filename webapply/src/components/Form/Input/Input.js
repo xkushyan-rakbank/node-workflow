@@ -28,8 +28,8 @@ export const Input = ({
             {...props}
             label={label}
             variant="outlined"
-            className={classes.textField}
             placeholder={placeholder}
+            className={classes.textField}
             disabled={disabled}
             error={error}
           />

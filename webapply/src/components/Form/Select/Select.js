@@ -25,7 +25,7 @@ export const CustomSelect = ({
   infoTitle,
   form: { errors, touched },
   form,
-  shrink = true,
+  shrink,
   ...props
 }) => {
   const classes = useStyles();
@@ -61,7 +61,7 @@ export const CustomSelect = ({
             {multiple ? (
               <>
                 <ListItemText primary={extractId(option)} />
-                <Checkbox checked={value.indexOf(extractId(option)) > -1} />
+                <Checkbox color="default" checked={value.indexOf(extractId(option)) > -1} />
               </>
             ) : (
               option.label
