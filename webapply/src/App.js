@@ -37,7 +37,10 @@ import TagManager from "react-gtm-module";
 class App extends React.Component {
   componentDidMount() {
     this.handlePageReload();
+
     this.props.receiveAppConfig();
+    this.props.prospectAutoSave();
+
     TagManager.initialize(tagManagerArgs);
   }
 

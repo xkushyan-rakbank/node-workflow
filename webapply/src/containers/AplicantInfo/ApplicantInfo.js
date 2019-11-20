@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
+import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { Input, CustomSelect, InputGroup } from "./../../components/Form";
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
-import { countryCodeOptions } from "./../../constants/options";
-import SubmitButton from "./../../components/Buttons/SubmitButton";
-import { prospect } from "./../../constants/config";
+import { Input, CustomSelect, InputGroup } from "./../../components/Form";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
+import { countryCodeOptions } from "./../../constants/options";
+import { prospect } from "./../../constants/config";
+
+import SubmitButton from "./../../components/Buttons/SubmitButton";
 
 const AplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -55,7 +56,6 @@ const ApplicantInfoPage = props => {
                 name="countryCode"
                 options={countryCodeOptions}
                 component={CustomSelect}
-                extractId={option => option.key}
                 shrink={false}
               />
 

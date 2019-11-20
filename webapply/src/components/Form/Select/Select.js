@@ -1,25 +1,30 @@
 import React from "react";
 import cx from "classnames";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+
 import { ErrorMessage, InfoTitle } from "./../../Notifications";
+import {
+  Select,
+  ListItemText,
+  Checkbox,
+  MenuItem,
+  InputLabel,
+  OutlinedInput,
+  FormControl
+} from "@material-ui/core";
 import { useStyles } from "./styled";
 
 export const CustomSelect = ({
-  extractId = option => option.value,
+  extractId = option => option.label,
   disabled,
   placeholder,
+  multiple = false,
   options,
   label,
   field,
   infoTitle,
   form: { errors, touched },
   form,
-  isMulti = false,
   shrink = true,
   ...props
 }) => {
@@ -27,10 +32,13 @@ export const CustomSelect = ({
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   const error = errors[field.name] && touched[field.name];
+  const value = field.value;
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
+
+  const renderValue = selected => (!multiple ? selected : selected.join(", "));
 
   return (
     <FormControl className="formControl" variant="outlined">
@@ -40,6 +48,9 @@ export const CustomSelect = ({
       <Select
         {...field}
         {...props}
+        value={value}
+        renderValue={renderValue}
+        multiple={multiple}
         input={<OutlinedInput labelWidth={labelWidth} />}
         IconComponent={KeyboardArrowDownIcon}
         className={cx(classes.selectField, classes.selectFieldBasic)}
@@ -47,7 +58,14 @@ export const CustomSelect = ({
       >
         {options.map(option => (
           <MenuItem key={extractId(option)} value={extractId(option)}>
-            {option.label}
+            {multiple ? (
+              <>
+                <ListItemText primary={extractId(option)} />
+                <Checkbox checked={value.indexOf(extractId(option)) > -1} />
+              </>
+            ) : (
+              option.label
+            )}
           </MenuItem>
         ))}
       </Select>
