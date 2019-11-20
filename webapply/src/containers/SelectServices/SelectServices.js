@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import BackLink from "../../components/Buttons/BackLink";
+import { BackLink } from "../../components/Buttons/BackLink";
 import SubmitButton from "../../components/Buttons/SubmitButton";
 import { SubmitApplication } from "./components/SubmitApplication";
 import { ServicesSteps } from "./components/ServicesSteps/index";

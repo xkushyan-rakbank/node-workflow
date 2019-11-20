@@ -13,6 +13,13 @@ export const theme = createMuiTheme({
     },
     action: {
       disabledBackground: "#d3d8db"
+    },
+    button: {
+      color: "#263d4c",
+      backgroundColor: "#ffffff"
+    },
+    text: {
+      color: "#373737"
     }
   }
 });

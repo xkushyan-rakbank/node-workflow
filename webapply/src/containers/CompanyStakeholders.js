@@ -8,7 +8,7 @@ import StakeholderStepper from "./StakeholderStepper";
 import AddStakeholderButton from "../components/Buttons/AddStakeholderButton";
 import { ErrorMessage } from "./../components/Notifications";
 import SubmitButton from "../components/Buttons/SubmitButton";
-import BackLink from "../components/Buttons/BackLink";
+import { BackLink } from "../components/Buttons/BackLink";
 import ConfirmDialog from "../components/ConfirmDialod";
 import routes from "../routes";
 import {

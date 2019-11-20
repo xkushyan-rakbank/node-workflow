@@ -7,10 +7,10 @@ import routes from "../routes";
 import SubmitButton from "../components/Buttons/SubmitButton";
 import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
 import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
+import { BackLink } from "../components/Buttons/BackLink";
 import { retrieveDocDetails } from "../store/actions/getProspectDocuments";
 import * as appConfigSelectors from "./../store/selectors/appConfig";
 
-import BackLink from "../components/Buttons/BackLink";
 const style = {
   sectionContainer: {
     marginBottom: "40px"

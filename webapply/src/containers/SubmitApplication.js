@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import Checkbox from "../components/InputField/Checkbox";
 import Button from "../components/Buttons/SubmitButton";
-import BackLink from "../components/Buttons/BackLink";
+import { BackLink } from "../components/Buttons/BackLink";
 import FormTitle from "../components/FormTitle";
 import brief from "../assets/icons/brief.png";
 import * as appConfigSelectors from "../store/selectors/appConfig";

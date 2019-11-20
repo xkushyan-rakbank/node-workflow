@@ -4,7 +4,7 @@ import routes from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
 
 import Button from "../../../../components/Buttons/SubmitButton";
-import BackLink from "../../../../components/Buttons/BackLink";
+import { BackLink } from "../../../../components/Buttons/BackLink";
 import FormTitle from "../../../../components/FormTitle";
 import { ErrorMessage } from "../../../../components/Notifications";
 import { CompanyCard } from "./CompanyCard";
