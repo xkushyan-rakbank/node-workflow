@@ -19,7 +19,6 @@ export const CompanySummaryCardComponent = ({
   const [completedStep, setCompletedStep] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-  const [isContinueDisabled, setIsContinueDisabled] = useState(false);
   const prevResetStep = usePreviousHook(resetStep);
   const classes = useStyles();
 
@@ -83,12 +82,9 @@ export const CompanySummaryCardComponent = ({
               step={item.step}
               title={item.title}
               infoTitle={item.infoTitle}
-              activeStep={step === item.step}
+              isActiveStep={step === item.step}
               filled={completedStep >= item.step}
               clickHandler={changeStep}
-              isContinueDisabled={isContinueDisabled}
-              setIsContinueDisabled={setIsContinueDisabled}
-              handleContinue={sendProspectToAPI}
             />
           );
         })}

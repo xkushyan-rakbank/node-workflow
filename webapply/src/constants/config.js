@@ -151,6 +151,8 @@ export const prospect = {
         country: ""
       }
     ],
+    isDontHaveSuppliersYet: false,
+    isDontTradeGoodsYet: false,
     topOriginGoodsCountries: [""],
     industryMultiSelect: [
       {
