@@ -52,7 +52,6 @@ export const AccountDetailsComponent = ({
   };
 
   useEffect(() => {
-    console.log("sssss");
     setFieldValue("subCategory", "");
   }, [branchCity, setFieldValue]);
 
