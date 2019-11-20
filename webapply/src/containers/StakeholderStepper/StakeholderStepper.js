@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+
 import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
 import StepComponent from "../../components/StepComponent";
 import { StepComponent as StepComponentFormik } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
@@ -34,6 +35,17 @@ const StakeholderStepper = ({
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
+  const [finalScreenIsShown, changeFinalScreenDisplay] = React.useState(false);
+
+  useEffect(() => {
+    if (isFinalScreenShown) {
+      changeFinalScreenDisplay(true);
+      setInterval(() => {
+        changeFinalScreenDisplay(false);
+        finishStakeholderEdit();
+      }, 5000);
+    }
+  }, [isFinalScreenShown, finishStakeholderEdit]);
 
   const deleteHandler = () => {
     if (isDisplayConfirmation) {
@@ -55,22 +67,20 @@ const StakeholderStepper = ({
     );
   };
 
-  if (isFinalScreenShown) {
-    return (
-      <SuccessFilledStakeholder
-        name={`${firstName} ${lastName}`}
-        onHideForm={finishStakeholderEdit}
-      />
-    );
+  if (finalScreenIsShown) {
+    return <SuccessFilledStakeholder name={`${firstName} ${lastName}`} />;
   }
 
   const cardProps = isStatusShown
     ? { content: renderContent(), firstName, lastName }
     : { firstName: "New Stakeholder", lastName: "" };
 
-  const isFilled = itemStep => !isNewStakeholder || completedStep >= itemStep - 1;
-  const createSetStepHandler = item => () =>
-    isFilled(item.step) ? props.handleChangeStep(item) : {};
+  const isFilled = itemStep => isNewStakeholder && completedStep >= itemStep - 1;
+  const createSetStepHandler = item => () => {
+    if (isFilled(item.step)) {
+      props.handleChangeStep(item);
+    }
+  };
 
   const createContinueHandler = itemStep => () => {
     switch (itemStep) {
@@ -87,8 +97,6 @@ const StakeholderStepper = ({
     <CompanyStakeholderCard {...cardProps} index={orderIndex}>
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => {
-          // const setStep = () => handleSetStep(item);
-          // const handleContinueFunction = () => handleContinue(item.step);
           const stepIndex = item.step - 1;
           const stepForm = stakeHoldersSteps[stepIndex].component;
 
@@ -139,15 +147,13 @@ const StakeholderStepper = ({
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    step: state.stakeholders.step,
-    completedStep: state.stakeholders.completedStep,
-    isFinalScreenShown: state.stakeholders.isFinalScreenShown,
-    isStatusShown: state.stakeholders.isStatusShown,
-    ...getSendProspectToAPIInfo(state)
-  };
-};
+const mapStateToProps = state => ({
+  step: state.stakeholders.step,
+  completedStep: state.stakeholders.completedStep,
+  isFinalScreenShown: state.stakeholders.isFinalScreenShown,
+  isStatusShown: state.stakeholders.isStatusShown,
+  ...getSendProspectToAPIInfo(state)
+});
 
 const mapDispatchToProps = {
   sendProspectToAPI,

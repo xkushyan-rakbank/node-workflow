@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
-import DatePicker from "../../InputField/DatePicker";
+import { DatePicker } from "../../Form/DatePicker/DatePicker";
 import CustomCheckbox from "../../InputField/RefactoredCheckbox";
 import InlineRadioGroup from "../../InputField/InlineRadioGroup";
 import InfoTitle from "../../InfoTitle";
@@ -20,8 +20,10 @@ const personalInformationSchema = Yup.object().shape({
   lastName: Yup.string().when("kycDetails.isShareholderACompany", {
     is: false,
     then: Yup.string().required("Required")
+  }),
+  kycDetails: Yup.object().shape({
+    dateOfBirth: Yup.date().required("Required")
   })
-  // "SigKycd.dateOfBirth": Yup.string().required("Required")
 });
 
 export const PersonalInformation = props => {
@@ -37,7 +39,7 @@ export const PersonalInformation = props => {
         lastName: "",
         kycDetails: {
           isShareholderACompany: false,
-          dateOfBirth: "2010-10-09T21:00:00.000Z",
+          dateOfBirth: null,
           isPEP: ""
         }
       }}
@@ -102,19 +104,19 @@ export const PersonalInformation = props => {
                 />
               </Grid>
               <Grid item md={6} sm={12}>
-                {/*<Field*/}
-                {/*  name="kycDetails.dateOfBirth"*/}
-                {/*  label="Date of Birth"*/}
-                {/*  placeholder="Date of Birth"*/}
-                {/*  disabled={isShareholderACompany}*/}
-                {/*  component={DatePicker}*/}
-                {/*/>*/}
-                <DatePicker
-                  id="SigKycd.dateOfBirth"
-                  indexes={[index]}
+                <Field
+                  name="kycDetails.dateOfBirth"
+                  label="Date of Birth"
+                  placeholder="Date of Birth"
                   disabled={isShareholderACompany}
-                  value={props.values.kycDetails.dateOfBirth}
+                  component={DatePicker}
                 />
+                {/*<DatePicker*/}
+                {/*  id="SigKycd.dateOfBirth"*/}
+                {/*  indexes={[index]}*/}
+                {/*  disabled={isShareholderACompany}*/}
+                {/*  value={props.values.kycDetails.dateOfBirth}*/}
+                {/*/>*/}
               </Grid>
             </Grid>
             <InfoTitle title="The details of this section should be the same as in the person’s passport" />

@@ -1,16 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
+
 import videoUrl from "../../../assets/videos/success_regular.mp4";
 import { useStyles } from "./styled";
 
-const SuccessFilledStakeholder = ({ name, onHideForm }) => {
+const SuccessFilledStakeholder = ({ name }) => {
   const classes = useStyles();
-
-  useEffect(() => {
-    const intervalId = setInterval(onHideForm, 5000);
-    return () => {
-      clearInterval(intervalId);
-    };
-  });
 
   return (
     <div className={classes.wrapper}>

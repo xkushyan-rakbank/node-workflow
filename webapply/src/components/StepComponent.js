@@ -45,9 +45,8 @@ const StepComponent = props => {
     isContinueDisabled,
     setIsContinueDisabled,
     prospectInfo,
-    stepForm
+    stepForm: Form
   } = props;
-  const Form = stepForm;
 
   const renderTitle = () => {
     if (activeStep) {
