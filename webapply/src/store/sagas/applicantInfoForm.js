@@ -19,11 +19,13 @@ function* applicantInfoFormSaga(action) {
       data: { prospectId }
     } = yield call(prospect.create, prospectUpdated);
 
+    action.data.prospectId = prospectId;
+
     yield put(applicantInfoFormSuccess());
     yield put(setVerified(true));
 
     yield put(updateProspectId(prospectId));
-    yield put(generateOtpCode());
+    yield put(generateOtpCode(action.data));
     yield call(history.push, routes.verifyOtp);
     yield put(updateSaveType("next"));
     yield put(resetInputsErrors());

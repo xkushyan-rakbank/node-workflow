@@ -9,7 +9,6 @@ import retrieveUploadDoc from "./getProspectDocuments";
 import searchProspectSaga from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import stakeholders from "./stakeholders";
-import comeBackLogin from "./comeBackLogin";
 
 export default function*() {
   yield all([
@@ -21,7 +20,6 @@ export default function*() {
     fork(retrieveUploadDoc),
     fork(searchProspectSaga),
     fork(retrieveApplicantInfo),
-    fork(stakeholders),
-    fork(comeBackLogin)
+    fork(stakeholders)
   ]);
 }

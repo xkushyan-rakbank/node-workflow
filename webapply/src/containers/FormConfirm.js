@@ -113,7 +113,7 @@ class FormConfirm extends React.Component {
     this.setState({ isRegenerateCodeAllow: false, isValidCode: false });
 
     if (this.state.loginAttempt < 3) {
-      this.props.generateOtpCode();
+      this.props.generateOtpCode(this.props.applicantInfo);
     }
   };
 

@@ -5,22 +5,12 @@ import * as appConfigSelectors from "../selectors/appConfig";
 import * as serverValidationActions from "../actions/serverValidation";
 import * as otpActions from "../actions/otp";
 
-function* generateOtp() {
+function* generateOtp(action) {
   try {
     const state = yield select();
-    const applicantInfo = appConfigSelectors.getApplicantInfo(state);
-    const payload = {
-      prospectId: appConfigSelectors.getProspectId(state),
-      mobileNo: applicantInfo.mobileNo,
-      countryCode: applicantInfo.countryCode,
-      email: applicantInfo.email
-    };
+    action.payload.prospectId = appConfigSelectors.getApplicantInfo(state).prospectId;
 
-    if (state.reCaptcha.token) {
-      payload.recaptchaToken = state.reCaptcha.token;
-    }
-
-    const { data } = yield call(otp.generate, payload);
+    const { data } = yield call(otp.generate, action.payload);
     yield put(otpActions.generateCodeSuccess(data));
   } catch (error) {
     yield put(otpActions.setOtpPendingRequest(false));

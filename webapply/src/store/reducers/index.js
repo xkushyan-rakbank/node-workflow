@@ -13,8 +13,6 @@ import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import selectedAccountInfo from "./selectedAccountInfo";
 import stakeholders from "./stakeholders";
 import validationErrors from "./validationErrors";
-import comeBackLogin from "./comeBackLogin";
-
 const reducers = history =>
   combineReducers({
     router: connectRouter(history),
@@ -29,8 +27,7 @@ const reducers = history =>
     retrieveApplicantInfo,
     selectedAccountInfo,
     stakeholders,
-    validationErrors,
-    comeBackLogin
+    validationErrors
   });
 
 export default reducers;
