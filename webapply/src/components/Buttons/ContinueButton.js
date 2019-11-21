@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import ContainedButton from "./ContainedButton";
+import { ContainedButton } from "./ContainedButton";
 
 const styles = {
   buttonStyle: {

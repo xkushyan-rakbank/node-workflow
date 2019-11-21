@@ -3,7 +3,7 @@ import cx from "classnames";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import ContainedButton from "../../../../../../components/Buttons/ContainedButton";
+import { ContainedButton } from "../../../../../../components/Buttons/ContainedButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
 import { useStyles } from "./styled";
 import { mockDataRows, accountTypes } from "../../constants";
