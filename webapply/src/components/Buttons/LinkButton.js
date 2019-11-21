@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "@material-ui/styles";
 import { theme } from "../../theme";
 
-const Button = styled("button")({
+export const Button = styled("button")({
   fontFamily: "Open Sans, sans-serif",
   fontSize: "16px",
   fontWeight: 600,

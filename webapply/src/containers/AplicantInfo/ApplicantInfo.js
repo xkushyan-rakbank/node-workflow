@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Input, CustomSelect, InputGroup } from "./../../components/Form";
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { countryCodeOptions } from "./../../constants/options";
-import SubmitButton from "./../../components/Buttons/SubmitButton";
+import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { prospect } from "./../../constants/config";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";

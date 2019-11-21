@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import routes from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
 
-import Button from "../../../../components/Buttons/SubmitButton";
+import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import FormTitle from "../../../../components/FormTitle";
 import { ErrorMessage } from "../../../../components/Notifications";
@@ -80,7 +80,7 @@ export const SubmitApplicationComponent = props => {
 
       <div className="linkContainer">
         <BackLink path={routes.selectServices} />
-        <Button
+        <SubmitButton
           disabled={!(checkBoxValues.isInformationProvided && checkBoxValues.areTermsAgreed)}
           label="Submit"
           justify="flex-end"

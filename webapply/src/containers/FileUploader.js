@@ -4,7 +4,7 @@ import SectionTitle from "../components/SectionTitle";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import routes from "../routes";
-import SubmitButton from "../components/Buttons/SubmitButton";
+import { SubmitButton } from "../components/Buttons/SubmitButton";
 import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
 import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
 import { BackLink } from "../components/Buttons/BackLink";

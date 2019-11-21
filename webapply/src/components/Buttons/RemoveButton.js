@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@material-ui/styles";
 
-const Button = styled("button")({
+export const Button = styled("button")({
   position: "absolute",
   top: "30px",
   right: "-90px",
@@ -24,7 +24,7 @@ const Button = styled("button")({
   }
 });
 
-const Text = styled("span")({
+export const Text = styled("span")({
   fontSize: "16px",
   lineHeight: "1.5",
   color: "#86868b",

@@ -7,7 +7,7 @@ import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
 import StepComponent from "../../components/StepComponent";
 import { searchedAppInfoSteps } from "../../constants";
 import routes from "../../routes";
-import SubmitButton from "../../components/Buttons/SubmitButton";
+import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import * as loginSelector from "./../../store/selectors/loginSelector";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { retrieveDocDetails } from "./../../store/actions/getProspectDocuments";

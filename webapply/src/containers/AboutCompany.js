@@ -5,7 +5,7 @@ import { differenceInYears } from "date-fns";
 import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
 import StepComponent from "../components/StepComponent";
 import StatusLoader from "../components/StatusLoader";
-import SubmitButton from "../components/Buttons/SubmitButton";
+import { SubmitButton } from "../components/Buttons/SubmitButton";
 import ApplicationStatus from "../components/ApplicationStatus";
 import { sendProspectToAPI, startProspectAutoSave } from "../store/actions/sendProspectToAPI";
 import {
