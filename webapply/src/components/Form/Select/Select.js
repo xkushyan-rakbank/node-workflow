@@ -13,7 +13,6 @@ import { useStyles } from "./styled";
 
 export const CustomSelect = ({
   extractId = option => option.value,
-  disabled,
   placeholder,
   options,
   label,
@@ -47,7 +46,6 @@ export const CustomSelect = ({
         IconComponent={KeyboardArrowDownIcon}
         className={cx(classes.selectField, classes.selectFieldBasic)}
         error={isError}
-        disabled={disabled}
       >
         {options.map(option => (
           <MenuItem key={extractId(option)} value={extractId(option)}>

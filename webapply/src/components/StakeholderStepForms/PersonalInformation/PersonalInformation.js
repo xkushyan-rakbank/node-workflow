@@ -6,10 +6,10 @@ import Grid from "@material-ui/core/Grid";
 
 import { DatePicker } from "../../Form/DatePicker/DatePicker";
 import CustomCheckbox from "../../InputField/RefactoredCheckbox";
-import InlineRadioGroup from "../../InputField/InlineRadioGroup";
+import { InlineRadioGroup } from "../../Form/InlineRadioGroup/InlineRadioGroup";
 import InfoTitle from "../../InfoTitle";
 import { CustomSelect, Input, InputGroup } from "../../Form";
-import { genderOptions } from "../../../constants/options";
+import { genderOptions, yesNoOptions } from "../../../constants/options";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { useStyles } from "./styled";
 
@@ -23,7 +23,8 @@ const personalInformationSchema = Yup.object().shape({
     then: Yup.string().required("Required")
   }),
   kycDetails: Yup.object().shape({
-    dateOfBirth: Yup.date().required("Required")
+    dateOfBirth: Yup.date().required("Required"),
+    isPEP: Yup.boolean().required("Required")
   })
 });
 
@@ -116,7 +117,12 @@ export const PersonalInformation = props => {
             </Grid>
             <InfoTitle title="The details of this section should be the same as in the person’s passport" />
             <div className={classes.divider} />
-            <InlineRadioGroup id="SigKycd.isPEP" indexes={[index]} />
+            <Field
+              component={InlineRadioGroup}
+              name="kycDetails.isPEP"
+              options={yesNoOptions}
+              label="Is this person a signatory?"
+            />
 
             <SubmitButton />
           </Form>

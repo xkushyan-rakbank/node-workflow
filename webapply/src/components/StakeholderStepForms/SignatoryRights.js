@@ -11,10 +11,10 @@ const signatoryRightsSchema = Yup.object().shape({
   kycDetails: Yup.object().shape({
     isSignatory: Yup.boolean().required("Required")
   }),
-  accountSigningInfo: Yup.object().shape({
-    authorityType: Yup.string().when("kycDetails.isSignatory", {
-      is: true,
-      then: Yup.string().required("Required")
+  accountSigningInfo: Yup.object().when("kycDetails", {
+    is: details => details.isSignatory,
+    then: Yup.object().shape({
+      authorityType: Yup.string().required("Required")
     })
   })
 });
@@ -26,7 +26,7 @@ export const SignatoryRights = ({ handleContinue }) => {
       onSubmit={handleContinue}
       validationSchema={signatoryRightsSchema}
     >
-      {props => {
+      {({ values }) => {
         return (
           <Form>
             <Grid container>
@@ -39,7 +39,7 @@ export const SignatoryRights = ({ handleContinue }) => {
               <Field
                 name="accountSigningInfo.authorityType"
                 options={authorityTypeOptions}
-                disabled={!props.values.kycDetails.isSignatory}
+                disabled={!values.kycDetails.isSignatory}
                 component={CustomSelect}
                 label="Authority Type"
               />

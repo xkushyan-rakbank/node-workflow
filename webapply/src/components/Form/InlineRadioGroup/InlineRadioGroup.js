@@ -9,15 +9,14 @@ import cx from "classnames";
 import { useStyles } from "./styled";
 import { ErrorMessage } from "../../Notifications";
 
-export const InlineRadioGroup = props => {
+export const InlineRadioGroup = ({
+  label,
+  field,
+  form: { touched, errors, setFieldValue },
+  options,
+  required
+}) => {
   const classes = useStyles();
-  const {
-    label,
-    field,
-    form: { touched, errors, setFieldValue },
-    options,
-    required
-  } = props;
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
