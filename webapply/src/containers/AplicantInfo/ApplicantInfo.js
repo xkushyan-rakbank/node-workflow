@@ -19,7 +19,6 @@ const aplicantInfoSchema = Yup.object({
     .required("You need to provide Email address")
     .matches(EMAIL_REGEX, "This is not a valid Email address"),
   countryCode: Yup.string().required("Select country code"),
-  countryCode2: Yup.string().required("Select country code"),
   mobileNo: Yup.string()
     .required("You need to provide mobile number")
     .matches(PHONE_REGEX, "This is not a valid phone")
