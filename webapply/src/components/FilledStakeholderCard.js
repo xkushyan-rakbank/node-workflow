@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import CompanyStakeholderCard from "./CompanyStakeholderCard";
-import { LinkButton } from "./Buttons/LinkButton";
+import LinkButton from "./Buttons/LinkButton";
 
 const style = {
   nameField: {

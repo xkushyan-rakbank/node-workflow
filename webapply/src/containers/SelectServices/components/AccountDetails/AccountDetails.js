@@ -12,7 +12,7 @@ import PureSelect from "../../../../components/InputField/PureSelect";
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
 import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
-import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
+import ContinueButton from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
 import { INPUT_ID_INDEX, INPUT_ID_INDEXES } from "../../constants";

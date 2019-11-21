@@ -6,7 +6,7 @@ import StepComponent from "../../components/StepComponent";
 import { StepComponent as StepComponentFormik } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
 import SuccessFilledStakeholder from "../../components/StakeholderStepForms/SuccessFilledStakeholder/SuccessFilledStakeholder";
 import StatusLoader from "../../components/StatusLoader";
-import { LinkButton } from "../../components/Buttons/LinkButton";
+import LinkButton from "../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_4 } from "./constants";
 import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
 import {

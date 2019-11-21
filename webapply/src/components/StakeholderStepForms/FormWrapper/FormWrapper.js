@@ -2,7 +2,7 @@ import React from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { ContinueButton } from "../../Buttons/ContinueButton";
+import ContinueButton from "../../Buttons/ContinueButton";
 import { validateForm } from "../../../utils/validate";
 import { updateValidationErrors } from "../../../store/actions/validationErrors";
 import { useStyles } from "./styled";

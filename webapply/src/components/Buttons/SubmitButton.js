@@ -1,31 +1,43 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { styled, withTheme } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
+import ContainedButton from "./ContainedButton";
 
-import { ContainedButton } from "./ContainedButton";
-
-export const ButtonWrapper = styled(Grid)({
-  margin: "42px 0 0"
-});
-
-export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
-  width: "192px",
-  fontWeight: 600,
-  letterSpacing: "normal",
-
-  "&:disabled": {
-    color: theme.palette.common.white
+const styles = {
+  buttonWrap: {
+    margin: "42px 0 0 "
+  },
+  buttonWrapWithBackLink: {},
+  nextButton: {
+    width: "192px",
+    fontWeight: 600,
+    letterSpacing: "normal",
+    "&:disabled": {
+      color: "#ffffff"
+    }
   }
-}));
+};
 
-export const SubmitButton = ({ justify, containerExtraStyles, ...rest }) => (
-  <ButtonWrapper
-    container
-    direction="row"
-    justify={justify}
-    alignItems="center"
-    style={containerExtraStyles}
-  >
-    <Button type="submit" withRightArrow {...rest} />
-  </ButtonWrapper>
-);
+const SubmitButton = props => {
+  const { disabled = false, classes, label, justify, containerExtraStyles } = props;
+  return (
+    <Grid
+      container
+      direction="row"
+      justify={justify}
+      alignItems="center"
+      className={classes.buttonWrap}
+      style={containerExtraStyles}
+    >
+      <ContainedButton
+        type="submit"
+        withRightArrow
+        disabled={disabled}
+        label={label}
+        className={classes.nextButton}
+      />
+    </Grid>
+  );
+};
+
+export default withStyles(styles)(SubmitButton);

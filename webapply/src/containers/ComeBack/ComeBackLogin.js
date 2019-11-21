@@ -5,7 +5,7 @@ import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import TextInput from "../../components/InputField/TextInput";
 import PureSelect from "../../components/InputField/PureSelect";
 import TextHelpWithLink from "../../components/TextHelpWithLink";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import SubmitButton from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";

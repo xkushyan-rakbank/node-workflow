@@ -2,7 +2,7 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core";
 import { Link } from "@material-ui/core";
-import { ContainedButton } from "../Buttons/ContainedButton";
+import ContinueButton from "../Buttons/ContainedButton";
 import check from "../../assets/icons/check_outline_ic.png";
 import { getIconsByAccount } from "../../constants/icons";
 
@@ -186,7 +186,7 @@ const ExpandedOptionsDetailedCard = ({
       </div>
       <div className={classes.upgrade}>
         {selectService ? (
-          <ContainedButton
+          <ContinueButton
             disabled={disabled}
             label={buttonLabel}
             className={classes.button}

@@ -1,33 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { styled } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
+import arrowBack from "./../../assets/icons/backArrow.png";
 
-import { ReactComponent as Icon } from "./../../assets/icons/backArrow.svg";
-import { theme } from "../../theme";
-
-export const ArrowBack = styled(Icon)({
-  width: "18px"
-});
-
-export const Root = styled(Link)({
-  marginRight: "20px",
-  display: "flex",
-  alignItems: "center"
-});
-
-export const Text = styled("span")({
-  fontSize: "14px",
-  fontWeight: 600,
-  textDecoration: "underline"
-});
-
-Text.defaultProps = {
-  style: theme.palette.text
+const style = {
+  container: {
+    marginRight: "20px",
+    display: "flex",
+    alignItems: "center",
+    "& img": {
+      width: "18px"
+    }
+  },
+  text: {
+    fontSize: "14px",
+    color: "#373737",
+    fontWeight: "600",
+    textDecoration: "underline"
+  }
 };
 
-export const BackLink = ({ classeName = "", path }) => (
-  <Root className={classeName} to={path}>
-    <ArrowBack alt="back" />
-    <Text>Go back</Text>
-  </Root>
+const BackLink = ({ classes, path }) => (
+  <Link className={classes.container} to={path}>
+    <img src={arrowBack} alt="back" />
+    <span className={classes.text}>Go back</span>
+  </Link>
 );
+
+export default withStyles(style)(BackLink);
