@@ -15,7 +15,7 @@ export const CheckboxGroup = ({
   options,
   keyExtractor = item => item.key,
   valueExtractor = item => item.value,
-  labelExtractor = item => item.label,
+  labelExtractor = item => item.displayText,
   infoTitle,
   field,
   form: { errors, touched }
