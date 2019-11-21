@@ -6,19 +6,33 @@ import { CustomCheckbox } from "./CustomCheckbox";
 import { InfoTitle } from "../../Notifications/index";
 import { ErrorMessage } from "../../Notifications/index";
 
-const CheckboxesWrapper = styled("div")({
+export const CheckboxesWrapper = styled("div")({
   display: "grid",
   gridTemplateColumns: "1fr 1fr"
 });
 
-export const CheckboxGroup = ({ options, infoTitle, field, form: { errors, touched } }) => {
+export const CheckboxGroup = ({
+  options,
+  keyExtractor = item => item.key,
+  valueExtractor = item => item.value,
+  labelExtractor = item => item.label,
+  infoTitle,
+  field,
+  form: { errors, touched }
+}) => {
   const isError = errors[field.name] && touched[field.name];
 
   return (
     <FormControl className="formControl">
       <CheckboxesWrapper>
-        {options.map(({ key, value, displayText }) => (
-          <CustomCheckbox key={key} value={value} label={displayText} {...field} />
+        {options.map(item => (
+          <CustomCheckbox
+            {...field}
+            key={keyExtractor(item)}
+            value={valueExtractor(item)}
+            label={labelExtractor(item)}
+            checked={(field.value || []).includes(valueExtractor(item))}
+          />
         ))}
       </CheckboxesWrapper>
 

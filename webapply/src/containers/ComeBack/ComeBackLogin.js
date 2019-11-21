@@ -7,7 +7,7 @@ import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { prospect } from "./../../constants/config";
 import { countryCodeOptions } from "./../../constants/options";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
-import SubmitButton from "../../components/Buttons/SubmitButton";
+import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
