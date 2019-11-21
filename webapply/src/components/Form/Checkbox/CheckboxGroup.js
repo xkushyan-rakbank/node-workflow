@@ -18,7 +18,7 @@ export const CheckboxGroup = ({ options, infoTitle, field, form: { errors, touch
     <FormControl className="formControl">
       <CheckboxesWrapper>
         {options.map(({ key, value, displayText }) => (
-          <CustomCheckbox key={key} value={value} label={displayText} {...field} />
+          <CustomCheckbox key={key} valueData={value} label={displayText} {...field} />
         ))}
       </CheckboxesWrapper>
 
