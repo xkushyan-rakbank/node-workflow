@@ -278,3 +278,96 @@ export const branches = [
     label: "Umm Al Quwain 2"
   }
 ];
+
+export const accountSigningTypes = [
+  {
+    code: "Any of us",
+    key: "Any of us",
+    value: "Any of us",
+    displayText: "Any of us can Sign"
+  },
+  {
+    code: "All of us",
+    key: "All of us",
+    value: "All of us",
+    displayText: "All of us Must Sign"
+  },
+  {
+    code: "Others",
+    key: "Others",
+    value: "Others",
+    displayText: "Other (Please Specify)"
+  }
+];
+
+export const yesNoOptions = [
+  {
+    code: "Yes",
+    key: "Yes",
+    value: true,
+    label: "Yes"
+  },
+  {
+    code: "No",
+    key: "No",
+    value: false,
+    label: "No"
+  }
+];
+
+export const authorityTypeOptions = [
+  {
+    code: "Sole proprietor",
+    key: "Sole proprietor",
+    value: "Sole proprietor",
+    label: "Sole proprietor"
+  },
+  {
+    code: "Power of Attorney",
+    key: "Power of Attorney",
+    value: "Power of Attorney",
+    label: "Power of Attorney"
+  },
+  {
+    code: "Partnership Agreement",
+    key: "Partnership Agreement",
+    value: "Partnership Agreement",
+    label: "Partnership Agreement"
+  },
+  {
+    code: "Memorandum/Articles of Association",
+    key: "Memorandum/Articles of Association",
+    value: "Memorandum/Articles of Association",
+    label: "Memorandum/Articles of Association"
+  },
+  {
+    code: "Board Resolution",
+    key: "Board Resolution",
+    value: "Board Resolution",
+    label: "Board Resolution"
+  },
+  {
+    code: "Shareholder Resolution",
+    key: "Shareholder Resolution",
+    value: "Shareholder Resolution",
+    label: "Shareholder Resolution"
+  },
+  {
+    code: "Legal Guardian (For minor)",
+    key: "Legal Guardian (For minor)",
+    value: "Legal Guardian (For minor)",
+    label: "Legal Guardian (For minor)"
+  },
+  {
+    code: "Legal Heir / Successor",
+    key: "Legal Heir / Successor",
+    value: "Legal Heir / Successor",
+    label: "Legal Heir / Successor"
+  },
+  {
+    code: "Court Appointed Arbitrator",
+    key: "Court Appointed Arbitrator",
+    value: "Court Appointed Arbitrator",
+    label: "Court Appointed Arbitrator"
+  }
+];

@@ -1,7 +1,7 @@
 import React from "react";
 import DoneIcon from "../../DoneIcon";
 import SectionTitle from "../../SectionTitle";
-import LinkButton from "../../Buttons/LinkButton";
+import { LinkButton } from "../../Buttons/LinkButton";
 import { useStyles } from "./styled";
 
 export const StepComponent = ({
@@ -14,10 +14,9 @@ export const StepComponent = ({
   setIsContinueDisabled,
   prospectInfo,
   handleContinue,
-  stepForm
+  stepForm: Form
 }) => {
   const classes = useStyles();
-  const Form = stepForm;
 
   const renderTitle = () => {
     if (isActiveStep) {
@@ -38,14 +37,16 @@ export const StepComponent = ({
       <div className={classes.stepTitleWrapper} onClick={clickHandler}>
         {renderTitle()}
       </div>
-      {isActiveStep && (
-        <Form
-          setIsContinueDisabled={setIsContinueDisabled}
-          index={index}
-          prospectInfo={prospectInfo}
-          handleContinue={handleContinue}
-        />
-      )}
+      <div className={classes.formWrapper}>
+        {isActiveStep && (
+          <Form
+            setIsContinueDisabled={setIsContinueDisabled}
+            index={index}
+            prospectInfo={prospectInfo}
+            handleContinue={handleContinue}
+          />
+        )}
+      </div>
     </>
   );
 };

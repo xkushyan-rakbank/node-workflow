@@ -6,8 +6,8 @@ import StepComponent from "../../components/StepComponent";
 import { StepComponent as StepComponentFormik } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
 import SuccessFilledStakeholder from "../../components/StakeholderStepForms/SuccessFilledStakeholder/SuccessFilledStakeholder";
 import StatusLoader from "../../components/StatusLoader";
-import LinkButton from "../../components/Buttons/LinkButton";
-import { stakeHoldersSteps, STEP_1, STEP_4 } from "./constants";
+import { LinkButton } from "../../components/Buttons/LinkButton";
+import { stakeHoldersSteps, STEP_1, STEP_2, STEP_4 } from "./constants";
 import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
 import {
   formatPersonalInformation,
@@ -100,7 +100,7 @@ const StakeholderStepper = ({
           const stepIndex = item.step - 1;
           const stepForm = stakeHoldersSteps[stepIndex].component;
 
-          if (item.step === STEP_1) {
+          if ([STEP_1, STEP_2].includes(item.step)) {
             return (
               <StepComponentFormik
                 index={index}

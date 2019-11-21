@@ -4,14 +4,11 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 import { CheckboxGroup, CustomSelect } from "../../../../components/Form";
-import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
-import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
 import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
-import ContinueButton from "../../../../components/Buttons/ContinueButton";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
-import { INPUT_ID_INDEX } from "../../constants";
 import { accountCurrencies, emirates, branches } from "../../../../constants/options";
 
 const INFO_TITLE =
@@ -23,17 +20,12 @@ const AccountDetailsSchema = Yup.object({
   subCategory: Yup.string().required("Field is required")
 });
 
-export const AccountDetailsComponent = ({
-  islamicBanking,
-  branchCityValue,
-  branchCityConfig,
-  goToNext
-}) => {
+export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBanking } }) => {
   const classes = useStyles();
-
   const onSubmit = values => {
-    // TODO continue
+    // TODO continue update store values
     // console.log(values);
+    // goToNext()
   };
 
   return (
@@ -42,7 +34,8 @@ export const AccountDetailsComponent = ({
         initialValues={{
           accountCurrencies: [],
           branchCity: "",
-          subCategory: ""
+          subCategory: "",
+          receiveInterest: false
         }}
         validationSchema={AccountDetailsSchema}
         onSubmit={onSubmit}
@@ -63,7 +56,6 @@ export const AccountDetailsComponent = ({
               <Subtitle title="Select branch" />
               <Grid container spacing={3}>
                 <Grid item md={6} sm={12}>
-                  {/* TODO fix placeholder shrink prop*/}
                   <Field
                     name="branchCity"
                     options={emirates}
@@ -75,11 +67,11 @@ export const AccountDetailsComponent = ({
                       setFieldValue("branchCity", e.target.value);
                       setFieldValue("subCategory", "");
                     }}
-                    shrink={true}
+                    component={CustomSelect}
+                    shrink={false}
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                  {/* TODO fix placeholder shrink prop*/}
                   <Field
                     name="subCategory"
                     options={branches.filter(item => item.emirateCode === values.branchCity)}
@@ -87,10 +79,30 @@ export const AccountDetailsComponent = ({
                     placeholder="Branch"
                     extractId={option => option.key}
                     component={CustomSelect}
-                    shrink={true}
+                    shrink={false}
                   />
                 </Grid>
               </Grid>
+
+              {!islamicBanking && (
+                <>
+                  <Divider />
+                  <Subtitle title="Select interest" />
+                  {/* TODO use Checkbox component after Oleg merge in dev */}
+                  <Field
+                    name="receiveInterest"
+                    options={[
+                      {
+                        code: "receiveInterest",
+                        displayText: "I don't wish to receive interest from my account",
+                        key: "receiveInterest",
+                        value: true
+                      }
+                    ]}
+                    component={CheckboxGroup}
+                  />
+                </>
+              )}
 
               <div className={classes.buttonWrapper}>
                 <ContinueButton type="submit" />
@@ -99,17 +111,6 @@ export const AccountDetailsComponent = ({
           );
         }}
       </Formik>
-
-      <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-        {/* TODO continue migrate to formik */}
-        {!islamicBanking && (
-          <>
-            <Divider />
-            <Subtitle title="Select interest" />
-            <Checkbox id="Acnt.receiveInterest" indexes={INPUT_ID_INDEX} />
-          </>
-        )}
-      </FormWrapper>
     </>
   );
 };
