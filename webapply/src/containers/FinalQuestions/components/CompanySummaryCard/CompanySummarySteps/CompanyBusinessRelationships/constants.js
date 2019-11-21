@@ -26,7 +26,7 @@ export const initialValues = {
   isDontHaveSuppliersYet,
   isDontTradeGoodsYet,
   otherBankDetails,
-  ["otherBankingRelationshipsInfo.otherBankDetails"]: otherBankDetails
+  "otherBankingRelationshipsInfo.otherBankDetails": otherBankDetails
 };
 
 export const countryOptions = [

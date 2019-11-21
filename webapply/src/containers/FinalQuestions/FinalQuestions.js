@@ -1,14 +1,14 @@
 import React, { useState } from "react";
+import cx from "classnames";
+import routes from "../../routes";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
-import routes from "../../routes";
 import { BackLink } from "../../components/Buttons/BackLink";
-import cx from "classnames";
 import { useStyles } from "./styled";
 
 export const FinalQuestionsComponent = ({ signatories, history }) => {
-  const [expandedMargin, setExpandedMargin] = useState(true);
+  const [isExpandedMargin, setIsExpandedMargin] = useState(true);
   const [filledSignatoriesIndexes, setFilledSignatoriesIndexes] = useState([]);
   const classes = useStyles();
 
@@ -20,14 +20,12 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
     }
   };
 
-  const isSubmitDisabled = () => !(filledSignatoriesIndexes.length > signatories.length);
-
-  const switchExpandedMargin = () => setExpandedMargin(prevState => !prevState);
+  const switchExpandedMargin = () => setIsExpandedMargin(prevState => !prevState);
 
   return (
     <>
       <h2>Final questions</h2>
-      <p className={cx(classes.description, { [classes.smallMargin]: !expandedMargin })}>
+      <p className={cx(classes.description, { [classes.smallMargin]: !isExpandedMargin })}>
         We’re almost there! Here we ask a bit about the background of the company and that of the
         signatories. We promise there’s no more questions after this section.
       </p>
@@ -38,25 +36,19 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         />
       </div>
       <div className={classes.sectionContainer}>
-        {signatories.map((item, index) => {
-          return (
-            <SignatorySummaryCard
-              key={index}
-              signatory={item}
-              index={index}
-              addFilledSignatoryIndex={addFilledSignatoryIndex}
-              filledSignatoriesIndexes={filledSignatoriesIndexes}
-            />
-          );
-        })}
+        {signatories.map((item, index) => (
+          <SignatorySummaryCard
+            key={index}
+            signatory={item}
+            index={index}
+            addFilledSignatoryIndex={addFilledSignatoryIndex}
+            filledSignatoriesIndexes={filledSignatoriesIndexes}
+          />
+        ))}
       </div>
       <div className={classes.linkContainer}>
         <BackLink path={routes.stakeholdersInfo} />
-        <SubmitButton
-          handleClick={goToUploadDocument}
-          label="Next Step"
-          disabled={isSubmitDisabled()}
-        />
+        <SubmitButton handleClick={goToUploadDocument} label="Next Step" />
       </div>
     </>
   );

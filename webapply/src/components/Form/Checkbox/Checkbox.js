@@ -1,9 +1,23 @@
 import React from "react";
 import cx from "classnames";
+import { styled } from "@material-ui/styles";
 import HelpTooltip from "../../HelpTooltip";
-import Check from "../../../assets/icons/on.svg";
-import infoIc from "../../../assets/icons/info.svg";
+import { ReactComponent as CheckIcon } from "../../../assets/icons/on.svg";
+import { ReactComponent as InfoIcon } from "../../../assets/icons/info.svg";
 import { useStyles } from "./styled";
+
+export const StyledCheckIcon = styled(CheckIcon)({
+  position: "absolute",
+  top: "-2px",
+  left: "-2px",
+  bottom: "0"
+});
+
+export const StyledInfoIcon = styled(InfoIcon)({
+  width: "16px",
+  height: "16px",
+  marginRight: "5px"
+});
 
 export const Checkbox = ({
   disabled,
@@ -13,9 +27,10 @@ export const Checkbox = ({
   infoTitle,
   form: { errors, touched, setFieldValue },
   withQuestion,
-  config,
+  config = {},
   name,
   callback,
+  tooltipMessage,
   ...props
 }) => {
   const classes = useStyles();
@@ -39,7 +54,7 @@ export const Checkbox = ({
               }}
             />
             <div className={classes.styledCheckbox}>
-              {field.value && <img src={Check} alt="check icon" />}
+              {field.value && <StyledCheckIcon alt="check icon" />}
             </div>
           </div>
           {config && config.title ? (
@@ -51,17 +66,11 @@ export const Checkbox = ({
           )}
         </label>
 
-        {withQuestion && (
-          <HelpTooltip
-            message={
-              "Lorem ipsum dolor sit amet, consectet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            }
-          />
-        )}
+        {withQuestion && <HelpTooltip message={tooltipMessage} />}
       </div>
-      {config && config.title && (
+      {config.title && (
         <div className={classes.secondRow}>
-          <img src={infoIc} alt="info" />
+          <StyledInfoIcon alt="info" />
           {config && config.title}
         </div>
       )}

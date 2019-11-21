@@ -5,10 +5,6 @@ import SignatoryPreferredMailingAddressForm from "./SignatorySummarySteps/Signat
 
 export const INITIAL_SIGNATORY_STEP = 1;
 
-export const SHARE_HOLDING_PERCENTAGE_PATH = "kycDetails.shareHoldingPercentage";
-
-export const AUTHORITY_TYPE_PATH = "accountSigningInfo.authorityType";
-
 export const signatoriesSteps = [
   {
     step: 1,

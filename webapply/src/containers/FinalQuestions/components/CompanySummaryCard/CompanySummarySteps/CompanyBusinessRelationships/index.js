@@ -1,7 +1,7 @@
 import { getOrgKYCDetails } from "../../../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { CompanyBusinessRelationshipsComponent } from "./CompanyBusinessRelationships";
-import { get } from "lodash";
+import get from "lodash/get";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => ({

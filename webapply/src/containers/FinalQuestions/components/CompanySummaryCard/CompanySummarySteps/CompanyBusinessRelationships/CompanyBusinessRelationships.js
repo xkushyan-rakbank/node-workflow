@@ -125,7 +125,7 @@ export const CompanyBusinessRelationshipsComponent = () => {
                               item
                               md={index === 0 ? 6 : 5}
                               sm={12}
-                              className={cx(classes.relative, { [classes.tablet]: index !== 0 })}
+                              className={cx(classes.relative, { [classes.tablet]: !index })}
                             >
                               <Field
                                 options={countryOptions}
@@ -185,42 +185,41 @@ export const CompanyBusinessRelationshipsComponent = () => {
                       )}
                     </Field>
                     <Grid container spacing={3} className={classes.flexContainer}>
-                      {values.topSuppliers.length > 0 &&
-                        values.topSuppliers.map((friend, index) => (
-                          <React.Fragment key={index}>
-                            <Grid item md={index === 0 ? 6 : 5} sm={12}>
-                              <Field
-                                name={`topSuppliers[${index}].name`}
-                                label="Name"
-                                placeholder="Name"
-                                component={Input}
-                                disabled={values.isDontHaveSuppliersYet}
+                      {values.topSuppliers.map((friend, index) => (
+                        <React.Fragment key={index}>
+                          <Grid item md={index === 0 ? 6 : 5} sm={12}>
+                            <Field
+                              name={`topSuppliers[${index}].name`}
+                              label="Name"
+                              placeholder="Name"
+                              component={Input}
+                              disabled={values.isDontHaveSuppliersYet}
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            md={index === 0 ? 6 : 5}
+                            sm={12}
+                            className={cx(classes.relative, { [classes.tablet]: !index })}
+                          >
+                            <Field
+                              options={countryOptions}
+                              shrink={false}
+                              name={`topSuppliers[${index}].country`}
+                              placeholder="Country"
+                              extractId={option => option.key}
+                              component={CustomSelect}
+                              disabled={values.isDontHaveSuppliersYet}
+                            />
+                            {!!index && (
+                              <RemoveButton
+                                onClick={() => arrayHelpers.remove(index)}
+                                title="Delete"
                               />
-                            </Grid>
-                            <Grid
-                              item
-                              md={index === 0 ? 6 : 5}
-                              sm={12}
-                              className={cx(classes.relative, { [classes.tablet]: index !== 0 })}
-                            >
-                              <Field
-                                options={countryOptions}
-                                shrink={false}
-                                name={`topSuppliers[${index}].country`}
-                                placeholder="Country"
-                                extractId={option => option.key}
-                                component={CustomSelect}
-                                disabled={values.isDontHaveSuppliersYet}
-                              />
-                              {!!index && (
-                                <RemoveButton
-                                  onClick={() => arrayHelpers.remove(index)}
-                                  title="Delete"
-                                />
-                              )}
-                            </Grid>
-                          </React.Fragment>
-                        ))}
+                            )}
+                          </Grid>
+                        </React.Fragment>
+                      ))}
                     </Grid>
                     {values.topSuppliers.length < limits.SUPPLIER_COUNT && (
                       <AddButton
@@ -265,7 +264,7 @@ export const CompanyBusinessRelationshipsComponent = () => {
                               item
                               md={index === 0 ? 12 : 10}
                               sm={12}
-                              className={cx(classes.relative, { [classes.tablet]: index !== 0 })}
+                              className={cx(classes.relative, { [classes.tablet]: !index })}
                             >
                               <Field
                                 options={countryOptions}
@@ -332,7 +331,7 @@ export const CompanyBusinessRelationshipsComponent = () => {
                                     md={index === 0 ? 12 : 10}
                                     sm={12}
                                     className={cx(classes.relative, {
-                                      [classes.tablet]: index !== 0
+                                      [classes.tablet]: !index
                                     })}
                                   >
                                     <Field

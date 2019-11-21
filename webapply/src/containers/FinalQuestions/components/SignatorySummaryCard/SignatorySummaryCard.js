@@ -5,12 +5,7 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import StepComponent from "../../../../components/StepComponent";
 import { usePreviousHook } from "../../../../utils/usePreviousHook";
 import { useStyles } from "./styled";
-import {
-  signatoriesSteps,
-  INITIAL_SIGNATORY_STEP,
-  SHARE_HOLDING_PERCENTAGE_PATH,
-  AUTHORITY_TYPE_PATH
-} from "./constants";
+import { signatoriesSteps, INITIAL_SIGNATORY_STEP } from "./constants";
 
 export const SignatorySummaryCardComponent = ({
   resetStep,
@@ -57,15 +52,12 @@ export const SignatorySummaryCardComponent = ({
     );
   };
 
-  const getShareHoldingPercentage = () => Number(get(signatory, SHARE_HOLDING_PERCENTAGE_PATH, 0));
+  const getShareHoldingPercentage = () =>
+    Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
 
   const getShareholdingLabel = () => {
     const percentage = getShareHoldingPercentage();
     return percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding";
-  };
-
-  const getSignatoryRightsLabel = () => {
-    return get(signatory, AUTHORITY_TYPE_PATH);
   };
 
   const renderCardContent = () => {
@@ -75,7 +67,9 @@ export const SignatorySummaryCardComponent = ({
           <div className={classes.name}>
             {firstName && lastName ? `${firstName} ${lastName}` : fullName}
           </div>
-          <div className={classes.signatoryField}>{getSignatoryRightsLabel()}</div>
+          <div className={classes.signatoryField}>
+            {get(signatory, "accountSigningInfo.authorityType")}
+          </div>
           <div className={classes.shareholdingField}>{getShareholdingLabel()}</div>
         </div>
         <div className={classes.controlsBox}>{renderControls()}</div>
