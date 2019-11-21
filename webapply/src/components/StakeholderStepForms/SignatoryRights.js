@@ -1,46 +1,55 @@
 import React from "react";
-import { connect } from "react-redux";
+import { Formik, Form, Field } from "formik";
 import Grid from "@material-ui/core/Grid";
-import PureSelect from "../InputField/PureSelect";
-import InlineRadioGroup from "../InputField/InlineRadioGroup";
-import { getInputValueById } from "../../store/selectors/input";
-import { updateProspect } from "../../store/actions/appConfig";
+import * as Yup from "yup";
 
-class SignatoryRights extends React.Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.isSignatory && !this.props.isSignatory) {
-      this.props.updateProspect({
-        [`prospect.signatoryInfo[${this.props.index}].accountSigningInfo.authorityType`]: ""
-      });
-    }
-  }
+import { InlineRadioGroup } from "../Form/InlineRadioGroup/InlineRadioGroup";
+import { CustomSelect } from "../Form";
+import { yesNoOptions, authorityTypeOptions } from "../../constants/options";
+import { SubmitButton } from "./SubmitButton/SubmitButton";
 
-  render() {
-    return (
-      <Grid container>
-        <InlineRadioGroup id="SigKycd.isSignatory" indexes={[this.props.index]} />
-        <PureSelect
-          disabled={!this.props.isSignatory}
-          required={this.props.isSignatory}
-          id="SigAcntSig.authorityType"
-          indexes={[this.props.index]}
-        />
-      </Grid>
-    );
-  }
-}
+const signatoryRightsSchema = Yup.object().shape({
+  kycDetails: Yup.object().shape({
+    isSignatory: Yup.boolean().required("Required")
+  }),
+  accountSigningInfo: Yup.object().when("kycDetails", {
+    is: details => details.isSignatory,
+    then: Yup.object().shape({
+      authorityType: Yup.string().required("Required")
+    })
+  })
+});
 
-const mapStateToProps = (state, { index }) => {
-  return {
-    isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index])
-  };
+export const SignatoryRights = ({ handleContinue }) => {
+  return (
+    <Formik
+      initialValues={{ accountSigningInfo: { authorityType: "" }, kycDetails: { isSignatory: "" } }}
+      onSubmit={handleContinue}
+      validationSchema={signatoryRightsSchema}
+    >
+      {({ values }) => {
+        return (
+          <Form>
+            <Grid container>
+              <Field
+                component={InlineRadioGroup}
+                name="kycDetails.isSignatory"
+                options={yesNoOptions}
+                label="Is this person a signatory?"
+              />
+              <Field
+                name="accountSigningInfo.authorityType"
+                options={authorityTypeOptions}
+                disabled={!values.kycDetails.isSignatory}
+                component={CustomSelect}
+                label="Authority Type"
+              />
+            </Grid>
+
+            <SubmitButton />
+          </Form>
+        );
+      }}
+    </Formik>
+  );
 };
-
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignatoryRights);

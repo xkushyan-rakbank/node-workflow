@@ -3,14 +3,15 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
+
 import { DatePicker } from "../../Form/DatePicker/DatePicker";
 import CustomCheckbox from "../../InputField/RefactoredCheckbox";
-import InlineRadioGroup from "../../InputField/InlineRadioGroup";
+import { InlineRadioGroup } from "../../Form/InlineRadioGroup/InlineRadioGroup";
 import InfoTitle from "../../InfoTitle";
 import { CustomSelect, Input, InputGroup } from "../../Form";
-import { genderOptions } from "../../../constants/options";
+import { genderOptions, yesNoOptions } from "../../../constants/options";
+import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { useStyles } from "./styled";
-import { ContinueButton } from "../../Buttons/ContinueButton";
 
 const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("kycDetails.isShareholderACompany", {
@@ -22,7 +23,8 @@ const personalInformationSchema = Yup.object().shape({
     then: Yup.string().required("Required")
   }),
   kycDetails: Yup.object().shape({
-    dateOfBirth: Yup.date().required("Required")
+    dateOfBirth: Yup.date().required("Required"),
+    isPEP: Yup.boolean().required("Required")
   })
 });
 
@@ -49,7 +51,7 @@ export const PersonalInformation = props => {
       {props => {
         const isShareholderACompany = checkIsShareholderACompany(props.value);
         return (
-          <Form className={classes.formWrapper}>
+          <Form>
             <Grid item container spacing={3}>
               <Grid item sm={12} className="mb-25 mt-25">
                 <Field
@@ -111,21 +113,18 @@ export const PersonalInformation = props => {
                   disabled={isShareholderACompany}
                   component={DatePicker}
                 />
-                {/*<DatePicker*/}
-                {/*  id="SigKycd.dateOfBirth"*/}
-                {/*  indexes={[index]}*/}
-                {/*  disabled={isShareholderACompany}*/}
-                {/*  value={props.values.kycDetails.dateOfBirth}*/}
-                {/*/>*/}
               </Grid>
             </Grid>
             <InfoTitle title="The details of this section should be the same as in the person’s passport" />
             <div className={classes.divider} />
-            <InlineRadioGroup id="SigKycd.isPEP" indexes={[index]} />
+            <Field
+              component={InlineRadioGroup}
+              name="kycDetails.isPEP"
+              options={yesNoOptions}
+              label="Is this person a signatory?"
+            />
 
-            <div className={classes.buttonWrapper}>
-              <ContinueButton disabled={!!props.isContinueDisabled} type="submit" />
-            </div>
+            <SubmitButton />
           </Form>
         );
       }}
