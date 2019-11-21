@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -12,16 +12,17 @@ import ContinueButton from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
 import { INPUT_ID_INDEX } from "../../constants";
-import { accountCurrencies, emiratesCities } from "../../../../constants/options";
+import { accountCurrencies, emirates, emiratesCities } from "../../../../constants/options";
 
 const INFO_TITLE =
   "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval.";
-const getSubCategory = branchCityKey => {
+
+const getEmirateCities = branchCityKey => {
   if (!branchCityKey) {
     return [];
   }
-  const emirate = emiratesCities.find(emirate => emirate.code === branchCityKey);
-  return emirate.subCategory;
+  const emirateData = emiratesCities.find(emirate => emirate.emirateCode === branchCityKey);
+  return emirateData.cities;
 };
 
 const AccountDetailsSchema = Yup.object({
@@ -43,18 +44,6 @@ export const AccountDetailsComponent = ({
     // console.log(values);
   };
 
-  const [branchCity, setBranchCity] = useState("");
-
-  let setFieldValue;
-  const clearValueBranch = (value, cb) => {
-    setBranchCity(value);
-    setFieldValue = cb;
-  };
-
-  useEffect(() => {
-    setFieldValue("subCategory", "");
-  }, [branchCity, setFieldValue]);
-
   return (
     <>
       <Formik
@@ -67,7 +56,6 @@ export const AccountDetailsComponent = ({
         onSubmit={onSubmit}
       >
         {({ values, setFieldValue }) => {
-          clearValueBranch(values.branchCity, setFieldValue);
           return (
             <Form>
               <Subtitle title="Select currencies" />
@@ -86,10 +74,14 @@ export const AccountDetailsComponent = ({
                   {/* TODO fix placeholder shrink prop*/}
                   <Field
                     name="branchCity"
-                    options={emiratesCities}
+                    options={emirates}
                     extractId={option => option.key}
                     label="Emirate / City"
                     placeholder="Emirate / City"
+                    onChange={e => {
+                      setFieldValue("branchCity", e.target.value);
+                      setFieldValue("subCategory", "");
+                    }}
                     component={CustomSelect}
                     shrink={true}
                   />
@@ -98,7 +90,7 @@ export const AccountDetailsComponent = ({
                   {/* TODO fix placeholder shrink prop*/}
                   <Field
                     name="subCategory"
-                    options={getSubCategory(values["branchCity"])}
+                    options={getEmirateCities(values["branchCity"])}
                     label="Branch"
                     placeholder="Branch"
                     extractId={option => option.key}

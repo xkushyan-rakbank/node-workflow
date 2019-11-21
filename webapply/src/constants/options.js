@@ -73,13 +73,73 @@ export const genderOptions = [
   }
 ];
 
-export const emiratesCities = [
+export const emirates = [
   {
     code: "AD",
     key: "AD",
     value: "AD",
-    label: "Abu Dhabi",
-    subCategory: [
+    label: "Abu Dhabi"
+  },
+  {
+    code: "A",
+    key: "A",
+    value: "A",
+    label: "Ajman"
+  },
+  {
+    code: "AA",
+    key: "AA",
+    value: "AA",
+    label: "Al Ain"
+  },
+  {
+    code: "Dubai",
+    key: "Dubai",
+    value: "Dubai",
+    label: "Dubai"
+  },
+  {
+    code: "F",
+    key: "F",
+    value: "F",
+    label: "Fujairah"
+  },
+  {
+    code: "K",
+    key: "K",
+    value: "K",
+    label: "Kalba"
+  },
+  {
+    code: "KH",
+    key: "KH",
+    value: "KH",
+    label: "Khorfakkan"
+  },
+  {
+    code: "RK",
+    key: "RK",
+    value: "RK",
+    label: "Ras Al Khaimah"
+  },
+  {
+    code: "SH",
+    key: "SH",
+    value: "SH",
+    label: "Sharjah"
+  },
+  {
+    code: "U",
+    key: "U",
+    value: "U",
+    label: "Umm Al Quwain"
+  }
+];
+
+export const emiratesCities = [
+  {
+    emirateCode: "AD",
+    cities: [
       {
         code: "Abu Dhabi 1",
         key: "Abu Dhabi 1",
@@ -95,11 +155,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "A",
-    key: "A",
-    value: "A",
-    label: "Ajman",
-    subCategory: [
+    emirateCode: "A",
+    cities: [
       {
         code: "Ajman 1",
         key: "Ajman 1",
@@ -115,11 +172,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "AA",
-    key: "AA",
-    value: "AA",
-    label: "Al Ain",
-    subCategory: [
+    emirateCode: "AA",
+    cities: [
       {
         code: "Al Ain 1",
         key: "Al Ain 1",
@@ -135,11 +189,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "Dubai",
-    key: "Dubai",
-    value: "Dubai",
-    label: "Dubai",
-    subCategory: [
+    emirateCode: "Dubai",
+    cities: [
       {
         code: "Dubai 1",
         key: "Dubai 1",
@@ -155,11 +206,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "F",
-    key: "F",
-    value: "F",
-    label: "Fujairah",
-    subCategory: [
+    emirateCode: "F",
+    cities: [
       {
         code: "Fujairah 1",
         key: "Fujairah 1",
@@ -175,11 +223,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "K",
-    key: "K",
-    value: "K",
-    label: "Kalba",
-    subCategory: [
+    emirateCode: "K",
+    cities: [
       {
         code: "Kalba 1",
         key: "Kalba 1",
@@ -195,11 +240,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "KH",
-    key: "KH",
-    value: "KH",
-    label: "Khorfakkan",
-    subCategory: [
+    emirateCode: "KH",
+    cities: [
       {
         code: "Khorfakkan 1",
         key: "Khorfakkan 1",
@@ -215,11 +257,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "RK",
-    key: "RK",
-    value: "RK",
-    label: "Ras Al Khaimah",
-    subCategory: [
+    emirateCode: "RK",
+    cities: [
       {
         code: "Ras Al Khaimah 1",
         key: "Ras Al Khaimah 1",
@@ -235,11 +274,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "SH",
-    key: "SH",
-    value: "SH",
-    label: "Sharjah",
-    subCategory: [
+    emirateCode: "SH",
+    cities: [
       {
         code: "Sharjah 1",
         key: "Sharjah 1",
@@ -255,11 +291,8 @@ export const emiratesCities = [
     ]
   },
   {
-    code: "U",
-    key: "U",
-    value: "U",
-    label: "Umm Al Quwain",
-    subCategory: [
+    emirateCode: "U",
+    cities: [
       {
         code: "Umm Al Quwain 1",
         key: "Umm Al Quwain 1",
