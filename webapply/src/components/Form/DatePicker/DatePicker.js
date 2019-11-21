@@ -2,6 +2,7 @@ import React from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { getIn } from "formik";
 
 import InfoTitle from "../../InfoTitle";
 import { ErrorMessage } from "../../Notifications";
@@ -20,7 +21,8 @@ export const DatePicker = ({
   form: { errors, touched, setFieldValue },
   datePickerProps = {}
 }) => {
-  const isError = errors[field.name] && touched[field.name];
+  const errorMessage = getIn(errors, field.name);
+  const isError = errorMessage && getIn(touched, field.name);
 
   return (
     <FormControl className="formControl">
@@ -51,7 +53,7 @@ export const DatePicker = ({
 
       {infoTitle && <InfoTitle title={infoTitle} />}
 
-      {isError && <ErrorMessage error={errors[field.name]} />}
+      {isError && <ErrorMessage error={errorMessage} />}
     </FormControl>
   );
-}
+};

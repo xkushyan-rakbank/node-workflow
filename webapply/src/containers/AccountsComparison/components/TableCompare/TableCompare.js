@@ -9,7 +9,6 @@ import routes from "../../../../routes";
 
 export const TableCompareComponent = ({
   history,
-  changeAccountType,
   updateProspect,
   updateAccountType,
   selectedAccount
@@ -75,7 +74,6 @@ export const TableCompareComponent = ({
   const handleSelectAccount = accountType => {
     updateAccountType(accountType);
     updateProspect({ "prospect.applicationInfo.accountType": accountType });
-    changeAccountType(accountType);
     history.push(routes.detailedAccount);
   };
 

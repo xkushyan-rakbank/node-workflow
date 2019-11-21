@@ -24,3 +24,51 @@ export const countryCodeOptions = [
     label: "+391"
   }
 ];
+
+export const accountCurrencies = [
+  {
+    code: "AED",
+    displayText: "AED",
+    key: "AED",
+    value: "AED"
+  },
+  {
+    code: "USD",
+    displayText: "USD",
+    key: "USD",
+    value: "USD"
+  },
+  {
+    code: "EUR",
+    displayText: "EUR",
+    key: "EUR",
+    value: "EUR"
+  },
+  {
+    code: "GBP",
+    displayText: "GBP",
+    key: "GBP",
+    value: "GBP"
+  }
+];
+
+export const genderOptions = [
+  {
+    code: "Mr.",
+    key: "Mr.",
+    value: "Mr.",
+    label: "Mr."
+  },
+  {
+    code: "Mrs.",
+    key: "Mrs.",
+    value: "Mrs.",
+    label: "Mrs."
+  },
+  {
+    code: "Ms.",
+    key: "Ms.",
+    value: "Ms.",
+    label: "Ms."
+  }
+];
