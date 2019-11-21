@@ -129,6 +129,7 @@ class AboutCompany extends React.Component {
                       title={item.title}
                       subTitle={item.infoTitle}
                       activeStep={step === item.step}
+                      stepForm={item.component}
                       filled={isFilled}
                       clickHandler={setStep}
                       handleContinue={this.sendProspectToAPI}
