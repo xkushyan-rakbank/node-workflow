@@ -4,9 +4,9 @@ import * as Yup from "yup";
 import cx from "classnames";
 import { Input, CustomSelect, Checkbox } from "../../../../../../components/Form";
 import Grid from "@material-ui/core/Grid";
-import AddButton from "../../../../../../components/Buttons/AddButton";
-import RemoveButton from "../../../../../../components/Buttons/RemoveButton";
-import ContinueButton from "../../../../../../components/Buttons/ContinueButton";
+import { AddButton } from "../../../../../../components/Buttons/AddButton";
+import { RemoveButton } from "../../../../../../components/Buttons/RemoveButton";
+import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { limits, initialValues, countryOptions } from "./constants";
 import { useStyles } from "./styled";
 

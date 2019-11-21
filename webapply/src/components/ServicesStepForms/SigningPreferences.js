@@ -9,7 +9,7 @@ import FormWrapper from "../StakeholderStepForms/FormWrapper";
 import { InfoTitle } from "./../Notifications";
 import PureSelect from "../InputField/PureSelect";
 import TextInput from "../InputField/TextInput";
-import AddButton from "../Buttons/AddButton";
+import { AddButton } from "../Buttons/AddButton";
 import Divider from "../Divider";
 import RadioGroup from "../InputField/RadioGroupButtons";
 import TextArea from "../InputField/TextArea";

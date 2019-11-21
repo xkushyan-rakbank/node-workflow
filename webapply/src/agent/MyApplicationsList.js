@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import ContainedButton from "../components/Buttons/ContainedButton";
+import { ContainedButton } from "../components/Buttons/ContainedButton";
 import { getProspectInfo } from "../store/actions/retrieveApplicantInfo";
 import * as prospectInfo from "../store/selectors/retrieveApplicantInfo";
 

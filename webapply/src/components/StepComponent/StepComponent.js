@@ -1,7 +1,7 @@
 import React from "react";
 import DoneIcon from "../DoneIcon";
 import SectionTitle from "../SectionTitle";
-import LinkButton from "../Buttons/LinkButton";
+import { LinkButton } from "../Buttons/LinkButton";
 import { useStyles } from "./styled";
 
 export const StepComponent = ({

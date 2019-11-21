@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import get from "lodash/get";
 import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
-import LinkButton from "../../../../components/Buttons/LinkButton";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import StepComponent from "../../../../components/StepComponent";
 import { usePreviousHook } from "../../../../utils/usePreviousHook";
 import { useStyles } from "./styled";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CompanyCard from "../../../../components/CompanyCard";
-import ContinueButton from "../../../../components/Buttons/ContinueButton";
-import LinkButton from "../../../../components/Buttons/LinkButton";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { finalQuestionsSteps, STEP_1 } from "./constants";
 import { useStyles } from "./styled";

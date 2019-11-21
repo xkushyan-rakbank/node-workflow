@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import TextInput from "../InputField/TextInput";
-import AddButton from "../Buttons/AddButton";
-import PureSelect from "../InputField/PureSelect";
+import TextInput from "../../../../../components/InputField/TextInput";
+import { AddButton } from "../../../../../components/Buttons/AddButton";
+import PureSelect from "../../../../../components/InputField/PureSelect";
 
 const styles = {
   title: {

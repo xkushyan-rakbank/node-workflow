@@ -4,7 +4,7 @@ import get from "lodash/get";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
-import AddButton from "../../../../components/Buttons/AddButton";
+import { AddButton } from "../../../../components/Buttons/AddButton";
 import Divider from "../../../../components/Divider";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
 import { SigningTransactions } from "./SigningTransactions";

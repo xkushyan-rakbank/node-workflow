@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import SubmitButton from "../../components/Buttons/SubmitButton";
+import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import routes from "../../routes";
-import BackLink from "../../components/Buttons/BackLink";
+import { BackLink } from "../../components/Buttons/BackLink";
 import cx from "classnames";
 import { useStyles } from "./styled";
 
@@ -55,7 +55,6 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         <SubmitButton
           handleClick={goToUploadDocument}
           label="Next Step"
-          classes={{ buttonWrap: classes.buttonWrap }}
           disabled={isSubmitDisabled()}
         />
       </div>

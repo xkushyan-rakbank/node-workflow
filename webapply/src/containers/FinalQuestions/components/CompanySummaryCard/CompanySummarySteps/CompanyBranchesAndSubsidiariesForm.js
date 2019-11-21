@@ -5,8 +5,8 @@ import CustomCheckbox from "../../../../../components/InputField/RefactoredCheck
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import TextInput from "../../../../../components/InputField/TextInput";
-import AddButton from "../../../../../components/Buttons/AddButton";
-import RemoveButton from "../../../../../components/Buttons/RemoveButton";
+import { AddButton } from "../../../../../components/Buttons/AddButton";
+import { RemoveButton } from "../../../../../components/Buttons/RemoveButton";
 import PureSelect from "../../../../../components/InputField/PureSelect";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { getOrgKYCDetails } from "../../../../../store/selectors/appConfig";
