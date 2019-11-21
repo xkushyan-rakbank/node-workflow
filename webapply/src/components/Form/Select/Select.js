@@ -34,9 +34,14 @@ export const CustomSelect = ({
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <InputLabel ref={inputLabel} shrink={shrink}>
-        {label}
-      </InputLabel>
+      {shrink ? (
+        <InputLabel ref={inputLabel} shrink>
+          {label}
+        </InputLabel>
+      ) : (
+        <InputLabel ref={inputLabel}>{label}</InputLabel>
+      )}
+
       <Select
         {...field}
         {...props}

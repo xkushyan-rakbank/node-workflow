@@ -64,7 +64,6 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
               <Subtitle title="Select branch" />
               <Grid container spacing={3}>
                 <Grid item md={6} sm={12}>
-                  {/* TODO fix bug placeholder shrink prop*/}
                   <Field
                     name="branchCity"
                     options={emirates}
@@ -80,7 +79,6 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
-                  {/* TODO fix bug placeholder shrink prop */}
                   <Field
                     name="subCategory"
                     options={getEmirateCities(values["branchCity"])}
