@@ -6,6 +6,8 @@ import { styled } from "@material-ui/styles";
 import { AddButton } from "../components/Buttons/AddButton";
 import { Grid } from "@material-ui/core";
 import { BackLink } from "../components/Buttons/BackLink";
+import { ContainedButton } from "../components/Buttons/ContainedButton";
+import { ContinueButton } from "../components/Buttons/ContinueButton";
 
 export default {
   title: "Buttons"
@@ -25,13 +27,23 @@ const Item = styled(Grid)({
 
 export const buttons = () => (
   <Container container justify="center" spacing={3}>
-    <Item item md={3} sm={2}>
+    <Item item>
       <AddButton title="Add Button" onClick={action("clicked-add-button")} />
     </Item>
-    <Item item md={3} sm={2}>
+    <Item item>
       <BrowserRouter>
         <BackLink title="Back Link" path="#" onClick={action("clicked-back-link")} />
       </BrowserRouter>
+    </Item>
+    <Item item>
+      <ContainedButton
+        withRightArrow
+        label="Contained Button"
+        handleClick={action("clicked-contained")}
+      />
+    </Item>
+    <Item item>
+      <ContinueButton handleClick={action("clicked-continue")} />
     </Item>
   </Container>
 );

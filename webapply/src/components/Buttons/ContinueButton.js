@@ -14,3 +14,7 @@ export const ContinueButton = styled(ContainedButton)({
     justifyContent: "center"
   }
 });
+
+ContainedButton.defaultProps = {
+  label: "Continue"
+};
