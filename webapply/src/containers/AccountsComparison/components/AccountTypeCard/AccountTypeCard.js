@@ -1,6 +1,6 @@
 import React from "react";
 import check_ic from "../../../../assets/images/check.png";
-import ContinueButton from "../../../../components/Buttons/ContinueButton";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 
 export const AccountTypeCardComponent = ({
