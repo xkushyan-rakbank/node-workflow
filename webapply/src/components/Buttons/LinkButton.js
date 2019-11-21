@@ -15,8 +15,8 @@ Button.defaultProps = {
   style: theme.palette.button
 };
 
-export const LinkButton = ({ clickHandler, title = "Edit", className = "" }) => (
-  <Button className={className} onClick={clickHandler}>
+export const LinkButton = ({ clickHandler, title = "Edit", className = "", ...rest }) => (
+  <Button className={className} onClick={clickHandler} {...rest}>
     {title}
   </Button>
 );

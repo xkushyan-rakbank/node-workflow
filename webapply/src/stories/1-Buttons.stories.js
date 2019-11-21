@@ -47,7 +47,7 @@ export const buttons = () => (
       <ContinueButton handleClick={action("clicked-continue")} />
     </Item>
     <Item item>
-      <LinkButton clickHandler={action("clicked-link")} />
+      <LinkButton onClick={action("clicked-link")} />
     </Item>
   </Container>
 );

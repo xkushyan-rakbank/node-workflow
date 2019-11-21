@@ -1,48 +1,41 @@
 import React from "react";
-import cx from "classnames";
-import { withStyles } from "@material-ui/core";
+import { styled } from "@material-ui/styles";
 
-const style = {
-  container: {
-    position: "absolute",
-    top: "30px",
-    right: "-90px",
-    display: "inline-flex",
-    alignItems: "center",
-    fontSize: "16px",
-    fontWeight: 600,
-    color: "#263d4c",
-    border: "none",
-    backgroundColor: "#ffffff",
-    cursor: "pointer",
-    padding: "0",
-    outline: "none",
-    "&[disabled]": {
-      opacity: "0.5"
-    },
-    "@media only screen and (max-width: 959px)": {
-      top: "80px",
-      right: "12px"
-    }
+const Button = styled("button")({
+  position: "absolute",
+  top: "30px",
+  right: "-90px",
+  display: "inline-flex",
+  alignItems: "center",
+  fontSize: "16px",
+  fontWeight: 600,
+  color: "#263d4c",
+  border: "none",
+  backgroundColor: "#ffffff",
+  cursor: "pointer",
+  padding: "0",
+  outline: "none",
+  "&[disabled]": {
+    opacity: "0.5"
   },
-  text: {
-    fontSize: "16px",
-    lineHeight: "1.5",
-    color: "#86868b",
-    fontWeight: 600,
-    fontStyle: "normal",
-    fontStretch: "normal",
-    textDecoration: "underline"
+  "@media only screen and (max-width: 959px)": {
+    top: "80px",
+    right: "12px"
   }
-};
+});
 
-const RemoveButton = props => {
-  const { classes, title = "Remove", className, ...rest } = props;
-  return (
-    <button className={cx(classes.container, className)} type="button" {...rest}>
-      <span className={classes.text}>{title}</span>
-    </button>
-  );
-};
+const Text = styled("span")({
+  fontSize: "16px",
+  lineHeight: "1.5",
+  color: "#86868b",
+  fontWeight: 600,
+  fontStyle: "normal",
+  fontStretch: "normal",
+  textDecoration: "underline"
+});
 
-export default withStyles(style)(RemoveButton);
+export const RemoveButton = ({ className = "", title = "Remove", ...rest }) => (
+  <Button className={className} type="button" {...rest}>
+    <Text>{title}</Text>
+  </Button>
+);
