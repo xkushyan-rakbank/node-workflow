@@ -9,11 +9,14 @@ import { RemoveButton } from "../../../../../../components/Buttons/RemoveButton"
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { limits, initialValues, countryOptions } from "./constants";
 import { useStyles } from "./styled";
+import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
     Yup.object().shape({
-      name: Yup.string().required("Required"),
+      name: Yup.string()
+        .required("Required")
+        .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
       country: Yup.string().required("Required")
     })
   ),
@@ -22,7 +25,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     is: false,
     then: Yup.array().of(
       Yup.object().shape({
-        name: Yup.string().required("Required"),
+        name: Yup.string()
+          .required("Required")
+          .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
         country: Yup.string().required("Required")
       })
     )
@@ -45,7 +50,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
       is: true,
       then: Yup.array().of(
         Yup.object().shape({
-          bankName: Yup.string().required("Required")
+          bankName: Yup.string()
+            .matches(BANK_NAME_REGEX, "This is not a valid bank name")
+            .required("Required")
         })
       ),
       otherwise: Yup.array().of(
@@ -76,10 +83,7 @@ export const CompanyBusinessRelationshipsComponent = () => {
     return items.length >= limit || !allFieldsFilled;
   }
 
-  const onSubmit = values => {
-    console.log("Submit");
-    console.log(values);
-  };
+  const onSubmit = values => console.log(values);
 
   return (
     <div className={classes.formWrapper}>
@@ -131,7 +135,7 @@ export const CompanyBusinessRelationshipsComponent = () => {
                                 extractId={option => option.key}
                                 component={CustomSelect}
                               />
-                              {index !== 0 && (
+                              {!!index && (
                                 <RemoveButton
                                   onClick={() => arrayHelpers.remove(index)}
                                   title="Delete"
@@ -208,7 +212,7 @@ export const CompanyBusinessRelationshipsComponent = () => {
                                 component={CustomSelect}
                                 disabled={values.isDontHaveSuppliersYet}
                               />
-                              {index > 0 && (
+                              {!!index && (
                                 <RemoveButton
                                   onClick={() => arrayHelpers.remove(index)}
                                   title="Delete"
@@ -272,7 +276,7 @@ export const CompanyBusinessRelationshipsComponent = () => {
                                 component={CustomSelect}
                                 disabled={values.isDontTradeGoodsYet}
                               />
-                              {index !== 0 && (
+                              {!!index && (
                                 <RemoveButton
                                   onClick={() => arrayHelpers.remove(index)}
                                   title="Delete"
@@ -336,7 +340,7 @@ export const CompanyBusinessRelationshipsComponent = () => {
                                       placeholder="Bank name"
                                       component={Input}
                                     />
-                                    {index !== 0 && (
+                                    {!!index && (
                                       <RemoveButton
                                         onClick={() => arrayHelpers.remove(index)}
                                         title="Delete"
