@@ -48,5 +48,11 @@ export const useStyles = makeStyles({
     "@media only screen and (max-width: 959px)": {
       marginBottom: "45px"
     }
+  },
+  buttonWrapper: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
+    margin: "40px 0"
   }
 });

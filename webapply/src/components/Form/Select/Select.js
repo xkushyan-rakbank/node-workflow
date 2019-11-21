@@ -8,10 +8,10 @@ import FormControl from "@material-ui/core/FormControl";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import { ErrorMessage, InfoTitle } from "./../../Notifications";
 import { useStyles } from "./styled";
+import { getIn } from "formik/dist/index";
 
 export const CustomSelect = ({
   extractId = option => option.value,
-  disabled,
   placeholder,
   options,
   label,
@@ -26,7 +26,8 @@ export const CustomSelect = ({
   const classes = useStyles();
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
-  const error = errors[field.name] && touched[field.name];
+  const errorMessage = getIn(errors, field.name);
+  const isError = errorMessage && getIn(touched, field.name);
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
@@ -43,7 +44,7 @@ export const CustomSelect = ({
         input={<OutlinedInput labelWidth={labelWidth} />}
         IconComponent={KeyboardArrowDownIcon}
         className={cx(classes.selectField, classes.selectFieldBasic)}
-        error={error}
+        error={isError}
       >
         {options.map(option => (
           <MenuItem key={extractId(option)} value={extractId(option)}>
@@ -52,7 +53,7 @@ export const CustomSelect = ({
         ))}
       </Select>
 
-      {error && <ErrorMessage error={errors[field.name]} />}
+      {isError && <ErrorMessage error={errorMessage} />}
 
       {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>

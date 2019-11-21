@@ -25,7 +25,8 @@ export const initialValues = {
   otherBankingRelationshipsExist,
   isDontHaveSuppliersYet,
   isDontTradeGoodsYet,
-  otherBankDetails
+  otherBankDetails,
+  ["otherBankingRelationshipsInfo.otherBankDetails"]: otherBankDetails
 };
 
 export const countryOptions = [

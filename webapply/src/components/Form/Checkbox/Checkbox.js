@@ -11,9 +11,11 @@ export const Checkbox = ({
   label,
   field,
   infoTitle,
-  form: { errors, touched },
+  form: { errors, touched, setFieldValue },
   withQuestion,
   config,
+  name,
+  callback,
   ...props
 }) => {
   const classes = useStyles();
@@ -26,9 +28,15 @@ export const Checkbox = ({
               {...props}
               {...field}
               type="checkbox"
-              checked={field.checked}
+              checked={field.value}
               className={classes.hiddenCheckbox}
               disabled={disabled}
+              onChange={() => {
+                setFieldValue(field.name, !field.value);
+                if (callback) {
+                  callback();
+                }
+              }}
             />
             <div className={classes.styledCheckbox}>
               {field.value && <img src={Check} alt="check icon" />}
