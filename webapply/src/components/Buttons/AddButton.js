@@ -1,49 +1,48 @@
 import React from "react";
-import { styled } from "@material-ui/styles";
+import cx from "classnames";
+import { withStyles } from "@material-ui/core";
+import addIcon from "../../assets/icons/add-icon.png";
 
-import { ReactComponent as Icon } from "../../assets/icons/add-icon.svg";
-import { theme } from "../../theme";
-
-export const AddIcon = styled(Icon)({
-  width: "24px",
-  height: "24px",
-  marginRight: "9px"
-});
-
-export const Button = styled("button")({
-  position: "relative",
-  display: "inline-flex",
-  alignItems: "center",
-  fontSize: "16px",
-  fontWeight: 600,
-  border: "none",
-  cursor: "pointer",
-  padding: "0",
-  outline: "none",
-  "&[disabled]": {
-    opacity: "0.5"
+const style = {
+  container: {
+    position: "relative",
+    display: "inline-flex",
+    alignItems: "center",
+    fontSize: "16px",
+    fontWeight: 600,
+    color: "#263d4c",
+    border: "none",
+    backgroundColor: "#ffffff",
+    cursor: "pointer",
+    padding: "0",
+    outline: "none",
+    "&[disabled]": {
+      opacity: "0.5"
+    }
+  },
+  text: {
+    fontSize: "14px",
+    lineHeight: "1.71",
+    color: "#373737",
+    fontWeight: 400,
+    fontStyle: "normal",
+    fontStretch: "normal"
+  },
+  icon: {
+    width: "24px",
+    height: "24px",
+    marginRight: "9px"
   }
-});
-
-Button.defaultProps = {
-  style: theme.palette.button
 };
 
-export const Text = styled("span")({
-  fontSize: "14px",
-  lineHeight: "1.71",
-  fontWeight: 400,
-  fontStyle: "normal",
-  fontStretch: "normal"
-});
-
-Text.defaultProps = {
-  style: theme.palette.text
+const AddButton = props => {
+  const { classes, title = "Add", className, ...rest } = props;
+  return (
+    <button className={cx(classes.container, className)} type="button" {...rest}>
+      <img src={addIcon} alt="add" className={classes.icon} />
+      <span className={classes.text}>{title}</span>
+    </button>
+  );
 };
 
-export const AddButton = ({ classes, title = "Add", className = "", ...rest }) => (
-  <Button className={className} type="button" {...rest}>
-    <AddIcon alt="add" />
-    <Text>{title}</Text>
-  </Button>
-);
+export default withStyles(style)(AddButton);

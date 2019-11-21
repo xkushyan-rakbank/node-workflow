@@ -2,7 +2,7 @@ import React from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import { SubmitButton } from "../components/Buttons/SubmitButton";
+import SubmitButton from "../components/Buttons/SubmitButton";
 import OtpVerification from "../components/OtpVerification";
 import { withStyles } from "@material-ui/core/styles";
 import { ErrorMessage } from "./../components/Notifications";

@@ -7,8 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
-import { AddButton } from "../Buttons/AddButton";
-import { RemoveButton } from "../Buttons/RemoveButton";
+import AddButton from "../Buttons/AddButton";
+import RemoveButton from "../Buttons/RemoveButton";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getOrgKYCDetails } from "../../store/selectors/appConfig";
 

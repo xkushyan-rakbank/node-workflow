@@ -10,7 +10,7 @@ import InfoTitle from "../../InfoTitle";
 import { CustomSelect, Input, InputGroup } from "../../Form";
 import { genderOptions } from "../../../constants/options";
 import { useStyles } from "./styled";
-import { ContinueButton } from "../../Buttons/ContinueButton";
+import ContinueButton from "../../Buttons/ContinueButton";
 
 const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("kycDetails.isShareholderACompany", {

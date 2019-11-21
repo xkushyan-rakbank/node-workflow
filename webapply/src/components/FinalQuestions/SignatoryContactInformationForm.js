@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
 import TextInput from "../InputField/TextInput";
-import { AddButton } from "../Buttons/AddButton";
+import AddButton from "../Buttons/AddButton";
 import PureSelect from "../InputField/PureSelect";
 
 const styles = {
