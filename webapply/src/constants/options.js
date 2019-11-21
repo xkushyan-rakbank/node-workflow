@@ -308,3 +308,24 @@ export const emiratesCities = [
     ]
   }
 ];
+
+export const accountSigningTypes = [
+  {
+    code: "Any of us",
+    key: "Any of us",
+    value: "Any of us",
+    displayText: "Any of us can Sign"
+  },
+  {
+    code: "All of us",
+    key: "All of us",
+    value: "All of us",
+    displayText: "All of us Must Sign"
+  },
+  {
+    code: "Others",
+    key: "Others",
+    value: "Others",
+    displayText: "Other (Please Specify)"
+  }
+];
