@@ -12,18 +12,10 @@ import ContinueButton from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
 import { INPUT_ID_INDEX } from "../../constants";
-import { accountCurrencies, emirates, emiratesCities } from "../../../../constants/options";
+import { accountCurrencies, emirates, branches } from "../../../../constants/options";
 
 const INFO_TITLE =
   "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval.";
-
-const getEmirateCities = branchCityKey => {
-  if (!branchCityKey) {
-    return [];
-  }
-  const emirateData = emiratesCities.find(emirate => emirate.emirateCode === branchCityKey);
-  return emirateData.cities;
-};
 
 const AccountDetailsSchema = Yup.object({
   accountCurrencies: Yup.array().required("Field is required"),
@@ -78,11 +70,11 @@ export const AccountDetailsComponent = ({
                     extractId={option => option.key}
                     label="Emirate / City"
                     placeholder="Emirate / City"
+                    component={CustomSelect}
                     onChange={e => {
                       setFieldValue("branchCity", e.target.value);
                       setFieldValue("subCategory", "");
                     }}
-                    component={CustomSelect}
                     shrink={true}
                   />
                 </Grid>
@@ -90,7 +82,7 @@ export const AccountDetailsComponent = ({
                   {/* TODO fix placeholder shrink prop*/}
                   <Field
                     name="subCategory"
-                    options={getEmirateCities(values["branchCity"])}
+                    options={branches.filter(item => item.emirateCode === values.branchCity)}
                     label="Branch"
                     placeholder="Branch"
                     extractId={option => option.key}
