@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
+
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { Input, CustomSelect, InputGroup } from "./../../components/Form";
-
 import { countryCodeOptions } from "./../../constants/options";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { prospect } from "./../../constants/config";

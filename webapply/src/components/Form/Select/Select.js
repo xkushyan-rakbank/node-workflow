@@ -1,8 +1,6 @@
 import React from "react";
 import cx from "classnames";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-
-import { ErrorMessage, InfoTitle } from "./../../Notifications";
 import {
   Select,
   ListItemText,
@@ -12,6 +10,8 @@ import {
   OutlinedInput,
   FormControl
 } from "@material-ui/core";
+
+import { ErrorMessage, InfoTitle } from "./../../Notifications";
 import { useStyles } from "./styled";
 
 export const CustomSelect = ({
