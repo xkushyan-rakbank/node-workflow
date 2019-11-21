@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { CheckboxGroup, CustomSelect } from "../../../../components/Form";
 import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
-import ContinueButton from "../../../../components/Buttons/ContinueButton";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
 import { accountCurrencies, emirates, emiratesCities } from "../../../../constants/options";

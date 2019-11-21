@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
-import ContainedButton from "./ContainedButton";
+import { ContainedButton } from "./ContainedButton";
 
 const styles = {
   buttonWrap: {
