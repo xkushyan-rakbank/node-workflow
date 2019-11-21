@@ -5,14 +5,13 @@ import { Formik, Form, Field } from "formik";
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { Input, CustomSelect, InputGroup } from "./../../components/Form";
 
+import { countryCodeOptions } from "./../../constants/options";
+import { SubmitButton } from "./../../components/Buttons/SubmitButton";
+import { prospect } from "./../../constants/config";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
-import { countryCodeOptions } from "./../../constants/options";
-import { prospect } from "./../../constants/config";
 
-import SubmitButton from "./../../components/Buttons/SubmitButton";
-
-const AplicantInfoSchema = Yup.object({
+const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required("You need to provide name ")
     .matches(NAME_REGEX, "This is not a valid name"),
@@ -44,7 +43,7 @@ const ApplicantInfoPage = props => {
 
       <Formik
         initialValues={prospect.applicantInfo}
-        validationSchema={AplicantInfoSchema}
+        validationSchema={aplicantInfoSchema}
         onSubmit={onSubmit}
       >
         {() => (

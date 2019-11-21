@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import DoneIcon from "./DoneIcon";
 import SectionTitle from "./SectionTitle";
-import LinkButton from "./Buttons/LinkButton";
+import { LinkButton } from "./Buttons/LinkButton";
 import FormWrapper from "./StakeholderStepForms/FormWrapper/FormWrapper";
 
 const styles = {
@@ -38,17 +38,15 @@ const StepComponent = props => {
     filled = false,
     activeStep,
     classes,
-    step,
     index,
     clickHandler,
     handleContinue,
-    steps,
     hideContinue,
     isContinueDisabled,
     setIsContinueDisabled,
-    prospectInfo
+    prospectInfo,
+    stepForm: Form
   } = props;
-  const Form = steps[step - 1].component;
 
   const renderTitle = () => {
     if (activeStep) {

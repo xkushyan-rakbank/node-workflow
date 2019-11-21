@@ -8,7 +8,6 @@ import accountComparisonPoster from "../../assets/images/videoPosters/Account co
 import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
 import { useStyles } from "./styled";
 import { INITIAL_SECTION_POSITION } from "./constants";
-import { LayoutContext } from "../../components/Layout";
 
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const [selectedAccount, setSelectedAccount] = useState("Current Account");
@@ -45,14 +44,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
             title="Compare the accounts"
             info="Our three business accounts, side by side"
           />
-          <LayoutContext.Consumer>
-            {({ changeAccountType }) => (
-              <TableCompare
-                changeAccountType={changeAccountType}
-                selectedAccount={selectedAccount}
-              />
-            )}
-          </LayoutContext.Consumer>
+          <TableCompare selectedAccount={selectedAccount} />
           <InfoNote
             text={
               <>

@@ -94,6 +94,7 @@ export const useStyles = makeStyles({
   },
   continueButtonRoot: {
     fontFamily: "Open Sans",
-    fontWeight: "600"
+    fontWeight: "600",
+    padding: "0 8px"
   }
 });
