@@ -1,8 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import Checkbox from "../components/InputField/Checkbox";
-import Button from "../components/Buttons/SubmitButton";
-import BackLink from "../components/Buttons/BackLink";
+import { SubmitButton } from "../components/Buttons/SubmitButton";
+import { BackLink } from "../components/Buttons/BackLink";
 import FormTitle from "../components/FormTitle";
 import brief from "../assets/icons/brief.png";
 import * as appConfigSelectors from "../store/selectors/appConfig";
@@ -228,7 +228,7 @@ class SubmitApplication extends React.Component {
         {isError && <ErrorMessage error={chkboxErrorMessage} />}
         <div className="linkContainer">
           <BackLink path={routes.selectServices} />
-          <Button
+          <SubmitButton
             disabled={!(isInformationProvided && areTermsAgreed)}
             label="Submit"
             justify="flex-end"

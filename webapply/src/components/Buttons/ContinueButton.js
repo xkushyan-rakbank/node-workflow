@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import ContainedButton from "./ContainedButton";
+import { ContainedButton } from "./ContainedButton";
 
 const styles = {
   buttonStyle: {
@@ -18,17 +18,6 @@ const styles = {
   }
 };
 
-const ContinueButton = props => {
-  const { label = "Continue", disabled = false, handleClick, classes, ...rest } = props;
-  return (
-    <ContainedButton
-      className={classes.buttonStyle}
-      disabled={disabled}
-      handleClick={handleClick}
-      label={label}
-      {...rest}
-    />
-  );
-};
-
-export default withStyles(styles)(ContinueButton);
+export const ContinueButton = withStyles(styles)(({ label = "Continue", classes, ...rest }) => (
+  <ContainedButton className={classes.buttonStyle} label={label} {...rest} />
+));
