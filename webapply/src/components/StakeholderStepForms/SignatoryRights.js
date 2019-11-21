@@ -1,11 +1,12 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import Grid from "@material-ui/core/Grid";
+import * as Yup from "yup";
+
 import { InlineRadioGroup } from "../Form/InlineRadioGroup/InlineRadioGroup";
 import { CustomSelect } from "../Form";
 import { yesNoOptions, authorityTypeOptions } from "../../constants/options";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
-import * as Yup from "yup";
 
 const signatoryRightsSchema = Yup.object().shape({
   kycDetails: Yup.object().shape({
