@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { Input, CustomSelect, InputGroup } from "./../../components/Form";
-// import Autocomplete from "../../components/Form/Select/SelectAutocomplete/SelectAutocomplete";
+
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 import { countryCodeOptions } from "./../../constants/options";
@@ -20,6 +20,7 @@ const AplicantInfoSchema = Yup.object({
     .required("You need to provide Email address")
     .matches(EMAIL_REGEX, "This is not a valid Email address"),
   countryCode: Yup.string().required("Select country code"),
+  countryCode2: Yup.string().required("Select country code"),
   mobileNo: Yup.string()
     .required("You need to provide mobile number")
     .matches(PHONE_REGEX, "This is not a valid phone")
@@ -55,6 +56,7 @@ const ApplicantInfoPage = props => {
             <InputGroup>
               <Field
                 name="countryCode"
+                required
                 options={countryCodeOptions}
                 component={CustomSelect}
                 shrink={false}
@@ -67,21 +69,6 @@ const ApplicantInfoPage = props => {
                 component={Input}
               />
             </InputGroup>
-
-            <Field
-              name="countryCode2"
-              label="Country"
-              options={countryCodeOptions}
-              component={CustomSelect}
-              multiple
-            />
-
-            {/* <Field
-              name="countryCode3"
-              label="Country"
-              options={countryCodeOptions}
-              component={CustomSelect}
-            /> */}
 
             <div className="linkContainer">
               <SubmitButton justify="flex-end" label="Next Step" />

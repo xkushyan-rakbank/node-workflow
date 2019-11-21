@@ -20,6 +20,7 @@ export const CustomSelect = ({
   placeholder,
   multiple = false,
   options,
+  required,
   label,
   field,
   infoTitle,
@@ -33,7 +34,6 @@ export const CustomSelect = ({
   const [labelWidth, setLabelWidth] = React.useState(0);
   const error = errors[field.name] && touched[field.name];
   const value = field.value;
-
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);

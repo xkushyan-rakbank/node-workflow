@@ -1,88 +1,58 @@
 import React from "react";
 import Select from "react-select";
-import { withStyles } from "@material-ui/core/styles";
-import { emphasize } from "@material-ui/core/styles/colorManipulator";
-import FormControl from "@material-ui/core/FormControl";
-import { Control, Option } from "./SelectAutocompleteComponents";
 
-const styles = theme => ({
-  input: {
-    display: "flex",
-    padding: 0,
-    height: "56px"
-  },
-  valueContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    flex: 1,
-    alignItems: "center"
-  },
-  chip: {
-    margin: `${theme.spacing(0.5)}px ${theme.spacing(0.25)}px`
-  },
-  chipFocused: {
-    backgroundColor: emphasize(
-      theme.palette.type === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
-      0.08
-    )
-  },
-  noOptionsMessage: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`
-  },
-  singleValue: {
-    fontSize: 16
-  },
-  placeholder: {
-    position: "absolute",
-    left: 2,
-    fontSize: 16
-  },
-  menu: {
-    marginTop: theme.spacing(1),
-    position: "absolute",
-    zIndex: 1,
-    left: 0,
-    right: 0
-  },
-  divider: {
-    height: theme.spacing(2)
-  }
-});
+import { getIn } from "formik";
+import { FormControl } from "@material-ui/core";
+import { ErrorMessage } from "./../../../Notifications";
+import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
+import { useStyles } from "./styled";
 
 const components = {
   Control,
-  Option
+  Option,
+  IndicatorsContainer,
+  MultiValue
 };
 
-class Autocomplete extends React.PureComponent {
-  render() {
-    const {
-      classes,
-      theme,
-      label,
-      field,
-      placeholder,
-      form: { setFieldValue },
-      options,
-      isMultiple,
-      ...props
-    } = this.props;
+export const SelectAutocomplete = ({
+  theme,
+  label,
+  shrink,
+  field,
+  form: { errors, touched, setFieldValue },
+  options,
+  multiple,
+  ...props
+}) => {
+  const classes = useStyles();
+  const errorMessage = getIn(errors, field.name);
+  const isError = errorMessage && getIn(touched, field.name);
 
-    return (
-      <FormControl className="formControl" variant="outlined">
-        <Select
-          {...field}
-          {...props}
-          classes={classes}
-          placeholder={placeholder}
-          options={options}
-          components={components}
-          onChange={value => setFieldValue(field.name, value)}
-          isMulti={isMultiple}
-        />
-      </FormControl>
-    );
-  }
-}
+  const handleChange = value => setFieldValue(field.name, value);
 
-export default withStyles(styles, { withTheme: true })(Autocomplete);
+  return (
+    <FormControl className="formControl" variant="outlined">
+      <Select
+        {...field}
+        {...props}
+        isClearable={true}
+        classes={classes}
+        options={options}
+        components={components}
+        onChange={handleChange}
+        isMulti={multiple}
+        closeMenuOnSelect={!multiple}
+        hideSelectedOptions={false}
+        joinValues={true}
+        delimiter=","
+        placeholder=""
+        textFieldProps={{
+          label,
+          error: isError
+        }}
+      />
+
+      {isError && <ErrorMessage error={errorMessage} />}
+    </FormControl>
+  );
+};
