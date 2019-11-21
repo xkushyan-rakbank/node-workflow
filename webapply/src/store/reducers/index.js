@@ -13,6 +13,7 @@ import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import selectedAccountInfo from "./selectedAccountInfo";
 import stakeholders from "./stakeholders";
 import validationErrors from "./validationErrors";
+import comeBackLogin from "./comeBackLogin";
 
 const reducers = history =>
   combineReducers({
@@ -28,7 +29,8 @@ const reducers = history =>
     retrieveApplicantInfo,
     selectedAccountInfo,
     stakeholders,
-    validationErrors
+    validationErrors,
+    comeBackLogin
   });
 
 export default reducers;
