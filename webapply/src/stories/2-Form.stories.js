@@ -64,6 +64,6 @@ export const checkboxGroup = () => (
           <SubmitButton label="Submit" />
         </Form>
       )}
-   </Formik>
+    </Formik>
   </MuiThemeProvider>
 );
