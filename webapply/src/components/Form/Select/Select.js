@@ -33,7 +33,6 @@ export const CustomSelect = ({
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   const error = errors[field.name] && touched[field.name];
-  const value = field.value;
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
@@ -48,7 +47,6 @@ export const CustomSelect = ({
       <Select
         {...field}
         {...props}
-        value={value}
         renderValue={renderValue}
         multiple={multiple}
         input={<OutlinedInput labelWidth={labelWidth} />}
@@ -61,7 +59,7 @@ export const CustomSelect = ({
             {multiple ? (
               <>
                 <ListItemText primary={extractId(option)} />
-                <Checkbox color="default" checked={value.indexOf(extractId(option)) > -1} />
+                <Checkbox color="default" checked={field.value.includes(extractId(option))} />
               </>
             ) : (
               option.label
