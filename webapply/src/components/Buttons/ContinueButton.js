@@ -1,34 +1,20 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import ContainedButton from "./ContainedButton";
+import { styled } from "@material-ui/core/styles";
+import { ContainedButton } from "./ContainedButton";
 
-const styles = {
-  buttonStyle: {
-    width: "180px",
-    height: "40px",
-    borderRadius: "21px ",
-    backgroundColor: "#000",
-    fontFamily: "Open Sans, sans-serif",
-    fontSize: "18px",
-    lineHeight: "normal",
-    letterSpacing: "normal",
-    "& span": {
-      justifyContent: "center"
-    }
+export const ContinueButton = styled(ContainedButton)({
+  width: "180px",
+  height: "40px",
+  borderRadius: "21px ",
+  backgroundColor: "#000",
+  fontFamily: "Open Sans, sans-serif",
+  fontSize: "18px",
+  lineHeight: "normal",
+  letterSpacing: "normal",
+  "& span": {
+    justifyContent: "center"
   }
-};
+});
 
-const ContinueButton = props => {
-  const { label = "Continue", disabled = false, handleClick, classes, ...rest } = props;
-  return (
-    <ContainedButton
-      className={classes.buttonStyle}
-      disabled={disabled}
-      handleClick={handleClick}
-      label={label}
-      {...rest}
-    />
-  );
+ContainedButton.defaultProps = {
+  label: "Continue"
 };
-
-export default withStyles(styles)(ContinueButton);

@@ -1,13 +1,13 @@
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
-import SubmitButton from "../components/Buttons/SubmitButton";
+import cx from "classnames";
+import { SubmitButton } from "../components/Buttons/SubmitButton";
 import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard";
 import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryCard";
+import { BackLink } from "../components/Buttons/BackLink";
 import routes from "../routes";
 import { getSignatories } from "../store/selectors/appConfig";
-import BackLink from "../components/Buttons/BackLink";
-import cx from "classnames";
 
 const style = {
   sectionContainer: {
