@@ -19,7 +19,7 @@ const styles = {
 };
 
 const SubmitButton = props => {
-  const { disabled = false, classes, label, justify, containerExtraStyles } = props;
+  const { classes, justify, containerExtraStyles, ...rest } = props;
   return (
     <Grid
       container
@@ -29,13 +29,7 @@ const SubmitButton = props => {
       className={classes.buttonWrap}
       style={containerExtraStyles}
     >
-      <ContainedButton
-        type="submit"
-        withRightArrow
-        disabled={disabled}
-        label={label}
-        className={classes.nextButton}
-      />
+      <ContainedButton type="submit" withRightArrow className={classes.nextButton} {...rest} />
     </Grid>
   );
 };
