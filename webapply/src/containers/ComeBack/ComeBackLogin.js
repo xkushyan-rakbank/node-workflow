@@ -17,6 +17,16 @@ import routes from "./../../routes";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
 import { useStyles } from "./styled";
 
+const ComebackSchema = Yup.object({
+  email: Yup.string()
+    .required("You need to provide Email address")
+    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+  countryCode: Yup.string().required("Select country code"),
+  mobileNo: Yup.string()
+    .required("You need to provide mobile number")
+    .matches(PHONE_REGEX, "This is not a valid phone")
+});
+
 const ComeBackLogin = ({
   history,
   generateOtpCode,
@@ -43,16 +53,6 @@ const ComeBackLogin = ({
       history.push(routes.comeBackLoginVerification);
     }
   }, [history, isOtpGenerated]);
-
-  const ComebackSchema = Yup.object({
-    email: Yup.string()
-      .required("You need to provide Email address")
-      .matches(EMAIL_REGEX, "This is not a valid Email address"),
-    countryCode: Yup.string().required("Select country code"),
-    mobileNo: Yup.string()
-      .required("You need to provide mobile number")
-      .matches(PHONE_REGEX, "This is not a valid phone")
-  });
 
   return (
     <div className={classes.centeredContainer}>
