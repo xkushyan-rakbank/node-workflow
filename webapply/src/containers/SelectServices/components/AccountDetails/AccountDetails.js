@@ -76,7 +76,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                       setFieldValue("subCategory", "");
                     }}
                     component={CustomSelect}
-                    shrink={true}
+                    shrink={false}
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -88,7 +88,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                     placeholder="Branch"
                     extractId={option => option.key}
                     component={CustomSelect}
-                    shrink={true}
+                    shrink={false}
                   />
                 </Grid>
               </Grid>
@@ -108,7 +108,6 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                         value: true
                       }
                     ]}
-                    infoTitle={INFO_TITLE}
                     component={CheckboxGroup}
                   />
                 </>
