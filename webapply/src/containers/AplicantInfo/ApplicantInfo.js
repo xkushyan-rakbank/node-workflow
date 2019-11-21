@@ -55,7 +55,6 @@ const ApplicantInfoPage = props => {
                 name="countryCode"
                 options={countryCodeOptions}
                 component={CustomSelect}
-                onChange={console.log}
                 extractId={option => option.key}
                 shrink={false}
               />
