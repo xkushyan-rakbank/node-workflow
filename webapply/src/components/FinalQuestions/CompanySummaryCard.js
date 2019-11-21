@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import CompanyCard from "../CompanyCard";
 import { ContinueButton } from "../Buttons/ContinueButton";
-import LinkButton from "../Buttons/LinkButton";
+import { LinkButton } from "../Buttons/LinkButton";
 import StepComponent from "../../components/StepComponent";
 import { getInputValueById } from "../../store/selectors/input";
 import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";

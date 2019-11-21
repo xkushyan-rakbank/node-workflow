@@ -8,6 +8,7 @@ import { Grid } from "@material-ui/core";
 import { BackLink } from "../components/Buttons/BackLink";
 import { ContainedButton } from "../components/Buttons/ContainedButton";
 import { ContinueButton } from "../components/Buttons/ContinueButton";
+import { LinkButton } from "../components/Buttons/LinkButton";
 
 export default {
   title: "Buttons"
@@ -44,6 +45,9 @@ export const buttons = () => (
     </Item>
     <Item item>
       <ContinueButton handleClick={action("clicked-continue")} />
+    </Item>
+    <Item item>
+      <LinkButton clickHandler={action("clicked-link")} />
     </Item>
   </Container>
 );

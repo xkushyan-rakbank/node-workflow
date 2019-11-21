@@ -1,27 +1,22 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
-import cx from "classnames";
+import { styled } from "@material-ui/styles";
+import { theme } from "../../theme";
 
-const style = {
-  editButton: {
-    fontFamily: "Open Sans, sans-serif",
-    fontSize: "16px",
-    fontWeight: 600,
-    color: "#263d4c",
-    border: "none",
-    backgroundColor: "#ffffff",
-    textDecoration: "underline",
-    cursor: "pointer"
-  }
+const Button = styled("button")({
+  fontFamily: "Open Sans, sans-serif",
+  fontSize: "16px",
+  fontWeight: 600,
+  border: "none",
+  textDecoration: "underline",
+  cursor: "pointer"
+});
+
+Button.defaultProps = {
+  style: theme.palette.button
 };
 
-const LinkButton = props => {
-  const { classes, clickHandler, title = "Edit", className } = props;
-  return (
-    <button className={cx(classes.editButton, className)} onClick={clickHandler}>
-      {title}
-    </button>
-  );
-};
-
-export default withStyles(style)(LinkButton);
+export const LinkButton = ({ clickHandler, title = "Edit", className = "" }) => (
+  <Button className={className} onClick={clickHandler}>
+    {title}
+  </Button>
+);

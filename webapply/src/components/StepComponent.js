@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 import DoneIcon from "./DoneIcon";
 import SectionTitle from "./SectionTitle";
-import LinkButton from "./Buttons/LinkButton";
+import { LinkButton } from "./Buttons/LinkButton";
 import FormWrapper from "./StakeholderStepForms/FormWrapper/FormWrapper";
 
 const styles = {
