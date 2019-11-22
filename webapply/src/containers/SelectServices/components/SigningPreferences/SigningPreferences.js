@@ -27,12 +27,12 @@ const signingPreferencesSchema = Yup.object({
     then: Yup.string()
       .max(120, "Max length is 120 symbols")
       .required("Field is required")
-  })
-  // signatoryInfo: Yup.array().of(
-  //   Yup.object().shape({
-  //     fullName: Yup.number().required("Required")
-  //   })
-  // )
+  }),
+  signatoryInfo: Yup.array().of(
+    Yup.object().shape({
+      fullName: Yup.string().required("Field is required")
+    })
+  )
 });
 
 export const SigningPreferencesComponent = ({

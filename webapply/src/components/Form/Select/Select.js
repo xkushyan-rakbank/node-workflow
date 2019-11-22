@@ -40,13 +40,7 @@ export const CustomSelect = ({
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const getSelectedValueText = selected => {
-    const { label } = options.find(option => option.code === selected);
-    return label;
-  };
-
-  const renderValue = selected =>
-    !multiple ? getSelectedValueText(selected) : selected.join(", ");
+  const renderValue = selected => (!multiple ? selected : selected.join(", "));
 
   return (
     <FormControl className="formControl" variant="outlined">
