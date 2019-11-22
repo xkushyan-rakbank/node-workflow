@@ -42,7 +42,7 @@ export const SignatorySummaryCardComponent = ({
     }
 
     return (
-      filledSignatoriesIndexes.includes(index) && (
+      filledSignatoriesIndexes.has(index) && (
         <LinkButton
           clickHandler={() => {
             setIsExpanded(true);
@@ -96,7 +96,7 @@ export const SignatorySummaryCardComponent = ({
           const isFilled = completedStep >= item.step;
           return (
             <StepComponent
-              index={index}
+              index={item.step}
               key={item.step}
               steps={signatoriesSteps}
               step={item.step}

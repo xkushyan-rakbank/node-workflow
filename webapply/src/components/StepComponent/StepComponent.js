@@ -11,7 +11,6 @@ export const StepComponent = ({
   isActiveStep,
   index,
   clickHandler,
-  setIsContinueDisabled,
   prospectInfo,
   handleContinue,
   stepForm
@@ -39,12 +38,7 @@ export const StepComponent = ({
         {renderTitle()}
       </div>
       {isActiveStep && (
-        <Form
-          setIsContinueDisabled={setIsContinueDisabled}
-          index={index}
-          prospectInfo={prospectInfo}
-          handleContinue={handleContinue}
-        />
+        <Form index={index} prospectInfo={prospectInfo} handleContinue={handleContinue} />
       )}
     </>
   );

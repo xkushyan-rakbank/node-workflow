@@ -7,8 +7,9 @@ import { finalQuestionsSteps, STEP_1 } from "./constants";
 import { useStyles } from "./styled";
 
 export const CompanySummaryCardComponent = ({ index, switchExpandedMargin, companyName }) => {
+  const filledCompanyStepsSet = new Set();
   const [step, setStep] = useState(STEP_1);
-  const [completedStep, setCompletedStep] = useState(null);
+  const [completedSteps, setCompletedSteps] = useState(filledCompanyStepsSet);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   const classes = useStyles();
@@ -42,8 +43,15 @@ export const CompanySummaryCardComponent = ({ index, switchExpandedMargin, compa
   };
 
   const changeStep = item => {
+    if (!item.isFilled) {
+      return;
+    }
     setStep(item.step);
-    setCompletedStep(item.step);
+  };
+
+  const handleContinue = item => {
+    setStep(item.step + 1);
+    setCompletedSteps(filledCompanyStepsSet.add(item.step));
   };
 
   return (
@@ -61,8 +69,9 @@ export const CompanySummaryCardComponent = ({ index, switchExpandedMargin, compa
               title={item.title}
               infoTitle={item.infoTitle}
               isActiveStep={step === item.step}
-              filled={completedStep >= item.step}
+              isFilled={completedSteps.has(item.step)}
               clickHandler={() => changeStep(item)}
+              handleContinue={() => handleContinue(item)}
               stepForm={stepForm}
             />
           );

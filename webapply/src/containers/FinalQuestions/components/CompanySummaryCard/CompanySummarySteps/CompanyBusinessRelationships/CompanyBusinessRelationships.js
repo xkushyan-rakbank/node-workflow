@@ -64,7 +64,7 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
   })
 });
 
-export const CompanyBusinessRelationshipsComponent = () => {
+export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
   const classes = useStyles();
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
 
@@ -83,7 +83,10 @@ export const CompanyBusinessRelationshipsComponent = () => {
     return items.length >= limit || !allFieldsFilled;
   }
 
-  const onSubmit = values => console.log(values);
+  const onSubmit = values => {
+    handleContinue();
+    console.log(values);
+  };
 
   return (
     <div className={classes.formWrapper}>

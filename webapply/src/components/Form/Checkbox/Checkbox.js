@@ -20,7 +20,7 @@ export const StyledInfoIcon = styled(InfoIcon)({
 });
 
 export const Checkbox = ({
-  disabled,
+  isDisabled,
   placeholder,
   label,
   field,
@@ -45,7 +45,7 @@ export const Checkbox = ({
               type="checkbox"
               checked={field.value}
               className={classes.hiddenCheckbox}
-              disabled={disabled}
+              disabled={isDisabled}
               onChange={() => {
                 setFieldValue(field.name, !field.value);
                 if (callback) {
@@ -59,7 +59,7 @@ export const Checkbox = ({
           </div>
           {config && config.title ? (
             <div className={classes.doubleLabel}>
-              <div className={cx(classes.firstRow, { disabled })}>{config.label}</div>
+              <div className={cx(classes.firstRow, { isDisabled })}>{config.label}</div>
             </div>
           ) : (
             <span className={classes.label}>{label || config.label}</span>
