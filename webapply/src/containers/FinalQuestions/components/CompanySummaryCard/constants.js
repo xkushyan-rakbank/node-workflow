@@ -1,4 +1,4 @@
-import CompanyAnticipatedTransactionsForm from "./CompanySummarySteps/CompanyAnticipatedTransactionsForm";
+import { CompanyAnticipatedTransactions } from "./CompanySummarySteps/CompanyAnticipatedTransactions";
 import CompanyPreferredMailingAddressForm from "./CompanySummarySteps/CompanyPreferredMailingAddressForm";
 import CompanyPreferredContactInformationForm from "./CompanySummarySteps/CompanyPreferredContactInformationForm";
 import { CompanyBusinessRelationships } from "./CompanySummarySteps/CompanyBusinessRelationships";
@@ -24,7 +24,7 @@ export const finalQuestionsSteps = [
   {
     step: STEP_3,
     title: "Anticipated transactions",
-    component: CompanyAnticipatedTransactionsForm
+    component: CompanyAnticipatedTransactions
   },
   {
     step: STEP_4,
