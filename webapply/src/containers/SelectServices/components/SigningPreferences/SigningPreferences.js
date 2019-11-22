@@ -4,6 +4,7 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 
 import { prospect } from "../../../../constants/config";
+import { PHONE_REGEX, NAME_REGEX } from "../../../../utils/validation";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 import { accountSigningTypes, countryCodeOptions } from "../../../../constants/options";
 
@@ -30,7 +31,16 @@ const signingPreferencesSchema = Yup.object({
   }),
   signatoryInfo: Yup.array().of(
     Yup.object().shape({
-      fullName: Yup.string().required("Field is required")
+      fullName: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
+      contactDetails: Yup.object().when("fullName", {
+        is: value => !!value,
+        then: Yup.object().shape({
+          primaryMobileNo: Yup.string()
+            .required("You need to provide mobile number")
+            .matches(PHONE_REGEX, "This is not a valid phone"),
+          primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+        })
+      })
     })
   )
 });
@@ -45,7 +55,7 @@ export const SigningPreferencesComponent = ({
   const onSubmit = e => {
     // TODO
     // console.log(e)
-    goToNext();
+    // goToNext();
   };
 
   const getNameField = (name, index) => `signatoryInfo[${index}].${name}`;
