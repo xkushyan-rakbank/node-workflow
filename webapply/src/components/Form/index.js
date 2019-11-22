@@ -4,3 +4,5 @@ export { CustomSelect } from "./Select/Select";
 export { SelectAutocomplete } from "./Select/SelectAutocomplete/SelectAutocomplete";
 export { DatePicker } from "./DatePicker/DatePicker";
 export { CheckboxGroup } from "./Checkbox/CheckboxGroup";
+export { AutoSaveForm } from "./AutoSaveForm/AutoSaveForm";
+export { AutoSaveField } from "./AutoSaveField/AutoSaveField";
