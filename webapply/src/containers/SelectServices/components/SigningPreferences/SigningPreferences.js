@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import get from "lodash/get";
+import React from "react";
+// import get from "lodash/get";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
+// import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 import { accountSigningTypes } from "../../../../constants/options";
 
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
@@ -19,36 +19,35 @@ import { useStyles } from "./styled";
 import { RadioGroupWrapper } from "../../../../components/Form/Radio/RadioGroupButtons";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 
-const SigningPreferencesSchema = Yup.object({
+const signingPreferencesSchema = Yup.object({
   accountSigningType: Yup.string().required("Field is required")
 });
 
-export const SigningPreferencesComponent = props => {
-  const {
-    signatoryInfo,
-    accountSigningType,
-    accountSigningInstn,
-    goToNext,
-    updateProspect
-  } = props;
+export const SigningPreferencesComponent = ({
+  signatoryInfo,
+  accountSigningType,
+  accountSigningInstn,
+  goToNext,
+  updateProspect
+}) => {
   const classes = useStyles();
 
-  const authorityToSignType = get(props, "accountSigningType.value");
-  useEffect(() => {
-    if (authorityToSignType !== ACCOUNTS_SIGNING_NAME_OTHER) {
-      updateProspect({ [accountSigningInstn.name]: "" });
-    }
-  }, [authorityToSignType, updateProspect, accountSigningInstn.name]);
+  // const authorityToSignType = get(props, "accountSigningType.value");
+  // useEffect(() => {
+  //   if (authorityToSignType !== ACCOUNTS_SIGNING_NAME_OTHER) {
+  //     updateProspect({ [accountSigningInstn.name]: "" });
+  //   }
+  // }, [authorityToSignType, updateProspect, accountSigningInstn.name]);
 
-  const handleAddPerson = () => {
-    const { signInfoFullNameInput } = props;
-    const signatoriesTotal = signatoryInfo.length;
-
-    if (signatoriesTotal === 1) {
-      const path = signInfoFullNameInput.config.name.replace("*", signatoriesTotal);
-      updateProspect({ [path]: "" });
-    }
-  };
+  // const handleAddPerson = () => {
+  //   const { signInfoFullNameInput } = props;
+  //   const signatoriesTotal = signatoryInfo.length;
+  //
+  //   if (signatoriesTotal === 1) {
+  //     const path = signInfoFullNameInput.config.name.replace("*", signatoriesTotal);
+  //     updateProspect({ [path]: "" });
+  //   }
+  // };
 
   const onSubmit = e => {
     // console.log(e) // TODO
@@ -60,28 +59,26 @@ export const SigningPreferencesComponent = props => {
         initialValues={{
           accountSigningType: ""
         }}
-        validationSchema={SigningPreferencesSchema}
+        validationSchema={signingPreferencesSchema}
         onSubmit={onSubmit}
       >
-        {({ values }) => {
-          return (
-            <Form>
-              <Subtitle title="Signing transactions" helpMessage="help message todo" />
-              <Field
-                name="accountSigningType"
-                options={accountSigningTypes}
-                component={RadioGroupWrapper}
-              >
-                <span>TEXT AREA</span>
-                {/* TODO implement text area */}
-              </Field>
+        {({ values }) => (
+          <Form>
+            <Subtitle title="Signing transactions" helpMessage="help message todo" />
+            <Field
+              name="accountSigningType"
+              options={accountSigningTypes}
+              component={RadioGroupWrapper}
+            >
+              <span>TEXT AREA</span>
+              {/* TODO implement text area */}
+            </Field>
 
-              <div className={classes.buttonWrapper}>
-                <ContinueButton type="submit" />
-              </div>
-            </Form>
-          );
-        }}
+            <div className={classes.buttonWrapper}>
+              <ContinueButton type="submit" />
+            </div>
+          </Form>
+        )}
       </Formik>
 
       <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
@@ -93,7 +90,7 @@ export const SigningPreferencesComponent = props => {
         <ContactGroup signatoryInfo={signatoryInfo} />
         <AddButton
           title="Add another person"
-          onClick={handleAddPerson}
+          // onClick={handleAddPerson}
           className={classes.addButton}
         />
       </FormWrapper>

@@ -1,5 +1,6 @@
 import React from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
+import { getIn } from "formik";
 
 import { RadioButton } from "./RadioButton";
 import { ErrorMessage } from "../../Notifications";
@@ -16,28 +17,26 @@ export const RadioGroupWrapper = ({
   children
 }) => {
   const classes = useStyledRadioGroup();
-  const isError = errors[field.name] && touched[field.name];
+  const error = getIn(errors, field.name);
 
   return (
     <>
       <RadioGroup classes={{ root: classes.radioGroup }}>
         <div className={classes.gridGroup}>
-          {options.map(option => {
-            return (
-              <RadioButton
-                {...field}
-                key={keyExtractor(option)}
-                value={valueExtractor(option)}
-                label={labelExtractor(option)}
-                checked={(field.value || []).includes(valueExtractor(option))}
-              />
-            );
-          })}
+          {options.map(option => (
+            <RadioButton
+              {...field}
+              key={keyExtractor(option)}
+              value={valueExtractor(option)}
+              label={labelExtractor(option)}
+              checked={(field.value || []).includes(valueExtractor(option))}
+            />
+          ))}
 
           {children}
         </div>
       </RadioGroup>
-      {isError && <ErrorMessage error={errors[field.name]} />}
+      {error && <ErrorMessage error={error} />}
     </>
   );
 };
