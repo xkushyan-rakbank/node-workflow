@@ -48,7 +48,7 @@ export const SigningPreferencesComponent = ({
     goToNext();
   };
 
-  const getNameField = (name, index) => `signatoryInfo[${index}].contactDetails.${name}`;
+  const getNameField = (name, index) => `signatoryInfo[${index}].${name}`;
 
   return (
     <>
@@ -91,7 +91,7 @@ export const SigningPreferencesComponent = ({
                   {values.signatoryInfo.map((signatory, index) => (
                     <React.Fragment key={index}>
                       <Field
-                        name={`signatoryInfo[${index}].fullName`}
+                        name={getNameField("fullName", index)}
                         label="Your Name"
                         placeholder="Your Name"
                         component={Input}
@@ -101,14 +101,14 @@ export const SigningPreferencesComponent = ({
                         <Grid item md={6} sm={12}>
                           <InputGroup>
                             <Field
-                              name={getNameField("primaryMobCountryCode", index)}
+                              name={getNameField("contactDetails.primaryMobCountryCode", index)}
                               required
                               options={countryCodeOptions}
                               component={CustomSelect}
                               shrink={false}
                             />
                             <Field
-                              name={getNameField("primaryMobileNo", index)}
+                              name={getNameField("contactDetails.primaryMobileNo", index)}
                               label="Primary mobile no."
                               placeholder="Primary mobile no."
                               component={Input}
@@ -119,13 +119,13 @@ export const SigningPreferencesComponent = ({
                         <Grid item md={6} sm={12}>
                           <InputGroup>
                             <Field
-                              name={getNameField("primaryPhoneCountryCode", index)}
+                              name={getNameField("contactDetails.primaryPhoneCountryCode", index)}
                               options={countryCodeOptions}
                               component={CustomSelect}
                               shrink={false}
                             />
                             <Field
-                              name={getNameField("primaryPhoneNo", index)}
+                              name={getNameField("contactDetails.primaryPhoneNo", index)}
                               label="Landline phone no. (optional)"
                               placeholder="Landline phone no. (optional)"
                               component={Input}
@@ -139,9 +139,7 @@ export const SigningPreferencesComponent = ({
                   <AddButton
                     title="Add another person"
                     onClick={() =>
-                      arrayHelpers.insert(prospect.signatoryInfo.length, {
-                        ...prospect.signatoryInfo
-                      })
+                      arrayHelpers.insert(prospect.signatoryInfo.length, ...prospect.signatoryInfo)
                     }
                     className={classes.addButton}
                     disabled={values.signatoryInfo.length === MAX_SIGNATORIES}
