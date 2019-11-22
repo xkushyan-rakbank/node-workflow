@@ -6,5 +6,11 @@ export const useStyles = makeStyles({
   },
   addButton: {
     marginTop: "12px"
+  },
+  buttonWrapper: {
+    width: "100%",
+    margin: "40px 0",
+    display: "flex",
+    justifyContent: "flex-end"
   }
 });

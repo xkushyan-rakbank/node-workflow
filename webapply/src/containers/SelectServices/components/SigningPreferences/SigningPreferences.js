@@ -1,23 +1,25 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import Grid from "@material-ui/core/Grid";
+import { Formik, Form, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 
-import { accountSigningTypes } from "../../../../constants/options";
+import { prospect } from "../../../../constants/config";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
+import { accountSigningTypes, countryCodeOptions } from "../../../../constants/options";
 
-import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
-import { AddButton } from "../../../../components/Buttons/AddButton";
 import Divider from "../../../../components/Divider";
-import { ConfirmingTransactions } from "./ConfirmingTransactions";
-import { ContactGroup } from "./ContactGroup";
-import { TextArea } from "../../../../components/Form/TextArea/TextArea";
-
 import Subtitle from "../../../../components/Subtitle";
+import { TextArea } from "../../../../components/Form/TextArea/TextArea";
+import { AddButton } from "../../../../components/Buttons/AddButton";
+import { CustomSelect } from "../../../../components/Form";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
+import { Input, InputGroup } from "./../../../../components/Form";
+import { RadioGroupWrapper } from "../../../../components/Form/Radio/RadioGroupButtons";
+import { ConfirmingTransactions } from "./ConfirmingTransactions";
 
 import { useStyles } from "./styled";
-import { RadioGroupWrapper } from "../../../../components/Form/Radio/RadioGroupButtons";
-import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 
+const MAX_SIGNATORIES = 2;
 const signingPreferencesSchema = Yup.object({
   accountSigningType: Yup.string().required("Field is required"),
   accountSigningInstn: Yup.string().when("accountSigningType", {
@@ -26,6 +28,11 @@ const signingPreferencesSchema = Yup.object({
       .max(120, "Max length is 120 symbols")
       .required("Field is required")
   })
+  // signatoryInfo: Yup.array().of(
+  //   Yup.object().shape({
+  //     fullName: Yup.number().required("Required")
+  //   })
+  // )
 });
 
 export const SigningPreferencesComponent = ({
@@ -35,34 +42,21 @@ export const SigningPreferencesComponent = ({
   goToNext
 }) => {
   const classes = useStyles();
-
-  // const authorityToSignType = get(props, "accountSigningType.value");
-  // useEffect(() => {
-  //   if (authorityToSignType !== ACCOUNTS_SIGNING_NAME_OTHER) {
-  //     updateProspect({ [accountSigningInstn.name]: "" });
-  //   }
-  // }, [authorityToSignType, updateProspect, accountSigningInstn.name]);
-
-  // const handleAddPerson = () => {
-  //   const { signInfoFullNameInput } = props;
-  //   const signatoriesTotal = signatoryInfo.length;
-  //
-  //   if (signatoriesTotal === 1) {
-  //     const path = signInfoFullNameInput.config.name.replace("*", signatoriesTotal);
-  //     updateProspect({ [path]: "" });
-  //   }
-  // };
-
   const onSubmit = e => {
-    // console.log(e) // TODO
+    // TODO
+    // console.log(e)
+    goToNext();
   };
+
+  const getNameField = (name, index) => `signatoryInfo[${index}].contactDetails.${name}`;
 
   return (
     <>
       <Formik
         initialValues={{
           accountSigningType: "",
-          accountSigningInstn: ""
+          accountSigningInstn: "",
+          signatoryInfo: prospect.signatoryInfo
         }}
         validationSchema={signingPreferencesSchema}
         onSubmit={onSubmit}
@@ -82,31 +76,86 @@ export const SigningPreferencesComponent = ({
               {values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
                 <Field
                   name="accountSigningInstn"
-                  placeholder="Please specify (Maxium 120 characters)"
+                  placeholder="Please specify (Max 120 characters)"
                   component={TextArea}
                 />
               )}
             </Field>
+
             <Divider />
-            <ConfirmingTransactions /> {/* TODO */}
+
+            <ConfirmingTransactions />
+            <FieldArray name="signatoryInfo">
+              {arrayHelpers => (
+                <>
+                  {values.signatoryInfo.map((signatory, index) => (
+                    <React.Fragment key={index}>
+                      <Field
+                        name={`signatoryInfo[${index}].fullName`}
+                        label="Your Name"
+                        placeholder="Your Name"
+                        component={Input}
+                      />
+
+                      <Grid container spacing={3}>
+                        <Grid item md={6} sm={12}>
+                          <InputGroup>
+                            <Field
+                              name={getNameField("primaryMobCountryCode", index)}
+                              required
+                              options={countryCodeOptions}
+                              component={CustomSelect}
+                              shrink={false}
+                            />
+                            <Field
+                              name={getNameField("primaryMobileNo", index)}
+                              label="Primary mobile no."
+                              placeholder="Primary mobile no."
+                              component={Input}
+                            />
+                          </InputGroup>
+                        </Grid>
+
+                        <Grid item md={6} sm={12}>
+                          <InputGroup>
+                            <Field
+                              name={getNameField("primaryPhoneCountryCode", index)}
+                              options={countryCodeOptions}
+                              component={CustomSelect}
+                              shrink={false}
+                            />
+                            <Field
+                              name={getNameField("primaryPhoneNo", index)}
+                              label="Landline phone no. (optional)"
+                              placeholder="Landline phone no. (optional)"
+                              component={Input}
+                            />
+                          </InputGroup>
+                        </Grid>
+                      </Grid>
+                    </React.Fragment>
+                  ))}
+
+                  <AddButton
+                    title="Add another person"
+                    onClick={() =>
+                      arrayHelpers.insert(prospect.signatoryInfo.length, {
+                        ...prospect.signatoryInfo
+                      })
+                    }
+                    className={classes.addButton}
+                    disabled={values.signatoryInfo.length === MAX_SIGNATORIES}
+                  />
+                </>
+              )}
+            </FieldArray>
+
             <div className={classes.buttonWrapper}>
               <ContinueButton type="submit" />
             </div>
           </Form>
         )}
       </Formik>
-
-      <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-        {/*<SigningTransactions accountSigningType={accountSigningType} />*/}
-        {/*<ConfirmingTransactions />*/}
-
-        <ContactGroup signatoryInfo={signatoryInfo} />
-        <AddButton
-          title="Add another person"
-          // onClick={handleAddPerson}
-          className={classes.addButton}
-        />
-      </FormWrapper>
     </>
   );
 };
