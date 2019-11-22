@@ -23,92 +23,89 @@ const accountDetailsSchema = Yup.object({
 export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBanking } }) => {
   const classes = useStyles();
   const onSubmit = useCallback(e => {
-    console.log(e);
     // console.log(values);
     // TODO continue update store values
     // goToNext()
   }, []);
 
   return (
-    <>
-      <Formik
-        initialValues={{
-          accountCurrencies: [],
-          branchCity: "",
-          subCategory: "",
-          receiveInterest: false
-        }}
-        validationSchema={accountDetailsSchema}
-        onSubmit={onSubmit}
-      >
-        {({ values, setFieldValue }) => (
-          <Form>
-            <Subtitle title="Select currencies" />
-            <Field
-              options={accountCurrencies}
-              name="accountCurrencies"
-              infoTitle={INFO_TITLE}
-              component={CheckboxGroup}
-            />
+    <Formik
+      initialValues={{
+        accountCurrencies: [],
+        branchCity: "",
+        subCategory: "",
+        receiveInterest: false
+      }}
+      validationSchema={accountDetailsSchema}
+      onSubmit={onSubmit}
+    >
+      {({ values, setFieldValue }) => (
+        <Form>
+          <Subtitle title="Select currencies" />
+          <Field
+            options={accountCurrencies}
+            name="accountCurrencies"
+            infoTitle={INFO_TITLE}
+            component={CheckboxGroup}
+          />
 
-            <Divider />
+          <Divider />
 
-            <Subtitle title="Select branch" />
-            <Grid container spacing={3}>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="branchCity"
-                  options={emirates}
-                  extractId={option => option.key}
-                  label="Emirate / City"
-                  placeholder="Emirate / City"
-                  component={CustomSelect}
-                  onChange={e => {
-                    setFieldValue("branchCity", e.target.value);
-                    setFieldValue("subCategory", "");
-                  }}
-                  shrink={false}
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="subCategory"
-                  options={branches.filter(item => item.emirateCode === values.branchCity)}
-                  label="Branch"
-                  placeholder="Branch"
-                  extractId={option => option.key}
-                  component={CustomSelect}
-                  shrink={false}
-                />
-              </Grid>
+          <Subtitle title="Select branch" />
+          <Grid container spacing={3}>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="branchCity"
+                options={emirates}
+                extractId={option => option.key}
+                label="Emirate / City"
+                placeholder="Emirate / City"
+                component={CustomSelect}
+                onChange={e => {
+                  setFieldValue("branchCity", e.target.value);
+                  setFieldValue("subCategory", "");
+                }}
+                shrink={false}
+              />
             </Grid>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="subCategory"
+                options={branches.filter(item => item.emirateCode === values.branchCity)}
+                label="Branch"
+                placeholder="Branch"
+                extractId={option => option.key}
+                component={CustomSelect}
+                shrink={false}
+              />
+            </Grid>
+          </Grid>
 
-            {!islamicBanking && (
-              <>
-                <Divider />
-                <Subtitle title="Select interest" />
-                {/* TODO use Checkbox component after Oleg merge in dev */}
-                <Field
-                  name="receiveInterest"
-                  options={[
-                    {
-                      code: "receiveInterest",
-                      displayText: "I don't wish to receive interest from my account",
-                      key: "receiveInterest",
-                      value: true
-                    }
-                  ]}
-                  component={CheckboxGroup}
-                />
-              </>
-            )}
+          {!islamicBanking && (
+            <>
+              <Divider />
+              <Subtitle title="Select interest" />
+              {/* TODO use Checkbox component after Oleg merge in dev */}
+              <Field
+                name="receiveInterest"
+                options={[
+                  {
+                    code: "receiveInterest",
+                    displayText: "I don't wish to receive interest from my account",
+                    key: "receiveInterest",
+                    value: true
+                  }
+                ]}
+                component={CheckboxGroup}
+              />
+            </>
+          )}
 
-            <div className={classes.buttonWrapper}>
-              <ContinueButton type="submit" />
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+          <div className={classes.buttonWrapper}>
+            <ContinueButton type="submit" />
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };

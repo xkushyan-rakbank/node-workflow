@@ -45,12 +45,7 @@ const signingPreferencesSchema = Yup.object({
   )
 });
 
-export const SigningPreferencesComponent = ({
-  signatoryInfo,
-  accountSigningType,
-  accountSigningInstn,
-  goToNext
-}) => {
+export const SigningPreferencesComponent = () => {
   const classes = useStyles();
   const onSubmit = e => {
     // TODO
