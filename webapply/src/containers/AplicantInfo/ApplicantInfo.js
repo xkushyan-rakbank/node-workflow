@@ -66,9 +66,9 @@ const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm, updateProspect
               <InputGroup>
                 <Field
                   name="countryCode"
+                  required
                   options={countryCodeOptions}
                   component={CustomSelect}
-                  extractId={option => option.key}
                   shrink={false}
                 />
 
