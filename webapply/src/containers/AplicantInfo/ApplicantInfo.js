@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
-import { Input, CustomSelect, InputGroup, AutoSaveForm } from "./../../components/Form";
+import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { countryCodeOptions } from "./../../constants/options";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { prospect } from "./../../constants/config";
-import { receiveAppConfig, updateProspect } from "./../../store/actions/appConfig";
+import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 
 const aplicantInfoSchema = Yup.object({
@@ -24,7 +24,7 @@ const aplicantInfoSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm, updateProspect }) => {
+const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm }) => {
   const onSubmit = values => applicantInfoForm(values);
 
   useEffect(() => {
@@ -44,47 +44,46 @@ const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm, updateProspect
         onSubmit={onSubmit}
       >
         {() => (
-          <AutoSaveForm
-            updateProspect={updateProspect}
-            mapValues={values => ({
-              "prospect.applicantInfo.fullName": values.fullName,
-              "prospect.applicantInfo.email": values.email,
-              "prospect.applicantInfo.countryCode": values.countryCode,
-              "prospect.applicantInfo.mobileNo": values.mobileNo
-            })}
-          >
-            <Form>
-              <Field name="fullName" label="Your Name" placeholder="Your Name" component={Input} />
+          <Form>
+            <Field
+              name="fullName"
+              path="prospect.applicantInfo.fullName"
+              label="Your Name"
+              placeholder="Your Name"
+              component={Input}
+            />
 
+            <Field
+              name="email"
+              path="prospect.applicantInfo.email"
+              label="Your E-mail Address"
+              placeholder="Email"
+              component={Input}
+            />
+
+            <InputGroup>
               <Field
-                name="email"
-                label="Your E-mail Address"
-                placeholder="Email"
-                component={Input}
+                name="countryCode"
+                path="prospect.applicantInfo.countryCode"
+                required
+                options={countryCodeOptions}
+                component={CustomSelect}
+                shrink={false}
               />
 
-              <InputGroup>
-                <Field
-                  name="countryCode"
-                  required
-                  options={countryCodeOptions}
-                  component={CustomSelect}
-                  shrink={false}
-                />
+              <Field
+                name="mobileNo"
+                path="prospect.applicantInfo.mobileNo"
+                label="Your Mobile Number"
+                placeholder="Mobile Number"
+                component={Input}
+              />
+            </InputGroup>
 
-                <Field
-                  name="mobileNo"
-                  label="Your Mobile Number"
-                  placeholder="Mobile Number"
-                  component={Input}
-                />
-              </InputGroup>
-
-              <div className="linkContainer">
-                <SubmitButton justify="flex-end" label="Next Step" />
-              </div>
-            </Form>
-          </AutoSaveForm>
+            <div className="linkContainer">
+              <SubmitButton justify="flex-end" label="Next Step" />
+            </div>
+          </Form>
         )}
       </Formik>
     </>
@@ -93,8 +92,7 @@ const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm, updateProspect
 
 const mapDispatchToProps = {
   receiveAppConfig,
-  applicantInfoForm,
-  updateProspect
+  applicantInfoForm
 };
 
 export const ApplicantInfo = connect(
