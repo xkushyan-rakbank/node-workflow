@@ -1,8 +1,8 @@
+import { connect } from "react-redux";
+import get from "lodash/get";
 import { getOrgKYCDetails } from "../../../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { CompanyBusinessRelationshipsComponent } from "./CompanyBusinessRelationships";
-import get from "lodash/get";
-import { connect } from "react-redux";
 
 const mapStateToProps = state => ({
   topCustomers: get(getOrgKYCDetails(state), "topCustomers", [{ name: "", country: "" }]),

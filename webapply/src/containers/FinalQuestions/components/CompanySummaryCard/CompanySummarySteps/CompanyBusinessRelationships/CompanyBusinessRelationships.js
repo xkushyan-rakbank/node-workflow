@@ -113,40 +113,39 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                   <>
                     <h4 className={classes.groupLabel}>Top customers</h4>
                     <Grid container spacing={3} className={classes.flexContainer}>
-                      {values.topCustomers.length > 0 &&
-                        values.topCustomers.map((friend, index) => (
-                          <React.Fragment key={index}>
-                            <Grid item md={index === 0 ? 6 : 5} sm={12}>
-                              <Field
-                                name={`topCustomers[${index}].name`}
-                                label="Name"
-                                placeholder="Name"
-                                component={Input}
+                      {values.topCustomers.map((friend, index) => (
+                        <React.Fragment key={index}>
+                          <Grid item md={index === 0 ? 6 : 5} sm={12}>
+                            <Field
+                              name={`topCustomers[${index}].name`}
+                              label="Name"
+                              placeholder="Name"
+                              component={Input}
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            md={index === 0 ? 6 : 5}
+                            sm={12}
+                            className={cx(classes.relative, { [classes.tablet]: !index })}
+                          >
+                            <Field
+                              options={countryOptions}
+                              shrink={false}
+                              name={`topCustomers[${index}].country`}
+                              placeholder="Country"
+                              extractId={option => option.key}
+                              component={CustomSelect}
+                            />
+                            {!!index && (
+                              <RemoveButton
+                                onClick={() => arrayHelpers.remove(index)}
+                                title="Delete"
                               />
-                            </Grid>
-                            <Grid
-                              item
-                              md={index === 0 ? 6 : 5}
-                              sm={12}
-                              className={cx(classes.relative, { [classes.tablet]: !index })}
-                            >
-                              <Field
-                                options={countryOptions}
-                                shrink={false}
-                                name={`topCustomers[${index}].country`}
-                                placeholder="Country"
-                                extractId={option => option.key}
-                                component={CustomSelect}
-                              />
-                              {!!index && (
-                                <RemoveButton
-                                  onClick={() => arrayHelpers.remove(index)}
-                                  title="Delete"
-                                />
-                              )}
-                            </Grid>
-                          </React.Fragment>
-                        ))}
+                            )}
+                          </Grid>
+                        </React.Fragment>
+                      ))}
                     </Grid>
                     {values.topCustomers.length < limits.CUSTOMER_COUNT && (
                       <AddButton
@@ -259,34 +258,33 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                       }
                     />
                     <Grid container spacing={3} className={classes.flexContainer}>
-                      {values.topOriginGoodsCountries.length > 0 &&
-                        values.topOriginGoodsCountries.map((friend, index) => (
-                          <React.Fragment key={index}>
-                            <Grid
-                              key={index}
-                              item
-                              md={index === 0 ? 12 : 10}
-                              sm={12}
-                              className={cx(classes.relative, { [classes.tablet]: !index })}
-                            >
-                              <Field
-                                options={countryOptions}
-                                shrink={false}
-                                name={`topOriginGoodsCountries[${index}]`}
-                                placeholder="Country"
-                                extractId={option => option.key}
-                                component={CustomSelect}
-                                disabled={values.isDontTradeGoodsYet}
+                      {values.topOriginGoodsCountries.map((friend, index) => (
+                        <React.Fragment key={index}>
+                          <Grid
+                            key={index}
+                            item
+                            md={index === 0 ? 12 : 10}
+                            sm={12}
+                            className={cx(classes.relative, { [classes.tablet]: !index })}
+                          >
+                            <Field
+                              options={countryOptions}
+                              shrink={false}
+                              name={`topOriginGoodsCountries[${index}]`}
+                              placeholder="Country"
+                              extractId={option => option.key}
+                              component={CustomSelect}
+                              disabled={values.isDontTradeGoodsYet}
+                            />
+                            {!!index && (
+                              <RemoveButton
+                                onClick={() => arrayHelpers.remove(index)}
+                                title="Delete"
                               />
-                              {!!index && (
-                                <RemoveButton
-                                  onClick={() => arrayHelpers.remove(index)}
-                                  title="Delete"
-                                />
-                              )}
-                            </Grid>
-                          </React.Fragment>
-                        ))}
+                            )}
+                          </Grid>
+                        </React.Fragment>
+                      ))}
                     </Grid>
                     {values.topOriginGoodsCountries.length < limits.COUNTRY_OF_ORIGIN_COUNT && (
                       <AddButton
@@ -324,34 +322,33 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                     {values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist && (
                       <>
                         <Grid container spacing={3} className={classes.flexContainer}>
-                          {values.otherBankingRelationshipsInfo.otherBankDetails.length > 0 &&
-                            values.otherBankingRelationshipsInfo.otherBankDetails.map(
-                              (friend, index) => (
-                                <React.Fragment key={index}>
-                                  <Grid
-                                    key={index}
-                                    item
-                                    md={index === 0 ? 12 : 10}
-                                    sm={12}
-                                    className={cx(classes.relative, {
-                                      [classes.tablet]: !index
-                                    })}
-                                  >
-                                    <Field
-                                      name={`${bankFieldPath}[${index}].bankName`}
-                                      placeholder="Bank name"
-                                      component={Input}
+                          {values.otherBankingRelationshipsInfo.otherBankDetails.map(
+                            (friend, index) => (
+                              <React.Fragment key={index}>
+                                <Grid
+                                  key={index}
+                                  item
+                                  md={index === 0 ? 12 : 10}
+                                  sm={12}
+                                  className={cx(classes.relative, {
+                                    [classes.tablet]: !index
+                                  })}
+                                >
+                                  <Field
+                                    name={`${bankFieldPath}[${index}].bankName`}
+                                    placeholder="Bank name"
+                                    component={Input}
+                                  />
+                                  {!!index && (
+                                    <RemoveButton
+                                      onClick={() => arrayHelpers.remove(index)}
+                                      title="Delete"
                                     />
-                                    {!!index && (
-                                      <RemoveButton
-                                        onClick={() => arrayHelpers.remove(index)}
-                                        title="Delete"
-                                      />
-                                    )}
-                                  </Grid>
-                                </React.Fragment>
-                              )
-                            )}
+                                  )}
+                                </Grid>
+                              </React.Fragment>
+                            )
+                          )}
                         </Grid>
                         {values.otherBankingRelationshipsInfo.otherBankDetails.length <
                           limits.ANOTHER_BANK_COUNT && (

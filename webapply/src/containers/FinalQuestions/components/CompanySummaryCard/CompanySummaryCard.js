@@ -43,9 +43,9 @@ export const CompanySummaryCardComponent = ({ index, switchExpandedMargin, compa
   };
 
   const changeStep = item => {
-    if (!item.isFilled) {
-      return;
-    }
+    // if (!item.isFilled) {
+    //   return;
+    // }
     setStep(item.step);
   };
 
