@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
-import { Input, CustomSelect, InputGroup } from "./../../components/Form";
+import { Input, CustomSelect, InputGroup, AutoSaveForm } from "./../../components/Form";
 import { countryCodeOptions } from "./../../constants/options";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { prospect } from "./../../constants/config";
-import { receiveAppConfig } from "./../../store/actions/appConfig";
+import { receiveAppConfig, updateProspect } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 
 const aplicantInfoSchema = Yup.object({
@@ -24,9 +24,7 @@ const aplicantInfoSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ApplicantInfoPage = props => {
-  const { receiveAppConfig, applicantInfoForm } = props;
-
+const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm, updateProspect }) => {
   const onSubmit = values => applicantInfoForm(values);
 
   useEffect(() => {
@@ -46,32 +44,47 @@ const ApplicantInfoPage = props => {
         onSubmit={onSubmit}
       >
         {() => (
-          <Form>
-            <Field name="fullName" label="Your Name" placeholder="Your Name" component={Input} />
-
-            <Field name="email" label="Your E-mail Address" placeholder="Email" component={Input} />
-
-            <InputGroup>
-              <Field
-                name="countryCode"
-                required
-                options={countryCodeOptions}
-                component={CustomSelect}
-                shrink={false}
-              />
+          <AutoSaveForm
+            updateProspect={updateProspect}
+            mapValues={values => ({
+              "prospect.applicantInfo.fullName": values.fullName,
+              "prospect.applicantInfo.email": values.email,
+              "prospect.applicantInfo.countryCode": values.countryCode,
+              "prospect.applicantInfo.mobileNo": values.mobileNo
+            })}
+          >
+            <Form>
+              <Field name="fullName" label="Your Name" placeholder="Your Name" component={Input} />
 
               <Field
-                name="mobileNo"
-                label="Your Mobile Number"
-                placeholder="Mobile Number"
+                name="email"
+                label="Your E-mail Address"
+                placeholder="Email"
                 component={Input}
               />
-            </InputGroup>
 
-            <div className="linkContainer">
-              <SubmitButton justify="flex-end" label="Next Step" />
-            </div>
-          </Form>
+              <InputGroup>
+                <Field
+                  name="countryCode"
+                  options={countryCodeOptions}
+                  component={CustomSelect}
+                  extractId={option => option.key}
+                  shrink={false}
+                />
+
+                <Field
+                  name="mobileNo"
+                  label="Your Mobile Number"
+                  placeholder="Mobile Number"
+                  component={Input}
+                />
+              </InputGroup>
+
+              <div className="linkContainer">
+                <SubmitButton justify="flex-end" label="Next Step" />
+              </div>
+            </Form>
+          </AutoSaveForm>
         )}
       </Formik>
     </>
@@ -80,7 +93,8 @@ const ApplicantInfoPage = props => {
 
 const mapDispatchToProps = {
   receiveAppConfig,
-  applicantInfoForm
+  applicantInfoForm,
+  updateProspect
 };
 
 export const ApplicantInfo = connect(
