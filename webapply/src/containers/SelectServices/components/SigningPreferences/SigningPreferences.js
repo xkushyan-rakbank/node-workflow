@@ -1,17 +1,16 @@
 import React from "react";
-// import get from "lodash/get";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-// import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 import { accountSigningTypes } from "../../../../constants/options";
+import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 
 import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import Divider from "../../../../components/Divider";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
-import { SigningTransactions } from "./SigningTransactions";
 import { ContactGroup } from "./ContactGroup";
+import { TextArea } from "../../../../components/Form/TextArea/TextArea";
 
 import Subtitle from "../../../../components/Subtitle";
 
@@ -20,15 +19,20 @@ import { RadioGroupWrapper } from "../../../../components/Form/Radio/RadioGroupB
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 
 const signingPreferencesSchema = Yup.object({
-  accountSigningType: Yup.string().required("Field is required")
+  accountSigningType: Yup.string().required("Field is required"),
+  accountSigningInstn: Yup.string().when("accountSigningType", {
+    is: ACCOUNTS_SIGNING_NAME_OTHER,
+    then: Yup.string()
+      .max(120, "Max length is 120 symbols")
+      .required("Field is required")
+  })
 });
 
 export const SigningPreferencesComponent = ({
   signatoryInfo,
   accountSigningType,
   accountSigningInstn,
-  goToNext,
-  updateProspect
+  goToNext
 }) => {
   const classes = useStyles();
 
@@ -57,23 +61,34 @@ export const SigningPreferencesComponent = ({
     <>
       <Formik
         initialValues={{
-          accountSigningType: ""
+          accountSigningType: "",
+          accountSigningInstn: ""
         }}
         validationSchema={signingPreferencesSchema}
         onSubmit={onSubmit}
       >
-        {({ values }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <Subtitle title="Signing transactions" helpMessage="help message todo" />
             <Field
               name="accountSigningType"
               options={accountSigningTypes}
+              onChange={e => {
+                setFieldValue("accountSigningType", e.currentTarget.value);
+                setFieldValue("accountSigningInstn", "");
+              }}
               component={RadioGroupWrapper}
             >
-              <span>TEXT AREA</span>
-              {/* TODO implement text area */}
+              {values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
+                <Field
+                  name="accountSigningInstn"
+                  placeholder="Please specify (Maxium 120 characters)"
+                  component={TextArea}
+                />
+              )}
             </Field>
-
+            <Divider />
+            <ConfirmingTransactions /> {/* TODO */}
             <div className={classes.buttonWrapper}>
               <ContinueButton type="submit" />
             </div>
@@ -82,10 +97,8 @@ export const SigningPreferencesComponent = ({
       </Formik>
 
       <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-        <SigningTransactions accountSigningType={accountSigningType} />
-
-        <Divider />
-        <ConfirmingTransactions />
+        {/*<SigningTransactions accountSigningType={accountSigningType} />*/}
+        {/*<ConfirmingTransactions />*/}
 
         <ContactGroup signatoryInfo={signatoryInfo} />
         <AddButton

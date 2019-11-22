@@ -14,7 +14,8 @@ export const RadioGroupWrapper = ({
   labelExtractor = item => item.displayText,
   form: { errors, touched },
   field,
-  children
+  children,
+  ...props
 }) => {
   const classes = useStyledRadioGroup();
   const error = getIn(errors, field.name);
@@ -30,6 +31,7 @@ export const RadioGroupWrapper = ({
               value={valueExtractor(option)}
               label={labelExtractor(option)}
               checked={(field.value || []).includes(valueExtractor(option))}
+              {...props}
             />
           ))}
 

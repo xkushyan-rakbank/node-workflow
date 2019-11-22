@@ -1,4 +1,5 @@
 import React from "react";
+import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
 import { styled } from "@material-ui/styles";
 
@@ -18,9 +19,9 @@ export const CheckboxGroup = ({
   labelExtractor = item => item.displayText,
   infoTitle,
   field,
-  form: { errors, touched }
+  form: { errors }
 }) => {
-  const isError = errors[field.name] && touched[field.name];
+  const error = getIn(errors, field.name);
 
   return (
     <FormControl className="formControl">
@@ -36,7 +37,7 @@ export const CheckboxGroup = ({
         ))}
       </CheckboxesWrapper>
 
-      {isError && <ErrorMessage error={errors[field.name]} />}
+      {error && <ErrorMessage error={error} />}
       {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>
   );

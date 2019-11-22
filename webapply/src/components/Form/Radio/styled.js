@@ -5,7 +5,7 @@ export const useStyledRadioGroup = makeStyles({
     flexDirection: "initial"
   },
   gridGroup: {
-    alignItems: "baseline",
+    alignItems: "start",
     width: "100%",
     display: "grid",
     gridTemplateColumns: "1fr 1fr"
