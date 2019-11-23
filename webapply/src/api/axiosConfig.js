@@ -10,7 +10,8 @@ import {
 
 const STOP = "stop";
 
-const getBaseURL = () => process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
+const getBaseURL = () =>
+  process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
 
 const instance = axios.create({
   baseURL: getBaseURL()
