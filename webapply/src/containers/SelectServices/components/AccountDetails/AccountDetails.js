@@ -91,7 +91,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                 options={[
                   {
                     code: "receiveInterest",
-                    displayText: "I don't wish to receive interest from my account",
+                    label: "I don't wish to receive interest from my account",
                     key: "receiveInterest",
                     value: true
                   }

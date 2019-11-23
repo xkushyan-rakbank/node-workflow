@@ -28,25 +28,25 @@ export const countryCodeOptions = [
 export const accountCurrencies = [
   {
     code: "AED",
-    displayText: "AED",
+    label: "AED",
     key: "AED",
     value: "AED"
   },
   {
     code: "USD",
-    displayText: "USD",
+    label: "USD",
     key: "USD",
     value: "USD"
   },
   {
     code: "EUR",
-    displayText: "EUR",
+    label: "EUR",
     key: "EUR",
     value: "EUR"
   },
   {
     code: "GBP",
-    displayText: "GBP",
+    label: "GBP",
     key: "GBP",
     value: "GBP"
   }
@@ -284,19 +284,19 @@ export const accountSigningTypes = [
     code: "Any of us",
     key: "Any of us",
     value: "Any of us",
-    displayText: "Any of us can Sign"
+    label: "Any of us can Sign"
   },
   {
     code: "All of us",
     key: "All of us",
     value: "All of us",
-    displayText: "All of us Must Sign"
+    label: "All of us Must Sign"
   },
   {
     code: "Others",
     key: "Others",
     value: "Others",
-    displayText: "Other (Please Specify)"
+    label: "Other (Please Specify)"
   }
 ];
 

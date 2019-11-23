@@ -11,7 +11,7 @@ export const RadioGroupWrapper = ({
   options,
   keyExtractor = item => item.key,
   valueExtractor = item => item.value,
-  labelExtractor = item => item.displayText,
+  labelExtractor = item => item.label,
   form: { errors, touched },
   field,
   children,
