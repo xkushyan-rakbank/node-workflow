@@ -15,21 +15,80 @@ import { prospect } from "../../../../../../constants/config";
 import { COMPANY_CURRENCY, MONTH_COUNT } from "./constants";
 import { ANNUAL_TURNOVER_REGEX } from "../../../../../../utils/validation";
 
+function getTotalMonthlyCreditsValue(annualFinancialTurnover) {
+  if (
+    !annualFinancialTurnover ||
+    !isNumber(+annualFinancialTurnover) ||
+    isNaN(+annualFinancialTurnover)
+  ) {
+    return 0;
+  }
+  return Math.floor(annualFinancialTurnover / MONTH_COUNT);
+}
+
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
   annualFinTurnoverAmtInAED: Yup.string().matches(
     ANNUAL_TURNOVER_REGEX,
     "This is not a valid value"
   ),
-  anticipatedTransactionsDetails: Yup.object().shape({
-    maxAmtSingleTxnCashAED: Yup.number().required("Required"),
-    maxAmtSingleTxnNonCashAED: Yup.number().required("Required"),
-    totalMonthlyCashCreditsAED: Yup.object().shape({
-      amountInFigures: Yup.number().required("Required")
-    }),
-    totalMonthlyNonCashCreditsAED: Yup.object().shape({
-      amountInFigures: Yup.number().required("Required")
-    })
-  })
+  maxAmtSingleTxnCashAED: Yup.number()
+    .required("Required")
+    .test(
+      "is not exceed turnover",
+      "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
+      function(value) {
+        const { annualFinTurnoverAmtInAED, maxAmtSingleTxnNonCashAED } = this.parent;
+        if (annualFinTurnoverAmtInAED && maxAmtSingleTxnNonCashAED) {
+          return +value + +maxAmtSingleTxnNonCashAED <= annualFinTurnoverAmtInAED;
+        } else if (annualFinTurnoverAmtInAED) {
+          return value <= annualFinTurnoverAmtInAED;
+        }
+        return true;
+      }
+    ),
+  maxAmtSingleTxnNonCashAED: Yup.number()
+    .required("Required")
+    .test(
+      "is not exceed turnover",
+      "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
+      function(value) {
+        const { annualFinTurnoverAmtInAED, maxAmtSingleTxnCashAED } = this.parent;
+        if (annualFinTurnoverAmtInAED && maxAmtSingleTxnCashAED) {
+          return +value + +maxAmtSingleTxnCashAED <= annualFinTurnoverAmtInAED;
+        } else if (annualFinTurnoverAmtInAED) {
+          return value <= annualFinTurnoverAmtInAED;
+        }
+        return true;
+      }
+    ),
+  totalMonthlyCashAmountInFigures: Yup.number()
+    .required("Required")
+    .test(
+      "is matches with month turnover",
+      "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
+      function(value) {
+        const { annualFinTurnoverAmtInAED, totalMonthlyNonCashAmountInFigures } = this.parent;
+        const totalMonthlyCredits = getTotalMonthlyCreditsValue(annualFinTurnoverAmtInAED);
+        if (totalMonthlyCredits && totalMonthlyNonCashAmountInFigures) {
+          return +value + +totalMonthlyNonCashAmountInFigures === totalMonthlyCredits;
+        }
+        return true;
+      }
+    ),
+  totalMonthlyNonCashAmountInFigures: Yup.number()
+    .required("Required")
+    .test(
+      "is matches with month turnover",
+      "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
+      function(value) {
+        const { annualFinTurnoverAmtInAED, totalMonthlyCashAmountInFigures } = this.parent;
+        const totalMonthlyCredits = getTotalMonthlyCreditsValue(annualFinTurnoverAmtInAED);
+        if (totalMonthlyCredits && totalMonthlyCashAmountInFigures) {
+          return +value + +totalMonthlyCashAmountInFigures === totalMonthlyCredits;
+        }
+        return true;
+      }
+    )
 });
 
 export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
@@ -38,29 +97,47 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
     endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
   };
 
-  function getTotalMonthlyCreditsValue(annualFinancialTurnover) {
-    if (
-      !annualFinancialTurnover ||
-      !isNumber(+annualFinancialTurnover) ||
-      isNaN(+annualFinancialTurnover)
-    ) {
-      return "Total Monthly Credits";
-    }
-    const monthlyCreditsValue = annualFinancialTurnover / MONTH_COUNT;
-    return `${Math.floor(monthlyCreditsValue)} in Total Monthly Credits`;
+  function getTotalMonthlyCreditsText(monthlyCreditsValue) {
+    return monthlyCreditsValue
+      ? `${Math.floor(monthlyCreditsValue)} in Total Monthly Credits`
+      : "Total Monthly Credits";
   }
 
   const onSubmit = values => {
-    handleContinue();
-    console.log(values);
+    // handleContinue();
+    const prospectValue = {
+      annualFinTurnoverAmtInAED: values.annualFinTurnoverAmtInAED,
+      anticipatedTransactionsDetails: {
+        maxAmtSingleTxnCashAED: values.maxAmtSingleTxnCashAED,
+        maxAmtSingleTxnNonCashAED: values.maxAmtSingleTxnNonCashAED,
+        totalMonthlyCashCreditsAED: { amountInFigures: values.totalMonthlyCashAmountInFigures },
+        totalMonthlyNonCashCreditsAED: {
+          amountInFigures: values.totalMonthlyNonCashAmountInFigures
+        }
+      }
+    };
+    console.log(prospectValue);
   };
+
+  const {
+    annualFinTurnoverAmtInAED,
+    anticipatedTransactionsDetails: {
+      maxAmtSingleTxnCashAED,
+      maxAmtSingleTxnNonCashAED,
+      totalMonthlyCashCreditsAED: { amountInFigures: totalMonthlyCashAmountInFigures } = {},
+      totalMonthlyNonCashCreditsAED: { amountInFigures: totalMonthlyNonCashAmountInFigures } = {}
+    } = {}
+  } = prospect.orgKYCDetails;
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          annualFinTurnoverAmtInAED: prospect.orgKYCDetails.annualFinTurnoverAmtInAED,
-          anticipatedTransactionsDetails: prospect.orgKYCDetails.anticipatedTransactionsDetails
+          annualFinTurnoverAmtInAED,
+          maxAmtSingleTxnCashAED,
+          maxAmtSingleTxnNonCashAED,
+          totalMonthlyCashAmountInFigures,
+          totalMonthlyNonCashAmountInFigures
         }}
         onSubmit={onSubmit}
         validationSchema={companyAnticipatedTransactionsSchema}
@@ -88,7 +165,9 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                       variant="outlined"
                       disabled
                       InputProps={commonInputProps}
-                      value={getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED)}
+                      value={getTotalMonthlyCreditsText(
+                        getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED)
+                      )}
                     />
                     <InfoTitle
                       classes={{ wrapper: classes.infoTitles }}
@@ -98,7 +177,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <Field
-                    name="anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
+                    name="totalMonthlyCashAmountInFigures"
                     label="Part of Monthly Total in Cash"
                     placeholder="Part of Monthly Total in Cash"
                     InputProps={commonInputProps}
@@ -107,7 +186,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <Field
-                    name="anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
+                    name="totalMonthlyNonCashAmountInFigures"
                     label="Part of Monthly Total in Non-Cash"
                     placeholder="Part of Monthly Total in Non-Cash"
                     InputProps={commonInputProps}
@@ -130,7 +209,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
               <Grid container spacing={3} className={classes.flexContainer}>
                 <Grid item md={6} sm={12}>
                   <Field
-                    name="anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
+                    name="maxAmtSingleTxnCashAED"
                     label="Maximum amount in Cash"
                     placeholder="Maximum amount in Cash"
                     InputProps={commonInputProps}
@@ -139,7 +218,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <Field
-                    name="anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
+                    name="maxAmtSingleTxnNonCashAED"
                     label="Maximum amount in Non-Cash"
                     placeholder="Maximum amount in Non-Cash"
                     InputProps={commonInputProps}
