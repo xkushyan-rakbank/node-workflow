@@ -1,35 +1,18 @@
-import { all, call, put, select, takeLatest, delay } from "redux-saga/effects";
-import get from "lodash/get";
+import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { otp } from "../../api/apiClient";
 import * as appConfigSelectors from "../selectors/appConfig";
-import * as serverValidationActions from "../actions/serverValidation";
 import * as otpActions from "../actions/otp";
+import { log } from "../../utils/loggger";
 
-function* generateOtp() {
+function* generateOtp(action) {
   try {
-    const state = yield select();
-    const applicantInfo = appConfigSelectors.getApplicantInfo(state);
-    const payload = {
-      prospectId: appConfigSelectors.getProspectId(state),
-      mobileNo: applicantInfo.mobileNo,
-      countryCode: applicantInfo.countryCode,
-      email: applicantInfo.email
-    };
+    const { data } = yield call(otp.generate, action.payload);
 
-    if (state.reCaptcha.token) {
-      payload.recaptchaToken = state.reCaptcha.token;
-    }
-
-    const { data } = yield call(otp.generate, payload);
     yield put(otpActions.generateCodeSuccess(data));
   } catch (error) {
+    log(error);
+  } finally {
     yield put(otpActions.setOtpPendingRequest(false));
-    if (error.isAxiosError) {
-      const errors = get(error, "response.data.errors", []);
-      yield put(serverValidationActions.setInputsErrors(errors));
-    } else {
-      yield call(otpSystemErrorHandler, error);
-    }
   }
 }
 
@@ -45,27 +28,16 @@ function* verifyOtp({ payload: otpToken }) {
       otpToken
     };
     const { data } = yield call(otp.verify, payload);
-    // TODO: only for develop - remove
-    yield delay(Math.random() > 0.5 ? 2000 : 1000);
     if (data.verified) {
       yield put(otpActions.verifyCodeSuccess());
     } else {
       yield put(otpActions.verifyCodeFailed());
     }
   } catch (error) {
+    log(error);
+  } finally {
     yield put(otpActions.setOtpPendingRequest(false));
-    if (error.isAxiosError) {
-      const errors = get(error, "response.data.errors", []);
-      yield put(serverValidationActions.setInputsErrors(errors));
-    } else {
-      yield call(otpSystemErrorHandler, error);
-    }
   }
-}
-
-function otpSystemErrorHandler(error) {
-  console.log("OTP_SAGA_CALL_SYSTEM_ERROR");
-  console.error(error);
 }
 
 export default function* otpSagas() {
