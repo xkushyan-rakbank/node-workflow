@@ -71,12 +71,17 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
           <Grid container item xs={12} direction="row" justify="flex-start">
             <OtpVerification onChange={isCodeValueValid} />
           </Grid>
-          {otp.verificationError && <ErrorMessage error="Code verification failed" />}
+          {otp.verificationError && (
+            <ErrorMessage classes={{ error: classes.error }} error="Code verification failed" />
+          )}
           {loginAttempt > MAX_ATTEMPT_ALLOWED && (
-            <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again." />
+            <ErrorMessage
+              classes={{ error: classes.error }}
+              error="You have exceeded your maximum attempt. Please come back later and try again."
+            />
           )}
           <span>
-            Didn’t get the code?
+            Didn’t get the code?{" "}
             <span
               onClick={handleSendNewCodeLinkClick}
               className={cx(classes.link, {
