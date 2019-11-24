@@ -1,4 +1,4 @@
-import { all, call, put, select, takeLatest, delay } from "redux-saga/effects";
+import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import get from "lodash/get";
 import { otp } from "../../api/apiClient";
 import * as appConfigSelectors from "../selectors/appConfig";
@@ -7,10 +7,8 @@ import * as otpActions from "../actions/otp";
 
 function* generateOtp(action) {
   try {
-    const state = yield select();
-    action.payload.prospectId = appConfigSelectors.getApplicantInfo(state).prospectId;
-
     const { data } = yield call(otp.generate, action.payload);
+
     yield put(otpActions.generateCodeSuccess(data));
   } catch (error) {
     yield put(otpActions.setOtpPendingRequest(false));
@@ -35,8 +33,6 @@ function* verifyOtp({ payload: otpToken }) {
       otpToken
     };
     const { data } = yield call(otp.verify, payload);
-    // TODO: only for develop - remove
-    yield delay(Math.random() > 0.5 ? 2000 : 1000);
     if (data.verified) {
       yield put(otpActions.verifyCodeSuccess());
     } else {

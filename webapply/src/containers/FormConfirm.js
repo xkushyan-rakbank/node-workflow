@@ -119,7 +119,6 @@ class FormConfirm extends React.Component {
 
   render() {
     const { classes, applicantInfo } = this.props;
-    console.log(applicantInfo.countryCode);
     const codeSentTo = applicantInfo.countryCode === "971" ? "phone" : "email";
     return (
       <>
