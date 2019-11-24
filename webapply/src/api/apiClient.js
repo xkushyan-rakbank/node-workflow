@@ -25,7 +25,7 @@ export const authentication = {
 };
 
 export const otp = {
-  generate: ({ prospectId, countryCode, mobileNo }) => {
+  generate: ({ prospectId, countryCode, mobileNo, email }) => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
@@ -33,7 +33,8 @@ export const otp = {
         action: OTP_ACTION_GENERATE,
         prospectId,
         countryCode,
-        mobileNo
+        mobileNo,
+        email
       }
     });
   },
