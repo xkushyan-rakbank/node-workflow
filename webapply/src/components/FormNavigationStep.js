@@ -34,6 +34,9 @@ const style = {
       }
     }
   },
+  icon: {
+    fontSize: "13px !important"
+  },
   doneIcon: {
     width: "24px"
   },
