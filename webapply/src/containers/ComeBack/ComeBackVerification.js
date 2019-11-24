@@ -66,7 +66,6 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
               <Grid container item xs={12} direction="row" justify="flex-start">
                 <OtpVerification onChange={isCodeValueValid} />
               </Grid>
-              {isValidCode && <ErrorMessage error="Code is not valid." />}
               {otp.verificationError && <ErrorMessage error="Code verification failed." />}
               {loginAttempt > MAX_ATTEMPT_ALLOWED && (
                 <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again." />
@@ -86,6 +85,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
 
             <div className="linkContainer">
               <SubmitButton
+                disabled={!isValidCode || otp.isPending}
                 label="Next Step"
                 justify="flex-end"
                 containerExtraStyles={{ width: "auto", margin: 0 }}
