@@ -15,7 +15,7 @@ export function* screenProspectSaga({ payload: { prospectId } }) {
 
     yield put(screenProspectSuccess(prospectId, response.data));
   } catch (error) {
-    log({ error });
+    log(error);
   }
 }
 

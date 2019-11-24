@@ -6,6 +6,7 @@ import {
 } from "../actions/searchProspect";
 import { search } from "../../api/apiClient";
 import { updateProspect } from "../actions/appConfig";
+import { log } from "../../utils/loggger";
 
 function* searchProspectFormSaga({ payload }) {
   try {
@@ -21,7 +22,7 @@ function* searchProspectFormSaga({ payload }) {
     const response = yield call(search.searchApplication, inputParam);
     yield put(searchApplicationsSuccess(response.data));
   } catch (error) {
-    console.error({ error });
+    log(error);
   }
 }
 

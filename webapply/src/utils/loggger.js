@@ -1,5 +1,5 @@
-export const log = msg => {
+export const log = error => {
   if (process.env.NODE_ENV === "development") {
-    console.error(msg);
+    console.error({ error });
   }
 };

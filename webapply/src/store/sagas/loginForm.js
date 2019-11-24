@@ -17,7 +17,7 @@ export function* loginFormSaga({ payload }) {
     yield put(loginInfoFormSuccess(response.data));
     yield call(history.push, routes.searchProspect);
   } catch (error) {
-    log({ error });
+    log(error);
   }
 }
 
