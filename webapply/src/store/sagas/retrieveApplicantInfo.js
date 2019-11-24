@@ -2,35 +2,35 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import * as actions from "../actions/retrieveApplicantInfo";
 import { displayScreenBasedOnViewId, setConfig } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect } from "../../api/apiClient";
+import { log } from "../../utils/loggger";
 
-function* retrieveApplicantInfoSaga(action) {
+function* retrieveApplicantInfoSaga({ payload }) {
   try {
     const inputParam = {
-      fullName: action.payload.fullName || "",
-      countryCode: action.payload.countryCode || "",
-      mobileNo: action.payload.mobileNo || "",
-      leadNumber: action.payload.leadNumber || "",
-      tradeLicenseNo: action.payload.tradeLicenseNo || "",
-      email: action.payload.email || "",
+      fullName: payload.fullName || "",
+      countryCode: payload.countryCode || "",
+      mobileNo: payload.mobileNo || "",
+      leadNumber: payload.leadNumber || "",
+      tradeLicenseNo: payload.tradeLicenseNo || "",
+      email: payload.email || "",
       eidNumber: ""
     };
 
     const response = yield call(retrieveApplicantInfos.applicant, inputParam);
     yield put(actions.retrieveApplicantInfoSuccess(response.data));
   } catch (error) {
-    console.error(error);
+    log(error);
   }
 }
 
-function* getProspectIdInfo(action) {
+function* getProspectIdInfo({ payload: { prospectId } }) {
   try {
-    const prospectId = action.payload;
     const response = yield call(prospect.get, prospectId);
     const config = { prospect: response.data };
     yield put(setConfig(config));
     yield put(displayScreenBasedOnViewId());
   } catch (error) {
-    console.error(error);
+    log(error);
   }
 }
 

@@ -6,22 +6,23 @@ import {
 } from "../actions/searchProspect";
 import { search } from "../../api/apiClient";
 import { updateProspect } from "../actions/appConfig";
+import { log } from "../../utils/loggger";
 
-function* searchProspectFormSaga(action) {
+function* searchProspectFormSaga({ payload }) {
   try {
     const inputParam = {
-      fullName: action.payload.fname || "",
-      countryCode: action.payload.countryCode || "",
-      mobileNo: action.payload.mobileNo || "",
-      leadNumber: action.payload.leadNumber || "",
-      tradeLicenseNo: action.payload.tradeLicenseNo || "",
-      email: action.payload.email || "",
+      fullName: payload.fname || "",
+      countryCode: payload.countryCode || "",
+      mobileNo: payload.mobileNo || "",
+      leadNumber: payload.leadNumber || "",
+      tradeLicenseNo: payload.tradeLicenseNo || "",
+      email: payload.email || "",
       eidNumber: ""
     };
     const response = yield call(search.searchApplication, inputParam);
     yield put(searchApplicationsSuccess(response.data));
   } catch (error) {
-    console.error({ error });
+    log(error);
   }
 }
 

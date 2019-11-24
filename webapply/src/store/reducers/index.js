@@ -11,6 +11,7 @@ import searchProspect from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import selectedAccountInfo from "./selectedAccountInfo";
 import stakeholders from "./stakeholders";
+import screenProspect from "./screenProspect";
 import validationErrors from "./validationErrors";
 
 const reducers = history =>
@@ -27,6 +28,7 @@ const reducers = history =>
     retrieveApplicantInfo,
     selectedAccountInfo,
     stakeholders,
+    screenProspect,
     validationErrors
   });
 
