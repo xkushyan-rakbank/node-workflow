@@ -25,9 +25,10 @@ export const CustomSelect = ({
   label,
   field,
   infoTitle,
-  form: { errors, touched },
+  form: { errors, touched, setFieldValue },
   isMulti = false,
   shrink,
+  callback,
   ...props
 }) => {
   const classes = useStyles();
@@ -52,6 +53,12 @@ export const CustomSelect = ({
         {...props}
         renderValue={renderValue}
         multiple={multiple}
+        onChange={(e, value) => {
+          setFieldValue(field.name, value.props.value);
+          if (callback) {
+            callback(value.props.value);
+          }
+        }}
         input={<OutlinedInput labelWidth={labelWidth} />}
         IconComponent={KeyboardArrowDownIcon}
         className={cx(classes.selectField, classes.selectFieldBasic)}

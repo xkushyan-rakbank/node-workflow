@@ -111,10 +111,10 @@ export const prospect = {
     ],
     contactDetails: {
       primaryMobileNo: "",
-      primaryMobCountryCode: "",
+      primaryMobCountryCode: "+971",
       primaryEmail: "",
       primaryPhoneNo: "",
-      primaryPhoneCountryCode: "",
+      primaryPhoneCountryCode: "+971",
       fax: "",
       faxCountryCode: "",
       secondaryPhoneNo: "",
