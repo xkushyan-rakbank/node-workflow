@@ -1,25 +1,21 @@
-import * as actions from "../actions/selectedAccountInfo";
+import { UPDATE_ACCOUNT_TYPE, UPDATE_ISLAMIC_TYPE } from "../actions/selectedAccountInfo";
+import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   accountType: "",
   islamicBanking: false
 };
 
-const selectedAccountInfoReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case actions.UPDATE_ACCOUNT_TYPE:
-      return {
-        ...state,
-        accountType: action.payload
-      };
-    case actions.UPDATE_ISLAMIC_TYPE:
-      return {
-        ...state,
-        islamicBanking: action.payload
-      };
-    default:
-      return state;
-  }
-};
-
-export default selectedAccountInfoReducer;
+export default handleActions(
+  {
+    [UPDATE_ACCOUNT_TYPE]: (state, { payload: accountType }) => ({
+      ...state,
+      accountType
+    }),
+    [UPDATE_ISLAMIC_TYPE]: (state, { payload: islamicBanking }) => ({
+      ...state,
+      islamicBanking
+    })
+  },
+  initialState
+);

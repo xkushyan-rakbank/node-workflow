@@ -1,6 +1,5 @@
 export const RETRIEVE_APPLICANT_INFO = "RETRIEVE_APPLICANT_INFO";
 export const RETRIEVE_APPLICANT_INFO_SUCCESS = "RETRIEVE_APPLICANT_INFO_SUCCESS";
-export const RETRIEVE_APPLICANT_INFO_FAIL = "RETRIEVE_APPLICANT_INFO_FAIL";
 export const GET_PROSPECT_INFO = "GET_PROSPECT";
 
 export const retrieveApplicantInfo = payload => {
@@ -9,10 +8,6 @@ export const retrieveApplicantInfo = payload => {
 
 export const retrieveApplicantInfoSuccess = payload => {
   return { type: RETRIEVE_APPLICANT_INFO_SUCCESS, payload };
-};
-
-export const retrieveApplicantInfoFail = payload => {
-  return { type: RETRIEVE_APPLICANT_INFO_FAIL, payload };
 };
 
 export const getProspectInfo = payload => {

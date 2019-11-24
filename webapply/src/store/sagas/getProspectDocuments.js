@@ -2,19 +2,18 @@ import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import { getProspectDocuments } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
 import * as actions from "../actions/getProspectDocuments";
-import cloneDeep from "lodash/cloneDeep";
 import { updateProspect, setConfig } from "../actions/appConfig";
 
 function* getProspectDocumentsSaga() {
   const state = yield select();
   const prospectID = getProspectId(state) || "COSME0000000000000001";
-  let config = cloneDeep(state.appConfig);
+  let config = { ...state.appConfig };
+
   try {
     const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
-    if (response.status === 200) {
-      config.prospect.documents = response.data;
-      yield put(updateProspect(config));
-    }
+
+    config.prospect.documents = response.data;
+    yield put(updateProspect(config));
   } catch (error) {
     config.prospect.documents = error;
     yield put(updateProspect(config));
@@ -71,14 +70,16 @@ function* updateProspectDocuments(payload) {
 
 function* updateExtraProspectDocuments(action) {
   const state = yield select();
-  let config = cloneDeep(state.appConfig);
+  let config = { ...state.appConfig };
+
   config.prospect.documents.companyDocuments.push(action.payload);
   yield put(setConfig(config));
 }
 
 function* deleteExtraProspectDocuments(action) {
   const state = yield select();
-  let config = cloneDeep(state.appConfig);
+  let config = { ...state.appConfig };
+
   config.prospect.documents.companyDocuments.splice(action.payload);
   yield put(setConfig(config));
 }

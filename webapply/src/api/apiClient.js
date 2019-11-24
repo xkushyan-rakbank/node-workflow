@@ -103,3 +103,11 @@ export const search = {
     });
   }
 };
+
+export const screening = {
+  send: prospectId =>
+    httpClient.request({
+      url: buildURI("screenProspectUri", prospectId),
+      method: "GET"
+    })
+};

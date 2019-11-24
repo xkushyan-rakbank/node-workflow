@@ -4,6 +4,7 @@ import { otp } from "../../api/apiClient";
 import * as appConfigSelectors from "../selectors/appConfig";
 import * as serverValidationActions from "../actions/serverValidation";
 import * as otpActions from "../actions/otp";
+import { log } from "../../utils/loggger";
 
 function* generateOtp() {
   try {
@@ -28,7 +29,7 @@ function* generateOtp() {
       const errors = get(error, "response.data.errors", []);
       yield put(serverValidationActions.setInputsErrors(errors));
     } else {
-      yield call(otpSystemErrorHandler, error);
+      log(error);
     }
   }
 }
@@ -58,14 +59,9 @@ function* verifyOtp({ payload: otpToken }) {
       const errors = get(error, "response.data.errors", []);
       yield put(serverValidationActions.setInputsErrors(errors));
     } else {
-      yield call(otpSystemErrorHandler, error);
+      log(error);
     }
   }
-}
-
-function otpSystemErrorHandler(error) {
-  console.log("OTP_SAGA_CALL_SYSTEM_ERROR");
-  console.error(error);
 }
 
 export default function* otpSagas() {
