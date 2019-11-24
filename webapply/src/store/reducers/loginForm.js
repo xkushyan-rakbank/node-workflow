@@ -1,32 +1,23 @@
-import * as actions from "../actions/loginForm";
+import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
+import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   loginStatus: false,
   loginResponse: {}
 };
 
-const loginFormReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case actions.LOGIN_INFO_FORM_SUCCESS:
-      return {
-        ...state,
-        loginResponse: action.payload,
-        loginStatus: true
-      };
-    case actions.LOGIN_INFO_FORM_FAIL:
-      return {
-        ...state,
-        loginResponse: action.error,
-        loginStatus: false
-      };
-    case actions.LOGOUT:
-      return {
-        ...state,
-        loginStatus: false
-      };
-    default:
-      return state;
-  }
-};
-
-export default loginFormReducer;
+export default handleActions(
+  {
+    [LOGIN_INFO_FORM_SUCCESS]: (state, action) => ({
+      ...state,
+      loginResponse: action.payload,
+      loginStatus: true
+    }),
+    [LOGOUT]: state => ({
+      ...state,
+      loginResponse: {},
+      loginStatus: false
+    })
+  },
+  initialState
+);

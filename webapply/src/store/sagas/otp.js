@@ -1,9 +1,8 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
-import get from "lodash/get";
 import { otp } from "../../api/apiClient";
 import * as appConfigSelectors from "../selectors/appConfig";
-import * as serverValidationActions from "../actions/serverValidation";
 import * as otpActions from "../actions/otp";
+import { log } from "../../utils/loggger";
 
 function* generateOtp(action) {
   try {
@@ -11,13 +10,9 @@ function* generateOtp(action) {
 
     yield put(otpActions.generateCodeSuccess(data));
   } catch (error) {
+    log(error);
+  } finally {
     yield put(otpActions.setOtpPendingRequest(false));
-    if (error.isAxiosError) {
-      const errors = get(error, "response.data.errors", []);
-      yield put(serverValidationActions.setInputsErrors(errors));
-    } else {
-      yield call(otpSystemErrorHandler, error);
-    }
   }
 }
 
@@ -39,19 +34,10 @@ function* verifyOtp({ payload: otpToken }) {
       yield put(otpActions.verifyCodeFailed());
     }
   } catch (error) {
+    log(error);
+  } finally {
     yield put(otpActions.setOtpPendingRequest(false));
-    if (error.isAxiosError) {
-      const errors = get(error, "response.data.errors", []);
-      yield put(serverValidationActions.setInputsErrors(errors));
-    } else {
-      yield call(otpSystemErrorHandler, error);
-    }
   }
-}
-
-function otpSystemErrorHandler(error) {
-  console.log("OTP_SAGA_CALL_SYSTEM_ERROR");
-  console.error(error);
 }
 
 export default function* otpSagas() {
