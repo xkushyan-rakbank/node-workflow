@@ -5,16 +5,13 @@ import TextField from "@material-ui/core/TextField";
 import { digitRegExp } from "../../constants";
 import { useStyles } from "./styled";
 
+const inputRefs = [];
+const bindNodeRef = index => node => {
+  inputRefs[index] = node;
+};
+
 export const OtpVerification = ({ onChange, code }) => {
   const classes = useStyles();
-  const inputRefs = code.map(() => null);
-
-  const bindNodeRef = useCallback(
-    index => node => {
-      inputRefs[index] = node;
-    },
-    [inputRefs]
-  );
 
   const handleInputFocus = useCallback(event => {
     event.target.select();
@@ -32,7 +29,7 @@ export const OtpVerification = ({ onChange, code }) => {
         inputRefs[newCodeIndex + 1].focus();
       }
     },
-    [code, inputRefs, onChange]
+    [code, onChange]
   );
 
   return code.map((value, index) => (
