@@ -1,18 +1,5 @@
 import * as actions from "../actions/otp";
 
-/**
- * @typedef {Object} Otp
- * @property {Boolean} isPending
- *
- * @property {Boolean} isGenerated
- * @property {String} mode ("email"|"sms")
- * @property {Number} otpTokenValidityInSec
- * @property {String} otpTokenValidUntil
- * @property {Number} generatedAt - timestamp
- *
- * @property {Boolean} isVerified
- * @property {Boolean} verificationError
- */
 const initialState = {
   isPending: false,
   isGenerated: false,
@@ -54,12 +41,9 @@ const otpReducer = (state = initialState, action) => {
       };
     }
     case actions.GENERATE_CODE_SUCCESS: {
-      const { mode, otpTokenValidityInSec, otpTokenValidUntil } = action.payload;
       return {
         ...state,
-        mode,
-        otpTokenValidityInSec,
-        otpTokenValidUntil,
+        ...action.payload,
         isGenerated: true,
         isPending: false,
         generatedAt: Date.now()
