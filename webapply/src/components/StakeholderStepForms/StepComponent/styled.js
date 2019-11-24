@@ -30,5 +30,8 @@ export const useStyles = makeStyles({
     opacity: 0.5,
     fontSize: "16px",
     color: "#263d4c"
+  },
+  formWrapper: {
+    margin: "0 20px"
   }
 });

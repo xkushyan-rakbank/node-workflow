@@ -17,7 +17,7 @@ export const prospect = {
   applicantInfo: {
     fullName: "",
     email: "",
-    countryCode: countryCodeOptions[0].key,
+    countryCode: countryCodeOptions[0].label,
     mobileNo: ""
   },
   generalInfo: {

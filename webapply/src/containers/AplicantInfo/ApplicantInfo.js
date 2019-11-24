@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { Input, CustomSelect, InputGroup } from "./../../components/Form";
+import { connect } from "react-redux";
+import { Formik, Form } from "formik";
+
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
+import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { countryCodeOptions } from "./../../constants/options";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { prospect } from "./../../constants/config";
@@ -23,9 +24,7 @@ const aplicantInfoSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ApplicantInfoPage = props => {
-  const { receiveAppConfig, applicantInfoForm } = props;
-
+const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm }) => {
   const onSubmit = values => applicantInfoForm(values);
 
   useEffect(() => {
@@ -46,21 +45,35 @@ const ApplicantInfoPage = props => {
       >
         {() => (
           <Form>
-            <Field name="fullName" label="Your Name" placeholder="Your Name" component={Input} />
+            <Field
+              name="fullName"
+              path="prospect.applicantInfo.fullName"
+              label="Your Name"
+              placeholder="Your Name"
+              component={Input}
+            />
 
-            <Field name="email" label="Your E-mail Address" placeholder="Email" component={Input} />
+            <Field
+              name="email"
+              path="prospect.applicantInfo.email"
+              label="Your E-mail Address"
+              placeholder="Email"
+              component={Input}
+            />
 
             <InputGroup>
               <Field
                 name="countryCode"
+                path="prospect.applicantInfo.countryCode"
+                required
                 options={countryCodeOptions}
                 component={CustomSelect}
-                extractId={option => option.key}
                 shrink={false}
               />
 
               <Field
                 name="mobileNo"
+                path="prospect.applicantInfo.mobileNo"
                 label="Your Mobile Number"
                 placeholder="Mobile Number"
                 component={Input}
