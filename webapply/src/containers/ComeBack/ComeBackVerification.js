@@ -64,7 +64,11 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
           <Form>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification onChange={isCodeValueValid} />
+                <OtpVerification
+                  code={code}
+                  isCodeValueValid={isValidCode}
+                  onChange={isCodeValueValid}
+                />
               </Grid>
               {otp.verificationError && (
                 <ErrorMessage

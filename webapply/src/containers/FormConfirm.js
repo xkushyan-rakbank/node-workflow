@@ -129,7 +129,11 @@ class FormConfirm extends React.Component {
         </p>
         <form noValidate onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">
-            <OtpVerification onChange={this.isCodeValueValid} />
+            <OtpVerification
+              code={this.state.code}
+              isCodeValueValid={this.state.isValidCode}
+              onChange={this.isCodeValueValid}
+            />
           </Grid>
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
           {this.props.otp.verificationError && <ErrorMessage error="Code verification failed" />}

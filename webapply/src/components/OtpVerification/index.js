@@ -1,15 +1,12 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import Grid from "@material-ui/core/Grid";
 import { digitRegExp } from "../../constants";
 import Input from "../../components/InputField/Input";
 import { useStyles } from "./styled";
 
-const OtpVerification = onChange => {
+const OtpVerification = ({ onChange, isValidCode, code }) => {
   const classes = useStyles();
-
-  const [code, setCode] = useState(Array(6).fill(""));
-  const [invalid, setInvalid] = useState(false);
-  const inputRefs = [];
+  const inputRefs = code.map(() => null);
 
   const bindNodeRef = useCallback(
     index => node => {
@@ -25,37 +22,20 @@ const OtpVerification = onChange => {
     [inputRefs]
   );
 
-  const jumpToNextInput = useCallback(
-    name => {
-      const index = Number(name);
-      inputRefs[index] && inputRefs[index].blur();
-      inputRefs[index + 1] && inputRefs[index + 1].focus();
-    },
-    [inputRefs]
-  );
-
   const handleChange = useCallback(
     event => {
       const { value, name } = event.target;
-      const newValue = value.trim();
-      const newState = { invalid };
-      if (digitRegExp.test(value) || (code[name] && !newValue)) {
-        const newCode = code;
-        newCode[name] = newValue;
-        newState.code = newCode;
-        if (newValue) {
-          jumpToNextInput(name);
-        }
+      const newCodeIndex = parseInt(name, 10);
+      const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
+
+      if (inputRefs[newCodeIndex + 1]) {
+        inputRefs[newCodeIndex + 1].focus();
       }
 
-      const isValid = code.every(value => digitRegExp.test(value));
-      //onChange = () => onChange({ isValid, code: code });
-      onChange({ isValid, code });
-
-      setCode(newState.code);
-      setInvalid(newState.invalid);
+      const isValid = newCode.every(value => digitRegExp.test(value));
+      onChange({ isValid, code: newCode });
     },
-    [setCode, setInvalid, jumpToNextInput, code, invalid, onChange]
+    [code, inputRefs, onChange]
   );
 
   return (
