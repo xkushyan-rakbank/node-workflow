@@ -104,7 +104,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
   }
 
   const onSubmit = values => {
-    // handleContinue();
+    handleContinue();
     const prospectValue = {
       annualFinTurnoverAmtInAED: values.annualFinTurnoverAmtInAED,
       anticipatedTransactionsDetails: {

@@ -1,6 +1,6 @@
 import { CompanyAnticipatedTransactions } from "./CompanySummarySteps/CompanyAnticipatedTransactions";
-import CompanyPreferredMailingAddressForm from "./CompanySummarySteps/CompanyPreferredMailingAddressForm";
-import CompanyPreferredContactInformationForm from "./CompanySummarySteps/CompanyPreferredContactInformationForm";
+import { CompanyPreferredMailingAddress } from "./CompanySummarySteps/CompanyPreferredMailingAddress";
+import CompanyPreferredContactInformationForm from "./CompanySummarySteps/CompanyPreferredContactInformation";
 import { CompanyBusinessRelationships } from "./CompanySummarySteps/CompanyBusinessRelationships";
 import { CompanyBranchesAndSubsidiaries } from "./CompanySummarySteps/CompanyBranchesAndSubsidiaries";
 
@@ -29,7 +29,7 @@ export const finalQuestionsSteps = [
   {
     step: STEP_4,
     title: "Preferred mailing address",
-    component: CompanyPreferredMailingAddressForm
+    component: CompanyPreferredMailingAddress
   },
   {
     step: STEP_5,

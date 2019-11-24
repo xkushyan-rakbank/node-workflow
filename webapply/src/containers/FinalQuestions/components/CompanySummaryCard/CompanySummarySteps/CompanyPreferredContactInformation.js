@@ -45,7 +45,7 @@ const styles = {
 
 const UAEPhoneCode = "971";
 
-class CompanyPreferredContactInformationForm extends Component {
+class CompanyPreferredContactInformation extends Component {
   static defaultProps = {
     handleContinue: () => {}
   };
@@ -154,5 +154,5 @@ export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(CompanyPreferredContactInformationForm)
+  )(CompanyPreferredContactInformation)
 );
