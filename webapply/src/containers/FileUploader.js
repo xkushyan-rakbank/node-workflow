@@ -22,9 +22,6 @@ const style = {
   Rectangle: {
     width: "622px",
     height: "940px"
-  },
-  buttonWrap: {
-    marginTop: "0"
   }
 };
 class FileUploader extends React.Component {
@@ -99,11 +96,7 @@ class FileUploader extends React.Component {
             <SubmitButton label="Next Step" justify="flex-end" disabled={true} />
           ) : (
             <Link to={routes.selectServices}>
-              <SubmitButton
-                label="Next Step"
-                justify="flex-end"
-                classes={{ buttonWrap: classes.buttonWrap }}
-              />
+              <SubmitButton label="Next Step" justify="flex-end" />
             </Link>
           )}
         </div>

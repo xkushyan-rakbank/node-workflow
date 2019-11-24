@@ -21,9 +21,6 @@ const style = {
   },
   smallMargin: {
     margin: "20px 0 40px"
-  },
-  buttonWrap: {
-    marginTop: "0"
   }
 };
 
@@ -86,7 +83,6 @@ class FinalQuestions extends React.Component {
             handleClick={this.goToUploadDocument}
             label="Next Step"
             justify="flex-end"
-            classes={{ buttonWrap: classes.buttonWrap }}
             disabled={this.isSubmitDisabled()}
           />
         </div>
