@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import OtpVerification from "../../components/OtpVerification";
+import { OtpVerification } from "../../components/OtpVerification";
 import { ErrorMessage } from "../../components/Notifications";
 import { generateOtpCode, verifyOtp } from "../../store/actions/otp";
 import { getOtp } from "../../store/selectors/otp";
@@ -40,7 +40,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
-  const isCodeValueValid = useCallback(
+  const handleSetCode = useCallback(
     ({ isValid, code }) => {
       setIsValidCode(isValid);
       setCode(code);
@@ -64,11 +64,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
           <Form>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification
-                  code={code}
-                  isCodeValueValid={isValidCode}
-                  onChange={isCodeValueValid}
-                />
+                <OtpVerification code={code} onChange={handleSetCode} />
               </Grid>
               {otp.verificationError && (
                 <ErrorMessage

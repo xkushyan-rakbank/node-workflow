@@ -3,7 +3,7 @@ import cx from "classnames";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { SubmitButton } from "../components/Buttons/SubmitButton";
-import OtpVerification from "../components/OtpVerification";
+import { OtpVerification } from "../components/OtpVerification";
 import { withStyles } from "@material-ui/core/styles";
 import { ErrorMessage } from "./../components/Notifications";
 import { displayScreenBasedOnViewId, updateSaveType } from "../store/actions/appConfig";
@@ -85,7 +85,7 @@ class FormConfirm extends React.Component {
     return this.state.code.join("");
   }
 
-  isCodeValueValid = ({ isValid, code }) => {
+  handleSetCode = ({ isValid, code }) => {
     this.setState({
       isValidCode: isValid,
       code
@@ -129,11 +129,7 @@ class FormConfirm extends React.Component {
         </p>
         <form noValidate onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">
-            <OtpVerification
-              code={this.state.code}
-              isCodeValueValid={this.state.isValidCode}
-              onChange={this.isCodeValueValid}
-            />
+            <OtpVerification code={this.state.code} onChange={this.handleSetCode} />
           </Grid>
           {this.state.invalid && <ErrorMessage error="Invalid code" />}
           {this.props.otp.verificationError && <ErrorMessage error="Code verification failed" />}
