@@ -17,5 +17,10 @@ export const useStyles = makeStyles({
   },
   labelStyle: {
     margin: "0 14px"
+  },
+  icon: {
+    width: "40px",
+    height: "40px",
+    marginRight: "10px"
   }
 });

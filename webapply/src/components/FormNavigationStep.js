@@ -1,8 +1,9 @@
 import React from "react";
 import cx from "classnames";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import DoneIcon from "@material-ui/icons/Done";
 import { withStyles } from "@material-ui/core/styles";
+
+import { Icon, ICONS } from "./Icons";
 
 const style = {
   stepItem: {
@@ -36,6 +37,9 @@ const style = {
   icon: {
     fontSize: "13px !important"
   },
+  doneIcon: {
+    width: "24px"
+  },
   activeStepItem: {
     opacity: "1",
     fontWeight: "600"
@@ -54,7 +58,7 @@ const FormNavigationLink = props => {
         </span>
       ) : filled ? (
         <span className="circle">
-          <DoneIcon className={classes.icon} />
+          <Icon name={ICONS.done} className={classes.doneIcon} />
         </span>
       ) : (
         ""
