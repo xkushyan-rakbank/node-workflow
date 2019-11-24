@@ -14,7 +14,7 @@ export const initialState = {
   isConfirmDialogOpen: false,
   editableStakeholder: undefined,
   isFinalScreenShown: false,
-  step: 1,
+  step: 3,
   confirmation: false,
   isStatusShown: false,
   completedStep: 0,
