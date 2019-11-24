@@ -23,7 +23,7 @@ function* applicantInfoFormSaga(action) {
     yield put(setVerified(true));
 
     yield put(updateProspectId(prospectId));
-    yield put(generateOtpCode());
+    yield put(generateOtpCode({ ...action.data, prospectId }));
     yield call(history.push, routes.verifyOtp);
     yield put(updateSaveType("next"));
     yield put(resetInputsErrors());

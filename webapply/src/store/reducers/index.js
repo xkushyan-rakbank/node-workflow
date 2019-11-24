@@ -2,7 +2,6 @@ import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import appConfig from "./appConfig";
 import reCaptcha from "./reCaptcha";
-// import applicantInfoForm from "./applicantInfoForm";
 import serverValidation from "./serverValidation";
 import sendProspectToAPI from "./sendProspectToAPI";
 import applicationStatus from "./applicationStatus";

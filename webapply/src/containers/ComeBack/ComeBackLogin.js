@@ -1,40 +1,35 @@
 import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
-
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
+import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
+import { prospect } from "./../../constants/config";
+import { countryCodeOptions } from "./../../constants/options";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
-import TextInput from "../../components/InputField/TextInput";
-import PureSelect from "../../components/InputField/PureSelect";
-import TextHelpWithLink from "../../components/TextHelpWithLink";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
-import { getReCaptchaToken } from "../../store/selectors/reCaptcha";
 import { isOtpGenerated } from "../../store/selectors/otp";
-import { getInputValueById } from "../../store/selectors/input";
 import routes from "./../../routes";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
 import { useStyles } from "./styled";
 
-const ComeBackLogin = ({
-  history,
-  email,
-  mobileNo,
-  countryCode,
-  generateOtpCode,
-  isOtpGenerated,
-  setToken = () => {},
-  setVerified
-}) => {
+const ComebackSchema = Yup.object({
+  email: Yup.string()
+    .required("You need to provide Email address")
+    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+  countryCode: Yup.string().required("Select country code"),
+  mobileNo: Yup.string()
+    .required("You need to provide mobile number")
+    .matches(PHONE_REGEX, "This is not a valid phone")
+});
+
+const ComeBackLogin = ({ history, generateOtpCode, isOtpGenerated, setToken, setVerified }) => {
   const classes = useStyles();
-  const submitForm = useCallback(
-    event => {
-      event.preventDefault();
-      generateOtpCode();
-    },
-    [generateOtpCode]
-  );
+  const submitForm = useCallback(values => generateOtpCode(values), [generateOtpCode]);
   const handleReCaptchaVerify = useCallback(
     token => {
       setToken(token);
@@ -57,45 +52,62 @@ const ComeBackLogin = ({
         title="Wondering about your application? You came to the right place."
         info="Please enter the login you used when you first applied"
       />
-
-      <form noValidate onSubmit={submitForm} className={classes.form}>
-        <div>
-          <TextInput id="Aplnt.email" />
-          <TextInput
-            id="Aplnt.mobileNo"
-            selectId="Aplnt.countryCode"
-            select={<PureSelect id="Aplnt.countryCode" combinedSelect defaultValue="UAE" />}
-          />
-
-          <TextHelpWithLink text="Can’t remember your login?" linkText="Chat with us" linkTo="#" />
-        </div>
-
-        {IS_RECAPTCHA_ENABLE && (
-          <ErrorBoundary className={classes.reCaptchaContainer}>
-            <ReCaptcha
-              onVerify={handleReCaptchaVerify}
-              onExpired={handleVerifiedFailed}
-              onError={handleVerifiedFailed}
+      <Formik
+        initialValues={prospect.applicantInfo}
+        validationSchema={ComebackSchema}
+        onSubmit={submitForm}
+      >
+        {() => (
+          <Form>
+            <Field
+              name="email"
+              path="prospect.applicantInfo.email"
+              label="Your E-mail Address"
+              placeholder="Email"
+              component={Input}
             />
-          </ErrorBoundary>
-        )}
 
-        <SubmitButton
-          label="Next"
-          justify="flex-end"
-          disabled={!email || !countryCode || !mobileNo}
-        />
-      </form>
+            <InputGroup>
+              <Field
+                name="countryCode"
+                path="prospect.applicantInfo.countryCode"
+                options={countryCodeOptions}
+                component={CustomSelect}
+                extractId={option => option.key}
+                shrink={false}
+              />
+
+              <Field
+                name="mobileNo"
+                path="prospect.applicantInfo.mobileNo"
+                label="Your Mobile Number"
+                placeholder="Mobile Number"
+                component={Input}
+              />
+            </InputGroup>
+
+            {IS_RECAPTCHA_ENABLE && (
+              <ErrorBoundary className={classes.reCaptchaContainer}>
+                <ReCaptcha
+                  onVerify={handleReCaptchaVerify}
+                  onExpired={handleVerifiedFailed}
+                  onError={handleVerifiedFailed}
+                />
+              </ErrorBoundary>
+            )}
+
+            <div className="linkContainer">
+              <SubmitButton justify="flex-end" label="Next" />
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };
 
 const mapStateToProps = state => ({
-  isOtpGenerated: isOtpGenerated(state),
-  reCaptchaToken: getReCaptchaToken(state),
-  email: getInputValueById(state, "Aplnt.email"),
-  mobileNo: getInputValueById(state, "Aplnt.mobileNo"),
-  countryCode: getInputValueById(state, "Aplnt.countryCode")
+  isOtpGenerated: isOtpGenerated(state)
 });
 
 const mapDispatchToProps = {
