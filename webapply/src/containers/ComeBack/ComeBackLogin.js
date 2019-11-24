@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { Input, CustomSelect, InputGroup } from "./../../components/Form";
+import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { prospect } from "./../../constants/config";
 import { countryCodeOptions } from "./../../constants/options";
@@ -27,17 +27,9 @@ const ComebackSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ComeBackLogin = ({
-  history,
-  generateOtpCode,
-  isOtpGenerated,
-  setToken = () => {},
-  setVerified
-}) => {
+const ComeBackLogin = ({ history, generateOtpCode, isOtpGenerated, setToken, setVerified }) => {
   const classes = useStyles();
-
-  const submitForm = values => generateOtpCode(values);
-
+  const submitForm = useCallback(values => generateOtpCode(values), [generateOtpCode]);
   const handleReCaptchaVerify = useCallback(
     token => {
       setToken(token);
@@ -67,11 +59,18 @@ const ComeBackLogin = ({
       >
         {() => (
           <Form>
-            <Field name="email" label="Your E-mail Address" placeholder="Email" component={Input} />
+            <Field
+              name="email"
+              path="prospect.applicantInfo.email"
+              label="Your E-mail Address"
+              placeholder="Email"
+              component={Input}
+            />
 
             <InputGroup>
               <Field
                 name="countryCode"
+                path="prospect.applicantInfo.countryCode"
                 options={countryCodeOptions}
                 component={CustomSelect}
                 extractId={option => option.key}
@@ -80,6 +79,7 @@ const ComeBackLogin = ({
 
               <Field
                 name="mobileNo"
+                path="prospect.applicantInfo.mobileNo"
                 label="Your Mobile Number"
                 placeholder="Mobile Number"
                 component={Input}
