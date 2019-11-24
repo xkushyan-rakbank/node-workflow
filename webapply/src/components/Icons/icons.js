@@ -1,9 +1,12 @@
-import { ReactComponent as Add } from "../../assets/icons/add.svg";
+import { ReactComponent as Done } from "../../assets/icons/add.svg";
+import { ReactComponent as Plus } from "../../assets/icons/add-icon.svg";
 
 export const iconComponents = {
-  add: Add
+  done: Done,
+  plus: Plus
 };
 
 export const ICONS = {
-  add: "add"
+  done: "done",
+  plus: "plus"
 };
