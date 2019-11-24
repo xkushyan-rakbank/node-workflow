@@ -10,7 +10,7 @@ import {
 
 const STOP = "stop";
 
-const getBaseURL = () => process.env.BASE_URL || "http://localhost:8080/";
+const getBaseURL = () => process.env.BASE_URL || "http://conv.rakbankonline.ae/quickapply";
 
 const instance = axios.create({
   baseURL: getBaseURL()
