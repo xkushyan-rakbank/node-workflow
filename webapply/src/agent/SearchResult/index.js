@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchApplicationList } from "./../SearchApplicationList/index";
 
-const SearchResult = props => {
+export const SearchResult = props => {
   return (
     <>
       <h2>Search Results</h2>
@@ -13,5 +13,3 @@ const SearchResult = props => {
     </>
   );
 };
-
-export default SearchResult;
