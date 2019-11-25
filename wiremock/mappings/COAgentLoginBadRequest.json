@@ -4,7 +4,7 @@
         "url": "/api/v1/banks/RAK/users/authenticate",
         "bodyPatterns": [
 			{
-				"matchesJsonPath": "$[?(@.username == 'InvalidFields' && @.password == 'admin@100')]"
+				"matchesJsonPath": "$[?(@.username == 'InvalidFields' && @.password == 'admin')]"
 			}
 		]
     },

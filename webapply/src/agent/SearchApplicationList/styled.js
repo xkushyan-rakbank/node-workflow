@@ -1,4 +1,6 @@
-export const styles = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   wrapper: {
     marginTop: "24px",
     borderRadius: "8px",
@@ -58,4 +60,4 @@ export const styles = {
     color: "#263d4c",
     minHeight: "18px"
   }
-};
+});
