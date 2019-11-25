@@ -7,7 +7,7 @@ import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
 
-export const FinalQuestionsComponent = ({ signatories, history }) => {
+export const FinalQuestionsComponent = ({ signatories, history, signatoriesMock }) => {
   const filledSignatoriesSet = new Set();
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
   const [filledSignatoriesIndexes, setFilledSignatoriesIndexes] = useState(filledSignatoriesSet);
@@ -39,7 +39,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         />
       </div>
       <div className={classes.sectionContainer}>
-        {signatories.map((item, index) => (
+        {signatoriesMock.map((item, index) => (
           <SignatorySummaryCard
             key={index}
             signatory={item}

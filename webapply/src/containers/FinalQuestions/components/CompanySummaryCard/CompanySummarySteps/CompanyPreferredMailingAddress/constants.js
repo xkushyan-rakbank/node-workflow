@@ -61,7 +61,7 @@ export const emirateCityOptions = [
   }
 ];
 
-export const OTHER_OPTION_CODE = "0";
+export const OTHER_OPTION_CODE = "Other";
 
 export const spaceTypeOptions = [
   {
@@ -98,6 +98,6 @@ export const spaceTypeOptions = [
     code: OTHER_OPTION_CODE,
     key: OTHER_OPTION_CODE,
     value: OTHER_OPTION_CODE,
-    label: "Other"
+    label: OTHER_OPTION_CODE
   }
 ];

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import get from "lodash/get";
 import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import StepComponent from "../../../../components/StepComponent";
-import { usePreviousHook } from "../../../../utils/usePreviousHook";
+import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { useStyles } from "./styled";
 import { signatoriesSteps, INITIAL_SIGNATORY_STEP } from "./constants";
 
@@ -16,25 +15,11 @@ export const SignatorySummaryCardComponent = ({
   filledSignatoriesIndexes,
   signatory: { firstName, lastName, fullName } = {}
 }) => {
+  const filledSignatoryStepsSet = new Set();
   const [step, setStep] = useState(INITIAL_SIGNATORY_STEP);
-  const [completedStep, setCompletedStep] = useState(null);
+  const [completedSteps, setCompletedSteps] = useState(filledSignatoryStepsSet);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isContinueDisabled, setIsContinueDisabled] = useState(true);
-  const prevResetStep = usePreviousHook(resetStep);
   const classes = useStyles();
-
-  useEffect(() => {
-    if (prevResetStep || !resetStep || !isExpanded) {
-      return;
-    }
-    const nextStep = step + 1;
-    setStep(nextStep);
-    setCompletedStep(step);
-    if (nextStep > signatoriesSteps.length) {
-      setIsExpanded(false);
-      addFilledSignatoryIndex(index + 1);
-    }
-  }, [resetStep, isExpanded, addFilledSignatoryIndex, step, prevResetStep, index]);
 
   const renderControls = () => {
     if (isExpanded) {
@@ -42,13 +27,13 @@ export const SignatorySummaryCardComponent = ({
     }
 
     return (
-      filledSignatoriesIndexes.has(index) && (
-        <LinkButton
-          clickHandler={() => {
-            setIsExpanded(true);
-          }}
-        />
-      )
+      // filledSignatoriesIndexes.has(index) && (
+      <LinkButton
+        clickHandler={() => {
+          setIsExpanded(true);
+        }}
+      />
+      // )
     );
   };
 
@@ -78,9 +63,15 @@ export const SignatorySummaryCardComponent = ({
   };
 
   const changeStep = item => {
-    if (completedStep >= item.step) {
-      this.setState({ step: item.step });
-    }
+    // if (!item.isFilled) {
+    //   return;
+    // }
+    setStep(item.step);
+  };
+
+  const handleContinue = item => {
+    setStep(item.step + 1);
+    setCompletedSteps(filledSignatoriesIndexes.add(item.step));
   };
 
   return (
@@ -93,20 +84,20 @@ export const SignatorySummaryCardComponent = ({
     >
       {isExpanded &&
         signatoriesSteps.map(item => {
-          const isFilled = completedStep >= item.step;
+          const stepIndex = item.step - 1;
+          const stepForm = signatoriesSteps[stepIndex].component;
           return (
             <StepComponent
-              index={item.step}
+              index={index}
               key={item.step}
               steps={signatoriesSteps}
               step={item.step}
               title={item.title}
-              activeStep={step === item.step}
-              filled={isFilled}
-              clickHandler={changeStep}
-              handleContinue={sendProspectToAPI}
-              isContinueDisabled={isContinueDisabled}
-              setIsContinueDisabled={setIsContinueDisabled}
+              isActiveStep={step === item.step}
+              isFilled={completedSteps.has(item.step)}
+              clickHandler={() => changeStep(item)}
+              handleContinue={() => handleContinue(item)}
+              stepForm={stepForm}
             />
           );
         })}
