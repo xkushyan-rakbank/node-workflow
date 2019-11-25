@@ -5,7 +5,7 @@ import { FormControl } from "@material-ui/core";
 
 import { ErrorMessage } from "./../../../Notifications";
 import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
-import { useStyles } from "./styled";
+import { useStyles, customStyles } from "./styled";
 
 const components = {
   Control,
@@ -22,6 +22,7 @@ export const SelectAutocomplete = ({
   form: { errors, touched, setFieldValue },
   options,
   multiple,
+  disabled,
   ...props
 }) => {
   const classes = useStyles();
@@ -37,10 +38,12 @@ export const SelectAutocomplete = ({
         {...props}
         isClearable={true}
         classes={classes}
+        styles={customStyles}
         options={options}
         components={components}
         onChange={handleChange}
         isMulti={multiple}
+        isDisabled={disabled}
         closeMenuOnSelect={!multiple}
         hideSelectedOptions={false}
         joinValues={true}

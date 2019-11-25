@@ -10,10 +10,10 @@ import {
 
 const STOP = "stop";
 
-const getBaseURL = () => process.env.BASE_URL || "http://conv.rakbankonline.ae/quickapply";
+// const getBaseURL = () => process.env.BASE_URL || "http://conv.rakbankonline.ae/quickapply";
 
 const instance = axios.create({
-  baseURL: getBaseURL()
+  baseURL: "http://localhost:8080"
 });
 
 instance.interceptors.response.use(

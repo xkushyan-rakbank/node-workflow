@@ -41,7 +41,6 @@ export const CustomSelect = ({
   }, []);
 
   const renderValue = selected => (!multiple ? selected : selected.join(", "));
-
   return (
     <FormControl className="formControl" variant="outlined">
       <InputLabel ref={inputLabel} shrink={shrink}>

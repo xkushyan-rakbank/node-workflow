@@ -4,9 +4,6 @@ import { AccountDetails } from "../containers/SelectServices/components/AccountD
 import { SigningPreferences } from "../containers/SelectServices/components/SigningPreferences";
 import { Channels } from "../containers/SelectServices/components/Channels";
 import { ValueAddedServices } from "../containers/SelectServices/components/ValueAddedServices";
-import { CompanyDetails } from "../components/AboutCompanyStepForms/CompanyDetails";
-import Industry from "../components/AboutCompanyStepForms/Industry";
-import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";
 import accountDetails from "../assets/icons/account_details.png";
 import signingPreferences from "../assets/icons/signing_preferences.png";
 import channels from "../assets/icons/channels.png";
@@ -27,20 +24,6 @@ import SignatoryPreferredMailingAddressForm from "../components/FinalQuestions/S
 import SignatoryEmploymentDetailsForm from "../components/FinalQuestions/SignatoryEmploymentDetailsForm";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
-
-export const aboutCompanySteps = [
-  {
-    step: 1,
-    title: "Company Details",
-    component: CompanyDetails
-  },
-  {
-    step: 2,
-    title: "Industry",
-    component: Industry
-  },
-  { step: 3, title: "Licence Information", component: LicenseInformation }
-];
 
 export const finalQuestionsSteps = [
   {
