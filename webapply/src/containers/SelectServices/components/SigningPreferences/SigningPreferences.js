@@ -19,9 +19,8 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import Divider from "../../../../components/Divider";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
-
-import { useStyles } from "./styled";
 import { updateProspect } from "../../../../store/actions/appConfig";
+import { useStyles } from "./styled";
 
 const MAX_SIGNATORIES = 2;
 const signingPreferencesSchema = Yup.object({
@@ -87,7 +86,6 @@ export const SigningPreferencesComponent = ({ goToNext }) => {
     >
       {({ values, setFieldValue }) => (
         <Form>
-          {console.log(values)}
           <Subtitle title="Signing transactions" helpMessage="help message todo" />
           <Field
             name="accountSigningType"
