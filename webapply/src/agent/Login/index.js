@@ -6,6 +6,7 @@ import { Input, AutoSaveField as Field } from "./../../components/Form";
 import { NAME_REGEX } from "./../../utils/validation";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { loginInfoForm } from "../../store/actions/loginForm";
+import * as inputSelectors from "../../store/selectors/input";
 import { useStyles } from "./styled";
 
 const loginSchema = Yup.object({
@@ -17,7 +18,7 @@ const loginSchema = Yup.object({
     .matches(NAME_REGEX, "This is not a valid password")
 });
 
-const Login = ({ loginInfoForm }) => {
+const LoginPage = ({ userName, password, loginInfoForm }) => {
   const classes = useStyles();
   const submitForm = useCallback(values => loginInfoForm(values), [loginInfoForm]);
 
@@ -49,7 +50,11 @@ const Login = ({ loginInfoForm }) => {
             />
 
             <div className="linkContainer">
-              <SubmitButton justify="flex-end" label="Next Step" />
+              <SubmitButton
+                justify="flex-end"
+                label="Next Step"
+                disabled={!password || !userName}
+              />
             </div>
           </Form>
         )}
@@ -58,11 +63,16 @@ const Login = ({ loginInfoForm }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  userName: inputSelectors.getInputValueById(state, "login.userName"),
+  password: inputSelectors.getInputValueById(state, "login.password")
+});
+
 const mapDispatchToProps = {
   loginInfoForm
 };
 
-export default connect(
-  null,
+export const Login = connect(
+  mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(LoginPage);
