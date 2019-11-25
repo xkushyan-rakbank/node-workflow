@@ -1,6 +1,5 @@
 import React from "react";
 import { generatePath } from "react-router";
-import get from "lodash/get";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { useStyles } from "./styled";
@@ -29,32 +28,26 @@ export const SearchApplicationList = ({ currentApplications }) => {
               to={generatePath(routes.SearchedAppInfo, { id: application.prospectId })}
             >
               <div>
-                <div className={classes.fullName}>
-                  {get(application, "applicantInfo.fullName", "")}
-                </div>
-                <div className={classes.account}>{get(application, "applicantInfo.email", "")}</div>
+                <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
+                <div className={classes.account}>{application.applicantInfo.email}</div>
                 <span className={classes.account}>
-                  {`${get(application, "applicantInfo.countryCode", "")} ${get(
-                    application,
-                    "applicantInfo.mobileNo",
-                    ""
-                  )}`}
+                  {`${application.applicantInfo.countryCode} ${application.applicantInfo.mobileNo}`}
                 </span>
                 <span className={classes.account}>
                   <br />
-                  {`Lead No. - ${get(application, "organizationInfo.leadNumber", "")}`}
+                  {`Lead No. - ${application.organizationInfo.leadNumber}`}
                 </span>
               </div>
               <div>
                 <div className={classes.companyName}>
-                  {get(application, "organizationInfo.companyName", "")}
+                  {application.organizationInfo.companyName}
                 </div>
                 <div className={classes.account}>
-                  {`TL No. - ${get(application, "organizationInfo.licenseNumber", "")}`}
+                  {`TL No. - ${application.organizationInfo.licenseNumber}`}
                 </div>
               </div>
               <div>
-                <div className={classes.status}>{get(application, "status.statusType", "")}</div>
+                <div className={classes.status}>{application.status.statusType}</div>
               </div>
             </Link>
           ))}

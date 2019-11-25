@@ -356,10 +356,3 @@ export const prospect = {
     freeField5: ""
   }
 };
-
-export const agentSection = {
-  login: {
-    userName: "",
-    password: ""
-  }
-};

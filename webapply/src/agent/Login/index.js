@@ -4,10 +4,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Input, AutoSaveField as Field } from "./../../components/Form";
 import { NAME_REGEX } from "./../../utils/validation";
-import { agentSection } from "./../../constants/config";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { loginInfoForm } from "../../store/actions/loginForm";
-import * as inputSelectors from "../../store/selectors/input";
 import { useStyles } from "./styled";
 
 const loginSchema = Yup.object({
@@ -19,7 +17,7 @@ const loginSchema = Yup.object({
     .matches(NAME_REGEX, "This is not a valid password")
 });
 
-const Login = ({ userName, password, loginInfoForm }) => {
+const Login = ({ loginInfoForm }) => {
   const classes = useStyles();
   const submitForm = useCallback(values => loginInfoForm(values), [loginInfoForm]);
 
@@ -27,7 +25,7 @@ const Login = ({ userName, password, loginInfoForm }) => {
     <div className={classes.baseForm}>
       <h2>Login</h2>
       <Formik
-        initialValues={agentSection.login}
+        initialValues={{ userName: "", password: "" }}
         validationSchema={loginSchema}
         onSubmit={submitForm}
       >
@@ -51,11 +49,7 @@ const Login = ({ userName, password, loginInfoForm }) => {
             />
 
             <div className="linkContainer">
-              <SubmitButton
-                justify="flex-end"
-                label="Next Step"
-                disabled={!password || !userName}
-              />
+              <SubmitButton justify="flex-end" label="Next Step" />
             </div>
           </Form>
         )}
@@ -64,15 +58,11 @@ const Login = ({ userName, password, loginInfoForm }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  userName: inputSelectors.getInputValueById(state, "login.userName"),
-  password: inputSelectors.getInputValueById(state, "login.password")
-});
 const mapDispatchToProps = {
   loginInfoForm
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Login);
