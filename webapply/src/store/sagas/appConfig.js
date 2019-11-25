@@ -70,6 +70,7 @@ function* updateProspectSaga(action) {
   const state = yield select();
   const newConfig = cloneDeep(state.appConfig);
   for (let name in action.fields) {
+    console.log(name, action.fields);
     set(newConfig, name, action.fields[name]);
   }
 

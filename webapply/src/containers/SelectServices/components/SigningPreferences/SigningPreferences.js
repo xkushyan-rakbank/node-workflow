@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
-import range from "lodash/range";
 
-// import { prospect } from "../../../../constants/config";
+import { prospect } from "../../../../constants/config";
 import { PHONE_REGEX, NAME_REGEX } from "../../../../utils/validation";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 import { accountSigningTypes, countryCodeOptions } from "../../../../constants/options";
@@ -18,11 +17,11 @@ import {
 } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import Divider from "../../../../components/Divider";
-
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
 
 import { useStyles } from "./styled";
+import { updateProspect } from "../../../../store/actions/appConfig";
 
 const MAX_SIGNATORIES = 2;
 const signingPreferencesSchema = Yup.object({
@@ -53,12 +52,17 @@ export const SigningPreferencesComponent = ({ goToNext }) => {
   const classes = useStyles();
   const [countOfSignatories, setCountOfSignatories] = useState(1);
   const createAddNewPersonHandler = arrayHelpers => () => {
+    const key = `prospect.organizationInfo.contactDetailsForTxnReconfirming[${countOfSignatories}]`;
+
     arrayHelpers.push({
-      [`signatories.${countOfSignatories}.fullName`]: "",
-      [`signatories.${countOfSignatories}.primaryMobCountryCode`]: "",
-      [`signatories.${countOfSignatories}.primaryMobileNo`]: "",
-      [`signatories.${countOfSignatories}.primaryPhoneCountryCode`]: "",
-      [`signatories.${countOfSignatories}.primaryPhoneNo`]: ""
+      fullName: "",
+      primaryMobCountryCode: "",
+      primaryMobileNo: "",
+      primaryPhoneCountryCode: "",
+      primaryPhoneNo: ""
+    });
+    updateProspect({
+      [key]: prospect.organizationInfo.contactDetailsForTxnReconfirming[0]
     });
     setCountOfSignatories(countOfSignatories + 1);
   };
@@ -70,11 +74,11 @@ export const SigningPreferencesComponent = ({ goToNext }) => {
         accountSigningInstn: "",
         signatories: [
           {
-            "signatories.0.fullName": "",
-            "signatories.0.primaryMobCountryCode": "",
-            "signatories.0.primaryMobileNo": "",
-            "signatories.0.primaryPhoneCountryCode": "",
-            "signatories.0.primaryPhoneNo": ""
+            fullName: "",
+            primaryMobCountryCode: "",
+            primaryMobileNo: "",
+            primaryPhoneCountryCode: "",
+            primaryPhoneNo: ""
           }
         ]
       }}
@@ -83,6 +87,7 @@ export const SigningPreferencesComponent = ({ goToNext }) => {
     >
       {({ values, setFieldValue }) => (
         <Form>
+          {console.log(values)}
           <Subtitle title="Signing transactions" helpMessage="help message todo" />
           <Field
             name="accountSigningType"
@@ -113,52 +118,62 @@ export const SigningPreferencesComponent = ({ goToNext }) => {
           <FieldArray name="signatories">
             {arrayHelpers => (
               <>
-                {range(countOfSignatories).map(index => (
-                  <React.Fragment key={index}>
-                    <Field
-                      name={`signatories.${index}.fullName`}
-                      label="Your Name"
-                      placeholder="Your Name"
-                      component={Input}
-                    />
+                {[...Array(countOfSignatories).keys()].map(index => {
+                  // eslint-disable-next-line max-len
+                  const prefix = `prospect.organizationInfo.contactDetailsForTxnReconfirming[${index}]`;
 
-                    <Grid container spacing={3}>
-                      <Grid item md={6} sm={12}>
-                        <InputGroup>
-                          <Field
-                            name={`signatories.${index}.primaryMobCountryCode`}
-                            options={countryCodeOptions}
-                            component={CustomSelect}
-                            shrink={false}
-                          />
-                          <Field
-                            name={`signatories.${index}.primaryMobileNo`}
-                            label="Primary mobile no."
-                            placeholder="Primary mobile no."
-                            component={Input}
-                          />
-                        </InputGroup>
-                      </Grid>
+                  return (
+                    <React.Fragment key={index}>
+                      <Field
+                        name={`signatories.${index}.fullName`}
+                        path={`prospect.signatoryInfo[${index}].fullName`}
+                        label="Your Name"
+                        placeholder="Your Name"
+                        component={Input}
+                      />
 
-                      <Grid item md={6} sm={12}>
-                        <InputGroup>
-                          <Field
-                            name={`signatories.${index}.primaryPhoneCountryCode`}
-                            options={countryCodeOptions}
-                            component={CustomSelect}
-                            shrink={false}
-                          />
-                          <Field
-                            name={`signatories.${index}.primaryPhoneNo`}
-                            label="Landline phone no. (optional)"
-                            placeholder="Landline phone no. (optional)"
-                            component={Input}
-                          />
-                        </InputGroup>
+                      <Grid container spacing={3}>
+                        <Grid item md={6} sm={12}>
+                          <InputGroup>
+                            <Field
+                              name={`signatories.${index}.primaryMobCountryCode`}
+                              path={`${prefix}.primaryMobCountryCode`}
+                              options={countryCodeOptions}
+                              component={CustomSelect}
+                              shrink={false}
+                            />
+                            <Field
+                              name={`signatories.${index}.primaryMobileNo`}
+                              path={`${prefix}.primaryMobileNo`}
+                              label="Primary mobile no."
+                              placeholder="Primary mobile no."
+                              component={Input}
+                            />
+                          </InputGroup>
+                        </Grid>
+
+                        <Grid item md={6} sm={12}>
+                          <InputGroup>
+                            <Field
+                              name={`signatories.${index}.primaryPhoneCountryCode`}
+                              path={`${prefix}.primaryPhoneNo`}
+                              options={countryCodeOptions}
+                              component={CustomSelect}
+                              shrink={false}
+                            />
+                            <Field
+                              name={`signatories.${index}.primaryPhoneNo`}
+                              path={`${prefix}.primaryPhoneCountryCode`}
+                              label="Landline phone no. (optional)"
+                              placeholder="Landline phone no. (optional)"
+                              component={Input}
+                            />
+                          </InputGroup>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </React.Fragment>
-                ))}
+                    </React.Fragment>
+                  );
+                })}
 
                 {countOfSignatories < MAX_SIGNATORIES && (
                   <AddButton
