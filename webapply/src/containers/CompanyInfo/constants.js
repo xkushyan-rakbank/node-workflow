@@ -2,11 +2,11 @@ import { CompanyDetails } from "./../../components/AboutCompanyStepForms/Company
 import { Industry } from "./../../components/AboutCompanyStepForms/Industry";
 import { LicenseInformation } from "./../../components/AboutCompanyStepForms/LicenseInformation";
 
-const STEP_1 = 1;
-const STEP_2 = 2;
-const STEP_3 = 3;
+export const STEP_1 = 1;
+export const STEP_2 = 2;
+export const STEP_3 = 3;
 
-export const conpanyInfoSteps = [
+export const companyInfoSteps = [
   {
     step: STEP_1,
     title: "Company Details",

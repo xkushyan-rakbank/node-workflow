@@ -30,12 +30,11 @@ function* sendProspectToAPISaga() {
     const newProspect = getProspect(state);
     const prospectID = "COSME0000000000000001"; // remove hardcoded ID
 
+    yield put(resetInputsErrors());
+    yield put(resetFormStep({ resetStep: true }));
     yield call(prospect.update, prospectID, newProspect);
     yield put(sendProspectToAPISuccess(newProspect));
     yield put(updateSaveType("continue"));
-    yield put(resetFormStep({ resetStep: true }));
-    yield put(resetInputsErrors());
-    yield delay(500);
     yield put(resetFormStep({ resetStep: false }));
 
     if (!isUndefined(state.stakeholders.editableStakeholder)) {

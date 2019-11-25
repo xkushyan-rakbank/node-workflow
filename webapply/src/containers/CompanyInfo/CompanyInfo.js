@@ -1,53 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
 
 import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
 import { StepComponent } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
-import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import companyInfoIcon from "./../../assets/icons/companyInfo.png";
 import { getOrganizationInfo, getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
-import { conpanyInfoSteps } from "./constants";
+import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
-  isResetStep,
   history,
   loading,
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
   const [step, setStep] = useState(1);
-  const [completedStep, setCompletedStep] = useState(0);
-  const isDisabled = completedStep === conpanyInfoSteps.length;
 
-  useEffect(() => {
-    if (isResetStep) {
-      const nextStep = step + 1;
+  const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
+  const handleContinue = useCallback(() => {
+    sendProspectToAPI().then(() => setStep(step + 1));
+  }, [sendProspectToAPI, step]);
+  const createSetStepHandler = nextStep => () => {
+    if (step > nextStep) {
       setStep(nextStep);
-      setCompletedStep(step);
-    }
-  }, [isResetStep]);
-
-  const handleClick = () => history.push(routes.stakeholdersInfo);
-
-  const renderContent = () => (
-    <>
-      <div className={classes.title}>{completedStep >= 1 ? companyName : "Company Name"}</div>
-      {loading && <StatusLoader />}
-    </>
-  );
-
-  const setStepHandler = item => {
-    if (completedStep >= item.step) {
-      setStep(item.step);
     }
   };
-
-  const handleContinue = () => sendProspectToAPI();
 
   return (
     <>
@@ -57,34 +39,35 @@ export const CompanyInfoPage = ({
         sentence.
       </p>
 
-      <CompanyStakeholderCard content={renderContent()} defaultAvatarIcon={companyInfoIcon}>
-        {conpanyInfoSteps.map(item => {
-          const clickHandler = () => setStepHandler(item);
-          const stepIndex = item.step - 1;
-          const stepForm = conpanyInfoSteps[stepIndex].component;
-          const isFilled = completedStep >= item.step;
-
-          return (
-            <StepComponent
-              key={item.step}
-              title={item.title}
-              subTitle={item.infoTitle}
-              isActiveStep={step === item.step}
-              isFilled={isFilled}
-              clickHandler={clickHandler}
-              handleContinue={handleContinue}
-              stepForm={stepForm}
-            />
-          );
-        })}
+      <CompanyStakeholderCard
+        content={
+          <>
+            <div className={classes.title}>{step !== STEP_1 ? companyName : "Company Name"}</div>
+            {loading && <StatusLoader />}
+          </>
+        }
+        defaultAvatarIcon={companyInfoIcon}
+      >
+        {companyInfoSteps.map(item => (
+          <StepComponent
+            key={item.step}
+            title={item.title}
+            subTitle={item.infoTitle}
+            isActiveStep={step === item.step}
+            isFilled={step > item.step}
+            clickHandler={createSetStepHandler(item.step)}
+            handleContinue={handleContinue}
+            stepForm={item.component}
+          />
+        ))}
       </CompanyStakeholderCard>
 
       <div className="linkContainer">
         <ContainedButton
           justify="flex-end"
           label="Next Step"
-          disabled={!isDisabled}
-          handleClick={handleClick}
+          disabled={step <= STEP_3}
+          handleClick={handleClickNextStep}
           withRightArrow
         />
       </div>
@@ -94,12 +77,11 @@ export const CompanyInfoPage = ({
 
 const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
-  isResetStep: state.sendProspectToAPI.resetStep,
   organizationInfo: getOrganizationInfo(state)
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI
+  sendProspectToAPIPromisify
 };
 
 export const CompanyInfo = connect(
