@@ -17,18 +17,19 @@ import { useStyles } from "./styled";
 
 export const CustomSelect = ({
   extractId = option => option.key,
+  extractValue = option => option.value,
+  extractLabel = item => item.label,
   placeholder,
   multiple = false,
-  options,
+  options = [],
   required,
   label,
   field,
   infoTitle,
-  form: { errors, touched, setFieldValue },
+  form: { errors, touched },
   isMulti = false,
   shrink,
-  callback,
-  ...props
+  ...rest
 }) => {
   const classes = useStyles();
   const inputLabel = React.useRef(null);
@@ -40,38 +41,38 @@ export const CustomSelect = ({
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const renderValue = selected => (!multiple ? selected : selected.join(", "));
+  const renderValue = selected =>
+    !multiple
+      ? extractLabel(options.find(item => extractValue(item) === selected) || {})
+      : options
+          .flatMap(item => (selected.includes(extractValue(item)) ? [extractLabel(item)] : []))
+          .join(", ");
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <InputLabel ref={inputLabel} shrink={shrink}>
+      <InputLabel ref={inputLabel} shrink={shrink === false ? undefined : true}>
         {label}
       </InputLabel>
+
       <Select
         {...field}
-        {...props}
+        {...rest}
         renderValue={renderValue}
         multiple={multiple}
-        onChange={(e, value) => {
-          setFieldValue(field.name, value.props.value);
-          if (callback) {
-            callback(value.props.value);
-          }
-        }}
         input={<OutlinedInput labelWidth={labelWidth} />}
         IconComponent={KeyboardArrowDownIcon}
         className={cx(classes.selectField, classes.selectFieldBasic)}
         error={isError}
       >
         {options.map(option => (
-          <MenuItem key={extractId(option)} value={extractId(option)}>
+          <MenuItem key={extractId(option)} value={extractValue(option)}>
             {multiple ? (
               <>
                 <ListItemText primary={extractId(option)} />
-                <Checkbox color="default" checked={field.value.includes(extractId(option))} />
+                <Checkbox color="default" checked={field.value.includes(extractValue(option))} />
               </>
             ) : (
-              option.label
+              extractLabel(option)
             )}
           </MenuItem>
         ))}

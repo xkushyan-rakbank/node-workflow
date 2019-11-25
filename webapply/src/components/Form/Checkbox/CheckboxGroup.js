@@ -1,5 +1,7 @@
 import React from "react";
+import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
+import { RadioGroup } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 
 import { CustomCheckbox } from "./CustomCheckbox";
@@ -12,31 +14,52 @@ export const CheckboxesWrapper = styled("div")({
 });
 
 export const CheckboxGroup = ({
+  type = "checkbox",
   options,
-  keyExtractor = item => item.key,
-  valueExtractor = item => item.value,
-  labelExtractor = item => item.label,
+  extractId = option => option.key,
+  extractValue = option => option.value,
+  extractLabel = item => item.label,
   infoTitle,
   field,
-  form: { errors, touched }
+  form: { errors, touched },
+  onSelect = () => {}
 }) => {
-  const isError = errors[field.name] && touched[field.name];
+  const errorMessage = getIn(errors, field.name);
+  const hasError = errorMessage && getIn(touched, field.name);
 
   return (
     <FormControl className="formControl">
-      <CheckboxesWrapper>
-        {options.map(item => (
-          <CustomCheckbox
-            {...field}
-            key={keyExtractor(item)}
-            value={valueExtractor(item)}
-            label={labelExtractor(item)}
-            checked={(field.value || []).includes(valueExtractor(item))}
-          />
-        ))}
-      </CheckboxesWrapper>
+      {type !== "radio" ? (
+        <CheckboxesWrapper>
+          {options.map(item => (
+            <CustomCheckbox
+              {...field}
+              type={type}
+              key={extractId(item)}
+              value={extractValue(item)}
+              label={extractLabel(item)}
+              onSelect={onSelect}
+              checked={(field.value || []).includes(extractValue(item))}
+            />
+          ))}
+        </CheckboxesWrapper>
+      ) : (
+        <RadioGroup {...field}>
+          <CheckboxesWrapper>
+            {options.map(item => (
+              <CustomCheckbox
+                type={type}
+                key={extractId(item)}
+                value={extractValue(item)}
+                label={extractLabel(item)}
+                onSelect={onSelect}
+              />
+            ))}
+          </CheckboxesWrapper>
+        </RadioGroup>
+      )}
 
-      {isError && <ErrorMessage error={errors[field.name]} />}
+      {hasError && <ErrorMessage error={errorMessage} />}
       {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>
   );

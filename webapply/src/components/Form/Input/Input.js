@@ -1,7 +1,8 @@
 import React from "react";
-import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
+import { getIn } from "formik";
+
 import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
 
 import { useStyles } from "./styled";
@@ -18,7 +19,6 @@ export const Input = ({
   ...props
 }) => {
   const classes = useStyles();
-
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 

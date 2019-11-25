@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useFormikContext, Field } from "formik";
+import { useFormikContext, Field, getIn } from "formik";
 
 import { updateProspect } from "../../../store/actions/appConfig";
 
 export const AutoSaveField = ({ name, path, ...rest }) => {
   const dispatch = useDispatch();
   const { values } = useFormikContext();
-  const value = values[name];
+  const value = getIn(values, name);
 
   useEffect(() => {
     if (path) {

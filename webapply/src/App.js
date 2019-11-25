@@ -6,7 +6,7 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 
 import { history } from "./store";
 import { ApplicantInfo } from "./containers/AplicantInfo/ApplicantInfo";
-import Login from "./agent/Login";
+import { Login } from "./agent/Login";
 import AboutCompany from "./containers/AboutCompany";
 import CompanyStakeholders from "./containers/CompanyStakeholders/CompanyStakeholders";
 import { FinalQuestions } from "./containers/FinalQuestions/index";

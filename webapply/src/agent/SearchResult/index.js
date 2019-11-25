@@ -1,18 +1,13 @@
 import React from "react";
-import SearchApplicationList from "./../SearchApplicationList/index";
-import { titles, errorMsgs } from "./constants";
+import { SearchApplicationList } from "./../SearchApplicationList/index";
 
-const SearchResult = props => {
-  return (
-    <>
-      <h2>{titles.SEARCH_RESULTS_TITLE}</h2>
-      {props.searchResults.length ? (
-        <SearchApplicationList currentApplications={props.searchResults} />
-      ) : (
-        <div>{errorMsgs.NO_RECORD_FOUND_ERROR}</div>
-      )}
-    </>
-  );
-};
-
-export default SearchResult;
+export const SearchResult = ({ searchResults }) => (
+  <>
+    <h2>Search Results</h2>
+    {searchResults.length ? (
+      <SearchApplicationList currentApplications={searchResults} />
+    ) : (
+      <div>No Record Found.</div>
+    )}
+  </>
+);

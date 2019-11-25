@@ -12,7 +12,8 @@ export const endpoints = {
   searchProspectUri: "/webapply/api/v1/usertypes/:userType/prospects/search",
   getDocumentByIdUri: "/webapply/api/v1/prospects/:prospectId/documents/:documentKey",
   screenProspectUri: "/webapply/api/v1//prospects/:prospectId/screening",
-  otpUri: "/webapply/api/v1/otp"
+  otpUri: "/webapply/api/v1/otp",
+  authenticateUserUri: "/webapply/api/v1/users/authenticate"
 };
 
 export const prospect = {
@@ -269,10 +270,10 @@ export const prospect = {
       },
       contactDetails: {
         primaryMobileNo: "",
-        primaryMobCountryCode: "",
+        primaryMobCountryCode: countryCodeOptions[0].label,
         primaryEmail: "",
         primaryPhoneNo: "",
-        primaryPhoneCountryCode: "",
+        primaryPhoneCountryCode: countryCodeOptions[0].label,
         fax: "",
         faxCountryCode: "",
         secondaryPhoneNo: "",
