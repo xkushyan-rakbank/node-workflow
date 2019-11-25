@@ -1,8 +1,13 @@
 import React from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import cx from "classnames";
-import { Input, CustomSelect, Checkbox } from "../../../../../../components/Form";
+import {
+  Input,
+  CustomSelect,
+  Checkbox,
+  AutoSaveField as Field
+} from "../../../../../../components/Form";
 import Grid from "@material-ui/core/Grid";
 import { AddButton } from "../../../../../../components/Buttons/AddButton";
 import { RemoveButton } from "../../../../../../components/Buttons/RemoveButton";
@@ -15,9 +20,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
     Yup.object().shape({
       name: Yup.string()
-        .required("Required")
+        .required("You need to provide customer name")
         .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-      country: Yup.string().required("Required")
+      country: Yup.string().required("You need to provide company country")
     })
   ),
   isDontHaveSuppliersYet: Yup.boolean(),
@@ -26,23 +31,16 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     then: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .required("Required")
+          .required("You need to provide company name")
           .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-        country: Yup.string().required("Required")
+        country: Yup.string().required("You need to provide company country")
       })
     )
   }),
-  otherwise: Yup.array().of(
-    Yup.object().shape({
-      name: Yup.string(),
-      country: Yup.string()
-    })
-  ),
   isDontTradeGoodsYet: Yup.bool(),
   topOriginGoodsCountries: Yup.array().when("isDontTradeGoodsYet", {
     is: false,
-    then: Yup.array().of(Yup.string().required("Required")),
-    otherwise: Yup.array().of(Yup.string())
+    then: Yup.array().of(Yup.string().required("You need to provide trade good country"))
   }),
   otherBankingRelationshipsInfo: Yup.object().shape({
     otherBankingRelationshipsExist: Yup.bool(),
@@ -52,20 +50,26 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
         Yup.object().shape({
           bankName: Yup.string()
             .matches(BANK_NAME_REGEX, "This is not a valid bank name")
-            .required("Required")
-        })
-      ),
-      otherwise: Yup.array().of(
-        Yup.object().shape({
-          bankName: Yup.string()
+            .required("You need to provide bank name")
         })
       )
     })
   })
 });
 
-export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
+export const CompanyBusinessRelationshipsComponent = ({
+  handleContinue,
+  topCustomers,
+  isDontHaveSuppliersYet,
+  topSuppliers,
+  topOriginGoodsCountries,
+  isDontTradeGoodsYet,
+  otherBankingRelationshipsExist,
+  otherBankDetails,
+  updateProspect
+}) => {
   const classes = useStyles();
+  const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
 
   function checkboxCallback(value, name, callback) {
@@ -83,6 +87,15 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
     return items.length >= limit || !allFieldsFilled;
   }
 
+  function handleRemoveItem(items, index, prospect) {
+    const dataList = [...items];
+    dataList.splice(index, 1);
+    const path = `prospect.orgKYCDetails.${prospect}`;
+    updateProspect({
+      [path]: [...dataList]
+    });
+  }
+
   const onSubmit = values => {
     handleContinue();
     console.log(values);
@@ -92,14 +105,15 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          topCustomers: initialValues.topCustomers,
-          isDontHaveSuppliersYet: initialValues.isDontHaveSuppliersYet,
-          topSuppliers: initialValues.topSuppliers,
-          topOriginGoodsCountries: initialValues.topOriginGoodsCountries,
-          isDontTradeGoodsYet: initialValues.isDontTradeGoodsYet,
+          topCustomers: topCustomers || initialValues.topCustomers,
+          isDontHaveSuppliersYet: isDontHaveSuppliersYet || initialValues.isDontHaveSuppliersYet,
+          topSuppliers: topSuppliers || initialValues.topSuppliers,
+          topOriginGoodsCountries: topOriginGoodsCountries || initialValues.topOriginGoodsCountries,
+          isDontTradeGoodsYet: isDontTradeGoodsYet || initialValues.isDontTradeGoodsYet,
           otherBankingRelationshipsInfo: {
-            otherBankingRelationshipsExist: initialValues.otherBankingRelationshipsExist,
-            otherBankDetails: initialValues.otherBankDetails
+            otherBankingRelationshipsExist:
+              otherBankingRelationshipsExist || initialValues.otherBankingRelationshipsExist,
+            otherBankDetails: otherBankDetails || initialValues.otherBankDetails
           }
         }}
         onSubmit={onSubmit}
@@ -118,6 +132,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                           <Grid item md={index === 0 ? 6 : 5} sm={12}>
                             <Field
                               name={`topCustomers[${index}].name`}
+                              path={`prospect.orgKYCDetails.topCustomers[${index}].name`}
                               label="Name"
                               placeholder="Name"
                               component={Input}
@@ -133,13 +148,17 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                               options={countryOptions}
                               shrink={false}
                               name={`topCustomers[${index}].country`}
+                              path={`prospect.orgKYCDetails.topCustomers[${index}].country`}
                               placeholder="Country"
                               extractId={option => option.key}
                               component={CustomSelect}
                             />
                             {!!index && (
                               <RemoveButton
-                                onClick={() => arrayHelpers.remove(index)}
+                                onClick={() => {
+                                  arrayHelpers.remove(index);
+                                  handleRemoveItem(topCustomers, index, "topCustomers");
+                                }}
                                 title="Delete"
                               />
                             )}
@@ -169,29 +188,27 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top suppliers</h4>
-                    <Field name="isDontHaveSuppliersYet" label="I don't have any suppliers">
-                      {({ field, form }) => (
-                        <Checkbox
-                          field={field}
-                          form={form}
-                          label="I don't have any suppliers"
-                          name="isDontHaveSuppliersYet"
-                          callback={() =>
-                            checkboxCallback(
-                              values.isDontHaveSuppliersYet,
-                              "topSuppliers",
-                              setFieldValue
-                            )
-                          }
-                        />
-                      )}
-                    </Field>
+                    <Field
+                      name="isDontHaveSuppliersYet"
+                      path="prospect.orgKYCDetails.isDontHaveSuppliersYet"
+                      label="I don't have any suppliers"
+                      component={Checkbox}
+                      onChange={() => {
+                        setFieldValue("isDontHaveSuppliersYet", !values.isDontHaveSuppliersYet);
+                        checkboxCallback(
+                          values.isDontHaveSuppliersYet,
+                          "topSuppliers",
+                          setFieldValue
+                        );
+                      }}
+                    />
                     <Grid container spacing={3} className={classes.flexContainer}>
                       {values.topSuppliers.map((friend, index) => (
                         <React.Fragment key={index}>
                           <Grid item md={index === 0 ? 6 : 5} sm={12}>
                             <Field
                               name={`topSuppliers[${index}].name`}
+                              path={`prospect.orgKYCDetails.topSuppliers[${index}].name`}
                               label="Name"
                               placeholder="Name"
                               component={Input}
@@ -208,6 +225,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                               options={countryOptions}
                               shrink={false}
                               name={`topSuppliers[${index}].country`}
+                              path={`prospect.orgKYCDetails.topSuppliers[${index}].country`}
                               placeholder="Country"
                               extractId={option => option.key}
                               component={CustomSelect}
@@ -215,7 +233,10 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                             />
                             {!!index && (
                               <RemoveButton
-                                onClick={() => arrayHelpers.remove(index)}
+                                onClick={() => {
+                                  arrayHelpers.remove(index);
+                                  handleRemoveItem(topSuppliers, index, "topSuppliers");
+                                }}
                                 title="Delete"
                               />
                             )}
@@ -247,15 +268,17 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                     <h4 className={classes.groupLabel}>Top origin of goods</h4>
                     <Field
                       name="isDontTradeGoodsYet"
+                      path="prospect.orgKYCDetails.isDontTradeGoodsYet"
                       label="I don't trade with goods"
                       component={Checkbox}
-                      callback={() =>
+                      onChange={() => {
+                        setFieldValue("isDontTradeGoodsYet", !values.isDontTradeGoodsYet);
                         checkboxCallback(
                           values.isDontTradeGoodsYet,
                           "topOriginGoodsCountries",
                           setFieldValue
-                        )
-                      }
+                        );
+                      }}
                     />
                     <Grid container spacing={3} className={classes.flexContainer}>
                       {values.topOriginGoodsCountries.map((friend, index) => (
@@ -271,6 +294,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                               options={countryOptions}
                               shrink={false}
                               name={`topOriginGoodsCountries[${index}]`}
+                              path={`prospect.orgKYCDetails.topOriginGoodsCountries[${index}]`}
                               placeholder="Country"
                               extractId={option => option.key}
                               component={CustomSelect}
@@ -278,7 +302,14 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                             />
                             {!!index && (
                               <RemoveButton
-                                onClick={() => arrayHelpers.remove(index)}
+                                onClick={() => {
+                                  arrayHelpers.remove(index);
+                                  handleRemoveItem(
+                                    topOriginGoodsCountries,
+                                    index,
+                                    "topOriginGoodsCountries"
+                                  );
+                                }}
                                 title="Delete"
                               />
                             )}
@@ -308,16 +339,21 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                     <h4 className={classes.groupLabel}>Relationships with other banks</h4>
                     <Field
                       name="otherBankingRelationshipsInfo.otherBankingRelationshipsExist"
+                      path="prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankingRelationshipsExist"
                       label="The company has accounts with other banks, inside or outside the UAE"
                       type="checkbox"
                       component={Checkbox}
-                      callback={() =>
+                      onChange={() => {
+                        setFieldValue(
+                          "otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
+                          !values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist
+                        );
                         checkboxCallback(
                           !values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist,
                           "otherBankingRelationshipsInfo.otherBankDetails",
                           setFieldValue
-                        )
-                      }
+                        );
+                      }}
                     />
                     {values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist && (
                       <>
@@ -336,12 +372,20 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                                 >
                                   <Field
                                     name={`${bankFieldPath}[${index}].bankName`}
+                                    path={`${basisPath}${bankFieldPath}[${index}].bankName`}
                                     placeholder="Bank name"
                                     component={Input}
                                   />
                                   {!!index && (
                                     <RemoveButton
-                                      onClick={() => arrayHelpers.remove(index)}
+                                      onClick={() => {
+                                        arrayHelpers.remove(index);
+                                        handleRemoveItem(
+                                          otherBankDetails,
+                                          index,
+                                          "otherBankingRelationshipsInfo.otherBankDetails"
+                                        );
+                                      }}
                                       title="Delete"
                                     />
                                   )}

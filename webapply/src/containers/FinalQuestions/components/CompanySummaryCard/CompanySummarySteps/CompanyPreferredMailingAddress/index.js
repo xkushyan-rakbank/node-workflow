@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
-import { getInputValueById } from "../../../../../../store/selectors/input";
+import get from "lodash/get";
 import { CompanyPreferredMailingAddressComponent } from "./CompanyPreferredMailingAddress";
+import { getOrganizationInfo } from "../../../../../../store/selectors/appConfig";
+import { prospect } from "../../../../../../constants/config";
 
 const mapStateToProps = state => ({
-  emirateCity: getInputValueById(state, "OrgAddrAdrd.emirateCity", [0, 0]),
-  spaceType: getInputValueById(state, "OrgAddrAdrdSpace.spaceType", [0, 0])
+  addressInfo: get(getOrganizationInfo(state), "addressInfo", prospect.organizationInfo.addressInfo)
 });
 
 export const CompanyPreferredMailingAddress = connect(mapStateToProps)(

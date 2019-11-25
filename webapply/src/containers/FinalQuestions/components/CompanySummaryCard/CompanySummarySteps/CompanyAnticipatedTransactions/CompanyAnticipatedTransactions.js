@@ -3,15 +3,14 @@ import * as Yup from "yup";
 import isNumber from "lodash/isNumber";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { InfoTitle } from "../../../../../../components/Notifications";
-import { Input } from "../../../../../../components/Form";
+import { Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
-import { prospect } from "../../../../../../constants/config";
 import { COMPANY_CURRENCY, MONTH_COUNT } from "./constants";
 import { ANNUAL_TURNOVER_REGEX } from "../../../../../../utils/validation";
 
@@ -91,7 +90,14 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     )
 });
 
-export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
+export const CompanyAnticipatedTransactionsComponent = ({
+  handleContinue,
+  annualFinTurnoverAmtInAED,
+  totalMonthlyCashAmountInFigures,
+  totalMonthlyNonCashAmountInFigures,
+  maxAmtSingleTxnCashAED,
+  maxAmtSingleTxnNonCashAED
+}) => {
   const classes = useStyles();
   const commonInputProps = {
     endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
@@ -119,16 +125,6 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
     console.log(prospectValue);
   };
 
-  const {
-    annualFinTurnoverAmtInAED,
-    anticipatedTransactionsDetails: {
-      maxAmtSingleTxnCashAED,
-      maxAmtSingleTxnNonCashAED,
-      totalMonthlyCashCreditsAED: { amountInFigures: totalMonthlyCashAmountInFigures } = {},
-      totalMonthlyNonCashCreditsAED: { amountInFigures: totalMonthlyNonCashAmountInFigures } = {}
-    } = {}
-  } = prospect.orgKYCDetails;
-
   return (
     <div className={classes.formWrapper}>
       <Formik
@@ -149,6 +145,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                 <Grid item sm={12}>
                   <Field
                     name="annualFinTurnoverAmtInAED"
+                    path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                     label="Annual turnover"
                     placeholder="Annual turnover"
                     component={Input}
@@ -178,6 +175,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                 <Grid item md={6} sm={12}>
                   <Field
                     name="totalMonthlyCashAmountInFigures"
+                    path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                     label="Part of Monthly Total in Cash"
                     placeholder="Part of Monthly Total in Cash"
                     InputProps={commonInputProps}
@@ -187,6 +185,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                 <Grid item md={6} sm={12}>
                   <Field
                     name="totalMonthlyNonCashAmountInFigures"
+                    path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                     label="Part of Monthly Total in Non-Cash"
                     placeholder="Part of Monthly Total in Non-Cash"
                     InputProps={commonInputProps}
@@ -211,6 +210,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                   <Field
                     name="maxAmtSingleTxnCashAED"
                     label="Maximum amount in Cash"
+                    path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
                     placeholder="Maximum amount in Cash"
                     InputProps={commonInputProps}
                     component={Input}
@@ -220,6 +220,7 @@ export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
                   <Field
                     name="maxAmtSingleTxnNonCashAED"
                     label="Maximum amount in Non-Cash"
+                    path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
                     placeholder="Maximum amount in Non-Cash"
                     InputProps={commonInputProps}
                     component={Input}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import { AddButton } from "../../../../../../components/Buttons/AddButton";
@@ -9,8 +9,12 @@ import { InfoTitle } from "../../../../../../components/Notifications/index";
 import { useStyles } from "./styled";
 import { EMAIL_REGEX, PHONE_REGEX } from "../../../../../../utils/validation";
 import { UAE_PHONE_CODE } from "./constants";
-import { prospect } from "../../../../../../constants/config";
-import { CustomSelect, Input, InputGroup } from "../../../../../../components/Form";
+import {
+  CustomSelect,
+  Input,
+  InputGroup,
+  AutoSaveField as Field
+} from "../../../../../../components/Form";
 import { countryCodeOptions } from "../../../../../../constants/options";
 
 const companyPreferredContactInformationSchema = Yup.object().shape({
@@ -32,14 +36,13 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
 export const CompanyPreferredContactInformationComponent = ({
   chequeBookApplied,
   updateProspect,
+  contactDetails,
   handleContinue
 }) => {
   const [isExistSecondaryPhoneNumber, setIsExistSecondaryPhoneNumber] = useState(false);
   const classes = useStyles();
 
   function handleCurrencyCountryChange(value) {
-    console.log(value);
-    console.log(chequeBookApplied);
     if (value !== UAE_PHONE_CODE && chequeBookApplied) {
       updateProspect({
         "prospect.accountInfo[0].chequeBookApplied": false
@@ -65,13 +68,13 @@ export const CompanyPreferredContactInformationComponent = ({
       <Formik
         initialValues={{
           organizationInfo: {
-            contactDetails: prospect.organizationInfo.contactDetails
+            contactDetails
           }
         }}
         onSubmit={onSubmit}
         validationSchema={companyPreferredContactInformationSchema}
       >
-        {() => {
+        {({ setFieldValue }) => {
           return (
             <Form>
               <Grid container spacing={3} className={classes.flexContainer}>
@@ -79,13 +82,21 @@ export const CompanyPreferredContactInformationComponent = ({
                   <InputGroup>
                     <Field
                       name="organizationInfo.contactDetails.primaryMobCountryCode"
+                      path="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
                       options={countryCodeOptions}
                       component={CustomSelect}
-                      callback={handleCurrencyCountryChange}
+                      onChange={e => {
+                        setFieldValue(
+                          "organizationInfo.contactDetails.primaryMobCountryCode",
+                          e.target.value
+                        );
+                        handleCurrencyCountryChange(e.target.value);
+                      }}
                       shrink={false}
                     />
                     <Field
                       name="organizationInfo.contactDetails.primaryMobileNo"
+                      path="prospect.organizationInfo.contactDetails.primaryMobileNo"
                       label="Mobile number"
                       placeholder="Mobile number"
                       component={Input}
@@ -96,19 +107,28 @@ export const CompanyPreferredContactInformationComponent = ({
                       <InputGroup>
                         <Field
                           name="organizationInfo.contactDetails.primaryPhoneCountryCode"
+                          path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
                           options={countryCodeOptions}
                           component={CustomSelect}
                           shrink={false}
                         />
                         <Field
                           name="organizationInfo.contactDetails.primaryPhoneNo"
+                          path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
                           label="Mobile number"
                           placeholder="Mobile number"
                           component={Input}
                         />
                       </InputGroup>
                       <RemoveButton
-                        onClick={handleRemovePrimaryPhone}
+                        onClick={() => {
+                          setFieldValue("organizationInfo.contactDetails.primaryPhoneNo", "");
+                          setFieldValue(
+                            "organizationInfo.contactDetails.primaryPhoneCountryCode",
+                            UAE_PHONE_CODE
+                          );
+                          handleRemovePrimaryPhone();
+                        }}
                         title="Delete"
                         className={classes.container}
                       />
@@ -118,6 +138,7 @@ export const CompanyPreferredContactInformationComponent = ({
                 <Grid item md={6} sm={12}>
                   <Field
                     name="organizationInfo.contactDetails.primaryEmail"
+                    path="prospect.organizationInfo.contactDetails.primaryEmail"
                     label="Primary e-mail address"
                     placeholder="Primary e-mail address"
                     component={Input}

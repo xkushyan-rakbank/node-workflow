@@ -1,12 +1,21 @@
 import { connect } from "react-redux";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
-import { getInputValueById } from "../../../../../../store/selectors/input";
 import { CompanyPreferredContactInformationComponent } from "./CompanyPreferredContactInformation";
+import { getOrganizationInfo, getAccountInfo } from "../../../../../../store/selectors/appConfig";
+import get from "lodash/get";
+import { prospect } from "../../../../../../constants/config";
 
 const mapStateToProps = state => ({
-  primaryPhoneNo: getInputValueById(state, "OrgCont.primaryPhoneNo"),
-  primaryEmail: getInputValueById(state, "OrgCont.primaryEmail"),
-  chequeBookApplied: getInputValueById(state, "Acnt.chequeBookApplied", [0])
+  contactDetails: get(
+    getOrganizationInfo(state),
+    "contactDetails",
+    prospect.organizationInfo.contactDetails
+  ),
+  chequeBookApplied: get(
+    getAccountInfo(state)[0],
+    "chequeBookApplied",
+    prospect.accountInfo[0].chequeBookApplied
+  )
 });
 
 const mapDispatchToProps = {

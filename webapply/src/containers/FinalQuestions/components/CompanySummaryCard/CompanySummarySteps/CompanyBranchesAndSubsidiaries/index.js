@@ -3,16 +3,29 @@ import get from "lodash/get";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { getOrgKYCDetails } from "../../../../../../store/selectors/appConfig";
 import { CompanyBusinessRelationshipsComponent } from "./CompanyBranchesAndSubsidiaries";
+import { prospect } from "../../../../../../constants/config";
 
 const mapStateToProps = state => ({
-  entitiesInUAE: get(getOrgKYCDetails(state), "entitiesInUAE", [
-    { companyName: "", emirate: "", tradeLicenseNo: "" }
-  ]),
-  otherEntitiesInUAE: get(getOrgKYCDetails(state), "otherEntitiesInUAE", false),
-  entitiesOutsideUAE: get(getOrgKYCDetails(state), "entitiesOutsideUAE", [
-    { companyName: "", country: "" }
-  ]),
-  otherEntitiesOutsideUAE: get(getOrgKYCDetails(state), "otherEntitiesOutsideUAE", false)
+  entitiesInUAE: get(
+    getOrgKYCDetails(state),
+    "entitiesInUAE",
+    prospect.orgKYCDetails.entitiesInUAE
+  ),
+  otherEntitiesInUAE: get(
+    getOrgKYCDetails(state),
+    "otherEntitiesInUAE",
+    prospect.orgKYCDetails.otherEntitiesInUAE
+  ),
+  entitiesOutsideUAE: get(
+    getOrgKYCDetails(state),
+    "entitiesOutsideUAE",
+    prospect.orgKYCDetails.entitiesOutsideUAE
+  ),
+  otherEntitiesOutsideUAE: get(
+    getOrgKYCDetails(state),
+    "otherEntitiesOutsideUAE",
+    prospect.orgKYCDetails.otherEntitiesOutsideUAE
+  )
 });
 
 const mapDispatchToProps = {

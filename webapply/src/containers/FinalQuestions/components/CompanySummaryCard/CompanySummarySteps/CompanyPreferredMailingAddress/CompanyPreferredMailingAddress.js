@@ -1,13 +1,12 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import InfoTitle from "../../../../../../components/InfoTitle";
-import { CustomSelect, Input } from "../../../../../../components/Form";
+import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 import { ADDRESS_NUMBER_REGEX, PO_NUMBER_REGEX } from "../../../../../../utils/validation";
-import { prospect } from "../../../../../../constants/config";
 import { emirateCityOptions, spaceTypeOptions, OTHER_OPTION_CODE } from "./constants";
 
 const companyPreferredMailingAddressSchema = Yup.object().shape({
@@ -38,7 +37,7 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
   })
 });
 
-export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
+export const CompanyPreferredMailingAddressComponent = ({ handleContinue, addressInfo }) => {
   const classes = useStyles();
 
   const onSubmit = values => {
@@ -51,7 +50,7 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
       <Formik
         initialValues={{
           organizationInfo: {
-            addressInfo: prospect.organizationInfo.addressInfo
+            addressInfo
           }
         }}
         onSubmit={onSubmit}
@@ -69,18 +68,21 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
                         <Grid item md={6} sm={12}>
                           <Field
                             name={`${pathBase}[${idx}].addressFieldDesc`}
+                            path={`prospect.${pathBase}[${idx}].addressFieldDesc`}
                             label="Office / Shop Number"
                             placeholder="Office / Shop Number"
                             component={Input}
                           />
                           <Field
                             name={`${pathBase}[${idx}].addressLine1`}
+                            path={`prospect.${pathBase}[${idx}].addressLine1`}
                             label="Street / Location"
                             placeholder="Street / Location"
                             component={Input}
                           />
                           <Field
                             name={`${pathBase}[${idx}].emirateCity`}
+                            path={`prospect.${pathBase}[${idx}].emirateCity`}
                             options={emirateCityOptions}
                             component={CustomSelect}
                             shrink={false}
@@ -89,6 +91,7 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
                         <Grid item md={6} sm={12}>
                           <Field
                             name={`${pathBase}[${idx}].typeOfSpaceOccupied.spaceType`}
+                            path={`prospect.${pathBase}[${idx}].typeOfSpaceOccupied.spaceType`}
                             options={spaceTypeOptions}
                             component={CustomSelect}
                             shrink={false}
@@ -97,6 +100,7 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
                             .typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
                             <Field
                               name={`${pathBase}[${idx}].typeOfSpaceOccupied.others`}
+                              path={`prospect.${pathBase}[${idx}].typeOfSpaceOccupied.others`}
                               label="Other(Specify)"
                               placeholder="Other(Specify)"
                               component={Input}
@@ -104,12 +108,14 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
                           )}
                           <Field
                             name={`${pathBase}[${idx}].poBox`}
+                            path={`prospect.${pathBase}[${idx}].poBox`}
                             label="PO Box Number"
                             placeholder="PO Box Number"
                             component={Input}
                           />
                           <Field
                             name={`${pathBase}[${idx}].country`}
+                            path={`prospect.${pathBase}[${idx}].country`}
                             label="Country"
                             placeholder="Country"
                             disabled
