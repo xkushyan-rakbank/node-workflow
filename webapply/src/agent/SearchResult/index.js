@@ -1,5 +1,5 @@
 import React from "react";
-import SearchApplicationList from "./../SearchApplicationList/index";
+import { SearchApplicationList } from "./../SearchApplicationList/index";
 
 const SearchResult = props => {
   return (

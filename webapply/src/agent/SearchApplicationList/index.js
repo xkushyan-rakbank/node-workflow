@@ -1,11 +1,11 @@
 import React from "react";
+import { generatePath } from "react-router";
 import get from "lodash/get";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
-import { titles } from "./constants";
 import { useStyles } from "./styled";
 
-const SearchApplicationList = ({ currentApplications }) => {
+export const SearchApplicationList = ({ currentApplications }) => {
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
@@ -13,20 +13,20 @@ const SearchApplicationList = ({ currentApplications }) => {
         <>
           <div className={classes.applicationRow}>
             <div>
-              <div className={classes.heading}>{titles.APPLICANT_DETAIL_TITLE}</div>
+              <div className={classes.heading}>Applicant&apos;s Detail</div>
             </div>
             <div>
-              <div className={classes.heading}>{titles.COMPANY_DETAIL_TITLE}</div>
+              <div className={classes.heading}>Company Detail</div>
             </div>
             <div>
-              <div className={classes.heading}>{titles.STATUS_TITLE}</div>
+              <div className={classes.heading}>Status</div>
             </div>
           </div>
-          {currentApplications.map((application, index) => (
+          {currentApplications.map(application => (
             <Link
               className={classes.applicationRow}
-              key={index}
-              to={`${routes.SearchedAppInfo.replace(":id", application.prospectId)}`}
+              key={application.prospectId}
+              to={generatePath(routes.SearchedAppInfo, { id: application.prospectId })}
             >
               <div>
                 <div className={classes.fullName}>
@@ -63,5 +63,3 @@ const SearchApplicationList = ({ currentApplications }) => {
     </div>
   );
 };
-
-export default SearchApplicationList;
