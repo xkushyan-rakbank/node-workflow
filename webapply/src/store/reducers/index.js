@@ -2,7 +2,6 @@ import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import appConfig from "./appConfig";
 import reCaptcha from "./reCaptcha";
-// import applicantInfoForm from "./applicantInfoForm";
 import serverValidation from "./serverValidation";
 import sendProspectToAPI from "./sendProspectToAPI";
 import applicationStatus from "./applicationStatus";
@@ -12,6 +11,7 @@ import searchProspect from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import selectedAccountInfo from "./selectedAccountInfo";
 import stakeholders from "./stakeholders";
+import screenProspect from "./screenProspect";
 import validationErrors from "./validationErrors";
 
 const reducers = history =>
@@ -28,6 +28,7 @@ const reducers = history =>
     retrieveApplicantInfo,
     selectedAccountInfo,
     stakeholders,
+    screenProspect,
     validationErrors
   });
 

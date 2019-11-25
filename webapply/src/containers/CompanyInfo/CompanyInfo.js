@@ -4,28 +4,40 @@ import { connect } from "react-redux";
 import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
 import { StepComponent } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
+import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import companyInfoIcon from "./../../assets/icons/companyInfo.png";
+import { getOrganizationInfo, getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
 import { conpanyInfoSteps } from "./constants";
 import { useStyles } from "./styled";
+import routes from "./../../routes";
 
-export const CompanyInfoPage = ({ sendProspectToAPI, isResetStep }) => {
+export const CompanyInfoPage = ({
+  sendProspectToAPI,
+  isResetStep,
+  history,
+  loading,
+  organizationInfo: { companyName }
+}) => {
   const classes = useStyles();
   const [step, setStep] = useState(1);
   const [completedStep, setCompletedStep] = useState(0);
+  const isDisabled = completedStep === conpanyInfoSteps.length;
 
   useEffect(() => {
     if (isResetStep) {
       const nextStep = step + 1;
       setStep(nextStep);
-      setCompletedStep(nextStep);
+      setCompletedStep(step);
     }
   }, [isResetStep]);
 
+  const handleClick = () => history.push(routes.stakeholdersInfo);
+
   const renderContent = () => (
     <>
-      <div className={classes.title}>Company Name</div>
-      <StatusLoader />
+      <div className={classes.title}>{completedStep >= 1 ? companyName : "Company Name"}</div>
+      {loading && <StatusLoader />}
     </>
   );
 
@@ -66,12 +78,24 @@ export const CompanyInfoPage = ({ sendProspectToAPI, isResetStep }) => {
           );
         })}
       </CompanyStakeholderCard>
+
+      <div className="linkContainer">
+        <ContainedButton
+          justify="flex-end"
+          label="Next Step"
+          disabled={!isDisabled}
+          handleClick={handleClick}
+          withRightArrow
+        />
+      </div>
     </>
   );
 };
 
 const mapStateToProps = state => ({
-  isResetStep: state.sendProspectToAPI.resetStep
+  ...getSendProspectToAPIInfo(state),
+  isResetStep: state.sendProspectToAPI.resetStep,
+  organizationInfo: getOrganizationInfo(state)
 });
 
 const mapDispatchToProps = {

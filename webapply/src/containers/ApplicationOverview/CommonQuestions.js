@@ -1,11 +1,12 @@
 import React from "react";
+import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import questionMark from "../../assets/icons/question-mark.png";
+
+import { ICONS, Icon } from "../../components/Icons/Icon";
 import arrowDown from "../../assets/icons/arrow-down.png";
-import cx from "classnames";
 
 const style = {
   root: {
@@ -86,43 +87,39 @@ class CommonQuestions extends React.Component {
   render() {
     const { classes, data } = this.props;
     const { expanded } = this.state;
-    return (
-      <>
-        {data.length > 0 &&
-          data.map(item => (
-            <ExpansionPanel
-              key={item.id}
-              square
-              expanded={expanded === item.id}
-              onChange={() => this.handleChange(item.id)}
-              classes={{ root: classes.root, expanded: classes.expanded }}
-            >
-              <ExpansionPanelSummary
-                expandIcon={<img src={arrowDown} alt="arrow-down" className={classes.iconSize} />}
-                aria-controls="panel1d-content"
-                id="panel1d-header"
-                classes={{
-                  root: classes.summaryRoot,
-                  content: classes.summaryContent,
-                  expanded: classes.expanded
-                }}
-              >
-                <div className={cx(classes.text, classes.textEllipsis)}>
-                  <img
-                    src={questionMark}
-                    alt="question"
-                    className={cx(classes.iconStyle, classes.iconSize)}
-                  />
-                  {item.question}
-                </div>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails classes={{ root: classes.detailsRoot }}>
-                <div className={cx(classes.text, classes.info)}>{item.answer}</div>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          ))}
-      </>
-    );
+
+    return data.map(item => (
+      <ExpansionPanel
+        key={item.id}
+        square
+        expanded={expanded === item.id}
+        onChange={() => this.handleChange(item.id)}
+        classes={{ root: classes.root, expanded: classes.expanded }}
+      >
+        <ExpansionPanelSummary
+          expandIcon={<img src={arrowDown} alt="arrow-down" className={classes.iconSize} />}
+          aria-controls="panel1d-content"
+          id="panel1d-header"
+          classes={{
+            root: classes.summaryRoot,
+            content: classes.summaryContent,
+            expanded: classes.expanded
+          }}
+        >
+          <div className={cx(classes.text, classes.textEllipsis)}>
+            <Icon
+              name={ICONS.question}
+              alt="question"
+              className={cx(classes.iconStyle, classes.iconSize)}
+            />
+            {item.question}
+          </div>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails classes={{ root: classes.detailsRoot }}>
+          <div className={cx(classes.text, classes.info)}>{item.answer}</div>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    ));
   }
 }
 

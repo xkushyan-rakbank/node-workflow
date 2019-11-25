@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { history } from "./..";
-import { APPLICANT_INFO_FORM, applicantInfoFormSuccess } from "../actions/applicantInfoForm";
+import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 import { updateProspectId, updateProspect, updateSaveType } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { generateOtpCode } from "./../actions/otp";
@@ -8,6 +8,7 @@ import { setVerified } from "../actions/reCaptcha";
 import { prospect } from "../../api/apiClient";
 import { prospect as initialProspect } from "./../../constants/config";
 import routes from "./../../routes";
+import { log } from "../../utils/loggger";
 
 function* applicantInfoFormSaga(action) {
   try {
@@ -19,16 +20,15 @@ function* applicantInfoFormSaga(action) {
       data: { prospectId }
     } = yield call(prospect.create, prospectUpdated);
 
-    yield put(applicantInfoFormSuccess());
     yield put(setVerified(true));
 
     yield put(updateProspectId(prospectId));
-    yield put(generateOtpCode());
+    yield put(generateOtpCode({ ...action.data, prospectId }));
     yield call(history.push, routes.verifyOtp);
     yield put(updateSaveType("next"));
     yield put(resetInputsErrors());
   } catch (error) {
-    console.error(error);
+    log(error);
   }
 }
 

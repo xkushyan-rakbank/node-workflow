@@ -3,16 +3,17 @@ import get from "lodash/get";
 import * as actions from "../actions/reCaptcha";
 import apiClient from "../../api/apiClient";
 import { getReCaptchaToken } from "../selectors/reCaptcha";
+import { log } from "../../utils/loggger";
 
 function* verifyToken() {
   try {
     const state = yield select();
-    yield put(actions.setPending(true));
 
+    yield put(actions.setPending(true));
     yield call(apiClient.reCaptcha.verify, getReCaptchaToken(state));
     yield put(actions.setVerified(true));
   } catch (error) {
-    console.error(error);
+    log(error);
     yield put(actions.setError(get(error, "data.message") || get(error, "message")));
   }
 }

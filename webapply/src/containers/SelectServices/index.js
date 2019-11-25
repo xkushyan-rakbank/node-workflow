@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { compose } from "redux";
 
 import { getInputValueById } from "../../store/selectors/input";
 import { updateAccountType } from "../../store/actions/selectedAccountInfo";
@@ -15,9 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { updateAccountType };
 
-export const SelectServices = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+export const SelectServices = connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(SelectServicesComponent);

@@ -16,11 +16,12 @@ import { ErrorMessage, InfoTitle } from "./../../Notifications";
 import { useStyles } from "./styled";
 
 export const CustomSelect = ({
-  disabled,
   extractId = option => option.key,
+  extractValue = option => option.value,
+  extractLabel = item => item.label,
   placeholder,
   multiple = false,
-  options,
+  options = [],
   required,
   label,
   field,
@@ -28,7 +29,7 @@ export const CustomSelect = ({
   form: { errors, touched },
   isMulti = false,
   shrink,
-  ...props
+  ...rest
 }) => {
   const classes = useStyles();
   const inputLabel = React.useRef(null);
@@ -40,15 +41,22 @@ export const CustomSelect = ({
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const renderValue = selected => (!multiple ? selected : selected.join(", "));
+  const renderValue = selected =>
+    !multiple
+      ? extractLabel(options.find(item => extractValue(item) === selected) || {})
+      : options
+          .flatMap(item => (selected.includes(extractValue(item)) ? [extractLabel(item)] : []))
+          .join(", ");
+
   return (
     <FormControl className="formControl" variant="outlined">
       <InputLabel ref={inputLabel} shrink={shrink}>
         {label}
       </InputLabel>
+
       <Select
         {...field}
-        {...props}
+        {...rest}
         renderValue={renderValue}
         multiple={multiple}
         input={<OutlinedInput labelWidth={labelWidth} />}
@@ -57,14 +65,14 @@ export const CustomSelect = ({
         error={isError}
       >
         {options.map(option => (
-          <MenuItem key={extractId(option)} value={extractId(option)}>
+          <MenuItem key={extractId(option)} value={extractValue(option)}>
             {multiple ? (
               <>
                 <ListItemText primary={extractId(option)} />
-                <Checkbox color="default" checked={field.value.includes(extractId(option))} />
+                <Checkbox color="default" checked={field.value.includes(extractValue(option))} />
               </>
             ) : (
-              option.label
+              extractLabel(option)
             )}
           </MenuItem>
         ))}
