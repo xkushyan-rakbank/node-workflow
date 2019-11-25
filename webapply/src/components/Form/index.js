@@ -5,5 +5,4 @@ export { SelectAutocomplete } from "./Select/SelectAutocomplete/SelectAutocomple
 export { DatePicker } from "./DatePicker/DatePicker";
 export { CheckboxGroup } from "./Checkbox/CheckboxGroup";
 export { Checkbox } from "./Checkbox/Checkbox";
-export { AutoSaveForm } from "./AutoSaveForm/AutoSaveForm";
 export { AutoSaveField } from "./AutoSaveField/AutoSaveField";
