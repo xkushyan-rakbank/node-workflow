@@ -19,7 +19,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(STEP_1);
 
   const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
   const handleContinue = useCallback(() => {
@@ -81,7 +81,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPIPromisify
+  sendProspectToAPI: sendProspectToAPIPromisify
 };
 
 export const CompanyInfo = connect(

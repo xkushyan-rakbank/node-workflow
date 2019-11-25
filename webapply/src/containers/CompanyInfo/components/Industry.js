@@ -2,12 +2,12 @@ import React from "react";
 import { Formik, Form } from "formik";
 import isEmpty from "lodash/isEmpty";
 import * as Yup from "yup";
-
 import Grid from "@material-ui/core/Grid";
-import { CustomSelect, SelectAutocomplete, AutoSaveField as Field } from "../../components/Form";
-import { ContinueButton } from "./../Buttons/ContinueButton";
-import { InfoTitle } from "./../Notifications";
-import { companyIndustry, companySubCategory } from "./../../constants/options";
+
+import { CustomSelect, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
+import { ContinueButton } from "../../../components/Buttons/ContinueButton";
+import { InfoTitle } from "../../../components/Notifications";
+import { companyIndustry, companySubCategory } from "../../../constants/options";
 
 const initialValues = {
   industry: [],
@@ -15,13 +15,8 @@ const initialValues = {
 };
 
 const industrySchema = Yup.object({
-  industry: Yup.string().required("Select country industry"),
-  subCategory: Yup.string()
-    .notRequired()
-    .when("industry", {
-      is: val => !!val,
-      then: Yup.string().required("Select country subCategory")
-    })
+  industry: Yup.array(),
+  subCategory: Yup.array()
 });
 
 export const Industry = ({ handleContinue }) => (
@@ -34,7 +29,7 @@ export const Industry = ({ handleContinue }) => (
               multiple
               name="industry"
               label="Company industry"
-              path="prospect.orgKYCDetails.industryMultiSelect[0].industry[0]"
+              path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
               options={companyIndustry}
               component={CustomSelect}
               onChange={e => {
@@ -47,7 +42,7 @@ export const Industry = ({ handleContinue }) => (
             <Field
               name="subCategory"
               label="Company subCategory"
-              path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory[0]"
+              path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
               options={companySubCategory.filter(item =>
                 values.industry.includes(item.industryCode)
               )}

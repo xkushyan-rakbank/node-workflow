@@ -1,26 +1,27 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import pick from "lodash/pick";
-
 import Grid from "@material-ui/core/Grid";
-import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../components/Form";
-import { companyCategoryOptions } from "./../../constants/options";
-import { ContinueButton } from "./../Buttons/ContinueButton";
-import { prospect } from "./../../constants/config";
-import { COMPANY_NAME_REGEX } from "./../../utils/validation";
 
-const initialValues = pick({ ...prospect.organizationInfo, ...prospect.orgKYCDetails }, [
-  "companyName",
-  "vatRegistrationNumber",
-  "numberOfEmployees",
-  "companyCategory"
-]);
+import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
+import { companyCategoryOptions } from "../../../constants/options";
+import { ContinueButton } from "../../../components/Buttons/ContinueButton";
+import { COMPANY_NAME_REGEX } from "../../../utils/validation";
+
+const initialValues = {
+  companyName: "",
+  vatRegistrationNumber: "",
+  numberOfEmployees: "",
+  companyCategory: ""
+};
 
 const companyDetailsSchema = Yup.object({
   companyName: Yup.string()
     .required("You need to provide company name")
-    .matches(COMPANY_NAME_REGEX, "This is not a valid company name")
+    .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
+  vatRegistrationNumber: Yup.string(),
+  numberOfEmployees: Yup.number().max(0),
+  companyCategory: Yup.string()
 });
 
 export const CompanyDetails = ({ handleContinue }) => (

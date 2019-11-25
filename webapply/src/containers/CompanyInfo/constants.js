@@ -1,6 +1,6 @@
-import { CompanyDetails } from "./../../components/AboutCompanyStepForms/CompanyDetails";
-import { Industry } from "./../../components/AboutCompanyStepForms/Industry";
-import { LicenseInformation } from "./../../components/AboutCompanyStepForms/LicenseInformation";
+import { CompanyDetails } from "./components/CompanyDetails";
+import { Industry } from "./components/Industry";
+import { LicenseInformation } from "./components/LicenseInformation";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
