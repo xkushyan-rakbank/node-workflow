@@ -1,15 +1,13 @@
 import React from "react";
 import { SearchApplicationList } from "./../SearchApplicationList/index";
 
-export const SearchResult = props => {
-  return (
-    <>
-      <h2>Search Results</h2>
-      {props.searchResults.length ? (
-        <SearchApplicationList currentApplications={props.searchResults} />
-      ) : (
-        <div>No Record Found.</div>
-      )}
-    </>
-  );
-};
+export const SearchResult = ({ searchResults }) => (
+  <>
+    <h2>Search Results</h2>
+    {searchResults.length ? (
+      <SearchApplicationList currentApplications={searchResults} />
+    ) : (
+      <div>No Record Found.</div>
+    )}
+  </>
+);
