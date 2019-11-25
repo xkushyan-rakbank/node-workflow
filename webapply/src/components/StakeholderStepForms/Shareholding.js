@@ -10,50 +10,42 @@ import { InlineRadioGroup } from "../Form/InlineRadioGroup/InlineRadioGroup";
 import { NumericInput } from "../Form/Input/NumericInput";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
 import { getSignatories } from "../../store/selectors/appConfig";
-import { getInputNameById, getInputValueById } from "../../store/selectors/input";
-import { updateProspect } from "../../store/actions/appConfig";
+import { getInputValueById } from "../../store/selectors/input";
 import { yesNoOptions } from "../../constants/options";
 
-const shareholdingRightsSchema = Yup.object().shape({
-  kycDetails: Yup.object().shape({
-    isShareholderACompany: Yup.boolean().required("Required"),
-    shareHoldingPercentage: Yup.number()
-      .positive()
-      .min(0, "Shareholders can't hold less than 0% of shares in total")
-      .max(100, "Shareholders can't hold more than 100% of shares in total")
-      .required("Required")
-  })
-});
+const shareholdingRightsSchema = totalPercentage =>
+  Yup.object().shape({
+    kycDetails: Yup.object().shape({
+      isShareholderACompany: Yup.boolean().required("Required"),
+      shareHoldingPercentage: Yup.number()
+        .positive()
+        .min(0, "Shareholders can't hold less than 0% of shares in total")
+        .max(100 - totalPercentage, "Shareholders can't hold more than 100% of shares in total")
+        .required("Required")
+    })
+  });
 
-export const Shareholding = props => {
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   if (
-  //     prevProps.isShareholder !== this.props.isShareholder &&
-  //     this.props.isShareholder === false
-  //   ) {
-  //     this.updateShareholderPercentageValue(0);
-  //   }
-  // }
-  //
-  // updateShareholderPercentageValue(value) {
-  //   this.props.updateProspect({ [this.props.shareholderPercentageInputName]: value });
-  // }
-  //
-  // customValidationMessage = ({ isFocused }) => {
-  //   if (!isFocused && this.props.totalPercentage > 100) {
-  //     return <ErrorMessage error="Shareholders can't hold more than 100% of shares in total" />;
-  //   }
-  //
-  //   return null;
-  // };
+export const Shareholding = ({ handleContinue, totalPercentage, isSoleProprietor }) => {
+  const kycDetails = isSoleProprietor
+    ? { isShareholderACompany: true, shareHoldingPercentage: 100 }
+    : { isShareholderACompany: "", shareHoldingPercentage: "" };
 
   return (
     <Formik
-      initialValues={{ kycDetails: { isShareholderACompany: "", shareHoldingPercentage: "" } }}
-      // onSubmit={handleContinue}
-      validationSchema={shareholdingRightsSchema}
+      initialValues={{ kycDetails }}
+      onSubmit={handleContinue}
+      validationSchema={() => shareholdingRightsSchema(totalPercentage)}
     >
-      {({ values }) => {
+      {({ values, setFieldValue }) => {
+        const shareholderHandler = event => {
+          const value = JSON.parse(event.target.value);
+          setFieldValue("kycDetails.isShareholderACompany", value);
+
+          if (value !== values.kycDetails.isShareholderACompany && !value) {
+            setFieldValue("kycDetails.shareHoldingPercentage", 0);
+          }
+        };
+
         return (
           <Form>
             <Grid container>
@@ -62,6 +54,7 @@ export const Shareholding = props => {
                 name="kycDetails.isShareholderACompany"
                 options={yesNoOptions}
                 label="Is this person a shareholder?"
+                onChange={shareholderHandler}
               />
               <Grid item md={12}>
                 <Field
@@ -91,24 +84,12 @@ const mapStateToProps = (state, { index }) => {
     0
   );
   return {
-    isShareholder: getInputValueById(state, "SigKycd.isShareholder", [index]),
-    shareholderPercentageInputName: getInputNameById(state, "SigKycd.shareHoldingPercentage", [
-      index
-    ]),
-    // temp - will work only on WireMock data
     isSoleProprietor: getInputValueById(state, "SigAcntSig.authorityType", [index]) === "SP",
-    currentPercentage: getInputValueById(state, "SigKycd.shareHoldingPercentage", [index]),
-    signatories,
-    totalPercentage,
-    isError: totalPercentage > 100
+    totalPercentage
   };
-};
-
-const mapDispatchToProps = {
-  updateProspect
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Shareholding);

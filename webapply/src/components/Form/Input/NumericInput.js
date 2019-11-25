@@ -17,7 +17,7 @@ export const NumericInput = ({
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
-  const handleChange = values => setFieldValue(field.name, values.value);
+  const handleChange = event => setFieldValue(field.name, event.target.value);
 
   return (
     <>
@@ -27,7 +27,6 @@ export const NumericInput = ({
           {...props}
           onChange={handleChange}
           variant="outlined"
-          isNumericString
           className={classes.textField}
           customInput={TextField}
           error={isError}
