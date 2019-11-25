@@ -7,8 +7,8 @@ import { ServicesSteps } from "./components/ServicesSteps/index";
 
 import routes from "../../routes";
 import { getSelectedTypeCurrency } from "../../utils/SelectServices";
-import { servicesSteps, accountsNames } from "../../constants/index";
-import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP } from "./constants";
+import { accountsNames } from "../../constants/index";
+import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP, servicesSteps } from "./constants";
 
 import { useStyles } from "./styled";
 

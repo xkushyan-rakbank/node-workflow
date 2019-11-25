@@ -1,9 +1,14 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import { CheckboxGroup, CustomSelect } from "../../../../components/Form";
+import {
+  AutoSaveField as Field,
+  CheckboxGroup,
+  CustomSelect,
+  Checkbox
+} from "../../../../components/Form";
 import Subtitle from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
@@ -17,27 +22,23 @@ const INFO_TITLE =
 const accountDetailsSchema = Yup.object({
   accountCurrencies: Yup.array().required("Field is required"),
   branchCity: Yup.string().required("Field is required"),
-  subCategory: Yup.string().required("Field is required")
+  branchID: Yup.string().required("Field is required"),
+  receiveInterest: Yup.bool()
 });
 
 export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBanking } }) => {
   const classes = useStyles();
-  const onSubmit = useCallback(e => {
-    // console.log(values);
-    // TODO continue update store values
-    // goToNext()
-  }, []);
 
   return (
     <Formik
       initialValues={{
         accountCurrencies: [],
         branchCity: "",
-        subCategory: "",
+        branchID: "",
         receiveInterest: false
       }}
       validationSchema={accountDetailsSchema}
-      onSubmit={onSubmit}
+      onSubmit={goToNext}
     >
       {({ values, setFieldValue }) => (
         <Form>
@@ -45,62 +46,53 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
           <Field
             options={accountCurrencies}
             name="accountCurrencies"
+            path="prospect.accountInfo[0].accountCurrencies"
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
           />
-
           <Divider />
-
           <Subtitle title="Select branch" />
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
               <Field
                 name="branchCity"
+                path="prospect.organizationInfo.branchCity"
                 options={emirates}
-                extractId={option => option.key}
                 label="Emirate / City"
                 placeholder="Emirate / City"
                 component={CustomSelect}
                 onChange={e => {
                   setFieldValue("branchCity", e.target.value);
-                  setFieldValue("subCategory", "");
+                  setFieldValue("branchID", "");
                 }}
                 shrink={false}
               />
             </Grid>
             <Grid item md={6} sm={12}>
               <Field
-                name="subCategory"
+                name="branchID"
+                path="prospect.organizationInfo.branchID"
                 options={branches.filter(item => item.emirateCode === values.branchCity)}
                 label="Branch"
                 placeholder="Branch"
-                extractId={option => option.key}
+                disabled={!values.branchCity}
                 component={CustomSelect}
                 shrink={false}
               />
             </Grid>
           </Grid>
-
           {!islamicBanking && (
             <>
               <Divider />
               <Subtitle title="Select interest" />
-              {/* TODO use Checkbox component after Oleg merge in dev */}
               <Field
                 name="receiveInterest"
-                options={[
-                  {
-                    code: "receiveInterest",
-                    label: "I don't wish to receive interest from my account",
-                    key: "receiveInterest",
-                    value: true
-                  }
-                ]}
-                component={CheckboxGroup}
+                path="prospect.accountInfo[0].receiveInterest"
+                label="I don't wish to receive interest from my account"
+                component={Checkbox}
               />
             </>
           )}
-
           <div className={classes.buttonWrapper}>
             <ContinueButton type="submit" />
           </div>

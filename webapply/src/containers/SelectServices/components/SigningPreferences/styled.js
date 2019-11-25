@@ -12,5 +12,8 @@ export const useStyles = makeStyles({
     margin: "40px 0",
     display: "flex",
     justifyContent: "flex-end"
+  },
+  textAreaWrap: {
+    width: "328px"
   }
 });
