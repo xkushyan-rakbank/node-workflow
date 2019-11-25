@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import cx from "classnames";
 import routes from "../../routes";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -15,11 +15,15 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
-  const addFilledSignatoryIndex = index => {
-    setFilledSignatoriesIndexes(filledSignatoriesSet.add(index));
-  };
+  const addFilledSignatoryIndex = useCallback(
+    index => setFilledSignatoriesIndexes(filledSignatoriesSet.add(index)),
+    [setFilledSignatoriesIndexes, filledSignatoriesSet]
+  );
 
-  const switchExpandedMargin = () => setIsExpandedMargin(prevState => !prevState);
+  const switchExpandedMargin = useCallback(() => setIsExpandedMargin(!isExpandedMargin), [
+    setIsExpandedMargin,
+    isExpandedMargin
+  ]);
 
   return (
     <>

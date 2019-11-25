@@ -1,5 +1,6 @@
 import React from "react";
 import { styled } from "@material-ui/styles";
+
 import { ReactComponent as Icon } from "../../assets/icons/add-icon.svg";
 import { theme } from "../../theme";
 

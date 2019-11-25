@@ -87,7 +87,7 @@ export const SignatorySummaryCardComponent = ({
     <CompanyStakeholderCard
       className={classes.card}
       firstName={signatory.firstName}
-      lastName={signatory.lastName ? signatory.lastName : signatory.fullName}
+      lastName={signatory.lastName || signatory.fullName}
       content={renderCardContent()}
       index={index}
     >
