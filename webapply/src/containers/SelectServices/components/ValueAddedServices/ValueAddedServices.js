@@ -30,11 +30,9 @@ export const ValueAddedServicesComponent = props => {
     updateProspect({ [name]: serviceName });
   };
 
-  const classList = cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency });
-
   return (
     <>
-      <div className={classList}>
+      <div className={cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency })}>
         {mockData.map(
           (
             {
