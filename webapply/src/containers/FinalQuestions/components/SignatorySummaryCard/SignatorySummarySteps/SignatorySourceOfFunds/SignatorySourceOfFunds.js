@@ -21,23 +21,11 @@ export const signatorySourceOfFundsSchema = Yup.object().shape({
 
 export const SignatorySourceOfFundsComponent = ({
   index,
-  handleContinue
+  handleContinue,
   // soursOfWealth,
-  // updateProspect
+  updateProspect
 }) => {
   const classes = useStyles();
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   if (
-  //     prevProps.soursOfWealth !== this.props.soursOfWealth &&
-  //     !this.isOtherSourceOfWealthSelected()
-  //   ) {
-  //     this.updateOtherWealthTypeValue("");
-  //   }
-  // }
-
-  // function updateOtherWealthTypeValue(value) {
-  //   updateProspect({ [otherWealthTypeInputName]: value });
-  // }
 
   const onSubmit = values => {
     handleContinue();
@@ -54,7 +42,7 @@ export const SignatorySourceOfFundsComponent = ({
         onSubmit={onSubmit}
         validationSchema={signatorySourceOfFundsSchema}
       >
-        {({ values }) => {
+        {({ values, setFieldValue }) => {
           return (
             <Form>
               <Grid container spacing={3} className={classes.flexContainer}>
@@ -64,6 +52,17 @@ export const SignatorySourceOfFundsComponent = ({
                     shrink={false}
                     name="wealthType"
                     placeholder="Source of funds"
+                    onChange={e => {
+                      setFieldValue("wealthType", e.target.value);
+                      if (
+                        e.target.value !== OTHER_SOURCE_OF_WEALTH &&
+                        values.wealthType === OTHER_SOURCE_OF_WEALTH
+                      ) {
+                        updateProspect({
+                          [`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.others`]: ""
+                        });
+                      }
+                    }}
                     component={CustomSelect}
                   />
                 </Grid>

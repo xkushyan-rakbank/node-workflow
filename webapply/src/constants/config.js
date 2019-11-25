@@ -309,7 +309,7 @@ export const prospect = {
               addressLine4: "",
               poBox: "",
               emirateCity: "",
-              country: ""
+              country: "United Arab Emirates"
             }
           ]
         }

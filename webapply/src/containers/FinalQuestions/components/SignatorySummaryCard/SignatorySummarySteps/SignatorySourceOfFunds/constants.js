@@ -4,25 +4,25 @@ export const wealthTypeOptions = [
   {
     code: "M",
     key: "Money",
-    value: "M",
+    value: "Money",
     label: "Money"
   },
   {
     code: "RE",
     key: "Real Estate",
-    value: "RE",
+    value: "Real Estate",
     label: "Real Estate"
   },
   {
     code: "ORG",
     key: "Organizations",
-    value: "ORG",
+    value: "Organizations",
     label: "Organizations"
   },
   {
     code: "O",
     key: OTHER_SOURCE_OF_WEALTH,
-    value: "O",
+    value: OTHER_SOURCE_OF_WEALTH,
     label: OTHER_SOURCE_OF_WEALTH
   }
 ];

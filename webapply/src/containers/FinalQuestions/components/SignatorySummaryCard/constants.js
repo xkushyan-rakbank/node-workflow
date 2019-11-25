@@ -1,7 +1,7 @@
 import { SignatoryEmploymentDetails } from "./SignatorySummarySteps/SignatoryEmploymentDetails";
 import { SignatorySourceOfFunds } from "./SignatorySummarySteps/SignatorySourceOfFunds";
 import { SignatoryPersonalInformation } from "./SignatorySummarySteps/SignatoryPersonalInformation";
-import SignatoryPreferredMailingAddressForm from "./SignatorySummarySteps/SignatoryPreferredMailingAddressForm";
+import { SignatoryPreferredMailingAddress } from "./SignatorySummarySteps/SignatoryPreferredMailingAddress";
 
 export const INITIAL_SIGNATORY_STEP = 1;
 
@@ -24,6 +24,6 @@ export const signatoriesSteps = [
   {
     step: 4,
     title: "Preferred mailing address",
-    component: SignatoryPreferredMailingAddressForm
+    component: SignatoryPreferredMailingAddress
   }
 ];
