@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import doneIcon from "./../assets/icons/Add.png";
+import doneIcon from "./../assets/icons/add.svg";
 
 const styles = {
   icon: {

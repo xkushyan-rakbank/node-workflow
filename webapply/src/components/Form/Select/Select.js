@@ -16,7 +16,6 @@ import { ErrorMessage, InfoTitle } from "./../../Notifications";
 import { useStyles } from "./styled";
 
 export const CustomSelect = ({
-  disabled,
   extractId = option => option.key,
   placeholder,
   multiple = false,
