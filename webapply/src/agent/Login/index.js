@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import TextInput from "../../components/InputField/TextInput";
-import SubmitButton from "../../components/Buttons/SubmitButton";
+import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { loginInfoForm } from "../../store/actions/loginForm";
 import * as inputSelectors from "../../store/selectors/input";
 import * as appConfigSelector from "../../store/selectors/appConfig";

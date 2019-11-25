@@ -5,10 +5,16 @@ import "mutation-observer";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import "./index.css";
+import TagManager from "react-gtm-module";
+
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import store from "./store/configureStore";
+import { store } from "./store";
+import { tagManagerArgs } from "./constants/gtm";
+
+import "./index.css";
+
+TagManager.initialize(tagManagerArgs);
 
 ReactDOM.render(
   <Provider store={store}>

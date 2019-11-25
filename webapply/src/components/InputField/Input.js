@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
-import InfoTitle from "./../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 
 const style = {
   textField: {

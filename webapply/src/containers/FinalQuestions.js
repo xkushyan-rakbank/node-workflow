@@ -1,13 +1,13 @@
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
-import SubmitButton from "../components/Buttons/SubmitButton";
+import cx from "classnames";
+import { SubmitButton } from "../components/Buttons/SubmitButton";
 import CompanySummaryCard from "../components/FinalQuestions/CompanySummaryCard";
 import SignatorySummaryCard from "../components/FinalQuestions/SignatorySummaryCard";
+import { BackLink } from "../components/Buttons/BackLink";
 import routes from "../routes";
 import { getSignatories } from "../store/selectors/appConfig";
-import BackLink from "../components/Buttons/BackLink";
-import cx from "classnames";
 
 const style = {
   sectionContainer: {
@@ -21,9 +21,6 @@ const style = {
   },
   smallMargin: {
     margin: "20px 0 40px"
-  },
-  buttonWrap: {
-    marginTop: "0"
   }
 };
 
@@ -86,7 +83,6 @@ class FinalQuestions extends React.Component {
             handleClick={this.goToUploadDocument}
             label="Next Step"
             justify="flex-end"
-            classes={{ buttonWrap: classes.buttonWrap }}
             disabled={this.isSubmitDisabled()}
           />
         </div>

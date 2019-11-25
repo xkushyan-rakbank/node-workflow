@@ -3,7 +3,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import { history } from "./../store/configureStore";
 import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
@@ -20,7 +19,6 @@ import {
   getScreeningResults
 } from "../store/selectors/appConfig";
 import { routerToAddPaddingInSlider } from "../constants/styles";
-import { applicationStatus } from "./../constants/index";
 
 const styles = {
   formLayout: {
@@ -68,22 +66,9 @@ class FormLayout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { hasUiError: false };
-
-    history.listen((location, action) => {
+    props.history.listen((location, action) => {
       this.props.applicationStatusReset();
-      this.setState({ hasUiError: false });
     });
-  }
-
-  static getDerivedStateFromError(error) {
-    if (process.env.NODE_ENV === "production") {
-      return { hasUiError: true };
-    }
-  }
-
-  componentDidCatch(error, info, event) {
-    console.error(error);
   }
 
   componentDidUpdate(prevProps) {
@@ -99,10 +84,9 @@ class FormLayout extends React.Component {
 
   render() {
     const { children, classes, isProceed, serverError, screeningResults, location } = this.props;
-    const { hasUiError } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <Header />
         <div className={classes.formLayout}>
           <FormNavigation />
@@ -113,18 +97,12 @@ class FormLayout extends React.Component {
 
                 <ErrorMessageAlert isVisible={serverError} handleClick={this.handleClick} />
 
-                {!isProceed ? (
-                  <ApplicationStatus statusFromServer={screeningResults} />
-                ) : hasUiError ? (
-                  <ApplicationStatus status={applicationStatus.uiError} />
-                ) : (
-                  children
-                )}
+                {!isProceed ? <ApplicationStatus statusFromServer={screeningResults} /> : children}
               </div>
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

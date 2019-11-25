@@ -2,12 +2,14 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { connect } from "react-redux";
+import get from "lodash/get";
+
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
 import { accountsNames, formStepper, searchProspectStepper } from "../constants";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import SubmitButton from "./Buttons/SubmitButton";
+import { ContainedButton } from "./Buttons/ContainedButton";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import {
   sideNavWidthXL,
@@ -17,7 +19,6 @@ import {
   portraitOrientationQueryIPads
 } from "../constants/styles";
 import routes from "../routes";
-import isEmpty from "lodash/isEmpty";
 
 const style = {
   formNav: {
@@ -74,10 +75,10 @@ const style = {
   contentContainer: {
     width: 340,
     marginLeft: 80,
-    height: 323,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    alignItems: "flex-start",
     "@media only screen and (max-width: 1300px)": {
       marginLeft: 40,
       width: "auto",
@@ -93,6 +94,7 @@ const style = {
     lineHeight: "1.17",
     fontWeight: 600,
     fontFamily: "Open Sans",
+    marginBottom: "50px",
     "@media only screen and (max-width: 1300px)": {
       paddingRight: "16px",
       fontSize: "40px"
@@ -105,7 +107,7 @@ const style = {
     fontSize: "16px",
     lineHeight: "1.5",
     color: "#fff",
-    marginTop: 20,
+    marginBottom: 50,
     display: "block",
     fontWeight: "normal",
     fontFamily: "Open Sans",
@@ -165,34 +167,37 @@ const AccountInfo = ({ classes, accountType, history }) => {
               {accountInfo[accountType].subtitle}
             </Typography>
           </div>
-          <SubmitButton
+          <ContainedButton
+            withRightArrow
             justify="flex-start"
             label="Apply now"
             handleClick={() => handleClick(routes.applicationOverview)}
           />
         </>
       ) : (
-        <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-          {isApplicationOverview
-            ? "Opening an account has never been this simple. saas"
-            : isMyApplications
-            ? "Your  applications, at a glance"
-            : isComeBackLogin
-            ? "Good to see you back!"
-            : isReUploadDocuments
-            ? "Edit your application"
-            : isComeBackVerification
-            ? "Confirm that it's you"
-            : "All businesses start with an account. Get yours now."}
+        <>
+          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+            {isApplicationOverview
+              ? "Opening an account has never been this simple. saas"
+              : isMyApplications
+              ? "Your  applications, at a glance"
+              : isComeBackLogin
+              ? "Good to see you back!"
+              : isReUploadDocuments
+              ? "Edit your application"
+              : isComeBackVerification
+              ? "Confirm that it's you"
+              : "All businesses start with an account. Get yours now."}
+          </Typography>
           {isApplicationOverview && (
-            <SubmitButton
+            <ContainedButton
+              withRightArrow
               justify="flex-start"
               label="Start application"
               handleClick={() => handleClick(routes.applicantInfo)}
-              classes={{ nextButton: classes.nextButton }}
             />
           )}
-        </Typography>
+        </>
       )}
     </div>
   );
@@ -262,9 +267,14 @@ class FormNavigation extends React.Component {
   }
 
   render() {
-    const { applicationInfo = {}, location, classes, history, checkLoginStatus } = this.props;
+    const {
+      applicationInfo: { islamicBanking, accountType },
+      location,
+      classes,
+      history,
+      checkLoginStatus
+    } = this.props;
     const { step } = this.state;
-    const { accountType, islamicBanking } = !isEmpty(applicationInfo) && applicationInfo;
     const showAccountInfo = new Set([
       routes.accountsComparison,
       routes.detailedAccount,
@@ -292,11 +302,7 @@ class FormNavigation extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  applicationInfo:
-    state.appConfig &&
-    state.appConfig.prospect &&
-    state.appConfig.prospect.applicationInfo &&
-    state.appConfig.prospect.applicationInfo,
+  applicationInfo: get(state, "appConfig.prospect.applicationInfo", {}),
   checkLoginStatus: loginSelector.checkLoginStatus(state)
 });
 

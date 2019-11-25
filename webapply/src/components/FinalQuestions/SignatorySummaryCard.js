@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import get from "lodash/get";
 import CompanyStakeholderCard from "../CompanyStakeholderCard";
-import LinkButton from "../Buttons/LinkButton";
+import { LinkButton } from "../Buttons/LinkButton";
 import StepComponent from "../../components/StepComponent";
 import { signatoriesSteps } from "../../constants";
 import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
@@ -159,6 +159,7 @@ class SignatorySummaryCard extends Component {
                 steps={signatoriesSteps}
                 step={item.step}
                 title={item.title}
+                stepForm={item.component}
                 activeStep={step === item.step}
                 filled={isFilled}
                 clickHandler={setStep}

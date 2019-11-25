@@ -5,8 +5,9 @@ export const GENERATE_CODE_SUCCESS = "OTP/GENERATE_CODE_SUCCESS";
 export const VERIFY_CODE_SUCCESS = "OTP/VERIFY_CODE_SUCCESS";
 export const VERIFY_CODE_FAILED = "OTP/VERIFY_CODE_FAILED";
 
-export const generateOtpCode = () => ({
-  type: GENERATE_OTP_CODE
+export const generateOtpCode = payload => ({
+  type: GENERATE_OTP_CODE,
+  payload
 });
 
 export const verifyOtp = payload => ({

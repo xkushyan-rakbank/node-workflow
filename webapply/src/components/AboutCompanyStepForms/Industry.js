@@ -9,7 +9,7 @@ import {
   getFieldConfigById,
   getInputNameById
 } from "../../store/selectors/input";
-import InfoTitle from "../InfoTitle";
+import { InfoTitle } from "./../Notifications";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getOptionsForSubId } from "../../utils/getInputSubOptions";
 

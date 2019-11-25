@@ -10,9 +10,10 @@ import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";
 import isBoolean from "lodash/isBoolean";
 import isNil from "lodash/isNil";
-import InfoTitle from "./../InfoTitle";
-import ErrorMessage from "./../ErrorMessage";
+import { InfoTitle } from "./../Notifications";
+import { ErrorMessage } from "./../Notifications";
 import { updateProspect } from "../../store/actions/appConfig";
+import { ContexualHelp } from "./../Notifications";
 import { fieldAttr } from "../../constants";
 import { validate } from "./../../utils/validate";
 import { getGeneralInputProps } from "../../store/selectors/input";
@@ -233,14 +234,15 @@ class Input extends React.Component {
       disabled,
       placeholder,
       serverValidation,
-      select
+      select,
+      placement,
+      contexualHelpText
     } = this.props;
     const { fieldErrors } = this.state;
     const inputProps = this.composeFieldAttrWithPropAttr(fieldAttr(id, config, indexes));
 
     const isError = !isEmpty(fieldErrors) || this.props.isError;
     const customValidationMessage = this.getCustomValidationMessage();
-
     if (id && config.label) {
       return (
         <div
@@ -257,28 +259,34 @@ class Input extends React.Component {
           >
             {select}
             <FormControl className="formControl">
-              <TextField
-                value={this.state.value}
-                onChange={this.handleChange}
-                InputProps={{
-                  ...InputProps,
-                  inputProps
-                }}
-                placeholder={placeholder}
-                InputLabelProps={{
-                  shrink: this.isLabelShrink(),
-                  ...InputLabelProps
-                }}
-                disabled={disabled}
-                variant="outlined"
-                label={config.label}
-                className={cx(classes.textField, className, {
-                  [classes.disabled]: disabled
-                })}
-                onBlur={this.handleOnBlur}
-                error={isError}
-                onFocus={this.handleFocus}
-              />
+              <ContexualHelp
+                open={contexualHelpText}
+                title={contexualHelpText}
+                placement={placement}
+              >
+                <TextField
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                  InputProps={{
+                    ...InputProps,
+                    inputProps
+                  }}
+                  placeholder={placeholder}
+                  InputLabelProps={{
+                    shrink: this.isLabelShrink(),
+                    ...InputLabelProps
+                  }}
+                  disabled={disabled}
+                  variant="outlined"
+                  label={config.label}
+                  className={cx(classes.textField, className, {
+                    [classes.disabled]: disabled
+                  })}
+                  onBlur={this.handleOnBlur}
+                  error={isError}
+                  onFocus={this.handleFocus}
+                />
+              </ContexualHelp>
 
               {!!config.title && <InfoTitle title={config.title} />}
             </FormControl>

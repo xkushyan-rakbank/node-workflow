@@ -1,26 +1,23 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { history } from "./../configureStore";
-import * as actions from "../actions/loginForm";
+import { history } from "./..";
+import { loginInfoFormSuccess, LOGIN_INFO_FORM, FORMAT_LOGIN } from "../actions/loginForm";
 import { updateProspect } from "../actions/appConfig";
 
-import apiClient from "../../api/apiClient";
+import { authentication } from "../../api/apiClient";
 import routes from "./../../routes";
+import { log } from "../../utils/loggger";
 
-export function* loginFormSaga(action) {
+export function* loginFormSaga({ payload }) {
   try {
     const param = {
-      username: action.payload.userName || "",
-      password: action.payload.password || ""
+      username: payload.userName || "",
+      password: payload.password || ""
     };
-    const response = yield call(apiClient.authentication.login, param);
-    if (response.status === 200) {
-      yield put(actions.loginInfoFormSuccess(response.data));
-      yield call(history.push, routes.searchProspect);
-    } else {
-      yield put(actions.loginInfoFormFail());
-    }
+    const response = yield call(authentication.login, param);
+    yield put(loginInfoFormSuccess(response.data));
+    yield call(history.push, routes.searchProspect);
   } catch (error) {
-    console.error({ error });
+    log(error);
   }
 }
 
@@ -33,6 +30,6 @@ function* formatLoginSaga() {
 }
 
 export default function* loginInfoFormSaga() {
-  yield all([takeLatest(actions.LOGIN_INFO_FORM, loginFormSaga)]);
-  yield all([takeLatest(actions.FORMAT_LOGIN, formatLoginSaga)]);
+  yield all([takeLatest(LOGIN_INFO_FORM, loginFormSaga)]);
+  yield all([takeLatest(FORMAT_LOGIN, formatLoginSaga)]);
 }

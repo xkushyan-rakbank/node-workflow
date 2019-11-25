@@ -12,7 +12,7 @@
     "connected-react-router": "^6.5.2",
     "core-js": "^3.2.1",
     "date-fns": "^2.0.0-beta.5",
-    "formik": "^1.5.8",
+    "formik": "^2.0.4",
     "history": "^4.9.0",
     "husky": "^3.0.2",
     "lint-staged": "^9.2.1",
@@ -26,11 +26,12 @@
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "react-select": "^3.0.5",
+    "react-select": "^3.0.8",
     "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "yup": "^0.27.0"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
@@ -46,7 +47,9 @@
     "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "eslint": "eslint src/",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -79,6 +82,10 @@
     }
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^5.2.6",
+    "@storybook/addon-links": "^5.2.6",
+    "@storybook/addons": "^5.2.6",
+    "@storybook/react": "^5.2.6",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "eslint-config-prettier": "^6.3.0",

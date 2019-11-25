@@ -1,33 +1,19 @@
 import axios from "axios";
-import store from "./../store/configureStore";
+import { store } from "./../store";
 import { setInputsErrors } from "./../store/actions/serverValidation";
 import { setError } from "./../store/actions/reCaptcha";
-import {
-  applicationStatusServerError,
-  applicationStatusProceed,
-  applicationStatusStop
-} from "./../store/actions/applicationStatus";
-import getBaseURL from "./../utils/getBaseURL";
+import { applicationStatusServerError } from "./../store/actions/applicationStatus";
+
+const getBaseURL = () =>
+  process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
 
 const instance = axios.create({
   baseURL: getBaseURL()
 });
 
 instance.interceptors.response.use(
-  function(response) {
-    const {
-      data: { preScreening }
-    } = response;
-
-    if (preScreening && preScreening.statusOverAll === "stop") {
-      store.dispatch(applicationStatusStop(preScreening.screeningResults));
-    } else {
-      store.dispatch(applicationStatusProceed());
-    }
-
-    return response;
-  },
-  function(error) {
+  response => response,
+  error => {
     const {
       status,
       data: { errors, errorType }
@@ -39,10 +25,8 @@ instance.interceptors.response.use(
       } else {
         store.dispatch(setInputsErrors(errors));
       }
-    } else if (status === 500) {
-      store.dispatch(applicationStatusServerError());
     } else {
-      console.error({ error });
+      store.dispatch(applicationStatusServerError());
     }
     return Promise.reject(error);
   }
