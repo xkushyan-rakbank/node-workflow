@@ -9,7 +9,9 @@ export const endpoints = {
   getProspectDocumentsUri: "/webapply/api/v1/prospects/:prospectId/documents",
   uploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
   reuploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  searchProspectUri: "/webapply/api/v1/usertypes/:userType/prospects/search",
   getDocumentByIdUri: "/webapply/api/v1/prospects/:prospectId/documents/:documentKey",
+  screenProspectUri: "/webapply/api/v1//prospects/:prospectId/screening",
   otpUri: "/webapply/api/v1/otp"
 };
 

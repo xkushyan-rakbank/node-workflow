@@ -67,5 +67,8 @@ export const useStyles = makeStyles({
   linkHide: {
     opacity: 0,
     visibility: "hidden"
+  },
+  error: {
+    marginBottom: "10px"
   }
 });

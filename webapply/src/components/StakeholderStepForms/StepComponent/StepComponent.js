@@ -1,8 +1,8 @@
 import React from "react";
-import DoneIcon from "../../DoneIcon";
 import SectionTitle from "../../SectionTitle";
 import { LinkButton } from "../../Buttons/LinkButton";
 import { useStyles } from "./styled";
+import { ICONS, Icon } from "../../Icons";
 
 export const StepComponent = ({
   title,
@@ -25,7 +25,7 @@ export const StepComponent = ({
     return isFilled ? (
       <div className={classes.filledTitle}>
         <LinkButton title={title} className={classes.linkTitle} />
-        <DoneIcon />
+        <Icon name={ICONS.done} className={classes.doneIcon} />
       </div>
     ) : (
       <div className={classes.disabledStep}>{title}</div>

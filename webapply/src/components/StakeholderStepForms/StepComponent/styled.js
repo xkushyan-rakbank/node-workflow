@@ -33,5 +33,8 @@ export const useStyles = makeStyles({
   },
   formWrapper: {
     margin: "0 20px"
+  },
+  doneIcon: {
+    width: "24px"
   }
 });

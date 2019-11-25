@@ -1,12 +1,15 @@
 import React from "react";
 import Button from "@material-ui/core/Button/Button";
 
-import AddIcon from "../../AddIcon";
 import { useStyles } from "./styled";
+import { ICONS, Icon } from "../../Icons";
 
-export const AddStakeholderButton = props => {
+export const AddStakeholderButton = ({
+  label = "Add Another Stakeholder",
+  handleClick,
+  ...rest
+}) => {
   const classes = useStyles();
-  const { label = "Add Another Stakeholder", disabled = false, handleClick } = props;
 
   return (
     <Button
@@ -17,10 +20,10 @@ export const AddStakeholderButton = props => {
       classes={{
         root: classes.buttonStyle
       }}
-      disabled={disabled}
       onClick={handleClick}
+      {...rest}
     >
-      <AddIcon />
+      <Icon name={ICONS.plus} className={classes.icon} />
       <div className={classes.labelStyle}>{label}</div>
     </Button>
   );

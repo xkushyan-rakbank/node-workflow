@@ -2,34 +2,17 @@ import axios from "axios";
 import { store } from "./../store";
 import { setInputsErrors } from "./../store/actions/serverValidation";
 import { setError } from "./../store/actions/reCaptcha";
-import {
-  applicationStatusServerError,
-  applicationStatusProceed,
-  applicationStatusStop
-} from "./../store/actions/applicationStatus";
+import { applicationStatusServerError } from "./../store/actions/applicationStatus";
 
-const STOP = "stop";
-
-const getBaseURL = () => process.env.BASE_URL || "http://conv.rakbankonline.ae/quickapply";
+const getBaseURL = () =>
+  process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
 
 const instance = axios.create({
   baseURL: getBaseURL()
 });
 
 instance.interceptors.response.use(
-  response => {
-    const {
-      data: { preScreening }
-    } = response;
-
-    if (preScreening && preScreening.statusOverAll === STOP) {
-      store.dispatch(applicationStatusStop(preScreening.screeningResults));
-    } else {
-      store.dispatch(applicationStatusProceed());
-    }
-
-    return response;
-  },
+  response => response,
   error => {
     const {
       status,
