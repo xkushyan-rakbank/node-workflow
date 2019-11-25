@@ -12,7 +12,8 @@ export const endpoints = {
   searchProspectUri: "/webapply/api/v1/usertypes/:userType/prospects/search",
   getDocumentByIdUri: "/webapply/api/v1/prospects/:prospectId/documents/:documentKey",
   screenProspectUri: "/webapply/api/v1//prospects/:prospectId/screening",
-  otpUri: "/webapply/api/v1/otp"
+  otpUri: "/webapply/api/v1/otp",
+  authenticateUserUri: "/webapply/api/v1/users/authenticate"
 };
 
 export const prospect = {
@@ -353,5 +354,12 @@ export const prospect = {
     freeField3: "",
     freeField4: "",
     freeField5: ""
+  }
+};
+
+export const agentSection = {
+  login: {
+    userName: "",
+    password: ""
   }
 };
