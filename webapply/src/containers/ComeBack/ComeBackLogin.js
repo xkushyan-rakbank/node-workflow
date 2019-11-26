@@ -17,7 +17,7 @@ import routes from "./../../routes";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
 import { useStyles } from "./styled";
 
-const ComebackSchema = Yup.object({
+const comebackSchema = Yup.object({
   email: Yup.string()
     .required("You need to provide Email address")
     .matches(EMAIL_REGEX, "This is not a valid Email address"),
@@ -27,9 +27,21 @@ const ComebackSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ComeBackLogin = ({ history, generateOtpCode, isOtpGenerated, setToken, setVerified }) => {
+const ComeBackLogin = ({
+  history,
+  generateOtpCode,
+  isOtpGenerated,
+  setToken,
+  setVerified,
+  recaptchaToken
+}) => {
   const classes = useStyles();
-  const submitForm = useCallback(values => generateOtpCode(values), [generateOtpCode]);
+  const submitForm = useCallback(
+    values => {
+      generateOtpCode({ ...values, recaptchaToken });
+    },
+    [generateOtpCode, recaptchaToken]
+  );
   const handleReCaptchaVerify = useCallback(
     token => {
       setToken(token);
@@ -54,10 +66,10 @@ const ComeBackLogin = ({ history, generateOtpCode, isOtpGenerated, setToken, set
       />
       <Formik
         initialValues={prospect.applicantInfo}
-        validationSchema={ComebackSchema}
+        validationSchema={comebackSchema}
         onSubmit={submitForm}
       >
-        {() => (
+        {({ values }) => (
           <Form>
             <Field
               name="email"
@@ -87,7 +99,7 @@ const ComeBackLogin = ({ history, generateOtpCode, isOtpGenerated, setToken, set
             </InputGroup>
 
             {IS_RECAPTCHA_ENABLE && (
-              <ErrorBoundary className={classes.reCaptchaContainer}>
+              <ErrorBoundary>
                 <ReCaptcha
                   onVerify={handleReCaptchaVerify}
                   onExpired={handleVerifiedFailed}
@@ -97,7 +109,13 @@ const ComeBackLogin = ({ history, generateOtpCode, isOtpGenerated, setToken, set
             )}
 
             <div className="linkContainer">
-              <SubmitButton justify="flex-end" label="Next" />
+              <SubmitButton
+                disabled={
+                  !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !recaptchaToken)
+                }
+                justify="flex-end"
+                label="Next"
+              />
             </div>
           </Form>
         )}
@@ -107,6 +125,7 @@ const ComeBackLogin = ({ history, generateOtpCode, isOtpGenerated, setToken, set
 };
 
 const mapStateToProps = state => ({
+  recaptchaToken: state.reCaptcha.token,
   isOtpGenerated: isOtpGenerated(state)
 });
 

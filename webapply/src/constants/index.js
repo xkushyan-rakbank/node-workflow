@@ -1,16 +1,8 @@
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
-import { AccountDetails } from "../containers/SelectServices/components/AccountDetails";
-import { SigningPreferences } from "../containers/SelectServices/components/SigningPreferences";
-import { Channels } from "../containers/SelectServices/components/Channels";
-import { ValueAddedServices } from "../containers/SelectServices/components/ValueAddedServices";
 import { CompanyDetails } from "../components/AboutCompanyStepForms/CompanyDetails";
 import Industry from "../components/AboutCompanyStepForms/Industry";
 import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";
-import accountDetails from "../assets/icons/account_details.png";
-import signingPreferences from "../assets/icons/signing_preferences.png";
-import channels from "../assets/icons/channels.png";
-import valueAddedServices from "../assets/icons/value_added_services.png";
 import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDetails/index";
 import CheckList from "../components/SearchedAppInfoSteps/CheckList/index";
 import Documents from "../components/SearchedAppInfoSteps/Documents/index";
@@ -177,28 +169,6 @@ export const searchProspectStepper = [
   }
 ];
 
-export const servicesSteps = [
-  {
-    step: 1,
-    title: "Account details",
-    component: AccountDetails,
-    icon: accountDetails
-  },
-  {
-    step: 2,
-    title: "Signing preferences",
-    component: SigningPreferences,
-    icon: signingPreferences
-  },
-  { step: 3, title: "Channels", component: Channels, icon: channels, titleInfo: "" },
-  {
-    step: 4,
-    title: "Value added services",
-    component: ValueAddedServices,
-    icon: valueAddedServices
-  }
-];
-
 export const digitRegExp = new RegExp("^[0-9]$");
 
 export const searchedAppInfoSteps = [
@@ -265,7 +235,7 @@ export const applicationStatus = {
   }
 };
 
-export const IS_RECAPTCHA_ENABLE = false;
+export const IS_RECAPTCHA_ENABLE = true;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";

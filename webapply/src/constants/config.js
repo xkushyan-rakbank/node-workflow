@@ -268,10 +268,10 @@ export const prospect = {
       },
       contactDetails: {
         primaryMobileNo: "",
-        primaryMobCountryCode: "",
+        primaryMobCountryCode: countryCodeOptions[0].label,
         primaryEmail: "",
         primaryPhoneNo: "",
-        primaryPhoneCountryCode: "",
+        primaryPhoneCountryCode: countryCodeOptions[0].label,
         fax: "",
         faxCountryCode: "",
         secondaryPhoneNo: "",

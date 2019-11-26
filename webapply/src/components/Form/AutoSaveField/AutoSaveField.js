@@ -1,19 +1,35 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useFormikContext, Field } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormikContext, Field, getIn } from "formik";
+import get from "lodash/get";
+import isEqual from "lodash/isEqual";
 
 import { updateProspect } from "../../../store/actions/appConfig";
+import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
 
 export const AutoSaveField = ({ name, path, ...rest }) => {
   const dispatch = useDispatch();
-  const { values } = useFormikContext();
-  const value = values[name];
+  const appConfig = useSelector(state => state.appConfig);
+  const { values, setFieldError, errors } = useFormikContext();
+  const value = getIn(values, name);
+  const serverValidationError = useSelector(state => getInputServerValidityByPath(state, path));
 
   useEffect(() => {
-    if (path) {
-      dispatch(updateProspect({ [path]: value }));
+    if (serverValidationError) {
+      setFieldError(name, serverValidationError.message);
     }
-  }, [path, value, dispatch]);
+  }, [setFieldError, serverValidationError, name]);
+
+  useEffect(() => {
+    if (path && !errors[path]) {
+      const oldValue = get(appConfig, path, null);
+
+      if (!isEqual(oldValue, value)) {
+        dispatch(updateProspect({ [path]: value }));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return <Field name={name} {...rest} />;
 };
