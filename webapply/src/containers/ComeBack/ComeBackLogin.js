@@ -33,14 +33,14 @@ const ComeBackLogin = ({
   isOtpGenerated,
   setToken,
   setVerified,
-  reCaptchaToken
+  recaptchaToken
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
-      generateOtpCode(values);
+      generateOtpCode({ ...values, recaptchaToken });
     },
-    [generateOtpCode]
+    [generateOtpCode, recaptchaToken]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -111,7 +111,7 @@ const ComeBackLogin = ({
             <div className="linkContainer">
               <SubmitButton
                 disabled={
-                  !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
+                  !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !recaptchaToken)
                 }
                 justify="flex-end"
                 label="Next"
@@ -125,7 +125,7 @@ const ComeBackLogin = ({
 };
 
 const mapStateToProps = state => ({
-  reCaptchaToken: state.reCaptcha.token,
+  recaptchaToken: state.reCaptcha.token,
   isOtpGenerated: isOtpGenerated(state)
 });
 
