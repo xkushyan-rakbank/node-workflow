@@ -218,7 +218,7 @@ export const applicationStatus = {
   }
 };
 
-export const IS_RECAPTCHA_ENABLE = false;
+export const IS_RECAPTCHA_ENABLE = true;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
