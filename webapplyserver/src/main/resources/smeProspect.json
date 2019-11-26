@@ -211,7 +211,7 @@
 			"lastName": "",
 			"shortName": "",
 			"fullName": "",
-			"gender": "",
+			"gender": "Mr.",
 			"maritalStatus": "",
 			"maritalStatusOthers": "",
 			"occupation": "",
@@ -221,14 +221,14 @@
 			"employmentStatus": "",
 			"kycVerified": false,
 			"kycDetails": {
-				"isShareholderACompany": false,
+				"isShareholderACompany": "",
 				"salutation": "",
 				"shareholderPOASignatoryName": "",
-				"isSignatory": false,
-				"isShareholder": false,
-				"shareHoldingPercentage": 0,
+				"isSignatory": "",
+				"isShareholder": "",
+				"shareHoldingPercentage": "",
 				"dateOfBirth": "",
-				"dualCitizenship": false,
+				"dualCitizenship": "",
 				"dualCitizenshipCountry": [
 					""
 				],
