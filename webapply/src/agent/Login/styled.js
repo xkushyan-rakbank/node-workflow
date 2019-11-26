@@ -4,10 +4,5 @@ export const useStyles = makeStyles({
   baseForm: {
     marginTop: "135px",
     maxWidth: "612px"
-  },
-  reCaptchaContainer: {
-    display: "flex",
-    paddingTop: "10px",
-    justifyContent: "flex-end"
   }
 });

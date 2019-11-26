@@ -10,9 +10,10 @@ import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
-import ErrorBoundary from "../../components/ErrorBoundary";
+import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import { Grid } from "@material-ui/core";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -103,28 +104,29 @@ const ApplicantInfoPage = ({
               />
             </InputGroup>
 
-            {IS_RECAPTCHA_ENABLE && (
-              <ErrorBoundary>
-                <ReCaptcha
-                  onVerify={handleReCaptchaVerify}
-                  onExpired={handleVerifiedFailed}
-                  onError={handleVerifiedFailed}
+            <Grid container direction="row" justify="space-between" alignItems="center">
+              {IS_RECAPTCHA_ENABLE && (
+                <ErrorBoundaryForReCaptcha>
+                  <ReCaptcha
+                    onVerify={handleReCaptchaVerify}
+                    onExpired={handleVerifiedFailed}
+                    onError={handleVerifiedFailed}
+                  />
+                </ErrorBoundaryForReCaptcha>
+              )}
+              <div className="linkContainer">
+                <SubmitButton
+                  disabled={
+                    !values.fullName ||
+                    !values.email ||
+                    !values.mobileNo ||
+                    (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
+                  }
+                  justify="flex-end"
+                  label="Next Step"
                 />
-              </ErrorBoundary>
-            )}
-
-            <div className="linkContainer">
-              <SubmitButton
-                disabled={
-                  !values.fullName ||
-                  !values.email ||
-                  !values.mobileNo ||
-                  (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
-                }
-                justify="flex-end"
-                label="Next Step"
-              />
-            </div>
+              </div>
+            </Grid>
           </Form>
         )}
       </Formik>
