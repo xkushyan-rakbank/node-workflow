@@ -11,11 +11,6 @@ export const useStyles = makeStyles({
       height: 350
     }
   },
-  reCaptchaContainer: {
-    display: "flex",
-    paddingTop: "10px",
-    justifyContent: "flex-end"
-  },
   centeredContainer: {
     display: "flex",
     justifyContent: "center",
