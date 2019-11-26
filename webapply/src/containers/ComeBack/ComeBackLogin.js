@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { Grid } from "@material-ui/core";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
@@ -9,7 +10,7 @@ import { countryCodeOptions } from "./../../constants/options";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
-import ErrorBoundary from "../../components/ErrorBoundary";
+import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import { isOtpGenerated } from "../../store/selectors/otp";
@@ -102,25 +103,26 @@ const ComeBackLogin = ({
               />
             </InputGroup>
 
-            {IS_RECAPTCHA_ENABLE && (
-              <ErrorBoundary>
-                <ReCaptcha
-                  onVerify={handleReCaptchaVerify}
-                  onExpired={handleVerifiedFailed}
-                  onError={handleVerifiedFailed}
+            <Grid container direction="row" justify="space-between" alignItems="center">
+              {IS_RECAPTCHA_ENABLE && (
+                <ErrorBoundaryForReCaptcha>
+                  <ReCaptcha
+                    onVerify={handleReCaptchaVerify}
+                    onExpired={handleVerifiedFailed}
+                    onError={handleVerifiedFailed}
+                  />
+                </ErrorBoundaryForReCaptcha>
+              )}
+              <div className="linkContainer">
+                <SubmitButton
+                  disabled={
+                    !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !recaptchaToken)
+                  }
+                  justify="flex-end"
+                  label="Next"
                 />
-              </ErrorBoundary>
-            )}
-
-            <div className="linkContainer">
-              <SubmitButton
-                disabled={
-                  !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !recaptchaToken)
-                }
-                justify="flex-end"
-                label="Next"
-              />
-            </div>
+              </div>
+            </Grid>
           </Form>
         )}
       </Formik>

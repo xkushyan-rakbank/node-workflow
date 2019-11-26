@@ -1,4 +1,7 @@
 import React from "react";
+import { styled } from "@material-ui/styles";
+
+import { log } from "../utils/loggger";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -11,13 +14,11 @@ class ErrorBoundary extends React.Component {
   };
 
   static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
 
   componentDidCatch(error, errorInfo) {
-    // You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
+    log({ error, errorInfo });
   }
 
   render() {
@@ -40,5 +41,11 @@ class ErrorBoundary extends React.Component {
     return content;
   }
 }
+
+export const ErrorBoundaryForReCaptcha = styled(ErrorBoundary)({
+  display: "flex",
+  paddingTop: "10px",
+  justifyContent: "flex-end"
+});
 
 export default ErrorBoundary;
