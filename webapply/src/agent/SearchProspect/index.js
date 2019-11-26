@@ -37,7 +37,7 @@ const SearchProspect = ({ searchApplications, searchResults }) => {
 
   return (
     <div className={classes.baseForm}>
-      <h2>Search Application</h2>
+      <h2>Search Applications</h2>
 
       <Formik
         initialValues={{
