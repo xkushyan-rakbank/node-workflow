@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
+import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -7,12 +8,9 @@ import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../..
 import { countryCodeOptions } from "./../../constants/options";
 import { NAME_REGEX, EMAIL_REGEX, LEAD_LICENSE_REGEX } from "./../../utils/validation";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import Grid from "@material-ui/core/Grid";
 import { SearchResult } from "./../SearchResult/index";
 import { searchApplications } from "./../../store/actions/searchProspect";
-import * as loginSelector from "./../../store/selectors/loginSelector";
 import * as getSearchResult from "./../../store/selectors/searchProspect";
-import routes from "../../routes";
 import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
@@ -27,18 +25,11 @@ const searchProspectSchema = Yup.object({
     .matches(LEAD_LICENSE_REGEX, "This is not a valid trade license number")
 });
 
-const SearchProspect = ({ history, checkLoginStatus, searchApplications, searchResults }) => {
+const SearchProspect = ({ searchApplications, searchResults }) => {
   const classes = useStyles();
-
-  useEffect(() => {
-    if (!checkLoginStatus) {
-      history.push(routes.login);
-    }
-  }, [checkLoginStatus, history]);
 
   const handleSubmit = useCallback(
     values => {
-      console.log("search submit", values);
       searchApplications(values);
     },
     [searchApplications]
@@ -67,6 +58,7 @@ const SearchProspect = ({ history, checkLoginStatus, searchApplications, searchR
               path="searchInfo.fname"
               label="Applicant Name"
               placeholder="Applicant Name"
+              contexualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."
               component={Input}
             />
 
@@ -87,6 +79,7 @@ const SearchProspect = ({ history, checkLoginStatus, searchApplications, searchR
                     path="searchInfo.mobileNo"
                     label="Mobile Number"
                     placeholder="Mobile Number"
+                    contexualHelpText="This should be the mobile number of the person who has registered for WebApply and initiated the application on behalf of the company."
                     component={Input}
                   />
                 </InputGroup>
@@ -97,6 +90,7 @@ const SearchProspect = ({ history, checkLoginStatus, searchApplications, searchR
                   path="searchInfo.email"
                   label="E-mail Address"
                   placeholder="E-mail Address"
+                  contexualHelpText="This should be the email id of the person who has registered for WebApply and initiated the application on behalf of the company."
                   component={Input}
                 />
               </Grid>
@@ -138,8 +132,7 @@ const SearchProspect = ({ history, checkLoginStatus, searchApplications, searchR
 };
 
 const mapStateToProps = state => ({
-  searchResults: getSearchResult.getSearchResult(state),
-  checkLoginStatus: loginSelector.checkLoginStatus(state)
+  searchResults: getSearchResult.getSearchResult(state)
 });
 
 const mapDispatchToProps = {

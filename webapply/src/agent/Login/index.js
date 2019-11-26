@@ -52,7 +52,7 @@ const LoginPage = ({ loginInfoForm }) => {
               <SubmitButton
                 justify="flex-end"
                 label="Next Step"
-                disabled={Object.keys(values).some(key => !values[key])}
+                disabled={Object.values(values).some(value => !value)}
               />
             </div>
           </Form>
