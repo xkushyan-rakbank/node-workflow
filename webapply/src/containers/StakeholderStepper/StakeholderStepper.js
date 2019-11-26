@@ -100,9 +100,6 @@ const StakeholderStepper = ({
     <CompanyStakeholderCard {...cardProps} index={orderIndex}>
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => {
-          const stepIndex = item.step - 1;
-          const stepForm = stakeHoldersSteps[stepIndex].component;
-
           if ([STEP_1, STEP_2, STEP_3].includes(item.step)) {
             return (
               <StepComponentFormik
@@ -114,7 +111,7 @@ const StakeholderStepper = ({
                 isFilled={isFilled}
                 clickHandler={createSetStepHandler(item)}
                 handleContinue={createContinueHandler(item.step)}
-                stepForm={stepForm}
+                stepForm={item.component}
               />
             );
           }
@@ -129,7 +126,7 @@ const StakeholderStepper = ({
               filled={isFilled}
               clickHandler={createSetStepHandler(item)}
               handleContinue={createContinueHandler(item.step)}
-              stepForm={stepForm}
+              stepForm={item.component}
             />
           );
         })}
