@@ -6,7 +6,6 @@ import { log } from "../../utils/loggger";
 
 function* generateOtp(action) {
   try {
-    console.log(action);
     const { data } = yield call(otp.generate, action.payload);
 
     yield put(otpActions.generateCodeSuccess(data));
