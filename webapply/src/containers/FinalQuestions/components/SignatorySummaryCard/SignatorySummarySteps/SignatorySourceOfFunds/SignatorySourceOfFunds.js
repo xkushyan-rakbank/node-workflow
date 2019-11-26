@@ -52,7 +52,7 @@ export const SignatorySourceOfFundsComponent = ({
                     name="wealthType"
                     path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.wealthType`}
                     placeholder="Source of funds"
-                    label="Source of funds"
+                    // label="Source of funds"
                     onChange={e => {
                       setFieldValue("wealthType", e.target.value);
                       if (

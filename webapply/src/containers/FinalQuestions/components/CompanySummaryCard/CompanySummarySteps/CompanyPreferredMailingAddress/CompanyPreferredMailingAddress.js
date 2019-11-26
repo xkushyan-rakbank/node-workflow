@@ -84,7 +84,7 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue, addres
                             path={`prospect.${pathBase}[${idx}].emirateCity`}
                             options={emirateCityOptions}
                             placeholder="Emirate"
-                            label="Emirate"
+                            // label="Emirate"
                             component={CustomSelect}
                             shrink={false}
                           />
@@ -95,7 +95,7 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue, addres
                             path={`prospect.${pathBase}[${idx}].typeOfSpaceOccupied.spaceType`}
                             options={spaceTypeOptions}
                             placeholder="Type of Space Occupied"
-                            label="Type of Space Occupied"
+                            // label="Type of Space Occupied"
                             component={CustomSelect}
                             shrink={false}
                           />

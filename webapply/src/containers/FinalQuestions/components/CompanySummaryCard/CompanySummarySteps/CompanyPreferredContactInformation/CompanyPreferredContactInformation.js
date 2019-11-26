@@ -85,7 +85,7 @@ export const CompanyPreferredContactInformationComponent = ({
                       path="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
                       options={countryCodeOptions}
                       placeholder="Country code"
-                      label="Country code"
+                      // label="Country code"
                       component={CustomSelect}
                       onChange={e => {
                         setFieldValue(
@@ -112,7 +112,7 @@ export const CompanyPreferredContactInformationComponent = ({
                           path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
                           options={countryCodeOptions}
                           placeholder="Country code"
-                          label="Country code"
+                          // label="Country code"
                           component={CustomSelect}
                           shrink={false}
                         />

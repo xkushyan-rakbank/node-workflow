@@ -147,7 +147,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               shrink={false}
                               name={`topCustomers[${index}].country`}
                               path={`prospect.orgKYCDetails.topCustomers[${index}].country`}
-                              label="Country"
+                              // label="Country"
                               placeholder="Country"
                               extractId={option => option.key}
                               component={CustomSelect}
@@ -226,7 +226,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               name={`topSuppliers[${index}].country`}
                               path={`prospect.orgKYCDetails.topSuppliers[${index}].country`}
                               placeholder="Country"
-                              label="Country"
+                              // label="Country"
                               extractId={option => option.key}
                               component={CustomSelect}
                               disabled={values.isDontHaveSuppliersYet}
@@ -296,7 +296,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               name={`topOriginGoodsCountries[${index}]`}
                               path={`prospect.orgKYCDetails.topOriginGoodsCountries[${index}]`}
                               placeholder="Country"
-                              label="Country"
+                              // label="Country"
                               extractId={option => option.key}
                               component={CustomSelect}
                               disabled={values.isDontTradeGoodsYet}

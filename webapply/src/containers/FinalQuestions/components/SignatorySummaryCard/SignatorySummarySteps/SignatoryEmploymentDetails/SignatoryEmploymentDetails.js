@@ -93,7 +93,7 @@ export const SignatoryEmploymentDetailsComponent = ({
                     name="qualification"
                     path={`${basePath}.kycDetails.qualification`}
                     placeholder="Qualification"
-                    label="Qualification"
+                    // label="Qualification"
                     component={CustomSelect}
                   />
                   <Field
@@ -102,7 +102,7 @@ export const SignatoryEmploymentDetailsComponent = ({
                     name="employmentType"
                     path={`${basePath}.employmentDetails.employmentType`}
                     placeholder="Employment Type"
-                    label="Employment Type"
+                    // label="Employment Type"
                     component={CustomSelect}
                   />
                 </Grid>
