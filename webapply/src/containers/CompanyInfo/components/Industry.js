@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import isEmpty from "lodash/isEmpty";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
@@ -48,7 +47,7 @@ export const Industry = ({ handleContinue }) => (
               )}
               component={SelectAutocomplete}
               multiple
-              disabled={isEmpty(values.industry)}
+              disabled={!values.industry.filter(item => item).length}
             />
           </Grid>
         </Grid>

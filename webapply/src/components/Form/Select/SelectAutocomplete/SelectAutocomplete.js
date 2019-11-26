@@ -20,7 +20,6 @@ export const SelectAutocomplete = ({
   shrink,
   field,
   form: { errors, touched, setFieldValue },
-  options,
   multiple,
   disabled,
   ...props
@@ -39,7 +38,6 @@ export const SelectAutocomplete = ({
         isClearable={true}
         classes={classes}
         styles={customStyles}
-        options={options}
         components={components}
         onChange={handleChange}
         isMulti={multiple}

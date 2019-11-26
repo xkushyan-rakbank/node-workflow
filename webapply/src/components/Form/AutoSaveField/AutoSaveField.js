@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormikContext, Field, getIn } from "formik";
 import get from "lodash/get";
+import isEqual from "lodash/isEqual";
 
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
@@ -14,7 +15,7 @@ export const AutoSaveField = ({ name, path, isLoadDefaultValueFromStore = true, 
   const serverValidationError = useSelector(state => getInputServerValidityByPath(state, path));
 
   useEffect(() => {
-    if (isLoadDefaultValueFromStore) {
+    if (isLoadDefaultValueFromStore && path) {
       const value = get(appConfig, path, null);
 
       if (value !== null) {
@@ -32,7 +33,11 @@ export const AutoSaveField = ({ name, path, isLoadDefaultValueFromStore = true, 
 
   useEffect(() => {
     if (path) {
-      dispatch(updateProspect({ [path]: value }));
+      const oldValue = get(appConfig, path, null);
+
+      if (!isEqual(oldValue, value)) {
+        dispatch(updateProspect({ [path]: value }));
+      }
     }
   }, [path, value, dispatch]);
 
