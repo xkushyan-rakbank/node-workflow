@@ -6,8 +6,8 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 
 import { history } from "./store";
 import { ApplicantInfo } from "./containers/AplicantInfo/ApplicantInfo";
+import { CompanyInfo } from "./containers/CompanyInfo/CompanyInfo";
 import { Login } from "./agent/Login";
-import AboutCompany from "./containers/AboutCompany";
 import CompanyStakeholders from "./containers/CompanyStakeholders/CompanyStakeholders";
 import { FinalQuestions } from "./containers/FinalQuestions/index";
 import FormConfirm from "./containers/FormConfirm";
@@ -54,7 +54,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
             <Route exact path={routes.accountsComparison} component={AccountsComparison} />
             <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
             <Route exact path={routes.verifyOtp} component={FormConfirm} />
-            <Route exact path={routes.companyInfo} component={AboutCompany} />
+            <Route exact path={routes.companyInfo} component={CompanyInfo} />
             <Route exact path="/agent" render={() => <Redirect to={routes.login} />} />
             <Route exact path={routes.login} component={Login} />
             <AgentProtectedRoute exact path={routes.searchProspect} component={SearchProspect} />

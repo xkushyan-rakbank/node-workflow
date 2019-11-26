@@ -1,7 +1,10 @@
 export const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 export const NAME_REGEX = /^([a-zA-Z '”`-]){1,35}$/;
 export const PHONE_REGEX = /^[0-9]{9,14}$/;
-export const COMPANY_NAME_REGEX = /^([a-zA-Z ]){1,80}$/;
+export const NUMBER_REGEX = /^[0-9]*$/;
+
+export const COMPANY_NAME_REGEX = /^([a-zA-Z '”`-]){1,30}$/;
+export const LEAD_LICENSE_REGEX = /^([a-zA-Z0-9])*$/;
 export const BANK_NAME_REGEX = /^([a-zA-Z. ]){1,50}$/;
 export const TRADE_LICENSE_REGEX = /^([a-zA-Z0-9]){1,20}$/;
 export const ANNUAL_TURNOVER_REGEX = /^[0-9]{1,10}([.][0-9]{1,2})*$/;
@@ -11,4 +14,3 @@ export const MARITAL_STATUS_REGEX = /^([a-zA-Z]){1,50}$/;
 export const EMPLOYMENT_TYPE_REGEX = /^([a-zA-Z ]){1,50}$/;
 export const DESIGNATION_REGEX = /^([a-zA-Z]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
-export const LEAD_LICENSE_REGEX = /^([a-zA-Z0-9])*$/;

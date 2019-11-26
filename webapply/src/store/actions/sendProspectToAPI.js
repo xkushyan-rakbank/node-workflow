@@ -1,3 +1,7 @@
+import { WAIT_FOR_ACTION } from "redux-wait-for-action";
+
+import { UPDATE_SAVE_TYPE } from "./appConfig";
+
 export const SEND_PROSPECT_TO_API = "SEND_PROSPECT_TO_API";
 export const SEND_PROSPECT_TO_API_SUCCESS = "SEND_PROSPECT_TO_API_SUCCESS";
 export const SEND_PROSPECT_TO_API_FAIL = "SEND_PROSPECT_TO_API_FAIL";
@@ -7,6 +11,13 @@ export const START_PROSPECT_AUTO_SAVE = "START_PROSPECT_AUTO_SAVE";
 
 export const sendProspectToAPI = () => {
   return { type: SEND_PROSPECT_TO_API };
+};
+
+export const sendProspectToAPIPromisify = () => {
+  return {
+    type: SEND_PROSPECT_TO_API,
+    [WAIT_FOR_ACTION]: action => action.type === UPDATE_SAVE_TYPE && action.saveType === "continue"
+  };
 };
 
 export const sendProspectToAPISuccess = prospectCopy => {

@@ -9,7 +9,7 @@ import { NAME_REGEX } from "./../../utils/validation";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { loginInfoForm } from "../../store/actions/loginForm";
 import { setToken, setVerified, verifyToken } from "../../store/actions/reCaptcha";
-import ErrorBoundary from "../../components/ErrorBoundary";
+import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
 import { useStyles } from "./styled";
@@ -75,7 +75,7 @@ const LoginPage = ({ loginInfoForm, setToken, setVerified, verifyToken, recaptch
             />
 
             <Grid container direction="row" justify="space-between" alignItems="center">
-              <ErrorBoundary className={classes.reCaptchaContainer}>
+              <ErrorBoundaryForReCaptcha>
                 {IS_RECAPTCHA_ENABLE && (
                   <ReCaptcha
                     onVerify={handleReCaptchaVerify}
@@ -83,7 +83,7 @@ const LoginPage = ({ loginInfoForm, setToken, setVerified, verifyToken, recaptch
                     onError={handleVerifiedFailed}
                   />
                 )}
-              </ErrorBoundary>
+              </ErrorBoundaryForReCaptcha>
               <div className="linkContainer">
                 <SubmitButton
                   justify="flex-end"

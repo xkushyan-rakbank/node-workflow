@@ -23,6 +23,7 @@
     "react-app-polyfill": "^1.0.3",
     "react-dom": "^16.8.6",
     "react-gtm-module": "^2.0.8",
+    "react-number-format": "^4.3.1",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
@@ -30,6 +31,7 @@
     "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
+    "redux-wait-for-action": "0.0.8",
     "reselect": "^4.0.0",
     "yup": "^0.27.0"
   },

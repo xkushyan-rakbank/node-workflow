@@ -1,8 +1,5 @@
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
-import { CompanyDetails } from "../components/AboutCompanyStepForms/CompanyDetails";
-import Industry from "../components/AboutCompanyStepForms/Industry";
-import LicenseInformation from "../components/AboutCompanyStepForms/LicenseInformation";
 import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDetails/index";
 import CheckList from "../components/SearchedAppInfoSteps/CheckList/index";
 import Documents from "../components/SearchedAppInfoSteps/Documents/index";
@@ -10,20 +7,6 @@ import AuditTrail from "../components/SearchedAppInfoSteps/AuditTrail/index";
 import routes from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
-
-export const aboutCompanySteps = [
-  {
-    step: 1,
-    title: "Company Details",
-    component: CompanyDetails
-  },
-  {
-    step: 2,
-    title: "Industry",
-    component: Industry
-  },
-  { step: 3, title: "Licence Information", component: LicenseInformation }
-];
 
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },

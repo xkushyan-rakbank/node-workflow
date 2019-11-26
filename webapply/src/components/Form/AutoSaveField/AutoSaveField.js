@@ -7,12 +7,23 @@ import isEqual from "lodash/isEqual";
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
 
-export const AutoSaveField = ({ name, path, ...rest }) => {
+export const AutoSaveField = ({ name, path, isLoadDefaultValueFromStore = true, ...rest }) => {
   const dispatch = useDispatch();
   const appConfig = useSelector(state => state.appConfig);
-  const { values, setFieldError, errors } = useFormikContext();
+  const { values, setFieldError, setFieldValue } = useFormikContext();
   const value = getIn(values, name);
   const serverValidationError = useSelector(state => getInputServerValidityByPath(state, path));
+
+  useEffect(() => {
+    if (isLoadDefaultValueFromStore && path) {
+      const value = get(appConfig, path, null);
+
+      if (value !== null) {
+        setFieldValue(name, value);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (serverValidationError) {
@@ -21,15 +32,14 @@ export const AutoSaveField = ({ name, path, ...rest }) => {
   }, [setFieldError, serverValidationError, name]);
 
   useEffect(() => {
-    if (path && !errors[path]) {
+    if (path) {
       const oldValue = get(appConfig, path, null);
 
       if (!isEqual(oldValue, value)) {
         dispatch(updateProspect({ [path]: value }));
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [path, value, dispatch]);
 
   return <Field name={name} {...rest} />;
 };

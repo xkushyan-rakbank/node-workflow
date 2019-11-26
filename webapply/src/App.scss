@@ -71,7 +71,6 @@ form .MuiGrid-root {
 
 .flexContainerForButton {
   display: flex;
-  margin-top: 42px;
   > * {
     width: auto;
     flex: 1;
@@ -327,4 +326,8 @@ h3 {
 .MuiListItemText-root {
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.MuiOutlinedInput-inputSelect {
+  padding-right: 56px !important;
 }
