@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "react-select";
 import { getIn } from "formik";
+import map from "lodash/map";
 import { FormControl } from "@material-ui/core";
 
 import { ErrorMessage } from "./../../../Notifications";
@@ -15,12 +16,16 @@ const components = {
 };
 
 export const SelectAutocomplete = ({
+  extractId = option => option.key,
+  extractValue = option => option.value,
+  extractLabel = item => item.label,
   theme,
   label,
   shrink,
+  options,
   field,
   form: { errors, touched, setFieldValue },
-  multiple,
+  multiple = false,
   disabled,
   ...props
 }) => {
@@ -28,7 +33,15 @@ export const SelectAutocomplete = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
-  const handleChange = value => setFieldValue(field.name, value);
+  const handleChange = selected => {
+    const value = multiple ? map(selected, item => extractValue(item)) : extractValue(selected);
+
+    return setFieldValue(field.name, value);
+  };
+
+  const renderValue = !multiple
+    ? options.find(option => extractValue(option) === field.value)
+    : options.filter(option => field.value.includes(option.value));
 
   return (
     <FormControl className="formControl" variant="outlined">
@@ -36,9 +49,11 @@ export const SelectAutocomplete = ({
         {...field}
         {...props}
         isClearable={true}
+        options={options}
         classes={classes}
         styles={customStyles}
         components={components}
+        value={renderValue}
         onChange={handleChange}
         isMulti={multiple}
         isDisabled={disabled}
