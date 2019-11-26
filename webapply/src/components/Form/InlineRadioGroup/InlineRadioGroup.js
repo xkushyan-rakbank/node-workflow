@@ -14,11 +14,14 @@ export const InlineRadioGroup = ({
   field,
   form: { touched, errors, setFieldValue },
   options,
-  required
+  required,
+  onChange
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
+  const handleChange = event =>
+    onChange ? onChange(event) : setFieldValue(field.name, JSON.parse(event.target.value));
 
   return (
     <FormControl
@@ -31,7 +34,7 @@ export const InlineRadioGroup = ({
         aria-label={label}
         name={field.name}
         value={field.value}
-        onChange={event => setFieldValue(field.name, JSON.parse(event.target.value))}
+        onChange={handleChange}
         className={cx(classes.inlineFormControl, "smallText")}
       >
         {label}
