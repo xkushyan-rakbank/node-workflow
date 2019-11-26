@@ -1,15 +1,26 @@
 import { connect } from "react-redux";
+import get from "lodash/get";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
-import { getInputValueById } from "../../../../../../store/selectors/input";
 import { SignatoryPreferredMailingAddressComponent } from "./SignatoryPreferredMailingAddress";
+import { getOrganizationInfo, getSignatories } from "../../../../../../store/selectors/appConfig";
+import { prospect } from "../../../../../../constants/config";
 
 const mapStateToProps = (state, { index }) => ({
-  sameAsCompanyAddress: getInputValueById(state, "Sig.sameAsCompanyAddress", [index]),
-  organizationEmirateCity: getInputValueById(state, "OrgAddrAdrd.emirateCity", [0, 0]),
-  organizationPoBox: getInputValueById(state, "OrgAddrAdrd.poBox", [0, 0]),
-  organizationAddressLine1: getInputValueById(state, "OrgAddrAdrd.addressLine1", [0, 0]),
-  organizationAddressFieldDesc: getInputValueById(state, "OrgAddrAdrd.addressFieldDesc", [0, 0]),
-  emirateCity: getInputValueById(state, "SigAddrAdrd.emirateCity", [index, 0, 0])
+  organizationAddressInfo: get(
+    getOrganizationInfo(state),
+    "addressInfo",
+    prospect.organizationInfo.addressInfo
+  ),
+  signatoryAddressInfo: get(
+    getSignatories(state)[index],
+    "addressInfo",
+    prospect.signatoryInfo[0].addressInfo
+  ),
+  sameAsCompanyAddress: get(
+    getSignatories(state)[index],
+    "sameAsCompanyAddress",
+    prospect.signatoryInfo[0].sameAsCompanyAddress
+  )
 });
 
 const mapDispatchToProps = {

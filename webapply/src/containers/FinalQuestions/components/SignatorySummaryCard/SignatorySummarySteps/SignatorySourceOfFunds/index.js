@@ -1,12 +1,21 @@
-import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { connect } from "react-redux";
-import { getInputNameById, getInputValueById } from "../../../../../../store/selectors/input";
+import get from "lodash/get";
+import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { SignatorySourceOfFundsComponent } from "./SignatorySourceOfFunds";
+import { prospect } from "../../../../../../constants/config";
+import { getSignatories } from "../../../../../../store/selectors/appConfig";
 
 const mapStateToProps = (state, { index }) => ({
-  soursOfWealth: getInputValueById(state, "SigKycdWlth.wealthType", [index]),
-  otherSoursOfWealth: getInputValueById(state, "SigKycdWlth.others", [index]),
-  otherWealthTypeInputName: getInputNameById(state, "SigKycdWlth.others", [index])
+  wealthType: get(
+    getSignatories(state)[index],
+    "kycDetails.sourceOfWealth.wealthType",
+    prospect.signatoryInfo[0].kycDetails.sourceOfWealth.wealthType
+  ),
+  others: get(
+    getSignatories(state)[index],
+    "kycDetails.sourceOfWealth.others",
+    prospect.signatoryInfo[0].kycDetails.sourceOfWealth.others
+  )
 });
 
 const mapDispatchToProps = {

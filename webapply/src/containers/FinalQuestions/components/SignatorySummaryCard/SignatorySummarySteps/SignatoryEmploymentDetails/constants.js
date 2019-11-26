@@ -23,27 +23,27 @@ export const qualificationOptions = [
 
 export const employmentTypeOptions = [
   {
-    code: "S",
+    code: "Salaried",
     key: "Salaried",
-    value: "S",
+    value: "Salaried",
     label: "Salaried"
   },
   {
-    code: "SE",
+    code: "Self-Employed",
     key: "Self-Employed",
-    value: "SE",
+    value: "Self-Employed",
     label: "Self-Employed"
   },
   {
-    code: "H",
+    code: "Housewife",
     key: "Housewife",
-    value: "H",
+    value: "Housewife",
     label: "Housewife"
   },
   {
-    code: "O",
+    code: OTHER_OPTION_CODE,
     key: OTHER_OPTION_CODE,
-    value: "O",
+    value: OTHER_OPTION_CODE,
     label: OTHER_OPTION_CODE
   }
 ];

@@ -2,21 +2,21 @@ export const OTHER_OPTION_CODE = "Others";
 
 export const maritalStatusOptions = [
   {
-    code: "M",
+    code: "Married",
     key: "Married",
-    value: "M",
+    value: "Married",
     label: "Married"
   },
   {
-    code: "S",
+    code: "Single",
     key: "Single",
-    value: "S",
+    value: "Single",
     label: "Single"
   },
   {
-    code: "O",
+    code: OTHER_OPTION_CODE,
     key: OTHER_OPTION_CODE,
-    value: "O",
+    value: OTHER_OPTION_CODE,
     label: OTHER_OPTION_CODE
   }
 ];

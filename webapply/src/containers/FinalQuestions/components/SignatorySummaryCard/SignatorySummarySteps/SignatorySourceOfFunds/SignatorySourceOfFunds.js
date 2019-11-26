@@ -1,12 +1,11 @@
 import React from "react";
 import * as Yup from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 import { WEALTH_TYPE__REGEX } from "../../../../../../utils/validation";
-import { prospect } from "../../../../../../constants/config";
-import { CustomSelect, Input } from "../../../../../../components/Form";
+import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { wealthTypeOptions, OTHER_SOURCE_OF_WEALTH } from "./constants";
 
 export const signatorySourceOfFundsSchema = Yup.object().shape({
@@ -22,7 +21,8 @@ export const signatorySourceOfFundsSchema = Yup.object().shape({
 export const SignatorySourceOfFundsComponent = ({
   index,
   handleContinue,
-  // soursOfWealth,
+  wealthType,
+  others,
   updateProspect
 }) => {
   const classes = useStyles();
@@ -36,8 +36,8 @@ export const SignatorySourceOfFundsComponent = ({
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          wealthType: prospect.signatoryInfo[index].kycDetails.sourceOfWealth.wealthType,
-          others: prospect.signatoryInfo[index].kycDetails.sourceOfWealth.others
+          wealthType,
+          others
         }}
         onSubmit={onSubmit}
         validationSchema={signatorySourceOfFundsSchema}
@@ -51,6 +51,7 @@ export const SignatorySourceOfFundsComponent = ({
                     options={wealthTypeOptions}
                     shrink={false}
                     name="wealthType"
+                    path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.wealthType`}
                     placeholder="Source of funds"
                     onChange={e => {
                       setFieldValue("wealthType", e.target.value);
@@ -58,6 +59,7 @@ export const SignatorySourceOfFundsComponent = ({
                         e.target.value !== OTHER_SOURCE_OF_WEALTH &&
                         values.wealthType === OTHER_SOURCE_OF_WEALTH
                       ) {
+                        setFieldValue("others", "");
                         updateProspect({
                           [`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.others`]: ""
                         });
@@ -70,6 +72,7 @@ export const SignatorySourceOfFundsComponent = ({
                   <Grid item md={12} sm={12}>
                     <Field
                       name="others"
+                      path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.others`}
                       label="Other(Specify)"
                       placeholder="Other(Specify)"
                       component={Input}

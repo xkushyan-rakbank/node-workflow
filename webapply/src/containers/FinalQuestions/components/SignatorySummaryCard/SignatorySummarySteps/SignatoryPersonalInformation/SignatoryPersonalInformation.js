@@ -1,12 +1,12 @@
 import React from "react";
 import * as Yup from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./styled";
 import { MARITAL_STATUS_REGEX } from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE } from "./constants";
-import { prospect } from "../../../../../../constants/config";
-import { CustomSelect, Input } from "../../../../../../components/Form";
+import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
+import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { maritalStatusOptions } from "./constants";
 
 export const signatoryPersonalInformationSchema = Yup.object().shape({
@@ -20,7 +20,13 @@ export const signatoryPersonalInformationSchema = Yup.object().shape({
   })
 });
 
-export const SignatoryPersonalInformationComponent = ({ index, handleContinue }) => {
+export const SignatoryPersonalInformationComponent = ({
+  index,
+  handleContinue,
+  maritalStatus,
+  mothersMaidenName,
+  maritalStatusOthers
+}) => {
   const classes = useStyles();
 
   const onSubmit = values => {
@@ -32,9 +38,9 @@ export const SignatoryPersonalInformationComponent = ({ index, handleContinue })
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          maritalStatus: prospect.signatoryInfo[index].maritalStatus,
-          mothersMaidenName: prospect.signatoryInfo[index].mothersMaidenName,
-          maritalStatusOthers: prospect.signatoryInfo[index].maritalStatusOthers
+          maritalStatus,
+          mothersMaidenName,
+          maritalStatusOthers
         }}
         onSubmit={onSubmit}
         validationSchema={signatoryPersonalInformationSchema}
@@ -48,6 +54,7 @@ export const SignatoryPersonalInformationComponent = ({ index, handleContinue })
                     options={maritalStatusOptions}
                     shrink={false}
                     name="maritalStatus"
+                    path={`prospect.signatoryInfo[${index}].maritalStatus`}
                     placeholder="Marital Status"
                     component={CustomSelect}
                   />
@@ -55,6 +62,7 @@ export const SignatoryPersonalInformationComponent = ({ index, handleContinue })
                 <Grid item md={6} sm={12}>
                   <Field
                     name="mothersMaidenName"
+                    path={`prospect.signatoryInfo[${index}].mothersMaidenName`}
                     label="Mother's maiden name"
                     placeholder="Mother's maiden name"
                     component={Input}
@@ -64,6 +72,7 @@ export const SignatoryPersonalInformationComponent = ({ index, handleContinue })
                   <Grid item md={12} sm={12}>
                     <Field
                       name="maritalStatusOthers"
+                      path={`prospect.signatoryInfo[${index}].maritalStatusOthers`}
                       label="Other(Specify)"
                       placeholder="Other(Specify)"
                       component={Input}
@@ -71,6 +80,9 @@ export const SignatoryPersonalInformationComponent = ({ index, handleContinue })
                   </Grid>
                 )}
               </Grid>
+              <div className={classes.buttonWrapper}>
+                <ContinueButton type="submit" />
+              </div>
             </Form>
           );
         }}
