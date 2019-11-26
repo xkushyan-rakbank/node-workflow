@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
-import { prospect } from "../../../../constants/config";
 import { PHONE_REGEX, NAME_REGEX } from "../../../../utils/validation";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 import { accountSigningTypes, countryCodeOptions } from "../../../../constants/options";
@@ -19,7 +18,6 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import Divider from "../../../../components/Divider";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
-import { updateProspect } from "../../../../store/actions/appConfig";
 import { useStyles } from "./styled";
 
 const MAX_SIGNATORIES = 2;
@@ -47,39 +45,27 @@ const signingPreferencesSchema = Yup.object({
   )
 });
 
-export const SigningPreferencesComponent = ({ goToNext }) => {
+export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
   const classes = useStyles();
-  const [countOfSignatories, setCountOfSignatories] = useState(1);
-  const createAddNewPersonHandler = arrayHelpers => () => {
-    const key = `prospect.organizationInfo.contactDetailsForTxnReconfirming[${countOfSignatories}]`;
-
-    arrayHelpers.push({
-      fullName: "",
-      primaryMobCountryCode: "",
-      primaryMobileNo: "",
-      primaryPhoneCountryCode: "",
-      primaryPhoneNo: ""
-    });
-    updateProspect({
-      [key]: prospect.organizationInfo.contactDetailsForTxnReconfirming[0]
-    });
+  const [countOfSignatories, setCountOfSignatories] = useState(
+    Math.max((organizationInfo.contactDetailsForTxnReconfirming || []).length, 1)
+  );
+  const handleAddNewPerson = useCallback(() => {
     setCountOfSignatories(countOfSignatories + 1);
-  };
+  }, [countOfSignatories]);
 
   return (
     <Formik
       initialValues={{
         accountSigningType: "",
         accountSigningInstn: "",
-        signatories: [
-          {
-            fullName: "",
-            primaryMobCountryCode: "",
-            primaryMobileNo: "",
-            primaryPhoneCountryCode: "",
-            primaryPhoneNo: ""
-          }
-        ]
+        signatories: [...new Array(MAX_SIGNATORIES)].map(() => ({
+          fullName: "",
+          primaryMobCountryCode: "",
+          primaryMobileNo: "",
+          primaryPhoneCountryCode: "",
+          primaryPhoneNo: ""
+        }))
       }}
       validationSchema={signingPreferencesSchema}
       onSubmit={goToNext}
@@ -176,7 +162,7 @@ export const SigningPreferencesComponent = ({ goToNext }) => {
                 {countOfSignatories < MAX_SIGNATORIES && (
                   <AddButton
                     title="Add another person"
-                    onClick={createAddNewPersonHandler(arrayHelpers)}
+                    onClick={handleAddNewPerson}
                     className={classes.addButton}
                   />
                 )}
