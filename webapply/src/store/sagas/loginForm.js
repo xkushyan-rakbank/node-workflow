@@ -9,11 +9,7 @@ import { log } from "../../utils/loggger";
 
 export function* loginFormSaga({ payload }) {
   try {
-    const param = {
-      username: payload.userName || "",
-      password: payload.password || ""
-    };
-    const response = yield call(authentication.login, param);
+    const response = yield call(authentication.login, payload);
     yield put(loginInfoFormSuccess(response.data));
     yield call(history.push, routes.searchProspect);
   } catch (error) {
