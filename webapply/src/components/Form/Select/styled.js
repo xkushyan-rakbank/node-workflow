@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
   selectField: {
+    height: "56px",
     "& svg": {
       fontSize: " 18px",
       color: " #000",

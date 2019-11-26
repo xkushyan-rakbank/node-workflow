@@ -1,12 +1,12 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
+import createReduxWaitForMiddleware from "redux-wait-for-action";
 
 import reducers from "./reducers";
 import rootSaga from "./sagas";
 import { routerMiddleware } from "connected-react-router";
 
 export const configureStore = (initialState, history) => {
-  const routermw = routerMiddleware(history);
   const sagaMiddleware = createSagaMiddleware();
 
   const composeEnhancers =
@@ -18,8 +18,7 @@ export const configureStore = (initialState, history) => {
     reducers(history),
     initialState,
     composeEnhancers(
-      applyMiddleware(routermw),
-      applyMiddleware(sagaMiddleware, routerMiddleware(history))
+      applyMiddleware(sagaMiddleware, routerMiddleware(history), createReduxWaitForMiddleware())
     )
   );
 

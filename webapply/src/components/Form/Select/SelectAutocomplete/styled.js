@@ -5,7 +5,8 @@ export const useStyles = makeStyles(theme => ({
   input: {
     display: "flex",
     padding: 0,
-    height: "56px",
+    minHeight: "56px",
+    height: "auto",
     "& + fieldset": {
       borderRadius: "8px ",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
@@ -37,13 +38,6 @@ export const useStyles = makeStyles(theme => ({
     left: 2,
     fontSize: 16
   },
-  menu: {
-    marginTop: theme.spacing(1),
-    position: "absolute",
-    zIndex: 1,
-    left: 0,
-    right: 0
-  },
   divider: {
     height: theme.spacing(2)
   },
@@ -70,3 +64,10 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between"
   }
 }));
+
+export const customStyles = {
+  menu: (provided, state) => ({
+    ...provided,
+    zIndex: 2
+  })
+};
