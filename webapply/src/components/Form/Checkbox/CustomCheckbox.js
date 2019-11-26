@@ -13,6 +13,9 @@ export const useStyles = makeStyles(theme => ({
   label: {
     fontSize: "14px",
     color: theme.palette.text.color
+  },
+  radioIcon: {
+    width: "24px"
   }
 }));
 
@@ -32,8 +35,10 @@ export const CustomCheckbox = ({ label, onSelect = () => {}, type = "checkbox", 
           />
         ) : (
           <Radio
-            icon={<img src={UncheckedRadioIcon} alt="check icon" />}
-            checkedIcon={<img src={CheckedRadioIcon} alt="checked icon" />}
+            icon={<img src={UncheckedRadioIcon} alt="check icon" className={classes.radioIcon} />}
+            checkedIcon={
+              <img src={CheckedRadioIcon} alt="checked icon" className={classes.radioIcon} />
+            }
             onClick={onSelect}
             {...rest}
           />

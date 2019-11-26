@@ -34,6 +34,9 @@ export const useStyles = makeStyles({
     "& svg": {
       position: "absolute",
       right: "20px"
+    },
+    "& div:first-child": {
+      paddingRight: "4px !important"
     }
   },
   selectFieldCombined: {
