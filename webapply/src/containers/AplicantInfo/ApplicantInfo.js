@@ -7,7 +7,6 @@ import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { countryCodeOptions } from "./../../constants/options";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
-import { prospect } from "./../../constants/config";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
@@ -58,7 +57,12 @@ const ApplicantInfoPage = ({
       </p>
 
       <Formik
-        initialValues={prospect.applicantInfo}
+        initialValues={{
+          fullName: "",
+          email: "",
+          countryCode: countryCodeOptions[0].value,
+          mobileNo: ""
+        }}
         validationSchema={aplicantInfoSchema}
         onSubmit={onSubmit}
       >
