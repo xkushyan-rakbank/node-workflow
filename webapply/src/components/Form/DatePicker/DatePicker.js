@@ -45,9 +45,13 @@ export const DatePicker = ({
           KeyboardButtonProps={{
             "aria-label": "change date"
           }}
+          InputLabelProps={{
+            shrink: true
+          }}
           {...field}
           onChange={value => setFieldValue(field.name, value)}
           {...datePickerProps}
+          value={field.value === "" ? null : field.value}
         />
       </MuiPickersUtilsProvider>
 
