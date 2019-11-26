@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
@@ -10,6 +10,10 @@ import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { prospect } from "./../../constants/config";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
+import { IS_RECAPTCHA_ENABLE } from "../../constants";
+import ErrorBoundary from "../../components/ErrorBoundary";
+import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
+import { setToken, setVerified } from "../../store/actions/reCaptcha";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -24,8 +28,23 @@ const aplicantInfoSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm }) => {
+const ApplicantInfoPage = ({
+  receiveAppConfig,
+  applicantInfoForm,
+  setToken,
+  setVerified,
+  reCaptchaToken
+}) => {
   const onSubmit = values => applicantInfoForm(values);
+  const handleReCaptchaVerify = useCallback(
+    token => {
+      setToken(token);
+    },
+    [setToken]
+  );
+  const handleVerifiedFailed = useCallback(() => {
+    setVerified(false);
+  }, [setVerified]);
 
   useEffect(() => {
     receiveAppConfig();
@@ -43,7 +62,7 @@ const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm }) => {
         validationSchema={aplicantInfoSchema}
         onSubmit={onSubmit}
       >
-        {() => (
+        {({ values }) => (
           <Form>
             <Field
               name="fullName"
@@ -80,8 +99,27 @@ const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm }) => {
               />
             </InputGroup>
 
+            {IS_RECAPTCHA_ENABLE && (
+              <ErrorBoundary>
+                <ReCaptcha
+                  onVerify={handleReCaptchaVerify}
+                  onExpired={handleVerifiedFailed}
+                  onError={handleVerifiedFailed}
+                />
+              </ErrorBoundary>
+            )}
+
             <div className="linkContainer">
-              <SubmitButton justify="flex-end" label="Next Step" />
+              <SubmitButton
+                disabled={
+                  !values.fullName ||
+                  !values.email ||
+                  !values.mobileNo ||
+                  (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
+                }
+                justify="flex-end"
+                label="Next Step"
+              />
             </div>
           </Form>
         )}
@@ -90,12 +128,18 @@ const ApplicantInfoPage = ({ receiveAppConfig, applicantInfoForm }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  reCaptchaToken: state.reCaptcha.token
+});
+
 const mapDispatchToProps = {
   receiveAppConfig,
-  applicantInfoForm
+  applicantInfoForm,
+  setToken,
+  setVerified
 };
 
 export const ApplicantInfo = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ApplicantInfoPage);
