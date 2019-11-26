@@ -16,9 +16,7 @@ const components = {
 };
 
 export const SelectAutocomplete = ({
-  extractId = option => option.key,
   extractValue = option => option.value,
-  extractLabel = item => item.label,
   theme,
   label,
   shrink,
