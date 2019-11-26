@@ -29,32 +29,35 @@ const StakeholderStepper = ({
   isStatusShown,
   completedStep,
   orderIndex,
+  deleteStakeholder,
   loading: isStatusLoading,
-  finishStakeholderEdit,
-  ...props
+  sendProspectToAPI: sendProspect,
+  formatPersonalInformation: personalInformationFormat,
+  formatNationality: nationalityFormat,
+  finishStakeholderEdit: finishEdition,
+  handleChangeStep: changeStepHandler
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
-  const [finalScreenIsShown, changeFinalScreenDisplay] = React.useState(false);
+  const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
 
   useEffect(() => {
     if (isFinalScreenShown) {
       changeFinalScreenDisplay(true);
       setInterval(() => {
         changeFinalScreenDisplay(false);
-        finishStakeholderEdit();
+        finishEdition();
       }, 5000);
     }
-  }, [isFinalScreenShown, finishStakeholderEdit]);
+  }, [isFinalScreenShown, finishEdition]);
 
-  const deleteHandler = () => {
-    if (isDisplayConfirmation) {
-      setIsDisplayConfirmation(false);
-      props.deleteStakeholder(id);
-    } else {
-      setIsDisplayConfirmation(true);
-    }
+  const handleDeleteStakeholder = () => {
+    setIsDisplayConfirmation(false);
+    deleteStakeholder(id);
   };
+
+  const deleteHandler = () =>
+    isDisplayConfirmation ? handleDeleteStakeholder() : setIsDisplayConfirmation(true);
 
   const renderContent = () => {
     return (
@@ -67,7 +70,7 @@ const StakeholderStepper = ({
     );
   };
 
-  if (finalScreenIsShown) {
+  if (isDisplayFinalScreen) {
     return <SuccessFilledStakeholder name={`${firstName} ${lastName}`} />;
   }
 
@@ -78,18 +81,18 @@ const StakeholderStepper = ({
   const isFilled = itemStep => isNewStakeholder && completedStep >= itemStep - 1;
   const createSetStepHandler = item => () => {
     if (isFilled(item.step)) {
-      props.handleChangeStep(item);
+      changeStepHandler(item);
     }
   };
 
   const createContinueHandler = itemStep => () => {
     switch (itemStep) {
       case STEP_1:
-        return props.formatPersonalInformation(index);
+        return personalInformationFormat(index);
       case STEP_4:
-        return props.formatNationality(index);
+        return nationalityFormat(index);
       default:
-        return props.sendProspectToAPI();
+        return sendProspect();
     }
   };
 
@@ -132,7 +135,7 @@ const StakeholderStepper = ({
         })}
       </div>
 
-      {!isNewStakeholder && props.deleteStakeholder && (
+      {!isNewStakeholder && deleteStakeholder && (
         <div className={classes.footerPart}>
           <LinkButton
             title={

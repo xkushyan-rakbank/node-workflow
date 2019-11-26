@@ -10,14 +10,13 @@ import { useStyles } from "./styled";
 export const NumericInput = ({
   placement,
   field,
-  form: { errors, touched, setFieldValue },
+  form: { errors, touched },
   inputProps,
   ...props
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
-  const handleChange = event => setFieldValue(field.name, event.target.value);
 
   return (
     <>
@@ -25,7 +24,6 @@ export const NumericInput = ({
         <NumberFormat
           {...field}
           {...props}
-          onChange={handleChange}
           variant="outlined"
           className={classes.textField}
           customInput={TextField}

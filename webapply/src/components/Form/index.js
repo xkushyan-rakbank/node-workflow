@@ -6,3 +6,5 @@ export { DatePicker } from "./DatePicker/DatePicker";
 export { CheckboxGroup } from "./Checkbox/CheckboxGroup";
 export { Checkbox } from "./Checkbox/Checkbox";
 export { AutoSaveField } from "./AutoSaveField/AutoSaveField";
+export { InlineRadioGroup } from "./InlineRadioGroup/InlineRadioGroup";
+export { NumericInput } from "./Input/NumericInput";
