@@ -34,8 +34,8 @@ const LoginPage = ({ loginInfoForm }) => {
             <Field
               name="userName"
               path="login.userName"
-              label="UserName"
-              placeholder="UserName"
+              label="User Name"
+              placeholder="User Name"
               component={Input}
             />
 
