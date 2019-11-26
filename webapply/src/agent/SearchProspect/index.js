@@ -28,7 +28,7 @@ const searchProspectSchema = Yup.object({
 
 const initialValues = {
   fname: "",
-  countryCode: countryCodeOptions[0].label,
+  countryCode: countryCodeOptions[0].value,
   mobileNo: "",
   email: "",
   raktrackNumber: "",
