@@ -2,9 +2,9 @@ import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
-import { prospect } from "./../../constants/config";
 import { countryCodeOptions } from "./../../constants/options";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -33,14 +33,14 @@ const ComeBackLogin = ({
   isOtpGenerated,
   setToken,
   setVerified,
-  reCaptchaToken
+  recaptchaToken
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
-      generateOtpCode(values);
+      generateOtpCode({ ...values, recaptchaToken });
     },
-    [generateOtpCode]
+    [generateOtpCode, recaptchaToken]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -65,7 +65,11 @@ const ComeBackLogin = ({
         info="Please enter the login you used when you first applied"
       />
       <Formik
-        initialValues={prospect.applicantInfo}
+        initialValues={{
+          email: "",
+          countryCode: countryCodeOptions[0].value,
+          mobileNo: ""
+        }}
         validationSchema={comebackSchema}
         onSubmit={submitForm}
       >
@@ -111,7 +115,7 @@ const ComeBackLogin = ({
             <div className="linkContainer">
               <SubmitButton
                 disabled={
-                  !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
+                  !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !recaptchaToken)
                 }
                 justify="flex-end"
                 label="Next"
@@ -125,7 +129,7 @@ const ComeBackLogin = ({
 };
 
 const mapStateToProps = state => ({
-  reCaptchaToken: state.reCaptcha.token,
+  recaptchaToken: state.reCaptcha.token,
   isOtpGenerated: isOtpGenerated(state)
 });
 

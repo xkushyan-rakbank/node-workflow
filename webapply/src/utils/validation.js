@@ -11,3 +11,4 @@ export const MARITAL_STATUS_REGEX = /^([a-zA-Z]){1,50}$/;
 export const EMPLOYMENT_TYPE_REGEX = /^([a-zA-Z ]){1,50}$/;
 export const DESIGNATION_REGEX = /^([a-zA-Z]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
+export const LEAD_LICENSE_REGEX = /^([a-zA-Z0-9])*$/;
