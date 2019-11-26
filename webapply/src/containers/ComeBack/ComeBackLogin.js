@@ -2,9 +2,9 @@ import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
-import { prospect } from "./../../constants/config";
 import { countryCodeOptions } from "./../../constants/options";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -65,7 +65,11 @@ const ComeBackLogin = ({
         info="Please enter the login you used when you first applied"
       />
       <Formik
-        initialValues={prospect.applicantInfo}
+        initialValues={{
+          email: "",
+          countryCode: countryCodeOptions[0].value,
+          mobileNo: ""
+        }}
         validationSchema={comebackSchema}
         onSubmit={submitForm}
       >

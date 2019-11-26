@@ -4,3 +4,4 @@ export const PHONE_REGEX = /^[0-9]{9,14}$/;
 export const NUMBER_REGEX = /^[0-9]*$/;
 
 export const COMPANY_NAME_REGEX = /^([a-zA-Z '”`-]){1,30}$/;
+export const LEAD_LICENSE_REGEX = /^([a-zA-Z0-9])*$/;

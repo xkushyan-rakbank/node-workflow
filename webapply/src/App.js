@@ -30,6 +30,7 @@ import { SubmitApplication } from "./containers/SelectServices/components/Submit
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 import { getEndpoints } from "./store/selectors/appConfig";
+import { AgentProtectedRoute } from "./components/Routers/AgentProtectedRouter";
 
 import "./App.scss";
 
@@ -56,7 +57,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
             <Route exact path={routes.companyInfo} component={CompanyInfo} />
             <Route exact path="/agent" render={() => <Redirect to={routes.login} />} />
             <Route exact path={routes.login} component={Login} />
-            <Route exact path={routes.searchProspect} component={SearchProspect} />
+            <AgentProtectedRoute exact path={routes.searchProspect} component={SearchProspect} />
             <Route exact path={routes.stakeholdersInfo} component={CompanyStakeholders} />
             <Route exact path={routes.finalQuestions} component={FinalQuestions} />
             <Route exact path={routes.uploadDocuments} component={UploadDocuments} />
@@ -68,7 +69,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
             <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
             <Route exact path={routes.comeBackLoginVerification} component={ComeBackVerification} />
             <Route exact path={routes.MyApplications} component={MyApplications} />
-            <Route path={routes.SearchedAppInfo} component={SearchedAppInfo} />
+            <AgentProtectedRoute path={routes.SearchedAppInfo} component={SearchedAppInfo} />
             <Route exact path={routes.SubmitApplication} component={SubmitApplication} />
             <Redirect to={routes.accountsComparison} />
           </Switch>

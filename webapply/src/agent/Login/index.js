@@ -1,15 +1,21 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { Grid } from "@material-ui/core";
+
 import { Input, AutoSaveField as Field } from "./../../components/Form";
 import { NAME_REGEX } from "./../../utils/validation";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { loginInfoForm } from "../../store/actions/loginForm";
+import { setToken, setVerified, verifyToken } from "../../store/actions/reCaptcha";
+import ErrorBoundary from "../../components/ErrorBoundary";
+import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
+import { IS_RECAPTCHA_ENABLE } from "../../constants";
 import { useStyles } from "./styled";
 
 const loginSchema = Yup.object({
-  userName: Yup.string()
+  username: Yup.string()
     .required("You need to provide username")
     .matches(NAME_REGEX, "This is not a valid username"),
   password: Yup.string()
@@ -17,25 +23,45 @@ const loginSchema = Yup.object({
     .matches(NAME_REGEX, "This is not a valid password")
 });
 
-const LoginPage = ({ loginInfoForm }) => {
+const LoginPage = ({ loginInfoForm, setToken, setVerified, verifyToken, recaptchaToken }) => {
   const classes = useStyles();
-  const submitForm = useCallback(values => loginInfoForm(values), [loginInfoForm]);
+  const submitForm = useCallback(
+    values => {
+      loginInfoForm({ ...values, recaptchaToken });
+    },
+    [loginInfoForm, recaptchaToken]
+  );
+  const handleReCaptchaVerify = useCallback(
+    token => {
+      setToken(token);
+    },
+    [setToken]
+  );
+  const handleVerifiedFailed = useCallback(() => {
+    setVerified(false);
+  }, [setVerified]);
+
+  useEffect(() => {
+    if (recaptchaToken) {
+      verifyToken();
+    }
+  }, [recaptchaToken, verifyToken]);
 
   return (
     <div className={classes.baseForm}>
       <h2>Login</h2>
       <Formik
-        initialValues={{ userName: "", password: "" }}
+        initialValues={{ username: "", password: "" }}
         validationSchema={loginSchema}
         onSubmit={submitForm}
       >
         {({ values }) => (
           <Form>
             <Field
-              name="userName"
+              name="username"
               path="login.userName"
-              label="UserName"
-              placeholder="UserName"
+              label="User Name"
+              placeholder="User Name"
               component={Input}
             />
 
@@ -48,13 +74,27 @@ const LoginPage = ({ loginInfoForm }) => {
               component={Input}
             />
 
-            <div className="linkContainer">
-              <SubmitButton
-                justify="flex-end"
-                label="Next Step"
-                disabled={Object.keys(values).some(key => !values[key])}
-              />
-            </div>
+            <Grid container direction="row" justify="space-between" alignItems="center">
+              <ErrorBoundary className={classes.reCaptchaContainer}>
+                {IS_RECAPTCHA_ENABLE && (
+                  <ReCaptcha
+                    onVerify={handleReCaptchaVerify}
+                    onExpired={handleVerifiedFailed}
+                    onError={handleVerifiedFailed}
+                  />
+                )}
+              </ErrorBoundary>
+              <div className="linkContainer">
+                <SubmitButton
+                  justify="flex-end"
+                  label="Next Step"
+                  disabled={
+                    Object.values(values).some(value => !value) ||
+                    (IS_RECAPTCHA_ENABLE && !recaptchaToken)
+                  }
+                />
+              </div>
+            </Grid>
           </Form>
         )}
       </Formik>
@@ -62,11 +102,18 @@ const LoginPage = ({ loginInfoForm }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  recaptchaToken: state.reCaptcha.token
+});
+
 const mapDispatchToProps = {
-  loginInfoForm
+  loginInfoForm,
+  setToken,
+  verifyToken,
+  setVerified
 };
 
 export const Login = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(LoginPage);
