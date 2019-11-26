@@ -4,69 +4,9 @@ import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDe
 import CheckList from "../components/SearchedAppInfoSteps/CheckList/index";
 import Documents from "../components/SearchedAppInfoSteps/Documents/index";
 import AuditTrail from "../components/SearchedAppInfoSteps/AuditTrail/index";
-import CompanyBusinessRelationshipsForm from "../components/FinalQuestions/CompanyBusinessRelationshipsForm";
-import CompanyPreferredContactInformationForm from "../components/FinalQuestions/CompanyPreferredContactInformationForm";
-import CompanyPreferredMailingAddressForm from "../components/FinalQuestions/CompanyPreferredMailingAddressForm";
-import CompanyBranchesAndSubsidiariesForm from "../components/FinalQuestions/CompanyBranchesAndSubsidiariesForm";
-import CompanyAnticipatedTransactionsForm from "../components/FinalQuestions/CompanyAnticipatedTransactionsForm";
 import routes from "../routes";
-import SignatoryPersonalInformationForm from "../components/FinalQuestions/SignatoryPersonalInformationForm";
-import SignatorySourceOfFundsForm from "../components/FinalQuestions/SignatorySourceOfFundsForm";
-import SignatoryPreferredMailingAddressForm from "../components/FinalQuestions/SignatoryPreferredMailingAddressForm";
-import SignatoryEmploymentDetailsForm from "../components/FinalQuestions/SignatoryEmploymentDetailsForm";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
-
-export const finalQuestionsSteps = [
-  {
-    step: 1,
-    title: "Business relationships",
-    component: CompanyBusinessRelationshipsForm
-  },
-  {
-    step: 2,
-    title: "Branches and subsidiaries",
-    component: CompanyBranchesAndSubsidiariesForm
-  },
-  {
-    step: 3,
-    title: "Anticipated transactions",
-    component: CompanyAnticipatedTransactionsForm
-  },
-  {
-    step: 4,
-    title: "Preferred mailing address",
-    component: CompanyPreferredMailingAddressForm
-  },
-  {
-    step: 5,
-    title: "Preferred contact information",
-    component: CompanyPreferredContactInformationForm
-  }
-];
-
-export const signatoriesSteps = [
-  {
-    step: 1,
-    title: "Personal Information",
-    component: SignatoryPersonalInformationForm
-  },
-  {
-    step: 2,
-    title: "Employment details",
-    component: SignatoryEmploymentDetailsForm
-  },
-  {
-    step: 3,
-    title: "Source of funds",
-    component: SignatorySourceOfFundsForm
-  },
-  {
-    step: 4,
-    title: "Preferred mailing address",
-    component: SignatoryPreferredMailingAddressForm
-  }
-];
 
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },

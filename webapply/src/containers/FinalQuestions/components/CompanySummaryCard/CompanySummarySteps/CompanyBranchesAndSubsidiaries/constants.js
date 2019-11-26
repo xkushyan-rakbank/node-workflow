@@ -1,0 +1,4 @@
+export const limits = {
+  INSIDE_SUBSIDIARY_COUNT: 5,
+  OUTSIDE_SUBSIDIARY_COUNT: 5
+};

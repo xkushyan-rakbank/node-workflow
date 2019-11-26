@@ -9,7 +9,7 @@ import { ApplicantInfo } from "./containers/AplicantInfo/ApplicantInfo";
 import { CompanyInfo } from "./containers/CompanyInfo/CompanyInfo";
 import { Login } from "./agent/Login";
 import CompanyStakeholders from "./containers/CompanyStakeholders/CompanyStakeholders";
-import FinalQuestions from "./containers/FinalQuestions";
+import { FinalQuestions } from "./containers/FinalQuestions/index";
 import FormConfirm from "./containers/FormConfirm";
 import FormLayout from "./containers/FormLayout";
 import SearchProspect from "./agent/SearchProspect";
