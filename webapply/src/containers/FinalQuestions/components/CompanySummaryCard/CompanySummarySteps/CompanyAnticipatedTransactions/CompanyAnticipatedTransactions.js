@@ -26,12 +26,11 @@ function getTotalMonthlyCreditsValue(annualFinancialTurnover) {
 }
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
-  annualFinTurnoverAmtInAED: Yup.string().matches(
-    ANNUAL_TURNOVER_REGEX,
-    "This is not a valid value"
-  ),
+  annualFinTurnoverAmtInAED: Yup.string()
+    .required("You need to provide annual turnover")
+    .matches(ANNUAL_TURNOVER_REGEX, "This is not a valid value"),
   maxAmtSingleTxnCashAED: Yup.number()
-    .required("Required")
+    .required("You need to provide single transaction value")
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -46,7 +45,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   maxAmtSingleTxnNonCashAED: Yup.number()
-    .required("Required")
+    .required("You need to provide single transaction value")
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -61,7 +60,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   totalMonthlyCashAmountInFigures: Yup.number()
-    .required("Required")
+    .required("You need to provide total monthly amount in cash")
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -75,7 +74,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   totalMonthlyNonCashAmountInFigures: Yup.number()
-    .required("Required")
+    .required("You need to provide total monthly amount in non-cash")
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -109,20 +108,8 @@ export const CompanyAnticipatedTransactionsComponent = ({
       : "Total Monthly Credits";
   }
 
-  const onSubmit = values => {
+  const onSubmit = () => {
     handleContinue();
-    const prospectValue = {
-      annualFinTurnoverAmtInAED: values.annualFinTurnoverAmtInAED,
-      anticipatedTransactionsDetails: {
-        maxAmtSingleTxnCashAED: values.maxAmtSingleTxnCashAED,
-        maxAmtSingleTxnNonCashAED: values.maxAmtSingleTxnNonCashAED,
-        totalMonthlyCashCreditsAED: { amountInFigures: values.totalMonthlyCashAmountInFigures },
-        totalMonthlyNonCashCreditsAED: {
-          amountInFigures: values.totalMonthlyNonCashAmountInFigures
-        }
-      }
-    };
-    console.log(prospectValue);
   };
 
   return (

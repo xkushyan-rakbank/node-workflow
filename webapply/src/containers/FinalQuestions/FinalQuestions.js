@@ -7,17 +7,19 @@ import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
 
-export const FinalQuestionsComponent = ({ signatories, history, signatoriesMock }) => {
-  const filledSignatoriesSet = new Set();
+export const FinalQuestionsComponent = ({ signatories, history }) => {
+  const availableSignatoriesSet = new Set();
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
-  const [filledSignatoriesIndexes, setFilledSignatoriesIndexes] = useState(filledSignatoriesSet);
+  const [availableSignatoriesIndexes, setAvailableSignatoriesIndexes] = useState(
+    availableSignatoriesSet
+  );
   const classes = useStyles();
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
-  const addFilledSignatoryIndex = useCallback(
-    index => setFilledSignatoriesIndexes(filledSignatoriesSet.add(index)),
-    [setFilledSignatoriesIndexes, filledSignatoriesSet]
+  const addAvailableSignatoryIndex = useCallback(
+    index => setAvailableSignatoriesIndexes(availableSignatoriesSet.add(index)),
+    [setAvailableSignatoriesIndexes, availableSignatoriesSet]
   );
 
   const switchExpandedMargin = useCallback(() => setIsExpandedMargin(!isExpandedMargin), [
@@ -35,17 +37,17 @@ export const FinalQuestionsComponent = ({ signatories, history, signatoriesMock 
       <div className={classes.sectionContainer}>
         <CompanySummaryCard
           switchExpandedMargin={switchExpandedMargin}
-          addFilledSignatoryIndex={addFilledSignatoryIndex}
+          addAvailableSignatoryIndex={addAvailableSignatoryIndex}
         />
       </div>
       <div className={classes.sectionContainer}>
-        {signatoriesMock.map((item, index) => (
+        {signatories.map((item, index) => (
           <SignatorySummaryCard
             key={index}
             signatory={item}
             index={index}
-            addFilledSignatoryIndex={addFilledSignatoryIndex}
-            filledSignatoriesIndexes={filledSignatoriesIndexes}
+            addAvailableSignatoryIndex={addAvailableSignatoryIndex}
+            availableSignatoriesIndexes={availableSignatoriesIndexes}
           />
         ))}
       </div>

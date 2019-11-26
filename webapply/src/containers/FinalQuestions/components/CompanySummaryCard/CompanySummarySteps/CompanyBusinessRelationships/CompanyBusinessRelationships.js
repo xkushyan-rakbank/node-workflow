@@ -96,9 +96,8 @@ export const CompanyBusinessRelationshipsComponent = ({
     });
   }
 
-  const onSubmit = values => {
+  const onSubmit = () => {
     handleContinue();
-    console.log(values);
   };
 
   return (

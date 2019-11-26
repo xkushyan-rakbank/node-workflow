@@ -4,12 +4,17 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { finalQuestionsSteps, STEP_1 } from "./constants";
+import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
 import { useStyles } from "./styled";
 
-export const CompanySummaryCardComponent = ({ index, switchExpandedMargin, companyName }) => {
-  const filledCompanyStepsSet = new Set();
+export const CompanySummaryCardComponent = ({
+  index,
+  switchExpandedMargin,
+  companyName,
+  addAvailableSignatoryIndex,
+  sendProspectToAPI
+}) => {
   const [step, setStep] = useState(STEP_1);
-  const [completedSteps, setCompletedSteps] = useState(filledCompanyStepsSet);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   const classes = useStyles();
@@ -43,16 +48,19 @@ export const CompanySummaryCardComponent = ({ index, switchExpandedMargin, compa
   };
 
   const changeStep = item => {
-    // if (!item.isFilled) {
-    //   return;
-    // }
+    if (step <= item.step) {
+      return;
+    }
     setStep(item.step);
   };
 
-  const handleContinue = item => {
-    setStep(item.step + 1);
-    setCompletedSteps(filledCompanyStepsSet.add(item.step));
-  };
+  function handleContinue() {
+    sendProspectToAPI();
+    setStep(step + 1);
+    if (step === finalQuestionsSteps.length) {
+      addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
+    }
+  }
 
   return (
     <CompanyCard companyName={companyName} controls={renderControlsContent()}>
@@ -69,9 +77,9 @@ export const CompanySummaryCardComponent = ({ index, switchExpandedMargin, compa
               title={item.title}
               infoTitle={item.infoTitle}
               isActiveStep={step === item.step}
-              isFilled={completedSteps.has(item.step)}
+              isFilled={step > item.step}
               clickHandler={() => changeStep(item)}
-              handleContinue={() => handleContinue(item)}
+              handleContinue={handleContinue}
               stepForm={stepForm}
             />
           );

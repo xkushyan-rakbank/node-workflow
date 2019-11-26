@@ -4,20 +4,18 @@ import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCar
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps, INITIAL_SIGNATORY_STEP } from "./constants";
+import { signatoriesSteps, STEP_1 } from "./constants";
 
 export const SignatorySummaryCardComponent = ({
   resetStep,
-  addFilledSignatoryIndex,
+  addAvailableSignatoryIndex,
   sendProspectToAPI,
   index,
   signatory,
-  filledSignatoriesIndexes,
+  availableSignatoriesIndexes,
   signatory: { firstName, lastName, fullName } = {}
 }) => {
-  const filledSignatoryStepsSet = new Set();
-  const [step, setStep] = useState(INITIAL_SIGNATORY_STEP);
-  const [completedSteps, setCompletedSteps] = useState(filledSignatoryStepsSet);
+  const [step, setStep] = useState(STEP_1);
   const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
 
@@ -27,13 +25,13 @@ export const SignatorySummaryCardComponent = ({
     }
 
     return (
-      // filledSignatoriesIndexes.has(index) && (
-      <LinkButton
-        clickHandler={() => {
-          setIsExpanded(true);
-        }}
-      />
-      // )
+      availableSignatoriesIndexes.has(index) && (
+        <LinkButton
+          clickHandler={() => {
+            setIsExpanded(true);
+          }}
+        />
+      )
     );
   };
 
@@ -63,16 +61,19 @@ export const SignatorySummaryCardComponent = ({
   };
 
   const changeStep = item => {
-    // if (!item.isFilled) {
-    //   return;
-    // }
+    if (step <= item.step) {
+      return;
+    }
     setStep(item.step);
   };
 
-  const handleContinue = item => {
-    setStep(item.step + 1);
-    setCompletedSteps(filledSignatoriesIndexes.add(item.step));
-  };
+  function handleContinue() {
+    sendProspectToAPI();
+    setStep(step + 1);
+    if (step === signatoriesSteps.length) {
+      addAvailableSignatoryIndex(index + 1);
+    }
+  }
 
   return (
     <CompanyStakeholderCard
@@ -94,9 +95,9 @@ export const SignatorySummaryCardComponent = ({
               step={item.step}
               title={item.title}
               isActiveStep={step === item.step}
-              isFilled={completedSteps.has(item.step)}
+              isFilled={step > item.step}
               clickHandler={() => changeStep(item)}
-              handleContinue={() => handleContinue(item)}
+              handleContinue={handleContinue}
               stepForm={stepForm}
             />
           );

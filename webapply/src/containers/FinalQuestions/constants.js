@@ -1,4 +1,4 @@
-export const signatories = {
+export const signatoriesMock = {
   signatoryInfo: [
     {
       screeningInfo: {

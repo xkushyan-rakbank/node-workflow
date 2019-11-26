@@ -15,19 +15,19 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
       Yup.object().shape({
         addressDetails: Yup.array().of(
           Yup.object().shape({
-            addressFieldDesc: Yup.string().required("Required"),
+            addressFieldDesc: Yup.string().required("You need to provide address details"),
             addressLine1: Yup.string()
-              .required("Required")
+              .required("You need to provide address details")
               .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
             poBox: Yup.string()
-              .required("Required")
+              .required("You need to provide po box number")
               .matches(PO_NUMBER_REGEX, "Invalid PO box number"),
-            emirateCity: Yup.string().required("Required"),
+            emirateCity: Yup.string().required("You need to provide emirate city"),
             typeOfSpaceOccupied: Yup.object().shape({
-              spaceType: Yup.string().required("Required"),
+              spaceType: Yup.string().required("You need to provide space type"),
               others: Yup.string().when("spaceType", {
                 is: value => value === OTHER_OPTION_CODE,
-                then: Yup.string().required("Required")
+                then: Yup.string().required("You need to specify space type")
               })
             })
           })
@@ -40,9 +40,8 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
 export const CompanyPreferredMailingAddressComponent = ({ handleContinue, addressInfo }) => {
   const classes = useStyles();
 
-  const onSubmit = values => {
+  const onSubmit = () => {
     handleContinue();
-    console.log(values);
   };
 
   return (

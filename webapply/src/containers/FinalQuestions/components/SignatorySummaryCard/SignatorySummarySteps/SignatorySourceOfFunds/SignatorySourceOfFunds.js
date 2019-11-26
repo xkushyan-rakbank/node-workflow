@@ -27,9 +27,8 @@ export const SignatorySourceOfFundsComponent = ({
 }) => {
   const classes = useStyles();
 
-  const onSubmit = values => {
+  const onSubmit = () => {
     handleContinue();
-    console.log(values);
   };
 
   return (

@@ -24,7 +24,6 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
       primaryMobileNo: Yup.string()
         .required("You need to provide number")
         .matches(PHONE_REGEX, "This is not a valid phone"),
-      primaryPhoneCountryCode: Yup.string().required("You need to provide code"),
       primaryEmail: Yup.string()
         .required("You need to provide Email address")
         .matches(EMAIL_REGEX, "This is not a valid Email address"),
@@ -60,9 +59,8 @@ export const CompanyPreferredContactInformationComponent = ({
     });
   }
 
-  const onSubmit = values => {
+  const onSubmit = () => {
     handleContinue();
-    console.log(values);
   };
 
   return (

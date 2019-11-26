@@ -3,26 +3,31 @@ import { SignatorySourceOfFunds } from "./SignatorySummarySteps/SignatorySourceO
 import { SignatoryPersonalInformation } from "./SignatorySummarySteps/SignatoryPersonalInformation";
 import { SignatoryPreferredMailingAddress } from "./SignatorySummarySteps/SignatoryPreferredMailingAddress";
 
-export const INITIAL_SIGNATORY_STEP = 1;
+export const SIGNATORY_INITIAL_INDEX = 0;
+
+export const STEP_1 = 1;
+export const STEP_2 = 2;
+export const STEP_3 = 3;
+export const STEP_4 = 4;
 
 export const signatoriesSteps = [
   {
-    step: 1,
+    step: STEP_1,
     title: "Personal Information",
     component: SignatoryPersonalInformation
   },
   {
-    step: 2,
+    step: STEP_2,
     title: "Employment details",
     component: SignatoryEmploymentDetails
   },
   {
-    step: 3,
+    step: STEP_3,
     title: "Source of funds",
     component: SignatorySourceOfFunds
   },
   {
-    step: 4,
+    step: STEP_4,
     title: "Preferred mailing address",
     component: SignatoryPreferredMailingAddress
   }

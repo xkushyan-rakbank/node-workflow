@@ -62,9 +62,8 @@ export const SignatoryEmploymentDetailsComponent = ({
     callback(name, employerName);
   }
 
-  const onSubmit = values => {
+  const onSubmit = () => {
     handleContinue();
-    console.log(values);
   };
 
   return (

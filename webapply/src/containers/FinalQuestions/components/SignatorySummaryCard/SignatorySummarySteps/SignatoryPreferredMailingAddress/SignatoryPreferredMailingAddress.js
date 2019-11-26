@@ -19,14 +19,14 @@ const signatoryPreferredMailingAddressSchema = Yup.object().shape({
       Yup.object().shape({
         addressDetails: Yup.array().of(
           Yup.object().shape({
-            addressFieldDesc: Yup.string().required("Required"),
+            addressFieldDesc: Yup.string().required("You need to provide address details"),
             addressLine1: Yup.string()
-              .required("Required")
+              .required("You need to provide address details")
               .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
             poBox: Yup.string()
-              .required("Required")
+              .required("You need to provide po box number")
               .matches(PO_NUMBER_REGEX, "Invalid PO box number"),
-            emirateCity: Yup.string().required("Required")
+            emirateCity: Yup.string().required("You need to provide emirate city")
           })
         )
       })
@@ -54,9 +54,8 @@ export const SignatoryPreferredMailingAddressComponent = ({
     });
   }
 
-  const onSubmit = values => {
+  const onSubmit = () => {
     handleContinue();
-    console.log(values);
   };
 
   const autoSavePathBase = `prospect.signatoryInfo[${index}].addressInfo[0].addressDetails[0]`;
@@ -85,8 +84,8 @@ export const SignatoryPreferredMailingAddressComponent = ({
                         <Field
                           name="signatoryInfo.sameAsCompanyAddress"
                           path={`prospect.signatoryInfo[${index}].sameAsCompanyAddress`}
-                          label="I don't have any suppliers"
                           component={Checkbox}
+                          label="Same as Company Address"
                           onChange={() => {
                             setFieldValue(
                               "signatoryInfo.sameAsCompanyAddress",
@@ -106,7 +105,6 @@ export const SignatoryPreferredMailingAddressComponent = ({
                                 ? organizationAddressInfo[0].addressDetails[0].poBox
                                 : ""
                             };
-                            console.log(fieldValues);
                             checkboxHandleClick(fieldValues);
                             setFieldValue(
                               `${pathBase}[${idx}].addressFieldDesc`,

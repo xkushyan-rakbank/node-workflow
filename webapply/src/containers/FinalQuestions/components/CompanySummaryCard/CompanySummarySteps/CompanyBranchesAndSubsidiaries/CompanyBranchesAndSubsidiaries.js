@@ -28,7 +28,7 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
         companyName: Yup.string()
           .required("You need to provide company name")
           .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-        emirate: Yup.string().required("Required"),
+        emirate: Yup.string().required("You need to provide emirate city"),
         tradeLicenseNo: Yup.string()
           .required("You need to provide license number")
           .matches(TRADE_LICENSE_REGEX, "This is not a valid trade license number")
@@ -90,9 +90,8 @@ export const CompanyBusinessRelationshipsComponent = ({
     });
   }
 
-  const onSubmit = values => {
+  const onSubmit = () => {
     handleContinue();
-    console.log(values);
   };
 
   const basisPath = "prospect.orgKYCDetails";
