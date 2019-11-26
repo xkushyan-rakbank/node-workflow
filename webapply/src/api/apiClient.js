@@ -25,7 +25,7 @@ export const authentication = {
 };
 
 export const otp = {
-  generate: ({ prospectId, countryCode, mobileNo, email }) => {
+  generate: ({ prospectId, countryCode, mobileNo, email, recaptchaToken }) => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
@@ -34,7 +34,8 @@ export const otp = {
         prospectId,
         countryCode,
         mobileNo,
-        email
+        email,
+        recaptchaToken
       }
     });
   },
