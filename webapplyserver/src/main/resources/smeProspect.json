@@ -86,7 +86,7 @@
 						"addressLine4": "",
 						"poBox": "",
 						"emirateCity": "",
-						"country": "",
+						"country": "United Arab Emirates",
 						"typeOfSpaceOccupied": {
 							"spaceType": "",
 							"others": ""
@@ -97,10 +97,10 @@
 		],
 		"contactDetails": {
 			"primaryMobileNo": "",
-			"primaryMobCountryCode": "",
+			"primaryMobCountryCode": "+971",
 			"primaryEmail": "",
 			"primaryPhoneNo": "",
-			"primaryPhoneCountryCode": "",
+			"primaryPhoneCountryCode": "+971",
 			"fax": "",
 			"faxCountryCode": "",
 			"secondaryPhoneNo": "",
@@ -137,6 +137,8 @@
 				"country": ""
 			}
 		],
+		"isDontHaveSuppliersYet": false,
+		"isDontTradeGoodsYet": false,
 		"topOriginGoodsCountries": [
 			""
 		],
@@ -259,10 +261,10 @@
 			},
 			"contactDetails": {
 				"primaryMobileNo": "",
-				"primaryMobCountryCode": "",
+				"primaryMobCountryCode": "+971",
 				"primaryEmail": "",
 				"primaryPhoneNo": "",
-				"primaryPhoneCountryCode": "",
+				"primaryPhoneCountryCode": "+971",
 				"fax": "",
 				"faxCountryCode": "",
 				"secondaryPhoneNo": "",
@@ -298,7 +300,7 @@
 							"addressLine4": "",
 							"poBox": "",
 							"emirateCity": "",
-							"country": ""
+							"country": "United Arab Emirates"
 						}
 					]
 				}

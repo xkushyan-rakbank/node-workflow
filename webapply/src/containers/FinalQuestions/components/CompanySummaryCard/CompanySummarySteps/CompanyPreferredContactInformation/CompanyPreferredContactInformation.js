@@ -20,11 +20,11 @@ import { countryCodeOptions } from "../../../../../../constants/options";
 const companyPreferredContactInformationSchema = Yup.object().shape({
   organizationInfo: Yup.object().shape({
     contactDetails: Yup.object().shape({
-      primaryMobCountryCode: Yup.string().required("Required"),
+      primaryMobCountryCode: Yup.string().required("You need to provide code"),
       primaryMobileNo: Yup.string()
-        .required("Required")
+        .required("You need to provide number")
         .matches(PHONE_REGEX, "This is not a valid phone"),
-      primaryPhoneCountryCode: Yup.string().required("Required"),
+      primaryPhoneCountryCode: Yup.string().required("You need to provide code"),
       primaryEmail: Yup.string()
         .required("You need to provide Email address")
         .matches(EMAIL_REGEX, "This is not a valid Email address"),
@@ -39,7 +39,9 @@ export const CompanyPreferredContactInformationComponent = ({
   contactDetails,
   handleContinue
 }) => {
-  const [isExistSecondaryPhoneNumber, setIsExistSecondaryPhoneNumber] = useState(false);
+  const [isExistSecondaryPhoneNumber, setIsExistSecondaryPhoneNumber] = useState(
+    () => !!contactDetails.primaryPhoneNo
+  );
   const classes = useStyles();
 
   function handleCurrencyCountryChange(value) {

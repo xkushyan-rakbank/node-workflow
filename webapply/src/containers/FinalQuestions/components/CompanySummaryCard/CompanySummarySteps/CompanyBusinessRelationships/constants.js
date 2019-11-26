@@ -31,21 +31,21 @@ export const initialValues = {
 
 export const countryOptions = [
   {
-    code: "AE",
+    code: "Emirate",
     key: "Emirate",
-    value: "AE",
+    value: "Emirate",
     label: "Emirate"
   },
   {
-    code: "USA",
+    code: "United States",
     key: "United States",
-    value: "USA",
+    value: "United States",
     label: "United States"
   },
   {
-    code: "GB",
+    code: "Great Britain",
     key: "Great Britain",
-    value: "GB",
+    value: "Great Britain",
     label: "Great Britain"
   }
 ];

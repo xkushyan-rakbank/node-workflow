@@ -16,6 +16,7 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
+import { emirateCityOptions } from "../CompanyPreferredMailingAddress/constants";
 import { countryOptions } from "../CompanyBusinessRelationships/constants";
 
 const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
@@ -61,7 +62,7 @@ export const CompanyBusinessRelationshipsComponent = ({
   updateProspect,
   entitiesOutsideUAE,
   otherEntitiesOutsideUAE,
-  otherEntitiesInUA
+  otherEntitiesInUAE
 }) => {
   const classes = useStyles();
 
@@ -102,7 +103,7 @@ export const CompanyBusinessRelationshipsComponent = ({
         initialValues={{
           entitiesInUAE,
           entitiesOutsideUAE,
-          otherEntitiesInUA,
+          otherEntitiesInUAE,
           otherEntitiesOutsideUAE
         }}
         onSubmit={onSubmit}
@@ -162,7 +163,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 className={cx(classes.relative, { [classes.tablet]: !index })}
                               >
                                 <Field
-                                  options={countryOptions}
+                                  options={emirateCityOptions}
                                   shrink={false}
                                   name={`entitiesInUAE[${index}].emirate`}
                                   path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}

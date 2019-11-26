@@ -105,15 +105,14 @@ export const CompanyBusinessRelationshipsComponent = ({
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          topCustomers: topCustomers || initialValues.topCustomers,
-          isDontHaveSuppliersYet: isDontHaveSuppliersYet || initialValues.isDontHaveSuppliersYet,
-          topSuppliers: topSuppliers || initialValues.topSuppliers,
-          topOriginGoodsCountries: topOriginGoodsCountries || initialValues.topOriginGoodsCountries,
-          isDontTradeGoodsYet: isDontTradeGoodsYet || initialValues.isDontTradeGoodsYet,
+          topCustomers,
+          isDontHaveSuppliersYet,
+          topSuppliers,
+          topOriginGoodsCountries,
+          isDontTradeGoodsYet,
           otherBankingRelationshipsInfo: {
-            otherBankingRelationshipsExist:
-              otherBankingRelationshipsExist || initialValues.otherBankingRelationshipsExist,
-            otherBankDetails: otherBankDetails || initialValues.otherBankDetails
+            otherBankingRelationshipsExist,
+            otherBankDetails
           }
         }}
         onSubmit={onSubmit}
@@ -372,7 +371,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 >
                                   <Field
                                     name={`${bankFieldPath}[${index}].bankName`}
-                                    path={`${basisPath}${bankFieldPath}[${index}].bankName`}
+                                    path={`${basisPath}.${bankFieldPath}[${index}].bankName`}
                                     placeholder="Bank name"
                                     component={Input}
                                   />
