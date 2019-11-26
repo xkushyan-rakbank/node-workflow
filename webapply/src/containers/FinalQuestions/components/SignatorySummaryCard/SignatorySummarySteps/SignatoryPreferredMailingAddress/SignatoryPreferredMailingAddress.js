@@ -148,6 +148,8 @@ export const SignatoryPreferredMailingAddressComponent = ({
                               path={`${autoSavePathBase}.emirateCity`}
                               disabled={values.signatoryInfo.sameAsCompanyAddress}
                               options={emirateCityOptions}
+                              label="Emirate"
+                              placeholder="Emirate"
                               component={CustomSelect}
                               shrink={false}
                             />

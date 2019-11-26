@@ -56,6 +56,7 @@ export const SignatoryPersonalInformationComponent = ({
                     name="maritalStatus"
                     path={`prospect.signatoryInfo[${index}].maritalStatus`}
                     placeholder="Marital Status"
+                    label="Marital Status"
                     component={CustomSelect}
                   />
                 </Grid>

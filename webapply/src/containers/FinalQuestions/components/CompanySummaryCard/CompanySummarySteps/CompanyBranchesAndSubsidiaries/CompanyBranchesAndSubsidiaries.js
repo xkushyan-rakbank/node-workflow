@@ -168,6 +168,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                   name={`entitiesInUAE[${index}].emirate`}
                                   path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
                                   placeholder="Emirate"
+                                  label="Emirate"
                                   extractId={option => option.key}
                                   component={CustomSelect}
                                 />
@@ -256,6 +257,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                   name={`entitiesOutsideUAE[${index}].country`}
                                   path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
                                   placeholder="Country"
+                                  label="Country"
                                   extractId={option => option.key}
                                   component={CustomSelect}
                                 />
