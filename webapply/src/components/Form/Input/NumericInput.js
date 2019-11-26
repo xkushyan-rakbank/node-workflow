@@ -19,22 +19,20 @@ export const NumericInput = ({
   const isError = errorMessage && getIn(touched, field.name);
 
   return (
-    <>
-      <FormControl className="formControl">
-        <NumberFormat
-          {...field}
-          {...props}
-          variant="outlined"
-          className={classes.textField}
-          customInput={TextField}
-          error={isError}
-          InputProps={{
-            ...inputProps
-          }}
-        />
+    <FormControl className="formControl">
+      <NumberFormat
+        {...field}
+        {...props}
+        variant="outlined"
+        className={classes.textField}
+        customInput={TextField}
+        error={isError}
+        InputProps={{
+          ...inputProps
+        }}
+      />
 
-        {isError && <ErrorMessage error={errorMessage} />}
-      </FormControl>
-    </>
+      {isError && <ErrorMessage error={errorMessage} />}
+    </FormControl>
   );
 };

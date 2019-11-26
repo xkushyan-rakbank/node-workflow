@@ -100,7 +100,4 @@ const mapStateToProps = (state, { index }) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(Shareholding);
+export default connect(mapStateToProps)(Shareholding);

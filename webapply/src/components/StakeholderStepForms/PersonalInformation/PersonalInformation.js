@@ -1,37 +1,39 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
+import cx from "classnames";
 
 import { DatePicker } from "../../Form/DatePicker/DatePicker";
-import CustomCheckbox from "../../InputField/RefactoredCheckbox";
 import { InlineRadioGroup } from "../../Form/InlineRadioGroup/InlineRadioGroup";
 import InfoTitle from "../../InfoTitle";
-import { CustomSelect, Input, InputGroup } from "../../Form";
+import { CustomSelect, Input, InputGroup, AutoSaveField as Field, Checkbox } from "../../Form";
 import { genderOptions, yesNoOptions } from "../../../constants/options";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { useStyles } from "./styled";
+import { ContexualHelp } from "../../Notifications";
+import questionMark from "../../../assets/icons/question_mark_grey.png";
 
 const personalInformationSchema = Yup.object().shape({
-  firstName: Yup.string().when("kycDetails.isShareholderACompany", {
+  firstName: Yup.string().when("isShareholderACompany", {
     is: false,
     then: Yup.string().required("Required")
   }),
-  lastName: Yup.string().when("kycDetails.isShareholderACompany", {
+  lastName: Yup.string().when("isShareholderACompany", {
     is: false,
     then: Yup.string().required("Required")
   }),
-  kycDetails: Yup.object().shape({
-    dateOfBirth: Yup.date().required("Required"),
-    isPEP: Yup.boolean().required("Required")
-  })
+  dateOfBirth: Yup.date().when("isShareholderACompany", {
+    is: false,
+    then: Yup.date().required("Required")
+  }),
+  isPEP: Yup.boolean().required("Required")
 });
 
-export const PersonalInformation = props => {
+export const PersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
-  const { index, handleContinue } = props;
-  const checkIsShareholderACompany = values => get(values, "kycDetails.isShareholderACompany");
+  const checkIsShareholderACompany = values => get(values, "isShareholderACompany");
   return (
     <Formik
       initialValues={{
@@ -39,30 +41,32 @@ export const PersonalInformation = props => {
         firstName: "",
         middleName: "",
         lastName: "",
-        kycDetails: {
-          isShareholderACompany: false,
-          dateOfBirth: null,
-          isPEP: ""
-        }
+        isShareholderACompany: "",
+        dateOfBirth: "",
+        isPEP: ""
       }}
       onSubmit={handleContinue}
       validationSchema={personalInformationSchema}
     >
-      {props => {
-        const isShareholderACompany = checkIsShareholderACompany(props.value);
+      {({ values }) => {
+        const isShareholderACompany = checkIsShareholderACompany(values);
         return (
           <Form>
             <Grid item container spacing={3}>
-              <Grid item sm={12} className="mb-25 mt-25">
+              <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
                 <Field
-                  name="kycDetails.isShareholderACompany"
+                  name="isShareholderACompany"
+                  path={`prospect.signatoryInfo[${index}].kycDetails.isShareholderACompany`}
                   label="This stakeholder is a company"
-                  type="checkbox"
-                  component={CustomCheckbox}
-                  id="Okyc.isShareholderACompany"
-                  indexes={[index]}
-                  withQuestion
+                  component={Checkbox}
                 />
+                <ContexualHelp
+                  title="Lorem ipsum dolor sit amet, consectet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                  placement="right"
+                  onFocus={false}
+                >
+                  <img alt="" src={questionMark} className={classes.questionIcon} />
+                </ContexualHelp>
               </Grid>
             </Grid>
             <Grid item container spacing={3}>
@@ -70,6 +74,7 @@ export const PersonalInformation = props => {
                 <InputGroup>
                   <Field
                     name="gender"
+                    path={`prospect.signatoryInfo[${index}].gender`}
                     options={genderOptions}
                     disabled={isShareholderACompany}
                     component={CustomSelect}
@@ -78,6 +83,7 @@ export const PersonalInformation = props => {
 
                   <Field
                     name="firstName"
+                    path={`prospect.signatoryInfo[${index}].firstName`}
                     label="First name"
                     placeholder="First name"
                     disabled={isShareholderACompany}
@@ -88,6 +94,7 @@ export const PersonalInformation = props => {
               <Grid item md={6} sm={12}>
                 <Field
                   name="middleName"
+                  path={`prospect.signatoryInfo[${index}].middleName`}
                   label="Middle Name (Optional)"
                   placeholder="Middle Name (Optional)"
                   disabled={isShareholderACompany}
@@ -99,6 +106,7 @@ export const PersonalInformation = props => {
               <Grid item md={6} sm={12}>
                 <Field
                   name="lastName"
+                  path={`prospect.signatoryInfo[${index}].lastName`}
                   label="Last name"
                   placeholder="Last name"
                   disabled={isShareholderACompany}
@@ -107,7 +115,8 @@ export const PersonalInformation = props => {
               </Grid>
               <Grid item md={6} sm={12}>
                 <Field
-                  name="kycDetails.dateOfBirth"
+                  name="dateOfBirth"
+                  path={`prospect.signatoryInfo[${index}].kycDetails.dateOfBirth`}
                   label="Date of Birth"
                   placeholder="Date of Birth"
                   disabled={isShareholderACompany}
@@ -118,8 +127,9 @@ export const PersonalInformation = props => {
             <InfoTitle title="The details of this section should be the same as in the person’s passport" />
             <div className={classes.divider} />
             <Field
+              name="isPEP"
+              path={`prospect.signatoryInfo[${index}].kycDetails.isPEP`}
               component={InlineRadioGroup}
-              name="kycDetails.isPEP"
               options={yesNoOptions}
               label="Is this person a signatory?"
             />
