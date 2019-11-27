@@ -32,7 +32,7 @@ const checkValidNumberFromString = string => {
   return isNumber(Number(string)) && !isNaN(Number(string));
 };
 
-const isFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => {
+const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => {
   const isValidFieldAndYearTotalValue =
     checkValidNumberFromString(field) && checkValidNumberFromString(yearTotal);
   if (isValidFieldAndYearTotalValue && checkValidNumberFromString(conditionalField)) {
@@ -62,7 +62,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
       function(value) {
         const { annualFinTurnoverAmtInAED, maxAmtSingleTxnNonCashAED } = this.parent;
-        return isFieldSumNotExceedYearTotal(
+        return checkFieldSumNotExceedYearTotal(
           value,
           maxAmtSingleTxnNonCashAED,
           annualFinTurnoverAmtInAED
@@ -76,7 +76,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
       function(value) {
         const { annualFinTurnoverAmtInAED, maxAmtSingleTxnCashAED } = this.parent;
-        return isFieldSumNotExceedYearTotal(
+        return checkFieldSumNotExceedYearTotal(
           value,
           maxAmtSingleTxnCashAED,
           annualFinTurnoverAmtInAED
