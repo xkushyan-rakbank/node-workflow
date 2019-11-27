@@ -53,10 +53,6 @@ const SearchedAppInfo = ({
     return null;
   }
 
-  let isDisable = false;
-
-  isDisable = disableArrayValues.indexOf(prospectInfo.status.statusNotes) > -1;
-
   return (
     <>
       <h2>Application Details</h2>
@@ -90,7 +86,7 @@ const SearchedAppInfo = ({
           label="Edit"
           justify="flex-end"
           handleClick={redirectUserPage}
-          disabled={isDisable}
+          disabled={disableArrayValues.includes(prospectInfo.status.statusNotes)}
         />
       </div>
       <ConfirmDialog

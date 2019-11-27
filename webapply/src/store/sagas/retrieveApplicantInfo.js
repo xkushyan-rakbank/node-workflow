@@ -23,9 +23,9 @@ function* retrieveApplicantInfoSaga({ payload }) {
   }
 }
 
-function* getProspectIdInfo(action) {
+function* getProspectIdInfo({ payload }) {
   try {
-    const response = yield call(prospect.get, action.payload);
+    const response = yield call(prospect.get, payload);
     const config = { prospect: response.data };
     yield put(setConfig(config));
     yield put(displayScreenBasedOnViewId());
