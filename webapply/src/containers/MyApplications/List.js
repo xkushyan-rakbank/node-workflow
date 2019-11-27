@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { ContainedButton } from "../components/Buttons/ContainedButton";
-import { getProspectInfo } from "../store/actions/retrieveApplicantInfo";
-import * as prospectInfo from "../store/selectors/retrieveApplicantInfo";
+import { ContainedButton } from "./../../components/Buttons/ContainedButton";
+import { getProspectInfo } from "./../../store/actions/retrieveApplicantInfo";
+import * as prospectInfo from "./../../store/selectors/retrieveApplicantInfo";
 
 export const StyledWhiteContainedButton = props => {
   const Button = withStyles(() => ({
@@ -83,13 +83,13 @@ const style = {
   }
 };
 
-class MyApplicationsList extends React.Component {
+class ApplicationList extends React.Component {
   getProspectDetails = prospectId => {
     this.props.getProspectInfo(prospectId);
   };
 
   render() {
-    const { classes, applicantInfo = {} } = this.props;
+    const { classes, applicantInfo = [] } = this.props;
     let info;
     if (Object.entries(applicantInfo).length !== 0) {
       info = applicantInfo.map((applications, index) => {
@@ -142,5 +142,5 @@ export default withStyles(style)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(MyApplicationsList)
+  )(ApplicationList)
 );

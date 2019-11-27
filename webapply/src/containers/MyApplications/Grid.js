@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { StyledWhiteContainedButton } from "./MyApplicationsList";
-import waves_background from "../assets/images/waves_bg.png";
-import { getProspectInfo } from "../store/actions/retrieveApplicantInfo";
-import * as prospectInfo from "../store/selectors/retrieveApplicantInfo";
+import { StyledWhiteContainedButton } from "./List";
+import waves_background from "./../../assets/images/waves_bg.png";
+import { getProspectInfo } from "./../../store/actions/retrieveApplicantInfo";
+import * as prospectInfo from "./../../store/selectors/retrieveApplicantInfo";
 
 const styles = {
   gridContainer: {
@@ -58,13 +58,13 @@ const styles = {
   }
 };
 
-class MyApplicationsGrid extends React.Component {
+class ApplicationGrid extends React.Component {
   getProspectDetails = prospectId => {
     this.props.getProspectInfo(prospectId);
   };
 
   render() {
-    const { classes, applicantInfo = {} } = this.props;
+    const { classes, applicantInfo = [] } = this.props;
     let info;
     if (Object.entries(applicantInfo).length !== 0) {
       info = applicantInfo.map((applications, index) => {
@@ -132,5 +132,5 @@ export default withStyles(styles)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(MyApplicationsGrid)
+  )(ApplicationGrid)
 );

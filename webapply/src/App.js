@@ -19,7 +19,7 @@ import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOve
 import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
 import ComeBackLogin from "./containers/ComeBack/ComeBackLogin";
 import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
-import MyApplications from "./containers/MyApplications/MyApplications";
+import MyApplications from "./containers/MyApplications";
 import UploadDocuments from "./containers/FileUploader";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
 import SearchedAppInfo from "./agent/SearchedAppInfo";
