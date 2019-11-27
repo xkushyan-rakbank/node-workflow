@@ -28,7 +28,7 @@ const searchProspectSchema = Yup.object({
 
 const initialValues = {
   fname: "",
-  countryCode: countryCodeOptions[0].label,
+  countryCode: countryCodeOptions[0].value,
   mobileNo: "",
   email: "",
   raktrackNumber: "",
@@ -47,7 +47,7 @@ const SearchProspect = ({ searchApplications, searchResults }) => {
 
   return (
     <div className={classes.baseForm}>
-      <h2>Search Application</h2>
+      <h2>Search Applications</h2>
 
       <Formik
         initialValues={initialValues}
