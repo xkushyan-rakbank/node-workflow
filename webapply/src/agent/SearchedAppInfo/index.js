@@ -10,7 +10,7 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
 import { getProspectInfo } from "../../store/actions/retrieveApplicantInfo";
-import { receiveAppConfig, updateProspectId } from "../../store/actions/appConfig";
+import { updateProspectId } from "../../store/actions/appConfig";
 import { ConfirmDialog } from "../../components/Modals";
 import { useStyles } from "./styled";
 
@@ -19,7 +19,6 @@ const SearchedAppInfo = ({
   match,
   updateProspectId,
   retrieveDocDetails,
-  receiveAppConfig,
   getProspectInfo
 }) => {
   const classes = useStyles();
@@ -37,9 +36,8 @@ const SearchedAppInfo = ({
   }, [setIsDisplayConfirmDialog]);
 
   const confirmHandler = useCallback(() => {
-    receiveAppConfig();
     getProspectInfo(match.params.id);
-  }, [receiveAppConfig, getProspectInfo, match.params.id]);
+  }, [getProspectInfo, match.params.id]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
@@ -102,7 +100,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   retrieveDocDetails,
   getProspectInfo,
-  receiveAppConfig,
   updateProspectId
 };
 
