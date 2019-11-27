@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";

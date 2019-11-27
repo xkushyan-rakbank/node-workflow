@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose } from "recompose";
-import { get } from "lodash";
+import { compose } from "redux";
+import get from "lodash/get";
 import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import routes from "./../routes";

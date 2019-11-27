@@ -80,13 +80,13 @@ export const prospect = {
     countryOfIncorporation: "",
     companyName: "",
     shortName: "",
-    dateOfIncorporation: "",
+    dateOfIncorporation: null,
     numberOfEmployees: 0,
     licenseType: "",
     licenseTypeOther: "",
     licenseIssuingAuthority: "",
     licenseNumber: "",
-    licenseIssueDate: "",
+    licenseIssueDate: null,
     licenseExpiryDate: "",
     vatRegistrationNumber: "",
     addressInfo: [
@@ -103,7 +103,7 @@ export const prospect = {
             addressLine4: "",
             poBox: "",
             emirateCity: "",
-            country: "",
+            country: "United Arab Emirates",
             typeOfSpaceOccupied: {
               spaceType: "",
               others: ""
@@ -114,10 +114,10 @@ export const prospect = {
     ],
     contactDetails: {
       primaryMobileNo: "",
-      primaryMobCountryCode: "",
+      primaryMobCountryCode: countryCodeOptions[0].label,
       primaryEmail: "",
       primaryPhoneNo: "",
-      primaryPhoneCountryCode: "",
+      primaryPhoneCountryCode: countryCodeOptions[0].label,
       fax: "",
       faxCountryCode: "",
       secondaryPhoneNo: "",
@@ -154,6 +154,8 @@ export const prospect = {
         country: ""
       }
     ],
+    isDontHaveSuppliersYet: false,
+    isDontTradeGoodsYet: false,
     topOriginGoodsCountries: [""],
     industryMultiSelect: [
       {
@@ -307,7 +309,7 @@ export const prospect = {
               addressLine4: "",
               poBox: "",
               emirateCity: "",
-              country: ""
+              country: "United Arab Emirates"
             }
           ]
         }

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
@@ -10,9 +10,10 @@ import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
-import ErrorBoundary from "../../components/ErrorBoundary";
+import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import { Grid } from "@material-ui/core";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -27,13 +28,14 @@ const aplicantInfoSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ApplicantInfoPage = ({
-  receiveAppConfig,
-  applicantInfoForm,
-  setToken,
-  setVerified,
-  reCaptchaToken
-}) => {
+const initialValues = {
+  fullName: "",
+  email: "",
+  countryCode: countryCodeOptions[0].value,
+  mobileNo: ""
+};
+
+const ApplicantInfoPage = ({ applicantInfoForm, setToken, setVerified, reCaptchaToken }) => {
   const onSubmit = values => applicantInfoForm(values);
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -45,10 +47,6 @@ const ApplicantInfoPage = ({
     setVerified(false);
   }, [setVerified]);
 
-  useEffect(() => {
-    receiveAppConfig();
-  }, [receiveAppConfig]);
-
   return (
     <>
       <h2>Let’s Start with the Basics</h2>
@@ -57,12 +55,7 @@ const ApplicantInfoPage = ({
       </p>
 
       <Formik
-        initialValues={{
-          fullName: "",
-          email: "",
-          countryCode: countryCodeOptions[0].value,
-          mobileNo: ""
-        }}
+        initialValues={initialValues}
         validationSchema={aplicantInfoSchema}
         onSubmit={onSubmit}
       >
@@ -103,28 +96,29 @@ const ApplicantInfoPage = ({
               />
             </InputGroup>
 
-            {IS_RECAPTCHA_ENABLE && (
-              <ErrorBoundary>
-                <ReCaptcha
-                  onVerify={handleReCaptchaVerify}
-                  onExpired={handleVerifiedFailed}
-                  onError={handleVerifiedFailed}
+            <Grid container direction="row" justify="space-between" alignItems="center">
+              {IS_RECAPTCHA_ENABLE && (
+                <ErrorBoundaryForReCaptcha>
+                  <ReCaptcha
+                    onVerify={handleReCaptchaVerify}
+                    onExpired={handleVerifiedFailed}
+                    onError={handleVerifiedFailed}
+                  />
+                </ErrorBoundaryForReCaptcha>
+              )}
+              <div className="linkContainer">
+                <SubmitButton
+                  disabled={
+                    !values.fullName ||
+                    !values.email ||
+                    !values.mobileNo ||
+                    (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
+                  }
+                  justify="flex-end"
+                  label="Next Step"
                 />
-              </ErrorBoundary>
-            )}
-
-            <div className="linkContainer">
-              <SubmitButton
-                disabled={
-                  !values.fullName ||
-                  !values.email ||
-                  !values.mobileNo ||
-                  (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
-                }
-                justify="flex-end"
-                label="Next Step"
-              />
-            </div>
+              </div>
+            </Grid>
           </Form>
         )}
       </Formik>

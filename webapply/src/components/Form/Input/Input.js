@@ -19,6 +19,7 @@ export const Input = ({
   ...props
 }) => {
   const classes = useStyles();
+
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 

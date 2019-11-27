@@ -50,7 +50,7 @@ export const CustomSelect = ({
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <InputLabel ref={inputLabel} shrink={shrink === false ? undefined : true}>
+      <InputLabel ref={inputLabel} shrink={shrink}>
         {label}
       </InputLabel>
 
