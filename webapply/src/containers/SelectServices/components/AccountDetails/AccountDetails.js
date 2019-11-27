@@ -59,13 +59,11 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                 path="prospect.organizationInfo.branchCity"
                 options={emirates}
                 label="Emirate / City"
-                placeholder="Emirate / City"
                 component={CustomSelect}
                 onChange={e => {
                   setFieldValue("branchCity", e.target.value);
                   setFieldValue("branchID", "");
                 }}
-                shrink={false}
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -77,7 +75,6 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                 placeholder="Branch"
                 disabled={!values.branchCity}
                 component={CustomSelect}
-                shrink={false}
               />
             </Grid>
           </Grid>

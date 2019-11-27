@@ -5,6 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import { CustomCheckbox } from "./CustomCheckbox";
 import { InfoTitle } from "../../Notifications/index";
 import { ErrorMessage } from "../../Notifications/index";
+import { useStyles } from "./styled";
 
 export const Checkbox = ({
   infoTitle,
@@ -14,6 +15,7 @@ export const Checkbox = ({
   form: { errors, touched },
   ...rest
 }) => {
+  const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
 
@@ -23,6 +25,7 @@ export const Checkbox = ({
         {...field}
         {...rest}
         label={label}
+        className={classes.checkbox}
         value={value}
         checked={field.value === value}
       />
