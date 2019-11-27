@@ -1,6 +1,6 @@
 import { PersonalInformation } from "../../components/StakeholderStepForms/PersonalInformation/PersonalInformation";
 import { SignatoryRights } from "../../components/StakeholderStepForms/SignatoryRights";
-import Shareholding from "../../components/StakeholderStepForms/Shareholding";
+import { Shareholding } from "../../components/StakeholderStepForms/Shareholding";
 import Nationality from "../../components/StakeholderStepForms/Nationality/Nationality";
 import CountryOfResidence from "../../components/StakeholderStepForms/CountryOfResidence";
 import PreferredContactInformation from "../../components/StakeholderStepForms/PreferredContactInformation";

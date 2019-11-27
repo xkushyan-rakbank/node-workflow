@@ -6,7 +6,7 @@ import { AddStakeholderButton } from "../../components/StakeholderStepForms/AddS
 import { ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
-import ConfirmDialog from "../../components/ConfirmDialod";
+import { ConfirmDialog } from "../../components/Modals";
 import routes from "../../routes";
 import {
   addNewStakeholder,
@@ -100,7 +100,8 @@ const CompanyStakeholders = props => {
       </div>
       <ConfirmDialog
         isOpen={isConfirmDialogOpen}
-        handler={props.confirmHandler}
+        handleConfirm={props.confirmHandler}
+        handleReject={props.closeConfirmDialog}
         handleClose={props.closeConfirmDialog}
         id="Stakeholder.message"
       />
