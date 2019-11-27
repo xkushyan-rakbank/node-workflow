@@ -2,7 +2,12 @@ import React from "react";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useStyles } from "./styled";
 
-export const ContexualHelp = ({ children, title = "", placement = "left" }) => {
+export const ContexualHelp = ({
+  children,
+  title = "",
+  placement = "left",
+  isDisableHoverListener = true
+}) => {
   const classes = useStyles();
 
   if (!title) {
@@ -10,7 +15,12 @@ export const ContexualHelp = ({ children, title = "", placement = "left" }) => {
   }
 
   return (
-    <Tooltip disableHoverListener classes={classes} placement={placement} title={title}>
+    <Tooltip
+      disableHoverListener={isDisableHoverListener}
+      classes={classes}
+      placement={placement}
+      title={title}
+    >
       {children}
     </Tooltip>
   );
