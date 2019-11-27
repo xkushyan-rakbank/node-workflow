@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import get from "lodash/get";
 import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -64,13 +64,14 @@ export const SignatorySummaryCardComponent = ({
     setStep(item.step);
   };
 
-  function handleContinue() {
-    sendProspectToAPI();
-    setStep(step + 1);
-    if (step === signatoriesSteps.length) {
-      addAvailableSignatoryIndex(index + 1);
-    }
-  }
+  const handleContinue = useCallback(() => {
+    sendProspectToAPI().then(() => {
+      setStep(step + 1);
+      if (step === signatoriesSteps.length) {
+        addAvailableSignatoryIndex(index + 1);
+      }
+    });
+  }, [sendProspectToAPI, step, addAvailableSignatoryIndex, index]);
 
   return (
     <CompanyStakeholderCard
@@ -81,22 +82,20 @@ export const SignatorySummaryCardComponent = ({
       index={index}
     >
       {isExpanded &&
-        signatoriesSteps.map(item => {
-          return (
-            <StepComponent
-              index={index}
-              key={item.step}
-              steps={signatoriesSteps}
-              step={item.step}
-              title={item.title}
-              isActiveStep={step === item.step}
-              isFilled={step > item.step}
-              handleClick={() => changeStep(item)}
-              handleContinue={handleContinue}
-              stepForm={item.component}
-            />
-          );
-        })}
+        signatoriesSteps.map(item => (
+          <StepComponent
+            index={index}
+            key={item.step}
+            steps={signatoriesSteps}
+            step={item.step}
+            title={item.title}
+            isActiveStep={step === item.step}
+            isFilled={step > item.step}
+            handleClick={() => changeStep(item)}
+            handleContinue={handleContinue}
+            stepForm={item.component}
+          />
+        ))}
     </CompanyStakeholderCard>
   );
 };

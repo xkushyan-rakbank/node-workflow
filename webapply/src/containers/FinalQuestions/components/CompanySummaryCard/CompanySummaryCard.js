@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import CompanyCard from "../../../../components/CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -53,34 +53,33 @@ export const CompanySummaryCardComponent = ({
     }
   };
 
-  const handleContinue = () => {
-    sendProspectToAPI();
-    setStep(step + 1);
-    if (step === finalQuestionsSteps.length) {
-      addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
-    }
-  };
+  const handleContinue = useCallback(() => {
+    sendProspectToAPI().then(() => {
+      setStep(step + 1);
+      if (step === finalQuestionsSteps.length) {
+        addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
+      }
+    });
+  }, [sendProspectToAPI, step, addAvailableSignatoryIndex]);
 
   return (
     <CompanyCard companyName={companyName} controls={renderControlsContent()}>
       {isExpanded &&
-        finalQuestionsSteps.map(item => {
-          return (
-            <StepComponent
-              index={index}
-              key={item.step}
-              steps={finalQuestionsSteps}
-              step={item.step}
-              title={item.title}
-              infoTitle={item.infoTitle}
-              isActiveStep={step === item.step}
-              isFilled={step > item.step}
-              handleClick={() => changeStep(item)}
-              handleContinue={handleContinue}
-              stepForm={item.component}
-            />
-          );
-        })}
+        finalQuestionsSteps.map(item => (
+          <StepComponent
+            index={index}
+            key={item.step}
+            steps={finalQuestionsSteps}
+            step={item.step}
+            title={item.title}
+            infoTitle={item.infoTitle}
+            isActiveStep={step === item.step}
+            isFilled={step > item.step}
+            handleClick={() => changeStep(item)}
+            handleContinue={handleContinue}
+            stepForm={item.component}
+          />
+        ))}
     </CompanyCard>
   );
 };
