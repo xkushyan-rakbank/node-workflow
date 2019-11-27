@@ -2,6 +2,7 @@ package ae.rakbank.documentuploader.controllers;
 
 import java.io.IOException;
 
+import ae.rakbank.documentuploader.commons.EnvironmentUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ae.rakbank.documentuploader.commons.ApiError;
 import ae.rakbank.documentuploader.commons.DocumentUploadException;
-import ae.rakbank.documentuploader.commons.EnvUtil;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 
 @CrossOrigin
@@ -47,6 +47,9 @@ public class DocumentUploadController {
 	private final DocumentUploadService docUploadService;
 
 	@Autowired
+	private EnvironmentUtil environmentUtil;
+
+	@Autowired
 	public DocumentUploadController(DocumentUploadService docUploadService) {
 		this.docUploadService = docUploadService;
 	}
@@ -54,11 +57,12 @@ public class DocumentUploadController {
 	@GetMapping(value = "/health", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Object> health() {
+		logger.info("get /health method request");
 		HttpHeaders headers = new HttpHeaders();
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode response = objectMapper.createObjectNode();
 		response.put("buildDate", buildDate);
-		if (!EnvUtil.isProd()) {
+		if (!environmentUtil.isWebApplyEnvProd()) {
 			response.put("project", appName);
 		}
 		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
