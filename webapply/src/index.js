@@ -12,8 +12,6 @@ import * as serviceWorker from "./serviceWorker";
 import { store } from "./store";
 import { tagManagerArgs } from "./constants/gtm";
 
-import "./index.css";
-
 TagManager.initialize(tagManagerArgs);
 
 ReactDOM.render(
