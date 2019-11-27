@@ -3,8 +3,7 @@ import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
-import { InlineRadioGroup, AutoSaveField as Field } from "../Form";
-import { CustomSelect } from "../Form";
+import { CustomSelect, InlineRadioGroup, AutoSaveField as Field } from "../Form";
 import { yesNoOptions, authorityTypeOptions } from "../../constants/options";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
 

@@ -15,7 +15,7 @@ const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
     isShareholderACompany: Yup.boolean().required("Required"),
     shareHoldingPercentage: Yup.number()
-      .positive()
+      .integer()
       .min(0, "Shareholders can't hold less than 0% of shares in total")
       .max(
         100 - totalPercentageWithoutCurrentStakeholder,
