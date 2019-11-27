@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import * as loginSelector from "./../store/selectors/loginSelector";

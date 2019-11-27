@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import HelpTooltip from "../HelpTooltip";
 import { defineDynamicInputId } from "../../constants";

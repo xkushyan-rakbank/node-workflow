@@ -8,7 +8,7 @@ import brief from "../assets/icons/brief.png";
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { ErrorMessage } from "./../components/Notifications";
 import { submitApplication } from "../constants/index";
 import routes from "../routes";

@@ -3,7 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import DateFnsUtils from "@date-io/date-fns";
 import { isValid } from "date-fns";
 import FormControl from "@material-ui/core/FormControl";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";

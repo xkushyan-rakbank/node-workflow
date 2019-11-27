@@ -1,4 +1,6 @@
-export const styles = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   sectionTitleIndent: {
     marginBottom: "24px"
   },
@@ -14,4 +16,4 @@ export const styles = {
   buttonContainer: {
     float: "right"
   }
-};
+});

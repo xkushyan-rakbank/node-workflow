@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
@@ -28,13 +28,14 @@ const aplicantInfoSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ApplicantInfoPage = ({
-  receiveAppConfig,
-  applicantInfoForm,
-  setToken,
-  setVerified,
-  reCaptchaToken
-}) => {
+const initialValues = {
+  fullName: "",
+  email: "",
+  countryCode: countryCodeOptions[0].value,
+  mobileNo: ""
+};
+
+const ApplicantInfoPage = ({ applicantInfoForm, setToken, setVerified, reCaptchaToken }) => {
   const onSubmit = values => applicantInfoForm(values);
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -46,10 +47,6 @@ const ApplicantInfoPage = ({
     setVerified(false);
   }, [setVerified]);
 
-  useEffect(() => {
-    receiveAppConfig();
-  }, [receiveAppConfig]);
-
   return (
     <>
       <h2>Let’s Start with the Basics</h2>
@@ -58,12 +55,7 @@ const ApplicantInfoPage = ({
       </p>
 
       <Formik
-        initialValues={{
-          fullName: "",
-          email: "",
-          countryCode: countryCodeOptions[0].value,
-          mobileNo: ""
-        }}
+        initialValues={initialValues}
         validationSchema={aplicantInfoSchema}
         onSubmit={onSubmit}
       >

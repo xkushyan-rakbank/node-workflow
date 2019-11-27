@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import get from "lodash/get";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core";

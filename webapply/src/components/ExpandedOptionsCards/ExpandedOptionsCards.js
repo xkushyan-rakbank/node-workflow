@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
-import { compose } from "recompose";
+import { compose } from "redux";
 
 import ExpandedDetailedOptionsCard from "./ExpandedDetailedOptionsCard";
 import { mockData } from "./constants";
@@ -62,6 +62,6 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-  connect(mapStateToProps),
-  withStyles(style)
+  withStyles(style),
+  connect(mapStateToProps)
 )(ExpandedOptionsCards);

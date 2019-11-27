@@ -5,7 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import { compose } from "recompose";
+import { compose } from "redux";
 import get from "lodash/get";
 import isUndefined from "lodash/isUndefined";
 import isEmpty from "lodash/isEmpty";

@@ -19,8 +19,9 @@ export function* loginFormSaga({ payload }) {
 
 function* formatLoginSaga() {
   const clearedLoginDetail = {
-    "login.username": "",
-    "login.password": ""
+    "login.userName": "",
+    "login.password": "",
+    prospect: {}
   };
   yield put(updateProspect(clearedLoginDetail));
 }
