@@ -1,18 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import get from "lodash/get";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
 import { NumericInput, InlineRadioGroup, AutoSaveField as Field } from "../Form";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
-import { getSignatories } from "../../store/selectors/appConfig";
 import { getInputValueById } from "../../store/selectors/input";
 import { yesNoOptions } from "../../constants/options";
+import { percentageSelectorWithoutCurrentStakeholder } from "../../store/selectors/stakeholder";
 
-const shareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
+const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
     isShareholderACompany: Yup.boolean().required("Required"),
     shareHoldingPercentage: Yup.number()
@@ -25,7 +24,7 @@ const shareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
       .required("Required")
   });
 
-export const Shareholding = ({
+const ShareholdingStep = ({
   handleContinue,
   totalPercentageWithoutCurrentStakeholder,
   isSoleProprietor,
@@ -48,7 +47,7 @@ export const Shareholding = ({
     <Formik
       initialValues={initialValues}
       onSubmit={handleContinue}
-      validationSchema={() => shareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
+      validationSchema={() => getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
     >
       {({ values, setFieldValue }) => {
         const shareholderHandler = createShareholderHandler({ values, setFieldValue });
@@ -88,11 +87,9 @@ export const Shareholding = ({
 };
 
 const mapStateToProps = (state, { index }) => {
-  const signatories = getSignatories(state);
-  const totalPercentageWithoutCurrentStakeholder = signatories.reduce(
-    (acc, item, idx) =>
-      acc + idx === index ? 0 : Number(get(item, "kycDetails.shareHoldingPercentage", 0)),
-    0
+  const totalPercentageWithoutCurrentStakeholder = percentageSelectorWithoutCurrentStakeholder(
+    state,
+    index
   );
   return {
     isSoleProprietor: getInputValueById(state, "SigAcntSig.authorityType", [index]) === "SP",
@@ -100,4 +97,4 @@ const mapStateToProps = (state, { index }) => {
   };
 };
 
-export default connect(mapStateToProps)(Shareholding);
+export const Shareholding = connect(mapStateToProps)(ShareholdingStep);

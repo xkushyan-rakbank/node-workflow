@@ -13,5 +13,9 @@ export const useStyles = makeStyles({
     position: "absolute",
     top: "21px",
     left: "245px"
+  },
+  iconSize: {
+    width: "24px",
+    height: "24px"
   }
 });
