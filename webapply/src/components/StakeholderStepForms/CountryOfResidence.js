@@ -1,68 +1,69 @@
 import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import PureSelect from "../InputField/PureSelect";
-import TextInput from "../InputField/TextInput";
-import { getInputNameById, getInputValueById } from "../../store/selectors/input";
-import { updateProspect } from "../../store/actions/appConfig";
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
 
-class CountryOfResidence extends React.Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.residenceCountry !== this.props.residenceCountry) {
-      this.setEidNumberValue(this.isSelectedOAE() ? "784" : "");
-    }
-  }
+import { getInputValueById } from "../../store/selectors/input";
+import { AutoSaveField as Field, NumericInput, SelectAutocomplete } from "../Form";
+import { countryCodeOptions } from "../../constants/options";
+import { SubmitButton } from "./SubmitButton/SubmitButton";
+import { EMIRATES_ID_REGEX } from "../../utils/validation";
 
-  setEidNumberValue(value) {
-    this.props.updateProspect({
-      [this.props.eidNumberInputName]: value
-    });
-  }
-
-  isSelectedOAE() {
-    return this.props.residenceCountry === "UAE";
-  }
-
-  render() {
-    const { index, isSignatory } = this.props;
-    const isOAE = this.isSelectedOAE();
-
-    return (
-      <Grid container spacing={3}>
-        <Grid item md={6} sm={12}>
-          <PureSelect
-            disabled={isSignatory}
-            defaultValue="UAE"
-            id="SigKycd.residenceCountry"
-            indexes={[index]}
-          />
-        </Grid>
-        <Grid item md={6} sm={12}>
-          <TextInput
-            placeholder="784-XXXX-XXXXXXX-X"
-            required={isOAE}
-            disabled={!isOAE}
-            defaultValue={isOAE ? "784" : undefined}
-            id="SigKycdEmid.eidNumber"
-            indexes={[index]}
-          />
-        </Grid>
-      </Grid>
-    );
-  }
-}
-
-const mapStateToProps = (state, { index }) => ({
-  residenceCountry: getInputValueById(state, "SigKycd.residenceCountry", [index]),
-  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index], false),
-  eidNumberInputName: getInputNameById(state, "SigKycdEmid.eidNumber", [index])
+const countryOfResidenceSchema = Yup.object().shape({
+  residenceCountry: Yup.string().required("Required"),
+  eidNumber: Yup.string().when("residenceCountry", {
+    is: value => value === "UAE",
+    then: Yup.string()
+      .required("Required")
+      .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
+  })
 });
 
-const mapDispatchToProps = {
-  updateProspect
-};
+const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
+  <Formik
+    initialValues={{
+      residenceCountry: "",
+      eidNumber: ""
+    }}
+    onSubmit={handleContinue}
+    validationSchema={countryOfResidenceSchema}
+  >
+    {({ values }) => (
+      <Form>
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <Field
+              name="residenceCountry"
+              path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
+              label="Country of Residence"
+              component={SelectAutocomplete}
+              options={countryCodeOptions}
+              disabled={isSignatory}
+            />
+          </Grid>
+          <Grid item md={6} sm={12}>
+            <Field
+              name="eidNumber"
+              path={`prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`}
+              label="Emirates ID"
+              placeholder="784-XXXX-XXXXXXX-X"
+              component={NumericInput}
+              disabled={values.residenceCountry !== "UAE"}
+              format="784-####-#######-#"
+              prefix={"784-"}
+            />
+          </Grid>
+        </Grid>
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CountryOfResidence);
+        <SubmitButton />
+      </Form>
+    )}
+  </Formik>
+);
+
+const mapStateToProps = (state, { index }) => ({
+  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index], false)
+});
+
+export const CountryOfResidence = connect(mapStateToProps)(CountryOfResidenceStep);
