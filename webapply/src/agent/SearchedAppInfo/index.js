@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-// import { find } from 'lodash'
-import get, { find } from "lodash";
+import get from "lodash/get";
 import { connect } from "react-redux";
 import { getSearchResult } from "./../../store/selectors/searchProspect";
 import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
@@ -46,7 +45,9 @@ const SearchedAppInfo = ({
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
 
-  const prospectInfo = find(searchResults.searchResult, { prospectId: match.params.id }) || {};
+  const prospectInfo = (searchResults.searchResult || []).find(
+    item => item.prospectId === match.params.id
+  );
 
   return (
     prospectInfo && (
@@ -60,7 +61,6 @@ const SearchedAppInfo = ({
         >
           <div className={classes.formContent}>
             {searchedAppInfoSteps.map(item => {
-              const clickSetStep = () => setStep(item.step);
               return (
                 <StepComponent
                   key={item.step}
@@ -69,7 +69,7 @@ const SearchedAppInfo = ({
                   subTitle={item.infoTitle}
                   activeStep={step === item.step}
                   filled={false}
-                  clickHandler={clickSetStep}
+                  clickHandler={() => setStep(item.step)}
                   hideContinue={true}
                   prospectInfo={prospectInfo}
                 />
