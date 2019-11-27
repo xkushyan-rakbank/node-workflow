@@ -5,7 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { withStyles } from "@material-ui/core";
-import { compose } from "recompose";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import { getMessageById } from "../store/selectors/message";
 
@@ -101,8 +101,5 @@ const mapStateToProps = (state, { id }) => ({
 
 export default compose(
   withStyles(styles),
-  connect(
-    mapStateToProps,
-    {}
-  )
+  connect(mapStateToProps)
 )(ConfirmDialog);
