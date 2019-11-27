@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
 import * as Yup from "yup";
-import isNumber from "lodash/isNumber";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
@@ -11,18 +10,45 @@ import { InfoTitle } from "../../../../../../components/Notifications";
 import { Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
-import { COMPANY_CURRENCY, MONTH_COUNT } from "./constants";
+import { COMPANY_CURRENCY, YEAR_MONTH_COUNT } from "./constants";
 import { ANNUAL_TURNOVER_REGEX } from "../../../../../../utils/validation";
 
-function getTotalMonthlyCreditsValue(annualFinancialTurnover) {
-  if (
-    !annualFinancialTurnover ||
-    !isNumber(+annualFinancialTurnover) ||
-    isNaN(+annualFinancialTurnover)
-  ) {
+const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
+  if (!isValidNumberFromString(annualFinancialTurnover)) {
     return 0;
   }
-  return Math.floor(annualFinancialTurnover / MONTH_COUNT);
+  return (parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT).toFixed(2);
+};
+
+const getTotalMonthlyCreditsText = monthlyCreditsValue => {
+  return monthlyCreditsValue
+    ? `${monthlyCreditsValue} in Total Monthly Credits`
+    : "Total Monthly Credits";
+};
+
+function isValidNumberFromString(string) {
+  return !!Number(string) || Number(string) === 0;
+}
+
+function isFieldSumNotExceedYearTotal(field, conditionalField, yearTotal) {
+  if (
+    isValidNumberFromString(field) &&
+    isValidNumberFromString(conditionalField) &&
+    isValidNumberFromString(yearTotal)
+  ) {
+    return Number(field) + Number(conditionalField) <= Number(yearTotal);
+  } else if (isValidNumberFromString(field) && isValidNumberFromString(yearTotal)) {
+    return Number(field) <= Number(yearTotal);
+  }
+  return true;
+}
+
+function isFieldSumEqualMonthTotal(field, conditionalField, yearTotal) {
+  const monthTotal = getTotalMonthlyCreditsValue(yearTotal);
+  if (isValidNumberFromString(field) && isValidNumberFromString(conditionalField)) {
+    return Number(field) + Number(conditionalField) === Number(monthTotal);
+  }
+  return true;
 }
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
@@ -36,12 +62,11 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
       function(value) {
         const { annualFinTurnoverAmtInAED, maxAmtSingleTxnNonCashAED } = this.parent;
-        if (annualFinTurnoverAmtInAED && maxAmtSingleTxnNonCashAED) {
-          return +value + +maxAmtSingleTxnNonCashAED <= annualFinTurnoverAmtInAED;
-        } else if (annualFinTurnoverAmtInAED) {
-          return value <= annualFinTurnoverAmtInAED;
-        }
-        return true;
+        return isFieldSumNotExceedYearTotal(
+          value,
+          maxAmtSingleTxnNonCashAED,
+          annualFinTurnoverAmtInAED
+        );
       }
     ),
   maxAmtSingleTxnNonCashAED: Yup.number()
@@ -51,12 +76,11 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
       function(value) {
         const { annualFinTurnoverAmtInAED, maxAmtSingleTxnCashAED } = this.parent;
-        if (annualFinTurnoverAmtInAED && maxAmtSingleTxnCashAED) {
-          return +value + +maxAmtSingleTxnCashAED <= annualFinTurnoverAmtInAED;
-        } else if (annualFinTurnoverAmtInAED) {
-          return value <= annualFinTurnoverAmtInAED;
-        }
-        return true;
+        return isFieldSumNotExceedYearTotal(
+          value,
+          maxAmtSingleTxnCashAED,
+          annualFinTurnoverAmtInAED
+        );
       }
     ),
   totalMonthlyCashAmountInFigures: Yup.number()
@@ -66,11 +90,11 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
       function(value) {
         const { annualFinTurnoverAmtInAED, totalMonthlyNonCashAmountInFigures } = this.parent;
-        const totalMonthlyCredits = getTotalMonthlyCreditsValue(annualFinTurnoverAmtInAED);
-        if (totalMonthlyCredits && totalMonthlyNonCashAmountInFigures) {
-          return +value + +totalMonthlyNonCashAmountInFigures === totalMonthlyCredits;
-        }
-        return true;
+        return isFieldSumEqualMonthTotal(
+          value,
+          totalMonthlyNonCashAmountInFigures,
+          annualFinTurnoverAmtInAED
+        );
       }
     ),
   totalMonthlyNonCashAmountInFigures: Yup.number()
@@ -80,47 +104,34 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
       function(value) {
         const { annualFinTurnoverAmtInAED, totalMonthlyCashAmountInFigures } = this.parent;
-        const totalMonthlyCredits = getTotalMonthlyCreditsValue(annualFinTurnoverAmtInAED);
-        if (totalMonthlyCredits && totalMonthlyCashAmountInFigures) {
-          return +value + +totalMonthlyCashAmountInFigures === totalMonthlyCredits;
-        }
-        return true;
+        return isFieldSumEqualMonthTotal(
+          value,
+          totalMonthlyCashAmountInFigures,
+          annualFinTurnoverAmtInAED
+        );
       }
     )
 });
 
-export const CompanyAnticipatedTransactionsComponent = ({
-  handleContinue,
-  annualFinTurnoverAmtInAED,
-  totalMonthlyCashAmountInFigures,
-  totalMonthlyNonCashAmountInFigures,
-  maxAmtSingleTxnCashAED,
-  maxAmtSingleTxnNonCashAED
-}) => {
+export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
   const classes = useStyles();
   const commonInputProps = {
     endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
   };
 
-  function getTotalMonthlyCreditsText(monthlyCreditsValue) {
-    return monthlyCreditsValue
-      ? `${Math.floor(monthlyCreditsValue)} in Total Monthly Credits`
-      : "Total Monthly Credits";
-  }
-
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     handleContinue();
-  };
+  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          annualFinTurnoverAmtInAED,
-          maxAmtSingleTxnCashAED,
-          maxAmtSingleTxnNonCashAED,
-          totalMonthlyCashAmountInFigures,
-          totalMonthlyNonCashAmountInFigures
+          annualFinTurnoverAmtInAED: "",
+          maxAmtSingleTxnCashAED: "",
+          maxAmtSingleTxnNonCashAED: "",
+          totalMonthlyCashAmountInFigures: "",
+          totalMonthlyNonCashAmountInFigures: ""
         }}
         onSubmit={onSubmit}
         validationSchema={companyAnticipatedTransactionsSchema}

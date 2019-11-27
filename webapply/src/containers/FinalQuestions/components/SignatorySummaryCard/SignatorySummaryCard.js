@@ -96,7 +96,7 @@ export const SignatorySummaryCardComponent = ({
               title={item.title}
               isActiveStep={step === item.step}
               isFilled={step > item.step}
-              clickHandler={() => changeStep(item)}
+              handleClick={() => changeStep(item)}
               handleContinue={handleContinue}
               stepForm={stepForm}
             />
