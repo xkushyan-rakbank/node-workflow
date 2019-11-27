@@ -48,26 +48,23 @@ export const CompanySummaryCardComponent = ({
   };
 
   const changeStep = item => {
-    if (step <= item.step) {
-      return;
+    if (step > item.step) {
+      setStep(item.step);
     }
-    setStep(item.step);
   };
 
-  function handleContinue() {
+  const handleContinue = () => {
     sendProspectToAPI();
     setStep(step + 1);
     if (step === finalQuestionsSteps.length) {
       addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
     }
-  }
+  };
 
   return (
     <CompanyCard companyName={companyName} controls={renderControlsContent()}>
       {isExpanded &&
         finalQuestionsSteps.map(item => {
-          const stepIndex = item.step - 1;
-          const stepForm = finalQuestionsSteps[stepIndex].component;
           return (
             <StepComponent
               index={index}
@@ -80,7 +77,7 @@ export const CompanySummaryCardComponent = ({
               isFilled={step > item.step}
               handleClick={() => changeStep(item)}
               handleContinue={handleContinue}
-              stepForm={stepForm}
+              stepForm={item.component}
             />
           );
         })}

@@ -35,11 +35,8 @@ export const SignatorySummaryCardComponent = ({
     );
   };
 
-  const getShareHoldingPercentage = () =>
-    Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
-
   const getShareholdingLabel = () => {
-    const percentage = getShareHoldingPercentage();
+    const percentage = Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
     return percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding";
   };
 
@@ -85,8 +82,6 @@ export const SignatorySummaryCardComponent = ({
     >
       {isExpanded &&
         signatoriesSteps.map(item => {
-          const stepIndex = item.step - 1;
-          const stepForm = signatoriesSteps[stepIndex].component;
           return (
             <StepComponent
               index={index}
@@ -98,7 +93,7 @@ export const SignatorySummaryCardComponent = ({
               isFilled={step > item.step}
               handleClick={() => changeStep(item)}
               handleContinue={handleContinue}
-              stepForm={stepForm}
+              stepForm={item.component}
             />
           );
         })}

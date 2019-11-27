@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
 import * as Yup from "yup";
+import isNumber from "lodash/isNumber";
+import isNaN from "lodash/isNaN";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
@@ -14,10 +16,10 @@ import { COMPANY_CURRENCY, YEAR_MONTH_COUNT } from "./constants";
 import { ANNUAL_TURNOVER_REGEX } from "../../../../../../utils/validation";
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
-  if (!isValidNumberFromString(annualFinancialTurnover)) {
+  if (!checkValidNumberFromString(annualFinancialTurnover)) {
     return 0;
   }
-  return (parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT).toFixed(2);
+  return Number((parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT).toFixed(2));
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
@@ -26,30 +28,28 @@ const getTotalMonthlyCreditsText = monthlyCreditsValue => {
     : "Total Monthly Credits";
 };
 
-function isValidNumberFromString(string) {
-  return !!Number(string) || Number(string) === 0;
-}
+const checkValidNumberFromString = string => {
+  return isNumber(Number(string)) && !isNaN(Number(string));
+};
 
-function isFieldSumNotExceedYearTotal(field, conditionalField, yearTotal) {
-  if (
-    isValidNumberFromString(field) &&
-    isValidNumberFromString(conditionalField) &&
-    isValidNumberFromString(yearTotal)
-  ) {
+const isFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => {
+  const isValidFieldAndYearTotalValue =
+    checkValidNumberFromString(field) && checkValidNumberFromString(yearTotal);
+  if (isValidFieldAndYearTotalValue && checkValidNumberFromString(conditionalField)) {
     return Number(field) + Number(conditionalField) <= Number(yearTotal);
-  } else if (isValidNumberFromString(field) && isValidNumberFromString(yearTotal)) {
+  } else if (isValidFieldAndYearTotalValue) {
     return Number(field) <= Number(yearTotal);
   }
   return true;
-}
+};
 
-function isFieldSumEqualMonthTotal(field, conditionalField, yearTotal) {
+const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
   const monthTotal = getTotalMonthlyCreditsValue(yearTotal);
-  if (isValidNumberFromString(field) && isValidNumberFromString(conditionalField)) {
-    return Number(field) + Number(conditionalField) === Number(monthTotal);
+  if (checkValidNumberFromString(field) && checkValidNumberFromString(conditionalField)) {
+    return Number(field) + Number(conditionalField) === monthTotal;
   }
   return true;
-}
+};
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
   annualFinTurnoverAmtInAED: Yup.string()
@@ -90,7 +90,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
       function(value) {
         const { annualFinTurnoverAmtInAED, totalMonthlyNonCashAmountInFigures } = this.parent;
-        return isFieldSumEqualMonthTotal(
+        return checkFieldSumEqualMonthTotal(
           value,
           totalMonthlyNonCashAmountInFigures,
           annualFinTurnoverAmtInAED
@@ -104,7 +104,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
       function(value) {
         const { annualFinTurnoverAmtInAED, totalMonthlyCashAmountInFigures } = this.parent;
-        return isFieldSumEqualMonthTotal(
+        return checkFieldSumEqualMonthTotal(
           value,
           totalMonthlyCashAmountInFigures,
           annualFinTurnoverAmtInAED
