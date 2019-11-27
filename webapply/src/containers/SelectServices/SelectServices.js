@@ -12,11 +12,10 @@ import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP, servicesSteps } from "./con
 
 import { useStyles } from "./styled";
 
-export const SelectServicesComponent = props => {
+export const SelectServicesComponent = ({ accountType, rakValuePackage, accountCurrencies }) => {
   const classes = useStyles();
   const [step, setStep] = useState(1);
   const [canSubmit, setCanSubmit] = useState(false);
-  const { accountType, rakValuePackage, accountCurrencies } = props;
 
   const setNextStep = () => setStep(step + 1);
   const handleContinue = () => {
