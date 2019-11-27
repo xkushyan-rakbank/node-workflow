@@ -14,6 +14,8 @@ import { updateProspectId } from "../../store/actions/appConfig";
 import { ConfirmDialog } from "../../components/Modals";
 import { useStyles } from "./styled";
 
+const disableArrayValues = ["Account activated", "Declined", "Ineligible"];
+
 const SearchedAppInfo = ({
   searchResults,
   match,
@@ -51,6 +53,10 @@ const SearchedAppInfo = ({
     return null;
   }
 
+  let isDisable = false;
+
+  isDisable = disableArrayValues.indexOf(prospectInfo.status.statusNotes) > -1;
+
   return (
     <>
       <h2>Application Details</h2>
@@ -80,7 +86,12 @@ const SearchedAppInfo = ({
       </CompanyStakeholderCard>
       <div className="linkContainer">
         <BackLink path={routes.searchProspect} />
-        <SubmitButton label="Edit" justify="flex-end" handleClick={redirectUserPage} />
+        <SubmitButton
+          label="Edit"
+          justify="flex-end"
+          handleClick={redirectUserPage}
+          disabled={isDisable}
+        />
       </div>
       <ConfirmDialog
         isOpen={isDisplayConfirmDialog}

@@ -8,10 +8,10 @@
         }
       },
       "status": {
-        "statusType": "Assessing",
+        "statusType": "",
         "statusCode": "",
         "statusFlag": "",
-        "statusNotes": "",
+        "statusNotes": "Assessing",
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "",
@@ -191,10 +191,10 @@
         }
       },
       "status": {
-        "statusType": "Documents Needed",
+        "statusType": "",
         "statusCode": "",
         "statusFlag": "",
-        "statusNotes": "",
+        "statusNotes": "Documents Needed",
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within 1 day to meet you in person and help you out.",
@@ -374,10 +374,10 @@
         }
       },
       "status": {
-        "statusType": "Account Activated",
+        "statusType": "",
         "statusCode": "",
         "statusFlag": "",
-        "statusNotes": "",
+        "statusNotes": "Account activated",
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "We apologise that we are unable to offer you a product as the details provided don’t meet our requirements. Thank you for your interest in RAK BANK",
