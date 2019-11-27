@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
-import get from "lodash/get";
+// import { find } from 'lodash'
+import get, { find } from "lodash";
 import { connect } from "react-redux";
-import * as searchResultSelector from "./../../store/selectors/searchProspect";
+import { getSearchResult } from "./../../store/selectors/searchProspect";
 import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
 import StepComponent from "../../components/StepComponent";
 import { searchedAppInfoSteps } from "../../constants";
 import routes from "../../routes";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import * as loginSelector from "./../../store/selectors/loginSelector";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { retrieveDocDetails } from "./../../store/actions/getProspectDocuments";
 import { getProspectInfo } from "./../../store/actions/retrieveApplicantInfo";
@@ -16,7 +16,6 @@ import ConfirmDialog from "../../components/ConfirmDialod";
 import { useStyles } from "./styled";
 
 const SearchedAppInfo = ({
-  index = 0,
   searchResults,
   match,
   updateProspectId,
@@ -27,7 +26,7 @@ const SearchedAppInfo = ({
   const classes = useStyles();
 
   const [step, setStep] = useState(1);
-  const [editClicked, setEditClicked] = useState(false);
+  const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
 
   useEffect(() => {
     updateProspectId(match.params.id);
@@ -35,8 +34,8 @@ const SearchedAppInfo = ({
   }, [updateProspectId, retrieveDocDetails, match.params.id]);
 
   const redirectUserPage = useCallback(() => {
-    setEditClicked(true);
-  }, [setEditClicked]);
+    setIsDisplayConfirmDialog(true);
+  }, [setIsDisplayConfirmDialog]);
 
   const confirmHandler = useCallback(() => {
     receiveAppConfig();
@@ -44,65 +43,59 @@ const SearchedAppInfo = ({
   }, [receiveAppConfig, getProspectInfo, match.params.id]);
 
   const closeConfirmDialog = useCallback(() => {
-    setEditClicked(false);
-  }, [setEditClicked]);
+    setIsDisplayConfirmDialog(false);
+  }, [setIsDisplayConfirmDialog]);
 
-  const prospectInfo = searchResults.searchResult
-    ? searchResults.searchResult.find(item => item.prospectId === match.params.id)
-    : {};
+  const prospectInfo = find(searchResults.searchResult, { prospectId: match.params.id }) || {};
 
-  return prospectInfo ? (
-    <>
-      <h2>Application Details</h2>
-      <p className="formDescription"></p>
-      <CompanyStakeholderCard
-        content={
-          <>
+  return (
+    prospectInfo && (
+      <>
+        <h2>Application Details</h2>
+        <p className="formDescription"></p>
+        <CompanyStakeholderCard
+          content={
             <div className={classes.title}>{get(prospectInfo, "applicantInfo.fullName", "")}</div>
-          </>
-        }
-      >
-        <div className={classes.formContent}>
-          {searchedAppInfoSteps.map(item => {
-            const clickSetStep = () => setStep(item.step);
-            return (
-              <StepComponent
-                index={index}
-                key={item.step}
-                stepForm={item.component}
-                title={item.title}
-                subTitle={item.infoTitle}
-                activeStep={step === item.step}
-                filled={false}
-                clickHandler={clickSetStep}
-                hideContinue={true}
-                prospectInfo={prospectInfo}
-              />
-            );
-          })}
+          }
+        >
+          <div className={classes.formContent}>
+            {searchedAppInfoSteps.map(item => {
+              const clickSetStep = () => setStep(item.step);
+              return (
+                <StepComponent
+                  key={item.step}
+                  stepForm={item.component}
+                  title={item.title}
+                  subTitle={item.infoTitle}
+                  activeStep={step === item.step}
+                  filled={false}
+                  clickHandler={clickSetStep}
+                  hideContinue={true}
+                  prospectInfo={prospectInfo}
+                />
+              );
+            })}
+          </div>
+        </CompanyStakeholderCard>
+        <div className="linkContainer">
+          <BackLink path={routes.searchProspect} />
+          <SubmitButton label="Edit" justify="flex-end" handleClick={redirectUserPage} />
         </div>
-      </CompanyStakeholderCard>
-      <div className="linkContainer">
-        <BackLink path={routes.searchProspect} />
-        <SubmitButton label="Edit" justify="flex-end" handleClick={redirectUserPage} />
-      </div>
-      {editClicked && (
-        <ConfirmDialog
-          isOpen={true}
-          handler={confirmHandler}
-          handleClose={closeConfirmDialog}
-          id="Search.editMessage"
-        />
-      )}
-    </>
-  ) : (
-    <></>
+        {isDisplayConfirmDialog && (
+          <ConfirmDialog
+            isOpen={true}
+            handler={confirmHandler}
+            handleClose={closeConfirmDialog}
+            message="Editing the application will result in re-performing the pre-screening checks and might change the results."
+          />
+        )}
+      </>
+    )
   );
 };
 
 const mapStateToProps = state => ({
-  searchResults: searchResultSelector.getSearchResult(state),
-  checkLoginStatus: loginSelector.checkLoginStatus(state)
+  searchResults: getSearchResult(state)
 });
 
 const mapDispatchToProps = {
