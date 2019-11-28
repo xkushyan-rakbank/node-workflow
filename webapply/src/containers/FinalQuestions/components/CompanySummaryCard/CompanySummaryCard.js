@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import CompanyCard from "../../../../components/CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
@@ -20,6 +20,12 @@ export const CompanySummaryCardComponent = ({
   const [isFilled, setIsFilled] = useState(false);
   const classes = useStyles();
 
+  useEffect(() => {
+    if (step === finalQuestionsSteps.length) {
+      addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
+    }
+  }, [step]);
+
   const handleClickStartHere = useCallback(() => {
     setIsExpanded(true);
     setIsFilled(true);
@@ -37,9 +43,6 @@ export const CompanySummaryCardComponent = ({
   const handleContinue = useCallback(() => {
     sendProspectToAPI().then(() => {
       setStep(step + 1);
-      if (step === finalQuestionsSteps.length) {
-        addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
-      }
     });
   }, [sendProspectToAPI, step, addAvailableSignatoryIndex]);
 

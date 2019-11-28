@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import get from "lodash/get";
 
 import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
@@ -19,6 +19,12 @@ export const SignatorySummaryCardComponent = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
 
+  useEffect(() => {
+    if (step === signatoriesSteps.length) {
+      addAvailableSignatoryIndex(index + 1);
+    }
+  }, [step]);
+
   const createChangeStepHandler = item => () => {
     if (step > item.step) {
       setStep(item.step);
@@ -28,9 +34,6 @@ export const SignatorySummaryCardComponent = ({
   const handleContinue = useCallback(() => {
     sendProspectToAPI().then(() => {
       setStep(step + 1);
-      if (step === signatoriesSteps.length) {
-        addAvailableSignatoryIndex(index + 1);
-      }
     });
   }, [sendProspectToAPI, step, addAvailableSignatoryIndex, index]);
 
