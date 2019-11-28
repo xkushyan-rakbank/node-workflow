@@ -51,13 +51,11 @@ export const AutoSaveField = ({
   }, [path, value, dispatch]);
 
   const options = useMemo(() => {
-    if (!isSelectOptions) {
-      return undefined;
+    if (path && isSelectOptions) {
+      const fieldConfig = Object.values(uiConfig).find(item => item.name === path);
+
+      return get(fieldConfig, "datalist", []).filter(filterOptions);
     }
-
-    const fieldConfig = Object.values(uiConfig).find(item => item.name === path);
-
-    return get(fieldConfig, "datalist", []).filter(filterOptions);
   }, [isSelectOptions, uiConfig]);
 
   return <Field name={name} options={options} {...rest} />;
