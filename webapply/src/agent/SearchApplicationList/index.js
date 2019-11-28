@@ -45,7 +45,7 @@ export const SearchApplicationList = ({ currentApplications }) => {
             </div>
           </div>
           <div>
-            <div className={classes.status}>{application.status.statusType}</div>
+            <div className={classes.status}>{application.status.statusNotes}</div>
           </div>
         </Link>
       ))}
