@@ -14,8 +14,8 @@ const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
   };
 
   let info;
-  if (Object.entries(applicantInfo).length) {
-    info = applicantInfo.map(applications => {
+  applicantInfo.length &&
+    (info = applicantInfo.map(applications => {
       return (
         <div className={classes.gridContainer} key={applications.prospectId}>
           <div className={classes.application}>
@@ -63,9 +63,8 @@ const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
           </div>
         </div>
       );
-    });
-    return <>{info}</>;
-  }
+    }));
+  return <>{info}</>;
 };
 
 const mapDispatchToProps = {

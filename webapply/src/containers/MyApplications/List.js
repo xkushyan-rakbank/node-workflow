@@ -45,8 +45,8 @@ const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   };
 
   let info;
-  if (Object.entries(applicantInfo).length) {
-    info = applicantInfo.map(applications => {
+  applicantInfo.length &&
+    (info = applicantInfo.map(applications => {
       return (
         <div className={classes.wrapper} key={applications.prospectId}>
           <div className={classes.applicationRow}>
@@ -81,8 +81,7 @@ const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
           </div>
         </div>
       );
-    });
-  }
+    }));
 
   return <>{info}</>;
 };
