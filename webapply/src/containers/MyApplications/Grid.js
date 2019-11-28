@@ -14,14 +14,13 @@ const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
   };
 
   let info;
-  if (Object.entries(applicantInfo).length !== 0) {
-    info = applicantInfo.map((applications, index) => {
-      const cmpName = applications.organizationInfo.companyName;
+  if (Object.entries(applicantInfo).length) {
+    info = applicantInfo.map(applications => {
       return (
-        <div className={classes.gridContainer} key={index}>
+        <div className={classes.gridContainer} key={applications.prospectId}>
           <div className={classes.application}>
             <img src={waves_background} className={classes.containerBg} alt="waves background" />
-            {cmpName ? (
+            {applications.organizationInfo.companyName ? (
               <>
                 <Typography variant="h6" component="span" classes={{ root: classes.title }}>
                   {applications.organizationInfo.companyName}

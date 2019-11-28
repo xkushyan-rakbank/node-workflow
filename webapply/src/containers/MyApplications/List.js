@@ -45,13 +45,12 @@ const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   };
 
   let info;
-  if (Object.entries(applicantInfo).length !== 0) {
-    info = applicantInfo.map((applications, index) => {
-      const cmpName = applications.organizationInfo.companyName;
+  if (Object.entries(applicantInfo).length) {
+    info = applicantInfo.map(applications => {
       return (
-        <div className={classes.wrapper} key={index}>
+        <div className={classes.wrapper} key={applications.prospectId}>
           <div className={classes.applicationRow}>
-            {cmpName ? (
+            {applications.organizationInfo.companyName ? (
               <div>
                 <div className={classes.companyName}>
                   {applications.organizationInfo.companyName}
