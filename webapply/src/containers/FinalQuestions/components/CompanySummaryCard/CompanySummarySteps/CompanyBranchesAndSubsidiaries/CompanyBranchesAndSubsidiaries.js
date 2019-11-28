@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import cx from "classnames";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import { AddButton } from "../../../../../../components/Buttons/AddButton";
@@ -9,12 +9,7 @@ import { ContinueButton } from "../../../../../../components/Buttons/ContinueBut
 import { limits } from "./constants";
 import { useStyles } from "./styled";
 import { prospect } from "../../../../../../constants/config";
-import {
-  Checkbox,
-  CustomSelect,
-  Input,
-  AutoSaveField as Field
-} from "../../../../../../components/Form";
+import { Checkbox, CustomSelect, Input, AutoSaveField } from "../../../../../../components/Form";
 import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
 import { emirateCityOptions } from "../CompanyPreferredMailingAddress/constants";
 import { countryOptions } from "../CompanyBusinessRelationships/constants";
@@ -52,7 +47,7 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
 export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
   const classes = useStyles();
 
-  const getIsAddButtonDisabled = (limit, items, ...fields) => {
+  const checkIsAddButtonDisabled = (limit, items, ...fields) => {
     const lastAddedItem = items[items.length - 1];
     const allFieldsFilled = fields.length
       ? fields.every(item => lastAddedItem[item] !== "")
@@ -96,13 +91,17 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
         {({ values, setFieldValue }) => {
           return (
             <Form>
-              <Field isFieldArray name="entitiesInUAE" path="prospect.orgKYCDetails.entitiesInUAE">
+              <AutoSaveField
+                isFieldArray
+                name="entitiesInUAE"
+                path="prospect.orgKYCDetails.entitiesInUAE"
+              >
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>
                       Branches or subsidiaries or other companies in the UAE
                     </h4>
-                    <Field
+                    <AutoSaveField
                       name="otherEntitiesInUAE"
                       path="prospect.orgKYCDetails.otherEntitiesInUAE"
                       label="The company has branches, subsidiaries or other companies in the UAE"
@@ -176,7 +175,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                               })
                             }
                             title="Add another subsidiary inside the UAE"
-                            disabled={getIsAddButtonDisabled(
+                            disabled={checkIsAddButtonDisabled(
                               limits.INSIDE_SUBSIDIARY_COUNT,
                               values.entitiesInUAE,
                               "companyName",
@@ -189,9 +188,9 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                     )}
                   </>
                 )}
-              </Field>
+              </AutoSaveField>
               <div className={classes.divider} />
-              <Field
+              <AutoSaveField
                 isFieldArray
                 name="entitiesOutsideUAE"
                 path="prospect.orgKYCDetails.entitiesOutsideUAE"
@@ -201,7 +200,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                     <h4 className={classes.groupLabel}>
                       Branches or subsidiaries or other companies outside the UAE
                     </h4>
-                    <Field
+                    <AutoSaveField
                       name="otherEntitiesOutsideUAE"
                       path="prospect.orgKYCDetails.otherEntitiesOutsideUAE"
                       label="The company has branches, subsidiaries or other companies outside the UAE"
@@ -261,7 +260,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                               })
                             }
                             title="Add another subsidiary outside the UAE"
-                            disabled={getIsAddButtonDisabled(
+                            disabled={checkIsAddButtonDisabled(
                               limits.OUTSIDE_SUBSIDIARY_COUNT,
                               values.entitiesOutsideUAE,
                               "companyName",
@@ -273,7 +272,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                     )}
                   </>
                 )}
-              </Field>
+              </AutoSaveField>
               <div className={classes.buttonWrapper}>
                 <ContinueButton type="submit" />
               </div>
