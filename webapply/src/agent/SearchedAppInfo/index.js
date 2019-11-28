@@ -10,16 +10,17 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
 import { getProspectInfo } from "../../store/actions/retrieveApplicantInfo";
-import { receiveAppConfig, updateProspectId } from "../../store/actions/appConfig";
+import { updateProspectId } from "../../store/actions/appConfig";
 import { ConfirmDialog } from "../../components/Modals";
 import { useStyles } from "./styled";
+
+const disableArrayValues = ["Account activated", "Declined", "Ineligible"];
 
 const SearchedAppInfo = ({
   searchResults,
   match,
   updateProspectId,
   retrieveDocDetails,
-  receiveAppConfig,
   getProspectInfo
 }) => {
   const classes = useStyles();
@@ -37,9 +38,8 @@ const SearchedAppInfo = ({
   }, [setIsDisplayConfirmDialog]);
 
   const confirmHandler = useCallback(() => {
-    receiveAppConfig();
     getProspectInfo(match.params.id);
-  }, [receiveAppConfig, getProspectInfo, match.params.id]);
+  }, [getProspectInfo, match.params.id]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
@@ -82,7 +82,12 @@ const SearchedAppInfo = ({
       </CompanyStakeholderCard>
       <div className="linkContainer">
         <BackLink path={routes.searchProspect} />
-        <SubmitButton label="Edit" justify="flex-end" handleClick={redirectUserPage} />
+        <SubmitButton
+          label="Edit"
+          justify="flex-end"
+          handleClick={redirectUserPage}
+          disabled={disableArrayValues.includes(prospectInfo.status.statusNotes)}
+        />
       </div>
       <ConfirmDialog
         isOpen={isDisplayConfirmDialog}
@@ -102,7 +107,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   retrieveDocDetails,
   getProspectInfo,
-  receiveAppConfig,
   updateProspectId
 };
 

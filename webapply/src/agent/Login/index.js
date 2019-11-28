@@ -71,6 +71,7 @@ const LoginPage = ({ loginInfoForm, setToken, setVerified, verifyToken, recaptch
               path="login.password"
               label="Your Password"
               placeholder="Your Password"
+              onPaste={e => e.preventDefault()}
               component={Input}
             />
 
