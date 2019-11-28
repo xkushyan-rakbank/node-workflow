@@ -68,14 +68,16 @@ export const SubmitApplicationComponent = props => {
         account={account}
       />
 
-      <BlockConfirm
-        isAgentLoggedIn={isAgentLoggedIn}
-        checkBoxValues={checkBoxValues}
-        onChange={handleChange}
-        tncClicked={tncClicked}
-        areTermsAgreed={checkBoxValues.areTermsAgreed}
-        termsEnrolmentClicked={termsEnrolmentClicked}
-      />
+      {!isAgentLoggedIn.loginStatus && (
+        <BlockConfirm
+          isAgentLoggedIn={isAgentLoggedIn}
+          checkBoxValues={checkBoxValues}
+          onChange={handleChange}
+          tncClicked={tncClicked}
+          areTermsAgreed={checkBoxValues.areTermsAgreed}
+          termsEnrolmentClicked={termsEnrolmentClicked}
+        />
+      )}
       {isError && <ErrorMessage error={chkboxErrorMessage} />}
 
       <div className="linkContainer">
