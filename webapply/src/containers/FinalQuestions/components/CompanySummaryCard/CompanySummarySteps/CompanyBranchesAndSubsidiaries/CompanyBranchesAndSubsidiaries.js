@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import cx from "classnames";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import { AddButton } from "../../../../../../components/Buttons/AddButton";
@@ -9,7 +9,12 @@ import { ContinueButton } from "../../../../../../components/Buttons/ContinueBut
 import { limits } from "./constants";
 import { useStyles } from "./styled";
 import { prospect } from "../../../../../../constants/config";
-import { Checkbox, CustomSelect, Input, AutoSaveField } from "../../../../../../components/Form";
+import {
+  Checkbox,
+  CustomSelect,
+  Input,
+  AutoSaveField as Field
+} from "../../../../../../components/Form";
 import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
 import { emirateCityOptions } from "../CompanyPreferredMailingAddress/constants";
 import { countryOptions } from "../CompanyBusinessRelationships/constants";
@@ -44,7 +49,12 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
   })
 });
 
-export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
+export const CompanyBranchesAndSubsidiariesComponent = ({
+  handleContinue,
+  entitiesInUAE,
+  entitiesOutsideUAE,
+  updateProspect
+}) => {
   const classes = useStyles();
 
   const checkIsAddButtonDisabled = (limit, items, ...fields) => {
@@ -61,27 +71,30 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
     }
   };
 
+  const handleRemoveField = useCallback(
+    (items, index, prospect) => {
+      const dataList = [...items];
+      dataList.splice(index, 1);
+      const path = `prospect.orgKYCDetails.${prospect}`;
+      updateProspect({
+        [path]: [...dataList]
+      });
+    },
+    [updateProspect]
+  );
+
   const handleSubmit = useCallback(() => {
     handleContinue();
   }, [handleContinue]);
+
+  const basisPath = "prospect.orgKYCDetails";
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          entitiesInUAE: [
-            {
-              companyName: "",
-              emirate: "",
-              tradeLicenseNo: ""
-            }
-          ],
-          entitiesOutsideUAE: [
-            {
-              companyName: "",
-              country: ""
-            }
-          ],
+          entitiesInUAE,
+          entitiesOutsideUAE,
           otherEntitiesInUAE: false,
           otherEntitiesOutsideUAE: false
         }}
@@ -91,17 +104,13 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
         {({ values, setFieldValue }) => {
           return (
             <Form>
-              <AutoSaveField
-                isFieldArray
-                name="entitiesInUAE"
-                path="prospect.orgKYCDetails.entitiesInUAE"
-              >
+              <FieldArray name="entitiesInUAE">
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>
                       Branches or subsidiaries or other companies in the UAE
                     </h4>
-                    <AutoSaveField
+                    <Field
                       name="otherEntitiesInUAE"
                       path="prospect.orgKYCDetails.otherEntitiesInUAE"
                       label="The company has branches, subsidiaries or other companies in the UAE"
@@ -123,6 +132,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                               <Grid item sm={12}>
                                 <Field
                                   name={`entitiesInUAE[${index}].companyName`}
+                                  path={`${basisPath}.entitiesInUAE[${index}].companyName`}
                                   label="Company name"
                                   placeholder="Company name"
                                   component={Input}
@@ -136,6 +146,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                               >
                                 <Field
                                   name={`entitiesInUAE[${index}].tradeLicenseNo`}
+                                  path={`${basisPath}.entitiesInUAE[${index}].tradeLicenseNo`}
                                   label="Trade License Number"
                                   placeholder="Trade License Number"
                                   component={Input}
@@ -150,13 +161,18 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                                 <Field
                                   options={emirateCityOptions}
                                   name={`entitiesInUAE[${index}].emirate`}
+                                  path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
+                                  placeholder="Emirate"
                                   label="Emirate"
                                   extractId={option => option.key}
                                   component={CustomSelect}
                                 />
                                 {!!index && (
                                   <RemoveButton
-                                    onClick={() => arrayHelpers.remove(index)}
+                                    onClick={() => {
+                                      arrayHelpers.remove(index);
+                                      handleRemoveField(entitiesInUAE, index, "entitiesInUAE");
+                                    }}
                                     title="Delete"
                                     className={classes.container}
                                   />
@@ -188,19 +204,15 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                     )}
                   </>
                 )}
-              </AutoSaveField>
+              </FieldArray>
               <div className={classes.divider} />
-              <AutoSaveField
-                isFieldArray
-                name="entitiesOutsideUAE"
-                path="prospect.orgKYCDetails.entitiesOutsideUAE"
-              >
+              <FieldArray name="entitiesOutsideUAE">
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>
                       Branches or subsidiaries or other companies outside the UAE
                     </h4>
-                    <AutoSaveField
+                    <Field
                       name="otherEntitiesOutsideUAE"
                       path="prospect.orgKYCDetails.otherEntitiesOutsideUAE"
                       label="The company has branches, subsidiaries or other companies outside the UAE"
@@ -222,6 +234,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                               <Grid item md={6} sm={12}>
                                 <Field
                                   name={`entitiesOutsideUAE[${index}].companyName`}
+                                  path={`${basisPath}.entitiesOutsideUAE[${index}].companyName`}
                                   label="Company name"
                                   placeholder="Company name"
                                   component={Input}
@@ -236,13 +249,21 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                                 <Field
                                   options={countryOptions}
                                   name={`entitiesOutsideUAE[${index}].country`}
+                                  path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
                                   label="Country"
                                   extractId={option => option.key}
                                   component={CustomSelect}
                                 />
                                 {!!index && (
                                   <RemoveButton
-                                    onClick={() => arrayHelpers.remove(index)}
+                                    onClick={() => {
+                                      arrayHelpers.remove(index);
+                                      handleRemoveField(
+                                        entitiesOutsideUAE,
+                                        index,
+                                        "entitiesOutsideUAE"
+                                      );
+                                    }}
                                     title="Delete"
                                     className={classes.container}
                                   />
@@ -272,7 +293,7 @@ export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
                     )}
                   </>
                 )}
-              </AutoSaveField>
+              </FieldArray>
               <div className={classes.buttonWrapper}>
                 <ContinueButton type="submit" />
               </div>
