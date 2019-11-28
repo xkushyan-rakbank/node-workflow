@@ -12,7 +12,7 @@ export const AutoSaveField = ({
   name,
   path,
   isLoadDefaultValueFromStore = true,
-  datalistId = false,
+  datalistId,
   filterOptions = () => true,
   ...rest
 }) => {
