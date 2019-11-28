@@ -39,7 +39,6 @@ export const CompanySummaryCardComponent = ({
     if (step > item.step) {
       setStep(item.step);
     }
-    setStep(item.step);
   };
 
   const handleContinue = useCallback(() => {
