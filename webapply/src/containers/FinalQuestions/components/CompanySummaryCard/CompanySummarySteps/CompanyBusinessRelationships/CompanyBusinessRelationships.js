@@ -70,11 +70,9 @@ export const CompanyBusinessRelationshipsComponent = ({
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
 
   const handleCheckboxCallback = useCallback(
-    (value, name, callback) => {
-      if (!value) {
-        updateProspect({ [`prospect.orgKYCDetails.${name}`]: initialValues[name] });
-        callback(name, initialValues[name]);
-      }
+    (name, callback) => {
+      updateProspect({ [`prospect.orgKYCDetails.${name}`]: initialValues[name] });
+      callback(name, initialValues[name]);
     },
     [updateProspect]
   );
@@ -120,7 +118,7 @@ export const CompanyBusinessRelationshipsComponent = ({
         onSubmit={handleSubmit}
         validationSchema={companyBusinessRelationshipsSchema}
       >
-        {({ values, setFieldValue, errors }) => {
+        {({ values, setFieldValue, setFieldTouched }) => {
           return (
             <Form>
               <FieldArray name="topCustomers">
@@ -195,11 +193,11 @@ export const CompanyBusinessRelationshipsComponent = ({
                       component={Checkbox}
                       onChange={() => {
                         setFieldValue("isDontHaveSuppliersYet", !values.isDontHaveSuppliersYet);
-                        handleCheckboxCallback(
-                          values.isDontHaveSuppliersYet,
-                          "topSuppliers",
-                          setFieldValue
-                        );
+                        if (!values.isDontHaveSuppliersYet) {
+                          handleCheckboxCallback("topSuppliers", setFieldValue);
+                          setFieldTouched("topSuppliers[0].name", false);
+                          setFieldTouched("topSuppliers[0].country", false);
+                        }
                       }}
                     />
                     <Grid container spacing={3} className={classes.flexContainer}>
@@ -272,11 +270,10 @@ export const CompanyBusinessRelationshipsComponent = ({
                       component={Checkbox}
                       onChange={() => {
                         setFieldValue("isDontTradeGoodsYet", !values.isDontTradeGoodsYet);
-                        handleCheckboxCallback(
-                          values.isDontTradeGoodsYet,
-                          "topOriginGoodsCountries",
-                          setFieldValue
-                        );
+                        if (!values.isDontTradeGoodsYet) {
+                          handleCheckboxCallback("topOriginGoodsCountries", setFieldValue);
+                          setFieldTouched("topOriginGoodsCountries[0]", false);
+                        }
                       }}
                     />
                     <Grid container spacing={3} className={classes.flexContainer}>
@@ -347,11 +344,13 @@ export const CompanyBusinessRelationshipsComponent = ({
                           "otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
                           !values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist
                         );
-                        handleCheckboxCallback(
-                          !values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist,
-                          "otherBankingRelationshipsInfo.otherBankDetails",
-                          setFieldValue
-                        );
+                        if (values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist) {
+                          handleCheckboxCallback(
+                            "otherBankingRelationshipsInfo.otherBankDetails",
+                            setFieldValue
+                          );
+                          setFieldTouched(`${bankFieldPath}[0].bankName`, false);
+                        }
                       }}
                     />
                     {values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist && (
