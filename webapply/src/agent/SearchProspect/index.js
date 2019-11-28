@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import omit from "lodash/omit";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
-import { countryCodeOptions } from "./../../constants/options";
 import { NAME_REGEX, EMAIL_REGEX, LEAD_LICENSE_REGEX } from "./../../utils/validation";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { SearchResult } from "./../SearchResult/index";
@@ -26,9 +25,11 @@ const searchProspectSchema = Yup.object({
     .matches(LEAD_LICENSE_REGEX, "This is not a valid trade license number")
 });
 
+const UAE_CODE = "971";
+
 const initialValues = {
   fname: "",
-  countryCode: countryCodeOptions[0].value,
+  countryCode: UAE_CODE,
   mobileNo: "",
   email: "",
   raktrackNumber: "",
@@ -71,7 +72,8 @@ const SearchProspect = ({ searchApplications, searchResults }) => {
                   <Field
                     name="countryCode"
                     path="searchInfo.countryCode"
-                    options={countryCodeOptions}
+                    datalistId="countryCode"
+                    extractLabel={item => item.displayText}
                     component={CustomSelect}
                     shrink={false}
                   />
