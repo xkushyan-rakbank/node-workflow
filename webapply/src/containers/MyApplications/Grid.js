@@ -5,6 +5,7 @@ import { StyledWhiteContainedButton } from "./List";
 import waves_background from "./../../assets/images/waves_bg.png";
 import { getProspectInfo } from "./../../store/actions/retrieveApplicantInfo";
 import { useStyles } from "./styled";
+import { ctaStatus, ctaWaterText, withoutCtaStatus, withoutCtaWaterText } from "./constants";
 
 const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
@@ -30,7 +31,9 @@ const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
                   component="span"
                   classes={{ root: classes.account }}
                 >
-                  {applications.organizationInfo.companyName}
+                  {`${applications.applicationInfo.accountType} ${
+                    applications.applicationInfo.islamicBanking ? "islamic" : ""
+                  }`}
                 </Typography>
               </>
             ) : (
@@ -47,17 +50,18 @@ const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
                 </Typography>
               </>
             )}
-            <div>
-              <span className={classes.status}>{applications.status.statusNotes}</span>
-            </div>
+            <div className={classes.status}>{applications.status.statusNotes}</div>
             <div className={classes.blockAction}>
-              {applications.status.statusType ? (
+              {ctaStatus.includes(applications.status.statusNotes) ? (
                 <StyledWhiteContainedButton
-                  label={applications.status.statusType}
+                  label={ctaWaterText[ctaStatus.indexOf(applications.status.statusNotes)]}
                   handleClick={() => getProspectDetails(applications.prospectId)}
                 />
               ) : (
-                <span>{applications.status.statusNotes}</span>
+                <span>
+                  {withoutCtaStatus.includes(applications.status.statusNotes) &&
+                    withoutCtaWaterText[withoutCtaStatus.indexOf(applications.status.statusNotes)]}
+                </span>
               )}
             </div>
           </div>

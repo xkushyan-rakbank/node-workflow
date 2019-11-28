@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import { getProspectInfo } from "./../../store/actions/retrieveApplicantInfo";
 import { useStyles } from "./styled";
+import { ctaStatus, ctaWaterText, withoutCtaStatus, withoutCtaWaterText } from "./constants";
 
 export const StyledWhiteContainedButton = props => {
   const Button = withStyles(() => ({
@@ -56,7 +57,9 @@ const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
                   {applications.organizationInfo.companyName}
                 </div>
                 <div className={classes.listAccount}>
-                  {applications.organizationInfo.companyName}
+                  {`${applications.applicationInfo.accountType} ${
+                    applications.applicationInfo.islamicBanking ? "islamic" : ""
+                  }`}
                 </div>
               </div>
             ) : (
@@ -69,13 +72,16 @@ const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
               <span className={classes.listStatus}>{applications.status.statusNotes}</span>
             </div>
             <div className={classes.action}>
-              {applications.status.statusType ? (
+              {ctaStatus.includes(applications.status.statusNotes) ? (
                 <StyledWhiteContainedButton
-                  label={applications.status.statusType}
+                  label={ctaWaterText[ctaStatus.indexOf(applications.status.statusNotes)]}
                   handleClick={() => getProspectDetails(applications.prospectId)}
                 />
               ) : (
-                <span>{applications.status.statusNotes}</span>
+                <span>
+                  {withoutCtaStatus.includes(applications.status.statusNotes) &&
+                    withoutCtaWaterText[withoutCtaStatus.indexOf(applications.status.statusNotes)]}
+                </span>
               )}
             </div>
           </div>

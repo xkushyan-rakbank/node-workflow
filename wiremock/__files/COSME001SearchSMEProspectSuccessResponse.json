@@ -30,7 +30,8 @@
         "createdBy": "string",
         "lastModifiedBy": "Kapil",
         "viewId": "/ApplicationSubmitted",
-        "actionType": "Save"
+        "actionType": "Save",
+        "accountType": "RAKStarter"
       },
       "signatoryInfo": [
         {
@@ -194,7 +195,7 @@
         "statusType": "",
         "statusCode": "",
         "statusFlag": "",
-        "statusNotes": "Documents Needed",
+        "statusNotes": "Documents needed",
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within 1 day to meet you in person and help you out.",
@@ -213,7 +214,8 @@
         "createdBy": "string",
         "lastModifiedBy": "Anil",
         "viewId": "/ApplicationSubmitted",
-        "actionType": "Save"
+        "actionType": "Save",
+        "accountType": "Current Account"
       },
       "signatoryInfo": [
         {
@@ -396,7 +398,8 @@
         "createdBy": "string",
         "lastModifiedBy": "Sachin",
         "viewId": "/ApplicationSubmitted",
-        "actionType": "Save"
+        "actionType": "Save",
+        "accountType": "RAKelite"
       },
       "signatoryInfo": [
         {
