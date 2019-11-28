@@ -28,24 +28,3 @@ export const initialValues = {
   otherBankDetails,
   "otherBankingRelationshipsInfo.otherBankDetails": otherBankDetails
 };
-
-export const countryOptions = [
-  {
-    code: "Emirate",
-    key: "Emirate",
-    value: "Emirate",
-    label: "Emirate"
-  },
-  {
-    code: "United States",
-    key: "United States",
-    value: "United States",
-    label: "United States"
-  },
-  {
-    code: "Great Britain",
-    key: "Great Britain",
-    value: "Great Britain",
-    label: "Great Britain"
-  }
-];

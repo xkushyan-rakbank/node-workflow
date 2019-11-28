@@ -13,21 +13,6 @@ const mapStateToProps = state => ({
     "topOriginGoodsCountries",
     initialValues.topOriginGoodsCountries
   ),
-  otherBankingRelationshipsExist: get(
-    getOrgKYCDetails(state),
-    "otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
-    initialValues.otherBankingRelationshipsExist
-  ),
-  isDontHaveSuppliersYet: get(
-    getOrgKYCDetails(state),
-    "isDontHaveSuppliersYet",
-    initialValues.isDontHaveSuppliersYet
-  ),
-  isDontTradeGoodsYet: get(
-    getOrgKYCDetails(state),
-    "isDontTradeGoodsYet",
-    initialValues.isDontTradeGoodsYet
-  ),
   otherBankDetails: get(getOrgKYCDetails(state), "otherBankingRelationshipsInfo.otherBankDetails", [
     initialValues.otherBankDetails
   ])
