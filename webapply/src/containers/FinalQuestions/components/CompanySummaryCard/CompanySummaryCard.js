@@ -36,9 +36,9 @@ export const CompanySummaryCardComponent = ({
   }, [switchExpandedMargin]);
 
   const createChangeStepHandler = item => () => {
-    // if (step > item.step) {
-    //   setStep(item.step);
-    // }
+    if (step > item.step) {
+      setStep(item.step);
+    }
     setStep(item.step);
   };
 
