@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import javax.annotation.PostConstruct;
 
+import ae.rakbank.documentuploader.commons.EnvironmentUtil;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +18,6 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ae.rakbank.documentuploader.commons.EnvUtil;
-
 @Component
 public class FileHelper {
 
@@ -26,6 +25,9 @@ public class FileHelper {
 
 	@Autowired
 	private ResourceLoader resourceLoader;
+
+	@Autowired
+	private EnvironmentUtil environmentUtil;
 
 	private JsonNode docUploadConfig;
 
@@ -36,16 +38,16 @@ public class FileHelper {
 
 			String fileContent = null;
 
-			File file = new File(EnvUtil.getConfigDir() + filename);
+			File file = new File(environmentUtil.getConfigDir() + filename);
 			if (fromConfigDirectory && file.exists()) {
-				logger.info(String.format("Read JSON file from %s%s", EnvUtil.getConfigDir(), filename));
+				logger.info(String.format("Read JSON file from %s%s", environmentUtil.getConfigDir(), filename));
 
-				fileContent = FileUtils.readFileToString(new File(EnvUtil.getConfigDir() + filename),
+				fileContent = FileUtils.readFileToString(new File(environmentUtil.getConfigDir() + filename),
 						StandardCharsets.UTF_8);
 			} else {
 				if (fromConfigDirectory) {
 					logger.error(String.format("FileNotFoundException: Read JSON file from %s%s",
-							EnvUtil.getConfigDir(), filename));
+							environmentUtil.getConfigDir(), filename));
 				}
 
 				logger.info("Read JSON file from classpath:" + filename);
