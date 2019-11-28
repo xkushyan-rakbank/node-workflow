@@ -42,5 +42,53 @@ export const useStyles = makeStyles({
     justifyContent: "center",
     flexDirection: "column",
     width: "100%"
+  }, //grid css start
+  gridContainer: {
+    flex: "0 0 50%",
+    height: "263px"
+  },
+  containerBg: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    zIndex: 0
+  },
+  application: {
+    position: "relative",
+    overflow: "hidden",
+    borderRadius: 8,
+    boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#ffffff",
+    backgroundImage: "linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0))",
+    padding: "37px 20px 10px",
+    boxSizing: "border-box",
+    display: "inline-flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+    height: "100%"
+  },
+  title: {
+    fontWeight: "600",
+    color: "#263d4c",
+    lineHeight: "1.7",
+    zIndex: 1
+  },
+  account: {
+    color: "#86868b",
+    zIndex: 1
+  },
+  status: {
+    borderRadius: 4,
+    backgroundColor: "#e9e9ed",
+    fontSize: "12px",
+    color: "#373737",
+    padding: "1px 5px",
+    marginTop: 40,
+    zIndex: 1
+  },
+  blockAction: {
+    marginTop: 40,
+    zIndex: "1"
   }
 });
