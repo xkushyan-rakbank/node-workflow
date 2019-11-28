@@ -19,26 +19,34 @@ export const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const CustomCheckbox = ({ label, onSelect = () => {}, type = "checkbox", ...rest }) => {
+export const CustomCheckbox = ({
+  label,
+  onSelect = () => {},
+  type = "checkbox",
+  useRadioIcon = false,
+  ...rest
+}) => {
   const classes = useStyles();
+  const uncheckedRadioIcon = (
+    <img src={UncheckedRadioIcon} alt="check icon" className={classes.radioIcon} />
+  );
+  const radioIconChecked = (
+    <img src={CheckedRadioIcon} alt="checked icon" className={classes.radioIcon} />
+  );
+
+  const uncheckedIcon = useRadioIcon ? uncheckedRadioIcon : <UncheckedIcon alt="unchecked" />;
+  const checkedIcon = useRadioIcon ? radioIconChecked : <CheckedIcon alt="checkedIcon" />;
 
   return (
     <FormControlLabel
       classes={{ label: classes.label }}
       control={
         type !== "radio" ? (
-          <Checkbox
-            icon={<UncheckedIcon alt="unchecked" />}
-            checkedIcon={<CheckedIcon alt="checkedIcon" />}
-            onClick={onSelect}
-            {...rest}
-          />
+          <Checkbox icon={uncheckedIcon} checkedIcon={checkedIcon} onClick={onSelect} {...rest} />
         ) : (
           <Radio
-            icon={<img src={UncheckedRadioIcon} alt="check icon" className={classes.radioIcon} />}
-            checkedIcon={
-              <img src={CheckedRadioIcon} alt="checked icon" className={classes.radioIcon} />
-            }
+            icon={uncheckedRadioIcon}
+            checkedIcon={radioIconChecked}
             onClick={onSelect}
             {...rest}
           />

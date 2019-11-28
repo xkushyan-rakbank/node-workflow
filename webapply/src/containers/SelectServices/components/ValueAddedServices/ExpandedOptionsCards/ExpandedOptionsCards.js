@@ -3,10 +3,10 @@ import { withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
-import ExpandedDetailedOptionsCard from "./ExpandedDetailedOptionsCard";
+import { ExpandedDetailedOptionsCard } from "./ExpandedDetailedOptionsCard";
 import { mockData } from "./constants";
-import { getUrlsReadMore } from "../../store/selectors/appConfig";
-import { getSelectedAccountInfo } from "../../store/selectors/selectedAccountInfo";
+import { getUrlsReadMore } from "../../../../../store/selectors/appConfig";
+import { getSelectedAccountInfo } from "../../../../../store/selectors/selectedAccountInfo";
 
 const style = {
   root: {

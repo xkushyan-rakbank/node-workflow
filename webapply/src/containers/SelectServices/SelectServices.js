@@ -50,7 +50,7 @@ export const SelectServicesComponent = props => {
         foreign currencies, cards or chequebooks.
       </p>
 
-      <ServicesSteps step={3} setStep={setStep} handleContinue={handleContinue} />
+      <ServicesSteps step={4} setStep={setStep} handleContinue={handleContinue} />
 
       <div className={classes.linkContainer}>
         <BackLink path={routes.uploadDocuments} />
