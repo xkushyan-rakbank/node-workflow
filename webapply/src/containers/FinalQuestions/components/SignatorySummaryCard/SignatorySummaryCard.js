@@ -20,10 +20,11 @@ export const SignatorySummaryCardComponent = ({
   const classes = useStyles();
 
   useEffect(() => {
-    if (step === signatoriesSteps.length) {
+    if (step > signatoriesSteps.length) {
       addAvailableSignatoryIndex(index + 1);
     }
-  }, [step]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, index]);
 
   const createChangeStepHandler = item => () => {
     if (step > item.step) {
@@ -35,7 +36,7 @@ export const SignatorySummaryCardComponent = ({
     sendProspectToAPI().then(() => {
       setStep(step + 1);
     });
-  }, [sendProspectToAPI, step, addAvailableSignatoryIndex, index]);
+  }, [sendProspectToAPI, step]);
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
 

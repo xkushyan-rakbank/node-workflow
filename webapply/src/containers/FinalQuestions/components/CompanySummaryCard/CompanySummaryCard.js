@@ -21,9 +21,10 @@ export const CompanySummaryCardComponent = ({
   const classes = useStyles();
 
   useEffect(() => {
-    if (step === finalQuestionsSteps.length) {
+    if (step > finalQuestionsSteps.length) {
       addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
   const handleClickStartHere = useCallback(() => {
@@ -32,7 +33,7 @@ export const CompanySummaryCardComponent = ({
     if (switchExpandedMargin) {
       switchExpandedMargin();
     }
-  }, []);
+  }, [switchExpandedMargin]);
 
   const createChangeStepHandler = item => () => {
     if (step > item.step) {
@@ -44,7 +45,7 @@ export const CompanySummaryCardComponent = ({
     sendProspectToAPI().then(() => {
       setStep(step + 1);
     });
-  }, [sendProspectToAPI, step, addAvailableSignatoryIndex]);
+  }, [sendProspectToAPI, step]);
 
   return (
     <CompanyCard
