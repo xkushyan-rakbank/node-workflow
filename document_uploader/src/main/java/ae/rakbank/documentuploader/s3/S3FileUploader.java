@@ -10,7 +10,6 @@ import java.nio.file.StandardCopyOption;
 
 import javax.activation.MimetypesFileTypeMap;
 
-import ae.rakbank.documentuploader.commons.EnvironmentUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -22,6 +21,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.emc.object.s3.S3Client;
+
+import ae.rakbank.documentuploader.commons.EnvUtil;
 
 /**
  * 
@@ -37,22 +38,18 @@ public class S3FileUploader {
 	@Autowired
 	private ECSS3Factory ecsS3Factory;
 
-	@Autowired
-	private EnvironmentUtil environmentUtil;
-
 	@Async
 	@Scheduled(cron = "0 0/5 * * * ?")
 	public void uploadFilesToS3Bucket() throws InterruptedException {
 		logger.info("[Begin] uploadFilesToS3Bucket() method");
 
-		logger.info("Initializing scanned docs dir: " + environmentUtil.getScannedDocsDir());
-		Path scannedDocsDir = Paths.get(environmentUtil.getScannedDocsDir());
+		Path scannedDocsDir = Paths.get(EnvUtil.getScannedDocsDir());
 		long totalDocs = 0;
 
 		try {
 			totalDocs = Files.list(scannedDocsDir).count();
 		} catch (IOException e) {
-			logger.error("Error occured while listing documents from " + environmentUtil.getScannedDocsDir(), e);
+			logger.error("Error occured while listing documents from " + EnvUtil.getScannedDocsDir(), e);
 		}
 
 		logger.info(String.format("%s documents found in %s", totalDocs, scannedDocsDir));
@@ -72,7 +69,7 @@ public class S3FileUploader {
 
 	private void uploadToS3(S3Client s3) {
 		try {
-			Files.newDirectoryStream(Paths.get(environmentUtil.getScannedDocsDir())).forEach(path -> {
+			Files.newDirectoryStream(Paths.get(EnvUtil.getScannedDocsDir())).forEach(path -> {
 				File file = path.toFile();
 
 				String objectKey = FilenameUtils.getBaseName(file.getName());
@@ -103,9 +100,7 @@ public class S3FileUploader {
 	}
 
 	private void moveFileFromScannedDocsToS3Object(Path path, File file) {
-		logger.info("Moving file " + file.getName() + " from scanned docs to S3Object");
-		logger.info("S3Objects dir = " + environmentUtil.getS3ObjectsDir());
-		Path targetPath = Paths.get(environmentUtil.getS3ObjectsDir() + "/" + file.getName());
+		Path targetPath = Paths.get(EnvUtil.getS3ObjectsDir() + "/" + file.getName());
 		try {
 			// move the file to sObject directory
 			Files.move(path, targetPath, StandardCopyOption.REPLACE_EXISTING);
