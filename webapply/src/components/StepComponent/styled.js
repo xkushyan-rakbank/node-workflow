@@ -30,5 +30,9 @@ export const useStyles = makeStyles({
     opacity: 0.5,
     fontSize: "16px",
     color: "#263d4c"
+  },
+  doneIcon: {
+    width: "24px",
+    height: "22px"
   }
 });

@@ -1,8 +1,8 @@
 import React from "react";
-import DoneIcon from "../DoneIcon";
 import SectionTitle from "../SectionTitle";
 import { LinkButton } from "../Buttons/LinkButton";
 import { useStyles } from "./styled";
+import { Icon, ICONS } from "../Icons";
 
 export const StepComponent = ({
   title,
@@ -10,13 +10,12 @@ export const StepComponent = ({
   isFilled = false,
   isActiveStep,
   index,
-  clickHandler,
+  handleClick,
   prospectInfo,
   handleContinue,
-  stepForm
+  stepForm: Form
 }) => {
   const classes = useStyles();
-  const Form = stepForm;
 
   const renderTitle = () => {
     if (isActiveStep) {
@@ -25,7 +24,7 @@ export const StepComponent = ({
     return isFilled ? (
       <div className={classes.filledTitle}>
         <LinkButton title={title} className={classes.linkTitle} />
-        <DoneIcon />
+        <Icon name={ICONS.done} className={classes.doneIcon} />
       </div>
     ) : (
       <div className={classes.disabledStep}>{title}</div>
@@ -34,7 +33,7 @@ export const StepComponent = ({
 
   return (
     <>
-      <div className={classes.stepTitleWrapper} onClick={clickHandler}>
+      <div className={classes.stepTitleWrapper} onClick={handleClick}>
         {renderTitle()}
       </div>
       {isActiveStep && (
