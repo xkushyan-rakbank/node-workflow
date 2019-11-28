@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import get from "lodash/get";
+
 import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
@@ -7,7 +8,6 @@ import { useStyles } from "./styled";
 import { signatoriesSteps, STEP_1 } from "./constants";
 
 export const SignatorySummaryCardComponent = ({
-  resetStep,
   addAvailableSignatoryIndex,
   sendProspectToAPI,
   index,
@@ -19,50 +19,14 @@ export const SignatorySummaryCardComponent = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
 
-  const renderControls = () => {
-    if (isExpanded) {
-      return null;
-    }
-
-    return (
-      availableSignatoriesIndexes.has(index) && (
-        <LinkButton
-          clickHandler={() => {
-            setIsExpanded(true);
-          }}
-        />
-      )
-    );
-  };
-
-  const getShareholdingLabel = () => {
-    const percentage = Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
-    return percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding";
-  };
-
-  const renderCardContent = () => {
-    return (
-      <div className={classes.contentBox}>
-        <div className={classes.infoBox}>
-          <div className={classes.name}>
-            {firstName && lastName ? `${firstName} ${lastName}` : fullName}
-          </div>
-          <div className={classes.signatoryField}>
-            {get(signatory, "accountSigningInfo.authorityType")}
-          </div>
-          <div className={classes.shareholdingField}>{getShareholdingLabel()}</div>
-        </div>
-        <div className={classes.controlsBox}>{renderControls()}</div>
-      </div>
-    );
-  };
-
-  const changeStep = item => {
-    if (step <= item.step) {
-      return;
-    }
-    setStep(item.step);
-  };
+  const changeStep = useCallback(
+    item => {
+      if (step > item.step) {
+        setStep(item.step);
+      }
+    },
+    [setStep, step]
+  );
 
   const handleContinue = useCallback(() => {
     sendProspectToAPI().then(() => {
@@ -73,12 +37,37 @@ export const SignatorySummaryCardComponent = ({
     });
   }, [sendProspectToAPI, step, addAvailableSignatoryIndex, index]);
 
+  const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
+
   return (
     <CompanyStakeholderCard
       className={classes.card}
       firstName={signatory.firstName}
       lastName={signatory.lastName || signatory.fullName}
-      content={renderCardContent()}
+      content={
+        <div className={classes.contentBox}>
+          <div className={classes.infoBox}>
+            <div className={classes.name}>
+              {firstName && lastName ? `${firstName} ${lastName}` : fullName}
+            </div>
+            <div className={classes.signatoryField}>
+              {get(signatory, "accountSigningInfo.authorityType")}
+            </div>
+            <div className={classes.shareholdingField}>
+              {percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding"}
+            </div>
+          </div>
+          <div className={classes.controlsBox}>
+            {!isExpanded && availableSignatoriesIndexes.has(index) && (
+              <LinkButton
+                clickHandler={() => {
+                  setIsExpanded(true);
+                }}
+              />
+            )}
+          </div>
+        </div>
+      }
       index={index}
     >
       {isExpanded &&
