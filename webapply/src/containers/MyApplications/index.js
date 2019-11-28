@@ -5,10 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-import list_ic from "../../assets/icons/list_white_ic.png";
-import list_gray_ic from "../../assets/icons/list_gray_ic.png";
-import grid_ic from "../../assets/icons/grid_grey_ic.png";
-import grid_white_ic from "../../assets/icons/grid_white_ic.png";
+import { Icon, ICONS } from "./../../components/Icons";
 
 import ApplicationList from "./List";
 import ApplicationGrid from "./Grid";
@@ -19,19 +16,21 @@ import { getSearchResult } from "./../../store/selectors/searchProspect";
 
 import { useStyles } from "./styled";
 
-const ButtonWithIcon = ({ icon, iconSelected, typeView, selectedView, handleClick }) => {
+const ButtonWithIcon = ({ iconName, iconSelected, typeView, selectedView, handleClick }) => {
   const isSelected = selectedView === typeView;
   return (
     <button className={cx({ selected: isSelected })} onClick={() => handleClick(typeView)}>
-      <img src={isSelected ? icon : iconSelected} alt="type view" />
+      <Icon name={isSelected ? iconName : iconSelected} />
     </button>
   );
 };
 
+const defaultView = "list";
+
 const MyApplications = ({ searchResults, searchApplications, inputParam }) => {
   const classes = useStyles();
 
-  const [selectedView, setSelectedView] = useState("list");
+  const [selectedView, setSelectedView] = useState(defaultView);
 
   useEffect(() => {
     searchApplications(inputParam);
@@ -52,15 +51,15 @@ const MyApplications = ({ searchResults, searchApplications, inputParam }) => {
         </Typography>
         <Box classes={{ root: classes.rootChangeViewContainer }}>
           <ButtonWithIcon
-            icon={list_ic}
-            iconSelected={list_gray_ic}
+            iconName={ICONS.list}
+            iconSelected={ICONS.listGray}
             typeView="list"
             selectedView={selectedView}
             handleClick={handleChangeView}
           />
           <ButtonWithIcon
-            icon={grid_white_ic}
-            iconSelected={grid_ic}
+            iconName={ICONS.gridWhite}
+            iconSelected={ICONS.grid}
             typeView="grid"
             selectedView={selectedView}
             handleClick={handleChangeView}
@@ -69,8 +68,8 @@ const MyApplications = ({ searchResults, searchApplications, inputParam }) => {
       </Grid>
 
       {searchResults && (
-        <div className={selectedView === "list" ? classes.viewColumn : classes.veiwRow}>
-          {selectedView === "list" ? (
+        <div className={selectedView === defaultView ? classes.viewColumn : classes.veiwRow}>
+          {selectedView === defaultView ? (
             <ApplicationList applicantInfo={searchResults.searchResult} />
           ) : (
             <ApplicationGrid applicantInfo={searchResults.searchResult} />
