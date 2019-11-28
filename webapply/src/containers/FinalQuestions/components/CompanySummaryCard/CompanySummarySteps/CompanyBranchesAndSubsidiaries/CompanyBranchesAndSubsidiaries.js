@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import cx from "classnames";
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import { AddButton } from "../../../../../../components/Buttons/AddButton";
@@ -35,13 +35,6 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
       })
     )
   }),
-  otherwise: Yup.array().of(
-    Yup.object().shape({
-      companyName: Yup.string(),
-      emirate: Yup.string(),
-      tradeLicenseNo: Yup.string()
-    })
-  ),
   otherEntitiesOutsideUAE: Yup.boolean(),
   entitiesOutsideUAE: Yup.array().when("otherEntitiesOutsideUAE", {
     is: true,
@@ -56,62 +49,54 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
   })
 });
 
-export const CompanyBusinessRelationshipsComponent = ({
-  handleContinue,
-  entitiesInUAE,
-  updateProspect,
-  entitiesOutsideUAE,
-  otherEntitiesOutsideUAE,
-  otherEntitiesInUAE
-}) => {
+export const CompanyBusinessRelationshipsComponent = ({ handleContinue }) => {
   const classes = useStyles();
 
-  function getIsAddButtonDisabled(limit, items, ...fields) {
+  const getIsAddButtonDisabled = (limit, items, ...fields) => {
     const lastAddedItem = items[items.length - 1];
     const allFieldsFilled = fields.length
       ? fields.every(item => lastAddedItem[item] !== "")
       : lastAddedItem;
     return items.length >= limit || !allFieldsFilled;
-  }
-
-  function checkboxCallback(value, name, callback) {
-    if (value) {
-      return;
-    }
-    callback(name, prospect.orgKYCDetails[name]);
-  }
-
-  function handleRemoveItem(items, index, prospect) {
-    const dataList = [...items];
-    dataList.splice(index, 1);
-    const path = `prospect.orgKYCDetails.${prospect}`;
-    updateProspect({
-      [path]: [...dataList]
-    });
-  }
-
-  const onSubmit = () => {
-    handleContinue();
   };
 
-  const basisPath = "prospect.orgKYCDetails";
+  const handleCheckboxCallback = (value, name, callback) => {
+    if (!value) {
+      callback(name, prospect.orgKYCDetails[name]);
+    }
+  };
+
+  const handleSubmit = useCallback(() => {
+    handleContinue();
+  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          entitiesInUAE,
-          entitiesOutsideUAE,
-          otherEntitiesInUAE,
-          otherEntitiesOutsideUAE
+          entitiesInUAE: [
+            {
+              companyName: "",
+              emirate: "",
+              tradeLicenseNo: ""
+            }
+          ],
+          entitiesOutsideUAE: [
+            {
+              companyName: "",
+              country: ""
+            }
+          ],
+          otherEntitiesInUAE: false,
+          otherEntitiesOutsideUAE: false
         }}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         validationSchema={companyBranchesAndSubsidiariesSchema}
       >
         {({ values, setFieldValue }) => {
           return (
             <Form>
-              <FieldArray name="entitiesInUAE">
+              <Field isFieldArray name="entitiesInUAE" path="prospect.orgKYCDetails.entitiesInUAE">
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>
@@ -124,7 +109,11 @@ export const CompanyBusinessRelationshipsComponent = ({
                       component={Checkbox}
                       onChange={() => {
                         setFieldValue("otherEntitiesInUAE", !values.otherEntitiesInUAE);
-                        checkboxCallback(values.otherEntitiesInUAE, "entitiesInUAE", setFieldValue);
+                        handleCheckboxCallback(
+                          values.otherEntitiesInUAE,
+                          "entitiesInUAE",
+                          setFieldValue
+                        );
                       }}
                     />
                     {values.otherEntitiesInUAE && (
@@ -135,7 +124,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                               <Grid item sm={12}>
                                 <Field
                                   name={`entitiesInUAE[${index}].companyName`}
-                                  path={`${basisPath}.entitiesInUAE[${index}].companyName`}
                                   label="Company name"
                                   placeholder="Company name"
                                   component={Input}
@@ -149,7 +137,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                               >
                                 <Field
                                   name={`entitiesInUAE[${index}].tradeLicenseNo`}
-                                  path={`${basisPath}.entitiesInUAE[${index}].tradeLicenseNo`}
                                   label="Trade License Number"
                                   placeholder="Trade License Number"
                                   component={Input}
@@ -163,20 +150,14 @@ export const CompanyBusinessRelationshipsComponent = ({
                               >
                                 <Field
                                   options={emirateCityOptions}
-                                  shrink={false}
                                   name={`entitiesInUAE[${index}].emirate`}
-                                  path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
-                                  placeholder="Emirate"
-                                  // label="Emirate"
+                                  label="Emirate"
                                   extractId={option => option.key}
                                   component={CustomSelect}
                                 />
                                 {!!index && (
                                   <RemoveButton
-                                    onClick={() => {
-                                      arrayHelpers.remove(index);
-                                      handleRemoveItem(entitiesInUAE, index, "entitiesInUAE");
-                                    }}
+                                    onClick={() => arrayHelpers.remove(index)}
                                     title="Delete"
                                     className={classes.container}
                                   />
@@ -208,9 +189,13 @@ export const CompanyBusinessRelationshipsComponent = ({
                     )}
                   </>
                 )}
-              </FieldArray>
+              </Field>
               <div className={classes.divider} />
-              <FieldArray name="entitiesOutsideUAE">
+              <Field
+                isFieldArray
+                name="entitiesOutsideUAE"
+                path="prospect.orgKYCDetails.entitiesOutsideUAE"
+              >
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>
@@ -223,7 +208,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                       component={Checkbox}
                       onChange={() => {
                         setFieldValue("otherEntitiesOutsideUAE", !values.otherEntitiesOutsideUAE);
-                        checkboxCallback(
+                        handleCheckboxCallback(
                           values.otherEntitiesOutsideUAE,
                           "entitiesOutsideUAE",
                           setFieldValue
@@ -238,7 +223,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                               <Grid item md={6} sm={12}>
                                 <Field
                                   name={`entitiesOutsideUAE[${index}].companyName`}
-                                  path={`${basisPath}.entitiesOutsideUAE[${index}].companyName`}
                                   label="Company name"
                                   placeholder="Company name"
                                   component={Input}
@@ -252,24 +236,14 @@ export const CompanyBusinessRelationshipsComponent = ({
                               >
                                 <Field
                                   options={countryOptions}
-                                  shrink={false}
                                   name={`entitiesOutsideUAE[${index}].country`}
-                                  path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
-                                  placeholder="Country"
-                                  // label="Country"
+                                  label="Country"
                                   extractId={option => option.key}
                                   component={CustomSelect}
                                 />
                                 {!!index && (
                                   <RemoveButton
-                                    onClick={() => {
-                                      arrayHelpers.remove(index);
-                                      handleRemoveItem(
-                                        entitiesOutsideUAE,
-                                        index,
-                                        "entitiesOutsideUAE"
-                                      );
-                                    }}
+                                    onClick={() => arrayHelpers.remove(index)}
                                     title="Delete"
                                     className={classes.container}
                                   />
@@ -299,7 +273,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                     )}
                   </>
                 )}
-              </FieldArray>
+              </Field>
               <div className={classes.buttonWrapper}>
                 <ContinueButton type="submit" />
               </div>

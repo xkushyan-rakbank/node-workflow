@@ -2,7 +2,7 @@ import { CompanyAnticipatedTransactions } from "./CompanySummarySteps/CompanyAnt
 import { CompanyPreferredMailingAddress } from "./CompanySummarySteps/CompanyPreferredMailingAddress";
 import { CompanyPreferredContactInformation } from "./CompanySummarySteps/CompanyPreferredContactInformation";
 import { CompanyBusinessRelationships } from "./CompanySummarySteps/CompanyBusinessRelationships";
-import { CompanyBranchesAndSubsidiaries } from "./CompanySummarySteps/CompanyBranchesAndSubsidiaries";
+import { CompanyBusinessRelationshipsComponent } from "./CompanySummarySteps/CompanyBranchesAndSubsidiaries";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
@@ -19,7 +19,7 @@ export const finalQuestionsSteps = [
   {
     step: STEP_2,
     title: "Branches and subsidiaries",
-    component: CompanyBranchesAndSubsidiaries
+    component: CompanyBusinessRelationshipsComponent
   },
   {
     step: STEP_3,

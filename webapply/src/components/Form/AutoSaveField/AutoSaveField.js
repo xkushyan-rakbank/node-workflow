@@ -1,13 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useFormikContext, Field, getIn } from "formik";
+import { useFormikContext, Field, FieldArray, getIn } from "formik";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
 
-export const AutoSaveField = ({ name, path, isLoadDefaultValueFromStore = true, ...rest }) => {
+export const AutoSaveField = ({
+  name,
+  path,
+  isLoadDefaultValueFromStore = true,
+  isFieldArray = false,
+  ...rest
+}) => {
   const dispatch = useDispatch();
   const appConfig = useSelector(state => state.appConfig);
   const { values, setFieldError, setFieldValue } = useFormikContext();
@@ -41,5 +47,5 @@ export const AutoSaveField = ({ name, path, isLoadDefaultValueFromStore = true, 
     }
   }, [path, value, dispatch]);
 
-  return <Field name={name} {...rest} />;
+  return isFieldArray ? <FieldArray name={name} {...rest} /> : <Field name={name} {...rest} />;
 };
