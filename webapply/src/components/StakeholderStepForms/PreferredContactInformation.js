@@ -7,29 +7,20 @@ import * as Yup from "yup";
 import { InfoTitle } from "./../Notifications";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
 import { AutoSaveField as Field, CustomSelect, Input, InputGroup } from "../Form";
+import { getInputValueById } from "../../store/selectors/input";
 import { EMAIL_REGEX, PHONE_REGEX } from "../../utils/validation";
 import { countryCodeOptions } from "../../constants/options";
 
-const getPreferredContactInformationSchema = isSignatory =>
-  Yup.object().shape({
-    primaryEmail: Yup.string().when("", {
-      is: isSignatory,
-      then: Yup.string()
-        .required("You need to provide Email address")
-        .matches(EMAIL_REGEX, "This is not a valid Email address")
-    }),
-    primaryMobCountryCode: Yup.string().when("", {
-      is: isSignatory,
-      then: Yup.string().required("Select country code")
-    }),
-    primaryMobileNo: Yup.string().when("", {
-      is: isSignatory,
-      then: Yup.string()
-        .required("You need to provide mobile number")
-        .matches(PHONE_REGEX, "This is not a valid phone")
-    }),
-    primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
-  });
+const preferredContactInformationSchema = Yup.object().shape({
+  primaryEmail: Yup.string()
+    .required("You need to provide Email address")
+    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+  primaryMobCountryCode: Yup.string().required("Select country code"),
+  primaryMobileNo: Yup.string()
+    .required("You need to provide mobile number")
+    .matches(PHONE_REGEX, "This is not a valid phone"),
+  primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+});
 
 const PreferredContactInformationStep = props => {
   const { isSignatory, index, handleContinue } = props;
@@ -43,7 +34,7 @@ const PreferredContactInformationStep = props => {
         primaryPhoneNo: ""
       }}
       onSubmit={handleContinue}
-      validationSchema={() => getPreferredContactInformationSchema(isSignatory)}
+      validationSchema={isSignatory && preferredContactInformationSchema}
     >
       <Form>
         <Grid container spacing={3}>
@@ -111,7 +102,7 @@ const PreferredContactInformationStep = props => {
 };
 
 const mapStateToProps = (state, { index }) => ({
-  isSignatory: true //getInputValueById(state, "SigKycd.isSignatory", [index])
+  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index])
 });
 
 export const PreferredContactInformation = connect(mapStateToProps)(

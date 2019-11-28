@@ -49,8 +49,8 @@ function* createNewStakeholderSaga() {
   const stakeholderId = uniqueId();
   stakeholdersIds.push(stakeholderId);
 
-  // const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
-  // config.prospect.signatoryInfo.push(signatoryInfoModel);
+  const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
+  config.prospect.signatoryInfo.push(signatoryInfoModel);
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
 
   yield put(updateStakeholdersIds(stakeholdersIds));

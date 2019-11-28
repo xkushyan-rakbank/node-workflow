@@ -14,8 +14,8 @@ import {
   UPDATE_ACTION_TYPE,
   UPDATE_VIEW_ID,
   DISPLAY_SCREEN_BASED_ON_VIEW_ID,
-  UPDATE_SAVE_TYPE
-  // saveProspectModel
+  UPDATE_SAVE_TYPE,
+  saveProspectModel
 } from "../actions/appConfig";
 import { config } from "../../api/apiClient";
 import { history } from "./..";
@@ -51,18 +51,16 @@ function* receiveAppConfigSaga() {
       response = yield call(config.load, null, segment);
     }
 
-    // const newConfig = cloneDeep(response.data);
-    // const prospectModel = cloneDeep(newConfig.prospect);
-    // if (newConfig.prospect) {
-    //   newConfig.prospect.signatoryInfo = [];
-    // }
+    const newConfig = cloneDeep(response.data);
+    const prospectModel = cloneDeep(newConfig.prospect);
+    if (newConfig.prospect) {
+      newConfig.prospect.signatoryInfo = [];
+    }
 
-    // yield put(saveProspectModel(prospectModel));
-    // yield put(receiveAppConfigSuccess(newConfig));
-    yield put(receiveAppConfigSuccess(response.data));
+    yield put(saveProspectModel(prospectModel));
+    yield put(receiveAppConfigSuccess(newConfig));
     yield put(updateProspect(applicationInfoFields));
-    // yield put(sendProspectToAPISuccess(newConfig.prospect));
-    yield put(sendProspectToAPISuccess(response.data.prospect));
+    yield put(sendProspectToAPISuccess(newConfig.prospect));
   } catch (error) {
     yield put(receiveAppConfigFail(error));
   }
