@@ -6,7 +6,6 @@ import { Grid } from "@material-ui/core";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
-import { countryCodeOptions } from "./../../constants/options";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
@@ -27,6 +26,8 @@ const comebackSchema = Yup.object({
     .required("You need to provide mobile number")
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
+
+const UAE_CODE = "971";
 
 const ComeBackLogin = ({
   history,
@@ -68,7 +69,7 @@ const ComeBackLogin = ({
       <Formik
         initialValues={{
           email: "",
-          countryCode: countryCodeOptions[0].value,
+          countryCode: UAE_CODE,
           mobileNo: ""
         }}
         validationSchema={comebackSchema}
@@ -88,9 +89,9 @@ const ComeBackLogin = ({
               <Field
                 name="countryCode"
                 path="prospect.applicantInfo.countryCode"
-                options={countryCodeOptions}
                 component={CustomSelect}
-                extractId={option => option.key}
+                isSelectOptions
+                extractLabel={item => item.displayText}
                 shrink={false}
               />
 
