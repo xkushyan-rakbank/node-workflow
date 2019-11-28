@@ -5,7 +5,6 @@ import { Formik, Form } from "formik";
 
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
-import { countryCodeOptions } from "./../../constants/options";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
@@ -14,6 +13,8 @@ import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { Grid } from "@material-ui/core";
+
+const UAE_CODE = "971";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -31,7 +32,7 @@ const aplicantInfoSchema = Yup.object({
 const initialValues = {
   fullName: "",
   email: "",
-  countryCode: countryCodeOptions[0].value,
+  countryCode: UAE_CODE,
   mobileNo: ""
 };
 
@@ -92,7 +93,8 @@ const ApplicantInfoPage = ({
                 name="countryCode"
                 path="prospect.applicantInfo.countryCode"
                 required
-                options={countryCodeOptions}
+                isSelectOptions
+                extractLabel={item => item.displayText}
                 component={CustomSelect}
                 shrink={false}
               />
