@@ -16,8 +16,6 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
-import { emirateCityOptions } from "../CompanyPreferredMailingAddress/constants";
-import { countryOptions } from "../CompanyBusinessRelationships/constants";
 
 const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
   otherEntitiesInUAE: Yup.boolean(),
@@ -159,12 +157,11 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 className={cx(classes.relative, { [classes.tablet]: !index })}
                               >
                                 <Field
-                                  options={emirateCityOptions}
                                   name={`entitiesInUAE[${index}].emirate`}
                                   path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
-                                  placeholder="Emirate"
+                                  datalistId="emirate"
                                   label="Emirate"
-                                  extractId={option => option.key}
+                                  extractLabel={item => item.displayText}
                                   component={CustomSelect}
                                 />
                                 {!!index && (
@@ -247,11 +244,11 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 className={cx({ [classes.relative]: index !== 0 })}
                               >
                                 <Field
-                                  options={countryOptions}
                                   name={`entitiesOutsideUAE[${index}].country`}
                                   path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
                                   label="Country"
-                                  extractId={option => option.key}
+                                  datalistId="country"
+                                  extractLabel={item => item.displayText}
                                   component={CustomSelect}
                                 />
                                 {!!index && (
