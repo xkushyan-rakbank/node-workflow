@@ -90,5 +90,48 @@ export const useStyles = makeStyles({
   blockAction: {
     marginTop: 40,
     zIndex: "1"
+  }, //list css start
+  wrapper: {
+    marginBottom: "24px",
+    borderRadius: "8px",
+    boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#ffffff",
+    width: "100%"
+  },
+  applicationRow: {
+    borderBottom: "1px solid #e6e6e6",
+    "&:last-of-type": {
+      border: "none"
+    },
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    alignItems: "center",
+    padding: "24px 20px 19px 30px"
+  },
+  companyName: {
+    fontSize: "16px",
+    fontWeight: 600,
+    lineHeight: 1,
+    color: "#263d4c"
+  },
+  listAccount: {
+    fontSize: "12px",
+    lineHeight: 1.33,
+    color: "#86868b",
+    marginTop: 5
+  },
+  listStatus: {
+    borderRadius: "4px",
+    backgroundColor: "#e9e9ed",
+    fontSize: "12px",
+    color: "#373737",
+    padding: "3px 5px"
+  },
+  action: {
+    fontSize: "14px",
+    fontStyle: "italic",
+    lineHeight: 1.14,
+    textAlign: "center",
+    color: "#b5b5bb"
   }
 });
