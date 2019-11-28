@@ -41,7 +41,8 @@ export const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    width: "100%"
+    width: "100%",
+    marginTop: "174px"
   }, //grid css start
   gridContainer: {
     flex: "0 0 50%",
