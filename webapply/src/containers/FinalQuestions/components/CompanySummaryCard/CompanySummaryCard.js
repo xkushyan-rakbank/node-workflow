@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+
 import CompanyCard from "../../../../components/CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -19,71 +20,70 @@ export const CompanySummaryCardComponent = ({
   const [isFilled, setIsFilled] = useState(false);
   const classes = useStyles();
 
-  const handleClickStartHere = () => {
+  useEffect(() => {
+    if (step > finalQuestionsSteps.length) {
+      addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
+
+  const handleClickStartHere = useCallback(() => {
     setIsExpanded(true);
     setIsFilled(true);
     if (switchExpandedMargin) {
       switchExpandedMargin();
     }
+  }, [switchExpandedMargin]);
+
+  const createChangeStepHandler = item => () => {
+    if (step > item.step) {
+      setStep(item.step);
+    }
   };
 
-  const renderControlsContent = () => {
-    if (isExpanded) {
-      return null;
-    }
-    return isFilled ? (
-      <LinkButton
-        clickHandler={() => {
-          setIsExpanded(true);
-          setIsFilled(false);
-        }}
-      />
-    ) : (
-      <ContinueButton
-        label="Start here"
-        classes={{ buttonStyle: classes.buttonStyle }}
-        handleClick={handleClickStartHere}
-      />
-    );
-  };
-
-  const changeStep = item => {
-    if (step <= item.step) {
-      return;
-    }
-    setStep(item.step);
-  };
-
-  function handleContinue() {
-    sendProspectToAPI();
-    setStep(step + 1);
-    if (step === finalQuestionsSteps.length) {
-      addAvailableSignatoryIndex(SIGNATORY_INITIAL_INDEX);
-    }
-  }
+  const handleContinue = useCallback(() => {
+    sendProspectToAPI().then(() => {
+      setStep(step + 1);
+    });
+  }, [sendProspectToAPI, step]);
 
   return (
-    <CompanyCard companyName={companyName} controls={renderControlsContent()}>
+    <CompanyCard
+      companyName={companyName}
+      controls={
+        !isExpanded &&
+        (isFilled ? (
+          <LinkButton
+            clickHandler={() => {
+              setIsExpanded(true);
+              setIsFilled(false);
+            }}
+          />
+        ) : (
+          <ContinueButton
+            label="Start here"
+            classes={{ buttonStyle: classes.buttonStyle }}
+            handleClick={handleClickStartHere}
+          />
+        ))
+      }
+    >
       {isExpanded &&
-        finalQuestionsSteps.map(item => {
-          const stepIndex = item.step - 1;
-          const stepForm = finalQuestionsSteps[stepIndex].component;
-          return (
-            <StepComponent
-              index={index}
-              key={item.step}
-              steps={finalQuestionsSteps}
-              step={item.step}
-              title={item.title}
-              infoTitle={item.infoTitle}
-              isActiveStep={step === item.step}
-              isFilled={step > item.step}
-              clickHandler={() => changeStep(item)}
-              handleContinue={handleContinue}
-              stepForm={stepForm}
-            />
-          );
-        })}
+        finalQuestionsSteps.map(item => (
+          <StepComponent
+            index={index}
+            key={item.step}
+            steps={finalQuestionsSteps}
+            step={item.step}
+            title={item.title}
+            infoTitle={item.infoTitle}
+            isActiveStep={step === item.step}
+            isFilled={step > item.step}
+            handleClick={createChangeStepHandler(item)}
+            handleContinue={handleContinue}
+            stepForm={item.component}
+          />
+        ))}
     </CompanyCard>
   );
 };

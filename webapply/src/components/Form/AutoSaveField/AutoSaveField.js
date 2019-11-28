@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormikContext, Field, getIn } from "formik";
 import get from "lodash/get";
@@ -6,10 +6,19 @@ import isEqual from "lodash/isEqual";
 
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
+import { getUiConfig } from "../../../store/selectors/appConfig";
 
-export const AutoSaveField = ({ name, path, isLoadDefaultValueFromStore = true, ...rest }) => {
+export const AutoSaveField = ({
+  name,
+  path,
+  isLoadDefaultValueFromStore = true,
+  datalistId,
+  filterOptions = () => true,
+  ...rest
+}) => {
   const dispatch = useDispatch();
   const appConfig = useSelector(state => state.appConfig);
+  const uiConfig = useSelector(getUiConfig);
   const { values, setFieldError, setFieldValue } = useFormikContext();
   const value = getIn(values, name);
   const serverValidationError = useSelector(state => getInputServerValidityByPath(state, path));
@@ -41,5 +50,13 @@ export const AutoSaveField = ({ name, path, isLoadDefaultValueFromStore = true, 
     }
   }, [path, value, dispatch]);
 
-  return <Field name={name} {...rest} />;
+  const options = useMemo(() => {
+    if (path && datalistId) {
+      const fieldConfig = Object.values(uiConfig).find(item => item.datalistId === datalistId);
+
+      return get(fieldConfig, "datalist", []).filter(filterOptions);
+    }
+  }, [datalistId, uiConfig]);
+
+  return <Field name={name} options={options} {...rest} />;
 };
