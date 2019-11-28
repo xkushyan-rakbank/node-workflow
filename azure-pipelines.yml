@@ -113,7 +113,7 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapplyserver/*.war",
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
                     "target": "onboarding/$(Build.BuildNumber)/$(Build.SourceBranchName)/webapplyServer/"
                 }
               ]
@@ -171,7 +171,7 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/document_uploader/*.war",
+                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
                     "target": "onboarding/$(Build.BuildNumber)/$(Build.SourceBranchName)/document_uploader/"
                 }
               ]
