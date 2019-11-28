@@ -22,7 +22,7 @@ export const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    "& img": {
+    "& svg": {
       width: "24px"
     }
   },
