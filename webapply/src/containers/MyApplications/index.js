@@ -16,11 +16,11 @@ import { getSearchResult } from "./../../store/selectors/searchProspect";
 
 import { useStyles } from "./styled";
 
-const ButtonWithIcon = ({ iconName, iconSelected, typeView, selectedView, handleClick }) => {
+const ButtonWithIcon = ({ iconSelected, typeView, selectedView, handleClick }) => {
   const isSelected = selectedView === typeView;
   return (
     <button className={cx({ selected: isSelected })} onClick={() => handleClick(typeView)}>
-      <Icon name={isSelected ? iconName : iconSelected} />
+      <Icon name={iconSelected} />
     </button>
   );
 };
@@ -51,14 +51,12 @@ const MyApplications = ({ searchResults, searchApplications, inputParam }) => {
         </Typography>
         <Box classes={{ root: classes.rootChangeViewContainer }}>
           <ButtonWithIcon
-            iconName={ICONS.list}
             iconSelected={ICONS.listGray}
             typeView="list"
             selectedView={selectedView}
             handleClick={handleChangeView}
           />
           <ButtonWithIcon
-            iconName={ICONS.gridWhite}
             iconSelected={ICONS.grid}
             typeView="grid"
             selectedView={selectedView}

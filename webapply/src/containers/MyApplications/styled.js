@@ -20,6 +20,9 @@ export const useStyles = makeStyles({
       "&.selected": {
         backgroundColor: "#000"
       },
+      "&.selected svg path": {
+        fill: "#ffffff"
+      },
       "&:hover": {
         cursor: "pointer"
       }
