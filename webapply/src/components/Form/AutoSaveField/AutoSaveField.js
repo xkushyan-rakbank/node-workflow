@@ -12,7 +12,7 @@ export const AutoSaveField = ({
   name,
   path,
   isLoadDefaultValueFromStore = true,
-  isSelectOptions = false,
+  datalistId = false,
   filterOptions = () => true,
   ...rest
 }) => {
@@ -51,12 +51,12 @@ export const AutoSaveField = ({
   }, [path, value, dispatch]);
 
   const options = useMemo(() => {
-    if (path && isSelectOptions) {
-      const fieldConfig = Object.values(uiConfig).find(item => item.name === path);
+    if (path && datalistId) {
+      const fieldConfig = Object.values(uiConfig).find(item => item.datalistId === datalistId);
 
       return get(fieldConfig, "datalist", []).filter(filterOptions);
     }
-  }, [isSelectOptions, uiConfig]);
+  }, [datalistId, uiConfig]);
 
   return <Field name={name} options={options} {...rest} />;
 };
