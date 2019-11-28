@@ -42,6 +42,10 @@ const LoginPage = ({ loginInfoForm, setToken, setVerified, verifyToken, recaptch
   }, [setVerified]);
 
   useEffect(() => {
+    const passwordInput = document.getElementById("passwordField");
+    passwordInput.onpaste = function(e) {
+      e.preventDefault();
+    };
     if (recaptchaToken) {
       verifyToken();
     }
@@ -71,6 +75,7 @@ const LoginPage = ({ loginInfoForm, setToken, setVerified, verifyToken, recaptch
               path="login.password"
               label="Your Password"
               placeholder="Your Password"
+              id="passwordField"
               component={Input}
             />
 
