@@ -19,14 +19,11 @@ export const SignatorySummaryCardComponent = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
 
-  const changeStep = useCallback(
-    item => {
-      if (step > item.step) {
-        setStep(item.step);
-      }
-    },
-    [setStep, step]
-  );
+  const createChangeStepHandler = item => () => {
+    if (step > item.step) {
+      setStep(item.step);
+    }
+  };
 
   const handleContinue = useCallback(() => {
     sendProspectToAPI().then(() => {
@@ -80,7 +77,7 @@ export const SignatorySummaryCardComponent = ({
             title={item.title}
             isActiveStep={step === item.step}
             isFilled={step > item.step}
-            handleClick={() => changeStep(item)}
+            handleClick={createChangeStepHandler(item)}
             handleContinue={handleContinue}
             stepForm={item.component}
           />

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+
 import CompanyCard from "../../../../components/CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -19,35 +20,15 @@ export const CompanySummaryCardComponent = ({
   const [isFilled, setIsFilled] = useState(false);
   const classes = useStyles();
 
-  const handleClickStartHere = () => {
+  const handleClickStartHere = useCallback(() => {
     setIsExpanded(true);
     setIsFilled(true);
     if (switchExpandedMargin) {
       switchExpandedMargin();
     }
-  };
+  }, []);
 
-  const renderControlsContent = () => {
-    if (isExpanded) {
-      return null;
-    }
-    return isFilled ? (
-      <LinkButton
-        clickHandler={() => {
-          setIsExpanded(true);
-          setIsFilled(false);
-        }}
-      />
-    ) : (
-      <ContinueButton
-        label="Start here"
-        classes={{ buttonStyle: classes.buttonStyle }}
-        handleClick={handleClickStartHere}
-      />
-    );
-  };
-
-  const changeStep = item => {
+  const createChangeStepHandler = item => () => {
     if (step > item.step) {
       setStep(item.step);
     }
@@ -63,7 +44,26 @@ export const CompanySummaryCardComponent = ({
   }, [sendProspectToAPI, step, addAvailableSignatoryIndex]);
 
   return (
-    <CompanyCard companyName={companyName} controls={renderControlsContent()}>
+    <CompanyCard
+      companyName={companyName}
+      controls={
+        !isExpanded &&
+        (isFilled ? (
+          <LinkButton
+            clickHandler={() => {
+              setIsExpanded(true);
+              setIsFilled(false);
+            }}
+          />
+        ) : (
+          <ContinueButton
+            label="Start here"
+            classes={{ buttonStyle: classes.buttonStyle }}
+            handleClick={handleClickStartHere}
+          />
+        ))
+      }
+    >
       {isExpanded &&
         finalQuestionsSteps.map(item => (
           <StepComponent
@@ -75,7 +75,7 @@ export const CompanySummaryCardComponent = ({
             infoTitle={item.infoTitle}
             isActiveStep={step === item.step}
             isFilled={step > item.step}
-            handleClick={() => changeStep(item)}
+            handleClick={createChangeStepHandler(item)}
             handleContinue={handleContinue}
             stepForm={item.component}
           />
