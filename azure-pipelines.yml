@@ -46,12 +46,12 @@ jobs:
         displayName: 'Stage Artifacts'
         inputs:
           SourceFolder: webapply/build/
-          TargetFolder: '$(build.artifactstagingdirectory)/webapply'
+          TargetFolder: '$(build.artifactstagingdirectory)/$(Build.SourceBranchName)/webapply'
       - task: ArchiveFiles@2
         displayName: 'Archive web'
         inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/webapply/'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/webapply/webapply.zip'
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapply/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapply/webapply.zip'
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
@@ -62,8 +62,8 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/$(Build.BuildNumber)/webapply/"
+                    "pattern": "$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapply/*.zip",
+                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
@@ -76,7 +76,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Build Artifacts'
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapply'
           ArtifactName: 'Webapply'
     - job: WebapplyServer
       pool:
@@ -97,12 +97,12 @@ jobs:
         displayName: 'Stage Artifacts'
         inputs:
           SourceFolder: webapplyserver/target/
-          TargetFolder: '$(build.artifactstagingdirectory)/webapplyserver'
+          TargetFolder: '$(build.artifactstagingdirectory)/$(Build.SourceBranchName)/webapplyserver'
       - task: ArchiveFiles@2
         displayName: 'Archive web'
         inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/webapplyserver/'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/webapplyserver/webapplyServer.war'
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapplyserver/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapplyserver/webapplyServer.war'
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
@@ -113,8 +113,8 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
-                    "target": "onboarding/$(Build.BuildNumber)/webapplyServer/"
+                    "pattern": "$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapplyserver/*.war",
+                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/webapplyServer/"
                 }
               ]
             }
@@ -127,7 +127,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Build Artifacts'
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/webapplyserver'
           ArtifactName: 'WebapplyServer'
           
     - job: document_uploader
@@ -155,12 +155,12 @@ jobs:
         displayName: 'Stage Artifacts'
         inputs:
           SourceFolder: document_uploader/target/
-          TargetFolder: '$(build.artifactstagingdirectory)/document_uploader'
+          TargetFolder: '$(build.artifactstagingdirectory)/$(Build.SourceBranchName)/document_uploader'
       - task: ArchiveFiles@2
         displayName: 'Archive Document uploader file'
         inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/document_uploader/'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/document-uploader/*.war'
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/document_uploader/'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/document-uploader/*.war'
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
@@ -171,8 +171,8 @@ jobs:
             {
               "files": [
                 {
-                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
-                    "target": "onboarding/$(Build.BuildNumber)/document_uploader/"
+                    "pattern": "$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/document_uploader/*.war",
+                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/document_uploader/"
                 }
               ]
             }
@@ -185,7 +185,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Build Artifacts'
         inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/document_uploader'
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.SourceBranchName)/document_uploader'
           ArtifactName: 'document_uploader'
     - job: Wiremock
       pool:
