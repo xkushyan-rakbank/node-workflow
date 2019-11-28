@@ -261,10 +261,10 @@
 			},
 			"contactDetails": {
 				"primaryMobileNo": "",
-				"primaryMobCountryCode": "",
+				"primaryMobCountryCode": "UAE",
 				"primaryEmail": "",
 				"primaryPhoneNo": "",
-				"primaryPhoneCountryCode": "",
+				"primaryPhoneCountryCode": "UAE",
 				"fax": "",
 				"faxCountryCode": "",
 				"secondaryPhoneNo": "",
