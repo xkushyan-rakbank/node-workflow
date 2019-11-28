@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { sendProspectToAPI } from "../../../../store/actions/sendProspectToAPI";
+import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import { SignatorySummaryCardComponent } from "./SignatorySummaryCard";
 
@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI
+  sendProspectToAPI: sendProspectToAPIPromisify
 };
 
 export const SignatorySummaryCard = connect(

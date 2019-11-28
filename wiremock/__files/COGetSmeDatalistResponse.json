@@ -1,27 +1,27 @@
 {
   "countryCode": [
     {
-      "code": "UAE",
+      "code": "971",
       "key": "971",
-      "value": "UAE",
+      "value": "971",
       "displayText": "+971"
     },
     {
-      "code": "EUR",
+      "code": "992",
       "key": "992",
-      "value": "EUR",
+      "value": "992",
       "displayText": "+992"
     },
     {
-      "code": "UA",
+      "code": "380",
       "key": "380",
-      "value": "UA",
+      "value": "380",
       "displayText": "+380"
     },
     {
-      "code": "GB",
+      "code": "391",
       "key": "391",
-      "value": "GB",
+      "value": "391",
       "displayText": "+391"
     }
   ],
