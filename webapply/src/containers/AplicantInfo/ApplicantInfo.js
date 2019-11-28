@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
@@ -35,8 +35,18 @@ const initialValues = {
   mobileNo: ""
 };
 
-const ApplicantInfoPage = ({ applicantInfoForm, setToken, setVerified, reCaptchaToken }) => {
-  const onSubmit = values => applicantInfoForm(values);
+const ApplicantInfoPage = ({
+  applicantInfoForm,
+  receiveAppConfig,
+  setToken,
+  setVerified,
+  reCaptchaToken
+}) => {
+  useEffect(() => {
+    receiveAppConfig();
+  }, [receiveAppConfig]);
+
+  const onSubmit = useCallback(values => applicantInfoForm(values), [applicantInfoForm]);
   const handleReCaptchaVerify = useCallback(
     token => {
       setToken(token);
