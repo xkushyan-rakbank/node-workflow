@@ -19,10 +19,7 @@ import java.net.URISyntaxException;
 
 import javax.annotation.PostConstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.emc.object.s3.S3Client;
@@ -30,6 +27,7 @@ import com.emc.object.s3.S3Config;
 import com.emc.object.s3.jersey.S3JerseyClient;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import ae.rakbank.documentuploader.commons.EnvUtil;
 import ae.rakbank.documentuploader.helpers.FileHelper;
 
 /**
@@ -38,16 +36,9 @@ import ae.rakbank.documentuploader.helpers.FileHelper;
  */
 @Component
 public class ECSS3Factory {
-	private static final Logger logger = LoggerFactory.getLogger(ECSS3Factory.class);
 
 	@Autowired
 	FileHelper fileHelper;
-
-	@Value("${webapply.dir}")
-	private String webApplyDir;
-
-	@Value("${webapply.env}")
-	private String webApplyEnv;
 
 	/* the S3 access key id - this is equivalent to the user */
 	private String s3AccessKeyId = "";
@@ -71,16 +62,12 @@ public class ECSS3Factory {
 
 	@PostConstruct
 	public void initAppState() {
-		logger.info("Configuring initial state");
-		logger.info("WEBAPPLY_DIR = " + webApplyDir);
-		logger.info("WEBAPPLY_ENV = " + webApplyEnv);
-
 		JsonNode docUploadConfig = fileHelper.getDocUploadConfigJson();
-		JsonNode otherConfigs = docUploadConfig.get("OtherConfigs").get(webApplyEnv);
+		JsonNode otherConfigs = docUploadConfig.get("OtherConfigs").get(EnvUtil.getEnv());
 		s3AccessKeyId = otherConfigs.get("s3AccessKeyId").asText();
 		s3SecretKey = otherConfigs.get("s3SecretKey").asText();
 		s3Bucket = otherConfigs.get("s3Bucket").asText();
-		s3Url = docUploadConfig.get("BaseURLs").get(webApplyEnv).get("s3BaseUrl").asText()
+		s3Url = docUploadConfig.get("BaseURLs").get(EnvUtil.getEnv()).get("s3BaseUrl").asText()
 				+ otherConfigs.get("s3Uri").asText();
 	}
 

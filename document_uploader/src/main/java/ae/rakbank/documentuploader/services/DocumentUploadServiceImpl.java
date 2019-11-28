@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import ae.rakbank.documentuploader.commons.EnvironmentUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,17 +19,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import ae.rakbank.documentuploader.commons.AppConfigProps;
 import ae.rakbank.documentuploader.commons.DocumentUploadException;
+import ae.rakbank.documentuploader.commons.EnvUtil;
 
 @Service
-public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.services.DocumentUploadService {
+public class DocumentUploadServiceImpl implements DocumentUploadService {
 
 	private static final Logger logger = LoggerFactory.getLogger(DocumentUploadServiceImpl.class);
 
-	private Path uploadsDir;
+	private final Path uploadsDir;
 
 	@Autowired
-	private EnvironmentUtil environmentUtil;
-
+	public DocumentUploadServiceImpl(AppConfigProps properties) {
+		this.uploadsDir = Paths.get(EnvUtil.getUploadDir());
+	}
 
 	@Override
 	public void store(MultipartFile file, JsonNode fileInfo, String prospectId)
@@ -47,9 +48,6 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
 					"Cannot store file with relative path outside current directory " + originalFilename);
 		}
 		try (InputStream inputStream = file.getInputStream()) {
-			logger.info("Initialiaing uploads dir: " + environmentUtil.getUploadDir());
-			uploadsDir = Paths.get(environmentUtil.getUploadDir());
-
 			Files.copy(inputStream, this.uploadsDir.resolve(documentKey), StandardCopyOption.REPLACE_EXISTING);
 			logger.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId,
 					this.uploadsDir.resolve(documentKey)));
