@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import uniqueId from "lodash/uniqueId";
 import cx from "classnames";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
@@ -80,8 +81,8 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          entitiesInUAE,
-          entitiesOutsideUAE,
+          entitiesInUAE: entitiesInUAE.map(item => ({ ...item, id: uniqueId() })),
+          entitiesOutsideUAE: entitiesOutsideUAE.map(item => ({ ...item, id: uniqueId() })),
           otherEntitiesInUAE: false,
           otherEntitiesOutsideUAE: false
         }}
@@ -104,7 +105,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       component={Checkbox}
                       onSelect={() => {
                         if (values.otherEntitiesInUAE) {
-                          setFieldValue("entitiesInUAE", prospect.orgKYCDetails.entitiesInUAE);
+                          setFieldValue(
+                            "entitiesInUAE",
+                            prospect.orgKYCDetails.entitiesInUAE.map(item => ({
+                              ...item,
+                              id: uniqueId()
+                            }))
+                          );
                           updateProspect({
                             "prospect.orgKYCDetails.entitiesInUAE":
                               prospect.orgKYCDetails.entitiesInUAE
@@ -116,7 +123,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       <>
                         <Grid container spacing={3} className={classes.flexContainer}>
                           {values.entitiesInUAE.map((item, index) => (
-                            <React.Fragment key={index}>
+                            <React.Fragment key={item.id}>
                               <Grid item sm={12}>
                                 <Field
                                   name={`entitiesInUAE[${index}].companyName`}
@@ -172,6 +179,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           <AddButton
                             onClick={() =>
                               arrayHelpers.insert(values.entitiesInUAE.length, {
+                                id: uniqueId(),
                                 companyName: "",
                                 tradeLicenseNo: "",
                                 emirate: ""
@@ -208,7 +216,10 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                         if (values.otherEntitiesOutsideUAE) {
                           setFieldValue(
                             "entitiesOutsideUAE",
-                            prospect.orgKYCDetails.entitiesOutsideUAE
+                            prospect.orgKYCDetails.entitiesOutsideUAE.map(item => ({
+                              ...item,
+                              id: uniqueId()
+                            }))
                           );
                           updateProspect({
                             "prospect.orgKYCDetails.entitiesOutsideUAE":
@@ -221,7 +232,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       <>
                         <Grid container spacing={3} className={classes.flexContainer}>
                           {values.entitiesOutsideUAE.map((item, index) => (
-                            <React.Fragment key={index}>
+                            <React.Fragment key={item.id}>
                               <Grid item md={6} sm={12}>
                                 <Field
                                   name={`entitiesOutsideUAE[${index}].companyName`}
@@ -267,6 +278,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           <AddButton
                             onClick={() =>
                               arrayHelpers.insert(values.entitiesOutsideUAE.length, {
+                                id: uniqueId(),
                                 companyName: "",
                                 country: ""
                               })
