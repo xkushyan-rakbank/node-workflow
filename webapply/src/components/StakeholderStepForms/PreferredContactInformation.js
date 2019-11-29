@@ -53,10 +53,11 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
             <Field
               name="primaryMobCountryCode"
               path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
-              options={countryCodeOptions}
+              // options={countryCodeOptions}
               component={CustomSelect}
               shrink={false}
               disabled={!isSignatory}
+              datalistId="countryCode"
             />
 
             <Field

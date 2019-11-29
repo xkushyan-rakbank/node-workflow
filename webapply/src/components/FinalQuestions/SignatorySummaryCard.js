@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import get from "lodash/get";
-import CompanyStakeholderCard from "../CompanyStakeholderCard";
+import { FormCard } from "../FormCard/FormCard";
 import { LinkButton } from "../Buttons/LinkButton";
 import StepComponent from "../../components/StepComponent";
 import { signatoriesSteps } from "../../constants";
@@ -141,7 +141,7 @@ class SignatorySummaryCard extends Component {
     const { index, signatory } = this.props;
     const { step, isContinueDisabled } = this.state;
     return (
-      <CompanyStakeholderCard
+      <FormCard
         className={this.props.classes.card}
         firstName={signatory.firstName}
         lastName={signatory.lastName ? signatory.lastName : signatory.fullName}
@@ -169,7 +169,7 @@ class SignatorySummaryCard extends Component {
               />
             );
           })}
-      </CompanyStakeholderCard>
+      </FormCard>
     );
   }
 }

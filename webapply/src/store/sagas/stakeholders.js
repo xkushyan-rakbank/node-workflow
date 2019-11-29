@@ -31,7 +31,9 @@ function* addNewStakeholderSaga() {
     yield put(createNewStakeholder());
   } else {
     yield put(openConfirmDialog());
+    yield take("CONFIRM_HANDLER");
     const { result } = yield take("CONFIRM_HANDLER");
+    console.log(result);
     const value = JSON.parse(result.currentTarget.value);
     if (value) {
       yield put(resetProspect());
@@ -66,14 +68,14 @@ function* editStakeholderSaga(action) {
     yield put(changeEditableStakeholder(action.index));
   } else {
     yield put(openConfirmDialog());
-    const { result } = yield take("CONFIRM_HANDLER");
-    const value = JSON.parse(result.currentTarget.value);
-    if (value) {
-      yield put(resetProspect());
-      yield put(changeEditableStakeholder(action.index));
-    } else {
-      yield put(closeConfirmDialog());
-    }
+    // const { result } = yield take("CONFIRM_HANDLER");
+    // const value = JSON.parse(result.currentTarget.value);
+    // if (value) {
+    yield put(resetProspect());
+    yield put(changeEditableStakeholder(action.index));
+    // } else {
+    //   yield put(closeConfirmDialog());
+    // }
   }
 }
 
