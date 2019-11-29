@@ -33,8 +33,8 @@ function* addNewStakeholderSaga() {
     yield put(openConfirmDialog());
     yield take("CONFIRM_HANDLER");
     const { result } = yield take("CONFIRM_HANDLER");
-    console.log(result);
     const value = JSON.parse(result.currentTarget.value);
+
     if (value) {
       yield put(resetProspect());
       yield put(createNewStakeholder());
