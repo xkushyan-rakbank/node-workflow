@@ -1,5 +1,7 @@
 import { prospect } from "../../../../../../constants/config";
 
+export const INITIAL_ARRAY_INDEX = 0;
+
 export const limits = {
   CUSTOMER_COUNT: 5,
   SUPPLIER_COUNT: 5,
