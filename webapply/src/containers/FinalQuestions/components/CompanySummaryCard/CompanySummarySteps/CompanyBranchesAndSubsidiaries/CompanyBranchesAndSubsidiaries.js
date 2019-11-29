@@ -56,30 +56,19 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
   const classes = useStyles();
 
   const checkIsAddButtonDisabled = (limit, items, ...fields) => {
-    const lastAddedItem = items[items.length - 1];
-    const allFieldsFilled = fields.length
-      ? fields.every(item => lastAddedItem[item] !== "")
-      : lastAddedItem;
-    return items.length >= limit || !allFieldsFilled;
-  };
-
-  const handleCheckboxCallback = (value, name, callback) => {
-    if (!value) {
-      callback(name, prospect.orgKYCDetails[name]);
+    if (!items.length) {
+      return false;
     }
+    const lastAddedItem = items[items.length - 1];
+    return items.length === limit || fields.some(item => lastAddedItem[item] === "");
   };
 
-  const handleRemoveField = useCallback(
-    (items, index, prospect) => {
-      const dataList = [...items];
-      dataList.splice(index, 1);
-      const path = `prospect.orgKYCDetails.${prospect}`;
-      updateProspect({
-        [path]: [...dataList]
-      });
-    },
-    [updateProspect]
-  );
+  const handleRemoveField = (items, index, prospect) => {
+    const dataList = [...items];
+    dataList.splice(index, 1);
+    const path = `prospect.orgKYCDetails.${prospect}`;
+    updateProspect({ [path]: [...dataList] });
+  };
 
   const handleSubmit = useCallback(() => {
     handleContinue();
@@ -113,13 +102,14 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       path="prospect.orgKYCDetails.otherEntitiesInUAE"
                       label="The company has branches, subsidiaries or other companies in the UAE"
                       component={Checkbox}
-                      onChange={() => {
-                        setFieldValue("otherEntitiesInUAE", !values.otherEntitiesInUAE);
-                        handleCheckboxCallback(
-                          values.otherEntitiesInUAE,
-                          "entitiesInUAE",
-                          setFieldValue
-                        );
+                      onSelect={() => {
+                        if (values.otherEntitiesInUAE) {
+                          setFieldValue("entitiesInUAE", prospect.orgKYCDetails.entitiesInUAE);
+                          updateProspect({
+                            "prospect.orgKYCDetails.entitiesInUAE":
+                              prospect.orgKYCDetails.entitiesInUAE
+                          });
+                        }
                       }}
                     />
                     {values.otherEntitiesInUAE && (
@@ -214,13 +204,17 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       path="prospect.orgKYCDetails.otherEntitiesOutsideUAE"
                       label="The company has branches, subsidiaries or other companies outside the UAE"
                       component={Checkbox}
-                      onChange={() => {
-                        setFieldValue("otherEntitiesOutsideUAE", !values.otherEntitiesOutsideUAE);
-                        handleCheckboxCallback(
-                          values.otherEntitiesOutsideUAE,
-                          "entitiesOutsideUAE",
-                          setFieldValue
-                        );
+                      onSelect={() => {
+                        if (values.otherEntitiesOutsideUAE) {
+                          setFieldValue(
+                            "entitiesOutsideUAE",
+                            prospect.orgKYCDetails.entitiesOutsideUAE
+                          );
+                          updateProspect({
+                            "prospect.orgKYCDetails.entitiesOutsideUAE":
+                              prospect.orgKYCDetails.entitiesOutsideUAE
+                          });
+                        }
                       }}
                     />
                     {values.otherEntitiesOutsideUAE && (
@@ -241,7 +235,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 item
                                 md={6}
                                 sm={12}
-                                className={cx({ [classes.relative]: index !== 0 })}
+                                className={cx({ [classes.relative]: !!index })}
                               >
                                 <Field
                                   name={`entitiesOutsideUAE[${index}].country`}
