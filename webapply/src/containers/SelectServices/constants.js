@@ -8,6 +8,10 @@ import signingPreferences from "../../assets/icons/signing_preferences.png";
 import channels from "../../assets/icons/channels.png";
 import valueAddedServices from "../../assets/icons/value_added_services.png";
 
+export const STEP_1 = 1;
+export const STEP_2 = 2;
+export const STEP_3 = 3;
+export const STEP_4 = 4;
 export const INPUT_ID_INDEX = [0];
 export const INPUT_ID_INDEXES = [0, 0];
 export const GO_TO_SUBMIT_STEP = 5;

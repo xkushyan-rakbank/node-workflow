@@ -23,8 +23,8 @@ export const ChannelsComponent = ({ stakeholders, goToNext, ...props }) => {
       initialValues={{
         debitCardApplied: "",
         chequeBookApplied: "",
-        eStatements: true,
-        mailStatements: ""
+        eStatements: false,
+        mailStatements: false
       }}
       onSubmit={goToNext}
     >

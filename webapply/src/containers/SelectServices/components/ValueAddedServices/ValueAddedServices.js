@@ -1,17 +1,16 @@
 import React from "react";
 import cx from "classnames";
 
-import { getUrlReadMore } from "../../../../components/ExpandedOptionsCards/ExpandedOptionsCards";
+import { getUrlReadMore } from "./ExpandedOptionsCards/ExpandedOptionsCards";
 import { ExpandedDetailedOptionsCard } from "./ExpandedOptionsCards/ExpandedDetailedOptionsCard";
-import { mockData } from "../../../../components/ExpandedOptionsCards/constants";
-import { getSelectedTypeCurrency } from "../../../../utils/SelectServices";
+import { mockData } from "./ExpandedOptionsCards/constants";
 import { accountsNames } from "../../../../constants/index";
 import { getButtonText } from "./utils";
 import { useStyles } from "./styled";
 
 export const ValueAddedServicesComponent = props => {
   const { accountType, readMoreUrls, rakValuePackage, accountCurrencies, updateProspect } = props;
-  const { isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(accountCurrencies);
+  const { isSelectOnlyForeignCurrency } = accountCurrencies;
   const classes = useStyles();
 
   const handleSelectValue = selectedService => {

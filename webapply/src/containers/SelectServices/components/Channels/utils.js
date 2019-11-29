@@ -1,5 +1,3 @@
-import { getSelectedTypeCurrency } from "../../../../utils/SelectServices";
-
 const updateValueCheckBox = (name, prevValue, newValue, updateProspect) => {
   if (newValue !== prevValue) {
     updateProspect({ [name]: newValue });
@@ -15,9 +13,7 @@ export const getStatusChequeBookApplied = props => {
     updateProspect
   } = props;
 
-  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
-    accountCurrencies
-  );
+  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = accountCurrencies;
 
   const mobCountryCode = "971";
   const basedMobileNumberForCompany = new Set([primaryMobCountryCode, primaryPhoneCountryCode]);
@@ -47,9 +43,7 @@ export const getStatusDebitCardApplied = props => {
 
   const accountSigningTypeAnyOfUs = accountSigningType === selectedSigningTypesAny;
 
-  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
-    accountCurrencies
-  );
+  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = accountCurrencies;
 
   if (isSelectOnlyForeignCurrency || !accountSigningTypeAnyOfUs) {
     updateValueCheckBox(name, value, false, updateProspect);

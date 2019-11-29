@@ -1,24 +1,11 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
-import { compose } from "redux";
 
-import { ExpandedDetailedOptionsCard } from "./ExpandedDetailedOptionsCard";
-import { mockData } from "./constants";
-import { getUrlsReadMore } from "../../../../../store/selectors/appConfig";
 import { getSelectedAccountInfo } from "../../../../../store/selectors/selectedAccountInfo";
-
-const style = {
-  root: {
-    display: "flex",
-    width: "100%",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    "@media only screen and (max-width: 850px)": {
-      justifyContent: "flex-start"
-    }
-  }
-};
+import { ExpandedDetailedOptionsCard } from "./ExpandedDetailedOptionsCard";
+import { getUrlsReadMore } from "../../../../../store/selectors/appConfig";
+import { mockData } from "./constants";
+import { useStyles } from "./styled";
 
 export const getUrlReadMore = (urls, selectedAccountInfo, value) => {
   const {
@@ -36,11 +23,11 @@ export const getUrlReadMore = (urls, selectedAccountInfo, value) => {
   return valueType ? rakValuePlusReadMoreUrl : rakValueMaxReadMoreUrl;
 };
 
-const ExpandedOptionsCards = ({ classes, accountType, ...props }) => {
+const ExpandedOptionsCardsComponent = ({ accountType, ...props }) => {
   const { readMoreUrls, selectedAccountInfo } = props;
-
+  const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div className={classes.cardsRoot}>
       {mockData.map(({ optionList, isIncluded, cost, value }) => (
         <ExpandedDetailedOptionsCard
           key={value}
@@ -61,7 +48,4 @@ const mapStateToProps = state => ({
   selectedAccountInfo: getSelectedAccountInfo(state)
 });
 
-export default compose(
-  withStyles(style),
-  connect(mapStateToProps)
-)(ExpandedOptionsCards);
+export const ExpandedOptionsCards = connect(mapStateToProps)(ExpandedOptionsCardsComponent);

@@ -1,9 +1,8 @@
-import { getSelectedTypeCurrency } from "../../../../utils/SelectServices";
 import { accountsNames } from "../../../../constants";
 
 export const getButtonText = ({ _id, options, props }) => {
   const { accountCurrencies, rakValuePackage, accountType } = props;
-  const { isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(accountCurrencies);
+  const { isSelectOnlyForeignCurrency } = accountCurrencies;
   if (isSelectOnlyForeignCurrency) {
     return options.disabledLabelForForeignCurrency;
   }

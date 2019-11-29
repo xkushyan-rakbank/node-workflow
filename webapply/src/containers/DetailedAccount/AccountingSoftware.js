@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
-import ExpandedOptionsCards from "../../components/ExpandedOptionsCards/ExpandedOptionsCards";
+import { ExpandedOptionsCards } from "../SelectServices/components/ValueAddedServices/ExpandedOptionsCards/ExpandedOptionsCards";
 
 const style = {
   indent: {
