@@ -369,16 +369,20 @@ export const CompanyBusinessRelationshipsComponent = ({
                       component={Checkbox}
                       onSelect={() => {
                         if (values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist) {
+                          const {
+                            orgKYCDetails: {
+                              otherBankingRelationshipsInfo: { otherBankDetails } = {}
+                            } = {}
+                          } = prospect;
                           setFieldValue(
                             "otherBankingRelationshipsInfo.otherBankDetails",
-                            prospect[bankFieldPath].map(item => ({
+                            otherBankDetails.map(item => ({
                               ...item,
                               id: uniqueId()
                             }))
                           );
                           updateProspect({
-                            "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails":
-                              prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails
+                            "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": otherBankDetails
                           });
                           setFieldTouched(`${bankFieldPath}[${INITIAL_ARRAY_INDEX}]`, false);
                         }
