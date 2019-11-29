@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
@@ -8,70 +8,52 @@ import { ContinueButton } from "../../../../../../components/Buttons/ContinueBut
 import { InfoTitle } from "../../../../../../components/Notifications/index";
 import { useStyles } from "./styled";
 import { EMAIL_REGEX, PHONE_REGEX } from "../../../../../../utils/validation";
-import { UAE_PHONE_CODE } from "./constants";
+import { UAE_PHONE_CODE, FIRST_ARRAY_INDEX } from "./constants";
+
 import {
   CustomSelect,
   Input,
   InputGroup,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { countryCodeOptions } from "../../../../../../constants/options";
 
 const companyPreferredContactInformationSchema = Yup.object().shape({
-  organizationInfo: Yup.object().shape({
-    contactDetails: Yup.object().shape({
-      primaryMobCountryCode: Yup.string().required("You need to provide code"),
-      primaryMobileNo: Yup.string()
-        .required("You need to provide number")
-        .matches(PHONE_REGEX, "This is not a valid phone"),
-      primaryEmail: Yup.string()
-        .required("You need to provide Email address")
-        .matches(EMAIL_REGEX, "This is not a valid Email address"),
-      primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
-    })
-  })
+  primaryMobCountryCode: Yup.string().required("You need to provide code"),
+  primaryMobileNo: Yup.string()
+    .required("You need to provide number")
+    .matches(PHONE_REGEX, "This is not a valid phone"),
+  primaryEmail: Yup.string()
+    .required("You need to provide Email address")
+    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+  primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
 });
 
 export const CompanyPreferredContactInformationComponent = ({
   chequeBookApplied,
   updateProspect,
-  contactDetails,
+  primaryPhoneNo,
   handleContinue
 }) => {
   const [isExistSecondaryPhoneNumber, setIsExistSecondaryPhoneNumber] = useState(
-    () => !!contactDetails.primaryPhoneNo
+    () => !!primaryPhoneNo
   );
   const classes = useStyles();
 
-  function handleCurrencyCountryChange(value) {
-    if (value !== UAE_PHONE_CODE && chequeBookApplied) {
-      updateProspect({
-        "prospect.accountInfo[0].chequeBookApplied": false
-      });
-    }
-  }
-
-  function handleRemovePrimaryPhone() {
-    setIsExistSecondaryPhoneNumber(false);
-    updateProspect({
-      "prospect.organizationInfo.contactDetails.primaryPhoneNo": false,
-      "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode": UAE_PHONE_CODE
-    });
-  }
-
-  const onSubmit = () => {
+  const handleSubmit = useCallback(() => {
     handleContinue();
-  };
+  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          organizationInfo: {
-            contactDetails
-          }
+          primaryMobCountryCode: UAE_PHONE_CODE,
+          primaryMobileNo: "",
+          primaryEmail: "",
+          primaryPhoneNo: "",
+          primaryPhoneCountryCode: UAE_PHONE_CODE
         }}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         validationSchema={companyPreferredContactInformationSchema}
       >
         {({ setFieldValue }) => {
@@ -81,23 +63,24 @@ export const CompanyPreferredContactInformationComponent = ({
                 <Grid item md={6} sm={12}>
                   <InputGroup>
                     <Field
-                      name="organizationInfo.contactDetails.primaryMobCountryCode"
+                      name="primaryMobCountryCode"
                       path="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
-                      options={countryCodeOptions}
-                      placeholder="Country code"
-                      // label="Country code"
+                      datalistId="countryCode"
+                      extractLabel={item => item.displayText}
+                      shrink={false}
                       component={CustomSelect}
                       onChange={e => {
-                        setFieldValue(
-                          "organizationInfo.contactDetails.primaryMobCountryCode",
-                          e.target.value
-                        );
-                        handleCurrencyCountryChange(e.target.value);
+                        setFieldValue("primaryMobCountryCode", e.target.value);
+                        if (e.target.value !== UAE_PHONE_CODE && chequeBookApplied) {
+                          console.log("need");
+                          updateProspect({
+                            [`prospect.accountInfo[${FIRST_ARRAY_INDEX}].chequeBookApplied`]: false
+                          });
+                        }
                       }}
-                      shrink={false}
                     />
                     <Field
-                      name="organizationInfo.contactDetails.primaryMobileNo"
+                      name="primaryMobileNo"
                       path="prospect.organizationInfo.contactDetails.primaryMobileNo"
                       label="Mobile number"
                       placeholder="Mobile number"
@@ -108,16 +91,15 @@ export const CompanyPreferredContactInformationComponent = ({
                     <div className={classes.relative}>
                       <InputGroup>
                         <Field
-                          name="organizationInfo.contactDetails.primaryPhoneCountryCode"
+                          name="primaryPhoneCountryCode"
                           path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
-                          options={countryCodeOptions}
-                          placeholder="Country code"
-                          // label="Country code"
                           component={CustomSelect}
+                          datalistId="countryCode"
+                          extractLabel={item => item.displayText}
                           shrink={false}
                         />
                         <Field
-                          name="organizationInfo.contactDetails.primaryPhoneNo"
+                          name="primaryPhoneNo"
                           path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
                           label="Mobile number"
                           placeholder="Mobile number"
@@ -126,12 +108,13 @@ export const CompanyPreferredContactInformationComponent = ({
                       </InputGroup>
                       <RemoveButton
                         onClick={() => {
-                          setFieldValue("organizationInfo.contactDetails.primaryPhoneNo", "");
-                          setFieldValue(
-                            "organizationInfo.contactDetails.primaryPhoneCountryCode",
-                            UAE_PHONE_CODE
-                          );
-                          handleRemovePrimaryPhone();
+                          setFieldValue("primaryPhoneNo", "");
+                          setFieldValue("primaryPhoneCountryCode", UAE_PHONE_CODE);
+                          setIsExistSecondaryPhoneNumber(false);
+                          updateProspect({
+                            "prospect.organizationInfo.contactDetails.primaryPhoneNo": "",
+                            "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode": UAE_PHONE_CODE
+                          });
                         }}
                         title="Delete"
                         className={classes.container}
@@ -141,7 +124,7 @@ export const CompanyPreferredContactInformationComponent = ({
                 </Grid>
                 <Grid item md={6} sm={12}>
                   <Field
-                    name="organizationInfo.contactDetails.primaryEmail"
+                    name="primaryEmail"
                     path="prospect.organizationInfo.contactDetails.primaryEmail"
                     label="Primary e-mail address"
                     placeholder="Primary e-mail address"

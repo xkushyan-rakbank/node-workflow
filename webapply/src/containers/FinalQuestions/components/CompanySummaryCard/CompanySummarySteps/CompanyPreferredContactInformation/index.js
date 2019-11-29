@@ -6,10 +6,10 @@ import get from "lodash/get";
 import { prospect } from "../../../../../../constants/config";
 
 const mapStateToProps = state => ({
-  contactDetails: get(
+  primaryPhoneNo: get(
     getOrganizationInfo(state),
-    "contactDetails",
-    prospect.organizationInfo.contactDetails
+    "contactDetails.primaryPhoneNo",
+    prospect.organizationInfo.contactDetails.primaryPhoneNo
   ),
   chequeBookApplied: get(
     getAccountInfo(state)[0],
