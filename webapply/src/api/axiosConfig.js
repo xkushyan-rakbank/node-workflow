@@ -3,6 +3,10 @@ import { store } from "./../store";
 import { setInputsErrors } from "./../store/actions/serverValidation";
 import { setError } from "./../store/actions/reCaptcha";
 import { applicationStatusServerError } from "./../store/actions/applicationStatus";
+import { encrypt, decrypt } from "./crypto";
+
+const ENCRYPT_METHODS = ["post", "put"];
+const SYM_KEY_HEADER = "x-sym-key";
 
 const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
@@ -11,8 +15,29 @@ const instance = axios.create({
   baseURL: getBaseURL()
 });
 
+instance.interceptors.request.use(config => {
+  const { rsaPublicKey } = store.getState().appConfig;
+
+  if (rsaPublicKey && ENCRYPT_METHODS.includes(config.method)) {
+    const [encryptedSymKey, encryptedPayload] = encrypt(rsaPublicKey, config.data);
+
+    config.headers[SYM_KEY_HEADER] = encryptedSymKey;
+    config.data = encryptedPayload;
+  }
+
+  return config;
+});
+
 instance.interceptors.response.use(
-  response => response,
+  response => {
+    const symKey = response.config.headers[SYM_KEY_HEADER];
+
+    if (symKey && response.data) {
+      response.data = decrypt(symKey, response.data);
+    }
+
+    return response;
+  },
   error => {
     const {
       status,
