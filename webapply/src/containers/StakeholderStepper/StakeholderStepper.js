@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import { CompanyStakeholderCard } from "../../components/StakeholderStepForms/CompanyStakeholderCard/CompanyStakeholderCard";
-import StepComponent from "../../components/StepComponent";
 import { StepComponent as StepComponentFormik } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
 import SuccessFilledStakeholder from "../../components/StakeholderStepForms/SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../components/Buttons/LinkButton";
@@ -89,37 +88,19 @@ const StakeholderStepperComponent = ({
       index={orderIndex}
     >
       <div className={classes.formContent}>
-        {stakeHoldersSteps.map(item => {
-          if (item.step !== STEP_4) {
-            return (
-              <StepComponentFormik
-                index={index}
-                key={item.step}
-                title={item.title}
-                subTitle={item.infoTitle}
-                isActiveStep={step === item.step}
-                isFilled={isFilled}
-                clickHandler={createSetStepHandler(item)}
-                handleContinue={createContinueHandler(item.step)}
-                stepForm={item.component}
-              />
-            );
-          }
-
-          return (
-            <StepComponent
-              index={index}
-              key={item.step}
-              title={item.title}
-              subTitle={item.infoTitle}
-              activeStep={step === item.step}
-              filled={isFilled}
-              clickHandler={createSetStepHandler(item)}
-              handleContinue={createContinueHandler(item.step)}
-              stepForm={item.component}
-            />
-          );
-        })}
+        {stakeHoldersSteps.map(item => (
+          <StepComponentFormik
+            index={index}
+            key={item.step}
+            title={item.title}
+            subTitle={item.infoTitle}
+            isActiveStep={step === item.step}
+            isFilled={isFilled}
+            clickHandler={createSetStepHandler(item)}
+            handleContinue={createContinueHandler(item.step)}
+            stepForm={item.component}
+          />
+        ))}
       </div>
 
       {!isNewStakeholder && deleteStakeholder && (
