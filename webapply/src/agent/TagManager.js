@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Router from "react-router";
-import routes from "./routes";
-
 import TagManager from "react-gtm-module";
+
+import routes from "./routes";
 
 const tagManagerArgs = {
   gtmId: "GTM-654654",

@@ -2,19 +2,17 @@ import React, { useCallback, useEffect } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
+import { Grid } from "@material-ui/core";
 
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
-import { IS_RECAPTCHA_ENABLE } from "../../constants";
+import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
-import { Grid } from "@material-ui/core";
-
-const UAE_CODE = "971";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()

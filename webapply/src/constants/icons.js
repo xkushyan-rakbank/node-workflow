@@ -1,5 +1,6 @@
-import { store } from "../store";
 import get from "lodash/get";
+
+import { store } from "../store";
 
 /* Conventional*/
 import transactionConventional from "../assets/icons/conventional/transaction.png";

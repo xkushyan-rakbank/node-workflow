@@ -3,12 +3,12 @@ import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import get from "lodash/get";
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
 import { accountsNames, formStepper, searchProspectStepper } from "../constants";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
 import { ContainedButton } from "./Buttons/ContainedButton";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import {
