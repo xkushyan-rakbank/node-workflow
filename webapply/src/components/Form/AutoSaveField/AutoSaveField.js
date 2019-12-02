@@ -48,7 +48,8 @@ export const AutoSaveField = ({
         dispatch(updateProspect({ [path]: value }));
       }
     }
-  }, [path, value, dispatch, appConfig]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path, value, dispatch]);
 
   const options = useMemo(() => {
     if (path && datalistId && uiConfig) {
@@ -56,7 +57,8 @@ export const AutoSaveField = ({
 
       return get(fieldConfig, "datalist", []).filter(filterOptions);
     }
-  }, [path, datalistId, uiConfig, filterOptions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path, datalistId, filterOptions]);
 
   return <Field name={name} options={options} {...rest} />;
 };

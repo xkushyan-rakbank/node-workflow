@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import Form from "react-bootstrap/Form";
+
 import { uploadFile } from "../store/actions/uploadFile";
 
 function FileUploader(props) {
   const { loading, error, uploadFile } = props;
-  let fileUpload = React.createRef();
 
   const uploadFileButton = event => {
     const data = new FormData();
@@ -14,16 +14,11 @@ function FileUploader(props) {
   };
 
   return (
-    <React.Fragment>
-      <Form.Control
-        type="file"
-        label="Upload"
-        onChange={uploadFileButton}
-        ref={ref => (fileUpload = ref)}
-      />
+    <>
+      <Form.Control type="file" label="Upload" onChange={uploadFileButton} />
       {loading && <div>Loading...</div>}
       {error && <div>{error}</div>}
-    </React.Fragment>
+    </>
   );
 }
 

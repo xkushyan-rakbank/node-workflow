@@ -12,7 +12,7 @@ export const AgentProtectedRoute = ({ component: Component, render, ...rest }) =
     <Route
       {...rest}
       render={props =>
-        isAuthenticated ? (
+        isAuthenticated || process.env.NODE_ENV === "development" ? (
           Component ? (
             <Component {...props} />
           ) : (

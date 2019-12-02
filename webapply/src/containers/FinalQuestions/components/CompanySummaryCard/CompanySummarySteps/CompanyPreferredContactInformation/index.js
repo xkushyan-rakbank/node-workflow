@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import get from "lodash/get";
+
 import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { CompanyPreferredContactInformationComponent } from "./CompanyPreferredContactInformation";
 import { getOrganizationInfo, getAccountInfo } from "../../../../../../store/selectors/appConfig";

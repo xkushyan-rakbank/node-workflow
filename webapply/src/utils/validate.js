@@ -1,6 +1,7 @@
+import get from "lodash/get";
+
 import { errorType } from "../constants";
 import { store } from "../store";
-import get from "lodash/get";
 
 export const validate = (field, fieldConfig) => {
   if (fieldConfig) {
