@@ -19,6 +19,7 @@ import {
 } from "../actions/appConfig";
 import { config } from "../../api/apiClient";
 import { history } from "./..";
+import { accountsNames } from "../../constants";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
@@ -48,7 +49,11 @@ function* receiveAppConfigSaga() {
       const product = getApplicationInfo.accountType;
       response = yield call(config.load, product, segment);
     } else {
-      response = yield call(config.load, null, segment);
+      if (process.env.NODE_ENV === "development") {
+        response = yield call(config.load, accountsNames.starter, segment);
+      } else {
+        response = yield call(config.load, null, segment);
+      }
     }
 
     const newConfig = cloneDeep(response.data);

@@ -56,12 +56,12 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
 }) => {
   const classes = useStyles();
 
-  const checkIsAddButtonDisabled = (limit, items, ...fields) => {
+  const checkIsAddButtonDisabled = (limit, items, fields) => {
     if (!items.length) {
       return false;
     }
     const lastAddedItem = items[items.length - 1];
-    return items.length === limit || fields.some(item => lastAddedItem[item] === "");
+    return items.length === limit || fields.some(field => lastAddedItem[field] === "");
   };
 
   const handleRemoveField = (items, index, prospect) => {
@@ -189,9 +189,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             disabled={checkIsAddButtonDisabled(
                               limits.INSIDE_SUBSIDIARY_COUNT,
                               values.entitiesInUAE,
-                              "companyName",
-                              "tradeLicenseNo",
-                              "emirate"
+                              ["companyName", "tradeLicenseNo", "emirate"]
                             )}
                           />
                         )}
@@ -287,8 +285,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             disabled={checkIsAddButtonDisabled(
                               limits.OUTSIDE_SUBSIDIARY_COUNT,
                               values.entitiesOutsideUAE,
-                              "companyName",
-                              "country"
+                              ["companyName", "country"]
                             )}
                           />
                         )}
