@@ -110,7 +110,7 @@ export const CompanyBusinessRelationshipsComponent = ({
           isDontTradeGoodsYet: false,
           otherBankingRelationshipsInfo: {
             otherBankingRelationshipsExist: false,
-            otherBankDetails
+            otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
           }
         }}
         onSubmit={handleSubmit}
@@ -302,9 +302,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                     />
                     <Grid container spacing={3} className={classes.flexContainer}>
                       {values.topOriginGoodsCountries.map((item, index) => (
-                        <React.Fragment key={index}>
+                        <React.Fragment key={item.id}>
                           <Grid
-                            key={index}
                             item
                             md={index === 0 ? 12 : 10}
                             sm={12}
@@ -392,10 +391,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                       <>
                         <Grid container spacing={3} className={classes.flexContainer}>
                           {values.otherBankingRelationshipsInfo.otherBankDetails.map(
-                            (friend, index) => (
-                              <React.Fragment key={index}>
+                            (item, index) => (
+                              <React.Fragment key={item.id}>
                                 <Grid
-                                  key={index}
                                   item
                                   md={index === 0 ? 12 : 10}
                                   sm={12}
@@ -433,7 +431,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                             onClick={() =>
                               arrayHelpers.insert(
                                 values.otherBankingRelationshipsInfo.otherBankDetails.length,
-                                { bankName: "" }
+                                { bankName: "", id: uniqueId() }
                               )
                             }
                             title="Add another bank"
