@@ -6,12 +6,13 @@ import * as Yup from "yup";
 import omit from "lodash/omit";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
-import { countryCodeOptions } from "./../../constants/options";
 import { NAME_REGEX, EMAIL_REGEX, LEAD_LICENSE_REGEX } from "./../../utils/validation";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { SearchResult } from "./../SearchResult/index";
+import { SearchResult } from "./../SearchResult";
 import { searchApplications } from "./../../store/actions/searchProspect";
 import { getSearchResult } from "./../../store/selectors/searchProspect";
+import { UAE_CODE } from "../../constants";
+
 import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
@@ -28,7 +29,7 @@ const searchProspectSchema = Yup.object({
 
 const initialValues = {
   fname: "",
-  countryCode: countryCodeOptions[0].value,
+  countryCode: UAE_CODE,
   mobileNo: "",
   email: "",
   raktrackNumber: "",
@@ -71,7 +72,7 @@ const SearchProspect = ({ searchApplications, searchResults }) => {
                   <Field
                     name="countryCode"
                     path="searchInfo.countryCode"
-                    options={countryCodeOptions}
+                    datalistId="countryCode"
                     component={CustomSelect}
                     shrink={false}
                   />
