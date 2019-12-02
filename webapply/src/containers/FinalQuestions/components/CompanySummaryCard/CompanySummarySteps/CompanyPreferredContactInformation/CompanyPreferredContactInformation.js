@@ -2,20 +2,27 @@ import React, { useState, useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
+
 import { AddButton } from "../../../../../../components/Buttons/AddButton";
 import { RemoveButton } from "../../../../../../components/Buttons/RemoveButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { InfoTitle } from "../../../../../../components/Notifications/index";
-import { useStyles } from "./styled";
-import { EMAIL_REGEX, PHONE_REGEX } from "../../../../../../utils/validation";
-import { UAE_PHONE_CODE, FIRST_ARRAY_INDEX } from "./constants";
-
+import { InfoTitle } from "../../../../../../components/Notifications";
 import {
   CustomSelect,
   Input,
   InputGroup,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
+import { EMAIL_REGEX, PHONE_REGEX } from "../../../../../../utils/validation";
+import {
+  UAE_PHONE_CODE,
+  FIRST_ARRAY_INDEX,
+  INITIAL_PRIMARY_MOBILE_NUMBER,
+  INITIAL_PRIMARY_EMAIL,
+  INITIAL_PRIMARY_PHONE_NUMBER
+} from "./constants";
+
+import { useStyles } from "./styled";
 
 const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required("You need to provide code"),
@@ -48,9 +55,9 @@ export const CompanyPreferredContactInformationComponent = ({
       <Formik
         initialValues={{
           primaryMobCountryCode: UAE_PHONE_CODE,
-          primaryMobileNo: "",
-          primaryEmail: "",
-          primaryPhoneNo: "",
+          primaryMobileNo: INITIAL_PRIMARY_MOBILE_NUMBER,
+          primaryEmail: INITIAL_PRIMARY_EMAIL,
+          primaryPhoneNo: INITIAL_PRIMARY_PHONE_NUMBER,
           primaryPhoneCountryCode: UAE_PHONE_CODE
         }}
         onSubmit={handleSubmit}
