@@ -8,7 +8,7 @@ import { DatePicker } from "../../Form/DatePicker/DatePicker";
 import { InlineRadioGroup } from "../../Form/InlineRadioGroup/InlineRadioGroup";
 import InfoTitle from "../../InfoTitle";
 import { CustomSelect, Input, InputGroup, AutoSaveField as Field, Checkbox } from "../../Form";
-import { genderOptions, yesNoOptions } from "../../../constants/options";
+import { yesNoOptions } from "../../../constants/options";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../Notifications";
 import { Icon, ICONS } from "../../Icons";
@@ -35,7 +35,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
   return (
     <Formik
       initialValues={{
-        gender: "Mr.",
+        gender: "",
         firstName: "",
         middleName: "",
         lastName: "",
@@ -73,10 +73,10 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 <Field
                   name="gender"
                   path={`prospect.signatoryInfo[${index}].gender`}
-                  options={genderOptions}
                   disabled={!!values.isShareholderACompany}
                   component={CustomSelect}
                   shrink={false}
+                  datalistId="gender"
                 />
 
                 <Field

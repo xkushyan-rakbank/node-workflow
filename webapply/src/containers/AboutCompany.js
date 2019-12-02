@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { differenceInYears } from "date-fns";
-import CompanyStakeholderCard from "../components/CompanyStakeholderCard";
+import { FormCard } from "../components/FormCard/FormCard";
 import StepComponent from "../components/StepComponent";
 import StatusLoader from "../components/StatusLoader";
 import { SubmitButton } from "../components/Buttons/SubmitButton";
@@ -105,7 +105,7 @@ class AboutCompany extends React.Component {
               sentence.
             </p>
 
-            <CompanyStakeholderCard
+            <FormCard
               content={
                 <>
                   <div className={classes.title}>
@@ -137,7 +137,7 @@ class AboutCompany extends React.Component {
                   );
                 })}
               </div>
-            </CompanyStakeholderCard>
+            </FormCard>
 
             <div className="linkContainer">
               <SubmitButton

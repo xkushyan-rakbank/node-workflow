@@ -1,6 +1,7 @@
 import React from "react";
-import ErrorIcon from "./../../../assets/images/error.svg";
 import { withStyles } from "@material-ui/core/styles";
+
+import ErrorIcon from "./../../../assets/images/error.svg";
 import { style } from "./styled";
 
 const ErrorMessageComponent = ({ error, classes }) => (

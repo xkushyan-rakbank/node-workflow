@@ -18,7 +18,7 @@ import { useStyles } from "./styled";
 export const CustomSelect = ({
   extractId = option => option.key,
   extractValue = option => option.value,
-  extractLabel = item => item.label,
+  extractLabel = item => item.label || item.displayText,
   placeholder,
   multiple = false,
   options = [],
