@@ -3,7 +3,7 @@ import { SignatoryRights } from "../../components/StakeholderStepForms/Signatory
 import { Shareholding } from "../../components/StakeholderStepForms/Shareholding";
 import Nationality from "../../components/StakeholderStepForms/Nationality/Nationality";
 import { CountryOfResidence } from "../../components/StakeholderStepForms/CountryOfResidence";
-import PreferredContactInformation from "../../components/StakeholderStepForms/PreferredContactInformation";
+import { PreferredContactInformation } from "../../components/StakeholderStepForms/PreferredContactInformation";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import get from "lodash/get";
 
-import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
+import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { useStyles } from "./styled";
@@ -41,7 +41,7 @@ export const SignatorySummaryCardComponent = ({
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
 
   return (
-    <CompanyStakeholderCard
+    <FormCard
       className={classes.card}
       firstName={signatory.firstName}
       lastName={signatory.lastName || signatory.fullName}
@@ -86,6 +86,6 @@ export const SignatorySummaryCardComponent = ({
             stepForm={item.component}
           />
         ))}
-    </CompanyStakeholderCard>
+    </FormCard>
   );
 };
