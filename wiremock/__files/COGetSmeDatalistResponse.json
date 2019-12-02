@@ -1,27 +1,27 @@
 {
   "countryCode": [
     {
-      "code": "UAE",
+      "code": "971",
       "key": "971",
-      "value": "UAE",
+      "value": "971",
       "displayText": "+971"
     },
     {
-      "code": "EUR",
+      "code": "992",
       "key": "992",
-      "value": "EUR",
+      "value": "992",
       "displayText": "+992"
     },
     {
-      "code": "UA",
+      "code": "380",
       "key": "380",
-      "value": "UA",
+      "value": "380",
       "displayText": "+380"
     },
     {
-      "code": "GB",
+      "code": "391",
       "key": "391",
-      "value": "GB",
+      "value": "391",
       "displayText": "+391"
     }
   ],
@@ -405,9 +405,9 @@
   ],
   "country": [
     {
-      "code": "AE",
-      "key": "AE",
-      "value": "AE",
+      "code": "UAE",
+      "key": "UAE",
+      "value": "UAE",
       "displayText": "Emirate"
     },
     {
@@ -757,16 +757,22 @@
   ],
   "gender": [
     {
-      "code": "Male",
-      "key": "Male",
-      "value": "Male",
-      "displayText": "Mr."
+      "code": "Mr.",
+      "key": "Mr.",
+      "value": "Mr.",
+      "label": "Mr."
     },
     {
-      "code": "Female",
-      "key": "Female",
-      "value": "Female",
-      "displayText": "Mrs."
+      "code": "Mrs.",
+      "key": "Mrs.",
+      "value": "Mrs.",
+      "label": "Mrs."
+    },
+    {
+      "code": "Ms.",
+      "key": "Ms.",
+      "value": "Ms.",
+      "label": "Ms."
     }
   ],
   "maritalStatus": [
@@ -889,16 +895,58 @@
   ],
   "authorityType": [
     {
-      "code": "SP",
-      "key": "SP",
-      "value": "SP",
-      "displayText": "Sole Proprietor"
+      "code": "Sole proprietor",
+      "key": "Sole proprietor",
+      "value": "Sole proprietor",
+      "label": "Sole proprietor"
     },
     {
-      "code": "PP",
-      "key": "PP",
-      "value": "PP",
-      "displayText": "Partial Proprietor"
+      "code": "Power of Attorney",
+      "key": "Power of Attorney",
+      "value": "Power of Attorney",
+      "label": "Power of Attorney"
+    },
+    {
+      "code": "Partnership Agreement",
+      "key": "Partnership Agreement",
+      "value": "Partnership Agreement",
+      "label": "Partnership Agreement"
+    },
+    {
+      "code": "Memorandum/Articles of Association",
+      "key": "Memorandum/Articles of Association",
+      "value": "Memorandum/Articles of Association",
+      "label": "Memorandum/Articles of Association"
+    },
+    {
+      "code": "Board Resolution",
+      "key": "Board Resolution",
+      "value": "Board Resolution",
+      "label": "Board Resolution"
+    },
+    {
+      "code": "Shareholder Resolution",
+      "key": "Shareholder Resolution",
+      "value": "Shareholder Resolution",
+      "label": "Shareholder Resolution"
+    },
+    {
+      "code": "Legal Guardian (For minor)",
+      "key": "Legal Guardian (For minor)",
+      "value": "Legal Guardian (For minor)",
+      "label": "Legal Guardian (For minor)"
+    },
+    {
+      "code": "Legal Heir / Successor",
+      "key": "Legal Heir / Successor",
+      "value": "Legal Heir / Successor",
+      "label": "Legal Heir / Successor"
+    },
+    {
+      "code": "Court Appointed Arbitrator",
+      "key": "Court Appointed Arbitrator",
+      "value": "Court Appointed Arbitrator",
+      "label": "Court Appointed Arbitrator"
     }
   ]
 }

@@ -20,15 +20,5 @@ export const useStyles = makeStyles({
   button: {
     fontSize: "16px",
     color: "#c00000"
-  },
-  userInfo: {
-    display: "flex",
-    flex: 1
-  },
-  nameField: {
-    fontSize: "20px",
-    fontWeight: "600",
-    lineHeight: "1.4",
-    marginLeft: "20px"
   }
 });

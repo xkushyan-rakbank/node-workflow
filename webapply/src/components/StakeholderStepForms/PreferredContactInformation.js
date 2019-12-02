@@ -9,7 +9,6 @@ import { SubmitButton } from "./SubmitButton/SubmitButton";
 import { AutoSaveField as Field, CustomSelect, Input, InputGroup } from "../Form";
 import { getInputValueById } from "../../store/selectors/input";
 import { EMAIL_REGEX, PHONE_REGEX } from "../../utils/validation";
-import { countryCodeOptions } from "../../constants/options";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
@@ -53,10 +52,10 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
             <Field
               name="primaryMobCountryCode"
               path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
-              options={countryCodeOptions}
               component={CustomSelect}
               shrink={false}
               disabled={!isSignatory}
+              datalistId="countryCode"
             />
 
             <Field
@@ -74,10 +73,10 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
             <Field
               name="primaryPhoneCountryCode"
               path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneCountryCode`}
-              options={countryCodeOptions}
               component={CustomSelect}
               shrink={false}
               disabled={!isSignatory}
+              datalistId="countryCode"
             />
 
             <Field

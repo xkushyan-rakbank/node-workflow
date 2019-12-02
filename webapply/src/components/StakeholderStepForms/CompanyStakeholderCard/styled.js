@@ -1,0 +1,31 @@
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
+  wrapper: {
+    width: "100%",
+    display: "flex",
+    borderRadius: "8px",
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    border: "solid 1px #e8e8e8",
+    backgroundColor: "#ffffff",
+    flexDirection: "column",
+    marginBottom: "24px"
+  },
+  contentWrapper: {
+    display: "flex",
+    alignItems: "center",
+    height: "40px",
+    margin: "30px 32px 30px 20px"
+  },
+  userInfo: {
+    display: "flex",
+    flex: 1
+  },
+  nameField: {
+    display: "flex",
+    alignItems: "center",
+    fontSize: "20px",
+    fontWeight: "600",
+    marginLeft: "20px"
+  }
+});

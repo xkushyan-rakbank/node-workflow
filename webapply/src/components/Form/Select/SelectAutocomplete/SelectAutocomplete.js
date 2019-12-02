@@ -17,6 +17,7 @@ const components = {
 
 export const SelectAutocomplete = ({
   extractValue = option => option.value,
+  extractLabel = option => option.label || option.displayText,
   theme,
   label,
   shrink,
@@ -64,6 +65,7 @@ export const SelectAutocomplete = ({
           label,
           error: isError
         }}
+        getOptionLabel={extractLabel}
       />
 
       {isError && <ErrorMessage error={errorMessage} />}
