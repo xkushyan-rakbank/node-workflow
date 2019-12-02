@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import React from "react";
 import uniqueId from "lodash/uniqueId";
-import { Formik, Form, FieldArray } from "formik";
+import { Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import cx from "classnames";
 import {
@@ -10,13 +10,13 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import Grid from "@material-ui/core/Grid";
-import { AddButton } from "../../../../../../components/Buttons/AddButton";
-import { RemoveButton } from "../../../../../../components/Buttons/RemoveButton";
+import { ArrayRemoveButton } from "../../../../Buttons/ArrayRemoveButton";
+import { ArrayAddButton } from "../../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
+import { FormikWithSubmitHandler as Formik } from "../../../../FormikWithSubmitHandler";
 import { limits, INITIAL_ARRAY_INDEX } from "./constants";
 import { useStyles } from "./styled";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
-import { prospect } from "../../../../../../constants/config";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
@@ -72,29 +72,11 @@ export const CompanyBusinessRelationshipsComponent = ({
   updateProspect
 }) => {
   const classes = useStyles();
+  const initialOtherBankDetails = [{ bankName: "" }];
+  const initialTopOriginGoodsCountries = [""];
+  const initialTopSuppliers = [{ name: "", country: "" }];
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
-
-  const checkIsAddButtonDisabled = (limit, items, ...fields) => {
-    if (!items.length) {
-      return false;
-    }
-    const lastAddedItem = items[items.length - 1];
-    return items.length === limit || fields.some(item => lastAddedItem[item] === "");
-  };
-
-  const handleRemoveItem = (items, index, prospect) => {
-    const dataList = [...items];
-    dataList.splice(index, 1);
-    const path = `prospect.orgKYCDetails.${prospect}`;
-    updateProspect({
-      [path]: [...dataList]
-    });
-  };
-
-  const handleSubmit = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
@@ -113,7 +95,7 @@ export const CompanyBusinessRelationshipsComponent = ({
             otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
           }
         }}
-        onSubmit={handleSubmit}
+        handleContinue={handleContinue}
         validationSchema={companyBusinessRelationshipsSchema}
       >
         {({ values, setFieldValue, setFieldTouched }) => {
@@ -150,11 +132,11 @@ export const CompanyBusinessRelationshipsComponent = ({
                               component={CustomSelect}
                             />
                             {!!index && (
-                              <RemoveButton
-                                onClick={() => {
-                                  arrayHelpers.remove(index);
-                                  handleRemoveItem(topCustomers, index, "topCustomers");
-                                }}
+                              <ArrayRemoveButton
+                                arrayHelpers={arrayHelpers}
+                                dataArray={topCustomers}
+                                itemIndex={index}
+                                prospectPath="prospect.orgKYCDetails.topCustomers"
                                 title="Delete"
                               />
                             )}
@@ -163,21 +145,17 @@ export const CompanyBusinessRelationshipsComponent = ({
                       ))}
                     </Grid>
                     {values.topCustomers.length < limits.CUSTOMER_COUNT && (
-                      <AddButton
-                        onClick={() =>
-                          arrayHelpers.insert(values.topCustomers.length, {
-                            id: uniqueId(),
-                            name: "",
-                            country: ""
-                          })
-                        }
+                      <ArrayAddButton
                         title="Add another customer"
-                        disabled={checkIsAddButtonDisabled(
-                          limits.CUSTOMER_COUNT,
-                          values.topCustomers,
-                          "name",
-                          "country"
-                        )}
+                        limit={limits.CUSTOMER_COUNT}
+                        requiredFields={["name", "country"]}
+                        addedItem={{
+                          id: uniqueId(),
+                          name: "",
+                          country: ""
+                        }}
+                        dataArray={values.topCustomers}
+                        arrayHelpers={arrayHelpers}
                       />
                     )}
                   </>
@@ -197,14 +175,13 @@ export const CompanyBusinessRelationshipsComponent = ({
                         if (!values.isDontHaveSuppliersYet) {
                           setFieldValue(
                             "topSuppliers",
-                            prospect.orgKYCDetails.topSuppliers.map(item => ({
+                            initialTopSuppliers.map(item => ({
                               ...item,
                               id: uniqueId()
                             }))
                           );
                           updateProspect({
-                            "prospect.orgKYCDetails.topSuppliers":
-                              prospect.orgKYCDetails.topSuppliers
+                            "prospect.orgKYCDetails.topSuppliers": initialTopSuppliers
                           });
                           setFieldTouched(`topSuppliers[${INITIAL_ARRAY_INDEX}].name`, false);
                           setFieldTouched(`topSuppliers[${INITIAL_ARRAY_INDEX}].country`, false);
@@ -240,11 +217,11 @@ export const CompanyBusinessRelationshipsComponent = ({
                               disabled={values.isDontHaveSuppliersYet}
                             />
                             {!!index && (
-                              <RemoveButton
-                                onClick={() => {
-                                  arrayHelpers.remove(index);
-                                  handleRemoveItem(topSuppliers, index, "topSuppliers");
-                                }}
+                              <ArrayRemoveButton
+                                arrayHelpers={arrayHelpers}
+                                dataArray={topSuppliers}
+                                itemIndex={index}
+                                prospectPath="prospect.orgKYCDetails.topSuppliers"
                                 title="Delete"
                               />
                             )}
@@ -253,21 +230,17 @@ export const CompanyBusinessRelationshipsComponent = ({
                       ))}
                     </Grid>
                     {values.topSuppliers.length < limits.SUPPLIER_COUNT && (
-                      <AddButton
-                        onClick={() =>
-                          arrayHelpers.insert(values.topSuppliers.length, {
-                            id: uniqueId(),
-                            name: "",
-                            country: ""
-                          })
-                        }
+                      <ArrayAddButton
                         title="Add another supplier"
-                        disabled={checkIsAddButtonDisabled(
-                          limits.SUPPLIER_COUNT,
-                          values.topSuppliers,
-                          "name",
-                          "country"
-                        )}
+                        limit={limits.SUPPLIER_COUNT}
+                        requiredFields={["name", "country"]}
+                        addedItem={{
+                          id: uniqueId(),
+                          name: "",
+                          country: ""
+                        }}
+                        dataArray={values.topSuppliers}
+                        arrayHelpers={arrayHelpers}
                       />
                     )}
                   </>
@@ -287,14 +260,13 @@ export const CompanyBusinessRelationshipsComponent = ({
                         if (!values.isDontTradeGoodsYet) {
                           setFieldValue(
                             "topOriginGoodsCountries",
-                            prospect.orgKYCDetails.topOriginGoodsCountries.map(item => ({
+                            initialTopOriginGoodsCountries.map(item => ({
                               country: item,
                               id: uniqueId()
                             }))
                           );
                           updateProspect({
-                            "prospect.orgKYCDetails.topOriginGoodsCountries":
-                              prospect.orgKYCDetails.topOriginGoodsCountries
+                            "prospect.orgKYCDetails.topOriginGoodsCountries": initialTopOriginGoodsCountries
                           });
                           setFieldTouched(`topOriginGoodsCountries[${INITIAL_ARRAY_INDEX}]`, false);
                         }
@@ -320,15 +292,11 @@ export const CompanyBusinessRelationshipsComponent = ({
                               disabled={values.isDontTradeGoodsYet}
                             />
                             {!!index && (
-                              <RemoveButton
-                                onClick={() => {
-                                  arrayHelpers.remove(index);
-                                  handleRemoveItem(
-                                    topOriginGoodsCountries,
-                                    index,
-                                    "topOriginGoodsCountries"
-                                  );
-                                }}
+                              <ArrayRemoveButton
+                                arrayHelpers={arrayHelpers}
+                                dataArray={topOriginGoodsCountries}
+                                itemIndex={index}
+                                prospectPath="prospect.orgKYCDetails.topOriginGoodsCountries"
                                 title="Delete"
                               />
                             )}
@@ -337,19 +305,16 @@ export const CompanyBusinessRelationshipsComponent = ({
                       ))}
                     </Grid>
                     {values.topOriginGoodsCountries.length < limits.COUNTRY_OF_ORIGIN_COUNT && (
-                      <AddButton
-                        onClick={() =>
-                          arrayHelpers.insert(values.topOriginGoodsCountries.length, {
-                            country: "",
-                            id: uniqueId()
-                          })
-                        }
+                      <ArrayAddButton
                         title="Add another country of origin"
-                        disabled={checkIsAddButtonDisabled(
-                          limits.COUNTRY_OF_ORIGIN_COUNT,
-                          values.topOriginGoodsCountries,
-                          "country"
-                        )}
+                        limit={limits.COUNTRY_OF_ORIGIN_COUNT}
+                        requiredFields={["country"]}
+                        addedItem={{
+                          id: uniqueId(),
+                          country: ""
+                        }}
+                        dataArray={values.topOriginGoodsCountries}
+                        arrayHelpers={arrayHelpers}
                       />
                     )}
                   </>
@@ -368,20 +333,15 @@ export const CompanyBusinessRelationshipsComponent = ({
                       component={Checkbox}
                       onSelect={() => {
                         if (values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist) {
-                          const {
-                            orgKYCDetails: {
-                              otherBankingRelationshipsInfo: { otherBankDetails } = {}
-                            } = {}
-                          } = prospect;
                           setFieldValue(
                             "otherBankingRelationshipsInfo.otherBankDetails",
-                            otherBankDetails.map(item => ({
+                            initialOtherBankDetails.map(item => ({
                               ...item,
                               id: uniqueId()
                             }))
                           );
                           updateProspect({
-                            "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": otherBankDetails
+                            "prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails": initialOtherBankDetails
                           });
                           setFieldTouched(`${bankFieldPath}[${INITIAL_ARRAY_INDEX}]`, false);
                         }
@@ -408,15 +368,11 @@ export const CompanyBusinessRelationshipsComponent = ({
                                     component={Input}
                                   />
                                   {!!index && (
-                                    <RemoveButton
-                                      onClick={() => {
-                                        arrayHelpers.remove(index);
-                                        handleRemoveItem(
-                                          otherBankDetails,
-                                          index,
-                                          "otherBankingRelationshipsInfo.otherBankDetails"
-                                        );
-                                      }}
+                                    <ArrayRemoveButton
+                                      arrayHelpers={arrayHelpers}
+                                      dataArray={otherBankDetails}
+                                      itemIndex={index}
+                                      prospectPath="prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails"
                                       title="Delete"
                                     />
                                   )}
@@ -427,19 +383,16 @@ export const CompanyBusinessRelationshipsComponent = ({
                         </Grid>
                         {values.otherBankingRelationshipsInfo.otherBankDetails.length <
                           limits.ANOTHER_BANK_COUNT && (
-                          <AddButton
-                            onClick={() =>
-                              arrayHelpers.insert(
-                                values.otherBankingRelationshipsInfo.otherBankDetails.length,
-                                { bankName: "", id: uniqueId() }
-                              )
-                            }
+                          <ArrayAddButton
                             title="Add another bank"
-                            disabled={checkIsAddButtonDisabled(
-                              limits.ANOTHER_BANK_COUNT,
-                              values.otherBankingRelationshipsInfo.otherBankDetails,
-                              "bankName"
-                            )}
+                            limit={limits.ANOTHER_BANK_COUNT}
+                            requiredFields={["bankName"]}
+                            addedItem={{
+                              id: uniqueId(),
+                              bankName: ""
+                            }}
+                            dataArray={values.otherBankingRelationshipsInfo.otherBankDetails}
+                            arrayHelpers={arrayHelpers}
                           />
                         )}
                       </>
