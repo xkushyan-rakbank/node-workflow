@@ -157,11 +157,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         title="Add another customer"
                         limit={limits.CUSTOMER_COUNT}
                         requiredFields={["name", "country"]}
-                        addedItem={{
-                          id: uniqueId(),
-                          name: "",
-                          country: ""
-                        }}
+                        addedItem={{ name: "", country: "" }}
                         dataArray={values.topCustomers}
                         arrayHelpers={arrayHelpers}
                       />
@@ -243,7 +239,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                         limit={limits.SUPPLIER_COUNT}
                         requiredFields={["name", "country"]}
                         addedItem={{
-                          id: uniqueId(),
                           name: "",
                           country: ""
                         }}
@@ -317,10 +312,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         title="Add another country of origin"
                         limit={limits.COUNTRY_OF_ORIGIN_COUNT}
                         requiredFields={["country"]}
-                        addedItem={{
-                          id: uniqueId(),
-                          country: ""
-                        }}
+                        addedItem={{ country: "" }}
                         dataArray={values.topOriginGoodsCountries}
                         arrayHelpers={arrayHelpers}
                       />
@@ -395,10 +387,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                             title="Add another bank"
                             limit={limits.ANOTHER_BANK_COUNT}
                             requiredFields={["bankName"]}
-                            addedItem={{
-                              id: uniqueId(),
-                              bankName: ""
-                            }}
+                            addedItem={{ bankName: "" }}
                             dataArray={values.otherBankingRelationshipsInfo.otherBankDetails}
                             arrayHelpers={arrayHelpers}
                           />

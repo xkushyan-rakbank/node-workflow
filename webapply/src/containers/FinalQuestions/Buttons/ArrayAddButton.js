@@ -1,4 +1,6 @@
 import React from "react";
+import uniqueId from "lodash/uniqueId";
+
 import { AddButton } from "../../../components/Buttons/AddButton";
 
 export const ArrayAddButton = ({
@@ -19,7 +21,7 @@ export const ArrayAddButton = ({
 
   return (
     <AddButton
-      onClick={() => arrayHelpers.insert(dataArray.length, addedItem)}
+      onClick={() => arrayHelpers.insert(dataArray.length, { ...addedItem, id: uniqueId() })}
       disabled={checkIsAddButtonDisabled()}
       {...props}
     />
