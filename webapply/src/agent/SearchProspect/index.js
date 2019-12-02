@@ -8,9 +8,11 @@ import omit from "lodash/omit";
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { NAME_REGEX, EMAIL_REGEX, LEAD_LICENSE_REGEX } from "./../../utils/validation";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { SearchResult } from "./../SearchResult/index";
+import { SearchResult } from "./../SearchResult";
 import { searchApplications } from "./../../store/actions/searchProspect";
 import { getSearchResult } from "./../../store/selectors/searchProspect";
+import { UAE_CODE } from "../../constants";
+
 import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
@@ -24,8 +26,6 @@ const searchProspectSchema = Yup.object({
     .max(20, "Maximum 20 charactors allowed")
     .matches(LEAD_LICENSE_REGEX, "This is not a valid trade license number")
 });
-
-const UAE_CODE = "971";
 
 const initialValues = {
   fname: "",
@@ -73,7 +73,6 @@ const SearchProspect = ({ searchApplications, searchResults }) => {
                     name="countryCode"
                     path="searchInfo.countryCode"
                     datalistId="countryCode"
-                    extractLabel={item => item.displayText}
                     component={CustomSelect}
                     shrink={false}
                   />
