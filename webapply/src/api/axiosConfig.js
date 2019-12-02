@@ -19,7 +19,7 @@ instance.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
 
   if (rsaPublicKey && ENCRYPT_METHODS.includes(config.method)) {
-    const [encryptedSymKey, encryptedPayload, symKey] = encrypt(rsaPublicKey, config.data);
+    const [encryptedPayload, encryptedSymKey, symKey] = encrypt(rsaPublicKey, config.data);
 
     return {
       ...config,
