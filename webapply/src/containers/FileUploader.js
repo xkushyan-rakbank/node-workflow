@@ -1,15 +1,16 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import SectionTitle from "../components/SectionTitle";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import routes from "../routes";
+
+import SectionTitle from "../components/SectionTitle";
 import { SubmitButton } from "../components/Buttons/SubmitButton";
 import CompanyDocuments from "../components/UploadDocument/CompanyDocument";
 import SignatoriesDocuments from "../components/UploadDocument/SignatoriesDocuments";
 import { BackLink } from "../components/Buttons/BackLink";
 import { retrieveDocDetails } from "../store/actions/getProspectDocuments";
 import * as appConfigSelectors from "./../store/selectors/appConfig";
+import routes from "../routes";
 
 const style = {
   sectionContainer: {
@@ -24,6 +25,7 @@ const style = {
     height: "940px"
   }
 };
+
 class FileUploader extends React.Component {
   componentDidMount() {
     this.props.retrieveDocDetails();
