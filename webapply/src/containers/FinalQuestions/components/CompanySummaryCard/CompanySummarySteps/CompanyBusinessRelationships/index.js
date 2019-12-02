@@ -3,34 +3,26 @@ import get from "lodash/get";
 import { getOrgKYCDetails } from "../../../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { CompanyBusinessRelationshipsComponent } from "./CompanyBusinessRelationships";
-import { initialValues } from "./constants";
+import {
+  initialOtherBankDetails,
+  initialTopOriginGoodsCountries,
+  initialTopSuppliers,
+  initialTopCustomers
+} from "./constants";
 
 const mapStateToProps = state => ({
-  topCustomers: get(getOrgKYCDetails(state), "topCustomers", initialValues.topCustomers),
-  topSuppliers: get(getOrgKYCDetails(state), "topSuppliers", initialValues.topSuppliers),
+  topCustomers: get(getOrgKYCDetails(state), "topCustomers", initialTopCustomers),
+  topSuppliers: get(getOrgKYCDetails(state), "topSuppliers", initialTopSuppliers),
   topOriginGoodsCountries: get(
     getOrgKYCDetails(state),
     "topOriginGoodsCountries",
-    initialValues.topOriginGoodsCountries
+    initialTopOriginGoodsCountries
   ),
-  otherBankingRelationshipsExist: get(
+  otherBankDetails: get(
     getOrgKYCDetails(state),
-    "otherBankingRelationshipsInfo.otherBankingRelationshipsExist",
-    initialValues.otherBankingRelationshipsExist
-  ),
-  isDontHaveSuppliersYet: get(
-    getOrgKYCDetails(state),
-    "isDontHaveSuppliersYet",
-    initialValues.isDontHaveSuppliersYet
-  ),
-  isDontTradeGoodsYet: get(
-    getOrgKYCDetails(state),
-    "isDontTradeGoodsYet",
-    initialValues.isDontTradeGoodsYet
-  ),
-  otherBankDetails: get(getOrgKYCDetails(state), "otherBankingRelationshipsInfo.otherBankDetails", [
-    initialValues.otherBankDetails
-  ])
+    "otherBankingRelationshipsInfo.otherBankDetails",
+    initialOtherBankDetails
+  )
 });
 
 const mapDispatchToProps = {
