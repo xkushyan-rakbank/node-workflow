@@ -158,12 +158,7 @@ class ApplicationSubmitted extends React.Component {
   render() {
     const { classes, AccountSubmittedInfo } = this.props;
     const { companyDocuments, banking } = getIconsByAccount();
-    let customClass;
-    {
-      AccountSubmittedInfo && AccountSubmittedInfo.length % 2 === 0
-        ? (customClass = classes.accountsNumbersRow)
-        : (customClass = classes.accountsNumbersColumn);
-    }
+
     return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
       <div className={classes.container}>
         <div className={classes.title}>
@@ -172,7 +167,8 @@ class ApplicationSubmitted extends React.Component {
         </div>
         <div
           className={cx(classes.accountsNumbers, {
-            [customClass]: AccountSubmittedInfo.length
+            [classes.accountsNumbersRow]: AccountSubmittedInfo.length % 2 === 0,
+            [classes.accountsNumbersColumn]: AccountSubmittedInfo.length % 2 !== 0
           })}
         >
           {AccountSubmittedInfo.map(accountData => (
