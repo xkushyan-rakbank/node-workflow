@@ -6,7 +6,6 @@ import * as Yup from "yup";
 
 import { getInputValueById } from "../../store/selectors/input";
 import { AutoSaveField as Field, NumericInput, SelectAutocomplete } from "../Form";
-import { countryCodeOptions } from "../../constants/options";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../utils/validation";
 
@@ -38,8 +37,8 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
               path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
               label="Country of Residence"
               component={SelectAutocomplete}
-              options={countryCodeOptions}
               disabled={isSignatory}
+              datalistId="country"
             />
           </Grid>
           <Grid item md={6} sm={12}>

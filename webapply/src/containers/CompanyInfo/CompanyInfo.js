@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
 
-import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
+import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
@@ -39,7 +39,7 @@ export const CompanyInfoPage = ({
         sentence.
       </p>
 
-      <CompanyStakeholderCard
+      <FormCard
         content={
           <>
             <div className={classes.title}>{step !== STEP_1 ? companyName : "Company Name"}</div>
@@ -60,7 +60,7 @@ export const CompanyInfoPage = ({
             stepForm={item.component}
           />
         ))}
-      </CompanyStakeholderCard>
+      </FormCard>
 
       <div className="linkContainer">
         <ContainedButton

@@ -1,18 +1,19 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
-import Avatar from "./Avatar";
+import { makeStyles } from "@material-ui/styles";
 
-const style = {
+import Avatar from "../Avatar";
+
+const useStyles = makeStyles({
   contentWrapper: {
     display: "flex",
     alignItems: "center",
     height: "62px",
     margin: "30px 32px 30px 20px"
   }
-};
+});
 
-const FilledInfoCard = props => {
-  const { firstName, lastName, content, classes, index, defaultAvatarIcon } = props;
+export const FilledInfoCard = ({ firstName, lastName, content, index, defaultAvatarIcon }) => {
+  const classes = useStyles();
 
   return (
     <div className={classes.contentWrapper}>
@@ -26,5 +27,3 @@ const FilledInfoCard = props => {
     </div>
   );
 };
-
-export default withStyles(style)(FilledInfoCard);
