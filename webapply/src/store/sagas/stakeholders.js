@@ -1,4 +1,9 @@
 import { all, put, takeEvery, select, take } from "redux-saga/effects";
+import cloneDeep from "lodash/cloneDeep";
+import isUndefined from "lodash/isUndefined";
+import get from "lodash/get";
+import uniqueId from "lodash/uniqueId";
+
 import {
   ADD_NEW_STAKEHOLDER,
   CREATE_NEW_STAKEHOLDER,
@@ -17,10 +22,6 @@ import {
 } from "../actions/stakeholders";
 import { updateProspect, setConfig, resetProspect } from "../actions/appConfig";
 import { sendProspectToAPI } from "../actions/sendProspectToAPI";
-import cloneDeep from "lodash/cloneDeep";
-import isUndefined from "lodash/isUndefined";
-import get from "lodash/get";
-import uniqueId from "lodash/uniqueId";
 import { stakeHoldersSteps } from "../../containers/StakeholderStepper/constants";
 
 function* addNewStakeholderSaga() {
