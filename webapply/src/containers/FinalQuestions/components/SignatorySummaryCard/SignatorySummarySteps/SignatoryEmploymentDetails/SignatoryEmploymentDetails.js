@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
-import { qualificationOptions, employmentTypeOptions, OTHER_OPTION_CODE } from "./constants";
+import { OTHER_OPTION_CODE } from "./constants";
 import {
   CustomSelect,
   Input,
@@ -53,15 +53,6 @@ export const SignatoryEmploymentDetailsComponent = ({
 }) => {
   const classes = useStyles();
 
-  function checkboxCallback(value, name, callback) {
-    const fieldPath = `prospect.signatoryInfo[${index}].employmentDetails.employerName`;
-    const employerName = value ? companyName : "";
-    updateProspect({
-      [fieldPath]: employerName
-    });
-    callback(name, employerName);
-  }
-
   const onSubmit = () => {
     handleContinue();
   };
@@ -88,21 +79,19 @@ export const SignatoryEmploymentDetailsComponent = ({
               <Grid container spacing={3} className={classes.flexContainer}>
                 <Grid item md={6} sm={12}>
                   <Field
-                    options={qualificationOptions}
-                    shrink={false}
                     name="qualification"
                     path={`${basePath}.kycDetails.qualification`}
-                    placeholder="Qualification"
-                    // label="Qualification"
+                    datalistId="qualification"
+                    extractLabel={item => item.displayText}
+                    label="Qualification"
                     component={CustomSelect}
                   />
                   <Field
-                    options={employmentTypeOptions}
-                    shrink={false}
                     name="employmentType"
                     path={`${basePath}.employmentDetails.employmentType`}
-                    placeholder="Employment Type"
-                    // label="Employment Type"
+                    datalistId="employmentType"
+                    extractLabel={item => item.displayText}
+                    label="Employment Type"
                     component={CustomSelect}
                   />
                 </Grid>
@@ -141,7 +130,11 @@ export const SignatoryEmploymentDetailsComponent = ({
                     component={Checkbox}
                     onChange={() => {
                       setFieldValue("isWorkAtTheCompany", !values.isWorkAtTheCompany);
-                      checkboxCallback(values.isWorkAtTheCompany, "employerName", setFieldValue);
+                      const employerName = values.isWorkAtTheCompany ? companyName : "";
+                      updateProspect({
+                        [`${basePath}.employmentDetails.employerName`]: employerName
+                      });
+                      setFieldValue("employerName", employerName);
                     }}
                   />
                 </Grid>
