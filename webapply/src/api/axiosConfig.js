@@ -19,10 +19,17 @@ instance.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
 
   if (rsaPublicKey && ENCRYPT_METHODS.includes(config.method)) {
-    const [encryptedSymKey, encryptedPayload] = encrypt(rsaPublicKey, config.data);
+    const [encryptedSymKey, encryptedPayload, symKey] = encrypt(rsaPublicKey, config.data);
 
-    config.headers[SYM_KEY_HEADER] = encryptedSymKey;
-    config.data = encryptedPayload;
+    return {
+      ...config,
+      headres: {
+        ...config.headers,
+        [SYM_KEY_HEADER]: encryptedSymKey
+      },
+      data: encryptedPayload,
+      symKey
+    };
   }
 
   return config;
@@ -30,10 +37,13 @@ instance.interceptors.request.use(config => {
 
 instance.interceptors.response.use(
   response => {
-    const symKey = response.config.headers[SYM_KEY_HEADER];
+    const { symKey } = response.config;
 
     if (symKey && response.data) {
-      response.data = decrypt(symKey, response.data);
+      return {
+        ...response,
+        data: decrypt(symKey, response.data)
+      };
     }
 
     return response;

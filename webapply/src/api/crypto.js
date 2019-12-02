@@ -1,11 +1,5 @@
 import forge from "node-forge";
 
-export const getSymmetricKey = () => {
-  const symKeyBytes = forge.random.getBytesSync(16);
-
-  return forge.util.encode64(symKeyBytes);
-};
-
 export const encryptPayload = (payload, symKey) => {
   const cipher = forge.cipher.createCipher("AES-ECB", symKey);
 
@@ -25,11 +19,12 @@ export const encryptSymmetricKey = (pem, symKey) => {
 };
 
 export const encrypt = (pubKey, payload) => {
-  const symKey = getSymmetricKey();
+  const symKeyBytes = forge.random.getBytesSync(16);
+  const symKey = forge.util.encode64(symKeyBytes);
   const encryptedPayload = encryptPayload(payload, symKey);
   const encryptedSymKey = encryptSymmetricKey(pubKey, symKey);
 
-  return [encryptedPayload, encryptedSymKey];
+  return [encryptedPayload, encryptedSymKey, symKey];
 };
 
 export const decrypt = (symKey, payload) => {
