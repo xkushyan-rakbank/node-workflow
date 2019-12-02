@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
+
 import routes from "../routes";
 import logo from "./../assets/images/logo.png";
-import { withStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
 
 const styles = {
   header: {

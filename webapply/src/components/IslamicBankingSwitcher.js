@@ -2,12 +2,12 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button/Button";
+import { connect } from "react-redux";
+import cx from "classnames";
+
 import * as appConfigSelectors from "../store/selectors/appConfig";
 import { updateProspect } from "../store/actions/appConfig";
 import { updateIslamicType } from "../store/actions/selectedAccountInfo";
-
-import { connect } from "react-redux";
-import cx from "classnames";
 
 const styles = {
   root: {
