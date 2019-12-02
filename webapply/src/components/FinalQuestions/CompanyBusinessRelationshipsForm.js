@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { get, last } from "lodash";
 import cx from "classnames";
-import CustomCheckbox from "../InputField/RefactoredCheckbox";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core";
+
+import CustomCheckbox from "../InputField/RefactoredCheckbox";
 import TextInput from "../InputField/TextInput";
 import PureSelect from "../InputField/PureSelect";
 import { AddButton } from "../Buttons/AddButton";

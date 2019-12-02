@@ -1,10 +1,10 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import createReduxWaitForMiddleware from "redux-wait-for-action";
+import { routerMiddleware } from "connected-react-router";
 
 import reducers from "./reducers";
 import rootSaga from "./sagas";
-import { routerMiddleware } from "connected-react-router";
 
 export const configureStore = (initialState, history) => {
   const sagaMiddleware = createSagaMiddleware();

@@ -2,19 +2,21 @@ import React from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import cx from "classnames";
+import Grid from "@material-ui/core/Grid";
+
 import {
   Input,
   CustomSelect,
   Checkbox,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import Grid from "@material-ui/core/Grid";
 import { AddButton } from "../../../../../../components/Buttons/AddButton";
 import { RemoveButton } from "../../../../../../components/Buttons/RemoveButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { limits, initialValues, countryOptions } from "./constants";
-import { useStyles } from "./styled";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
+
+import { useStyles } from "./styled";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(

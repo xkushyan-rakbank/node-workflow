@@ -1,3 +1,3 @@
-import { StyledTableCellWitHoverHandlerComponent } from "./StyledTableCellWitHoverHandler";
-
-export const StyledTableCellWitHoverHandler = StyledTableCellWitHoverHandlerComponent;
+export {
+  StyledTableCellWitHoverHandlerComponent as StyledTableCellWitHoverHandler
+} from "./StyledTableCellWitHoverHandler";

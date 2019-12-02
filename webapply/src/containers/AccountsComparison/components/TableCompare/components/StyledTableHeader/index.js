@@ -1,3 +1,1 @@
-import { StyledTableHeaderComponent } from "./StyledTableHeader";
-
-export const StyledTableHeader = StyledTableHeaderComponent;
+export { StyledTableHeaderComponent as StyledTableHeader } from "./StyledTableHeader";

@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
-import FilledStakeholderCard from "../../components/FilledStakeholderCard";
-import StakeholderStepper from "../StakeholderStepper/StakeholderStepper";
+
+import { FilledStakeholderCard } from "../../components/StakeholderStepForms/FilledStakeholderCard/FilledStakeholderCard";
+import { StakeholderStepper } from "../StakeholderStepper/StakeholderStepper";
 import { AddStakeholderButton } from "../../components/StakeholderStepForms/AddStakeholderButton/AddStakeholderButton";
 import { ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";

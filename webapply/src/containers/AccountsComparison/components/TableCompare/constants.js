@@ -1,7 +1,7 @@
 import { accountsNames } from "../../../../constants";
 import checkIc from "../../../../assets/icons/check.svg";
 
-export const mockDataRows = [
+export const accountsDataRows = [
   {
     info: "Monthly Average Credit Balance",
     starter: { text: "Zero" },
