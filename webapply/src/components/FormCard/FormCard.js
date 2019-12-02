@@ -1,9 +1,9 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
 import cx from "classnames";
-import FilledInfoCard from "./FilledInfoCard";
+import { makeStyles } from "@material-ui/styles";
+import { FilledInfoCard } from "./FilledInfoCard";
 
-const style = {
+const useStyles = makeStyles({
   wrapper: {
     width: "100%",
     display: "flex",
@@ -14,10 +14,19 @@ const style = {
     flexDirection: "column",
     marginBottom: "24px"
   }
-};
+});
 
-const CompanyStakeholderCard = props => {
-  const { firstName, lastName, content, classes, className, index, defaultAvatarIcon } = props;
+export const FormCard = ({
+  firstName,
+  lastName,
+  content,
+  className,
+  index,
+  defaultAvatarIcon,
+  children
+}) => {
+  const classes = useStyles();
+
   return (
     <div className={cx(classes.wrapper, className)}>
       <FilledInfoCard
@@ -27,9 +36,7 @@ const CompanyStakeholderCard = props => {
         index={index}
         defaultAvatarIcon={defaultAvatarIcon}
       />
-      {props.children}
+      {children}
     </div>
   );
 };
-
-export default withStyles(style)(CompanyStakeholderCard);

@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
 import { CustomSelect, InlineRadioGroup, AutoSaveField as Field } from "../Form";
-import { yesNoOptions, authorityTypeOptions } from "../../constants/options";
+import { yesNoOptions } from "../../constants/options";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
 
 const signatoryRightsSchema = Yup.object().shape({
@@ -35,10 +35,10 @@ export const SignatoryRights = ({ handleContinue, index }) => {
             <Field
               name="authorityType"
               path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
-              options={authorityTypeOptions}
               disabled={!values.isSignatory}
               component={CustomSelect}
               label="Authority Type"
+              datalistId="authorityType"
             />
           </Grid>
 
