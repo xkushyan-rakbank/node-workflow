@@ -10,13 +10,13 @@ import { getInputValueById } from "../../../store/selectors/input";
 import { handleCitizenship } from "../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
-import { AutoSaveField as Field, CustomSelect, Checkbox, Input } from "../../Form";
+import { AutoSaveField as Field, SelectAutocomplete, Checkbox, Input } from "../../Form";
 import { PASSPORT_NUMBER_REGEX } from "../../../utils/validation";
 
 const MAX_ANOTHER_CITIZENSHIP = 4;
 const INITIAL_VALUES = {
   nationality: "",
-  hasAnotherCitizenship: "",
+  hasAnotherCitizenship: false,
   passportNumber: "",
   diplomatPassport: ""
 };
@@ -39,18 +39,23 @@ const Nationality = ({ index, passportDetails, handleContinue }) => {
     passportIndex,
     setFieldValue,
     push,
+    remove,
+    pop,
     values
   }) => event => {
     const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
-    const value = JSON.parse(event.target.value);
-    const previousValue = getIn(values, name);
-    console.log(event.target.value);
-    console.log(previousValue);
-    if (!previousValue && value) {
+    const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
+
+    if (!value) {
       push(INITIAL_VALUES);
+    } else {
+      if (passportIndex === 0) {
+        values.passportDetails.map(index => remove(index));
+      }
+      pop();
     }
 
-    setFieldValue(name, value);
+    setFieldValue(name, !value);
   };
 
   return (
@@ -67,14 +72,30 @@ const Nationality = ({ index, passportDetails, handleContinue }) => {
             <Grid container spacing={3}>
               <FieldArray
                 name="passportDetails"
-                render={({ push }) => {
-                  return passportDetails.map((item, passportIndex) => {
+                render={({ push, remove, pop }) => {
+                  return values.passportDetails.map((item, passportIndex) => {
                     const addAnotherCitizenship = addAnotherCitizenshipHandler({
                       passportIndex,
                       setFieldValue,
                       push,
+                      remove,
+                      pop,
                       values
                     });
+
+                    const isDisabled = () => {
+                      if (values.passportDetails.length > 1 && passportIndex !== 0) {
+                        const passportDetailsLength = values.passportDetails.length;
+                        const prevPassportIndex = passportDetailsLength - 2;
+
+                        const name = `passportDetails[${prevPassportIndex}].nationality`;
+                        const disabled =
+                          passportDetailsLength - 1 === passportIndex && !getIn(values, name);
+
+                        return disabled;
+                      }
+                    };
+
                     return (
                       <React.Fragment key={passportIndex}>
                         {passportIndex !== 0 && <Grid item sm={12} className={classes.divider} />}
@@ -84,8 +105,9 @@ const Nationality = ({ index, passportDetails, handleContinue }) => {
                             // eslint-disable-next-line max-len
                             path={`prospect.signatoryInfo[${index}].kycDetails.passportDetails[${passportIndex}].nationality`}
                             label="Nationality"
-                            component={CustomSelect}
+                            component={SelectAutocomplete}
                             datalistId="country"
+                            disabled={isDisabled()}
                           />
                           {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
                             <Field
@@ -95,6 +117,7 @@ const Nationality = ({ index, passportDetails, handleContinue }) => {
                               label="This person has another citizenship"
                               component={Checkbox}
                               onChange={addAnotherCitizenship}
+                              disabled={isDisabled()}
                             />
                           )}
                         </Grid>

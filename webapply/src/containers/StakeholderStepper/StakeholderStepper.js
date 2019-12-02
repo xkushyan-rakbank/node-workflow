@@ -95,7 +95,7 @@ const StakeholderStepperComponent = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={isFilled}
+            isFilled={step > item.step}
             clickHandler={createSetStepHandler(item)}
             handleContinue={createContinueHandler(item.step)}
             stepForm={item.component}
