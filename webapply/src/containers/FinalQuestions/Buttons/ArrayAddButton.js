@@ -4,11 +4,10 @@ import { AddButton } from "../../../components/Buttons/AddButton";
 export const ArrayAddButton = ({
   arrayHelpers,
   dataArray,
-  itemIndex,
   addedItem,
-  title,
   limit,
-  requiredFields
+  requiredFields,
+  ...props
 }) => {
   const checkIsAddButtonDisabled = () => {
     if (!dataArray.length) {
@@ -21,8 +20,8 @@ export const ArrayAddButton = ({
   return (
     <AddButton
       onClick={() => arrayHelpers.insert(dataArray.length, addedItem)}
-      title={title}
       disabled={checkIsAddButtonDisabled()}
+      {...props}
     />
   );
 };

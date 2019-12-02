@@ -8,8 +8,8 @@ const ArrayRemoveButtonComponent = ({
   dataArray,
   itemIndex,
   prospectPath,
-  title,
-  updateProspect
+  updateProspect,
+  ...props
 }) => {
   return (
     <RemoveButton
@@ -19,7 +19,7 @@ const ArrayRemoveButtonComponent = ({
           [prospectPath]: [...dataArray].splice(itemIndex, 1)
         });
       }}
-      title={title}
+      {...props}
     />
   );
 };

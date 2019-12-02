@@ -6,3 +6,8 @@ export const limits = {
   COUNTRY_OF_ORIGIN_COUNT: 5,
   ANOTHER_BANK_COUNT: 5
 };
+
+export const initialOtherBankDetails = [{ bankName: "" }];
+export const initialTopOriginGoodsCountries = [""];
+export const initialTopSuppliers = [{ name: "", country: "" }];
+export const initialTopCustomers = [{ name: "", country: "" }];

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import uniqueId from "lodash/uniqueId";
-import { Form, FieldArray } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
@@ -14,8 +14,13 @@ import {
 import { ArrayRemoveButton } from "../../../../Buttons/ArrayRemoveButton";
 import { ArrayAddButton } from "../../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { FormikWithSubmitHandler as Formik } from "../../../../FormikWithSubmitHandler";
-import { limits, INITIAL_ARRAY_INDEX } from "./constants";
+import {
+  limits,
+  INITIAL_ARRAY_INDEX,
+  initialOtherBankDetails,
+  initialTopOriginGoodsCountries,
+  initialTopSuppliers
+} from "./constants";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -74,11 +79,12 @@ export const CompanyBusinessRelationshipsComponent = ({
   updateProspect
 }) => {
   const classes = useStyles();
-  const initialOtherBankDetails = [{ bankName: "" }];
-  const initialTopOriginGoodsCountries = [""];
-  const initialTopSuppliers = [{ name: "", country: "" }];
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
+
+  const handleSubmit = useCallback(() => {
+    handleContinue();
+  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
@@ -97,7 +103,7 @@ export const CompanyBusinessRelationshipsComponent = ({
             otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
           }
         }}
-        handleContinue={handleContinue}
+        onSubmit={handleSubmit}
         validationSchema={companyBusinessRelationshipsSchema}
       >
         {({ values, setFieldValue, setFieldTouched }) => {
