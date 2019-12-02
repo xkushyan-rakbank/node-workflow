@@ -2,12 +2,14 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { getIconsByAccount } from "../../constants/icons";
 import { connect } from "react-redux";
-import dotsBg from "../../assets/images/dots_bg.png";
+
+import { getIconsByAccount } from "../../constants/icons";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
 import * as accountInfoSelector from "../../store/selectors/appConfig";
+
+import dotsBg from "../../assets/images/dots_bg.png";
 
 const styles = {
   title: {

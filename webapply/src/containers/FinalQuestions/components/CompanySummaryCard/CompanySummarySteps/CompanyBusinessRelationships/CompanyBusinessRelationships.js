@@ -3,20 +3,22 @@ import uniqueId from "lodash/uniqueId";
 import { Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import cx from "classnames";
+import Grid from "@material-ui/core/Grid";
+
 import {
   Input,
   CustomSelect,
   Checkbox,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import Grid from "@material-ui/core/Grid";
 import { ArrayRemoveButton } from "../../../../Buttons/ArrayRemoveButton";
 import { ArrayAddButton } from "../../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { FormikWithSubmitHandler as Formik } from "../../../../FormikWithSubmitHandler";
 import { limits, INITIAL_ARRAY_INDEX } from "./constants";
-import { useStyles } from "./styled";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
+
+import { useStyles } from "./styled";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(

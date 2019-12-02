@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import companyIconSvg from "../../assets/icons/brief.png";
+import { connect } from "react-redux";
+
 import UploadDocument from "./UploadDocument";
 import { getInputValueById } from "../../store/selectors/input";
-import { connect } from "react-redux";
+
+import companyIconSvg from "../../assets/icons/brief.png";
 
 const style = {
   container: {
