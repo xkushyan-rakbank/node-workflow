@@ -8,7 +8,7 @@ import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../c
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 import { ADDRESS_NUMBER_REGEX, PO_NUMBER_REGEX } from "../../../../../../utils/validation";
-import { OTHER_OPTION_CODE } from "./constants";
+import { OTHER_OPTION_CODE, BASE_PATH } from "./constants";
 
 const companyPreferredMailingAddressSchema = Yup.object().shape({
   addressFieldDesc: Yup.string().required("You need to provide address details"),
@@ -27,8 +27,6 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
     })
   })
 });
-
-const pathBase = "organizationInfo.addressInfo[0].addressDetails[0]";
 
 export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
   const classes = useStyles();
@@ -61,21 +59,21 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
                 <Grid item md={6} sm={12}>
                   <Field
                     name="addressFieldDesc"
-                    path={`prospect.${pathBase}.addressFieldDesc`}
+                    path={`${BASE_PATH}.addressFieldDesc`}
                     label="Office / Shop Number"
                     placeholder="Office / Shop Number"
                     component={Input}
                   />
                   <Field
                     name="addressLine1"
-                    path={`prospect.${pathBase}.addressLine1`}
+                    path={`${BASE_PATH}.addressLine1`}
                     label="Street / Location"
                     placeholder="Street / Location"
                     component={Input}
                   />
                   <Field
                     name="emirateCity"
-                    path={`prospect.${pathBase}.emirateCity`}
+                    path={`${BASE_PATH}.emirateCity`}
                     datalistId="emirate"
                     extractLabel={item => item.displayText}
                     label="Emirate"
@@ -85,7 +83,7 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
                 <Grid item md={6} sm={12}>
                   <Field
                     name="typeOfSpaceOccupied.spaceType"
-                    path={`prospect.${pathBase}.typeOfSpaceOccupied.spaceType`}
+                    path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
                     datalistId="spaceType"
                     extractLabel={item => item.displayText}
                     label="Type of Space Occupied"
@@ -94,7 +92,7 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
                   {values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
                     <Field
                       name="typeOfSpaceOccupied.others"
-                      path={`prospect.${pathBase}.typeOfSpaceOccupied.others`}
+                      path={`${BASE_PATH}.typeOfSpaceOccupied.others`}
                       label="Other(Specify)"
                       placeholder="Other(Specify)"
                       component={Input}
@@ -102,17 +100,12 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
                   )}
                   <Field
                     name="poBox"
-                    path={`prospect.${pathBase}.poBox`}
+                    path={`${BASE_PATH}.poBox`}
                     label="PO Box Number"
                     placeholder="PO Box Number"
                     component={Input}
                   />
-                  <Field
-                    name="country"
-                    path={`prospect.${pathBase}.country`}
-                    disabled
-                    component={Input}
-                  />
+                  <Field name="country" path={`${BASE_PATH}.country`} disabled component={Input} />
                 </Grid>
               </Grid>
               <div className={classes.infoTitleWrap}>
