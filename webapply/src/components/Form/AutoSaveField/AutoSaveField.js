@@ -41,22 +41,22 @@ export const AutoSaveField = ({
   }, [setFieldError, serverValidationError, name]);
 
   useEffect(() => {
-    if (path) {
+    if (path && appConfig) {
       const oldValue = get(appConfig, path, null);
 
       if (!isEqual(oldValue, value)) {
         dispatch(updateProspect({ [path]: value }));
       }
     }
-  }, [path, value, dispatch]);
+  }, [path, value, dispatch, appConfig]);
 
   const options = useMemo(() => {
-    if (path && datalistId) {
+    if (path && datalistId && uiConfig) {
       const fieldConfig = Object.values(uiConfig).find(item => item.datalistId === datalistId);
 
       return get(fieldConfig, "datalist", []).filter(filterOptions);
     }
-  }, [datalistId, uiConfig]);
+  }, [path, datalistId, uiConfig, filterOptions]);
 
   return <Field name={name} options={options} {...rest} />;
 };

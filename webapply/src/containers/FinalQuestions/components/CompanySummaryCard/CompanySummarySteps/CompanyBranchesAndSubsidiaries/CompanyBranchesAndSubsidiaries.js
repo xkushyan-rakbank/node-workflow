@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+import uniqueId from "lodash/uniqueId";
 import cx from "classnames";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
@@ -16,8 +17,6 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
-import { emirateCityOptions } from "../CompanyPreferredMailingAddress/constants";
-import { countryOptions } from "../CompanyBusinessRelationships/constants";
 
 const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
   otherEntitiesInUAE: Yup.boolean(),
@@ -35,13 +34,6 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
       })
     )
   }),
-  otherwise: Yup.array().of(
-    Yup.object().shape({
-      companyName: Yup.string(),
-      emirate: Yup.string(),
-      tradeLicenseNo: Yup.string()
-    })
-  ),
   otherEntitiesOutsideUAE: Yup.boolean(),
   entitiesOutsideUAE: Yup.array().when("otherEntitiesOutsideUAE", {
     is: true,
@@ -56,43 +48,32 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
   })
 });
 
-export const CompanyBusinessRelationshipsComponent = ({
+export const CompanyBranchesAndSubsidiariesComponent = ({
   handleContinue,
   entitiesInUAE,
-  updateProspect,
   entitiesOutsideUAE,
-  otherEntitiesOutsideUAE,
-  otherEntitiesInUAE
+  updateProspect
 }) => {
   const classes = useStyles();
 
-  function getIsAddButtonDisabled(limit, items, ...fields) {
-    const lastAddedItem = items[items.length - 1];
-    const allFieldsFilled = fields.length
-      ? fields.every(item => lastAddedItem[item] !== "")
-      : lastAddedItem;
-    return items.length >= limit || !allFieldsFilled;
-  }
-
-  function checkboxCallback(value, name, callback) {
-    if (value) {
-      return;
+  const checkIsAddButtonDisabled = (limit, items, fields) => {
+    if (!items.length) {
+      return false;
     }
-    callback(name, prospect.orgKYCDetails[name]);
-  }
+    const lastAddedItem = items[items.length - 1];
+    return items.length === limit || fields.some(field => lastAddedItem[field] === "");
+  };
 
-  function handleRemoveItem(items, index, prospect) {
+  const handleRemoveField = (items, index, prospect) => {
     const dataList = [...items];
     dataList.splice(index, 1);
     const path = `prospect.orgKYCDetails.${prospect}`;
-    updateProspect({
-      [path]: [...dataList]
-    });
-  }
-
-  const onSubmit = () => {
-    handleContinue();
+    updateProspect({ [path]: [...dataList] });
   };
+
+  const handleSubmit = useCallback(() => {
+    handleContinue();
+  }, [handleContinue]);
 
   const basisPath = "prospect.orgKYCDetails";
 
@@ -100,12 +81,12 @@ export const CompanyBusinessRelationshipsComponent = ({
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          entitiesInUAE,
-          entitiesOutsideUAE,
-          otherEntitiesInUAE,
-          otherEntitiesOutsideUAE
+          entitiesInUAE: entitiesInUAE.map(item => ({ ...item, id: uniqueId() })),
+          entitiesOutsideUAE: entitiesOutsideUAE.map(item => ({ ...item, id: uniqueId() })),
+          otherEntitiesInUAE: false,
+          otherEntitiesOutsideUAE: false
         }}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         validationSchema={companyBranchesAndSubsidiariesSchema}
       >
         {({ values, setFieldValue }) => {
@@ -122,16 +103,27 @@ export const CompanyBusinessRelationshipsComponent = ({
                       path="prospect.orgKYCDetails.otherEntitiesInUAE"
                       label="The company has branches, subsidiaries or other companies in the UAE"
                       component={Checkbox}
-                      onChange={() => {
-                        setFieldValue("otherEntitiesInUAE", !values.otherEntitiesInUAE);
-                        checkboxCallback(values.otherEntitiesInUAE, "entitiesInUAE", setFieldValue);
+                      onSelect={() => {
+                        if (values.otherEntitiesInUAE) {
+                          setFieldValue(
+                            "entitiesInUAE",
+                            prospect.orgKYCDetails.entitiesInUAE.map(item => ({
+                              ...item,
+                              id: uniqueId()
+                            }))
+                          );
+                          updateProspect({
+                            "prospect.orgKYCDetails.entitiesInUAE":
+                              prospect.orgKYCDetails.entitiesInUAE
+                          });
+                        }
                       }}
                     />
                     {values.otherEntitiesInUAE && (
                       <>
                         <Grid container spacing={3} className={classes.flexContainer}>
                           {values.entitiesInUAE.map((item, index) => (
-                            <React.Fragment key={index}>
+                            <React.Fragment key={item.id}>
                               <Grid item sm={12}>
                                 <Field
                                   name={`entitiesInUAE[${index}].companyName`}
@@ -162,20 +154,18 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 className={cx(classes.relative, { [classes.tablet]: !index })}
                               >
                                 <Field
-                                  options={emirateCityOptions}
-                                  shrink={false}
                                   name={`entitiesInUAE[${index}].emirate`}
                                   path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
-                                  placeholder="Emirate"
-                                  // label="Emirate"
-                                  extractId={option => option.key}
+                                  datalistId="emirate"
+                                  label="Emirate"
+                                  extractLabel={item => item.displayText}
                                   component={CustomSelect}
                                 />
                                 {!!index && (
                                   <RemoveButton
                                     onClick={() => {
                                       arrayHelpers.remove(index);
-                                      handleRemoveItem(entitiesInUAE, index, "entitiesInUAE");
+                                      handleRemoveField(entitiesInUAE, index, "entitiesInUAE");
                                     }}
                                     title="Delete"
                                     className={classes.container}
@@ -189,18 +179,17 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <AddButton
                             onClick={() =>
                               arrayHelpers.insert(values.entitiesInUAE.length, {
+                                id: uniqueId(),
                                 companyName: "",
                                 tradeLicenseNo: "",
                                 emirate: ""
                               })
                             }
                             title="Add another subsidiary inside the UAE"
-                            disabled={getIsAddButtonDisabled(
+                            disabled={checkIsAddButtonDisabled(
                               limits.INSIDE_SUBSIDIARY_COUNT,
                               values.entitiesInUAE,
-                              "companyName",
-                              "tradeLicenseNo",
-                              "emirate"
+                              ["companyName", "tradeLicenseNo", "emirate"]
                             )}
                           />
                         )}
@@ -221,20 +210,27 @@ export const CompanyBusinessRelationshipsComponent = ({
                       path="prospect.orgKYCDetails.otherEntitiesOutsideUAE"
                       label="The company has branches, subsidiaries or other companies outside the UAE"
                       component={Checkbox}
-                      onChange={() => {
-                        setFieldValue("otherEntitiesOutsideUAE", !values.otherEntitiesOutsideUAE);
-                        checkboxCallback(
-                          values.otherEntitiesOutsideUAE,
-                          "entitiesOutsideUAE",
-                          setFieldValue
-                        );
+                      onSelect={() => {
+                        if (values.otherEntitiesOutsideUAE) {
+                          setFieldValue(
+                            "entitiesOutsideUAE",
+                            prospect.orgKYCDetails.entitiesOutsideUAE.map(item => ({
+                              ...item,
+                              id: uniqueId()
+                            }))
+                          );
+                          updateProspect({
+                            "prospect.orgKYCDetails.entitiesOutsideUAE":
+                              prospect.orgKYCDetails.entitiesOutsideUAE
+                          });
+                        }
                       }}
                     />
                     {values.otherEntitiesOutsideUAE && (
                       <>
                         <Grid container spacing={3} className={classes.flexContainer}>
                           {values.entitiesOutsideUAE.map((item, index) => (
-                            <React.Fragment key={index}>
+                            <React.Fragment key={item.id}>
                               <Grid item md={6} sm={12}>
                                 <Field
                                   name={`entitiesOutsideUAE[${index}].companyName`}
@@ -248,23 +244,21 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 item
                                 md={6}
                                 sm={12}
-                                className={cx({ [classes.relative]: index !== 0 })}
+                                className={cx({ [classes.relative]: !!index })}
                               >
                                 <Field
-                                  options={countryOptions}
-                                  shrink={false}
                                   name={`entitiesOutsideUAE[${index}].country`}
                                   path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
-                                  placeholder="Country"
-                                  // label="Country"
-                                  extractId={option => option.key}
+                                  label="Country"
+                                  datalistId="country"
+                                  extractLabel={item => item.displayText}
                                   component={CustomSelect}
                                 />
                                 {!!index && (
                                   <RemoveButton
                                     onClick={() => {
                                       arrayHelpers.remove(index);
-                                      handleRemoveItem(
+                                      handleRemoveField(
                                         entitiesOutsideUAE,
                                         index,
                                         "entitiesOutsideUAE"
@@ -282,16 +276,16 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <AddButton
                             onClick={() =>
                               arrayHelpers.insert(values.entitiesOutsideUAE.length, {
+                                id: uniqueId(),
                                 companyName: "",
                                 country: ""
                               })
                             }
                             title="Add another subsidiary outside the UAE"
-                            disabled={getIsAddButtonDisabled(
+                            disabled={checkIsAddButtonDisabled(
                               limits.OUTSIDE_SUBSIDIARY_COUNT,
                               values.entitiesOutsideUAE,
-                              "companyName",
-                              "country"
+                              ["companyName", "country"]
                             )}
                           />
                         )}

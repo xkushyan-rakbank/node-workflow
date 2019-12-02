@@ -11,6 +11,7 @@ export const StyledTableHeaderCellWitHoverHandlerComponent = ({
   handleHover
 }) => {
   const classes = useStyles();
+
   return (
     <TableCell
       data-name={name}

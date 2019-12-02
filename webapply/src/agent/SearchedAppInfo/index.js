@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import get from "lodash/get";
 import { connect } from "react-redux";
 import { getSearchResult } from "../../store/selectors/searchProspect";
-import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
+import { FormCard } from "../../components/FormCard/FormCard";
 import StepComponent from "../../components/StepComponent";
 import { searchedAppInfoSteps } from "../../constants";
 import routes from "../../routes";
@@ -57,7 +57,7 @@ const SearchedAppInfo = ({
     <>
       <h2>Application Details</h2>
       <p className="formDescription"></p>
-      <CompanyStakeholderCard
+      <FormCard
         content={
           <div className={classes.title}>{get(prospectInfo, "applicantInfo.fullName", "")}</div>
         }
@@ -79,7 +79,7 @@ const SearchedAppInfo = ({
             );
           })}
         </div>
-      </CompanyStakeholderCard>
+      </FormCard>
       <div className="linkContainer">
         <BackLink path={routes.searchProspect} />
         <SubmitButton
