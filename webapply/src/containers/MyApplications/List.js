@@ -73,9 +73,7 @@ const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
                     <StyledWhiteContainedButton
                       label={ctaWaterText[ctaStatus.indexOf(applications.status.statusNotes)]}
                       handleClick={() => getProspectDetails(applications.prospectId)}
-                      disabled={
-                        applications.applicationInfo.lastModifiedBy.trim().length ? true : false
-                      }
+                      disabled={applications.applicationInfo.lastModifiedBy.trim().length > 0}
                     />
                   ) : (
                     <span>

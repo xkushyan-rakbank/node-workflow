@@ -14,7 +14,7 @@ import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import { isOtpGenerated } from "../../store/selectors/otp";
 import routes from "./../../routes";
-import { IS_RECAPTCHA_ENABLE } from "../../constants";
+import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { useStyles } from "./styled";
 
 const comebackSchema = Yup.object({
@@ -26,8 +26,6 @@ const comebackSchema = Yup.object({
     .required("You need to provide mobile number")
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
-
-const UAE_CODE = "971";
 
 const ComeBackLogin = ({
   history,
@@ -89,9 +87,10 @@ const ComeBackLogin = ({
               <Field
                 name="countryCode"
                 path="prospect.applicantInfo.countryCode"
-                component={CustomSelect}
-                isSelectOptions
+                required
+                datalistId="countryCode"
                 extractLabel={item => item.displayText}
+                component={CustomSelect}
                 shrink={false}
               />
 
