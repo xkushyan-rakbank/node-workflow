@@ -77,7 +77,6 @@ export const SignatoryEmploymentDetailsComponent = ({
                     name="qualification"
                     path={`${basePath}.kycDetails.qualification`}
                     datalistId="qualification"
-                    extractLabel={item => item.displayText}
                     label="Qualification"
                     component={CustomSelect}
                   />
@@ -85,7 +84,6 @@ export const SignatoryEmploymentDetailsComponent = ({
                     name="employmentType"
                     path={`${basePath}.employmentDetails.employmentType`}
                     datalistId="employmentType"
-                    extractLabel={item => item.displayText}
                     label="Employment Type"
                     component={CustomSelect}
                   />

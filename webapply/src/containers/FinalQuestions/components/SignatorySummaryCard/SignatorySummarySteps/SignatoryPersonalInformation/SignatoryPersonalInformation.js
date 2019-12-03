@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./styled";
 import { MARITAL_STATUS_REGEX } from "../../../../../../utils/validation";
-import { OTHER_OPTION_CODE } from "./constants";
+import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 

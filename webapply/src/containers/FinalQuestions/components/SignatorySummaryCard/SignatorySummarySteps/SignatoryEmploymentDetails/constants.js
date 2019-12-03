@@ -1,1 +1,1 @@
-export const OTHER_OPTION_CODE = "Others";
+export const OTHER_OPTION_CODE = "O";

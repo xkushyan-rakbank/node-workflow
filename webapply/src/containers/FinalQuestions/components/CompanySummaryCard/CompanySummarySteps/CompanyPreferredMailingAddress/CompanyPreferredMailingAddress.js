@@ -75,7 +75,6 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   name="emirateCity"
                   path={`${BASE_PATH}.emirateCity`}
                   datalistId="emirate"
-                  extractLabel={item => item.displayText}
                   label="Emirate"
                   component={CustomSelect}
                 />
@@ -85,7 +84,6 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   name="typeOfSpaceOccupied.spaceType"
                   path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
                   datalistId="spaceType"
-                  extractLabel={item => item.displayText}
                   label="Type of Space Occupied"
                   component={CustomSelect}
                 />

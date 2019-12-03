@@ -147,7 +147,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
                                 datalistId="emirate"
                                 label="Emirate"
-                                extractLabel={item => item.displayText}
                                 component={CustomSelect}
                               />
                               {!!index && (
@@ -234,7 +233,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
                                 label="Country"
                                 datalistId="country"
-                                extractLabel={item => item.displayText}
                                 component={CustomSelect}
                               />
                               {!!index && (
