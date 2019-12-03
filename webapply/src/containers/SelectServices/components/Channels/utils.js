@@ -1,60 +1,57 @@
+import { UAE_CODE } from "../../../../constants";
+
 const updateValueCheckBox = (name, prevValue, newValue, updateProspect) => {
   if (newValue !== prevValue) {
     updateProspect({ [name]: newValue });
   }
 };
 
-export const getStatusChequeBookApplied = props => {
-  const {
-    primaryMobCountryCode,
-    primaryPhoneCountryCode,
-    chequeBook: { name, value },
-    accountCurrencies,
-    updateProspect
-  } = props;
-
+export const getStatusIsChequeBookApplied = ({
+  primaryMobCountryCode,
+  primaryPhoneCountryCode,
+  chequeBook: { name, value },
+  accountCurrencies,
+  updateProspect
+}) => {
   const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = accountCurrencies;
 
-  const mobCountryCode = "971";
   const basedMobileNumberForCompany = new Set([primaryMobCountryCode, primaryPhoneCountryCode]);
-  const isSelectedLocalMobilePhone = basedMobileNumberForCompany.has(mobCountryCode);
+  const isSelectedLocalMobilePhone = basedMobileNumberForCompany.has(UAE_CODE);
 
   if (isSelectForeignCurrencyAndLocal || isSelectedLocalMobilePhone) {
     updateValueCheckBox(name, value, true, updateProspect);
-    return { isDisabledChequeBook: true };
+    return true;
   }
 
   if (isSelectOnlyForeignCurrency || !isSelectedLocalMobilePhone) {
-    return { isDisabledChequeBook: false };
+    return false;
   }
 
-  return { isDisabledChequeBook: false };
+  return false;
 };
 
-export const getStatusDebitCardApplied = props => {
-  const {
-    accountSigningInfo: { accountSigningType, authorityType },
-    debitCardApplied: { name, value },
-    accountCurrencies,
-    updateProspect
-  } = props;
+export const getStatusIsDebitCardApplied = ({
+  accountSigningInfo: { accountSigningType, authorityType },
+  debitCardApplied: { name, value },
+  accountCurrencies,
+  updateProspect
+}) => {
   const selectedSigningTypesAny = "Any of us";
   const authorityTypeSP = "SP";
 
-  const accountSigningTypeAnyOfUs = accountSigningType === selectedSigningTypesAny;
-
+  const isAccountSigningTypeAnyOfUs = accountSigningType === selectedSigningTypesAny;
   const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = accountCurrencies;
 
-  if (isSelectOnlyForeignCurrency || !accountSigningTypeAnyOfUs) {
+  if (isSelectOnlyForeignCurrency || !isAccountSigningTypeAnyOfUs) {
     updateValueCheckBox(name, value, false, updateProspect);
-    return { isDisabledDebitCard: true };
+    return true;
   }
 
   if (authorityType === authorityTypeSP || isSelectForeignCurrencyAndLocal) {
     updateValueCheckBox(name, value, true, updateProspect);
-    return { isDisabledDebitCard: true };
+    return true;
   }
 
-  updateValueCheckBox(name, value, accountSigningTypeAnyOfUs, updateProspect);
-  return { isDisabledDebitCard: accountSigningTypeAnyOfUs };
+  updateValueCheckBox(name, value, isAccountSigningTypeAnyOfUs, updateProspect);
+  return isAccountSigningTypeAnyOfUs;
 };

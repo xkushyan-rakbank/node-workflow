@@ -1,38 +1,56 @@
 import React from "react";
 import cx from "classnames";
 import { Link } from "@material-ui/core";
-import { ContainedButton } from "../../../../../components/Buttons/ContainedButton";
-import check from "../../../../../assets/icons/check_outline_ic.png";
+
+import { accountsNames } from "../../../../../constants";
 import { getIconsByAccount } from "../../../../../constants/icons";
+
+import { ICONS, Icon } from "../../../../../components/Icons/Icon";
+import { ContainedButton } from "../../../../../components/Buttons/ContainedButton";
+
 import { useStyles } from "./styled";
+
+export const rakValuePackagePlusName = "RAKvalue PLUS";
+
+const getUrlReadMore = (urls, islamicBanking, value) => {
+  const {
+    rakValuePlusIslamicReadMoreUrl,
+    rakValueMaxIslamicReadMoreUrl,
+    rakValuePlusReadMoreUrl,
+    rakValueMaxReadMoreUrl
+  } = urls;
+
+  const isValueTypeHavePlusUrl = value.includes("PLUS");
+
+  if (islamicBanking) {
+    return isValueTypeHavePlusUrl ? rakValuePlusIslamicReadMoreUrl : rakValueMaxIslamicReadMoreUrl;
+  }
+  return isValueTypeHavePlusUrl ? rakValuePlusReadMoreUrl : rakValueMaxReadMoreUrl;
+};
 
 export const ExpandedDetailedOptionsCard = ({
   optionList,
   isIncluded,
   cost,
   value,
-  href,
   accountType,
   className,
   buttonLabel,
   selectService,
   handleClick,
   disabled,
-  id
+  id,
+  readMoreUrls
 }) => {
   const classes = useStyles();
   const { plus, max } = getIconsByAccount();
-
-  const renderTitle = () =>
-    accountType === "RAKstarter" && value === "RAKvalue PLUS"
-      ? "Included in RAKstarter"
-      : "Available upgrade";
+  const href = getUrlReadMore(readMoreUrls, accountType, value);
 
   return (
     <div className={cx(classes.root, className)}>
       <div className={classes.title}>
         <div className={classes.icon}>
-          {value === "RAKvalue PLUS" ? (
+          {value === rakValuePackagePlusName ? (
             <img width={80} height={80} src={plus} alt="rak-plus" />
           ) : (
             <img width={80} height={80} src={max} alt="rak-max" />
@@ -44,7 +62,7 @@ export const ExpandedDetailedOptionsCard = ({
         <ul className={classes.options}>
           {optionList.map(option => (
             <li key={option.text}>
-              <img className={classes.listIcon} src={check} alt="check" height={16} width={16} />
+              <Icon className={classes.listIcon} name={ICONS.checkOutline} alt="check" />
               <div
                 className={cx("text", classes.indent)}
                 dangerouslySetInnerHTML={{ __html: option.text }}
@@ -77,8 +95,10 @@ export const ExpandedDetailedOptionsCard = ({
             className={classes.button}
             handleClick={() => handleClick(id)}
           />
+        ) : accountType === accountsNames.starter && value === rakValuePackagePlusName ? (
+          "Included in RAKstarter"
         ) : (
-          renderTitle()
+          "Available upgrade"
         )}
       </div>
     </div>

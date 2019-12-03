@@ -3,13 +3,19 @@ import { ReactComponent as Plus } from "../../assets/icons/add-icon.svg";
 import { ReactComponent as Question } from "../../assets/icons/question-mark.svg";
 import { ReactComponent as Lock } from "../../assets/icons/lock.svg";
 import { ReactComponent as Close } from "../../assets/icons/close.svg";
+import { ReactComponent as CheckedRadio } from "../../assets/icons/checked.svg";
+import { ReactComponent as UnCheckedRadio } from "../../assets/icons/unchecked.svg";
+import { ReactComponent as CheckOutline } from "../../assets/icons/check_outline_ic.svg";
 
 export const iconComponents = {
   done: Done,
   plus: Plus,
   question: Question,
   lock: Lock,
-  close: Close
+  close: Close,
+  checkedRadio: CheckedRadio,
+  unCheckedRadio: UnCheckedRadio,
+  checkOutline: CheckOutline
 };
 
 export const ICONS = {
@@ -17,5 +23,8 @@ export const ICONS = {
   plus: "plus",
   question: "question",
   lock: "lock",
-  close: "close"
+  close: "close",
+  checkedRadio: "checkedRadio",
+  unCheckedRadio: "unCheckedRadio",
+  checkOutline: "checkOutline"
 };

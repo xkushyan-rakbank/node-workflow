@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import get from "lodash/get";
 import { Divider, Grid } from "@material-ui/core";
 
-import { getStatusDebitCardApplied, getStatusChequeBookApplied } from "./utils";
+import { getStatusIsDebitCardApplied, getStatusIsChequeBookApplied } from "./utils";
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
@@ -11,8 +11,8 @@ import Subtitle from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 
 export const ChannelsComponent = ({ stakeholders, goToNext, ...props }) => {
-  const { isDisabledDebitCard } = getStatusDebitCardApplied(props);
-  const { isDisabledChequeBook } = getStatusChequeBookApplied(props);
+  const isDisabledDebitCard = getStatusIsDebitCardApplied(props);
+  const isDisabledChequeBook = getStatusIsChequeBookApplied(props);
 
   const isHasSignatories = stakeholders.some(stakeholder =>
     get(stakeholder, "kycDetails.isSignatory")

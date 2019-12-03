@@ -4,10 +4,10 @@ import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { ICONS, Icon } from "../../../components/Icons/Icon";
+
 import { ReactComponent as CheckedIcon } from "../../../assets/icons/on.svg";
 import { ReactComponent as UncheckedIcon } from "../../../assets/icons/off.svg";
-import CheckedRadioIcon from "../../../assets/icons/checked2x.png";
-import UncheckedRadioIcon from "../../../assets/icons/unchecked@2x.png";
 
 export const useStyles = makeStyles(theme => ({
   label: {
@@ -28,10 +28,10 @@ export const CustomCheckbox = ({
 }) => {
   const classes = useStyles();
   const uncheckedRadioIcon = (
-    <img src={UncheckedRadioIcon} alt="check icon" className={classes.radioIcon} />
+    <Icon name={ICONS.unCheckedRadio} alt="check icon" className={classes.radioIcon} />
   );
   const radioIconChecked = (
-    <img src={CheckedRadioIcon} alt="checked icon" className={classes.radioIcon} />
+    <Icon name={ICONS.checkedRadio} alt="checked icon" className={classes.radioIcon} />
   );
 
   const uncheckedIcon = useRadioIcon ? uncheckedRadioIcon : <UncheckedIcon alt="unchecked" />;

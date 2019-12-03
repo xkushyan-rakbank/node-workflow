@@ -28,37 +28,29 @@ export const SelectServicesComponent = ({
     }
   };
 
-  const label = step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step";
+  if (step === SUBMIT_APPLICATION_STEP) {
+    return <SubmitApplication />;
+  }
 
   return (
     <>
-      {step === SUBMIT_APPLICATION_STEP ? (
-        <SubmitApplication />
-      ) : (
-        <>
-          <h2>Services for your account</h2>
-          <p className={classes.formDescription}>
-            Enough of us asking. Now it’s your turn to say which services you want, whether it is
-            foreign currencies, cards or chequebooks.
-          </p>
+      <h2>Services for your account</h2>
+      <p className={classes.formDescription}>
+        Enough of us asking. Now it’s your turn to say which services you want, whether it is
+        foreign currencies, cards or chequebooks.
+      </p>
 
-          <ServicesSteps
-            step={step}
-            clickHandler={createSetStepHandler}
-            handleContinue={setNextStep}
-          />
+      <ServicesSteps step={step} clickHandler={createSetStepHandler} handleContinue={setNextStep} />
 
-          <div className={classes.linkContainer}>
-            <BackLink path={routes.uploadDocuments} />
-            <SubmitButton
-              handleClick={setNextStep}
-              label={label}
-              justify="flex-end"
-              disabled={step <= STEP_3 || rakValuePackage || isSelectOnlyForeignCurrency}
-            />
-          </div>
-        </>
-      )}
+      <div className={classes.linkContainer}>
+        <BackLink path={routes.uploadDocuments} />
+        <SubmitButton
+          handleClick={setNextStep}
+          label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
+          justify="flex-end"
+          disabled={step <= STEP_3 || rakValuePackage || isSelectOnlyForeignCurrency}
+        />
+      </div>
     </>
   );
 };

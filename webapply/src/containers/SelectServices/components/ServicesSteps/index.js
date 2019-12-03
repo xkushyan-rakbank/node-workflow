@@ -13,7 +13,7 @@ export const ServicesSteps = ({ step, clickHandler, handleContinue }) => {
   return servicesSteps.map(({ component: Component, ...stepData }) => (
     <div key={stepData.step}>
       <div className={classes.stepWrapper}>
-        <ServicesStepTitle step={stepData} activeStep={step} clickHandler={clickHandler} />
+        <ServicesStepTitle step={stepData} activeStep={step} createClickHandler={clickHandler} />
         {step === stepData.step && (
           <div
             className={cx(classes.formWrapper, {
