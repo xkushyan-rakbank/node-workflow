@@ -6,7 +6,6 @@ import { Grid } from "@material-ui/core";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
-import { countryCodeOptions } from "./../../constants/options";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
@@ -15,7 +14,7 @@ import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import { isOtpGenerated } from "../../store/selectors/otp";
 import routes from "./../../routes";
-import { IS_RECAPTCHA_ENABLE } from "../../constants";
+import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { useStyles } from "./styled";
 
 const comebackSchema = Yup.object({
@@ -68,7 +67,7 @@ const ComeBackLogin = ({
       <Formik
         initialValues={{
           email: "",
-          countryCode: countryCodeOptions[0].value,
+          countryCode: UAE_CODE,
           mobileNo: ""
         }}
         validationSchema={comebackSchema}
@@ -88,9 +87,10 @@ const ComeBackLogin = ({
               <Field
                 name="countryCode"
                 path="prospect.applicantInfo.countryCode"
-                options={countryCodeOptions}
+                required
+                datalistId="countryCode"
+                extractLabel={item => item.displayText}
                 component={CustomSelect}
-                extractId={option => option.key}
                 shrink={false}
               />
 

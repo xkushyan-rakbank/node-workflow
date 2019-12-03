@@ -6,8 +6,8 @@ import { CompanyPreferredContactInformationComponent } from "./CompanyPreferredC
 import { getOrganizationInfo, getAccountInfo } from "../../../../../../store/selectors/appConfig";
 
 const mapStateToProps = state => ({
-  contactDetails: get(getOrganizationInfo(state), "contactDetails", {}),
-  chequeBookApplied: get(getAccountInfo(state)[0], "chequeBookApplied", false)
+  primaryPhoneNo: get(getOrganizationInfo(state), "contactDetails.primaryPhoneNo", ""),
+  chequeBookApplied: get(getAccountInfo(state)[0], "chequeBookApplied", "")
 });
 
 const mapDispatchToProps = {
