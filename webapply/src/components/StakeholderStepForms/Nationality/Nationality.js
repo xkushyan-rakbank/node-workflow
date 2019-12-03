@@ -40,7 +40,7 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
     const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
 
     if (!value) {
-      arrayHelper.push(initialPassportDetails);
+      arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
     } else {
       if (!passportIndex) {
         values.passportDetails.forEach((el, index) => arrayHelper.remove(index));
@@ -67,7 +67,7 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
     <Formik
       onSubmit={handleContinue}
       initialValues={{
-        passportDetails
+        passportDetails: passportDetails.map(item => ({ ...item, id: uniqueId() }))
       }}
       validationSchema={nationalitySchema}
     >
@@ -80,10 +80,9 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                 values.passportDetails.map((item, passportIndex) => {
                   // eslint-disable-next-line max-len
                   const passportDetails = `prospect.signatoryInfo[${index}].kycDetails.passportDetails[${passportIndex}]`;
-
+                  console.log(item);
                   return (
-                    <React.Fragment key={uniqueId()}>
-                      {console.log("render")}
+                    <React.Fragment key={item.id}>
                       {!!passportIndex && <Grid item sm={12} className={classes.divider} />}
                       <Grid item md={6} sm={12}>
                         <Field
