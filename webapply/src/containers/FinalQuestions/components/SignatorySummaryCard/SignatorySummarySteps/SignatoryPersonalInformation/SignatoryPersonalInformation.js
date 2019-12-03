@@ -37,46 +37,44 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
         onSubmit={handleSubmit}
         validationSchema={signatoryPersonalInformationSchema}
       >
-        {({ values }) => {
-          return (
-            <Form>
-              <Grid spacing={3} container className={classes.flexContainer}>
-                <Grid item md={6} sm={12}>
+        {({ values }) => (
+          <Form>
+            <Grid spacing={3} container className={classes.flexContainer}>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="maritalStatus"
+                  path={`prospect.signatoryInfo[${index}].maritalStatus`}
+                  datalistId="maritalStatus"
+                  label="Marital Status"
+                  component={CustomSelect}
+                />
+              </Grid>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="mothersMaidenName"
+                  path={`prospect.signatoryInfo[${index}].mothersMaidenName`}
+                  label="Mother's maiden name"
+                  placeholder="Mother's maiden name"
+                  component={Input}
+                />
+              </Grid>
+              {values.maritalStatus === OTHER_OPTION_CODE && (
+                <Grid item md={12} sm={12}>
                   <Field
-                    name="maritalStatus"
-                    path={`prospect.signatoryInfo[${index}].maritalStatus`}
-                    datalistId="maritalStatus"
-                    label="Marital Status"
-                    component={CustomSelect}
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <Field
-                    name="mothersMaidenName"
-                    path={`prospect.signatoryInfo[${index}].mothersMaidenName`}
-                    label="Mother's maiden name"
-                    placeholder="Mother's maiden name"
+                    name="maritalStatusOthers"
+                    path={`prospect.signatoryInfo[${index}].maritalStatusOthers`}
+                    label="Other(Specify)"
+                    placeholder="Other(Specify)"
                     component={Input}
                   />
                 </Grid>
-                {values.maritalStatus === OTHER_OPTION_CODE && (
-                  <Grid item md={12} sm={12}>
-                    <Field
-                      name="maritalStatusOthers"
-                      path={`prospect.signatoryInfo[${index}].maritalStatusOthers`}
-                      label="Other(Specify)"
-                      placeholder="Other(Specify)"
-                      component={Input}
-                    />
-                  </Grid>
-                )}
-              </Grid>
-              <div className={classes.buttonWrapper}>
-                <ContinueButton type="submit" />
-              </div>
-            </Form>
-          );
-        }}
+              )}
+            </Grid>
+            <div className={classes.buttonWrapper}>
+              <ContinueButton type="submit" />
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );
