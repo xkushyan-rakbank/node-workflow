@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
@@ -6,9 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import InfoTitle from "../../../../../../components/InfoTitle";
 import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { useStyles } from "./styled";
 import { ADDRESS_NUMBER_REGEX, PO_NUMBER_REGEX } from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE, BASE_PATH } from "./constants";
+
+import { useStyles } from "./styled";
 
 const companyPreferredMailingAddressSchema = Yup.object().shape({
   addressFieldDesc: Yup.string().required("You need to provide address details"),
@@ -31,9 +32,9 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
 export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
   const classes = useStyles();
 
-  const onSubmit = () => {
+  const handleSubmit = useCallback(() => {
     handleContinue();
-  };
+  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
@@ -49,7 +50,7 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
           },
           country: ""
         }}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         validationSchema={companyPreferredMailingAddressSchema}
       >
         {({ values }) => {
