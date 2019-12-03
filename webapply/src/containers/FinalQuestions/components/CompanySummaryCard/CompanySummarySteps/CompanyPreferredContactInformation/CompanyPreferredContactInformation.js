@@ -14,13 +14,7 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { EMAIL_REGEX, PHONE_REGEX } from "../../../../../../utils/validation";
-import {
-  UAE_PHONE_CODE,
-  FIRST_ARRAY_INDEX,
-  INITIAL_PRIMARY_MOBILE_NUMBER,
-  INITIAL_PRIMARY_EMAIL,
-  INITIAL_PRIMARY_PHONE_NUMBER
-} from "./constants";
+import { UAE_PHONE_CODE } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -41,9 +35,7 @@ export const CompanyPreferredContactInformationComponent = ({
   primaryPhoneNo,
   handleContinue
 }) => {
-  const [isExistSecondaryPhoneNumber, setIsExistSecondaryPhoneNumber] = useState(
-    () => !!primaryPhoneNo
-  );
+  const [isExistSecondaryPhoneNumber, setIsExistSecondaryPhoneNumber] = useState(!!primaryPhoneNo);
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
@@ -55,108 +47,105 @@ export const CompanyPreferredContactInformationComponent = ({
       <Formik
         initialValues={{
           primaryMobCountryCode: UAE_PHONE_CODE,
-          primaryMobileNo: INITIAL_PRIMARY_MOBILE_NUMBER,
-          primaryEmail: INITIAL_PRIMARY_EMAIL,
-          primaryPhoneNo: INITIAL_PRIMARY_PHONE_NUMBER,
+          primaryMobileNo: "",
+          primaryEmail: "",
+          primaryPhoneNo: "",
           primaryPhoneCountryCode: UAE_PHONE_CODE
         }}
         onSubmit={handleSubmit}
         validationSchema={companyPreferredContactInformationSchema}
       >
-        {({ setFieldValue }) => {
-          return (
-            <Form>
-              <Grid container spacing={3} className={classes.flexContainer}>
-                <Grid item md={6} sm={12}>
-                  <InputGroup>
-                    <Field
-                      name="primaryMobCountryCode"
-                      path="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
-                      datalistId="countryCode"
-                      extractLabel={item => item.displayText}
-                      shrink={false}
-                      component={CustomSelect}
-                      onChange={e => {
-                        setFieldValue("primaryMobCountryCode", e.target.value);
-                        if (e.target.value !== UAE_PHONE_CODE && chequeBookApplied) {
-                          console.log("need");
-                          updateProspect({
-                            [`prospect.accountInfo[${FIRST_ARRAY_INDEX}].chequeBookApplied`]: false
-                          });
-                        }
-                      }}
-                    />
-                    <Field
-                      name="primaryMobileNo"
-                      path="prospect.organizationInfo.contactDetails.primaryMobileNo"
-                      label="Mobile number"
-                      placeholder="Mobile number"
-                      component={Input}
-                    />
-                  </InputGroup>
-                  {isExistSecondaryPhoneNumber && (
-                    <div className={classes.relative}>
-                      <InputGroup>
-                        <Field
-                          name="primaryPhoneCountryCode"
-                          path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
-                          component={CustomSelect}
-                          datalistId="countryCode"
-                          extractLabel={item => item.displayText}
-                          shrink={false}
-                        />
-                        <Field
-                          name="primaryPhoneNo"
-                          path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
-                          label="Mobile number"
-                          placeholder="Mobile number"
-                          component={Input}
-                        />
-                      </InputGroup>
-                      <RemoveButton
-                        onClick={() => {
-                          setFieldValue("primaryPhoneNo", "");
-                          setFieldValue("primaryPhoneCountryCode", UAE_PHONE_CODE);
-                          setIsExistSecondaryPhoneNumber(false);
-                          updateProspect({
-                            "prospect.organizationInfo.contactDetails.primaryPhoneNo": "",
-                            "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode": UAE_PHONE_CODE
-                          });
-                        }}
-                        title="Delete"
-                        className={classes.container}
-                      />
-                    </div>
-                  )}
-                </Grid>
-                <Grid item md={6} sm={12}>
+        {({ setFieldValue }) => (
+          <Form>
+            <Grid container spacing={3} className={classes.flexContainer}>
+              <Grid item md={6} sm={12}>
+                <InputGroup>
                   <Field
-                    name="primaryEmail"
-                    path="prospect.organizationInfo.contactDetails.primaryEmail"
-                    label="Primary e-mail address"
-                    placeholder="Primary e-mail address"
+                    name="primaryMobCountryCode"
+                    path="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
+                    datalistId="countryCode"
+                    extractLabel={item => item.displayText}
+                    shrink={false}
+                    component={CustomSelect}
+                    onChange={e => {
+                      setFieldValue("primaryMobCountryCode", e.target.value);
+                      if (e.target.value !== UAE_PHONE_CODE && chequeBookApplied) {
+                        updateProspect({
+                          "prospect.accountInfo[0].chequeBookApplied": false
+                        });
+                      }
+                    }}
+                  />
+                  <Field
+                    name="primaryMobileNo"
+                    path="prospect.organizationInfo.contactDetails.primaryMobileNo"
+                    label="Mobile number"
+                    placeholder="Mobile number"
                     component={Input}
                   />
-                </Grid>
+                </InputGroup>
+                {isExistSecondaryPhoneNumber && (
+                  <div className={classes.relative}>
+                    <InputGroup>
+                      <Field
+                        name="primaryPhoneCountryCode"
+                        path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
+                        component={CustomSelect}
+                        datalistId="countryCode"
+                        extractLabel={item => item.displayText}
+                        shrink={false}
+                      />
+                      <Field
+                        name="primaryPhoneNo"
+                        path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
+                        label="Mobile number"
+                        placeholder="Mobile number"
+                        component={Input}
+                      />
+                    </InputGroup>
+                    <RemoveButton
+                      onClick={() => {
+                        setFieldValue("primaryPhoneNo", "");
+                        setFieldValue("primaryPhoneCountryCode", UAE_PHONE_CODE);
+                        setIsExistSecondaryPhoneNumber(false);
+                        updateProspect({
+                          "prospect.organizationInfo.contactDetails.primaryPhoneNo": "",
+                          "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode": UAE_PHONE_CODE
+                        });
+                      }}
+                      title="Delete"
+                      className={classes.container}
+                    />
+                  </div>
+                )}
               </Grid>
-              {!isExistSecondaryPhoneNumber && (
-                <AddButton
-                  onClick={() => setIsExistSecondaryPhoneNumber(true)}
-                  title="Add a landline number"
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="primaryEmail"
+                  path="prospect.organizationInfo.contactDetails.primaryEmail"
+                  label="Primary e-mail address"
+                  placeholder="Primary e-mail address"
+                  component={Input}
                 />
-              )}
-              <div className={classes.infoTitleWrap}>
-                <InfoTitle
-                  classes={{ wrapper: classes.infoTitle }}
-                  title="Heads up! We can only send chequebooks if you use a phone number from the UAE."
-                />
-              </div>
-              <div className={classes.buttonWrapper}>
-                <ContinueButton type="submit" />
-              </div>
-            </Form>
-          );
-        }}
+              </Grid>
+            </Grid>
+            {!isExistSecondaryPhoneNumber && (
+              <AddButton
+                onClick={() => setIsExistSecondaryPhoneNumber(true)}
+                title="Add a landline number"
+              />
+            )}
+            <div className={classes.infoTitleWrap}>
+              <InfoTitle
+                classes={{ wrapper: classes.infoTitle }}
+                title="Heads up! We can only send chequebooks if you use a phone number from the UAE."
+              />
+            </div>
+            <div className={classes.buttonWrapper}>
+              <ContinueButton type="submit" />
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );

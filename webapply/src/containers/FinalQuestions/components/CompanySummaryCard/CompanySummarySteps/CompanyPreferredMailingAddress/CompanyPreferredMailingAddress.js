@@ -29,7 +29,7 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
   })
 });
 
-export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
+export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
@@ -53,74 +53,72 @@ export const CompanyPreferredMailingAddressComponent = ({ handleContinue }) => {
         onSubmit={handleSubmit}
         validationSchema={companyPreferredMailingAddressSchema}
       >
-        {({ values }) => {
-          return (
-            <Form>
-              <Grid container spacing={3} className={classes.flexContainer}>
-                <Grid item md={6} sm={12}>
-                  <Field
-                    name="addressFieldDesc"
-                    path={`${BASE_PATH}.addressFieldDesc`}
-                    label="Office / Shop Number"
-                    placeholder="Office / Shop Number"
-                    component={Input}
-                  />
-                  <Field
-                    name="addressLine1"
-                    path={`${BASE_PATH}.addressLine1`}
-                    label="Street / Location"
-                    placeholder="Street / Location"
-                    component={Input}
-                  />
-                  <Field
-                    name="emirateCity"
-                    path={`${BASE_PATH}.emirateCity`}
-                    datalistId="emirate"
-                    extractLabel={item => item.displayText}
-                    label="Emirate"
-                    component={CustomSelect}
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <Field
-                    name="typeOfSpaceOccupied.spaceType"
-                    path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
-                    datalistId="spaceType"
-                    extractLabel={item => item.displayText}
-                    label="Type of Space Occupied"
-                    component={CustomSelect}
-                  />
-                  {values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
-                    <Field
-                      name="typeOfSpaceOccupied.others"
-                      path={`${BASE_PATH}.typeOfSpaceOccupied.others`}
-                      label="Other(Specify)"
-                      placeholder="Other(Specify)"
-                      component={Input}
-                    />
-                  )}
-                  <Field
-                    name="poBox"
-                    path={`${BASE_PATH}.poBox`}
-                    label="PO Box Number"
-                    placeholder="PO Box Number"
-                    component={Input}
-                  />
-                  <Field name="country" path={`${BASE_PATH}.country`} disabled component={Input} />
-                </Grid>
-              </Grid>
-              <div className={classes.infoTitleWrap}>
-                <InfoTitle
-                  classes={{ wrapper: classes.infoTitle }}
-                  title="You guessed it, we will use this section for our communication with you"
+        {({ values }) => (
+          <Form>
+            <Grid container spacing={3} className={classes.flexContainer}>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="addressFieldDesc"
+                  path={`${BASE_PATH}.addressFieldDesc`}
+                  label="Office / Shop Number"
+                  placeholder="Office / Shop Number"
+                  component={Input}
                 />
-              </div>
-              <div className={classes.buttonWrapper}>
-                <ContinueButton type="submit" />
-              </div>
-            </Form>
-          );
-        }}
+                <Field
+                  name="addressLine1"
+                  path={`${BASE_PATH}.addressLine1`}
+                  label="Street / Location"
+                  placeholder="Street / Location"
+                  component={Input}
+                />
+                <Field
+                  name="emirateCity"
+                  path={`${BASE_PATH}.emirateCity`}
+                  datalistId="emirate"
+                  extractLabel={item => item.displayText}
+                  label="Emirate"
+                  component={CustomSelect}
+                />
+              </Grid>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="typeOfSpaceOccupied.spaceType"
+                  path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
+                  datalistId="spaceType"
+                  extractLabel={item => item.displayText}
+                  label="Type of Space Occupied"
+                  component={CustomSelect}
+                />
+                {values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
+                  <Field
+                    name="typeOfSpaceOccupied.others"
+                    path={`${BASE_PATH}.typeOfSpaceOccupied.others`}
+                    label="Other(Specify)"
+                    placeholder="Other(Specify)"
+                    component={Input}
+                  />
+                )}
+                <Field
+                  name="poBox"
+                  path={`${BASE_PATH}.poBox`}
+                  label="PO Box Number"
+                  placeholder="PO Box Number"
+                  component={Input}
+                />
+                <Field name="country" path={`${BASE_PATH}.country`} disabled component={Input} />
+              </Grid>
+            </Grid>
+            <div className={classes.infoTitleWrap}>
+              <InfoTitle
+                classes={{ wrapper: classes.infoTitle }}
+                title="You guessed it, we will use this section for our communication with you"
+              />
+            </div>
+            <div className={classes.buttonWrapper}>
+              <ContinueButton type="submit" />
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );

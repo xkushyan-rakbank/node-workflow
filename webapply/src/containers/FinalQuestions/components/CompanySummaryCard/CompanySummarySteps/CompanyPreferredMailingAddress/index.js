@@ -1,3 +1,1 @@
-export {
-  CompanyPreferredMailingAddressComponent as CompanyPreferredMailingAddress
-} from "./CompanyPreferredMailingAddress";
+export { CompanyPreferredMailingAddress } from "./CompanyPreferredMailingAddress";

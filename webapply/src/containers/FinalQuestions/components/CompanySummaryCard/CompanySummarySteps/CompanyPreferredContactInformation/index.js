@@ -4,23 +4,10 @@ import get from "lodash/get";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { CompanyPreferredContactInformationComponent } from "./CompanyPreferredContactInformation";
 import { getOrganizationInfo, getAccountInfo } from "../../../../../../store/selectors/appConfig";
-import {
-  INITIAL_PRIMARY_PHONE_NUMBER,
-  FIRST_ARRAY_INDEX,
-  INITIAL_PRIMARY_CHEQUE_BOOK_APPLIED
-} from "./constants";
 
 const mapStateToProps = state => ({
-  primaryPhoneNo: get(
-    getOrganizationInfo(state),
-    "contactDetails.primaryPhoneNo",
-    INITIAL_PRIMARY_PHONE_NUMBER
-  ),
-  chequeBookApplied: get(
-    getAccountInfo(state)[FIRST_ARRAY_INDEX],
-    "chequeBookApplied",
-    INITIAL_PRIMARY_CHEQUE_BOOK_APPLIED
-  )
+  primaryPhoneNo: get(getOrganizationInfo(state), "contactDetails.primaryPhoneNo", ""),
+  chequeBookApplied: get(getAccountInfo(state)[0], "chequeBookApplied", "")
 });
 
 const mapDispatchToProps = {
