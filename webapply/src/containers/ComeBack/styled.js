@@ -15,7 +15,8 @@ export const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    width: "100%"
+    width: "100%",
+    marginTop: "174px"
   },
   verificationForm: {
     width: "100%",
