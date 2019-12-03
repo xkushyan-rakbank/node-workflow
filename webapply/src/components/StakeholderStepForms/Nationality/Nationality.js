@@ -4,14 +4,12 @@ import Grid from "@material-ui/core/Grid";
 import { Formik, Form, FieldArray, getIn } from "formik";
 import * as Yup from "yup";
 import uniqueId from "lodash/uniqueId";
-import get from "lodash/get";
 
 import { handleCitizenship } from "../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { AutoSaveField as Field, SelectAutocomplete, Checkbox, Input } from "../../Form";
 import { PASSPORT_NUMBER_REGEX } from "../../../utils/validation";
-import { getSignatories } from "./../../../store/selectors/appConfig";
 
 const MAX_ANOTHER_CITIZENSHIP = 4;
 const initialPassportDetails = {
@@ -32,7 +30,7 @@ const nationalitySchema = Yup.object().shape({
   )
 });
 
-const NationalityStep = ({ index, passportDetails, handleContinue }) => {
+const NationalityStep = ({ index, handleContinue }) => {
   const classes = useStyles();
 
   const createAddCityshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => event => {
@@ -135,13 +133,7 @@ const mapDispatchToProps = {
   handleCitizenship
 };
 
-const mapStateToProps = (state, { index }) => {
-  return {
-    passportDetails: get(getSignatories(state)[index], "kycDetails.passportDetails", [])
-  };
-};
-
 export const Nationality = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(NationalityStep);
