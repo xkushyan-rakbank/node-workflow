@@ -4,19 +4,21 @@ import cx from "classnames";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
-import { AddButton } from "../../../../../../components/Buttons/AddButton";
-import { RemoveButton } from "../../../../../../components/Buttons/RemoveButton";
+
+import { ArrayRemoveButton } from "../../../../Buttons/ArrayRemoveButton";
+import { ArrayAddButton } from "../../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { limits } from "./constants";
-import { useStyles } from "./styled";
-import { prospect } from "../../../../../../constants/config";
 import {
   Checkbox,
   CustomSelect,
   Input,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
+import { limits } from "./constants";
+import { prospect } from "../../../../../../constants/config";
 import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
+
+import { useStyles } from "./styled";
 
 const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
   otherEntitiesInUAE: Yup.boolean(),
@@ -55,21 +57,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
   updateProspect
 }) => {
   const classes = useStyles();
-
-  const checkIsAddButtonDisabled = (limit, items, fields) => {
-    if (!items.length) {
-      return false;
-    }
-    const lastAddedItem = items[items.length - 1];
-    return items.length === limit || fields.some(field => lastAddedItem[field] === "");
-  };
-
-  const handleRemoveField = (items, index, prospect) => {
-    const dataList = [...items];
-    dataList.splice(index, 1);
-    const path = `prospect.orgKYCDetails.${prospect}`;
-    updateProspect({ [path]: [...dataList] });
-  };
 
   const handleSubmit = useCallback(() => {
     handleContinue();
@@ -162,13 +149,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   component={CustomSelect}
                                 />
                                 {!!index && (
-                                  <RemoveButton
-                                    onClick={() => {
-                                      arrayHelpers.remove(index);
-                                      handleRemoveField(entitiesInUAE, index, "entitiesInUAE");
-                                    }}
-                                    title="Delete"
+                                  <ArrayRemoveButton
+                                    arrayHelpers={arrayHelpers}
+                                    dataArray={entitiesInUAE}
+                                    itemIndex={index}
+                                    prospectPath="prospect.orgKYCDetails.entitiesInUAE"
                                     className={classes.container}
+                                    title="Delete"
                                   />
                                 )}
                               </Grid>
@@ -176,21 +163,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           ))}
                         </Grid>
                         {values.entitiesInUAE.length < limits.INSIDE_SUBSIDIARY_COUNT && (
-                          <AddButton
-                            onClick={() =>
-                              arrayHelpers.insert(values.entitiesInUAE.length, {
-                                id: uniqueId(),
-                                companyName: "",
-                                tradeLicenseNo: "",
-                                emirate: ""
-                              })
-                            }
+                          <ArrayAddButton
                             title="Add another subsidiary inside the UAE"
-                            disabled={checkIsAddButtonDisabled(
-                              limits.INSIDE_SUBSIDIARY_COUNT,
-                              values.entitiesInUAE,
-                              ["companyName", "tradeLicenseNo", "emirate"]
-                            )}
+                            limit={limits.INSIDE_SUBSIDIARY_COUNT}
+                            requiredFields={["companyName", "tradeLicenseNo", "emirate"]}
+                            addedItem={{ companyName: "", tradeLicenseNo: "", emirate: "" }}
+                            dataArray={values.entitiesInUAE}
+                            arrayHelpers={arrayHelpers}
                           />
                         )}
                       </>
@@ -255,17 +234,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   component={CustomSelect}
                                 />
                                 {!!index && (
-                                  <RemoveButton
-                                    onClick={() => {
-                                      arrayHelpers.remove(index);
-                                      handleRemoveField(
-                                        entitiesOutsideUAE,
-                                        index,
-                                        "entitiesOutsideUAE"
-                                      );
-                                    }}
-                                    title="Delete"
+                                  <ArrayRemoveButton
+                                    arrayHelpers={arrayHelpers}
+                                    dataArray={entitiesOutsideUAE}
+                                    itemIndex={index}
+                                    prospectPath="prospect.orgKYCDetails.entitiesOutsideUAE"
                                     className={classes.container}
+                                    title="Delete"
                                   />
                                 )}
                               </Grid>
@@ -273,20 +248,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           ))}
                         </Grid>
                         {values.entitiesOutsideUAE.length < limits.OUTSIDE_SUBSIDIARY_COUNT && (
-                          <AddButton
-                            onClick={() =>
-                              arrayHelpers.insert(values.entitiesOutsideUAE.length, {
-                                id: uniqueId(),
-                                companyName: "",
-                                country: ""
-                              })
-                            }
+                          <ArrayAddButton
                             title="Add another subsidiary outside the UAE"
-                            disabled={checkIsAddButtonDisabled(
-                              limits.OUTSIDE_SUBSIDIARY_COUNT,
-                              values.entitiesOutsideUAE,
-                              ["companyName", "country"]
-                            )}
+                            limit={limits.OUTSIDE_SUBSIDIARY_COUNT}
+                            requiredFields={["companyName", "country"]}
+                            addedItem={{ companyName: "", country: "" }}
+                            dataArray={values.entitiesOutsideUAE}
+                            arrayHelpers={arrayHelpers}
                           />
                         )}
                       </>
