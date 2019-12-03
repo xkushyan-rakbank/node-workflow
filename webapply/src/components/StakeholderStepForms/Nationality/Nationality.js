@@ -18,7 +18,7 @@ const initialPassportDetails = {
   nationality: "",
   hasAnotherCitizenship: false,
   passportNumber: "",
-  diplomatPassport: ""
+  diplomatPassport: false
 };
 
 const nationalitySchema = Yup.object().shape({
@@ -42,11 +42,7 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
     if (!value) {
       arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
     } else {
-      if (!passportIndex) {
-        values.passportDetails.forEach((el, index) => arrayHelper.remove(index));
-      } else {
-        arrayHelper.pop();
-      }
+      values.passportDetails.forEach((el, index) => index >= passportIndex && arrayHelper.pop());
     }
     setFieldValue(name, !value);
   };
@@ -56,10 +52,8 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
       const passportDetailsLength = values.passportDetails.length;
       const prevPassportIndex = passportDetailsLength - 2;
       const prevNationalityPath = `passportDetails[${prevPassportIndex}].nationality`;
-      const isDisabled =
-        passportDetailsLength - 1 === passportIndex && !getIn(values, prevNationalityPath);
 
-      return isDisabled;
+      return passportDetailsLength - 1 === passportIndex && !getIn(values, prevNationalityPath);
     }
   };
 
@@ -67,7 +61,7 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
     <Formik
       onSubmit={handleContinue}
       initialValues={{
-        passportDetails: passportDetails.map(item => ({ ...item, id: uniqueId() }))
+        passportDetails: [{ ...initialPassportDetails, id: uniqueId() }]
       }}
       validationSchema={nationalitySchema}
     >
@@ -80,7 +74,6 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                 values.passportDetails.map((item, passportIndex) => {
                   // eslint-disable-next-line max-len
                   const passportDetails = `prospect.signatoryInfo[${index}].kycDetails.passportDetails[${passportIndex}]`;
-                  console.log(item);
                   return (
                     <React.Fragment key={item.id}>
                       {!!passportIndex && <Grid item sm={12} className={classes.divider} />}
@@ -93,7 +86,6 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                           datalistId="country"
                           disabled={isDisabled()}
                           shrink={true}
-                          isLoadDefaultValueFromStore={false}
                         />
                         {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
                           <Field
@@ -108,7 +100,6 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                               setFieldValue
                             )}
                             disabled={isDisabled(values, passportIndex)}
-                            isLoadDefaultValueFromStore={false}
                           />
                         )}
                       </Grid>
@@ -119,14 +110,12 @@ const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                           label="Passport Number"
                           placeholder="Passport Number"
                           component={Input}
-                          isLoadDefaultValueFromStore={false}
                         />
                         <Field
                           name={`passportDetails[${passportIndex}].diplomatPassport`}
                           path={`${passportDetails}.diplomatPassport`}
                           label="This is a diplomatic Passport"
                           component={Checkbox}
-                          isLoadDefaultValueFromStore={false}
                         />
                       </Grid>
                     </React.Fragment>
