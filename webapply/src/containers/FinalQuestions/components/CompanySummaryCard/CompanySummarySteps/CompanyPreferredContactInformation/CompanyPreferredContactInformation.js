@@ -64,7 +64,6 @@ export const CompanyPreferredContactInformationComponent = ({
                     name="primaryMobCountryCode"
                     path="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
                     datalistId="countryCode"
-                    extractLabel={item => item.displayText}
                     shrink={false}
                     component={CustomSelect}
                     onChange={e => {
@@ -92,7 +91,6 @@ export const CompanyPreferredContactInformationComponent = ({
                         path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
                         component={CustomSelect}
                         datalistId="countryCode"
-                        extractLabel={item => item.displayText}
                         shrink={false}
                       />
                       <Field

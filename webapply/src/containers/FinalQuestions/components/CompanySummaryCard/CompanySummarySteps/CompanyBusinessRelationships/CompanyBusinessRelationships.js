@@ -136,7 +136,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                               path={`prospect.orgKYCDetails.topCustomers[${index}].country`}
                               label="Country"
                               datalistId="country"
-                              extractLabel={item => item.displayText}
                               component={CustomSelect}
                             />
                             {!!index && (
@@ -216,7 +215,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                               path={`prospect.orgKYCDetails.topSuppliers[${index}].country`}
                               label="Country"
                               datalistId="country"
-                              extractLabel={item => item.displayText}
                               component={CustomSelect}
                               disabled={values.isDontHaveSuppliersYet}
                             />
@@ -289,8 +287,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                               path={`prospect.orgKYCDetails.topOriginGoodsCountries[${index}]`}
                               label="Country"
                               datalistId="country"
-                              extractLabel={item => item.displayText}
-                              extractId={option => option.key}
                               component={CustomSelect}
                               disabled={values.isDontTradeGoodsYet}
                             />
