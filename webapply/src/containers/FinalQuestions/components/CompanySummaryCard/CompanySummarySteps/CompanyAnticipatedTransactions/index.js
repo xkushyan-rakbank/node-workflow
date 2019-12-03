@@ -1,1 +1,1 @@
-export { CompanyAnticipatedTransactionsComponent } from "./CompanyAnticipatedTransactions";
+export { CompanyAnticipatedTransactions } from "./CompanyAnticipatedTransactions";
