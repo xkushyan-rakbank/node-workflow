@@ -23,7 +23,7 @@ instance.interceptors.request.use(config => {
 
     return {
       ...config,
-      headres: {
+      headers: {
         ...config.headers,
         [SYM_KEY_HEADER]: encryptedSymKey
       },
