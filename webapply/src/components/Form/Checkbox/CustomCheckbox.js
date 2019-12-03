@@ -34,15 +34,17 @@ export const CustomCheckbox = ({
     <Icon name={ICONS.checkedRadio} alt="checked icon" className={classes.radioIcon} />
   );
 
-  const uncheckedIcon = useRadioIcon ? uncheckedRadioIcon : <UncheckedIcon alt="unchecked" />;
-  const checkedIcon = useRadioIcon ? radioIconChecked : <CheckedIcon alt="checkedIcon" />;
-
   return (
     <FormControlLabel
       classes={{ label: classes.label }}
       control={
         type !== "radio" ? (
-          <Checkbox icon={uncheckedIcon} checkedIcon={checkedIcon} onClick={onSelect} {...rest} />
+          <Checkbox
+            icon={useRadioIcon ? uncheckedRadioIcon : <UncheckedIcon alt="unchecked" />}
+            checkedIcon={useRadioIcon ? radioIconChecked : <CheckedIcon alt="checkedIcon" />}
+            onClick={onSelect}
+            {...rest}
+          />
         ) : (
           <Radio
             icon={uncheckedRadioIcon}

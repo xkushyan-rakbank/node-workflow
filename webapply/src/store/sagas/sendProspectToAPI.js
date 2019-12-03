@@ -23,6 +23,7 @@ import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { handleChangeStep } from "../actions/stakeholders";
 import { prospect } from "../../api/apiClient";
+import { log } from "../../utils/loggger";
 
 function* sendProspectToAPISaga() {
   try {
@@ -41,7 +42,7 @@ function* sendProspectToAPISaga() {
       yield put(handleChangeStep());
     }
   } catch (error) {
-    console.error({ error });
+    log(error);
     yield call(sendProspectToAPIFail());
   } finally {
     yield put(updateSaveType("continue"));
