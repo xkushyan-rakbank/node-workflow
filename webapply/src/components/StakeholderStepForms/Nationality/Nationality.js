@@ -32,7 +32,7 @@ const nationalitySchema = Yup.object().shape({
   )
 });
 
-const Nationality = ({ index, passportDetails, handleContinue }) => {
+const NationalityStep = ({ index, passportDetails, handleContinue }) => {
   const classes = useStyles();
 
   const createAddCityshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => event => {
@@ -153,7 +153,7 @@ const mapStateToProps = (state, { index }) => {
   };
 };
 
-export default connect(
+export const Nationality = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Nationality);
+)(NationalityStep);
