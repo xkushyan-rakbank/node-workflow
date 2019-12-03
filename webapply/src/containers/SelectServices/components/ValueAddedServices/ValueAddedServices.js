@@ -5,7 +5,7 @@ import {
   ExpandedDetailedOptionsCard,
   rakValuePackagePlusName
 } from "./ExpandedOptionsCards/ExpandedDetailedOptionsCard";
-import { RakValuesList } from "./ExpandedOptionsCards/constants";
+import { rakValuesList } from "./ExpandedOptionsCards/constants";
 import { accountsNames } from "../../../../constants/index";
 
 import { useStyles } from "./styled";
@@ -59,7 +59,7 @@ export const ValueAddedServicesComponent = ({
   return (
     <>
       <div className={cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency })}>
-        {RakValuesList.map(({ optionList, isIncluded, cost, value, _id }, index) => (
+        {rakValuesList.map(({ optionList, isIncluded, cost, value, _id }, index) => (
           <ExpandedDetailedOptionsCard
             key={value}
             value={value}
@@ -67,7 +67,7 @@ export const ValueAddedServicesComponent = ({
             isSelected={value === rakValuePackage.value && !isSelectOnlyForeignCurrency}
             buttonLabel={getButtonText({
               _id,
-              options: RakValuesList[index],
+              options: rakValuesList[index],
               accountCurrencies,
               rakValuePackage,
               accountType

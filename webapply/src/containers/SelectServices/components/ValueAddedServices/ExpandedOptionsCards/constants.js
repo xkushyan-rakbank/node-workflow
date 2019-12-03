@@ -1,4 +1,4 @@
-export const RakValuesList = [
+export const rakValuesList = [
   {
     optionList: [
       {

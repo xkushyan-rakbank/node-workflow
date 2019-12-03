@@ -14,7 +14,7 @@ export const CheckboxesWrapper = styled("div")({
 });
 
 export const CheckboxGroup = ({
-  type = "checkbox",
+  useRadioIcon,
   options,
   extractId = option => option.key,
   extractValue = option => option.value,
@@ -29,26 +29,12 @@ export const CheckboxGroup = ({
 
   return (
     <FormControl className="formControl">
-      {type !== "radio" ? (
-        <CheckboxesWrapper>
-          {options.map(item => (
-            <CustomCheckbox
-              {...field}
-              type={type}
-              key={extractId(item)}
-              value={extractValue(item)}
-              label={extractLabel(item)}
-              onSelect={onSelect}
-              checked={(field.value || []).includes(extractValue(item))}
-            />
-          ))}
-        </CheckboxesWrapper>
-      ) : (
+      {useRadioIcon ? (
         <RadioGroup {...field}>
           <CheckboxesWrapper>
             {options.map(item => (
               <CustomCheckbox
-                type={type}
+                useRadioIcon={useRadioIcon}
                 key={extractId(item)}
                 value={extractValue(item)}
                 label={extractLabel(item)}
@@ -57,6 +43,19 @@ export const CheckboxGroup = ({
             ))}
           </CheckboxesWrapper>
         </RadioGroup>
+      ) : (
+        <CheckboxesWrapper>
+          {options.map(item => (
+            <CustomCheckbox
+              {...field}
+              key={extractId(item)}
+              value={extractValue(item)}
+              label={extractLabel(item)}
+              onSelect={onSelect}
+              checked={(field.value || []).includes(extractValue(item))}
+            />
+          ))}
+        </CheckboxesWrapper>
       )}
 
       {hasError && <ErrorMessage error={errorMessage} />}

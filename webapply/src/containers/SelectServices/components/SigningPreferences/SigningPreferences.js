@@ -77,7 +77,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
             name="accountSigningType"
             options={accountSigningTypes}
             path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
-            type="radio"
+            useRadioIcon
             onSelect={e => {
               setFieldValue("accountSigningType", e.currentTarget.value);
               setFieldValue("accountSigningInstn", "");
