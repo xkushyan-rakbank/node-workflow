@@ -40,12 +40,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
     .matches(DESIGNATION_REGEX, "Invalid designation value")
 });
 
-export const SignatoryEmploymentDetailsComponent = ({
-  index,
-  companyName,
-  updateProspect,
-  handleContinue
-}) => {
+export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handleContinue }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
@@ -123,9 +118,6 @@ export const SignatoryEmploymentDetailsComponent = ({
                     component={Checkbox}
                     onSelect={() => {
                       const employerName = values.isWorkAtTheCompany ? "" : companyName;
-                      updateProspect({
-                        [`${basePath}.employmentDetails.employerName`]: employerName
-                      });
                       setFieldValue("employerName", employerName);
                     }}
                   />
