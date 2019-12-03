@@ -24,7 +24,7 @@ export const Checkbox = ({
         {...rest}
         label={label}
         value={value}
-        checked={field.value ? field.value : false}
+        checked={field.value === value}
       />
 
       {hasError && <ErrorMessage error={errorMessage} />}

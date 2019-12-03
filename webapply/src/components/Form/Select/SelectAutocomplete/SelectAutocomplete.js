@@ -64,7 +64,7 @@ export const SelectAutocomplete = ({
           label,
           error: isError,
           InputLabelProps: {
-            shrink: true
+            shrink
           }
         }}
         getOptionLabel={extractLabel}

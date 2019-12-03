@@ -1,5 +1,5 @@
 import { generatePath } from "react-router";
-// import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash/isEmpty";
 import { store } from "./../store";
 import { endpoints } from "./../constants/config";
 
@@ -21,10 +21,10 @@ export const getQueryString = (product, segment) => {
   if (product && segment) {
     queryString = `?segment=${segment}&product=${product}&role=${role}`;
   } else {
-    // const product = !isEmpty(store.getState().appConfig.endpoints)
-    //   ? store.getState().appConfig.prospect.applicationInfo.accountType
-    //   : null;
-    const product = "RAKelite";
+    const product = !isEmpty(store.getState().appConfig.endpoints)
+      ? store.getState().appConfig.prospect.applicationInfo.accountType
+      : null;
+    // const product = "RAKelite";
     if (product) {
       queryString = `?segment=${segment}&product=${product}&role=${role}`;
     } else {

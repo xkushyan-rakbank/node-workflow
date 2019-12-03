@@ -28,7 +28,6 @@ export const CustomCheckbox = ({ label, onSelect = () => {}, type = "checkbox", 
       control={
         type !== "radio" ? (
           <Checkbox
-            className={classes.checkbox}
             icon={<UncheckedIcon alt="unchecked" />}
             checkedIcon={<CheckedIcon alt="checkedIcon" />}
             onClick={onSelect}
