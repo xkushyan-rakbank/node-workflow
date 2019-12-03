@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
+
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { useStyles } from "./styled";
 import { OTHER_OPTION_CODE } from "./constants";
 import {
   CustomSelect,
@@ -16,6 +16,8 @@ import {
   COMPANY_NAME_REGEX,
   DESIGNATION_REGEX
 } from "../../../../../../utils/validation";
+
+import { useStyles } from "./styled";
 
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required("You need to provide qualification"),
@@ -41,35 +43,28 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
 export const SignatoryEmploymentDetailsComponent = ({
   index,
   companyName,
-  employmentType,
-  isWorkAtTheCompany,
   updateProspect,
-  handleContinue,
-  qualification,
-  designation,
-  totalExperienceYrs,
-  otherEmploymentType,
-  employerName
+  handleContinue
 }) => {
   const classes = useStyles();
 
-  const onSubmit = () => {
+  const handleSubmit = useCallback(() => {
     handleContinue();
-  };
+  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          qualification,
-          employmentType,
-          designation,
-          totalExperienceYrs,
-          otherEmploymentType,
-          isWorkAtTheCompany,
-          employerName
+          qualification: "",
+          employmentType: "",
+          designation: "",
+          totalExperienceYrs: 0,
+          otherEmploymentType: "",
+          isWorkAtTheCompany: false,
+          employerName: ""
         }}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         validationSchema={signatoryEmploymentDetailsSchema}
       >
         {({ values, setFieldValue }) => {
@@ -128,9 +123,8 @@ export const SignatoryEmploymentDetailsComponent = ({
                     path={`${basePath}.employmentDetails.isWorkAtTheCompany`}
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
-                    onChange={() => {
-                      setFieldValue("isWorkAtTheCompany", !values.isWorkAtTheCompany);
-                      const employerName = values.isWorkAtTheCompany ? companyName : "";
+                    onSelect={() => {
+                      const employerName = values.isWorkAtTheCompany ? "" : companyName;
                       updateProspect({
                         [`${basePath}.employmentDetails.employerName`]: employerName
                       });
