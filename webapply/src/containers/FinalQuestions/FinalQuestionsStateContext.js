@@ -6,7 +6,6 @@ export const FinalQuestionsStateContext = createContext({});
 
 export const FinalQuestionsState = ({ children }) => {
   const [state, setState] = useState({
-    isWorkAtTheCompany: false,
     isDontTradeGoodsYet: false,
     isDontHaveSuppliersYet: false
   });

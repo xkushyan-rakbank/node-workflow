@@ -252,9 +252,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top origin of goods</h4>
-                    <Field
+                    <FinalQuestionField
                       name="isDontTradeGoodsYet"
-                      path="prospect.orgKYCDetails.isDontTradeGoodsYet"
                       label="I don't trade with goods"
                       component={Checkbox}
                       onSelect={() => {
