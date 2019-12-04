@@ -154,8 +154,6 @@ export const prospect = {
         country: ""
       }
     ],
-    isDontHaveSuppliersYet: false,
-    isDontTradeGoodsYet: false,
     topOriginGoodsCountries: [""],
     industryMultiSelect: [
       {
@@ -292,8 +290,7 @@ export const prospect = {
         employerName: "",
         occupation: "",
         totalExperienceYrs: 0,
-        employmentStartDate: "",
-        isWorkAtTheCompany: false
+        employmentStartDate: ""
       },
       sameAsCompanyAddress: false,
       addressInfo: [
