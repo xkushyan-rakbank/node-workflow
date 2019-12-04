@@ -1,6 +1,6 @@
 import React, { createContext, useMemo, useState, useContext, useEffect } from "react";
 import { getIn, Field, useFormikContext } from "formik";
-import { isEqual } from "date-fns";
+import { isEqual } from "lodash/isEqual";
 
 export const FinalQuestionsStateContext = createContext({});
 
