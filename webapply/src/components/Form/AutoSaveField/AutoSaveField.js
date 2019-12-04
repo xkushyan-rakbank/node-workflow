@@ -25,9 +25,9 @@ export const AutoSaveField = ({
 
   useEffect(() => {
     if (isLoadDefaultValueFromStore && path) {
-      const value = get(appConfig, path, null);
+      const value = get(appConfig, path);
 
-      if (value !== null) {
+      if (value !== undefined) {
         setFieldValue(name, value);
       }
     }
@@ -42,7 +42,7 @@ export const AutoSaveField = ({
 
   useEffect(() => {
     if (path && appConfig) {
-      const oldValue = get(appConfig, path, null);
+      const oldValue = get(appConfig, path);
 
       if (!isEqual(oldValue, value)) {
         dispatch(updateProspect({ [path]: value }));
