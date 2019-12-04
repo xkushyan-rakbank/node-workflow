@@ -61,43 +61,6 @@ export const emirateCityOptions = [
   }
 ];
 
-export const OTHER_OPTION_CODE = "Other";
+export const BASE_PATH = "prospect.organizationInfo.addressInfo[0].addressDetails[0]";
 
-export const spaceTypeOptions = [
-  {
-    code: "OF",
-    key: "Office",
-    value: "OF",
-    label: "Office"
-  },
-  {
-    code: "W",
-    key: "Warehouse",
-    value: "W",
-    label: "Warehouse"
-  },
-  {
-    code: "K",
-    key: "Kiosk",
-    value: "K",
-    label: "Kiosk"
-  },
-  {
-    code: "S",
-    key: "Shop",
-    value: "S",
-    label: "Shop"
-  },
-  {
-    code: "FD",
-    key: "Flexi desk",
-    value: "FD",
-    label: "Flexi desk"
-  },
-  {
-    code: OTHER_OPTION_CODE,
-    key: OTHER_OPTION_CODE,
-    value: OTHER_OPTION_CODE,
-    label: OTHER_OPTION_CODE
-  }
-];
+export const OTHER_OPTION_CODE = "Other";
