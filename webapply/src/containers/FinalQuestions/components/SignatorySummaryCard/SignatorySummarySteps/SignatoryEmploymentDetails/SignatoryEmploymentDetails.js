@@ -18,6 +18,7 @@ import {
 } from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
+import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required("You need to provide qualification"),
@@ -111,9 +112,8 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                   </Grid>
                 )}
                 <Grid item sm={12}>
-                  <Field
-                    name="isWorkAtTheCompany"
-                    path={`${basePath}.employmentDetails.isWorkAtTheCompany`}
+                  <FinalQuestionField
+                    name={`isWorkAtTheCompany${index}`}
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
                     onSelect={() => {

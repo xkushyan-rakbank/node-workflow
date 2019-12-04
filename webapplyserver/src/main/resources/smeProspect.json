@@ -137,8 +137,6 @@
 				"country": ""
 			}
 		],
-		"isDontHaveSuppliersYet": false,
-		"isDontTradeGoodsYet": false,
 		"topOriginGoodsCountries": [
 			""
 		],
@@ -283,8 +281,7 @@
 				"employerName": "",
 				"occupation": "",
 				"totalExperienceYrs": 0,
-				"employmentStartDate": "",
-				"isWorkAtTheCompany": false
+				"employmentStartDate": ""
 			},
 			"sameAsCompanyAddress": false,
 			"addressInfo": [

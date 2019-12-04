@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { updateProspect } from "../../../store/actions/appConfig";
-import { RemoveButton } from "../../../components/Buttons/RemoveButton";
+
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { RemoveButton } from "../../../../components/Buttons/RemoveButton";
 
 const ArrayRemoveButtonComponent = ({
   arrayHelpers,

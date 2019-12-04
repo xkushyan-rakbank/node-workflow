@@ -11,8 +11,8 @@ import {
   Checkbox,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { ArrayRemoveButton } from "../../../../Buttons/ArrayRemoveButton";
-import { ArrayAddButton } from "../../../../Buttons/ArrayAddButton";
+import { ArrayRemoveButton } from "../../../Buttons/ArrayRemoveButton";
+import { ArrayAddButton } from "../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
   limits,
@@ -252,9 +252,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top origin of goods</h4>
-                    <Field
+                    <FinalQuestionField
                       name="isDontTradeGoodsYet"
-                      path="prospect.orgKYCDetails.isDontTradeGoodsYet"
                       label="I don't trade with goods"
                       component={Checkbox}
                       onSelect={() => {
