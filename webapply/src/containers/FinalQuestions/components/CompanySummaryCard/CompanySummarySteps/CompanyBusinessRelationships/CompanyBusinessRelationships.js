@@ -11,8 +11,8 @@ import {
   Checkbox,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { ArrayRemoveButton } from "../../../../Buttons/ArrayRemoveButton";
-import { ArrayAddButton } from "../../../../Buttons/ArrayAddButton";
+import { ArrayRemoveButton } from "../../../Buttons/ArrayRemoveButton";
+import { ArrayAddButton } from "../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
   limits,
