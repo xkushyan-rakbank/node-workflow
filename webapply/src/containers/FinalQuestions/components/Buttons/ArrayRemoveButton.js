@@ -1,10 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
 
-import { updateProspect } from "../../../../store/actions/appConfig";
 import { RemoveButton } from "../../../../components/Buttons/RemoveButton";
 
-const ArrayRemoveButtonComponent = ({
+export const ArrayRemoveButton = ({
   arrayHelpers,
   dataArray,
   itemIndex,
@@ -24,12 +22,3 @@ const ArrayRemoveButtonComponent = ({
     />
   );
 };
-
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export const ArrayRemoveButton = connect(
-  null,
-  mapDispatchToProps
-)(ArrayRemoveButtonComponent);
