@@ -20,7 +20,7 @@ import DetailedAccount from "./containers/DetailedAccount/DetailedAccount";
 import ComeBackLogin from "./containers/ComeBack/ComeBackLogin";
 import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
 import { MyApplications } from "./containers/MyApplications";
-import UploadDocuments from "./containers/FileUploader";
+import { UploadDocuments } from "./containers/uploadDocuments";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
 import SearchedAppInfo from "./agent/SearchedAppInfo";
 import ReUploadDocuments from "./containers/ReUploadDocuments";
