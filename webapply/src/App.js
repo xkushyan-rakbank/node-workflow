@@ -25,15 +25,15 @@ import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationS
 import SearchedAppInfo from "./agent/SearchedAppInfo";
 import ReUploadDocuments from "./containers/ReUploadDocuments";
 import { AgentProtectedRoute, ProspectProtectedRoute } from "./components/Routers";
-import routes from "./routes.js";
-import { theme } from "./theme";
 import { SubmitApplication } from "./containers/SelectServices/components/SubmitApplication";
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 import { getEndpoints } from "./store/selectors/appConfig";
+import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
+import routes from "./routes.js";
+import { theme } from "./theme";
 
 import "./App.scss";
-import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
@@ -69,7 +69,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 path={routes.stakeholdersInfo}
                 component={CompanyStakeholders}
               />
-              <ProspectProtectedRoute exact path={routes.finalQuestions} component={FinalQuestions} />
+              <ProspectProtectedRoute
+                exact
+                path={routes.finalQuestions}
+                component={FinalQuestions}
+              />
               <ProspectProtectedRoute
                 exact
                 path={routes.uploadDocuments}
@@ -80,12 +84,20 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 path={routes.reUploadDocuments}
                 component={ReUploadDocuments}
               />
-              <ProspectProtectedRoute exact path={routes.selectServices} component={SelectServices} />
+              <ProspectProtectedRoute
+                exact
+                path={routes.selectServices}
+                component={SelectServices}
+              />
 
               <Route exact path={routes.applicationOverview} component={ApplicationOverview} />
               <Route exact path={routes.detailedAccount} component={DetailedAccount} />
               <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
-              <Route exact path={routes.comeBackLoginVerification} component={ComeBackVerification} />
+              <Route
+                exact
+                path={routes.comeBackLoginVerification}
+                component={ComeBackVerification}
+              />
               <Route exact path={routes.MyApplications} component={MyApplications} />
               <AgentProtectedRoute path={routes.SearchedAppInfo} component={SearchedAppInfo} />
               <ProspectProtectedRoute
