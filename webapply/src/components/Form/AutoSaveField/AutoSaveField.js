@@ -25,9 +25,9 @@ export const AutoSaveField = ({
 
   useEffect(() => {
     if (isLoadDefaultValueFromStore && path) {
-      const value = get(appConfig, path, null);
+      const value = get(appConfig, path);
 
-      if (value !== null) {
+      if (value !== undefined) {
         setFieldValue(name, value);
       }
     }
@@ -42,13 +42,14 @@ export const AutoSaveField = ({
 
   useEffect(() => {
     if (path && appConfig) {
-      const oldValue = get(appConfig, path, null);
+      const oldValue = get(appConfig, path);
 
       if (!isEqual(oldValue, value)) {
         dispatch(updateProspect({ [path]: value }));
       }
     }
-  }, [path, value, dispatch, appConfig]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path, value, dispatch]);
 
   const options = useMemo(() => {
     if (path && datalistId && uiConfig) {
@@ -56,7 +57,8 @@ export const AutoSaveField = ({
 
       return get(fieldConfig, "datalist", []).filter(filterOptions);
     }
-  }, [path, datalistId, uiConfig, filterOptions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path, datalistId, filterOptions]);
 
   return <Field name={name} options={options} {...rest} />;
 };

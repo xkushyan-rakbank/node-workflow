@@ -158,6 +158,8 @@ export const applicationStatus = {
   }
 };
 
+export const UAE_CODE = "971";
+
 export const IS_RECAPTCHA_ENABLE = true;
 
 export const REQUEST_LOADING = "loading";

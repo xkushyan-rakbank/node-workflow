@@ -337,3 +337,7 @@ h3 {
 .MuiOutlinedInput-inputSelect {
   padding-right: 56px !important;
 }
+
+[aria-disabled="true"] {
+  opacity: 0.6;
+}

@@ -1,6 +1,7 @@
-import { portraitOrientationQueryIPads } from "../../../../constants/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import { mobileResolution } from "../../../../constants";
+
+import { portraitOrientationQueryIPads } from "../../../../constants/styles";
 
 export const useStyles = makeStyles({
   cardsContainer: {

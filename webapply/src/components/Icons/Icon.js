@@ -1,6 +1,7 @@
 import React from "react";
-import { ICONS, iconComponents } from "./icons";
 import { styled } from "@material-ui/styles";
+
+import { ICONS, iconComponents } from "./icons";
 
 const Icon = ({ className, name, ...props }) => {
   const IconComponent = iconComponents[name];

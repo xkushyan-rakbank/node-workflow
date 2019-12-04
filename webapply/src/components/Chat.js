@@ -1,7 +1,8 @@
 import React from "react";
-import chatIcon from "./../assets/icons/chat.png";
 import { withStyles } from "@material-ui/core/styles";
 import { mobileResolution } from "../constants";
+
+import chatIcon from "./../assets/icons/chat.png";
 
 const style = {
   chat: {
