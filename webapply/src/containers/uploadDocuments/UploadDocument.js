@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import routes from "../../routes";
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import CompanyDocuments from "./../../components/UploadDocument/CompanyDocument";
+import { CompanyDocuments } from "./../uploadDocuments/components/CompanyDocument";
 import SignatoriesDocuments from "./../../components/UploadDocument/SignatoriesDocuments";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
@@ -55,7 +55,7 @@ export const UploadDocumentComponent = ({
         <>
           <div className={classes.sectionContainer}>
             <SectionTitle title="Company documents" className={classes.title} />
-            <CompanyDocuments DocDetails={{ documents, companyName }} />
+            <CompanyDocuments documents={documents.companyDocuments} companyName={companyName} />
           </div>
           {documents.stakeholdersDocuments ? (
             <div className={classes.sectionContainer}>

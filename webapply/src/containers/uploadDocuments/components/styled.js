@@ -1,13 +1,7 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
-import UploadDocument from "./UploadDocument";
-import { getInputValueById } from "../../store/selectors/input";
-
-import companyIconSvg from "../../assets/icons/brief.png";
-
-const style = {
+export const useStyles = makeStyles({
+  //companydocument css start
   container: {
     borderRadius: "8px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
@@ -83,41 +77,4 @@ const style = {
     cursor: "pointer",
     lineHeight: "2.2"
   }
-};
-
-class CompanyDocuments extends Component {
-  render() {
-    let companyDocuments = this.props.DocDetails.documents.companyDocuments;
-    const companyName = this.props.companyName;
-    let companyDocument;
-    if (companyDocuments) {
-      companyDocument = companyDocuments.map((documents, index) => {
-        return (
-          <UploadDocument key={index} documents={documents} index={index} type="companyDocument" />
-        );
-      });
-    }
-
-    return (
-      <div className={this.props.classes.container}>
-        <header className={this.props.classes.header}>
-          <div className={this.props.classes.companyIconWrap}>
-            {this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}
-          </div>
-          <div className={this.props.classes.contentBox}>
-            <h3 className={this.props.classes.label}>{companyName}</h3>
-          </div>
-        </header>
-        {companyDocument}
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
-  };
-};
-
-export default withStyles(style)(connect(mapStateToProps)(CompanyDocuments));
+});
