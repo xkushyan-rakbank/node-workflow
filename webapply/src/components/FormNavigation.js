@@ -6,7 +6,7 @@ import get from "lodash/get";
 
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
-import { accountsNames, formStepper, searchProspectStepper } from "../constants";
+import { accountsNames, formStepper, searchProspectStepper, mobileResolution } from "../constants";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import { ContainedButton } from "./Buttons/ContainedButton";
@@ -20,6 +20,14 @@ import {
 } from "../constants/styles";
 import routes from "../routes";
 
+const blobImages = {
+  red: require("../assets/images/bg-blobs/bg-blob-red.png"),
+  redS: require("../assets/images/bg-blobs/bg-blob-s-red.png"),
+  brown: require("../assets/images/bg-blobs/bg-blob-brown.png"),
+  brownS: require("../assets/images/bg-blobs/bg-blob-s-brown.png"),
+  green: require("../assets/images/bg-blobs/bg-blob-green.png")
+};
+
 const style = {
   formNav: {
     flex: `0 0 ${sideNavWidthXL}px`,
@@ -28,7 +36,17 @@ const style = {
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "right center",
+    backgroundImage: `url(${blobImages.red})`,
     zIndex: "11",
+    "&.brown": {
+      backgroundImage: `url(${blobImages.brown})`
+    },
+    "&.green": {
+      backgroundImage: `url(${blobImages.green})`
+    },
+    [portraitOrientationQueryIPads]: {
+      paddingTop: "270px"
+    },
     "@media only screen and (max-width: 1420px)": {
       flex: `0 0 ${sideNavWidthLG}px`
     },
@@ -38,8 +56,20 @@ const style = {
     "@media only screen and (max-width: 1220px)": {
       flex: `0 0 ${sideNavWidthSM}px`
     },
-    [portraitOrientationQueryIPads]: {
-      paddingTop: "270px"
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      flex: "0 0 100%",
+      height: "190px",
+      paddingTop: "70px",
+      marginBottom: "calc(100vh - 300px)",
+      backgroundSize: "cover",
+      backgroundPosition: "center bottom",
+      backgroundImage: `url(${blobImages.redS})`,
+      "&.brown": {
+        backgroundImage: `url(${blobImages.brownS})`
+      },
+      "&.green": {
+        backgroundImage: `url(${blobImages.redS})`
+      }
     },
     "& ul": {
       margin: "0",
@@ -86,6 +116,10 @@ const style = {
     },
     "@media only screen and (max-width: 1220px)": {
       marginLeft: 20
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      margin: 0,
+      padding: "0 16px"
     }
   },
   sectionTitle: {
@@ -100,7 +134,15 @@ const style = {
       fontSize: "40px"
     },
     "@media only screen and (max-width: 1220px)": {
-      fontSize: "30px"
+      fontSize: "32px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      margin: 0,
+      padding: 0,
+      maxWidth: "500px"
+    },
+    "@media only screen and (max-width: 374px)": {
+      fontSize: "28px"
     }
   },
   sectionSubtitle: {
@@ -113,6 +155,9 @@ const style = {
     fontFamily: "Open Sans",
     "@media only screen and (max-width: 1220px)": {
       paddingRight: "25px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      fontSize: "14px"
     }
   },
   nextButton: {
@@ -228,15 +273,14 @@ const FormStepper = ({ step, path, checkLoginStatus }) =>
     </ul>
   );
 
-const getBgImage = (accountType, islamicBanking) => {
-  const bgImageUrl =
-    accountType === accountsNames.elite
-      ? "bg-blob-brown.png"
-      : islamicBanking
-      ? "bg-blob-green.png"
-      : "bg-blob-red.png";
-  const bgImage = require(`../assets/images/${bgImageUrl}`);
-  return `url(${bgImage})`;
+const getAccountTypeClass = (accountType, islamicBanking) => {
+  if (accountType && accountType === accountsNames.elite) {
+    return " brown";
+  } else if (islamicBanking) {
+    return " green";
+  } else {
+    return "";
+  }
 };
 
 class FormNavigation extends React.Component {
@@ -284,10 +328,10 @@ class FormNavigation extends React.Component {
       routes.comeBackLoginVerification,
       routes.reUploadDocuments
     ]).has(location.pathname);
-    const backgroundImage = getBgImage(accountType, islamicBanking);
+    const accountTypeClass = getAccountTypeClass(accountType, islamicBanking);
 
     return (
-      <div className={classes.formNav} style={{ backgroundImage }}>
+      <div className={`${classes.formNav + accountTypeClass}`}>
         {showAccountInfo ? (
           <AccountInfo classes={classes} accountType={accountType} history={history} />
         ) : (

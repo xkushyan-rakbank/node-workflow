@@ -79,6 +79,7 @@ export const StyledTableBodyComponent = ({
                 labelStyle: classes.containedButtonLabelStyle
               }}
             />
+            {name}
           </TableCell>
         ))}
       </TableRow>

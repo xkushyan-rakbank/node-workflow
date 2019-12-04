@@ -1,6 +1,7 @@
 import React from "react";
 import chatIcon from "./../assets/icons/chat.png";
 import { withStyles } from "@material-ui/core/styles";
+import { mobileResolution } from "../constants";
 
 const style = {
   chat: {
@@ -11,6 +12,9 @@ const style = {
     fontSize: "18px",
     "@media only screen and (max-width: 1220px)": {
       left: "15px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      position: "fixed"
     }
   },
   chatInner: {
@@ -46,6 +50,23 @@ const style = {
     "& img": {
       width: "30px",
       height: "30px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      "& .hide-on-mobile": {
+        display: "none"
+      },
+      "& span": {
+        width: "48px",
+        height: "48px",
+        margin: 0
+      },
+      "& img": {
+        width: "26px",
+        height: "26px"
+      },
+      "& a": {
+        marginLeft: 0
+      }
     }
   }
 };
@@ -59,7 +80,10 @@ const Chat = ({ classes }) => {
             <img src={chatIcon} alt="chat" />
           </span>
         </a>
-        <a href="/"> Chat with Us</a>
+        <a href="/" className="hide-on-mobile">
+          {" "}
+          Chat with Us
+        </a>
       </div>
     </div>
   );
