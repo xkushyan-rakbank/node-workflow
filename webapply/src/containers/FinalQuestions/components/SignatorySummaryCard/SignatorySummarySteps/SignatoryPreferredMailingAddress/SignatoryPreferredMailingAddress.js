@@ -65,18 +65,19 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 component={Checkbox}
                 label="Same as Company Address"
                 onSelect={() => {
-                  const fieldValues = {
-                    addressFieldDesc: !values.sameAsCompanyAddress
-                      ? organisationAddressFieldDesc
-                      : "",
-                    addressLine1: !values.sameAsCompanyAddress ? organisationAddressLine1 : "",
-                    emirateCity: !values.sameAsCompanyAddress ? organisationEmirateCity : "",
-                    poBox: !values.sameAsCompanyAddress ? organisationPoBox : ""
-                  };
-                  setFieldValue("addressFieldDesc", fieldValues.addressFieldDesc);
-                  setFieldValue("addressLine1", fieldValues.addressLine1);
-                  setFieldValue("emirateCity", fieldValues.emirateCity);
-                  setFieldValue("poBox", fieldValues.poBox);
+                  setFieldValue(
+                    "addressFieldDesc",
+                    !values.sameAsCompanyAddress ? organisationAddressFieldDesc : ""
+                  );
+                  setFieldValue(
+                    "addressLine1",
+                    !values.sameAsCompanyAddress ? organisationAddressLine1 : ""
+                  );
+                  setFieldValue(
+                    "emirateCity",
+                    !values.sameAsCompanyAddress ? organisationEmirateCity : ""
+                  );
+                  setFieldValue("poBox", !values.sameAsCompanyAddress ? organisationPoBox : "");
                 }}
               />
               <Grid container spacing={3} className={classes.flexContainer}>

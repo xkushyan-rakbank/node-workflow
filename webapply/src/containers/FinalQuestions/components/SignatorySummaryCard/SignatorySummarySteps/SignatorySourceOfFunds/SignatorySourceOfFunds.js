@@ -47,7 +47,6 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, updateP
                   datalistId="wealthType"
                   label="Source of funds"
                   onChange={e => {
-                    setFieldValue("wealthType", e.target.value);
                     if (
                       e.target.value !== OTHER_SOURCE_OF_WEALTH &&
                       values.wealthType === OTHER_SOURCE_OF_WEALTH
@@ -57,6 +56,7 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, updateP
                       });
                       setFieldTouched("others", false);
                     }
+                    setFieldValue("wealthType", e.target.value);
                   }}
                   component={CustomSelect}
                 />
