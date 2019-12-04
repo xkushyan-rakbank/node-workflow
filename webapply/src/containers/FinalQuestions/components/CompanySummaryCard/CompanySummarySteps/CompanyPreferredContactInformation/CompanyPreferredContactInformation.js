@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 
 import { AddButton } from "../../../../../../components/Buttons/AddButton";
@@ -83,39 +84,37 @@ export const CompanyPreferredContactInformationComponent = ({
                     component={Input}
                   />
                 </InputGroup>
-                {isExistSecondaryPhoneNumber && (
-                  <div className={classes.relative}>
-                    <InputGroup>
-                      <Field
-                        name="primaryPhoneCountryCode"
-                        path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
-                        component={CustomSelect}
-                        datalistId="countryCode"
-                        shrink={false}
-                      />
-                      <Field
-                        name="primaryPhoneNo"
-                        path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
-                        label="Mobile number"
-                        placeholder="Mobile number"
-                        component={Input}
-                      />
-                    </InputGroup>
-                    <RemoveButton
-                      onClick={() => {
-                        setFieldValue("primaryPhoneNo", "");
-                        setFieldValue("primaryPhoneCountryCode", UAE_PHONE_CODE);
-                        setIsExistSecondaryPhoneNumber(false);
-                        updateProspect({
-                          "prospect.organizationInfo.contactDetails.primaryPhoneNo": "",
-                          "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode": UAE_PHONE_CODE
-                        });
-                      }}
-                      title="Delete"
-                      className={classes.container}
+                <div
+                  className={cx(classes.relative, {
+                    [classes.hidden]: !isExistSecondaryPhoneNumber
+                  })}
+                >
+                  <InputGroup>
+                    <Field
+                      name="primaryPhoneCountryCode"
+                      path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
+                      component={CustomSelect}
+                      datalistId="countryCode"
+                      shrink={false}
                     />
-                  </div>
-                )}
+                    <Field
+                      name="primaryPhoneNo"
+                      path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
+                      label="Mobile number"
+                      placeholder="Mobile number"
+                      component={Input}
+                    />
+                  </InputGroup>
+                  <RemoveButton
+                    onClick={() => {
+                      setFieldValue("primaryPhoneNo", "");
+                      setFieldValue("primaryPhoneCountryCode", UAE_PHONE_CODE);
+                      setIsExistSecondaryPhoneNumber(false);
+                    }}
+                    title="Delete"
+                    className={classes.container}
+                  />
+                </div>
               </Grid>
               <Grid item md={6} sm={12}>
                 <Field
