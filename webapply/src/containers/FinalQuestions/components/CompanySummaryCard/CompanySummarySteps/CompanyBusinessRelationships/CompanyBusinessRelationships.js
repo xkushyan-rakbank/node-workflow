@@ -24,6 +24,7 @@ import {
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
+import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
@@ -169,9 +170,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top suppliers</h4>
-                    <Field
+                    <FinalQuestionField
                       name="isDontHaveSuppliersYet"
-                      path="prospect.orgKYCDetails.isDontHaveSuppliersYet"
                       label="I don't have any suppliers"
                       component={Checkbox}
                       onSelect={() => {

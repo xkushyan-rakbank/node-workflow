@@ -33,6 +33,7 @@ import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 import { getEndpoints } from "./store/selectors/appConfig";
 
 import "./App.scss";
+import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
@@ -48,52 +49,54 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
   return (
     <MuiThemeProvider theme={theme}>
       <ConnectedRouter history={history}>
-        <FormLayout>
-          <Switch>
-            <ProspectProtectedRoute
-              exact
-              path={routes.ApplicationSubmitted}
-              component={ApplicationSubmitted}
-            />
-            <Route exact path={routes.accountsComparison} component={AccountsComparison} />
-            <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
-            <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
-            <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
-            <Route exact path="/agent" render={() => <Redirect to={routes.login} />} />
-            <Route exact path={routes.login} component={Login} />
-            <AgentProtectedRoute exact path={routes.searchProspect} component={SearchProspect} />
-            <ProspectProtectedRoute
-              exact
-              path={routes.stakeholdersInfo}
-              component={CompanyStakeholders}
-            />
-            <ProspectProtectedRoute exact path={routes.finalQuestions} component={FinalQuestions} />
-            <ProspectProtectedRoute
-              exact
-              path={routes.uploadDocuments}
-              component={UploadDocuments}
-            />
-            <ProspectProtectedRoute
-              exact
-              path={routes.reUploadDocuments}
-              component={ReUploadDocuments}
-            />
-            <ProspectProtectedRoute exact path={routes.selectServices} component={SelectServices} />
+        <FinalQuestionsState>
+          <FormLayout>
+            <Switch>
+              <ProspectProtectedRoute
+                exact
+                path={routes.ApplicationSubmitted}
+                component={ApplicationSubmitted}
+              />
+              <Route exact path={routes.accountsComparison} component={AccountsComparison} />
+              <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
+              <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
+              <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
+              <Route exact path="/agent" render={() => <Redirect to={routes.login} />} />
+              <Route exact path={routes.login} component={Login} />
+              <AgentProtectedRoute exact path={routes.searchProspect} component={SearchProspect} />
+              <ProspectProtectedRoute
+                exact
+                path={routes.stakeholdersInfo}
+                component={CompanyStakeholders}
+              />
+              <ProspectProtectedRoute exact path={routes.finalQuestions} component={FinalQuestions} />
+              <ProspectProtectedRoute
+                exact
+                path={routes.uploadDocuments}
+                component={UploadDocuments}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.reUploadDocuments}
+                component={ReUploadDocuments}
+              />
+              <ProspectProtectedRoute exact path={routes.selectServices} component={SelectServices} />
 
-            <Route exact path={routes.applicationOverview} component={ApplicationOverview} />
-            <Route exact path={routes.detailedAccount} component={DetailedAccount} />
-            <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
-            <Route exact path={routes.comeBackLoginVerification} component={ComeBackVerification} />
-            <Route exact path={routes.MyApplications} component={MyApplications} />
-            <AgentProtectedRoute path={routes.SearchedAppInfo} component={SearchedAppInfo} />
-            <ProspectProtectedRoute
-              exact
-              path={routes.SubmitApplication}
-              component={SubmitApplication}
-            />
-            <Redirect to={routes.accountsComparison} />
-          </Switch>
-        </FormLayout>
+              <Route exact path={routes.applicationOverview} component={ApplicationOverview} />
+              <Route exact path={routes.detailedAccount} component={DetailedAccount} />
+              <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
+              <Route exact path={routes.comeBackLoginVerification} component={ComeBackVerification} />
+              <Route exact path={routes.MyApplications} component={MyApplications} />
+              <AgentProtectedRoute path={routes.SearchedAppInfo} component={SearchedAppInfo} />
+              <ProspectProtectedRoute
+                exact
+                path={routes.SubmitApplication}
+                component={SubmitApplication}
+              />
+              <Redirect to={routes.accountsComparison} />
+            </Switch>
+          </FormLayout>
+        </FinalQuestionsState>
       </ConnectedRouter>
     </MuiThemeProvider>
   );
