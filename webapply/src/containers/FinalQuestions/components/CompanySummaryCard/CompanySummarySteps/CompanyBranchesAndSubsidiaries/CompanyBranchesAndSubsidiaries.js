@@ -5,8 +5,8 @@ import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { ArrayRemoveButton } from "../../../../Buttons/ArrayRemoveButton";
-import { ArrayAddButton } from "../../../../Buttons/ArrayAddButton";
+import { ArrayRemoveButton } from "../../../Buttons/ArrayRemoveButton";
+import { ArrayAddButton } from "../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
   Checkbox,
