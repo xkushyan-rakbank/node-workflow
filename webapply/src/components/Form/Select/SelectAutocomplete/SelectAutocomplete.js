@@ -47,7 +47,6 @@ export const SelectAutocomplete = ({
       <Select
         {...field}
         {...props}
-        isClearable={true}
         options={options}
         classes={classes}
         styles={customStyles}
@@ -63,7 +62,10 @@ export const SelectAutocomplete = ({
         placeholder=""
         textFieldProps={{
           label,
-          error: isError
+          error: isError,
+          InputLabelProps: {
+            shrink
+          }
         }}
         getOptionLabel={extractLabel}
       />

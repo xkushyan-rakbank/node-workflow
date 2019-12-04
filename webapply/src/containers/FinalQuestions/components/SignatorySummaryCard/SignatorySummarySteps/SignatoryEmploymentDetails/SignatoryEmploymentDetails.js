@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useCallback } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
+
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { useStyles } from "./styled";
-import { qualificationOptions, employmentTypeOptions, OTHER_OPTION_CODE } from "./constants";
+import { OTHER_OPTION_CODE } from "./constants";
 import {
   CustomSelect,
   Input,
@@ -16,6 +16,9 @@ import {
   COMPANY_NAME_REGEX,
   DESIGNATION_REGEX
 } from "../../../../../../utils/validation";
+
+import { useStyles } from "./styled";
+import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required("You need to provide qualification"),
@@ -38,47 +41,26 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
     .matches(DESIGNATION_REGEX, "Invalid designation value")
 });
 
-export const SignatoryEmploymentDetailsComponent = ({
-  index,
-  companyName,
-  employmentType,
-  isWorkAtTheCompany,
-  updateProspect,
-  handleContinue,
-  qualification,
-  designation,
-  totalExperienceYrs,
-  otherEmploymentType,
-  employerName
-}) => {
+export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handleContinue }) => {
   const classes = useStyles();
 
-  function checkboxCallback(value, name, callback) {
-    const fieldPath = `prospect.signatoryInfo[${index}].employmentDetails.employerName`;
-    const employerName = value ? companyName : "";
-    updateProspect({
-      [fieldPath]: employerName
-    });
-    callback(name, employerName);
-  }
-
-  const onSubmit = () => {
+  const handleSubmit = useCallback(() => {
     handleContinue();
-  };
+  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          qualification,
-          employmentType,
-          designation,
-          totalExperienceYrs,
-          otherEmploymentType,
-          isWorkAtTheCompany,
-          employerName
+          qualification: "",
+          employmentType: "",
+          designation: "",
+          totalExperienceYrs: 0,
+          otherEmploymentType: "",
+          isWorkAtTheCompany: false,
+          employerName: ""
         }}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         validationSchema={signatoryEmploymentDetailsSchema}
       >
         {({ values, setFieldValue }) => {
@@ -88,21 +70,17 @@ export const SignatoryEmploymentDetailsComponent = ({
               <Grid container spacing={3} className={classes.flexContainer}>
                 <Grid item md={6} sm={12}>
                   <Field
-                    options={qualificationOptions}
-                    shrink={false}
                     name="qualification"
                     path={`${basePath}.kycDetails.qualification`}
-                    placeholder="Qualification"
-                    // label="Qualification"
+                    datalistId="qualification"
+                    label="Qualification"
                     component={CustomSelect}
                   />
                   <Field
-                    options={employmentTypeOptions}
-                    shrink={false}
                     name="employmentType"
                     path={`${basePath}.employmentDetails.employmentType`}
-                    placeholder="Employment Type"
-                    // label="Employment Type"
+                    datalistId="employmentType"
+                    label="Employment Type"
                     component={CustomSelect}
                   />
                 </Grid>
@@ -134,14 +112,13 @@ export const SignatoryEmploymentDetailsComponent = ({
                   </Grid>
                 )}
                 <Grid item sm={12}>
-                  <Field
-                    name="isWorkAtTheCompany"
-                    path={`${basePath}.employmentDetails.isWorkAtTheCompany`}
+                  <FinalQuestionField
+                    name={`isWorkAtTheCompany${index}`}
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
-                    onChange={() => {
-                      setFieldValue("isWorkAtTheCompany", !values.isWorkAtTheCompany);
-                      checkboxCallback(values.isWorkAtTheCompany, "employerName", setFieldValue);
+                    onSelect={() => {
+                      const employerName = values.isWorkAtTheCompany ? "" : companyName;
+                      setFieldValue("employerName", employerName);
                     }}
                   />
                 </Grid>
