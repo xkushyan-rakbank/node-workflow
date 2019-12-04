@@ -1,7 +1,7 @@
 import React from "react";
 import uniqueId from "lodash/uniqueId";
 
-import { AddButton } from "../../../components/Buttons/AddButton";
+import { AddButton } from "../../../../components/Buttons/AddButton";
 
 export const ArrayAddButton = ({
   arrayHelpers,
