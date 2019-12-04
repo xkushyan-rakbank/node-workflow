@@ -33,3 +33,6 @@ export const percentageSelectorWithoutCurrentStakeholder = (state, index) => {
     0
   );
 };
+
+export const checkIsHasSignatories = state =>
+  stakeholdersSelector(state).some(stakeholder => get(stakeholder, "kycDetails.isSignatory"));

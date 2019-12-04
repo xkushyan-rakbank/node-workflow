@@ -46,11 +46,8 @@ export const ValueAddedServicesComponent = ({
 
   const handleSelectValue = useCallback(
     selectedService => {
-      let serviceName = selectedService;
-      if (value === selectedService && accountType !== accountsNames.starter) {
-        serviceName = "";
-      }
-
+      const serviceName =
+        value === selectedService && accountType !== accountsNames.starter ? selectedService : "";
       updateProspect({ [name]: serviceName });
     },
     [value, accountType, name, updateProspect]

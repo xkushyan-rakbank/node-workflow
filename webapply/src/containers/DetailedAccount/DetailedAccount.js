@@ -5,7 +5,7 @@ import * as appConfigSelectors from "../../store/selectors/appConfig";
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher";
 import AccountBenefits from "./AccountBenefits";
-import AccountingSoftware from "./AccountingSoftware";
+import { AccountingSoftware } from "./AccountingSoftware";
 
 import getVideoUrl from "../../utils/getVideoUrl";
 import routes from "../../routes";

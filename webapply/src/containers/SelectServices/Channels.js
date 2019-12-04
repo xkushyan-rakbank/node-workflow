@@ -4,7 +4,7 @@ import { getSignatories } from "../../store/selectors/appConfig";
 import { getInputValueById } from "../../store/selectors/input";
 import { getGeneralInputProps } from "../../store/selectors/input";
 import { getSelectedTypeCurrency } from "../../store/selectors/SelectServices";
-import { stakeholders as stakeholdersSelector } from "../../store/selectors/stakeholder";
+import { stakeholdersSelector, checkIsHasSignatories } from "../../store/selectors/stakeholder";
 import { updateProspect } from "../../store/actions/appConfig";
 
 import { ChannelsComponent } from "./components/Channels/Channels";
@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
   eStatements: getGeneralInputProps(state, "Acnt.eStatements", [0]),
   mailStatements: getGeneralInputProps(state, "Acnt.mailStatements", [0]),
   stakeholders: stakeholdersSelector(state),
+  isHasSignatories: checkIsHasSignatories(state),
   primaryMobCountryCode: getInputValueById(state, "OrgCont.primaryMobCountryCode"),
   primaryPhoneCountryCode: getInputValueById(state, "OrgCont.primaryPhoneCountryCode")
 });

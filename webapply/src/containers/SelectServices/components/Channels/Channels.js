@@ -1,22 +1,17 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import get from "lodash/get";
 import { Divider, Grid } from "@material-ui/core";
 
-import { getStatusIsDebitCardApplied, getStatusIsChequeBookApplied } from "./utils";
+import { checkIsDebitCardApplied, checkIsChequeBookApplied } from "./utils";
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import Subtitle from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 
-export const ChannelsComponent = ({ stakeholders, goToNext, ...props }) => {
-  const isDisabledDebitCard = getStatusIsDebitCardApplied(props);
-  const isDisabledChequeBook = getStatusIsChequeBookApplied(props);
-
-  const isHasSignatories = stakeholders.some(stakeholder =>
-    get(stakeholder, "kycDetails.isSignatory")
-  );
+export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ...props }) => {
+  const isDisabledDebitCard = checkIsDebitCardApplied(props);
+  const isDisabledChequeBook = checkIsChequeBookApplied(props);
 
   return (
     <Formik
@@ -64,7 +59,7 @@ export const ChannelsComponent = ({ stakeholders, goToNext, ...props }) => {
             label="I want online bank statements"
             component={Checkbox}
             useRadioIcon
-            onChange={e => {
+            onChange={() => {
               setFieldValue("mailStatements", false);
               setFieldValue("eStatements", true);
             }}
@@ -76,7 +71,7 @@ export const ChannelsComponent = ({ stakeholders, goToNext, ...props }) => {
             label="I want paper statements (monthly charges apply)"
             component={Checkbox}
             useRadioIcon
-            onChange={e => {
+            onChange={() => {
               setFieldValue("eStatements", false);
               setFieldValue("mailStatements", true);
             }}

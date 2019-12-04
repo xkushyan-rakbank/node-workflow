@@ -64,25 +64,25 @@
       "code": "AED",
       "key": "AED",
       "value": "AED",
-      "displayText": "AED"
+      "label": "AED"
     },
     {
       "code": "USD",
       "key": "USD",
       "value": "USD",
-      "displayText": "USD"
+      "label": "USD"
     },
     {
       "code": "EUR",
       "key": "EUR",
       "value": "EUR",
-      "displayText": "EUR"
+      "label": "EUR"
     },
     {
       "code": "GBP",
       "key": "GBP",
       "value": "GBP",
-      "displayText": "GBP"
+      "label": "GBP"
     }
   ],
   "branchCity": [
@@ -289,28 +289,144 @@
   ],
   "branchID": [
     {
-      "code": "branchId1",
-      "key": "branchId1",
-      "value": "branchId1",
-      "displayText": "branchId1"
+      "emirateCode": "AD",
+      "code": "Abu Dhabi 1",
+      "key": "Abu Dhabi 1",
+      "value": "Abu Dhabi 1",
+      "label": "Abu Dhabi 1"
     },
     {
-      "code": "branchId2",
-      "key": "branchId2",
-      "value": "branchId2",
-      "displayText": "branchId2"
+      "emirateCode": "AD",
+      "code": "Abu Dhabi 2",
+      "key": "Abu Dhabi 2",
+      "value": "Abu Dhabi 2",
+      "label": "Abu Dhabi 2"
     },
     {
-      "code": "branchId3",
-      "key": "branchId3",
-      "value": "branchId3",
-      "displayText": "branchId3"
+      "emirateCode": "A",
+      "code": "Ajman 1",
+      "key": "Ajman 1",
+      "value": "Ajman 1",
+      "label": "Ajman 1"
     },
     {
-      "code": "branchId4",
-      "key": "branchId4",
-      "value": "branchId4",
-      "displayText": "branchId4"
+      "emirateCode": "A",
+      "code": "Ajman 2",
+      "key": "Ajman 2",
+      "value": "Ajman 2",
+      "label": "Ajman 2"
+    },
+    {
+      "emirateCode": "AA",
+      "code": "Al Ain 1",
+      "key": "Al Ain 1",
+      "value": "Al Ain 1",
+      "label": "Al Ain 1"
+    },
+    {
+      "emirateCode": "AA",
+      "code": "Al Ain 2",
+      "key": "Al Ain 2",
+      "value": "Al Ain 2",
+      "label": "Al Ain 2"
+    },
+    {
+      "emirateCode": "Dubai",
+      "code": "Dubai 1",
+      "key": "Dubai 1",
+      "value": "Dubai 1",
+      "label": "Dubai 1"
+    },
+    {
+      "emirateCode": "Dubai",
+      "code": "Dubai 2",
+      "key": "Dubai 2",
+      "value": "Dubai 2",
+      "label": "Dubai 2"
+    },
+    {
+      "emirateCode": "F",
+      "code": "Fujairah 1",
+      "key": "Fujairah 1",
+      "value": "Fujairah 1",
+      "label": "Fujairah 1"
+    },
+    {
+      "emirateCode": "F",
+      "code": "Fujairah 2",
+      "key": "Fujairah 2",
+      "value": "Fujairah 2",
+      "label": "Fujairah 2"
+    },
+    {
+      "emirateCode": "K",
+      "code": "Kalba 1",
+      "key": "Kalba 1",
+      "value": "Kalba 1",
+      "label": "Kalba 1"
+    },
+    {
+      "emirateCode": "K",
+      "code": "Kalba 2",
+      "key": "Kalba 2",
+      "value": "Kalba 2",
+      "label": "Kalba 2"
+    },
+    {
+      "emirateCode": "KH",
+      "code": "Khorfakkan 1",
+      "key": "Khorfakkan 1",
+      "value": "Khorfakkan 1",
+      "label": "Khorfakkan 1"
+    },
+    {
+      "emirateCode": "KH",
+      "code": "Khorfakkan 2",
+      "key": "Khorfakkan 2",
+      "value": "Khorfakkan 2",
+      "label": "Khorfakkan 2"
+    },
+    {
+      "emirateCode": "RK",
+      "code": "Ras Al Khaimah 1",
+      "key": "Ras Al Khaimah 1",
+      "value": "Ras Al Khaimah 1",
+      "label": "Ras Al Khaimah 1"
+    },
+    {
+      "emirateCode": "RK",
+      "code": "Ras Al Khaimah 2",
+      "key": "Ras Al Khaimah 2",
+      "value": "Ras Al Khaimah 2",
+      "label": "Ras Al Khaimah 2"
+    },
+    {
+      "emirateCode": "SH",
+      "code": "Sharjah 1",
+      "key": "Sharjah 1",
+      "value": "Sharjah 1",
+      "label": "Sharjah 1"
+    },
+    {
+      "emirateCode": "SH",
+      "code": "Sharjah 2",
+      "key": "Sharjah 2",
+      "value": "Sharjah 2",
+      "label": "Sharjah 2"
+    },
+    {
+      "emirateCode": "U",
+      "code": "Umm Al Quwain 1",
+      "key": "Umm Al Quwain 1",
+      "value": "Umm Al Quwain 1",
+      "label": "Umm Al Quwain 1"
+    },
+    {
+      "emirateCode": "U",
+      "code": "Umm Al Quwain 2",
+      "key": "Umm Al Quwain 2",
+      "value": "Umm Al Quwain 2",
+      "label": "Umm Al Quwain 2"
     }
   ],
   "countryOfIncorporation": [
