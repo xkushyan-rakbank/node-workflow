@@ -10,7 +10,6 @@ import {
   cancelled,
   fork
 } from "redux-saga/effects";
-import isUndefined from "lodash/isUndefined";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -21,7 +20,6 @@ import {
 import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
-import { handleChangeStep } from "../actions/stakeholders";
 import { prospect } from "../../api/apiClient";
 
 function* sendProspectToAPISaga() {
@@ -37,9 +35,9 @@ function* sendProspectToAPISaga() {
     yield put(updateSaveType("continue"));
     yield put(resetFormStep({ resetStep: false }));
 
-    if (!isUndefined(state.stakeholders.editableStakeholder)) {
-      yield put(handleChangeStep());
-    }
+    // if (!isUndefined(state.stakeholders.editableStakeholder)) {
+    //   yield put(handleChangeStep());
+    // }
   } catch (error) {
     console.error({ error });
     yield call(sendProspectToAPIFail());

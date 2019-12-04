@@ -4,10 +4,14 @@ import Grid from "@material-ui/core/Grid";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { getInputValueById } from "../../store/selectors/input";
-import { AutoSaveField as Field, NumericInput, SelectAutocomplete } from "../Form";
-import { SubmitButton } from "./SubmitButton/SubmitButton";
-import { EMIRATES_ID_REGEX } from "../../utils/validation";
+import { getInputValueById } from "../../../../store/selectors/input";
+import {
+  AutoSaveField as Field,
+  NumericInput,
+  SelectAutocomplete
+} from "../../../../components/Form";
+import { SubmitButton } from "./../SubmitButton/SubmitButton";
+import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 
 const countryOfResidenceSchema = Yup.object().shape({
   residenceCountry: Yup.string().required("Required"),
@@ -48,7 +52,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
               label="Emirates ID"
               placeholder="784-XXXX-XXXXXXX-X"
               component={NumericInput}
-              disabled={values.residenceCountry !== "UAE"}
+              disabled={values.residenceCountry !== "AE"}
               format="784-####-#######-#"
               prefix={"784-"}
             />

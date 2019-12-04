@@ -4,11 +4,16 @@ import { connect } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { InfoTitle } from "./../Notifications";
-import { SubmitButton } from "./SubmitButton/SubmitButton";
-import { AutoSaveField as Field, CustomSelect, Input, InputGroup } from "../Form";
-import { getInputValueById } from "../../store/selectors/input";
-import { EMAIL_REGEX, PHONE_REGEX } from "../../utils/validation";
+import { InfoTitle } from "../../../../components/Notifications";
+import { SubmitButton } from "./../SubmitButton/SubmitButton";
+import {
+  AutoSaveField as Field,
+  CustomSelect,
+  Input,
+  InputGroup
+} from "../../../../components/Form";
+import { getInputValueById } from "../../../../store/selectors/input";
+import { EMAIL_REGEX, PHONE_REGEX } from "../../../../utils/validation";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()

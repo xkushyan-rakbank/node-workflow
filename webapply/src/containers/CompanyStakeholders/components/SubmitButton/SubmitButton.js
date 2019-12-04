@@ -1,5 +1,5 @@
 import React from "react";
-import { ContinueButton } from "../../Buttons/ContinueButton";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 
 export const SubmitButton = () => {

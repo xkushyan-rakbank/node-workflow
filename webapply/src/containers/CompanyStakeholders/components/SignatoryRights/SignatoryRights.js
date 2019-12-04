@@ -3,9 +3,13 @@ import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
-import { CustomSelect, InlineRadioGroup, AutoSaveField as Field } from "../Form";
-import { yesNoOptions } from "../../constants/options";
-import { SubmitButton } from "./SubmitButton/SubmitButton";
+import {
+  CustomSelect,
+  InlineRadioGroup,
+  AutoSaveField as Field
+} from "../../../../components/Form";
+import { yesNoOptions } from "../../../../constants/options";
+import { SubmitButton } from "./../SubmitButton/SubmitButton";
 
 const signatoryRightsSchema = Yup.object().shape({
   isSignatory: Yup.boolean().required("Required"),

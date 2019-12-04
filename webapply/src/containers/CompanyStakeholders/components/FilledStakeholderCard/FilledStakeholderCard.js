@@ -1,8 +1,8 @@
 import React from "react";
 import cx from "classnames";
 
-import { LinkButton } from "../../Buttons/LinkButton";
-import Avatar from "../../Avatar";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
+import Avatar from "../../../../components/Avatar";
 import { useStyles } from "./styled";
 
 export const FilledStakeholderCard = ({

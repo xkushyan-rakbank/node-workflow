@@ -4,14 +4,20 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
-import { DatePicker } from "../../Form/DatePicker/DatePicker";
-import { InlineRadioGroup } from "../../Form/InlineRadioGroup/InlineRadioGroup";
-import InfoTitle from "../../InfoTitle";
-import { CustomSelect, Input, InputGroup, AutoSaveField as Field, Checkbox } from "../../Form";
-import { yesNoOptions } from "../../../constants/options";
-import { SubmitButton } from "../SubmitButton/SubmitButton";
-import { ContexualHelp } from "../../Notifications";
-import { Icon, ICONS } from "../../Icons";
+import InfoTitle from "../../../../components/InfoTitle";
+import {
+  CustomSelect,
+  Input,
+  InputGroup,
+  AutoSaveField as Field,
+  Checkbox,
+  DatePicker,
+  InlineRadioGroup
+} from "../../../../components/Form";
+import { yesNoOptions } from "../../../../constants/options";
+import { SubmitButton } from "./../SubmitButton/SubmitButton";
+import { ContexualHelp } from "../../../../components/Notifications";
+import { Icon, ICONS } from "../../../../components/Icons";
 import { useStyles } from "./styled";
 
 const personalInformationSchema = Yup.object().shape({
@@ -32,6 +38,11 @@ const personalInformationSchema = Yup.object().shape({
 
 export const PersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
+
+  // const handleChange = event => {
+  //   console.log(event.target.value);
+  // };
+
   return (
     <Formik
       initialValues={{
@@ -46,7 +57,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       onSubmit={handleContinue}
       validationSchema={personalInformationSchema}
     >
-      {({ values }) => (
+      {({ values, setFieldValue, resetForm }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -55,6 +66,10 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 path={`prospect.signatoryInfo[${index}].kycDetails.isShareholderACompany`}
                 label="This stakeholder is a company"
                 component={Checkbox}
+                onChange={() => {
+                  resetForm();
+                  setFieldValue("isShareholderACompany", !values.isShareholderACompany);
+                }}
               />
               <ContexualHelp
                 title="Lorem ipsum dolor sit amet, consectet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."

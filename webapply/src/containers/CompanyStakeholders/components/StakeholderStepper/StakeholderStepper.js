@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 
-import { CompanyStakeholderCard } from "../../components/StakeholderStepForms/CompanyStakeholderCard/CompanyStakeholderCard";
-import { StepComponent as StepComponentFormik } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
-import SuccessFilledStakeholder from "../../components/StakeholderStepForms/SuccessFilledStakeholder/SuccessFilledStakeholder";
-import { LinkButton } from "../../components/Buttons/LinkButton";
-import { stakeHoldersSteps, STEP_1, STEP_4 } from "./constants";
-import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
-import {
-  formatPersonalInformation,
-  formatNationality,
-  finishStakeholderEdit,
-  handleChangeStep
-} from "../../store/actions/stakeholders";
-import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
+import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
+import { StepComponent as StepComponentFormik } from "./../StepComponent/StepComponent";
+import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
+import { stakeHoldersSteps, STEP_1 } from "./../../constants";
+import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
+import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { useStyles } from "./styled";
 
 const StakeholderStepperComponent = ({
@@ -22,32 +16,29 @@ const StakeholderStepperComponent = ({
   isNewStakeholder,
   firstName,
   lastName,
-  step,
-  isFinalScreenShown,
   isStatusShown,
-  completedStep,
   orderIndex,
   deleteStakeholder,
-  loading: isStatusLoading,
-  sendProspectToAPI: sendProspect,
-  formatPersonalInformation: personalInformationFormat,
-  formatNationality: nationalityFormat,
-  finishStakeholderEdit: finishEdition,
-  handleChangeStep: changeStepHandler
+  sendProspectToAPI,
+  loading: isStatusLoading
 }) => {
   const classes = useStyles();
+  const [step, setStep] = useState(STEP_1);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
 
   useEffect(() => {
-    if (isFinalScreenShown) {
+    if (step > stakeHoldersSteps.length) {
       changeFinalScreenDisplay(true);
       setInterval(() => {
         changeFinalScreenDisplay(false);
-        finishEdition();
       }, 5000);
     }
-  }, [isFinalScreenShown, finishEdition]);
+  }, [step]);
+
+  const handleContinue = useCallback(() => {
+    sendProspectToAPI().then(() => setStep(step + 1));
+  }, [sendProspectToAPI, step]);
 
   const handleDeleteStakeholder = () => {
     setIsDisplayConfirmation(false);
@@ -57,21 +48,9 @@ const StakeholderStepperComponent = ({
   const deleteHandler = () =>
     isDisplayConfirmation ? handleDeleteStakeholder() : setIsDisplayConfirmation(true);
 
-  const createContinueHandler = itemStep => () => {
-    switch (itemStep) {
-      case STEP_1:
-        return personalInformationFormat(index);
-      case STEP_4:
-        return nationalityFormat(index);
-      default:
-        return sendProspect();
-    }
-  };
-
-  const isFilled = itemStep => isNewStakeholder && completedStep >= itemStep - 1;
-  const createSetStepHandler = item => () => {
-    if (isFilled(item.step)) {
-      changeStepHandler(item);
+  const createSetStepHandler = nextStep => () => {
+    if (step > nextStep) {
+      setStep(nextStep);
     }
   };
 
@@ -96,8 +75,8 @@ const StakeholderStepperComponent = ({
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
             isFilled={step > item.step}
-            clickHandler={createSetStepHandler(item)}
-            handleContinue={createContinueHandler(item.step)}
+            clickHandler={createSetStepHandler(item.step)}
+            handleContinue={handleContinue}
             stepForm={item.component}
           />
         ))}
@@ -119,19 +98,12 @@ const StakeholderStepperComponent = ({
 };
 
 const mapStateToProps = state => ({
-  step: state.stakeholders.step,
-  completedStep: state.stakeholders.completedStep,
-  isFinalScreenShown: state.stakeholders.isFinalScreenShown,
   isStatusShown: state.stakeholders.isStatusShown,
   ...getSendProspectToAPIInfo(state)
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI,
-  formatPersonalInformation,
-  formatNationality,
-  finishStakeholderEdit,
-  handleChangeStep
+  sendProspectToAPI: sendProspectToAPIPromisify
 };
 
 export const StakeholderStepper = connect(

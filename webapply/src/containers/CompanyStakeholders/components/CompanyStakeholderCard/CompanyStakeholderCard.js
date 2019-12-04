@@ -1,8 +1,8 @@
 import React from "react";
 import cx from "classnames";
 
-import StatusLoader from "../../StatusLoader";
-import Avatar from "../../Avatar";
+import StatusLoader from "../../../../components/StatusLoader";
+import Avatar from "../../../../components/Avatar";
 import { useStyles } from "./styled";
 
 export const CompanyStakeholderCard = ({
