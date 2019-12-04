@@ -17,13 +17,13 @@ function* applicantInfoFormSaga(action) {
       applicantInfo: action.data
     };
 
+    yield put(updateProspect({ prospect: prospectUpdated }));
+
     if (IS_RECAPTCHA_ENABLE) {
       const state = yield select();
       const recaptchaToken = state.reCaptcha.token;
       prospectUpdated = { ...prospectUpdated, recaptchaToken };
     }
-
-    yield put(updateProspect({ prospect: prospectUpdated }));
 
     const {
       data: { prospectId }
