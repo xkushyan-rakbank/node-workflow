@@ -2,9 +2,7 @@ import React, { createContext, useMemo, useState, useContext, useEffect } from "
 import { getIn, Field, useFormikContext } from "formik";
 import { isEqual } from "date-fns";
 
-export let FinalQuestionStateManager = {};
-
-export const FinalQuestionsStateContext = createContext(FinalQuestionStateManager);
+export const FinalQuestionsStateContext = createContext({});
 
 export const FinalQuestionsState = ({ children }) => {
   const [state, setState] = useState({
@@ -12,7 +10,7 @@ export const FinalQuestionsState = ({ children }) => {
     isDontTradeGoodsYet: false,
     isDontHaveSuppliersYet: false
   });
-  FinalQuestionStateManager = useMemo(
+  const context = useMemo(
     () => ({
       ...state,
       setFieldValue: (name, value) => setState({ ...state, [name]: value })
@@ -21,7 +19,7 @@ export const FinalQuestionsState = ({ children }) => {
   );
 
   return (
-    <FinalQuestionsStateContext.Provider value={FinalQuestionStateManager}>
+    <FinalQuestionsStateContext.Provider value={context}>
       {children}
     </FinalQuestionsStateContext.Provider>
   );
@@ -30,11 +28,12 @@ export const FinalQuestionsState = ({ children }) => {
 export const FinalQuestionField = ({ name, ...rest }) => {
   const { setFieldValue, ...state } = useContext(FinalQuestionsStateContext);
   const { values, setFieldValue: setFormikFieldValue } = useFormikContext();
+
   const oldValue = getIn(state, name);
   const value = getIn(values, name);
 
   useEffect(() => {
-    setFormikFieldValue(name, getIn(state, name));
+    setFormikFieldValue(name, oldValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
