@@ -1,17 +1,19 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { compose } from "redux";
+
 import Checkbox from "../components/InputField/Checkbox";
 import { SubmitButton } from "../components/Buttons/SubmitButton";
 import { BackLink } from "../components/Buttons/BackLink";
 import FormTitle from "../components/FormTitle";
-import brief from "../assets/icons/brief.png";
 import * as appConfigSelectors from "../store/selectors/appConfig";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
 import { ErrorMessage } from "./../components/Notifications";
-import { submitApplication } from "../constants/index";
+import { submitApplication } from "../constants";
 import routes from "../routes";
+
+import brief from "../assets/icons/brief.png";
 
 const style = {
   checkboxesWrapper: {

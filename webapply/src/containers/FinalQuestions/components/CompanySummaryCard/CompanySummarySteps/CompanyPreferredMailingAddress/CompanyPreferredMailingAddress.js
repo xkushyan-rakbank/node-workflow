@@ -1,147 +1,122 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
+
 import InfoTitle from "../../../../../../components/InfoTitle";
 import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { useStyles } from "./styled";
 import { ADDRESS_NUMBER_REGEX, PO_NUMBER_REGEX } from "../../../../../../utils/validation";
-import { emirateCityOptions, spaceTypeOptions, OTHER_OPTION_CODE } from "./constants";
+import { OTHER_OPTION_CODE, BASE_PATH } from "./constants";
+
+import { useStyles } from "./styled";
 
 const companyPreferredMailingAddressSchema = Yup.object().shape({
-  organizationInfo: Yup.object().shape({
-    addressInfo: Yup.array().of(
-      Yup.object().shape({
-        addressDetails: Yup.array().of(
-          Yup.object().shape({
-            addressFieldDesc: Yup.string().required("You need to provide address details"),
-            addressLine1: Yup.string()
-              .required("You need to provide address details")
-              .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
-            poBox: Yup.string()
-              .required("You need to provide po box number")
-              .matches(PO_NUMBER_REGEX, "Invalid PO box number"),
-            emirateCity: Yup.string().required("You need to provide emirate city"),
-            typeOfSpaceOccupied: Yup.object().shape({
-              spaceType: Yup.string().required("You need to provide space type"),
-              others: Yup.string().when("spaceType", {
-                is: value => value === OTHER_OPTION_CODE,
-                then: Yup.string().required("You need to specify space type")
-              })
-            })
-          })
-        )
-      })
-    )
+  addressFieldDesc: Yup.string().required("You need to provide address details"),
+  addressLine1: Yup.string()
+    .required("You need to provide address details")
+    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+  poBox: Yup.string()
+    .required("You need to provide po box number")
+    .matches(PO_NUMBER_REGEX, "Invalid PO box number"),
+  emirateCity: Yup.string().required("You need to provide emirate city"),
+  typeOfSpaceOccupied: Yup.object().shape({
+    spaceType: Yup.string().required("You need to provide space type"),
+    others: Yup.string().when("spaceType", {
+      is: value => value === OTHER_OPTION_CODE,
+      then: Yup.string().required("You need to specify space type")
+    })
   })
 });
 
-export const CompanyPreferredMailingAddressComponent = ({ handleContinue, addressInfo }) => {
+export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
   const classes = useStyles();
 
-  const onSubmit = () => {
+  const handleSubmit = useCallback(() => {
     handleContinue();
-  };
+  }, [handleContinue]);
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          organizationInfo: {
-            addressInfo
-          }
+          addressFieldDesc: "",
+          addressLine1: "",
+          poBox: "",
+          emirateCity: "",
+          typeOfSpaceOccupied: {
+            spaceType: "",
+            others: ""
+          },
+          country: ""
         }}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         validationSchema={companyPreferredMailingAddressSchema}
       >
-        {({ values }) => {
-          return (
-            <Form>
-              <Grid container spacing={3} className={classes.flexContainer}>
-                {values.organizationInfo.addressInfo.map((item, index) => {
-                  const pathBase = `organizationInfo.addressInfo[${index}].addressDetails`;
-                  return item.addressDetails.map((address, idx) => {
-                    return (
-                      <React.Fragment key={address.preferredAddress}>
-                        <Grid item md={6} sm={12}>
-                          <Field
-                            name={`${pathBase}[${idx}].addressFieldDesc`}
-                            path={`prospect.${pathBase}[${idx}].addressFieldDesc`}
-                            label="Office / Shop Number"
-                            placeholder="Office / Shop Number"
-                            component={Input}
-                          />
-                          <Field
-                            name={`${pathBase}[${idx}].addressLine1`}
-                            path={`prospect.${pathBase}[${idx}].addressLine1`}
-                            label="Street / Location"
-                            placeholder="Street / Location"
-                            component={Input}
-                          />
-                          <Field
-                            name={`${pathBase}[${idx}].emirateCity`}
-                            path={`prospect.${pathBase}[${idx}].emirateCity`}
-                            options={emirateCityOptions}
-                            placeholder="Emirate"
-                            // label="Emirate"
-                            component={CustomSelect}
-                            shrink={false}
-                          />
-                        </Grid>
-                        <Grid item md={6} sm={12}>
-                          <Field
-                            name={`${pathBase}[${idx}].typeOfSpaceOccupied.spaceType`}
-                            path={`prospect.${pathBase}[${idx}].typeOfSpaceOccupied.spaceType`}
-                            options={spaceTypeOptions}
-                            placeholder="Type of Space Occupied"
-                            // label="Type of Space Occupied"
-                            component={CustomSelect}
-                            shrink={false}
-                          />
-                          {values.organizationInfo.addressInfo[index].addressDetails[idx]
-                            .typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
-                            <Field
-                              name={`${pathBase}[${idx}].typeOfSpaceOccupied.others`}
-                              path={`prospect.${pathBase}[${idx}].typeOfSpaceOccupied.others`}
-                              label="Other(Specify)"
-                              placeholder="Other(Specify)"
-                              component={Input}
-                            />
-                          )}
-                          <Field
-                            name={`${pathBase}[${idx}].poBox`}
-                            path={`prospect.${pathBase}[${idx}].poBox`}
-                            label="PO Box Number"
-                            placeholder="PO Box Number"
-                            component={Input}
-                          />
-                          <Field
-                            name={`${pathBase}[${idx}].country`}
-                            path={`prospect.${pathBase}[${idx}].country`}
-                            label="Country"
-                            placeholder="Country"
-                            disabled
-                            component={Input}
-                          />
-                        </Grid>
-                      </React.Fragment>
-                    );
-                  });
-                })}
-              </Grid>
-              <div className={classes.infoTitleWrap}>
-                <InfoTitle
-                  classes={{ wrapper: classes.infoTitle }}
-                  title="You guessed it, we will use this section for our communication with you"
+        {({ values }) => (
+          <Form>
+            <Grid container spacing={3} className={classes.flexContainer}>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="addressFieldDesc"
+                  path={`${BASE_PATH}.addressFieldDesc`}
+                  label="Office / Shop Number"
+                  placeholder="Office / Shop Number"
+                  component={Input}
                 />
-              </div>
-              <div className={classes.buttonWrapper}>
-                <ContinueButton type="submit" />
-              </div>
-            </Form>
-          );
-        }}
+                <Field
+                  name="addressLine1"
+                  path={`${BASE_PATH}.addressLine1`}
+                  label="Street / Location"
+                  placeholder="Street / Location"
+                  component={Input}
+                />
+                <Field
+                  name="emirateCity"
+                  path={`${BASE_PATH}.emirateCity`}
+                  datalistId="emirate"
+                  label="Emirate"
+                  component={CustomSelect}
+                />
+              </Grid>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="typeOfSpaceOccupied.spaceType"
+                  path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
+                  datalistId="spaceType"
+                  label="Type of Space Occupied"
+                  component={CustomSelect}
+                />
+                {values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
+                  <Field
+                    name="typeOfSpaceOccupied.others"
+                    path={`${BASE_PATH}.typeOfSpaceOccupied.others`}
+                    label="Other(Specify)"
+                    placeholder="Other(Specify)"
+                    component={Input}
+                  />
+                )}
+                <Field
+                  name="poBox"
+                  path={`${BASE_PATH}.poBox`}
+                  label="PO Box Number"
+                  placeholder="PO Box Number"
+                  component={Input}
+                />
+                <Field name="country" path={`${BASE_PATH}.country`} disabled component={Input} />
+              </Grid>
+            </Grid>
+            <div className={classes.infoTitleWrap}>
+              <InfoTitle
+                classes={{ wrapper: classes.infoTitle }}
+                title="You guessed it, we will use this section for our communication with you"
+              />
+            </div>
+            <div className={classes.buttonWrapper}>
+              <ContinueButton type="submit" />
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );

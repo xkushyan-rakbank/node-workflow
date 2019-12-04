@@ -15,6 +15,7 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "quotes": ["error", "double"],
+    "import/first": ["error", "absolute-first"], 
     "jsx-a11y/anchor-is-valid": 0,
     "react/prop-types": 0,
     "react/jsx-uses-react": "error",

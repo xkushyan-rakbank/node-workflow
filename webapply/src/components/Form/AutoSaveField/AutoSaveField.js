@@ -41,22 +41,24 @@ export const AutoSaveField = ({
   }, [setFieldError, serverValidationError, name]);
 
   useEffect(() => {
-    if (path) {
+    if (path && appConfig) {
       const oldValue = get(appConfig, path);
 
       if (!isEqual(oldValue, value)) {
         dispatch(updateProspect({ [path]: value }));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, value, dispatch]);
 
   const options = useMemo(() => {
-    if (path && datalistId) {
+    if (path && datalistId && uiConfig) {
       const fieldConfig = Object.values(uiConfig).find(item => item.datalistId === datalistId);
 
       return get(fieldConfig, "datalist", []).filter(filterOptions);
     }
-  }, [datalistId, uiConfig]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path, datalistId, filterOptions]);
 
   return <Field name={name} options={options} {...rest} />;
 };
