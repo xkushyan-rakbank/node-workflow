@@ -29,7 +29,7 @@ const signingPreferencesSchema = Yup.object({
       .max(120, "Max length is 120 symbols")
       .required("Field is required")
   }),
-  signatoryInfo: Yup.array().of(
+  signatories: Yup.array().of(
     Yup.object().shape({
       fullName: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
       primaryMobCountryCode: Yup.string(),
