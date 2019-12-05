@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import get from "lodash/get";
 
 import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import { StepComponent } from "../../../../components/StepComponent/StepComponent";
+import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps, STEP_1 } from "./constants";
+import { signatoriesSteps } from "./constants";
 
 export const SignatorySummaryCardComponent = ({
   addAvailableSignatoryIndex,
@@ -15,28 +15,8 @@ export const SignatorySummaryCardComponent = ({
   availableSignatoriesIndexes,
   signatory: { firstName, lastName, fullName } = {}
 }) => {
-  const [step, setStep] = useState(STEP_1);
   const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
-
-  useEffect(() => {
-    if (step > signatoriesSteps.length) {
-      addAvailableSignatoryIndex(index + 1);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, index]);
-
-  const createChangeStepHandler = item => () => {
-    if (step > item.step) {
-      setStep(item.step);
-    }
-  };
-
-  const handleContinue = useCallback(() => {
-    sendProspectToAPI().then(() => {
-      setStep(step + 1);
-    });
-  }, [sendProspectToAPI, step]);
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
 
@@ -71,21 +51,14 @@ export const SignatorySummaryCardComponent = ({
       }
       index={index}
     >
-      {isExpanded &&
-        signatoriesSteps.map(item => (
-          <StepComponent
-            index={index}
-            key={item.step}
-            steps={signatoriesSteps}
-            step={item.step}
-            title={item.title}
-            isActiveStep={step === item.step}
-            isFilled={step > item.step}
-            handleClick={createChangeStepHandler(item)}
-            handleContinue={handleContinue}
-            stepForm={item.component}
-          />
-        ))}
+      {isExpanded && (
+        <FinalQuestionStepComponent
+          index={index}
+          stepsArray={signatoriesSteps}
+          addAvailableSignatoryIndex={addAvailableSignatoryIndex}
+          sendProspectToAPI={sendProspectToAPI}
+        />
+      )}
     </FormCard>
   );
 };
