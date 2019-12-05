@@ -19,7 +19,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const [step, setStep] = useState(STEP_1);
+  const [step, setStep] = useState(2);
 
   const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
   const handleContinue = useCallback(() => {
