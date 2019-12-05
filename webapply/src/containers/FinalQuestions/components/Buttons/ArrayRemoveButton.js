@@ -9,16 +9,14 @@ export const ArrayRemoveButton = ({
   prospectPath,
   updateProspect,
   ...props
-}) => {
-  return (
-    <RemoveButton
-      onClick={() => {
-        arrayHelpers.remove(itemIndex);
-        updateProspect({
-          [prospectPath]: [...dataArray].splice(itemIndex, 1)
-        });
-      }}
-      {...props}
-    />
-  );
-};
+}) => (
+  <RemoveButton
+    onClick={() => {
+      arrayHelpers.remove(itemIndex);
+      updateProspect({
+        [prospectPath]: [...dataArray].splice(itemIndex, 1)
+      });
+    }}
+    {...props}
+  />
+);
