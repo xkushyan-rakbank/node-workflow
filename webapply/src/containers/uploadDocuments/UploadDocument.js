@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import routes from "../../routes";
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -40,6 +40,10 @@ export const UploadDocument = ({
       });
   }
 
+  const DocDetails = useMemo(() => {
+    return { documents, getSignatories };
+  }, [documents, getSignatories]);
+
   const goToSelectService = () => history.push(routes.selectServices);
 
   return (
@@ -57,7 +61,7 @@ export const UploadDocument = ({
           {documents.stakeholdersDocuments && (
             <div className={classes.sectionContainer}>
               <SectionTitle title="Stakeholders documents" />
-              <SignatoriesDocuments DocDetails={{ documents, getSignatories }} />
+              <SignatoriesDocuments DocDetails={DocDetails} />
             </div>
           )}
         </>
