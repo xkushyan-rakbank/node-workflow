@@ -19,7 +19,6 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
 
   const [code, setCode] = useState(Array(6).fill(""));
   const [isValidCode, setIsValidCode] = useState(false);
-  const [isRegenerateCodeAllow, setIsRegenerateCodeAllow] = useState(true);
   const [loginAttempt, setLoginAttempt] = useState(0);
 
   useEffect(() => {
@@ -29,13 +28,10 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
   }, [history, otp]);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
-    const newLoginAttempt = loginAttempt + 1;
-    setLoginAttempt(newLoginAttempt);
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(inputParam);
-    } else {
-      setIsRegenerateCodeAllow(false);
     }
+    setLoginAttempt(loginAttempt + 1);
   }, [loginAttempt, generateOtpCode, inputParam]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
@@ -83,7 +79,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]: !isRegenerateCodeAllow
+                    [classes.linkDisabled]: loginAttempt >= MAX_ATTEMPT_ALLOWED
                   })}
                 >
                   Send a new code
