@@ -3,7 +3,7 @@ import { AccountTypeCard } from "../AccountTypeCard";
 import { useStyles } from "./styled";
 import { accountTypesDescription, SECTION_INDEX } from "./constants";
 
-export const AccountCardComponent = ({ handleClick }) => {
+export const AccountCardComponent = ({ handleClick, handleClickMobile }) => {
   const classes = useStyles();
   return (
     <div className={classes.cardsContainer}>
@@ -18,6 +18,7 @@ export const AccountCardComponent = ({ handleClick }) => {
               scrollToIndex={SECTION_INDEX}
               accountType={name}
               handleClick={handleClick}
+              handleClickMobile={handleClickMobile}
             />
           </div>
         );

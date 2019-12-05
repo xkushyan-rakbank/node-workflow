@@ -22,8 +22,9 @@ const BootstrapInput = withStyles(theme => ({
     position: "relative",
     backgroundColor: "#fff",
     border: "1px solid #e8e8e8",
-    fontSize: 16,
-    padding: "10px 26px 10px 12px",
+    fontSize: 14,
+    textAlign: "left",
+    padding: "13px 26px 13px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     "&:focus": {
       backgroundColor: "#fff"

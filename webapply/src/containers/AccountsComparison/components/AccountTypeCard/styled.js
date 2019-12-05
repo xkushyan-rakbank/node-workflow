@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { portraitOrientationQueryIPads } from "../../../../constants/styles";
+import { mobileResolution } from "../../../../constants";
 
 export const useStyles = makeStyles({
   container: {
@@ -87,6 +88,17 @@ export const useStyles = makeStyles({
     justifyContent: "center",
     "& span": {
       fontSize: "16px"
+    },
+    "& .show-on-mobile": {
+      display: "none"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      "& > button": {
+        display: "none"
+      },
+      "& .show-on-mobile": {
+        display: "block"
+      }
     }
   },
   continueButtonRoot: {

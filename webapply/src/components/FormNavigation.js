@@ -10,6 +10,8 @@ import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
 import { accountsNames, formStepper, searchProspectStepper, mobileResolution } from "../constants";
 import { ContainedButton } from "./Buttons/ContainedButton";
+import { MobileNotification } from "./Modals";
+import IslamicBankingSwitcherMobile from "./IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import {
   sideNavWidthXL,
@@ -23,9 +25,13 @@ import routes from "../routes";
 const blobImages = {
   red: require("../assets/images/bg-blobs/bg-blob-red.png"),
   redS: require("../assets/images/bg-blobs/bg-blob-s-red.png"),
+  redM: require("../assets/images/bg-blobs/bg-blob-m-red.png"),
   brown: require("../assets/images/bg-blobs/bg-blob-brown.png"),
   brownS: require("../assets/images/bg-blobs/bg-blob-s-brown.png"),
-  green: require("../assets/images/bg-blobs/bg-blob-green.png")
+  brownM: require("../assets/images/bg-blobs/bg-blob-m-brown.png"),
+  green: require("../assets/images/bg-blobs/bg-blob-green.png"),
+  greenS: require("../assets/images/bg-blobs/bg-blob-s-green.png"),
+  greenM: require("../assets/images/bg-blobs/bg-blob-m-green.png")
 };
 
 const style = {
@@ -33,17 +39,7 @@ const style = {
     flex: `0 0 ${sideNavWidthXL}px`,
     position: "relative",
     paddingTop: "170px",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "right center",
-    backgroundImage: `url(${blobImages.red})`,
     zIndex: "11",
-    "&.brown": {
-      backgroundImage: `url(${blobImages.brown})`
-    },
-    "&.green": {
-      backgroundImage: `url(${blobImages.green})`
-    },
     [portraitOrientationQueryIPads]: {
       paddingTop: "270px"
     },
@@ -57,18 +53,22 @@ const style = {
       flex: `0 0 ${sideNavWidthSM}px`
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      display: "flex",
+      overflow: "hidden",
+      flexDirection: "column",
+      transition: "all .3s",
       flex: "0 0 100%",
-      height: "190px",
+      height: "290px",
       paddingTop: "70px",
-      marginBottom: "calc(100vh - 300px)",
-      backgroundSize: "cover",
-      backgroundPosition: "center bottom",
-      backgroundImage: `url(${blobImages.redS})`,
-      "&.brown": {
-        backgroundImage: `url(${blobImages.brownS})`
+      marginBottom: -40,
+      "&.small-bg": {
+        height: "190px"
       },
-      "&.green": {
-        backgroundImage: `url(${blobImages.redS})`
+      "&.open": {
+        height: "calc(100vh - 50px)",
+        "&.has-video": {
+          marginBottom: "calc(-100vh + 220px)"
+        }
       }
     },
     "& ul": {
@@ -98,6 +98,38 @@ const style = {
         paddingLeft: "40px",
         "@media only screen and (max-width: 1250px)": {
           paddingLeft: "20px"
+        }
+      }
+    }
+  },
+  formNavBg: {
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right center",
+    backgroundImage: `url(${blobImages.red})`,
+    "&.brown": {
+      backgroundImage: `url(${blobImages.brown})`
+    },
+    "&.green": {
+      backgroundImage: `url(${blobImages.green})`
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      backgroundSize: "cover",
+      backgroundPosition: "center bottom",
+      backgroundImage: `url(${blobImages.redM})`,
+      "&.brown": {
+        backgroundImage: `url(${blobImages.brownM})`
+      },
+      "&.green": {
+        backgroundImage: `url(${blobImages.greenM})`
+      },
+      "&.small-bg": {
+        backgroundImage: `url(${blobImages.redS})`,
+        "&.brown": {
+          backgroundImage: `url(${blobImages.brownS})`
+        },
+        "&.green": {
+          backgroundImage: `url(${blobImages.greenS})`
         }
       }
     }
@@ -137,7 +169,7 @@ const style = {
       fontSize: "32px"
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      margin: 0,
+      margin: "0 0 30px",
       padding: 0,
       maxWidth: "500px"
     },
@@ -157,11 +189,25 @@ const style = {
       paddingRight: "25px"
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      fontSize: "14px"
+      fontSize: "14px",
+      margin: "-20px 0 30px"
     }
   },
   nextButton: {
     width: "238px"
+  },
+  sectionButtons: {
+    "& .show-mobile-modal": {
+      display: "none"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      "& > button": {
+        display: "none"
+      },
+      "& .show-mobile-modal": {
+        display: "block"
+      }
+    }
   }
 };
 
@@ -223,7 +269,7 @@ const AccountInfo = ({ classes, accountType, history }) => {
         <>
           <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
             {isApplicationOverview
-              ? "Opening an account has never been this simple. saas"
+              ? "Opening an account has never been this simple."
               : isMyApplications
               ? "Your  applications, at a glance"
               : isComeBackLogin
@@ -235,12 +281,17 @@ const AccountInfo = ({ classes, accountType, history }) => {
               : "All businesses start with an account. Get yours now."}
           </Typography>
           {isApplicationOverview && (
-            <ContainedButton
-              withRightArrow
-              justify="flex-start"
-              label="Start application"
-              handleClick={() => handleClick(routes.applicantInfo)}
-            />
+            <div className={classes.sectionButtons}>
+              <ContainedButton
+                withRightArrow
+                justify="flex-start"
+                label="Start application"
+                handleClick={() => handleClick(routes.applicantInfo)}
+              />
+              <div className="show-mobile-modal">
+                <MobileNotification />
+              </div>
+            </div>
           )}
         </>
       )}
@@ -285,7 +336,8 @@ const getAccountTypeClass = (accountType, islamicBanking) => {
 
 class FormNavigation extends React.Component {
   state = {
-    step: (this.getRouteConfig() || {}).step || 1
+    step: (this.getRouteConfig() || {}).step || 1,
+    isSwitcherShow: false
   };
 
   componentDidUpdate(prevProps) {
@@ -310,6 +362,12 @@ class FormNavigation extends React.Component {
     }
   }
 
+  toggleSwitcherShow = () => {
+    const { isSwitcherShow } = this.state;
+    const value = !isSwitcherShow;
+    this.setState({ isSwitcherShow: value });
+  };
+
   render() {
     const {
       applicationInfo: { islamicBanking, accountType },
@@ -318,7 +376,7 @@ class FormNavigation extends React.Component {
       history,
       checkLoginStatus
     } = this.props;
-    const { step } = this.state;
+    const { step, isSwitcherShow } = this.state;
     const showAccountInfo = new Set([
       routes.accountsComparison,
       routes.detailedAccount,
@@ -328,10 +386,35 @@ class FormNavigation extends React.Component {
       routes.comeBackLoginVerification,
       routes.reUploadDocuments
     ]).has(location.pathname);
-    const accountTypeClass = getAccountTypeClass(accountType, islamicBanking);
+    const showSmallBg = new Set([
+      routes.accountsComparison,
+      routes.comeBackLogin,
+      routes.comeBackLoginVerification
+    ]).has(location.pathname);
+    const bgTypeClass = getAccountTypeClass(accountType, islamicBanking);
+    const bgSizeClass = showSmallBg ? " small-bg" : "";
+    const openClass = isSwitcherShow ? " open" : "";
+    const hasVideoClass = routes.accountsComparison === location.pathname ? " has-video" : "";
 
     return (
-      <div className={`${classes.formNav + accountTypeClass}`}>
+      <div
+        className={
+          `${classes.formNav} ${classes.formNavBg}` +
+          bgTypeClass +
+          bgSizeClass +
+          openClass +
+          hasVideoClass
+        }
+      >
+        <IslamicBankingSwitcherMobile
+          className={`show-on-mobile ${classes.formNavBg}` + bgTypeClass}
+          isSwitcherShow={isSwitcherShow}
+          toggleSwitcherShow={this.toggleSwitcherShow}
+        >
+          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+            What banking option do you prefer?
+          </Typography>
+        </IslamicBankingSwitcherMobile>
         {showAccountInfo ? (
           <AccountInfo classes={classes} accountType={accountType} history={history} />
         ) : (

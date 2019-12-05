@@ -7,7 +7,7 @@ import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
 import { getIconsByAccount } from "../../constants/icons";
-import { accountsNames } from "../../constants";
+import { accountsNames, mobileResolution } from "../../constants";
 import HeaderTitle from "../../components/HeaderTitle";
 
 const style = {
@@ -16,10 +16,12 @@ const style = {
     color: "green"
   },
   firstGroup: {
-    width: "100%"
+    width: "100%",
+    marginTop: 40
   },
   indent: {
-    marginBottom: "30px"
+    margin: "0 -10px 30px",
+    paddingTop: 20
   },
   secondGroup: {
     height: "300px",
@@ -27,6 +29,12 @@ const style = {
     display: "flex",
     "& span": {
       maxWidth: "380px"
+    },
+    "& img": {
+      maxWidth: "100%"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      flexWrap: "wrap"
     }
   },
   title: {
@@ -56,9 +64,7 @@ const TwoSteps = ({ classes, accountType, islamicBanking }) => {
     <>
       <HeaderTitle />
       <div className={classes.firstGroup}>
-        <div className={classes.indent}>
-          <SectionTitleWithInfo title="Two easy steps" />
-        </div>
+        <SectionTitleWithInfo title="Two easy steps" />
         <div className={classes.indent}>
           <IconCardsContainer>
             <IconCardItem minWidth="200px" title="First" text="You fill a couple of questions">

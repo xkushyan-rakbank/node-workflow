@@ -9,10 +9,12 @@ export const AccountTypeCardComponent = ({
   description,
   buttonText,
   handleClick,
+  handleClickMobile,
   scrollToIndex,
   accountType
 }) => {
   const classes = useStyles();
+
   return (
     <div className={classes.container}>
       <div>
@@ -42,6 +44,14 @@ export const AccountTypeCardComponent = ({
           label={buttonText}
           classes={{ buttonStyle: classes.continueButtonRoot }}
         />
+        <div className="show-on-mobile">
+          <ContinueButton
+            handleClick={handleClickMobile}
+            name={scrollToIndex}
+            label={buttonText}
+            classes={{ buttonStyle: classes.continueButtonRoot }}
+          />
+        </div>
       </div>
     </div>
   );

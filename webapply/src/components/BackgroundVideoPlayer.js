@@ -52,9 +52,18 @@ const styles = {
     "@media only screen and (max-width: 1300px)": {
       left: `${sideNavWidthMD}px`
     },
+    "& .show-on-mobile": {
+      display: "none"
+    },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       left: 0,
-      textAlign: "center"
+      textAlign: "center",
+      "& > button": {
+        display: "none"
+      },
+      "& .show-on-mobile": {
+        display: "block"
+      }
     }
   },
   scrollButton: {
@@ -80,7 +89,7 @@ const styles = {
 class BackgroundVideoPlayer extends React.Component {
   constructor(props) {
     super(props);
-    this.videoBg = document.createElement("div.");
+    this.videoBg = document.createElement("div");
     this.videoBg.className = "videoBg";
   }
 
@@ -122,10 +131,21 @@ class BackgroundVideoPlayer extends React.Component {
 
   render() {
     const playedVideos = this.getPlayedVideos();
-    const { classes, nextElementPosition, videoUrl, handleClick, posterUrl } = this.props;
+    const {
+      classes,
+      nextElementPosition,
+      videoUrl,
+      handleClick,
+      handleClickMobile,
+      posterUrl,
+      videoWrapperClass
+    } = this.props;
 
     const video = (
-      <div style={{ top: `-${100 * nextElementPosition}vh` }} className={classes.container}>
+      <div
+        style={{ top: `-${100 * nextElementPosition}vh` }}
+        className={classes.container + videoWrapperClass}
+      >
         <video
           muted
           id="video-background"
@@ -144,6 +164,17 @@ class BackgroundVideoPlayer extends React.Component {
             Read more
             <img src={expandMoreIcon} className={classes.expandMoreIc} alt="scroll down" />
           </Fab>
+          <div className="show-on-mobile">
+            <Fab
+              variant="extended"
+              className={classes.scrollButton}
+              name={1}
+              onClick={handleClickMobile}
+            >
+              Read more
+              <img src={expandMoreIcon} className={classes.expandMoreIc} alt="scroll down" />
+            </Fab>
+          </div>
         </div>
       </div>
     );

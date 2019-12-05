@@ -107,11 +107,7 @@ export const TableCompareComponent = ({
         </div>
         <div className={classes.tableMobileContainer}>
           <Table classes={{ root: classes.tableRoot }}>
-            <StyledTableBodyMobile
-              handleSelectAccount={handleSelectAccount}
-              mobileAccount1="currentAccount"
-              mobileAccount2="elite"
-            />
+            <StyledTableBodyMobile handleSelectAccount={handleSelectAccount} />
           </Table>
         </div>
       </div>

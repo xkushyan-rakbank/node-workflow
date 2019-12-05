@@ -7,15 +7,34 @@ import ExpandedDetailedOptionsCard from "./ExpandedDetailedOptionsCard";
 import { mockData } from "./constants";
 import { getUrlsReadMore } from "../../store/selectors/appConfig";
 import { getSelectedAccountInfo } from "../../store/selectors/selectedAccountInfo";
+import { portraitOrientationQueryIPads } from "../../constants/styles";
+import { mobileResolution } from "../../constants";
 
 const style = {
-  root: {
+  cardsContainer: {
     display: "flex",
-    width: "100%",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    "@media only screen and (max-width: 850px)": {
-      justifyContent: "flex-start"
+    flexWrap: "nowrap",
+    overflow: "auto",
+    margin: "-20px -26px 0",
+    padding: "20px 16px 25px",
+    [portraitOrientationQueryIPads]: {
+      flexDirection: "column"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      margin: "0 -16px",
+      paddingLeft: 0,
+      paddingRight: 0
+    }
+  },
+  cardsContainerItem: {
+    padding: "0 10px",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      "&:first-child": {
+        paddingLeft: 16
+      },
+      "&:last-child": {
+        paddingRight: 16
+      }
     }
   }
 };
@@ -40,17 +59,19 @@ const ExpandedOptionsCards = ({ classes, accountType, ...props }) => {
   const { readMoreUrls, selectedAccountInfo } = props;
 
   return (
-    <div className={classes.root}>
+    <div className={classes.cardsContainer}>
       {mockData.map(({ optionList, isIncluded, cost, value }) => (
-        <ExpandedDetailedOptionsCard
-          key={value}
-          optionList={optionList}
-          isIncluded={isIncluded}
-          cost={cost}
-          value={value}
-          href={getUrlReadMore(readMoreUrls, selectedAccountInfo, value)}
-          accountType={accountType}
-        />
+        <div key={value} className={classes.cardsContainerItem}>
+          <ExpandedDetailedOptionsCard
+            key={value}
+            optionList={optionList}
+            isIncluded={isIncluded}
+            cost={cost}
+            value={value}
+            href={getUrlReadMore(readMoreUrls, selectedAccountInfo, value)}
+            accountType={accountType}
+          />
+        </div>
       ))}
     </div>
   );
