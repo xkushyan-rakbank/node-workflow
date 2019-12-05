@@ -11,6 +11,7 @@ import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
+import { InputSkeleton } from "../../components/Skeleton/InputSkeleton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
 
@@ -39,7 +40,8 @@ const ApplicantInfoPage = ({
   receiveAppConfig,
   setToken,
   setVerified,
-  reCaptchaToken
+  reCaptchaToken,
+  loading
 }) => {
   useEffect(() => {
     receiveAppConfig();
@@ -70,40 +72,46 @@ const ApplicantInfoPage = ({
       >
         {({ values }) => (
           <Form>
-            <Field
-              name="fullName"
-              path="prospect.applicantInfo.fullName"
-              label="Your Name"
-              placeholder="Your Name"
-              component={Input}
-            />
-
-            <Field
-              name="email"
-              path="prospect.applicantInfo.email"
-              label="Your E-mail Address"
-              placeholder="Email"
-              component={Input}
-            />
-
-            <InputGroup>
+            <InputSkeleton loading={loading}>
               <Field
-                name="countryCode"
-                path="prospect.applicantInfo.countryCode"
-                required
-                datalistId="countryCode"
-                component={CustomSelect}
-                shrink={false}
-              />
-
-              <Field
-                name="mobileNo"
-                path="prospect.applicantInfo.mobileNo"
-                label="Your Mobile Number"
-                placeholder="Mobile Number"
+                name="fullName"
+                path="prospect.applicantInfo.fullName"
+                label="Your Name"
+                placeholder="Your Name"
                 component={Input}
               />
-            </InputGroup>
+            </InputSkeleton>
+
+            <InputSkeleton loading={loading}>
+              <Field
+                name="email"
+                path="prospect.applicantInfo.email"
+                label="Your E-mail Address"
+                placeholder="Email"
+                component={Input}
+              />
+            </InputSkeleton>
+
+            <InputSkeleton loading={loading}>
+              <InputGroup>
+                <Field
+                  name="countryCode"
+                  path="prospect.applicantInfo.countryCode"
+                  required
+                  datalistId="countryCode"
+                  component={CustomSelect}
+                  shrink={false}
+                />
+
+                <Field
+                  name="mobileNo"
+                  path="prospect.applicantInfo.mobileNo"
+                  label="Your Mobile Number"
+                  placeholder="Mobile Number"
+                  component={Input}
+                />
+              </InputGroup>
+            </InputSkeleton>
 
             <Grid container direction="row" justify="space-between" alignItems="center">
               {IS_RECAPTCHA_ENABLE && (
@@ -136,7 +144,8 @@ const ApplicantInfoPage = ({
 };
 
 const mapStateToProps = state => ({
-  reCaptchaToken: state.reCaptcha.token
+  reCaptchaToken: state.reCaptcha.token,
+  loading: state.appConfig.loading
 });
 
 const mapDispatchToProps = {
