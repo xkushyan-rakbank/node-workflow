@@ -195,19 +195,6 @@ const style = {
   },
   nextButton: {
     width: "238px"
-  },
-  sectionButtons: {
-    "& .show-mobile-modal": {
-      display: "none"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      "& > button": {
-        display: "none"
-      },
-      "& .show-mobile-modal": {
-        display: "block"
-      }
-    }
   }
 };
 
@@ -281,17 +268,19 @@ const AccountInfo = ({ classes, accountType, history }) => {
               : "All businesses start with an account. Get yours now."}
           </Typography>
           {isApplicationOverview && (
-            <div className={classes.sectionButtons}>
-              <ContainedButton
-                withRightArrow
-                justify="flex-start"
-                label="Start application"
-                handleClick={() => handleClick(routes.applicantInfo)}
-              />
-              <div className="show-mobile-modal">
+            <>
+              <div className="hide-on-mobile">
+                <ContainedButton
+                  withRightArrow
+                  justify="flex-start"
+                  label="Start application"
+                  handleClick={() => handleClick(routes.applicantInfo)}
+                />
+              </div>
+              <div className="show-on-mobile">
                 <MobileNotification />
               </div>
-            </div>
+            </>
           )}
         </>
       )}

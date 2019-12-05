@@ -43,6 +43,7 @@ export const AccountTypeCardComponent = ({
           name={scrollToIndex}
           label={buttonText}
           classes={{ buttonStyle: classes.continueButtonRoot }}
+          className="hide-on-mobile"
         />
         <div className="show-on-mobile">
           <ContinueButton

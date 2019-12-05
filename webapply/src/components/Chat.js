@@ -54,9 +54,6 @@ const style = {
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       display: "none",
-      "& .hide-on-mobile": {
-        display: "none"
-      },
       "& span": {
         width: "48px",
         height: "48px",

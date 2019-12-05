@@ -28,6 +28,7 @@ const ButtonToggler = styled("button")({
 const SwitcherWrapper = styled("div")({
   position: "absolute",
   opacity: props => (props.isSwitcherShow ? 1 : 0),
+  pointerEvents: props => (props.isSwitcherShow ? "auto" : "none"),
   zIndex: 2,
   backgroundColor: "transparent",
   top: 0,

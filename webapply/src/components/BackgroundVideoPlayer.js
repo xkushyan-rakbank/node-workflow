@@ -52,18 +52,9 @@ const styles = {
     "@media only screen and (max-width: 1300px)": {
       left: `${sideNavWidthMD}px`
     },
-    "& .show-on-mobile": {
-      display: "none"
-    },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       left: 0,
-      textAlign: "center",
-      "& > button": {
-        display: "none"
-      },
-      "& .show-on-mobile": {
-        display: "block"
-      }
+      textAlign: "center"
     }
   },
   scrollButton: {
@@ -160,7 +151,12 @@ class BackgroundVideoPlayer extends React.Component {
         </video>
 
         <div className={classes.buttonContainer}>
-          <Fab variant="extended" className={classes.scrollButton} name={1} onClick={handleClick}>
+          <Fab
+            variant="extended"
+            className={`${classes.scrollButton} hide-on-mobile`}
+            name={1}
+            onClick={handleClick}
+          >
             Read more
             <img src={expandMoreIcon} className={classes.expandMoreIc} alt="scroll down" />
           </Fab>
