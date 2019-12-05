@@ -1,15 +1,30 @@
 import React from "react";
+import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Divider, Grid } from "@material-ui/core";
 
 import { checkIsDebitCardApplied, checkIsChequeBookApplied } from "./utils";
+import { NAME_REGEX } from "../../../../utils/validation";
+
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import Subtitle from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
-
 import { ICONS, Icon } from "../../../../components/Icons/Icon";
+
+const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
+
+const channelsSchema = Yup.object({
+  signatory: Yup.array().of(
+    Yup.object().shape({
+      nameOnDebitCard: Yup.string()
+        .matches(NAME_REGEX, "This is not a valid name")
+        .max(16, "Max length is 16 symbols")
+        .required("Field is required")
+    })
+  )
+});
 
 const CustomCheckbox = props => (
   <Field
@@ -30,8 +45,12 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
         debitCardApplied: "",
         chequeBookApplied: "",
         eStatements: false,
-        mailStatements: false
+        mailStatements: false,
+        signatory: stakeholders.map(({ firstName, lastName }) => ({
+          nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
+        }))
       }}
+      validationSchema={channelsSchema}
       onSubmit={goToNext}
     >
       {({ values, setFieldValue }) => (
