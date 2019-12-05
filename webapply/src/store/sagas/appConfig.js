@@ -19,7 +19,7 @@ import {
 } from "../actions/appConfig";
 import { config } from "../../api/apiClient";
 import { history } from "./..";
-import { accountsNames } from "../../constants";
+import { accountsNames, UAE_CODE } from "../../constants";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
@@ -40,11 +40,6 @@ function* receiveAppConfigSaga() {
       : pathname.substring(1, pathname.lastIndexOf("/"));
     const { accountType, islamicBanking } = getSelectedAccountInfo(state);
 
-    const applicationInfoFields = {
-      "prospect.applicationInfo.accountType": accountType,
-      "prospect.applicationInfo.islamicBanking": islamicBanking
-    };
-
     if (!isEmpty(endpoints)) {
       const product = getApplicationInfo.accountType;
       response = yield call(config.load, product, segment);
@@ -60,11 +55,15 @@ function* receiveAppConfigSaga() {
     const prospectModel = cloneDeep(newConfig.prospect);
     if (newConfig.prospect) {
       newConfig.prospect.signatoryInfo = [];
+      if (!newConfig.prospect.applicantInfo.countryCode) {
+        newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
+      }
+      newConfig.prospect.applicationInfo.accountType = accountType;
+      newConfig.prospect.applicationInfo.islamicBanking = islamicBanking;
     }
 
     yield put(saveProspectModel(prospectModel));
     yield put(receiveAppConfigSuccess(newConfig));
-    yield put(updateProspect(applicationInfoFields));
     yield put(sendProspectToAPISuccess(newConfig.prospect));
   } catch (error) {
     yield put(receiveAppConfigFail(error));

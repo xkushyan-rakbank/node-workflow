@@ -92,7 +92,6 @@ const ApplicantInfoPage = ({
                 path="prospect.applicantInfo.countryCode"
                 required
                 datalistId="countryCode"
-                extractLabel={item => item.displayText}
                 component={CustomSelect}
                 shrink={false}
               />

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormikContext, Field, getIn } from "formik";
 import get from "lodash/get";
@@ -22,14 +22,18 @@ export const AutoSaveField = ({
   const { values, setFieldError, setFieldValue } = useFormikContext();
   const value = getIn(values, name);
   const serverValidationError = useSelector(state => getInputServerValidityByPath(state, path));
+  const [isLoadedDefaultValueFromStore, setIsLoadedDefaultValueFromStore] = useState(
+    !isLoadDefaultValueFromStore
+  );
 
   useEffect(() => {
-    if (isLoadDefaultValueFromStore && path) {
+    if (!isLoadedDefaultValueFromStore && path) {
       const value = get(appConfig, path);
 
       if (value !== undefined) {
         setFieldValue(name, value);
       }
+      setIsLoadedDefaultValueFromStore(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,7 +45,7 @@ export const AutoSaveField = ({
   }, [setFieldError, serverValidationError, name]);
 
   useEffect(() => {
-    if (path && appConfig) {
+    if (isLoadedDefaultValueFromStore && path && appConfig) {
       const oldValue = get(appConfig, path);
 
       if (!isEqual(oldValue, value)) {
@@ -49,7 +53,7 @@ export const AutoSaveField = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, value, dispatch]);
+  }, [isLoadedDefaultValueFromStore, value]);
 
   const options = useMemo(() => {
     if (path && datalistId && uiConfig) {
