@@ -34,6 +34,7 @@ const style = {
       maxWidth: "100%"
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      height: "auto",
       flexWrap: "wrap"
     }
   },
