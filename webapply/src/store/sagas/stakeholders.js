@@ -13,7 +13,6 @@ import {
   openConfirmDialog,
   closeConfirmDialog,
   updateStakeholdersIds
-  // FORMAT_NATIONALITY,
 } from "../actions/stakeholders";
 import { setConfig, resetProspect } from "../actions/appConfig";
 

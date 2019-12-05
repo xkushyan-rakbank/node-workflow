@@ -60,7 +60,7 @@ const StakeholderStepperComponent = ({
 
   return (
     <CompanyStakeholderCard
-      isStatusShown={isStatusShown}
+      isStatusShown={step !== STEP_1}
       firstName={firstName}
       lastName={lastName}
       isStatusLoading={isStatusLoading}
