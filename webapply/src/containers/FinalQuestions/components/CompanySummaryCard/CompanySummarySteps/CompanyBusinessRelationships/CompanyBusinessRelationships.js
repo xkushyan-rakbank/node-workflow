@@ -144,6 +144,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 arrayHelpers={arrayHelpers}
                                 dataArray={topCustomers}
                                 itemIndex={index}
+                                updateProspect={updateProspect}
                                 prospectPath="prospect.orgKYCDetails.topCustomers"
                                 title="Delete"
                               />
@@ -223,6 +224,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 arrayHelpers={arrayHelpers}
                                 dataArray={topSuppliers}
                                 itemIndex={index}
+                                updateProspect={updateProspect}
                                 prospectPath="prospect.orgKYCDetails.topSuppliers"
                                 title="Delete"
                               />
@@ -294,6 +296,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 arrayHelpers={arrayHelpers}
                                 dataArray={topOriginGoodsCountries}
                                 itemIndex={index}
+                                updateProspect={updateProspect}
                                 prospectPath="prospect.orgKYCDetails.topOriginGoodsCountries"
                                 title="Delete"
                               />
@@ -367,6 +370,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                       arrayHelpers={arrayHelpers}
                                       dataArray={otherBankDetails}
                                       itemIndex={index}
+                                      updateProspect={updateProspect}
                                       prospectPath="prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails"
                                       title="Delete"
                                     />

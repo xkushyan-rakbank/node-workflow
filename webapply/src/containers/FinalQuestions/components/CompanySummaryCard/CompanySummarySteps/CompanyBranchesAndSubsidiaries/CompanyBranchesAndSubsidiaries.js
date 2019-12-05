@@ -14,8 +14,7 @@ import {
   Input,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { limits } from "./constants";
-import { prospect } from "../../../../../../constants/config";
+import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
 import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -93,14 +92,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       if (values.otherEntitiesInUAE) {
                         setFieldValue(
                           "entitiesInUAE",
-                          prospect.orgKYCDetails.entitiesInUAE.map(item => ({
+                          initialEntitiesInUAE.map(item => ({
                             ...item,
                             id: uniqueId()
                           }))
                         );
                         updateProspect({
-                          "prospect.orgKYCDetails.entitiesInUAE":
-                            prospect.orgKYCDetails.entitiesInUAE
+                          "prospect.orgKYCDetails.entitiesInUAE": initialEntitiesInUAE
                         });
                         setFieldTouched("entitiesInUAE[0].companyName", false);
                         setFieldTouched("entitiesInUAE[0].tradeLicenseNo", false);
@@ -154,6 +152,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   arrayHelpers={arrayHelpers}
                                   dataArray={entitiesInUAE}
                                   itemIndex={index}
+                                  updateProspect={updateProspect}
                                   prospectPath="prospect.orgKYCDetails.entitiesInUAE"
                                   className={classes.container}
                                   title="Delete"
@@ -194,14 +193,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       if (values.otherEntitiesOutsideUAE) {
                         setFieldValue(
                           "entitiesOutsideUAE",
-                          prospect.orgKYCDetails.entitiesOutsideUAE.map(item => ({
+                          initialEntitiesOutsideUAE.map(item => ({
                             ...item,
                             id: uniqueId()
                           }))
                         );
                         updateProspect({
-                          "prospect.orgKYCDetails.entitiesOutsideUAE":
-                            prospect.orgKYCDetails.entitiesOutsideUAE
+                          "prospect.orgKYCDetails.entitiesOutsideUAE": initialEntitiesOutsideUAE
                         });
                         setFieldTouched("entitiesOutsideUAE[0].companyName", false);
                         setFieldTouched("entitiesOutsideUAE[0].country", false);
@@ -240,6 +238,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   arrayHelpers={arrayHelpers}
                                   dataArray={entitiesOutsideUAE}
                                   itemIndex={index}
+                                  updateProspect={updateProspect}
                                   prospectPath="prospect.orgKYCDetails.entitiesOutsideUAE"
                                   className={classes.container}
                                   title="Delete"
