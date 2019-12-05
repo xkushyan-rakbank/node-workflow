@@ -11,7 +11,8 @@ const useStyles = makeStyles({
   }
 });
 
-export const SkeletonLoader = ({ isLoading, field }) => {
+export const SkeletonLoader = () => {
   const clasess = useStyles();
-  return isLoading ? <Skeleton variant="rect" className={clasess.skeleton} /> : field;
+
+  return <Skeleton variant="rect" className={clasess.skeleton} />;
 };

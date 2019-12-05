@@ -72,55 +72,52 @@ const ApplicantInfoPage = ({
       >
         {({ values }) => (
           <Form>
-            <SkeletonLoader
-              isLoading={isConfigLoading}
-              field={
+            {isConfigLoading ? (
+              <SkeletonLoader />
+            ) : (
+              <Field
+                name="fullName"
+                path="prospect.applicantInfo.fullName"
+                label="Your Name"
+                placeholder="Your Name"
+                component={Input}
+              />
+            )}
+
+            {isConfigLoading ? (
+              <SkeletonLoader />
+            ) : (
+              <Field
+                name="email"
+                path="prospect.applicantInfo.email"
+                label="Your E-mail Address"
+                placeholder="Email"
+                component={Input}
+              />
+            )}
+
+            {isConfigLoading ? (
+              <SkeletonLoader />
+            ) : (
+              <InputGroup>
                 <Field
-                  name="fullName"
-                  path="prospect.applicantInfo.fullName"
-                  label="Your Name"
-                  placeholder="Your Name"
+                  name="countryCode"
+                  path="prospect.applicantInfo.countryCode"
+                  required
+                  datalistId="countryCode"
+                  component={CustomSelect}
+                  shrink={false}
+                />
+
+                <Field
+                  name="mobileNo"
+                  path="prospect.applicantInfo.mobileNo"
+                  label="Your Mobile Number"
+                  placeholder="Mobile Number"
                   component={Input}
                 />
-              }
-            />
-
-            <SkeletonLoader
-              isLoading={isConfigLoading}
-              field={
-                <Field
-                  name="email"
-                  path="prospect.applicantInfo.email"
-                  label="Your E-mail Address"
-                  placeholder="Email"
-                  component={Input}
-                />
-              }
-            />
-
-            <SkeletonLoader
-              isLoading={isConfigLoading}
-              field={
-                <InputGroup>
-                  <Field
-                    name="countryCode"
-                    path="prospect.applicantInfo.countryCode"
-                    required
-                    datalistId="countryCode"
-                    component={CustomSelect}
-                    shrink={false}
-                  />
-
-                  <Field
-                    name="mobileNo"
-                    path="prospect.applicantInfo.mobileNo"
-                    label="Your Mobile Number"
-                    placeholder="Mobile Number"
-                    component={Input}
-                  />
-                </InputGroup>
-              }
-            />
+              </InputGroup>
+            )}
 
             <Grid container direction="row" justify="space-between" alignItems="center">
               {IS_RECAPTCHA_ENABLE && (
