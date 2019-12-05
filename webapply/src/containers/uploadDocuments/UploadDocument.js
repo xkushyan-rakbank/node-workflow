@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import get from "lodash/get";
 import routes from "../../routes";
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -27,21 +26,17 @@ export const UploadDocument = ({
   let requiredDocCount = 0;
   if (documents && Object.keys(documents).length) {
     requiredDocCount = requiredDocCount + documents.companyDocuments.length;
-    get(documents, "companyDocuments", []).length &&
-      documents.companyDocuments.map(doc => {
-        if (doc.uploadStatus === uploadedStatus) {
-          uploadedDocsCount = uploadedDocsCount + 1;
-        }
-      });
+    uploadedDocsCount += documents.companyDocuments.filter(
+      doc => doc.uploadStatus === uploadedStatus
+    ).length;
+
     documents.stakeholdersDocuments &&
       Object.keys(documents.stakeholdersDocuments).length &&
       Object.keys(documents.stakeholdersDocuments).map(userDoc => {
         requiredDocCount = requiredDocCount + documents.stakeholdersDocuments[userDoc].length;
-        documents.stakeholdersDocuments[userDoc].map(doc => {
-          if (doc.uploadStatus === uploadedStatus) {
-            uploadedDocsCount = uploadedDocsCount + 1;
-          }
-        });
+        uploadedDocsCount += documents.stakeholdersDocuments[userDoc].filter(
+          doc => doc.uploadStatus === uploadedStatus
+        ).length;
       });
   }
 
