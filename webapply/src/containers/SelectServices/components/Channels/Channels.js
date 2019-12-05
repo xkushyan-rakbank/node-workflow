@@ -9,6 +9,17 @@ import { InfoTitle } from "../../../../components/Notifications";
 import Subtitle from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 
+import { ICONS, Icon } from "../../../../components/Icons/Icon";
+
+const CustomCheckbox = props => (
+  <Field
+    component={Checkbox}
+    icon={<Icon name={ICONS.unCheckedRadio} alt="select icon" />}
+    checkedIcon={<Icon name={ICONS.checkedRadio} alt="selected icon" />}
+    {...props}
+  />
+);
+
 export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ...props }) => {
   const isDisabledDebitCard = checkIsDebitCardApplied(props);
   const isDisabledChequeBook = checkIsChequeBookApplied(props);
@@ -53,24 +64,20 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
 
           <Subtitle title="Bank statements" />
 
-          <Field
+          <CustomCheckbox
             name="eStatements"
             path="prospect.accountInfo[0].eStatements"
             label="I want online bank statements"
-            component={Checkbox}
-            useRadioIcon
             onChange={() => {
               setFieldValue("mailStatements", false);
               setFieldValue("eStatements", true);
             }}
           />
 
-          <Field
+          <CustomCheckbox
             name="mailStatements"
             path="prospect.accountInfo[0].mailStatements"
             label="I want paper statements (monthly charges apply)"
-            component={Checkbox}
-            useRadioIcon
             onChange={() => {
               setFieldValue("eStatements", false);
               setFieldValue("mailStatements", true);

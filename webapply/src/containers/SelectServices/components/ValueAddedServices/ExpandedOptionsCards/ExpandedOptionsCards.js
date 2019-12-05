@@ -12,15 +12,12 @@ const ExpandedOptionsCardsComponent = ({ accountType, readMoreUrls }) => {
   const classes = useStyles();
   return (
     <div className={classes.cardsRoot}>
-      {rakValuesList.map(({ optionList, isIncluded, cost, value }) => (
+      {rakValuesList.map(({ isIncluded: isIncludeFd, ...cardProps }) => (
         <ExpandedDetailedOptionsCard
-          key={value}
-          optionList={optionList}
-          isIncludeFd={isIncluded}
-          cost={cost}
-          value={value}
+          key={cardProps.value}
           readMoreUrls={readMoreUrls}
           accountType={accountType}
+          {...cardProps}
         />
       ))}
     </div>

@@ -5,9 +5,9 @@ import { RadioGroup } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 
 import { CustomCheckbox } from "./CustomCheckbox";
+import { CustomRadioButton } from "../RadioButton/CustomRadioButton";
 import { InfoTitle } from "../../Notifications/index";
 import { ErrorMessage } from "../../Notifications/index";
-import { ICONS, Icon } from "../../../components/Icons/Icon";
 
 export const CheckboxesWrapper = styled("div")({
   display: "grid",
@@ -34,14 +34,11 @@ export const CheckboxGroup = ({
         <RadioGroup {...field}>
           <CheckboxesWrapper>
             {options.map(item => (
-              <CustomCheckbox
-                useRadioIcon={useRadioIcon}
+              <CustomRadioButton
                 key={extractId(item)}
                 value={extractValue(item)}
                 label={extractLabel(item)}
                 onSelect={onSelect}
-                icon={<Icon name={ICONS.unCheckedRadio} alt="select icon" />}
-                checkedIcon={<Icon name={ICONS.checkedRadio} alt="unselected icon" />}
               />
             ))}
           </CheckboxesWrapper>
@@ -56,8 +53,6 @@ export const CheckboxGroup = ({
               label={extractLabel(item)}
               onSelect={onSelect}
               checked={(field.value || []).includes(extractValue(item))}
-              icon={<Icon name={ICONS.uncheckedIcon} alt="checked icon" />}
-              checkedIcon={<Icon name={ICONS.checkedIcon} alt="unchecked icon" />}
             />
           ))}
         </CheckboxesWrapper>
