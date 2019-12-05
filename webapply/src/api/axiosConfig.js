@@ -28,6 +28,7 @@ instance.interceptors.request.use(config => {
       ...config,
       headers: {
         ...config.headers,
+        "Content-Type": "application/json",
         [SYM_KEY_HEADER]: encryptedSymKey
       },
       data: encryptedPayload,
@@ -45,7 +46,7 @@ instance.interceptors.response.use(
     if (symKey && response.data) {
       return {
         ...response,
-        data: decrypt(symKey, response.data)
+        data: JSON.parse(decrypt(symKey, response.data))
       };
     }
 
