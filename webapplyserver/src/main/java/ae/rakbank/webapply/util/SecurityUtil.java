@@ -24,8 +24,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import sun.misc.BASE64Decoder;
-import sun.rmi.runtime.Log;
 
 import static ae.rakbank.webapply.security.ReadWriteKey.PRIVATE_KEY_FILE;
 import static ae.rakbank.webapply.security.ReadWriteKey.decrypt;
@@ -44,6 +42,7 @@ public class SecurityUtil {
     @PostConstruct
     private void loadKeyStore() {
         try {
+            LOG.info("Initializing private key");
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
             privateKey = (PrivateKey) inputStream.readObject();
         } catch (Exception e) {
@@ -58,6 +57,7 @@ public class SecurityUtil {
     }
 
     public byte[] decryptAsymmetric(String input) throws IOException, GeneralSecurityException {
+
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] finalString = cipher.doFinal((Base64.decodeBase64(input)));
@@ -74,8 +74,9 @@ public class SecurityUtil {
 
     public byte[] decryptSymmetric(String strToDecrypt, SecretKeySpec secretKey) {
         try {
+//            Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
             LOG.info("String data to decrypt=" + strToDecrypt);
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return cipher.doFinal(Base64.decodeBase64(strToDecrypt));
         } catch (Exception e) {

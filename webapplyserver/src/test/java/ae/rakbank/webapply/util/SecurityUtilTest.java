@@ -1,21 +1,23 @@
 package ae.rakbank.webapply.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.crypto.Cipher;
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.security.GeneralSecurityException;
-import java.security.Key;
-import java.security.PrivateKey;
+import java.security.*;
+import java.util.Arrays;
 
 import static ae.rakbank.webapply.security.ReadWriteKey.PRIVATE_KEY_FILE;
+import static org.apache.http.Consts.ASCII;
 
 public class SecurityUtilTest {
     static String textToDecrypt = "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";
@@ -30,19 +32,50 @@ public class SecurityUtilTest {
        su = new SecurityUtil();
     }
 
+
+
     @Test
-    public void testDecryptSymmetric() {
-        //SecretKeySpec keySpec = su.getSecretKeySpec(symKey.getBytes());
-        SecretKeySpec keySpec = su.getSecretKeySpec(symKey.getBytes());
+    public void oneMoreTest() throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException {
+        String base64Cipher = "iz1qFlQJfs6Ycp+gcc2z4w==";
+        byte [] cipherBytes = Base64.decodeBase64(base64Cipher);
+        byte [] iv = "1234567812345678".getBytes(ASCII);
+        byte [] keyBytes = "1234567812345678".getBytes(ASCII);
 
-        byte[] decoded = su.decryptSymmetric(textToDecrypt, keySpec);
+        SecretKey aesKey = new SecretKeySpec(keyBytes, "AES");
 
-        String decodedString = String.valueOf(decoded);
-        System.out.println(decodedString);
+        Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
+        cipher.init(Cipher.DECRYPT_MODE, aesKey, new IvParameterSpec(iv));
 
-//        Assert.assertTrue(decodedString.contains("{"));
-//        Assert.assertTrue(decodedString.contains("}"));
-//        Assert.assertTrue(decodedString.contains(":"));
+        byte[] result = cipher.doFinal(cipherBytes);
+        System.out.println(Hex.encodeHexString(result));
+    }
+
+    @Test
+    public void testDecryptSymmetric() throws IOException, ClassNotFoundException, GeneralSecurityException {
+
+        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
+        Key privateKey = (PrivateKey) inputStream.readObject();
+
+        Cipher xSymCipher = Cipher.getInstance("RSA");
+        xSymCipher.init(Cipher.DECRYPT_MODE, privateKey);
+        byte[] decodedXSymKey = xSymCipher.doFinal((Base64.decodeBase64(xSymKey)));
+        //byte[] decodedXSymKey = su.decryptAsymmetric(xSymKey);
+////
+
+        System.out.println("abc: "+new String(su.decryptSymmetric(textToDecrypt, su.getSecretKeySpec(decodedXSymKey))));
+
+        //String decodedXSymKey = symKey;
+
+
+        SecretKeySpec skeySpec = new SecretKeySpec(decodedXSymKey, "AES");
+        Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+
+
+        cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+
+        byte[] original = cipher
+                .doFinal(Base64.decodeBase64(textToDecrypt));
+        System.out.println(new String(original));
 
     }
 

@@ -46,8 +46,9 @@ public class SecurityFilter implements Filter {
             byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
             SecretKeySpec spec = securityUtil.getSecretKeySpec(randomKey);
             String dataToDecrypt = decrypt((HttpServletRequest) request);
-            byte[] decryptedData = securityUtil.decryptSymmetric(dataToDecrypt, spec);
-            logger.info("Decrypted data="+ decryptedData);
+            byte[] decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));
+            logger.info("Decrypted data="+ new String(decryptedData));
+
             //logger.info("Encoded Decrypted data="+ Base64.getDecoder().decode(decryptedData));
             if (decryptedData == null) {
                 GenericResponse failed = GenericResponse.getFailedResponse(
