@@ -135,13 +135,8 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
   );
 };
 
-const mapStateToProps = (state, { index }) => {
-  return {
-    passportDetails: get(getSignatories(state)[index], "kycDetails.passportDetails", [])
-  };
-};
+const mapStateToProps = (state, { index }) => ({
+  passportDetails: get(getSignatories(state)[index], "kycDetails.passportDetails", [])
+});
 
-export const Nationality = connect(
-  mapStateToProps,
-  null
-)(NationalityStep);
+export const Nationality = connect(mapStateToProps)(NationalityStep);
