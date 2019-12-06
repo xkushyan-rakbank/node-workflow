@@ -113,7 +113,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     )
 });
 
-export const CompanyAnticipatedTransactionsComponent = ({ handleContinue }) => {
+export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
   const classes = useStyles();
   const commonInputProps = {
     endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
