@@ -22,7 +22,7 @@ import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { handleChangeStep } from "../actions/stakeholders";
-import { applicationStatusOverallStop } from "../actions/applicationStatus";
+import { applicationStatusSetScreeningResults } from "../actions/applicationStatus";
 import { prospect } from "../../api/apiClient";
 
 function* sendProspectToAPISaga() {
@@ -33,15 +33,13 @@ function* sendProspectToAPISaga() {
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
-    const {
-      data: {
-        preScreening: { statusOverAll }
-      }
-    } = yield call(prospect.update, prospectID, newProspect);
+    const { data: { preScreening = {} } = {} } = yield call(
+      prospect.update,
+      prospectID,
+      newProspect
+    );
 
-    console.log(statusOverAll);
-
-    if (statusOverAll !== "stop") {
+    if (preScreening.statusOverAll !== "stop") {
       yield put(sendProspectToAPISuccess(newProspect));
       yield put(updateSaveType("continue"));
       yield put(resetFormStep({ resetStep: false }));
@@ -50,7 +48,7 @@ function* sendProspectToAPISaga() {
         yield put(handleChangeStep());
       }
     } else {
-      yield put(applicationStatusOverallStop());
+      yield put(applicationStatusSetScreeningResults(preScreening));
     }
   } catch (error) {
     console.error({ error });

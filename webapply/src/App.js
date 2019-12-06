@@ -11,7 +11,7 @@ import { Login } from "./agent/Login";
 import CompanyStakeholders from "./containers/CompanyStakeholders/CompanyStakeholders";
 import { FinalQuestions } from "./containers/FinalQuestions/index";
 import FormConfirm from "./containers/FormConfirm";
-import FormLayout from "./containers/FormLayout";
+import { FormLayout } from "./containers/FormLayout";
 import SearchProspect from "./agent/SearchProspect";
 import { SelectServices } from "./containers/SelectServices";
 import { AccountsComparison } from "./containers/AccountsComparison";

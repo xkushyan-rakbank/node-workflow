@@ -2,7 +2,6 @@ import axios from "axios";
 import { store } from "./../store";
 import { setInputsErrors } from "./../store/actions/serverValidation";
 import { setError } from "./../store/actions/reCaptcha";
-// import { applicationStatusServerError } from "./../store/actions/applicationStatus";
 import { NotificationsManager } from "../components/Notifications";
 
 const getBaseURL = () =>
@@ -22,20 +21,12 @@ instance.interceptors.response.use(
 
     if (status === 400) {
       if (errorType === "ReCaptchaError") {
-        console.log("ReCaptchaError");
         store.dispatch(setError(errors));
       } else {
-        console.log("setInputsErrors");
         store.dispatch(setInputsErrors(errors));
       }
     } else {
-      console.log("applicationStatusServerError");
-      NotificationsManager.add({
-        title: "Test Title",
-        message: "Test Message"
-      });
-      console.log(error);
-      // store.dispatch(applicationStatusServerError());
+      NotificationsManager.add();
     }
     return Promise.reject(error);
   }
