@@ -1,9 +1,9 @@
 import React from "react";
 
-import videoUrl from "../../../assets/videos/success_regular.mp4";
+import videoUrl from "../../../../assets/videos/success_regular.mp4";
 import { useStyles } from "./styled";
 
-const SuccessFilledStakeholder = ({ name }) => {
+export const SuccessFilledStakeholder = ({ name }) => {
   const classes = useStyles();
 
   return (
@@ -18,5 +18,3 @@ const SuccessFilledStakeholder = ({ name }) => {
     </div>
   );
 };
-
-export default SuccessFilledStakeholder;

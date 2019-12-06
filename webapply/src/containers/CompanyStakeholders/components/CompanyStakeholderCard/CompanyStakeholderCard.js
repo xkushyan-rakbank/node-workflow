@@ -1,8 +1,8 @@
 import React from "react";
 import cx from "classnames";
 
-import StatusLoader from "../../StatusLoader";
-import Avatar from "../../Avatar";
+import StatusLoader from "../../../../components/StatusLoader";
+import Avatar from "../../../../components/Avatar";
 import { useStyles } from "./styled";
 
 export const CompanyStakeholderCard = ({
@@ -18,11 +18,11 @@ export const CompanyStakeholderCard = ({
   return (
     <div className={cx(classes.wrapper, className)}>
       <div className={classes.contentWrapper}>
-        {isStatusShown && <Avatar firstName={firstName} lastName={lastName} index={index} />}
+        {<Avatar firstName={firstName} lastName={lastName} index={index} />}
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>
-            {isStatusShown && firstName.length ? `${firstName} ${lastName}` : "New Stakeholder"}
+            {firstName.length ? `${firstName} ${lastName}` : "New Stakeholder"}
           </div>
           {isStatusShown && <StatusLoader loading={isStatusLoading} />}
         </div>

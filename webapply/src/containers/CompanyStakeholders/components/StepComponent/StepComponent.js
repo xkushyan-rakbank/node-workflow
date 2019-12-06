@@ -1,8 +1,8 @@
 import React from "react";
-import SectionTitle from "../../SectionTitle";
-import { LinkButton } from "../../Buttons/LinkButton";
+import SectionTitle from "../../../../components/SectionTitle";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { useStyles } from "./styled";
-import { ICONS, Icon } from "../../Icons";
+import { ICONS, Icon } from "../../../../components/Icons";
 
 export const StepComponent = ({
   title,
