@@ -26,7 +26,7 @@ function* sendProspectToAPISaga() {
   try {
     const state = yield select();
     const newProspect = getProspect(state);
-    const prospectID = "COSME0000000000000001"; // remove hardcoded ID
+    const prospectID = getProspectId(state) || "COSME0000000000000001";
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));

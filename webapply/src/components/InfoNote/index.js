@@ -1,3 +1,1 @@
-import { InfoNoteComponent } from "./InfoNote";
-
-export const InfoNote = InfoNoteComponent;
+export { InfoNote } from "./InfoNote";

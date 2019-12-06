@@ -4255,76 +4255,6 @@
 		"readonlyFor": [],
 		"default": "false"
 	},
-	"Okyc.isDontHaveSuppliersYet": {
-		"criteria": {
-			"roles": [
-				"customer",
-				"agent"
-			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
-			"devices": [
-				"mobile",
-				"tablet",
-				"desktop"
-			]
-		},
-		"validationErrors": {
-			"required": "Field is required.",
-			"invalid": "Field is invalid.",
-			"multilineInvalid": null
-		},
-		"applicable": null,
-		"label": "I don't have any suppliers",
-		"placeholder": null,
-		"path": "$.prospect.orgKYCDetails.isDontHaveSuppliersYet",
-		"name": "prospect.orgKYCDetails.isDontHaveSuppliersYet",
-		"required": false,
-		"datalistId": null,
-		"readonlyFor": [],
-		"default": "false"
-	},
-	"Okyc.isDontTradeGoodsYet": {
-		"criteria": {
-			"roles": [
-				"customer",
-				"agent"
-			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
-			"devices": [
-				"mobile",
-				"tablet",
-				"desktop"
-			]
-		},
-		"validationErrors": {
-			"required": "Field is required.",
-			"invalid": "Field is invalid.",
-			"multilineInvalid": null
-		},
-		"applicable": null,
-		"label": "I don't trade with goods",
-		"placeholder": null,
-		"path": "$.prospect.orgKYCDetails.isDontTradeGoodsYet",
-		"name": "prospect.orgKYCDetails.isDontTradeGoodsYet",
-		"required": false,
-		"datalistId": null,
-		"readonlyFor": [],
-		"default": "false"
-	},
 	"OkycEntOut.companyName": {
 		"criteria": {
 			"roles": [
@@ -6856,40 +6786,6 @@
 		"readonlyFor": [],
 		"maxlength": "50",
 		"pattern": "^[a-zA-Z ]*$"
-	},
-	"SigEmpd.isWorkAtTheCompany": {
-		"criteria": {
-			"roles": [
-				"customer",
-				"agent"
-			],
-			"segments": [
-				"sme"
-			],
-			"products": [
-				"RAKstarter",
-				"Current Account",
-				"RAKelite"
-			],
-			"devices": [
-				"mobile",
-				"tablet",
-				"desktop"
-			]
-		},
-		"validationErrors": {
-			"required": "Field is required.",
-			"invalid": "Field is invalid.",
-			"multilineInvalid": null
-		},
-		"applicable": null,
-		"label": "This Person works at ",
-		"placeholder": null,
-		"path": "$.prospect.signatoryInfo[*].employmentDetails.isWorkAtTheCompany",
-		"name": "prospect.signatoryInfo[*].employmentDetails.isWorkAtTheCompany",
-		"required": false,
-		"datalistId": null,
-		"readonlyFor": []
 	},
 	"SigEmpd.occupation": {
 		"criteria": {
