@@ -34,10 +34,6 @@ function* sendProspectToAPISaga() {
     yield put(sendProspectToAPISuccess(newProspect));
     yield put(updateSaveType("continue"));
     yield put(resetFormStep({ resetStep: false }));
-
-    // if (!isUndefined(state.stakeholders.editableStakeholder)) {
-    //   yield put(handleChangeStep());
-    // }
   } catch (error) {
     console.error({ error });
     yield call(sendProspectToAPIFail());
