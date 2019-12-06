@@ -3,6 +3,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
+
 import FormNavigation from "../components/FormNavigation";
 import ApplicationStatus from "../components/ApplicationStatus";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
@@ -12,6 +13,7 @@ import {
   applicationStatusReset,
   applicationStatusServerError
 } from "./../store/actions/applicationStatus";
+import { Notifications } from "../components/Notifications";
 import { updateViewId } from "./../store/actions/appConfig";
 import {
   getProceedStatus,
@@ -94,7 +96,7 @@ class FormLayout extends React.Component {
             <div className={classes.formInner}>
               <div className={classes.mainContainer}>
                 {!routerToAddPaddingInSlider.includes(location.pathname) && <HeaderTitle />}
-
+                <Notifications />
                 <ErrorMessageAlert isVisible={serverError} handleClick={this.handleClick} />
 
                 {!isProceed ? <ApplicationStatus statusFromServer={screeningResults} /> : children}

@@ -1,6 +1,7 @@
 import {
   APPLICATION_STATUS_SERVER_ERROR,
-  APPLICATION_STATUS_RESET
+  APPLICATION_STATUS_RESET,
+  APPLICATION_STATUS_OVERALL_STOP
 } from "./../actions/applicationStatus";
 
 export const initialState = {
@@ -19,6 +20,11 @@ const applicationStatusReducer = (state = initialState, action) => {
       };
     case APPLICATION_STATUS_RESET:
       return initialState;
+    case APPLICATION_STATUS_OVERALL_STOP:
+      return {
+        ...state,
+        isProceed: false
+      };
     default:
       return state;
   }

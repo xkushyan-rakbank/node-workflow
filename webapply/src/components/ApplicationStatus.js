@@ -48,7 +48,7 @@ const styles = {
 
 class ApplicationStatus extends React.Component {
   render() {
-    const { classes, status, linkToProducts, statusFromServer } = this.props;
+    const { classes, status = {}, linkToProducts, statusFromServer } = this.props;
 
     return (
       <div className={classes.appStatus}>
