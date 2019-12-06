@@ -13,7 +13,7 @@ export const AutoSaveField = ({
   path,
   isLoadDefaultValueFromStore = true,
   datalistId,
-  filterOptions = () => true,
+  filterOptions = option => option,
   ...rest
 }) => {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ export const AutoSaveField = ({
     if (path && datalistId && uiConfig) {
       const fieldConfig = Object.values(uiConfig).find(item => item.datalistId === datalistId);
 
-      return get(fieldConfig, "datalist", []).filter(filterOptions);
+      return filterOptions(get(fieldConfig, "datalist", []));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, datalistId, filterOptions]);
