@@ -9,13 +9,17 @@ import { useStyles } from "./styled";
 
 export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
-  const [availableSignatoriesIndexes, setAvailableSignatoriesIndexes] = useState(new Set([]));
+  const [availableSignatoriesIndexes, setAvailableSignatoriesIndexes] = useState([]);
   const classes = useStyles();
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
   const addAvailableSignatoryIndex = useCallback(
-    index => setAvailableSignatoriesIndexes(new Set([...availableSignatoriesIndexes.add(index)])),
+    index => {
+      if (!availableSignatoriesIndexes.includes(index)) {
+        setAvailableSignatoriesIndexes([...availableSignatoriesIndexes, index]);
+      }
+    },
     [setAvailableSignatoriesIndexes, availableSignatoriesIndexes]
   );
 

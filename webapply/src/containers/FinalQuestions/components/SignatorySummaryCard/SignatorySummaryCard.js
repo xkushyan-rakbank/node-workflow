@@ -39,7 +39,7 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {!isExpanded && availableSignatoriesIndexes.has(index) && (
+            {!isExpanded && availableSignatoriesIndexes.includes(index) && (
               <LinkButton
                 clickHandler={() => {
                   setIsExpanded(true);
