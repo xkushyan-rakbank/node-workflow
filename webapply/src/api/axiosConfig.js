@@ -46,7 +46,7 @@ instance.interceptors.response.use(
     if (symKey && response.data) {
       return {
         ...response,
-        data: JSON.parse(decrypt(symKey, response.data))
+        data: JSON.parse(decrypt(symKey, response.data).data)
       };
     }
 
