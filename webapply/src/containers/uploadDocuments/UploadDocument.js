@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import routes from "../../routes";
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanyDocuments } from "./../uploadDocuments/components/CompanyDocument";
-import SignatoriesDocuments from "./../../components/UploadDocument/SignatoriesDocuments";
+import { SignatoriesDocuments } from "./../uploadDocuments/components/SignatoryDocument";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
 
@@ -13,7 +13,7 @@ export const UploadDocument = ({
   retrieveDocDetails,
   documents,
   companyName,
-  getSignatories,
+  signatories,
   history
 }) => {
   const classes = useStyles();
@@ -40,10 +40,6 @@ export const UploadDocument = ({
       });
   }
 
-  const DocDetails = useMemo(() => {
-    return { documents, getSignatories };
-  }, [documents, getSignatories]);
-
   const goToSelectService = () => history.push(routes.selectServices);
 
   return (
@@ -61,7 +57,10 @@ export const UploadDocument = ({
           {documents.stakeholdersDocuments && (
             <div className={classes.sectionContainer}>
               <SectionTitle title="Stakeholders documents" />
-              <SignatoriesDocuments DocDetails={DocDetails} />
+              <SignatoriesDocuments
+                documents={documents.stakeholdersDocuments}
+                signatories={signatories}
+              />
             </div>
           )}
         </>

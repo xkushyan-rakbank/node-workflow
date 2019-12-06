@@ -12,7 +12,7 @@ import { getInputValueById } from "../../store/selectors/input";
 const mapStateToProps = state => ({
   documents: getProspectDocuments(state),
   companyName: getInputValueById(state, "Org.companyName"),
-  getSignatories: getSignatories(state),
+  signatories: getSignatories(state),
   uploadDocsEndpoints: getEndpoints(state),
   prospectID: getProspectId(state)
 });

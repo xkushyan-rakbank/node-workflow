@@ -5,7 +5,6 @@ import { useStyles } from "./styled";
 
 export const CompanyDocuments = ({ documents, companyName, icon = "" }) => {
   const classes = useStyles();
-  const companyDocumentText = "companyDocument";
   return (
     <div className={classes.container}>
       <header className={classes.header}>
@@ -16,11 +15,7 @@ export const CompanyDocuments = ({ documents, companyName, icon = "" }) => {
       </header>
       {documents.map(document => {
         return (
-          <UploadDocument
-            key={document.documentKey}
-            documents={document}
-            type={companyDocumentText}
-          />
+          <UploadDocument key={document.documentKey} documents={document} type="companyDocument" />
         );
       })}
     </div>
