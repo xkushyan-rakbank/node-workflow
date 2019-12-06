@@ -1,5 +1,6 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { connect } from "react-redux";
+import isUndefined from "lodash/isUndefined";
 
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
@@ -10,13 +11,11 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../components/Modals";
 import routes from "../../routes";
 import {
-  addNewStakeholder,
-  deleteStakeholder,
-  editStakeholder,
-  openConfirmDialog,
-  closeConfirmDialog,
-  confirmHandler
+  changeEditableStakeholder,
+  createNewStakeholder,
+  deleteStakeholder
 } from "../../store/actions/stakeholders";
+import { resetProspect } from "../../store/actions/appConfig";
 import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
 import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import {
@@ -28,27 +27,58 @@ import { useStyles } from "./styled";
 
 const MAX_STAKEHOLDERS_LENGTH = 6;
 
-const CompanyStakeholders = props => {
+const CompanyStakeholders = ({
+  deleteStakeholder: deleteHandler,
+  changeEditableStakeholder,
+  createNewStakeholder,
+  editableStakeholder,
+  stakeholders,
+  percentage,
+  history
+}) => {
   const classes = useStyles();
-  const goToFinalQuestions = () => props.history.push(routes.finalQuestions);
-  const {
-    stakeholders,
-    editableStakeholder,
-    isConfirmDialogOpen,
-    isNewStakeholder,
-    percentage,
-    editStakeholder: editHandler,
-    deleteStakeholder: deleteHandler
-  } = props;
-  const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
+  const [open, setOpen] = useState(false);
+  const [isNewStakeholder, setIsNewStakeholder] = useState(false);
+
   const isLowPercentage = percentage < 100;
+  const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
   const isDisableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || isLowPercentage;
-
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
-   or edit the shareholding % for the added stakeholders.`;
+  or edit the shareholding % for the added stakeholders.`;
 
-  const editStakeholderHandler = useCallback(index => editHandler(index), [editHandler]);
+  const goToFinalQuestions = () => history.push(routes.finalQuestions);
+
   const handleDeleteStakeholder = useCallback(id => deleteHandler(id), [deleteHandler]);
+
+  const editStakeholderHandler = useCallback(
+    index => {
+      if (isUndefined(editableStakeholder)) {
+        changeEditableStakeholder(index);
+      } else {
+        resetProspect();
+        changeEditableStakeholder(index);
+      }
+      setIsNewStakeholder(false);
+    },
+    [changeEditableStakeholder, editableStakeholder]
+  );
+
+  const addNewStakeholder = () => {
+    if (isUndefined(editableStakeholder)) {
+      setIsNewStakeholder(true);
+      createNewStakeholder();
+    } else {
+      setOpen(true);
+    }
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const handleConfirm = () => {
+    resetProspect();
+    createNewStakeholder();
+    setOpen(false);
+  };
 
   return (
     <>
@@ -83,7 +113,7 @@ const CompanyStakeholders = props => {
 
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
-          <AddStakeholderButton handleClick={props.addNewStakeholder} />
+          <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
       )}
 
@@ -100,10 +130,9 @@ const CompanyStakeholders = props => {
         />
       </div>
       <ConfirmDialog
-        isOpen={isConfirmDialogOpen}
-        handleConfirm={props.confirmHandler}
-        handleReject={props.closeConfirmDialog}
-        handleClose={props.closeConfirmDialog}
+        isOpen={open}
+        handleConfirm={handleConfirm}
+        handleClose={handleClose}
         id="Stakeholder.message"
       />
     </>
@@ -111,15 +140,8 @@ const CompanyStakeholders = props => {
 };
 
 const mapStateToProps = state => {
-  const {
-    isNewStakeholder,
-    isConfirmDialogOpen,
-    editableStakeholder,
-    stakeholdersIds
-  } = stakeholdersState(state);
+  const { editableStakeholder, stakeholdersIds } = stakeholdersState(state);
   return {
-    isNewStakeholder,
-    isConfirmDialogOpen,
     editableStakeholder,
     stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
@@ -129,13 +151,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  addNewStakeholder,
   deleteStakeholder,
   sendProspectToAPI,
-  openConfirmDialog,
-  confirmHandler,
-  closeConfirmDialog,
-  editStakeholder
+  createNewStakeholder,
+  changeEditableStakeholder
 };
 
 export default connect(
