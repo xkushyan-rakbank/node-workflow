@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
 
 import { FormCard } from "../../components/FormCard/FormCard";
-import { StepComponent } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
+import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";

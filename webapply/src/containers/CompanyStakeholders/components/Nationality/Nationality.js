@@ -4,12 +4,18 @@ import Grid from "@material-ui/core/Grid";
 import { Formik, Form, FieldArray, getIn } from "formik";
 import * as Yup from "yup";
 import uniqueId from "lodash/uniqueId";
+import get from "lodash/get";
 
-import { handleCitizenship } from "../../../store/actions/stakeholders";
+import {
+  AutoSaveField as Field,
+  SelectAutocomplete,
+  Checkbox,
+  Input
+} from "../../../../components/Form";
+import { getSignatories } from "../../../../store/selectors/appConfig";
+import { PASSPORT_NUMBER_REGEX } from "../../../../utils/validation";
+import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { useStyles } from "./styled";
-import { SubmitButton } from "../SubmitButton/SubmitButton";
-import { AutoSaveField as Field, SelectAutocomplete, Checkbox, Input } from "../../Form";
-import { PASSPORT_NUMBER_REGEX } from "../../../utils/validation";
 
 const MAX_ANOTHER_CITIZENSHIP = 4;
 const initialPassportDetails = {
@@ -30,7 +36,7 @@ const nationalitySchema = Yup.object().shape({
   )
 });
 
-const NationalityStep = ({ index, handleContinue }) => {
+export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
   const classes = useStyles();
 
   const createAddCityshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => event => {
@@ -59,7 +65,7 @@ const NationalityStep = ({ index, handleContinue }) => {
     <Formik
       onSubmit={handleContinue}
       initialValues={{
-        passportDetails: [{ ...initialPassportDetails, id: uniqueId() }]
+        passportDetails: passportDetails.map(item => ({ ...item, id: uniqueId() }))
       }}
       validationSchema={nationalitySchema}
     >
@@ -129,11 +135,8 @@ const NationalityStep = ({ index, handleContinue }) => {
   );
 };
 
-const mapDispatchToProps = {
-  handleCitizenship
-};
+const mapStateToProps = (state, { index }) => ({
+  passportDetails: get(getSignatories(state)[index], "kycDetails.passportDetails", [])
+});
 
-export const Nationality = connect(
-  null,
-  mapDispatchToProps
-)(NationalityStep);
+export const Nationality = connect(mapStateToProps)(NationalityStep);

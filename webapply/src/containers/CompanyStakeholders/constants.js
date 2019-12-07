@@ -1,9 +1,9 @@
-import { PersonalInformation } from "../../components/StakeholderStepForms/PersonalInformation/PersonalInformation";
-import { SignatoryRights } from "../../components/StakeholderStepForms/SignatoryRights";
-import { Shareholding } from "../../components/StakeholderStepForms/Shareholding";
-import { Nationality } from "../../components/StakeholderStepForms/Nationality/Nationality";
-import { CountryOfResidence } from "../../components/StakeholderStepForms/CountryOfResidence";
-import { PreferredContactInformation } from "../../components/StakeholderStepForms/PreferredContactInformation";
+import { PersonalInformation } from "./components/PersonalInformation/PersonalInformation";
+import { SignatoryRights } from "./components/SignatoryRights/SignatoryRights";
+import { Shareholding } from "./components/Shareholding/Shareholding";
+import { Nationality } from "./components/Nationality/Nationality";
+import { CountryOfResidence } from "./components/CountryOfResidence/CountryOfResidence";
+import { PreferredContactInformation } from "./components/PreferredContactInformation/PreferredContactInformation";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;

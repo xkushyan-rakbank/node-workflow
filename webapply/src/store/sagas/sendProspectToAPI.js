@@ -10,7 +10,6 @@ import {
   cancelled,
   fork
 } from "redux-saga/effects";
-import isUndefined from "lodash/isUndefined";
 import get from "lodash/get";
 
 import {
@@ -25,7 +24,6 @@ import { log } from "../../utils/loggger";
 import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
-import { handleChangeStep } from "../actions/stakeholders";
 import { prospect } from "../../api/apiClient";
 import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
 
@@ -37,16 +35,16 @@ function* sendProspectToAPISaga() {
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
+    yield call(prospect.update, prospectID, newProspect);
+    yield put(sendProspectToAPISuccess(newProspect));
+    yield put(updateSaveType("continue"));
+    yield put(resetFormStep({ resetStep: false }));
     const { data } = yield call(prospect.update, prospectID, newProspect);
 
     if (get(data, "preScreening.statusOverAll") !== APP_STOP_SCREEN_RESULT) {
       yield put(sendProspectToAPISuccess(newProspect));
       yield put(updateSaveType("continue"));
       yield put(resetFormStep({ resetStep: false }));
-
-      if (!isUndefined(state.stakeholders.editableStakeholder)) {
-        yield put(handleChangeStep());
-      }
     } else {
       yield put(setScreeningResults(data.preScreening));
     }

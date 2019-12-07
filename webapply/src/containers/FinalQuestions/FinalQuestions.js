@@ -8,18 +8,19 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
 
 export const FinalQuestionsComponent = ({ signatories, history }) => {
-  const availableSignatoriesSet = new Set();
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
-  const [availableSignatoriesIndexes, setAvailableSignatoriesIndexes] = useState(
-    availableSignatoriesSet
-  );
+  const [availableSignatoriesIndexes, setAvailableSignatoriesIndexes] = useState([]);
   const classes = useStyles();
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
   const addAvailableSignatoryIndex = useCallback(
-    index => setAvailableSignatoriesIndexes(availableSignatoriesSet.add(index)),
-    [setAvailableSignatoriesIndexes, availableSignatoriesSet]
+    index => {
+      if (!availableSignatoriesIndexes.includes(index)) {
+        setAvailableSignatoriesIndexes([...availableSignatoriesIndexes, index]);
+      }
+    },
+    [setAvailableSignatoriesIndexes, availableSignatoriesIndexes]
   );
 
   const switchExpandedMargin = useCallback(() => setIsExpandedMargin(!isExpandedMargin), [

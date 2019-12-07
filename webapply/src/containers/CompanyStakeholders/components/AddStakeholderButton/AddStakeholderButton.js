@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button/Button";
 
 import { useStyles } from "./styled";
-import { ICONS, Icon } from "../../Icons";
+import { ICONS, Icon } from "../../../../components/Icons";
 
 export const AddStakeholderButton = ({
   label = "Add Another Stakeholder",
