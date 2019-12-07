@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import routes from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
 
-import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import { FormTitle } from "../../../../components/FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
+import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -18,7 +18,7 @@ export const SubmitApplicationComponent = ({
   organizationInfo: { companyName }
 }) => {
   const handleSubmit = () => history.push(routes.ApplicationSubmitted);
-  const [isDisabledSubmit, setDisabledSubmit] = useState(true);
+  const [formFieldsValues, setFormFields] = useState({});
 
   return (
     <>
@@ -30,12 +30,12 @@ export const SubmitApplicationComponent = ({
         account={account}
       />
 
-      {!isAgentLoggedIn.loginStatus && <BlockConfirm handleValid={setDisabledSubmit} />}
+      {!isAgentLoggedIn.loginStatus && <BlockConfirm setFormFields={setFormFields} />}
 
       <div className="linkContainer">
         <BackLink path={routes.selectServices} />
         <SubmitButton
-          disabled={isDisabledSubmit}
+          disabled={!(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed)}
           label="Submit"
           justify="flex-end"
           handleClick={handleSubmit}

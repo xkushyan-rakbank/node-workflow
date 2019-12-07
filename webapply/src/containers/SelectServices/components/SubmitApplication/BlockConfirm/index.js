@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form } from "formik";
+import * as Yup from "yup";
 
 import { submitApplication } from "../../../../../constants";
 import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
@@ -7,42 +8,38 @@ import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form
 import { useStyles } from "./styled";
 
 const {
-  termCondition,
-  termsOfEnrolment,
   termConditionUrl,
   termOfEnrolmentUrl,
   trueNdCompleteAcknldgelabel,
   needCommunicationLabel
 } = submitApplication;
-const termsAndConditionsError = `Please click the ${termCondition} and ${termsOfEnrolment}`;
 
-export const BlockConfirm = ({ submitApplicationData, handleValid }) => {
+const blockConfirmSchema = Yup.object({
+  isInformationProvided: Yup.boolean().oneOf([true], "Required"),
+  areTermsAgreed: Yup.boolean().oneOf([true], "Required")
+});
+
+export const BlockConfirm = ({ setFormFields }) => {
   const classes = useStyles();
-  const [isCheckTerms, setVisitTerms] = useState(false);
-  const [isCheckConditions, setVisitConditions] = useState(false);
 
   const termsAgreedLabel = (
     <span>
       I agree with RakBank’s{" "}
-      <a
-        href={termConditionUrl}
-        onClick={() => setVisitTerms(true)}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href={termConditionUrl} target="_blank" rel="noopener noreferrer">
         terms and conditions
       </a>{" "}
       &{" "}
-      <a
-        href={termOfEnrolmentUrl}
-        onClick={() => setVisitConditions(true)}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href={termOfEnrolmentUrl} target="_blank" rel="noopener noreferrer">
         terms and enrollment
       </a>
     </span>
   );
+
+  const setFieldsValue = (event, setFieldValue, values) => {
+    const { name } = event.target;
+    setFieldValue(name, !values[name]);
+    setFormFields({ ...values, [name]: !values[name] });
+  };
 
   return (
     <div className={classes.checkboxesWrapper}>
@@ -52,31 +49,33 @@ export const BlockConfirm = ({ submitApplicationData, handleValid }) => {
           areTermsAgreed: false,
           needCommunication: false
         }}
-        // onSubmit={() => {}} // TDDO
+        onSubmit={() => {}}
+        validationSchema={blockConfirmSchema}
       >
-        {({ values, setFieldError, setFieldValue, handleChange, ...props }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <Field
               name="isInformationProvided"
               label={trueNdCompleteAcknldgelabel}
+              onChange={e => setFieldsValue(e, setFieldValue, values)}
+              formControlClasses={{ root: classes.formControlRoot }}
               component={Checkbox}
             />
 
             <Field
               name="areTermsAgreed"
               label={termsAgreedLabel}
-              onChange={e => {
-                if (!isCheckTerms || !isCheckConditions) {
-                  setFieldError("areTermsAgreed", termsAndConditionsError);
-                  return;
-                }
-                handleValid(values.areTermsAgreed);
-                setFieldValue("areTermsAgreed", !values.areTermsAgreed);
-              }}
+              onChange={e => setFieldsValue(e, setFieldValue, values)}
+              formControlClasses={{ root: classes.formControlRoot }}
               component={Checkbox}
             />
 
-            <Field name="needCommunication" label={needCommunicationLabel} component={Checkbox} />
+            <Field
+              name="needCommunication"
+              label={needCommunicationLabel}
+              formControlClasses={{ root: classes.formControlRoot }}
+              component={Checkbox}
+            />
           </Form>
         )}
       </Formik>

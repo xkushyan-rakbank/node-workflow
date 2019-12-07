@@ -8,5 +8,8 @@ export const useStyles = makeStyles({
   },
   listItem: {
     display: "block"
+  },
+  formControlRoot: {
+    margin: "0"
   }
 });
