@@ -55,7 +55,7 @@ class ApplicationStatus extends React.Component {
         <img src={status.icon || declinedRegular} alt="error" />
         <div className={classes.message}>
           <p>{statusFromServer ? statusFromServer.screeningReason : status.text}</p>
-          {linkToProducts && (
+          {!statusFromServer && linkToProducts && (
             <Link to={routes.accountsComparison} className={classes.appStatusLink}>
               See products
             </Link>

@@ -11,19 +11,23 @@ import {
   fork
 } from "redux-saga/effects";
 import isUndefined from "lodash/isUndefined";
+import get from "lodash/get";
+
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
   sendProspectToAPIFail,
+  setScreeningResults,
   resetFormStep,
   PROSPECT_AUTO_SAVE
 } from "../actions/sendProspectToAPI";
+import { log } from "../../utils/loggger";
 import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { handleChangeStep } from "../actions/stakeholders";
-import { applicationStatusSetScreeningResults } from "../actions/applicationStatus";
 import { prospect } from "../../api/apiClient";
+import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
 
 function* sendProspectToAPISaga() {
   try {
@@ -33,13 +37,9 @@ function* sendProspectToAPISaga() {
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
-    const { data: { preScreening = {} } = {} } = yield call(
-      prospect.update,
-      prospectID,
-      newProspect
-    );
+    const { data } = yield call(prospect.update, prospectID, newProspect);
 
-    if (preScreening.statusOverAll !== "stop") {
+    if (get(data, "preScreening.statusOverAll") !== APP_STOP_SCREEN_RESULT) {
       yield put(sendProspectToAPISuccess(newProspect));
       yield put(updateSaveType("continue"));
       yield put(resetFormStep({ resetStep: false }));
@@ -48,10 +48,10 @@ function* sendProspectToAPISaga() {
         yield put(handleChangeStep());
       }
     } else {
-      yield put(applicationStatusSetScreeningResults(preScreening));
+      yield put(setScreeningResults(data.preScreening));
     }
   } catch (error) {
-    console.error({ error });
+    log({ error });
     yield call(sendProspectToAPIFail());
   }
 }
@@ -70,7 +70,7 @@ function* prospectAutoSave() {
     }
   } finally {
     if (yield cancelled()) {
-      console.log("cancel");
+      log("cancel");
     }
   }
 }

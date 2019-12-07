@@ -5,6 +5,7 @@ import ApplicationStatus from "../../components/ApplicationStatus";
 import Header from "../../components/Header";
 import HeaderTitle from "../../components/HeaderTitle";
 import { Notifications } from "../../components/Notifications/index";
+import { NotificationsProvider } from "../../components/Notifications";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { APP_STOP_SCREEN_RESULT } from "./constants";
 
@@ -13,8 +14,7 @@ import { useStyles } from "./styled";
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},
   children,
-  screeningResults: { statusOverAll } = {},
-  screeningResults,
+  screeningResults = {},
   updateViewId
 }) => {
   const classes = useStyles({ pathname });
@@ -24,7 +24,7 @@ export const FormLayoutComponent = ({
   }, [key, pathname, updateViewId]);
 
   return (
-    <>
+    <NotificationsProvider>
       <Header />
       <div className={classes.formLayout}>
         <FormNavigation />
@@ -33,7 +33,7 @@ export const FormLayoutComponent = ({
             <div className={classes.mainContainer}>
               {!routerToAddPaddingInSlider.includes(pathname) && <HeaderTitle />}
               <Notifications />
-              {statusOverAll === APP_STOP_SCREEN_RESULT ? (
+              {screeningResults.statusOverAll === APP_STOP_SCREEN_RESULT ? (
                 <ApplicationStatus statusFromServer={screeningResults} />
               ) : (
                 children
@@ -42,6 +42,6 @@ export const FormLayoutComponent = ({
           </div>
         </div>
       </div>
-    </>
+    </NotificationsProvider>
   );
 };
