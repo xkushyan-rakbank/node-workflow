@@ -1,0 +1,111 @@
+package ae.rakbank.webapply.security;
+
+import ae.rakbank.webapply.filter.HttpServletRequestWritableWrapper;
+import ae.rakbank.webapply.filter.ResponseWrapper;
+import ae.rakbank.webapply.response.GenericResponse;
+import ae.rakbank.webapply.util.SecurityUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.PublicKey;
+
+@Component
+public class SecurityFilter implements Filter {
+    private static final String UTF_8 = "UTF-8";
+
+    @Autowired
+    private SecurityUtil securityUtil;
+
+    private static final Logger logger = LoggerFactory.getLogger(SecurityFilter.class);
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        logger.info("Filter initialized");
+        String result = null;
+        if (skipEncryption((HttpServletRequest) request)) {
+            logger.info("Encryption skipped");
+            chain.doFilter(request, response);
+        } else {
+            logger.info("Encryption enabled");
+            ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
+            byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
+            SecretKeySpec spec = securityUtil.getSecretKeySpec(randomKey);
+            String dataToDecrypt = decrypt((HttpServletRequest) request);
+            byte[] decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));
+
+            if (decryptedData == null) {
+                GenericResponse failed = GenericResponse.getFailedResponse(
+                        "Error while reading request payload, encrypted payload should be passed", "");
+                ObjectMapper mapper = new ObjectMapper();
+                result = mapper.writeValueAsString(failed);
+            } else {
+                HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
+                        decryptedData);
+
+                chain.doFilter(requestWrapper, responseWrapper);
+
+                result = encrypt(responseWrapper, spec);
+            }
+            response.setContentLength(result.length());
+            response.getWriter().write(result);
+        }
+    }
+
+    private String encrypt(ResponseWrapper responseWrapper, SecretKeySpec spec) {
+        try {
+            return securityUtil.encryptSymmetric(responseWrapper.getCaptureAsString(), spec);
+        } catch (Exception e) {
+            logger.error("error while encryption {}", e.getMessage());
+        }
+        return null;
+    }
+
+    private String decrypt(ServletRequest request) {
+        try {
+            StringBuilder buffer = new StringBuilder();
+            BufferedReader reader = request.getReader();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line);
+            }
+            String data = buffer.toString();
+            return data;
+        } catch (Exception e) {
+            logger.error("error while decryption {}", e.getMessage());
+        }
+        return null;
+    }
+
+    private boolean skipEncryption(HttpServletRequest request) {
+        return request.getHeader("x-sym-key") == null || request.getHeader("isForward") != null ? true : false;
+    }
+
+    private byte[] getKeyFromRequest(HttpServletRequest request){
+        String key = request.getHeader("x-sym-key");
+        try {
+            return securityUtil.decryptAsymmetric(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String decrypt(String input, PublicKey key) throws IOException, GeneralSecurityException {
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        return org.apache.commons.codec.binary.Base64.encodeBase64String(cipher.doFinal(input.getBytes(UTF_8)));
+    }
+
+}

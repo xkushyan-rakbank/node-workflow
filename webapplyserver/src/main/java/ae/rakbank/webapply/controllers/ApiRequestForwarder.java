@@ -582,8 +582,8 @@ public class ApiRequestForwarder {
 		HttpHeaders headers = new HttpHeaders();
 		headers.addAll(response.getHeaders());
 
-		logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]", operationId,
-				url, response.getStatusCodeValue(), response.getBody()));
+		logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s]", operationId,
+				url, response.getStatusCodeValue()));
 
 		if (response.getStatusCode().is2xxSuccessful()) {
 			logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
