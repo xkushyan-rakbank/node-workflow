@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import cx from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import get from "lodash/get";
@@ -381,22 +382,17 @@ class FormNavigation extends React.Component {
       routes.comeBackLoginVerification
     ]).has(location.pathname);
     const bgTypeClass = getAccountTypeClass(accountType, islamicBanking);
-    const bgSizeClass = showSmallBg ? " small-bg" : "";
-    const openClass = isSwitcherShow ? " open" : "";
-    const hasVideoClass = routes.accountsComparison === location.pathname ? " has-video" : "";
 
     return (
       <div
-        className={
-          `${classes.formNav} ${classes.formNavBg}` +
-          bgTypeClass +
-          bgSizeClass +
-          openClass +
-          hasVideoClass
-        }
+        className={cx(classes.formNav, classes.formNavBg, bgTypeClass, {
+          "small-bg": showSmallBg,
+          open: isSwitcherShow,
+          "has-video": routes.accountsComparison === location.pathname
+        })}
       >
         <IslamicBankingSwitcherMobile
-          className={`show-on-mobile ${classes.formNavBg}` + bgTypeClass}
+          className={cx(classes.formNavBg, bgTypeClass)}
           isSwitcherShow={isSwitcherShow}
           toggleSwitcherShow={this.toggleSwitcherShow}
         >

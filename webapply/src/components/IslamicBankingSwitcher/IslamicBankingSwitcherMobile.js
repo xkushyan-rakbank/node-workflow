@@ -1,6 +1,8 @@
 import React from "react";
 import { styled } from "@material-ui/core/styles";
+
 import IslamicBankingSwitcher from "./IslamicBankingSwitcher";
+
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 
 const ButtonToggler = styled("button")({
@@ -41,6 +43,11 @@ const SwitcherWrapper = styled("div")({
   transition: "all .3s"
 });
 
+export const ArrowDownIcon = styled(ArrowDown)({
+  width: "32px",
+  height: "32px"
+});
+
 const IslamicBankingSwitcherMobile = ({
   children,
   className,
@@ -48,15 +55,15 @@ const IslamicBankingSwitcherMobile = ({
   toggleSwitcherShow
 }) => {
   return (
-    <>
+    <div className="show-on-mobile">
       <ButtonToggler onClick={toggleSwitcherShow} isSwitcherShow={isSwitcherShow}>
-        <ArrowDown />
+        <ArrowDownIcon />
       </ButtonToggler>
       <SwitcherWrapper className={className} isSwitcherShow={isSwitcherShow}>
         {children}
         <IslamicBankingSwitcher />
       </SwitcherWrapper>
-    </>
+    </div>
   );
 };
 
