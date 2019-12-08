@@ -573,9 +573,9 @@ public class ApiRequestForwarder {
       String errorJson;
       
       if (channelContext == null) {
-        errorJson = e.getResponseBodyAsString();
+          errorJson = e.getResponseBodyAsString();
       } else {
-        errorJson = channelContext.get(0);
+          errorJson = channelContext.get(0);
       }
       JsonNode badReqResponse = new ObjectMapper().readTree(errorJson);
 			return new ResponseEntity<Object>(badReqResponse, null, HttpStatus.BAD_REQUEST);
@@ -588,7 +588,6 @@ public class ApiRequestForwarder {
 		}
 		// ResponseEntity headers is immutable, so create new HttpHeaders object
     HttpHeaders headers = new HttpHeaders();
-    logger.error(response.getHeaders().get("ChannelContext").get(0));
 		headers.addAll(response.getHeaders());
 
 		logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s]", operationId,
