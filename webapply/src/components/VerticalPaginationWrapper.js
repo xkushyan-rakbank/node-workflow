@@ -201,14 +201,13 @@ class VerticalPaginationWrapper extends React.Component {
       scrollToSecondSection
     } = this.props;
     const { top, nextElementPosition } = this.state;
-    const videoWrapperClass = !showVideoOnMobile ? " hide-on-mobile" : "";
 
     return (
       <>
         <div className={classes.paginationWrapper} onWheel={this.handleWheel}>
           {videoUrl && (
             <VideoBackground
-              videoWrapperClass={videoWrapperClass}
+              videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
               nextElementPosition={nextElementPosition}
               videoUrl={videoUrl}
               posterUrl={posterUrl}
