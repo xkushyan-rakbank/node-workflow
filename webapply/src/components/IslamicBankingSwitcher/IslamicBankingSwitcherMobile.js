@@ -53,16 +53,14 @@ export const IslamicBankingSwitcherMobile = ({
   className,
   isSwitcherShow,
   toggleSwitcherShow
-}) => {
-  return (
-    <div className="show-on-mobile">
-      <ButtonToggler onClick={toggleSwitcherShow} isSwitcherShow={isSwitcherShow}>
-        <ArrowDownIcon />
-      </ButtonToggler>
-      <SwitcherWrapper className={className} isSwitcherShow={isSwitcherShow}>
-        {children}
-        <IslamicBankingSwitcher />
-      </SwitcherWrapper>
-    </div>
-  );
-};
+}) => (
+  <div className="show-on-mobile">
+    <ButtonToggler onClick={toggleSwitcherShow} isSwitcherShow={isSwitcherShow}>
+      <ArrowDownIcon />
+    </ButtonToggler>
+    <SwitcherWrapper className={className} isSwitcherShow={isSwitcherShow}>
+      {children}
+      <IslamicBankingSwitcher />
+    </SwitcherWrapper>
+  </div>
+);
