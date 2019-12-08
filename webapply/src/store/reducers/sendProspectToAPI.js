@@ -2,7 +2,7 @@ import {
   SEND_PROSPECT_TO_API,
   SEND_PROSPECT_TO_API_SUCCESS,
   SEND_PROSPECT_TO_API_FAIL,
-  SEND_PROSPECT_SCREENING_RESULTS,
+  SET_SCREENING_RESULTS,
   RESET_FORM_STEP
 } from "../actions/sendProspectToAPI";
 
@@ -36,7 +36,7 @@ const sendProspectToAPIReducer = (state = initialState, action) => {
         ...state,
         resetStep: action.resetStep
       };
-    case SEND_PROSPECT_SCREENING_RESULTS:
+    case SET_SCREENING_RESULTS:
       return {
         ...state,
         screeningResults: action.payload
