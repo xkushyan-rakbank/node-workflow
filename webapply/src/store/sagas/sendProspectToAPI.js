@@ -35,7 +35,6 @@ function* sendProspectToAPISaga() {
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
-    yield call(prospect.update, prospectID, newProspect);
     const { data } = yield call(prospect.update, prospectID, newProspect);
 
     if (get(data, "preScreening.statusOverAll") !== APP_STOP_SCREEN_RESULT) {
