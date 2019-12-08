@@ -4,6 +4,7 @@ import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
 import { NotificationsManager } from "../components/Notifications";
 import { encrypt, decrypt } from "./crypto";
+import { log } from "../utils/loggger";
 
 const ENCRYPT_METHODS = ["post", "put"];
 const SYM_KEY_HEADER = "x-sym-key";
@@ -53,16 +54,20 @@ instance.interceptors.response.use(
     return response;
   },
   error => {
-    const {
-      status,
-      data: { errors, errorType }
-    } = error.response;
+    const { status, data, config } = error.response;
+    let jsonData = data;
+
+    if (config.symKey && data) {
+      jsonData = JSON.parse(decrypt(config.symKey, data).data);
+    }
 
     if (status === 400) {
-      if (errorType === "ReCaptchaError") {
-        store.dispatch(setError(errors));
+      if (jsonData.errorType === "ReCaptchaError") {
+        store.dispatch(setError(data.errors));
+      } else if (jsonData.errors) {
+        store.dispatch(setInputsErrors(data.errors));
       } else {
-        store.dispatch(setInputsErrors(errors));
+        log(jsonData);
       }
     } else {
       NotificationsManager.add && NotificationsManager.add();
