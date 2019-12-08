@@ -36,21 +36,19 @@ function* sendProspectToAPISaga() {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
     yield call(prospect.update, prospectID, newProspect);
-    yield put(sendProspectToAPISuccess(newProspect));
-    yield put(updateSaveType("continue"));
-    yield put(resetFormStep({ resetStep: false }));
     const { data } = yield call(prospect.update, prospectID, newProspect);
 
     if (get(data, "preScreening.statusOverAll") !== APP_STOP_SCREEN_RESULT) {
       yield put(sendProspectToAPISuccess(newProspect));
-      yield put(updateSaveType("continue"));
-      yield put(resetFormStep({ resetStep: false }));
     } else {
       yield put(setScreeningResults(data.preScreening));
     }
   } catch (error) {
     log({ error });
-    yield call(sendProspectToAPIFail());
+    yield put(sendProspectToAPIFail());
+  } finally {
+    yield put(updateSaveType("continue"));
+    yield put(resetFormStep({ resetStep: false }));
   }
 }
 

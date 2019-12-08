@@ -1,6 +1,4 @@
-import { WAIT_FOR_ACTION } from "redux-wait-for-action";
-
-import { UPDATE_SAVE_TYPE } from "./appConfig";
+import { WAIT_FOR_ACTION, ERROR_ACTION } from "redux-wait-for-action";
 
 export const SEND_PROSPECT_TO_API = "SEND_PROSPECT_TO_API";
 export const SEND_PROSPECT_TO_API_SUCCESS = "SEND_PROSPECT_TO_API_SUCCESS";
@@ -16,7 +14,8 @@ export const sendProspectToAPI = () => {
 
 export const sendProspectToAPIPromisify = () => ({
   type: SEND_PROSPECT_TO_API,
-  [WAIT_FOR_ACTION]: action => action.type === UPDATE_SAVE_TYPE && action.saveType === "continue"
+  [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
+  [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL
 });
 
 export const sendProspectToAPISuccess = prospectCopy => {
