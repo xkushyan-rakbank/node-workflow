@@ -8,17 +8,16 @@ export const SEND_PROSPECT_TO_API_FAIL = "SEND_PROSPECT_TO_API_FAIL";
 export const RESET_FORM_STEP = "RESET_FORM_STEP";
 export const PROSPECT_AUTO_SAVE = "PROSPECT_AUTO_SAVE";
 export const START_PROSPECT_AUTO_SAVE = "START_PROSPECT_AUTO_SAVE";
+export const SET_SCREENING_RESULTS = "SET_SCREENING_RESULTS";
 
 export const sendProspectToAPI = () => {
   return { type: SEND_PROSPECT_TO_API };
 };
 
-export const sendProspectToAPIPromisify = () => {
-  return {
-    type: SEND_PROSPECT_TO_API,
-    [WAIT_FOR_ACTION]: action => action.type === UPDATE_SAVE_TYPE && action.saveType === "continue"
-  };
-};
+export const sendProspectToAPIPromisify = () => ({
+  type: SEND_PROSPECT_TO_API,
+  [WAIT_FOR_ACTION]: action => action.type === UPDATE_SAVE_TYPE && action.saveType === "continue"
+});
 
 export const sendProspectToAPISuccess = prospectCopy => {
   return { type: SEND_PROSPECT_TO_API_SUCCESS, prospectCopy };
@@ -38,4 +37,8 @@ export const prospectAutoSave = () => {
 
 export const startProspectAutoSave = () => {
   return { type: START_PROSPECT_AUTO_SAVE };
+};
+
+export const setScreeningResults = payload => {
+  return { type: SET_SCREENING_RESULTS, payload };
 };

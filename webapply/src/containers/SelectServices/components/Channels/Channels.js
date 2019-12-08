@@ -4,7 +4,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 
 import Subtitle from "../../../../components/Subtitle";
 import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
-import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
+import FormWrapper from "../../../../components/FormWrapper/FormWrapper";
 import InfoTitle from "../../../../components/InfoTitle";
 import RadioButton from "../../../../components/InputField/RadioButton";
 import Divider from "../../../../components/Divider";

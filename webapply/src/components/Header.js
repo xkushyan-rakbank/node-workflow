@@ -5,12 +5,12 @@ import get from "lodash/get";
 import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import routes from "./../routes";
-import { accountsNames } from "../constants";
+import { accountsNames, mobileResolution } from "../constants";
 import logo from "../assets/images/rakbankLogo.png";
 
 const styles = {
   header: {
-    position: " fixed",
+    position: "fixed",
     top: "30px",
     left: "40px",
     display: "flex",
@@ -24,6 +24,17 @@ const styles = {
     },
     "& a": {
       display: "flex"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      position: "absolute",
+      margin: 0,
+      padding: 0,
+      top: "20px",
+      left: "16px",
+      "& img": {
+        minWidth: "114px",
+        width: "114px"
+      }
     }
   },
   accountType: {

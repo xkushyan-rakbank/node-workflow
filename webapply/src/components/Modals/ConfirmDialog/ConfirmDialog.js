@@ -7,7 +7,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useStyles } from "./styled";
 
-export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm, handleReject }) => {
+export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm }) => {
   const classes = useStyles();
 
   return (
@@ -24,10 +24,9 @@ export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm, han
       <div className={classes.divider} />
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         <Button
-          onClick={handleConfirm}
+          onClick={handleClose}
           color="primary"
           variant="outlined"
-          value={false}
           className={classes.actionButton}
         >
           Cancel
@@ -36,7 +35,6 @@ export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm, han
           onClick={handleConfirm}
           color="primary"
           variant="contained"
-          value={true}
           className={classes.actionButton}
         >
           Yes, I{"'"}m sure

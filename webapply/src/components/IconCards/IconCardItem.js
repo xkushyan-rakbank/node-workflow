@@ -29,7 +29,10 @@ const style = {
     width: "100%"
   },
   iconCardImg: {
-    paddingBottom: "20px",
+    paddingBottom: 20,
+    height: 80,
+    display: "flex",
+    alignItems: "center",
     "& img": {
       width: 60
     }

@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import expandMoreIcon from "../assets/icons/arrow-down.png";
 import { sideNavWidthXL, sideNavWidthLG, sideNavWidthMD } from "../constants/styles";
+import { mobileResolution } from "../constants";
 const appRootEl = document.getElementById("root");
 
 const styles = {
@@ -17,7 +18,10 @@ const styles = {
     transition: "top 400ms",
     overflow: "hidden",
     maxHeight: "100vh",
-    zIndex: 11
+    zIndex: 11,
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      top: "0!important"
+    }
   },
   video: {
     position: "absolute",
@@ -29,7 +33,10 @@ const styles = {
     minHeight: "100%",
     width: "auto",
     height: "auto",
-    overflow: "hidden"
+    overflow: "hidden",
+    [`@media only screen and (max-width: ${mobileResolution}px) and (max-height: 750px)`]: {
+      paddingTop: "130px"
+    }
   },
   buttonContainer: {
     position: "absolute",
@@ -44,6 +51,10 @@ const styles = {
     },
     "@media only screen and (max-width: 1300px)": {
       left: `${sideNavWidthMD}px`
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      left: 0,
+      textAlign: "center"
     }
   },
   scrollButton: {
@@ -54,7 +65,10 @@ const styles = {
     boxShadow: "none",
     fontSize: "18px",
     textTransform: "inherit",
-    letterSpacing: "normal"
+    letterSpacing: "normal",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      height: "48px"
+    }
   },
   expandMoreIc: {
     width: "22px",
@@ -66,7 +80,7 @@ const styles = {
 class BackgroundVideoPlayer extends React.Component {
   constructor(props) {
     super(props);
-    this.videoBg = document.createElement("div.");
+    this.videoBg = document.createElement("div");
     this.videoBg.className = "videoBg";
   }
 
@@ -108,10 +122,21 @@ class BackgroundVideoPlayer extends React.Component {
 
   render() {
     const playedVideos = this.getPlayedVideos();
-    const { classes, nextElementPosition, videoUrl, handleClick, posterUrl } = this.props;
+    const {
+      classes,
+      nextElementPosition,
+      videoUrl,
+      handleClick,
+      handleClickMobile,
+      posterUrl,
+      videoWrapperClass
+    } = this.props;
 
     const video = (
-      <div style={{ top: `-${100 * nextElementPosition}vh` }} className={classes.container}>
+      <div
+        style={{ top: `-${100 * nextElementPosition}vh` }}
+        className={classes.container + videoWrapperClass}
+      >
         <video
           muted
           id="video-background"
@@ -126,10 +151,26 @@ class BackgroundVideoPlayer extends React.Component {
         </video>
 
         <div className={classes.buttonContainer}>
-          <Fab variant="extended" className={classes.scrollButton} name={1} onClick={handleClick}>
+          <Fab
+            variant="extended"
+            className={`${classes.scrollButton} hide-on-mobile`}
+            name={1}
+            onClick={handleClick}
+          >
             Read more
             <img src={expandMoreIcon} className={classes.expandMoreIc} alt="scroll down" />
           </Fab>
+          <div className="show-on-mobile">
+            <Fab
+              variant="extended"
+              className={classes.scrollButton}
+              name={1}
+              onClick={handleClickMobile}
+            >
+              Read more
+              <img src={expandMoreIcon} className={classes.expandMoreIc} alt="scroll down" />
+            </Fab>
+          </div>
         </div>
       </div>
     );

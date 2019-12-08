@@ -1,8 +1,8 @@
 import axios from "axios";
-import { store } from "./../store";
-import { setInputsErrors } from "./../store/actions/serverValidation";
-import { setError } from "./../store/actions/reCaptcha";
-import { applicationStatusServerError } from "./../store/actions/applicationStatus";
+import { store } from "../store";
+import { setInputsErrors } from "../store/actions/serverValidation";
+import { setError } from "../store/actions/reCaptcha";
+import { NotificationsManager } from "../components/Notifications";
 import { encrypt, decrypt } from "./crypto";
 
 const ENCRYPT_METHODS = ["post", "put"];
@@ -65,7 +65,7 @@ instance.interceptors.response.use(
         store.dispatch(setInputsErrors(errors));
       }
     } else {
-      store.dispatch(applicationStatusServerError());
+      NotificationsManager.add && NotificationsManager.add();
     }
     return Promise.reject(error);
   }

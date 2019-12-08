@@ -476,7 +476,7 @@ public class ApiRequestForwarder {
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
-
+      /*
       if (!captchaVerified) {
 				String action = requestJSON.get("action").asText();
 				// verify captcha before sending OTP
@@ -508,7 +508,8 @@ public class ApiRequestForwarder {
 						return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 					}
 				}
-			}
+      }
+      */
 
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
 					MediaType.APPLICATION_JSON);

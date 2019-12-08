@@ -4,7 +4,6 @@ import appConfig from "./appConfig";
 import reCaptcha from "./reCaptcha";
 import serverValidation from "./serverValidation";
 import sendProspectToAPI from "./sendProspectToAPI";
-import applicationStatus from "./applicationStatus";
 import otp from "./otp";
 import login from "./loginForm";
 import searchProspect from "./searchProspect";
@@ -22,7 +21,6 @@ const reducers = history =>
     serverValidation,
     reCaptcha,
     sendProspectToAPI,
-    applicationStatus,
     login,
     searchProspect,
     retrieveApplicantInfo,
