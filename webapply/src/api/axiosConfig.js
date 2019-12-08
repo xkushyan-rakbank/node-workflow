@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "./../store";
 import { setInputsErrors } from "./../store/actions/serverValidation";
 import { setError } from "./../store/actions/reCaptcha";
-import { applicationStatusServerError } from "./../store/actions/applicationStatus";
+import { NotificationsManager } from "../components/Notifications";
 
 const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
@@ -26,7 +26,7 @@ instance.interceptors.response.use(
         store.dispatch(setInputsErrors(errors));
       }
     } else {
-      store.dispatch(applicationStatusServerError());
+      NotificationsManager.add && NotificationsManager.add();
     }
     return Promise.reject(error);
   }
