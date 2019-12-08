@@ -10,17 +10,22 @@ import {
   cancelled,
   fork
 } from "redux-saga/effects";
+import get from "lodash/get";
+
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
   sendProspectToAPIFail,
+  setScreeningResults,
   resetFormStep,
   PROSPECT_AUTO_SAVE
 } from "../actions/sendProspectToAPI";
+import { log } from "../../utils/loggger";
 import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
+import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
 
 function* sendProspectToAPISaga() {
   try {
@@ -34,8 +39,17 @@ function* sendProspectToAPISaga() {
     yield put(sendProspectToAPISuccess(newProspect));
     yield put(updateSaveType("continue"));
     yield put(resetFormStep({ resetStep: false }));
+    const { data } = yield call(prospect.update, prospectID, newProspect);
+
+    if (get(data, "preScreening.statusOverAll") !== APP_STOP_SCREEN_RESULT) {
+      yield put(sendProspectToAPISuccess(newProspect));
+      yield put(updateSaveType("continue"));
+      yield put(resetFormStep({ resetStep: false }));
+    } else {
+      yield put(setScreeningResults(data.preScreening));
+    }
   } catch (error) {
-    console.error({ error });
+    log({ error });
     yield call(sendProspectToAPIFail());
   }
 }
@@ -54,7 +68,7 @@ function* prospectAutoSave() {
     }
   } finally {
     if (yield cancelled()) {
-      console.log("cancel");
+      log("cancel");
     }
   }
 }

@@ -48,14 +48,14 @@ const styles = {
 
 class ApplicationStatus extends React.Component {
   render() {
-    const { classes, status, linkToProducts, statusFromServer } = this.props;
+    const { classes, status = {}, linkToProducts, statusFromServer } = this.props;
 
     return (
       <div className={classes.appStatus}>
         <img src={status.icon || declinedRegular} alt="error" />
         <div className={classes.message}>
           <p>{statusFromServer ? statusFromServer.screeningReason : status.text}</p>
-          {linkToProducts && (
+          {!statusFromServer && linkToProducts && (
             <Link to={routes.accountsComparison} className={classes.appStatusLink}>
               See products
             </Link>
