@@ -11,8 +11,8 @@ import {
   Checkbox,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { ArrayRemoveButton } from "../../../../Buttons/ArrayRemoveButton";
-import { ArrayAddButton } from "../../../../Buttons/ArrayAddButton";
+import { ArrayRemoveButton } from "../../../Buttons/ArrayRemoveButton";
+import { ArrayAddButton } from "../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
   limits,
@@ -24,6 +24,7 @@ import {
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
+import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
@@ -143,6 +144,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 arrayHelpers={arrayHelpers}
                                 dataArray={topCustomers}
                                 itemIndex={index}
+                                updateProspect={updateProspect}
                                 prospectPath="prospect.orgKYCDetails.topCustomers"
                                 title="Delete"
                               />
@@ -169,9 +171,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top suppliers</h4>
-                    <Field
+                    <FinalQuestionField
                       name="isDontHaveSuppliersYet"
-                      path="prospect.orgKYCDetails.isDontHaveSuppliersYet"
                       label="I don't have any suppliers"
                       component={Checkbox}
                       onSelect={() => {
@@ -223,6 +224,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 arrayHelpers={arrayHelpers}
                                 dataArray={topSuppliers}
                                 itemIndex={index}
+                                updateProspect={updateProspect}
                                 prospectPath="prospect.orgKYCDetails.topSuppliers"
                                 title="Delete"
                               />
@@ -252,9 +254,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top origin of goods</h4>
-                    <Field
+                    <FinalQuestionField
                       name="isDontTradeGoodsYet"
-                      path="prospect.orgKYCDetails.isDontTradeGoodsYet"
                       label="I don't trade with goods"
                       component={Checkbox}
                       onSelect={() => {
@@ -295,6 +296,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 arrayHelpers={arrayHelpers}
                                 dataArray={topOriginGoodsCountries}
                                 itemIndex={index}
+                                updateProspect={updateProspect}
                                 prospectPath="prospect.orgKYCDetails.topOriginGoodsCountries"
                                 title="Delete"
                               />
@@ -368,6 +370,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                       arrayHelpers={arrayHelpers}
                                       dataArray={otherBankDetails}
                                       itemIndex={index}
+                                      updateProspect={updateProspect}
                                       prospectPath="prospect.orgKYCDetails.otherBankingRelationshipsInfo.otherBankDetails"
                                       title="Delete"
                                     />

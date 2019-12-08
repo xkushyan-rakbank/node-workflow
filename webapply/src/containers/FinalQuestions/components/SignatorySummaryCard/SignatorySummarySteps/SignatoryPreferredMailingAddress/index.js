@@ -1,33 +1,27 @@
 import { connect } from "react-redux";
 import get from "lodash/get";
-import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { SignatoryPreferredMailingAddressComponent } from "./SignatoryPreferredMailingAddress";
-import { getOrganizationInfo, getSignatories } from "../../../../../../store/selectors/appConfig";
-import { prospect } from "../../../../../../constants/config";
+import { getOrganizationInfo } from "../../../../../../store/selectors/appConfig";
 
-const mapStateToProps = (state, { index }) => ({
-  organizationAddressInfo: get(
+const mapStateToProps = state => ({
+  organisationAddressFieldDesc: get(
     getOrganizationInfo(state),
-    "addressInfo",
-    prospect.organizationInfo.addressInfo
+    "addressInfo[0].addressDetails[0].addressFieldDesc",
+    ""
   ),
-  signatoryAddressInfo: get(
-    getSignatories(state)[index],
-    "addressInfo",
-    prospect.signatoryInfo[0].addressInfo
+  organisationAddressLine1: get(
+    getOrganizationInfo(state),
+    "addressInfo[0].addressDetails[0].addressLine1",
+    ""
   ),
-  sameAsCompanyAddress: get(
-    getSignatories(state)[index],
-    "sameAsCompanyAddress",
-    prospect.signatoryInfo[0].sameAsCompanyAddress
-  )
+  organisationEmirateCity: get(
+    getOrganizationInfo(state),
+    "addressInfo[0].addressDetails[0].emirateCity",
+    ""
+  ),
+  organisationPoBox: get(getOrganizationInfo(state), "addressInfo[0].addressDetails[0].poBox", "")
 });
 
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export const SignatoryPreferredMailingAddress = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignatoryPreferredMailingAddressComponent);
+export const SignatoryPreferredMailingAddress = connect(mapStateToProps)(
+  SignatoryPreferredMailingAddressComponent
+);

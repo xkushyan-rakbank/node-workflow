@@ -10,7 +10,6 @@ import {
   cancelled,
   fork
 } from "redux-saga/effects";
-import isUndefined from "lodash/isUndefined";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -21,14 +20,13 @@ import {
 import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
-import { handleChangeStep } from "../actions/stakeholders";
 import { prospect } from "../../api/apiClient";
 
 function* sendProspectToAPISaga() {
   try {
     const state = yield select();
     const newProspect = getProspect(state);
-    const prospectID = "COSME0000000000000001"; // remove hardcoded ID
+    const prospectID = getProspectId(state) || "COSME0000000000000001";
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
@@ -36,10 +34,6 @@ function* sendProspectToAPISaga() {
     yield put(sendProspectToAPISuccess(newProspect));
     yield put(updateSaveType("continue"));
     yield put(resetFormStep({ resetStep: false }));
-
-    if (!isUndefined(state.stakeholders.editableStakeholder)) {
-      yield put(handleChangeStep());
-    }
   } catch (error) {
     console.error({ error });
     yield call(sendProspectToAPIFail());

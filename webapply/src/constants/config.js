@@ -1,4 +1,4 @@
-import { countryCodeOptions } from "./options";
+import { UAE_CODE } from ".";
 
 export const endpoints = {
   baseUrl: "http://conv.rakbankonline.ae/quickapply",
@@ -20,7 +20,7 @@ export const prospect = {
   applicantInfo: {
     fullName: "",
     email: "",
-    countryCode: countryCodeOptions[0].label,
+    countryCode: UAE_CODE,
     mobileNo: ""
   },
   generalInfo: {
@@ -114,10 +114,10 @@ export const prospect = {
     ],
     contactDetails: {
       primaryMobileNo: "",
-      primaryMobCountryCode: countryCodeOptions[0].label,
+      primaryMobCountryCode: UAE_CODE,
       primaryEmail: "",
       primaryPhoneNo: "",
-      primaryPhoneCountryCode: countryCodeOptions[0].label,
+      primaryPhoneCountryCode: UAE_CODE,
       fax: "",
       faxCountryCode: "",
       secondaryPhoneNo: "",
@@ -154,8 +154,6 @@ export const prospect = {
         country: ""
       }
     ],
-    isDontHaveSuppliersYet: false,
-    isDontTradeGoodsYet: false,
     topOriginGoodsCountries: [""],
     industryMultiSelect: [
       {
@@ -270,10 +268,10 @@ export const prospect = {
       },
       contactDetails: {
         primaryMobileNo: "",
-        primaryMobCountryCode: countryCodeOptions[0].label,
+        primaryMobCountryCode: UAE_CODE,
         primaryEmail: "",
         primaryPhoneNo: "",
-        primaryPhoneCountryCode: countryCodeOptions[0].label,
+        primaryPhoneCountryCode: UAE_CODE,
         fax: "",
         faxCountryCode: "",
         secondaryPhoneNo: "",
@@ -292,8 +290,7 @@ export const prospect = {
         employerName: "",
         occupation: "",
         totalExperienceYrs: 0,
-        employmentStartDate: "",
-        isWorkAtTheCompany: false
+        employmentStartDate: ""
       },
       sameAsCompanyAddress: false,
       addressInfo: [
