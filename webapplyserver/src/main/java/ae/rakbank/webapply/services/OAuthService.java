@@ -117,8 +117,8 @@ public class OAuthService {
 					}
 
 					logger.info(String.format(
-							"API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s], retryCounter=%s",
-							methodName, url, response.getStatusCodeValue(), response.getBody(), retryCounter));
+							"API call from %s method, Endpoint=[%s] HttpStatus=[%s], retryCounter=%s",
+							methodName, url, response.getStatusCodeValue(), retryCounter));
 
 					if (response.getStatusCode().is2xxSuccessful()) {
 						logger.info(String.format(

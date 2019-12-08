@@ -19,11 +19,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.PublicKey;
-import java.util.Base64;
-import java.util.Enumeration;
 
 @Component
-//@ConditionalOnExpression("${skiply.data.encryption.enabled:false}")
 public class SecurityFilter implements Filter {
     private static final String UTF_8 = "UTF-8";
 
@@ -47,9 +44,7 @@ public class SecurityFilter implements Filter {
             SecretKeySpec spec = securityUtil.getSecretKeySpec(randomKey);
             String dataToDecrypt = decrypt((HttpServletRequest) request);
             byte[] decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));
-            logger.info("Decrypted data="+ new String(decryptedData));
 
-            //logger.info("Encoded Decrypted data="+ Base64.getDecoder().decode(decryptedData));
             if (decryptedData == null) {
                 GenericResponse failed = GenericResponse.getFailedResponse(
                         "Error while reading request payload, encrypted payload should be passed", "");
@@ -61,7 +56,7 @@ public class SecurityFilter implements Filter {
 
                 chain.doFilter(requestWrapper, responseWrapper);
 
-                result = encrypt(responseWrapper, spec); // use same random key iv for encrypting payload
+                result = encrypt(responseWrapper, spec);
             }
             response.setContentLength(result.length());
             response.getWriter().write(result);
@@ -79,16 +74,13 @@ public class SecurityFilter implements Filter {
 
     private String decrypt(ServletRequest request) {
         try {
-            // Read from request
             StringBuilder buffer = new StringBuilder();
             BufferedReader reader = request.getReader();
             String line;
             while ((line = reader.readLine()) != null) {
-                logger.info("line=" + line);
                 buffer.append(line);
             }
             String data = buffer.toString();
-            logger.info("Request to decrypt=" + data);
             return data;
         } catch (Exception e) {
             logger.error("error while decryption {}", e.getMessage());
@@ -104,8 +96,7 @@ public class SecurityFilter implements Filter {
         String key = request.getHeader("x-sym-key");
         try {
             return securityUtil.decryptAsymmetric(key);
-
-        } catch (IOException | GeneralSecurityException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

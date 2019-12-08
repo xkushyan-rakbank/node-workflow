@@ -48,6 +48,11 @@ import ae.rakbank.webapply.helpers.CookieHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.OAuthService;
 
+import java.security.KeyFactory;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
+import org.apache.commons.codec.binary.Base64;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
@@ -249,11 +254,11 @@ public class WebApplyController {
 		initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
 		initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
 
-		JsonNode rsaPublicKey = getRSAPublicKey();
+    String publicKey = fileHelper.getRSAPublicKey();
 
-		if (rsaPublicKey != null && rsaPublicKey.has("body")) {
-			initStateJSON.put("rsaPublicKey", rsaPublicKey.get("body").asText());
-		}
+    if (publicKey != null) {
+      initStateJSON.put("rsaPublicKey", publicKey);
+    }
 		
 		if (authToken != null && authToken !="") {
 			initStateJSON.put("authorizationToken", authToken.toString());
@@ -497,8 +502,8 @@ public class WebApplyController {
 			datalist.setAll((ObjectNode) fileHelper.getDatalistJSON());
 			populateDefaultDatalist(datalist);
 
-			logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]",
-					methodName, url, response.getStatusCodeValue(), datalist));
+			logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s]",
+					methodName, url, response.getStatusCodeValue()));
 
 			return new ResponseEntity<JsonNode>(datalist, null, HttpStatus.NO_CONTENT);
 
@@ -506,11 +511,6 @@ public class WebApplyController {
 			logger.error("Unable to call datalist API due to oauth error.");
 			return oauthResponse;
 		}
-	}
-
-	private JsonNode getRSAPublicKey() {
-		logger.info("Begin getRSAPublicKey()");
-		return fileHelper.getRSAPublicKeyJSON();
 	}
 
 	private void populateDefaultDatalist(JsonNode datalist) {

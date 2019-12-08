@@ -1,107 +1,74 @@
 package ae.rakbank.webapply.util;
 
-import ae.rakbank.webapply.commons.EnvUtil;
-import com.fasterxml.jackson.databind.ser.Serializers;
+import ae.rakbank.webapply.helpers.FileHelper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.*;
-import java.security.cert.Certificate;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
+
+import java.security.KeyFactory;
+import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
-import static ae.rakbank.webapply.security.ReadWriteKey.PRIVATE_KEY_FILE;
-import static ae.rakbank.webapply.security.ReadWriteKey.decrypt;
-
 @Component
-//@ConditionalOnExpression("${skiply.data.encryption.enabled:false}")
 public class SecurityUtil {
 
-    /** The Constant LOG. */
-    private static final Logger LOG = LoggerFactory.getLogger(SecurityUtil.class);
+  private static final Logger LOG = LoggerFactory.getLogger(SecurityUtil.class);
 
-    private PrivateKey privateKey;
+  @Autowired
+  FileHelper fileHelper;
 
-    private static final String UTF_8 = "UTF-8";
+  private static final String UTF_8 = "UTF-8";
 
-    @PostConstruct
-    private void loadKeyStore() {
-        try {
-            LOG.info("Initializing private key");
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
-            privateKey = (PrivateKey) inputStream.readObject();
-        } catch (Exception e) {
-            LOG.error("Error reading private key", e.getMessage());
-        }
+  public byte[] decryptAsymmetric(String input) throws Exception{
+    String privateKeyContent = fileHelper.getRSAPrivateKey();
+    privateKeyContent = privateKeyContent.replaceAll("\\n", "").replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "");
+    KeyFactory kf = KeyFactory.getInstance("RSA");
+    PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.decodeBase64(privateKeyContent));
+    PrivateKey privKey = kf.generatePrivate(keySpecPKCS8);
+
+    Cipher cipher = Cipher.getInstance("RSA");
+    cipher.init(Cipher.DECRYPT_MODE, privKey);
+    byte[] finalString = cipher.doFinal((Base64.decodeBase64(input)));
+    return finalString;
+  }
+
+  public byte[] decryptSymmetric(String strToDecrypt, SecretKeySpec secretKey) {
+    try {
+      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+      cipher.init(Cipher.DECRYPT_MODE, secretKey);
+      return cipher.doFinal(Base64.decodeBase64(strToDecrypt));
+    } catch (Exception e) {
+      LOG.error("error while decrypting data {}", e.getMessage());
     }
 
-    public String encryptAsymmetric(byte[] input) throws IOException, GeneralSecurityException {
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-        return Base64.encodeBase64String(cipher.doFinal(input));
-    }
+    return null;
+  }
 
-    public byte[] decryptAsymmetric(String input) throws IOException, GeneralSecurityException {
-
-            Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            byte[] finalString = cipher.doFinal((Base64.decodeBase64(input)));
-            LOG.info("Decrypted key =" + finalString);
-            return finalString;
+  public String encryptSymmetric(String strToEncrypt, SecretKeySpec secretKey) {
+    try {
+      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+      cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+      
+      return Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes(UTF_8)));
+    } catch (Exception e) {
+      LOG.error("error while encrypting data {}", e.getMessage());
     }
+    return null;
+  }
 
-    public byte[] generateIV() {
-        SecureRandom random = new SecureRandom();
-        byte[] iv = new byte[16];
-        random.nextBytes(iv);
-        return iv;
+  public SecretKeySpec getSecretKeySpec(byte[] randomKey) {
+    try {
+      return new SecretKeySpec(randomKey, "AES");
+    } catch (Exception e) {
+      LOG.error("error while setting key for encryption {}", e.getMessage());
     }
-
-    public byte[] decryptSymmetric(String strToDecrypt, SecretKeySpec secretKey) {
-        try {
-//            Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-            LOG.info("String data to decrypt=" + strToDecrypt);
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return cipher.doFinal(Base64.decodeBase64(strToDecrypt));
-        } catch (Exception e) {
-            LOG.error("error while decrypting data {}", e.getMessage());
-        }
-        return null;
-    }
-
-    public String encryptSymmetric(String strToEncrypt, SecretKeySpec secretKey) {
-        try {
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes(UTF_8)));
-        } catch (Exception e) {
-            LOG.error("error while encrypting data {}", e.getMessage());
-        }
-        return null;
-    }
-
-    public SecretKeySpec getSecretKeySpec(byte[] randomKey) {
-        try {
-            return new SecretKeySpec(randomKey, "AES");
-        } catch (Exception e) {
-            LOG.error("error while setting key for encryption {}", e.getMessage());
-        }
-        return null;
-    }
+    return null;
+  }
 }
