@@ -63,15 +63,13 @@ instance.interceptors.response.use(
 
     if (status === 400) {
       if (jsonData.errorType === "ReCaptchaError") {
-        store.dispatch(setError(data.errors));
+        return store.dispatch(setError(data.errors));
       } else if (jsonData.errors) {
-        store.dispatch(setInputsErrors(data.errors));
-      } else {
-        log(jsonData);
+        return store.dispatch(setInputsErrors(data.errors));
       }
-    } else {
-      NotificationsManager.add && NotificationsManager.add();
     }
+
+    NotificationsManager.add && NotificationsManager.add();
     return Promise.reject(error);
   }
 );
