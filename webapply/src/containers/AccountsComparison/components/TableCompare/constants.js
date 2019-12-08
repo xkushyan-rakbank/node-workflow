@@ -42,14 +42,17 @@ export const accountsDataRows = [
 
 export const accountTypes = {
   starter: {
+    id: "starter",
     name: accountsNames.starter,
     position: 2
   },
   currentAccount: {
+    id: "currentAccount",
     name: accountsNames.currentAccount,
     position: 3
   },
   elite: {
+    id: "elite",
     name: accountsNames.elite,
     position: 4
   }

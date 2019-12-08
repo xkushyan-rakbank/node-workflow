@@ -3,19 +3,26 @@ import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
 
 import VideoBackground from "./BackgroundVideoPlayer";
+import { mobileResolution } from "../constants";
 
 const transitionDuration = 400;
 const style = {
   paginationWrapper: {
-    position: "relative",
-    height: "100vh",
-    overflowY: "hidden"
+    [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
+      position: "relative",
+      height: "100vh",
+      overflowY: "hidden"
+    }
   },
   paginationContent: {
     position: "absolute",
     left: 0,
     width: "100%",
-    transition: `top ${transitionDuration}ms`
+    transition: `top ${transitionDuration}ms`,
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      position: "static",
+      top: "0!important"
+    }
   },
   childWrapper: {
     display: "flex",
@@ -24,9 +31,14 @@ const style = {
     position: "relative",
     paddingTop: "170px",
     boxSizing: "border-box",
+    padding: "0 26px",
     "@media only screen and (max-height: 900px)": {
       justifyContent: "center",
       paddingTop: "0px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      height: "auto",
+      padding: "40px 16px 0"
     }
   },
   childWrapperWithHeader: {
@@ -44,6 +56,9 @@ const style = {
     transform: "translateY(-50%)",
     "@media only screen and (max-width: 1360px)": {
       right: "15px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      display: "none"
     }
   },
   paginationDot: {
@@ -83,11 +98,11 @@ class VerticalPaginationWrapper extends React.Component {
   }
 
   componentDidMount() {
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("overflow-hidden");
   }
 
   componentWillUnmount() {
-    document.body.style.overflow = "";
+    document.body.classList.remove("overflow-hidden");
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -177,7 +192,14 @@ class VerticalPaginationWrapper extends React.Component {
   };
 
   render() {
-    const { classes, children, videoUrl, posterUrl } = this.props;
+    const {
+      classes,
+      children,
+      videoUrl,
+      posterUrl,
+      showVideoOnMobile = false,
+      scrollToSecondSection
+    } = this.props;
     const { top, nextElementPosition } = this.state;
 
     return (
@@ -185,10 +207,12 @@ class VerticalPaginationWrapper extends React.Component {
         <div className={classes.paginationWrapper} onWheel={this.handleWheel}>
           {videoUrl && (
             <VideoBackground
+              videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
               nextElementPosition={nextElementPosition}
               videoUrl={videoUrl}
               posterUrl={posterUrl}
               handleClick={this.handleClick}
+              handleClickMobile={scrollToSecondSection}
             />
           )}
           <div style={{ top }} className={classes.paginationContent}>

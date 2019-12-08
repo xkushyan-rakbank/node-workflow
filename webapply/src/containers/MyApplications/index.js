@@ -15,7 +15,7 @@ export const MyApplications = () => {
 
   useEffect(() => {
     dispatch(searchApplications(inputParam));
-  }, [searchApplications, inputParam, dispatch]);
+  }, [inputParam, dispatch]);
 
   return (
     <BaseComponent

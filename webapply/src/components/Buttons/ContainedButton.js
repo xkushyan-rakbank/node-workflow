@@ -14,18 +14,24 @@ const ArrowIcon = styled(Icon)({
 const styles = {
   buttonStyle: {
     height: "56px",
-    borderRadius: "28px ",
+    borderRadius: "28px",
     outline: "none ",
     fontSize: "18px",
     textTransform: "none",
-    padding: "0 36px",
+    padding: "0 32px",
     backgroundColor: "#000",
+    "& svg": {
+      verticalAlign: "top",
+      marginLeft: 18,
+      marginRight: -10
+    },
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.7)"
     }
   },
   labelStyle: {
     fontSize: "18px",
+    lineHeight: "24px",
     textAlign: "left",
     color: "#ffffff",
     justifyContent: "space-between"

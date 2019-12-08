@@ -4,7 +4,7 @@ import { portraitOrientationQueryIPads } from "../../../../constants/styles";
 export const useStyles = makeStyles({
   container: {
     border: "solid 1px #e8e8e8",
-    width: "247px",
+    width: 247,
     height: 526,
     maxHeight: 526,
     borderRadius: "8px",
@@ -12,13 +12,10 @@ export const useStyles = makeStyles({
     backgroundColor: "#fff",
     padding: "37px 15px 40px",
     boxSizing: "border-box",
-    margin: "20px 19px 0 0px",
+    margin: "20px 0 0 0",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    "&:last-child": {
-      marginRight: 0
-    },
     [portraitOrientationQueryIPads]: {
       padding: "5px 24px 11px",
       marginTop: "10px",

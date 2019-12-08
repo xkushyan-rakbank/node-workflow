@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import * as loginSelector from "./../store/selectors/loginSelector";
 import * as appConfigSelectors from "../store/selectors/appConfig";
-import { accountsNames } from "../constants";
+import { accountsNames, mobileResolution } from "../constants";
 import router from "../routes";
 import { logout, formatLogin } from "./../store/actions/loginForm";
 import { formatSearchList } from "./../store/actions/searchProspect";
@@ -23,6 +23,9 @@ const styles = {
       "& span": {
         fontWeight: "600"
       }
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      display: "none"
     }
   },
   headerTitleIn: {

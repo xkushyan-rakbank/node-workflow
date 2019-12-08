@@ -5,6 +5,7 @@ import { Link } from "@material-ui/core";
 import { ContainedButton } from "../Buttons/ContainedButton";
 import check from "../../assets/icons/check_outline_ic.png";
 import { getIconsByAccount } from "../../constants/icons";
+import { mobileResolution } from "../../constants";
 
 const style = {
   root: {
@@ -19,15 +20,18 @@ const style = {
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
-    marginRight: "20px",
-    "&:last-child": {
-      marginRight: 0
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      minWidth: 250,
+      padding: "40px 16px 25px 16px"
     }
   },
   title: {
     fontSize: "20px",
     borderBottom: "solid 1px #e8e8e8",
-    paddingBottom: "30px"
+    paddingBottom: "30px",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      paddingBottom: 20
+    }
   },
   icon: {
     display: "flex",
@@ -52,6 +56,9 @@ const style = {
     textAlign: "center",
     "& span": {
       marginLeft: "5px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      paddingBottom: 5
     }
   },
   options: {
@@ -94,7 +101,10 @@ const style = {
   linkWrapper: {
     paddingBottom: "40px",
     borderBottom: "solid 1px #e8e8e8",
-    fontWeight: "600"
+    fontWeight: "600",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      paddingBottom: 20
+    }
   },
   upgrade: {
     paddingTop: "5px",
