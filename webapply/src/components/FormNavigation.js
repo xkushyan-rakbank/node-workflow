@@ -12,8 +12,8 @@ import Chat from "./Chat";
 import { accountsNames, formStepper, searchProspectStepper, mobileResolution } from "../constants";
 import { ContainedButton } from "./Buttons/ContainedButton";
 import { MobileNotification } from "./Modals";
-import IslamicBankingSwitcherMobile from "./IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
-import * as loginSelector from "./../store/selectors/loginSelector";
+import { IslamicBankingSwitcherMobile } from "./IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
+import { checkLoginStatus } from "./../store/selectors/loginSelector";
 import {
   sideNavWidthXL,
   sideNavWidthLG,
@@ -415,7 +415,7 @@ class FormNavigation extends React.Component {
 
 const mapStateToProps = state => ({
   applicationInfo: get(state, "appConfig.prospect.applicationInfo", {}),
-  checkLoginStatus: loginSelector.checkLoginStatus(state)
+  checkLoginStatus: checkLoginStatus(state)
 });
 
 export default compose(

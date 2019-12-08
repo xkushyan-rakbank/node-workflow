@@ -5,7 +5,7 @@ import IslamicBankingSwitcher from "./IslamicBankingSwitcher";
 
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 
-const ButtonToggler = styled("button")({
+const ButtonToggler = styled(({ isSwitcherShow, ...rest }) => <button {...rest} />)({
   position: "absolute",
   backgroundColor: "transparent",
   top: 16,
@@ -27,7 +27,7 @@ const ButtonToggler = styled("button")({
   }
 });
 
-const SwitcherWrapper = styled("div")({
+const SwitcherWrapper = styled(({ isSwitcherShow, ...rest }) => <div {...rest} />)({
   position: "absolute",
   opacity: props => (props.isSwitcherShow ? 1 : 0),
   pointerEvents: props => (props.isSwitcherShow ? "auto" : "none"),
@@ -48,7 +48,7 @@ export const ArrowDownIcon = styled(ArrowDown)({
   height: "32px"
 });
 
-const IslamicBankingSwitcherMobile = ({
+export const IslamicBankingSwitcherMobile = ({
   children,
   className,
   isSwitcherShow,
@@ -66,5 +66,3 @@ const IslamicBankingSwitcherMobile = ({
     </div>
   );
 };
-
-export default IslamicBankingSwitcherMobile;
