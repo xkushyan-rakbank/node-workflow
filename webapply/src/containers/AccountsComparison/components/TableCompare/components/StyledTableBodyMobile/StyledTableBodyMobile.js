@@ -34,88 +34,68 @@ const BootstrapInput = withStyles(theme => ({
 
 export const StyledTableBodyMobileComponent = ({ handleSelectAccount }) => {
   const classes = useStyles();
-  const [mobileAccount1, setMobileAccount1] = useState(accountTypes.starter.id);
-  const [mobileAccount2, setMobileAccount2] = useState(accountTypes.currentAccount.id);
+  const [mobileAccounts, setMobileAccounts] = useState([
+    accountTypes.starter.id,
+    accountTypes.currentAccount.id
+  ]);
+
   return (
     <TableBody>
       <TableRow classes={{ root: classes.tableRowRoot }}>
-        <TableCell classes={{ root: classes.tableCellRoot }} className={classes.tableCellSelect}>
-          <Select
-            value={mobileAccount1}
-            onChange={e => setMobileAccount1(e.target.value)}
-            input={<BootstrapInput />}
+        {mobileAccounts.map((mobileAccount, index) => (
+          <TableCell
+            key={index}
+            classes={{ root: classes.tableCellRoot }}
+            className={classes.tableCellSelect}
           >
-            {Object.entries(accountTypes).map(([_, { id, name }], index) => {
-              if (mobileAccount2 !== id) {
-                return (
-                  <MenuItem value={id} key={index}>
-                    {name}
-                  </MenuItem>
-                );
-              }
-            })}
-          </Select>
-        </TableCell>
-
-        <TableCell classes={{ root: classes.tableCellRoot }} className={classes.tableCellSelect}>
-          <Select
-            value={mobileAccount2}
-            onChange={e => setMobileAccount2(e.target.value)}
-            input={<BootstrapInput />}
-          >
-            {Object.entries(accountTypes).map(([_, { id, name }], index) => {
-              if (mobileAccount1 !== id) {
-                return (
-                  <MenuItem value={id} key={index}>
-                    {name}
-                  </MenuItem>
-                );
-              }
-            })}
-          </Select>
-        </TableCell>
+            <Select
+              value={mobileAccount}
+              onChange={e => {
+                const newMobileAccounts = [...mobileAccounts];
+                newMobileAccounts[index] = e.target.value;
+                setMobileAccounts(newMobileAccounts);
+              }}
+              input={<BootstrapInput />}
+            >
+              {Object.entries(accountTypes).map(
+                ([_, { id, name }]) =>
+                  mobileAccounts[1 - index] !== id && (
+                    <MenuItem value={id} key={id}>
+                      {name}
+                    </MenuItem>
+                  )
+              )}
+            </Select>
+          </TableCell>
+        ))}
       </TableRow>
 
-      {accountsDataRows.map((accountsDataRow, index) => {
-        return (
-          <TableRow classes={{ root: classes.tableRowRoot }} key={index}>
+      {accountsDataRows.map((accountsDataRow, index) => (
+        <TableRow classes={{ root: classes.tableRowRoot }} key={index}>
+          {mobileAccounts.map((mobileAccount, index) => (
             <StyledTableCellWitHoverHandler
+              key={index}
               title={accountsDataRow.info}
               name={accountTypes.elite.name}
-              account={accountsDataRow[mobileAccount1]}
+              account={accountsDataRow[mobileAccount]}
             />
-
-            <StyledTableCellWitHoverHandler
-              title={accountsDataRow.info}
-              name={accountTypes.elite.name}
-              account={accountsDataRow[mobileAccount2]}
-            />
-          </TableRow>
-        );
-      })}
+          ))}
+        </TableRow>
+      ))}
 
       <TableRow classes={{ root: classes.tableRowRoot }}>
-        <TableCell classes={{ root: classes.tableCellRoot }}>
-          <ContainedButton
-            label="Read more"
-            handleClick={() => handleSelectAccount(accountTypes[mobileAccount1].name)}
-            classes={{
-              buttonStyle: classes.containedButton,
-              labelStyle: classes.containedButtonLabelStyle
-            }}
-          />
-        </TableCell>
-
-        <TableCell classes={{ root: classes.tableCellRoot }}>
-          <ContainedButton
-            label="Read more"
-            handleClick={() => handleSelectAccount(accountTypes[mobileAccount2].name)}
-            classes={{
-              buttonStyle: classes.containedButton,
-              labelStyle: classes.containedButtonLabelStyle
-            }}
-          />
-        </TableCell>
+        {mobileAccounts.map((mobileAccount, index) => (
+          <TableCell key={index} classes={{ root: classes.tableCellRoot }}>
+            <ContainedButton
+              label="Read more"
+              handleClick={() => handleSelectAccount(accountTypes[mobileAccount].name)}
+              classes={{
+                buttonStyle: classes.containedButton,
+                labelStyle: classes.containedButtonLabelStyle
+              }}
+            />
+          </TableCell>
+        ))}
       </TableRow>
     </TableBody>
   );
