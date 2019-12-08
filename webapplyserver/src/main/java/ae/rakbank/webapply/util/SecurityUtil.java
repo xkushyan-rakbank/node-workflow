@@ -28,7 +28,10 @@ public class SecurityUtil {
 
   public byte[] decryptAsymmetric(String input) throws Exception{
     String privateKeyContent = fileHelper.getRSAPrivateKey();
-    privateKeyContent = privateKeyContent.replaceAll("\\n", "").replace("-----BEGIN PRIVATE KEY-----", "").replace("-----END PRIVATE KEY-----", "");
+    privateKeyContent = privateKeyContent
+      .replaceAll("\\n", "")
+      .replace("-----BEGIN PRIVATE KEY-----", "")
+      .replace("-----END PRIVATE KEY-----", "");
     KeyFactory kf = KeyFactory.getInstance("RSA");
     PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.decodeBase64(privateKeyContent));
     PrivateKey privKey = kf.generatePrivate(keySpecPKCS8);
@@ -36,6 +39,7 @@ public class SecurityUtil {
     Cipher cipher = Cipher.getInstance("RSA");
     cipher.init(Cipher.DECRYPT_MODE, privKey);
     byte[] finalString = cipher.doFinal((Base64.decodeBase64(input)));
+
     return finalString;
   }
 

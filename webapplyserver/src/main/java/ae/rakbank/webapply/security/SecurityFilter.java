@@ -41,15 +41,21 @@ public class SecurityFilter implements Filter {
             logger.info("Encryption enabled");
             ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
             byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
-            SecretKeySpec spec = securityUtil.getSecretKeySpec(randomKey);
-            String dataToDecrypt = decrypt((HttpServletRequest) request);
-            byte[] decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));
+            byte[] decryptedData = null;
+            SecretKeySpec spec = null;
+
+            if (randomKey != null) {
+              spec = securityUtil.getSecretKeySpec(randomKey);
+              String dataToDecrypt = decrypt((HttpServletRequest) request);
+              decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));  
+            }
 
             if (decryptedData == null) {
                 GenericResponse failed = GenericResponse.getFailedResponse(
                         "Error while reading request payload, encrypted payload should be passed", "");
                 ObjectMapper mapper = new ObjectMapper();
                 result = mapper.writeValueAsString(failed);
+                responseWrapper.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             } else {
                 HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
                         decryptedData);

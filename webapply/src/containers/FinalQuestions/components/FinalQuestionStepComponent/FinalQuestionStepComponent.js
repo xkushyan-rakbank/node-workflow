@@ -29,12 +29,15 @@ export const FinalQuestionStepComponent = ({
 
   const handleContinue = useCallback(
     itemStep => () => {
-      sendProspectToAPI().then(() => {
-        setStep(step + 1);
-        if (!completedSteps.includes(itemStep)) {
-          setCompletedSteps([...completedSteps, itemStep]);
-        }
-      });
+      sendProspectToAPI().then(
+        () => {
+          setStep(step + 1);
+          if (!completedSteps.includes(itemStep)) {
+            setCompletedSteps([...completedSteps, itemStep]);
+          }
+        },
+        () => {}
+      );
     },
     [sendProspectToAPI, step, completedSteps]
   );

@@ -37,7 +37,7 @@ const StakeholderStepperComponent = ({
   }, [step]);
 
   const handleContinue = useCallback(() => {
-    sendProspectToAPI().then(() => setStep(step + 1));
+    sendProspectToAPI().then(() => setStep(step + 1), () => {});
   }, [sendProspectToAPI, step]);
 
   const handleDeleteStakeholder = () => {
