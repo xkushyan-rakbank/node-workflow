@@ -26,7 +26,7 @@ instance.interceptors.response.use(
         store.dispatch(setInputsErrors(errors));
       }
     } else {
-      NotificationsManager.add();
+      NotificationsManager.add && NotificationsManager.add();
     }
     return Promise.reject(error);
   }
