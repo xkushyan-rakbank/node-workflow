@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import routes from "../../routes";
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { CompanyDocuments } from "./../uploadDocuments/components/CompanyDocument";
-import { SignatoriesDocuments } from "./../uploadDocuments/components/SignatoryDocument";
+import { CompanyDocuments } from "./../UploadDocuments/components/CompanyDocument";
+import { SignatoriesDocuments } from "./../UploadDocuments/components/SignatoryDocument";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
 
