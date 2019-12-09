@@ -1,3 +1,5 @@
+$mobileResolution: 991;
+
 /*
 * ====== Base ======
 */
@@ -6,6 +8,12 @@ body {
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  &.overflow-hidden {
+    @media (min-width: #{$mobileResolution + 1}px) {
+      overflow: hidden;
+    }
+  }
 }
 
 html,
@@ -13,6 +21,7 @@ body,
 #root {
   height: 100%;
   min-height: 100%;
+  scroll-behavior: smooth;
 }
 
 .formDescription {
@@ -334,4 +343,18 @@ h3 {
 
 [aria-disabled="true"] {
   opacity: 0.6;
+}
+
+.show-on-mobile {
+  display: none;
+}
+
+@media (max-width: #{$mobileResolution}px) {
+  .hide-on-mobile {
+    display: none!important;
+  }
+
+  .show-on-mobile {
+    display: block;
+  }
 }

@@ -21,9 +21,9 @@ const NotificationsProvider = ({ children }) => {
   const [notifications, dispatch] = useReducer(notificationsReducer, []);
   const remove = useCallback(notification => dispatch({ op: "remove", notification }), [dispatch]);
   const add = useCallback(
-    options => {
+    (options = {}) => {
       const id = uniqueId("notification-");
-      dispatch({ op: "add", notification: { ...options, fixed: true, id } });
+      dispatch({ op: "add", notification: { ...options, id } });
       setTimeout(() => remove(id), options.delay || 5000);
     },
     [dispatch, remove]
@@ -57,7 +57,6 @@ export const NotificationsStyled = styled("div")({
 
 const Notifications = () => {
   const { notifications, remove } = useContext(NotificationsContext);
-  console.log(notifications);
 
   return (
     <NotificationsStyled>

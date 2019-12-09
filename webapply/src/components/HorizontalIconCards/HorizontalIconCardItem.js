@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
+import { mobileResolution } from "../../constants";
 
 const style = {
   iconCardWrapper: {
@@ -15,7 +16,10 @@ const style = {
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
     textAlign: "center",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      margin: "5px auto"
+    }
   },
   iconCardText: {
     display: "flex",

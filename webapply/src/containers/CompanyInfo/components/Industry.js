@@ -49,7 +49,10 @@ export const Industry = ({ handleContinue }) => (
               filterOptions={options =>
                 options
                   .filter(item => values.industry.includes(item.value))
-                  .reduce((acc, curr) => [...acc, ...curr.subCategory], [])
+                  .reduce(
+                    (acc, curr) => (curr.subCategory ? [...acc, ...curr.subCategory] : acc),
+                    []
+                  )
               }
               multiple
               disabled={!values.industry.filter(item => item).length}

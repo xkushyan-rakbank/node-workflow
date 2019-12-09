@@ -68,7 +68,7 @@ export const CustomSelect = ({
           <MenuItem key={extractId(option)} value={extractValue(option)}>
             {multiple ? (
               <>
-                <ListItemText primary={extractId(option)} />
+                <ListItemText primary={extractLabel(option)} />
                 <Checkbox color="default" checked={field.value.includes(extractValue(option))} />
               </>
             ) : (

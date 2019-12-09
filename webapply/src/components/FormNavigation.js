@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import cx from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import get from "lodash/get";
@@ -8,9 +9,11 @@ import { withStyles } from "@material-ui/core/styles";
 
 import FormNavigationStep from "./FormNavigationStep";
 import Chat from "./Chat";
-import { accountsNames, formStepper, searchProspectStepper } from "../constants";
+import { accountsNames, formStepper, searchProspectStepper, mobileResolution } from "../constants";
 import { ContainedButton } from "./Buttons/ContainedButton";
-import * as loginSelector from "./../store/selectors/loginSelector";
+import { MobileNotification } from "./Modals";
+import { IslamicBankingSwitcherMobile } from "./IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
+import { checkLoginStatus } from "./../store/selectors/loginSelector";
 import {
   sideNavWidthXL,
   sideNavWidthLG,
@@ -20,15 +23,27 @@ import {
 } from "../constants/styles";
 import routes from "../routes";
 
+const blobImages = {
+  red: require("../assets/images/bg-blobs/bg-blob-red.png"),
+  redS: require("../assets/images/bg-blobs/bg-blob-s-red.png"),
+  redM: require("../assets/images/bg-blobs/bg-blob-m-red.png"),
+  brown: require("../assets/images/bg-blobs/bg-blob-brown.png"),
+  brownS: require("../assets/images/bg-blobs/bg-blob-s-brown.png"),
+  brownM: require("../assets/images/bg-blobs/bg-blob-m-brown.png"),
+  green: require("../assets/images/bg-blobs/bg-blob-green.png"),
+  greenS: require("../assets/images/bg-blobs/bg-blob-s-green.png"),
+  greenM: require("../assets/images/bg-blobs/bg-blob-m-green.png")
+};
+
 const style = {
   formNav: {
     flex: `0 0 ${sideNavWidthXL}px`,
     position: "relative",
     paddingTop: "170px",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "right center",
     zIndex: "11",
+    [portraitOrientationQueryIPads]: {
+      paddingTop: "270px"
+    },
     "@media only screen and (max-width: 1420px)": {
       flex: `0 0 ${sideNavWidthLG}px`
     },
@@ -38,8 +53,24 @@ const style = {
     "@media only screen and (max-width: 1220px)": {
       flex: `0 0 ${sideNavWidthSM}px`
     },
-    [portraitOrientationQueryIPads]: {
-      paddingTop: "270px"
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      display: "flex",
+      overflow: "hidden",
+      flexDirection: "column",
+      transition: "all .3s",
+      flex: "0 0 100%",
+      height: "290px",
+      paddingTop: "70px",
+      marginBottom: -40,
+      "&.small-bg": {
+        height: "190px"
+      },
+      "&.open": {
+        height: "calc(100vh - 50px)",
+        "&.has-video": {
+          marginBottom: "calc(-100vh + 220px)"
+        }
+      }
     },
     "& ul": {
       margin: "0",
@@ -72,6 +103,38 @@ const style = {
       }
     }
   },
+  formNavBg: {
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right center",
+    backgroundImage: `url(${blobImages.red})`,
+    "&.brown": {
+      backgroundImage: `url(${blobImages.brown})`
+    },
+    "&.green": {
+      backgroundImage: `url(${blobImages.green})`
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      backgroundSize: "cover",
+      backgroundPosition: "center bottom",
+      backgroundImage: `url(${blobImages.redM})`,
+      "&.brown": {
+        backgroundImage: `url(${blobImages.brownM})`
+      },
+      "&.green": {
+        backgroundImage: `url(${blobImages.greenM})`
+      },
+      "&.small-bg": {
+        backgroundImage: `url(${blobImages.redS})`,
+        "&.brown": {
+          backgroundImage: `url(${blobImages.brownS})`
+        },
+        "&.green": {
+          backgroundImage: `url(${blobImages.greenS})`
+        }
+      }
+    }
+  },
   contentContainer: {
     width: 340,
     marginLeft: 80,
@@ -86,6 +149,10 @@ const style = {
     },
     "@media only screen and (max-width: 1220px)": {
       marginLeft: 20
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      margin: 0,
+      padding: "0 16px"
     }
   },
   sectionTitle: {
@@ -100,7 +167,15 @@ const style = {
       fontSize: "40px"
     },
     "@media only screen and (max-width: 1220px)": {
-      fontSize: "30px"
+      fontSize: "32px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      margin: "0 0 30px",
+      padding: 0,
+      maxWidth: "500px"
+    },
+    "@media only screen and (max-width: 374px)": {
+      fontSize: "28px"
     }
   },
   sectionSubtitle: {
@@ -113,6 +188,10 @@ const style = {
     fontFamily: "Open Sans",
     "@media only screen and (max-width: 1220px)": {
       paddingRight: "25px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      fontSize: "14px",
+      margin: "-20px 0 30px"
     }
   },
   nextButton: {
@@ -178,7 +257,7 @@ const AccountInfo = ({ classes, accountType, history }) => {
         <>
           <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
             {isApplicationOverview
-              ? "Opening an account has never been this simple. saas"
+              ? "Opening an account has never been this simple."
               : isMyApplications
               ? "Your  applications, at a glance"
               : isComeBackLogin
@@ -190,12 +269,19 @@ const AccountInfo = ({ classes, accountType, history }) => {
               : "All businesses start with an account. Get yours now."}
           </Typography>
           {isApplicationOverview && (
-            <ContainedButton
-              withRightArrow
-              justify="flex-start"
-              label="Start application"
-              handleClick={() => handleClick(routes.applicantInfo)}
-            />
+            <>
+              <div className="hide-on-mobile">
+                <ContainedButton
+                  withRightArrow
+                  justify="flex-start"
+                  label="Start application"
+                  handleClick={() => handleClick(routes.applicantInfo)}
+                />
+              </div>
+              <div className="show-on-mobile">
+                <MobileNotification />
+              </div>
+            </>
           )}
         </>
       )}
@@ -228,20 +314,20 @@ const FormStepper = ({ step, path, checkLoginStatus }) =>
     </ul>
   );
 
-const getBgImage = (accountType, islamicBanking) => {
-  const bgImageUrl =
-    accountType === accountsNames.elite
-      ? "bg-blob-brown.png"
-      : islamicBanking
-      ? "bg-blob-green.png"
-      : "bg-blob-red.png";
-  const bgImage = require(`../assets/images/${bgImageUrl}`);
-  return `url(${bgImage})`;
+const getAccountTypeClass = (accountType, islamicBanking) => {
+  if (accountType && accountType === accountsNames.elite) {
+    return " brown";
+  } else if (islamicBanking) {
+    return " green";
+  } else {
+    return "";
+  }
 };
 
 class FormNavigation extends React.Component {
   state = {
-    step: (this.getRouteConfig() || {}).step || 1
+    step: (this.getRouteConfig() || {}).step || 1,
+    isSwitcherShow: false
   };
 
   componentDidUpdate(prevProps) {
@@ -266,6 +352,12 @@ class FormNavigation extends React.Component {
     }
   }
 
+  toggleSwitcherShow = () => {
+    const { isSwitcherShow } = this.state;
+    const value = !isSwitcherShow;
+    this.setState({ isSwitcherShow: value });
+  };
+
   render() {
     const {
       applicationInfo: { islamicBanking, accountType },
@@ -274,7 +366,7 @@ class FormNavigation extends React.Component {
       history,
       checkLoginStatus
     } = this.props;
-    const { step } = this.state;
+    const { step, isSwitcherShow } = this.state;
     const showAccountInfo = new Set([
       routes.accountsComparison,
       routes.detailedAccount,
@@ -284,10 +376,30 @@ class FormNavigation extends React.Component {
       routes.comeBackLoginVerification,
       routes.reUploadDocuments
     ]).has(location.pathname);
-    const backgroundImage = getBgImage(accountType, islamicBanking);
+    const showSmallBg = new Set([
+      routes.accountsComparison,
+      routes.comeBackLogin,
+      routes.comeBackLoginVerification
+    ]).has(location.pathname);
+    const bgTypeClass = getAccountTypeClass(accountType, islamicBanking);
 
     return (
-      <div className={classes.formNav} style={{ backgroundImage }}>
+      <div
+        className={cx(classes.formNav, classes.formNavBg, bgTypeClass, {
+          "small-bg": showSmallBg,
+          open: isSwitcherShow,
+          "has-video": routes.accountsComparison === location.pathname
+        })}
+      >
+        <IslamicBankingSwitcherMobile
+          className={cx(classes.formNavBg, bgTypeClass)}
+          isSwitcherShow={isSwitcherShow}
+          toggleSwitcherShow={this.toggleSwitcherShow}
+        >
+          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+            What banking option do you prefer?
+          </Typography>
+        </IslamicBankingSwitcherMobile>
         {showAccountInfo ? (
           <AccountInfo classes={classes} accountType={accountType} history={history} />
         ) : (
@@ -303,7 +415,7 @@ class FormNavigation extends React.Component {
 
 const mapStateToProps = state => ({
   applicationInfo: get(state, "appConfig.prospect.applicationInfo", {}),
-  checkLoginStatus: loginSelector.checkLoginStatus(state)
+  checkLoginStatus: checkLoginStatus(state)
 });
 
 export default compose(
