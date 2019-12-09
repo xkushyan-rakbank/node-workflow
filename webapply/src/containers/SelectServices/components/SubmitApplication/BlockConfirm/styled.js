@@ -11,5 +11,9 @@ export const useStyles = makeStyles({
   },
   listItem: {
     display: "block"
+  },
+  link: {
+    color: "#888888",
+    textDecoration: "underline"
   }
 });

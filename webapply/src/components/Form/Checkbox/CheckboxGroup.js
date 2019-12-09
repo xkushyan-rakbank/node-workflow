@@ -15,7 +15,7 @@ export const CheckboxesWrapper = styled("div")({
 });
 
 export const CheckboxGroup = ({
-  useRadioIcon,
+  typeRadio,
   options,
   extractId = option => option.key,
   extractValue = option => option.value,
@@ -30,7 +30,7 @@ export const CheckboxGroup = ({
 
   return (
     <FormControl className="formControl">
-      {useRadioIcon ? (
+      {typeRadio ? (
         <RadioGroup {...field}>
           <CheckboxesWrapper>
             {options.map(item => (

@@ -74,7 +74,7 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
           <Field
             name="chequeBookApplied"
             path=" prospect.accountInfo[0].chequeBookApplied"
-            label="I want debit cards for all the company signatories"
+            label="I want a cheque book for the company"
             component={Checkbox}
             disabled={isDisabledChequeBook}
           />

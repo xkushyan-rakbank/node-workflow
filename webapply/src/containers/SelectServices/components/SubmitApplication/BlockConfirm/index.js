@@ -25,11 +25,16 @@ export const BlockConfirm = ({ setFormFields }) => {
   const termsAgreedLabel = (
     <span>
       I agree with RakBank’s{" "}
-      <a href={termConditionUrl} target="_blank" rel="noopener noreferrer">
+      <a className={classes.link} href={termConditionUrl} target="_blank" rel="noopener noreferrer">
         terms and conditions
       </a>{" "}
       &{" "}
-      <a href={termOfEnrolmentUrl} target="_blank" rel="noopener noreferrer">
+      <a
+        className={classes.link}
+        href={termOfEnrolmentUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         terms and enrollment
       </a>
     </span>
