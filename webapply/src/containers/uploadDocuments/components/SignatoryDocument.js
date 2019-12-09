@@ -8,38 +8,32 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
+    const docUploadDetails = documents[index + "_" + signatorie.firstName];
     return (
-      documents[index + "_" + signatorie.firstName] && (
-        <div className={classes.signatoreyContainer} key={index}>
+      docUploadDetails && (
+        <div className={classes.signatoreyContainer} key={signatorie.signatoryId}>
           <div className={classes.contentWrapper}>
             <Avatar firstName={signatorie.firstName} lastName={signatorie.lastName} />
             <div className={classes.userInfo}>
               <div className={classes.nameField}>{signatorie.firstName}</div>
               <div className={classes.SignatoryRights}>{signatorie.roles}</div>
               <div className={classes.shareholdingField}>
-                {signatorie.kycDetails.shareHoldingPercentage ? (
-                  <>
-                    Shareholding
-                    {signatorie.kycDetails.shareHoldingPercentage} %
-                  </>
-                ) : (
-                  "No shareholding"
-                )}
+                {signatorie.kycDetails.shareHoldingPercentage
+                  ? `Shareholding ${signatorie.kycDetails.shareHoldingPercentage} %`
+                  : "No shareholding"}
               </div>
             </div>
           </div>
-          {documents[index + "_" + signatorie.firstName].map((documents, index) => {
-            if (signatorie.firstName === documents.signatoryName) {
-              return (
+          {docUploadDetails.map(document => {
+            return (
+              signatorie.firstName === document.signatoryName && (
                 <UploadDocuments
-                  key={index}
-                  documents={documents}
+                  key={document.documentKey}
+                  documents={document}
                   type="stakeholdersDocuments"
-                  docUploadDetails={documents[index + "_" + signatorie.firstName]}
                 />
-              );
-            }
-            return null;
+              )
+            );
           })}
         </div>
       )
