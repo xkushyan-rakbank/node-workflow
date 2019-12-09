@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { mobileResolution } from "../../../../../../constants";
 
 export const useStyles = makeStyles({
   tableCellRoot: {
@@ -10,6 +11,13 @@ export const useStyles = makeStyles({
     },
     "& span + span": {
       fontSize: "12px",
+      color: "#888",
+      [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+        fontSize: 10
+      }
+    },
+    "& div": {
+      fontSize: "14px",
       color: "#888"
     },
     "& button": {

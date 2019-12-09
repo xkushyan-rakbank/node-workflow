@@ -1,14 +1,12 @@
 package ae.rakbank.webapply.helpers;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
@@ -26,53 +24,58 @@ public class FileHelper {
 	private ResourceLoader resourceLoader;
 
 	public JsonNode loadJSONFile(String filename, boolean fromConfigDirectory) {
+    String fileContent = loadFileContents(filename, fromConfigDirectory);
+
+    if (fileContent == null) {
+      return null;
+    }
+
 		try {
-			logger.info("read file: " + filename);
 			ObjectMapper objectMapper = new ObjectMapper();
-
-			String fileContent = null;
-			File file = new File(EnvUtil.getConfigDir() + filename);
-			if (fromConfigDirectory && file.exists()) {
-				logger.info(String.format("Read JSON file from %s%s", EnvUtil.getConfigDir(), filename));
-
-				fileContent = FileUtils.readFileToString(new File(EnvUtil.getConfigDir() + filename),
-						String.valueOf(StandardCharsets.UTF_8));
-			} else {
-
-				if (fromConfigDirectory) {
-					logger.error(String.format("FileNotFoundException: Read JSON file from %s%s",
-							EnvUtil.getConfigDir(), filename));
-				}
-
-				logger.info("Read JSON file from classpath:" + filename);
-
-				Resource resource = resourceLoader.getResource("classpath:" + filename);
-				fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
-
-			}
 			return objectMapper.readTree(fileContent);
 		} catch (Exception e) {
 			logger.error("error loading " + filename, e);
-		}
+    }
+
 		return null;
 	}
 
-	public String loadFileContents(String filename) {
-		File file = new File(EnvUtil.getConfigDir() + filename);
+	public String loadFileContents(String filename, boolean fromConfigDirectory) {
 		try {
+      File file = loadFile(filename, fromConfigDirectory);
+
+      if (file == null) {
+        return null;
+      }
+
 			return FileUtils.readFileToString(file, String.valueOf(StandardCharsets.UTF_8));
-		} catch (IOException e) {
-			logger.error("Unable to read contents from " + EnvUtil.getConfigDir() + filename, e);
-		}
-		return null;
-	}
+		} catch (Exception e) {
+			logger.error("error loading " + filename, e);
+    }
+
+    return null;
+  }
+  
+  public File loadFile(String filename, boolean fromConfigDirectory) {
+    try {
+      if (fromConfigDirectory) {
+        return new File(EnvUtil.getConfigDir() + filename);
+      } else {
+        return resourceLoader.getResource("classpath:" + filename).getFile();
+      }
+    } catch (Exception e) {
+			logger.error("error loading " + filename, e);
+    }
+
+    return null;
+  }
 
 	public JsonNode getUIConfigJSON() {
 		return loadJSONFile("uiConfig.json", false);
 	}
 
 	public JsonNode getAppConfigJSON() {
-		return loadJSONFile("appConfig.json", true);
+		return loadJSONFile("appConfig.json", !EnvUtil.getEnv().equals("local"));
 	}
 
 	public JsonNode getSMEProspectJSON() {
@@ -83,8 +86,11 @@ public class FileHelper {
 		return loadJSONFile("datalist.json", false);
 	}
 
-	public JsonNode getRSAPublicKeyJSON() {
-		return loadJSONFile("RSAPublicKey.json", true);
-	}
+  public String getRSAPublicKey() {
+		return loadFileContents("public.key", !EnvUtil.getEnv().equals("local"));
+  }
 
+  public String getRSAPrivateKey() {
+		return loadFileContents("private.key", !EnvUtil.getEnv().equals("local"));
+	}
 }

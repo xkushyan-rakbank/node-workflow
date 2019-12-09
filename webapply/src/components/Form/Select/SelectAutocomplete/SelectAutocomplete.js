@@ -1,7 +1,6 @@
 import React from "react";
 import Select from "react-select";
 import { getIn } from "formik";
-import map from "lodash/map";
 import { FormControl } from "@material-ui/core";
 
 import { ErrorMessage } from "./../../../Notifications";
@@ -33,7 +32,9 @@ export const SelectAutocomplete = ({
   const isError = errorMessage && getIn(touched, field.name);
 
   const handleChange = selected => {
-    const value = multiple ? map(selected, item => extractValue(item)) : extractValue(selected);
+    const value = multiple
+      ? (selected || []).map(item => extractValue(item))
+      : extractValue(selected);
 
     return setFieldValue(field.name, value);
   };

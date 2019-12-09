@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 
 import SectionTitle from "./SectionTitle";
 import { LinkButton } from "./Buttons/LinkButton";
-import FormWrapper from "./StakeholderStepForms/FormWrapper/FormWrapper";
+import FormWrapper from "./FormWrapper/FormWrapper";
 import { ICONS, Icon } from "./Icons";
 
 const styles = {

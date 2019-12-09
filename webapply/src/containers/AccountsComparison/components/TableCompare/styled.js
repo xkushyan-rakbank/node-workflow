@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { mobileResolution } from "../../../../constants";
 
 export const useStyles = makeStyles({
   paperRoot: {
@@ -8,7 +9,16 @@ export const useStyles = makeStyles({
     position: "relative"
   },
   tableContainer: {
-    position: "relative"
+    position: "relative",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      display: "none"
+    }
+  },
+  tableMobileContainer: {
+    display: "none",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      display: "block"
+    }
   },
   selectedAccountContainer: {
     position: "absolute",
@@ -26,11 +36,10 @@ export const useStyles = makeStyles({
   },
   tableRoot: {
     tableLayout: "fixed",
-    width: "780px",
+    width: "100%",
     maxWidth: "780px",
     borderRadius: "8px",
     position: "relative",
-    overflow: "hidden",
     margin: "40px 0 30px 0",
     "& th, & td": {
       borderBottom: "none",
@@ -44,10 +53,10 @@ export const useStyles = makeStyles({
         right: 0,
         margin: "0 auto",
         width: "90%",
-        height: "2px",
+        height: 1,
         backgroundColor: "#f7f8f9",
         display: "block",
-        top: "-1px"
+        top: 0
       }
     },
     "& tr:nth-of-type(even) td": {
@@ -62,6 +71,9 @@ export const useStyles = makeStyles({
     },
     "& th:last-child, & td:last-child": {
       paddingRight: "0"
+    },
+    "& th:first-child, & td:first-child": {
+      paddingLeft: "0"
     }
   }
 });

@@ -7,6 +7,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 import { ICONS, Icon } from "../../components/Icons/Icon";
 import arrowDown from "../../assets/icons/arrow-down.png";
+import { mobileResolution } from "../../constants";
 
 const style = {
   root: {
@@ -24,6 +25,9 @@ const style = {
     },
     "&$expanded": {
       margin: "auto"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      minWidth: "100%"
     }
   },
   expanded: {},
@@ -31,6 +35,9 @@ const style = {
     minHeight: 60,
     "&$expanded": {
       minHeight: 60
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      padding: "8px 16px"
     }
   },
   summaryContent: {
@@ -59,17 +66,26 @@ const style = {
   text: {
     paddingBottom: "5px",
     fontSize: "16px",
-    "@media only screen and (max-height: 991px)": {
-      lineHeight: "16px"
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      paddingBottom: 0
     }
   },
   textEllipsis: {
     overflow: "hidden",
     whiteSpace: "nowrap",
-    textOverflow: "ellipsis"
+    textOverflow: "ellipsis",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      whiteSpace: "normal",
+      "& svg": {
+        display: "none"
+      }
+    }
   },
   info: {
-    paddingLeft: "10px"
+    paddingLeft: 10,
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      paddingLeft: 0
+    }
   }
 };
 

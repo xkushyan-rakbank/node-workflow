@@ -770,19 +770,19 @@
   "industry": [
     {
       "code": "EES",
-      "key": "Energy Equipment & Services",
+      "key": "EES",
       "value": "EES",
       "displayText": "Energy Equipment & Services",
       "subCategory": [
         {
           "code": "OGD",
-          "key": "Oil&GasDrilling",
+          "key": "OGD",
           "value": "OGD",
           "displayText": "Oil & Gas Drilling"
         },
         {
           "code": "OGES",
-          "key": "Oil&GasEquipment&Services",
+          "key": "OGES",
           "value": "OGES",
           "displayText": "Oil & Gas Equipment & Services"
         }
@@ -790,19 +790,19 @@
     },
     {
       "code": "OGC&F",
-      "key": "Oil, Gas & Consumable Fuel",
+      "key": "OGC&F",
       "value": "OGC&F",
       "displayText": "Oil, Gas & Consumable Fuels",
       "subCategory": [
         {
           "code": "IOG",
-          "key": "IntegratedOil&Gas",
+          "key": "IOG",
           "value": "IOG",
           "displayText": "Integrated Oil & Gas"
         },
         {
           "code": "OGEP",
-          "key": "Oil&GasExploration&Production",
+          "key": "OGEP",
           "value": "OGEP",
           "displayText": "Oil & Gas Exploration & Production"
         }

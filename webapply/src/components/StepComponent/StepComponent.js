@@ -36,9 +36,11 @@ export const StepComponent = ({
       <div className={classes.stepTitleWrapper} onClick={handleClick}>
         {renderTitle()}
       </div>
-      {isActiveStep && (
-        <Form index={index} prospectInfo={prospectInfo} handleContinue={handleContinue} />
-      )}
+      <div className={classes.formWrapper}>
+        {isActiveStep && (
+          <Form index={index} prospectInfo={prospectInfo} handleContinue={handleContinue} />
+        )}
+      </div>
     </>
   );
 };

@@ -13,7 +13,6 @@ public class EnvUtil {
 	private static final String WEB_APPLY_DIR = System.getenv("WEB_APPLY_DIR");
 
 	static {
-
 		if (StringUtils.isBlank(WEB_APPLY_DIR)) {
 			logger.error("System property 'WEB_APPLY_DIR' not configured, load config files from classpath:");
 		}
