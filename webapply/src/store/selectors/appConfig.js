@@ -50,3 +50,26 @@ export const getUrlsReadMore = state => ({
 });
 
 export const getProspectDocuments = state => state.appConfig.prospect.documents;
+
+const createGetDocsCountSelector = (filterDocuments = () => true) => state => {
+  const documents = getProspectDocuments(state);
+  let counter = 0;
+
+  if (documents) {
+    counter += (documents.companyDocuments || []).filter(filterDocuments).length;
+
+    Object.values(documents.stakeholdersDocuments || {}).map(stakeholdersDocument => {
+      counter += stakeholdersDocument.filter(filterDocuments).length;
+    });
+  }
+
+  return counter;
+};
+
+const UPLOADED_STATE = "Uploaded";
+
+export const getUploadedDocsCount = createGetDocsCountSelector(
+  doc => doc.uploadStatus === UPLOADED_STATE
+);
+
+export const getRequiredDocsCount = createGetDocsCountSelector();

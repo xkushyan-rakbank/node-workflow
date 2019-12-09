@@ -7,13 +7,13 @@ import { SignatoriesDocuments } from "./../UploadDocuments/components/SignatoryD
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
 
-const uploadedStatus = "Uploaded";
-
 export const UploadDocument = ({
   retrieveDocDetails,
   documents,
   companyName,
   signatories,
+  uploadedDocsCount,
+  requiredDocCount,
   history
 }) => {
   const classes = useStyles();
@@ -21,24 +21,6 @@ export const UploadDocument = ({
   useEffect(() => {
     retrieveDocDetails();
   }, [retrieveDocDetails]);
-
-  let uploadedDocsCount = 0;
-  let requiredDocCount = 0;
-  if (documents && Object.keys(documents).length) {
-    requiredDocCount = requiredDocCount + documents.companyDocuments.length;
-    uploadedDocsCount += documents.companyDocuments.filter(
-      doc => doc.uploadStatus === uploadedStatus
-    ).length;
-
-    documents.stakeholdersDocuments &&
-      Object.keys(documents.stakeholdersDocuments).length &&
-      Object.keys(documents.stakeholdersDocuments).map(userDoc => {
-        requiredDocCount = requiredDocCount + documents.stakeholdersDocuments[userDoc].length;
-        uploadedDocsCount += documents.stakeholdersDocuments[userDoc].filter(
-          doc => doc.uploadStatus === uploadedStatus
-        ).length;
-      });
-  }
 
   const goToSelectService = () => history.push(routes.selectServices);
 

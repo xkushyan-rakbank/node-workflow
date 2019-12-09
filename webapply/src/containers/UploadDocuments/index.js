@@ -3,7 +3,9 @@ import {
   getProspectDocuments,
   getSignatories,
   getEndpoints,
-  getProspectId
+  getProspectId,
+  getUploadedDocsCount,
+  getRequiredDocsCount
 } from "../../store/selectors/appConfig";
 import { UploadDocument } from "./UploadDocument";
 import { retrieveDocDetails, docUploadSuccess } from "../../store/actions/getProspectDocuments";
@@ -14,7 +16,9 @@ const mapStateToProps = state => ({
   companyName: getInputValueById(state, "Org.companyName"),
   signatories: getSignatories(state),
   uploadDocsEndpoints: getEndpoints(state),
-  prospectID: getProspectId(state)
+  prospectID: getProspectId(state),
+  uploadedDocsCount: getUploadedDocsCount(state),
+  requiredDocCount: getRequiredDocsCount(state)
 });
 
 const mapDispatchToProps = {
