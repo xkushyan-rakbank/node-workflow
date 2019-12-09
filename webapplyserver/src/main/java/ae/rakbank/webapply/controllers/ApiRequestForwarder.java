@@ -95,6 +95,7 @@ public class ApiRequestForwarder {
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
 			if (requestBodyJSON.has("recaptchaToken")) {
+        /*
 				logger.info("Validate reCAPTCHA before saving applicant info.");
 				String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
 				String ip = servletRequest.getRemoteAddr();
@@ -112,7 +113,8 @@ public class ApiRequestForwarder {
 
 				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
 					return captchaResponse;
-				}
+        }
+        */
 
 				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
 			} else {
