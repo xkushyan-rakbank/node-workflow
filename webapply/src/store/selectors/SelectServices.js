@@ -1,4 +1,8 @@
-export const getSelectedTypeCurrency = (accountCurrencies = []) => {
+import { getInputValueById } from "./input";
+
+export const getSelectedTypeCurrency = (state, id, index) => {
+  const accountCurrencies = getInputValueById(state, id, index) || [];
+
   const isSelectedLocalCurrency = accountCurrencies.includes("AED");
   const isSelectForeignCurrencyAndLocal =
     isSelectedLocalCurrency || (isSelectedLocalCurrency && accountCurrencies.length > 1);

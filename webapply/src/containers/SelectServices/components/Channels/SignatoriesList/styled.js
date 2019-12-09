@@ -11,9 +11,11 @@ export const useStyles = makeStyles({
     lineHeight: 2.14,
     color: "#373737"
   },
+  rootInput: {
+    fontWeight: "600",
+    fontFamily: "Open Sans"
+  },
   signatoryNamesContainer: {
-    display: "flex",
-    flexDirection: "column",
     marginTop: "12px",
     "& div + div": {
       marginTop: "20px"
@@ -21,18 +23,9 @@ export const useStyles = makeStyles({
   },
   signatoryName: {
     display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
     "& span": {
       fontSize: "14px",
       fontFamily: "Open Sans"
-    }
-  },
-  selectCombined: {
-    margin: "0 !important",
-    width: "360px",
-    "& input": {
-      fontWeight: "600"
     }
   }
 });

@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
+  checkbox: {
+    "&[aria-disabled='true']": {
+      opacity: 0.5
+    }
+  },
   checkboxWrapper: {
     display: "flex",
     alignItems: "center"

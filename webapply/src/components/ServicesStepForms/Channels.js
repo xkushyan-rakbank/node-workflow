@@ -17,7 +17,7 @@ import { getGeneralInputProps } from "../../store/selectors/input";
 import { updateProspect } from "../../store/actions/appConfig";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 import { stakeholders as stakeholdersSelector } from "../../store/selectors/stakeholder";
-import { getSelectedTypeCurrency } from "../../utils/SelectServices";
+import { getSelectedTypeCurrency } from "../../store/selectors/SelectServices";
 
 const style = {
   formWrapper: {
@@ -75,9 +75,7 @@ const getStatusChequeBookApplied = props => {
     accountCurrencies
   } = props;
 
-  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
-    accountCurrencies
-  );
+  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = accountCurrencies;
 
   const mobCountryCode = "971";
   const basedMobileNumberForCompany = new Set([primaryMobCountryCode, primaryPhoneCountryCode]);
@@ -104,9 +102,7 @@ const getStatusDebitCardApplied = props => {
 
   const accountSigningTypeAnyOfUs = accountSigningType === "Any of us";
 
-  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(
-    accountCurrencies
-  );
+  const { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency } = accountCurrencies;
 
   if (isSelectOnlyForeignCurrency || !accountSigningTypeAnyOfUs) {
     updateValueCheckBox(name, value, false, props);
@@ -224,7 +220,7 @@ class AccountDetails extends React.Component {
 
 const mapStateToProps = state => ({
   ...appConfigSelectors.getSignatories(state)[0],
-  accountCurrencies: getInputValueById(state, "Acnt.accountCurrencies", [0]),
+  accountCurrencies: getSelectedTypeCurrency(state, "Acnt.accountCurrencies", [0]),
   debitCardApplied: getGeneralInputProps(state, "Acnt.debitCardApplied", [0]),
   chequeBook: getGeneralInputProps(state, "Acnt.chequeBookApplied", [0]),
   eStatements: getGeneralInputProps(state, "Acnt.eStatements", [0]),

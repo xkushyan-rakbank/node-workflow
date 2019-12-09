@@ -31,7 +31,7 @@ function* sendProspectToAPISaga() {
   try {
     const state = yield select();
     const newProspect = getProspect(state);
-    const prospectID = getProspectId(state) || "COSME0000000000000001";
+    const prospectID = getProspectId(state);
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));

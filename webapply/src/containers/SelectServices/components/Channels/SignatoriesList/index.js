@@ -1,7 +1,8 @@
 import React from "react";
+import { Grid } from "@material-ui/core";
 
+import { Input, AutoSaveField as Field } from "../../../../../components/Form";
 import InfoTitle from "../../../../../components/InfoTitle";
-import TextInput from "../../../../../components/InputField/TextInput";
 
 import { useStyles } from "./styled";
 
@@ -17,21 +18,31 @@ export const SignatoriesList = ({ stakeholders }) => {
       />
 
       <div className={classes.signatoryNamesContainer}>
-        {stakeholders.map(
-          ({ firstName, lastName, kycDetails = {} }, index) =>
+        {stakeholders.map(({ firstName, lastName, kycDetails = {} }, index) => {
+          const prefix = `prospect.signatoryInfo.${index}`;
+
+          return (
             kycDetails.isSignatory && (
               <div className={classes.signatoryName} key={index}>
-                <span>
-                  {firstName} {lastName}
-                </span>
-                <TextInput
-                  id="SigDbtcAuths.nameOnDebitCard"
-                  indexes={[index]}
-                  classes={{ regularWrapper: classes.selectCombined }}
-                />
+                <Grid container spacing={3} alignItems="center">
+                  <Grid item md={6} sm={12}>
+                    <span>{`${firstName} ${lastName}`}</span>
+                  </Grid>
+                  <Grid item md={6} sm={12}>
+                    <Field
+                      name={`signatory.${index}.nameOnDebitCard`}
+                      path={`${prefix}.debitCardInfo.authSignatoryDetails.nameOnDebitCard`}
+                      label="Name on debit card"
+                      placeholder="Name on debit card"
+                      classes={{ root: classes.rootInput }}
+                      component={Input}
+                    />
+                  </Grid>
+                </Grid>
               </div>
             )
-        )}
+          );
+        })}
       </div>
     </>
   );

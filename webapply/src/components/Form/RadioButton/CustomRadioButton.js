@@ -1,9 +1,9 @@
 import React from "react";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
+import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import { ICONS, Icon } from "../../../components/Icons/Icon";
+import { ICONS, Icon } from "../../Icons/Icon";
 
 export const useStyles = makeStyles(theme => ({
   label: {
@@ -12,16 +12,17 @@ export const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const CustomCheckbox = ({ label, onSelect = () => {}, ...rest }) => {
+export const CustomRadioButton = ({ label, onSelect = () => {}, ...rest }) => {
   const classes = useStyles();
+
   return (
     <FormControlLabel
       classes={{ label: classes.label }}
       control={
-        <Checkbox
+        <Radio
           onClick={onSelect}
-          icon={<Icon name={ICONS.uncheckedIcon} alt="checked icon" />}
-          checkedIcon={<Icon name={ICONS.checkedIcon} alt="unchecked icon" />}
+          icon={<Icon name={ICONS.unCheckedRadio} alt="select icon" />}
+          checkedIcon={<Icon name={ICONS.checkedRadio} alt="selected icon" />}
           {...rest}
         />
       }

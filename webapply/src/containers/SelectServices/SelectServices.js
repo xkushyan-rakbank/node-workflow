@@ -1,47 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 
-import { BackLink } from "../../components/Buttons/BackLink";
+import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP, STEP_1, STEP_3 } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { SubmitApplication } from "./components/SubmitApplication";
 import { ServicesSteps } from "./components/ServicesSteps/index";
-
-import routes from "../../routes";
-import { getSelectedTypeCurrency } from "../../utils/SelectServices";
-import { accountsNames } from "../../constants/index";
-import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP, servicesSteps } from "./constants";
-
+import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
+import routes from "../../routes";
 
-export const SelectServicesComponent = ({ accountType, rakValuePackage, accountCurrencies }) => {
+export const SelectServicesComponent = ({
+  rakValuePackage,
+  accountCurrencies,
+  sendProspectToAPI
+}) => {
   const classes = useStyles();
-  const [step, setStep] = useState(1);
-  const [canSubmit, setCanSubmit] = useState(false);
+  const [step, setStep] = useState(STEP_1);
+  const { isSelectOnlyForeignCurrency } = accountCurrencies;
 
-  const setNextStep = () => setStep(step + 1);
-  const handleContinue = () => {
-    if (step < servicesSteps.length) {
-      setNextStep();
-      return;
+  const setNextStep = useCallback(() => {
+    sendProspectToAPI().then(() => setStep(step + 1), () => {});
+  }, [sendProspectToAPI, step]);
+
+  const createSetStepHandler = nextStep => () => {
+    if (step > nextStep) {
+      setStep(nextStep);
     }
-    setCanSubmit(true);
   };
 
-  useEffect(() => {
-    const { isSelectOnlyForeignCurrency } = getSelectedTypeCurrency(accountCurrencies);
-    if (step === servicesSteps.length) {
-      if (accountType === accountsNames.starter) {
-        if (rakValuePackage || isSelectOnlyForeignCurrency) {
-          setCanSubmit(true);
-        }
-        return;
-      }
-      setCanSubmit(true);
-    }
-  }, [step, accountType, rakValuePackage, accountCurrencies]);
+  if (step === SUBMIT_APPLICATION_STEP) {
+    return <SubmitApplication />;
+  }
 
-  return step === SUBMIT_APPLICATION_STEP ? (
-    <SubmitApplication />
-  ) : (
+  return (
     <>
       <h2>Services for your account</h2>
       <p className={classes.formDescription}>
@@ -49,7 +39,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, accountC
         foreign currencies, cards or chequebooks.
       </p>
 
-      <ServicesSteps step={step} setStep={setStep} handleContinue={handleContinue} />
+      <ServicesSteps step={step} clickHandler={createSetStepHandler} handleContinue={setNextStep} />
 
       <div className={classes.linkContainer}>
         <BackLink path={routes.uploadDocuments} />
@@ -57,7 +47,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, accountC
           handleClick={setNextStep}
           label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
           justify="flex-end"
-          disabled={!canSubmit}
+          disabled={step <= STEP_3 || rakValuePackage || isSelectOnlyForeignCurrency}
         />
       </div>
     </>

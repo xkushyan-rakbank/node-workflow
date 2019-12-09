@@ -1,41 +1,30 @@
 import React from "react";
 import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
-import { makeStyles } from "@material-ui/core/styles";
 
-import { CustomCheckbox } from "./CustomCheckbox";
 import { InfoTitle } from "../../Notifications/index";
 import { ErrorMessage } from "../../Notifications/index";
+import { CustomRadioButton } from "./CustomRadioButton";
 
-const useStyles = makeStyles({
-  formControlRoot: {
-    margin: "12px 0 24px",
-    width: "100%",
-    display: "flex"
-  }
-});
-
-export const Checkbox = ({
+export const RadioButton = ({
   infoTitle,
   label = "",
   value = true,
   field,
   form: { errors, touched },
-  formControlClasses,
   ...rest
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
-  const classes = useStyles();
 
   return (
-    <FormControl classes={{ root: classes.formControlRoot }} className="formControlContainer">
-      <CustomCheckbox
+    <FormControl className="formControl">
+      <CustomRadioButton
         {...field}
-        {...rest}
         label={label}
         value={value}
         checked={field.value === value}
+        {...rest}
       />
 
       {hasError && <ErrorMessage error={errorMessage} />}

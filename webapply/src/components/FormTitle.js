@@ -1,7 +1,7 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const style = {
+const useStyles = makeStyles({
   title: {
     fontSize: "48px",
     lineHeight: "56px"
@@ -11,13 +11,14 @@ const style = {
     fontSize: "20px",
     lineHeight: "26px"
   }
+});
+
+export const FormTitle = ({ title, info }) => {
+  const classes = useStyles();
+  return (
+    <>
+      <h2 className={classes.title}>{title}</h2>
+      <div className={classes.info}>{info}</div>
+    </>
+  );
 };
-
-const FormTitle = ({ classes, title, info }) => (
-  <>
-    <h2 className={classes.title}>{title}</h2>
-    <div className={classes.info}>{info}</div>
-  </>
-);
-
-export default withStyles(style)(FormTitle);

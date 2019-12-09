@@ -1,67 +1,82 @@
 import React from "react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
 
-import Checkbox from "../../../../../components/InputField/Checkbox";
+import { submitApplication } from "../../../../../constants";
+import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
 
 import { useStyles } from "./styled";
-import { submitApplication } from "../../../../../constants";
 
-export const BlockConfirm = ({
-  isAgentLoggedIn,
-  onChange,
-  tncClicked,
-  termsEnrolmentClicked,
-  checkBoxValues: { isInformationProvided, needCommunication, areTermsAgreed }
-}) => {
+const {
+  termConditionUrl,
+  termOfEnrolmentUrl,
+  trueNdCompleteAcknldgelabel,
+  needCommunicationLabel
+} = submitApplication;
+
+const blockConfirmSchema = Yup.object({
+  isInformationProvided: Yup.boolean().oneOf([true], "Required"),
+  areTermsAgreed: Yup.boolean().oneOf([true], "Required")
+});
+
+export const BlockConfirm = ({ setFormFields }) => {
   const classes = useStyles();
 
+  const termsAgreedLabel = (
+    <span>
+      I agree with RakBank’s{" "}
+      <a className={classes.link} href={termConditionUrl} target="_blank" rel="noopener noreferrer">
+        terms and conditions
+      </a>{" "}
+      &{" "}
+      <a
+        className={classes.link}
+        href={termOfEnrolmentUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        terms and enrollment
+      </a>
+    </span>
+  );
+
+  const setFieldsValue = (event, setFieldValue, values) => {
+    const { name } = event.target;
+    setFieldValue(name, !values[name]);
+    setFormFields({ ...values, [name]: !values[name] });
+  };
+
   return (
-    <>
-      {isAgentLoggedIn && (
-        <div className={classes.checkboxesWrapper}>
-          <Checkbox
-            value={isInformationProvided}
-            name="isInformationProvided"
-            label={submitApplication.trueNdCompleteAcknldgelabel}
-            className={classes.listItem}
-            onChange={onChange}
-          />
-          <Checkbox
-            value={areTermsAgreed}
-            name="areTermsAgreed"
-            label={
-              <span>
-                I agree with RakBank’s{" "}
-                <a
-                  href={submitApplication.termConditionUrl}
-                  onClick={tncClicked}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  terms and conditions
-                </a>{" "}
-                &{" "}
-                <a
-                  href={submitApplication.termOfEnrolmentUrl}
-                  onClick={termsEnrolmentClicked}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  terms and enrollment
-                </a>
-              </span>
-            }
-            className={classes.listItem}
-            onChange={onChange}
-          />
-          <Checkbox
-            value={needCommunication}
-            name="needCommunication"
-            label={submitApplication.needCommunicationLabel}
-            className={classes.listItem}
-            onChange={onChange}
-          />
-        </div>
-      )}
-    </>
+    <div className={classes.checkboxesWrapper}>
+      <Formik
+        initialValues={{
+          isInformationProvided: false,
+          areTermsAgreed: false,
+          needCommunication: false
+        }}
+        onSubmit={() => {}}
+        validationSchema={blockConfirmSchema}
+      >
+        {({ values, setFieldValue }) => (
+          <Form>
+            <Field
+              name="isInformationProvided"
+              label={trueNdCompleteAcknldgelabel}
+              onChange={e => setFieldsValue(e, setFieldValue, values)}
+              component={Checkbox}
+            />
+
+            <Field
+              name="areTermsAgreed"
+              label={termsAgreedLabel}
+              onChange={e => setFieldsValue(e, setFieldValue, values)}
+              component={Checkbox}
+            />
+
+            <Field name="needCommunication" label={needCommunicationLabel} component={Checkbox} />
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
