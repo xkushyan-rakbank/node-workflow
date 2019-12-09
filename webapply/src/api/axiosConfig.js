@@ -57,19 +57,23 @@ instance.interceptors.response.use(
     const { status, data, config } = error.response;
     let jsonData = data;
 
-    if (config.symKey && data) {
-      jsonData = JSON.parse(decrypt(config.symKey, data).data);
-    }
-
-    if (status === 400) {
-      if (jsonData.errorType === "ReCaptchaError") {
-        return store.dispatch(setError(data.errors));
-      } else if (jsonData.errors) {
-        return store.dispatch(setInputsErrors(data.errors));
+    if (config.symKey && typeof data === "string") {
+      try {
+        jsonData = JSON.parse(decrypt(config.symKey, data).data);
+      } catch (e) {
+        log(e);
       }
     }
 
-    NotificationsManager.add && NotificationsManager.add();
+    if (status === 400 && jsonData.errorType === "ReCaptchaError") {
+      store.dispatch(setError(data.errors));
+    } else if (status === 400 && jsonData.errors) {
+      store.dispatch(setInputsErrors(data.errors));
+    } else {
+      log(jsonData);
+      NotificationsManager.add && NotificationsManager.add();
+    }
+
     return Promise.reject(error);
   }
 );
