@@ -31,7 +31,7 @@ function* sendProspectToAPISaga() {
   try {
     const state = yield select();
     const newProspect = getProspect(state);
-    const prospectID = getProspectId(state);
+    const prospectID = getProspectId(state) || "COSME0000000000000001";
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
@@ -56,7 +56,7 @@ function* prospectAutoSave() {
     while (true) {
       const state = yield select();
       const newProspect = getProspect(state);
-      const prospectId = getProspectId(state);
+      const prospectId = getProspectId(state) || "COSME0000000000000001";
 
       yield call(prospect.update, prospectId, newProspect);
       yield put(updateSaveType("auto"));

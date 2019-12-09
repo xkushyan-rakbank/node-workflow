@@ -24,11 +24,14 @@ export const CompanyInfoPage = ({
 
   const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
   const handleContinue = useCallback(() => {
-    sendProspectToAPI().then(() => {
-      const nextStep = step + 1;
-      setStep(nextStep);
-      setAvailableStep(nextStep);
-    });
+    sendProspectToAPI().then(
+      () => {
+        const nextStep = step + 1;
+        setStep(nextStep);
+        setAvailableStep(nextStep);
+      },
+      () => {}
+    );
   }, [sendProspectToAPI, step]);
   const createSetStepHandler = nextStep => () => {
     if (availableStep >= nextStep) {
