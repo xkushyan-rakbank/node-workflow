@@ -4,6 +4,7 @@ import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
 import { NotificationsManager } from "../components/Notifications";
 import { encrypt, decrypt } from "./crypto";
+import { log } from "../utils/loggger";
 
 const ENCRYPT_METHODS = ["post", "put"];
 const SYM_KEY_HEADER = "x-sym-key";
