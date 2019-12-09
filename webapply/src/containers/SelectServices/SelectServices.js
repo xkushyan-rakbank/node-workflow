@@ -9,7 +9,6 @@ import { useStyles } from "./styled";
 import routes from "../../routes";
 
 export const SelectServicesComponent = ({
-  accountType,
   rakValuePackage,
   accountCurrencies,
   sendProspectToAPI
@@ -19,7 +18,7 @@ export const SelectServicesComponent = ({
   const { isSelectOnlyForeignCurrency } = accountCurrencies;
 
   const setNextStep = useCallback(() => {
-    sendProspectToAPI().then(() => setStep(step + 1));
+    sendProspectToAPI().then(() => setStep(step + 1), () => {});
   }, [sendProspectToAPI, step]);
 
   const createSetStepHandler = nextStep => () => {
