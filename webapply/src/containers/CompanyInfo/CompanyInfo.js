@@ -25,8 +25,9 @@ export const CompanyInfoPage = ({
   const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
   const handleContinue = useCallback(() => {
     sendProspectToAPI().then(() => {
-      setStep(step + 1);
-      setAvailableStep(step + 1);
+      const nextStep = step + 1;
+      setStep(nextStep);
+      setAvailableStep(nextStep);
     });
   }, [sendProspectToAPI, step]);
   const createSetStepHandler = nextStep => () => {
