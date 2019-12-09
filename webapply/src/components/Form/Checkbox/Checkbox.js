@@ -8,7 +8,7 @@ import { InfoTitle } from "../../Notifications/index";
 import { ErrorMessage } from "../../Notifications/index";
 
 const useStyles = makeStyles({
-  root: {
+  formControlRoot: {
     margin: "12px 0 24px",
     width: "100%",
     display: "flex"
@@ -29,7 +29,7 @@ export const Checkbox = ({
   const classes = useStyles();
 
   return (
-    <FormControl className={classes.root} classes={formControlClasses}>
+    <FormControl classes={{ root: classes.formControlRoot }} className="formControlContainer">
       <CustomCheckbox
         {...field}
         {...rest}

@@ -58,7 +58,6 @@ export const BlockConfirm = ({ setFormFields }) => {
               name="isInformationProvided"
               label={trueNdCompleteAcknldgelabel}
               onChange={e => setFieldsValue(e, setFieldValue, values)}
-              formControlClasses={{ root: classes.formControlRoot }}
               component={Checkbox}
             />
 
@@ -66,16 +65,10 @@ export const BlockConfirm = ({ setFormFields }) => {
               name="areTermsAgreed"
               label={termsAgreedLabel}
               onChange={e => setFieldsValue(e, setFieldValue, values)}
-              formControlClasses={{ root: classes.formControlRoot }}
               component={Checkbox}
             />
 
-            <Field
-              name="needCommunication"
-              label={needCommunicationLabel}
-              formControlClasses={{ root: classes.formControlRoot }}
-              component={Checkbox}
-            />
+            <Field name="needCommunication" label={needCommunicationLabel} component={Checkbox} />
           </Form>
         )}
       </Formik>
