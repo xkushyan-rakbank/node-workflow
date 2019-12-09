@@ -8,7 +8,7 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
-    const docUploadDetails = documents[`${index} ${signatorie.firstName}`];
+    const docUploadDetails = documents[`${index}_${signatorie.firstName}`];
     return (
       docUploadDetails && (
         <div className={classes.signatoreyContainer} key={signatorie.signatoryId}>
