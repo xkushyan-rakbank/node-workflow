@@ -10,6 +10,7 @@ import { ReactComponent as UnCheckedRadio } from "../../assets/icons/unchecked.s
 import { ReactComponent as CheckOutline } from "../../assets/icons/check_outline_ic.svg";
 import { ReactComponent as CheckedIcon } from "../../assets/icons/on.svg";
 import { ReactComponent as UncheckedIcon } from "../../assets/icons/off.svg";
+import { ReactComponent as Brief } from "../../assets/icons/brief.svg";
 
 export const iconComponents = {
   done: Done,
@@ -23,7 +24,8 @@ export const iconComponents = {
   unCheckedRadio: UnCheckedRadio,
   checkOutline: CheckOutline,
   checkedIcon: CheckedIcon,
-  uncheckedIcon: UncheckedIcon
+  uncheckedIcon: UncheckedIcon,
+  brief: Brief
 };
 
 export const ICONS = {
@@ -38,5 +40,6 @@ export const ICONS = {
   unCheckedRadio: "unCheckedRadio",
   checkOutline: "checkOutline",
   checkedIcon: "checkedIcon",
-  uncheckedIcon: "uncheckedIcon"
+  uncheckedIcon: "uncheckedIcon",
+  brief: "brief"
 };
