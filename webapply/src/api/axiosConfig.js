@@ -45,23 +45,51 @@ instance.interceptors.response.use(
     const { symKey } = response.config;
 
     if (symKey && response.data && typeof data === "string") {
-      return {
-        ...response,
-        data: JSON.parse(decrypt(symKey, response.data).data)
-      };
+      let payload;
+
+      try {
+        payload = decrypt(symKey, response.data).data;
+      } catch (e) {
+        log({ e, symKey, data: response.data });
+      }
+
+      try {
+        if (payload) {
+          return {
+            ...response,
+            data: JSON.parse(payload)
+          };
+        }
+      } catch (e) {
+        log({ e, payload });
+      }
     }
 
     return response;
   },
   error => {
-    const { status, data, config } = error.response;
+    const {
+      status,
+      data,
+      config: { symKey }
+    } = error.response;
     let jsonData = data;
 
-    if (config.symKey && data && typeof data === "string") {
+    if (symKey && data && typeof data === "string") {
+      let payload;
+
       try {
-        jsonData = JSON.parse(decrypt(config.symKey, data).data);
+        payload = decrypt(symKey, data).data;
       } catch (e) {
-        log(e);
+        log({ e, symKey, data });
+      }
+
+      try {
+        if (payload) {
+          jsonData = JSON.parse(payload);
+        }
+      } catch (e) {
+        log({ e, payload });
       }
     }
 
