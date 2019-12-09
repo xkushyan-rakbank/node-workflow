@@ -20,13 +20,17 @@ export const CompanyInfoPage = ({
 }) => {
   const classes = useStyles();
   const [step, setStep] = useState(STEP_1);
+  const [availableStep, setAvailableStep] = useState(STEP_1);
 
   const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
   const handleContinue = useCallback(() => {
-    sendProspectToAPI().then(() => setStep(step + 1), () => {});
+    sendProspectToAPI().then(() => {
+      setStep(step + 1);
+      setAvailableStep(step + 1);
+    });
   }, [sendProspectToAPI, step]);
   const createSetStepHandler = nextStep => () => {
-    if (step > nextStep) {
+    if (availableStep >= nextStep) {
       setStep(nextStep);
     }
   };
@@ -54,8 +58,8 @@ export const CompanyInfoPage = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={step > item.step}
-            clickHandler={createSetStepHandler(item.step)}
+            isFilled={availableStep >= item.step}
+            handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
           />
