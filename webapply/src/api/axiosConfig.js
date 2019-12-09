@@ -44,7 +44,7 @@ instance.interceptors.response.use(
   response => {
     const { symKey } = response.config;
 
-    if (symKey && response.data && typeof data === "string") {
+    if (symKey && response.data && typeof response.data === "string") {
       let payload;
 
       try {
