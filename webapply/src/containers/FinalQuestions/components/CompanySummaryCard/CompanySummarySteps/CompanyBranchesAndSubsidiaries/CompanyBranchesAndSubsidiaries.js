@@ -14,6 +14,7 @@ import {
   Input,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
+import { InfoTitle } from "../../../../../../components/Notifications";
 import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
 import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
 
@@ -119,6 +120,12 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 placeholder="Company name"
                                 component={Input}
                               />
+                              <InfoTitle
+                                title="Company name should be same as mentioned in the registration documents"
+                                classes={{
+                                  wrapper: classes.infoTitles
+                                }}
+                              />
                             </Grid>
                             <Grid
                               item
@@ -218,6 +225,12 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 label="Company name"
                                 placeholder="Company name"
                                 component={Input}
+                              />
+                              <InfoTitle
+                                title="Company name should be same as mentioned in the registration documents"
+                                classes={{
+                                  wrapper: classes.infoTitles
+                                }}
                               />
                             </Grid>
                             <Grid

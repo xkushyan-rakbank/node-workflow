@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import get from "lodash/get";
 
 import { FormCard } from "../../../../components/FormCard/FormCard";
@@ -8,14 +8,15 @@ import { useStyles } from "./styled";
 import { signatoriesSteps } from "./constants";
 
 export const SignatorySummaryCardComponent = ({
-  addAvailableSignatoryIndex,
   sendProspectToAPI,
   index,
   signatory,
   availableSignatoriesIndexes,
-  signatory: { firstName, lastName, fullName } = {}
+  signatory: { firstName, lastName, fullName } = {},
+  expandedSignatoryIndex,
+  setExpandedSignatoryIndex,
+  handleFinalStepContinue
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
@@ -39,10 +40,10 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {!isExpanded && availableSignatoriesIndexes.includes(index) && (
+            {!(expandedSignatoryIndex === index) && availableSignatoriesIndexes.includes(index) && (
               <LinkButton
                 clickHandler={() => {
-                  setIsExpanded(true);
+                  setExpandedSignatoryIndex(index);
                 }}
               />
             )}
@@ -51,11 +52,11 @@ export const SignatorySummaryCardComponent = ({
       }
       index={index}
     >
-      {isExpanded && (
+      {expandedSignatoryIndex === index && (
         <FinalQuestionStepComponent
           index={index}
           stepsArray={signatoriesSteps}
-          addAvailableSignatoryIndex={addAvailableSignatoryIndex}
+          handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
         />
       )}
