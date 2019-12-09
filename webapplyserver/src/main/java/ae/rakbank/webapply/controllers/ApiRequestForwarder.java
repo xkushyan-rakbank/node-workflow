@@ -477,6 +477,9 @@ public class ApiRequestForwarder {
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+      if (requestJSON.has("recaptchaToken")) {
+        ((ObjectNode) requestJSON).remove("recaptchaToken");
+      }
       /*
       if (!captchaVerified) {
 				String action = requestJSON.get("action").asText();
