@@ -13,11 +13,9 @@ export const CompanyDocuments = ({ documents, companyName, icon = "" }) => {
           <h3 className={classes.label}>{companyName}</h3>
         </div>
       </header>
-      {documents.map(document => {
-        return (
-          <UploadDocument key={document.documentKey} documents={document} type="companyDocument" />
-        );
-      })}
+      {documents.map(document => (
+        <UploadDocument key={document.documentKey} documents={document} type="companyDocument" />
+      ))}
     </div>
   );
 };

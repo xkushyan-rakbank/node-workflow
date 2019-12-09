@@ -24,8 +24,8 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
               </div>
             </div>
           </div>
-          {docUploadDetails.map(document => {
-            return (
+          {docUploadDetails.map(
+            document =>
               signatorie.firstName === document.signatoryName && (
                 <UploadDocuments
                   key={document.documentKey}
@@ -33,8 +33,7 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
                   type="stakeholdersDocuments"
                 />
               )
-            );
-          })}
+          )}
         </div>
       )
     );
