@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import cx from "classnames";
 
 import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -20,6 +21,8 @@ export const SignatorySummaryCardComponent = ({
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
+
+  const handleSetNotExpanded = () => setExpandedSignatoryIndex(index + 1);
 
   return (
     <FormCard
@@ -52,14 +55,15 @@ export const SignatorySummaryCardComponent = ({
       }
       index={index}
     >
-      {expandedSignatoryIndex === index && (
+      <div className={cx({ [classes.hidden]: !(expandedSignatoryIndex === index) })}>
         <FinalQuestionStepComponent
           index={index}
           stepsArray={signatoriesSteps}
+          setIsNotExpanded={handleSetNotExpanded}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
         />
-      )}
+      </div>
     </FormCard>
   );
 };

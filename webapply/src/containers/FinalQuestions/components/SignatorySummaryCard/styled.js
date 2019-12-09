@@ -32,5 +32,8 @@ export const useStyles = makeStyles({
   controlsBox: {
     display: "flex",
     alignItems: "center"
+  },
+  hidden: {
+    display: "none"
   }
 });
