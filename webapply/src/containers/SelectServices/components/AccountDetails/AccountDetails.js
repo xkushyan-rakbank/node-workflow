@@ -50,7 +50,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
             component={CheckboxGroup}
           />
           <Divider />
-          <Subtitle title="Select branch" />
+          <Subtitle title="Select branch" classes={{ wrapper: classes.subtitleBranch }} />
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
               <Field
@@ -83,11 +83,12 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
           {!islamicBanking && (
             <>
               <Divider />
-              <Subtitle title="Select interest" />
+              <Subtitle title="Select interest" classes={{ wrapper: classes.subtitleInterest }} />
               <Field
                 name="receiveInterest"
                 path="prospect.accountInfo[0].receiveInterest"
                 label="I don't wish to receive interest from my account"
+                className={{ formControl: classes.formControl }}
                 component={Checkbox}
               />
             </>

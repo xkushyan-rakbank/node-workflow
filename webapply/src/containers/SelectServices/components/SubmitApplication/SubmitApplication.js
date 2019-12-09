@@ -4,7 +4,7 @@ import routes from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
 
 import { BackLink } from "../../../../components/Buttons/BackLink";
-import { FormTitle } from "../../../../components/FormTitle";
+import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";

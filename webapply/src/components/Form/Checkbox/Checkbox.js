@@ -2,6 +2,7 @@ import React from "react";
 import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
+import cx from "classnames";
 
 import { CustomCheckbox } from "./CustomCheckbox";
 import { InfoTitle } from "../../Notifications/index";
@@ -21,7 +22,7 @@ export const Checkbox = ({
   value = true,
   field,
   form: { errors, touched },
-  formControlClasses,
+  className = {},
   ...rest
 }) => {
   const errorMessage = getIn(errors, field.name);
@@ -29,7 +30,10 @@ export const Checkbox = ({
   const classes = useStyles();
 
   return (
-    <FormControl classes={{ root: classes.formControlRoot }} className="formControlContainer">
+    <FormControl
+      classes={{ root: cx(classes.formControlRoot, className.formControl) }}
+      className="formControlContainer"
+    >
       <CustomCheckbox
         {...field}
         {...rest}

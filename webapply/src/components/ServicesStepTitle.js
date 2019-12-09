@@ -1,8 +1,9 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { LinkButton } from "./Buttons/LinkButton";
 
-const styles = {
+const useStyles = makeStyles(theme => ({
   wrapper: {
     display: "flex",
     justifyContent: "flex-start",
@@ -25,17 +26,19 @@ const styles = {
   title: {
     fontSize: "20px",
     fontWeight: 600,
-    color: "#373737",
+    color: theme.palette.text.color,
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    fontFamily: "Open Sans"
   },
   editButton: {
     margin: "0 40px 0 auto"
   }
-};
+}));
 
-const ServicesStepTitle = ({ step, activeStep, classes, createClickHandler }) => {
+const ServicesStepTitle = ({ step, activeStep, createClickHandler }) => {
   const doneStep = step.step < activeStep;
+  const classes = useStyles();
 
   return (
     <div className={classes.wrapper}>
@@ -51,4 +54,4 @@ const ServicesStepTitle = ({ step, activeStep, classes, createClickHandler }) =>
   );
 };
 
-export default withStyles(styles)(ServicesStepTitle);
+export default ServicesStepTitle;
