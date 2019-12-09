@@ -44,7 +44,7 @@ instance.interceptors.response.use(
   response => {
     const { symKey } = response.config;
 
-    if (symKey && response.data) {
+    if (symKey && response.data && typeof data === "string") {
       return {
         ...response,
         data: JSON.parse(decrypt(symKey, response.data).data)
@@ -57,7 +57,7 @@ instance.interceptors.response.use(
     const { status, data, config } = error.response;
     let jsonData = data;
 
-    if (config.symKey && typeof data === "string") {
+    if (config.symKey && data && typeof data === "string") {
       try {
         jsonData = JSON.parse(decrypt(config.symKey, data).data);
       } catch (e) {
