@@ -5,6 +5,7 @@ import { ReactComponent as ListGray } from "../../assets/icons/list_gray_ic.svg"
 import { ReactComponent as Grid } from "../../assets/icons/grid_grey_ic.svg";
 import { ReactComponent as Lock } from "../../assets/icons/lock.svg";
 import { ReactComponent as Close } from "../../assets/icons/close.svg";
+import { ReactComponent as Brief } from "../../assets/icons/brief.svg";
 
 export const iconComponents = {
   done: Done,
@@ -13,7 +14,8 @@ export const iconComponents = {
   listGray: ListGray,
   grid: Grid,
   lock: Lock,
-  close: Close
+  close: Close,
+  brief: Brief
 };
 
 export const ICONS = {
@@ -23,5 +25,6 @@ export const ICONS = {
   listGray: "listGray",
   grid: "grid",
   lock: "lock",
-  close: "close"
+  close: "close",
+  brief: "brief"
 };

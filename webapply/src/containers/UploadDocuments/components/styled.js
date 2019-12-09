@@ -1,13 +1,6 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
-import UploadDocument from "./UploadDocument";
-import { getInputValueById } from "../../store/selectors/input";
-
-import companyIconSvg from "../../assets/icons/brief.png";
-
-const style = {
+export const useStyles = makeStyles({
   container: {
     borderRadius: "8px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
@@ -82,42 +75,56 @@ const style = {
     color: "#373737",
     cursor: "pointer",
     lineHeight: "2.2"
+  }, //signatory css starts
+  signatoreyContainer: {
+    borderRadius: "8px",
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    border: "solid 1px #e8e8e8",
+    backgroundColor: "#ffffff",
+    marginTop: "20px"
+  },
+  contentWrapper: {
+    display: "flex",
+    alignItems: "center",
+    height: "62px",
+    margin: "20px 35px 20px 25px"
+  },
+  greenAvatar: {
+    backgroundColor: "#166a2c",
+    width: "40px",
+    fontSize: "14px",
+    fontWeight: 600
+  },
+  nameField: {
+    fontSize: "18px",
+    fontWeight: 600,
+    lineHeight: 1.33,
+    color: "#373737"
+  },
+  signatoryField: {
+    fontSize: "14px",
+    lineHeight: "1.71",
+    color: "#517085"
+  },
+  shareholdingField: {
+    opacity: 0.5,
+    fontSize: "12px",
+    lineHeight: 1.33,
+    color: "#263d4c"
+  },
+  userInfo: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    margin: "0 16px"
+  },
+  SignatoryRights: {
+    fontSize: "14px",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "1.29",
+    letterSpacing: "normal",
+    color: "#373737"
   }
-};
-
-class CompanyDocuments extends Component {
-  render() {
-    let companyDocuments = this.props.DocDetails.documents.companyDocuments;
-    const companyName = this.props.companyName;
-    let companyDocument;
-    if (companyDocuments) {
-      companyDocument = companyDocuments.map((documents, index) => {
-        return (
-          <UploadDocument key={index} documents={documents} index={index} type="companyDocument" />
-        );
-      });
-    }
-
-    return (
-      <div className={this.props.classes.container}>
-        <header className={this.props.classes.header}>
-          <div className={this.props.classes.companyIconWrap}>
-            {this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}
-          </div>
-          <div className={this.props.classes.contentBox}>
-            <h3 className={this.props.classes.label}>{companyName}</h3>
-          </div>
-        </header>
-        {companyDocument}
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    companyName: getInputValueById(state, "Org.companyName") || "Designit Arabia"
-  };
-};
-
-export default withStyles(style)(connect(mapStateToProps)(CompanyDocuments));
+});
