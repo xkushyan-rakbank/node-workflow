@@ -70,7 +70,9 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                 name="branchID"
                 datalistId="branchID"
                 path="prospect.organizationInfo.branchID"
-                filterOptions={branch => branch.emirateCode === values.branchCity}
+                filterOptions={emirates =>
+                  emirates.filter(emirate => emirate.emirateCode === values.branchCity)
+                }
                 label="Branch"
                 placeholder="Branch"
                 disabled={!values.branchCity}
