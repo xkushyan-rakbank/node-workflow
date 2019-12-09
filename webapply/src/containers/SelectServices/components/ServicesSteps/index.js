@@ -3,7 +3,7 @@ import cx from "classnames";
 
 import { GO_TO_SUBMIT_STEP, servicesSteps } from "../../constants";
 
-import ServicesStepTitle from "../../../../components/ServicesStepTitle";
+import { ServicesStepTitle } from "../../../../components/ServicesStepTitle";
 
 import { useStyles } from "./styled";
 

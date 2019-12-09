@@ -11,6 +11,10 @@ import { ReactComponent as CheckOutline } from "../../assets/icons/check_outline
 import { ReactComponent as CheckedIcon } from "../../assets/icons/on.svg";
 import { ReactComponent as UncheckedIcon } from "../../assets/icons/off.svg";
 import { ReactComponent as Brief } from "../../assets/icons/brief.svg";
+import { ReactComponent as AccountDetails } from "../../assets/icons/account_details.svg";
+import { ReactComponent as SigningPreferences } from "../../assets/icons/signing_preferences.svg";
+import { ReactComponent as Channels } from "../../assets/icons/channels.svg";
+import { ReactComponent as ValueAddedServices } from "../../assets/icons/value_added_services.svg";
 
 export const iconComponents = {
   done: Done,
@@ -25,7 +29,11 @@ export const iconComponents = {
   checkOutline: CheckOutline,
   checkedIcon: CheckedIcon,
   uncheckedIcon: UncheckedIcon,
-  brief: Brief
+  brief: Brief,
+  accountDetails: AccountDetails,
+  signingPreferences: SigningPreferences,
+  channels: Channels,
+  valueAddedServices: ValueAddedServices
 };
 
 export const ICONS = {
@@ -41,5 +49,9 @@ export const ICONS = {
   checkOutline: "checkOutline",
   checkedIcon: "checkedIcon",
   uncheckedIcon: "uncheckedIcon",
-  brief: "brief"
+  brief: "brief",
+  accountDetails: "accountDetails",
+  signingPreferences: "signingPreferences",
+  channels: "channels",
+  valueAddedServices: "valueAddedServices"
 };

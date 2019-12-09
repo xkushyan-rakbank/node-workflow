@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { Icon } from "../components/Icons/Icon";
+
 import { LinkButton } from "./Buttons/LinkButton";
 
 const useStyles = makeStyles(theme => ({
@@ -36,22 +38,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ServicesStepTitle = ({ step, activeStep, createClickHandler }) => {
+export const ServicesStepTitle = ({ step, activeStep, createClickHandler }) => {
   const doneStep = step.step < activeStep;
   const classes = useStyles();
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.icon}>
-        <img src={step.icon} alt="" />
+        <Icon name={step.icon} alt={step.title} />
       </div>
       <div className={classes.title}>{step.title}</div>
-
       {doneStep && (
         <LinkButton className={classes.editButton} clickHandler={createClickHandler(step.step)} />
       )}
     </div>
   );
 };
-
-export default ServicesStepTitle;
