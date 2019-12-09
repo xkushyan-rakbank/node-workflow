@@ -6,7 +6,7 @@ import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
 
 export const FinalQuestionStepComponent = ({
   index = null,
-  addAvailableSignatoryIndex,
+  handleFinalStepContinue,
   sendProspectToAPI,
   stepsArray
 }) => {
@@ -16,7 +16,7 @@ export const FinalQuestionStepComponent = ({
   useEffect(() => {
     if (step > stepsArray.length) {
       const completedIndex = index !== null ? index + 1 : SIGNATORY_INITIAL_INDEX;
-      addAvailableSignatoryIndex(completedIndex);
+      handleFinalStepContinue(completedIndex);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);

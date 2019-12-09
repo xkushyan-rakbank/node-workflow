@@ -12,7 +12,7 @@ export const CompanySummaryCardComponent = ({
   index,
   switchExpandedMargin,
   companyName,
-  addAvailableSignatoryIndex,
+  handleFinalStepContinue,
   sendProspectToAPI
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -52,7 +52,7 @@ export const CompanySummaryCardComponent = ({
         <FinalQuestionStepComponent
           index={index}
           stepsArray={finalQuestionsSteps}
-          addAvailableSignatoryIndex={addAvailableSignatoryIndex}
+          handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
         />
       )}
