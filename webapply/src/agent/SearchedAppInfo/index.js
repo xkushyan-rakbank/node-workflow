@@ -3,7 +3,7 @@ import get from "lodash/get";
 import { connect } from "react-redux";
 import { getSearchResult } from "../../store/selectors/searchProspect";
 import { FormCard } from "../../components/FormCard/FormCard";
-import StepComponent from "../../components/StepComponent";
+import { StepComponent } from "../../components/StepComponent/StepComponent";
 import { searchedAppInfoSteps } from "../../constants";
 import routes from "../../routes";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -67,14 +67,14 @@ const SearchedAppInfo = ({
             return (
               <StepComponent
                 key={item.step}
-                stepForm={item.component}
                 title={item.title}
                 subTitle={item.infoTitle}
-                activeStep={step === item.step}
-                filled={false}
-                clickHandler={() => setStep(item.step)}
+                isActiveStep={step === item.step}
+                isFilled={false}
+                handleClick={() => setStep(item.step)}
                 hideContinue={true}
                 prospectInfo={prospectInfo}
+                stepForm={item.component}
               />
             );
           })}
