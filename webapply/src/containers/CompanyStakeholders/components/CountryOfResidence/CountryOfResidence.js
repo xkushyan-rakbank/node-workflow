@@ -13,15 +13,18 @@ import {
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 
-const countryOfResidenceSchema = Yup.object().shape({
-  residenceCountry: Yup.string().required("Required"),
-  eidNumber: Yup.string().when("residenceCountry", {
-    is: value => value === "UAE",
-    then: Yup.string()
-      .required("Required")
-      .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
-  })
-});
+const UAE = "AE";
+
+const getCountryOfResidenceSchema = isSignatory =>
+  Yup.object().shape({
+    residenceCountry: Yup.string().test("required", "Required", value => isSignatory || value),
+    eidNumber: Yup.string().when("residenceCountry", {
+      is: value => value === UAE,
+      then: Yup.string()
+        .required("Required")
+        .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
+    })
+  });
 
 const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
   <Formik
@@ -30,7 +33,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
       eidNumber: ""
     }}
     onSubmit={handleContinue}
-    validationSchema={countryOfResidenceSchema}
+    validationSchema={getCountryOfResidenceSchema(isSignatory)}
   >
     {({ values }) => (
       <Form>
@@ -43,6 +46,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
               component={SelectAutocomplete}
               disabled={isSignatory}
               datalistId="country"
+              shrink
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -52,7 +56,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
               label="Emirates ID"
               placeholder="784-XXXX-XXXXXXX-X"
               component={NumericInput}
-              disabled={values.residenceCountry !== "AE"}
+              disabled={values.residenceCountry !== UAE}
               format="784-####-#######-#"
               prefix={"784-"}
             />
