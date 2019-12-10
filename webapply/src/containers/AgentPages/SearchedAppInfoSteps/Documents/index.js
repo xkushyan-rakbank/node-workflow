@@ -2,8 +2,8 @@ import React from "react";
 import get from "lodash/get";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import Avatar from "../../../components/Avatar";
-import * as appConfigSelector from "./../../../store/selectors/appConfig";
+import Avatar from "../../../../components/Avatar";
+import * as appConfigSelector from "../../../../store/selectors/appConfig";
 import { styles } from "./styled";
 import { titles, errorMsgs, DUMMY_PROSPECT_ID, DUMMY_DOCUMENT_KEY } from "./constants";
 

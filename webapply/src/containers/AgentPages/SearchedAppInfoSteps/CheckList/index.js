@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import { withStyles } from "@material-ui/core/styles";
-import Avatar from "../../../components/Avatar";
+import Avatar from "../../../../components/Avatar";
 import { styles } from "./styled";
 import { titles, errorMsgs } from "./constants";
 

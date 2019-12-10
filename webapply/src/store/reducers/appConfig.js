@@ -53,9 +53,9 @@ const appConfigReducer = (state = initialState, action) => {
       return {
         ...state,
         prospect: {
-          ...state.prospect,
+          ...(state.prospect || {}),
           generalInfo: {
-            ...(state.prospect.generalInfo || {}),
+            ...((state.prospect && state.prospect.generalInfo) || {}),
             prospectId: action.prospectId
           }
         }

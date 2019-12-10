@@ -1,7 +1,7 @@
-import SearchedCompanyDetails from "../../../components/SearchedAppInfoSteps/CompanyDetails";
-import AuditTrail from "../../../components/SearchedAppInfoSteps/AuditTrail";
-import Documents from "../../../components/SearchedAppInfoSteps/Documents";
-import CheckList from "../../../components/SearchedAppInfoSteps/CheckList";
+import SearchedCompanyDetails from "../SearchedAppInfoSteps/CompanyDetails";
+import AuditTrail from "../SearchedAppInfoSteps/AuditTrail";
+import Documents from "../SearchedAppInfoSteps/Documents";
+import CheckList from "../SearchedAppInfoSteps/CheckList";
 
 export const disableArrayValues = ["Account activated", "Declined", "Ineligible"];
 
