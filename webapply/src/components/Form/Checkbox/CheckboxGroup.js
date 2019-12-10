@@ -11,7 +11,8 @@ import { ErrorMessage } from "../../Notifications/index";
 
 export const CheckboxesWrapper = styled("div")({
   display: "grid",
-  gridTemplateColumns: "1fr 1fr"
+  gridTemplateColumns: "1fr 1fr",
+  alignItems: "flex-start"
 });
 
 export const CheckboxGroup = ({
@@ -23,7 +24,8 @@ export const CheckboxGroup = ({
   infoTitle,
   field,
   form: { errors, touched },
-  onSelect = () => {}
+  onSelect = () => {},
+  textAreaComponent
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
@@ -41,6 +43,7 @@ export const CheckboxGroup = ({
                 onSelect={onSelect}
               />
             ))}
+            {textAreaComponent}
           </CheckboxesWrapper>
         </RadioGroup>
       ) : (

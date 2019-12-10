@@ -18,13 +18,14 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { Divider } from "../Divider";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
+
 import { useStyles } from "./styled";
 
 const MAX_SIGNATORIES = 2;
 const signingPreferencesSchema = Yup.object({
   accountSigningType: Yup.string().required("Field is required"),
   accountSigningInstn: Yup.string().when("accountSigningType", {
-    is: ACCOUNTS_SIGNING_NAME_OTHER,
+    is: () => ACCOUNTS_SIGNING_NAME_OTHER,
     then: Yup.string()
       .max(120, "Max length is 120 symbols")
       .required("Field is required")
@@ -44,8 +45,9 @@ const signingPreferencesSchema = Yup.object({
     })
   )
 });
+const pathSignatoryInfo = "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn";
 
-export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
+export const SigningPreferencesComponent = ({ organizationInfo, goToNext, updateProspect }) => {
   const classes = useStyles();
   const [countOfSignatories, setCountOfSignatories] = useState(
     Math.max((organizationInfo.contactDetailsForTxnReconfirming || []).length, 1)
@@ -81,22 +83,27 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
             onSelect={e => {
               setFieldValue("accountSigningType", e.currentTarget.value);
               setFieldValue("accountSigningInstn", "");
+              if (values.accountSigningInstn) {
+                updateProspect({ [pathSignatoryInfo]: "" });
+              }
             }}
             component={CheckboxGroup}
+            textAreaComponent={
+              values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
+                <div className={classes.textAreaWrap}>
+                  <Field
+                    name="accountSigningInstn"
+                    path={pathSignatoryInfo}
+                    placeholder="Please specify (Max 120 characters)"
+                    maxLength={120}
+                    multiline
+                    rows={4}
+                    component={Input}
+                  />
+                </div>
+              )
+            }
           />
-          {values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
-            <div className={classes.textAreaWrap}>
-              <Field
-                name="accountSigningInstn"
-                path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn"
-                placeholder="Please specify (Max 120 characters)"
-                maxLength={120}
-                multiline
-                rows={4}
-                component={Input}
-              />
-            </div>
-          )}
           <Divider />
           <ConfirmingTransactions />
           <FieldArray name="signatories">
