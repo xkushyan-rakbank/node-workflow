@@ -44,6 +44,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
       <div className={classes.sectionContainer}>
         <CompanySummaryCard
           switchExpandedMargin={switchExpandedMargin}
+          expandedSignatoryIndex={expandedSignatoryIndex}
           handleFinalStepContinue={handleFinalStepContinue}
         />
       </div>

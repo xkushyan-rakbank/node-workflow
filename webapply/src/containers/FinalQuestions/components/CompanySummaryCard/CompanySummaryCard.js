@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import cx from "classnames";
 
 import CompanyCard from "../../../../components/CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
@@ -13,32 +14,28 @@ export const CompanySummaryCardComponent = ({
   switchExpandedMargin,
   companyName,
   handleFinalStepContinue,
-  sendProspectToAPI
+  sendProspectToAPI,
+  expandedSignatoryIndex
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
   const classes = useStyles();
 
   const handleClickStartHere = useCallback(() => {
     setIsExpanded(true);
-    setIsFilled(true);
     if (switchExpandedMargin) {
       switchExpandedMargin();
     }
   }, [switchExpandedMargin]);
+
+  const handleExpandNextBlock = () => setIsExpanded(false);
 
   return (
     <CompanyCard
       companyName={companyName}
       controls={
         !isExpanded &&
-        (isFilled ? (
-          <LinkButton
-            clickHandler={() => {
-              setIsExpanded(true);
-              setIsFilled(false);
-            }}
-          />
+        (expandedSignatoryIndex !== null ? (
+          <LinkButton clickHandler={() => setIsExpanded(true)} />
         ) : (
           <ContinueButton
             label="Start here"
@@ -48,14 +45,15 @@ export const CompanySummaryCardComponent = ({
         ))
       }
     >
-      {isExpanded && (
+      <div className={cx({ [classes.hidden]: !isExpanded })}>
         <FinalQuestionStepComponent
           index={index}
           stepsArray={finalQuestionsSteps}
+          handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
         />
-      )}
+      </div>
     </CompanyCard>
   );
 };
