@@ -57,10 +57,9 @@ const createGetDocsCountSelector = (filterDocuments = () => true) => state => {
 
   if (documents) {
     counter += (documents.companyDocuments || []).filter(filterDocuments).length;
-
-    Object.values(documents.stakeholdersDocuments || {}).map(stakeholdersDocument => {
-      counter += stakeholdersDocument.filter(filterDocuments).length;
-    });
+    counter += Object.values(documents.stakeholdersDocuments || {})
+      .map(stakeholdersDocument => stakeholdersDocument.filter(filterDocuments).length)
+      .reduce((acc, item) => acc + item, 0);
   }
 
   return counter;

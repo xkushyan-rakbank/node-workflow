@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { STEP_1 } from "../CompanySummaryCard/constants";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
-import { useStep } from "../../../../utils/useStep";
+import { useStep } from "../../../../components/StepComponent/useStep";
 
 export const FinalQuestionStepComponent = ({
   index = null,
@@ -11,7 +11,7 @@ export const FinalQuestionStepComponent = ({
   sendProspectToAPI,
   stepsArray
 }) => {
-  const { step, availableSteps, handleContinue, createSetStepHandler } = useStep(
+  const { step, availableSteps, handleContinue, handleSetStep } = useStep(
     STEP_1,
     sendProspectToAPI
   );
@@ -34,7 +34,7 @@ export const FinalQuestionStepComponent = ({
       infoTitle={item.infoTitle}
       isActiveStep={step === item.step}
       isFilled={availableSteps.includes(item.step)}
-      handleClick={createSetStepHandler(item.step)}
+      handleClick={() => handleSetStep(item.step)}
       handleContinue={handleContinue}
       stepForm={item.component}
     />

@@ -1,12 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
-  formDescription: {
-    fontSize: "20px",
-    color: "#373737",
-    margin: "20px 0 40px",
-    lineHeight: "1.5"
-  },
   linkContainer: {
     display: "flex",
     alignItems: "center",

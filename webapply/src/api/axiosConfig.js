@@ -6,7 +6,7 @@ import { NotificationsManager } from "../components/Notifications";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 
-const ENCRYPT_METHODS = ["post", "put"];
+const ENCRYPT_METHODS = [];
 const SYM_KEY_HEADER = "x-sym-key";
 
 const getBaseURL = () =>
@@ -44,7 +44,7 @@ instance.interceptors.response.use(
   response => {
     const { symKey } = response.config;
 
-    if (symKey && response.data && typeof data === "string") {
+    if (symKey && response.data && typeof response.data === "string") {
       let payload;
 
       try {

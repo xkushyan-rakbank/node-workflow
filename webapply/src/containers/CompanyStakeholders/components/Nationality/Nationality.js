@@ -39,7 +39,7 @@ const nationalitySchema = Yup.object().shape({
 export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
   const classes = useStyles();
 
-  const createAddCityshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => event => {
+  const createAddCityshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => () => {
     const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
     const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
 
@@ -84,11 +84,21 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                       <Grid item md={6} sm={12}>
                         <Field
                           name={`passportDetails[${passportIndex}].nationality`}
-                          path={`${passportDetails}.nationality`}
+                          path={`${passportDetails}.country`}
                           label="Nationality"
                           component={SelectAutocomplete}
                           datalistId="country"
                           disabled={isDisabled()}
+                          changeProspect={(prospect, value) => {
+                            if (passportIndex) {
+                              return prospect;
+                            }
+
+                            return {
+                              ...prospect,
+                              [`prospect.signatoryInfo[${index}].kycDetails.nationality`]: value
+                            };
+                          }}
                           shrink={true}
                         />
                         {passportIndex < MAX_ANOTHER_CITIZENSHIP && (

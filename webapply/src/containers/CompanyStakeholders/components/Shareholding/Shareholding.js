@@ -51,7 +51,7 @@ const ShareholdingStep = ({
     <Formik
       initialValues={initialValues}
       onSubmit={handleContinue}
-      validationSchema={() => getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
+      validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
     >
       {({ values, setFieldValue }) => {
         const shareholderHandler = createShareholderHandler({ values, setFieldValue });

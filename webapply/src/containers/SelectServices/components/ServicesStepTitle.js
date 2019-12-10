@@ -1,8 +1,10 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
-import { LinkButton } from "./Buttons/LinkButton";
+import { makeStyles } from "@material-ui/core/styles";
 
-const styles = {
+import { Icon } from "../../../components/Icons";
+import { LinkButton } from "../../../components/Buttons/LinkButton";
+
+const useStyles = makeStyles(theme => ({
   wrapper: {
     display: "flex",
     justifyContent: "flex-start",
@@ -25,30 +27,28 @@ const styles = {
   title: {
     fontSize: "20px",
     fontWeight: 600,
-    color: "#373737",
+    color: theme.palette.text.color,
     display: "flex",
     flexDirection: "column"
   },
   editButton: {
     margin: "0 40px 0 auto"
   }
-};
+}));
 
-const ServicesStepTitle = ({ step, activeStep, classes, createClickHandler }) => {
-  const doneStep = step.step < activeStep;
+export const ServicesStepTitle = ({ step, isCompleteStep, createClickHandler }) => {
+  const doneStep = step.step < isCompleteStep;
+  const classes = useStyles();
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.icon}>
-        <img src={step.icon} alt="" />
+        <Icon name={step.icon} alt={step.title} />
       </div>
       <div className={classes.title}>{step.title}</div>
-
       {doneStep && (
         <LinkButton className={classes.editButton} clickHandler={createClickHandler(step.step)} />
       )}
     </div>
   );
 };
-
-export default withStyles(styles)(ServicesStepTitle);

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
 
-import { useStep } from "../../utils/useStep";
+import { useStep } from "../../components/StepComponent/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
@@ -20,7 +20,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const { step, availableSteps, handleContinue, createSetStepHandler } = useStep(
+  const { step, availableSteps, handleContinue, handleSetStep } = useStep(
     STEP_1,
     sendProspectToAPI
   );
@@ -51,7 +51,7 @@ export const CompanyInfoPage = ({
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
-            handleClick={createSetStepHandler(item.step)}
+            handleClick={() => handleSetStep(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
           />
