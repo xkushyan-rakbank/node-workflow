@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
 
-import { useStep } from "../../utils/useStep";
+import { useStep } from "../../components/StepComponent/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
@@ -51,7 +51,7 @@ export const CompanyInfoPage = ({
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
-            handleClick={createSetStepHandler(item.step)}
+            handleClick={() => createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
           />

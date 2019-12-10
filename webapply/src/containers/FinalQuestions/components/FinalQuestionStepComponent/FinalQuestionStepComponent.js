@@ -3,13 +3,12 @@ import React, { useEffect } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { STEP_1 } from "../CompanySummaryCard/constants";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
-import { useStep } from "../../../../utils/useStep";
+import { useStep } from "../../../../components/StepComponent/useStep";
 
 export const FinalQuestionStepComponent = ({
   index = null,
   handleFinalStepContinue,
   sendProspectToAPI,
-  handleExpandNextBlock,
   stepsArray
 }) => {
   const { step, availableSteps, handleContinue, createSetStepHandler } = useStep(
@@ -21,7 +20,6 @@ export const FinalQuestionStepComponent = ({
     if (step > stepsArray.length) {
       const completedIndex = index !== null ? index + 1 : SIGNATORY_INITIAL_INDEX;
       handleFinalStepContinue(completedIndex);
-      handleExpandNextBlock();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
@@ -36,7 +34,7 @@ export const FinalQuestionStepComponent = ({
       infoTitle={item.infoTitle}
       isActiveStep={step === item.step}
       isFilled={availableSteps.includes(item.step)}
-      handleClick={createSetStepHandler(item.step)}
+      handleClick={() => createSetStepHandler(item.step)}
       handleContinue={handleContinue}
       stepForm={item.component}
     />
