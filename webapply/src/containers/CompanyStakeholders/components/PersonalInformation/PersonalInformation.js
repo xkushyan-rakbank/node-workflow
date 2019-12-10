@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
-import InfoTitle from "../../../../components/InfoTitle";
+import { InfoTitle } from "../../../../components/InfoTitle";
 import {
   CustomSelect,
   Input,

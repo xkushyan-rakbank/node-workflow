@@ -25,7 +25,7 @@ const MAX_SIGNATORIES = 2;
 const signingPreferencesSchema = Yup.object({
   accountSigningType: Yup.string().required("Field is required"),
   accountSigningInstn: Yup.string().when("accountSigningType", {
-    is: () => ACCOUNTS_SIGNING_NAME_OTHER,
+    is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
     then: Yup.string()
       .max(120, "Max length is 120 symbols")
       .required("Field is required")
@@ -113,7 +113,6 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
             {arrayHelpers => (
               <>
                 {[...Array(countOfSignatories).keys()].map(index => {
-                  // eslint-disable-next-line max-len
                   const prefix = "organizationInfo.contactDetailsForTxnReconfirming";
                   const prospectPrefix = `prospect.${prefix}[${index}]`;
                   const prefixPhone = `${prefix}.[${index}]`;

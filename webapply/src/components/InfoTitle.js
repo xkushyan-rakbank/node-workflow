@@ -1,10 +1,10 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import cx from "classnames";
-import infoIc from "../assets/icons/info.svg";
-import infoIcYellow from "../assets/icons/infoYellow.svg";
 
-const styles = {
+import { Icon as IConComponent, ICONS } from "./Icons";
+
+const useStyles = makeStyles({
   wrapper: {
     display: "flex",
     alignItems: "flex-start",
@@ -12,7 +12,7 @@ const styles = {
     fontWeight: "normal",
     lineHeight: 1.33,
     color: "#86868b",
-    marginTop: "10px !important",
+    marginTop: "10px",
     "& div": {
       display: "flex",
       alignItems: "center",
@@ -22,25 +22,20 @@ const styles = {
   icon: {
     margin: "1px 6.4px 0 0",
     width: "16px"
-  },
-  info: {
-    "& div": {
-      color: "#d1af29"
-    }
   }
-};
+});
 
-const InfoTitle = ({ classes, styles, typeInfo, ...props }) => {
-  const Icon = ({ src }) => <img src={src} alt="info icon" className={classes.icon} />;
+export const InfoTitle = ({ styles, typeInfo, ...props }) => {
+  const classes = useStyles();
+  const Icon = ({ name }) => <IConComponent name={name} alt="info icon" className={classes.icon} />;
+
   return (
     <div
       className={cx(classes.wrapper, props.className, { [classes.info]: typeInfo })}
       style={{ ...styles }}
     >
-      {typeInfo ? <Icon src={infoIcYellow} /> : <Icon src={infoIc} />}
+      {typeInfo ? <Icon name={ICONS.infoIcYellow} /> : <Icon name={ICONS.infoIc} />}
       <div>{props.title}</div>
     </div>
   );
 };
-
-export default withStyles(styles)(InfoTitle);
