@@ -56,7 +56,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
               label="Emirates ID"
               placeholder="784-XXXX-XXXXXXX-X"
               component={NumericInput}
-              disabled={isSignatory && values.residenceCountry !== UAE}
+              disabled={isSignatory || values.residenceCountry !== UAE}
               format="784-####-#######-#"
               prefix={"784-"}
             />
