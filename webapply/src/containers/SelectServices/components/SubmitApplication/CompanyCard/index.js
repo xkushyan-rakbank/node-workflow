@@ -3,7 +3,7 @@ import get from "lodash/get";
 
 import { ACCOUNTS_SIGNING_NAME_ALL } from "../../../constants";
 
-import Divider from "../../../../../components/Divider";
+import { Divider } from "../../Divider";
 
 import brief from "../../../../../assets/icons/brief.png";
 import { useStyles } from "./styled";

@@ -15,7 +15,7 @@ import {
   AutoSaveField as Field
 } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import Divider from "../../../../components/Divider";
+import { Divider } from "../Divider";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
 import { useStyles } from "./styled";

@@ -10,7 +10,7 @@ import {
   Checkbox
 } from "../../../../components/Form";
 import { Subtitle } from "../../../../components/Subtitle";
-import Divider from "../../../../components/Divider";
+import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
