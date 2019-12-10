@@ -9,7 +9,7 @@ import {
   CustomSelect,
   Checkbox
 } from "../../../../components/Form";
-import Subtitle from "../../../../components/Subtitle";
+import { Subtitle } from "../../../../components/Subtitle";
 import Divider from "../../../../components/Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 
@@ -88,7 +88,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                 name="receiveInterest"
                 path="prospect.accountInfo[0].receiveInterest"
                 label="I don't wish to receive interest from my account"
-                className={{ formControl: classes.formControl }}
+                classes={{ formControlRoot: classes.formControl }}
                 component={Checkbox}
               />
             </>
