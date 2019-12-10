@@ -9,9 +9,11 @@ pr:
   branches:
     include:
       - develop
+      - deploy
 #trigger: none
 trigger:
   - develop
+  - deploy
 #  - releases/*
 
 jobs:
