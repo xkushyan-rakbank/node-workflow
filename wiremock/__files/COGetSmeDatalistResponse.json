@@ -773,7 +773,7 @@
       "key": "EES",
       "value": "EES",
       "displayText": "Energy Equipment & Services",
-      "subCategory": [
+      "subGroup": [
         {
           "code": "OGD",
           "key": "OGD",
@@ -793,7 +793,7 @@
       "key": "OGC&F",
       "value": "OGC&F",
       "displayText": "Oil, Gas & Consumable Fuels",
-      "subCategory": [
+      "subGroup": [
         {
           "code": "IOG",
           "key": "IOG",
