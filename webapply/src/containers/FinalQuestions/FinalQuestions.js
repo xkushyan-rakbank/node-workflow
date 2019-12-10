@@ -63,7 +63,11 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
       </div>
       <div className={classes.linkContainer}>
         <BackLink path={routes.stakeholdersInfo} />
-        <SubmitButton handleClick={goToUploadDocument} label="Next Step" />
+        <SubmitButton
+          disabled={signatories.length >= availableSignatoriesIndexes.length}
+          handleClick={goToUploadDocument}
+          label="Next Step"
+        />
       </div>
     </>
   );
