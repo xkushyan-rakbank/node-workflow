@@ -9,7 +9,7 @@ import { NAME_REGEX } from "../../../../utils/validation";
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
-import Subtitle from "../../../../components/Subtitle";
+import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 import { ICONS, Icon } from "../../../../components/Icons/Icon";
 

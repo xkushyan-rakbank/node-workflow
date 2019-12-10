@@ -6,7 +6,7 @@ import { Grid } from "@material-ui/core";
 import { PHONE_REGEX, NAME_REGEX } from "../../../../utils/validation";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 import { accountSigningTypes, countryCodeOptions } from "../../../../constants/options";
-import Subtitle from "../../../../components/Subtitle";
+import { Subtitle } from "../../../../components/Subtitle";
 import {
   Input,
   InputGroup,

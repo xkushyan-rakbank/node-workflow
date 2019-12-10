@@ -5,8 +5,10 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { SubmitApplication } from "./components/SubmitApplication";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { useStyles } from "./styled";
+import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
+
+import { useStyles } from "./styled";
 
 export const SelectServicesComponent = ({
   rakValuePackage,
@@ -33,11 +35,11 @@ export const SelectServicesComponent = ({
 
   return (
     <>
-      <h2>Services for your account</h2>
-      <p className={classes.formDescription}>
-        Enough of us asking. Now it’s your turn to say which services you want, whether it is
-        foreign currencies, cards or chequebooks.
-      </p>
+      <FormTitle
+        title="Services for your account"
+        info="Enough of us asking. Now it’s your turn to say which services you want, whether it is
+        foreign currencies, cards or chequebooks."
+      />
 
       <ServicesSteps step={step} clickHandler={createSetStepHandler} handleContinue={setNextStep} />
 
