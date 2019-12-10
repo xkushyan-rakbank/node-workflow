@@ -20,9 +20,9 @@ export const SignatorySummaryCardComponent = ({
 }) => {
   const classes = useStyles();
 
-  const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
+  const handleExpandNextSignatory = () => setExpandedSignatoryIndex(index + 1);
 
-  const handleSetNotExpanded = () => setExpandedSignatoryIndex(index + 1);
+  const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
 
   return (
     <FormCard
@@ -59,7 +59,7 @@ export const SignatorySummaryCardComponent = ({
         <FinalQuestionStepComponent
           index={index}
           stepsArray={signatoriesSteps}
-          setIsNotExpanded={handleSetNotExpanded}
+          setIsNotExpanded={handleExpandNextSignatory}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
         />
