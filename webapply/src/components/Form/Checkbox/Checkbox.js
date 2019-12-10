@@ -21,12 +21,12 @@ export const Checkbox = ({
   value = true,
   field,
   form: { errors, touched },
-  formControlClasses,
+  classes: extendedClasses,
   ...rest
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
-  const classes = useStyles();
+  const classes = useStyles({ classes: extendedClasses });
 
   return (
     <FormControl classes={{ root: classes.formControlRoot }} className="formControlContainer">

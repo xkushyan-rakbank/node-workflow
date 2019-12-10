@@ -1,6 +1,6 @@
 import React from "react";
 
-import Subtitle from "../../../../../components/Subtitle";
+import { Subtitle } from "../../../../../components/Subtitle";
 import InfoTitle from "../../../../../components/InfoTitle";
 
 import { useStyles } from "./styled";

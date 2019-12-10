@@ -1,12 +1,8 @@
+import { ICONS } from "../../components/Icons";
 import { AccountDetails } from "./AccountDetails";
 import { SigningPreferences } from "./SigningPreferences";
 import { Channels } from "./Channels";
 import { ValueAddedServices } from "./ValueAddedServices";
-
-import accountDetails from "../../assets/icons/account_details.png";
-import signingPreferences from "../../assets/icons/signing_preferences.png";
-import channels from "../../assets/icons/channels.png";
-import valueAddedServices from "../../assets/icons/value_added_services.png";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
@@ -22,19 +18,19 @@ export const servicesSteps = [
     step: STEP_1,
     title: "Account details",
     component: AccountDetails,
-    icon: accountDetails
+    icon: ICONS.accountDetails
   },
   {
     step: STEP_2,
     title: "Signing preferences",
     component: SigningPreferences,
-    icon: signingPreferences
+    icon: ICONS.signingPreferences
   },
-  { step: STEP_3, title: "Channels", component: Channels, icon: channels, titleInfo: "" },
+  { step: STEP_3, title: "Channels", component: Channels, icon: ICONS.channels, titleInfo: "" },
   {
     step: STEP_4,
     title: "Value added services",
     component: ValueAddedServices,
-    icon: valueAddedServices
+    icon: ICONS.valueAddedServices
   }
 ];
