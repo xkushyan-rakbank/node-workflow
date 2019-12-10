@@ -113,9 +113,9 @@
 		"contactDetailsForTxnReconfirming": [
 			{
 				"primaryMobileNo": "",
-				"primaryMobCountryCode": "",
+				"primaryMobCountryCode": "971",
 				"primaryPhoneNo": "",
-				"primaryPhoneCountryCode": ""
+				"primaryPhoneCountryCode": "971"
 			}
 		]
 	},
