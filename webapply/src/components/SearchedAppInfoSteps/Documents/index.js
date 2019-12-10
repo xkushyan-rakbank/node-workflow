@@ -9,9 +9,9 @@ import { titles, errorMsgs, DUMMY_PROSPECT_ID, DUMMY_DOCUMENT_KEY } from "./cons
 
 const Documents = ({ classes, docs, prospectInfo, endpointsUrl }) => {
   const signatoryInfo = prospectInfo.signatoryInfo;
-
   const documentBaseUrl = `${endpointsUrl.baseUrl || ""}${endpointsUrl.getDocumentByIdUri || ""}`;
   const headingClassName = `${classes.checkListData} ${classes.heading}`;
+
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
@@ -78,30 +78,29 @@ const Documents = ({ classes, docs, prospectInfo, endpointsUrl }) => {
                   <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
                 </div>
               </div>
-              {docs.stakeholdersDocuments[`${index}_${user.fullName}`] &&
-                docs.stakeholdersDocuments[`${index}_${user.fullName}`].map((doc, index) => (
-                  <div className={classes.applicationRow} key={index}>
-                    <div>
-                      <div className={classes.checkListData}>{doc.documentType}</div>
-                    </div>
-                    <div>
-                      <div className={classes.checkListData}>{doc.uploadStatus}</div>
-                    </div>
-                    {doc.uploadStatus !== "NotUploaded" && (
-                      <div>
-                        <a
-                          index={index}
-                          href={documentBaseUrl
-                            .replace("{prospectId}", DUMMY_PROSPECT_ID)
-                            .replace("{documentKey}", DUMMY_DOCUMENT_KEY)}
-                          className={classes.link}
-                        >
-                          {titles.PRINT_DOWNLOAD_TITLE}
-                        </a>
-                      </div>
-                    )}
+              {(docs.stakeholdersDocuments[`${index}_${user.fullName}`] || []).map((doc, index) => (
+                <div className={classes.applicationRow} key={index}>
+                  <div>
+                    <div className={classes.checkListData}>{doc.documentType}</div>
                   </div>
-                ))}
+                  <div>
+                    <div className={classes.checkListData}>{doc.uploadStatus}</div>
+                  </div>
+                  {doc.uploadStatus !== "NotUploaded" && (
+                    <div>
+                      <a
+                        index={index}
+                        href={documentBaseUrl
+                          .replace("{prospectId}", DUMMY_PROSPECT_ID)
+                          .replace("{documentKey}", DUMMY_DOCUMENT_KEY)}
+                        className={classes.link}
+                      >
+                        {titles.PRINT_DOWNLOAD_TITLE}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         ))
@@ -112,18 +111,9 @@ const Documents = ({ classes, docs, prospectInfo, endpointsUrl }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    docs: appConfigSelector.getProspectDocuments(state),
-    endpointsUrl: appConfigSelector.getEndpoints(state)
-  };
-};
+const mapStateToProps = state => ({
+  docs: appConfigSelector.getProspectDocuments(state),
+  endpointsUrl: appConfigSelector.getEndpoints(state)
+});
 
-const mapDispatchToProps = {};
-
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Documents)
-);
+export default withStyles(styles)(connect(mapStateToProps)(Documents));
