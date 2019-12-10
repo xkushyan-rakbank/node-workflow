@@ -8,7 +8,7 @@ export const FinalQuestionStepComponent = ({
   index = null,
   handleFinalStepContinue,
   sendProspectToAPI,
-  setIsNotExpanded,
+  handleExpandNextBlock,
   stepsArray
 }) => {
   const [step, setStep] = useState(STEP_1);
@@ -18,7 +18,7 @@ export const FinalQuestionStepComponent = ({
     if (step > stepsArray.length) {
       const completedIndex = index !== null ? index + 1 : SIGNATORY_INITIAL_INDEX;
       handleFinalStepContinue(completedIndex);
-      setIsNotExpanded();
+      handleExpandNextBlock();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);

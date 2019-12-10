@@ -20,7 +20,7 @@ export const SignatorySummaryCardComponent = ({
 }) => {
   const classes = useStyles();
 
-  const handleExpandNextSignatory = () => setExpandedSignatoryIndex(index + 1);
+  const handleExpandNextBlock = () => setExpandedSignatoryIndex(index + 1);
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
 
@@ -43,7 +43,7 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {!(expandedSignatoryIndex === index) && availableSignatoriesIndexes.includes(index) && (
+            {expandedSignatoryIndex !== index && availableSignatoriesIndexes.includes(index) && (
               <LinkButton
                 clickHandler={() => {
                   setExpandedSignatoryIndex(index);
@@ -55,11 +55,11 @@ export const SignatorySummaryCardComponent = ({
       }
       index={index}
     >
-      <div className={cx({ [classes.hidden]: !(expandedSignatoryIndex === index) })}>
+      <div className={cx({ [classes.hidden]: expandedSignatoryIndex !== index })}>
         <FinalQuestionStepComponent
           index={index}
           stepsArray={signatoriesSteps}
-          setIsNotExpanded={handleExpandNextSignatory}
+          handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
         />

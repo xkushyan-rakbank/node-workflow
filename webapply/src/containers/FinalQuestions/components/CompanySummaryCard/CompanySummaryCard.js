@@ -27,7 +27,7 @@ export const CompanySummaryCardComponent = ({
     }
   }, [switchExpandedMargin]);
 
-  const handleSetNotExpanded = () => setIsExpanded(false);
+  const handleExpandNextBlock = () => setIsExpanded(false);
 
   return (
     <CompanyCard
@@ -49,7 +49,7 @@ export const CompanySummaryCardComponent = ({
         <FinalQuestionStepComponent
           index={index}
           stepsArray={finalQuestionsSteps}
-          setIsNotExpanded={handleSetNotExpanded}
+          handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
         />
