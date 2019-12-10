@@ -22,7 +22,7 @@ import ComeBackVerification from "./containers/ComeBack/ComeBackVerification";
 import { MyApplications } from "./containers/MyApplications";
 import { UploadDocuments } from "./containers/UploadDocuments";
 import ApplicationSubmitted from "./containers/ApplicationSubmitted/ApplicationSubmitted";
-import SearchedAppInfo from "./containers/AgentPages/SearchedAppInfo";
+import { SearchedAppInfo } from "./containers/AgentPages/SearchedAppInfo";
 import ReUploadDocuments from "./containers/ReUploadDocuments";
 import { AgentProtectedRoute, ProspectProtectedRoute } from "./components/Routers";
 import { SubmitApplication } from "./containers/SelectServices/components/SubmitApplication";

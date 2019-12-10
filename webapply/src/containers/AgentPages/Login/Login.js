@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
 import { Input, AutoSaveField as Field } from "../../../components/Form";
-import { NAME_REGEX } from "../../../utils/validation";
+import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../utils/validation";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
 import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
@@ -15,10 +15,10 @@ import { useStyles } from "./styled";
 const loginSchema = Yup.object({
   username: Yup.string()
     .required("You need to provide username")
-    .matches(NAME_REGEX, "This is not a valid username"),
+    .matches(USER_NAME_REGEX, "This is not a valid username"),
   password: Yup.string()
     .required("You need to provide password")
-    .matches(NAME_REGEX, "This is not a valid password")
+    .matches(PASSWORD_REGEX, "This is not a valid password")
 });
 
 export const LoginComponent = ({
