@@ -33,7 +33,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
       eidNumber: ""
     }}
     onSubmit={handleContinue}
-    validationSchema={() => getCountryOfResidenceSchema(isSignatory)}
+    validationSchema={getCountryOfResidenceSchema(isSignatory)}
   >
     {({ values }) => (
       <Form>
