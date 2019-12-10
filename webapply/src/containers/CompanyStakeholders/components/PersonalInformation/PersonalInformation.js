@@ -39,10 +39,6 @@ const personalInformationSchema = Yup.object().shape({
 export const PersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
 
-  // const handleChange = event => {
-  //   console.log(event.target.value);
-  // };
-
   return (
     <Formik
       initialValues={{
@@ -144,7 +140,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             path={`prospect.signatoryInfo[${index}].kycDetails.isPEP`}
             component={InlineRadioGroup}
             options={yesNoOptions}
-            label="Is this person a signatory?"
+            label="This Person, or a relative of this person by relation or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country."
           />
 
           <SubmitButton />

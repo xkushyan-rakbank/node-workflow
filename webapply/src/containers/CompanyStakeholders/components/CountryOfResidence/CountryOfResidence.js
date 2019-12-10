@@ -19,7 +19,7 @@ const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
     residenceCountry: Yup.string().test("required", "Required", value => isSignatory || value),
     eidNumber: Yup.string().when("residenceCountry", {
-      is: value => value === UAE,
+      is: value => !isSignatory && value === UAE,
       then: Yup.string()
         .required("Required")
         .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
@@ -56,7 +56,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
               label="Emirates ID"
               placeholder="784-XXXX-XXXXXXX-X"
               component={NumericInput}
-              disabled={values.residenceCountry !== UAE}
+              disabled={isSignatory || values.residenceCountry !== UAE}
               format="784-####-#######-#"
               prefix={"784-"}
             />
