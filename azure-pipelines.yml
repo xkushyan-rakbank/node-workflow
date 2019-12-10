@@ -18,7 +18,7 @@ jobs:
     - job: Webapply
       timeoutInMinutes: 120
       pool:
-        name: Hosted macOS
+        name: Hosted myself
 #      demands:
 #        - java
 #        - JDK
@@ -80,7 +80,7 @@ jobs:
           ArtifactName: 'Webapply'
     - job: WebapplyServer
       pool:
-       name: Hosted macOS
+       name: Hosted myself
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -132,7 +132,7 @@ jobs:
           
     - job: document_uploader
       pool:
-       name: Hosted macOS
+       name: Hosted myself
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -195,7 +195,7 @@ jobs:
        #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
         and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
       pool:
-       name: Hosted macOS
+       name: Hosted myself
       steps:
       #prepare the Sonarqube for executing the sonar 
       - task: SonarQubePrepare@4
