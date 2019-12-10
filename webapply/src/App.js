@@ -12,7 +12,7 @@ import CompanyStakeholders from "./containers/CompanyStakeholders/CompanyStakeho
 import { FinalQuestions } from "./containers/FinalQuestions/index";
 import FormConfirm from "./containers/FormConfirm";
 import { FormLayout } from "./containers/FormLayout";
-import SearchProspect from "./containers/AgentPages/SearchProspect";
+import { SearchProspect } from "./containers/AgentPages/SearchProspect";
 import { SelectServices } from "./containers/SelectServices";
 import { AccountsComparison } from "./containers/AccountsComparison";
 import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOverview";
