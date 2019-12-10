@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
 import get from "lodash/get";
 import { connect } from "react-redux";
-import { getSearchResult } from "../../store/selectors/searchProspect";
-import { FormCard } from "../../components/FormCard/FormCard";
-import { StepComponent } from "../../components/StepComponent/StepComponent";
-import { searchedAppInfoSteps } from "../../constants";
-import routes from "../../routes";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { BackLink } from "../../components/Buttons/BackLink";
-import { retrieveDocDetails } from "../../store/actions/getProspectDocuments";
-import { getProspectInfo } from "../../store/actions/retrieveApplicantInfo";
-import { updateProspectId } from "../../store/actions/appConfig";
-import { ConfirmDialog } from "../../components/Modals";
-import { useStyles } from "./styled";
+import { getSearchResult } from "../../../store/selectors/searchProspect";
+import { FormCard } from "../../../components/FormCard/FormCard";
+import { StepComponent } from "../../../components/StepComponent/StepComponent";
+import { searchedAppInfoSteps } from "../../../constants";
+import routes from "../../../routes";
+import { SubmitButton } from "../../../components/Buttons/SubmitButton";
+import { BackLink } from "../../../components/Buttons/BackLink";
+import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
+import { getProspectInfo } from "../../../store/actions/retrieveApplicantInfo";
+import { updateProspectId } from "../../../store/actions/appConfig";
+import { ConfirmDialog } from "../../../components/Modals";
+import { disableArrayValues, CONFIRM_MESSAGE } from "./constants";
 
-const disableArrayValues = ["Account activated", "Declined", "Ineligible"];
+import { useStyles } from "./styled";
 
 const SearchedAppInfo = ({
   searchResults,
@@ -56,7 +56,7 @@ const SearchedAppInfo = ({
   return (
     <>
       <h2>Application Details</h2>
-      <p className="formDescription"></p>
+      <p className="formDescription" />
       <FormCard
         content={
           <div className={classes.title}>{get(prospectInfo, "applicantInfo.fullName", "")}</div>
@@ -94,7 +94,7 @@ const SearchedAppInfo = ({
         handleConfirm={confirmHandler}
         handleReject={confirmDialogHandler}
         handleClose={confirmDialogHandler}
-        message="Editing the application will result in re-performing the pre-screening checks and might change the results."
+        message={CONFIRM_MESSAGE}
       />
     </>
   );

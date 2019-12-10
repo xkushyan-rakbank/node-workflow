@@ -5,13 +5,13 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import omit from "lodash/omit";
 
-import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
-import { NAME_REGEX, EMAIL_REGEX, LEAD_LICENSE_REGEX } from "./../../utils/validation";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { SearchResult } from "./../SearchResult";
-import { searchApplications } from "./../../store/actions/searchProspect";
-import { getSearchResult } from "./../../store/selectors/searchProspect";
-import { UAE_CODE } from "../../constants";
+import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "../../../components/Form";
+import { NAME_REGEX, EMAIL_REGEX, LEAD_LICENSE_REGEX } from "../../../utils/validation";
+import { SubmitButton } from "../../../components/Buttons/SubmitButton";
+import { SearchResult } from "../SearchResult";
+import { searchApplications } from "../../../store/actions/searchProspect";
+import { getSearchResult } from "../../../store/selectors/searchProspect";
+import { UAE_CODE } from "../../../constants";
 
 import { useStyles } from "./styled";
 

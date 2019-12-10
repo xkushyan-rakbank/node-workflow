@@ -1,7 +1,7 @@
 import React from "react";
 import { generatePath } from "react-router";
 import { Link } from "react-router-dom";
-import routes from "../../routes";
+import routes from "../../../routes";
 import { useStyles } from "./styled";
 
 export const SearchApplicationList = ({ currentApplications }) => {

@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect } from "react";
-import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
-import { Input, AutoSaveField as Field } from "./../../components/Form";
-import { NAME_REGEX } from "./../../utils/validation";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { loginInfoForm } from "../../store/actions/loginForm";
-import { setToken, setVerified, verifyToken } from "../../store/actions/reCaptcha";
-import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
-import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
-import { IS_RECAPTCHA_ENABLE } from "../../constants";
+import { Input, AutoSaveField as Field } from "../../../components/Form";
+import { NAME_REGEX } from "../../../utils/validation";
+import { SubmitButton } from "../../../components/Buttons/SubmitButton";
+import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
+import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
+import { IS_RECAPTCHA_ENABLE } from "../../../constants";
+
 import { useStyles } from "./styled";
 
 const loginSchema = Yup.object({
@@ -23,7 +21,13 @@ const loginSchema = Yup.object({
     .matches(NAME_REGEX, "This is not a valid password")
 });
 
-const LoginPage = ({ loginInfoForm, setToken, setVerified, verifyToken, recaptchaToken }) => {
+export const LoginComponent = ({
+  loginInfoForm,
+  setToken,
+  setVerified,
+  verifyToken,
+  recaptchaToken
+}) => {
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
@@ -102,19 +106,3 @@ const LoginPage = ({ loginInfoForm, setToken, setVerified, verifyToken, recaptch
     </div>
   );
 };
-
-const mapStateToProps = state => ({
-  recaptchaToken: state.reCaptcha.token
-});
-
-const mapDispatchToProps = {
-  loginInfoForm,
-  setToken,
-  verifyToken,
-  setVerified
-};
-
-export const Login = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginPage);
