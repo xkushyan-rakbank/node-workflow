@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import HelpTooltip from "./HelpTooltip";
+import { HelpTooltip } from "./HelpTooltip";
 
 const useStyles = makeStyles({
   wrapper: {

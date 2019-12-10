@@ -15,6 +15,7 @@ import { ReactComponent as AccountDetails } from "../../assets/icons/account_det
 import { ReactComponent as SigningPreferences } from "../../assets/icons/signing_preferences.svg";
 import { ReactComponent as Channels } from "../../assets/icons/channels.svg";
 import { ReactComponent as ValueAddedServices } from "../../assets/icons/value_added_services.svg";
+import { ReactComponent as QuestionMarkGray } from "../../assets/icons/question_mark_grey.svg";
 
 export const iconComponents = {
   done: Done,
@@ -33,7 +34,8 @@ export const iconComponents = {
   accountDetails: AccountDetails,
   signingPreferences: SigningPreferences,
   channels: Channels,
-  valueAddedServices: ValueAddedServices
+  valueAddedServices: ValueAddedServices,
+  questionMarkGray: QuestionMarkGray
 };
 
 export const ICONS = {
@@ -53,5 +55,6 @@ export const ICONS = {
   accountDetails: "accountDetails",
   signingPreferences: "signingPreferences",
   channels: "channels",
-  valueAddedServices: "valueAddedServices"
+  valueAddedServices: "valueAddedServices",
+  questionMarkGray: "questionMarkGray"
 };
