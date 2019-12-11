@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
-import { StepComponent as StepComponentFormik } from "./../StepComponent/StepComponent";
+import { StepComponent } from "./../StepComponent/StepComponent";
 import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1 } from "./../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
+import { useStep } from "../../../../components/StepComponent/useStep";
 import { useStyles } from "./styled";
 
 const StakeholderStepperComponent = ({
@@ -16,16 +17,18 @@ const StakeholderStepperComponent = ({
   isNewStakeholder,
   firstName,
   lastName,
-  isStatusShown,
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
   loading: isStatusLoading
 }) => {
   const classes = useStyles();
-  const [step, setStep] = useState(STEP_1);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
+  const [step, availableSteps, handleSetNextStep, handleSetStep] = useStep(STEP_1);
+
+  const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
     if (step > stakeHoldersSteps.length) {
@@ -36,10 +39,6 @@ const StakeholderStepperComponent = ({
     }
   }, [step]);
 
-  const handleContinue = useCallback(() => {
-    sendProspectToAPI().then(() => setStep(step + 1), () => {});
-  }, [sendProspectToAPI, step]);
-
   const handleDeleteStakeholder = () => {
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);
@@ -47,12 +46,6 @@ const StakeholderStepperComponent = ({
 
   const deleteHandler = () =>
     isDisplayConfirmation ? handleDeleteStakeholder() : setIsDisplayConfirmation(true);
-
-  const createSetStepHandler = nextStep => () => {
-    if (step > nextStep) {
-      setStep(nextStep);
-    }
-  };
 
   if (isDisplayFinalScreen) {
     return <SuccessFilledStakeholder name={`${firstName} ${lastName}`} />;
@@ -68,13 +61,13 @@ const StakeholderStepperComponent = ({
     >
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => (
-          <StepComponentFormik
+          <StepComponent
             index={index}
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={step > item.step}
+            isFilled={availableSteps.includes(item.step)}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}

@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 
+import { useStep } from "../../components/StepComponent/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
@@ -19,25 +20,12 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const [step, setStep] = useState(STEP_1);
-  const [availableStep, setAvailableStep] = useState(STEP_1);
+  const [step, availableSteps, handleSetNextStep, handleSetStep] = useStep(STEP_1);
+
+  const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
-  const handleContinue = useCallback(() => {
-    sendProspectToAPI().then(
-      () => {
-        const nextStep = step + 1;
-        setStep(nextStep);
-        setAvailableStep(nextStep);
-      },
-      () => {}
-    );
-  }, [sendProspectToAPI, step]);
-  const createSetStepHandler = nextStep => () => {
-    if (availableStep >= nextStep) {
-      setStep(nextStep);
-    }
-  };
 
   return (
     <>
@@ -62,7 +50,7 @@ export const CompanyInfoPage = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={availableStep >= item.step}
+            isFilled={availableSteps.includes(item.step)}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}

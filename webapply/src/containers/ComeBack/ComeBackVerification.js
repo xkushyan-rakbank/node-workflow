@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
+
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { OtpVerification } from "../../components/OtpVerification";
@@ -11,8 +12,11 @@ import { generateOtpCode, verifyOtp } from "../../store/actions/otp";
 import { getOtp } from "../../store/selectors/otp";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import routes from "../../routes";
+import { UAE_CODE } from "../../constants";
+
 import { useStyles } from "./styled";
-import { COUNTRY_CODE, MAX_ATTEMPT_ALLOWED } from "./constants";
+
+export const MAX_ATTEMPT_ALLOWED = 3;
 
 const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, history }) => {
   const classes = useStyles();
@@ -48,7 +52,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
         title={
-          inputParam.countryCode === COUNTRY_CODE
+          inputParam.countryCode === UAE_CODE
             ? "We have sent you a verification code on registered mobile number"
             : "We have sent you a verification code on registered email address"
         }

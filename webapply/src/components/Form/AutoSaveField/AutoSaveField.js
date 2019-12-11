@@ -14,6 +14,7 @@ export const AutoSaveField = ({
   isLoadDefaultValueFromStore = true,
   datalistId,
   filterOptions = option => option,
+  changeProspect = prospect => prospect,
   ...rest
 }) => {
   const dispatch = useDispatch();
@@ -49,7 +50,9 @@ export const AutoSaveField = ({
       const oldValue = get(appConfig, path);
 
       if (!isEqual(oldValue, value)) {
-        dispatch(updateProspect({ [path]: value }));
+        const prospect = changeProspect({ [path]: value }, value);
+
+        dispatch(updateProspect(prospect));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
