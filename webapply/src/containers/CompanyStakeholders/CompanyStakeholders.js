@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import { connect } from "react-redux";
-import isUndefined from "lodash/isUndefined";
 
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
@@ -34,7 +33,8 @@ const CompanyStakeholders = ({
   editableStakeholder,
   stakeholders,
   percentage,
-  history
+  history,
+  resetProspect
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -52,23 +52,21 @@ const CompanyStakeholders = ({
 
   const editStakeholderHandler = useCallback(
     index => {
-      if (isUndefined(editableStakeholder)) {
-        changeEditableStakeholder(index);
-      } else {
+      if (editableStakeholder) {
         resetProspect();
-        changeEditableStakeholder(index);
       }
+      changeEditableStakeholder(index);
       setIsNewStakeholder(false);
     },
-    [changeEditableStakeholder, editableStakeholder]
+    [changeEditableStakeholder, editableStakeholder, resetProspect]
   );
 
   const addNewStakeholder = () => {
-    if (isUndefined(editableStakeholder)) {
+    if (editableStakeholder) {
+      setOpen(true);
+    } else {
       setIsNewStakeholder(true);
       createNewStakeholder();
-    } else {
-      setOpen(true);
     }
   };
 
@@ -154,7 +152,8 @@ const mapDispatchToProps = {
   deleteStakeholder,
   sendProspectToAPI,
   createNewStakeholder,
-  changeEditableStakeholder
+  changeEditableStakeholder,
+  resetProspect
 };
 
 export default connect(
