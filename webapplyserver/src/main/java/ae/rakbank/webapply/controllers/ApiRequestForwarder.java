@@ -606,55 +606,12 @@ public class ApiRequestForwarder {
 
 			cookieHelper.createWebApplyJWT(httpResponse);
 
-			if (MediaType.APPLICATION_JSON.equals(mediaType)
-					&& (StringUtils.isNotBlank(segment) || StringUtils.contains(url, "documents"))) {
-				updateHrefValue((JsonNode) response.getBody(), segment, prospectId, url);
-      }
 		} else {
 			logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
 					operationId, url, response.getStatusCodeValue()));
 		}
 
 		return new ResponseEntity<Object>(response.getBody(), headers, response.getStatusCode());
-	}
-
-	private void updateHrefValue(JsonNode parent, String segment, String prospectId, String endpoint) {
-		if (parent.has("prospectId") && parent.has("_links")) {
-			String prospectIdValue = parent.get("prospectId").asText();
-			String getProspectUri = appConfigJSON.get("WebApplyURIs").get("getProspectUri").asText();
-
-			UriComponents uriComponents = UriComponentsBuilder.fromUriString(getProspectUri).buildAndExpand(segment,
-					prospectIdValue);
-			
-			if (parent.has("_links") && parent.get("_links").has("self")) {
-				((ObjectNode) parent.get("_links").get("self")).put("href", uriComponents.toString());
-			}
-    }
-    /*
-    else if (StringUtils.contains(endpoint, "documents") && parent.has("documentKey")) {
-			String documentKey = parent.get("documentKey").asText();
-
-			String getDocumentByIdUri = appConfigJSON.get("WebApplyURIs").get("getDocumentByIdUri").asText();
-
-			UriComponents uriComponents = UriComponentsBuilder.fromUriString(getDocumentByIdUri)
-					.buildAndExpand(prospectId, documentKey);
-
-			ObjectMapper objectMapper = new ObjectMapper();
-			ObjectNode href = objectMapper.createObjectNode();
-			href.put("href", uriComponents.toString());
-
-			ObjectNode self = objectMapper.createObjectNode();
-			self.set("self", href);
-
-			((ObjectNode) parent).set("_links", self);
-    }
-    */
-
-		// Now, recursively invoke this method on all properties
-		for (JsonNode child : parent) {
-			updateHrefValue(child, segment, prospectId, endpoint);
-		}
-
 	}
 
 }

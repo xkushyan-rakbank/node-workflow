@@ -8,5 +8,8 @@ export const useStyles = makeStyles({
   infoTitle: {
     marginTop: "2px",
     marginBottom: "6px"
+  },
+  subtitle: {
+    margin: "13px 0 0px"
   }
 });

@@ -1,8 +1,10 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
+
 import { getProspectDocuments } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
 import * as actions from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
+import { log } from "../../utils/loggger";
 
 function* getProspectDocumentsSaga() {
   const state = yield select();
@@ -15,8 +17,7 @@ function* getProspectDocumentsSaga() {
     config.prospect.documents = response.data;
     yield put(updateProspect(config));
   } catch (error) {
-    config.prospect.documents = error;
-    yield put(updateProspect(config));
+    log(error);
   }
 }
 

@@ -16,16 +16,17 @@ export const Input = ({
   field,
   infoTitle,
   form: { errors, touched },
+  classes: extendedClasses,
   ...props
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ classes: extendedClasses });
 
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
   return (
     <>
-      <FormControl className="formControl">
+      <FormControl classes={{ root: classes.formControlRoot }}>
         <ContexualHelp title={contexualHelpText} placement={placement}>
           <TextField
             {...field}

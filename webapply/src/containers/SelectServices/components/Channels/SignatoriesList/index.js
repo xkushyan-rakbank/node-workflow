@@ -2,7 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 
 import { Input, AutoSaveField as Field } from "../../../../../components/Form";
-import InfoTitle from "../../../../../components/InfoTitle";
+import { InfoTitle } from "../../../../../components/InfoTitle";
 
 import { useStyles } from "./styled";
 

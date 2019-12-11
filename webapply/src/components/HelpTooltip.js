@@ -1,9 +1,10 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useState, useRef } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Popover from "./Popover";
-import questionMark from "../assets/icons/question_mark_grey.png";
+import { ICONS, Icon } from "./Icons";
+import { useOnClickOutside } from "../utils/useOnClickOutside";
 
-const styles = {
+const useStyles = makeStyles({
   wrapper: {
     marginLeft: "12px",
     position: "relative",
@@ -13,39 +14,24 @@ const styles = {
   questionIcon: {
     cursor: "pointer"
   }
+});
+
+export const HelpTooltip = ({ message }) => {
+  const ref = useRef();
+  const classes = useStyles();
+  const [isOpenToolTip, setIsOpenTollTip] = useState(false);
+
+  useOnClickOutside(ref, () => setIsOpenTollTip(false));
+
+  return (
+    <div className={classes.wrapper} ref={ref}>
+      <Icon
+        alt="more info icon"
+        name={ICONS.questionMarkGray}
+        className={classes.questionIcon}
+        onClick={() => setIsOpenTollTip(true)}
+      />
+      {isOpenToolTip && <Popover message={message} />}
+    </div>
+  );
 };
-
-class HelpTooltip extends React.Component {
-  state = {
-    isOpenPopover: false
-  };
-
-  togglePopover = () => {
-    if (!this.state.isOpenPopover) {
-      document.addEventListener("click", this.togglePopover, false);
-    } else {
-      document.removeEventListener("click", this.togglePopover, false);
-    }
-
-    this.setState(prevState => ({
-      isOpenPopover: !prevState.isOpenPopover
-    }));
-  };
-
-  render() {
-    const { classes, message } = this.props;
-    return (
-      <div className={classes.wrapper}>
-        <img
-          alt=""
-          src={questionMark}
-          className={classes.questionIcon}
-          onClick={this.togglePopover}
-        />
-        {this.state.isOpenPopover && <Popover message={message} />}
-      </div>
-    );
-  }
-}
-
-export default withStyles(styles)(HelpTooltip);
