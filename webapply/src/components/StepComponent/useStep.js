@@ -1,21 +1,17 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
-export function useStep(initialStep, sendProspectToAPI) {
+export const useStep = initialStep => {
   const [step, setStep] = useState(initialStep);
   const [availableSteps, setAvailableSteps] = useState([initialStep]);
 
-  const handleContinue = useCallback(() => {
-    sendProspectToAPI().then(
-      () => {
-        const nextStep = step + 1;
-        setStep(nextStep);
-        if (!availableSteps.includes(nextStep)) {
-          setAvailableSteps([...availableSteps, nextStep]);
-        }
-      },
-      () => {}
-    );
-  }, [sendProspectToAPI, step, availableSteps]);
+  const handleSetNextStep = () => {
+    const nextStep = step + 1;
+
+    setStep(nextStep);
+    if (!availableSteps.includes(nextStep)) {
+      setAvailableSteps([...availableSteps, nextStep]);
+    }
+  };
 
   const handleSetStep = nextStep => {
     if (availableSteps.includes(nextStep)) {
@@ -26,7 +22,7 @@ export function useStep(initialStep, sendProspectToAPI) {
   return {
     step,
     availableSteps,
-    handleContinue,
+    handleSetNextStep,
     handleSetStep
   };
 }

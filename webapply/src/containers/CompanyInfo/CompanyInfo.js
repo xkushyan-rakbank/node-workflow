@@ -20,10 +20,12 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const { step, availableSteps, handleContinue, handleSetStep } = useStep(
-    STEP_1,
-    sendProspectToAPI
-  );
+  const { step, availableSteps, handleSetNextStep, handleSetStep } = useStep(STEP_1);
+
+  const handleContinue = useCallback(() => {
+    sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  }, [sendProspectToAPI, step]);
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
 
@@ -51,7 +53,7 @@ export const CompanyInfoPage = ({
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
-            handleClick={() => handleSetStep(item.step)}
+            handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
           />

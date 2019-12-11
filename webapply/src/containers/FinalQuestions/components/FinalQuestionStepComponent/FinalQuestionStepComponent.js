@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { STEP_1 } from "../CompanySummaryCard/constants";
@@ -11,10 +11,12 @@ export const FinalQuestionStepComponent = ({
   sendProspectToAPI,
   stepsArray
 }) => {
-  const { step, availableSteps, handleContinue, handleSetStep } = useStep(
-    STEP_1,
-    sendProspectToAPI
-  );
+  const { step, availableSteps, handleSetNextStep, handleSetStep } = useStep(STEP_1);
+
+  const handleContinue = useCallback(() => {
+    sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  }, [sendProspectToAPI, step]);
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
     if (step > stepsArray.length) {
@@ -34,7 +36,7 @@ export const FinalQuestionStepComponent = ({
       infoTitle={item.infoTitle}
       isActiveStep={step === item.step}
       isFilled={availableSteps.includes(item.step)}
-      handleClick={() => handleSetStep(item.step)}
+      handleClick={createSetStepHandler(item.step)}
       handleContinue={handleContinue}
       stepForm={item.component}
     />
