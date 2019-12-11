@@ -25,7 +25,7 @@ export const CheckboxGroup = ({
   field,
   form: { errors, touched },
   onSelect = () => {},
-  textAreaComponent
+  textArea
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
@@ -43,7 +43,7 @@ export const CheckboxGroup = ({
                 onSelect={onSelect}
               />
             ))}
-            {textAreaComponent}
+            {textArea}
           </CheckboxesWrapper>
         </RadioGroup>
       ) : (

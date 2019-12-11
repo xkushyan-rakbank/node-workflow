@@ -90,7 +90,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
               }
             }}
             component={CheckboxGroup}
-            textAreaComponent={
+            textArea={
               values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
                 <div className={classes.textAreaWrap}>
                   <Field
