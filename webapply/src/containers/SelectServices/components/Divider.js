@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   }
 });
 
-export const Divider = () => {
-  const classes = useStyles();
+export const Divider = ({ classes: extendedClasses }) => {
+  const classes = useStyles({ classes: extendedClasses });
   return <div className={classes.divider} />;
 };

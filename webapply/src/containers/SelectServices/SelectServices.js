@@ -46,6 +46,7 @@ export const SelectServicesComponent = ({
       <div className={classes.linkContainer}>
         <BackLink path={routes.uploadDocuments} />
         <SubmitButton
+          className={classes.submitButton}
           handleClick={setNextStep}
           label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
           justify="flex-end"

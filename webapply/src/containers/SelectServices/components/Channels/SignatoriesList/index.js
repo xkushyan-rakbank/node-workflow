@@ -34,7 +34,7 @@ export const SignatoriesList = ({ stakeholders }) => {
                       path={`${prefix}.debitCardInfo.authSignatoryDetails.nameOnDebitCard`}
                       label="Name on debit card"
                       placeholder="Name on debit card"
-                      classes={{ root: classes.rootInput }}
+                      classes={{ formControlRoot: classes.rootInput }}
                       component={Input}
                     />
                   </Grid>

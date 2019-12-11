@@ -1,7 +1,7 @@
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import { Divider, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import { checkIsDebitCardApplied, checkIsChequeBookApplied } from "./utils";
 import { NAME_REGEX } from "../../../../utils/validation";
@@ -12,8 +12,17 @@ import { InfoTitle } from "../../../../components/Notifications";
 import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 import { ICONS, Icon } from "../../../../components/Icons/Icon";
+import { Divider } from "../Divider";
+
+import { useStyles } from "./styled";
 
 const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
+// eslint-disable-next-line max-len
+const DEBIT_CARD_INFO =
+  "Debit cards will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
+// eslint-disable-next-line max-len
+const CHEQUE_BOOK_INFO =
+  "Cheque book will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
 
 const channelsSchema = Yup.object({
   signatory: Yup.array().of(
@@ -38,6 +47,7 @@ const CustomCheckbox = props => (
 export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ...props }) => {
   const isDisabledDebitCard = checkIsDebitCardApplied(props);
   const isDisabledChequeBook = checkIsChequeBookApplied(props);
+  const classes = useStyles();
 
   return (
     <Formik
@@ -61,13 +71,15 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
             name="debitCardApplied"
             path=" prospect.accountInfo[0].debitCardApplied"
             label="I want debit cards for all the company signatories"
+            classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
+            infoTitle={DEBIT_CARD_INFO}
             disabled={isDisabledDebitCard}
           />
 
           {isHasSignatories && <SignatoriesList stakeholders={stakeholders} />}
 
-          <Divider />
+          <Divider classes={{ divider: classes.divider }} />
 
           <Subtitle title="Cheque book" />
 
@@ -75,7 +87,9 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
             name="chequeBookApplied"
             path=" prospect.accountInfo[0].chequeBookApplied"
             label="I want a cheque book for the company"
+            classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
+            infoTitle={CHEQUE_BOOK_INFO}
             disabled={isDisabledChequeBook}
           />
 
@@ -87,6 +101,7 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
             name="eStatements"
             path="prospect.accountInfo[0].eStatements"
             label="I want online bank statements"
+            classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
               setFieldValue("mailStatements", false);
               setFieldValue("eStatements", true);
@@ -97,13 +112,19 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
             name="mailStatements"
             path="prospect.accountInfo[0].mailStatements"
             label="I want paper statements (monthly charges apply)"
+            classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {
               setFieldValue("eStatements", false);
               setFieldValue("mailStatements", true);
             }}
           />
 
-          <Grid container direction="row" justify="space-between" style={{ padding: 20 }}>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            classes={{ root: classes.rootGrid }}
+          >
             <Grid item xs={9}>
               <InfoTitle title="These will be mailed by courier to your preferred address" />
             </Grid>
