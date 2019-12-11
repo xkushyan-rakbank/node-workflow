@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
@@ -44,16 +44,31 @@ const CustomCheckbox = props => (
   />
 );
 
-export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ...props }) => {
-  const isDisabledDebitCard = checkIsDebitCardApplied(props);
-  const isDisabledChequeBook = checkIsChequeBookApplied(props);
+const pathDebitCardApplied = "prospect.accountInfo[0].debitCardApplied";
+const pathChequeBookApplied = "prospect.accountInfo[0].chequeBookApplied";
+
+export const ChannelsComponent = ({
+  isHasSignatories,
+  stakeholders,
+  goToNext,
+  updateProspect,
+  debitCardApplied,
+  ...props
+}) => {
+  const { isDisabledDebitCard, isDebitCardApplied } = checkIsDebitCardApplied(props);
+  const { isDisabledChequeBook, isChequeBookApplied } = checkIsChequeBookApplied(props);
   const classes = useStyles();
+
+  useEffect(() => {
+    updateProspect({ [pathDebitCardApplied]: isDebitCardApplied });
+    updateProspect({ [pathChequeBookApplied]: isChequeBookApplied });
+  }, []);
 
   return (
     <Formik
       initialValues={{
-        debitCardApplied: "",
-        chequeBookApplied: "",
+        debitCardApplied: isDebitCardApplied,
+        chequeBookApplied: isChequeBookApplied,
         eStatements: false,
         mailStatements: false,
         signatory: stakeholders.map(({ firstName, lastName }) => ({
@@ -69,7 +84,7 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
 
           <Field
             name="debitCardApplied"
-            path=" prospect.accountInfo[0].debitCardApplied"
+            path={pathDebitCardApplied}
             label="I want debit cards for all the company signatories"
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
@@ -85,7 +100,7 @@ export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ..
 
           <Field
             name="chequeBookApplied"
-            path=" prospect.accountInfo[0].chequeBookApplied"
+            path={pathChequeBookApplied}
             label="I want a cheque book for the company"
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
