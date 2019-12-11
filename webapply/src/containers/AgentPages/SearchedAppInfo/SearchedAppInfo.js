@@ -8,6 +8,7 @@ import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
 import { disableArrayValues, searchedAppInfoSteps, CONFIRM_MESSAGE } from "./constants";
+import { DUMMY_PROSPECT_ID } from "../SearchedAppInfoSteps/Documents/constants";
 
 import { useStyles } from "./styled";
 
@@ -24,7 +25,7 @@ export const SearchedAppInfoComponent = ({
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
 
   useEffect(() => {
-    updateProspectId(match.params.id);
+    updateProspectId(DUMMY_PROSPECT_ID);
     retrieveDocDetails();
   }, [updateProspectId, retrieveDocDetails, match.params.id]);
 
