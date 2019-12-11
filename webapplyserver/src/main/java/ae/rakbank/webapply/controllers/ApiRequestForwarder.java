@@ -606,13 +606,10 @@ public class ApiRequestForwarder {
 
 			cookieHelper.createWebApplyJWT(httpResponse);
 
-      /*
 			if (MediaType.APPLICATION_JSON.equals(mediaType)
 					&& (StringUtils.isNotBlank(segment) || StringUtils.contains(url, "documents"))) {
 				updateHrefValue((JsonNode) response.getBody(), segment, prospectId, url);
       }
-      */
-
 		} else {
 			logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
 					operationId, url, response.getStatusCodeValue()));
@@ -632,8 +629,9 @@ public class ApiRequestForwarder {
 			if (parent.has("_links") && parent.get("_links").has("self")) {
 				((ObjectNode) parent.get("_links").get("self")).put("href", uriComponents.toString());
 			}
-
-		} else if (StringUtils.contains(endpoint, "documents") && parent.has("documentKey")) {
+    }
+    /*
+    else if (StringUtils.contains(endpoint, "documents") && parent.has("documentKey")) {
 			String documentKey = parent.get("documentKey").asText();
 
 			String getDocumentByIdUri = appConfigJSON.get("WebApplyURIs").get("getDocumentByIdUri").asText();
@@ -649,8 +647,8 @@ public class ApiRequestForwarder {
 			self.set("self", href);
 
 			((ObjectNode) parent).set("_links", self);
-
-		}
+    }
+    */
 
 		// Now, recursively invoke this method on all properties
 		for (JsonNode child : parent) {
