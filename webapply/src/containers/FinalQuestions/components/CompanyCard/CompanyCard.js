@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 
 import { Icon, ICONS } from "../../../../components/Icons";
 
@@ -14,7 +15,7 @@ export const CompanyCard = ({
   const classes = useStyles();
 
   return (
-    <div className={className}>
+    <div className={cx(className, classes.container)}>
       <header className={classes.header}>
         <div className={classes.companyIconWrap}>
           <Icon name={icon} alt="companyIconSvg" className={classes.companyIcon} />
