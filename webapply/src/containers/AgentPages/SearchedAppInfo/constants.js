@@ -1,7 +1,7 @@
-import SearchedCompanyDetails from "../SearchedAppInfoSteps/CompanyDetails";
-import AuditTrail from "../SearchedAppInfoSteps/AuditTrail";
-import Documents from "../SearchedAppInfoSteps/Documents";
-import CheckList from "../SearchedAppInfoSteps/CheckList";
+import { CompanyDetails } from "../SearchedAppInfoSteps/CompanyDetails";
+import { AuditTrail } from "../SearchedAppInfoSteps/AuditTrail";
+import { Documents } from "../SearchedAppInfoSteps/Documents";
+import { CheckList } from "../SearchedAppInfoSteps/CheckList";
 
 export const disableArrayValues = ["Account activated", "Declined", "Ineligible"];
 
@@ -12,7 +12,7 @@ export const searchedAppInfoSteps = [
   {
     step: 1,
     title: "Details",
-    component: SearchedCompanyDetails
+    component: CompanyDetails
   },
   {
     step: 2,

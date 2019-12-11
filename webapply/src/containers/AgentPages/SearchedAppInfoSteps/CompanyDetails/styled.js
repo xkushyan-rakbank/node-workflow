@@ -1,4 +1,6 @@
-export const styles = {
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   companyDetails: {
     fontSize: "14px",
     lineHeight: 1.33,
@@ -22,4 +24,4 @@ export const styles = {
     fontSize: "20px",
     marginBottom: "24px"
   }
-};
+});
