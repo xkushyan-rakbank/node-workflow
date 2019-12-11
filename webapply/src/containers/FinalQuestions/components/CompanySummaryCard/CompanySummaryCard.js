@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import cx from "classnames";
 
-import CompanyCard from "../../../../components/CompanyCard";
+import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
