@@ -11,10 +11,6 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
   const classes = useStyles();
   const signatoryInfo = prospectInfo.signatoryInfo;
   const documentBaseUrl = `${endpointsUrl.baseUrl || ""}${endpointsUrl.getDocumentByIdUri || ""}`;
-  console.log(documentBaseUrl);
-  console.log(
-    documentBaseUrl.replace("{prospectId}", prospectInfo.prospectId).replace("{documentKey}", "55")
-  );
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (
@@ -42,7 +38,13 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
                 <div className={classes.checkListData}>{application.uploadStatus}</div>
               </div>
               <div>
-                <a index={index} href={documentBaseUrl} className={classes.link}>
+                <a
+                  index={index}
+                  href={documentBaseUrl
+                    .replace("{prospectId}", prospectInfo.prospectId)
+                    .replace("{documentKey}", application.documentKey)}
+                  className={classes.link}
+                >
                   {titles.PRINT_DOWNLOAD_TITLE}
                 </a>
               </div>
