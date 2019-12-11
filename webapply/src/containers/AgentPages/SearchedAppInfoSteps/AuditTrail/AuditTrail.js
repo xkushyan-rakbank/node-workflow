@@ -1,8 +1,6 @@
 import React from "react";
 import cx from "classnames";
 
-import { titles, errorMsgs } from "./constants";
-
 import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
@@ -12,14 +10,10 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div>
-          <div className={cx(classes.checkListData, classes.heading)}>
-            {titles.MODIFIED_BY_TITLE}
-          </div>
+          <div className={cx(classes.checkListData, classes.heading)}>Modified By</div>
         </div>
         <div>
-          <div className={cx(classes.checkListData, classes.heading)}>
-            {titles.MODIFIED_ON_TITLE}
-          </div>
+          <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
         </div>
       </div>
       <div className={classes.applicationRow}>
@@ -40,6 +34,6 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
       </div>
     </div>
   ) : (
-    <div className={classes.errorMsg}>{errorMsgs.MODIFY_ERROR}</div>
+    <div className={classes.errorMsg}>Fields are not modified yet.</div>
   );
 };

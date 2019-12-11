@@ -12,6 +12,3 @@ export const titles = {
   ACTIONS_TITLE: "Actions",
   PRINT_DOWNLOAD_TITLE: "Print / Download"
 };
-
-export const DUMMY_PROSPECT_ID = "MGHN43MD75";
-export const DUMMY_DOCUMENT_KEY = "MGHN43MD75_TL";

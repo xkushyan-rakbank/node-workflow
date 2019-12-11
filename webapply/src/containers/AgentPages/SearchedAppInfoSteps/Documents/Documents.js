@@ -3,7 +3,7 @@ import get from "lodash/get";
 import cx from "classnames";
 
 import Avatar from "../../../../components/Avatar";
-import { titles, errorMsgs, DUMMY_PROSPECT_ID, DUMMY_DOCUMENT_KEY } from "./constants";
+import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -11,6 +11,10 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
   const classes = useStyles();
   const signatoryInfo = prospectInfo.signatoryInfo;
   const documentBaseUrl = `${endpointsUrl.baseUrl || ""}${endpointsUrl.getDocumentByIdUri || ""}`;
+  console.log(documentBaseUrl);
+  console.log(
+    documentBaseUrl.replace("{prospectId}", prospectInfo.prospectId).replace("{documentKey}", "55")
+  );
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (
@@ -38,13 +42,7 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
                 <div className={classes.checkListData}>{application.uploadStatus}</div>
               </div>
               <div>
-                <a
-                  index={index}
-                  href={documentBaseUrl
-                    .replace("{prospectId}", DUMMY_PROSPECT_ID)
-                    .replace("{documentKey}", DUMMY_DOCUMENT_KEY)}
-                  className={classes.link}
-                >
+                <a index={index} href={documentBaseUrl} className={classes.link}>
                   {titles.PRINT_DOWNLOAD_TITLE}
                 </a>
               </div>
@@ -91,8 +89,8 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
                       <a
                         index={index}
                         href={documentBaseUrl
-                          .replace("{prospectId}", DUMMY_PROSPECT_ID)
-                          .replace("{documentKey}", DUMMY_DOCUMENT_KEY)}
+                          .replace("{prospectId}", prospectInfo.prospectId)
+                          .replace("{documentKey}", doc.documentKey)}
                         className={classes.link}
                       >
                         {titles.PRINT_DOWNLOAD_TITLE}
