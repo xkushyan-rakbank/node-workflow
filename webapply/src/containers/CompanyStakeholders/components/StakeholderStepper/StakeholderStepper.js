@@ -25,11 +25,10 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
+  const [step, availableSteps, handleSetNextStep, handleSetStep] = useStep(STEP_1);
 
-  const [step, availableSteps, handleContinue, createSetStepHandler] = useStep(
-    STEP_1,
-    sendProspectToAPI
-  );
+  const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
     if (step > stakeHoldersSteps.length) {
@@ -69,7 +68,7 @@ const StakeholderStepperComponent = ({
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
-            clickHandler={() => createSetStepHandler(item.step)}
+            clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
           />
