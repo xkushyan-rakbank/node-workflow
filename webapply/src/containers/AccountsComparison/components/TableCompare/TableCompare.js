@@ -3,6 +3,7 @@ import Table from "@material-ui/core/Table";
 import Paper from "@material-ui/core/Paper";
 import { StyledTableHeader } from "./components/StyledTableHeader";
 import { StyledTableBody } from "./components/StyledTableBody";
+import { StyledTableBodyMobile } from "./components/StyledTableBodyMobile";
 import { sizes, accountTypes } from "./constants";
 import { useStyles } from "./styled";
 import routes from "../../../../routes";
@@ -102,6 +103,11 @@ export const TableCompareComponent = ({
               handleSelectAccount={handleSelectAccount}
               refs={refs}
             />
+          </Table>
+        </div>
+        <div className={classes.tableMobileContainer}>
+          <Table classes={{ root: classes.tableRoot }}>
+            <StyledTableBodyMobile handleSelectAccount={handleSelectAccount} />
           </Table>
         </div>
       </div>

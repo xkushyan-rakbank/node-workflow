@@ -5,25 +5,26 @@ import { updateProspectId, updateProspect, updateSaveType } from "../actions/app
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { setVerified } from "../actions/reCaptcha";
 import { prospect } from "../../api/apiClient";
-import { prospect as initialProspect } from "./../../constants/config";
 import routes from "./../../routes";
 import { log } from "../../utils/loggger";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
 
 function* applicantInfoFormSaga(action) {
   try {
+    const state = yield select();
+
     let prospectUpdated = {
-      ...initialProspect,
+      ...state.appConfig.prospect,
       applicantInfo: action.data
     };
+
+    yield put(updateProspect({ prospect: prospectUpdated }));
 
     if (IS_RECAPTCHA_ENABLE) {
       const state = yield select();
       const recaptchaToken = state.reCaptcha.token;
       prospectUpdated = { ...prospectUpdated, recaptchaToken };
     }
-
-    yield put(updateProspect({ prospect: prospectUpdated }));
 
     const {
       data: { prospectId }

@@ -28,7 +28,7 @@ export const getProceedStatus = state => state.applicationStatus.isProceed;
 
 export const getServerErrorStatus = state => state.applicationStatus.serverErorr;
 
-export const getScreeningResults = state => state.applicationStatus.screeningResults;
+export const getScreeningResults = state => state.sendProspectToAPI.screeningResults;
 
 export const getLoginParam = state => state.appConfig.login;
 
@@ -50,3 +50,25 @@ export const getUrlsReadMore = state => ({
 });
 
 export const getProspectDocuments = state => state.appConfig.prospect.documents;
+
+const createGetDocsCountSelector = (filterDocuments = () => true) => state => {
+  const documents = getProspectDocuments(state);
+  let counter = 0;
+
+  if (documents) {
+    counter += (documents.companyDocuments || []).filter(filterDocuments).length;
+    counter += Object.values(documents.stakeholdersDocuments || {})
+      .map(stakeholdersDocument => stakeholdersDocument.filter(filterDocuments).length)
+      .reduce((acc, item) => acc + item, 0);
+  }
+
+  return counter;
+};
+
+const UPLOADED_STATE = "Uploaded";
+
+export const getUploadedDocsCount = createGetDocsCountSelector(
+  doc => doc.uploadStatus === UPLOADED_STATE
+);
+
+export const getRequiredDocsCount = createGetDocsCountSelector();

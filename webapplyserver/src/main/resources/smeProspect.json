@@ -2,7 +2,7 @@
 	"applicantInfo": {
 		"fullName": "",
 		"email": "",
-		"countryCode": "",
+		"countryCode": "971",
 		"mobileNo": "",
 		"applyOnbehalf": false
 	},
@@ -97,10 +97,10 @@
 		],
 		"contactDetails": {
 			"primaryMobileNo": "",
-			"primaryMobCountryCode": "UAE",
+			"primaryMobCountryCode": "971",
 			"primaryEmail": "",
 			"primaryPhoneNo": "",
-			"primaryPhoneCountryCode": "UAE",
+			"primaryPhoneCountryCode": "971",
 			"fax": "",
 			"faxCountryCode": "",
 			"secondaryPhoneNo": "",
@@ -113,9 +113,9 @@
 		"contactDetailsForTxnReconfirming": [
 			{
 				"primaryMobileNo": "",
-				"primaryMobCountryCode": "",
+				"primaryMobCountryCode": "971",
 				"primaryPhoneNo": "",
-				"primaryPhoneCountryCode": ""
+				"primaryPhoneCountryCode": "971"
 			}
 		]
 	},
@@ -137,8 +137,6 @@
 				"country": ""
 			}
 		],
-		"isDontHaveSuppliersYet": false,
-		"isDontTradeGoodsYet": false,
 		"topOriginGoodsCountries": [
 			""
 		],
@@ -234,7 +232,7 @@
 				"dualCitizenshipCountry": [
 					""
 				],
-				"residenceCountry": "UAE",
+				"residenceCountry": "AE",
 				"isUAEResident": false,
 				"passportDetails": [
 					{
@@ -261,10 +259,10 @@
 			},
 			"contactDetails": {
 				"primaryMobileNo": "",
-				"primaryMobCountryCode": "",
+				"primaryMobCountryCode": "971",
 				"primaryEmail": "",
 				"primaryPhoneNo": "",
-				"primaryPhoneCountryCode": "",
+				"primaryPhoneCountryCode": "971",
 				"fax": "",
 				"faxCountryCode": "",
 				"secondaryPhoneNo": "",
@@ -283,8 +281,7 @@
 				"employerName": "",
 				"occupation": "",
 				"totalExperienceYrs": 0,
-				"employmentStartDate": "",
-				"isWorkAtTheCompany": false
+				"employmentStartDate": ""
 			},
 			"sameAsCompanyAddress": false,
 			"addressInfo": [

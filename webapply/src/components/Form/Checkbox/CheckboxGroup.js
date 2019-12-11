@@ -5,16 +5,18 @@ import { RadioGroup } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 
 import { CustomCheckbox } from "./CustomCheckbox";
+import { CustomRadioButton } from "../RadioButton/CustomRadioButton";
 import { InfoTitle } from "../../Notifications/index";
 import { ErrorMessage } from "../../Notifications/index";
 
 export const CheckboxesWrapper = styled("div")({
   display: "grid",
-  gridTemplateColumns: "1fr 1fr"
+  gridTemplateColumns: "1fr 1fr",
+  alignItems: "flex-start"
 });
 
 export const CheckboxGroup = ({
-  type = "checkbox",
+  typeRadio,
   options,
   extractId = option => option.key,
   extractValue = option => option.value,
@@ -22,19 +24,33 @@ export const CheckboxGroup = ({
   infoTitle,
   field,
   form: { errors, touched },
-  onSelect = () => {}
+  onSelect = () => {},
+  textArea
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
 
   return (
     <FormControl className="formControl">
-      {type !== "radio" ? (
+      {typeRadio ? (
+        <RadioGroup {...field}>
+          <CheckboxesWrapper>
+            {options.map(item => (
+              <CustomRadioButton
+                key={extractId(item)}
+                value={extractValue(item)}
+                label={extractLabel(item)}
+                onSelect={onSelect}
+              />
+            ))}
+            {textArea}
+          </CheckboxesWrapper>
+        </RadioGroup>
+      ) : (
         <CheckboxesWrapper>
           {options.map(item => (
             <CustomCheckbox
               {...field}
-              type={type}
               key={extractId(item)}
               value={extractValue(item)}
               label={extractLabel(item)}
@@ -43,20 +59,6 @@ export const CheckboxGroup = ({
             />
           ))}
         </CheckboxesWrapper>
-      ) : (
-        <RadioGroup {...field}>
-          <CheckboxesWrapper>
-            {options.map(item => (
-              <CustomCheckbox
-                type={type}
-                key={extractId(item)}
-                value={extractValue(item)}
-                label={extractLabel(item)}
-                onSelect={onSelect}
-              />
-            ))}
-          </CheckboxesWrapper>
-        </RadioGroup>
       )}
 
       {hasError && <ErrorMessage error={errorMessage} />}

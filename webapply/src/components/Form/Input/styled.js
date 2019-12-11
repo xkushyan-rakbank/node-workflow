@@ -65,5 +65,10 @@ export const useStyles = makeStyles({
         paddingLeft: 107
       }
     }
+  },
+  formControlRoot: {
+    margin: "12px 0 24px",
+    width: "100%",
+    display: "flex"
   }
 });

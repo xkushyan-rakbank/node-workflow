@@ -2,12 +2,14 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { getIconsByAccount } from "../../constants/icons";
 import { connect } from "react-redux";
-import dotsBg from "../../assets/images/dots_bg.png";
+
+import { getIconsByAccount } from "../../constants/icons";
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
 import * as accountInfoSelector from "../../store/selectors/appConfig";
+
+import dotsBg from "../../assets/images/dots_bg.png";
 
 const styles = {
   title: {
@@ -158,12 +160,7 @@ class ApplicationSubmitted extends React.Component {
   render() {
     const { classes, AccountSubmittedInfo } = this.props;
     const { companyDocuments, banking } = getIconsByAccount();
-    let customClass;
-    {
-      AccountSubmittedInfo && AccountSubmittedInfo.length % 2 === 0
-        ? (customClass = classes.accountsNumbersRow)
-        : (customClass = classes.accountsNumbersColumn);
-    }
+
     return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
       <div className={classes.container}>
         <div className={classes.title}>
@@ -172,7 +169,8 @@ class ApplicationSubmitted extends React.Component {
         </div>
         <div
           className={cx(classes.accountsNumbers, {
-            [customClass]: AccountSubmittedInfo.length
+            [classes.accountsNumbersRow]: AccountSubmittedInfo.length % 2 === 0,
+            [classes.accountsNumbersColumn]: AccountSubmittedInfo.length % 2 !== 0
           })}
         >
           {AccountSubmittedInfo.map(accountData => (

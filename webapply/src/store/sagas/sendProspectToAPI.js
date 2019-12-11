@@ -10,39 +10,44 @@ import {
   cancelled,
   fork
 } from "redux-saga/effects";
-import isUndefined from "lodash/isUndefined";
+import get from "lodash/get";
+
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
   sendProspectToAPIFail,
+  setScreeningResults,
   resetFormStep,
   PROSPECT_AUTO_SAVE
 } from "../actions/sendProspectToAPI";
+import { log } from "../../utils/loggger";
 import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
-import { handleChangeStep } from "../actions/stakeholders";
 import { prospect } from "../../api/apiClient";
+import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
 
 function* sendProspectToAPISaga() {
   try {
     const state = yield select();
     const newProspect = getProspect(state);
-    const prospectID = "COSME0000000000000001"; // remove hardcoded ID
+    const prospectID = getProspectId(state) || "COSME0000000000000001";
 
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
-    yield call(prospect.update, prospectID, newProspect);
-    yield put(sendProspectToAPISuccess(newProspect));
-    yield put(updateSaveType("continue"));
-    yield put(resetFormStep({ resetStep: false }));
+    const { data } = yield call(prospect.update, prospectID, newProspect);
 
-    if (!isUndefined(state.stakeholders.editableStakeholder)) {
-      yield put(handleChangeStep());
+    if (get(data, "preScreening.statusOverAll") !== APP_STOP_SCREEN_RESULT) {
+      yield put(sendProspectToAPISuccess(newProspect));
+    } else {
+      yield put(setScreeningResults(data.preScreening));
     }
   } catch (error) {
-    console.error({ error });
-    yield call(sendProspectToAPIFail());
+    log({ error });
+    yield put(sendProspectToAPIFail());
+  } finally {
+    yield put(updateSaveType("continue"));
+    yield put(resetFormStep({ resetStep: false }));
   }
 }
 
@@ -51,7 +56,7 @@ function* prospectAutoSave() {
     while (true) {
       const state = yield select();
       const newProspect = getProspect(state);
-      const prospectId = getProspectId(state);
+      const prospectId = getProspectId(state) || "COSME0000000000000001";
 
       yield call(prospect.update, prospectId, newProspect);
       yield put(updateSaveType("auto"));
@@ -60,7 +65,7 @@ function* prospectAutoSave() {
     }
   } finally {
     if (yield cancelled()) {
-      console.log("cancel");
+      log("cancel");
     }
   }
 }

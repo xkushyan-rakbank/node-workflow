@@ -2,9 +2,9 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import { BrowserRouter } from "react-router-dom";
 import { styled } from "@material-ui/styles";
+import { Grid } from "@material-ui/core";
 
 import { AddButton } from "../components/Buttons/AddButton";
-import { Grid } from "@material-ui/core";
 import { BackLink } from "../components/Buttons/BackLink";
 import { ContainedButton } from "../components/Buttons/ContainedButton";
 import { ContinueButton } from "../components/Buttons/ContinueButton";

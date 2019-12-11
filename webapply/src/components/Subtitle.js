@@ -1,8 +1,8 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import HelpTooltip from "./HelpTooltip";
+import { makeStyles } from "@material-ui/core/styles";
+import { HelpTooltip } from "./HelpTooltip";
 
-const styles = {
+const useStyles = makeStyles({
   wrapper: {
     margin: "24px 0 10px",
     fontSize: "16px",
@@ -17,14 +17,13 @@ const styles = {
     backgroundColor: "#517085",
     marginRight: "11px"
   }
-};
+});
 
-const Subtitle = ({ classes, title, helpMessage }) => {
+export const Subtitle = ({ title, helpMessage, classes: extendedClasses }) => {
+  const classes = useStyles({ classes: extendedClasses });
   return (
     <div className={classes.wrapper}>
       {title} {helpMessage && <HelpTooltip message={helpMessage} />}
     </div>
   );
 };
-
-export default withStyles(styles)(Subtitle);

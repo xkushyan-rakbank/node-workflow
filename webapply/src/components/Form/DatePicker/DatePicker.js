@@ -4,7 +4,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { getIn } from "formik";
 
-import InfoTitle from "../../InfoTitle";
+import { InfoTitle } from "../../InfoTitle";
 import { ErrorMessage } from "../../Notifications";
 import { BaseDatePicker } from "./styled";
 

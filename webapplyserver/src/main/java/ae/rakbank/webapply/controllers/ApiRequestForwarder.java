@@ -1,6 +1,7 @@
 package ae.rakbank.webapply.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -94,6 +95,7 @@ public class ApiRequestForwarder {
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
 			if (requestBodyJSON.has("recaptchaToken")) {
+        /*
 				logger.info("Validate reCAPTCHA before saving applicant info.");
 				String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
 				String ip = servletRequest.getRemoteAddr();
@@ -111,7 +113,8 @@ public class ApiRequestForwarder {
 
 				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
 					return captchaResponse;
-				}
+        }
+        */
 
 				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
 			} else {
@@ -476,7 +479,10 @@ public class ApiRequestForwarder {
 		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
-
+      if (requestJSON.has("recaptchaToken")) {
+        ((ObjectNode) requestJSON).remove("recaptchaToken");
+      }
+      /*
       if (!captchaVerified) {
 				String action = requestJSON.get("action").asText();
 				// verify captcha before sending OTP
@@ -508,7 +514,8 @@ public class ApiRequestForwarder {
 						return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
 					}
 				}
-			}
+      }
+      */
 
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
 					MediaType.APPLICATION_JSON);
@@ -552,7 +559,6 @@ public class ApiRequestForwarder {
 	private ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId,
 			MediaType mediaType, String segment, String prospectId) throws IOException {
-		logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", operationId, url));
 
 		logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request:[%s]", operationId, url,
 				request.toString()));
@@ -567,8 +573,16 @@ public class ApiRequestForwarder {
 			}
 		} catch (HttpClientErrorException e) {
 			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
-					e.getResponseBodyAsString()), e);
-			JsonNode badReqResponse = new ObjectMapper().readTree(e.getResponseBodyAsString());
+          e.getResponseBodyAsString()), e);
+      List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
+      String errorJson;
+      
+      if (channelContext == null) {
+          errorJson = e.getResponseBodyAsString();
+      } else {
+          errorJson = channelContext.get(0);
+      }
+      JsonNode badReqResponse = new ObjectMapper().readTree(errorJson);
 			return new ResponseEntity<Object>(badReqResponse, null, HttpStatus.BAD_REQUEST);
 		} catch (HttpServerErrorException e) {
 			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
@@ -578,10 +592,10 @@ public class ApiRequestForwarder {
 			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		// ResponseEntity headers is immutable, so create new HttpHeaders object
-		HttpHeaders headers = new HttpHeaders();
+    HttpHeaders headers = new HttpHeaders();
 		headers.addAll(response.getHeaders());
 
-		logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s], response=[%s]", operationId,
+		logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
 				url, response.getStatusCodeValue(), response.getBody()));
 
 		if (response.getStatusCode().is2xxSuccessful()) {

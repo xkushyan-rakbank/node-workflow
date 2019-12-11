@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 
-import CompanyStakeholderCard from "../../components/CompanyStakeholderCard";
-import { StepComponent } from "../../components/StakeholderStepForms/StepComponent/StepComponent";
+import { useStep } from "../../components/StepComponent/useStep";
+import { FormCard } from "../../components/FormCard/FormCard";
+import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
@@ -19,17 +20,12 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const [step, setStep] = useState(STEP_1);
+  const [step, availableSteps, handleSetNextStep, handleSetStep] = useStep(STEP_1);
+
+  const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
-  const handleContinue = useCallback(() => {
-    sendProspectToAPI().then(() => setStep(step + 1));
-  }, [sendProspectToAPI, step]);
-  const createSetStepHandler = nextStep => () => {
-    if (step > nextStep) {
-      setStep(nextStep);
-    }
-  };
 
   return (
     <>
@@ -39,7 +35,7 @@ export const CompanyInfoPage = ({
         sentence.
       </p>
 
-      <CompanyStakeholderCard
+      <FormCard
         content={
           <>
             <div className={classes.title}>{step !== STEP_1 ? companyName : "Company Name"}</div>
@@ -54,13 +50,13 @@ export const CompanyInfoPage = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={step > item.step}
-            clickHandler={createSetStepHandler(item.step)}
+            isFilled={availableSteps.includes(item.step)}
+            handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
           />
         ))}
-      </CompanyStakeholderCard>
+      </FormCard>
 
       <div className="linkContainer">
         <ContainedButton

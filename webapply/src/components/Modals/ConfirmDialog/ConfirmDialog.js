@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -7,14 +7,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useStyles } from "./styled";
 
-export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm, handleReject }) => {
+export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm }) => {
   const classes = useStyles();
-  const confirmHandler = useCallback(() => {
-    handleConfirm();
-  }, [handleConfirm]);
-  const rejectHandler = useCallback(() => {
-    handleReject();
-  }, [handleReject]);
 
   return (
     <Dialog
@@ -30,7 +24,7 @@ export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm, han
       <div className={classes.divider} />
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         <Button
-          onClick={rejectHandler}
+          onClick={handleClose}
           color="primary"
           variant="outlined"
           className={classes.actionButton}
@@ -38,7 +32,7 @@ export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm, han
           Cancel
         </Button>
         <Button
-          onClick={confirmHandler}
+          onClick={handleConfirm}
           color="primary"
           variant="contained"
           className={classes.actionButton}

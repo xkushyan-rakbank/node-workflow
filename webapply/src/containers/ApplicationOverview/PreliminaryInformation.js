@@ -5,6 +5,7 @@ import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
 import CommonQuestions from "./CommonQuestions";
+import { mobileResolution } from "../../constants";
 
 const mockData = [
   {
@@ -47,9 +48,10 @@ const style = {
     fontSize: "16px",
     fontWeight: "600",
     backgroundColor: "rgba(239, 242, 244, .5)",
-    "@media only screen and (max-width: 991px)": {
-      minWidth: "inherit",
-      fontSize: "14px"
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      minWidth: "auto",
+      padding: "20px 16px",
+      borderRadius: "8px 8px 0 0"
     }
   },
   note: {
@@ -66,9 +68,8 @@ const style = {
   },
   iconsWrapper: {
     flexWrap: "nowrap",
-    overflowX: "auto",
+    margin: "0 -10px",
     "@media only screen and (max-width: 991px)": {
-      overflowX: "inherit",
       flexWrap: "wrap"
     }
   }

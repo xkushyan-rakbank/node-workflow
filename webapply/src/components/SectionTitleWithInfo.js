@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { mobileResolution } from "../constants";
 
 const style = {
   title: {
@@ -13,7 +14,10 @@ const style = {
     fontSize: "20px",
     color: "#373737",
     display: "block",
-    marginTop: "10px"
+    marginTop: "10px",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      fontSize: "14px"
+    }
   }
 };
 

@@ -1,2 +1,2 @@
 export const COMPANY_CURRENCY = "AED";
-export const MONTH_COUNT = 12;
+export const YEAR_MONTH_COUNT = 12;

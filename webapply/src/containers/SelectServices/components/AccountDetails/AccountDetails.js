@@ -9,12 +9,11 @@ import {
   CustomSelect,
   Checkbox
 } from "../../../../components/Form";
-import Subtitle from "../../../../components/Subtitle";
-import Divider from "../../../../components/Divider";
+import { Subtitle } from "../../../../components/Subtitle";
+import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 
 import { useStyles } from "./styled";
-import { accountCurrencies, emirates, branches } from "../../../../constants/options";
 
 const INFO_TITLE =
   "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval.";
@@ -44,51 +43,52 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
         <Form>
           <Subtitle title="Select currencies" />
           <Field
-            options={accountCurrencies}
             name="accountCurrencies"
+            datalistId="accountCurrencies"
             path="prospect.accountInfo[0].accountCurrencies"
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
           />
           <Divider />
-          <Subtitle title="Select branch" />
+          <Subtitle title="Select branch" classes={{ wrapper: classes.subtitleBranch }} />
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
               <Field
                 name="branchCity"
+                datalistId="branchCity"
                 path="prospect.organizationInfo.branchCity"
-                options={emirates}
                 label="Emirate / City"
-                placeholder="Emirate / City"
                 component={CustomSelect}
                 onChange={e => {
                   setFieldValue("branchCity", e.target.value);
                   setFieldValue("branchID", "");
                 }}
-                shrink={false}
               />
             </Grid>
             <Grid item md={6} sm={12}>
               <Field
                 name="branchID"
+                datalistId="branchID"
                 path="prospect.organizationInfo.branchID"
-                options={branches.filter(item => item.emirateCode === values.branchCity)}
+                filterOptions={emirates =>
+                  emirates.filter(emirate => emirate.emirateCode === values.branchCity)
+                }
                 label="Branch"
                 placeholder="Branch"
                 disabled={!values.branchCity}
                 component={CustomSelect}
-                shrink={false}
               />
             </Grid>
           </Grid>
           {!islamicBanking && (
             <>
               <Divider />
-              <Subtitle title="Select interest" />
+              <Subtitle title="Select interest" classes={{ wrapper: classes.subtitleInterest }} />
               <Field
                 name="receiveInterest"
                 path="prospect.accountInfo[0].receiveInterest"
                 label="I don't wish to receive interest from my account"
+                classes={{ formControlRoot: classes.formControl }}
                 component={Checkbox}
               />
             </>

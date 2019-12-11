@@ -1,86 +1,118 @@
-import React, { useState } from "react";
-import get from "lodash/get";
-import RadioGroup from "@material-ui/core/RadioGroup";
+import React from "react";
+import * as Yup from "yup";
+import { Formik, Form } from "formik";
+import { Divider, Grid } from "@material-ui/core";
 
-import Subtitle from "../../../../components/Subtitle";
-import Checkbox from "../../../../components/InputField/RefactoredCheckbox";
-import FormWrapper from "../../../../components/StakeholderStepForms/FormWrapper/FormWrapper";
-import InfoTitle from "../../../../components/InfoTitle";
-import RadioButton from "../../../../components/InputField/RadioButton";
-import Divider from "../../../../components/Divider";
+import { checkIsDebitCardApplied, checkIsChequeBookApplied } from "./utils";
+import { NAME_REGEX } from "../../../../utils/validation";
+
+import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
+import { InfoTitle } from "../../../../components/Notifications";
+import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
+import { ICONS, Icon } from "../../../../components/Icons/Icon";
 
-import { INPUT_ID_INDEX } from "../../constants";
-import { getStatusDebitCardApplied, getStatusChequeBookApplied } from "./utils";
+const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
 
-import { useStyles } from "./styled";
+const channelsSchema = Yup.object({
+  signatory: Yup.array().of(
+    Yup.object().shape({
+      nameOnDebitCard: Yup.string()
+        .matches(NAME_REGEX, "This is not a valid name")
+        .max(16, "Max length is 16 symbols")
+        .required("Field is required")
+    })
+  )
+});
 
-export const ChannelsComponent = props => {
-  const { goToNext, stakeholders, eStatements, mailStatements, updateProspect } = props;
-  const [selectedTypeStatementsID, setSelectedTypeStatementsID] = useState("");
-  const classes = useStyles();
+const CustomCheckbox = props => (
+  <Field
+    component={Checkbox}
+    icon={<Icon name={ICONS.unCheckedRadio} alt="select icon" />}
+    checkedIcon={<Icon name={ICONS.checkedRadio} alt="selected icon" />}
+    {...props}
+  />
+);
 
-  const { isDisabledDebitCard } = getStatusDebitCardApplied(props);
-  const { isDisabledChequeBook } = getStatusChequeBookApplied(props);
-
-  const isHasSignatories = stakeholders.some(stakeholder =>
-    get(stakeholder, "kycDetails.isSignatory")
-  );
-
-  const onChangeBankStatements = e => {
-    const { id } = e.target;
-    updateProspect({ [selectedTypeStatementsID]: false });
-    updateProspect({ [id]: true });
-    setSelectedTypeStatementsID(id);
-  };
+export const ChannelsComponent = ({ isHasSignatories, stakeholders, goToNext, ...props }) => {
+  const isDisabledDebitCard = checkIsDebitCardApplied(props);
+  const isDisabledChequeBook = checkIsChequeBookApplied(props);
 
   return (
-    <FormWrapper className={classes.formWrapper} handleContinue={goToNext}>
-      <div className={classes.contactsTitle}>
-        <Subtitle title="Debit Cards" />
-      </div>
-      <Checkbox
-        id="Acnt.debitCardApplied"
-        indexes={INPUT_ID_INDEX}
-        classes={{ labelWrapper: classes.cardAppliedCheckbox }}
-        disabled={isDisabledDebitCard}
-      />
+    <Formik
+      initialValues={{
+        debitCardApplied: "",
+        chequeBookApplied: "",
+        eStatements: false,
+        mailStatements: false,
+        signatory: stakeholders.map(({ firstName, lastName }) => ({
+          nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
+        }))
+      }}
+      validationSchema={channelsSchema}
+      onSubmit={goToNext}
+    >
+      {({ values, setFieldValue }) => (
+        <Form>
+          <Subtitle title="Debit Cards" />
 
-      {isHasSignatories && <SignatoriesList stakeholders={stakeholders} />}
+          <Field
+            name="debitCardApplied"
+            path=" prospect.accountInfo[0].debitCardApplied"
+            label="I want debit cards for all the company signatories"
+            component={Checkbox}
+            disabled={isDisabledDebitCard}
+          />
 
-      <Divider classes={{ divider: classes.divider }} />
+          {isHasSignatories && <SignatoriesList stakeholders={stakeholders} />}
 
-      <div className={classes.contactsTitle}>
-        <Subtitle title="Cheque book" />
-      </div>
-      <Checkbox
-        id="Acnt.chequeBookApplied"
-        indexes={INPUT_ID_INDEX}
-        disabled={isDisabledChequeBook}
-      />
+          <Divider />
 
-      <Divider classes={{ divider: classes.divider }} />
+          <Subtitle title="Cheque book" />
 
-      <Subtitle title="Bank statements" />
-      <RadioGroup name="BankStatements" onChange={onChangeBankStatements}>
-        <RadioButton
-          value={eStatements.value}
-          checked={eStatements.value}
-          label={eStatements.config.label}
-          id={eStatements.name}
-        />
-        <RadioButton
-          value={mailStatements.value}
-          checked={mailStatements.value}
-          label={mailStatements.config.label}
-          id={mailStatements.name}
-        />
-      </RadioGroup>
+          <Field
+            name="chequeBookApplied"
+            path=" prospect.accountInfo[0].chequeBookApplied"
+            label="I want a cheque book for the company"
+            component={Checkbox}
+            disabled={isDisabledChequeBook}
+          />
 
-      <InfoTitle
-        title="These will be mailed by courier to your preferred address"
-        classes={{ wrapper: classes.infoTitle }}
-      />
-    </FormWrapper>
+          <Divider />
+
+          <Subtitle title="Bank statements" />
+
+          <CustomCheckbox
+            name="eStatements"
+            path="prospect.accountInfo[0].eStatements"
+            label="I want online bank statements"
+            onChange={() => {
+              setFieldValue("mailStatements", false);
+              setFieldValue("eStatements", true);
+            }}
+          />
+
+          <CustomCheckbox
+            name="mailStatements"
+            path="prospect.accountInfo[0].mailStatements"
+            label="I want paper statements (monthly charges apply)"
+            onChange={() => {
+              setFieldValue("eStatements", false);
+              setFieldValue("mailStatements", true);
+            }}
+          />
+
+          <Grid container direction="row" justify="space-between" style={{ padding: 20 }}>
+            <Grid item xs={9}>
+              <InfoTitle title="These will be mailed by courier to your preferred address" />
+            </Grid>
+            <Grid item xs={3}>
+              <ContinueButton type="submit" />
+            </Grid>
+          </Grid>
+        </Form>
+      )}
+    </Formik>
   );
 };

@@ -18,7 +18,7 @@ import { useStyles } from "./styled";
 export const CustomSelect = ({
   extractId = option => option.key,
   extractValue = option => option.value,
-  extractLabel = item => item.label,
+  extractLabel = item => item.label || item.displayText,
   placeholder,
   multiple = false,
   options = [],
@@ -68,7 +68,7 @@ export const CustomSelect = ({
           <MenuItem key={extractId(option)} value={extractValue(option)}>
             {multiple ? (
               <>
-                <ListItemText primary={extractId(option)} />
+                <ListItemText primary={extractLabel(option)} />
                 <Checkbox color="default" checked={field.value.includes(extractValue(option))} />
               </>
             ) : (

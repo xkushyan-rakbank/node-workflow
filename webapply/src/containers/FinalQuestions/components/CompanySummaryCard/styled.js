@@ -7,5 +7,8 @@ export const useStyles = makeStyles({
     top: "-105px",
     width: "auto",
     padding: "8px 33px 12px 33px"
+  },
+  hidden: {
+    display: "none"
   }
 });

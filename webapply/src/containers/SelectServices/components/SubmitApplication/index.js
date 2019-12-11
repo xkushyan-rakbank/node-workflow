@@ -1,4 +1,6 @@
+import { compose } from "redux";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import {
   getApplicationInfo,
@@ -17,4 +19,7 @@ const mapStateToProps = state => ({
   isAgentLoggedIn: getIsAgentLoggedIn(state)
 });
 
-export const SubmitApplication = connect(mapStateToProps)(SubmitApplicationComponent);
+export const SubmitApplication = compose(
+  withRouter,
+  connect(mapStateToProps)
+)(SubmitApplicationComponent);

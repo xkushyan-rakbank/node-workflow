@@ -1,0 +1,106 @@
+import React from "react";
+import cx from "classnames";
+import { Link } from "@material-ui/core";
+
+import { accountsNames } from "../../../../../constants";
+import { getIconsByAccount } from "../../../../../constants/icons";
+
+import { ICONS, Icon } from "../../../../../components/Icons/Icon";
+import { ContainedButton } from "../../../../../components/Buttons/ContainedButton";
+
+import { useStyles } from "./styled";
+
+export const rakValuePackagePlusName = "RAKvalue PLUS";
+
+const getUrlReadMore = (urls, islamicBanking, value) => {
+  const {
+    rakValuePlusIslamicReadMoreUrl,
+    rakValueMaxIslamicReadMoreUrl,
+    rakValuePlusReadMoreUrl,
+    rakValueMaxReadMoreUrl
+  } = urls;
+
+  const isValueTypeHavePlusUrl = value.includes("PLUS");
+
+  if (islamicBanking) {
+    return isValueTypeHavePlusUrl ? rakValuePlusIslamicReadMoreUrl : rakValueMaxIslamicReadMoreUrl;
+  }
+  return isValueTypeHavePlusUrl ? rakValuePlusReadMoreUrl : rakValueMaxReadMoreUrl;
+};
+
+export const ExpandedDetailedOptionsCard = ({
+  optionList,
+  isIncluded,
+  cost,
+  value,
+  accountType,
+  className,
+  buttonLabel,
+  selectService,
+  handleClick,
+  disabled,
+  id,
+  readMoreUrls
+}) => {
+  const classes = useStyles();
+  const { plus, max } = getIconsByAccount();
+  const href = getUrlReadMore(readMoreUrls, accountType, value);
+
+  return (
+    <div className={cx(classes.root, className)}>
+      <div className={classes.title}>
+        <div className={classes.icon}>
+          {value === rakValuePackagePlusName ? (
+            <img width={80} height={80} src={plus} alt="rak-plus" />
+          ) : (
+            <img width={80} height={80} src={max} alt="rak-max" />
+          )}
+        </div>
+        <div className={classes.name}>{value}</div>
+      </div>
+      {optionList && (
+        <ul className={classes.options}>
+          {optionList.map(option => (
+            <li key={option.text}>
+              <Icon className={classes.listIcon} name={ICONS.checkOutline} alt="check" />
+              <div
+                className={cx("text", classes.indent)}
+                dangerouslySetInnerHTML={{ __html: option.text }}
+              />
+              {option.items && (
+                <ul className={classes.nestedOptions}>
+                  {option.items.map(item => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className={classes.linkWrapper}>
+        <Link href={href} className={classes.link} target="_blank">
+          Read more
+        </Link>
+      </div>
+      <div className={classes.cost}>
+        {cost}
+        <span>AED/ month</span>
+      </div>
+      <div className={classes.upgrade}>
+        {selectService ? (
+          <ContainedButton
+            disabled={disabled}
+            label={buttonLabel}
+            className={classes.button}
+            handleClick={() => handleClick(id)}
+          />
+        ) : accountType === accountsNames.starter && value === rakValuePackagePlusName ? (
+          "Included in RAKstarter"
+        ) : (
+          "Available upgrade"
+        )}
+      </div>
+    </div>
+  );
+};

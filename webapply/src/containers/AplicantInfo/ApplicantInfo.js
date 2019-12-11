@@ -1,19 +1,19 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
+import { Grid } from "@material-ui/core";
 
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
-import { countryCodeOptions } from "./../../constants/options";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
-import { IS_RECAPTCHA_ENABLE } from "../../constants";
+import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
+import { SkeletonLoader } from "../../components/SkeletonLoader";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
-import { Grid } from "@material-ui/core";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -31,12 +31,23 @@ const aplicantInfoSchema = Yup.object({
 const initialValues = {
   fullName: "",
   email: "",
-  countryCode: countryCodeOptions[0].value,
+  countryCode: UAE_CODE,
   mobileNo: ""
 };
 
-const ApplicantInfoPage = ({ applicantInfoForm, setToken, setVerified, reCaptchaToken }) => {
-  const onSubmit = values => applicantInfoForm(values);
+const ApplicantInfoPage = ({
+  applicantInfoForm,
+  receiveAppConfig,
+  setToken,
+  setVerified,
+  reCaptchaToken,
+  isConfigLoading
+}) => {
+  useEffect(() => {
+    receiveAppConfig();
+  }, [receiveAppConfig]);
+
+  const onSubmit = useCallback(values => applicantInfoForm(values), [applicantInfoForm]);
   const handleReCaptchaVerify = useCallback(
     token => {
       setToken(token);
@@ -61,40 +72,52 @@ const ApplicantInfoPage = ({ applicantInfoForm, setToken, setVerified, reCaptcha
       >
         {({ values }) => (
           <Form>
-            <Field
-              name="fullName"
-              path="prospect.applicantInfo.fullName"
-              label="Your Name"
-              placeholder="Your Name"
-              component={Input}
-            />
-
-            <Field
-              name="email"
-              path="prospect.applicantInfo.email"
-              label="Your E-mail Address"
-              placeholder="Email"
-              component={Input}
-            />
-
-            <InputGroup>
+            {isConfigLoading ? (
+              <SkeletonLoader />
+            ) : (
               <Field
-                name="countryCode"
-                path="prospect.applicantInfo.countryCode"
-                required
-                options={countryCodeOptions}
-                component={CustomSelect}
-                shrink={false}
-              />
-
-              <Field
-                name="mobileNo"
-                path="prospect.applicantInfo.mobileNo"
-                label="Your Mobile Number"
-                placeholder="Mobile Number"
+                name="fullName"
+                path="prospect.applicantInfo.fullName"
+                label="Your Name"
+                placeholder="Your Name"
                 component={Input}
               />
-            </InputGroup>
+            )}
+
+            {isConfigLoading ? (
+              <SkeletonLoader />
+            ) : (
+              <Field
+                name="email"
+                path="prospect.applicantInfo.email"
+                label="Your E-mail Address"
+                placeholder="Email"
+                component={Input}
+              />
+            )}
+
+            {isConfigLoading ? (
+              <SkeletonLoader />
+            ) : (
+              <InputGroup>
+                <Field
+                  name="countryCode"
+                  path="prospect.applicantInfo.countryCode"
+                  required
+                  datalistId="countryCode"
+                  component={CustomSelect}
+                  shrink={false}
+                />
+
+                <Field
+                  name="mobileNo"
+                  path="prospect.applicantInfo.mobileNo"
+                  label="Your Mobile Number"
+                  placeholder="Mobile Number"
+                  component={Input}
+                />
+              </InputGroup>
+            )}
 
             <Grid container direction="row" justify="space-between" alignItems="center">
               {IS_RECAPTCHA_ENABLE && (
@@ -127,7 +150,8 @@ const ApplicantInfoPage = ({ applicantInfoForm, setToken, setVerified, reCaptcha
 };
 
 const mapStateToProps = state => ({
-  reCaptchaToken: state.reCaptcha.token
+  reCaptchaToken: state.reCaptcha.token,
+  isConfigLoading: state.appConfig.loading
 });
 
 const mapDispatchToProps = {

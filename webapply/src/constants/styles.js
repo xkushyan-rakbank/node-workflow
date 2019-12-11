@@ -12,5 +12,8 @@ export const routerToAddPaddingInSlider = [
   routes.accountsComparison,
   routes.detailedAccount,
   routes.applicationOverview,
-  routes.login
+  routes.login,
+  routes.comeBackLogin,
+  routes.comeBackLoginVerification,
+  routes.MyApplications
 ];

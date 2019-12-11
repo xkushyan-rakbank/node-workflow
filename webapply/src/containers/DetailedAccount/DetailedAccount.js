@@ -3,9 +3,9 @@ import { Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
-import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher";
+import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher/IslamicBankingSwitcher";
 import AccountBenefits from "./AccountBenefits";
-import AccountingSoftware from "./AccountingSoftware";
+import { AccountingSoftware } from "./AccountingSoftware";
 
 import getVideoUrl from "../../utils/getVideoUrl";
 import routes from "../../routes";
@@ -22,9 +22,11 @@ const DetailedAccount = ({ applicationInfo }) => {
   return (
     <>
       {!accountType && <Redirect to={routes.accountsComparison} />}
-      <IslamicBankingSwitcher />
+      <div className="hide-on-mobile">
+        <IslamicBankingSwitcher />
+      </div>
       <VerticalPaginationWrapper videoUrl={videoUrl} posterUrl={posterUrl}>
-        <div> </div>
+        <div />
         <AccountBenefits accountType={accountType} />
         <AccountingSoftware accountType={accountType} />
       </VerticalPaginationWrapper>

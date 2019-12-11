@@ -6,7 +6,7 @@ import TableCell from "@material-ui/core/TableCell";
 import { ContainedButton } from "../../../../../../components/Buttons/ContainedButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
 import { useStyles } from "./styled";
-import { mockDataRows, accountTypes } from "../../constants";
+import { accountsDataRows, accountTypes } from "../../constants";
 import { FIRST_ROW_POSITION, TABLE_POSITION_OFFSET } from "./constants";
 
 export const StyledTableBodyComponent = ({
@@ -18,7 +18,7 @@ export const StyledTableBodyComponent = ({
   const classes = useStyles();
   return (
     <TableBody>
-      {mockDataRows.map(({ starter, currentAccount, elite, info }, index) => {
+      {accountsDataRows.map(({ starter, currentAccount, elite, info }, index) => {
         return (
           <TableRow classes={{ root: classes.tableRowRoot }} key={index}>
             <TableCell
@@ -60,30 +60,27 @@ export const StyledTableBodyComponent = ({
 
       <TableRow classes={{ root: classes.tableRowRoot }}>
         <TableCell component="th" scope="row" />
-        {Object.entries(accountTypes).map(([type, value], index) => {
-          const { name } = value;
-          return (
-            <TableCell
-              ref={refs[index]}
-              data-name={name}
-              onMouseEnter={handleHover}
-              key={index}
-              classes={{ root: classes.tableCellRoot }}
-              className={cx({
-                [classes.tableCellActive]: selectedCurrentColumn === index + TABLE_POSITION_OFFSET
-              })}
-            >
-              <ContainedButton
-                label="Read more"
-                handleClick={() => handleSelectAccount(name)}
-                classes={{
-                  buttonStyle: classes.containedButton,
-                  labelStyle: classes.containedButtonLabelStyle
-                }}
-              />
-            </TableCell>
-          );
-        })}
+        {Object.entries(accountTypes).map(([_, { name }], index) => (
+          <TableCell
+            ref={refs[index]}
+            data-name={name}
+            onMouseEnter={handleHover}
+            key={index}
+            classes={{ root: classes.tableCellRoot }}
+            className={cx({
+              [classes.tableCellActive]: selectedCurrentColumn === index + TABLE_POSITION_OFFSET
+            })}
+          >
+            <ContainedButton
+              label="Read more"
+              handleClick={() => handleSelectAccount(name)}
+              classes={{
+                buttonStyle: classes.containedButton,
+                labelStyle: classes.containedButtonLabelStyle
+              }}
+            />
+          </TableCell>
+        ))}
       </TableRow>
     </TableBody>
   );

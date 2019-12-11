@@ -8,19 +8,26 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
 
 export const FinalQuestionsComponent = ({ signatories, history }) => {
-  const availableSignatoriesSet = new Set();
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
-  const [availableSignatoriesIndexes, setAvailableSignatoriesIndexes] = useState(
-    availableSignatoriesSet
-  );
+  const [availableSignatoriesIndexes, setAvailableSignatoriesIndexes] = useState([]);
+  const [expandedSignatoryIndex, setExpandedSignatoryIndex] = useState(null);
   const classes = useStyles();
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
   const addAvailableSignatoryIndex = useCallback(
-    index => setAvailableSignatoriesIndexes(availableSignatoriesSet.add(index)),
-    [setAvailableSignatoriesIndexes, availableSignatoriesSet]
+    index => {
+      if (!availableSignatoriesIndexes.includes(index)) {
+        setAvailableSignatoriesIndexes([...availableSignatoriesIndexes, index]);
+      }
+    },
+    [setAvailableSignatoriesIndexes, availableSignatoriesIndexes]
   );
+
+  const handleFinalStepContinue = index => {
+    setExpandedSignatoryIndex(index);
+    addAvailableSignatoryIndex(index);
+  };
 
   const switchExpandedMargin = useCallback(() => setIsExpandedMargin(!isExpandedMargin), [
     setIsExpandedMargin,
@@ -37,23 +44,30 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
       <div className={classes.sectionContainer}>
         <CompanySummaryCard
           switchExpandedMargin={switchExpandedMargin}
-          addAvailableSignatoryIndex={addAvailableSignatoryIndex}
+          expandedSignatoryIndex={expandedSignatoryIndex}
+          handleFinalStepContinue={handleFinalStepContinue}
         />
       </div>
       <div className={classes.sectionContainer}>
         {signatories.map((item, index) => (
           <SignatorySummaryCard
             key={index}
+            expandedSignatoryIndex={expandedSignatoryIndex}
             signatory={item}
             index={index}
-            addAvailableSignatoryIndex={addAvailableSignatoryIndex}
+            setExpandedSignatoryIndex={setExpandedSignatoryIndex}
+            handleFinalStepContinue={handleFinalStepContinue}
             availableSignatoriesIndexes={availableSignatoriesIndexes}
           />
         ))}
       </div>
       <div className={classes.linkContainer}>
         <BackLink path={routes.stakeholdersInfo} />
-        <SubmitButton handleClick={goToUploadDocument} label="Next Step" />
+        <SubmitButton
+          disabled={signatories.length >= availableSignatoriesIndexes.length}
+          handleClick={goToUploadDocument}
+          label="Next Step"
+        />
       </div>
     </>
   );

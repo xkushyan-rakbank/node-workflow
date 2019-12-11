@@ -1,7 +1,7 @@
 import { accountsNames } from "../../../../constants";
 import checkIc from "../../../../assets/icons/check.svg";
 
-export const mockDataRows = [
+export const accountsDataRows = [
   {
     info: "Monthly Average Credit Balance",
     starter: { text: "Zero" },
@@ -42,14 +42,17 @@ export const mockDataRows = [
 
 export const accountTypes = {
   starter: {
+    id: "starter",
     name: accountsNames.starter,
     position: 2
   },
   currentAccount: {
+    id: "currentAccount",
     name: accountsNames.currentAccount,
     position: 3
   },
   elite: {
+    id: "elite",
     name: accountsNames.elite,
     position: 4
   }

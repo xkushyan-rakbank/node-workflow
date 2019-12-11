@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import { CustomSelect, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
-import { companyIndustry, companySubCategory } from "../../../constants/options";
 
 const initialValues = {
   industry: [],
@@ -14,8 +13,11 @@ const initialValues = {
 };
 
 const industrySchema = Yup.object({
-  industry: Yup.array(),
-  subCategory: Yup.array()
+  industry: Yup.string().required("You need to provide indusry"),
+  subCategory: Yup.string().when("industry", {
+    is: industry => !!industry,
+    then: Yup.string().required("You need to provide sub-category")
+  })
 });
 
 export const Industry = ({ handleContinue }) => (
@@ -29,7 +31,7 @@ export const Industry = ({ handleContinue }) => (
               name="industry"
               label="Company industry"
               path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
-              options={companyIndustry}
+              datalistId="industry"
               component={CustomSelect}
               onChange={e => {
                 setFieldValue("industry", e.target.value);
@@ -42,12 +44,15 @@ export const Industry = ({ handleContinue }) => (
               name="subCategory"
               label="Company subCategory"
               path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
-              options={companySubCategory.filter(item =>
-                values.industry.includes(item.industryCode)
-              )}
               component={SelectAutocomplete}
+              datalistId="industry"
+              filterOptions={options =>
+                options
+                  .filter(item => values.industry.includes(item.value))
+                  .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
+              }
               multiple
-              disabled={!values.industry.filter(item => item).length}
+              disabled={!(values.industry || []).length}
             />
           </Grid>
         </Grid>

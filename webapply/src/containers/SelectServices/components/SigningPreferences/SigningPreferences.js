@@ -5,8 +5,8 @@ import { Grid } from "@material-ui/core";
 
 import { PHONE_REGEX, NAME_REGEX } from "../../../../utils/validation";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
-import { accountSigningTypes, countryCodeOptions } from "../../../../constants/options";
-import Subtitle from "../../../../components/Subtitle";
+import { accountSigningTypes } from "../../../../constants/options";
+import { Subtitle } from "../../../../components/Subtitle";
 import {
   Input,
   InputGroup,
@@ -15,21 +15,22 @@ import {
   AutoSaveField as Field
 } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import Divider from "../../../../components/Divider";
+import { Divider } from "../Divider";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
+
 import { useStyles } from "./styled";
 
 const MAX_SIGNATORIES = 2;
 const signingPreferencesSchema = Yup.object({
   accountSigningType: Yup.string().required("Field is required"),
   accountSigningInstn: Yup.string().when("accountSigningType", {
-    is: ACCOUNTS_SIGNING_NAME_OTHER,
+    is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
     then: Yup.string()
       .max(120, "Max length is 120 symbols")
       .required("Field is required")
   }),
-  signatoryInfo: Yup.array().of(
+  signatories: Yup.array().of(
     Yup.object().shape({
       fullName: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
       primaryMobCountryCode: Yup.string(),
@@ -44,8 +45,9 @@ const signingPreferencesSchema = Yup.object({
     })
   )
 });
+const pathSignatoryInfo = "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn";
 
-export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
+export const SigningPreferencesComponent = ({ organizationInfo, goToNext, updateProspect }) => {
   const classes = useStyles();
   const [countOfSignatories, setCountOfSignatories] = useState(
     Math.max((organizationInfo.contactDetailsForTxnReconfirming || []).length, 1)
@@ -59,13 +61,15 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
       initialValues={{
         accountSigningType: "",
         accountSigningInstn: "",
-        signatories: [...new Array(MAX_SIGNATORIES)].map(() => ({
-          fullName: "",
-          primaryMobCountryCode: "",
-          primaryMobileNo: "",
-          primaryPhoneCountryCode: "",
-          primaryPhoneNo: ""
-        }))
+        organizationInfo: {
+          contactDetailsForTxnReconfirming: [...new Array(MAX_SIGNATORIES)].map(() => ({
+            fullName: "",
+            primaryMobCountryCode: "",
+            primaryMobileNo: "",
+            primaryPhoneCountryCode: "",
+            primaryPhoneNo: ""
+          }))
+        }
       }}
       validationSchema={signingPreferencesSchema}
       onSubmit={goToNext}
@@ -77,38 +81,46 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
             name="accountSigningType"
             options={accountSigningTypes}
             path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
-            type="radio"
+            typeRadio
             onSelect={e => {
               setFieldValue("accountSigningType", e.currentTarget.value);
               setFieldValue("accountSigningInstn", "");
+              if (values.accountSigningInstn) {
+                updateProspect({ [pathSignatoryInfo]: "" });
+              }
             }}
             component={CheckboxGroup}
+            textArea={
+              values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
+                <div className={classes.textAreaWrap}>
+                  <Field
+                    name="accountSigningInstn"
+                    path={pathSignatoryInfo}
+                    placeholder="Please specify (Max 120 characters)"
+                    classes={{ formControlRoot: classes.formControl }}
+                    maxLength={120}
+                    multiline
+                    rows={2}
+                    component={Input}
+                  />
+                </div>
+              )
+            }
           />
-          {values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
-            <div className={classes.textAreaWrap}>
-              <Field
-                name="accountSigningInstn"
-                path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn"
-                placeholder="Please specify (Max 120 characters)"
-                maxLength={120}
-                multiline
-                rows={4}
-                component={Input}
-              />
-            </div>
-          )}
           <Divider />
           <ConfirmingTransactions />
-          <FieldArray name="signatories">
+          <FieldArray name="organizationInfo">
             {arrayHelpers => (
               <>
                 {[...Array(countOfSignatories).keys()].map(index => {
-                  // eslint-disable-next-line max-len
-                  const prefix = `prospect.organizationInfo.contactDetailsForTxnReconfirming[${index}]`;
+                  const prefix = "organizationInfo.contactDetailsForTxnReconfirming";
+                  const prospectPrefix = `prospect.${prefix}[${index}]`;
+                  const prefixPhone = `${prefix}.[${index}]`;
 
                   return (
                     <React.Fragment key={index}>
                       <Field
+                        // TODO find out correct path also update validation schema !!
                         name={`signatories.${index}.fullName`}
                         path={`prospect.signatoryInfo[${index}].fullName`}
                         label="Your Name"
@@ -120,15 +132,15 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
                         <Grid item md={6} sm={12}>
                           <InputGroup>
                             <Field
-                              name={`signatories.${index}.primaryMobCountryCode`}
-                              path={`${prefix}.primaryMobCountryCode`}
-                              options={countryCodeOptions}
+                              name={`${prefixPhone}.primaryMobCountryCode`}
+                              path={`${prospectPrefix}.primaryMobCountryCode`}
+                              datalistId="countryCode"
                               component={CustomSelect}
                               shrink={false}
                             />
                             <Field
-                              name={`signatories.${index}.primaryMobileNo`}
-                              path={`${prefix}.primaryMobileNo`}
+                              name={`${prefixPhone}.primaryMobileNo`}
+                              path={`${prospectPrefix}.primaryMobileNo`}
                               label="Primary mobile no."
                               placeholder="Primary mobile no."
                               component={Input}
@@ -139,15 +151,15 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext }) => {
                         <Grid item md={6} sm={12}>
                           <InputGroup>
                             <Field
-                              name={`signatories.${index}.primaryPhoneCountryCode`}
-                              path={`${prefix}.primaryPhoneNo`}
-                              options={countryCodeOptions}
+                              name={`${prefixPhone}.primaryPhoneCountryCode`}
+                              path={`${prospectPrefix}.primaryPhoneCountryCode`}
+                              datalistId="countryCode"
                               component={CustomSelect}
                               shrink={false}
                             />
                             <Field
-                              name={`signatories.${index}.primaryPhoneNo`}
-                              path={`${prefix}.primaryPhoneCountryCode`}
+                              name={`${prefixPhone}.primaryPhoneNo`}
+                              path={`${prospectPrefix}.primaryPhoneNo`}
                               label="Landline phone no. (optional)"
                               placeholder="Landline phone no. (optional)"
                               component={Input}

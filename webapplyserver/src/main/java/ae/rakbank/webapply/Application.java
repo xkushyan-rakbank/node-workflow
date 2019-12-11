@@ -14,6 +14,11 @@ import ae.rakbank.webapply.commons.AppConfigProps;
 @EnableScheduling
 public class Application extends SpringBootServletInitializer {
 
+  public Application(){
+    super();
+    setRegisterErrorPageFilter(false);
+  }
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

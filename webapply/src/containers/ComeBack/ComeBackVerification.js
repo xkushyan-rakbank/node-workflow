@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
+
 import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { OtpVerification } from "../../components/OtpVerification";
@@ -11,15 +12,17 @@ import { generateOtpCode, verifyOtp } from "../../store/actions/otp";
 import { getOtp } from "../../store/selectors/otp";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import routes from "../../routes";
+import { UAE_CODE } from "../../constants";
+
 import { useStyles } from "./styled";
-import { COUNTRY_CODE, MAX_ATTEMPT_ALLOWED } from "./constants";
+
+export const MAX_ATTEMPT_ALLOWED = 3;
 
 const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, history }) => {
   const classes = useStyles();
 
   const [code, setCode] = useState(Array(6).fill(""));
   const [isValidCode, setIsValidCode] = useState(false);
-  const [isRegenerateCodeAllow, setIsRegenerateCodeAllow] = useState(true);
   const [loginAttempt, setLoginAttempt] = useState(0);
 
   useEffect(() => {
@@ -29,13 +32,10 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
   }, [history, otp]);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
-    const newLoginAttempt = loginAttempt + 1;
-    setLoginAttempt(newLoginAttempt);
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(inputParam);
-    } else {
-      setIsRegenerateCodeAllow(false);
     }
+    setLoginAttempt(loginAttempt + 1);
   }, [loginAttempt, generateOtpCode, inputParam]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
@@ -52,7 +52,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
         title={
-          inputParam.countryCode === COUNTRY_CODE
+          inputParam.countryCode === UAE_CODE
             ? "We have sent you a verification code on registered mobile number"
             : "We have sent you a verification code on registered email address"
         }
@@ -83,7 +83,7 @@ const ComeBackVerification = ({ inputParam, generateOtpCode, verifyOtp, otp, his
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]: !isRegenerateCodeAllow
+                    [classes.linkDisabled]: loginAttempt >= MAX_ATTEMPT_ALLOWED
                   })}
                 >
                   Send a new code

@@ -1,48 +1,29 @@
 import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
-import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { ReactComponent as CheckedIcon } from "../../../assets/icons/on.svg";
-import { ReactComponent as UncheckedIcon } from "../../../assets/icons/off.svg";
-import CheckedRadioIcon from "../../../assets/icons/checked2x.png";
-import UncheckedRadioIcon from "../../../assets/icons/unchecked@2x.png";
+import { ICONS, Icon } from "../../../components/Icons/Icon";
 
 export const useStyles = makeStyles(theme => ({
   label: {
     fontSize: "14px",
     color: theme.palette.text.color
-  },
-  radioIcon: {
-    width: "24px"
   }
 }));
 
-export const CustomCheckbox = ({ label, onSelect = () => {}, type = "checkbox", ...rest }) => {
+export const CustomCheckbox = ({ label, onSelect = () => {}, ...rest }) => {
   const classes = useStyles();
-
   return (
     <FormControlLabel
       classes={{ label: classes.label }}
       control={
-        type !== "radio" ? (
-          <Checkbox
-            icon={<UncheckedIcon alt="unchecked" />}
-            checkedIcon={<CheckedIcon alt="checkedIcon" />}
-            onClick={onSelect}
-            {...rest}
-          />
-        ) : (
-          <Radio
-            icon={<img src={UncheckedRadioIcon} alt="check icon" className={classes.radioIcon} />}
-            checkedIcon={
-              <img src={CheckedRadioIcon} alt="checked icon" className={classes.radioIcon} />
-            }
-            onClick={onSelect}
-            {...rest}
-          />
-        )
+        <Checkbox
+          onClick={onSelect}
+          icon={<Icon name={ICONS.uncheckedIcon} alt="checked icon" />}
+          checkedIcon={<Icon name={ICONS.checkedIcon} alt="unchecked icon" />}
+          {...rest}
+        />
       }
       label={label}
     />

@@ -1,107 +1,69 @@
-import React, { useState } from "react";
+import React from "react";
 import get from "lodash/get";
-import CompanyStakeholderCard from "../../../../components/CompanyStakeholderCard";
+import cx from "classnames";
+
+import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import { StepComponent } from "../../../../components/StepComponent/StepComponent";
+import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps, STEP_1 } from "./constants";
+import { signatoriesSteps } from "./constants";
 
 export const SignatorySummaryCardComponent = ({
-  resetStep,
-  addAvailableSignatoryIndex,
   sendProspectToAPI,
   index,
   signatory,
   availableSignatoriesIndexes,
-  signatory: { firstName, lastName, fullName } = {}
+  signatory: { firstName, lastName, fullName } = {},
+  expandedSignatoryIndex,
+  setExpandedSignatoryIndex,
+  handleFinalStepContinue
 }) => {
-  const [step, setStep] = useState(STEP_1);
-  const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
 
-  const renderControls = () => {
-    if (isExpanded) {
-      return null;
-    }
+  const handleExpandNextBlock = () => setExpandedSignatoryIndex(index + 1);
 
-    return (
-      availableSignatoriesIndexes.has(index) && (
-        <LinkButton
-          clickHandler={() => {
-            setIsExpanded(true);
-          }}
-        />
-      )
-    );
-  };
-
-  const getShareHoldingPercentage = () =>
-    Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
-
-  const getShareholdingLabel = () => {
-    const percentage = getShareHoldingPercentage();
-    return percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding";
-  };
-
-  const renderCardContent = () => {
-    return (
-      <div className={classes.contentBox}>
-        <div className={classes.infoBox}>
-          <div className={classes.name}>
-            {firstName && lastName ? `${firstName} ${lastName}` : fullName}
-          </div>
-          <div className={classes.signatoryField}>
-            {get(signatory, "accountSigningInfo.authorityType")}
-          </div>
-          <div className={classes.shareholdingField}>{getShareholdingLabel()}</div>
-        </div>
-        <div className={classes.controlsBox}>{renderControls()}</div>
-      </div>
-    );
-  };
-
-  const changeStep = item => {
-    if (step <= item.step) {
-      return;
-    }
-    setStep(item.step);
-  };
-
-  function handleContinue() {
-    sendProspectToAPI();
-    setStep(step + 1);
-    if (step === signatoriesSteps.length) {
-      addAvailableSignatoryIndex(index + 1);
-    }
-  }
+  const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
 
   return (
-    <CompanyStakeholderCard
+    <FormCard
       className={classes.card}
       firstName={signatory.firstName}
       lastName={signatory.lastName || signatory.fullName}
-      content={renderCardContent()}
+      content={
+        <div className={classes.contentBox}>
+          <div className={classes.infoBox}>
+            <div className={classes.name}>
+              {firstName && lastName ? `${firstName} ${lastName}` : fullName}
+            </div>
+            <div className={classes.signatoryField}>
+              {get(signatory, "accountSigningInfo.authorityType")}
+            </div>
+            <div className={classes.shareholdingField}>
+              {percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding"}
+            </div>
+          </div>
+          <div className={classes.controlsBox}>
+            {expandedSignatoryIndex !== index && availableSignatoriesIndexes.includes(index) && (
+              <LinkButton
+                clickHandler={() => {
+                  setExpandedSignatoryIndex(index);
+                }}
+              />
+            )}
+          </div>
+        </div>
+      }
       index={index}
     >
-      {isExpanded &&
-        signatoriesSteps.map(item => {
-          const stepIndex = item.step - 1;
-          const stepForm = signatoriesSteps[stepIndex].component;
-          return (
-            <StepComponent
-              index={index}
-              key={item.step}
-              steps={signatoriesSteps}
-              step={item.step}
-              title={item.title}
-              isActiveStep={step === item.step}
-              isFilled={step > item.step}
-              clickHandler={() => changeStep(item)}
-              handleContinue={handleContinue}
-              stepForm={stepForm}
-            />
-          );
-        })}
-    </CompanyStakeholderCard>
+      <div className={cx({ [classes.hidden]: expandedSignatoryIndex !== index })}>
+        <FinalQuestionStepComponent
+          index={index}
+          stepsArray={signatoriesSteps}
+          handleExpandNextBlock={handleExpandNextBlock}
+          handleFinalStepContinue={handleFinalStepContinue}
+          sendProspectToAPI={sendProspectToAPI}
+        />
+      </div>
+    </FormCard>
   );
 };
