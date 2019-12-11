@@ -99,6 +99,7 @@ const CompanyStakeholders = ({
               deleteStakeholder={handleDeleteStakeholder}
               isNewStakeholder={isNewStakeholder}
               orderIndex={index}
+              changeEditableStakeholder={changeEditableStakeholder}
             />
           ) : (
             <FilledStakeholderCard

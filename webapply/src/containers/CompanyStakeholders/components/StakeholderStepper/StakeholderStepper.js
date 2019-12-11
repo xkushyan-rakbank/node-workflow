@@ -20,7 +20,8 @@ const StakeholderStepperComponent = ({
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
-  loading: isStatusLoading
+  loading: isStatusLoading,
+  changeEditableStakeholder
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
@@ -35,6 +36,7 @@ const StakeholderStepperComponent = ({
       changeFinalScreenDisplay(true);
       setInterval(() => {
         changeFinalScreenDisplay(false);
+        changeEditableStakeholder();
       }, 5000);
     }
   }, [step]);
@@ -90,8 +92,9 @@ const StakeholderStepperComponent = ({
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, { changeEditableStakeholder }) => ({
   isStatusShown: state.stakeholders.isStatusShown,
+  changeEditableStakeholder,
   ...getSendProspectToAPIInfo(state)
 });
 
