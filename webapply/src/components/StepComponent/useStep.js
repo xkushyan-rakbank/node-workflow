@@ -19,10 +19,5 @@ export const useStep = initialStep => {
     }
   };
 
-  return {
-    step,
-    availableSteps,
-    handleSetNextStep,
-    handleSetStep
-  };
-}
+  return [step, availableSteps, handleSetNextStep, handleSetStep];
+};

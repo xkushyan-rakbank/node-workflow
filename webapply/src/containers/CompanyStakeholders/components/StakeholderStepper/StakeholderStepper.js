@@ -26,7 +26,7 @@ const StakeholderStepperComponent = ({
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
 
-  const { step, availableSteps, handleContinue, createSetStepHandler } = useStep(
+  const [step, availableSteps, handleContinue, createSetStepHandler] = useStep(
     STEP_1,
     sendProspectToAPI
   );
