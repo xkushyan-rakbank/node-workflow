@@ -11,9 +11,8 @@ export const StepComponent = ({
   isActiveStep,
   index,
   handleClick,
-  prospectInfo,
-  handleContinue,
-  stepForm: Form
+  stepForm: Form,
+  ...props
 }) => {
   const classes = useStyles();
 
@@ -36,11 +35,7 @@ export const StepComponent = ({
       <div className={classes.stepTitleWrapper} onClick={handleClick}>
         {renderTitle()}
       </div>
-      <div className={classes.formWrapper}>
-        {isActiveStep && (
-          <Form index={index} prospectInfo={prospectInfo} handleContinue={handleContinue} />
-        )}
-      </div>
+      <div className={classes.formWrapper}>{isActiveStep && <Form index={index} {...props} />}</div>
     </>
   );
 };
