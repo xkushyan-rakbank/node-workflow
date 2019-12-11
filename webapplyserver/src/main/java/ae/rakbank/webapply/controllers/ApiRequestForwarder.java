@@ -606,10 +606,12 @@ public class ApiRequestForwarder {
 
 			cookieHelper.createWebApplyJWT(httpResponse);
 
+      /*
 			if (MediaType.APPLICATION_JSON.equals(mediaType)
 					&& (StringUtils.isNotBlank(segment) || StringUtils.contains(url, "documents"))) {
 				updateHrefValue((JsonNode) response.getBody(), segment, prospectId, url);
-			}
+      }
+      */
 
 		} else {
 			logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
