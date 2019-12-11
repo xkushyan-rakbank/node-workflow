@@ -7,17 +7,13 @@ import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
+import { accountsNames } from "../../constants";
 
 import { useStyles } from "./styled";
 
-export const SelectServicesComponent = ({
-  rakValuePackage,
-  accountCurrencies,
-  sendProspectToAPI
-}) => {
+export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const classes = useStyles();
   const [step, setStep] = useState(STEP_1);
-  const { isSelectOnlyForeignCurrency } = accountCurrencies;
 
   const setNextStep = useCallback(() => {
     sendProspectToAPI().then(() => setStep(step + 1), () => {});
@@ -32,6 +28,8 @@ export const SelectServicesComponent = ({
   if (step === SUBMIT_APPLICATION_STEP) {
     return <SubmitApplication />;
   }
+
+  const getIsDisableSubmitButton = () => accountType === accountsNames.starter && !rakValuePackage;
 
   return (
     <>
@@ -50,7 +48,7 @@ export const SelectServicesComponent = ({
           handleClick={setNextStep}
           label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
           justify="flex-end"
-          disabled={step <= STEP_3 || rakValuePackage || isSelectOnlyForeignCurrency}
+          disabled={step <= STEP_3 || getIsDisableSubmitButton()}
         />
       </div>
     </>
