@@ -68,7 +68,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 }}
               />
               <ContexualHelp
-                title="Lorem ipsum dolor sit amet, consectet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                title="Select 'Yes' if this person holds any shares based on Memorandum of Association/Articles of Association/Partners agreement/Service Agreement/Share"
                 placement="right"
                 isDisableHoverListener={false}
               >

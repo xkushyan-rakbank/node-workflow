@@ -37,6 +37,7 @@ export const Input = ({
             placeholder={placeholder}
             disabled={disabled}
             error={isError}
+            InputProps={{ classes: { input: classes.input } }}
           />
         </ContexualHelp>
 
