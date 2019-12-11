@@ -15,5 +15,8 @@ export const useStyles = makeStyles({
   },
   textAreaWrap: {
     width: "328px"
+  },
+  formControl: {
+    marginBottom: "0"
   }
 });
