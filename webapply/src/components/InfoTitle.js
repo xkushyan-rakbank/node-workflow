@@ -30,14 +30,11 @@ IconStyled.defaultProps = {
   alt: "info icon"
 };
 
-export const InfoTitle = ({ styles, typeInfo, ...props }) => {
+export const InfoTitle = ({ styles, iconName = ICONS.info, ...props }) => {
   const classes = useStyles();
   return (
-    <div
-      className={cx(classes.wrapper, props.className, { [classes.info]: typeInfo })}
-      style={{ ...styles }}
-    >
-      {typeInfo ? <IconStyled name={ICONS.infoYellow} /> : <IconStyled name={ICONS.info} />}
+    <div className={cx(classes.wrapper, props.className)} style={{ ...styles }}>
+      <IconStyled name={iconName} />
       <div>{props.title}</div>
     </div>
   );
