@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
 
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { OtpVerification } from "../../components/OtpVerification/index";
@@ -15,156 +14,114 @@ import { getApplicationInfo, getApplicantInfo } from "../../store/selectors/appC
 import { getInputNameById } from "../../store/selectors/input";
 import routes from "../../routes";
 
-// import { useStyles } from './styled';
+import { useStyles } from "./styled";
 
-const style = {
-  confirmForm: {
-    maxWidth: "780px",
-    width: "100%"
-  },
-  formDescription: {
-    fontSize: "20px",
-    color: "#373737",
-    margin: "0px 0 18px",
-    "& b": {
-      fontWeight: "600"
-    }
-  },
-  squareInput: {
-    marginRight: "16px",
-    "& div": {
-      width: "88px",
-      height: "88px",
-      boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.01)",
-      fontSize: "30px"
-    },
-    "& input": {
-      textAlign: "center"
-    }
-  },
-  link: {
-    textDecoration: "underline",
-    cursor: "pointer"
-  },
-  linkDisabled: {
-    opacity: "0.5",
-    cursor: "not-allowed"
-  }
-}; // todo remove, use useStyles() instead
+const FormConfirm = ({ ...props }) => {
+  let resetRegenerateCodeAllowTimeoutId = () => {};
 
-class FormConfirm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      code: Array(6).fill(""),
-      invalid: false,
-      isValidCode: false,
-      isRegenerateCodeAllow: true,
-      loginAttempt: 0
+  const [code, setCode] = useState(Array(6).fill(""));
+  const [invalid, setInvalid] = useState(false);
+  const [isValidCode, setIsValidCode] = useState(false);
+  const [isRegenerateCodeAllow, setRegenerateCodeAllow] = useState(true);
+  const [loginAttempt, setLoginAttempt] = useState(0);
+  const regenerateCodeDelay = 10 * 1000; // TODO remove
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(resetRegenerateCodeAllowTimeoutId);
+      setLoginAttempt(0);
     };
-    this.regenerateCodeDelay = 10 * 1000;
-  }
+  }, []);
 
-  componentWillUnmount() {
-    clearTimeout(this.resetRegenerateCodeAllowTimeoutId);
-    this.setState({ loginAttempt: 0 });
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.otp.isVerified && this.props.otp.isVerified) {
-      this.props.updateSaveType("next");
-      this.props.history.push(routes.companyInfo);
+  useEffect(() => {
+    if (props.otp.isVerified) {
+      props.updateSaveType("next");
+      props.history.push(routes.companyInfo);
     }
 
-    if (prevState.isRegenerateCodeAllow && !this.state.isRegenerateCodeAllow) {
-      this.resetRegenerateCodeAllowTimeoutId = setTimeout(
-        () => this.setState({ isRegenerateCodeAllow: true }),
-        this.regenerateCodeDelay
+    if (isRegenerateCodeAllow) {
+      resetRegenerateCodeAllowTimeoutId = setTimeout(
+        () => setRegenerateCodeAllow(true),
+        regenerateCodeDelay
       );
     }
-  }
+  }, [props.otp.isVerified, isRegenerateCodeAllow]);
 
-  getFullCode() {
-    return this.state.code.join("");
-  }
+  const getFullCode = () => code.join("");
 
-  handleSetCode = ({ isValid, code }) => {
-    this.setState({
-      isValidCode: isValid,
-      code
-    });
+  const handleSetCode = ({ isValid, code }) => {
+    setIsValidCode(isValid);
+    setCode(code);
   };
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-
-    // if (this.isCodeValueValid()) {
-    this.props.verifyOtp(this.getFullCode());
+    // if (isCodeValueValid()) {
+    props.verifyOtp(getFullCode());
     // } else {
     // TODO handle incorrect input code from server
-    //   this.setState({ invalid: true });
+    setInvalid(true);
     // }
   };
 
-  handleSendNewCodeLinkClick = () => {
-    this.setState({ loginAttempt: this.state.loginAttempt + 1 });
-
-    if (!this.state.isRegenerateCodeAllow) {
+  const handleSendNewCodeLinkClick = () => {
+    setLoginAttempt(loginAttempt + 1);
+    if (isRegenerateCodeAllow) {
       return;
     }
-
-    this.setState({ isRegenerateCodeAllow: false, isValidCode: false });
-
-    if (this.state.loginAttempt < 3) {
-      this.props.generateOtpCode(this.props.applicantInfo);
+    setRegenerateCodeAllow(false);
+    setIsValidCode(false);
+    if (loginAttempt < 3) {
+      props.generateOtpCode(props.applicantInfo);
     }
   };
 
-  render() {
-    const { classes, applicantInfo } = this.props;
-    const codeSentTo = applicantInfo.countryCode === "971" ? "phone" : "email";
-    return (
-      <>
-        <h2>Confirm It’s You</h2>
-        <p className={classes.formDescription}>
-          We have sent you a verification code to {codeSentTo} . Please input the six digits below,
-          to cofirm this is you.
-        </p>
-        {/*TODO reuse Form*/}
-        <form noValidate onSubmit={this.handleSubmit}>
-          <Grid container item xs={12} direction="row" justify="flex-start">
-            <OtpVerification code={this.state.code} onChange={this.handleSetCode} />
-          </Grid>
-          {this.state.invalid && <ErrorMessage error="Invalid code" />}
-          {this.props.otp.verificationError && <ErrorMessage error="Code verification failed" />}
-          <div className="flexContainerForButton">
-            <span>
-              Didn’t get the code?{" "}
-              <span
-                onClick={this.handleSendNewCodeLinkClick}
-                className={cx(classes.link, {
-                  [classes.linkDisabled]: !this.state.isRegenerateCodeAllow
-                })}
-              >
-                Send a new code
-              </span>
+  const { applicantInfo } = props;
+  const classes = useStyles();
+  const codeSentTo = applicantInfo.countryCode === "971" ? "phone" : "email";
+
+  return (
+    <>
+      <h2>Confirm It’s You</h2>
+      <p className={classes.formDescription}>
+        We have sent you a verification code to {codeSentTo} . Please input the six digits below, to
+        cofirm this is you.
+      </p>
+
+      {/*TODO reuse Form*/}
+      <form noValidate onSubmit={handleSubmit}>
+        <Grid container item xs={12} direction="row" justify="flex-start">
+          <OtpVerification code={code} onChange={handleSetCode} />
+        </Grid>
+        {invalid && <ErrorMessage error="Invalid code" />}
+        {props.otp.verificationError && <ErrorMessage error="Code verification failed" />}
+        <div className="flexContainerForButton">
+          <span>
+            Didn’t get the code?{" "}
+            <span
+              onClick={handleSendNewCodeLinkClick}
+              className={cx(classes.link, {
+                [classes.linkDisabled]: !isRegenerateCodeAllow
+              })}
+            >
+              Send a new code
             </span>
-          </div>
-          {this.state.loginAttempt > 3 && (
-            <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again" />
-          )}
+          </span>
+        </div>
+        {loginAttempt > 3 && (
+          <ErrorMessage error="You have exceeded your maximum attempt. Please come back later and try again" />
+        )}
 
-          <SubmitButton
-            disabled={!this.state.isValidCode || this.props.otp.isPending}
-            label={this.props.otp.isPending ? "Verify..." : "Next Step"}
-            justify="flex-end"
-          />
-        </form>
-      </>
-    );
-  }
-}
-
+        <SubmitButton
+          disabled={!isValidCode || props.otp.isPending}
+          label={props.otp.isPending ? "Verify..." : "Next Step"}
+          justify="flex-end"
+        />
+      </form>
+    </>
+  );
+};
+// TODO move out
 const mapStateToProps = state => ({
   otp: getOtp(state),
   mobileServerValidation: getInputServerValidityByPath(
@@ -178,17 +135,15 @@ const mapStateToProps = state => ({
   applicationInfo: getApplicationInfo(state),
   applicantInfo: getApplicantInfo(state)
 });
-
+// TODO move out
 const mapDispatchToProps = {
   verifyOtp,
   updateSaveType,
   generateOtpCode,
   displayScreenBasedOnViewId
 };
-
-export default withStyles(style)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(FormConfirm)
-);
+// TODO move out
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FormConfirm);
