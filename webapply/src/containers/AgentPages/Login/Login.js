@@ -31,7 +31,13 @@ export const LoginComponent = ({
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
-      loginInfoForm({ ...values, recaptchaToken });
+      let loginData = { ...values };
+
+      if (IS_RECAPTCHA_ENABLE) {
+        loginData.recaptchaToken = recaptchaToken;
+      }
+
+      loginInfoForm(loginData);
     },
     [loginInfoForm, recaptchaToken]
   );
