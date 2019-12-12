@@ -38,7 +38,13 @@ const ComeBackLogin = ({
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
-      generateOtpCode({ ...values, recaptchaToken });
+      let loginData = { ...values };
+
+      if (IS_RECAPTCHA_ENABLE) {
+        loginData.recaptchaToken = recaptchaToken;
+      }
+
+      generateOtpCode(loginData);
     },
     [generateOtpCode, recaptchaToken]
   );

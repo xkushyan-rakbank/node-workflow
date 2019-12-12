@@ -44,5 +44,13 @@ public class EnvUtil {
 			return true;
 		}
 		return false;
-	}
+  }
+  
+  public static boolean isRecaptchaEnable() {
+    return false;
+  }
+
+  public static boolean isCheckRecaptcha() {
+    return false;
+  }
 }
