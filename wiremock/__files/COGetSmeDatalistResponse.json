@@ -434,27 +434,2026 @@
       "code": "AF",
       "key": "AF",
       "value": "AF",
-      "label": "Afghanistan"
+      "displayText": "Afghanistan",
+      "subGroup": null
+    },
+    {
+      "code": "AX",
+      "key": "AX",
+      "value": "AX",
+      "displayText": "Alan Islands",
+      "subGroup": null
     },
     {
       "code": "AL",
       "key": "AL",
       "value": "AL",
-      "label": "Albania"
+      "displayText": "Albania",
+      "subGroup": null
+    },
+    {
+      "code": "DZ",
+      "key": "DZ",
+      "value": "DZ",
+      "displayText": "Algeria",
+      "subGroup": null
+    },
+    {
+      "code": "AS",
+      "key": "AS",
+      "value": "AS",
+      "displayText": "American Samoa",
+      "subGroup": null
+    },
+    {
+      "code": "AD",
+      "key": "AD",
+      "value": "AD",
+      "displayText": "Andorra",
+      "subGroup": null
+    },
+    {
+      "code": "AO",
+      "key": "AO",
+      "value": "AO",
+      "displayText": "Angola",
+      "subGroup": null
+    },
+    {
+      "code": "AI",
+      "key": "AI",
+      "value": "AI",
+      "displayText": "Anguilla",
+      "subGroup": null
+    },
+    {
+      "code": "AQ",
+      "key": "AQ",
+      "value": "AQ",
+      "displayText": "Antartica",
+      "subGroup": null
+    },
+    {
+      "code": "AG",
+      "key": "AG",
+      "value": "AG",
+      "displayText": "Antigua and Barbuda",
+      "subGroup": null
+    },
+    {
+      "code": "AR",
+      "key": "AR",
+      "value": "AR",
+      "displayText": "Argentina",
+      "subGroup": null
+    },
+    {
+      "code": "AM",
+      "key": "AM",
+      "value": "AM",
+      "displayText": "Armenia",
+      "subGroup": null
+    },
+    {
+      "code": "AW",
+      "key": "AW",
+      "value": "AW",
+      "displayText": "Aruba",
+      "subGroup": null
+    },
+    {
+      "code": "AU",
+      "key": "AU",
+      "value": "AU",
+      "displayText": "Australia",
+      "subGroup": null
+    },
+    {
+      "code": "AT",
+      "key": "AT",
+      "value": "AT",
+      "displayText": "Austria",
+      "subGroup": null
+    },
+    {
+      "code": "AZ",
+      "key": "AZ",
+      "value": "AZ",
+      "displayText": "Azerbaijan",
+      "subGroup": null
+    },
+    {
+      "code": "BS",
+      "key": "BS",
+      "value": "BS",
+      "displayText": "Bahamas",
+      "subGroup": null
+    },
+    {
+      "code": "BH",
+      "key": "BH",
+      "value": "BH",
+      "displayText": "Bahrain",
+      "subGroup": null
+    },
+    {
+      "code": "BD",
+      "key": "BD",
+      "value": "BD",
+      "displayText": "Bangladesh",
+      "subGroup": null
+    },
+    {
+      "code": "BB",
+      "key": "BB",
+      "value": "BB",
+      "displayText": "Barbados",
+      "subGroup": null
+    },
+    {
+      "code": "BY",
+      "key": "BY",
+      "value": "BY",
+      "displayText": "Belarus",
+      "subGroup": null
+    },
+    {
+      "code": "BE",
+      "key": "BE",
+      "value": "BE",
+      "displayText": "Belgium",
+      "subGroup": null
+    },
+    {
+      "code": "BZ",
+      "key": "BZ",
+      "value": "BZ",
+      "displayText": "Belize",
+      "subGroup": null
+    },
+    {
+      "code": "BJ",
+      "key": "BJ",
+      "value": "BJ",
+      "displayText": "Benin",
+      "subGroup": null
+    },
+    {
+      "code": "BM",
+      "key": "BM",
+      "value": "BM",
+      "displayText": "Bermuda",
+      "subGroup": null
+    },
+    {
+      "code": "BT",
+      "key": "BT",
+      "value": "BT",
+      "displayText": "Bhutan",
+      "subGroup": null
+    },
+    {
+      "code": "BO",
+      "key": "BO",
+      "value": "BO",
+      "displayText": "Bolivia",
+      "subGroup": null
+    },
+    {
+      "code": "BA",
+      "key": "BA",
+      "value": "BA",
+      "displayText": "Bosnia-Herzegovina",
+      "subGroup": null
+    },
+    {
+      "code": "BW",
+      "key": "BW",
+      "value": "BW",
+      "displayText": "Botswana",
+      "subGroup": null
+    },
+    {
+      "code": "BV",
+      "key": "BV",
+      "value": "BV",
+      "displayText": "Bouvet Island",
+      "subGroup": null
+    },
+    {
+      "code": "BR",
+      "key": "BR",
+      "value": "BR",
+      "displayText": "Brazil",
+      "subGroup": null
+    },
+    {
+      "code": "IO",
+      "key": "IO",
+      "value": "IO",
+      "displayText": "British Indian Oc Te",
+      "subGroup": null
+    },
+    {
+      "code": "BN",
+      "key": "BN",
+      "value": "BN",
+      "displayText": "Brunei Darussalam",
+      "subGroup": null
+    },
+    {
+      "code": "BG",
+      "key": "BG",
+      "value": "BG",
+      "displayText": "Bulgaria",
+      "subGroup": null
+    },
+    {
+      "code": "BF",
+      "key": "BF",
+      "value": "BF",
+      "displayText": "Burkina Fasso",
+      "subGroup": null
+    },
+    {
+      "code": "BI",
+      "key": "BI",
+      "value": "BI",
+      "displayText": "Burundi",
+      "subGroup": null
+    },
+    {
+      "code": "KH",
+      "key": "KH",
+      "value": "KH",
+      "displayText": "Cambodia",
+      "subGroup": null
+    },
+    {
+      "code": "CM",
+      "key": "CM",
+      "value": "CM",
+      "displayText": "Cameroon",
+      "subGroup": null
+    },
+    {
+      "code": "CA",
+      "key": "CA",
+      "value": "CA",
+      "displayText": "Canada",
+      "subGroup": null
+    },
+    {
+      "code": "CV",
+      "key": "CV",
+      "value": "CV",
+      "displayText": "Cape Verde",
+      "subGroup": null
+    },
+    {
+      "code": "KY",
+      "key": "KY",
+      "value": "KY",
+      "displayText": "Cayman Islands",
+      "subGroup": null
+    },
+    {
+      "code": "CF",
+      "key": "CF",
+      "value": "CF",
+      "displayText": "Central African Rep",
+      "subGroup": null
+    },
+    {
+      "code": "TD",
+      "key": "TD",
+      "value": "TD",
+      "displayText": "Chad",
+      "subGroup": null
+    },
+    {
+      "code": "CL",
+      "key": "CL",
+      "value": "CL",
+      "displayText": "Chile",
+      "subGroup": null
+    },
+    {
+      "code": "CN",
+      "key": "CN",
+      "value": "CN",
+      "displayText": "China",
+      "subGroup": null
+    },
+    {
+      "code": "CX",
+      "key": "CX",
+      "value": "CX",
+      "displayText": "Christmas Island",
+      "subGroup": null
+    },
+    {
+      "code": "CC",
+      "key": "CC",
+      "value": "CC",
+      "displayText": "Cocos (Keeling) Is",
+      "subGroup": null
+    },
+    {
+      "code": "CO",
+      "key": "CO",
+      "value": "CO",
+      "displayText": "Columbia",
+      "subGroup": null
+    },
+    {
+      "code": "KM",
+      "key": "KM",
+      "value": "KM",
+      "displayText": "Comoros",
+      "subGroup": null
+    },
+    {
+      "code": "CG",
+      "key": "CG",
+      "value": "CG",
+      "displayText": "Congo",
+      "subGroup": null
+    },
+    {
+      "code": "CD",
+      "key": "CD",
+      "value": "CD",
+      "displayText": "Congo, The Democratic Republic of The",
+      "subGroup": null
+    },
+    {
+      "code": "CK",
+      "key": "CK",
+      "value": "CK",
+      "displayText": "Cook Islands",
+      "subGroup": null
+    },
+    {
+      "code": "CR",
+      "key": "CR",
+      "value": "CR",
+      "displayText": "Costa Rica",
+      "subGroup": null
+    },
+    {
+      "code": "CI",
+      "key": "CI",
+      "value": "CI",
+      "displayText": "Cote dIvoire",
+      "subGroup": null
+    },
+    {
+      "code": "HR",
+      "key": "HR",
+      "value": "HR",
+      "displayText": "Croatia",
+      "subGroup": null
+    },
+    {
+      "code": "CW",
+      "key": "CW",
+      "value": "CW",
+      "displayText": "Curacao",
+      "subGroup": null
+    },
+    {
+      "code": "CY",
+      "key": "CY",
+      "value": "CY",
+      "displayText": "Cyprus",
+      "subGroup": null
+    },
+    {
+      "code": "CZ",
+      "key": "CZ",
+      "value": "CZ",
+      "displayText": "Czech Republic",
+      "subGroup": null
+    },
+    {
+      "code": "DK",
+      "key": "DK",
+      "value": "DK",
+      "displayText": "Denmark",
+      "subGroup": null
+    },
+    {
+      "code": "DJ",
+      "key": "DJ",
+      "value": "DJ",
+      "displayText": "Djibouti",
+      "subGroup": null
+    },
+    {
+      "code": "DM",
+      "key": "DM",
+      "value": "DM",
+      "displayText": "Dominica",
+      "subGroup": null
+    },
+    {
+      "code": "DO",
+      "key": "DO",
+      "value": "DO",
+      "displayText": "Dominican Republic",
+      "subGroup": null
+    },
+    {
+      "code": "EC",
+      "key": "EC",
+      "value": "EC",
+      "displayText": "Ecuador",
+      "subGroup": null
+    },
+    {
+      "code": "EG",
+      "key": "EG",
+      "value": "EG",
+      "displayText": "Egypt",
+      "subGroup": null
+    },
+    {
+      "code": "SV",
+      "key": "SV",
+      "value": "SV",
+      "displayText": "El Salvador",
+      "subGroup": null
+    },
+    {
+      "code": "GQ",
+      "key": "GQ",
+      "value": "GQ",
+      "displayText": "Equatorial Guinea",
+      "subGroup": null
+    },
+    {
+      "code": "ER",
+      "key": "ER",
+      "value": "ER",
+      "displayText": "Eritrea",
+      "subGroup": null
+    },
+    {
+      "code": "EE",
+      "key": "EE",
+      "value": "EE",
+      "displayText": "Estonia",
+      "subGroup": null
+    },
+    {
+      "code": "ET",
+      "key": "ET",
+      "value": "ET",
+      "displayText": "Ethiopia",
+      "subGroup": null
+    },
+    {
+      "code": "FO",
+      "key": "FO",
+      "value": "FO",
+      "displayText": "Faeroe Islands",
+      "subGroup": null
+    },
+    {
+      "code": "FK",
+      "key": "FK",
+      "value": "FK",
+      "displayText": "Falkland Islands",
+      "subGroup": null
+    },
+    {
+      "code": "FJ",
+      "key": "FJ",
+      "value": "FJ",
+      "displayText": "Fiji",
+      "subGroup": null
+    },
+    {
+      "code": "FI",
+      "key": "FI",
+      "value": "FI",
+      "displayText": "Finland",
+      "subGroup": null
+    },
+    {
+      "code": "FR",
+      "key": "FR",
+      "value": "FR",
+      "displayText": "France",
+      "subGroup": null
+    },
+    {
+      "code": "GF",
+      "key": "GF",
+      "value": "GF",
+      "displayText": "French Guiana",
+      "subGroup": null
+    },
+    {
+      "code": "PF",
+      "key": "PF",
+      "value": "PF",
+      "displayText": "French Polynesia",
+      "subGroup": null
+    },
+    {
+      "code": "TF",
+      "key": "TF",
+      "value": "TF",
+      "displayText": "French Sthn Terr.",
+      "subGroup": null
+    },
+    {
+      "code": "GA",
+      "key": "GA",
+      "value": "GA",
+      "displayText": "Gabon",
+      "subGroup": null
+    },
+    {
+      "code": "GM",
+      "key": "GM",
+      "value": "GM",
+      "displayText": "Gambia",
+      "subGroup": null
+    },
+    {
+      "code": "GE",
+      "key": "GE",
+      "value": "GE",
+      "displayText": "Georgia",
+      "subGroup": null
+    },
+    {
+      "code": "DE",
+      "key": "DE",
+      "value": "DE",
+      "displayText": "Germany",
+      "subGroup": null
+    },
+    {
+      "code": "GH",
+      "key": "GH",
+      "value": "GH",
+      "displayText": "Ghana",
+      "subGroup": null
+    },
+    {
+      "code": "GI",
+      "key": "GI",
+      "value": "GI",
+      "displayText": "Gibraltar",
+      "subGroup": null
+    },
+    {
+      "code": "GR",
+      "key": "GR",
+      "value": "GR",
+      "displayText": "Greece",
+      "subGroup": null
+    },
+    {
+      "code": "GL",
+      "key": "GL",
+      "value": "GL",
+      "displayText": "Greenland",
+      "subGroup": null
+    },
+    {
+      "code": "GD",
+      "key": "GD",
+      "value": "GD",
+      "displayText": "Grenada",
+      "subGroup": null
+    },
+    {
+      "code": "GP",
+      "key": "GP",
+      "value": "GP",
+      "displayText": "Guadeloupe",
+      "subGroup": null
+    },
+    {
+      "code": "GU",
+      "key": "GU",
+      "value": "GU",
+      "displayText": "Guam",
+      "subGroup": null
+    },
+    {
+      "code": "GT",
+      "key": "GT",
+      "value": "GT",
+      "displayText": "Guatemala",
+      "subGroup": null
+    },
+    {
+      "code": "GG",
+      "key": "GG",
+      "value": "GG",
+      "displayText": "Guernsey C.I.",
+      "subGroup": null
+    },
+    {
+      "code": "GN",
+      "key": "GN",
+      "value": "GN",
+      "displayText": "Guinea",
+      "subGroup": null
+    },
+    {
+      "code": "GW",
+      "key": "GW",
+      "value": "GW",
+      "displayText": "Guinea-Bissau",
+      "subGroup": null
+    },
+    {
+      "code": "GY",
+      "key": "GY",
+      "value": "GY",
+      "displayText": "Guyana",
+      "subGroup": null
+    },
+    {
+      "code": "HT",
+      "key": "HT",
+      "value": "HT",
+      "displayText": "Haiti",
+      "subGroup": null
+    },
+    {
+      "code": "HM",
+      "key": "HM",
+      "value": "HM",
+      "displayText": "Heard and McDonald Is",
+      "subGroup": null
+    },
+    {
+      "code": "HN",
+      "key": "HN",
+      "value": "HN",
+      "displayText": "Honduras",
+      "subGroup": null
+    },
+    {
+      "code": "HK",
+      "key": "HK",
+      "value": "HK",
+      "displayText": "Hong Kong",
+      "subGroup": null
+    },
+    {
+      "code": "HU",
+      "key": "HU",
+      "value": "HU",
+      "displayText": "Hungary",
+      "subGroup": null
+    },
+    {
+      "code": "IS",
+      "key": "IS",
+      "value": "IS",
+      "displayText": "Iceland",
+      "subGroup": null
+    },
+    {
+      "code": "IN",
+      "key": "IN",
+      "value": "IN",
+      "displayText": "India",
+      "subGroup": null
+    },
+    {
+      "code": "ID",
+      "key": "ID",
+      "value": "ID",
+      "displayText": "Indonesia",
+      "subGroup": null
+    },
+    {
+      "code": "IQ",
+      "key": "IQ",
+      "value": "IQ",
+      "displayText": "Iraq",
+      "subGroup": null
+    },
+    {
+      "code": "IE",
+      "key": "IE",
+      "value": "IE",
+      "displayText": "Ireland",
+      "subGroup": null
+    },
+    {
+      "code": "IM",
+      "key": "IM",
+      "value": "IM",
+      "displayText": "Isle of Man",
+      "subGroup": null
+    },
+    {
+      "code": "IT",
+      "key": "IT",
+      "value": "IT",
+      "displayText": "Italy",
+      "subGroup": null
+    },
+    {
+      "code": "JM",
+      "key": "JM",
+      "value": "JM",
+      "displayText": "Jamaica",
+      "subGroup": null
+    },
+    {
+      "code": "JP",
+      "key": "JP",
+      "value": "JP",
+      "displayText": "Japan",
+      "subGroup": null
+    },
+    {
+      "code": "JE",
+      "key": "JE",
+      "value": "JE",
+      "displayText": "Jersey C.I.",
+      "subGroup": null
+    },
+    {
+      "code": "JO",
+      "key": "JO",
+      "value": "JO",
+      "displayText": "Jordan",
+      "subGroup": null
+    },
+    {
+      "code": "KZ",
+      "key": "KZ",
+      "value": "KZ",
+      "displayText": "Kazakhstan",
+      "subGroup": null
+    },
+    {
+      "code": "KE",
+      "key": "KE",
+      "value": "KE",
+      "displayText": "Kenya",
+      "subGroup": null
+    },
+    {
+      "code": "KI",
+      "key": "KI",
+      "value": "KI",
+      "displayText": "Kiribati",
+      "subGroup": null
+    },
+    {
+      "code": "KR",
+      "key": "KR",
+      "value": "KR",
+      "displayText": "Korea",
+      "subGroup": null
+    },
+    {
+      "code": "XK",
+      "key": "XK",
+      "value": "XK",
+      "displayText": "Kosovo",
+      "subGroup": null
+    },
+    {
+      "code": "KW",
+      "key": "KW",
+      "value": "KW",
+      "displayText": "Kuwait",
+      "subGroup": null
+    },
+    {
+      "code": "KG",
+      "key": "KG",
+      "value": "KG",
+      "displayText": "Kyrgyzstan",
+      "subGroup": null
+    },
+    {
+      "code": "LA",
+      "key": "LA",
+      "value": "LA",
+      "displayText": "Lao Peoples Dem Rep",
+      "subGroup": null
+    },
+    {
+      "code": "LV",
+      "key": "LV",
+      "value": "LV",
+      "displayText": "Latvia",
+      "subGroup": null
+    },
+    {
+      "code": "LB",
+      "key": "LB",
+      "value": "LB",
+      "displayText": "Lebanon",
+      "subGroup": null
+    },
+    {
+      "code": "LS",
+      "key": "LS",
+      "value": "LS",
+      "displayText": "Lesotho",
+      "subGroup": null
+    },
+    {
+      "code": "LR",
+      "key": "LR",
+      "value": "LR",
+      "displayText": "Liberia",
+      "subGroup": null
+    },
+    {
+      "code": "LY",
+      "key": "LY",
+      "value": "LY",
+      "displayText": "Libyan Arab Jamah",
+      "subGroup": null
+    },
+    {
+      "code": "LI",
+      "key": "LI",
+      "value": "LI",
+      "displayText": "Liechtenstein",
+      "subGroup": null
+    },
+    {
+      "code": "LT",
+      "key": "LT",
+      "value": "LT",
+      "displayText": "Lithuania",
+      "subGroup": null
+    },
+    {
+      "code": "LU",
+      "key": "LU",
+      "value": "LU",
+      "displayText": "Luxembourg",
+      "subGroup": null
+    },
+    {
+      "code": "MO",
+      "key": "MO",
+      "value": "MO",
+      "displayText": "Macau",
+      "subGroup": null
+    },
+    {
+      "code": "MK",
+      "key": "MK",
+      "value": "MK",
+      "displayText": "Macedonia, Republic of",
+      "subGroup": null
+    },
+    {
+      "code": "MG",
+      "key": "MG",
+      "value": "MG",
+      "displayText": "Madagascar",
+      "subGroup": null
+    },
+    {
+      "code": "MW",
+      "key": "MW",
+      "value": "MW",
+      "displayText": "Malawi",
+      "subGroup": null
+    },
+    {
+      "code": "MY",
+      "key": "MY",
+      "value": "MY",
+      "displayText": "Malaysia",
+      "subGroup": null
+    },
+    {
+      "code": "MV",
+      "key": "MV",
+      "value": "MV",
+      "displayText": "Maldives",
+      "subGroup": null
+    },
+    {
+      "code": "ML",
+      "key": "ML",
+      "value": "ML",
+      "displayText": "Mali",
+      "subGroup": null
+    },
+    {
+      "code": "MT",
+      "key": "MT",
+      "value": "MT",
+      "displayText": "Malta",
+      "subGroup": null
+    },
+    {
+      "code": "MH",
+      "key": "MH",
+      "value": "MH",
+      "displayText": "Marshall Islands",
+      "subGroup": null
+    },
+    {
+      "code": "MQ",
+      "key": "MQ",
+      "value": "MQ",
+      "displayText": "Martinique",
+      "subGroup": null
+    },
+    {
+      "code": "MR",
+      "key": "MR",
+      "value": "MR",
+      "displayText": "Mauritania",
+      "subGroup": null
+    },
+    {
+      "code": "MU",
+      "key": "MU",
+      "value": "MU",
+      "displayText": "Mauritius",
+      "subGroup": null
+    },
+    {
+      "code": "YT",
+      "key": "YT",
+      "value": "YT",
+      "displayText": "Mayotte",
+      "subGroup": null
+    },
+    {
+      "code": "MX",
+      "key": "MX",
+      "value": "MX",
+      "displayText": "Mexico",
+      "subGroup": null
+    },
+    {
+      "code": "FM",
+      "key": "FM",
+      "value": "FM",
+      "displayText": "Micronesia",
+      "subGroup": null
+    },
+    {
+      "code": "MD",
+      "key": "MD",
+      "value": "MD",
+      "displayText": "Moldova, Republic of",
+      "subGroup": null
+    },
+    {
+      "code": "MC",
+      "key": "MC",
+      "value": "MC",
+      "displayText": "Monaco",
+      "subGroup": null
+    },
+    {
+      "code": "MN",
+      "key": "MN",
+      "value": "MN",
+      "displayText": "Mongolia",
+      "subGroup": null
+    },
+    {
+      "code": "MS",
+      "key": "MS",
+      "value": "MS",
+      "displayText": "Monserrat",
+      "subGroup": null
+    },
+    {
+      "code": "ME",
+      "key": "ME",
+      "value": "ME",
+      "displayText": "Montenegro",
+      "subGroup": null
+    },
+    {
+      "code": "MA",
+      "key": "MA",
+      "value": "MA",
+      "displayText": "Morocco",
+      "subGroup": null
+    },
+    {
+      "code": "MZ",
+      "key": "MZ",
+      "value": "MZ",
+      "displayText": "Mozambique",
+      "subGroup": null
+    },
+    {
+      "code": "MM",
+      "key": "MM",
+      "value": "MM",
+      "displayText": "Myanmar",
+      "subGroup": null
+    },
+    {
+      "code": "NA",
+      "key": "NA",
+      "value": "NA",
+      "displayText": "Namibia",
+      "subGroup": null
+    },
+    {
+      "code": "NR",
+      "key": "NR",
+      "value": "NR",
+      "displayText": "Nauru",
+      "subGroup": null
+    },
+    {
+      "code": "NP",
+      "key": "NP",
+      "value": "NP",
+      "displayText": "Nepal",
+      "subGroup": null
+    },
+    {
+      "code": "AN",
+      "key": "AN",
+      "value": "AN",
+      "displayText": "Neth Antilles",
+      "subGroup": null
+    },
+    {
+      "code": "NL",
+      "key": "NL",
+      "value": "NL",
+      "displayText": "Netherlands",
+      "subGroup": null
+    },
+    {
+      "code": "NC",
+      "key": "NC",
+      "value": "NC",
+      "displayText": "New Caledonia",
+      "subGroup": null
+    },
+    {
+      "code": "NZ",
+      "key": "NZ",
+      "value": "NZ",
+      "displayText": "New Zealand",
+      "subGroup": null
+    },
+    {
+      "code": "NI",
+      "key": "NI",
+      "value": "NI",
+      "displayText": "Nicaragua",
+      "subGroup": null
+    },
+    {
+      "code": "NE",
+      "key": "NE",
+      "value": "NE",
+      "displayText": "Niger",
+      "subGroup": null
+    },
+    {
+      "code": "NG",
+      "key": "NG",
+      "value": "NG",
+      "displayText": "Nigeria",
+      "subGroup": null
+    },
+    {
+      "code": "NU",
+      "key": "NU",
+      "value": "NU",
+      "displayText": "Niue",
+      "subGroup": null
+    },
+    {
+      "code": "NF",
+      "key": "NF",
+      "value": "NF",
+      "displayText": "Norfolk Island",
+      "subGroup": null
+    },
+    {
+      "code": "MP",
+      "key": "MP",
+      "value": "MP",
+      "displayText": "Northern Mariana Is",
+      "subGroup": null
+    },
+    {
+      "code": "NO",
+      "key": "NO",
+      "value": "NO",
+      "displayText": "Norway",
+      "subGroup": null
+    },
+    {
+      "code": "OM",
+      "key": "OM",
+      "value": "OM",
+      "displayText": "Oman",
+      "subGroup": null
+    },
+    {
+      "code": "PK",
+      "key": "PK",
+      "value": "PK",
+      "displayText": "Pakistan",
+      "subGroup": null
+    },
+    {
+      "code": "PW",
+      "key": "PW",
+      "value": "PW",
+      "displayText": "Palau",
+      "subGroup": null
+    },
+    {
+      "code": "PS",
+      "key": "PS",
+      "value": "PS",
+      "displayText": "Palestine",
+      "subGroup": null
+    },
+    {
+      "code": "PA",
+      "key": "PA",
+      "value": "PA",
+      "displayText": "Panama",
+      "subGroup": null
+    },
+    {
+      "code": "PZ",
+      "key": "PZ",
+      "value": "PZ",
+      "displayText": "Panama Canal Zone",
+      "subGroup": null
+    },
+    {
+      "code": "PG",
+      "key": "PG",
+      "value": "PG",
+      "displayText": "Papua New Guinea",
+      "subGroup": null
+    },
+    {
+      "code": "PY",
+      "key": "PY",
+      "value": "PY",
+      "displayText": "Paraguay",
+      "subGroup": null
+    },
+    {
+      "code": "PE",
+      "key": "PE",
+      "value": "PE",
+      "displayText": "Peru",
+      "subGroup": null
+    },
+    {
+      "code": "PH",
+      "key": "PH",
+      "value": "PH",
+      "displayText": "Philippines",
+      "subGroup": null
+    },
+    {
+      "code": "PN",
+      "key": "PN",
+      "value": "PN",
+      "displayText": "Pitcairn",
+      "subGroup": null
+    },
+    {
+      "code": "PL",
+      "key": "PL",
+      "value": "PL",
+      "displayText": "Poland",
+      "subGroup": null
+    },
+    {
+      "code": "PT",
+      "key": "PT",
+      "value": "PT",
+      "displayText": "Portugal",
+      "subGroup": null
+    },
+    {
+      "code": "PR",
+      "key": "PR",
+      "value": "PR",
+      "displayText": "Puerto Rico",
+      "subGroup": null
+    },
+    {
+      "code": "QA",
+      "key": "QA",
+      "value": "QA",
+      "displayText": "Qatar",
+      "subGroup": null
+    },
+    {
+      "code": "RE",
+      "key": "RE",
+      "value": "RE",
+      "displayText": "Reunion",
+      "subGroup": null
+    },
+    {
+      "code": "RO",
+      "key": "RO",
+      "value": "RO",
+      "displayText": "Romania",
+      "subGroup": null
+    },
+    {
+      "code": "RU",
+      "key": "RU",
+      "value": "RU",
+      "displayText": "Russian Federation",
+      "subGroup": null
+    },
+    {
+      "code": "RW",
+      "key": "RW",
+      "value": "RW",
+      "displayText": "Rwanda",
+      "subGroup": null
+    },
+    {
+      "code": "BL",
+      "key": "BL",
+      "value": "BL",
+      "displayText": "Saint Barthelemy",
+      "subGroup": null
+    },
+    {
+      "code": "LC",
+      "key": "LC",
+      "value": "LC",
+      "displayText": "Saint Lucia",
+      "subGroup": null
+    },
+    {
+      "code": "MF",
+      "key": "MF",
+      "value": "MF",
+      "displayText": "Saint Martin",
+      "subGroup": null
+    },
+    {
+      "code": "WS",
+      "key": "WS",
+      "value": "WS",
+      "displayText": "Samoa",
+      "subGroup": null
+    },
+    {
+      "code": "SM",
+      "key": "SM",
+      "value": "SM",
+      "displayText": "San Marino",
+      "subGroup": null
+    },
+    {
+      "code": "ST",
+      "key": "ST",
+      "value": "ST",
+      "displayText": "Sao Tome and Principe",
+      "subGroup": null
+    },
+    {
+      "code": "SA",
+      "key": "SA",
+      "value": "SA",
+      "displayText": "Saudi Arabia",
+      "subGroup": null
+    },
+    {
+      "code": "SN",
+      "key": "SN",
+      "value": "SN",
+      "displayText": "Senegal",
+      "subGroup": null
+    },
+    {
+      "code": "RS",
+      "key": "RS",
+      "value": "RS",
+      "displayText": "Serbia",
+      "subGroup": null
+    },
+    {
+      "code": "SC",
+      "key": "SC",
+      "value": "SC",
+      "displayText": "Seychelles",
+      "subGroup": null
+    },
+    {
+      "code": "SL",
+      "key": "SL",
+      "value": "SL",
+      "displayText": "Sierra Leone",
+      "subGroup": null
+    },
+    {
+      "code": "SG",
+      "key": "SG",
+      "value": "SG",
+      "displayText": "Singapore",
+      "subGroup": null
+    },
+    {
+      "code": "SK",
+      "key": "SK",
+      "value": "SK",
+      "displayText": "Slovakia",
+      "subGroup": null
+    },
+    {
+      "code": "SI",
+      "key": "SI",
+      "value": "SI",
+      "displayText": "Slovenia",
+      "subGroup": null
+    },
+    {
+      "code": "SB",
+      "key": "SB",
+      "value": "SB",
+      "displayText": "Solomon Islands",
+      "subGroup": null
+    },
+    {
+      "code": "SO",
+      "key": "SO",
+      "value": "SO",
+      "displayText": "Somalia",
+      "subGroup": null
+    },
+    {
+      "code": "ZA",
+      "key": "ZA",
+      "value": "ZA",
+      "displayText": "South Africa",
+      "subGroup": null
+    },
+    {
+      "code": "GS",
+      "key": "GS",
+      "value": "GS",
+      "displayText": "South Georgia-St-ISL",
+      "subGroup": null
+    },
+    {
+      "code": "SS",
+      "key": "SS",
+      "value": "SS",
+      "displayText": "South Sudan",
+      "subGroup": null
+    },
+    {
+      "code": "ES",
+      "key": "ES",
+      "value": "ES",
+      "displayText": "Spain",
+      "subGroup": null
+    },
+    {
+      "code": "LK",
+      "key": "LK",
+      "value": "LK",
+      "displayText": "Sri Lanka",
+      "subGroup": null
+    },
+    {
+      "code": "SH",
+      "key": "SH",
+      "value": "SH",
+      "displayText": "St Helena",
+      "subGroup": null
+    },
+    {
+      "code": "KN",
+      "key": "KN",
+      "value": "KN",
+      "displayText": "St Kitts and Nevis",
+      "subGroup": null
+    },
+    {
+      "code": "PM",
+      "key": "PM",
+      "value": "PM",
+      "displayText": "St Pierre and Miquelon",
+      "subGroup": null
+    },
+    {
+      "code": "VC",
+      "key": "VC",
+      "value": "VC",
+      "displayText": "St Vincent and the Gre",
+      "subGroup": null
+    },
+    {
+      "code": "SR",
+      "key": "SR",
+      "value": "SR",
+      "displayText": "Suriname",
+      "subGroup": null
+    },
+    {
+      "code": "SJ",
+      "key": "SJ",
+      "value": "SJ",
+      "displayText": "Svalbard and Jan Mayan",
+      "subGroup": null
+    },
+    {
+      "code": "SZ",
+      "key": "SZ",
+      "value": "SZ",
+      "displayText": "Swaziland",
+      "subGroup": null
+    },
+    {
+      "code": "SE",
+      "key": "SE",
+      "value": "SE",
+      "displayText": "Sweden",
+      "subGroup": null
+    },
+    {
+      "code": "CH",
+      "key": "CH",
+      "value": "CH",
+      "displayText": "Switzerland",
+      "subGroup": null
+    },
+    {
+      "code": "TW",
+      "key": "TW",
+      "value": "TW",
+      "displayText": "Taiwan",
+      "subGroup": null
+    },
+    {
+      "code": "TJ",
+      "key": "TJ",
+      "value": "TJ",
+      "displayText": "Tajikistan",
+      "subGroup": null
+    },
+    {
+      "code": "TZ",
+      "key": "TZ",
+      "value": "TZ",
+      "displayText": "Tanzania, Utd Rep of",
+      "subGroup": null
+    },
+    {
+      "code": "TH",
+      "key": "TH",
+      "value": "TH",
+      "displayText": "Thailand",
+      "subGroup": null
+    },
+    {
+      "code": "TL",
+      "key": "TL",
+      "value": "TL",
+      "displayText": "Timor-Leste",
+      "subGroup": null
+    },
+    {
+      "code": "TG",
+      "key": "TG",
+      "value": "TG",
+      "displayText": "Togo",
+      "subGroup": null
+    },
+    {
+      "code": "TK",
+      "key": "TK",
+      "value": "TK",
+      "displayText": "Tokelau",
+      "subGroup": null
+    },
+    {
+      "code": "TO",
+      "key": "TO",
+      "value": "TO",
+      "displayText": "Tonga",
+      "subGroup": null
+    },
+    {
+      "code": "TT",
+      "key": "TT",
+      "value": "TT",
+      "displayText": "Trinidad and Tobago",
+      "subGroup": null
+    },
+    {
+      "code": "TN",
+      "key": "TN",
+      "value": "TN",
+      "displayText": "Tunisia",
+      "subGroup": null
+    },
+    {
+      "code": "TC",
+      "key": "TC",
+      "value": "TC",
+      "displayText": "Turka and Caicos Is",
+      "subGroup": null
+    },
+    {
+      "code": "TR",
+      "key": "TR",
+      "value": "TR",
+      "displayText": "Turkey",
+      "subGroup": null
+    },
+    {
+      "code": "TM",
+      "key": "TM",
+      "value": "TM",
+      "displayText": "Turkmenistan",
+      "subGroup": null
+    },
+    {
+      "code": "TV",
+      "key": "TV",
+      "value": "TV",
+      "displayText": "Tuvalu",
+      "subGroup": null
+    },
+    {
+      "code": "UM",
+      "key": "UM",
+      "value": "UM",
+      "displayText": "US Minor Outlaying I",
+      "subGroup": null
+    },
+    {
+      "code": "UG",
+      "key": "UG",
+      "value": "UG",
+      "displayText": "Uganda",
+      "subGroup": null
+    },
+    {
+      "code": "UA",
+      "key": "UA",
+      "value": "UA",
+      "displayText": "Ukraine",
+      "subGroup": null
+    },
+    {
+      "code": "AE",
+      "key": "AE",
+      "value": "AE",
+      "displayText": "United Arab Emirates",
+      "subGroup": null
+    },
+    {
+      "code": "GB",
+      "key": "GB",
+      "value": "GB",
+      "displayText": "United Kingdom",
+      "subGroup": null
+    },
+    {
+      "code": "US",
+      "key": "US",
+      "value": "US",
+      "displayText": "United States of America",
+      "subGroup": null
+    },
+    {
+      "code": "UY",
+      "key": "UY",
+      "value": "UY",
+      "displayText": "Uruguay",
+      "subGroup": null
+    },
+    {
+      "code": "UZ",
+      "key": "UZ",
+      "value": "UZ",
+      "displayText": "Uzbekistan",
+      "subGroup": null
+    },
+    {
+      "code": "VU",
+      "key": "VU",
+      "value": "VU",
+      "displayText": "Vanuatu",
+      "subGroup": null
+    },
+    {
+      "code": "VA",
+      "key": "VA",
+      "value": "VA",
+      "displayText": "Vatican City State",
+      "subGroup": null
+    },
+    {
+      "code": "VE",
+      "key": "VE",
+      "value": "VE",
+      "displayText": "Venezuela",
+      "subGroup": null
+    },
+    {
+      "code": "VN",
+      "key": "VN",
+      "value": "VN",
+      "displayText": "Vietnam",
+      "subGroup": null
+    },
+    {
+      "code": "VG",
+      "key": "VG",
+      "value": "VG",
+      "displayText": "Virgin Islands, Brit",
+      "subGroup": null
+    },
+    {
+      "code": "VI",
+      "key": "VI",
+      "value": "VI",
+      "displayText": "Virgin Islands, U.S.",
+      "subGroup": null
+    },
+    {
+      "code": "WF",
+      "key": "WF",
+      "value": "WF",
+      "displayText": "Wallis and Futuna Is",
+      "subGroup": null
+    },
+    {
+      "code": "EH",
+      "key": "EH",
+      "value": "EH",
+      "displayText": "Western Sahara",
+      "subGroup": null
+    },
+    {
+      "code": "YE",
+      "key": "YE",
+      "value": "YE",
+      "displayText": "Yemen",
+      "subGroup": null
+    },
+    {
+      "code": "YU",
+      "key": "YU",
+      "value": "YU",
+      "displayText": "Yugoslavia",
+      "subGroup": null
+    },
+    {
+      "code": "ZM",
+      "key": "ZM",
+      "value": "ZM",
+      "displayText": "Zambia",
+      "subGroup": null
+    },
+    {
+      "code": "ZW",
+      "key": "ZW",
+      "value": "ZW",
+      "displayText": "Zimbabwe",
+      "subGroup": null
     }
   ],
   "licenseIssuingAuthority": [
     {
-      "code": "option1",
-      "key": "option1",
-      "value": "option1",
-      "label": "Some option 1"
+      "code": "ABD",
+      "key": "ABD",
+      "value": "ABD",
+      "displayText": "ABU DHABI",
+      "subGroup": null
     },
     {
-      "code": "option2",
-      "key": "option2",
-      "value": "option2",
-      "label": "Some option 1"
+      "code": "AJM",
+      "key": "AJM",
+      "value": "AJM",
+      "displayText": "AJMAN",
+      "subGroup": null
+    },
+    {
+      "code": "AJFZ",
+      "key": "AJFZ",
+      "value": "AJFZ",
+      "displayText": "AJMAN FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "AAFZ",
+      "key": "AAFZ",
+      "value": "AAFZ",
+      "displayText": "AL AWIR FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "COC",
+      "key": "COC",
+      "value": "COC",
+      "displayText": "CHAMBER OF COMMERCE",
+      "subGroup": null
+    },
+    {
+      "code": "DOED",
+      "key": "DOED",
+      "value": "DOED",
+      "displayText": "DEPARTMENT OF ECONOMIC DEVELOPMENT",
+      "subGroup": null
+    },
+    {
+      "code": "DNRD",
+      "key": "DNRD",
+      "value": "DNRD",
+      "displayText": "DEPARTMENT OF NATURALISATION AND RESIDENCY DUBAI",
+      "subGroup": null
+    },
+    {
+      "code": "DUB",
+      "key": "DUB",
+      "value": "DUB",
+      "displayText": "DUBAI",
+      "subGroup": null
+    },
+    {
+      "code": "DAFZ",
+      "key": "DAFZ",
+      "value": "DAFZ",
+      "displayText": "DUBAI AIRPORT FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "DAC",
+      "key": "DAC",
+      "value": "DAC",
+      "displayText": "DUBAI AVIATION CITY",
+      "subGroup": null
+    },
+    {
+      "code": "DCCA",
+      "key": "DCCA",
+      "value": "DCCA",
+      "displayText": "DUBAI CREATIVE CLUSTERS AUTHORITY",
+      "subGroup": null
+    },
+    {
+      "code": "DHCC",
+      "key": "DHCC",
+      "value": "DHCC",
+      "displayText": "DUBAI HEALTH CARE CITY(DHCC)",
+      "subGroup": null
+    },
+    {
+      "code": "DHUC",
+      "key": "DHUC",
+      "value": "DHUC",
+      "displayText": "DUBAI HUMANITARIAN CITY",
+      "subGroup": null
+    },
+    {
+      "code": "DINC",
+      "key": "DINC",
+      "value": "DINC",
+      "displayText": "DUBAI INTERNET CITY",
+      "subGroup": null
+    },
+    {
+      "code": "DIFC",
+      "key": "DIFC",
+      "value": "DIFC",
+      "displayText": "DUBAI INTL. FINANCIAL CENTRE",
+      "subGroup": null
+    },
+    {
+      "code": "DMC",
+      "key": "DMC",
+      "value": "DMC",
+      "displayText": "DUBAI MEDIA CITY",
+      "subGroup": null
+    },
+    {
+      "code": "DSO",
+      "key": "DSO",
+      "value": "DSO",
+      "displayText": "DUBAI SILICON OASIS FZ",
+      "subGroup": null
+    },
+    {
+      "code": "DCMZ",
+      "key": "DCMZ",
+      "value": "DCMZ",
+      "displayText": "DUCAMZ",
+      "subGroup": null
+    },
+    {
+      "code": "DMCC",
+      "key": "DMCC",
+      "value": "DMCC",
+      "displayText": "DXB METAL & COMMODITIES CENTRE",
+      "subGroup": null
+    },
+    {
+      "code": "EIA",
+      "key": "EIA",
+      "value": "EIA",
+      "displayText": "EMIRATES ID AUTHORITY",
+      "subGroup": null
+    },
+    {
+      "code": "FUJ",
+      "key": "FUJ",
+      "value": "FUJ",
+      "displayText": "FUJAIRAH",
+      "subGroup": null
+    },
+    {
+      "code": "FFZ",
+      "key": "FFZ",
+      "value": "FFZ",
+      "displayText": "FUJAIRAH FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "GADP",
+      "key": "GADP",
+      "value": "GADP",
+      "displayText": "GOLD AND DIAMOND PARK",
+      "subGroup": null
+    },
+    {
+      "code": "GOR",
+      "key": "GOR",
+      "value": "GOR",
+      "displayText": "GOVT OF RAK - DEPARTMENT OF CIVIL AVIATION",
+      "subGroup": null
+    },
+    {
+      "code": "GOFZ",
+      "key": "GOFZ",
+      "value": "GOFZ",
+      "displayText": "GOVT. OF UAQ FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "HFZ",
+      "key": "HFZ",
+      "value": "HFZ",
+      "displayText": "HAMRIYA FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "JBL",
+      "key": "JBL",
+      "value": "JBL",
+      "displayText": "JEBEL ALI FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "JLT",
+      "key": "JLT",
+      "value": "JLT",
+      "displayText": "JUMEIRAH LAKE TOWERSY",
+      "subGroup": null
+    },
+    {
+      "code": "KNV",
+      "key": "KNV",
+      "value": "KNV",
+      "displayText": "KNOWLEDGE VILLAGE",
+      "subGroup": null
+    },
+    {
+      "code": "MGD",
+      "key": "MGD",
+      "value": "MGD",
+      "displayText": "MIGRATION DEFAULT",
+      "subGroup": null
+    },
+    {
+      "code": "OVRS",
+      "key": "OVRS",
+      "value": "OVRS",
+      "displayText": "OVERSEAS",
+      "subGroup": null
+    },
+    {
+      "code": "RAFZ",
+      "key": "RAFZ",
+      "value": "RAFZ",
+      "displayText": "RAK AIRPORT FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "RFZ",
+      "key": "RFZ",
+      "value": "RFZ",
+      "displayText": "RAK FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "RIA",
+      "key": "RIA",
+      "value": "RIA",
+      "displayText": "RAK INVESTMENT AUTHORITY",
+      "subGroup": null
+    },
+    {
+      "code": "RKV",
+      "key": "RKV",
+      "value": "RKV",
+      "displayText": "RAK KNOWLEDGE VILLAGE",
+      "subGroup": null
+    },
+    {
+      "code": "RTZ",
+      "key": "RTZ",
+      "value": "RTZ",
+      "displayText": "RAK TRADE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "RAK",
+      "key": "RAK",
+      "value": "RAK",
+      "displayText": "RAS AL KHAIMAH",
+      "subGroup": null
+    },
+    {
+      "code": "SFZ",
+      "key": "SFZ",
+      "value": "SFZ",
+      "displayText": "SAIF ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "SHJ",
+      "key": "SHJ",
+      "value": "SHJ",
+      "displayText": "SHARJAH",
+      "subGroup": null
+    },
+    {
+      "code": "SHFZ",
+      "key": "SHFZ",
+      "value": "SHFZ",
+      "displayText": "SHARJAH FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "TPRK",
+      "key": "TPRK",
+      "value": "TPRK",
+      "displayText": "TECHNO PARK",
+      "subGroup": null
+    },
+    {
+      "code": "TPCF",
+      "key": "TPCF",
+      "value": "TPCF",
+      "displayText": "TRAKHEES-PORTS,CUSTOMS&FREEZON",
+      "subGroup": null
+    },
+    {
+      "code": "UMAQ",
+      "key": "UMAQ",
+      "value": "UMAQ",
+      "displayText": "UMM AL QUWAIN",
+      "subGroup": null
+    },
+    {
+      "code": "ZCRP",
+      "key": "ZCRP",
+      "value": "ZCRP",
+      "displayText": "ZONES CORP",
+      "subGroup": null
     }
   ],
   "emirateCity": [
@@ -709,136 +2708,158 @@
   ],
   "companyCategory": [
     {
+      "code": "RF",
+      "key": "RF",
+      "value": "RF",
+      "displayText": " Ruling Family",
+      "subGroup": null
+    },
+    {
       "code": "CT",
-      "key": " CT",
-      "value": "Charitable Trust",
-      "label": "Charitable Trust "
+      "key": "CT",
+      "value": "CT",
+      "displayText": "Charitable Trust",
+      "subGroup": null
     },
     {
       "code": "EIGO",
-      "key": " EIGO",
-      "value": "Educational Institute - Government owned",
-      "label": "Educational Institute - Government owned"
+      "key": "EIGO",
+      "value": "EIGO",
+      "displayText": "Educational Institute - Government owned",
+      "subGroup": null
     },
     {
       "code": "EIPO",
       "key": "EIPO",
-      "value": "Educational Institute - Private owned",
-      "label": "Educational Institute - Private owned"
+      "value": "EIPO",
+      "displayText": "Educational Institute - Private owned",
+      "subGroup": null
+    },
+    {
+      "code": "FCPR",
+      "key": "FCPR",
+      "value": "FCPR",
+      "displayText": "Foreign company - Private Limited",
+      "subGroup": null
     },
     {
       "code": "FCPL",
       "key": "FCPL",
-      "value": "Foreign company - Private Limited",
-      "label": "Foreign company - Private Limited"
+      "value": "FCPL",
+      "displayText": "Foreign company - Public Limited",
+      "subGroup": null
     },
     {
-      "code": "FCPubL",
-      "key": "FCPubL",
-      "value": "Foreign company - Public Limited",
-      "label": "Foreign company - Public Limited"
+      "code": "FZC",
+      "key": "FZC",
+      "value": "FZC",
+      "displayText": "Free Zone Companies",
+      "subGroup": null
     },
     {
-      "code": "FZCompanies",
-      "key": "FZCompanies",
-      "value": "Free zone Companies",
-      "label": "Free zone Companies"
+      "code": "GP",
+      "key": "GP",
+      "value": "GP",
+      "displayText": "General Partnership",
+      "subGroup": null
     },
     {
-      "code": "GeneralPartnership",
-      "key": "GeneralPartnership",
-      "value": "General Partnership",
-      "label": "General Partnership"
+      "code": "GOFI",
+      "key": "GOFI",
+      "value": "GOFI",
+      "displayText": "Government Owned other Financial Institute",
+      "subGroup": null
     },
     {
-      "code": "GovernmentRelatedEntities",
-      "key": "GovernmentRelatedEntities",
-      "value": "Government related entities",
-      "label": "Government related entities"
+      "code": "GRE",
+      "key": "GRE",
+      "value": "GRE",
+      "displayText": "Government related entities",
+      "subGroup": null
     },
     {
-      "code": "GovernmentOFI",
-      "key": "GovernmentOFI",
-      "value": "Government Owned other Financial Institute",
-      "label": "Government Owned other Financial Institute"
-    },
-    {
-      "code": "InvestmentBrokerDealer",
-      "key": "InvestmentBrokerDealer",
-      "value": "Investment Broker & Dealer",
-      "label": "Investment Broker & Dealer"
+      "code": "IBD",
+      "key": "IBD",
+      "value": "IBD",
+      "displayText": "Investment Broker & Dealer",
+      "subGroup": null
     },
     {
       "code": "LLC",
       "key": "LLC",
-      "value": "Limited Liability Company (LLC)",
-      "label": "Limited Liability Company (LLC)"
+      "value": "LLC",
+      "displayText": "Limited Liability Company (LLC)",
+      "subGroup": null
     },
     {
-      "code": "LocalBranchofForeignCompany",
-      "key": "LocalBranchofForeignCompany",
-      "value": "Local Branch of a Foreign Company",
-      "label": "Local Branch of a Foreign Company"
+      "code": "LBFC",
+      "key": "LBFC",
+      "value": "LBFC",
+      "displayText": "Local Branch of a Foreign Company",
+      "subGroup": null
     },
     {
-      "code": "NonResidentCompany",
-      "key": "NonResidentCompany",
-      "value": "Non-Resident Company",
-      "label": "Non-Resident Company"
+      "code": "NRC",
+      "key": "NRC",
+      "value": "NRC",
+      "displayText": "Non-Resident Company",
+      "subGroup": null
     },
     {
-      "code": "OffShoreEntities",
-      "key": "OffShoreEntities",
-      "value": "Off-shore entities",
-      "label": "Off-shore entities"
+      "code": "OFFE",
+      "key": "OFFE",
+      "value": "OFFE",
+      "displayText": "Off-shore entities",
+      "subGroup": null
     },
     {
-      "code": "Partnerships",
-      "key": "Partnerships",
-      "value": "Partnerships",
-      "label": "Partnerships"
+      "code": "PART",
+      "key": "PART",
+      "value": "PART",
+      "displayText": "Partnerships",
+      "subGroup": null
     },
     {
-      "code": "PrivateJointStockСompany",
-      "key": "PrivateJointStockСompany",
-      "value": "Private Joint Stock company",
-      "label": "Private Joint Stock company"
+      "code": "PRJSC",
+      "key": "PRJSC",
+      "value": "PRJSC",
+      "displayText": "Private Joint Stock company",
+      "subGroup": null
     },
     {
-      "code": "PublicJointStockСompany",
-      "key": "PublicJointStockСompany",
-      "value": "Public Joint Stock company",
-      "label": "Public Joint Stock company"
+      "code": "PJSC",
+      "key": "PJSC",
+      "value": "PJSC",
+      "displayText": "Public Joint stock company",
+      "subGroup": null
     },
     {
-      "code": "RulingFamily",
-      "key": "RulingFamily",
-      "value": "Ruling Family",
-      "label": "Ruling Family"
+      "code": "SBD",
+      "key": "SBD",
+      "value": "SBD",
+      "displayText": "Security Broker & Dealer",
+      "subGroup": null
     },
     {
-      "code": "SecurityBroker&Dealer",
-      "key": "SecurityBroker&Dealer",
-      "value": "Security Broker & Dealer",
-      "label": "Security Broker & Dealer"
+      "code": "STC",
+      "key": "STC",
+      "value": "STC",
+      "displayText": "Societies/Trusts/Clubs",
+      "subGroup": null
     },
     {
-      "code": "Societies/Trusts/Clubs",
-      "key": "Societies/Trusts/Clubs",
-      "value": "Societies/Trusts/Clubs",
-      "label": "Societies/Trusts/Clubs"
+      "code": "SP",
+      "key": "SP",
+      "value": "SP",
+      "displayText": "Sole proprietorship",
+      "subGroup": null
     },
     {
-      "code": "SoleProprietorship",
-      "key": "SoleProprietorship",
-      "value": "Sole proprietorship",
-      "label": "Sole proprietorship"
-    },
-    {
-      "code": "UnderFormationCompanies",
-      "key": "UnderFormationCompanies",
-      "value": "Under formation companies",
-      "label": "Under formation companies"
+      "code": "UFC",
+      "key": "UFC",
+      "value": "UFC",
+      "displayText": "Under formation companies",
+      "subGroup": null
     }
   ],
   "topOriginGoodsCountries": [
