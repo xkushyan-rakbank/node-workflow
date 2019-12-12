@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import routes from "../../routes";
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { CompanyDocuments } from "./components/CompanyDocument";
-import { SignatoriesDocuments } from "./components/SignatoryDocument";
+import { CompanyDocuments } from "./components/CompanyDocuments";
+import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
 
@@ -12,8 +12,6 @@ export const UploadDocument = ({
   documents,
   companyName,
   signatories,
-  uploadedDocsCount,
-  requiredDocCount,
   history
 }) => {
   const classes = useStyles();
@@ -50,12 +48,7 @@ export const UploadDocument = ({
 
       <div className="linkContainer">
         <BackLink path={routes.finalQuestions} />
-        <SubmitButton
-          handleClick={goToSelectService}
-          label="Next Step"
-          justify="flex-end"
-          disabled={requiredDocCount !== uploadedDocsCount}
-        />
+        <SubmitButton handleClick={goToSelectService} label="Next Step" justify="flex-end" />
       </div>
     </>
   );

@@ -5,6 +5,7 @@ import { useStyles } from "./styled";
 
 export const CompanyDocuments = ({ documents, companyName, icon = "" }) => {
   const classes = useStyles();
+
   return (
     <div className={classes.container}>
       <header className={classes.header}>
