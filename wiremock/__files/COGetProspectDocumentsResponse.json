@@ -52,7 +52,7 @@
       }
     ],
     "stakeholdersDocuments": {
-      "0_Manohar": {
+      "0_": {
         "documents": [
           {
             "documentType": "Passport",
@@ -81,7 +81,7 @@
           }
         ]
       },
-      "1_Richard": {
+      "1_": {
         "documents": [
           {
             "documentType": "Passport",
