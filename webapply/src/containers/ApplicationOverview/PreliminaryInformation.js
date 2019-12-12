@@ -7,7 +7,7 @@ import IconCardItem from "../../components/IconCards/IconCardItem";
 import CommonQuestions from "./CommonQuestions";
 import { mobileResolution } from "../../constants";
 
-const mockData = [
+const questions = [
   {
     question: "Once I start the application, can I come back later and complete it.",
     answer:
@@ -106,7 +106,7 @@ const PreliminaryInformation = ({ classes }) => {
       </div>
       <div className={classes.answers}>
         <div className={classes.title}>Got more questions? We got some answers</div>
-        <CommonQuestions data={mockData} />
+        <CommonQuestions data={questions} />
       </div>
     </>
   );
