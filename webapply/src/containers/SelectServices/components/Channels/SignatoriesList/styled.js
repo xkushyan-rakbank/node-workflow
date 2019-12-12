@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   infoTitle: {
     marginTop: "0"
   },
@@ -8,12 +8,10 @@ export const useStyles = makeStyles({
     fontSize: "14px",
     fontWeight: 600,
     marginTop: "40px",
-    lineHeight: 2.14,
-    color: "#373737"
+    color: theme.palette.text.text
   },
   rootInput: {
-    fontWeight: "600",
-    fontFamily: "Open Sans"
+    fontWeight: "600"
   },
   signatoryNamesContainer: {
     marginTop: "12px",
@@ -24,8 +22,7 @@ export const useStyles = makeStyles({
   signatoryName: {
     display: "flex",
     "& span": {
-      fontSize: "14px",
-      fontFamily: "Open Sans"
+      fontSize: "14px"
     }
   }
-});
+}));

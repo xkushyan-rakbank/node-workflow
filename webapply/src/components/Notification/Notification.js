@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Icon, ICONS } from "../../../components/Icons";
+import { Icon, ICONS } from "../Icons";
 import { useStyles } from "./styled";
 
 export const Notification = ({

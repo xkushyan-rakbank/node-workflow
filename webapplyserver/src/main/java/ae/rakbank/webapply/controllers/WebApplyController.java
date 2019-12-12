@@ -44,7 +44,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.CSRFTokenHelper;
-import ae.rakbank.webapply.helpers.CookieHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.OAuthService;
 
@@ -77,9 +76,6 @@ public class WebApplyController {
 
 	@Autowired
 	CSRFTokenHelper csrfTokenHelper;
-
-	@Autowired
-	CookieHelper cookieHelper;
 
 	private JsonNode uiConfigJSON = null;
 
@@ -158,7 +154,6 @@ public class WebApplyController {
 
 		HttpHeaders headers = new HttpHeaders();
 		csrfTokenHelper.createCSRFToken(httpRequest, headers);
-		cookieHelper.createWebApplyJWT(httpResponse);
 
 		String cacheKey = getCacheKey(segment, product, role, device);
 		String cachedValue = getCachedData(cacheKey);
