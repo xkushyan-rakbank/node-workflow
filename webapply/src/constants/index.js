@@ -1,9 +1,5 @@
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
-import SearchedCompanyDetails from "../components/SearchedAppInfoSteps/CompanyDetails/index";
-import CheckList from "../components/SearchedAppInfoSteps/CheckList/index";
-import Documents from "../components/SearchedAppInfoSteps/Documents/index";
-import AuditTrail from "../components/SearchedAppInfoSteps/AuditTrail/index";
 import routes from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
@@ -93,21 +89,6 @@ export const searchProspectStepper = [
 ];
 
 export const digitRegExp = new RegExp("^[0-9]$");
-
-export const searchedAppInfoSteps = [
-  {
-    step: 1,
-    title: "Details",
-    component: SearchedCompanyDetails
-  },
-  {
-    step: 2,
-    title: "Checks",
-    component: CheckList
-  },
-  { step: 3, title: "Documents", component: Documents },
-  { step: 4, title: "Audit Trail", component: AuditTrail }
-];
 
 export const submitApplication = {
   termCondition: "terms & conditions",

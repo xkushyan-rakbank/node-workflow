@@ -4,16 +4,16 @@ import { ContainedButton } from "./ContainedButton";
 
 const styles = {
   buttonStyle: {
-    width: "180px",
+    width: "145px",
     height: "40px",
     borderRadius: "21px ",
     backgroundColor: "#000",
     fontFamily: "Open Sans, sans-serif",
-    fontSize: "18px",
     lineHeight: "normal",
     letterSpacing: "normal",
     "& span": {
-      justifyContent: "center"
+      justifyContent: "center",
+      fontSize: "16px"
     }
   }
 };

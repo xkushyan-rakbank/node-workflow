@@ -1,3 +1,5 @@
+import get from "lodash/get";
+
 export const getUiConfig = state => state.appConfig.uiConfig || {};
 
 export const getEndpoints = state => state.appConfig.endpoints || {};
@@ -58,7 +60,10 @@ const createGetDocsCountSelector = (filterDocuments = () => true) => state => {
   if (documents) {
     counter += (documents.companyDocuments || []).filter(filterDocuments).length;
     counter += Object.values(documents.stakeholdersDocuments || {})
-      .map(stakeholdersDocument => stakeholdersDocument.filter(filterDocuments).length)
+      .map(
+        stakeholdersDocument =>
+          get(stakeholdersDocument, "documents", []).filter(filterDocuments).length
+      )
       .reduce((acc, item) => acc + item, 0);
   }
 

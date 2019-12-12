@@ -70,5 +70,10 @@ export const useStyles = makeStyles({
     margin: "12px 0 24px",
     width: "100%",
     display: "flex"
+  },
+  input: {
+    "&::placeholder": {
+      color: "#86868b"
+    }
   }
 });

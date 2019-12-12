@@ -1,13 +1,12 @@
 import React from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { getIn } from "formik";
 import cx from "classnames";
 
-import { useStyles } from "./styled";
+import { CustomRadioButton as Radio } from "../RadioButton/CustomRadioButton";
 import { ErrorMessage } from "../../Notifications";
+import { useStyles } from "./styled";
 
 export const InlineRadioGroup = ({
   label,
@@ -40,12 +39,7 @@ export const InlineRadioGroup = ({
         {label}
         <div className="box-group-grid">
           {options.map(item => (
-            <FormControlLabel
-              key={item.key}
-              value={item.value}
-              control={<Radio color="secondary" />}
-              label={item.label}
-            />
+            <Radio color="secondary" key={item.key} value={item.value} label={item.label} />
           ))}
         </div>
       </RadioGroup>
