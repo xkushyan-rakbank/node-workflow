@@ -20,5 +20,17 @@ export const useStyles = makeStyles({
   },
   error: {
     marginBottom: "10px"
-  }
+  },
+  linkContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginTop: "42px",
+    marginBottom: "42px"
+  },
+  nextButton: {
+    width: "auto",
+    margin: 0
+  },
+  title: {}
 });

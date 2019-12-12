@@ -21,8 +21,8 @@ const useStyles = makeStyles({
   }
 });
 
-export const SectionTitleWithInfo = ({ title, info }) => {
-  const classes = useStyles();
+export const SectionTitleWithInfo = ({ title, info, classes: extendedClasses }) => {
+  const classes = useStyles({ classes: extendedClasses });
   return (
     <>
       <h3 className={classes.title}>{title}</h3>

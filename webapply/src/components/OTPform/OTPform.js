@@ -4,12 +4,12 @@ import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 import { useHistory } from "react-router-dom";
 
-import { OtpVerification } from "../../components/OtpVerification";
-import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
+import { UAE_CODE } from "../../constants";
+
 import { ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-
-import { UAE_CODE } from "../../constants";
+import { OtpVerification } from "../../components/OtpVerification";
+import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
 
 import { useStyles } from "./styled";
 
@@ -17,16 +17,25 @@ export const MAX_ATTEMPT_ALLOWED = 3;
 
 export const OTPformComponent = ({
   otp,
-  inputParam,
-  redirectRoute,
   verifyOtp,
-  generateOtpCode
+  inputParam,
+  isHideTitle,
+  redirectRoute,
+  generateOtpCode,
+  infoTitleResult,
+  classes: extendetClasses
 }) => {
   const history = useHistory();
 
   const [code, setCode] = useState(Array(6).fill(""));
   const [isValidCode, setIsValidCode] = useState(false);
   const [loginAttempt, setLoginAttempt] = useState(0);
+
+  useEffect(() => {
+    if (otp.isVerified) {
+      history.push(redirectRoute);
+    }
+  }, [history, otp]);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
@@ -45,23 +54,25 @@ export const OTPformComponent = ({
     [setIsValidCode, setCode]
   );
 
-  const classes = useStyles();
+  const getTitle = () => {
+    if (isHideTitle) return;
+    return inputParam.countryCode === UAE_CODE
+      ? "We have sent you a verification code on registered mobile number"
+      : "We have sent you a verification code on registered email address";
+  };
 
-  useEffect(() => {
-    if (otp.isVerified) {
-      history.push(redirectRoute);
-    }
-  }, [history, otp]);
+  const classes = useStyles({ classes: extendetClasses });
 
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
-        title={
-          inputParam.countryCode === UAE_CODE
-            ? "We have sent you a verification code on registered mobile number"
-            : "We have sent you a verification code on registered email address"
+        classes={{ title: classes.title }}
+        title={getTitle()}
+        info={
+          infoTitleResult
+            ? infoTitleResult
+            : "Please enter the six digits below, to confirm this is you"
         }
-        info="Please enter the six digits below, to confirm this is you"
       />
 
       <Formik initialValues={code} onSubmit={submitForm}>
@@ -78,7 +89,6 @@ export const OTPformComponent = ({
                   error="Code verification failed."
                 />
               )}
-
               {loginAttempt > MAX_ATTEMPT_ALLOWED && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
@@ -98,13 +108,12 @@ export const OTPformComponent = ({
                 </span>
               </span>
             </div>
-            {/*TODO linkContainer move to classes*/}
-            <div className="linkContainer">
+
+            <div className={classes.linkContainer}>
               <SubmitButton
                 disabled={!isValidCode || otp.isPending}
                 justify="flex-end"
                 label={otp.isPending ? "Verify..." : "Next Step"}
-                //TODO move out inline styles
                 containerExtraStyles={{ width: "auto", margin: 0 }}
               />
             </div>
