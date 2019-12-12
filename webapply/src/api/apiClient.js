@@ -25,30 +25,23 @@ export const authentication = {
 };
 
 export const otp = {
-  generate: ({ prospectId, countryCode, mobileNo, email, recaptchaToken }) => {
+  generate: payload => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
       data: {
         action: OTP_ACTION_GENERATE,
-        prospectId,
-        countryCode,
-        mobileNo,
-        email,
-        recaptchaToken
+        ...payload
       }
     });
   },
-  verify: ({ prospectId, countryCode, mobileNo, otpToken }) => {
+  verify: payload => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
       data: {
         action: OTP_ACTION_VERIFY,
-        prospectId,
-        countryCode,
-        mobileNo,
-        otpToken
+        ...payload
       }
     });
   }
