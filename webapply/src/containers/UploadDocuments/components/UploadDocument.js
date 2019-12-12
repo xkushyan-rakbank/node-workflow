@@ -1,139 +1,14 @@
 import React, { useState, useRef } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
 import { retrieveDocDetails, docUpload } from "../../../store/actions/getProspectDocuments";
+import { getProspectId, getProspectErrorMessage } from "../../../store/selectors/appConfig";
 import companyIconSvg from "../../../assets/icons/file.png";
-import * as appConfigSelectors from "../../../store/selectors/appConfig";
+import { useStyles } from "./styled";
 
-const style = {
-  fileUploadPlaceholder: {
-    height: "50px",
-    display: "flex",
-    alignItems: "center",
-    padding: "0 25px",
-    borderTop: "solid 1px rgba(230, 230, 230, 0.5)",
-    cursor: "pointer"
-  },
-  contentBox: {
-    alignItems: "center",
-    flexGrow: "1",
-    paddingLeft: "18px"
-  },
-
-  uploadedFileName: {
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: ".6",
-    letterSpacing: "normal",
-    color: "#373737",
-    display: "block"
-  },
-
-  fileSizeMessage: {
-    color: "#888888",
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: ".6",
-    letterSpacing: "normal"
-  },
-  controlsBox: {
-    width: "130px",
-    height: "32px",
-    borderRadius: "21px",
-    border: "solid 1px #373737",
-    fontSize: "14px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    letterSpacing: "normal",
-    textAlign: "center",
-    color: "#373737",
-    cursor: "pointer",
-    lineHeight: "2.2"
-  },
-  UploadedContentBox: {
-    display: "flex",
-    alignItems: "center",
-    flexGrow: "1",
-    paddingLeft: "16px",
-    paddingRight: "16px"
-  },
-  uploadFileName: {
-    fontSize: "12px",
-    fontWeight: "600",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "1.17",
-    letterSpacing: "normal",
-    color: "#373737",
-    paddingLeft: "5px"
-  },
-  SignatoryRights: {
-    width: "39px",
-    height: "14px",
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "1.17",
-    letterSpacing: "normal",
-    color: "#888888",
-    paddingLeft: "9px"
-  },
-  SignatoryRightsCopy: {
-    width: "25px",
-    height: "18px",
-    fontSize: "12px",
-    fontWeight: "600",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "1.5",
-    letterSpacing: "normal",
-    textAlign: "right",
-    color: "#373737",
-    paddingLeft: "11px"
-  },
-  ErrorExplanation: {
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: ".6",
-    letterSpacing: "normal",
-    color: "#ea2925"
-  },
-
-  cancel: {
-    borderRadius: "25px",
-    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
-    border: "solid 1px #e8e8e8",
-    backgroundColor: "#ffffff",
-    padding: "0 6px",
-    justify: "flex-end"
-  },
-  defaultInput: {
-    display: "none"
-  },
-  myProgressBar: {
-    height: "4px",
-    borderRadius: "3px",
-    textAlign: "center",
-    lineHeight: "32px",
-    color: "black"
-  },
-  progressStatus: {
-    display: "inline-block",
-    paddingLeft: "11px"
-  }
-};
-
-const UploadDocuments = props => {
-  const { classes, documents, docUpload, prospectID, icon, uploadErrorMessage, index } = props;
+const UploadDocumentsComponent = props => {
+  const { documents, docUpload, prospectID, icon, uploadErrorMessage, index } = props;
+  const classes = useStyles();
   const inputEl = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -154,7 +29,6 @@ const UploadDocuments = props => {
   };
   const fileUploadHandler = () => {
     if (fileValidation(inputEl.current.files[0])) {
-      //verify the file type
       let docKey;
       if (documents.signatoryName) {
         docKey =
@@ -168,8 +42,6 @@ const UploadDocuments = props => {
       let fileInfo = {
         documentKey: docKey
       };
-
-      // storing the uploaded file details into form data
 
       fileInfo = JSON.stringify(fileInfo);
       const data = new FormData();
@@ -196,7 +68,7 @@ const UploadDocuments = props => {
           />
           <>
             {!selectedFile && (
-              <div className={classes.contentBox}>
+              <div className={classes.ContentBox}>
                 {!selectedFile && (
                   <p className={classes.uploadedFileName}>{documents.documentType}</p>
                 )}
@@ -213,7 +85,7 @@ const UploadDocuments = props => {
             )}
             {!selectedFile && (
               <p
-                className={classes.controlsBox}
+                className={classes.ControlsBox}
                 justify="flex-end"
                 onClick={() => inputEl.current.click()}
               >
@@ -228,7 +100,7 @@ const UploadDocuments = props => {
                 <div className={classes.contentBox}>
                   <div className={classes.uploadFileName}>
                     {selectedFile.name}
-                    <span className={classes.SignatoryRights}>{selectedFile.size} Bytes</span>
+                    <span className={classes.signatoryRights}>{selectedFile.size} Bytes</span>
                   </div>
                   <div className={classes.uploadFileName}>
                     <div id="Progress_Status">
@@ -255,13 +127,11 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = state => ({
-  prospectID: appConfigSelectors.getProspectId(state),
-  uploadErrorMessage: appConfigSelectors.getProspectErrorMessage(state)
+  prospectID: getProspectId(state),
+  uploadErrorMessage: getProspectErrorMessage(state)
 });
 
-export default withStyles(style)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(UploadDocuments)
-);
+export const UploadDocuments = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UploadDocumentsComponent);

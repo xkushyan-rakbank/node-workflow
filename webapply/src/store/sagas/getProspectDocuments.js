@@ -34,7 +34,6 @@ function* updateProspectDocuments({ props, selectedFile, data, prospectId }) {
     indexValue = props.index;
   }
 
-  // update the store value after getting the response
   try {
     yield put(setProspect());
     const response = yield call(uploadProspectDocument.send, { data, prospectId, indexValue });

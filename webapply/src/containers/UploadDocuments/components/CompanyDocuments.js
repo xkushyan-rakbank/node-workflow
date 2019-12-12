@@ -1,5 +1,5 @@
 import React from "react";
-import UploadDocuments from "./UploadDocument";
+import { UploadDocuments } from "./UploadDocument";
 import { ICONS, Icon } from "./../../../components/Icons";
 import { useStyles } from "./styled";
 

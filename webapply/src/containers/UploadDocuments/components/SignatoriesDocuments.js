@@ -2,8 +2,7 @@ import React from "react";
 import get from "lodash/get";
 
 import Avatar from "./../../../components/Avatar";
-import UploadDocuments from "./UploadDocument";
-
+import { UploadDocuments } from "./UploadDocument";
 import { useStyles } from "./styled";
 
 export const SignatoriesDocuments = ({ documents, signatories }) => {
