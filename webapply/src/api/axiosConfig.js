@@ -9,11 +9,11 @@ import { log } from "../utils/loggger";
 const ENCRYPT_METHODS = [];
 const SYM_KEY_HEADER = "x-sym-key";
 
-// const getBaseURL = () =>
-//   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
+const getBaseURL = () =>
+  process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8080"
+  baseURL: getBaseURL()
 });
 
 instance.interceptors.request.use(config => {
