@@ -11,7 +11,7 @@
         "statusType": "Upload Documents",
         "statusCode": "",
         "statusFlag": "",
-        "statusNotes": "New documents needed",
+        "statusNotes": "Documents needed",
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "",
@@ -30,7 +30,8 @@
         "createdBy": "string",
         "lastModifiedBy": "Kapil",
         "viewId": "/ReUploadDocuments",
-        "actionType": "Save"
+        "actionType": "Save",
+        "accountType": "RAKStarter"
       },
       "signatoryInfo": [
         {
@@ -134,7 +135,7 @@
       ],
       "organizationInfo": {
         "licenseNumber": "3456798765789",
-        "companyName": "Gill Pvt. Ltd.",
+        "companyName": "",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [
@@ -193,7 +194,7 @@
         "statusType":"Incomplete",
         "statusCode": "",
         "statusFlag": "",
-        "statusNotes": "Incomplete application",
+        "statusNotes": "Incomplete",
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within 1 day to meet you in person and help you out.",
@@ -212,6 +213,7 @@
         "createdBy": "string",
         "lastModifiedBy": "string",
         "viewId": "/ApplicationSubmitted",
+        "accountType": "RAKelite",
         "actionType": "Save"
       },
       "signatoryInfo": [
@@ -285,6 +287,7 @@
         "createdBy": "string",
         "lastModifiedBy": "string",
         "viewId": "/ApplicationSubmitted",
+        "accountType": "Current Account",
         "actionType": "Save"
       },
       "signatoryInfo": [
