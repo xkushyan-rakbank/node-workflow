@@ -1,6 +1,6 @@
 import React from "react";
 import Avatar from "./../../../components/Avatar";
-import UploadDocuments from "./../../../components/UploadDocument/UploadDocument";
+import UploadDocuments from "./UploadDocument";
 
 import { useStyles } from "./styled";
 

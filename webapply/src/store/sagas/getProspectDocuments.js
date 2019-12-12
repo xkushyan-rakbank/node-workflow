@@ -1,9 +1,14 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
-
-import { getProspectDocuments } from "../../api/apiClient";
+import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
 import * as actions from "../actions/getProspectDocuments";
-import { updateProspect, setConfig } from "../actions/appConfig";
+import {
+  setProspect,
+  setProspectFail,
+  setProspectSuccess,
+  updateProspect,
+  setConfig
+} from "../actions/appConfig";
 import { log } from "../../utils/loggger";
 
 function* getProspectDocumentsSaga() {
@@ -17,56 +22,65 @@ function* getProspectDocumentsSaga() {
     config.prospect.documents = response.data;
     yield put(updateProspect(config));
   } catch (error) {
-    log(error);
+    config.prospect.documents = error;
+    yield put(updateProspect(config));
   }
 }
 
-function* updateProspectDocuments(payload) {
+function* updateProspectDocuments({ props, selectedFile, data, prospectId }) {
   let clearedPersonalInfo, docDetails, indexValue, signatoryIndexName, signatoryDocIndex;
-  if (payload.payload.type) {
-    docDetails = payload.payload.type;
-    indexValue = payload.payload.index;
+  if (props.type) {
+    docDetails = props.type;
+    indexValue = props.index;
   }
 
   // update the store value after getting the response
-
-  if (docDetails === "companyDocument") {
-    clearedPersonalInfo = {
-      [`prospect.documents.companyDocuments[${indexValue}].uploadStatus`]: "Uploaded",
-      [`prospect.documents.companyDocuments[${indexValue}].documentTitle`]: payload.payload
-        .documents.documentType,
-      [`prospect.documents.companyDocuments[${indexValue}].fileName`]: payload.docDetails.name,
-      [`prospect.documents.companyDocuments[${indexValue}].fileSize`]: payload.docDetails.size,
-      [`prospect.documents.companyDocuments[${indexValue}].submittedDt`]: payload.docDetails
-        .lastModifiedDate,
-      [`prospect.documents.companyDocuments[${indexValue}].fileFormat`]: payload.docDetails.type
-    };
-  } else if (docDetails === "stakeholdersDocuments") {
-    signatoryDocIndex = payload.payload.signatoryDocIndex;
-    signatoryIndexName = payload.payload.docUploadDetails[indexValue].signatoryName;
-    clearedPersonalInfo = {
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].uploadStatus`]: "Updated",
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].documentTitle`]: payload.payload.documents.documentType,
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].fileName`]: payload.docDetails.name,
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].fileSize`]: payload.docDetails.size,
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].submittedDt`]: payload.docDetails.lastModifiedDate,
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].fileFormat`]: payload.docDetails.type
-    };
+  try {
+    yield put(setProspect());
+    const response = yield call(uploadProspectDocument.send, { data, prospectId, indexValue });
+    if (response.status === 200) {
+      if (docDetails === "companyDocument") {
+        clearedPersonalInfo = {
+          [`prospect.documents.companyDocuments[${indexValue}].uploadStatus`]: "Uploaded",
+          [`prospect.documents.companyDocuments[${indexValue}].documentType`]: props.documents
+            .documentType,
+          [`prospect.documents.companyDocuments[${indexValue}].fileName`]: selectedFile.name,
+          [`prospect.documents.companyDocuments[${indexValue}].fileSize`]: selectedFile.size,
+          // eslint-disable-next-line max-len
+          [`prospect.documents.companyDocuments[${indexValue}].submittedDt`]: selectedFile.lastModifiedDate,
+          [`prospect.documents.companyDocuments[${indexValue}].fileFormat`]: selectedFile.type
+        };
+      } else if (docDetails === "stakeholdersDocuments") {
+        signatoryDocIndex = props.signatoryDocIndex;
+        signatoryIndexName = props.docUploadDetails[indexValue].signatoryName;
+        clearedPersonalInfo = {
+          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+            "_" +
+            signatoryIndexName}][${indexValue}].uploadStatus`]: "Updated",
+          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+            "_" +
+            signatoryIndexName}][${indexValue}].documentType`]: props.documents.documentType,
+          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+            "_" +
+            signatoryIndexName}][${indexValue}].fileName`]: selectedFile.name,
+          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+            "_" +
+            signatoryIndexName}][${indexValue}].fileSize`]: selectedFile.size,
+          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+            "_" +
+            signatoryIndexName}][${indexValue}].submittedDt`]: selectedFile.lastModifiedDate,
+          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
+            "_" +
+            signatoryIndexName}][${indexValue}].fileFormat`]: selectedFile.type
+        };
+      }
+      yield put(setProspectSuccess(clearedPersonalInfo));
+    } else {
+      yield put(setProspectFail(true));
+    }
+  } catch (error) {
+    log(error);
   }
-
-  yield put(updateProspect(clearedPersonalInfo));
 }
 
 function* updateExtraProspectDocuments(action) {
@@ -88,7 +102,7 @@ function* deleteExtraProspectDocuments(action) {
 export default function* appConfigSaga() {
   yield all([
     takeLatest(actions.RETRIEVE_DOC_UPLOADER, getProspectDocumentsSaga),
-    takeLatest(actions.UPLOAD_SUCCESS, updateProspectDocuments),
+    takeLatest(actions.DOC_UPLOADER, updateProspectDocuments),
     takeLatest(actions.EXTRA_DOC_UPLOAD_SUCCESS, updateExtraProspectDocuments),
     takeLatest(actions.DELETE_EXTRA_DOC_UPLOAD_SUCCESS, deleteExtraProspectDocuments)
   ]);

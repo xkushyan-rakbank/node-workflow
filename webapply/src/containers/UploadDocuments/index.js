@@ -8,7 +8,7 @@ import {
   getRequiredDocsCount
 } from "../../store/selectors/appConfig";
 import { UploadDocument } from "./UploadDocument";
-import { retrieveDocDetails, docUploadSuccess } from "../../store/actions/getProspectDocuments";
+import { retrieveDocDetails, docUpload } from "../../store/actions/getProspectDocuments";
 import { getInputValueById } from "../../store/selectors/input";
 
 const mapStateToProps = state => ({
@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   retrieveDocDetails,
-  docUploadSuccess
+  docUpload
 };
 
 export const UploadDocuments = connect(

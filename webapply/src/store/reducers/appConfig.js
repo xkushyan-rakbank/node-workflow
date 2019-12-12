@@ -4,7 +4,9 @@ import {
   RECEIVE_APPCONFIG_FAIL,
   UPDATE_PROSPECT_ID,
   SET_CONFIG,
-  SET_PROSPECT,
+  SET_PROSPECT_SUCCESS,
+  SET_PROSPECT_REQUEST,
+  SET_PROSPECT_FAIL,
   SAVE_PROSPECT_MODEL
 } from "../actions/appConfig";
 
@@ -14,6 +16,7 @@ export const initialState = {
   endpoints: {},
   prospect: {},
   error: "",
+  prospectError: false,
   searchInfo: { segment: "sme" },
   login: {},
   prospectModel: {}
@@ -44,11 +47,29 @@ const appConfigReducer = (state = initialState, action) => {
         ...state,
         ...action.payload
       };
-    case SET_PROSPECT:
+    case SET_PROSPECT_REQUEST:
       return {
         ...state,
-        prospect: action.prospect
+        loading: true,
+        prospectError: false
       };
+    case SET_PROSPECT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        prospectError: false,
+        prospect: {
+          ...state.prospect,
+          ...action.prospect
+        }
+      };
+    case SET_PROSPECT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        prospectError: true
+      };
+
     case UPDATE_PROSPECT_ID:
       return {
         ...state,

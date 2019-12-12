@@ -1,5 +1,5 @@
 import React from "react";
-import UploadDocument from "./../../../components/UploadDocument/UploadDocument";
+import UploadDocuments from "./UploadDocument";
 import { ICONS, Icon } from "./../../../components/Icons";
 import { useStyles } from "./styled";
 
@@ -13,8 +13,13 @@ export const CompanyDocuments = ({ documents, companyName, icon = "" }) => {
           <h3 className={classes.label}>{companyName}</h3>
         </div>
       </header>
-      {documents.map(document => (
-        <UploadDocument key={document.documentKey} documents={document} type="companyDocument" />
+      {documents.map((document, index) => (
+        <UploadDocuments
+          key={document.documentKey}
+          documents={document}
+          index={index}
+          type="companyDocument"
+        />
       ))}
     </div>
   );

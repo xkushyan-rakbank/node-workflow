@@ -113,3 +113,21 @@ export const screening = {
       method: "GET"
     })
 };
+
+export const uploadProspectDocument = {
+  send: ({ data, prospectId, indexValue }) => {
+    return httpClient.request({
+      url: buildURI("docUploaderUri", prospectId),
+      method: "POST",
+      data,
+      onUploadProgress: ProgressEvent => {
+        const progress = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100);
+        let element = document.getElementById(`myProgressBar${indexValue}`);
+        let progressPercentage = document.getElementById(`progressStatus${indexValue}`);
+        element.style.width = progress + "%";
+        element.style.backgroundColor = "#373737";
+        progressPercentage.innerHTML = progress + "%";
+      }
+    });
+  }
+};

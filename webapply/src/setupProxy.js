@@ -18,4 +18,11 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    "/docUploader",
+    proxy({
+      target: "http://localhost:8081",
+      changeOrigin: true
+    })
+  );
 };
