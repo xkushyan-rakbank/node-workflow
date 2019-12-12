@@ -4,8 +4,7 @@ import FormNavigation from "../../components/FormNavigation";
 import ApplicationStatus from "../../components/ApplicationStatus";
 import Header from "../../components/Header";
 import HeaderTitle from "../../components/HeaderTitle";
-import { Notifications } from "../../components/Notifications/index";
-import { NotificationsProvider } from "../../components/Notifications";
+import { Notifications, NotificationsProvider } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { APP_STOP_SCREEN_RESULT } from "./constants";
 
