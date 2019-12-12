@@ -40,7 +40,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.CSRFTokenHelper;
-import ae.rakbank.webapply.helpers.CookieHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.OAuthService;
 import ae.rakbank.webapply.services.RecaptchaService;
@@ -63,9 +62,6 @@ public class ApiRequestForwarder {
 
 	@Autowired
 	CSRFTokenHelper csrfTokenHelper;
-
-	@Autowired
-	CookieHelper cookieHelper;
 
 	private JsonNode dehURIs = null;
 
@@ -95,34 +91,33 @@ public class ApiRequestForwarder {
 		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
 			if (requestBodyJSON.has("recaptchaToken")) {
-        /*
-				logger.info("Validate reCAPTCHA before saving applicant info.");
-				String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
-				String ip = servletRequest.getRemoteAddr();
-				ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
+        if (EnvUtil.isCheckRecaptcha()) {
+          logger.info("Validate reCAPTCHA before saving applicant info.");
+          String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
+          String ip = servletRequest.getRemoteAddr();
+          ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
 
-				if (captchaResponse.getStatusCode().is2xxSuccessful()) {
-					logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
-				} else {
-					logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
-							captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
-				}
+          if (captchaResponse.getStatusCode().is2xxSuccessful()) {
+            logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
+          } else {
+            logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
+                captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
+          }
 
-				logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
-						oauthResponse.getStatusCodeValue(), ip));
+          logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
+              oauthResponse.getStatusCodeValue(), ip));
 
-				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
-					return captchaResponse;
+          if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
+            return captchaResponse;
+          }
         }
-        */
 
 				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
-			} else {
-				// commented to make test the application on DEV env.
+      } else if (EnvUtil.isRecaptchaEnable()) {
 				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
-						"recaptchaToken is required");
+        "recaptchaToken is required");
 
-				return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
       }
       
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
@@ -432,12 +427,12 @@ public class ApiRequestForwarder {
 				}
 
 				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
-			} else {
+      } else if (EnvUtil.isRecaptchaEnable()) {
 				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
 						"recaptchaToken is required");
 
 				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
-			}
+      }
 
 			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
 					MediaType.APPLICATION_JSON);
@@ -603,8 +598,6 @@ public class ApiRequestForwarder {
 					operationId, url, response.getStatusCodeValue()));
 
 			csrfTokenHelper.createCSRFToken(httpRequest, headers);
-
-			cookieHelper.createWebApplyJWT(httpResponse);
 
 		} else {
 			logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",

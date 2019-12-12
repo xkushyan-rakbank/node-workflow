@@ -8,17 +8,22 @@ export const disableArrayValues = ["Account activated", "Declined", "Ineligible"
 export const CONFIRM_MESSAGE =
   "Editing the application will result in re-performing the pre-screening checks and might change the results.";
 
+export const STEP_1 = 1;
+export const STEP_2 = 2;
+export const STEP_3 = 3;
+export const STEP_4 = 4;
+
 export const searchedAppInfoSteps = [
   {
-    step: 1,
+    step: STEP_1,
     title: "Details",
     component: CompanyDetails
   },
   {
-    step: 2,
+    step: STEP_2,
     title: "Checks",
     component: CheckList
   },
-  { step: 3, title: "Documents", component: Documents },
-  { step: 4, title: "Audit Trail", component: AuditTrail }
+  { step: STEP_3, title: "Documents", component: Documents },
+  { step: STEP_4, title: "Audit Trail", component: AuditTrail }
 ];

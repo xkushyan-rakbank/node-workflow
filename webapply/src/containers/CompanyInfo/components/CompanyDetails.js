@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
-import { companyCategoryOptions } from "../../../constants/options";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX } from "../../../utils/validation";
 
@@ -47,8 +46,8 @@ export const CompanyDetails = ({ handleContinue }) => (
             <Field
               name="companyCategory"
               label="Company Category"
-              path="prospect.organizationInfo.companyCategory"
-              options={companyCategoryOptions}
+              path="prospect.OrgKYCDetails.companyCategory"
+              datalistId="companyCategory"
               component={SelectAutocomplete}
             />
           </Grid>

@@ -7,7 +7,8 @@ import routes from "../../../routes";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
-import { disableArrayValues, searchedAppInfoSteps, CONFIRM_MESSAGE } from "./constants";
+import { disableArrayValues, searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1 } from "./constants";
+import { useStep } from "../../../components/StepComponent/useStep";
 
 import { useStyles } from "./styled";
 
@@ -19,8 +20,11 @@ export const SearchedAppInfoComponent = ({
   getProspectInfo
 }) => {
   const classes = useStyles();
+  const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
+  const [step, handleSetStep] = useStep(STEP_1, initialAvailableSteps);
 
-  const [step, setStep] = useState(1);
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
+
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
 
   useEffect(() => {
@@ -65,8 +69,8 @@ export const SearchedAppInfoComponent = ({
                 title={item.title}
                 subTitle={item.infoTitle}
                 isActiveStep={step === item.step}
-                isFilled={false}
-                handleClick={() => setStep(item.step)}
+                isFilled={true}
+                handleClick={createSetStepHandler(item.step)}
                 hideContinue={true}
                 prospectInfo={prospectInfo}
                 stepForm={item.component}
