@@ -59,8 +59,7 @@ export const ValueAddedServicesComponent = ({
     } else {
       updateProspect({ [name]: "" });
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [accountType, name, updateProspect]);
   return (
     <>
       <div className={cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency })}>

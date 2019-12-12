@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 
-import Avatar from "./../../../components/Avatar";
+import Avatar from "../../../components/Avatar/Avatar";
 import UploadDocuments from "./../../../components/UploadDocument/UploadDocument";
 
 import { useStyles } from "./styled";
@@ -15,7 +15,7 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
       docUploadDetails && (
         <div className={classes.signatoreyContainer} key={signatorie.signatoryId}>
           <div className={classes.contentWrapper}>
-            <Avatar firstName={signatorie.firstName} lastName={signatorie.lastName} />
+            <Avatar firstName={signatorie.firstName} lastName={signatorie.lastName} index={index} />
             <div className={classes.userInfo}>
               <div className={classes.nameField}>{signatorie.firstName}</div>
               <div className={classes.SignatoryRights}>{signatorie.roles}</div>

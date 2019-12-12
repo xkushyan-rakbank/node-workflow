@@ -52,14 +52,17 @@ export const SearchedAppInfoComponent = ({
     return null;
   }
 
+  const fullName = get(prospectInfo, "applicantInfo.fullName", "");
+  const [firstName, lastName] = fullName.split(/\s/);
+
   return (
     <>
       <h2>Application Details</h2>
       <p className="formDescription" />
       <FormCard
-        content={
-          <div className={classes.title}>{get(prospectInfo, "applicantInfo.fullName", "")}</div>
-        }
+        firstName={firstName}
+        lastName={lastName}
+        content={<div className={classes.title}>{fullName}</div>}
       >
         <div className={classes.formContent}>
           {searchedAppInfoSteps.map(item => {
