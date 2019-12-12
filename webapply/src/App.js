@@ -30,7 +30,7 @@ import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 import { getEndpoints } from "./store/selectors/appConfig";
 import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
-import routes from "./routes.js";
+import routes from "./routes";
 import { theme } from "./theme";
 
 import "./App.scss";
