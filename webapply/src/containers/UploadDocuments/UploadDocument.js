@@ -12,8 +12,6 @@ export const UploadDocument = ({
   documents,
   companyName,
   signatories,
-  uploadedDocsCount,
-  requiredDocCount,
   history
 }) => {
   const classes = useStyles();
@@ -50,12 +48,7 @@ export const UploadDocument = ({
 
       <div className="linkContainer">
         <BackLink path={routes.finalQuestions} />
-        <SubmitButton
-          handleClick={goToSelectService}
-          label="Next Step"
-          justify="flex-end"
-          disabled={requiredDocCount !== uploadedDocsCount}
-        />
+        <SubmitButton handleClick={goToSelectService} label="Next Step" justify="flex-end" />
       </div>
     </>
   );
