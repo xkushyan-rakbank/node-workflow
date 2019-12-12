@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export const useStep = initialStep => {
+export const useStep = (initialStep, initialAvailableSteps = [initialStep]) => {
   const [step, setStep] = useState(initialStep);
-  const [availableSteps, setAvailableSteps] = useState([initialStep]);
+  const [availableSteps, setAvailableSteps] = useState(initialAvailableSteps);
 
   const handleSetNextStep = () => {
     const nextStep = step + 1;
@@ -19,5 +19,5 @@ export const useStep = initialStep => {
     }
   };
 
-  return [step, availableSteps, handleSetNextStep, handleSetStep];
+  return [step, handleSetStep, availableSteps, handleSetNextStep];
 };
