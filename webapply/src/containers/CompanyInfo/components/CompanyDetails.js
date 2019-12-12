@@ -46,7 +46,7 @@ export const CompanyDetails = ({ handleContinue }) => (
             <Field
               name="companyCategory"
               label="Company Category"
-              path="prospect.organizationInfo.companyCategory"
+              path="prospect.OrgKYCDetails.companyCategory"
               datalistId="companyCategory"
               component={SelectAutocomplete}
             />
