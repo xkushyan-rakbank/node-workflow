@@ -10,10 +10,10 @@ export const checkIsChequeBookApplied = ({
   );
 
   if (isSelectForeignCurrencyAndLocal || isSelectedLocalMobilePhone) {
-    return true;
+    return { isDisabledChequeBook: true, isChequeBookApplied: true };
   }
 
-  return false;
+  return { isDisabledChequeBook: true, isChequeBookApplied: false };
 };
 
 export const checkIsDebitCardApplied = ({
@@ -25,12 +25,16 @@ export const checkIsDebitCardApplied = ({
 
   const isAccountSigningTypeAnyOfUs = accountSigningType === selectedSigningTypesAny;
 
-  if (isSelectOnlyForeignCurrency || !isAccountSigningTypeAnyOfUs) {
-    return true;
+  if (
+    isSelectForeignCurrencyAndLocal ||
+    isAccountSigningTypeAnyOfUs ||
+    authorityType === authorityTypeSP
+  ) {
+    return { isDisabledDebitCard: true, isDebitCardApplied: true };
   }
 
-  if (authorityType === authorityTypeSP || isSelectForeignCurrencyAndLocal) {
-    return true;
+  if (isSelectOnlyForeignCurrency) {
+    return { isDisabledDebitCard: false, isDebitCardApplied: false };
   }
-  return isAccountSigningTypeAnyOfUs;
+  return { isDisabledDebitCard: false, isDebitCardApplied: false };
 };

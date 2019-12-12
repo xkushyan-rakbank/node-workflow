@@ -11,5 +11,8 @@ export const useStyles = makeStyles({
       width: "auto",
       margin: "0"
     }
+  },
+  submitButton: {
+    padding: "0 24px"
   }
 });

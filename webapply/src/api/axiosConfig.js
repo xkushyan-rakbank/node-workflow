@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
-import { NotificationsManager } from "../components/Notifications";
+import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 

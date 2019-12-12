@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import cx from "classnames";
 
 import {
@@ -47,12 +47,19 @@ export const ValueAddedServicesComponent = ({
   const handleSelectValue = useCallback(
     selectedService => {
       const serviceName =
-        value === selectedService && accountType !== accountsNames.starter ? selectedService : "";
+        value === selectedService && accountType !== accountsNames.starter ? "" : selectedService;
       updateProspect({ [name]: serviceName });
     },
     [value, accountType, name, updateProspect]
   );
 
+  useEffect(() => {
+    if (accountType === accountsNames.starter) {
+      updateProspect({ [name]: "RAKvalue PLUS" });
+    } else {
+      updateProspect({ [name]: "" });
+    }
+  }, []);
   return (
     <>
       <div className={cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency })}>

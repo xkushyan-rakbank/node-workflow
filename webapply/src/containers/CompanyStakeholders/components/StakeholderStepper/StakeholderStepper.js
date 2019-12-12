@@ -9,7 +9,10 @@ import { stakeHoldersSteps, STEP_1 } from "./../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { useStep } from "../../../../components/StepComponent/useStep";
+import { changeEditableStakeholder } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
+
+const timeInterval = 5000;
 
 const StakeholderStepperComponent = ({
   id,
@@ -20,7 +23,8 @@ const StakeholderStepperComponent = ({
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
-  loading: isStatusLoading
+  loading: isStatusLoading,
+  changeEditableStakeholder
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
@@ -31,12 +35,13 @@ const StakeholderStepperComponent = ({
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
-    if (step > stakeHoldersSteps.length) {
-      changeFinalScreenDisplay(true);
-      setInterval(() => {
-        changeFinalScreenDisplay(false);
-      }, 5000);
-    }
+    if (step <= stakeHoldersSteps.length) return;
+    changeFinalScreenDisplay(true);
+    const interval = setInterval(() => {
+      changeFinalScreenDisplay(false);
+      changeEditableStakeholder();
+    }, timeInterval);
+    return () => clearInterval(interval);
   }, [step]);
 
   const handleDeleteStakeholder = () => {
@@ -96,7 +101,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI: sendProspectToAPIPromisify
+  sendProspectToAPI: sendProspectToAPIPromisify,
+  changeEditableStakeholder
 };
 
 export const StakeholderStepper = connect(

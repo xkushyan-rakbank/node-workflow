@@ -40,7 +40,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.CSRFTokenHelper;
-import ae.rakbank.webapply.helpers.CookieHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.OAuthService;
 import ae.rakbank.webapply.services.RecaptchaService;
@@ -63,9 +62,6 @@ public class ApiRequestForwarder {
 
 	@Autowired
 	CSRFTokenHelper csrfTokenHelper;
-
-	@Autowired
-	CookieHelper cookieHelper;
 
 	private JsonNode dehURIs = null;
 
@@ -603,8 +599,6 @@ public class ApiRequestForwarder {
 					operationId, url, response.getStatusCodeValue()));
 
 			csrfTokenHelper.createCSRFToken(httpRequest, headers);
-
-			cookieHelper.createWebApplyJWT(httpResponse);
 
 		} else {
 			logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
