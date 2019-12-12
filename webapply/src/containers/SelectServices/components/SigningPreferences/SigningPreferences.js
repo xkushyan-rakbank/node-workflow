@@ -5,7 +5,6 @@ import { Grid } from "@material-ui/core";
 
 import { PHONE_REGEX, NAME_REGEX } from "../../../../utils/validation";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
-import { accountSigningTypes } from "../../../../constants/options";
 import { Subtitle } from "../../../../components/Subtitle";
 import {
   Input,
@@ -79,9 +78,9 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
           <Subtitle title="Signing transactions" helpMessage="help message todo" />
           <Field
             name="accountSigningType"
-            options={accountSigningTypes}
             path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
             typeRadio
+            datalistId="accountSigningType"
             onSelect={e => {
               setFieldValue("accountSigningType", e.currentTarget.value);
               setFieldValue("accountSigningInstn", "");

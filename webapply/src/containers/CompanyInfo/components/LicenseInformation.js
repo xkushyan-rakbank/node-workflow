@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import { Input, DatePicker, CustomSelect, AutoSaveField as Field } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
-import { licenseIssuingAuthority, countryOfIncorporation } from "../../../constants/options";
 import { NUMBER_REGEX } from "../../../utils/validation";
 
 const initialValues = {
@@ -57,7 +56,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               name="licenseIssuingAuthority"
               label="Lisence Issuing authority"
               path="prospect.organizationInfo.licenseIssuingAuthority"
-              options={licenseIssuingAuthority}
+              datalistId="licenseIssuingAuthority"
               component={CustomSelect}
             />
           </Grid>
@@ -66,7 +65,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               name="countryOfIncorporation"
               label="Country of incorporation"
               path="prospect.organizationInfo.countryOfIncorporation"
-              options={countryOfIncorporation}
+              datalistId="countryOfIncorporation"
               component={CustomSelect}
             />
           </Grid>
