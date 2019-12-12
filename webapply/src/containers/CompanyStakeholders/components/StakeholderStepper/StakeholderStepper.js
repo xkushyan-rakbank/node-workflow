@@ -29,7 +29,7 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const [step, availableSteps, handleSetNextStep, handleSetStep] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
   const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
