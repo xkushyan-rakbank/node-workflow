@@ -10,7 +10,7 @@ import { CompanyInfo } from "./containers/CompanyInfo/CompanyInfo";
 import { Login } from "./containers/AgentPages/Login";
 import CompanyStakeholders from "./containers/CompanyStakeholders/CompanyStakeholders";
 import { FinalQuestions } from "./containers/FinalQuestions/index";
-import FormConfirm from "./containers/FormConfirm";
+import FormConfirm from "./containers/FormConfirm/FormConfirm";
 import { FormLayout } from "./containers/FormLayout";
 import { SearchProspect } from "./containers/AgentPages/SearchProspect";
 import { SelectServices } from "./containers/SelectServices";

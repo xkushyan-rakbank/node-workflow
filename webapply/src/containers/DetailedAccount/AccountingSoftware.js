@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
+import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { ExpandedOptionsCards } from "../SelectServices/components/ValueAddedServices/ExpandedOptionsCards/ExpandedOptionsCards";
 
 const useStyles = makeStyles({

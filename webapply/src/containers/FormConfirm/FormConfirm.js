@@ -4,16 +4,18 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 
-import { SubmitButton } from "../components/Buttons/SubmitButton";
-import { OtpVerification } from "../components/OtpVerification";
-import { ErrorMessage } from "../components/Notifications";
-import { displayScreenBasedOnViewId, updateSaveType } from "../store/actions/appConfig";
-import { generateOtpCode, verifyOtp } from "../store/actions/otp";
-import { getInputServerValidityByPath } from "../store/selectors/serverValidation";
-import { getOtp } from "../store/selectors/otp";
-import { getApplicationInfo, getApplicantInfo } from "../store/selectors/appConfig";
-import { getInputNameById } from "../store/selectors/input";
-import routes from "../routes";
+import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { OtpVerification } from "../../components/OtpVerification/index";
+import { ErrorMessage } from "../../components/Notifications/index";
+import { displayScreenBasedOnViewId, updateSaveType } from "../../store/actions/appConfig";
+import { generateOtpCode, verifyOtp } from "../../store/actions/otp";
+import { getInputServerValidityByPath } from "../../store/selectors/serverValidation";
+import { getOtp } from "../../store/selectors/otp";
+import { getApplicationInfo, getApplicantInfo } from "../../store/selectors/appConfig";
+import { getInputNameById } from "../../store/selectors/input";
+import routes from "../../routes";
+
+// import { useStyles } from './styled';
 
 const style = {
   confirmForm: {
@@ -48,7 +50,7 @@ const style = {
     opacity: "0.5",
     cursor: "not-allowed"
   }
-};
+}; // todo remove, use useStyles() instead
 
 class FormConfirm extends React.Component {
   constructor(props) {
@@ -128,6 +130,7 @@ class FormConfirm extends React.Component {
           We have sent you a verification code to {codeSentTo} . Please input the six digits below,
           to cofirm this is you.
         </p>
+        {/*TODO reuse Form*/}
         <form noValidate onSubmit={this.handleSubmit}>
           <Grid container item xs={12} direction="row" justify="flex-start">
             <OtpVerification code={this.state.code} onChange={this.handleSetCode} />

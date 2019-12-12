@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
-import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
+import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { OtpVerification } from "../../components/OtpVerification";
 import { ErrorMessage } from "../../components/Notifications";

@@ -1,8 +1,8 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { mobileResolution } from "../constants";
 
-const style = {
+const useStyles = makeStyles({
   title: {
     fontSize: "24px",
     fontWeight: 600,
@@ -19,13 +19,14 @@ const style = {
       fontSize: "14px"
     }
   }
+});
+
+export const SectionTitleWithInfo = ({ title, info }) => {
+  const classes = useStyles();
+  return (
+    <>
+      <h3 className={classes.title}>{title}</h3>
+      <span className={classes.info}>{info}</span>
+    </>
+  );
 };
-
-const SectionTitleWithInfo = ({ title, info, classes }) => (
-  <>
-    <h3 className={classes.title}>{title}</h3>
-    <span className={classes.info}>{info}</span>
-  </>
-);
-
-export default withStyles(style)(SectionTitleWithInfo);
