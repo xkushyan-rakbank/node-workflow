@@ -8,11 +8,9 @@ import { ICONS } from "../../../components/Icons";
 import { ApplicationList } from "./ApplicationList";
 import { ApplicationGrid } from "./ApplicationGrid";
 import { ButtonWithIcon } from "./ButtonWithIcon";
+import { GRID_VIEW, LIST_VIEW } from "../constants";
 
 import { useStyles } from "./styled";
-
-const LIST_VIEW = "list";
-const GRID_VIEW = "grid";
 
 export const MyApplications = ({ searchResults, getProspectInfo }) => {
   const classes = useStyles();
