@@ -21,7 +21,7 @@ export const SearchedAppInfoComponent = ({
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
-  const { step, handleSetStep } = useStep(STEP_1, initialAvailableSteps);
+  const [step, handleSetStep] = useStep(STEP_1, initialAvailableSteps);
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
