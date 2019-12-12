@@ -1,4 +1,6 @@
 import React from "react";
+import get from "lodash/get";
+
 import Avatar from "./../../../components/Avatar";
 import UploadDocuments from "./../../../components/UploadDocument/UploadDocument";
 
@@ -24,7 +26,7 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
               </div>
             </div>
           </div>
-          {docUploadDetails.map(
+          {get(docUploadDetails, "documents", []).map(
             document =>
               signatorie.firstName === document.signatoryName && (
                 <UploadDocuments
