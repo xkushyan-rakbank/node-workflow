@@ -4,7 +4,7 @@ import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { CustomCheckbox } from "./CustomCheckbox";
-import { InfoTitle } from "../../Notifications/index";
+import { InfoTitle } from "../../../components/InfoTitle";
 import { ErrorMessage } from "../../Notifications/index";
 
 const useStyles = makeStyles({
@@ -12,7 +12,8 @@ const useStyles = makeStyles({
     margin: "12px 0 24px",
     width: "100%",
     display: "flex"
-  }
+  },
+  infoTitle: {}
 });
 
 export const Checkbox = ({
@@ -39,7 +40,7 @@ export const Checkbox = ({
       />
 
       {hasError && <ErrorMessage error={errorMessage} />}
-      {infoTitle && <InfoTitle title={infoTitle} />}
+      {infoTitle && <InfoTitle className={classes.infoTitle} title={infoTitle} />}
     </FormControl>
   );
 };
