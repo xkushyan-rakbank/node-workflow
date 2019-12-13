@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 
-import Avatar from "../../../components/Avatar/Avatar";
+import { UserAvatar as Avatar } from "../../../components/Avatar/Avatar";
 import UploadDocuments from "./../../../components/UploadDocument/UploadDocument";
 
 import { useStyles } from "./styled";

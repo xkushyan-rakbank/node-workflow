@@ -2,7 +2,7 @@ import React from "react";
 import get from "lodash/get";
 import cx from "classnames";
 
-import Avatar from "../../../../components/Avatar/Avatar";
+import { UserAvatar as Avatar } from "../../../../components/Avatar/Avatar";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";

@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
 
-import Avatar from "../Avatar/Avatar";
+import { UserAvatar as Avatar } from "../Avatar/Avatar";
 
 const useStyles = makeStyles({
   contentWrapper: {
