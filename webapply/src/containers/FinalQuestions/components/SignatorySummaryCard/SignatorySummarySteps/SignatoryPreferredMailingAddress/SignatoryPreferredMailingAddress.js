@@ -17,9 +17,7 @@ import { useStyles } from "./styled";
 
 const signatoryPreferredMailingAddressSchema = Yup.object().shape({
   addressFieldDesc: Yup.string().required("You need to provide address details"),
-  addressLine1: Yup.string()
-    .required("You need to provide address details")
-    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+  addressLine1: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
     .matches(PO_NUMBER_REGEX, "Invalid PO box number"),

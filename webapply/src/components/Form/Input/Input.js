@@ -2,6 +2,7 @@ import React from "react";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import { getIn } from "formik";
+import cx from "classnames";
 
 import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
 
@@ -37,7 +38,7 @@ export const Input = ({
             placeholder={placeholder}
             disabled={disabled}
             error={isError}
-            InputProps={{ classes: { input: classes.input } }}
+            InputProps={{ classes: { input: cx(classes.input, { [classes.disabled]: disabled }) } }}
           />
         </ContexualHelp>
 
