@@ -49,7 +49,7 @@ export const useStyles = makeStyles({
   },
   contentBox: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
     flexGrow: "1",
     paddingLeft: "16px",
     paddingRight: "16px"
@@ -229,12 +229,18 @@ export const useStyles = makeStyles({
   },
 
   cancel: {
-    borderRadius: "25px",
-    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    width: 20,
     border: "solid 1px #e8e8e8",
+    height: 20,
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    borderRadius: 25,
     backgroundColor: "#ffffff",
-    padding: "0 6px",
-    justify: "flex-end"
+    margin: 0,
+    display: "flex",
+    justifyContent: "center",
+    padding: 1,
+    fontSize: 15,
+    fontWeight: "bold"
   },
   defaultInput: {
     display: "none"
@@ -244,7 +250,10 @@ export const useStyles = makeStyles({
     borderRadius: "3px",
     textAlign: "center",
     lineHeight: "32px",
-    color: "black"
+    color: "black",
+    backgroundColor: "#373737",
+    width: "100%",
+    transition: "width 0.2s ease"
   },
   progressStatus: {
     display: "inline-block",

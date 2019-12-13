@@ -27,7 +27,7 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* updateProspectDocuments({ props, selectedFile, data, prospectId }) {
+function* updateProspectDocuments({ props, selectedFile, data, prospectId, setProgress }) {
   let clearedPersonalInfo, docDetails, indexValue, signatoryIndexName, signatoryDocIndex;
   if (props.type) {
     docDetails = props.type;
@@ -36,41 +36,35 @@ function* updateProspectDocuments({ props, selectedFile, data, prospectId }) {
 
   try {
     yield put(setProspect());
-    const response = yield call(uploadProspectDocument.send, { data, prospectId, indexValue });
+    const response = yield call(uploadProspectDocument.send, {
+      prospectId,
+      data,
+      setProgress
+    });
     if (response.status === 200) {
       if (docDetails === "companyDocument") {
+        const companyDocuments = `prospect.documents.companyDocuments[${indexValue}]`;
         clearedPersonalInfo = {
-          [`prospect.documents.companyDocuments[${indexValue}].uploadStatus`]: "Uploaded",
-          [`prospect.documents.companyDocuments[${indexValue}].documentType`]: props.documents
-            .documentType,
-          [`prospect.documents.companyDocuments[${indexValue}].fileName`]: selectedFile.name,
-          [`prospect.documents.companyDocuments[${indexValue}].fileSize`]: selectedFile.size,
-          // eslint-disable-next-line max-len
-          [`prospect.documents.companyDocuments[${indexValue}].submittedDt`]: selectedFile.lastModifiedDate,
-          [`prospect.documents.companyDocuments[${indexValue}].fileFormat`]: selectedFile.type
+          [`${companyDocuments}.uploadStatus`]: "Uploaded",
+          [`${companyDocuments}.documentType`]: props.documents.documentType,
+          [`${companyDocuments}.fileName`]: selectedFile.name,
+          [`${companyDocuments}.fileSize`]: selectedFile.size,
+          [`${companyDocuments}.submittedDt`]: selectedFile.lastModifiedDate,
+          [`${companyDocuments}.fileFormat`]: selectedFile.type
         };
       } else if (docDetails === "stakeholdersDocuments") {
         signatoryDocIndex = props.signatoryDocIndex;
         signatoryIndexName = props.docUploadDetails[indexValue].signatoryName;
+        // eslint-disable-next-line max-len
+        const stakeholdersDocuments = `prospect.documents.stakeholdersDocuments[${signatoryDocIndex}_${signatoryIndexName}][${indexValue}]`;
+
         clearedPersonalInfo = {
-          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-            "_" +
-            signatoryIndexName}][${indexValue}].uploadStatus`]: "Updated",
-          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-            "_" +
-            signatoryIndexName}][${indexValue}].documentType`]: props.documents.documentType,
-          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-            "_" +
-            signatoryIndexName}][${indexValue}].fileName`]: selectedFile.name,
-          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-            "_" +
-            signatoryIndexName}][${indexValue}].fileSize`]: selectedFile.size,
-          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-            "_" +
-            signatoryIndexName}][${indexValue}].submittedDt`]: selectedFile.lastModifiedDate,
-          [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-            "_" +
-            signatoryIndexName}][${indexValue}].fileFormat`]: selectedFile.type
+          [`${stakeholdersDocuments}.uploadStatus`]: "Updated",
+          [`${stakeholdersDocuments}.documentType`]: props.documents.documentType,
+          [`${stakeholdersDocuments}.fileName`]: selectedFile.name,
+          [`${stakeholdersDocuments}.fileSize`]: selectedFile.size,
+          [`${stakeholdersDocuments}.submittedDt`]: selectedFile.lastModifiedDate,
+          [`${stakeholdersDocuments}.fileFormat`]: selectedFile.type
         };
       }
       yield put(setProspectSuccess(clearedPersonalInfo));

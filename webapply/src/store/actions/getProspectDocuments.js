@@ -7,8 +7,8 @@ export const retrieveDocDetails = () => {
   return { type: RETRIEVE_DOC_UPLOADER };
 };
 
-export const docUpload = (props, selectedFile, data, prospectId) => {
-  return { type: DOC_UPLOADER, props, selectedFile, data, prospectId };
+export const docUpload = (props, selectedFile, data, prospectId, setProgress) => {
+  return { type: DOC_UPLOADER, props, selectedFile, data, prospectId, setProgress };
 };
 
 export const extraDocUploadSuccess = payload => {

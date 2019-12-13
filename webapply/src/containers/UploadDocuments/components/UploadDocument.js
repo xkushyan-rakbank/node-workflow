@@ -1,71 +1,72 @@
 import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
+import * as Yup from "yup";
 
 import { retrieveDocDetails, docUpload } from "../../../store/actions/getProspectDocuments";
 import { getProspectId, getProspectErrorMessage } from "../../../store/selectors/appConfig";
+import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
+import { docKeyGenerator } from "./../../../utils/docKeyGenerator";
 import companyIconSvg from "../../../assets/icons/file.png";
 import { useStyles } from "./styled";
 
+const validationFileSchema = Yup.object().shape({
+  file: Yup.mixed()
+    .test("size", "File size exceeded (5Mb maximum)", value => value && value.size <= FILE_SIZE)
+    .test(
+      "type",
+      "Supported formats are PDF, JPG and PNG",
+      value => value && SUPPORTED_FORMATS.includes(value.type)
+    )
+});
+
 const UploadDocumentsComponent = props => {
-  const { documents, docUpload, prospectID, icon, uploadErrorMessage, index } = props;
-  const classes = useStyles();
-  const inputEl = useRef(null);
+  const { documents, docUpload, prospectID, icon, uploadErrorMessage } = props;
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const uploadFileSizeMax = 5;
+  const [percentCompleted, setPercentCompleted] = useState(0);
+  const classes = useStyles(percentCompleted);
+  const inputEl = useRef(null);
+  const NotUploaded = documents.uploadStatus !== "NotUploaded";
 
-  const fileValidation = file => {
-    const types = ["image/png", "image/jpeg", "application/pdf", "application/txt"];
-    if (types.indexOf(file.type) < 0) {
-      setErrorMessage("Supported formats are PDF, JPG and PNG");
-      return false;
-    } else if (file.size >= uploadFileSizeMax * 1048576) {
-      setErrorMessage("File size exceeded (5Mb maximum)");
-      return false;
-    } else {
-      setErrorMessage("");
-      return true;
-    }
-  };
-  const fileUploadHandler = () => {
-    if (fileValidation(inputEl.current.files[0])) {
-      let docKey;
-      if (documents.signatoryName) {
-        docKey =
-          documents.documentType +
-          documents.signatoryName +
-          Math.floor(Math.random() * 100000 + 1000);
-      } else {
-        docKey = documents.documentType + Math.floor(Math.random() * 100000 + 1000);
-      }
-      docKey = docKey.replace(/\s/g, "");
+  const fileUploadHandler = async () => {
+    const file = inputEl.current.files[0];
+    const isValid = await validationFileSchema
+      .validate({ file }, { returnError: true })
+      .then(value => value)
+      .catch(error => setErrorMessage(error.message));
+
+    if (isValid) {
       let fileInfo = {
-        documentKey: docKey
+        documentKey: docKeyGenerator(documents)
       };
 
       fileInfo = JSON.stringify(fileInfo);
+
       const data = new FormData();
       data.append("fileInfo", fileInfo);
-      data.append("file", inputEl.current.files[0]);
-      docUpload(props, inputEl.current.files[0], data, prospectID || "COSME0017");
-      setSelectedFile(inputEl.current.files[0]);
+      data.append("file", file);
+      docUpload(props, file, data, prospectID || "COSME0017", setPercentCompleted);
+      setSelectedFile(file);
     }
   };
+
   const fileUploadCancel = () => {
     setSelectedFile(null);
   };
 
   return (
     <>
-      {documents.uploadStatus !== "NotUploaded" && (
+      {NotUploaded && (
         <div className={classes.fileUploadPlaceholder}>
           <input
             className={classes.defaultInput}
+            name="file"
             type="file"
             onChange={fileUploadHandler}
             ref={inputEl}
             multiple
           />
+
           <>
             {!selectedFile && (
               <div className={classes.ContentBox}>
@@ -75,7 +76,7 @@ const UploadDocumentsComponent = props => {
                 {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
                 {!errorMessage && !selectedFile && (
                   <p className={classes.fileSizeMessage}>
-                    Supported formats are PDF, JPG and PNG | {uploadFileSizeMax}MB maximum size
+                    Supported formats are PDF, JPG and PNG | 5MB maximum size
                   </p>
                 )}
                 {uploadErrorMessage && (
@@ -104,9 +105,12 @@ const UploadDocumentsComponent = props => {
                   </div>
                   <div className={classes.uploadFileName}>
                     <div id="Progress_Status">
-                      <div className={classes.myProgressBar} id={`myProgressBar${index}`}></div>
+                      <div
+                        className={classes.myProgressBar}
+                        style={{ width: `${percentCompleted}%` }}
+                      ></div>
                     </div>
-                    <div className={classes.progressStatus} id={`progressStatus${index}`}></div>
+                    <div className={classes.progressStatus}>{percentCompleted}%</div>
                   </div>
                 </div>
                 <p className={classes.cancel} onClick={fileUploadCancel}>
