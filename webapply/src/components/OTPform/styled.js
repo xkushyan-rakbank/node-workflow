@@ -32,5 +32,9 @@ export const useStyles = makeStyles({
     width: "auto",
     margin: 0
   },
-  title: {}
+  title: {},
+  submitButton: {
+    width: "auto",
+    margin: 0
+  }
 });

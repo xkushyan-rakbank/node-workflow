@@ -28,7 +28,6 @@ export const FormConfirm = () => {
       <OTPform
         redirectRoute={routes.companyInfo}
         infoTitleResult="We have sent you a verification code. Please enter the six digits below, to cofirm this is you."
-        isHideTitle
         classes={{
           centeredContainer: classes.centeredContainer,
           title: classes.title

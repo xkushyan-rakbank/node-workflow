@@ -18,7 +18,6 @@ export const MAX_ATTEMPT_ALLOWED = 3;
 export const OTPformComponent = ({
   otp,
   verifyOtp,
-  isHideTitle,
   applicantInfo,
   redirectRoute,
   generateOtpCode,
@@ -56,7 +55,7 @@ export const OTPformComponent = ({
   );
 
   const getTitle = () => {
-    if (isHideTitle) return;
+    if (infoTitleResult) return;
     return applicantInfo.countryCode === UAE_CODE
       ? "We have sent you a verification code on registered mobile number"
       : "We have sent you a verification code on registered email address";
@@ -115,7 +114,7 @@ export const OTPformComponent = ({
                 disabled={!isValidCode || otp.isPending}
                 justify="flex-end"
                 label={otp.isPending ? "Verify..." : "Next Step"}
-                containerExtraStyles={{ width: "auto", margin: 0 }}
+                submitButtonClassName={classes.submitButton}
               />
             </div>
           </Form>
