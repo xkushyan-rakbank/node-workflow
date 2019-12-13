@@ -10,7 +10,8 @@ const useStyles = makeStyles({
   },
   container: {
     "& .title": {
-      marginBottom: "0"
+      marginBottom: "0",
+      fontSize: "48px"
     }
   },
   title: {

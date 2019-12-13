@@ -8,7 +8,7 @@ import { OTPformComponent } from "./OTPform";
 
 const mapStateToProps = state => ({
   otp: getOtp(state),
-  inputParam: getApplicantInfo(state) //TODO rename
+  applicantInfo: getApplicantInfo(state)
 });
 
 const mapDispatchToProps = {

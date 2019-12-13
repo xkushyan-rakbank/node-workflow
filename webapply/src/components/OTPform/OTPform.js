@@ -18,8 +18,8 @@ export const MAX_ATTEMPT_ALLOWED = 3;
 export const OTPformComponent = ({
   otp,
   verifyOtp,
-  inputParam,
   isHideTitle,
+  applicantInfo,
   redirectRoute,
   generateOtpCode,
   infoTitleResult,
@@ -36,14 +36,14 @@ export const OTPformComponent = ({
       history.push(redirectRoute);
     }
     // eslint-disable-next-line
-  }, [history, otp]);
+  }, [otp]);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
-      generateOtpCode(inputParam);
+      generateOtpCode(applicantInfo);
     }
     setLoginAttempt(loginAttempt + 1);
-  }, [loginAttempt, generateOtpCode, inputParam]);
+  }, [loginAttempt, generateOtpCode, applicantInfo]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
@@ -57,7 +57,7 @@ export const OTPformComponent = ({
 
   const getTitle = () => {
     if (isHideTitle) return;
-    return inputParam.countryCode === UAE_CODE
+    return applicantInfo.countryCode === UAE_CODE
       ? "We have sent you a verification code on registered mobile number"
       : "We have sent you a verification code on registered email address";
   };
