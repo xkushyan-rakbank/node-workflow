@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 import overviewRegular from "../../assets/gif/overview_reg.gif";
 import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import overviewElite from "../../assets/gif/overview_elite.gif";
-import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
+import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
 import { getIconsByAccount } from "../../constants/icons";

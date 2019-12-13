@@ -6,7 +6,7 @@ import { Grid } from "@material-ui/core";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
 import { EMAIL_REGEX, PHONE_REGEX } from "./../../utils/validation";
-import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
+import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";

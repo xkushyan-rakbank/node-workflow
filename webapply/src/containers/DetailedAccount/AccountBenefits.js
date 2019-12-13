@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
-import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
+import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../components/HorizontalIconCards/HorizontalIconCardsContainer";
 import HorizontalIconCardItem from "../../components/HorizontalIconCards/HorizontalIconCardItem";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
