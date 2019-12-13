@@ -25,7 +25,7 @@
         "mobileNo": "3456234578"
       },
       "applicationInfo": {
-        "createdDate": "string",
+        "createdDate": "12:10:2019",
         "lastModifiedDate": "12:10:2019",
         "createdBy": "string",
         "lastModifiedBy": "Kapil",
@@ -35,8 +35,8 @@
       },
       "signatoryInfo": [
         {
-          "signatoryId": "string",
-          "fullName": "Abhi",
+          "signatoryId": "0",
+          "fullName": "",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
@@ -84,8 +84,8 @@
           }
         },
         {
-          "signatoryId": "string",
-          "fullName": "Bhakta",
+          "signatoryId": "1",
+          "fullName": "",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
@@ -136,6 +136,7 @@
       "organizationInfo": {
         "licenseNumber": "3456798765789",
         "companyName": "",
+        "leadNumber": "0123456789",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [
@@ -219,7 +220,7 @@
       "signatoryInfo": [
         {
           "signatoryId": "string",
-          "fullName": "string",
+          "fullName": "",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
@@ -240,6 +241,7 @@
       "organizationInfo": {
         "licenseNumber": "447877565655",
         "companyName": "Purva Limited",
+        "leadNumber": "0123456789",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [
@@ -293,7 +295,7 @@
       "signatoryInfo": [
         {
           "signatoryId": "string",
-          "fullName": "string",
+          "fullName": "",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
@@ -314,6 +316,7 @@
       "organizationInfo": {
         "licenseNumber": "50978643469",
         "companyName": "ACC Corporate Limited",
+        "leadNumber": "0123456789",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [
