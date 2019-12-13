@@ -18,13 +18,13 @@ export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
   }
 }));
 
-export const SubmitButton = ({ justify, containerExtraStyles, ...rest }) => (
+export const SubmitButton = ({ justify, submitButtonClassName, ...rest }) => (
   <ButtonWrapper
     container
     direction="row"
     justify={justify}
     alignItems="center"
-    style={containerExtraStyles}
+    className={submitButtonClassName}
   >
     <Button type="submit" withRightArrow {...rest} />
   </ButtonWrapper>
