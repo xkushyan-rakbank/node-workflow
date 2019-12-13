@@ -26,21 +26,19 @@ export const CheckList = ({ prospectInfo = {} }) => {
               <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
             </div>
           </div>
-          {prospectInfo.organizationInfo.screeningInfo.screeningResults.map(
-            (application, index) => (
-              <div className={classes.applicationRow} key={index}>
-                <div>
-                  <div className={classes.checkListData}>{application.screeningType}</div>
-                </div>
-                <div>
-                  <div className={classes.checkListData}>{application.screeningStatus}</div>
-                </div>
-                <div>
-                  <div className={classes.checkListData}>{application.screeningReason}</div>
-                </div>
+          {prospectInfo.organizationInfo.screeningInfo.screeningResults.map(application => (
+            <div className={classes.applicationRow} key={application.screeningType}>
+              <div>
+                <div className={classes.checkListData}>{application.screeningType}</div>
               </div>
-            )
-          )}
+              <div>
+                <div className={classes.checkListData}>{application.screeningStatus}</div>
+              </div>
+              <div>
+                <div className={classes.checkListData}>{application.screeningReason}</div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <div className={classes.errorMsg}>{errorMsgs.COMPANY_CHECKLIST_ERROR}</div>
@@ -68,8 +66,8 @@ export const CheckList = ({ prospectInfo = {} }) => {
                 </div>
               </div>
               {get(signatory, "screeningInfo.screeningResults", []).length ? (
-                signatory.screeningInfo.screeningResults.map((application, index) => (
-                  <div className={classes.applicationRow} key={index}>
+                signatory.screeningInfo.screeningResults.map(application => (
+                  <div className={classes.applicationRow} key={application.screeningType}>
                     <div>
                       <div className={classes.checkListData}>{application.screeningType}</div>
                     </div>
