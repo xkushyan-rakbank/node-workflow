@@ -12,6 +12,7 @@ import {
   Checkbox,
   CustomSelect,
   Input,
+  SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { InfoTitle } from "../../../../../../components/Notifications";
@@ -244,7 +245,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
                                 label="Country"
                                 datalistId="country"
-                                component={CustomSelect}
+                                component={SelectAutocomplete}
                               />
                               {!!index && (
                                 <ArrayRemoveButton

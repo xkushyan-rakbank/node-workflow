@@ -7,8 +7,8 @@ import Grid from "@material-ui/core/Grid";
 
 import {
   Input,
-  CustomSelect,
   Checkbox,
+  SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { ArrayRemoveButton } from "../../../Buttons/ArrayRemoveButton";
@@ -121,8 +121,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                             <Field
                               name={`topCustomers[${index}].name`}
                               path={`prospect.orgKYCDetails.topCustomers[${index}].name`}
-                              label="Name"
-                              placeholder="Name"
+                              label="Customer name"
+                              placeholder="Customer name"
                               component={Input}
                             />
                           </Grid>
@@ -137,7 +137,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               path={`prospect.orgKYCDetails.topCustomers[${index}].country`}
                               label="Country"
                               datalistId="country"
-                              component={CustomSelect}
+                              component={SelectAutocomplete}
                             />
                             {!!index && (
                               <ArrayRemoveButton
@@ -199,8 +199,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                             <Field
                               name={`topSuppliers[${index}].name`}
                               path={`prospect.orgKYCDetails.topSuppliers[${index}].name`}
-                              label="Name"
-                              placeholder="Name"
+                              label="Supplier name"
+                              placeholder="Supplier name"
                               component={Input}
                               disabled={values.isDontHaveSuppliersYet}
                             />
@@ -216,7 +216,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               path={`prospect.orgKYCDetails.topSuppliers[${index}].country`}
                               label="Country"
                               datalistId="country"
-                              component={CustomSelect}
+                              component={SelectAutocomplete}
                               disabled={values.isDontHaveSuppliersYet}
                             />
                             {!!index && (
@@ -286,9 +286,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                             <Field
                               name={`topOriginGoodsCountries[${index}].country`}
                               path={`prospect.orgKYCDetails.topOriginGoodsCountries[${index}]`}
-                              label="Country"
+                              label="Country of origin"
                               datalistId="country"
-                              component={CustomSelect}
+                              component={SelectAutocomplete}
                               disabled={values.isDontTradeGoodsYet}
                             />
                             {!!index && (
