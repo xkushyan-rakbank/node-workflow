@@ -35,6 +35,7 @@ export const OTPformComponent = ({
     if (otp.isVerified) {
       history.push(redirectRoute);
     }
+    // eslint-disable-next-line
   }, [history, otp]);
 
   const handleSendNewCodeLinkClick = useCallback(() => {

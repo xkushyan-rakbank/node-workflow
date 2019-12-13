@@ -62,6 +62,7 @@ export const ChannelsComponent = ({
   useEffect(() => {
     updateProspect({ [pathDebitCardApplied]: isDebitCardApplied });
     updateProspect({ [pathChequeBookApplied]: isChequeBookApplied });
+    // eslint-disable-next-line
   }, []);
 
   return (
