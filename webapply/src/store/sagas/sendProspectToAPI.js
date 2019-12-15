@@ -8,12 +8,12 @@ import {
   take,
   cancel,
   cancelled,
-  fork
+  fork,
+  actionChannel
 } from "redux-saga/effects";
 import get from "lodash/get";
 
 import {
-  SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
   sendProspectToAPIFail,
   setScreeningResults,
@@ -26,6 +26,14 @@ import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
 import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
+
+function* watchRequest() {
+  const requestChannel = yield actionChannel("SEND_PROSPECT_TO_API");
+  while (true) {
+    const { payload } = yield take(requestChannel);
+    yield call(sendProspectToAPISaga, payload);
+  }
+}
 
 function* sendProspectToAPISaga() {
   try {
@@ -81,9 +89,6 @@ function* prospectAutoSaveFlowSaga() {
   }
 }
 
-export default function* sendProspectToAPI() {
-  yield all([
-    takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
-    takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga)
-  ]);
+export default function* sendProspectToAPISagas() {
+  yield all([takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga), watchRequest()]);
 }
