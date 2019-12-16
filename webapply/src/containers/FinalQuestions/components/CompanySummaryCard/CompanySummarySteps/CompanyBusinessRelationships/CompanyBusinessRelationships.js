@@ -138,6 +138,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               label="Country"
                               datalistId="country"
                               component={SelectAutocomplete}
+                              shrink
                             />
                             {!!index && (
                               <ArrayRemoveButton
@@ -218,6 +219,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               datalistId="country"
                               component={SelectAutocomplete}
                               disabled={values.isDontHaveSuppliersYet}
+                              shrink
                             />
                             {!!index && (
                               <ArrayRemoveButton
@@ -290,6 +292,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               datalistId="country"
                               component={SelectAutocomplete}
                               disabled={values.isDontTradeGoodsYet}
+                              shrink
                             />
                             {!!index && (
                               <ArrayRemoveButton
