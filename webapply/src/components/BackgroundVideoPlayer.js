@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import cx from "classnames";
 
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
@@ -135,7 +136,7 @@ class BackgroundVideoPlayer extends React.Component {
     const video = (
       <div
         style={{ top: `-${100 * nextElementPosition}vh` }}
-        className={classes.container + videoWrapperClass}
+        className={cx(classes.container, videoWrapperClass)}
       >
         <video
           muted
