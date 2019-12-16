@@ -13,8 +13,8 @@ const styles = {
     marginBottom: "10px"
   },
   divider: {
-    width: "5px",
-    height: "24px",
+    width: "4px",
+    height: "16px",
     borderRadius: "2px",
     backgroundColor: "#373737",
     marginRight: "11px"
