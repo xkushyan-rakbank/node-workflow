@@ -2,7 +2,7 @@ import React from "react";
 import get from "lodash/get";
 import cx from "classnames";
 
-import Avatar from "../../../../components/Avatar";
+import { Avatar } from "../../../../components/Avatar/Avatar";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
@@ -10,6 +10,7 @@ import { useStyles } from "./styled";
 export const CheckList = ({ prospectInfo = {} }) => {
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
+
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
@@ -45,10 +46,10 @@ export const CheckList = ({ prospectInfo = {} }) => {
       )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
       {(prospectInfo.signatoryInfo || []).length ? (
-        prospectInfo.signatoryInfo.map(signatory => (
+        prospectInfo.signatoryInfo.map((signatory, index) => (
           <div key={signatory.signatoryId}>
             <div className={classes.contentWrapper}>
-              <Avatar firstName={signatory.fullName} />
+              <Avatar fullName={signatory.fullName} index={index} />
               <div className={classes.userInfo}>
                 <div className={classes.nameField}>{signatory.fullName}</div>
               </div>
