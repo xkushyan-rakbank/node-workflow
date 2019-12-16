@@ -10,8 +10,9 @@ import { MobileNotification } from "../Modals/index";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 
 import routes from "../../routes";
-import { accountsNames, formStepper, searchProspectStepper } from "../../constants/index";
+import { accountsNames, formStepper, searchProspectStepper } from "../../constants";
 import { accountsInfo } from "./constants";
+import { getIsShowAccountInfo, getIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
 
@@ -20,7 +21,7 @@ const AccountInfo = ({ accountType }) => {
   const history = useHistory();
   const { location: { pathname } = {} } = history;
 
-  const handleClick = path => history.push(path);
+  const handleClick = path => () => history.push(path);
 
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isMyApplications = pathname === routes.MyApplications;
@@ -48,7 +49,7 @@ const AccountInfo = ({ accountType }) => {
             withRightArrow
             justify="flex-start"
             label="Apply now"
-            handleClick={() => handleClick(routes.applicationOverview)}
+            handleClick={handleClick(routes.applicationOverview)}
           />
         </>
       ) : (
@@ -73,7 +74,7 @@ const AccountInfo = ({ accountType }) => {
                   withRightArrow
                   justify="flex-start"
                   label="Start application"
-                  handleClick={() => handleClick(routes.applicantInfo)}
+                  handleClick={handleClick(routes.applicantInfo)}
                 />
               </div>
               <div className="show-on-mobile">
@@ -87,30 +88,26 @@ const AccountInfo = ({ accountType }) => {
   );
 };
 
-const FormStepper = ({ step, path, checkLoginStatus }) =>
-  checkLoginStatus ? (
+const FormStepper = ({ step, path, checkLoginStatus }) => {
+  const NavigationStep = ({ navigationData }) =>
+    navigationData.map(item => (
+      <FormNavigationStep
+        key={item.step}
+        title={item.title}
+        activeStep={path === item.path || path === item.relatedPath}
+        filled={step > item.step}
+      />
+    ));
+  return (
     <ul>
-      {searchProspectStepper.map(item => (
-        <FormNavigationStep
-          key={item.step}
-          title={item.title}
-          activeStep={path === item.path || path === item.relatedPath}
-          filled={step > item.step}
-        />
-      ))}
-    </ul>
-  ) : (
-    <ul>
-      {formStepper.map(item => (
-        <FormNavigationStep
-          key={item.step}
-          title={item.title}
-          activeStep={path === item.path || path === item.relatedPath}
-          filled={step > item.step}
-        />
-      ))}
+      {checkLoginStatus ? (
+        <NavigationStep navigationData={searchProspectStepper} />
+      ) : (
+        <NavigationStep navigationData={formStepper} />
+      )}
     </ul>
   );
+};
 
 const getAccountTypeClass = (accountType, islamicBanking) => {
   if (accountType && accountType === accountsNames.elite) {
@@ -126,10 +123,9 @@ export const FormNavigationComponent = ({
   applicationInfo: { islamicBanking, accountType },
   checkLoginStatus
 }) => {
-  const history = useHistory();
   const {
     location: { pathname, key }
-  } = history;
+  } = useHistory();
 
   const getRouteConfig = () =>
     formStepper.find(step => [step.path, step.relatedPath].some(path => pathname === path));
@@ -143,34 +139,14 @@ export const FormNavigationComponent = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, step, pathname]);
 
-  const toggleSwitcherShow = () => {
-    setIsSwitcherShow(!isSwitcherShow);
-  };
-
   const classes = useStyles();
-
-  const showAccountInfo = new Set([
-    routes.accountsComparison,
-    routes.detailedAccount,
-    routes.applicationOverview,
-    routes.MyApplications,
-    routes.comeBackLogin,
-    routes.comeBackLoginVerification,
-    routes.reUploadDocuments
-  ]).has(pathname);
-
-  const showSmallBg = new Set([
-    routes.accountsComparison,
-    routes.comeBackLogin,
-    routes.comeBackLoginVerification
-  ]).has(pathname);
-
   const bgTypeClass = getAccountTypeClass(accountType, islamicBanking);
+  const toggleSwitcherShow = () => setIsSwitcherShow(!isSwitcherShow);
 
   return (
     <div
       className={cx(classes.formNav, classes.formNavBg, bgTypeClass, {
-        "small-bg": showSmallBg,
+        "small-bg": getIsShowSmallBg(pathname),
         open: isSwitcherShow,
         "has-video": routes.accountsComparison === pathname
       })}
@@ -184,7 +160,7 @@ export const FormNavigationComponent = ({
           What banking option do you prefer?
         </Typography>
       </IslamicBankingSwitcherMobile>
-      {showAccountInfo ? (
+      {getIsShowAccountInfo(pathname) ? (
         <AccountInfo classes={classes} accountType={accountType} />
       ) : (
         pathname !== routes.login && (
