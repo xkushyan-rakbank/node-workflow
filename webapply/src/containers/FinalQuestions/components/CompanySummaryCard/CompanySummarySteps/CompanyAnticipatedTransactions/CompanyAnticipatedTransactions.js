@@ -146,6 +146,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                     label="Annual turnover"
                     placeholder="Annual turnover"
+                    InputProps={commonInputProps}
                     component={Input}
                   />
                 </Grid>

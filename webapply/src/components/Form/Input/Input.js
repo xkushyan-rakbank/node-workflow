@@ -18,6 +18,7 @@ export const Input = ({
   infoTitle,
   form: { errors, touched },
   classes: extendedClasses,
+  InputProps,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -34,11 +35,11 @@ export const Input = ({
             {...props}
             label={label}
             variant="outlined"
-            className={classes.textField}
+            className={cx(classes.textField, { [classes.disabled]: disabled })}
             placeholder={placeholder}
             disabled={disabled}
             error={isError}
-            InputProps={{ classes: { input: cx(classes.input, { [classes.disabled]: disabled }) } }}
+            InputProps={{ ...InputProps, classes: { input: classes.input } }}
           />
         </ContexualHelp>
 
