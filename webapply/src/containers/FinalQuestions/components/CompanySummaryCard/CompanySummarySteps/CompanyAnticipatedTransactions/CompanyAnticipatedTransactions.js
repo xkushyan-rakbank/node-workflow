@@ -145,8 +145,9 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   <Field
                     name="annualFinTurnoverAmtInAED"
                     path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
-                    label="Annual Financial Turnover"
-                    placeholder="Annual Financial Turnover"
+                    label="Annual turnover"
+                    placeholder="Annual turnover"
+                    InputProps={commonInputProps}
                     component={Input}
                   />
                 </Grid>

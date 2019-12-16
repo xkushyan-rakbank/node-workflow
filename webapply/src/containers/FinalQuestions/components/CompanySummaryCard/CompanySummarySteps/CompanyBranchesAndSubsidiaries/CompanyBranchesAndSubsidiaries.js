@@ -121,12 +121,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 placeholder="Company name"
                                 component={Input}
                               />
-                              <InfoTitle
-                                title="Company name should be same as mentioned in the registration documents"
-                                classes={{
-                                  wrapper: classes.infoTitles
-                                }}
-                              />
                             </Grid>
                             <Grid
                               item
@@ -180,6 +174,14 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           arrayHelpers={arrayHelpers}
                         />
                       )}
+                      <Grid item sm={12}>
+                        <InfoTitle
+                          title="Company name should be same as mentioned in the registration documents"
+                          classes={{
+                            wrapper: classes.infoTitles
+                          }}
+                        />
+                      </Grid>
                     </>
                   )}
                 </>
@@ -227,12 +229,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 placeholder="Company name"
                                 component={Input}
                               />
-                              <InfoTitle
-                                title="Company name should be same as mentioned in the registration documents"
-                                classes={{
-                                  wrapper: classes.infoTitles
-                                }}
-                              />
                             </Grid>
                             <Grid
                               item
@@ -272,6 +268,14 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           arrayHelpers={arrayHelpers}
                         />
                       )}
+                      <Grid item sm={12}>
+                        <InfoTitle
+                          title="Company name should be same as mentioned in the registration documents"
+                          classes={{
+                            wrapper: classes.infoTitles
+                          }}
+                        />
+                      </Grid>
                     </>
                   )}
                 </>

@@ -17,9 +17,7 @@ import { useStyles } from "./styled";
 
 const signatoryPreferredMailingAddressSchema = Yup.object().shape({
   addressFieldDesc: Yup.string().required("You need to provide address details"),
-  addressLine1: Yup.string()
-    .required("You need to provide address details")
-    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+  addressLine1: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
     .matches(PO_NUMBER_REGEX, "Invalid PO box number"),
@@ -58,75 +56,73 @@ export const SignatoryPreferredMailingAddressComponent = ({
       >
         {({ values, setFieldValue }) => (
           <Form>
+            <Field
+              name="sameAsCompanyAddress"
+              path={`prospect.signatoryInfo[${index}].sameAsCompanyAddress`}
+              component={Checkbox}
+              label="Same as Company Address"
+              onSelect={() => {
+                setFieldValue(
+                  "addressFieldDesc",
+                  !values.sameAsCompanyAddress ? organisationAddressFieldDesc : ""
+                );
+                setFieldValue(
+                  "addressLine1",
+                  !values.sameAsCompanyAddress ? organisationAddressLine1 : ""
+                );
+                setFieldValue(
+                  "emirateCity",
+                  !values.sameAsCompanyAddress ? organisationEmirateCity : ""
+                );
+                setFieldValue("poBox", !values.sameAsCompanyAddress ? organisationPoBox : "");
+              }}
+            />
             <Grid container spacing={3} className={classes.flexContainer}>
-              <Field
-                name="sameAsCompanyAddress"
-                path={`prospect.signatoryInfo[${index}].sameAsCompanyAddress`}
-                component={Checkbox}
-                label="Same as Company Address"
-                onSelect={() => {
-                  setFieldValue(
-                    "addressFieldDesc",
-                    !values.sameAsCompanyAddress ? organisationAddressFieldDesc : ""
-                  );
-                  setFieldValue(
-                    "addressLine1",
-                    !values.sameAsCompanyAddress ? organisationAddressLine1 : ""
-                  );
-                  setFieldValue(
-                    "emirateCity",
-                    !values.sameAsCompanyAddress ? organisationEmirateCity : ""
-                  );
-                  setFieldValue("poBox", !values.sameAsCompanyAddress ? organisationPoBox : "");
-                }}
-              />
-              <Grid container spacing={3} className={classes.flexContainer}>
-                <Grid item sm={12}>
-                  <Field
-                    name="addressFieldDesc"
-                    path={`${autoSavePathBase}.addressFieldDesc`}
-                    disabled={values.sameAsCompanyAddress}
-                    label="Flat / Villa / Building"
-                    placeholder="Flat / Villa / Building"
-                    component={Input}
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <Field
-                    name="addressLine1"
-                    path={`${autoSavePathBase}.addressLine1`}
-                    disabled={values.sameAsCompanyAddress}
-                    label="Street / Location"
-                    placeholder="Street / Location"
-                    component={Input}
-                  />
-                  <Field
-                    name="emirateCity"
-                    path={`${autoSavePathBase}.emirateCity`}
-                    disabled={values.sameAsCompanyAddress}
-                    datalistId="emirate"
-                    label="Emirate"
-                    component={CustomSelect}
-                  />
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <Field
-                    name="poBox"
-                    path={`${autoSavePathBase}.poBox`}
-                    disabled={values.sameAsCompanyAddress}
-                    label="PO Box Number"
-                    placeholder="PO Box Number"
-                    component={Input}
-                  />
-                  <Field
-                    name="country"
-                    path={`${autoSavePathBase}.country`}
-                    label="Country"
-                    placeholder="Country"
-                    disabled
-                    component={Input}
-                  />
-                </Grid>
+              <Grid item sm={12}>
+                <Field
+                  name="addressFieldDesc"
+                  path={`${autoSavePathBase}.addressFieldDesc`}
+                  disabled={values.sameAsCompanyAddress}
+                  label="Flat / Villa / Building"
+                  placeholder="Flat / Villa / Building"
+                  component={Input}
+                />
+              </Grid>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="addressLine1"
+                  path={`${autoSavePathBase}.addressLine1`}
+                  disabled={values.sameAsCompanyAddress}
+                  label="Street / Location"
+                  placeholder="Street / Location"
+                  component={Input}
+                />
+                <Field
+                  name="emirateCity"
+                  path={`${autoSavePathBase}.emirateCity`}
+                  disabled={values.sameAsCompanyAddress}
+                  datalistId="emirate"
+                  label="Emirate"
+                  component={CustomSelect}
+                />
+              </Grid>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="poBox"
+                  path={`${autoSavePathBase}.poBox`}
+                  disabled={values.sameAsCompanyAddress}
+                  label="PO Box Number"
+                  placeholder="PO Box Number"
+                  component={Input}
+                />
+                <Field
+                  name="country"
+                  path={`${autoSavePathBase}.country`}
+                  label="Country"
+                  placeholder="Country"
+                  disabled
+                  component={Input}
+                />
               </Grid>
             </Grid>
             <div className={classes.buttonWrapper}>

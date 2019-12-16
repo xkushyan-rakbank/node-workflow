@@ -8,9 +8,6 @@ export const useStyles = makeStyles({
     marginTop: "0",
     marginBottom: "0"
   },
-  formWrapper: {
-    margin: "0 20px"
-  },
   buttonWrapper: {
     width: "100%",
     display: "flex",
