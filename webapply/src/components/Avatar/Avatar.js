@@ -1,13 +1,14 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
+import UserAvatar from "@material-ui/core/Avatar";
 
 import { ColoredAvatar } from "./ColoredAvatar";
 import { avatarColors } from "./avatarColors";
 import { useStyles } from "./styled";
 
-export const UserAvatar = ({
+export const Avatar = ({
   firstName = "",
   lastName = "",
+  fullName = "",
   index,
   defaultAvatarIcon,
   isEmptyAvatar
@@ -16,14 +17,15 @@ export const UserAvatar = ({
 
   if (isEmptyAvatar) {
     return (
-      <Avatar className={classes.emptyAvatar}>
+      <UserAvatar className={classes.emptyAvatar}>
         {defaultAvatarIcon && (
           <img src={defaultAvatarIcon} alt="defaultIcon" className={classes.defaultAvatar} />
         )}
-      </Avatar>
+      </UserAvatar>
     );
   }
 
-  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
+  const firstAndLastName = fullName ? fullName.split(/\s/) : [firstName, lastName];
+  const initials = firstAndLastName.map(name => name.charAt(0)).join("");
   return <ColoredAvatar color={avatarColors[index || 0]}>{initials}</ColoredAvatar>;
 };
