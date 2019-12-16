@@ -36,6 +36,7 @@ jobs:
           npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
+          REACT_APP_RECAPTCHA_ENABLE: N
         displayName: 'Buildling webapply Application'
         enabled: true
       - bash : |
@@ -93,6 +94,9 @@ jobs:
           cd webapplyserver
           mvn clean
           mvn install
+        env:
+          REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
+          RECAPTCHA_ENABLE: N
         displayName: 'Buildling webapplyServer Application'
         enabled: true
       - task: CopyFiles@2
