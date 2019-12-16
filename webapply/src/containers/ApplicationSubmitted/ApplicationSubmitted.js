@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 
 import { getIconsByAccount } from "../../constants/icons";
-import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
+import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
 import * as accountInfoSelector from "../../store/selectors/appConfig";
 
