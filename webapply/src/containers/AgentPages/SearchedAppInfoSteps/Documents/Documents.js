@@ -2,12 +2,12 @@ import React from "react";
 import get from "lodash/get";
 import cx from "classnames";
 
-import Avatar from "../../../../components/Avatar";
+import { Avatar } from "../../../../components/Avatar/Avatar";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
 
-export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
+export const DocumentsComponent = ({ docs = {}, prospectInfo, endpointsUrl }) => {
   const classes = useStyles();
   const signatoryInfo = prospectInfo.signatoryInfo;
   const documentBaseUrl = `${endpointsUrl.baseUrl || ""}${endpointsUrl.getDocumentByIdUri || ""}`;
@@ -61,7 +61,7 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
         signatoryInfo.map((user, index) => (
           <div key={user.signatoryId}>
             <div className={classes.contentWrapper}>
-              <Avatar firstName={user.fullName} />
+              <Avatar fullName={user.fullName} index={index} />
               <div className={classes.userInfo}>
                 <div className={classes.nameField}>{user.fullName}</div>
               </div>
