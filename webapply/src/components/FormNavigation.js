@@ -138,10 +138,6 @@ const style = {
   contentContainer: {
     width: 340,
     marginLeft: 80,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
     "@media only screen and (max-width: 1300px)": {
       marginLeft: 40,
       width: "auto",
