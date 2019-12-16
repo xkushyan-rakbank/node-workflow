@@ -9,6 +9,7 @@ export const useStyles = makeStyles({
     padding: "8px 33px 12px 33px"
   },
   hidden: {
-    display: "none"
+    maxHeight: "0",
+    overflow: "hidden"
   }
 });

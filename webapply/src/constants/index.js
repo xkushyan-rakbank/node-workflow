@@ -141,7 +141,7 @@ export const applicationStatus = {
 
 export const UAE_CODE = "971";
 
-export const IS_RECAPTCHA_ENABLE = false;
+export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";

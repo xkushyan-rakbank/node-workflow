@@ -60,10 +60,11 @@ export const ChannelsComponent = ({
   const classes = useStyles();
 
   useEffect(() => {
-    updateProspect({ [pathDebitCardApplied]: isDebitCardApplied });
-    updateProspect({ [pathChequeBookApplied]: isChequeBookApplied });
-    // eslint-disable-next-line
-  }, []);
+    updateProspect({
+      [pathDebitCardApplied]: isDebitCardApplied,
+      [pathChequeBookApplied]: isChequeBookApplied
+    });
+  }, [isChequeBookApplied, isDebitCardApplied, updateProspect]);
 
   return (
     <Formik

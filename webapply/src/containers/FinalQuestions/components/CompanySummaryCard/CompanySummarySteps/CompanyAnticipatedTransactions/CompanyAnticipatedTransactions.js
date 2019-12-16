@@ -113,11 +113,12 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     )
 });
 
+const commonInputProps = {
+  endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
+};
+
 export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
   const classes = useStyles();
-  const commonInputProps = {
-    endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
-  };
 
   const onSubmit = useCallback(() => {
     handleContinue();
@@ -146,6 +147,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                     label="Annual turnover"
                     placeholder="Annual turnover"
+                    InputProps={commonInputProps}
                     component={Input}
                   />
                 </Grid>
