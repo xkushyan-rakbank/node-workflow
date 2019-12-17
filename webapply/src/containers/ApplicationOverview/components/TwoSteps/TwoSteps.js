@@ -1,30 +1,16 @@
 import React from "react";
 
-import overviewRegular from "../../../../assets/gif/overview_reg.gif";
-import overviewIslamic from "../../../../assets/gif/overview_islamic.gif";
-import overviewElite from "../../../../assets/gif/overview_elite.gif";
 import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../../../components/IconCards/IconCardItem";
-import { getIconsByAccount } from "../../../../constants/icons";
-import { accountsNames } from "../../../../constants/index";
 import HeaderTitle from "../../../../components/HeaderTitle";
+import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
 
 import { useStyles } from "./styled";
 
-export const TwoSteps = ({ accountType, islamicBanking }) => {
+export const TwoSteps = () => {
   const classes = useStyles();
-
-  const getGifUrl = () => {
-    if (islamicBanking) {
-      return overviewIslamic;
-    } else if (accountType === accountsNames.elite) {
-      return overviewElite;
-    }
-    return overviewRegular;
-  };
-
-  const { interrogation, signature } = getIconsByAccount();
+  const { interrogation, signature, overview } = useIconsByAccount();
 
   return (
     <>
@@ -49,7 +35,7 @@ export const TwoSteps = ({ accountType, islamicBanking }) => {
             We need to spend some time getting to know you and your company
           </span>
         </div>
-        <img src={getGifUrl()} alt="overview" />
+        <img src={overview} alt="overview" />
       </div>
     </>
   );

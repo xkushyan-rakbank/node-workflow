@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getIconsByAccount } from "../../../../constants/icons";
+import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
 import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
 import IconCardsContainer from "../../../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../../../components/IconCards/IconCardItem";
@@ -12,7 +12,7 @@ import { useStyles } from "./styled";
 export const PreliminaryInformation = () => {
   const classes = useStyles();
 
-  const { license, passport, emiratesId, companyDocuments } = getIconsByAccount();
+  const { license, passport, emiratesId, companyDocuments } = useIconsByAccount();
 
   return (
     <>

@@ -5,7 +5,7 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../components/HorizontalIconCards/HorizontalIconCardsContainer";
 import HorizontalIconCardItem from "../../components/HorizontalIconCards/HorizontalIconCardItem";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
-import { getIconsByAccount } from "../../constants/icons";
+import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { InfoNote } from "../../components/InfoNote";
 import { accountsNames, mobileResolution } from "../../constants";
 
@@ -66,7 +66,7 @@ const AccountBenefits = ({ classes, accountType }) => {
     serviceCenter,
     exchange,
     lounge
-  } = getIconsByAccount();
+  } = useIconsByAccount();
 
   const mockData = {
     RAKstarter: [

@@ -3,7 +3,7 @@ import cx from "classnames";
 import { Link } from "@material-ui/core";
 
 import { accountsNames } from "../../../../../constants";
-import { getIconsByAccount } from "../../../../../constants/icons";
+import { useIconsByAccount } from "../../../../../utils/useIconsByAccount";
 
 import { ICONS, Icon } from "../../../../../components/Icons/Icon";
 import { ContainedButton } from "../../../../../components/Buttons/ContainedButton";
@@ -43,7 +43,7 @@ export const ExpandedDetailedOptionsCard = ({
   readMoreUrls
 }) => {
   const classes = useStyles();
-  const { plus, max } = getIconsByAccount();
+  const { plus, max } = useIconsByAccount();
   const href = getUrlReadMore(readMoreUrls, accountType, value);
 
   return (
