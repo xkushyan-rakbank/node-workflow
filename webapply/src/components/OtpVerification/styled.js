@@ -1,33 +1,47 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   squareInput: {
-    marginRight: "20px",
-    marginTop: "48px",
-    marginBottom: "40px",
+    marginRight: 20,
+    marginTop: 48,
+    marginBottom: 40,
+    borderRadius: 8,
+    width: "110px",
+    "&:last-child": {
+      marginRight: 0
+    },
     "& fieldset": {
-      borderRadius: "8px ",
+      borderRadius: 8,
       border: "solid 1px rgba(194, 194, 194, 0.56)"
     },
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: "#373737"
     },
-    "& div": {
-      borderRadius: 8,
-      width: "110px",
-      height: "88px",
-      fontSize: "46px",
-      fontWeight: "600",
-      "@media only screen and (max-width: 1360px)": {
-        width: "100px"
-      },
-      "@media only screen and (max-width: 1220px)": {
-        width: "85px",
-        height: "70px"
+    "& input": {
+      boxSizing: "border-box",
+      height: 88,
+      textAlign: "center",
+      fontSize: 46,
+      fontWeight: 600,
+      fontFamily: "Open Sans, sans-serif"
+    },
+    [theme.breakpoints.down("md")]: {
+      width: 85,
+      "& input": {
+        height: 70
       }
     },
-    "& input": {
-      textAlign: "center"
+    [theme.breakpoints.down("sm")]: {
+      margin: "30px 8px 30px 0",
+      maxWidth: 48,
+      minWidth: 1,
+      flexBasis: 0,
+      flexGrow: 1,
+      "& input": {
+        height: 48,
+        fontSize: 24,
+        padding: "11px 12px 13px"
+      }
     }
   }
-});
+}));
