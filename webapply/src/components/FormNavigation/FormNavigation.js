@@ -12,7 +12,7 @@ import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicB
 import routes from "../../routes";
 import { accountsNames, formStepper, searchProspectStepper } from "../../constants";
 import { accountsInfo } from "./constants";
-import { getIsShowAccountInfo, getIsShowSmallBg } from "./utils";
+import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
 
@@ -22,16 +22,11 @@ const AccountInfo = ({ accountType }) => {
   const { location: { pathname } = {} } = history;
 
   const handleClick = path => () => history.push(path);
-
   const isApplicationOverview = pathname === routes.applicationOverview;
-  const isMyApplications = pathname === routes.MyApplications;
-  const isComeBackLogin = pathname === routes.comeBackLogin;
-  const isComeBackVerification = pathname === routes.comeBackLoginVerification;
-  const isReUploadDocuments = pathname === routes.reUploadDocuments;
 
   return (
     <div className={classes.contentContainer}>
-      {accountType && pathname !== routes.applicationOverview ? (
+      {accountType && !isApplicationOverview ? (
         <>
           <div>
             <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
@@ -55,17 +50,20 @@ const AccountInfo = ({ accountType }) => {
       ) : (
         <>
           <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-            {isApplicationOverview
-              ? "Opening an account has never been this simple."
-              : isMyApplications
-              ? "Your  applications, at a glance"
-              : isComeBackLogin
-              ? "Good to see you back!"
-              : isReUploadDocuments
-              ? "Edit your application"
-              : isComeBackVerification
-              ? "Confirm that it's you"
-              : "All businesses start with an account. Get yours now."}
+            {(() => {
+              switch (pathname) {
+                case routes.applicationOverview:
+                  return "Opening an account has never been this simple.";
+                case routes.MyApplications:
+                  return "Your  applications, at a glance";
+                case routes.comeBackLogin:
+                  return "Good to see you back!";
+                case routes.comeBackLoginVerification:
+                  return "Confirm that it's you";
+                default:
+                  return "All businesses start with an account. Get yours now.";
+              }
+            })()}
           </Typography>
           {isApplicationOverview && (
             <>
@@ -88,40 +86,22 @@ const AccountInfo = ({ accountType }) => {
   );
 };
 
-const FormStepper = ({ step, path, checkLoginStatus }) => {
-  const NavigationStep = ({ navigationData }) =>
-    navigationData.map(item => (
+const FormStepper = ({ step, path, isLogin }) => (
+  <ul>
+    {(isLogin ? searchProspectStepper : formStepper).map(currentStep => (
       <FormNavigationStep
-        key={item.step}
-        title={item.title}
-        activeStep={path === item.path || path === item.relatedPath}
-        filled={step > item.step}
+        key={currentStep.step}
+        title={currentStep.title}
+        activeStep={path === currentStep.path || path === currentStep.relatedPath}
+        filled={step > currentStep.step}
       />
-    ));
-  return (
-    <ul>
-      {checkLoginStatus ? (
-        <NavigationStep navigationData={searchProspectStepper} />
-      ) : (
-        <NavigationStep navigationData={formStepper} />
-      )}
-    </ul>
-  );
-};
-
-const getAccountTypeClass = (accountType, islamicBanking) => {
-  if (accountType && accountType === accountsNames.elite) {
-    return " brown";
-  } else if (islamicBanking) {
-    return " green";
-  } else {
-    return "";
-  }
-};
+    ))}
+  </ul>
+);
 
 export const FormNavigationComponent = ({
   applicationInfo: { islamicBanking, accountType },
-  checkLoginStatus
+  isLogin
 }) => {
   const {
     location: { pathname, key }
@@ -140,13 +120,13 @@ export const FormNavigationComponent = ({
   }, [key, step, pathname]);
 
   const classes = useStyles();
-  const bgTypeClass = getAccountTypeClass(accountType, islamicBanking);
+  const bgTypeClass = cx({ brown: accountType === accountsNames.elite, green: islamicBanking });
   const toggleSwitcherShow = () => setIsSwitcherShow(!isSwitcherShow);
 
   return (
     <div
       className={cx(classes.formNav, classes.formNavBg, bgTypeClass, {
-        "small-bg": getIsShowSmallBg(pathname),
+        "small-bg": checkIsShowSmallBg(pathname),
         open: isSwitcherShow,
         "has-video": routes.accountsComparison === pathname
       })}
@@ -160,14 +140,12 @@ export const FormNavigationComponent = ({
           What banking option do you prefer?
         </Typography>
       </IslamicBankingSwitcherMobile>
-      {getIsShowAccountInfo(pathname) ? (
+      {checkIsShowAccountInfo(pathname) ? (
         <AccountInfo classes={classes} accountType={accountType} />
       ) : (
-        pathname !== routes.login && (
-          <FormStepper step={step} path={pathname} checkLoginStatus={checkLoginStatus} />
-        )
+        pathname !== routes.login && <FormStepper step={step} path={pathname} isLogin={isLogin} />
       )}
-      {!(checkLoginStatus || pathname === routes.login) && <Chat />}
+      {!(isLogin || pathname === routes.login) && <Chat />}
     </div>
   );
 };

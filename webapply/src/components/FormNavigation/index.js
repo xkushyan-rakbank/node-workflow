@@ -6,7 +6,7 @@ import { FormNavigationComponent } from "./FormNavigation";
 
 const mapStateToProps = state => ({
   applicationInfo: get(state, "appConfig.prospect.applicationInfo", {}),
-  checkLoginStatus: checkLoginStatus(state)
+  isLogin: checkLoginStatus(state)
 });
 
 export const FormNavigation = connect(mapStateToProps)(FormNavigationComponent);

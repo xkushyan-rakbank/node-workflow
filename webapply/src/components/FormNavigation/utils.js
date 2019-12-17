@@ -1,6 +1,6 @@
 import routes from "../../routes";
 
-export const getIsShowAccountInfo = pathname =>
+export const checkIsShowAccountInfo = pathname =>
   [
     routes.accountsComparison,
     routes.detailedAccount,
@@ -11,7 +11,7 @@ export const getIsShowAccountInfo = pathname =>
     routes.reUploadDocuments
   ].includes(pathname);
 
-export const getIsShowSmallBg = pathname =>
+export const checkIsShowSmallBg = pathname =>
   [routes.accountsComparison, routes.comeBackLogin, routes.comeBackLoginVerification].includes(
     pathname
   );
