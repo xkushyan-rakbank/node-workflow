@@ -108,13 +108,13 @@ export const screening = {
 };
 
 export const uploadProspectDocument = {
-  send: ({ data, prospectId, indexValue, setProgress }) => {
+  send: ({ data, prospectId }) => {
     return httpClient.request({
       url: buildURI("docUploaderUri", prospectId),
       method: "POST",
-      data,
-      onUploadProgress: progressEvent =>
-        setProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total))
+      data
+      // onUploadProgress: progressEvent =>
+      //   setProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total))
     });
   }
 };

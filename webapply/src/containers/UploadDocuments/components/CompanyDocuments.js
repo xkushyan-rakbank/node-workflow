@@ -19,7 +19,7 @@ export const CompanyDocuments = ({ documents, companyName, icon = "" }) => {
           key={document.documentKey}
           documents={document}
           index={index}
-          type="companyDocument"
+          type="companyDocuments"
         />
       ))}
     </div>

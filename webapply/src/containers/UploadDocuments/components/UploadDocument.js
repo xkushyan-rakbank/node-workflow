@@ -1,11 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { connect } from "react-redux";
+import nanoid from "nanoid";
 import * as Yup from "yup";
 
 import { retrieveDocDetails, docUpload } from "../../../store/actions/getProspectDocuments";
-import { getProspectId, getProspectErrorMessage } from "../../../store/selectors/appConfig";
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
-import { docKeyGenerator } from "./../../../utils/docKeyGenerator";
 import companyIconSvg from "../../../assets/icons/file.png";
 import { useStyles } from "./styled";
 
@@ -20,35 +19,46 @@ const validationFileSchema = Yup.object().shape({
 });
 
 const UploadDocumentsComponent = props => {
-  const { documents, docUpload, prospectID, icon, uploadErrorMessage } = props;
-  const [errorMessage, setErrorMessage] = useState("");
+  const { documents, type: docOwner, docUpload, icon, uploadErrorMessage } = props;
+  const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [percentCompleted, setPercentCompleted] = useState(0);
-  const classes = useStyles(percentCompleted);
+  // const [percentCompleted, setPercentCompleted] = useState(0);
+  const classes = useStyles();
   const inputEl = useRef(null);
   const NotUploaded = documents.uploadStatus !== "NotUploaded";
 
-  const fileUploadHandler = async () => {
+  const fileUploadHandler = useCallback(() => {
     const file = inputEl.current.files[0];
-    const isValid = await validationFileSchema
-      .validate({ file }, { returnError: true })
-      .then(value => value)
-      .catch(error => setErrorMessage(error.message));
 
-    if (isValid) {
-      let fileInfo = {
-        documentKey: docKeyGenerator(documents)
-      };
+    try {
+      const isValid = validationFileSchema.validateSync({ file }, { abortEarly: false });
 
-      fileInfo = JSON.stringify(fileInfo);
+      if (isValid) {
+        const fileInfo = JSON.stringify({
+          documentKey: nanoid()
+        });
 
-      const data = new FormData();
-      data.append("fileInfo", fileInfo);
-      data.append("file", file);
-      docUpload(props, file, data, prospectID || "COSME0017", setPercentCompleted);
-      setSelectedFile(file);
+        const docProps = {
+          uploadStatus: "Uploaded",
+          fileName: file.name,
+          fileSize: file.size,
+          submittedDt: file.lastModifiedDate,
+          fileFormat: file.type
+        };
+
+        const docType = documents.documentType;
+
+        const data = new FormData();
+        data.append("fileInfo", fileInfo);
+        data.append("file", file);
+        docUpload(data, docProps, docOwner, docType);
+        setErrorMessage(null);
+        setSelectedFile(file);
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
     }
-  };
+  });
 
   const fileUploadCancel = () => {
     setSelectedFile(null);
@@ -105,12 +115,9 @@ const UploadDocumentsComponent = props => {
                   </div>
                   <div className={classes.uploadFileName}>
                     <div id="Progress_Status">
-                      <div
-                        className={classes.myProgressBar}
-                        style={{ width: `${percentCompleted}%` }}
-                      ></div>
+                      <div className={classes.myProgressBar} style={{ width: "100%" }}></div>
                     </div>
-                    <div className={classes.progressStatus}>{percentCompleted}%</div>
+                    <div className={classes.progressStatus}>100%</div>
                   </div>
                 </div>
                 <p className={classes.cancel} onClick={fileUploadCancel}>
@@ -130,12 +137,7 @@ const mapDispatchToProps = {
   docUpload
 };
 
-const mapStateToProps = state => ({
-  prospectID: getProspectId(state),
-  uploadErrorMessage: getProspectErrorMessage(state)
-});
-
 export const UploadDocuments = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(UploadDocumentsComponent);
