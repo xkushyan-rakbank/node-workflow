@@ -147,4 +147,4 @@ export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
 
-export const mobileResolution = 991;
+export const mobileResolution = 955;

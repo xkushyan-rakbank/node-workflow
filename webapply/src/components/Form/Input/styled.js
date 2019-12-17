@@ -59,7 +59,7 @@ export const useStyles = makeStyles({
         transform: "translate(107px, -6px) scale(0.75)"
       },
       "& legend": {
-        marginLeft: 102
+        marginLeft: 95
       },
       "& input": {
         paddingLeft: 107
@@ -69,7 +69,13 @@ export const useStyles = makeStyles({
   formControlRoot: {
     margin: "12px 0 24px",
     width: "100%",
-    display: "flex"
+    display: "flex",
+    "& label": {
+      transform: "translate(16px, 20px) scale(1)"
+    },
+    "& label.MuiInputLabel-outlined.MuiInputLabel-shrink": {
+      transform: "translate(16px, -6px) scale(0.75)"
+    }
   },
   input: {
     paddingLeft: 16,
