@@ -53,10 +53,10 @@ export const useStyles = makeStyles({
       flex: 1,
       position: "relative",
       "& label": {
-        transform: "translate(114px, 20px) scale(1)"
+        transform: "translate(107px, 20px) scale(1)"
       },
       "& label.MuiInputLabel-outlined.MuiInputLabel-shrink": {
-        transform: "translate(114px, -6px) scale(0.75)"
+        transform: "translate(107px, -6px) scale(0.75)"
       },
       "& legend": {
         marginLeft: 102
@@ -72,6 +72,8 @@ export const useStyles = makeStyles({
     display: "flex"
   },
   input: {
+    paddingLeft: 16,
+    paddingRight: 16,
     "&::placeholder": {
       color: "#86868b"
     }
