@@ -1,7 +1,7 @@
 {
     "companyDocuments": [
       {
-        "documentType": "TL",
+        "documentType": "TradeLicenseNo",
         "signatoryId": "",
         "signatoryName": "",
         "documentTitle": "",
@@ -23,7 +23,7 @@
         "verifiedBy": "",
         "isEncrypted": false,
         "encryptionDetails": "",
-        "uploadStatus": ""
+        "uploadStatus": "Uploaded"
       },
       {
         "documentType": "MOA",
@@ -48,7 +48,7 @@
         "verifiedBy": "",
         "isEncrypted": false,
         "encryptionDetails": "",
-        "uploadStatus": ""
+        "uploadStatus": "Uploaded"
       }
     ],
     "stakeholdersDocuments": {
@@ -56,7 +56,7 @@
         "documents": [
           {
             "documentType": "Passport",
-            "signatoryId": "",
+            "signatoryId": "1",
             "signatoryName": "Manohar",
             "documentTitle": "",
             "documentKey": "MGHN43MD75_PP_0",
@@ -77,7 +77,7 @@
             "verifiedBy": "",
             "isEncrypted": false,
             "encryptionDetails": "",
-            "uploadStatus": ""
+            "uploadStatus": "Uploaded"
           }
         ]
       },
@@ -85,7 +85,7 @@
         "documents": [
           {
             "documentType": "Passport",
-            "signatoryId": "",
+            "signatoryId": "2",
             "signatoryName": "Richard",
             "documentTitle": "",
             "documentKey": "MGHN43MD75_PP_1",
@@ -106,7 +106,7 @@
             "verifiedBy": "",
             "isEncrypted": false,
             "encryptionDetails": "",
-            "uploadStatus": ""
+            "uploadStatus": "Uploaded"
           }
         ]
       }

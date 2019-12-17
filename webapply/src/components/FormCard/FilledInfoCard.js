@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
 
-import Avatar from "../Avatar";
+import { Avatar } from "../Avatar/Avatar";
 
 const useStyles = makeStyles({
   contentWrapper: {
@@ -22,6 +22,7 @@ export const FilledInfoCard = ({ firstName, lastName, content, index, defaultAva
         lastName={lastName}
         index={index}
         defaultAvatarIcon={defaultAvatarIcon}
+        isEmptyAvatar={!firstName && !lastName}
       />
       {content}
     </div>

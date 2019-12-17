@@ -1,16 +1,16 @@
-export const ctaStatus = [
-  "Incomplete",
-  "Documents needed",
-  "Need Additional Information/Documents"
-];
+export const LIST_VIEW = "list";
 
-export const ctaWaterText = ["Finish application", "Upload Document", "Upload Document"];
+export const GRID_VIEW = "grid";
 
-export const withoutCtaStatus = ["Assessing", "Account activated", "Declined", "Ineligible"];
+export const notCtaStatuses = {
+  Assessing: "We will call you soon",
+  "Account activated": "Ready for transaction",
+  Declined: "Criteria not met",
+  Ineligible: "We will call you soon"
+};
 
-export const withoutCtaWaterText = [
-  "We will call you soon",
-  "Ready for transaction",
-  "Criteria not met",
-  "We will call you soon"
-];
+export const ctaStatuses = {
+  Incomplete: "Finish application",
+  "Documents needed": "Upload Document",
+  "Need Additional Information/Documents": "Upload Document"
+};

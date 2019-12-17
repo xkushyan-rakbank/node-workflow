@@ -47,7 +47,7 @@ public class EnvUtil {
   }
   
   public static boolean isRecaptchaEnable() {
-    return true;
+    return !System.getenv("RECAPTCHA_ENABLE").equals("N");
   }
 
   public static boolean isCheckRecaptcha() {

@@ -11,7 +11,7 @@
         "statusType": "Upload Documents",
         "statusCode": "",
         "statusFlag": "",
-        "statusNotes": "New documents needed",
+        "statusNotes": "Documents needed",
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "",
@@ -25,17 +25,18 @@
         "mobileNo": "3456234578"
       },
       "applicationInfo": {
-        "createdDate": "string",
+        "createdDate": "12:10:2019",
         "lastModifiedDate": "12:10:2019",
         "createdBy": "string",
         "lastModifiedBy": "Kapil",
         "viewId": "/ReUploadDocuments",
-        "actionType": "Save"
+        "actionType": "Save",
+        "accountType": "RAKStarter"
       },
       "signatoryInfo": [
         {
-          "signatoryId": "string",
-          "fullName": "Abhi",
+          "signatoryId": "0",
+          "fullName": "",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
@@ -83,8 +84,8 @@
           }
         },
         {
-          "signatoryId": "string",
-          "fullName": "Bhakta",
+          "signatoryId": "1",
+          "fullName": "",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
@@ -134,7 +135,8 @@
       ],
       "organizationInfo": {
         "licenseNumber": "3456798765789",
-        "companyName": "Gill Pvt. Ltd.",
+        "companyName": "",
+        "leadNumber": "0123456789",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [
@@ -193,7 +195,7 @@
         "statusType":"Incomplete",
         "statusCode": "",
         "statusFlag": "",
-        "statusNotes": "Incomplete application",
+        "statusNotes": "Incomplete",
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within 1 day to meet you in person and help you out.",
@@ -212,12 +214,13 @@
         "createdBy": "string",
         "lastModifiedBy": "string",
         "viewId": "/ApplicationSubmitted",
+        "accountType": "RAKelite",
         "actionType": "Save"
       },
       "signatoryInfo": [
         {
           "signatoryId": "string",
-          "fullName": "string",
+          "fullName": "",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
@@ -238,6 +241,7 @@
       "organizationInfo": {
         "licenseNumber": "447877565655",
         "companyName": "Purva Limited",
+        "leadNumber": "0123456789",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [
@@ -285,12 +289,13 @@
         "createdBy": "string",
         "lastModifiedBy": "string",
         "viewId": "/ApplicationSubmitted",
+        "accountType": "Current Account",
         "actionType": "Save"
       },
       "signatoryInfo": [
         {
           "signatoryId": "string",
-          "fullName": "string",
+          "fullName": "",
           "screeningInfo": {
             "statusOverAll": "proceed",
             "screeningResults": [
@@ -311,6 +316,7 @@
       "organizationInfo": {
         "licenseNumber": "50978643469",
         "companyName": "ACC Corporate Limited",
+        "leadNumber": "0123456789",
         "screeningInfo": {
           "statusOverAll": "proceed",
           "screeningResults": [

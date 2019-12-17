@@ -34,6 +34,7 @@ export const useStyles = makeStyles({
     alignItems: "center"
   },
   hidden: {
-    display: "none"
+    maxHeight: "0",
+    overflow: "hidden"
   }
 });

@@ -60,9 +60,11 @@ export const ChannelsComponent = ({
   const classes = useStyles();
 
   useEffect(() => {
-    updateProspect({ [pathDebitCardApplied]: isDebitCardApplied });
-    updateProspect({ [pathChequeBookApplied]: isChequeBookApplied });
-  }, []);
+    updateProspect({
+      [pathDebitCardApplied]: isDebitCardApplied,
+      [pathChequeBookApplied]: isChequeBookApplied
+    });
+  }, [isChequeBookApplied, isDebitCardApplied, updateProspect]);
 
   return (
     <Formik

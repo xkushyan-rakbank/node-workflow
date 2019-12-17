@@ -2,12 +2,12 @@ import React from "react";
 import get from "lodash/get";
 import cx from "classnames";
 
-import Avatar from "../../../../components/Avatar";
+import { Avatar } from "../../../../components/Avatar/Avatar";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
 
-export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
+export const DocumentsComponent = ({ docs = {}, prospectInfo, endpointsUrl }) => {
   const classes = useStyles();
   const signatoryInfo = prospectInfo.signatoryInfo;
   const documentBaseUrl = `${endpointsUrl.baseUrl || ""}${endpointsUrl.getDocumentByIdUri || ""}`;
@@ -30,7 +30,7 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
             </div>
           </div>
           {docs.companyDocuments.map((application, index) => (
-            <div className={classes.applicationRow} key={index}>
+            <div className={classes.applicationRow} key={application.documentType}>
               <div>
                 <div className={classes.checkListData}>{application.documentType}</div>
               </div>
@@ -59,9 +59,9 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
       {Object.keys(docs.stakeholdersDocuments || {}).length ? (
         (signatoryInfo || []).length &&
         signatoryInfo.map((user, index) => (
-          <div key={index}>
+          <div key={user.signatoryId}>
             <div className={classes.contentWrapper}>
-              <Avatar firstName={user.fullName} />
+              <Avatar fullName={user.fullName} index={index} />
               <div className={classes.userInfo}>
                 <div className={classes.nameField}>{user.fullName}</div>
               </div>
@@ -78,29 +78,31 @@ export const DocumentsComponent = ({ docs, prospectInfo, endpointsUrl }) => {
                   <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
                 </div>
               </div>
-              {(docs.stakeholdersDocuments[`${index}_${user.fullName}`] || []).map((doc, index) => (
-                <div className={classes.applicationRow} key={index}>
-                  <div>
-                    <div className={classes.checkListData}>{doc.documentType}</div>
-                  </div>
-                  <div>
-                    <div className={classes.checkListData}>{doc.uploadStatus}</div>
-                  </div>
-                  {doc.uploadStatus !== "NotUploaded" && (
+              {(docs.stakeholdersDocuments[`${index}_${user.fullName}`].documents || []).map(
+                (doc, index) => (
+                  <div className={classes.applicationRow} key={doc.documentType}>
                     <div>
-                      <a
-                        index={index}
-                        href={documentBaseUrl
-                          .replace("{prospectId}", prospectInfo.prospectId)
-                          .replace("{documentKey}", doc.documentKey)}
-                        className={classes.link}
-                      >
-                        {titles.PRINT_DOWNLOAD_TITLE}
-                      </a>
+                      <div className={classes.checkListData}>{doc.documentType}</div>
                     </div>
-                  )}
-                </div>
-              ))}
+                    <div>
+                      <div className={classes.checkListData}>{doc.uploadStatus}</div>
+                    </div>
+                    {doc.uploadStatus !== "NotUploaded" && (
+                      <div>
+                        <a
+                          index={index}
+                          href={documentBaseUrl
+                            .replace("{prospectId}", prospectInfo.prospectId)
+                            .replace("{documentKey}", doc.documentKey)}
+                          className={classes.link}
+                        >
+                          {titles.PRINT_DOWNLOAD_TITLE}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )
+              )}
             </div>
           </div>
         ))

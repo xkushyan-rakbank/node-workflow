@@ -54,12 +54,8 @@ export const ValueAddedServicesComponent = ({
   );
 
   useEffect(() => {
-    if (accountType === accountsNames.starter) {
-      updateProspect({ [name]: "RAKvalue PLUS" });
-    } else {
-      updateProspect({ [name]: "" });
-    }
-  }, []);
+    updateProspect({ [name]: accountType === accountsNames.starter ? "RAKvalue PLUS" : "" });
+  }, [accountType, name, updateProspect]);
   return (
     <>
       <div className={cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency })}>

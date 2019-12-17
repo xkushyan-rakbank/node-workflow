@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ctaStatus, ctaWaterText, withoutCtaStatus, withoutCtaWaterText } from "../constants";
+import { ctaStatuses, notCtaStatuses } from "../constants";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 
 import { useStyles } from "./styled";
@@ -14,11 +14,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
         {app.organizationInfo.companyName ? (
           <div>
             <div className={classes.companyName}>{app.organizationInfo.companyName}</div>
-            <div className={classes.listAccount}>
-              {`${app.applicationInfo.accountType} ${
-                app.applicationInfo.islamicBanking ? "islamic" : ""
-              }`}
-            </div>
+            <div className={classes.listAccount}>{app.applicationInfo.accountType}</div>
           </div>
         ) : (
           <div>
@@ -30,17 +26,13 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
           <span className={classes.listStatus}>{app.status.statusNotes}</span>
         </div>
         <div className={classes.action}>
-          {ctaStatus.includes(app.status.statusNotes) ? (
+          {ctaStatuses[app.status.statusNotes] ? (
             <WhiteContainedButton
-              label={ctaWaterText[ctaStatus.indexOf(app.status.statusNotes)]}
+              label={ctaStatuses[app.status.statusNotes]}
               handleClick={() => getProspectInfo(app.prospectId)}
-              disabled={app.applicationInfo.lastModifiedBy.trim().length > 0}
             />
           ) : (
-            <span>
-              {withoutCtaStatus.includes(app.status.statusNotes) &&
-                withoutCtaWaterText[withoutCtaStatus.indexOf(app.status.statusNotes)]}
-            </span>
+            <span>{notCtaStatuses[app.status.statusNotes]}</span>
           )}
         </div>
       </div>

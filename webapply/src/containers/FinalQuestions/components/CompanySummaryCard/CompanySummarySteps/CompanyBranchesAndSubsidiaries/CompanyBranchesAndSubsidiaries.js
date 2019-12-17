@@ -12,6 +12,7 @@ import {
   Checkbox,
   CustomSelect,
   Input,
+  SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { InfoTitle } from "../../../../../../components/Notifications";
@@ -120,12 +121,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 placeholder="Company name"
                                 component={Input}
                               />
-                              <InfoTitle
-                                title="Company name should be same as mentioned in the registration documents"
-                                classes={{
-                                  wrapper: classes.infoTitles
-                                }}
-                              />
                             </Grid>
                             <Grid
                               item
@@ -179,6 +174,14 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           arrayHelpers={arrayHelpers}
                         />
                       )}
+                      <Grid item sm={12}>
+                        <InfoTitle
+                          title="Company name should be same as mentioned in the registration documents"
+                          classes={{
+                            wrapper: classes.infoTitles
+                          }}
+                        />
+                      </Grid>
                     </>
                   )}
                 </>
@@ -226,12 +229,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 placeholder="Company name"
                                 component={Input}
                               />
-                              <InfoTitle
-                                title="Company name should be same as mentioned in the registration documents"
-                                classes={{
-                                  wrapper: classes.infoTitles
-                                }}
-                              />
                             </Grid>
                             <Grid
                               item
@@ -244,7 +241,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
                                 label="Country"
                                 datalistId="country"
-                                component={CustomSelect}
+                                component={SelectAutocomplete}
                               />
                               {!!index && (
                                 <ArrayRemoveButton
@@ -271,6 +268,14 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           arrayHelpers={arrayHelpers}
                         />
                       )}
+                      <Grid item sm={12}>
+                        <InfoTitle
+                          title="Company name should be same as mentioned in the registration documents"
+                          classes={{
+                            wrapper: classes.infoTitles
+                          }}
+                        />
+                      </Grid>
                     </>
                   )}
                 </>

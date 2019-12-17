@@ -63,7 +63,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/$(Build.BuildNumber)/$(Build.SourceBranchName)/webapply/"
+                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
@@ -114,7 +114,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
-                    "target": "onboarding/$(Build.BuildNumber)/$(Build.SourceBranchName)/webapplyServer/"
+                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/webapplyServer/"
                 }
               ]
             }
@@ -172,7 +172,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
-                    "target": "onboarding/$(Build.BuildNumber)/$(Build.SourceBranchName)/document_uploader/"
+                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/document_uploader/"
                 }
               ]
             }

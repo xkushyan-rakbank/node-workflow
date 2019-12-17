@@ -18,7 +18,9 @@ import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
+import { BackLink } from "../../components/Buttons/BackLink";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import routes from "../../routes";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -135,6 +137,7 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
+                <BackLink path={routes.accountsComparison} />
                 <SubmitButton
                   disabled={
                     !values.fullName ||

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
-import SectionTitleWithInfo from "../../components/SectionTitleWithInfo";
+import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
 import { TableCompare } from "./components/TableCompare";
