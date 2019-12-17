@@ -7,7 +7,11 @@ export const VERIFY_CODE_FAILED = "OTP/VERIFY_CODE_FAILED";
 
 export const generateOtpCode = payload => ({
   type: GENERATE_OTP_CODE,
-  payload
+  payload: {
+    email: payload.email,
+    countryCode: payload.countryCode,
+    mobileNo: payload.mobileNo
+  }
 });
 
 export const verifyOtp = payload => ({
