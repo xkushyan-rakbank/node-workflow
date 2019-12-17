@@ -26,7 +26,7 @@ const questions = [
     id: 3
   },
   {
-    question: "Now do I check the status of my submitted application",
+    question: "How do I check the status of my submitted application",
     answer:
       "You can check the status of your application by accessing the link sent to your email Id.",
     id: 4
@@ -88,13 +88,13 @@ const PreliminaryInformation = ({ classes }) => {
           <IconCardItem minWidth="100px" text="Trade License">
             <img src={license} alt="trade-license" />
           </IconCardItem>
-          <IconCardItem minWidth="100px" text="Passport/visa of all signatories¹">
+          <IconCardItem minWidth="100px" text="Passport of all signatories¹">
             <img src={passport} alt="passport-visa" />
           </IconCardItem>
           <IconCardItem minWidth="100px" text="Emirates ID of all signatories">
             <img src={emiratesId} alt="emirates-id" />
           </IconCardItem>
-          <IconCardItem minWidth="100px" text="Other company documents²">
+          <IconCardItem minWidth="100px" text="Company MoA*²">
             <img src={companyDocuments} alt="company-documents" />
           </IconCardItem>
         </IconCardsContainer>
