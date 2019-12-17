@@ -88,7 +88,7 @@ export const CompanyBusinessRelationshipsComponent = ({
   }, [handleContinue]);
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           topCustomers: topCustomers.map(item => ({ ...item, id: uniqueId() })),
