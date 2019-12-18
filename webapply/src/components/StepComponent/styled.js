@@ -15,7 +15,7 @@ export const useStyles = makeStyles({
     }
   },
   stepTitleWrapper: {
-    padding: "13px 16px",
+    padding: "13px 20px",
     borderTop: "1px solid rgba(230, 230, 230, 0.5)",
     cursor: "pointer"
   },
@@ -34,5 +34,8 @@ export const useStyles = makeStyles({
   doneIcon: {
     width: "24px",
     height: "22px"
+  },
+  formWrapper: {
+    padding: "0 20px"
   }
 });

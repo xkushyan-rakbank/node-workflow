@@ -66,7 +66,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
   const basisPath = "prospect.orgKYCDetails";
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           entitiesInUAE: entitiesInUAE.map(item => ({ ...item, id: uniqueId() })),

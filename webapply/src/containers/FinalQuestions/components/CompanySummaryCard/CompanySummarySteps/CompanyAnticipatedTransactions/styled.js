@@ -36,9 +36,6 @@ export const useStyles = makeStyles({
     top: "-10px",
     marginBottom: "10px"
   },
-  formWrapper: {
-    margin: "0 20px"
-  },
   buttonWrapper: {
     width: "100%",
     display: "flex",

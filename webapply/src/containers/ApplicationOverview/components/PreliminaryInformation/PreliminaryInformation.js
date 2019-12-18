@@ -25,13 +25,13 @@ export const PreliminaryInformation = () => {
           <IconCardItem minWidth="100px" text="Trade License">
             <img src={license} alt="trade-license" />
           </IconCardItem>
-          <IconCardItem minWidth="100px" text="Passport/visa of all signatories¹">
+          <IconCardItem minWidth="100px" text="Passport of all signatories¹">
             <img src={passport} alt="passport-visa" />
           </IconCardItem>
           <IconCardItem minWidth="100px" text="Emirates ID of all signatories">
             <img src={emiratesId} alt="emirates-id" />
           </IconCardItem>
-          <IconCardItem minWidth="100px" text="Other company documents²">
+          <IconCardItem minWidth="100px" text="Company MoA*²">
             <img src={companyDocuments} alt="company-documents" />
           </IconCardItem>
         </IconCardsContainer>
