@@ -21,8 +21,7 @@ import {
   setScreeningResults,
   resetFormStep,
   PROSPECT_AUTO_SAVE,
-  sendProspectRequest,
-  continueProspectUpdate
+  sendProspectRequest
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
 import { getProspect, getProspectId } from "../selectors/appConfig";
@@ -51,11 +50,6 @@ function* sendProspectToAPISaga() {
     const newProspect = getProspect(state);
 
     yield put(sendProspectRequest("continue", newProspect));
-    const { data } = yield take("CONTINUE_PROSPECT_UPDATE");
-
-    if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
-      yield put(setScreeningResults(data.preScreening));
-    }
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }
@@ -86,7 +80,10 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     newProspect.applicationInfo.saveType = saveType;
 
     yield put(sendProspectToAPISuccess(newProspect));
-    yield put(continueProspectUpdate(data));
+
+    if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
+      yield put(setScreeningResults(data.preScreening));
+    }
   } catch (error) {
     log({ error });
     yield put(sendProspectToAPIFail());
