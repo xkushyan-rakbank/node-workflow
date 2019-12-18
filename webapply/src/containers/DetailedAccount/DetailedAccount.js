@@ -15,7 +15,7 @@ const DetailedAccount = ({ applicationInfo }) => {
 
   let videoUrl, posterUrl;
   if (Object.keys(applicationInfo).length && accountType.length) {
-    videoUrl = getVideoUrl(applicationInfo).videoUrl;
+    videoUrl = getVideoUrl(applicationInfo).videoUrls;
     posterUrl = getVideoUrl(applicationInfo).posterUrl;
   }
 
@@ -25,7 +25,7 @@ const DetailedAccount = ({ applicationInfo }) => {
       <div className="hide-on-mobile">
         <IslamicBankingSwitcher />
       </div>
-      <VerticalPaginationWrapper videoUrl={videoUrl} posterUrl={posterUrl}>
+      <VerticalPaginationWrapper videoUrls={videoUrl} posterUrl={posterUrl}>
         <div />
         <AccountBenefits accountType={accountType} />
         <AccountingSoftware accountType={accountType} />

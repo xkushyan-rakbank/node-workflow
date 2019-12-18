@@ -195,7 +195,7 @@ class VerticalPaginationWrapper extends React.Component {
     const {
       classes,
       children,
-      videoUrl,
+      videoUrls,
       posterUrl,
       showVideoOnMobile = false,
       scrollToSecondSection
@@ -205,11 +205,11 @@ class VerticalPaginationWrapper extends React.Component {
     return (
       <>
         <div className={classes.paginationWrapper} onWheel={this.handleWheel}>
-          {videoUrl && (
+          {videoUrls && (
             <VideoBackground
               videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
               nextElementPosition={nextElementPosition}
-              videoUrl={videoUrl}
+              videoUrls={videoUrls}
               posterUrl={posterUrl}
               handleClick={this.handleClick}
               handleClickMobile={scrollToSecondSection}
@@ -228,7 +228,7 @@ class VerticalPaginationWrapper extends React.Component {
           </div>
         </div>
         <div className={classes.paginationDots}>
-          {videoUrl
+          {videoUrls
             ? nextElementPosition !== 0 && this.renderPagination(children)
             : this.renderPagination(children)}
         </div>

@@ -5,7 +5,8 @@ import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
 import { TableCompare } from "./components/TableCompare";
 import accountComparisonPoster from "../../assets/images/videoPosters/Account comparison.jpg";
-import accountComparisonVideo from "../../assets/videos/Account comparison.mp4";
+import accountComparisonVideo from "../../assets/videos/Accountcomparison.webm";
+import accountComparisonVideoMP4 from "../../assets/videos/Accountcomparison.mp4";
 import { useStyles } from "./styled";
 import { INITIAL_SECTION_POSITION } from "./constants";
 
@@ -36,7 +37,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   return (
     <div className={classes.container}>
       <VerticalPaginationWrapper
-        videoUrl={accountComparisonVideo}
+        videoUrls={{ webm: accountComparisonVideo, mp4: accountComparisonVideoMP4 }}
         posterUrl={accountComparisonPoster}
         indexScrollToSection={indexScrollToSection}
         scrollToSecondSection={scrollToSecondSection}
