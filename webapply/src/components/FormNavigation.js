@@ -198,15 +198,18 @@ const style = {
 const accountInfo = {
   RAKstarter: {
     title: "RAKstarter account",
-    subtitle: "A zero balance account, for the budding entrepreneurs out there."
+    subtitle: "A zero balance account, for the budding entrepreneurs out there.",
+    islamicSubtitle: "A zero balance account, for the budding entrepreneurs out there."
   },
   "Current Account": {
     title: "Business Current Account",
-    subtitle: "Our most flexible account for growing businesses."
+    subtitle: "Our most flexible account for growing businesses.",
+    islamicSubtitle: "Our most flexible account for established businesses "
   },
   RAKelite: {
     title: "RAKelite  business account",
-    subtitle: "Our most exclusive account, for our most exclusive clients."
+    subtitle: "Our most exclusive account, for our most exclusive clients.",
+    islamicSubtitle: "Our most exclusive account, for our most exclusive clients."
   },
   comeBackLogin: {
     title: "Good to see you back!"
@@ -216,7 +219,7 @@ const accountInfo = {
   }
 };
 
-const AccountInfo = ({ classes, accountType, history }) => {
+const AccountInfo = ({ classes, accountType, history, islamicBanking }) => {
   const { location: { pathname } = {} } = history;
   const handleClick = path => history.push(path);
 
@@ -239,7 +242,9 @@ const AccountInfo = ({ classes, accountType, history }) => {
               component="span"
               classes={{ root: classes.sectionSubtitle }}
             >
-              {accountInfo[accountType].subtitle}
+              {islamicBanking
+                ? accountInfo[accountType].islamicSubtitle
+                : accountInfo[accountType].subtitle}
             </Typography>
           </div>
           <ContainedButton
@@ -397,7 +402,12 @@ class FormNavigation extends React.Component {
           </Typography>
         </IslamicBankingSwitcherMobile>
         {showAccountInfo ? (
-          <AccountInfo classes={classes} accountType={accountType} history={history} />
+          <AccountInfo
+            classes={classes}
+            accountType={accountType}
+            history={history}
+            islamicBanking={islamicBanking}
+          />
         ) : (
           location.pathname !== routes.login && (
             <FormStepper step={step} path={location.pathname} checkLoginStatus={checkLoginStatus} />
