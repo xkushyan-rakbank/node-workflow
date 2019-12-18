@@ -3,6 +3,7 @@ export const DOC_UPLOADER = "DOC_UPLOADER";
 export const EXTRA_DOC_UPLOAD_SUCCESS = "EXTRA_DOC_UPLOAD_SUCCESS";
 export const DELETE_EXTRA_DOC_UPLOAD_SUCCESS = "DELETE_EXTRA_DOC_UPLOAD_SUCCESS";
 export const CANCEL_DOC_UPLOAD = "CANCEL_DOC_UPLOAD";
+export const START_DOC_UPLOAD = "START_DOC_UPLOAD";
 
 export const retrieveDocDetails = () => {
   return { type: RETRIEVE_DOC_UPLOADER };
@@ -18,6 +19,10 @@ export const extraDocUploadSuccess = payload => {
 
 export const deleteExtraDocUploadSuccess = payload => {
   return { type: DELETE_EXTRA_DOC_UPLOAD_SUCCESS, payload };
+};
+
+export const startDocUpload = () => {
+  return { type: START_DOC_UPLOAD };
 };
 
 export const cancelDocUpload = () => {

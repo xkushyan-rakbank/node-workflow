@@ -1,8 +1,24 @@
-import { all, call, put, takeLatest, select } from "redux-saga/effects";
+import {
+  all,
+  call,
+  put,
+  take,
+  takeLatest,
+  select,
+  takeEvery,
+  race,
+  cancelled
+} from "redux-saga/effects";
+import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
-import * as actions from "../actions/getProspectDocuments";
+import {
+  RETRIEVE_DOC_UPLOADER,
+  DOC_UPLOADER,
+  EXTRA_DOC_UPLOAD_SUCCESS,
+  DELETE_EXTRA_DOC_UPLOAD_SUCCESS
+} from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
 
@@ -21,13 +37,14 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* updateProspectDocuments({ data, docProps, docOwner, docType }) {
-  const state = yield select();
-  const config = cloneDeep(state.appConfig);
-  const prospectId = getProspectId(state) || "COSME0000000000000001";
-
+function* uploadDocumentsBgSync(data, docProps, docOwner, docType) {
+  const source = CancelToken.source();
   try {
-    yield call(uploadProspectDocument.send, { prospectId, data });
+    const state = yield select();
+    const config = cloneDeep(state.appConfig);
+    const prospectId = getProspectId(state) || "COSME0017";
+
+    yield call(uploadProspectDocument.send, { prospectId, data, source });
 
     config.prospect.documents[docOwner].forEach(
       (doc, index, documents) =>
@@ -35,9 +52,18 @@ function* updateProspectDocuments({ data, docProps, docOwner, docType }) {
     );
 
     yield put(setConfig(config));
-  } catch (error) {
-    log(error);
+  } finally {
+    if (yield cancelled()) {
+      source.cancel();
+    }
   }
+}
+
+function* uploadDocumentsFlowSaga({ data, docProps, docOwner, docType }) {
+  yield race({
+    task: call(uploadDocumentsBgSync, data, docProps, docOwner, docType),
+    cancel: take("CANCEL_DOC_UPLOAD")
+  });
 }
 
 function* updateExtraProspectDocuments(action) {
@@ -58,9 +84,9 @@ function* deleteExtraProspectDocuments(action) {
 
 export default function* appConfigSaga() {
   yield all([
-    takeLatest(actions.RETRIEVE_DOC_UPLOADER, getProspectDocumentsSaga),
-    takeLatest(actions.DOC_UPLOADER, updateProspectDocuments),
-    takeLatest(actions.EXTRA_DOC_UPLOAD_SUCCESS, updateExtraProspectDocuments),
-    takeLatest(actions.DELETE_EXTRA_DOC_UPLOAD_SUCCESS, deleteExtraProspectDocuments)
+    takeLatest(RETRIEVE_DOC_UPLOADER, getProspectDocumentsSaga),
+    takeEvery(DOC_UPLOADER, uploadDocumentsFlowSaga),
+    takeLatest(EXTRA_DOC_UPLOAD_SUCCESS, updateExtraProspectDocuments),
+    takeLatest(DELETE_EXTRA_DOC_UPLOAD_SUCCESS, deleteExtraProspectDocuments)
   ]);
 }

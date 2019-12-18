@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import nanoid from "nanoid";
 import * as Yup from "yup";
 
-import { retrieveDocDetails, docUpload } from "../../../store/actions/getProspectDocuments";
+import {
+  retrieveDocDetails,
+  docUpload,
+  cancelDocUpload
+} from "../../../store/actions/getProspectDocuments";
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 import companyIconSvg from "../../../assets/icons/file.png";
 import { useStyles } from "./styled";
@@ -62,6 +66,7 @@ const UploadDocumentsComponent = props => {
 
   const fileUploadCancel = () => {
     setSelectedFile(null);
+    cancelDocUpload();
   };
 
   return (
@@ -134,7 +139,8 @@ const UploadDocumentsComponent = props => {
 };
 const mapDispatchToProps = {
   retrieveDocDetails,
-  docUpload
+  docUpload,
+  cancelDocUpload
 };
 
 export const UploadDocuments = connect(
