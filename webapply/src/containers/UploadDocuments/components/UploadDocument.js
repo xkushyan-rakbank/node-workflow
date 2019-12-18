@@ -63,10 +63,10 @@ const UploadDocumentsComponent = props => {
     }
   });
 
-  const fileUploadCancel = () => {
+  const fileUploadCancel = useCallback(() => {
     setSelectedFile(null);
     cancelDocUpload();
-  };
+  });
 
   return (
     <>
