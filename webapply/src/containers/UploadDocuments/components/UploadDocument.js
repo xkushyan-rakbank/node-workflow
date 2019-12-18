@@ -23,7 +23,16 @@ const validationFileSchema = Yup.object().shape({
 });
 
 const UploadDocumentsComponent = props => {
-  const { documents, type: docOwner, docUpload, icon, uploadErrorMessage, propgress } = props;
+  const {
+    documents,
+    type: docOwner,
+    docUpload,
+    icon,
+    uploadErrorMessage,
+    propgress,
+    cancelDocUpload,
+    index
+  } = props;
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
@@ -34,38 +43,37 @@ const UploadDocumentsComponent = props => {
     const file = inputEl.current.files[0];
 
     try {
-      const isValid = validationFileSchema.validateSync({ file }, { abortEarly: false });
-
-      if (isValid) {
-        const fileInfo = JSON.stringify({
-          documentKey: nanoid()
-        });
-
-        const docProps = {
-          uploadStatus: "Uploaded",
-          fileName: file.name,
-          fileSize: file.size,
-          submittedDt: file.lastModifiedDate,
-          fileFormat: file.type
-        };
-
-        const docType = documents.documentType;
-
-        const data = new FormData();
-        data.append("fileInfo", fileInfo);
-        data.append("file", file);
-        docUpload(data, docProps, docOwner, docType);
-        setErrorMessage(null);
-        setSelectedFile(file);
-      }
+      validationFileSchema.validateSync({ file }, { abortEarly: false });
     } catch (error) {
       setErrorMessage(error.message);
+      return;
     }
+
+    const fileInfo = JSON.stringify({
+      documentKey: nanoid()
+    });
+
+    const docProps = {
+      uploadStatus: "Uploaded",
+      fileName: file.name,
+      fileSize: file.size,
+      submittedDt: file.lastModifiedDate,
+      fileFormat: file.type
+    };
+
+    const docType = documents.documentType;
+
+    const data = new FormData();
+    data.append("fileInfo", fileInfo);
+    data.append("file", file);
+    docUpload(data, docProps, docOwner, docType, index);
+    setErrorMessage(null);
+    setSelectedFile(file);
   });
 
   const fileUploadCancel = useCallback(() => {
+    cancelDocUpload(index);
     setSelectedFile(null);
-    cancelDocUpload();
   });
 
   return (

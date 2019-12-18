@@ -20,7 +20,8 @@ import {
   DOC_UPLOADER,
   EXTRA_DOC_UPLOAD_SUCCESS,
   DELETE_EXTRA_DOC_UPLOAD_SUCCESS,
-  uploadFilesProgress
+  uploadFilesProgress,
+  CANCEL_DOC_UPLOAD
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
@@ -92,10 +93,14 @@ function* uploadDocumentsBgSync(data, docProps, docOwner, docType) {
   }
 }
 
-function* uploadDocumentsFlowSaga({ data, docProps, docOwner, docType }) {
+function* uploadDocumentsFlowSaga({ data, docProps, docOwner, docType, index }) {
   yield race({
     task: call(uploadDocumentsBgSync, data, docProps, docOwner, docType),
-    cancel: take("CANCEL_DOC_UPLOAD")
+    cancel: take(action => {
+      if (action.type === "CANCEL_DOC_UPLOAD" && action.index === index) {
+        return CANCEL_DOC_UPLOAD;
+      }
+    })
   });
 }
 
