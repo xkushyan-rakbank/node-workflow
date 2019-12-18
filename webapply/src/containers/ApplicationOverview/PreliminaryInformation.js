@@ -105,7 +105,7 @@ const PreliminaryInformation = ({ classes }) => {
         company.
       </div>
       <div className={classes.answers}>
-        <div className={classes.title}>Got more questions? We got some answers</div>
+        <div className={classes.title}>Have more questions? Here are some answers </div>
         <CommonQuestions data={questions} />
       </div>
     </>
