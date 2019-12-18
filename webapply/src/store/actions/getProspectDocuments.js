@@ -11,8 +11,8 @@ export const retrieveDocDetails = () => {
   return { type: RETRIEVE_DOC_UPLOADER };
 };
 
-export const docUpload = (data, docProps, docOwner, docType) => {
-  return { type: DOC_UPLOADER, data, docProps, docOwner, docType };
+export const docUpload = payload => {
+  return { type: DOC_UPLOADER, payload };
 };
 
 export const extraDocUploadSuccess = payload => {

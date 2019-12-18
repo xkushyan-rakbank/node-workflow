@@ -30,7 +30,7 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
               signatorie.firstName === document.signatoryName && (
                 <UploadDocuments
                   key={document.documentKey}
-                  documents={document}
+                  document={document}
                   type="stakeholdersDocuments"
                 />
               )
