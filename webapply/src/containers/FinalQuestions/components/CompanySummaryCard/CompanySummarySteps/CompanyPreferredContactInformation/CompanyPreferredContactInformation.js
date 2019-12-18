@@ -44,7 +44,7 @@ export const CompanyPreferredContactInformationComponent = ({
   }, [handleContinue]);
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           primaryMobCountryCode: UAE_PHONE_CODE,

@@ -19,7 +19,9 @@ const companyDetailsSchema = Yup.object({
     .required("You need to provide company name")
     .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
   vatRegistrationNumber: Yup.string(),
-  numberOfEmployees: Yup.number().max(0),
+  numberOfEmployees: Yup.number()
+    .min(0, "must be more than 0")
+    .max(1000, "must be less than or equal to 1000"),
   companyCategory: Yup.string()
 });
 
@@ -46,7 +48,7 @@ export const CompanyDetails = ({ handleContinue }) => (
             <Field
               name="companyCategory"
               label="Company Category"
-              path="prospect.OrgKYCDetails.companyCategory"
+              path="prospect.orgKYCDetails.companyCategory"
               datalistId="companyCategory"
               component={SelectAutocomplete}
             />

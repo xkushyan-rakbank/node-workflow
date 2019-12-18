@@ -45,6 +45,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "server:mock": "cd ../wiremock/ && java -jar wiremock-standalone-2.24.1.jar",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "eslint": "eslint src/",
     "test": "jest",
@@ -100,6 +101,6 @@
     "lint-staged": "^9.2.1",
     "jest-junit": "^6.3.0",
     "prettier": "1.18.2",
-    "redux-mock-store": "^1.5.3"
+    "source-map-explorer": "^2.1.2"
   }
 }

@@ -42,7 +42,7 @@ const StakeholderStepperComponent = ({
       changeEditableStakeholder();
     }, timeInterval);
     return () => clearInterval(interval);
-  }, [step]);
+  }, [step, changeEditableStakeholder]);
 
   const handleDeleteStakeholder = () => {
     setIsDisplayConfirmation(false);
