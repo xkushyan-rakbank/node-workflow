@@ -6,7 +6,7 @@ import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import routes from "./../routes";
 import { accountsNames, mobileResolution } from "../constants";
-import logo from "../assets/images/rakbankLogo.png";
+import logo from "../assets/images/rakbankLogo.svg";
 
 const styles = {
   header: {
