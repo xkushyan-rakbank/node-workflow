@@ -9,7 +9,8 @@ import {
   cancel,
   cancelled,
   fork,
-  debounce
+  actionChannel,
+  flush
 } from "redux-saga/effects";
 import get from "lodash/get";
 
@@ -29,19 +30,27 @@ import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
 import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
 
-function* _sendProspectToAPI(action) {
-  yield call(sendProspectToAPI, action);
-}
-
-function* debounceSendRequest() {
-  yield debounce(1000, "SEND_PROSPECT_REQUEST", _sendProspectToAPI);
+function* watchRequest() {
+  const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
+  while (true) {
+    const actions = yield flush(chan);
+    if (actions.length) {
+      const continueActions = actions.filter(act => act.saveType === "continue");
+      yield call(sendProspectToAPI, continueActions.length ? continueActions[0] : actions[0]);
+    }
+    yield delay(1000);
+  }
 }
 
 function* sendProspectToAPISaga() {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
-    yield put(sendProspectRequest("continue"));
+
+    const state = yield select();
+    const newProspect = getProspect(state);
+
+    yield put(sendProspectRequest("continue", newProspect));
     const { data } = yield take("CONTINUE_PROSPECT_UPDATE");
 
     if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
@@ -55,7 +64,10 @@ function* sendProspectToAPISaga() {
 function* prospectAutoSave() {
   try {
     while (true) {
-      yield put(sendProspectRequest("auto"));
+      const state = yield select();
+      const newProspect = getProspect(state);
+
+      yield put(sendProspectRequest("auto", newProspect));
       yield delay(40000);
     }
   } finally {
@@ -65,10 +77,9 @@ function* prospectAutoSave() {
   }
 }
 
-function* sendProspectToAPI({ saveType }) {
+function* sendProspectToAPI({ newProspect, saveType }) {
   try {
     const state = yield select();
-    const newProspect = getProspect(state);
     const prospectId = getProspectId(state) || "COSME0000000000000001";
 
     const { data } = yield call(prospect.update, prospectId, newProspect);
@@ -97,6 +108,6 @@ export default function* sendProspectToAPISagas() {
   yield all([
     takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
     takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga),
-    debounceSendRequest()
+    fork(watchRequest)
   ]);
 }

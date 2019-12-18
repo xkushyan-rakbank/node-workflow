@@ -44,11 +44,10 @@ export const setScreeningResults = payload => {
   return { type: SET_SCREENING_RESULTS, payload };
 };
 
-export const sendProspectRequest = saveType => {
-  return { type: SEND_PROSPECT_REQUEST, saveType };
+export const sendProspectRequest = (saveType, newProspect) => {
+  return { type: SEND_PROSPECT_REQUEST, saveType, newProspect };
 };
 
 export const continueProspectUpdate = data => {
-  console.log("continueProspectUpdate", data);
   return { type: CONTINUE_PROSPECT_UPDATE, data };
 };
