@@ -35,7 +35,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
     onSubmit={handleContinue}
     validationSchema={getCountryOfResidenceSchema(isSignatory)}
   >
-    {({ values }) => (
+    {({ values, setFieldValue }) => (
       <Form>
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
@@ -57,8 +57,9 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
               placeholder="784-XXXX-XXXXXXX-X"
               component={NumericInput}
               disabled={isSignatory || values.residenceCountry !== UAE}
-              format="784-####-#######-#"
-              prefix={"784-"}
+              format="###-####-#######-#"
+              prefix={"784"}
+              setFieldValue={setFieldValue}
             />
           </Grid>
         </Grid>

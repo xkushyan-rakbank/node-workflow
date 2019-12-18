@@ -9,20 +9,21 @@ import { useStyles } from "./styled";
 
 export const NumericInput = ({
   placement,
-  field,
+  field: { name, value },
   form: { errors, touched },
   inputProps,
+  setFieldValue,
   ...props
 }) => {
   const classes = useStyles();
-  const errorMessage = getIn(errors, field.name);
-  const isError = errorMessage && getIn(touched, field.name);
-
+  const errorMessage = getIn(errors, name);
+  const isError = errorMessage && getIn(touched, name);
   return (
     <FormControl className="formControl">
       <NumberFormat
-        {...field}
         {...props}
+        name={name}
+        value={value}
         variant="outlined"
         className={classes.textField}
         customInput={TextField}
@@ -30,6 +31,9 @@ export const NumericInput = ({
         InputProps={{
           ...inputProps
         }}
+        onValueChange={({ formattedValue }) =>
+          setFieldValue(name, formattedValue.replace(/-/g, ""))
+        }
       />
 
       {isError && <ErrorMessage error={errorMessage} />}
