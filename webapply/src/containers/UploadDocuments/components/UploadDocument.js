@@ -23,10 +23,9 @@ const validationFileSchema = Yup.object().shape({
 });
 
 const UploadDocumentsComponent = props => {
-  const { documents, type: docOwner, docUpload, icon, uploadErrorMessage } = props;
+  const { documents, type: docOwner, docUpload, icon, uploadErrorMessage, propgress } = props;
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  // const [percentCompleted, setPercentCompleted] = useState(0);
   const classes = useStyles();
   const inputEl = useRef(null);
   const NotUploaded = documents.uploadStatus !== "NotUploaded";
@@ -120,9 +119,12 @@ const UploadDocumentsComponent = props => {
                   </div>
                   <div className={classes.uploadFileName}>
                     <div id="Progress_Status">
-                      <div className={classes.myProgressBar} style={{ width: "100%" }}></div>
+                      <div
+                        className={classes.myProgressBar}
+                        style={{ width: `${propgress}%` }}
+                      ></div>
                     </div>
-                    <div className={classes.progressStatus}>100%</div>
+                    <div className={classes.progressStatus}>{propgress}%</div>
                   </div>
                 </div>
                 <p className={classes.cancel} onClick={fileUploadCancel}>
@@ -137,6 +139,11 @@ const UploadDocumentsComponent = props => {
     </>
   );
 };
+
+const mapStateToProps = state => ({
+  propgress: state.uploadDocuments.propgress
+});
+
 const mapDispatchToProps = {
   retrieveDocDetails,
   docUpload,
@@ -144,6 +151,6 @@ const mapDispatchToProps = {
 };
 
 export const UploadDocuments = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(UploadDocumentsComponent);

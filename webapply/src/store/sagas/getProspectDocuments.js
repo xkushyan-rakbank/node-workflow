@@ -3,12 +3,14 @@ import {
   call,
   put,
   take,
-  takeLatest,
-  select,
-  takeEvery,
+  fork,
   race,
+  select,
+  takeLatest,
+  takeEvery,
   cancelled
 } from "redux-saga/effects";
+import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
@@ -17,10 +19,34 @@ import {
   RETRIEVE_DOC_UPLOADER,
   DOC_UPLOADER,
   EXTRA_DOC_UPLOAD_SUCCESS,
-  DELETE_EXTRA_DOC_UPLOAD_SUCCESS
+  DELETE_EXTRA_DOC_UPLOAD_SUCCESS,
+  uploadFilesProgress
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
+
+function createUploader(prospectId, data, source) {
+  let emit;
+  const chan = eventChannel(emitter => {
+    emit = emitter;
+    return () => {};
+  });
+  const uploadProgressCb = ({ total, loaded }) => {
+    const percentage = Math.round((loaded * 100) / total);
+    emit(percentage);
+    if (percentage === 100) emit(END);
+  };
+
+  const uploadPromise = uploadProspectDocument.send({ prospectId, data, source, uploadProgressCb });
+  return [uploadPromise, chan];
+}
+
+function* uploadProgressWatcher(chan) {
+  while (true) {
+    const progress = yield take(chan);
+    yield put(uploadFilesProgress(progress));
+  }
+}
 
 function* getProspectDocumentsSaga() {
   const state = yield select();
@@ -39,12 +65,17 @@ function* getProspectDocumentsSaga() {
 
 function* uploadDocumentsBgSync(data, docProps, docOwner, docType) {
   const source = CancelToken.source();
+
   try {
     const state = yield select();
     const config = cloneDeep(state.appConfig);
     const prospectId = getProspectId(state) || "COSME0017";
 
-    yield call(uploadProspectDocument.send, { prospectId, data, source });
+    const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source);
+
+    yield fork(uploadProgressWatcher, chan);
+
+    yield call(() => uploadPromise);
 
     config.prospect.documents[docOwner].forEach(
       (doc, index, documents) =>
@@ -52,6 +83,8 @@ function* uploadDocumentsBgSync(data, docProps, docOwner, docType) {
     );
 
     yield put(setConfig(config));
+  } catch (error) {
+    log(error);
   } finally {
     if (yield cancelled()) {
       source.cancel();
