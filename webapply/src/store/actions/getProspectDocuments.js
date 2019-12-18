@@ -23,8 +23,8 @@ export const deleteExtraDocUploadSuccess = payload => {
   return { type: DELETE_EXTRA_DOC_UPLOAD_SUCCESS, payload };
 };
 
-export const cancelDocUpload = index => {
-  return { type: CANCEL_DOC_UPLOAD, index };
+export const cancelDocUpload = documentKey => {
+  return { type: CANCEL_DOC_UPLOAD, payload: { documentKey } };
 };
 
 export const uploadFilesProgress = progress => {

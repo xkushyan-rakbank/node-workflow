@@ -100,7 +100,9 @@ function* uploadDocumentsBgSync(data, docProps, docOwner, docType) {
 function* uploadDocumentsFlowSaga({ data, docProps, docOwner, docType, documentKey }) {
   yield race({
     task: call(uploadDocumentsBgSync, data, docProps, docOwner, docType),
-    cancel: take(action => action.type === CANCEL_DOC_UPLOAD && action.payload.id === documentKey)
+    cancel: take(
+      action => action.type === CANCEL_DOC_UPLOAD && action.payload.documentKey === documentKey
+    )
   });
 }
 
