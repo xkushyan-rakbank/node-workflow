@@ -125,7 +125,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
   }, [handleContinue]);
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           annualFinTurnoverAmtInAED: "",

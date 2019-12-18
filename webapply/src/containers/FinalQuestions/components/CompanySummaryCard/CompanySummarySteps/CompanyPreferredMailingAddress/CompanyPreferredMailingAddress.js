@@ -35,7 +35,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
   }, [handleContinue]);
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           addressFieldDesc: "",
