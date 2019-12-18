@@ -4,7 +4,7 @@ import {
   RECEIVE_APPCONFIG_FAIL,
   UPDATE_PROSPECT_ID,
   SET_CONFIG,
-  SET_PROSPECT_SUCCESS,
+  SET_PROSPECT,
   SET_PROSPECT_REQUEST,
   SET_PROSPECT_FAIL,
   SAVE_PROSPECT_MODEL
@@ -53,15 +53,10 @@ const appConfigReducer = (state = initialState, action) => {
         loading: true,
         prospectError: false
       };
-    case SET_PROSPECT_SUCCESS:
+    case SET_PROSPECT:
       return {
         ...state,
-        loading: false,
-        prospectError: false,
-        prospect: {
-          ...state.prospect,
-          ...action.prospect
-        }
+        prospect: action.prospect
       };
     case SET_PROSPECT_FAIL:
       return {

@@ -7,6 +7,7 @@ import {
   receiveAppConfigSuccess,
   receiveAppConfigFail,
   RESET_PROSPECT,
+  UPDATE_PROSPECT,
   setConfig,
   setProspect,
   updateProspect,
@@ -14,8 +15,7 @@ import {
   UPDATE_VIEW_ID,
   DISPLAY_SCREEN_BASED_ON_VIEW_ID,
   UPDATE_SAVE_TYPE,
-  saveProspectModel,
-  SET_PROSPECT_SUCCESS
+  saveProspectModel
 } from "../actions/appConfig";
 import { config } from "../../api/apiClient";
 import { history } from "./..";
@@ -73,8 +73,8 @@ function* receiveAppConfigSaga() {
 function* updateProspectSaga(action) {
   const state = yield select();
   const newConfig = cloneDeep(state.appConfig);
-  for (let name in action.prospect) {
-    set(newConfig, name, action.prospect[name]);
+  for (let name in action.fields) {
+    set(newConfig, name, action.fields[name]);
   }
 
   yield put(setConfig(newConfig));
@@ -126,7 +126,7 @@ function* updateSaveTypeSaga({ saveType }) {
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
-    takeLatest(SET_PROSPECT_SUCCESS, updateProspectSaga),
+    takeLatest(UPDATE_PROSPECT, updateProspectSaga),
     takeLatest(DISPLAY_SCREEN_BASED_ON_VIEW_ID, displayScreenBasedOnViewIdSaga),
     takeLatest(UPDATE_ACTION_TYPE, updateActionTypeSaga),
     takeLatest(UPDATE_VIEW_ID, updateViewIdSaga),
