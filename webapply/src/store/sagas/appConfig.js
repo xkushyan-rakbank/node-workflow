@@ -8,7 +8,6 @@ import {
   receiveAppConfigFail,
   UPDATE_PROSPECT,
   RESET_PROSPECT,
-  UPDATE_PROSPECT,
   setConfig,
   setProspect,
   updateProspect,
