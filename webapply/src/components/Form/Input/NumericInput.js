@@ -31,9 +31,6 @@ export const NumericInput = ({
         InputProps={{
           ...inputProps
         }}
-        onValueChange={({ formattedValue }) =>
-          setFieldValue(name, formattedValue.replace(/-/g, ""))
-        }
       />
 
       {isError && <ErrorMessage error={errorMessage} />}

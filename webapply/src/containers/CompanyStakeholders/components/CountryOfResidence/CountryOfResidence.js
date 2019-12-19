@@ -3,17 +3,47 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import MaskedInput from "react-text-mask";
 
 import { getInputValueById } from "../../../../store/selectors/input";
-import {
-  AutoSaveField as Field,
-  NumericInput,
-  SelectAutocomplete
-} from "../../../../components/Form";
+import { AutoSaveField as Field, SelectAutocomplete, Input } from "../../../../components/Form";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 
 const UAE = "AE";
+
+function TextMaskCustom(props) {
+  const { inputRef, ...other } = props;
+  return (
+    <MaskedInput
+      {...other}
+      ref={ref => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask={[
+        "7",
+        "8",
+        "4",
+        "-",
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        "-",
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        /\d/,
+        "-",
+        /\d/
+      ]}
+      guide={false}
+    />
+  );
+}
 
 const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
@@ -26,49 +56,58 @@ const getCountryOfResidenceSchema = isSignatory =>
     })
   });
 
-const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
-  <Formik
-    initialValues={{
-      residenceCountry: "",
-      eidNumber: ""
-    }}
-    onSubmit={handleContinue}
-    validationSchema={getCountryOfResidenceSchema(isSignatory)}
-  >
-    {({ values, setFieldValue }) => (
-      <Form>
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Field
-              name="residenceCountry"
-              path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
-              label="Country of Residence"
-              component={SelectAutocomplete}
-              disabled={isSignatory}
-              datalistId="country"
-              shrink
-            />
-          </Grid>
-          <Grid item md={6} sm={12}>
-            <Field
-              name="eidNumber"
-              path={`prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`}
-              label="Emirates ID"
-              placeholder="784-XXXX-XXXXXXX-X"
-              component={NumericInput}
-              disabled={isSignatory || values.residenceCountry !== UAE}
-              format="###-####-#######-#"
-              prefix={"784"}
-              setFieldValue={setFieldValue}
-            />
-          </Grid>
-        </Grid>
+const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
+  const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
+  return (
+    <Formik
+      initialValues={{
+        residenceCountry: "",
+        eidNumber: ""
+      }}
+      onSubmit={handleContinue}
+      validationSchema={getCountryOfResidenceSchema(isSignatory)}
+    >
+      {({ values }) => {
+        return (
+          <Form>
+            <Grid container spacing={3}>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="residenceCountry"
+                  path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
+                  label="Country of Residence"
+                  component={SelectAutocomplete}
+                  disabled={isSignatory}
+                  datalistId="country"
+                  shrink
+                />
+              </Grid>
+              <Grid item md={6} sm={12}>
+                <Field
+                  name="eidNumber"
+                  path={eidNumberPath}
+                  label="Emirates ID"
+                  placeholder="784-XXXX-XXXXXXX-X"
+                  disabled={isSignatory || values.residenceCountry !== UAE}
+                  component={Input}
+                  InputProps={{
+                    inputComponent: TextMaskCustom
+                  }}
+                  changeProspect={(prospect, value) => ({
+                    ...prospect,
+                    [eidNumberPath]: value.replace(/-/g, "")
+                  })}
+                />
+              </Grid>
+            </Grid>
 
-        <SubmitButton />
-      </Form>
-    )}
-  </Formik>
-);
+            <SubmitButton />
+          </Form>
+        );
+      }}
+    </Formik>
+  );
+};
 
 const mapStateToProps = (state, { index }) => ({
   isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index], false)
