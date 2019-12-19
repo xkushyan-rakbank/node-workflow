@@ -47,10 +47,15 @@ public class EnvUtil {
   }
   
   public static boolean isRecaptchaEnable() {
-    return !System.getenv("RECAPTCHA_ENABLE").equals("N");
+	  String env = System.getenv("RECAPTCHA_ENABLE");
+	  if (!StringUtils.isEmpty(env) && env.equals("Y")) {
+	  	return true;
+	  }
+	  return false;
   }
 
   public static boolean isCheckRecaptcha() {
     return false;
   }
+
 }
