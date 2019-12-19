@@ -4,7 +4,6 @@ export const RECEIVE_APPCONFIG_FAIL = "RECEIVE_APPCONFIG_FAIL";
 export const UPDATE_PROSPECT = "UPDATE_PROSPECT";
 export const SET_CONFIG = "SET_CONFIG";
 export const SET_PROSPECT = "SET_PROSPECT";
-export const SET_PROSPECT_REQUEST = "SET_PROSPECT_REQUEST";
 export const SET_PROSPECT_FAIL = "SET_PROSPECT_FAIL";
 export const RESET_PROSPECT = "RESET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
@@ -35,11 +34,7 @@ export const setConfig = payload => {
 };
 
 export const setProspect = () => {
-  return { type: SET_PROSPECT_REQUEST };
-};
-
-export const setProspectSuccess = prospect => {
-  return { type: SET_PROSPECT, prospect };
+  return { type: SET_PROSPECT };
 };
 
 export const setProspectFail = error => {

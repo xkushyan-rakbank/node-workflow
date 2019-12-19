@@ -5,7 +5,6 @@ import {
   UPDATE_PROSPECT_ID,
   SET_CONFIG,
   SET_PROSPECT,
-  SET_PROSPECT_REQUEST,
   SET_PROSPECT_FAIL,
   SAVE_PROSPECT_MODEL
 } from "../actions/appConfig";
@@ -46,12 +45,6 @@ const appConfigReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload
-      };
-    case SET_PROSPECT_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        prospectError: false
       };
     case SET_PROSPECT:
       return {
