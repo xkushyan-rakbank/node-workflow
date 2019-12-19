@@ -118,10 +118,10 @@ export const UploadDocuments = ({
                 <div id="Progress_Status">
                   <div
                     className={classes.myProgressBar}
-                    style={{ width: `${progress[documentKey]}%` }}
+                    style={{ width: `${progress[documentKey] || 0}%` }}
                   ></div>
                 </div>
-                <div className={classes.progressStatus}>{progress[documentKey]}%</div>
+                <div className={classes.progressStatus}>{progress[documentKey] || 0}%</div>
               </div>
             </div>
             <p className={classes.cancel} onClick={fileUploadCancel}>
