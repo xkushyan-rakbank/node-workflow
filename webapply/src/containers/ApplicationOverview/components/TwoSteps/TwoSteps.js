@@ -10,7 +10,7 @@ import { useStyles } from "./styled";
 
 export const TwoSteps = () => {
   const classes = useStyles();
-  const { interrogation, signature, overview } = useIconsByAccount();
+  const { interrogation: Interrogation, signature: Signature, overview } = useIconsByAccount();
 
   return (
     <>
@@ -20,10 +20,10 @@ export const TwoSteps = () => {
         <div className={classes.indent}>
           <IconCardsContainer>
             <IconCardItem minWidth="200px" title="First" text="You fill a couple of questions">
-              <img src={interrogation} alt="interrogation" />
+              <Interrogation alt="interrogation" />
             </IconCardItem>
             <IconCardItem minWidth="200px" title="Then" text="We call you to sign the account">
-              <img src={signature} alt="signature" />
+              <Signature alt="signature" />
             </IconCardItem>
           </IconCardsContainer>
         </div>

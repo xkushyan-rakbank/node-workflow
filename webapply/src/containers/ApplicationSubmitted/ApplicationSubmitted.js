@@ -140,7 +140,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    "& img": {
+    "& svg": {
       width: "44px"
     }
   },
@@ -157,12 +157,12 @@ const styles = {
 };
 
 const ApplicationSubmitted = ({ classes, AccountSubmittedInfo }) => {
-  const { companyDocuments, banking } = useIconsByAccount();
+  const { companyDocuments: CompanyDocuments, banking: Banking } = useIconsByAccount();
 
   return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
     <div className={classes.container}>
       <div className={classes.title}>
-        <img src={companyDocuments} alt="checked" />
+        <CompanyDocuments alt="checked" />
         <SectionTitleWithInfo title="Meet the brand new accounts for Designit Arabia" />
       </div>
       <div
@@ -196,7 +196,7 @@ const ApplicationSubmitted = ({ classes, AccountSubmittedInfo }) => {
       </div>
       <div className={classes.divider}>{""}</div>
       <div className={classes.result}>
-        <img src={banking} alt="wait call" />
+        <Banking alt="wait call" />
         <Typography align="center" classes={{ root: classes.resultNextStep }}>
           What happens now
         </Typography>

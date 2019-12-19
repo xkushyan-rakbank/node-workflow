@@ -151,16 +151,16 @@ const ExpandedOptionsDetailedCard = ({
       ? "Included in RAKstarter"
       : "Available upgrade";
 
-  const { plus, max } = useIconsByAccount();
+  const { plus: Plus, max: Max } = useIconsByAccount();
 
   return (
     <div className={cx(classes.root, className)}>
       <div className={classes.title}>
         <div className={classes.icon}>
           {value === "RAKvalue PLUS" ? (
-            <img width={80} height={80} src={plus} alt="rak-plus" />
+            <Plus width={80} height={80} alt="rak-plus" />
           ) : (
-            <img width={80} height={80} src={max} alt="rak-max" />
+            <Max width={80} height={80} alt="rak-max" />
           )}
         </div>
         <div className={classes.name}>{value}</div>

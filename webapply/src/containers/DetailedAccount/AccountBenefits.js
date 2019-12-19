@@ -131,11 +131,14 @@ const AccountBenefits = ({ classes, accountType }) => {
         <SectionTitleWithInfo title={text} />
       </div>
       <HorizontalIconCardsContainer>
-        {data.map(item => (
-          <HorizontalIconCardItem key={item.key} text={item.text}>
-            <img className={classes.icon} src={item.icon} alt={item.alt} />
-          </HorizontalIconCardItem>
-        ))}
+        {data.map(item => {
+          const Icon = item.icon;
+          return (
+            <HorizontalIconCardItem key={item.key} text={item.text}>
+              <Icon className={classes.icon} alt={item.alt} />
+            </HorizontalIconCardItem>
+          );
+        })}
         {isShowInfoNote && (
           <div className={classes.styleInfoNotes}>
             <InfoNote text="*Companies older than 12 months are not eligible for the RAKstarter account" />

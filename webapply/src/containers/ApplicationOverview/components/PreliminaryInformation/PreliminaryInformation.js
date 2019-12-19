@@ -12,7 +12,12 @@ import { useStyles } from "./styled";
 export const PreliminaryInformation = () => {
   const classes = useStyles();
 
-  const { license, passport, emiratesId, companyDocuments } = useIconsByAccount();
+  const {
+    license: License,
+    passport: Passport,
+    emiratesId: EmirateId,
+    companyDocuments: CompanyDocuments
+  } = useIconsByAccount();
 
   return (
     <>
@@ -23,16 +28,16 @@ export const PreliminaryInformation = () => {
       <div className={classes.cardsWrapper}>
         <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
           <IconCardItem minWidth="100px" text="Trade License">
-            <img src={license} alt="trade-license" />
+            <License alt="trade-license" />
           </IconCardItem>
           <IconCardItem minWidth="100px" text="Passport of all signatories¹">
-            <img src={passport} alt="passport-visa" />
+            <Passport alt="passport-visa" />
           </IconCardItem>
           <IconCardItem minWidth="100px" text="Emirates ID of all signatories">
-            <img src={emiratesId} alt="emirates-id" />
+            <EmirateId alt="emirates-id" />
           </IconCardItem>
           <IconCardItem minWidth="100px" text="Company MoA*²">
-            <img src={companyDocuments} alt="company-documents" />
+            <CompanyDocuments alt="company-documents" />
           </IconCardItem>
         </IconCardsContainer>
       </div>
