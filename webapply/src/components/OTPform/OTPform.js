@@ -35,7 +35,14 @@ export const OTPformComponent = ({
       history.push(redirectRoute);
     }
     // eslint-disable-next-line
-  }, [otp]);
+  }, [otp.isVerified]);
+
+  useEffect(() => {
+    if (otp.verificationError) {
+      setCode(Array(6).fill(""));
+    }
+    // eslint-disable-next-line
+  }, [otp.verificationError]);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
