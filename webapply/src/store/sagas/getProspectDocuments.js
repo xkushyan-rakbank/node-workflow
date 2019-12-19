@@ -13,6 +13,7 @@ import {
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
 
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
@@ -53,7 +54,7 @@ function* uploadProgressWatcher(chan) {
 function* getProspectDocumentsSaga() {
   const state = yield select();
   const prospectID = getProspectId(state) || "COSME0000000000000001";
-  let config = { ...state.appConfig };
+  const config = cloneDeep(state.appConfig);
 
   try {
     const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
@@ -65,7 +66,7 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* uploadDocumentsBgSync(data, docProps, docOwner, docType) {
+function* uploadDocumentsBgSync(data, docProps, docOwner, documentType) {
   const source = CancelToken.source();
 
   try {
@@ -80,7 +81,7 @@ function* uploadDocumentsBgSync(data, docProps, docOwner, docType) {
 
     const config = { ...state.appConfig };
     const documents = config.prospect.documents[docOwner].map(doc => {
-      if (doc.documentType === docType) {
+      if (doc.documentType === documentType) {
         return { ...doc, ...docProps };
       }
 
@@ -97,9 +98,11 @@ function* uploadDocumentsBgSync(data, docProps, docOwner, docType) {
   }
 }
 
-function* uploadDocumentsFlowSaga({ data, docProps, docOwner, docType, documentKey }) {
+function* uploadDocumentsFlowSaga({
+  payload: { data, docProps, docOwner, documentType, documentKey }
+}) {
   yield race({
-    task: call(uploadDocumentsBgSync, data, docProps, docOwner, docType),
+    task: call(uploadDocumentsBgSync, data, docProps, docOwner, documentType),
     cancel: take(
       action => action.type === CANCEL_DOC_UPLOAD && action.payload.documentKey === documentKey
     )

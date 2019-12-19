@@ -58,7 +58,7 @@ const UploadDocumentsComponent = ({
     data.append("fileInfo", fileInfo);
     data.append("file", file);
 
-    docUpload(data, docProps, docOwner, document.documentType, documentKey);
+    docUpload({ data, docProps, docOwner, documentType: document.documentType, documentKey });
     setErrorMessage(null);
     setSelectedFile(file);
     // eslint-disable-next-line react-hooks/exhaustive-deps
