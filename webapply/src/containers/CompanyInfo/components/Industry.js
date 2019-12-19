@@ -29,7 +29,7 @@ export const Industry = ({ handleContinue }) => (
             <Field
               multiple
               name="industry"
-              label="Company industry"
+              label="Industry"
               path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
               datalistId="industry"
               component={CustomSelect}
@@ -42,7 +42,7 @@ export const Industry = ({ handleContinue }) => (
           <Grid item md={6} sm={12}>
             <Field
               name="subCategory"
-              label="Company subCategory"
+              label="Industry sub-category"
               path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
               component={SelectAutocomplete}
               datalistId="industry"
