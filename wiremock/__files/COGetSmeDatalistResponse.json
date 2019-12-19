@@ -2890,44 +2890,445 @@
   ],
   "industry": [
     {
-      "code": "EES",
-      "key": "EES",
-      "value": "EES",
-      "displayText": "Energy Equipment & Services",
+      "code": "CNT",
+      "key": "CNT",
+      "value": "CNT",
+      "displayText": "CONSTRUCTION",
+      "subGroup": null
+    },
+    {
+      "code": "DLG",
+      "key": "DLG",
+      "value": "DLG",
+      "displayText": "DEALERS IN LUXURY GOODS",
+      "subGroup": null
+    },
+    {
+      "code": "EGH",
+      "key": "EGH",
+      "value": "EGH",
+      "displayText": "ELECTRICITY & GAS HEATER",
+      "subGroup": null
+    },
+    {
+      "code": "FI",
+      "key": "FI",
+      "value": "FI",
+      "displayText": "FINANCIAL INSTITUTION",
+      "subGroup": null
+    },
+    {
+      "code": "GT",
+      "key": "GT",
+      "value": "GT",
+      "displayText": "GENERAL TRADING",
+      "subGroup": null
+    },
+    {
+      "code": "AGA",
+      "key": "AGA",
+      "value": "AGA",
+      "displayText": "AGRICULTURE & ALLIED",
       "subGroup": [
         {
-          "code": "OGD",
-          "key": "OGD",
-          "value": "OGD",
-          "displayText": "Oil & Gas Drilling"
+          "code": "AGA",
+          "key": "AGA",
+          "value": "AGA",
+          "displayText": "AGRICULTURE & ALLIED ACTIVITIES"
         },
         {
-          "code": "OGES",
-          "key": "OGES",
-          "value": "OGES",
-          "displayText": "Oil & Gas Equipment & Services"
+          "code": "AB",
+          "key": "AB",
+          "value": "AB",
+          "displayText": "ALCHOHOLIC BEVERAGES"
+        },
+        {
+          "code": "BS",
+          "key": "BS",
+          "value": "BS",
+          "displayText": "BROKERS & SERVICES"
+        },
+        {
+          "code": "CTL",
+          "key": "CTL",
+          "value": "CTL",
+          "displayText": "CATTLE"
+        },
+        {
+          "code": "CW",
+          "key": "CW",
+          "value": "CW",
+          "displayText": "CIVIL WORK"
+        },
+        {
+          "code": "CNT",
+          "key": "CNT",
+          "value": "CNT",
+          "displayText": "CONSTRUCTION"
+        },
+        {
+          "code": "COC",
+          "key": "COC",
+          "value": "COC",
+          "displayText": "CULTIVATION OF CROPS"
+        },
+        {
+          "code": "DLG",
+          "key": "DLG",
+          "value": "DLG",
+          "displayText": "DEALERS IN LUXURY GOODS"
+        },
+        {
+          "code": "EW",
+          "key": "EW",
+          "value": "EW",
+          "displayText": "ELECTRICAL WORK"
+        },
+        {
+          "code": "EGW",
+          "key": "EGW",
+          "value": "EGW",
+          "displayText": "ELECTRICITY & GAS & WATER"
+        },
+        {
+          "code": "FHT",
+          "key": "FHT",
+          "value": "FHT",
+          "displayText": "FISHING HUNTING TRAPPING"
+        },
+        {
+          "code": "FRT",
+          "key": "FRT",
+          "value": "FRT",
+          "displayText": "FORESTRY"
+        },
+        {
+          "code": "GCC",
+          "key": "GCC",
+          "value": "GCC",
+          "displayText": "GENERAL CONTRACTORS - COMMERCIAL"
+        },
+        {
+          "code": "GCR",
+          "key": "GCR",
+          "value": "GCR",
+          "displayText": "GENERAL CONTRACTORS - RESIDENCIAL"
+        },
+        {
+          "code": "GCRE",
+          "key": "GCRE",
+          "value": "GCRE",
+          "displayText": "GENERAL CONTRACTORS - RETAIL"
+        },
+        {
+          "code": "ICGC",
+          "key": "ICGC",
+          "value": "ICGC",
+          "displayText": "INDUSTRIAL & CONSUMER GAS & CNG"
+        },
+        {
+          "code": "IT",
+          "key": "IT",
+          "value": "IT",
+          "displayText": "INVESTMENT & TRUSTS"
+        },
+        {
+          "code": "IC",
+          "key": "IC",
+          "value": "IC",
+          "displayText": "INVESTMENT COMPANIES"
+        },
+        {
+          "code": "OA",
+          "key": "OA",
+          "value": "OA",
+          "displayText": "OTHER ACTIVITIES"
+        },
+        {
+          "code": "OBCW",
+          "key": "OBCW",
+          "value": "OBCW",
+          "displayText": "OTHER BUILDING CONTRACTING WORKS"
+        },
+        {
+          "code": "OC",
+          "key": "OC",
+          "value": "OC",
+          "displayText": "OTHER CONSTRUCTION"
+        },
+        {
+          "code": "OL",
+          "key": "OL",
+          "value": "OL",
+          "displayText": "OTHER LIVESTOCK"
+        },
+        {
+          "code": "OTH",
+          "key": "OTH",
+          "value": "OTH",
+          "displayText": "OTHERS"
+        },
+        {
+          "code": "PF",
+          "key": "PF",
+          "value": "PF",
+          "displayText": "POULTRY FARMING"
+        },
+        {
+          "code": "RE",
+          "key": "RE",
+          "value": "RE",
+          "displayText": "REAL ESTATE"
+        },
+        {
+          "code": "RS",
+          "key": "RS",
+          "value": "RS",
+          "displayText": "ROADS & STREETS"
+        },
+        {
+          "code": "SHP",
+          "key": "SHP",
+          "value": "SHP",
+          "displayText": "SHEEP"
+        },
+        {
+          "code": "WSGP",
+          "key": "WSGP",
+          "value": "WSGP",
+          "displayText": "WATER & SEWERS &GAS PIPELINES"
+        },
+        {
+          "code": "WPIB",
+          "key": "WPIB",
+          "value": "WPIB",
+          "displayText": "WATER PRODUCTION INCLUDING BOTTLED WATER"
         }
       ]
     },
     {
-      "code": "OGC&F",
-      "key": "OGC&F",
-      "value": "OGC&F",
-      "displayText": "Oil, Gas & Consumable Fuels",
+      "code": "AB",
+      "key": "AB",
+      "value": "AB",
+      "displayText": "ALCHOHOLIC BEVERAGES",
       "subGroup": [
         {
-          "code": "IOG",
-          "key": "IOG",
-          "value": "IOG",
-          "displayText": "Integrated Oil & Gas"
+          "code": "AGA",
+          "key": "AGA",
+          "value": "AGA",
+          "displayText": "AGRICULTURE & ALLIED ACTIVITIES"
         },
         {
-          "code": "OGEP",
-          "key": "OGEP",
-          "value": "OGEP",
-          "displayText": "Oil & Gas Exploration & Production"
+          "code": "AB",
+          "key": "AB",
+          "value": "AB",
+          "displayText": "ALCHOHOLIC BEVERAGES"
+        },
+        {
+          "code": "BS",
+          "key": "BS",
+          "value": "BS",
+          "displayText": "BROKERS & SERVICES"
+        },
+        {
+          "code": "CTL",
+          "key": "CTL",
+          "value": "CTL",
+          "displayText": "CATTLE"
+        },
+        {
+          "code": "CW",
+          "key": "CW",
+          "value": "CW",
+          "displayText": "CIVIL WORK"
+        },
+        {
+          "code": "CNT",
+          "key": "CNT",
+          "value": "CNT",
+          "displayText": "CONSTRUCTION"
+        },
+        {
+          "code": "COC",
+          "key": "COC",
+          "value": "COC",
+          "displayText": "CULTIVATION OF CROPS"
+        },
+        {
+          "code": "DLG",
+          "key": "DLG",
+          "value": "DLG",
+          "displayText": "DEALERS IN LUXURY GOODS"
+        },
+        {
+          "code": "EW",
+          "key": "EW",
+          "value": "EW",
+          "displayText": "ELECTRICAL WORK"
+        },
+        {
+          "code": "EGW",
+          "key": "EGW",
+          "value": "EGW",
+          "displayText": "ELECTRICITY & GAS & WATER"
+        },
+        {
+          "code": "FHT",
+          "key": "FHT",
+          "value": "FHT",
+          "displayText": "FISHING HUNTING TRAPPING"
+        },
+        {
+          "code": "FRT",
+          "key": "FRT",
+          "value": "FRT",
+          "displayText": "FORESTRY"
+        },
+        {
+          "code": "GCC",
+          "key": "GCC",
+          "value": "GCC",
+          "displayText": "GENERAL CONTRACTORS - COMMERCIAL"
+        },
+        {
+          "code": "GCR",
+          "key": "GCR",
+          "value": "GCR",
+          "displayText": "GENERAL CONTRACTORS - RESIDENCIAL"
+        },
+        {
+          "code": "GCRE",
+          "key": "GCRE",
+          "value": "GCRE",
+          "displayText": "GENERAL CONTRACTORS - RETAIL"
+        },
+        {
+          "code": "ICGC",
+          "key": "ICGC",
+          "value": "ICGC",
+          "displayText": "INDUSTRIAL & CONSUMER GAS & CNG"
+        },
+        {
+          "code": "IT",
+          "key": "IT",
+          "value": "IT",
+          "displayText": "INVESTMENT & TRUSTS"
+        },
+        {
+          "code": "IC",
+          "key": "IC",
+          "value": "IC",
+          "displayText": "INVESTMENT COMPANIES"
+        },
+        {
+          "code": "OA",
+          "key": "OA",
+          "value": "OA",
+          "displayText": "OTHER ACTIVITIES"
+        },
+        {
+          "code": "OBCW",
+          "key": "OBCW",
+          "value": "OBCW",
+          "displayText": "OTHER BUILDING CONTRACTING WORKS"
+        },
+        {
+          "code": "OC",
+          "key": "OC",
+          "value": "OC",
+          "displayText": "OTHER CONSTRUCTION"
+        },
+        {
+          "code": "OL",
+          "key": "OL",
+          "value": "OL",
+          "displayText": "OTHER LIVESTOCK"
+        },
+        {
+          "code": "OTH",
+          "key": "OTH",
+          "value": "OTH",
+          "displayText": "OTHERS"
+        },
+        {
+          "code": "PF",
+          "key": "PF",
+          "value": "PF",
+          "displayText": "POULTRY FARMING"
+        },
+        {
+          "code": "RE",
+          "key": "RE",
+          "value": "RE",
+          "displayText": "REAL ESTATE"
+        },
+        {
+          "code": "RS",
+          "key": "RS",
+          "value": "RS",
+          "displayText": "ROADS & STREETS"
+        },
+        {
+          "code": "SHP",
+          "key": "SHP",
+          "value": "SHP",
+          "displayText": "SHEEP"
+        },
+        {
+          "code": "WSGP",
+          "key": "WSGP",
+          "value": "WSGP",
+          "displayText": "WATER & SEWERS &GAS PIPELINES"
+        },
+        {
+          "code": "WPIB",
+          "key": "WPIB",
+          "value": "WPIB",
+          "displayText": "WATER PRODUCTION INCLUDING BOTTLED WATER"
         }
       ]
+    },
+    {
+      "code": "MNF",
+      "key": "MNF",
+      "value": "MNF",
+      "displayText": "MANUFACTURING",
+      "subGroup": null
+    },
+    {
+      "code": "MIN",
+      "key": "MIN",
+      "value": "MIN",
+      "displayText": "MINING",
+      "subGroup": null
+    },
+    {
+      "code": "RT",
+      "key": "RT",
+      "value": "RT",
+      "displayText": "RETAIL TRADING",
+      "subGroup": null
+    },
+    {
+      "code": "SRV",
+      "key": "SRV",
+      "value": "SRV",
+      "displayText": "SERVICES",
+      "subGroup": null
+    },
+    {
+      "code": "TRN",
+      "key": "TRN",
+      "value": "TRN",
+      "displayText": "TRANSPORT",
+      "subGroup": null
+    },
+    {
+      "code": "WT",
+      "key": "WT",
+      "value": "WT",
+      "displayText": "WHOLESALE TRADING",
+      "subGroup": null
     }
   ],
   "emirate": [
