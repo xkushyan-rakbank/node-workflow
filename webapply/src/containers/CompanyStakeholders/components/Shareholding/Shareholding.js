@@ -16,7 +16,6 @@ const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
     isShareholderACompany: Yup.boolean().required("Required"),
     shareHoldingPercentage: Yup.number()
-      .integer()
       .min(0, "Shareholders can't hold less than 0% of shares in total")
       .max(
         100 - totalPercentageWithoutCurrentStakeholder,
@@ -73,7 +72,11 @@ const ShareholdingStep = ({
                   component={Input}
                   InputProps={{
                     inputComponent: NumberFormat,
-                    inputProps: { isNumericString: true, decimalSeparator: ".", decimalScale: 2 },
+                    inputProps: {
+                      isNumericString: true,
+                      decimalSeparator: ".",
+                      decimalScale: 2
+                    },
                     endAdornment: <InputAdornment position="end">%</InputAdornment>
                   }}
                 />
