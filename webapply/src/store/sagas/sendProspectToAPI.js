@@ -8,7 +8,9 @@ import {
   take,
   cancel,
   cancelled,
-  fork
+  fork,
+  actionChannel,
+  flush
 } from "redux-saga/effects";
 import get from "lodash/get";
 
@@ -18,35 +20,37 @@ import {
   sendProspectToAPIFail,
   setScreeningResults,
   resetFormStep,
-  PROSPECT_AUTO_SAVE
+  PROSPECT_AUTO_SAVE,
+  sendProspectRequest
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
-import { updateSaveType } from "./../actions/appConfig";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
 import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
 
+function* watchRequest() {
+  const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
+  while (true) {
+    const actions = yield flush(chan);
+    if (actions.length) {
+      const continueActions = actions.filter(act => act.saveType === "continue");
+      yield call(sendProspectToAPI, continueActions.length ? continueActions[0] : actions[0]);
+    }
+    yield delay(1000);
+  }
+}
+
 function* sendProspectToAPISaga() {
   try {
-    const state = yield select();
-    const newProspect = getProspect(state);
-    const prospectID = getProspectId(state) || "COSME0000000000000001";
-
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
-    const { data } = yield call(prospect.update, prospectID, newProspect);
 
-    if (get(data, "preScreening.statusOverAll") !== APP_STOP_SCREEN_RESULT) {
-      yield put(sendProspectToAPISuccess(newProspect));
-    } else {
-      yield put(setScreeningResults(data.preScreening));
-    }
-  } catch (error) {
-    log({ error });
-    yield put(sendProspectToAPIFail());
+    const state = yield select();
+    const newProspect = getProspect(state);
+
+    yield put(sendProspectRequest("continue", newProspect));
   } finally {
-    yield put(updateSaveType("continue"));
     yield put(resetFormStep({ resetStep: false }));
   }
 }
@@ -56,17 +60,33 @@ function* prospectAutoSave() {
     while (true) {
       const state = yield select();
       const newProspect = getProspect(state);
-      const prospectId = getProspectId(state) || "COSME0000000000000001";
 
-      yield call(prospect.update, prospectId, newProspect);
-      yield put(updateSaveType("auto"));
-      yield put(sendProspectToAPISuccess(newProspect));
+      yield put(sendProspectRequest("auto", newProspect));
       yield delay(40000);
     }
   } finally {
     if (yield cancelled()) {
       log("cancel");
     }
+  }
+}
+
+function* sendProspectToAPI({ newProspect, saveType }) {
+  try {
+    const state = yield select();
+    const prospectId = getProspectId(state) || "COSME0000000000000001";
+
+    const { data } = yield call(prospect.update, prospectId, newProspect);
+    newProspect.applicationInfo.saveType = saveType;
+
+    yield put(sendProspectToAPISuccess(newProspect));
+
+    if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
+      yield put(setScreeningResults(data.preScreening));
+    }
+  } catch (error) {
+    log({ error });
+    yield put(sendProspectToAPIFail());
   }
 }
 
@@ -81,9 +101,10 @@ function* prospectAutoSaveFlowSaga() {
   }
 }
 
-export default function* sendProspectToAPI() {
+export default function* sendProspectToAPISagas() {
   yield all([
     takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
-    takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga)
+    takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga),
+    fork(watchRequest)
   ]);
 }
