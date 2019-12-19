@@ -26,10 +26,13 @@ export const percentageSelector = state => {
 };
 
 export const percentageSelectorWithoutCurrentStakeholder = (state, index) => {
-  const signatories = getSignatories(state);
-  return signatories
-    .filter((_, idx) => idx !== index)
-    .reduce((acc, item) => acc + Number(get(item, "kycDetails.shareHoldingPercentage", 0)), 0);
+  const signatories = [...getSignatories(state)];
+  signatories.slice(index, 1);
+
+  return signatories.reduce(
+    (acc, item) => acc + Number(get(item, "kycDetails.shareHoldingPercentage", 0)),
+    0
+  );
 };
 
 export const checkIsHasSignatories = state =>
