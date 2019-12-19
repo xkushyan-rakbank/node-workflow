@@ -1,15 +1,60 @@
-import { all, call, put, takeLatest, select } from "redux-saga/effects";
+import {
+  all,
+  call,
+  put,
+  take,
+  fork,
+  race,
+  select,
+  takeLatest,
+  takeEvery,
+  cancelled
+} from "redux-saga/effects";
+import { eventChannel, END } from "redux-saga";
+import { CancelToken } from "axios";
+import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
 
-import { getProspectDocuments } from "../../api/apiClient";
+import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
-import * as actions from "../actions/getProspectDocuments";
+import {
+  RETRIEVE_DOC_UPLOADER,
+  DOC_UPLOADER,
+  EXTRA_DOC_UPLOAD_SUCCESS,
+  DELETE_EXTRA_DOC_UPLOAD_SUCCESS,
+  uploadFilesProgress,
+  CANCEL_DOC_UPLOAD
+} from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
+
+function createUploader(prospectId, data, source) {
+  let emit;
+  const chan = eventChannel(emitter => {
+    emit = emitter;
+    return () => {};
+  });
+  const uploadProgressCb = ({ total, loaded }) => {
+    const percentage = Math.round((loaded * 100) / total);
+    emit(percentage);
+    if (percentage === 100) emit(END);
+  };
+
+  const uploadPromise = uploadProspectDocument.send({ prospectId, data, source, uploadProgressCb });
+  return [uploadPromise, chan];
+}
+
+function* uploadProgressWatcher(chan, documentKey) {
+  while (true) {
+    const progress = yield take(chan);
+    yield put(uploadFilesProgress({ [documentKey]: progress }));
+  }
+}
 
 function* getProspectDocumentsSaga() {
   const state = yield select();
   const prospectID = getProspectId(state) || "COSME0000000000000001";
-  let config = { ...state.appConfig };
+  const config = cloneDeep(state.appConfig);
 
   try {
     const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
@@ -21,52 +66,46 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* updateProspectDocuments(payload) {
-  let clearedPersonalInfo, docDetails, indexValue, signatoryIndexName, signatoryDocIndex;
-  if (payload.payload.type) {
-    docDetails = payload.payload.type;
-    indexValue = payload.payload.index;
+function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, documentKey }) {
+  const source = CancelToken.source();
+
+  try {
+    const state = yield select();
+    const prospectId = getProspectId(state) || "COSME0017";
+
+    const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source);
+
+    yield fork(uploadProgressWatcher, chan, documentKey);
+
+    yield call(() => uploadPromise);
+
+    const config = { ...state.appConfig };
+    const documents = config.prospect.documents[docOwner].map(doc => {
+      if (doc.documentType === documentType) {
+        return { ...doc, ...docProps };
+      }
+
+      return doc;
+    });
+    set(config, ["config", "prospect", "documents", docOwner], documents);
+    yield put(setConfig(config));
+  } catch (error) {
+    log(error);
+  } finally {
+    if (yield cancelled()) {
+      source.cancel();
+    }
   }
+}
 
-  // update the store value after getting the response
-
-  if (docDetails === "companyDocument") {
-    clearedPersonalInfo = {
-      [`prospect.documents.companyDocuments[${indexValue}].uploadStatus`]: "Uploaded",
-      [`prospect.documents.companyDocuments[${indexValue}].documentTitle`]: payload.payload
-        .documents.documentType,
-      [`prospect.documents.companyDocuments[${indexValue}].fileName`]: payload.docDetails.name,
-      [`prospect.documents.companyDocuments[${indexValue}].fileSize`]: payload.docDetails.size,
-      [`prospect.documents.companyDocuments[${indexValue}].submittedDt`]: payload.docDetails
-        .lastModifiedDate,
-      [`prospect.documents.companyDocuments[${indexValue}].fileFormat`]: payload.docDetails.type
-    };
-  } else if (docDetails === "stakeholdersDocuments") {
-    signatoryDocIndex = payload.payload.signatoryDocIndex;
-    signatoryIndexName = payload.payload.docUploadDetails[indexValue].signatoryName;
-    clearedPersonalInfo = {
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].uploadStatus`]: "Updated",
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].documentTitle`]: payload.payload.documents.documentType,
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].fileName`]: payload.docDetails.name,
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].fileSize`]: payload.docDetails.size,
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].submittedDt`]: payload.docDetails.lastModifiedDate,
-      [`prospect.documents.stakeholdersDocuments[${signatoryDocIndex +
-        "_" +
-        signatoryIndexName}][${indexValue}].fileFormat`]: payload.docDetails.type
-    };
-  }
-
-  yield put(updateProspect(clearedPersonalInfo));
+function* uploadDocumentsFlowSaga({ payload }) {
+  yield race({
+    task: call(uploadDocumentsBgSync, payload),
+    cancel: take(
+      action =>
+        action.type === CANCEL_DOC_UPLOAD && action.payload.documentKey === payload.documentKey
+    )
+  });
 }
 
 function* updateExtraProspectDocuments(action) {
@@ -87,9 +126,9 @@ function* deleteExtraProspectDocuments(action) {
 
 export default function* appConfigSaga() {
   yield all([
-    takeLatest(actions.RETRIEVE_DOC_UPLOADER, getProspectDocumentsSaga),
-    takeLatest(actions.UPLOAD_SUCCESS, updateProspectDocuments),
-    takeLatest(actions.EXTRA_DOC_UPLOAD_SUCCESS, updateExtraProspectDocuments),
-    takeLatest(actions.DELETE_EXTRA_DOC_UPLOAD_SUCCESS, deleteExtraProspectDocuments)
+    takeLatest(RETRIEVE_DOC_UPLOADER, getProspectDocumentsSaga),
+    takeEvery(DOC_UPLOADER, uploadDocumentsFlowSaga),
+    takeLatest(EXTRA_DOC_UPLOAD_SUCCESS, updateExtraProspectDocuments),
+    takeLatest(DELETE_EXTRA_DOC_UPLOAD_SUCCESS, deleteExtraProspectDocuments)
   ]);
 }
