@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
     marginLeft: "20px",
     fontSize: "20px",
     fontWeight: 600,
-    color: "#373737"
+    color: theme.palette.text.color
   },
   username: {
     fontSize: "20px",
