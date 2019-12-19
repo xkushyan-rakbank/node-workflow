@@ -15,8 +15,10 @@ import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 
 const UAE = "AE";
 
-const getCountryOfResidenceSchema = isSignatory =>
-  Yup.object().shape({
+const getCountryOfResidenceSchema = isSignatory => {
+  console.log("isSignatory");
+  console.log(isSignatory);
+  return Yup.object().shape({
     residenceCountry: Yup.string().test("required", "Required", value => isSignatory || value),
     eidNumber: Yup.string().when("residenceCountry", {
       is: value => !isSignatory && value === UAE,
@@ -25,6 +27,7 @@ const getCountryOfResidenceSchema = isSignatory =>
         .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
     })
   });
+};
 
 const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => (
   <Formik

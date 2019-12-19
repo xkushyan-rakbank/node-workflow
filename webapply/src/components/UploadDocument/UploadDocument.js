@@ -259,6 +259,7 @@ class UploadDocuments extends Component {
   }
 
   render() {
+    // uatrmtc.rakbankonline.ae/webapply/api
     let endPoint = "/webapply/api/v1/prospects/" + this.props.prospectID + "/documents";
     uploadDocUri = this.props.uploadDocsEndpoints;
     uploadDocUri = uploadDocUri.baseUrl + endPoint;
