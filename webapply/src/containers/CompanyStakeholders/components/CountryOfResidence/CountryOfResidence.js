@@ -3,47 +3,18 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import MaskedInput from "react-text-mask";
 
 import { getInputValueById } from "../../../../store/selectors/input";
-import { AutoSaveField as Field, SelectAutocomplete, Input } from "../../../../components/Form";
+import {
+  AutoSaveField as Field,
+  SelectAutocomplete,
+  Input,
+  EmiratesIDMaskComponent
+} from "../../../../components/Form";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 
 const UAE = "AE";
-
-function TextMaskCustom(props) {
-  const { inputRef, ...other } = props;
-  return (
-    <MaskedInput
-      {...other}
-      ref={ref => {
-        inputRef(ref ? ref.inputElement : null);
-      }}
-      mask={[
-        "7",
-        "8",
-        "4",
-        "-",
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        "-",
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        "-",
-        /\d/
-      ]}
-      guide={false}
-    />
-  );
-}
 
 const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
@@ -91,7 +62,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                   disabled={isSignatory || values.residenceCountry !== UAE}
                   component={Input}
                   InputProps={{
-                    inputComponent: TextMaskCustom
+                    inputComponent: EmiratesIDMaskComponent
                   }}
                   changeProspect={(prospect, value) => ({
                     ...prospect,

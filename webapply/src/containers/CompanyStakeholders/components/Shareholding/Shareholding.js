@@ -4,12 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
+import NumberFormat from "react-number-format";
 
-import {
-  NumericInput,
-  InlineRadioGroup,
-  AutoSaveField as Field
-} from "../../../../components/Form";
+import { InlineRadioGroup, AutoSaveField as Field, Input } from "../../../../components/Form";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
@@ -73,11 +70,12 @@ const ShareholdingStep = ({
                   label="Percentage"
                   placeholder="Percentage"
                   disabled={!values.isShareholderACompany}
-                  component={NumericInput}
-                  inputProps={{ endAdornment: <InputAdornment position="end">%</InputAdornment> }}
-                  isNumericString
-                  decimalSeparator={"."}
-                  decimalScale={2}
+                  component={Input}
+                  InputProps={{
+                    inputComponent: NumberFormat,
+                    inputProps: { isNumericString: true, decimalSeparator: ".", decimalScale: 2 },
+                    endAdornment: <InputAdornment position="end">%</InputAdornment>
+                  }}
                 />
               </Grid>
             </Grid>
