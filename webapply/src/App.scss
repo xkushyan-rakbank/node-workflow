@@ -204,7 +204,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: #e8e8e8;
 }
 
-#myprogressBar {
+#myProgressBar {
   height: 4px;
   border-radius: 3px;
   text-align: center;
@@ -351,7 +351,7 @@ h3 {
 
 @media (max-width: #{$mobileResolution}px) {
   .hide-on-mobile {
-    display: none!important;
+    display: none !important;
   }
 
   .show-on-mobile {

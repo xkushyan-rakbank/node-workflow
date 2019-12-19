@@ -106,3 +106,15 @@ export const screening = {
       method: "GET"
     })
 };
+
+export const uploadProspectDocument = {
+  send: ({ data, prospectId, source, uploadProgressCb }) => {
+    return httpClient.request({
+      url: buildURI("docUploaderUri", prospectId),
+      method: "POST",
+      data,
+      cancelToken: source.token,
+      onUploadProgress: progressEvent => uploadProgressCb(progressEvent)
+    });
+  }
+};
