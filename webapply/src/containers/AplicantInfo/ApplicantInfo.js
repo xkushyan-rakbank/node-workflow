@@ -69,7 +69,8 @@ const ApplicantInfoPage = ({
     <>
       <h2>Let’s Start with the Basics</h2>
       <p className="formDescription">
-        First things first, you need a login, so you can come back to your application later.
+        First things first, you need a login, so you can come back to the application in case you
+        cannot complete it in one go.
       </p>
 
       <Formik
