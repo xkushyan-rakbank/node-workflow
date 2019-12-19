@@ -26,6 +26,7 @@ export const FormConfirm = () => {
       <h2 className="title">Confirm It’s You</h2>
 
       <OTPform
+        goBackRoute={routes.applicantInfo}
         redirectRoute={routes.companyInfo}
         infoTitleResult="We have sent you a verification code. Please enter the six digits below, to cofirm this is you."
         classes={{

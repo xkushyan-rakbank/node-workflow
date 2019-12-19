@@ -9,6 +9,7 @@ import { UAE_CODE } from "../../constants";
 import { ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { OtpVerification } from "../../components/OtpVerification";
+import { BackLink } from "../Buttons/BackLink";
 import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
 
 import { useStyles } from "./styled";
@@ -19,6 +20,7 @@ export const OTPformComponent = ({
   otp,
   verifyOtp,
   applicantInfo,
+  goBackRoute,
   redirectRoute,
   generateOtpCode,
   infoTitleResult,
@@ -110,6 +112,7 @@ export const OTPformComponent = ({
             </div>
 
             <div className={classes.linkContainer}>
+              <BackLink path={goBackRoute} />
               <SubmitButton
                 disabled={!isValidCode || otp.isPending}
                 justify="flex-end"
