@@ -3,7 +3,14 @@ import { UploadDocuments } from "./UploadDocument";
 import { ICONS, Icon } from "./../../../components/Icons";
 import { useStyles } from "./styled";
 
-export const CompanyDocuments = ({ documents, companyName, icon = "" }) => {
+export const CompanyDocuments = ({
+  documents,
+  companyName,
+  icon = "",
+  docUpload,
+  cancelDocUpload,
+  progress
+}) => {
   const classes = useStyles();
 
   return (
@@ -15,7 +22,14 @@ export const CompanyDocuments = ({ documents, companyName, icon = "" }) => {
         </div>
       </header>
       {documents.map(document => (
-        <UploadDocuments key={document.documentKey} document={document} type="companyDocuments" />
+        <UploadDocuments
+          key={document.documentKey}
+          document={document}
+          type="companyDocuments"
+          docUpload={docUpload}
+          cancelDocUpload={cancelDocUpload}
+          progress={progress}
+        />
       ))}
     </div>
   );

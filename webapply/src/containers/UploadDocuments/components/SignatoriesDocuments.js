@@ -5,7 +5,13 @@ import { Avatar } from "./../../../components/Avatar/Avatar";
 import { UploadDocuments } from "./UploadDocument";
 import { useStyles } from "./styled";
 
-export const SignatoriesDocuments = ({ documents, signatories }) => {
+export const SignatoriesDocuments = ({
+  documents,
+  signatories,
+  docUpload,
+  cancelDocUpload,
+  progress
+}) => {
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
@@ -32,6 +38,9 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
                   key={document.documentKey}
                   document={document}
                   type="stakeholdersDocuments"
+                  docUpload={docUpload}
+                  cancelDocUpload={cancelDocUpload}
+                  progress={progress}
                 />
               )
           )}

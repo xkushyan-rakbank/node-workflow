@@ -8,7 +8,11 @@ import {
   getRequiredDocsCount
 } from "../../store/selectors/appConfig";
 import { UploadDocument } from "./UploadDocument";
-import { retrieveDocDetails, docUpload } from "../../store/actions/getProspectDocuments";
+import {
+  retrieveDocDetails,
+  docUpload,
+  cancelDocUpload
+} from "../../store/actions/getProspectDocuments";
 import { getInputValueById } from "../../store/selectors/input";
 
 const mapStateToProps = state => ({
@@ -18,12 +22,14 @@ const mapStateToProps = state => ({
   uploadDocsEndpoints: getEndpoints(state),
   prospectID: getProspectId(state),
   uploadedDocsCount: getUploadedDocsCount(state),
-  requiredDocCount: getRequiredDocsCount(state)
+  requiredDocCount: getRequiredDocsCount(state),
+  progress: state.uploadDocuments.progress
 });
 
 const mapDispatchToProps = {
   retrieveDocDetails,
-  docUpload
+  docUpload,
+  cancelDocUpload
 };
 
 export const UploadDocuments = connect(

@@ -1,13 +1,7 @@
 import React, { useState, useRef, useCallback, useMemo } from "react";
-import { connect } from "react-redux";
 import nanoid from "nanoid";
 import * as Yup from "yup";
 
-import {
-  retrieveDocDetails,
-  docUpload,
-  cancelDocUpload
-} from "../../../store/actions/getProspectDocuments";
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 import companyIconSvg from "../../../assets/icons/file.png";
 import { useStyles } from "./styled";
@@ -22,13 +16,13 @@ const validationFileSchema = Yup.object().shape({
     )
 });
 
-const UploadDocumentsComponent = ({
+export const UploadDocuments = ({
   document,
   type: docOwner,
   docUpload,
   icon,
   uploadErrorMessage,
-  propgress,
+  progress,
   cancelDocUpload
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -119,11 +113,15 @@ const UploadDocumentsComponent = ({
                 {selectedFile.name}
                 <span className={classes.signatoryRights}>{selectedFile.size} Bytes</span>
               </div>
+
               <div className={classes.uploadFileName}>
                 <div id="Progress_Status">
-                  <div className={classes.myProgressBar} style={{ width: `${propgress}%` }}></div>
+                  <div
+                    className={classes.myProgressBar}
+                    style={{ width: `${progress[documentKey]}%` }}
+                  ></div>
                 </div>
-                <div className={classes.progressStatus}>{propgress}%</div>
+                <div className={classes.progressStatus}>{progress[documentKey]}%</div>
               </div>
             </div>
             <p className={classes.cancel} onClick={fileUploadCancel}>
@@ -135,18 +133,3 @@ const UploadDocumentsComponent = ({
     </div>
   );
 };
-
-const mapStateToProps = state => ({
-  propgress: state.uploadDocuments.propgress
-});
-
-const mapDispatchToProps = {
-  retrieveDocDetails,
-  docUpload,
-  cancelDocUpload
-};
-
-export const UploadDocuments = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UploadDocumentsComponent);

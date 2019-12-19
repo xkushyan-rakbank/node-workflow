@@ -44,10 +44,10 @@ function createUploader(prospectId, data, source) {
   return [uploadPromise, chan];
 }
 
-function* uploadProgressWatcher(chan) {
+function* uploadProgressWatcher(chan, documentKey) {
   while (true) {
     const progress = yield take(chan);
-    yield put(uploadFilesProgress(progress));
+    yield put(uploadFilesProgress({ [documentKey]: progress }));
   }
 }
 
@@ -66,7 +66,7 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* uploadDocumentsBgSync(data, docProps, docOwner, documentType) {
+function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, documentKey }) {
   const source = CancelToken.source();
 
   try {
@@ -75,7 +75,7 @@ function* uploadDocumentsBgSync(data, docProps, docOwner, documentType) {
 
     const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source);
 
-    yield fork(uploadProgressWatcher, chan);
+    yield fork(uploadProgressWatcher, chan, documentKey);
 
     yield call(() => uploadPromise);
 
@@ -98,13 +98,12 @@ function* uploadDocumentsBgSync(data, docProps, docOwner, documentType) {
   }
 }
 
-function* uploadDocumentsFlowSaga({
-  payload: { data, docProps, docOwner, documentType, documentKey }
-}) {
+function* uploadDocumentsFlowSaga({ payload }) {
   yield race({
-    task: call(uploadDocumentsBgSync, data, docProps, docOwner, documentType),
+    task: call(uploadDocumentsBgSync, payload),
     cancel: take(
-      action => action.type === CANCEL_DOC_UPLOAD && action.payload.documentKey === documentKey
+      action =>
+        action.type === CANCEL_DOC_UPLOAD && action.payload.documentKey === payload.documentKey
     )
   });
 }
