@@ -9,7 +9,7 @@ import { AccountingSoftware } from "./AccountingSoftware";
 
 import routes from "../../routes";
 import { getApplicationInfo } from "../../store/selectors/appConfig";
-import { getVideoByAccountType } from "../../utils/video";
+import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 
 export const DetailedAccount = () => {
   const { accountType, islamicBanking } = useSelector(getApplicationInfo);
@@ -25,7 +25,7 @@ export const DetailedAccount = () => {
       <div className="hide-on-mobile">
         <IslamicBankingSwitcher />
       </div>
-      <VerticalPaginationWrapper video={getVideoByAccountType({ accountType, islamicBanking })}>
+      <VerticalPaginationWrapper video={getVideoByAccountType(accountType, islamicBanking)}>
         <div />
         <AccountBenefits accountType={accountType} />
         <AccountingSoftware accountType={accountType} />

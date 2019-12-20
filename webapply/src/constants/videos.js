@@ -1,26 +1,26 @@
-import RAKstarterVideo from "../assets/videos/Rakstarter.mp4";
-import RAKstarterVideoWebm from "../assets/videos/Rakstarter.webm";
-import RAKstarterVideoPoster from "../assets/images/videoPosters/Rakstarter.jpg";
+import rakStarterVideo from "../assets/videos/Rakstarter.mp4";
+import rakStarterVideoWebm from "../assets/videos/Rakstarter.webm";
+import rakStarterVideoPoster from "../assets/images/videoPosters/Rakstarter.jpg";
 
-import RAKstarterIslamicVideo from "../assets/videos/Rakstarter_Islamic.mp4";
-import RAKstarterIslamicVideoWebm from "../assets/videos/Rakstarter_Islamic.webm";
-import RAKstarterIslamicVideoPoster from "../assets/images/videoPosters/Rakstarter_Islamic.jpg";
+import rakStarterIslamicVideo from "../assets/videos/Rakstarter_Islamic.mp4";
+import rakStarterIslamicVideoWebm from "../assets/videos/Rakstarter_Islamic.webm";
+import rakStarterIslamicVideoPoster from "../assets/images/videoPosters/Rakstarter_Islamic.jpg";
 
-import CurrentAccountVideo from "../assets/videos/CurrentAccount.mp4";
-import CurrentAccountVideoWebm from "../assets/videos/CurrentAccount.webm";
-import CurrentAccountVideoPoster from "../assets/images/videoPosters/CurrentAccount.jpg";
+import currentAccountVideo from "../assets/videos/CurrentAccount.mp4";
+import currentAccountVideoWebm from "../assets/videos/CurrentAccount.webm";
+import currentAccountVideoPoster from "../assets/images/videoPosters/CurrentAccount.jpg";
 
-import CurrentAccountIslamicVideo from "../assets/videos/RakCurrentAccount_islamic.mp4";
-import CurrentAccountIslamicVideoWebm from "../assets/videos/RakCurrentAccount_islamic.webm";
-import CurrentAccountIslamicVideoPoster from "../assets/images/videoPosters/RakCurrentAccount_islamic.jpg";
+import currentAccountIslamicVideo from "../assets/videos/RakCurrentAccount_islamic.mp4";
+import currentAccountIslamicVideoWebm from "../assets/videos/RakCurrentAccount_islamic.webm";
+import currentAccountIslamicVideoPoster from "../assets/images/videoPosters/RakCurrentAccount_islamic.jpg";
 
-import RAKeliteVideo from "../assets/videos/RakElite.mp4";
-import RAKeliteVideoWebm from "../assets/videos/RakElite.webm";
-import RAKeliteVideoPoster from "../assets/images/videoPosters/RakElite.jpg";
+import rakEliteVideo from "../assets/videos/RakElite.mp4";
+import rakEliteVideoWebm from "../assets/videos/RakElite.webm";
+import rakEliteVideoPoster from "../assets/images/videoPosters/RakElite.jpg";
 
-import RAKeliteIslamicVideo from "../assets/videos/Rakelite_islamic.mp4";
-import RAKeliteIslamicVideoWebm from "../assets/videos/Rakelite_islamic.webm";
-import RAKeliteIslamicVideoPoster from "../assets/images/videoPosters/Rakelite_islamic.jpg";
+import rakEliteIslamicVideo from "../assets/videos/Rakelite_islamic.mp4";
+import rakEliteIslamicVideoWebm from "../assets/videos/Rakelite_islamic.webm";
+import rakEliteIslamicVideoPoster from "../assets/images/videoPosters/Rakelite_islamic.jpg";
 
 import accountComparisonPoster from "../assets/images/videoPosters/Account comparison.jpg";
 import accountComparisonVideo from "../assets/videos/Accountcomparison.webm";
@@ -32,44 +32,44 @@ export const videos = [
   {
     accountType: accountsNames.starter,
     isIslamic: false,
-    mp4: RAKstarterVideo,
-    webm: RAKstarterVideoWebm,
-    poster: RAKstarterVideoPoster
+    mp4: rakStarterVideo,
+    webm: rakStarterVideoWebm,
+    poster: rakStarterVideoPoster
   },
   {
     accountType: accountsNames.starter,
     isIslamic: true,
-    mp4: RAKstarterIslamicVideo,
-    webm: RAKstarterIslamicVideoWebm,
-    poster: RAKstarterIslamicVideoPoster
+    mp4: rakStarterIslamicVideo,
+    webm: rakStarterIslamicVideoWebm,
+    poster: rakStarterIslamicVideoPoster
   },
   {
     accountType: accountsNames.currentAccount,
     isIslamic: false,
-    mp4: CurrentAccountVideo,
-    webm: CurrentAccountVideoWebm,
-    poster: CurrentAccountVideoPoster
+    mp4: currentAccountVideo,
+    webm: currentAccountVideoWebm,
+    poster: currentAccountVideoPoster
   },
   {
     accountType: accountsNames.currentAccount,
     isIslamic: true,
-    mp4: CurrentAccountIslamicVideo,
-    webm: CurrentAccountIslamicVideoWebm,
-    poster: CurrentAccountIslamicVideoPoster
+    mp4: currentAccountIslamicVideo,
+    webm: currentAccountIslamicVideoWebm,
+    poster: currentAccountIslamicVideoPoster
   },
   {
     accountType: accountsNames.elite,
     isIslamic: false,
-    mp4: RAKeliteVideo,
-    webm: RAKeliteVideoWebm,
-    poster: RAKeliteVideoPoster
+    mp4: rakEliteVideo,
+    webm: rakEliteVideoWebm,
+    poster: rakEliteVideoPoster
   },
   {
     accountType: accountsNames.elite,
     isIslamic: true,
-    mp4: RAKeliteIslamicVideo,
-    webm: RAKeliteIslamicVideoWebm,
-    poster: RAKeliteIslamicVideoPoster
+    mp4: rakEliteIslamicVideo,
+    webm: rakEliteIslamicVideoWebm,
+    poster: rakEliteIslamicVideoPoster
   },
   {
     accountType: "",

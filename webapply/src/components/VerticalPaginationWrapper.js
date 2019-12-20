@@ -197,7 +197,7 @@ class VerticalPaginationWrapper extends React.Component {
       children,
       showVideoOnMobile = false,
       scrollToSecondSection,
-      video = {}
+      video
     } = this.props;
     const { top, nextElementPosition } = this.state;
 
