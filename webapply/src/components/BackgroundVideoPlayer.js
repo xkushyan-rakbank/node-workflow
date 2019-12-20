@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import cx from "classnames";
-import get from "lodash/get";
 
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
@@ -130,12 +129,8 @@ class BackgroundVideoPlayer extends React.Component {
       handleClick,
       handleClickMobile,
       videoWrapperClass,
-      currentVideo
+      currentVideo: { mp4, webm, poster }
     } = this.props;
-
-    const mp4 = get(currentVideo, "mp4", "");
-    const webm = get(currentVideo, "webm", "");
-    const poster = get(currentVideo, "poster", "");
 
     const video = (
       <div
