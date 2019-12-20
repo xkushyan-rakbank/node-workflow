@@ -5,11 +5,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
-import {
-  NumericInput,
-  InlineRadioGroup,
-  AutoSaveField as Field
-} from "../../../../components/Form";
+import { PercentageInput } from "./PercentageInput";
+import { InlineRadioGroup, AutoSaveField as Field, Input } from "../../../../components/Form";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
@@ -19,7 +16,6 @@ const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
     isShareholderACompany: Yup.boolean().required("Required"),
     shareHoldingPercentage: Yup.number()
-      .integer()
       .min(0, "Shareholders can't hold less than 0% of shares in total")
       .max(
         100 - totalPercentageWithoutCurrentStakeholder,
@@ -73,11 +69,11 @@ const ShareholdingStep = ({
                   label="Percentage"
                   placeholder="Percentage"
                   disabled={!values.isShareholderACompany}
-                  component={NumericInput}
-                  inputProps={{ endAdornment: <InputAdornment position="end">%</InputAdornment> }}
-                  isNumericString
-                  decimalSeparator={"."}
-                  decimalScale={2}
+                  component={Input}
+                  InputProps={{
+                    inputComponent: PercentageInput,
+                    endAdornment: <InputAdornment position="end">%</InputAdornment>
+                  }}
                 />
               </Grid>
             </Grid>
