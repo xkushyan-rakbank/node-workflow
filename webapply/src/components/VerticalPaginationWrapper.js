@@ -200,7 +200,7 @@ class VerticalPaginationWrapper extends React.Component {
       video
     } = this.props;
     const { top, nextElementPosition } = this.state;
-    const poster = video.poster || "";
+    const poster = (video && video.poster) || "";
 
     return (
       <>
