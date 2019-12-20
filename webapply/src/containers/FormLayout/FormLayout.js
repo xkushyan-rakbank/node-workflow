@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import FormNavigation from "../../components/FormNavigation";
+import { FormNavigation } from "../../components/FormNavigation";
 import ApplicationStatus from "../../components/ApplicationStatus";
 import Header from "../../components/Header";
 import HeaderTitle from "../../components/HeaderTitle";

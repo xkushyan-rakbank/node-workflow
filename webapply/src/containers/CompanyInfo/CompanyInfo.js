@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
+import cx from "classnames";
 
 import { useStep } from "../../components/StepComponent/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
@@ -8,7 +9,11 @@ import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import companyInfoIcon from "./../../assets/icons/companyInfo.png";
-import { getOrganizationInfo, getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
+import {
+  getApplicantInfo,
+  getOrganizationInfo,
+  getSendProspectToAPIInfo
+} from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
@@ -17,6 +22,7 @@ export const CompanyInfoPage = ({
   sendProspectToAPI,
   history,
   loading,
+  fullName,
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
@@ -30,9 +36,9 @@ export const CompanyInfoPage = ({
   return (
     <>
       <h2>Tell Us about Your Company</h2>
-      <p className="formDescription">
-        Explanation text goes here. One to three short sentences maximum. This is the third
-        sentence.
+      <p className={classes.username}>Welcome, {fullName}!</p>
+      <p className={cx(classes.sectionTitleIndent, classes.username)}>
+        Now that we know each other, we want to know a bit more about your company.
       </p>
 
       <FormCard
@@ -73,6 +79,7 @@ export const CompanyInfoPage = ({
 
 const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
+  fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state)
 });
 

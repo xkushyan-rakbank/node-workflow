@@ -95,7 +95,6 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
           </InputGroup>
         </Grid>
       </Grid>
-      <InfoTitle title="Heads up! We can only issue chequebooks if you use a phone number from the UAE." />
 
       <SubmitButton />
     </Form>

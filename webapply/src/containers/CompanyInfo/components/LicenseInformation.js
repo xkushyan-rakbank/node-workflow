@@ -43,7 +43,7 @@ export const LicenseInformation = ({ handleContinue }) => (
           <Grid item md={6} sm={12}>
             <Field
               name="licenseIssueDate"
-              label="Date of lisence issuing"
+              label="License issuing date"
               path="prospect.organizationInfo.licenseIssueDate"
               component={DatePicker}
             />
@@ -54,7 +54,7 @@ export const LicenseInformation = ({ handleContinue }) => (
           <Grid item md={6} sm={12}>
             <Field
               name="licenseIssuingAuthority"
-              label="Lisence Issuing authority"
+              label="License issuing authority"
               path="prospect.organizationInfo.licenseIssuingAuthority"
               datalistId="licenseIssuingAuthority"
               component={CustomSelect}

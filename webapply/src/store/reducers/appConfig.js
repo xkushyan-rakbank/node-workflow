@@ -5,6 +5,7 @@ import {
   UPDATE_PROSPECT_ID,
   SET_CONFIG,
   SET_PROSPECT,
+  SET_PROSPECT_FAIL,
   SAVE_PROSPECT_MODEL
 } from "../actions/appConfig";
 
@@ -14,6 +15,7 @@ export const initialState = {
   endpoints: {},
   prospect: {},
   error: "",
+  prospectError: false,
   searchInfo: { segment: "sme" },
   login: {},
   prospectModel: {}
@@ -49,6 +51,13 @@ const appConfigReducer = (state = initialState, action) => {
         ...state,
         prospect: action.prospect
       };
+    case SET_PROSPECT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        prospectError: true
+      };
+
     case UPDATE_PROSPECT_ID:
       return {
         ...state,

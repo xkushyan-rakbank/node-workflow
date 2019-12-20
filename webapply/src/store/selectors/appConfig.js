@@ -77,3 +77,7 @@ export const getUploadedDocsCount = createGetDocsCountSelector(
 );
 
 export const getRequiredDocsCount = createGetDocsCountSelector();
+
+export const getProspectErrorMessage = state => state.appConfig.prospectError;
+
+export const getLoading = state => state.appConfig.loading;

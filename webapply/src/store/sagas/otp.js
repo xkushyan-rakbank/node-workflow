@@ -22,6 +22,7 @@ function* verifyOtp({ payload: otpToken }) {
     const applicantInfo = appConfigSelectors.getApplicantInfo(state);
 
     const payload = {
+      email: applicantInfo.email,
       prospectId: appConfigSelectors.getProspectId(state),
       mobileNo: applicantInfo.mobileNo,
       countryCode: applicantInfo.countryCode,

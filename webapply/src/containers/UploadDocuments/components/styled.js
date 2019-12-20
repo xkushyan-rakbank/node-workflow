@@ -49,7 +49,7 @@ export const useStyles = makeStyles({
   },
   contentBox: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
     flexGrow: "1",
     paddingLeft: "16px",
     paddingRight: "16px"
@@ -126,5 +126,137 @@ export const useStyles = makeStyles({
     lineHeight: "1.29",
     letterSpacing: "normal",
     color: "#373737"
+  },
+  fileUploadPlaceholder: {
+    height: "50px",
+    display: "flex",
+    alignItems: "center",
+    padding: "0 25px",
+    borderTop: "solid 1px rgba(230, 230, 230, 0.5)",
+    cursor: "pointer"
+  },
+  ContentBox: {
+    alignItems: "center",
+    flexGrow: "1",
+    paddingLeft: "18px"
+  },
+
+  uploadedFileName: {
+    fontSize: "12px",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: ".6",
+    letterSpacing: "normal",
+    color: "#373737",
+    display: "block"
+  },
+
+  fileSizeMessage: {
+    color: "#888888",
+    fontSize: "12px",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: ".6",
+    letterSpacing: "normal"
+  },
+  ControlsBox: {
+    width: "130px",
+    height: "32px",
+    borderRadius: "21px",
+    border: "solid 1px #373737",
+    fontSize: "14px",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    letterSpacing: "normal",
+    textAlign: "center",
+    color: "#373737",
+    cursor: "pointer",
+    lineHeight: "2.2"
+  },
+  UploadedContentBox: {
+    display: "flex",
+    alignItems: "center",
+    flexGrow: "1",
+    paddingLeft: "16px",
+    paddingRight: "16px"
+  },
+  uploadFileName: {
+    fontSize: "12px",
+    fontWeight: "600",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "1.17",
+    letterSpacing: "normal",
+    color: "#373737",
+    paddingLeft: "5px"
+  },
+  signatoryRights: {
+    width: "39px",
+    height: "14px",
+    fontSize: "12px",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "1.17",
+    letterSpacing: "normal",
+    color: "#888888",
+    paddingLeft: "9px"
+  },
+  SignatoryRightsCopy: {
+    width: "25px",
+    height: "18px",
+    fontSize: "12px",
+    fontWeight: "600",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "1.5",
+    letterSpacing: "normal",
+    textAlign: "right",
+    color: "#373737",
+    paddingLeft: "11px"
+  },
+  ErrorExplanation: {
+    fontSize: "12px",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: ".6",
+    letterSpacing: "normal",
+    color: "#ea2925"
+  },
+
+  cancel: {
+    width: 20,
+    border: "solid 1px #e8e8e8",
+    height: 20,
+    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
+    borderRadius: 25,
+    backgroundColor: "#ffffff",
+    margin: 0,
+    display: "flex",
+    justifyContent: "center",
+    padding: 1,
+    fontSize: 15,
+    fontWeight: "bold"
+  },
+  defaultInput: {
+    display: "none"
+  },
+  myProgressBar: {
+    height: "4px",
+    borderRadius: "3px",
+    textAlign: "center",
+    lineHeight: "32px",
+    color: "black",
+    backgroundColor: "#373737",
+    width: "100%",
+    transition: "width 0.2s ease"
+  },
+  progressStatus: {
+    display: "inline-block",
+    paddingLeft: "11px"
   }
 });

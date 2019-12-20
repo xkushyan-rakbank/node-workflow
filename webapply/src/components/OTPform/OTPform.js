@@ -18,6 +18,7 @@ export const MAX_ATTEMPT_ALLOWED = 3;
 export const OTPformComponent = ({
   otp,
   verifyOtp,
+  verifyClearError,
   applicantInfo,
   redirectRoute,
   generateOtpCode,
@@ -35,7 +36,16 @@ export const OTPformComponent = ({
       history.push(redirectRoute);
     }
     // eslint-disable-next-line
-  }, [otp]);
+  }, [otp.isVerified]);
+
+  useEffect(() => {
+    if (otp.verificationError) {
+      setCode(Array(6).fill(""));
+    }
+    // eslint-disable-next-line
+  }, [otp.verificationError]);
+
+  useEffect(() => () => verifyClearError(), []);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
