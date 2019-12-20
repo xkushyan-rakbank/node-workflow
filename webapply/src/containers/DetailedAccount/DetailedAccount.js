@@ -13,8 +13,8 @@ import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 
 export const DetailedAccount = () => {
   const { accountType, islamicBanking } = useSelector(getApplicationInfo);
-
   const history = useHistory();
+
   if (!accountType) {
     history.push(routes.accountsComparison);
     return null;
