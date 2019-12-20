@@ -8,8 +8,7 @@ import { getInputValueById } from "../../../../store/selectors/input";
 import {
   AutoSaveField as Field,
   SelectAutocomplete,
-  Input,
-  EmiratesIDMaskComponent
+  EmiratesID
 } from "../../../../components/Form";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
@@ -38,44 +37,37 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       onSubmit={handleContinue}
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
     >
-      {({ values }) => {
-        return (
-          <Form>
-            <Grid container spacing={3}>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="residenceCountry"
-                  path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
-                  label="Country of Residence"
-                  component={SelectAutocomplete}
-                  disabled={isSignatory}
-                  datalistId="country"
-                  shrink
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="eidNumber"
-                  path={eidNumberPath}
-                  label="Emirates ID"
-                  placeholder="784-XXXX-XXXXXXX-X"
-                  disabled={isSignatory || values.residenceCountry !== UAE}
-                  component={Input}
-                  InputProps={{
-                    inputComponent: EmiratesIDMaskComponent
-                  }}
-                  changeProspect={(prospect, value) => ({
-                    ...prospect,
-                    [eidNumberPath]: value.replace(/-/g, "")
-                  })}
-                />
-              </Grid>
+      {({ values }) => (
+        <Form>
+          <Grid container spacing={3}>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="residenceCountry"
+                path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
+                label="Country of Residence"
+                component={SelectAutocomplete}
+                disabled={isSignatory}
+                datalistId="country"
+                shrink
+              />
             </Grid>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="eidNumber"
+                path={eidNumberPath}
+                disabled={isSignatory || values.residenceCountry !== UAE}
+                component={EmiratesID}
+                changeProspect={(prospect, value) => ({
+                  ...prospect,
+                  [eidNumberPath]: value.replace(/-/g, "")
+                })}
+              />
+            </Grid>
+          </Grid>
 
-            <SubmitButton />
-          </Form>
-        );
-      }}
+          <SubmitButton />
+        </Form>
+      )}
     </Formik>
   );
 };

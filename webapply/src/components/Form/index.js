@@ -9,4 +9,4 @@ export { AutoSaveField } from "./AutoSaveField/AutoSaveField";
 export { InlineRadioGroup } from "./InlineRadioGroup/InlineRadioGroup";
 export { RadioButton } from "./RadioButton/RadioButon";
 export { SkeletonLoader } from "./SkeletonLoader";
-export { EmiratesIDMaskComponent } from "./EmiratesIDMaskComponent";
+export { EmiratesID } from "./Input/EmiratesID";
