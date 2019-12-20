@@ -65,6 +65,12 @@ const otpReducer = (state = initialState, action) => {
         isPending: false
       };
     }
+    case actions.VERIFY_CLEAR_ERROR: {
+      return {
+        ...state,
+        verificationError: false
+      };
+    }
     default:
       return state;
   }
