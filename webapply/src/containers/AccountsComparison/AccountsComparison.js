@@ -7,7 +7,7 @@ import { InfoNote } from "../../components/InfoNote";
 import { TableCompare } from "./components/TableCompare";
 
 import { INITIAL_SECTION_POSITION } from "./constants";
-import { getCurrentVideoData } from "../../utils/video";
+import { getVideoByAccountType } from "../../utils/video";
 
 import { useStyles } from "./styled";
 
@@ -38,7 +38,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   return (
     <div className={classes.container}>
       <VerticalPaginationWrapper
-        currentVideo={getCurrentVideoData({})}
+        video={getVideoByAccountType({ accountType: "" })}
         indexScrollToSection={indexScrollToSection}
         scrollToSecondSection={scrollToSecondSection}
         showVideoOnMobile

@@ -28,7 +28,7 @@ import accountComparisonVideoMP4 from "../assets/videos/Accountcomparison.mp4";
 
 import { accountsNames } from "./index";
 
-export const videosData = [
+export const videos = [
   {
     accountType: accountsNames.starter,
     isIslamic: false,

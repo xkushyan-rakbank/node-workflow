@@ -129,7 +129,7 @@ class BackgroundVideoPlayer extends React.Component {
       handleClick,
       handleClickMobile,
       videoWrapperClass,
-      currentVideo: { mp4, webm, poster }
+      video: { mp4, webm, poster }
     } = this.props;
 
     const video = (

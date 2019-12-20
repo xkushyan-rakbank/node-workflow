@@ -1,6 +1,4 @@
-import { videosData } from "../constants/videos";
+import { videos } from "../constants/videos";
 
-export const getCurrentVideoData = ({ accountType = "", islamicBanking = false }) =>
-  videosData
-    .filter(account => account.accountType === accountType)
-    .find(video => video.isIslamic === islamicBanking);
+export const getVideoByAccountType = ({ accountType, islamicBanking = false }) =>
+  videos.find(video => video.isIslamic === islamicBanking && video.accountType === accountType);
