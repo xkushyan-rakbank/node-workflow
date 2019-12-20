@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import cx from "classnames";
+import get from "lodash/get";
 
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
@@ -126,12 +127,15 @@ class BackgroundVideoPlayer extends React.Component {
     const {
       classes,
       nextElementPosition,
-      videoUrls,
       handleClick,
       handleClickMobile,
-      posterUrl,
-      videoWrapperClass
+      videoWrapperClass,
+      currentVideo
     } = this.props;
+
+    const mp4 = get(currentVideo, "mp4", "");
+    const webm = get(currentVideo, "webm", "");
+    const poster = get(currentVideo, "poster", "");
 
     const video = (
       <div
@@ -142,14 +146,14 @@ class BackgroundVideoPlayer extends React.Component {
           muted
           id="video-background"
           className={classes.video}
-          key={videoUrls.mp4}
-          data-name={videoUrls.mp4}
+          key={mp4}
+          data-name={mp4}
           onEnded={this.onEndedVideoPLay}
           onLoadedData={this.onLoadedDataVideo}
-          poster={playedVideos && playedVideos.includes(videoUrls.mp4) ? posterUrl : ""}
+          poster={playedVideos && playedVideos.includes(mp4) ? poster : ""}
         >
-          <source src={videoUrls.webm} type="video/webm" />
-          <source src={videoUrls.mp4} type="video/mp4" />
+          <source src={webm} type="video/webm" />
+          <source src={mp4} type="video/mp4" />
         </video>
 
         <div className={classes.buttonContainer}>

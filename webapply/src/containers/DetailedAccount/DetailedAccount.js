@@ -1,31 +1,32 @@
 import React from "react";
-import { Redirect, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import * as appConfigSelectors from "../../store/selectors/appConfig";
+import { useHistory } from "react-router-dom";
+import { useStore } from "react-redux";
+
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher/IslamicBankingSwitcher";
 import AccountBenefits from "./AccountBenefits";
 import { AccountingSoftware } from "./AccountingSoftware";
 
-import getVideoUrl from "../../utils/getVideoUrl";
 import routes from "../../routes";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
 
-const DetailedAccount = ({ applicationInfo }) => {
-  const { accountType } = applicationInfo;
+import { getCurrentVideoData } from "../../utils/video";
 
-  let videoUrl, posterUrl;
-  if (Object.keys(applicationInfo).length && accountType.length) {
-    videoUrl = getVideoUrl(applicationInfo).videoUrls;
-    posterUrl = getVideoUrl(applicationInfo).posterUrl;
-  }
+export const DetailedAccount = () => {
+  const state = useStore().getState();
+  const { accountType, islamicBanking } = appConfigSelectors.getApplicationInfo(state);
+
+  const history = useHistory();
+  if (!accountType) history.push(routes.accountsComparison);
 
   return (
     <>
-      {!accountType && <Redirect to={routes.accountsComparison} />}
       <div className="hide-on-mobile">
         <IslamicBankingSwitcher />
       </div>
-      <VerticalPaginationWrapper videoUrls={videoUrl} posterUrl={posterUrl}>
+      <VerticalPaginationWrapper
+        currentVideo={getCurrentVideoData({ accountType, islamicBanking })}
+      >
         <div />
         <AccountBenefits accountType={accountType} />
         <AccountingSoftware accountType={accountType} />
@@ -33,9 +34,3 @@ const DetailedAccount = ({ applicationInfo }) => {
     </>
   );
 };
-
-const mapStateToProps = state => ({
-  applicationInfo: appConfigSelectors.getApplicationInfo(state)
-});
-
-export default connect(mapStateToProps)(withRouter(DetailedAccount));

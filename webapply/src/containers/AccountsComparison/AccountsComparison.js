@@ -1,14 +1,15 @@
 import React, { useState, useRef } from "react";
+
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
 import { TableCompare } from "./components/TableCompare";
-import accountComparisonPoster from "../../assets/images/videoPosters/Account comparison.jpg";
-import accountComparisonVideo from "../../assets/videos/Accountcomparison.webm";
-import accountComparisonVideoMP4 from "../../assets/videos/Accountcomparison.mp4";
-import { useStyles } from "./styled";
+
 import { INITIAL_SECTION_POSITION } from "./constants";
+import { getCurrentVideoData } from "../../utils/video";
+
+import { useStyles } from "./styled";
 
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const [selectedAccount, setSelectedAccount] = useState("Current Account");
@@ -37,8 +38,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   return (
     <div className={classes.container}>
       <VerticalPaginationWrapper
-        videoUrls={{ webm: accountComparisonVideo, mp4: accountComparisonVideoMP4 }}
-        posterUrl={accountComparisonPoster}
+        currentVideo={getCurrentVideoData({})}
         indexScrollToSection={indexScrollToSection}
         scrollToSecondSection={scrollToSecondSection}
         showVideoOnMobile
