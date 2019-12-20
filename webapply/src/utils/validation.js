@@ -17,7 +17,7 @@ export const EMPLOYMENT_TYPE_REGEX = /^([a-zA-Z ]){1,50}$/;
 export const DESIGNATION_REGEX = /^([a-zA-Z]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
 export const EMIRATES_ID_REGEX = /^784-\d{4}-\d{7}-\d$/;
-export const PASSPORT_NUMBER_REGEX = /^[a-z0-9]+$/;
+export const PASSPORT_NUMBER_REGEX = /^[a-zA-Z0-9]{1,100}$/;
 
 export const FILE_SIZE = 5 * 1048576;
 export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", "application/txt"];
