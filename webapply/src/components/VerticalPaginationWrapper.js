@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
-import get from "lodash/get";
 
 import VideoBackground from "./BackgroundVideoPlayer";
 import { mobileResolution } from "../constants";
@@ -201,7 +200,7 @@ class VerticalPaginationWrapper extends React.Component {
       video
     } = this.props;
     const { top, nextElementPosition } = this.state;
-    const poster = get(video, "poster", "");
+    const poster = video.poster || "";
 
     return (
       <>
