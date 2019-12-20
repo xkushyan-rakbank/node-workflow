@@ -18,20 +18,30 @@ import { yesNoOptions } from "../../../../constants/options";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
+
+import { NAME_REGEX } from "../../../../utils/validation";
+
 import { useStyles } from "./styled";
 
 const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("isShareholderACompany", {
-    is: false,
-    then: Yup.string().required("Required")
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.string()
+      .required("Required")
+      .matches(NAME_REGEX, "This is not a valid first name")
   }),
+  middleName: Yup.string().matches(NAME_REGEX, "This is not a valid middle name"),
   lastName: Yup.string().when("isShareholderACompany", {
-    is: false,
-    then: Yup.string().required("Required")
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.string()
+      .required("Required")
+      .matches(NAME_REGEX, "This is not a valid last name")
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
-    is: false,
-    then: Yup.date().required("Required")
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.date()
+      .typeError("")
+      .required("Required")
   }),
   isPEP: Yup.boolean().required("Required")
 });
