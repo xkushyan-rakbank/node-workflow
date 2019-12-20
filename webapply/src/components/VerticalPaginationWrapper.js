@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
+import get from "lodash/get";
 
 import VideoBackground from "./BackgroundVideoPlayer";
 import { mobileResolution } from "../constants";
@@ -200,17 +201,20 @@ class VerticalPaginationWrapper extends React.Component {
       video
     } = this.props;
     const { top, nextElementPosition } = this.state;
+    const poster = get(video, "poster", "");
 
     return (
       <>
         <div className={classes.paginationWrapper} onWheel={this.handleWheel}>
-          <VideoBackground
-            video={video}
-            videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
-            nextElementPosition={nextElementPosition}
-            handleClick={this.handleClick}
-            handleClickMobile={scrollToSecondSection}
-          />
+          {poster && (
+            <VideoBackground
+              video={video}
+              videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
+              nextElementPosition={nextElementPosition}
+              handleClick={this.handleClick}
+              handleClickMobile={scrollToSecondSection}
+            />
+          )}
 
           <div style={{ top }} className={classes.paginationContent}>
             {React.Children.map(children, child => (
@@ -225,7 +229,7 @@ class VerticalPaginationWrapper extends React.Component {
           </div>
         </div>
         <div className={classes.paginationDots}>
-          {video.poster
+          {poster
             ? nextElementPosition !== 0 && this.renderPagination(children)
             : this.renderPagination(children)}
         </div>
