@@ -1,4 +1,5 @@
 import get from "lodash/get";
+import { accountsNames } from "./index";
 
 import { store } from "../store";
 
@@ -123,10 +124,14 @@ export const getIconsByAccount = () => {
   const islamicBanking = get(store.getState(), "appConfig.prospect.applicationInfo.islamicBanking");
   const accountType = get(store.getState(), "appConfig.prospect.applicationInfo.accountType");
 
-  if (islamicBanking) {
+  if (islamicBanking && accountType !== accountsNames.elite) {
     return islamicIconsSet;
   }
-  if (accountType === "RAKstarter" || accountType === "Current Account" || accountType === "") {
+  if (
+    accountType === accountsNames.starter ||
+    accountType === accountsNames.currentAccount ||
+    accountType === ""
+  ) {
     return conventionalIconsSet;
   } else {
     return eliteIconsSet;
