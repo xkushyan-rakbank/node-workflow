@@ -104,14 +104,14 @@ instance.interceptors.response.use(
       if (status === 502) {
         NotificationsManager.add &&
           NotificationsManager.add({
-            title: "Webapplyserver is down",
-            message: "Contact to webapplyserver administrator."
+            title: "Unable to process the request",
+            message: "Please, contact webapplyserver team for further resolution."
           });
-      } else if (status === 401) {
+      } else if (status === 401 || status === 504) {
         NotificationsManager.add &&
           NotificationsManager.add({
-            title: "DEH server is down(401)",
-            message: "Contact to DEH team."
+            title: "Unable to send the request to DEH server",
+            message: "Please, contact DEH team for further resolution."
           });
       }
     }
