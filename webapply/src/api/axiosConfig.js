@@ -73,9 +73,7 @@ instance.interceptors.response.use(
       data,
       config: { symKey }
     } = error.response;
-    console.log("error");
-    console.log(error.response);
-    console.log(error.response.data);
+
     let jsonData = data;
 
     if (symKey && data && typeof data === "string") {
@@ -106,20 +104,14 @@ instance.interceptors.response.use(
       if (status === 502) {
         NotificationsManager.add &&
           NotificationsManager.add({
-            title: "Server is down(502)",
-            message: "Connect to server administrator."
+            title: "Webapplyserver is down",
+            message: "Contact to webapplyserver administrator."
           });
       } else if (status === 401) {
         NotificationsManager.add &&
           NotificationsManager.add({
             title: "DEH server is down(401)",
-            message: "Connect to server administrator."
-          });
-      } else if (status === 500) {
-        NotificationsManager.add &&
-          NotificationsManager.add({
-            title: "Internal error(500)",
-            message: "Connect to server administrator."
+            message: "Contact to DEH team."
           });
       }
     }
