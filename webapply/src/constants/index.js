@@ -1,8 +1,6 @@
 import isUndefined from "lodash/isUndefined";
 import isArray from "lodash/isArray";
 import routes from "../routes";
-import callbackRegular from "./../assets/gif/callback_regular.gif";
-import declinedRegular from "./../assets/gif/declined_regular.gif";
 
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
@@ -109,34 +107,6 @@ export const accountsNames = {
   starter: "RAKstarter",
   currentAccount: "Current Account",
   elite: "RAKelite"
-};
-
-export const applicationStatus = {
-  dedupe: {
-    icon: callbackRegular,
-    text:
-      "It looks like we already know you and have your details! Let us save you time. We will call you back within X days to meet you in person and help you out."
-  },
-  virtualCurrencies: {
-    icon: declinedRegular,
-    text:
-      "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAKBANK."
-  },
-  blNlMatch: {
-    icon: declinedRegular,
-    text:
-      "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAKBANK."
-  },
-  notEligible: {
-    icon: declinedRegular,
-    text:
-      "Oops, this product is not for you. Our RAKstarter account is for companies operating for less than a year. But don’t worry, we have other products suited for you."
-  },
-  uiError: {
-    icon: declinedRegular,
-    text:
-      "It`s our fault, not yours. We`ve have been notified of the problem. In the meantime, try refreshing or see the JavaScript console for technical details."
-  }
 };
 
 export const UAE_CODE = "971";

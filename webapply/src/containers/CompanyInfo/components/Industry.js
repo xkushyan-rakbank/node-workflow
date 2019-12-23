@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { CustomSelect, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
+import { SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 
@@ -32,7 +32,7 @@ export const Industry = ({ handleContinue }) => (
               label="Industry"
               path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
               datalistId="industry"
-              component={CustomSelect}
+              component={SelectAutocomplete}
               onChange={e => {
                 setFieldValue("industry", e.target.value);
                 setFieldValue("subCategory", "");
