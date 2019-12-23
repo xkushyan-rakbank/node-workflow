@@ -109,19 +109,6 @@ export const screening = {
 
 export const uploadProspectDocument = {
   send: ({ data, prospectId, source, uploadProgressCb }) => {
-    console.log("document upload");
-    console.log("data");
-    console.log(data);
-    console.log("prospectId");
-    console.log(prospectId);
-    console.log("request info");
-    console.log({
-      url: buildURI("docUploaderUri", prospectId),
-      method: "POST",
-      data,
-      cancelToken: source.token,
-      onUploadProgress: progressEvent => uploadProgressCb(progressEvent)
-    });
     return httpClient.request({
       url: buildURI("docUploaderUri", prospectId),
       method: "POST",
