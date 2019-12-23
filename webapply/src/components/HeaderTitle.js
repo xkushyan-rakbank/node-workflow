@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import cx from "classnames";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
@@ -16,7 +17,6 @@ const styles = {
     backgroundColor: "#fff",
     marginBottom: "115px",
     "& span": {
-      maxWidth: "780px",
       width: "100%",
       fontSize: "14px",
       color: "#86868b",
@@ -27,6 +27,9 @@ const styles = {
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       display: "none"
     }
+  },
+  withMargin: {
+    marginTop: "-130px"
   },
   headerTitleIn: {
     display: "flex",
@@ -48,7 +51,8 @@ const HeaderTitle = props => {
     applicationInfo: { islamicBanking, accountType },
     organizationInfo: { companyName },
     checkLoginStatus,
-    getAgentName
+    getAgentName,
+    withMargin
   } = props;
 
   let selectedAccountTypeName = "";
@@ -89,7 +93,7 @@ const HeaderTitle = props => {
   };
 
   return (
-    <div className={classes.headerTitle}>
+    <div className={cx(classes.headerTitle, withMargin && classes.withMargin)}>
       <div className={classes.headerTitleIn}>
         <span>
           {portalTitle.length ? (
@@ -103,7 +107,7 @@ const HeaderTitle = props => {
             </>
           ) : (
             <>
-              {selectedAccountTypeName} {islamicBanking && "islamic"} application{" "}
+              {selectedAccountTypeName} {islamicBanking && "Islamic"} application{" "}
               {!isHideCompanyName && organizationName}
             </>
           )}

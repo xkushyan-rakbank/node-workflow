@@ -6,13 +6,17 @@ import { accountsNames } from "../../constants/index";
 export const useIconsByAccount = () => {
   const applicationInfo = useSelector(state => state.appConfig.prospect.applicationInfo) || {};
 
-  if (applicationInfo.islamicBanking) {
+  if (applicationInfo.islamicBanking && applicationInfo.accountType !== accountsNames.elite) {
     return islamicIconsSet;
   }
 
-  if (applicationInfo.accountType === accountsNames.elite) {
-    return eliteIconsSet;
+  if (
+    applicationInfo.accountType === accountsNames.starter ||
+    applicationInfo.accountType === accountsNames.currentAccount ||
+    applicationInfo.accountType === ""
+  ) {
+    return conventionalIconsSet;
   }
 
-  return conventionalIconsSet;
+  return eliteIconsSet;
 };

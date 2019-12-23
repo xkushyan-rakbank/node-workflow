@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { Input, DatePicker, CustomSelect, AutoSaveField as Field } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
-import { NUMBER_REGEX } from "../../../utils/validation";
+import { LEAD_LICENSE_REGEX } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
@@ -20,7 +20,8 @@ const initialValues = {
 const licenseInformationSchema = Yup.object({
   licenseNumber: Yup.string()
     .required("You need to provide license number")
-    .matches(NUMBER_REGEX, "This is not a valid license number")
+    .max(20, "Maximum 20 charactors allowed")
+    .matches(LEAD_LICENSE_REGEX, "This is not a valid trade license number")
 });
 
 export const LicenseInformation = ({ handleContinue }) => (
@@ -37,13 +38,14 @@ export const LicenseInformation = ({ handleContinue }) => (
               name="licenseNumber"
               label="License number"
               path="prospect.organizationInfo.licenseNumber"
+              contexualHelpText="If License Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.Example CN-123/2018/456 to be entered as CN1232018456"
               component={Input}
             />
           </Grid>
           <Grid item md={6} sm={12}>
             <Field
               name="licenseIssueDate"
-              label="Date of lisence issuing"
+              label="License issuing date"
               path="prospect.organizationInfo.licenseIssueDate"
               component={DatePicker}
             />
@@ -54,7 +56,7 @@ export const LicenseInformation = ({ handleContinue }) => (
           <Grid item md={6} sm={12}>
             <Field
               name="licenseIssuingAuthority"
-              label="Lisence Issuing authority"
+              label="License issuing authority"
               path="prospect.organizationInfo.licenseIssuingAuthority"
               datalistId="licenseIssuingAuthority"
               component={CustomSelect}

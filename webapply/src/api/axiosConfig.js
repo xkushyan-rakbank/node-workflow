@@ -73,6 +73,7 @@ instance.interceptors.response.use(
       data,
       config: { symKey }
     } = error.response;
+
     let jsonData = data;
 
     if (symKey && data && typeof data === "string") {

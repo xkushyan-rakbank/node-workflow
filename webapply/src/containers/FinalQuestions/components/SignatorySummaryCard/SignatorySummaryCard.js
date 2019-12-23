@@ -55,7 +55,7 @@ export const SignatorySummaryCardComponent = ({
       }
       index={index}
     >
-      <div className={cx({ [classes.hidden]: expandedSignatoryIndex !== index })}>
+      <div className={cx({ hidden: expandedSignatoryIndex !== index })}>
         <FinalQuestionStepComponent
           index={index}
           stepsArray={signatoriesSteps}

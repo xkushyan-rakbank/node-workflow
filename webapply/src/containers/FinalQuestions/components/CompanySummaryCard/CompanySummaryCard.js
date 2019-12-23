@@ -45,7 +45,7 @@ export const CompanySummaryCardComponent = ({
         ))
       }
     >
-      <div className={cx({ [classes.hidden]: !isExpanded })}>
+      <div className={cx({ hidden: !isExpanded })}>
         <FinalQuestionStepComponent
           index={index}
           stepsArray={finalQuestionsSteps}
