@@ -101,19 +101,6 @@ instance.interceptors.response.use(
     } else {
       log(jsonData);
       NotificationsManager.add && NotificationsManager.add();
-      if (status === 502) {
-        NotificationsManager.add &&
-          NotificationsManager.add({
-            title: "Unable to process the request",
-            message: "Please, contact webapplyserver team for further resolution."
-          });
-      } else if (status === 401 || status === 504) {
-        NotificationsManager.add &&
-          NotificationsManager.add({
-            title: "Unable to send the request to DEH server",
-            message: "Please, contact DEH team for further resolution."
-          });
-      }
     }
 
     return Promise.reject(error);

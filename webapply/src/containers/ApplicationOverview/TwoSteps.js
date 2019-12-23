@@ -16,8 +16,7 @@ const style = {
     color: "green"
   },
   firstGroup: {
-    width: "100%",
-    marginTop: 40
+    width: "100%"
   },
   indent: {
     margin: "0 -10px 30px",
@@ -51,20 +50,20 @@ const style = {
 };
 
 const TwoSteps = ({ classes, accountType, islamicBanking }) => {
-  const getGifUrl = () => {
-    if (islamicBanking) {
-      return overviewIslamic;
-    } else if (accountType === accountsNames.elite) {
-      return overviewElite;
-    }
-    return overviewRegular;
-  };
+  let gifUrl = overviewRegular;
+
+  if (islamicBanking && accountType !== accountsNames.elite) {
+    gifUrl = overviewIslamic;
+  } else if (accountType === accountsNames.elite) {
+    gifUrl = overviewElite;
+  }
+
   const { interrogation, signature } = getIconsByAccount();
 
   return (
     <>
-      <HeaderTitle />
       <div className={classes.firstGroup}>
+        <HeaderTitle />
         <SectionTitleWithInfo title="Two easy steps" />
         <div className={classes.indent}>
           <IconCardsContainer>
@@ -84,7 +83,7 @@ const TwoSteps = ({ classes, accountType, islamicBanking }) => {
             We need to spend some time getting to know you and your company
           </span>
         </div>
-        <img className={classes.overview} src={getGifUrl()} alt="overview" />
+        <img className={classes.overview} src={gifUrl} alt="overview" />
       </div>
     </>
   );
