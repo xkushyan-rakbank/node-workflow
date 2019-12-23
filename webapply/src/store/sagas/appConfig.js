@@ -2,6 +2,7 @@ import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
+
 import {
   RECEIVE_APPCONFIG,
   receiveAppConfigSuccess,
@@ -102,7 +103,7 @@ function* updateActionTypeSaga({ actionType }) {
 function* resetProspectSaga() {
   const state = yield select();
   const prospect = state.sendProspectToAPI.prospectCopy;
-  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
+  const stakeholdersIds = cloneDeep(state.stakeholders.stakeholdersIds);
   yield put(setProspect(prospect));
 
   if (prospect.signatoryInfo.length !== stakeholdersIds.length) {

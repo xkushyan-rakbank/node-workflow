@@ -34,15 +34,19 @@ const CompanyStakeholders = ({
   stakeholders,
   percentage,
   history,
-  resetProspect
+  resetProspect,
+  stakeholdersIds
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isNewStakeholder, setIsNewStakeholder] = useState(false);
-
   const isLowPercentage = percentage < 100;
   const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
-  const isDisableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || isLowPercentage;
+  const isDisableNextStep =
+    stakeholders.length < 1 ||
+    Number.isInteger(editableStakeholder) ||
+    !stakeholdersIds.every(stakeholder => stakeholder.done) ||
+    isLowPercentage;
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
   or edit the shareholding % for the added stakeholders.`;
 
