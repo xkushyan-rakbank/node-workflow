@@ -38,6 +38,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               name="licenseNumber"
               label="License number"
               path="prospect.organizationInfo.licenseNumber"
+              contexualHelpText="If License Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.Example CN-123/2018/456 to be entered as CN1232018456"
               component={Input}
             />
           </Grid>
