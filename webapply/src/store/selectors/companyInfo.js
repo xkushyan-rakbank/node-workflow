@@ -1,10 +1,9 @@
+import get from "lodash/get";
 import { getOrgKYCDetails } from "./appConfig";
 
-export const getVirtualCurrency = state => {
+export const getIsVirtualCurrency = state => {
   const getIndustryMultiSelect = getOrgKYCDetails(state).industryMultiSelect || [];
-  const isVC =
-    getIndustryMultiSelect.length > 0 &&
-    getIndustryMultiSelect[0].industry.includes("Virtual currency");
+  const industry = get(getIndustryMultiSelect, "[0].industry", []);
 
-  return isVC;
+  return getIndustryMultiSelect.length > 0 && industry.includes("Virtual currency");
 };

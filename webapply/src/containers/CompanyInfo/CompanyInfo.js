@@ -17,8 +17,9 @@ import {
   getOrganizationInfo,
   getSendProspectToAPIInfo
 } from "../../store/selectors/appConfig";
-import { getVirtualCurrency } from "./../../store/selectors/companyInfo";
+import { getIsVirtualCurrency } from "./../../store/selectors/companyInfo";
 import { companyInfoSteps, STEP_1, STEP_3, companyStatus } from "./constants";
+import { accountsNames } from "./../../constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
@@ -37,7 +38,7 @@ export const CompanyInfoPage = ({
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
   const [isError, setError] = useState(false);
   const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
-  const isEligible = isIssuanceDateCorrect && accountType === "RAKstarter ";
+  const isEligible = isIssuanceDateCorrect && accountType === accountsNames.starter;
   const isForeignCompany = countryOfIncorporation === UAE;
 
   const handleContinue = () =>
@@ -124,7 +125,7 @@ const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
   fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state),
-  isVirtualCurrency: getVirtualCurrency(state),
+  isVirtualCurrency: getIsVirtualCurrency(state),
   accountType: getApplicationInfo(state).accountType
 });
 
