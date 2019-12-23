@@ -11,11 +11,8 @@ export const useStyles = makeStyles({
     top: "30px",
     right: "-110px",
     "@media only screen and (max-width: 959px)": {
-      top: "63px",
+      top: "85px",
       right: "12px"
     }
-  },
-  hidden: {
-    display: "none"
   }
 });

@@ -37,7 +37,7 @@ const PreferredContactInformationStep = ({
   handleContinue,
   primaryPhoneNo
 }) => {
-  const [isExistPrimaryPhoneNo, setIsExistPrimaryPhoneNo] = useState(!!primaryPhoneNo);
+  const [isExistsPrimaryPhoneNo, setIsExistsPrimaryPhoneNo] = useState(!!primaryPhoneNo);
   const classes = useStyles();
   return (
     <Formik
@@ -51,10 +51,10 @@ const PreferredContactInformationStep = ({
       onSubmit={handleContinue}
       validationSchema={isSignatory && preferredContactInformationSchema}
     >
-      {({ setFieldValue }) => (
+      {({ setValues, values }) => (
         <Form>
           <Grid container spacing={3} className={classes.gridContainer}>
-            <Grid item spacing={3} md={6} sm={12}>
+            <Grid item md={6} sm={12}>
               <InputGroup>
                 <Field
                   name="primaryMobCountryCode"
@@ -90,7 +90,7 @@ const PreferredContactInformationStep = ({
               md={6}
               sm={12}
               className={cx(classes.relative, {
-                [classes.hidden]: !isExistPrimaryPhoneNo
+                hidden: !isExistsPrimaryPhoneNo
               })}
             >
               <InputGroup>
@@ -114,18 +114,21 @@ const PreferredContactInformationStep = ({
               </InputGroup>
               <RemoveButton
                 onClick={() => {
-                  setFieldValue("primaryPhoneNo", "");
-                  setFieldValue("primaryPhoneCountryCode", UAE_PHONE_CODE);
-                  setIsExistPrimaryPhoneNo(false);
+                  setValues({
+                    ...values,
+                    primaryPhoneNo: "",
+                    primaryPhoneCountryCode: UAE_PHONE_CODE
+                  });
+                  setIsExistsPrimaryPhoneNo(false);
                 }}
                 title="Delete"
                 className={classes.container}
               />
             </Grid>
           </Grid>
-          {!isExistPrimaryPhoneNo && (
+          {!isExistsPrimaryPhoneNo && (
             <AddButton
-              onClick={() => setIsExistPrimaryPhoneNo(true)}
+              onClick={() => setIsExistsPrimaryPhoneNo(true)}
               title="Add a landline number"
             />
           )}
