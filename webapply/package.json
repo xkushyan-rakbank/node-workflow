@@ -34,7 +34,11 @@
     "redux-saga": "^1.0.5",
     "redux-wait-for-action": "0.0.8",
     "reselect": "^4.0.0",
-    "yup": "^0.27.0"
+    "yup": "^0.27.0",
+    "styled-components": "^5.0.0-beta.8",
+    "prop-types": "^15.7.1",
+    "cometd": "^3.1.10",
+    "@babel/plugin-proposal-class-properties": "^7.3.3"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [

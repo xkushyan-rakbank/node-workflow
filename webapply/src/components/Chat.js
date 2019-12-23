@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { mobileResolution } from "../constants";
-
 import chatIcon from "./../assets/icons/chat.png";
+// import { WebChat } from "./../containers/WebChat";
 
 const style = {
   chat: {
@@ -71,18 +71,18 @@ const style = {
 };
 
 const Chat = ({ classes }) => {
+  const [isOpen, setOpen] = useState(false);
+  const openWebChat = () => setOpen(isOpen);
+
   return (
     <div className={classes.chat}>
-      <div className={classes.chatInner}>
-        <a href="/">
+      <div className={classes.chatInner} onClick={openWebChat}>
+        <div>
           <span>
             <img src={chatIcon} alt="chat" />
           </span>
-        </a>
-        <a href="/" className="hide-on-mobile">
-          {" "}
-          Chat with Us
-        </a>
+        </div>
+        <div className="hide-on-mobile"> Chat with Us</div>
       </div>
     </div>
   );
