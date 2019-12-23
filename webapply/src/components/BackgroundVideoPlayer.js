@@ -126,11 +126,10 @@ class BackgroundVideoPlayer extends React.Component {
     const {
       classes,
       nextElementPosition,
-      videoUrl,
       handleClick,
       handleClickMobile,
-      posterUrl,
-      videoWrapperClass
+      videoWrapperClass,
+      video: { mp4, webm, poster }
     } = this.props;
 
     const video = (
@@ -142,13 +141,14 @@ class BackgroundVideoPlayer extends React.Component {
           muted
           id="video-background"
           className={classes.video}
-          key={videoUrl}
-          data-name={videoUrl}
+          key={mp4}
+          data-name={mp4}
           onEnded={this.onEndedVideoPLay}
           onLoadedData={this.onLoadedDataVideo}
-          poster={playedVideos && playedVideos.includes(videoUrl) ? posterUrl : ""}
+          poster={playedVideos && playedVideos.includes(mp4) ? poster : ""}
         >
-          <source src={videoUrl} />
+          <source src={webm} type="video/webm" />
+          <source src={mp4} type="video/mp4" />
         </video>
 
         <div className={classes.buttonContainer}>

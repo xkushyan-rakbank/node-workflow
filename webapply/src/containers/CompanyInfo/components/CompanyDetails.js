@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
-import { COMPANY_NAME_REGEX } from "../../../utils/validation";
+import { COMPANY_NAME_REGEX, VAT_REGISTRATION_NUMBER } from "../../../utils/validation";
 
 const initialValues = {
   companyName: "",
@@ -18,7 +18,10 @@ const companyDetailsSchema = Yup.object({
   companyName: Yup.string()
     .required("You need to provide company name")
     .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-  vatRegistrationNumber: Yup.string(),
+  vatRegistrationNumber: Yup.string().matches(
+    VAT_REGISTRATION_NUMBER,
+    "Not allowed special characters"
+  ),
   numberOfEmployees: Yup.number()
     .min(0, "must be more than 0")
     .max(1000, "must be less than or equal to 1000"),
