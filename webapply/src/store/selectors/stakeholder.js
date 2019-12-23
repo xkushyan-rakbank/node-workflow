@@ -12,7 +12,7 @@ export const stakeholdersSelector = createSelector(
   (stakeholders, stakeholdersIds) =>
     stakeholders.map((item, index) => ({
       ...item,
-      id: stakeholdersIds[index].stakeholderId
+      id: stakeholdersIds[index].id
     }))
 );
 

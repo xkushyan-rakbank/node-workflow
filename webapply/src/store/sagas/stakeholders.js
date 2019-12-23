@@ -14,9 +14,7 @@ import { setConfig } from "../actions/appConfig";
 function* createNewStakeholderSaga() {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
-  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
-  const stakeholderId = uniqueId();
-  stakeholdersIds.push({ stakeholderId, done: false });
+  const stakeholdersIds = [...state.stakeholders.stakeholdersIds, { id: uniqueId(), done: false }];
 
   const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
   config.prospect.signatoryInfo.push(signatoryInfoModel);
@@ -41,10 +39,18 @@ function* deleteStakeholderSaga(action) {
   yield put(changeEditableStakeholder());
 }
 
-function* setFillStakeholderSaga({ index }) {
+function* setFillStakeholderSaga({ payload }) {
   const state = yield select();
-  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
-  stakeholdersIds[index].done = true;
+  const stakeholdersIds = state.stakeholders.stakeholdersIds.reduce(
+    (previousValue, currentValue, index) => [
+      ...previousValue,
+      {
+        ...currentValue,
+        done: payload.index === index ? true : currentValue.done
+      }
+    ],
+    []
+  );
 
   yield put(updateStakeholdersIds(stakeholdersIds));
 }

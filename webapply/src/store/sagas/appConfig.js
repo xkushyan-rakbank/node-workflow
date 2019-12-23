@@ -103,7 +103,7 @@ function* updateActionTypeSaga({ actionType }) {
 function* resetProspectSaga() {
   const state = yield select();
   const prospect = state.sendProspectToAPI.prospectCopy;
-  const stakeholdersIds = cloneDeep(state.stakeholders.stakeholdersIds);
+  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
   yield put(setProspect(prospect));
 
   if (prospect.signatoryInfo.length !== stakeholdersIds.length) {

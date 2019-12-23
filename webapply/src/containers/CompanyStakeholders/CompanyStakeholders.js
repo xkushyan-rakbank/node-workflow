@@ -44,7 +44,6 @@ const CompanyStakeholders = ({
   const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
   const isDisableNextStep =
     stakeholders.length < 1 ||
-    Number.isInteger(editableStakeholder) ||
     !stakeholdersIds.every(stakeholder => stakeholder.done) ||
     isLowPercentage;
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
