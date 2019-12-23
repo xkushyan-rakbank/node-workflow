@@ -17,10 +17,11 @@ export const AccountInfo = ({ accountType }) => {
 
   const handleClick = path => () => history.push(path);
   const isApplicationOverview = pathname === routes.applicationOverview;
+  const isAccountsComparison = pathname === routes.accountsComparison;
 
   return (
     <div className={classes.contentContainer}>
-      {accountType && !isApplicationOverview ? (
+      {accountType && !isApplicationOverview && !isAccountsComparison ? (
         <>
           <div>
             <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>

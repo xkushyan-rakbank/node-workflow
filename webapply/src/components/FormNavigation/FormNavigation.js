@@ -27,7 +27,13 @@ export const FormNavigationComponent = ({
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
 
   const classes = useStyles();
-  const bgTypeClass = cx({ brown: accountType === accountsNames.elite, green: islamicBanking });
+  const isAccountsComparison = routes.accountsComparison === pathname;
+
+  const bgTypeClass = cx({
+    brown: !isAccountsComparison && accountType === accountsNames.elite,
+    green: !isAccountsComparison && islamicBanking && accountType !== accountsNames.elite
+  });
+
   const toggleSwitcherShow = () => setIsSwitcherShow(!isSwitcherShow);
 
   return (

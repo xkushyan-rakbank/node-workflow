@@ -2576,9 +2576,9 @@
       "displayText": "Flexi desk"
     },
     {
-      "code": "O",
-      "key": "O",
-      "value": "O",
+      "code": "OTHER",
+      "key": "OTHER",
+      "value": "OTHER",
       "displayText": "Other"
     }
   ],

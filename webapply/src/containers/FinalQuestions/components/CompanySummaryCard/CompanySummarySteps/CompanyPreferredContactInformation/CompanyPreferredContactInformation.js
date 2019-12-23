@@ -86,7 +86,7 @@ export const CompanyPreferredContactInformationComponent = ({
                 </InputGroup>
                 <div
                   className={cx(classes.relative, {
-                    [classes.hidden]: !isExistSecondaryPhoneNumber
+                    hidden: !isExistSecondaryPhoneNumber
                   })}
                 >
                   <InputGroup>
