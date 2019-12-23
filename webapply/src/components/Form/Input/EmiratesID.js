@@ -6,7 +6,6 @@ import { Input } from "./Input";
 // eslint-disable-next-line prettier/prettier
 const MASK = ["7","8","4","-",/\d/,/\d/,/\d/,/\d/,"-",/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,"-",/\d/];
 
-
 const TextMask = ({ inputRef, ...rest }) => (
   <MaskedInput
     ref={ref => {
