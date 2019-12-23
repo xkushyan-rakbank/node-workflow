@@ -34,7 +34,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName, licenseIssueDate, countryOfIncorporation }
 }) => {
   const classes = useStyles();
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_3);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
   const [isError, setError] = useState(false);
   const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
   const isEligible = isIssuanceDateCorrect && accountType === "RAKstarter ";
