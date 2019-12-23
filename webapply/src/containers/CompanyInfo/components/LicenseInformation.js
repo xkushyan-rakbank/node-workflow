@@ -10,9 +10,9 @@ import { NUMBER_REGEX } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
-  licenseIssueDate: null,
+  licenseIssueDate: "",
   licenseIssuingAuthority: "",
-  countryOfIncorporation: "",
+  countryOfIncorporation: "AE",
   dateOfIncorporation: null,
   yearsInBusiness: ""
 };
@@ -20,7 +20,9 @@ const initialValues = {
 const licenseInformationSchema = Yup.object({
   licenseNumber: Yup.string()
     .required("You need to provide license number")
-    .matches(NUMBER_REGEX, "This is not a valid license number")
+    .matches(NUMBER_REGEX, "This is not a valid license number"),
+  licenseIssueDate: Yup.date().required("You need to provide issue date"),
+  countryOfIncorporation: Yup.string().required("You need to provide country incorporation")
 });
 
 export const LicenseInformation = ({ handleContinue }) => (
