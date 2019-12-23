@@ -27,7 +27,7 @@ const comebackSchema = Yup.object({
     .matches(PHONE_REGEX, "This is not a valid phone")
 });
 
-const ComeBackLogin = ({
+const ComeBackLoginComponent = ({
   history,
   generateOtpCode,
   isOtpGenerated,
@@ -147,7 +147,7 @@ const mapDispatchToProps = {
   setVerified
 };
 
-export default connect(
+export const ComeBackLogin = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ComeBackLogin);
+)(ComeBackLoginComponent);

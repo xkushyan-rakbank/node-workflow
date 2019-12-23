@@ -26,7 +26,7 @@ import { useStyles } from "./styled";
 
 const MAX_STAKEHOLDERS_LENGTH = 6;
 
-const CompanyStakeholders = ({
+const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
   changeEditableStakeholder,
   createNewStakeholder,
@@ -156,7 +156,7 @@ const mapDispatchToProps = {
   resetProspect
 };
 
-export default connect(
+export const CompanyStakeholders = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CompanyStakeholders);
+)(CompanyStakeholdersComponent);

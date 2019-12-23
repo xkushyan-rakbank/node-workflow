@@ -156,7 +156,7 @@ const styles = {
   }
 };
 
-class ApplicationSubmitted extends React.Component {
+class ApplicationSubmittedComponent extends React.Component {
   render() {
     const { classes, AccountSubmittedInfo } = this.props;
     const { companyDocuments, banking } = getIconsByAccount();
@@ -219,4 +219,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(ApplicationSubmitted));
+export const ApplicationSubmitted = withStyles(styles)(
+  connect(mapStateToProps)(ApplicationSubmittedComponent)
+);

@@ -139,7 +139,7 @@ const tagManagerArgs = {
   }
 };
 
-class EditApplication extends Component {
+class EditApplicationComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -304,9 +304,9 @@ const mapDispatchToProps = {
   deleteExtraDocUploadSuccess
 };
 
-export default withStyles(style)(
+export const EditApplication = withStyles(style)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(EditApplication)
+  )(EditApplicationComponent)
 );
