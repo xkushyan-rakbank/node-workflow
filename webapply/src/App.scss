@@ -341,6 +341,11 @@ h3 {
   padding-right: 56px !important;
 }
 
+.hidden {
+  max-height: 0;
+  overflow: hidden;
+}
+
 [aria-disabled="true"] {
   opacity: 0.6;
 }
