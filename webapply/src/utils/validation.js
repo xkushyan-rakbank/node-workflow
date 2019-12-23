@@ -12,12 +12,13 @@ export const TRADE_LICENSE_REGEX = /^([a-zA-Z0-9]){1,20}$/;
 export const ANNUAL_TURNOVER_REGEX = /^[0-9]{1,10}([.][0-9]{1,2})*$/;
 export const ADDRESS_NUMBER_REGEX = /^[a-zA-Z0-9\\@\\#\\%\\*\\(\\)]{1,50}$/;
 export const PO_NUMBER_REGEX = /^[0-9]{1,100}$/;
-export const MARITAL_STATUS_REGEX = /^([a-zA-Z]){1,50}$/;
+export const MOTHERS_MAIDEN_NAME_REGEX = /^([a-zA-Z]){1,50}$/;
 export const EMPLOYMENT_TYPE_REGEX = /^([a-zA-Z ]){1,50}$/;
 export const DESIGNATION_REGEX = /^([a-zA-Z]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
 export const EMIRATES_ID_REGEX = /^784-\d{4}-\d{7}-\d$/;
-export const PASSPORT_NUMBER_REGEX = /^[a-z0-9]+$/;
+export const PASSPORT_NUMBER_REGEX = /^[a-zA-Z0-9]{1,100}$/;
+export const VAT_REGISTRATION_NUMBER = /^([a-zA-Z0-9])*$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
 
 export const FILE_SIZE = 5 * 1048576;

@@ -108,7 +108,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
             <div className={classes.infoTitleWrap}>
               <InfoTitle
                 classes={{ wrapper: classes.infoTitle }}
-                title="You guessed it, we will use this section for our communication with you"
+                title="You guessed it! We will use the information in this section to communicate with you"
               />
             </div>
             <div className={classes.buttonWrapper}>

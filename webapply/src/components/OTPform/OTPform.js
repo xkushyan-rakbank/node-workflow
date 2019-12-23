@@ -35,16 +35,17 @@ export const OTPformComponent = ({
     if (otp.isVerified) {
       history.push(redirectRoute);
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp.isVerified]);
 
   useEffect(() => {
     if (otp.verificationError) {
       setCode(Array(6).fill(""));
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp.verificationError]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => verifyClearError(), []);
 
   const handleSendNewCodeLinkClick = useCallback(() => {

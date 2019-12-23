@@ -19,7 +19,7 @@ export const companyInfoSteps = [
     title: "Industry",
     component: Industry
   },
-  { step: STEP_3, title: "Licence Information", component: LicenseInformation }
+  { step: STEP_3, title: "License Information", component: LicenseInformation }
 ];
 
 export const companyStatus = {

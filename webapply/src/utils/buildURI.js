@@ -6,6 +6,12 @@ import { endpoints } from "./../constants/config";
 export const buildURI = (uriName, prospectId, documentKey) => {
   const { pathname } = window.location;
   let uri = endpoints[uriName];
+  if (uriName === "docUploaderUri") {
+    uri = "https://217.165.206.6";
+    return uri;
+  }
+  console.log("buildURI");
+  console.log(uri);
   const userType = pathname.includes("/agent")
     ? store.getState().appConfig.searchInfo.segment
     : pathname.substring(1, pathname.lastIndexOf("/"));
