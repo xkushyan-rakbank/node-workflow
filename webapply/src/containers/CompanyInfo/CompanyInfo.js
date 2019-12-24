@@ -37,9 +37,12 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
   const [isError, setError] = useState(false);
-  const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
-  const isEligible = isIssuanceDateCorrect && accountType === accountsNames.starter;
   const isForeignCompany = countryOfIncorporation === UAE;
+  let isEligible = false;
+  if (licenseIssueDate) {
+    const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
+    isEligible = isIssuanceDateCorrect && accountType === accountsNames.starter;
+  }
 
   const handleContinue = () =>
     sendProspectToAPI().then(
