@@ -14,6 +14,7 @@ import {
   DatePicker,
   InlineRadioGroup
 } from "../../../../components/Form";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { yesNoOptions } from "../../../../constants/options";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
@@ -62,8 +63,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       }}
       onSubmit={handleContinue}
       validationSchema={personalInformationSchema}
+      validateOnChange={false}
     >
-      {({ values, setFieldValue, resetForm }) => (
+      {withCompanyStakeholder(index, ({ values, setFieldValue, resetForm }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -155,7 +157,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

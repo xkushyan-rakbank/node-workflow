@@ -10,6 +10,7 @@ import {
   SelectAutocomplete,
   EmiratesID
 } from "../../../../components/Form";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 
@@ -28,6 +29,7 @@ const getCountryOfResidenceSchema = isSignatory =>
 
 const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
   const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
+
   return (
     <Formik
       initialValues={{
@@ -36,8 +38,9 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       }}
       onSubmit={handleContinue}
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
+      validateOnChange={false}
     >
-      {({ values }) => (
+      {withCompanyStakeholder(index, ({ values }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
@@ -67,7 +70,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
 
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

@@ -21,6 +21,6 @@ export const updateStakeholdersIds = stakeholdersIds => {
   return { type: UPDATE_STAKEHOLDERS_IDS, stakeholdersIds };
 };
 
-export const setFillStakeholder = index => {
-  return { type: SET_FILL_STAKEHOLDER, payload: { index } };
+export const setFillStakeholder = (index, done) => {
+  return { type: SET_FILL_STAKEHOLDER, payload: { index, done } };
 };
