@@ -24,7 +24,7 @@ const companyDetailsSchema = Yup.object({
   numberOfEmployees: Yup.number()
     .min(0, "must be more than 0")
     .max(1000, "must be less than or equal to 1000"),
-  companyCategory: Yup.string()
+  companyCategory: Yup.string().required("You need to provide company category")
 });
 
 export const CompanyDetails = ({ handleContinue }) => (
