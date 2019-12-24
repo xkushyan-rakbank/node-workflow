@@ -18,7 +18,6 @@ export const DESIGNATION_REGEX = /^([a-zA-Z]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
 export const EMIRATES_ID_REGEX = /^784-\d{4}-\d{7}-\d$/;
 export const PASSPORT_NUMBER_REGEX = /^[a-zA-Z0-9]{1,100}$/;
-export const VAT_REGISTRATION_NUMBER = /^([a-zA-Z0-9])*$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
 
 export const FILE_SIZE = 5 * 1048576;

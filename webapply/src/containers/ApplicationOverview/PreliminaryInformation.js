@@ -6,6 +6,7 @@ import IconCardsContainer from "../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../components/IconCards/IconCardItem";
 import CommonQuestions from "./CommonQuestions";
 import { mobileResolution } from "../../constants";
+import HeaderTitle from "../../components/HeaderTitle";
 
 const questions = [
   {
@@ -79,6 +80,7 @@ const PreliminaryInformation = ({ classes }) => {
 
   return (
     <>
+      <HeaderTitle withMargin />
       <SectionTitleWithInfo
         title="Have these ready"
         info="Before we start, make sure you have these documents at hand"

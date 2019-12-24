@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { FormNavigation } from "../../components/FormNavigation";
-import ApplicationStatus from "../../components/ApplicationStatus";
+import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 import Header from "../../components/Header";
 import HeaderTitle from "../../components/HeaderTitle";
 import { Notifications, NotificationsProvider } from "../../components/Notification";

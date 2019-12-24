@@ -10,9 +10,9 @@ import { LEAD_LICENSE_REGEX } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
-  licenseIssueDate: null,
+  licenseIssueDate: "",
   licenseIssuingAuthority: "",
-  countryOfIncorporation: "",
+  countryOfIncorporation: "AE",
   dateOfIncorporation: null,
   yearsInBusiness: ""
 };
@@ -21,7 +21,9 @@ const licenseInformationSchema = Yup.object({
   licenseNumber: Yup.string()
     .required("You need to provide license number")
     .max(20, "Maximum 20 charactors allowed")
-    .matches(LEAD_LICENSE_REGEX, "This is not a valid trade license number")
+    .matches(LEAD_LICENSE_REGEX, "This is not a valid trade license number"),
+  licenseIssueDate: Yup.date().required("You need to provide issue date"),
+  countryOfIncorporation: Yup.string().required("You need to provide country incorporation")
 });
 
 export const LicenseInformation = ({ handleContinue }) => (

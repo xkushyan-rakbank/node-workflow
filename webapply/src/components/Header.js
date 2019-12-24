@@ -74,7 +74,7 @@ const Header = props => {
   if (accountType === accountsNames.elite && islamicBanking)
     accountTypeText = "RAKelite - RAKislamic";
 
-  const isShowAccountType = routes.detailedAccount === pathname && accountTypeText.length;
+  const isShowAccountType = routes.accountsComparison !== pathname && accountTypeText.length;
 
   return (
     <header className={classes.header}>
