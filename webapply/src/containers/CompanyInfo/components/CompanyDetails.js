@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../utils/validation";
+import { MAX_COMPANY_NAME_LENGTH } from "../constants";
 
 const initialValues = {
   companyName: "",
@@ -43,6 +44,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               path="prospect.organizationInfo.companyName"
               contexualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 30 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
               infoTitle="This should be the same as in your Trade License"
+              inputProps={{ maxLength: MAX_COMPANY_NAME_LENGTH }}
               component={Input}
             />
           </Grid>
