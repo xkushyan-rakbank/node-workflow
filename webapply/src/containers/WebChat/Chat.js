@@ -9,7 +9,6 @@ export const Chat = ({
   isOpened,
   isClosed,
   isMinimized,
-  isExpanded,
   openWebChat,
   closeWebChat,
   minimizeWebChat,

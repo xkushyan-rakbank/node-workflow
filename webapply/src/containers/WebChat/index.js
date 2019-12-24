@@ -11,8 +11,7 @@ import {
 const mapStateToProps = state => ({
   isOpened: state.webChat.opened,
   isClosed: state.webChat.closed,
-  isMinimized: state.webChat.minimized,
-  isExpanded: state.webChat.expanded
+  isMinimized: state.webChat.minimized
 });
 
 const mapDispatchToProps = {
