@@ -51,6 +51,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
         }}
         onSubmit={handleSubmit}
         validationSchema={companyPreferredMailingAddressSchema}
+        validateOnChange={false}
       >
         {({ values }) => (
           <Form>

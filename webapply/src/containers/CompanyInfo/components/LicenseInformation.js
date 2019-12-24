@@ -29,6 +29,7 @@ const licenseInformationSchema = Yup.object({
 export const LicenseInformation = ({ handleContinue }) => (
   <Formik
     initialValues={initialValues}
+    validateOnChange={false}
     validationSchema={licenseInformationSchema}
     onSubmit={handleContinue}
   >

@@ -136,6 +136,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
         }}
         onSubmit={onSubmit}
         validationSchema={companyAnticipatedTransactionsSchema}
+        validateOnChange={false}
       >
         {({ values }) => {
           return (

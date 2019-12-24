@@ -55,6 +55,7 @@ export const CompanyPreferredContactInformationComponent = ({
         }}
         onSubmit={handleSubmit}
         validationSchema={companyPreferredContactInformationSchema}
+        validateOnChange={false}
       >
         {({ setFieldValue }) => (
           <Form>

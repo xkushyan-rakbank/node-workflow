@@ -77,6 +77,7 @@ const ComeBackLogin = ({
           mobileNo: ""
         }}
         validationSchema={comebackSchema}
+        validateOnChange={false}
         onSubmit={submitForm}
       >
         {({ values }) => (

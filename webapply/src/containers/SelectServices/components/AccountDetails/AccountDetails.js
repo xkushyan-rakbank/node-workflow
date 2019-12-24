@@ -37,6 +37,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
         receiveInterest: false
       }}
       validationSchema={accountDetailsSchema}
+      validateOnChange={false}
       onSubmit={goToNext}
     >
       {({ values, setFieldValue }) => (
