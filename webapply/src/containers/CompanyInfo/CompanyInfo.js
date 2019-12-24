@@ -35,7 +35,7 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
   const [isError, setError] = useState(false);
-  const isForeignCompany = !!countryOfIncorporation && countryOfIncorporation !== UAE;
+  const isForeignCompany = countryOfIncorporation && countryOfIncorporation !== UAE;
   let isEligible = false;
   if (licenseIssueDate) {
     const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
