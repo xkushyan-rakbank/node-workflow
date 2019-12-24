@@ -15,7 +15,7 @@ import {
   InputGroup
 } from "../../../../components/Form";
 import { getInputValueById } from "../../../../store/selectors/input";
-import { EMAIL_REGEX, PHONE_REGEX } from "../../../../utils/validation";
+import { PHONE_REGEX } from "../../../../utils/validation";
 import { UAE_PHONE_CODE } from "../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredContactInformation/constants";
 
 import { useStyles } from "./styled";
@@ -23,7 +23,7 @@ import { useStyles } from "./styled";
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
     .required("You need to provide Email address")
-    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+    .email("This is not a valid Email address"),
   primaryMobCountryCode: Yup.string().required("Select country code"),
   primaryMobileNo: Yup.string()
     .required("You need to provide mobile number")
