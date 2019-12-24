@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import omit from "lodash/omit";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "../../../components/Form";
-import { NAME_REGEX, LEAD_LICENSE_REGEX, PHONE_REGEX } from "../../../utils/validation";
+import { NAME_REGEX, ALPHANUMERIC_REGEX, PHONE_REGEX } from "../../../utils/validation";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { SearchResult } from "../SearchResult";
 import { UAE_CODE } from "../../../constants";
@@ -17,11 +17,11 @@ const searchProspectSchema = Yup.object({
   mobileNo: Yup.string().matches(PHONE_REGEX, "This is not a valid mobile no."),
   email: Yup.string().email("This is not a valid email"),
   raktrackNumber: Yup.string()
-    .max(20, "Maximum 20 charactors allowed")
-    .matches(LEAD_LICENSE_REGEX, "This is not a valid rak track lead reference number"),
+    .max(20, "Maximum 20 characters allowed")
+    .matches(ALPHANUMERIC_REGEX, "This is not a valid rak track lead reference number"),
   tradeLicenseNo: Yup.string()
-    .max(20, "Maximum 20 charactors allowed")
-    .matches(LEAD_LICENSE_REGEX, "This is not a valid trade license number")
+    .max(20, "Maximum 20 characters allowed")
+    .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number")
 });
 
 const initialValues = {
