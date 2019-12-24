@@ -17,7 +17,7 @@ import {
 } from "../../../../../../components/Form";
 import { InfoTitle } from "../../../../../../components/Notifications";
 import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
-import { TRADE_LICENSE_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
+import { ALPHANUMERIC_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
 
@@ -33,7 +33,8 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
         emirate: Yup.string().required("You need to provide emirate city"),
         tradeLicenseNo: Yup.string()
           .required("You need to provide license number")
-          .matches(TRADE_LICENSE_REGEX, "This is not a valid trade license number")
+          .max(20, "Maximum 20 characters allowed")
+          .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number")
       })
     )
   }),

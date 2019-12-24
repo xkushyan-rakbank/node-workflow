@@ -8,7 +8,7 @@ import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "../../.
 import {
   NAME_REGEX,
   EMAIL_REGEX,
-  LEAD_LICENSE_REGEX,
+  ALPHANUMERIC_REGEX,
   PHONE_REGEX
 } from "../../../utils/validation";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
@@ -22,11 +22,11 @@ const searchProspectSchema = Yup.object({
   mobileNo: Yup.string().matches(PHONE_REGEX, "This is not a valid mobile no."),
   email: Yup.string().matches(EMAIL_REGEX, "This is not a valid email"),
   raktrackNumber: Yup.string()
-    .max(20, "Maximum 20 charactors allowed")
-    .matches(LEAD_LICENSE_REGEX, "This is not a valid rak track lead reference number"),
+    .max(20, "Maximum 20 characters allowed")
+    .matches(ALPHANUMERIC_REGEX, "This is not a valid rak track lead reference number"),
   tradeLicenseNo: Yup.string()
-    .max(20, "Maximum 20 charactors allowed")
-    .matches(LEAD_LICENSE_REGEX, "This is not a valid trade license number")
+    .max(20, "Maximum 20 characters allowed")
+    .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number")
 });
 
 const initialValues = {
