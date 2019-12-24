@@ -51,6 +51,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               name="companyCategory"
               label="Company Category"
               path="prospect.orgKYCDetails.companyCategory"
+              contexualHelpText="Select Foreign / Offshore / Non-Resident company if applicable. In case of a Free Zone company  select Free Zone. In case of Civil Company select  Partnerships. Select appropriate category in all other cases"
               datalistId="companyCategory"
               component={SelectAutocomplete}
             />
