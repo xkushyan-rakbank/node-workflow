@@ -41,7 +41,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               name="companyName"
               label="Company Name"
               path="prospect.organizationInfo.companyName"
-              contexualHelpText="if the Company's name is more than 30 characters long, than an abbreviation needs to be entered and that this abbreviation will appear in all Bank records including Cheque Books."
+              contexualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 30 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
               infoTitle="This should be the same as in your Trade License"
               component={Input}
             />
