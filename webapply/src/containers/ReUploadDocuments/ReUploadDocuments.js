@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TagManager from "react-gtm-module";
 import { connect } from "react-redux";
-import closeBtn from "../assets/images/close.png";
-import companyIconSvg from "../assets/icons/file.png";
+import closeBtn from "../../assets/images/close.png";
+import companyIconSvg from "../../assets/icons/file.png";
 import {
   retrieveDocDetails,
   extraDocUploadSuccess,
   deleteExtraDocUploadSuccess
-} from "../store/actions/getProspectDocuments";
-import * as appConfigSelectors from "./../store/selectors/appConfig";
+} from "../../store/actions/getProspectDocuments";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
 
 const uploadFileSizeMax = 5;
 const maxExtraDocUpload = 7;

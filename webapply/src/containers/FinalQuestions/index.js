@@ -6,4 +6,4 @@ const mapStateToProps = state => ({
   signatories: getSignatories(state)
 });
 
-export const FinalQuestions = connect(mapStateToProps)(FinalQuestionsComponent);
+export default connect(mapStateToProps)(FinalQuestionsComponent);
