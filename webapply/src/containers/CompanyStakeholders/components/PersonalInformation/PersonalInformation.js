@@ -69,6 +69,7 @@ export const PersonalInformation = ({
       }}
       onSubmit={handleContinue}
       validationSchema={personalInformationSchema}
+      validateOnChange={false}
     >
       {withCompanyStakeholderFormik(
         { filledStakeholder, setUnfilledStakeholder },

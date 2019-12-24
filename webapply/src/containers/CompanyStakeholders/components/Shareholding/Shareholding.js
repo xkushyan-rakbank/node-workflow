@@ -53,6 +53,7 @@ const ShareholdingStep = ({
       initialValues={initialValues}
       onSubmit={handleContinue}
       validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
+      validateOnChange={false}
     >
       {withCompanyStakeholderFormik(
         { filledStakeholder, setUnfilledStakeholder },
@@ -64,7 +65,7 @@ const ShareholdingStep = ({
                 <Field
                   name="isShareholderACompany"
                   component={InlineRadioGroup}
-                  path={`prospect.signatoryInfo[${index}].kycDetails.isShareholderACompany`}
+                  path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}
                   options={yesNoOptions}
                   label="Is this person a shareholder?"
                   onChange={shareholderHandler}
@@ -72,7 +73,7 @@ const ShareholdingStep = ({
                 <Grid item md={12}>
                   <Field
                     name="shareHoldingPercentage"
-                    path={`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`}
+                    path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}
                     label="Percentage"
                     placeholder="Percentage"
                     disabled={!values.isShareholderACompany}

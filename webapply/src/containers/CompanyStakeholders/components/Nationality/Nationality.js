@@ -77,6 +77,7 @@ export const NationalityStep = ({
         passportDetails: passportDetails.map(item => ({ ...item, id: uniqueId() }))
       }}
       validationSchema={nationalitySchema}
+      validateOnChange={false}
     >
       {withCompanyStakeholderFormik(
         { filledStakeholder, setUnfilledStakeholder },

@@ -44,6 +44,7 @@ const CountryOfResidenceStep = ({
       }}
       onSubmit={handleContinue}
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
+      validateOnChange={false}
     >
       {withCompanyStakeholderFormik({ filledStakeholder, setUnfilledStakeholder }, ({ values }) => (
         <Form>

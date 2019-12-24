@@ -32,6 +32,7 @@ export const SignatoryRights = ({
       initialValues={{ authorityType: "", isSignatory: "" }}
       onSubmit={handleContinue}
       validationSchema={signatoryRightsSchema}
+      validateOnChange={false}
     >
       {withCompanyStakeholderFormik({ filledStakeholder, setUnfilledStakeholder }, ({ values }) => (
         <Form>
