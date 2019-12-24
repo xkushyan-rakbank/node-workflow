@@ -31,7 +31,8 @@ export const useStyles = makeStyles({
       backgroundColor: " #fff",
       borderRadius: "50%",
       boxShadow: "0 2px 14px 0 rgba(0, 0, 0, 0.18)",
-      marginRight: "20px"
+      marginRight: "20px",
+      position: "relative"
     },
     "& p": {
       margin: "0"
@@ -65,5 +66,31 @@ export const useStyles = makeStyles({
         marginLeft: 0
       }
     }
+  },
+  messagesCount: {
+    top: 10,
+    right: 11,
+    minWidth: 20,
+    height: 20,
+    position: "absolute",
+    borderRadius: "50%",
+    backgroundColor: "#db1d2c",
+    padding: 1,
+    "& p": {
+      fontSize: 13,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100%"
+    }
+  },
+  chatWrapper: {
+    position: "fixed",
+    bottom: "40px",
+    left: "40px",
+    transition: "all 0.3s ease"
+  },
+  mimimized: {
+    bottom: "-105%"
   }
 });

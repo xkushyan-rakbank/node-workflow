@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import ArrowBack from "../../../../assets/webchat/arrow_left.svg";
+import Close from "../../../../assets/webchat/close.svg";
+import Minimize from "../../../../assets/webchat/minimize.svg";
 
 const HeaderStyled = styled.div`
   font-size: 16px;
@@ -28,11 +30,21 @@ const BackButton = styled.button`
   }
 `;
 
+const ActionButtons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 55px;
+  > img {
+    cursor: pointer;
+  }
+`;
+
 const Title = styled.div`
   margin: 0 auto;
 `;
 
-const Header = ({ onPressBack }) => {
+const Header = ({ onPressBack, onClose, onMinimize }) => {
   return (
     <HeaderStyled>
       {onPressBack && (
@@ -41,6 +53,10 @@ const Header = ({ onPressBack }) => {
         </BackButton>
       )}
       <Title>Live Chat</Title>
+      <ActionButtons>
+        <img src={Minimize} alt="Minimize" onClick={onMinimize} />
+        <img src={Close} alt="Close" onClick={onClose} />
+      </ActionButtons>
     </HeaderStyled>
   );
 };

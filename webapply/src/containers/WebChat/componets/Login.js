@@ -78,7 +78,7 @@ const subjectsList = [
   { value: 13, label: "Other Inquiries" }
 ];
 
-const Login = ({ name, mobileNumber, onSubmit }) => {
+const Login = ({ name, mobileNumber, onSubmit, onClose, onMinimize }) => {
   const [subject, changeSubject] = useState(subjectsList[0]);
   const [message, changeMessage] = useState("");
 
@@ -92,7 +92,7 @@ const Login = ({ name, mobileNumber, onSubmit }) => {
 
   return (
     <>
-      <Header />
+      <Header onClose={onClose} onMinimize={onMinimize} />
       <Container>
         <Info>
           <Field>Name: {name}</Field>

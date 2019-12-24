@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import { Login } from "./componets/Login";
-import { Chat } from "./componets/Chat";
+import { Login } from "./Login";
+import { Chat } from "./Chat";
 
 const Container = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const Container = styled.div`
   background-color: #fff;
 `;
 
-export const WebChat = props => {
+const WebChat = ({ onClose, onMinimize, ...props }) => {
   const [chatReady, setChatReady] = useState(false);
   const [message, setMessage] = useState("");
   const [subject, setSubject] = useState("");
@@ -31,11 +31,15 @@ export const WebChat = props => {
           onPressBack={() => setChatReady(false)}
           message={message}
           subject={subject}
+          onClose={onClose}
+          onMinimize={onMinimize}
           {...props}
         />
       ) : (
-        <Login onSubmit={onUserInfoSubmit} {...props} />
+        <Login onSubmit={onUserInfoSubmit} {...props} onClose={onClose} onMinimize={onMinimize} />
       )}
     </Container>
   );
 };
+
+export default WebChat;

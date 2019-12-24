@@ -4,7 +4,7 @@ import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import FormNavigationStep from "../FormNavigationStep";
-import { Chat } from "../Chat/Chat";
+import { WebChat } from "../../containers/WebChat";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
 import routes from "../../routes";
@@ -69,7 +69,7 @@ export const FormNavigationComponent = ({
           </ul>
         )
       )}
-      {!(isLogin || pathname === routes.login) && <Chat />}
+      {!(isLogin || pathname === routes.login) && <WebChat />}
     </div>
   );
 };

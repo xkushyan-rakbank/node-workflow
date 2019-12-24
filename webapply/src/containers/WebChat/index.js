@@ -1,6 +1,28 @@
-import { WebChat } from "./WebChat";
-import { GenesysChat, UserTypes, agentEvents } from "./utils/GenesysChat";
+import { connect } from "react-redux";
 
-export { WebChat, GenesysChat, UserTypes, agentEvents };
+import { Chat } from "./Chat";
+import {
+  openWebChat,
+  closeWebChat,
+  minimizeWebChat,
+  expandWebChat
+} from "../../store/actions/webChat";
 
-export default WebChat;
+const mapStateToProps = state => ({
+  isOpened: state.webChat.opened,
+  isClosed: state.webChat.closed,
+  isMinimized: state.webChat.minimized,
+  isExpanded: state.webChat.expanded
+});
+
+const mapDispatchToProps = {
+  openWebChat,
+  closeWebChat,
+  minimizeWebChat,
+  expandWebChat
+};
+
+export const WebChat = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Chat);

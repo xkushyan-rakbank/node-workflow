@@ -52,6 +52,12 @@ class Chat extends PureComponent {
 
   onClose = () => {
     GenesysChat.getInstance().triggerDisconnectEvent();
+    this.props.onClose();
+  };
+
+  onMinimizeChat = () => {
+    GenesysChat.getInstance().minimizeChat();
+    this.props.onMinimize();
   };
 
   onNewMessageArrival = messages => {
@@ -84,7 +90,11 @@ class Chat extends PureComponent {
 
     return (
       <>
-        <Header onPressBack={this.onPressBack} />
+        <Header
+          onPressBack={this.onPressBack}
+          onClose={this.onClose}
+          onMinimize={this.onMinimizeChat}
+        />
         <Body>
           <MessagesList data={messages} />
           {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}
