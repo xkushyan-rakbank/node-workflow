@@ -13,7 +13,7 @@ const StyledTextarea = styled.textarea`
   line-height: 22px;
   overflow: auto;
   height: auto;
-  color: var(--dark-grey);
+  color: #373737;
   outline: none;
 `;
 
@@ -22,7 +22,7 @@ const TextareaWrapper = styled.div`
   margin: auto 16px 20px 16px;
   padding: 16px;
   border-radius: 4px;
-  border: solid 1px var(--pale-grey);
+  border: solid 1px #e9e9ed;
 `;
 
 const StyledButton = styled.button`

@@ -25,7 +25,7 @@ const FormItemSelect = styled(FormItem)`
         bottom: "-10px",
         borderRadius: "4px",
         zIndex: "-1",
-        backgroundColor: "var(--white)"
+        backgroundColor: "#fff"
       }};
   }
   img {
@@ -59,7 +59,7 @@ const customStyles = (isError, overwriteStyle) => {
     valueContainer: provided => ({
       ...provided,
       padding: "0",
-      borderBottom: `1px solid ${isError ? "var(--tomato)" : "var(--pale-grey)"}`
+      borderBottom: `1px solid ${isError ? "#ec2d1b)" : "#e9e9ed"}`
     }),
     input: provided => ({
       ...provided,
@@ -79,7 +79,7 @@ const customStyles = (isError, overwriteStyle) => {
       margin: "0",
       fontSize: "14px",
       lineHeight: "16px",
-      color: "var(--light-gray)"
+      color: "#707070"
     }),
     singleValue: provided => ({
       ...provided,
@@ -87,7 +87,7 @@ const customStyles = (isError, overwriteStyle) => {
       margin: "0",
       fontSize: "14px",
       lineHeight: "16px",
-      color: "var(--dark-grey)"
+      color: "#373737"
     }),
     menu: provided => ({
       ...provided,
@@ -96,7 +96,7 @@ const customStyles = (isError, overwriteStyle) => {
       top: "calc(100% + 11px)",
       margin: "10px 0",
       width: "calc(100% + 10px)",
-      background: "var(--white)",
+      background: "#fff",
       minWidth: "200px",
       border: "0",
       borderRadius: "8px",
@@ -109,15 +109,15 @@ const customStyles = (isError, overwriteStyle) => {
     option: (provided, state) => ({
       ...provided,
       padding: "10px 16px",
-      color: "(--dark-grey)",
-      backgroundColor: state.isSelected ? "var(--pale-grey)" : "transparent",
+      color: "#373737",
+      backgroundColor: state.isSelected ? "#e9e9ed" : "transparent",
       cursor: !state.isSelected ? "pointer" : "default",
       transition: "all .2s",
       "&:hover, &:focus": {
-        backgroundColor: !state.isSelected ? "var(--light-gold)" : "var(--pale-grey)"
+        backgroundColor: !state.isSelected ? "#fcfaf6" : "#e9e9ed"
       },
       "&:not(:last-child)": {
-        borderBottom: "1px solid var(--pale-grey)"
+        borderBottom: "1px solid #e9e9ed"
       },
       "&:first-child": {
         borderRadius: "8px 8px 0 0"
@@ -130,13 +130,13 @@ const customStyles = (isError, overwriteStyle) => {
       ...provided,
       padding: 0,
       "&:not(:last-child)": {
-        borderBottom: "1px solid var(--pale-grey)"
+        borderBottom: "1px solid #e9e9ed"
       }
     }),
     groupHeading: provided => ({
       ...provided,
       padding: "0 16px",
-      borderBottom: "1px solid var(--pale-grey)",
+      borderBottom: "1px solid #e9e9ed",
       margin: 0
     }),
     ...overwriteStyle

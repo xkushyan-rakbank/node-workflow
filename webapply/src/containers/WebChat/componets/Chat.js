@@ -16,7 +16,7 @@ const Body = styled.div`
 const TypingLabel = styled.div`
   font-size: 12px;
   margin: 8px 16px;
-  color: var(--silver);
+  color: #c6c6cc;
 `;
 
 class Chat extends PureComponent {

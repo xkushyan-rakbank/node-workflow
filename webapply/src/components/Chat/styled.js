@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../constants";
-import chatIcon from "./../assets/icons/chat.png";
-// import { WebChat } from "./../containers/WebChat";
+import { makeStyles } from "@material-ui/core/styles";
+import { mobileResolution } from "../../constants";
 
-const style = {
+export const useStyles = makeStyles({
   chat: {
     position: "absolute",
     left: "77px",
@@ -68,24 +65,4 @@ const style = {
       }
     }
   }
-};
-
-const Chat = ({ classes }) => {
-  const [isOpen, setOpen] = useState(false);
-  const openWebChat = () => setOpen(isOpen);
-
-  return (
-    <div className={classes.chat}>
-      <div className={classes.chatInner} onClick={openWebChat}>
-        <div>
-          <span>
-            <img src={chatIcon} alt="chat" />
-          </span>
-        </div>
-        <div className="hide-on-mobile"> Chat with Us</div>
-      </div>
-    </div>
-  );
-};
-
-export default withStyles(style)(Chat);
+});

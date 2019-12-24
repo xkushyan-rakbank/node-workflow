@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Verified from "../../../assets/success.svg";
+import Verified from "../../../assets/webchat/success.svg";
 
 import { Dropdown } from "./elements/Dropdown";
 import { Button } from "./elements/Button";
@@ -17,14 +17,14 @@ const Container = styled.div`
 const Field = styled.div`
   font-size: 12px;
   line-height: 16px;
-  color: var(--light-gray);
+  color: #707070;
 `;
 
 const Label = styled.div`
   display: flex;
   align-items: center;
   font-weight: 600;
-  color: var(--green);
+  color: #00c8a3;
   margin-left: auto;
   img {
     margin-right: 5px;
@@ -41,20 +41,20 @@ const Message = styled.textarea`
   margin-top: 24px;
   padding: 12px 14px;
   border-radius: 5px;
-  border: 1px solid var(--pale-grey);
+  border: 1px solid #e9e9ed;
   resize: none;
   width: 100%;
   font-size: 16px;
   font-weight: normal;
-  color: var(----dark-grey);
+  color: #373737;
   transition: all 0.2s;
   ::-webkit-input-placeholder {
     opacity: 0.2;
-    color: var(--light-gray);
+    color: #707070;
     transition: all 0.2s;
   }
   :focus {
-    border-color: var(--pale-grey);
+    border-color: #e9e9ed;
     outline: none;
     ::-webkit-input-placeholder {
       opacity: 1;

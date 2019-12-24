@@ -8,8 +8,8 @@ const HeaderStyled = styled.div`
   align-items: center;
   justify-content: center;
   padding: 15px;
-  color: var(--dark-grey);
-  border-bottom: 1px solid var(--pale-grey);
+  color: #373737;
+  border-bottom: 1px solid #e9e9ed;
 `;
 
 const BackButton = styled.button`

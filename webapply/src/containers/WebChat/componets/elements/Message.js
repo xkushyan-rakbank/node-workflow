@@ -24,14 +24,14 @@ const MessageStyled = styled.div`
   display: flex;
   padding: 12px 16px;
   border-radius: 16px;
-  background-color: ${({ incoming }) => (incoming ? "var(--silver-two)" : "var(--dark-grey)")};
+  background-color: ${({ incoming }) => (incoming ? "#eaeced" : "#373737")};
   font-size: 14px;
-  color: ${({ incoming }) => (incoming ? "var(--dark-grey-blue)" : "var(--white)")};
+  color: ${({ incoming }) => (incoming ? "#263d4c" : "#fff")};
 `;
 
 const DateStyled = styled.div`
   font-size: 12px;
-  color: var(--silver);
+  color: #c6c6cc;
   margin-top: 5px;
 `;
 
@@ -42,9 +42,9 @@ const Avatar = styled.div`
   align-items: center;
   width: 32px;
   height: 32px;
-  background-color: ${({ incoming }) => (incoming ? "var(--tomato)" : "var(--dark-grey)")};
+  background-color: ${({ incoming }) => (incoming ? "#ec2d1b" : "#373737")};
   font-size: 20px;
-  color: var(--white);
+  color: #fff;
   border-radius: 100%;
 `;
 

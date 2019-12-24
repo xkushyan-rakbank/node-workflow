@@ -29,7 +29,7 @@ const Label = styled.label`
   line-height: 16px;
   z-index: 1;
   transition: all 0.2s;
-  color: var(--light-gray);
+  color: #707070;
   pointer-events: none;
   ${props => (props.active ? labelStyle.active : labelStyle.default)};
 `;
@@ -39,19 +39,19 @@ const Suffix = styled.div`
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--dark-grey);
+  color: #373737;
   font-size: 12px;
   line-height: 18px;
   svg {
     width: 18px;
     height: 18px;
     vertical-align: top;
-    color: var(--dark-grey);
+    color: #373737;
   }
 `;
 
 const Error = styled.div`
-  color: var(--tomato);
+  color: #ec2d1b;
   font-size: 10px;
   line-height: 14px;
   position: absolute;
@@ -79,7 +79,7 @@ const FormItemDisabled = styled(FormItemStyled)`
     min-height: 32px;
   }
   label {
-    color: var(--silver);
+    color: #c6c6cc;
   }
 `;
 

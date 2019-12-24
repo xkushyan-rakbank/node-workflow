@@ -6,16 +6,16 @@ export const Button = styled.button`
   font-size: 16px;
   line-height: 24px;
   font-weight: 600;
-  color: var(--white);
+  color: #fff;
   min-width: 132px;
   margin-top: 24px;
   height: 42px;
   padding: 6px 20px;
   border-radius: 28px;
-  background-color: var(--dark-grey);
+  background-color: #373737;
   box-shadow: none;
   cursor: pointer;
   :disabled {
-    background-color: var(--light-gray);
+    background-color: #707070;
   }
 `;

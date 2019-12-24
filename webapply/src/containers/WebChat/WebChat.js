@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import "./styles/style.scss";
 import { Login } from "./componets/Login";
 import { Chat } from "./componets/Chat";
 
@@ -11,7 +10,7 @@ const Container = styled.div`
   min-height: 450px;
   border-radius: 8px;
   box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.11);
-  background-color: var(--white);
+  background-color: #fff;
 `;
 
 export const WebChat = props => {
