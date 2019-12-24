@@ -39,7 +39,7 @@ export const CompanyInfoPage = ({
   let isEligible = false;
   if (licenseIssueDate) {
     const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
-    isEligible = isIssuanceDateCorrect && accountType === accountsNames.starter;
+    isEligible = !isIssuanceDateCorrect && accountType === accountsNames.starter;
   }
 
   const handleContinue = () =>
