@@ -18,12 +18,10 @@ import {
   getSendProspectToAPIInfo
 } from "../../store/selectors/appConfig";
 import { getIsVirtualCurrency } from "./../../store/selectors/companyInfo";
-import { companyInfoSteps, STEP_1, STEP_3, companyStatus } from "./constants";
+import { companyInfoSteps, STEP_1, STEP_3, companyStatus, UAE } from "./constants";
 import { accountsNames } from "./../../constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
-
-const UAE = "AE";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
@@ -37,9 +35,12 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
   const [isError, setError] = useState(false);
-  const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
-  const isEligible = isIssuanceDateCorrect && accountType === accountsNames.starter;
-  const isForeignCompany = countryOfIncorporation === UAE;
+  const isForeignCompany = countryOfIncorporation && countryOfIncorporation !== UAE;
+  let isEligible = false;
+  if (licenseIssueDate) {
+    const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
+    isEligible = isIssuanceDateCorrect && accountType === accountsNames.starter;
+  }
 
   const handleContinue = () =>
     sendProspectToAPI().then(
