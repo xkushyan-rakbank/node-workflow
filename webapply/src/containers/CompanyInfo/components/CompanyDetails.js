@@ -34,7 +34,7 @@ export const CompanyDetails = ({ handleContinue }) => (
     validationSchema={companyDetailsSchema}
     onSubmit={handleContinue}
   >
-    {({ setFieldValue }) => (
+    {() => (
       <Form>
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
@@ -44,9 +44,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               path="prospect.organizationInfo.companyName"
               contexualHelpText="if the Company's name is more than 30 characters long, than an abbreviation needs to be entered and that this abbreviation will appear in all Bank records including Cheque Books."
               infoTitle="This should be the same as in your Trade License"
-              onChange={e =>
-                setFieldValue("companyName", e.target.value.substr(0, MAX_COMPANY_NAME_LENGTH))
-              }
+              inputProps={{ maxLength: MAX_COMPANY_NAME_LENGTH }}
               component={Input}
             />
           </Grid>
