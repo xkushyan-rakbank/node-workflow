@@ -13,11 +13,11 @@ const initialValues = {
 };
 
 const industrySchema = Yup.object({
-  industry: Yup.string().required("You need to provide indusry")
-  // subCategory: Yup.string().when("industry", {
-  //   is: industry => !!industry,
-  //   then: Yup.string().required("You need to provide sub-category")
-  // })
+  industry: Yup.string().required("You need to provide indusry"),
+  subCategory: Yup.string().when("industry", {
+    is: industry => !!industry,
+    then: Yup.string().required("You need to provide sub-category")
+  })
 });
 
 export const Industry = ({ handleContinue }) => (
