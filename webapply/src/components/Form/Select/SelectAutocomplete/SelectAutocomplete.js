@@ -3,7 +3,7 @@ import Select from "react-select";
 import { getIn } from "formik";
 import { FormControl } from "@material-ui/core";
 
-import { ErrorMessage } from "./../../../Notifications";
+import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
 import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
 import { useStyles, customStyles } from "./styled";
 
@@ -25,6 +25,7 @@ export const SelectAutocomplete = ({
   form: { errors, touched, setFieldValue },
   multiple = false,
   disabled,
+  contexualHelpText,
   ...props
 }) => {
   const classes = useStyles();
@@ -45,32 +46,33 @@ export const SelectAutocomplete = ({
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <Select
-        {...field}
-        {...props}
-        options={options}
-        classes={classes}
-        styles={customStyles}
-        components={components}
-        value={renderValue}
-        onChange={handleChange}
-        isMulti={multiple}
-        isDisabled={disabled}
-        closeMenuOnSelect={!multiple}
-        hideSelectedOptions={false}
-        joinValues={true}
-        delimiter=","
-        placeholder=""
-        textFieldProps={{
-          label,
-          error: isError,
-          InputLabelProps: {
-            shrink: !!renderValue
-          }
-        }}
-        getOptionLabel={extractLabel}
-      />
-
+      <ContexualHelp title={contexualHelpText}>
+        <Select
+          {...field}
+          {...props}
+          options={options}
+          classes={classes}
+          styles={customStyles}
+          components={components}
+          value={renderValue}
+          onChange={handleChange}
+          isMulti={multiple}
+          isDisabled={disabled}
+          closeMenuOnSelect={!multiple}
+          hideSelectedOptions={false}
+          joinValues={true}
+          delimiter=","
+          placeholder=""
+          textFieldProps={{
+            label,
+            error: isError,
+            InputLabelProps: {
+              shrink: !!renderValue
+            }
+          }}
+          getOptionLabel={extractLabel}
+        />
+      </ContexualHelp>
       {isError && <ErrorMessage error={errorMessage} />}
     </FormControl>
   );
