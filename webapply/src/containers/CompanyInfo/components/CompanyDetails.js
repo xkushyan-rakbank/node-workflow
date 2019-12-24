@@ -24,7 +24,7 @@ const companyDetailsSchema = Yup.object({
   numberOfEmployees: Yup.number()
     .min(0, "must be more than 0")
     .max(1000, "must be less than or equal to 1000"),
-  companyCategory: Yup.string()
+  companyCategory: Yup.string().required("You need to provide company category")
 });
 
 export const CompanyDetails = ({ handleContinue }) => (
@@ -51,6 +51,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               name="companyCategory"
               label="Company Category"
               path="prospect.orgKYCDetails.companyCategory"
+              contexualHelpText="Select Foreign / Offshore / Non-Resident company if applicable. In case of a Free Zone company  select Free Zone. In case of Civil Company select  Partnerships. Select appropriate category in all other cases"
               datalistId="companyCategory"
               component={SelectAutocomplete}
             />
