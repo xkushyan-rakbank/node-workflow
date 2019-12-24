@@ -18,6 +18,7 @@ export const useStyles = makeStyles({
   chatInner: {
     display: "flex",
     alignItems: "center",
+    cursor: "pointer",
     "@media only screen and (max-width: 991px)": {
       flexDirection: "column"
     },

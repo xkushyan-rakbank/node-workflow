@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from "react";
+import React, { useState, Suspense, lazy, useCallback } from "react";
 import chatIcon from "./../../assets/icons/chat.png";
 import { useStyles } from "./styled";
 
@@ -8,7 +8,7 @@ export const Chat = () => {
   const classes = useStyles();
   const [isOpen, setOpen] = useState(false);
 
-  const openWebChat = () => setOpen(true);
+  const openWebChat = useCallback(() => setOpen(true));
 
   return (
     <div className={classes.chat}>
