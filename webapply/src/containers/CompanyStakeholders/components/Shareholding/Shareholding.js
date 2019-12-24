@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 
 import { PercentageInput } from "./PercentageInput";
 import { InlineRadioGroup, AutoSaveField as Field, Input } from "../../../../components/Form";
-import { withCompanyStakeholderFormik } from "../StakeholderFormik";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
@@ -29,12 +29,8 @@ const ShareholdingStep = ({
   handleContinue,
   totalPercentageWithoutCurrentStakeholder,
   isSoleProprietor,
-  index,
-  filledStakeholder,
-  setFillStakeholder
+  index
 }) => {
-  const setUnfilledStakeholder = () => setFillStakeholder(index, false);
-
   const initialValues = isSoleProprietor
     ? { isShareholderACompany: true, shareHoldingPercentage: 100 }
     : { isShareholderACompany: "", shareHoldingPercentage: "" };
@@ -55,42 +51,39 @@ const ShareholdingStep = ({
       validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
       validateOnChange={false}
     >
-      {withCompanyStakeholderFormik(
-        { filledStakeholder, setUnfilledStakeholder },
-        ({ values, setFieldValue }) => {
-          const shareholderHandler = createShareholderHandler({ values, setFieldValue });
-          return (
-            <Form>
-              <Grid container>
+      {withCompanyStakeholder(index, ({ values, setFieldValue }) => {
+        const shareholderHandler = createShareholderHandler({ values, setFieldValue });
+        return (
+          <Form>
+            <Grid container>
+              <Field
+                name="isShareholderACompany"
+                component={InlineRadioGroup}
+                path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}
+                options={yesNoOptions}
+                label="Is this person a shareholder?"
+                onChange={shareholderHandler}
+              />
+              <Grid item md={12}>
                 <Field
-                  name="isShareholderACompany"
-                  component={InlineRadioGroup}
-                  path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}
-                  options={yesNoOptions}
-                  label="Is this person a shareholder?"
-                  onChange={shareholderHandler}
+                  name="shareHoldingPercentage"
+                  path={`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`}
+                  label="Percentage"
+                  placeholder="Percentage"
+                  disabled={!values.isShareholderACompany}
+                  component={Input}
+                  InputProps={{
+                    inputComponent: PercentageInput,
+                    endAdornment: <InputAdornment position="end">%</InputAdornment>
+                  }}
                 />
-                <Grid item md={12}>
-                  <Field
-                    name="shareHoldingPercentage"
-                    path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}
-                    label="Percentage"
-                    placeholder="Percentage"
-                    disabled={!values.isShareholderACompany}
-                    component={Input}
-                    InputProps={{
-                      inputComponent: PercentageInput,
-                      endAdornment: <InputAdornment position="end">%</InputAdornment>
-                    }}
-                  />
-                </Grid>
               </Grid>
+            </Grid>
 
-              <SubmitButton />
-            </Form>
-          );
-        }
-      )}
+            <SubmitButton />
+          </Form>
+        );
+      })}
     </Formik>
   );
 };

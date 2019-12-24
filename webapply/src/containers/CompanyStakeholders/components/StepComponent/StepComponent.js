@@ -15,8 +15,6 @@ export const StepComponent = ({
   prospectInfo,
   handleContinue,
   stepForm: Form,
-  filledStakeholder,
-  setFillStakeholder
 }) => {
   const classes = useStyles();
 
@@ -46,8 +44,6 @@ export const StepComponent = ({
             index={index}
             prospectInfo={prospectInfo}
             handleContinue={handleContinue}
-            filledStakeholder={filledStakeholder}
-            setFillStakeholder={setFillStakeholder}
           />
         )}
       </div>

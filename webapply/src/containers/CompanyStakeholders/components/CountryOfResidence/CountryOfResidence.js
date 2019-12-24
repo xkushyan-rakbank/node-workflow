@@ -10,7 +10,7 @@ import {
   SelectAutocomplete,
   EmiratesID
 } from "../../../../components/Form";
-import { withCompanyStakeholderFormik } from "../StakeholderFormik";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 
@@ -27,15 +27,9 @@ const getCountryOfResidenceSchema = isSignatory =>
     })
   });
 
-const CountryOfResidenceStep = ({
-  index,
-  isSignatory,
-  handleContinue,
-  filledStakeholder,
-  setFillStakeholder
-}) => {
+const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
   const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
-  const setUnfilledStakeholder = () => setFillStakeholder(index, false);
+
   return (
     <Formik
       initialValues={{
@@ -46,7 +40,7 @@ const CountryOfResidenceStep = ({
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >
-      {withCompanyStakeholderFormik({ filledStakeholder, setUnfilledStakeholder }, ({ values }) => (
+      {withCompanyStakeholder(index, ({ values }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>

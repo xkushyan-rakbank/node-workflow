@@ -8,7 +8,7 @@ import {
   InlineRadioGroup,
   AutoSaveField as Field
 } from "../../../../components/Form";
-import { withCompanyStakeholderFormik } from "../StakeholderFormik";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { yesNoOptions } from "../../../../constants/options";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 
@@ -20,43 +20,35 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-export const SignatoryRights = ({
-  handleContinue,
-  index,
-  filledStakeholder,
-  setFillStakeholder
-}) => {
-  const setUnfilledStakeholder = () => setFillStakeholder(index, false);
-  return (
-    <Formik
-      initialValues={{ authorityType: "", isSignatory: "" }}
-      onSubmit={handleContinue}
-      validationSchema={signatoryRightsSchema}
-      validateOnChange={false}
-    >
-      {withCompanyStakeholderFormik({ filledStakeholder, setUnfilledStakeholder }, ({ values }) => (
-        <Form>
-          <Grid container>
-            <Field
-              name="isSignatory"
-              path={`prospect.signatoryInfo[${index}].kycDetails.isSignatory`}
-              component={InlineRadioGroup}
-              options={yesNoOptions}
-              label="Is this person a signatory?"
-            />
-            <Field
-              name="authorityType"
-              path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
-              disabled={!values.isSignatory}
-              component={CustomSelect}
-              label="Authority Type"
-              datalistId="authorityType"
-            />
-          </Grid>
+export const SignatoryRights = ({ handleContinue, index }) => (
+  <Formik
+    initialValues={{ authorityType: "", isSignatory: "" }}
+    onSubmit={handleContinue}
+    validationSchema={signatoryRightsSchema}
+    validateOnChange={false}
+  >
+    {withCompanyStakeholder(index, ({ values }) => (
+      <Form>
+        <Grid container>
+          <Field
+            name="isSignatory"
+            path={`prospect.signatoryInfo[${index}].kycDetails.isSignatory`}
+            component={InlineRadioGroup}
+            options={yesNoOptions}
+            label="Is this person a signatory?"
+          />
+          <Field
+            name="authorityType"
+            path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
+            disabled={!values.isSignatory}
+            component={CustomSelect}
+            label="Authority Type"
+            datalistId="authorityType"
+          />
+        </Grid>
 
-          <SubmitButton />
-        </Form>
-      ))}
-    </Formik>
-  );
-};
+        <SubmitButton />
+      </Form>
+    ))}
+  </Formik>
+);
