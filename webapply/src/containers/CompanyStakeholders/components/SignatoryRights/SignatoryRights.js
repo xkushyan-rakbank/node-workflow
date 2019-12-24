@@ -8,6 +8,7 @@ import {
   InlineRadioGroup,
   AutoSaveField as Field
 } from "../../../../components/Form";
+import { withCompanyStakeholderFormik } from "../StakeholderFormik";
 import { yesNoOptions } from "../../../../constants/options";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 
@@ -19,14 +20,20 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-export const SignatoryRights = ({ handleContinue, index }) => {
+export const SignatoryRights = ({
+  handleContinue,
+  index,
+  filledStakeholder,
+  setFillStakeholder
+}) => {
+  const setUnfilledStakeholder = () => setFillStakeholder(index, false);
   return (
     <Formik
       initialValues={{ authorityType: "", isSignatory: "" }}
       onSubmit={handleContinue}
       validationSchema={signatoryRightsSchema}
     >
-      {({ values }) => (
+      {withCompanyStakeholderFormik({ filledStakeholder, setUnfilledStakeholder }, ({ values }) => (
         <Form>
           <Grid container>
             <Field
@@ -48,7 +55,7 @@ export const SignatoryRights = ({ handleContinue, index }) => {
 
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

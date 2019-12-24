@@ -28,7 +28,8 @@ const StakeholderStepperComponent = ({
   sendProspectToAPI,
   loading: isStatusLoading,
   changeEditableStakeholder,
-  setFillStakeholder
+  setFillStakeholder,
+  stakeholdersIds
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
@@ -39,7 +40,7 @@ const StakeholderStepperComponent = ({
     sendProspectToAPI().then(
       () => {
         if (step === STEP_6) {
-          setFillStakeholder(index);
+          setFillStakeholder(index, true);
         }
         handleSetNextStep();
       },
@@ -89,6 +90,8 @@ const StakeholderStepperComponent = ({
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
+            filledStakeholder={stakeholdersIds[index].done}
+            setFillStakeholder={setFillStakeholder}
           />
         ))}
       </div>
@@ -110,6 +113,7 @@ const StakeholderStepperComponent = ({
 
 const mapStateToProps = state => ({
   isStatusShown: state.stakeholders.isStatusShown,
+  stakeholdersIds: state.stakeholders.stakeholdersIds,
   ...getSendProspectToAPIInfo(state)
 });
 

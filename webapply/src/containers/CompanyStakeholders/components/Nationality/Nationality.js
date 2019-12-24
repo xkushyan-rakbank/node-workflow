@@ -12,6 +12,7 @@ import {
   Checkbox,
   Input
 } from "../../../../components/Form";
+import { withCompanyStakeholderFormik } from "../StakeholderFormik";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { ALPHANUMERIC_REGEX } from "../../../../utils/validation";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
@@ -37,8 +38,15 @@ const nationalitySchema = Yup.object().shape({
   )
 });
 
-export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
+export const NationalityStep = ({
+  index,
+  passportDetails,
+  handleContinue,
+  filledStakeholder,
+  setFillStakeholder
+}) => {
   const classes = useStyles();
+  const setUnfilledStakeholder = () => setFillStakeholder(index, false);
 
   const createAddCityshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => () => {
     const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
@@ -70,77 +78,80 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
       }}
       validationSchema={nationalitySchema}
     >
-      {({ values, setFieldValue }) => (
-        <Form>
-          <Grid container spacing={3}>
-            <FieldArray
-              name="passportDetails"
-              render={arrayHelper =>
-                values.passportDetails.map((item, passportIndex) => {
-                  // eslint-disable-next-line max-len
-                  const passportDetails = `prospect.signatoryInfo[${index}].kycDetails.passportDetails[${passportIndex}]`;
-                  return (
-                    <React.Fragment key={item.id}>
-                      {!!passportIndex && <Grid item sm={12} className={classes.divider} />}
-                      <Grid item md={6} sm={12}>
-                        <Field
-                          name={`passportDetails[${passportIndex}].nationality`}
-                          path={`${passportDetails}.country`}
-                          label="Nationality"
-                          component={SelectAutocomplete}
-                          datalistId="country"
-                          disabled={isDisabled()}
-                          changeProspect={(prospect, value) => {
-                            if (passportIndex) {
-                              return prospect;
-                            }
-
-                            return {
-                              ...prospect,
-                              [`prospect.signatoryInfo[${index}].kycDetails.nationality`]: value
-                            };
-                          }}
-                          shrink={true}
-                        />
-                        {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
+      {withCompanyStakeholderFormik(
+        { filledStakeholder, setUnfilledStakeholder },
+        ({ values, setFieldValue }) => (
+          <Form>
+            <Grid container spacing={3}>
+              <FieldArray
+                name="passportDetails"
+                render={arrayHelper =>
+                  values.passportDetails.map((item, passportIndex) => {
+                    // eslint-disable-next-line max-len
+                    const passportDetails = `prospect.signatoryInfo[${index}].kycDetails.passportDetails[${passportIndex}]`;
+                    return (
+                      <React.Fragment key={item.id}>
+                        {!!passportIndex && <Grid item sm={12} className={classes.divider} />}
+                        <Grid item md={6} sm={12}>
                           <Field
-                            name={`passportDetails[${passportIndex}].hasAnotherCitizenship`}
-                            path={`${passportDetails}.hasAnotherCitizenship`}
-                            label="This person has another citizenship"
-                            component={Checkbox}
-                            onChange={createAddCityshipHandler(
-                              values,
-                              arrayHelper,
-                              passportIndex,
-                              setFieldValue
-                            )}
-                            disabled={isDisabled(values, passportIndex)}
+                            name={`passportDetails[${passportIndex}].nationality`}
+                            path={`${passportDetails}.country`}
+                            label="Nationality"
+                            component={SelectAutocomplete}
+                            datalistId="country"
+                            disabled={isDisabled()}
+                            changeProspect={(prospect, value) => {
+                              if (passportIndex) {
+                                return prospect;
+                              }
+
+                              return {
+                                ...prospect,
+                                [`prospect.signatoryInfo[${index}].kycDetails.nationality`]: value
+                              };
+                            }}
+                            shrink={true}
                           />
-                        )}
-                      </Grid>
-                      <Grid item md={6} sm={12}>
-                        <Field
-                          name={`passportDetails[${passportIndex}].passportNumber`}
-                          path={`${passportDetails}.passportNumber`}
-                          label="Passport Number"
-                          placeholder="Passport Number"
-                          component={Input}
-                        />
-                        <Field
-                          name={`passportDetails[${passportIndex}].diplomatPassport`}
-                          path={`${passportDetails}.diplomatPassport`}
-                          label="This is a diplomatic Passport"
-                          component={Checkbox}
-                        />
-                      </Grid>
-                    </React.Fragment>
-                  );
-                })
-              }
-            />
-          </Grid>
-          <SubmitButton />
-        </Form>
+                          {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
+                            <Field
+                              name={`passportDetails[${passportIndex}].hasAnotherCitizenship`}
+                              path={`${passportDetails}.hasAnotherCitizenship`}
+                              label="This person has another citizenship"
+                              component={Checkbox}
+                              onChange={createAddCityshipHandler(
+                                values,
+                                arrayHelper,
+                                passportIndex,
+                                setFieldValue
+                              )}
+                              disabled={isDisabled(values, passportIndex)}
+                            />
+                          )}
+                        </Grid>
+                        <Grid item md={6} sm={12}>
+                          <Field
+                            name={`passportDetails[${passportIndex}].passportNumber`}
+                            path={`${passportDetails}.passportNumber`}
+                            label="Passport Number"
+                            placeholder="Passport Number"
+                            component={Input}
+                          />
+                          <Field
+                            name={`passportDetails[${passportIndex}].diplomatPassport`}
+                            path={`${passportDetails}.diplomatPassport`}
+                            label="This is a diplomatic Passport"
+                            component={Checkbox}
+                          />
+                        </Grid>
+                      </React.Fragment>
+                    );
+                  })
+                }
+              />
+            </Grid>
+            <SubmitButton />
+          </Form>
+        )
       )}
     </Formik>
   );

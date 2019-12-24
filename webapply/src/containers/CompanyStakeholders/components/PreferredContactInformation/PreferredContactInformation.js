@@ -14,6 +14,7 @@ import {
   Input,
   InputGroup
 } from "../../../../components/Form";
+import { withCompanyStakeholderFormik } from "../StakeholderFormik";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { PHONE_REGEX } from "../../../../utils/validation";
 import { UAE_PHONE_CODE } from "../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredContactInformation/constants";
@@ -35,10 +36,13 @@ const PreferredContactInformationStep = ({
   isSignatory,
   index,
   handleContinue,
-  primaryPhoneNo
+  primaryPhoneNo,
+  filledStakeholder,
+  setFillStakeholder
 }) => {
   const [isExistsPrimaryPhoneNo, setIsExistsPrimaryPhoneNo] = useState(!!primaryPhoneNo);
   const classes = useStyles();
+  const setUnfilledStakeholder = () => setFillStakeholder(index, false);
   return (
     <Formik
       initialValues={{
@@ -51,89 +55,92 @@ const PreferredContactInformationStep = ({
       onSubmit={handleContinue}
       validationSchema={isSignatory && preferredContactInformationSchema}
     >
-      {({ setValues, values }) => (
-        <Form>
-          <Grid container spacing={3} className={classes.gridContainer}>
-            <Grid item md={6} sm={12}>
-              <InputGroup>
-                <Field
-                  name="primaryMobCountryCode"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
-                  component={CustomSelect}
-                  shrink={false}
-                  disabled={!isSignatory}
-                  datalistId="countryCode"
-                />
+      {withCompanyStakeholderFormik(
+        { filledStakeholder, setUnfilledStakeholder },
+        ({ setValues, values }) => (
+          <Form>
+            <Grid container spacing={3} className={classes.gridContainer}>
+              <Grid item md={6} sm={12}>
+                <InputGroup>
+                  <Field
+                    name="primaryMobCountryCode"
+                    path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
+                    component={CustomSelect}
+                    shrink={false}
+                    disabled={!isSignatory}
+                    datalistId="countryCode"
+                  />
 
+                  <Field
+                    name="primaryMobileNo"
+                    path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
+                    label="Mobile Number"
+                    placeholder="Mobile Number"
+                    component={Input}
+                    disabled={!isSignatory}
+                  />
+                </InputGroup>
+              </Grid>
+              <Grid item md={6} sm={12}>
                 <Field
-                  name="primaryMobileNo"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
-                  label="Mobile Number"
-                  placeholder="Mobile Number"
+                  name="primaryEmail"
+                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryEmail`}
+                  label="E-mail Address"
+                  placeholder="E-mail Address"
                   component={Input}
                   disabled={!isSignatory}
                 />
-              </InputGroup>
-            </Grid>
-            <Grid item md={6} sm={12}>
-              <Field
-                name="primaryEmail"
-                path={`prospect.signatoryInfo[${index}].contactDetails.primaryEmail`}
-                label="E-mail Address"
-                placeholder="E-mail Address"
-                component={Input}
-                disabled={!isSignatory}
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              sm={12}
-              className={cx(classes.relative, {
-                hidden: !isExistsPrimaryPhoneNo
-              })}
-            >
-              <InputGroup>
-                <Field
-                  name="primaryPhoneCountryCode"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneCountryCode`}
-                  component={CustomSelect}
-                  shrink={false}
-                  disabled={!isSignatory}
-                  datalistId="countryCode"
-                />
+              </Grid>
+              <Grid
+                item
+                md={6}
+                sm={12}
+                className={cx(classes.relative, {
+                  hidden: !isExistsPrimaryPhoneNo
+                })}
+              >
+                <InputGroup>
+                  <Field
+                    name="primaryPhoneCountryCode"
+                    path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneCountryCode`}
+                    component={CustomSelect}
+                    shrink={false}
+                    disabled={!isSignatory}
+                    datalistId="countryCode"
+                  />
 
-                <Field
-                  name="primaryPhoneNo"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneNo`}
-                  label="Landline number (optional)"
-                  placeholder="Landline number (optional)"
-                  component={Input}
-                  disabled={!isSignatory}
+                  <Field
+                    name="primaryPhoneNo"
+                    path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneNo`}
+                    label="Landline number (optional)"
+                    placeholder="Landline number (optional)"
+                    component={Input}
+                    disabled={!isSignatory}
+                  />
+                </InputGroup>
+                <RemoveButton
+                  onClick={() => {
+                    setValues({
+                      ...values,
+                      primaryPhoneNo: "",
+                      primaryPhoneCountryCode: UAE_PHONE_CODE
+                    });
+                    setIsExistsPrimaryPhoneNo(false);
+                  }}
+                  title="Delete"
+                  className={classes.container}
                 />
-              </InputGroup>
-              <RemoveButton
-                onClick={() => {
-                  setValues({
-                    ...values,
-                    primaryPhoneNo: "",
-                    primaryPhoneCountryCode: UAE_PHONE_CODE
-                  });
-                  setIsExistsPrimaryPhoneNo(false);
-                }}
-                title="Delete"
-                className={classes.container}
-              />
+              </Grid>
             </Grid>
-          </Grid>
-          {!isExistsPrimaryPhoneNo && (
-            <AddButton
-              onClick={() => setIsExistsPrimaryPhoneNo(true)}
-              title="Add a landline number"
-            />
-          )}
-          <SubmitButton />
-        </Form>
+            {!isExistsPrimaryPhoneNo && (
+              <AddButton
+                onClick={() => setIsExistsPrimaryPhoneNo(true)}
+                title="Add a landline number"
+              />
+            )}
+            <SubmitButton />
+          </Form>
+        )
       )}
     </Formik>
   );
