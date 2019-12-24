@@ -77,6 +77,7 @@ const ApplicantInfoPage = ({
 
       <Formik
         initialValues={initialValues}
+        validateOnChange={false}
         validationSchema={aplicantInfoSchema}
         onSubmit={onSubmit}
       >
