@@ -35,14 +35,17 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
   const [isError, setError] = useState(false);
-  const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
-  const isNotEligible =
-    !!licenseIssueDate && isIssuanceDateCorrect && accountType === accountsNames.starter;
   const isForeignCompany = !!countryOfIncorporation && countryOfIncorporation !== UAE;
+  let isEligible = false;
+  if (licenseIssueDate) {
+    const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
+    isEligible = isIssuanceDateCorrect && accountType === accountsNames.starter;
+  }
+
   const handleContinue = () =>
     sendProspectToAPI().then(
       () => {
-        if (isVirtualCurrency || isNotEligible || isForeignCompany) {
+        if (isVirtualCurrency || isEligible || isForeignCompany) {
           setError(true);
         }
         handleSetNextStep();
@@ -58,7 +61,7 @@ export const CompanyInfoPage = ({
     switch (isError) {
       case isVirtualCurrency:
         return companyStatus.virtualCurrencies;
-      case isNotEligible:
+      case isEligible:
         return companyStatus.notEligible;
       case isForeignCompany:
         return companyStatus.notRegisteredInUAE;
