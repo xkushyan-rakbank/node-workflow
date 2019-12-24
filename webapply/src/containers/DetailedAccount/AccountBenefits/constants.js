@@ -1,3 +1,5 @@
+import { accountsNames } from "../../../constants";
+
 export const accountTypesInfo = {
   RAKstarter: [
     { key: 1, text: "No minimum balance required", iconName: "balance" },
@@ -43,4 +45,10 @@ export const accountTypesInfo = {
     },
     { key: 6, text: "Dedicated Relationship Manager", iconName: "manager" }
   ]
+};
+
+export const accountText = {
+  [accountsNames.starter]: "Unmatched benefits to make banking stress-free",
+  [accountsNames.currentAccount]: "Unmatched benefits for an unmatched price",
+  [accountsNames.elite]: "Unmatched privileges to take your business to the next level"
 };
