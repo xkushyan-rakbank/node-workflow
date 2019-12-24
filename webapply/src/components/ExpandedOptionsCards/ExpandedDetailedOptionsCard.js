@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core";
 import { Link } from "@material-ui/core";
 import { ContainedButton } from "../Buttons/ContainedButton";
 import check from "../../assets/icons/check_outline_ic.png";
-import { getIconsByAccount } from "../../constants/icons";
+import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { mobileResolution } from "../../constants";
 
 const style = {
@@ -151,16 +151,16 @@ const ExpandedOptionsDetailedCard = ({
       ? "Included in RAKstarter"
       : "Available upgrade";
 
-  const { plus, max } = getIconsByAccount();
+  const { plus: Plus, max: Max } = useIconsByAccount();
 
   return (
     <div className={cx(classes.root, className)}>
       <div className={classes.title}>
         <div className={classes.icon}>
           {value === "RAKvalue PLUS" ? (
-            <img width={80} height={80} src={plus} alt="rak-plus" />
+            <Plus width={80} height={80} alt="rak-plus" />
           ) : (
-            <img width={80} height={80} src={max} alt="rak-max" />
+            <Max width={80} height={80} alt="rak-max" />
           )}
         </div>
         <div className={classes.name}>{value}</div>

@@ -3,7 +3,7 @@ import cx from "classnames";
 import { Link } from "@material-ui/core";
 
 import { accountsNames } from "../../../../../constants";
-import { getIconsByAccount } from "../../../../../constants/icons";
+import { useIconsByAccount } from "../../../../../utils/useIconsByAccount";
 
 import { ICONS, Icon } from "../../../../../components/Icons/Icon";
 import { ContainedButton } from "../../../../../components/Buttons/ContainedButton";
@@ -43,7 +43,7 @@ export const ExpandedDetailedOptionsCard = ({
   readMoreUrls
 }) => {
   const classes = useStyles();
-  const { plus, max } = getIconsByAccount();
+  const { plus: Plus, max: Max } = useIconsByAccount();
   const href = getUrlReadMore(readMoreUrls, accountType, value);
 
   return (
@@ -51,9 +51,9 @@ export const ExpandedDetailedOptionsCard = ({
       <div className={classes.title}>
         <div className={classes.icon}>
           {value === rakValuePackagePlusName ? (
-            <img width={80} height={80} src={plus} alt="rak-plus" />
+            <Plus width={80} height={80} alt="rak-plus" />
           ) : (
-            <img width={80} height={80} src={max} alt="rak-max" />
+            <Max width={80} height={80} alt="rak-max" />
           )}
         </div>
         <div className={classes.name}>{value}</div>
