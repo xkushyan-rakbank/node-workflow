@@ -7,12 +7,12 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import routes from "./routes";
 import { history } from "./store";
 
-import { components } from "./bundles";
 import { FormLayout } from "./containers/FormLayout";
 import { AccountsComparison } from "./containers/AccountsComparison";
 import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
+import { AgentPages } from "./containers/AgentPages";
 
-import { AgentProtectedRoute, ProspectProtectedRoute } from "./components/Routers";
+import { ProspectProtectedRoute } from "./components/Routers";
 
 import { getEndpoints } from "./store/selectors/appConfig";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -24,6 +24,7 @@ import "./App.scss";
 const UploadDocuments = lazy(() => import("./containers/UploadDocuments"));
 const ReUploadDocuments = lazy(() => import("./containers/ReUploadDocuments"));
 const ApplicantInfo = lazy(() => import("./containers/AplicantInfo"));
+const DetailedAccount = lazy(() => import("./containers/DetailedAccount"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
@@ -60,13 +61,6 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.companyInfo}
                   component={lazy(() => import("./containers/CompanyInfo"))}
                 />
-                <Route exact path="/agent" render={() => <Redirect to={routes.login} />} />
-                <Route exact path={routes.login} component={components.Login} />
-                <AgentProtectedRoute
-                  exact
-                  path={routes.searchProspect}
-                  component={components.SearchProspect}
-                />
                 <ProspectProtectedRoute
                   exact
                   path={routes.stakeholdersInfo}
@@ -97,32 +91,32 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.applicationOverview}
                   component={lazy(() => import("./containers/ApplicationOverview"))}
                 />
-                console.log(DetailedAccount)
+                <Route exact path={routes.detailedAccount} component={DetailedAccount} />
                 <Route
                   exact
-                  path={routes.detailedAccount}
-                  component={lazy(() => import("./containers/DetailedAccount"))}
+                  path={routes.comeBackLogin}
+                  component={lazy(() => import("./containers/ComeBackLogin"))}
                 />
-                <Route exact path={routes.comeBackLogin} component={components.ComeBackLogin} />
                 <Route
                   exact
                   path={routes.comeBackLoginVerification}
-                  component={lazy(() => import("./containers/ComeBack"))}
+                  component={lazy(() => import("./containers/ComeBackVerification"))}
                 />
                 <Route
                   exact
                   path={routes.MyApplications}
                   component={lazy(() => import("./containers/MyApplications"))}
                 />
-                <AgentProtectedRoute
-                  path={routes.SearchedAppInfo}
-                  component={components.SearchedAppInfo}
-                />
                 <ProspectProtectedRoute
                   exact
                   path={routes.SubmitApplication}
-                  component={components.SubmitApplication}
+                  component={lazy(() =>
+                    import("./containers/SelectServices/components/SubmitApplication/index")
+                  )}
                 />
+
+                {AgentPages()}
+
                 <Redirect to={routes.accountsComparison} />
               </Switch>
             </Suspense>

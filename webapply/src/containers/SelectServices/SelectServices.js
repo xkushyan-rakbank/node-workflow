@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 
 import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP, STEP_1, STEP_3 } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { SubmitApplication } from "./components/SubmitApplication";
+import SubmitApplication from "./components/SubmitApplication";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";

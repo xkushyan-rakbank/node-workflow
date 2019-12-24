@@ -15,7 +15,7 @@ const mapDispatchToProps = {
   setVerified
 };
 
-export const Login = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(LoginComponent);

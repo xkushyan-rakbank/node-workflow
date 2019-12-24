@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
   isAgentLoggedIn: getIsAgentLoggedIn(state)
 });
 
-export const SubmitApplication = compose(
+export default compose(
   withRouter,
   connect(mapStateToProps)
 )(SubmitApplicationComponent);
