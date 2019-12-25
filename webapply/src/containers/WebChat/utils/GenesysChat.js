@@ -144,10 +144,11 @@ export class GenesysChat {
     const dataFromServer = message.data;
     this.lastPosition = dataFromServer.nextPosition;
     if (has(dataFromServer, "messages")) {
-      dataFromServer.messages.map(message => {
+      dataFromServer.messages.forEach(message => {
         if (has(agentEvents, message.text)) {
           callSafely(this.eventsCallback, message.text);
         } else {
+          // eslint-disable-next-line default-case
           switch (message.type) {
             case ChatOperationTypes.IncomingMessage: {
               this.addMessage({ ...message });
@@ -190,6 +191,7 @@ export class GenesysChat {
         }
       });
     } else {
+      // eslint-disable-next-line default-case
       switch (dataFromServer.operation) {
         case ChatOperationTypes.SendMessage:
         case ChatOperationTypes.RequestChat: {
