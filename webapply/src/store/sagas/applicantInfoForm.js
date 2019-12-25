@@ -4,11 +4,11 @@ import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 import { updateProspectId, updateProspect, updateSaveType } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { setVerified } from "../actions/reCaptcha";
+import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
 import routes from "./../../routes";
 import { log } from "../../utils/loggger";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
-import { generateCodeSuccess } from "../actions/otp";
 
 function* applicantInfoFormSaga(action) {
   try {
