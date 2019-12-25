@@ -42,18 +42,21 @@ const webChatReducer = (state, { type }) => {
   }
 };
 
-export const Chat = () => {
+export const Chat = props => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(webChatReducer, initialState);
   const { isOpened, isClosed, isMinimized } = state;
   const toogleChat = isMinimized ? classes.mimimized : classes.expand;
 
+  // eslint-disable-next-line
   const openChat = useCallback(() =>
     isClosed ? dispatch({ type: "open" }) : dispatch({ type: "expand" })
   );
 
+  // eslint-disable-next-line
   const closeWebChat = useCallback(() => dispatch({ type: "close" }));
 
+  // eslint-disable-next-line
   const minimizeChat = useCallback(() => dispatch({ type: "minimize" }));
 
   return (
@@ -79,7 +82,7 @@ export const Chat = () => {
       {isOpened && (
         <div className={cx(classes.chatWrapper, toogleChat)}>
           <Suspense fallback={<div>Loading...</div>}>
-            <WebChatComponent onClose={closeWebChat} onMinimize={minimizeChat} />
+            <WebChatComponent onClose={closeWebChat} onMinimize={minimizeChat} {...props} />
           </Suspense>
         </div>
       )}

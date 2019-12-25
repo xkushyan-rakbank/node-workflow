@@ -15,7 +15,8 @@ import { useStyles } from "./styled";
 
 export const FormNavigationComponent = ({
   applicationInfo: { islamicBanking, accountType },
-  isLogin
+  isLogin,
+  ...props
 }) => {
   const {
     location: { pathname }
@@ -69,7 +70,7 @@ export const FormNavigationComponent = ({
           </ul>
         )
       )}
-      {!(isLogin || pathname === routes.login) && <Chat />}
+      {(isLogin || pathname === routes.companyInfo) && <Chat {...props} />}
     </div>
   );
 };
