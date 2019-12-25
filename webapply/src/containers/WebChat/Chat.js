@@ -52,16 +52,11 @@ const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
   const toogleChat = isMinimized ? classes.mimimized : classes.expand;
   const mobileNumber = `${countryCode + mobileNo}`;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const openChat = useCallback(() =>
-    isClosed ? dispatch({ type: "open" }) : dispatch({ type: "expand" })
-  );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const closeWebChat = useCallback(() => dispatch({ type: "close" }));
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const minimizeChat = useCallback(() => dispatch({ type: "minimize" }));
+  const openChat = useCallback(() => {
+    dispatch({ type: isClosed ? "open" : "expand" });
+  }, [isClosed, dispatch]);
+  const closeWebChat = useCallback(() => dispatch({ type: "close" }), [dispatch]);
+  const minimizeChat = useCallback(() => dispatch({ type: "minimize" }), [dispatch]);
 
   return (
     <>

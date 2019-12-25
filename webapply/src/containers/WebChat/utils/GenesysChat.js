@@ -144,8 +144,7 @@ export class GenesysChat {
     const dataFromServer = message.data;
     this.lastPosition = dataFromServer.nextPosition;
     if (has(dataFromServer, "messages")) {
-      // eslint-disable-next-line array-callback-return
-      dataFromServer.messages.map(message => {
+      dataFromServer.messages.forEach(message => {
         if (has(agentEvents, message.text)) {
           callSafely(this.eventsCallback, message.text);
         } else {
