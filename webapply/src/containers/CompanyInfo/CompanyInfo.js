@@ -18,8 +18,8 @@ import {
   getSendProspectToAPIInfo
 } from "../../store/selectors/appConfig";
 import { getIsVirtualCurrency } from "./../../store/selectors/companyInfo";
-import { companyInfoSteps, STEP_1, STEP_3, companyStatus, UAE } from "./constants";
-import { accountsNames } from "./../../constants";
+import { companyInfoSteps, STEP_1, STEP_3, companyStatus } from "./constants";
+import { accountsNames, UAE } from "./../../constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 

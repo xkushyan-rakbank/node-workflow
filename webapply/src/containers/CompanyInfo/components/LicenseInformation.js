@@ -7,12 +7,13 @@ import { Input, DatePicker, CustomSelect, AutoSaveField as Field } from "../../.
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
+import { UAE } from "../../../constants";
 
 const initialValues = {
   licenseNumber: "",
   licenseIssueDate: "",
   licenseIssuingAuthority: "",
-  countryOfIncorporation: "AE",
+  countryOfIncorporation: UAE,
   dateOfIncorporation: "",
   yearsInBusiness: ""
 };
