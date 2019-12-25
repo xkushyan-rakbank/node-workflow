@@ -147,7 +147,7 @@ export class GenesysChat {
       // eslint-disable-next-line
       dataFromServer.messages.map(message => {
         if (has(agentEvents, message.text)) {
-          return callSafely(this.eventsCallback, message.text);
+          callSafely(this.eventsCallback, message.text);
         } else {
           // eslint-disable-next-line
           switch (message.type) {
