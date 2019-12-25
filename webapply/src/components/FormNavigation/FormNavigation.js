@@ -4,7 +4,7 @@ import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import FormNavigationStep from "../FormNavigationStep";
-import Chat from "../Chat";
+import { Chat } from "../../containers/WebChat/Chat";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
 import routes from "../../routes";

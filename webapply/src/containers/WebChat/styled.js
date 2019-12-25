@@ -1,10 +1,7 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../constants";
+import { makeStyles } from "@material-ui/core/styles";
+import { mobileResolution } from "../../constants";
 
-import chatIcon from "./../assets/icons/chat.png";
-
-const style = {
+export const useStyles = makeStyles({
   chat: {
     position: "absolute",
     left: "77px",
@@ -21,6 +18,7 @@ const style = {
   chatInner: {
     display: "flex",
     alignItems: "center",
+    cursor: "pointer",
     "@media only screen and (max-width: 991px)": {
       flexDirection: "column"
     },
@@ -33,7 +31,8 @@ const style = {
       backgroundColor: " #fff",
       borderRadius: "50%",
       boxShadow: "0 2px 14px 0 rgba(0, 0, 0, 0.18)",
-      marginRight: "20px"
+      marginRight: "20px",
+      position: "relative"
     },
     "& p": {
       margin: "0"
@@ -67,25 +66,31 @@ const style = {
         marginLeft: 0
       }
     }
+  },
+  messagesCount: {
+    top: 10,
+    right: 11,
+    minWidth: 20,
+    height: 20,
+    position: "absolute",
+    borderRadius: "50%",
+    backgroundColor: "#db1d2c",
+    padding: 1,
+    "& p": {
+      fontSize: 13,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100%"
+    }
+  },
+  chatWrapper: {
+    position: "fixed",
+    bottom: "40px",
+    left: "40px",
+    transition: "all 0.3s ease"
+  },
+  mimimized: {
+    bottom: "-105%"
   }
-};
-
-const Chat = ({ classes }) => {
-  return (
-    <div className={classes.chat}>
-      <div className={classes.chatInner}>
-        <a href="/">
-          <span>
-            <img src={chatIcon} alt="chat" />
-          </span>
-        </a>
-        <a href="/" className="hide-on-mobile">
-          {" "}
-          Chat with Us
-        </a>
-      </div>
-    </div>
-  );
-};
-
-export default withStyles(style)(Chat);
+});
