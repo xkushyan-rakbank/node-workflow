@@ -109,6 +109,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   placeholder="First name"
                   disabled={!!values.isShareholderACompany}
                   component={Input}
+                  inputProps={{ maxLength: 30 }}
                 />
               </InputGroup>
             </Grid>
@@ -120,6 +121,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Middle Name (Optional)"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
+                inputProps={{ maxLength: 30 }}
               />
             </Grid>
           </Grid>
@@ -132,6 +134,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Last name"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
+                inputProps={{ maxLength: 30 }}
               />
             </Grid>
             <Grid item md={6} sm={12}>
