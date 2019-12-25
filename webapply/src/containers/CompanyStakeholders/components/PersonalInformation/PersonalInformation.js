@@ -80,7 +80,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 }}
               />
               <ContexualHelp
-                title="Select 'Yes' if this person holds any shares based on Memorandum of Association/Articles of Association/Partners agreement/Service Agreement/Share"
+                title="Select this check box if another company holds any shares based on Memorandum of Association / Articles of Association / Partners agreement / Service Agreement / Share Certificate"
                 placement="right"
                 isDisableHoverListener={false}
               >
