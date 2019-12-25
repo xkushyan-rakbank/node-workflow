@@ -8,6 +8,7 @@ import { prospect } from "../../api/apiClient";
 import routes from "./../../routes";
 import { log } from "../../utils/loggger";
 import { IS_RECAPTCHA_ENABLE } from "../../constants";
+import { generateCodeSuccess } from "../actions/otp";
 
 function* applicantInfoFormSaga(action) {
   try {
@@ -31,7 +32,7 @@ function* applicantInfoFormSaga(action) {
     } = yield call(prospect.create, prospectUpdated);
 
     yield put(setVerified(true));
-
+    yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
     yield call(history.push, routes.verifyOtp);
     yield put(updateSaveType("next"));
