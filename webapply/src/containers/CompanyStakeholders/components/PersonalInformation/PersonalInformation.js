@@ -51,7 +51,9 @@ const personalInformationSchema = Yup.object().shape({
 
 export const PersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
+
   const applicantInfo = useSelector(getApplicantInfo);
+
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
     [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
