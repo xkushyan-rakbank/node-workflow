@@ -123,6 +123,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
                   inputProps={{ maxLength: 30 }}
+                  contexualHelpText="Given Name of the stakeholder exactly the way it is mentioned in the passport"
                 />
               </InputGroup>
             </Grid>

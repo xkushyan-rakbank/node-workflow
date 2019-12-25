@@ -63,6 +63,7 @@ const ShareholdingStep = ({
                 options={yesNoOptions}
                 label="Is this person a shareholder?"
                 onChange={shareholderHandler}
+                contexualHelpText="eutygrhueryghu"
               />
               <Grid item md={12}>
                 <Field
