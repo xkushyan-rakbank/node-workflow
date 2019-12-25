@@ -45,7 +45,8 @@ class ErrorBoundary extends React.Component {
 export const ErrorBoundaryForReCaptcha = styled(ErrorBoundary)({
   display: "flex",
   paddingTop: "10px",
-  justifyContent: "flex-end"
+  maxWidth: "100%",
+  justifyContent: "center"
 });
 
 export default ErrorBoundary;

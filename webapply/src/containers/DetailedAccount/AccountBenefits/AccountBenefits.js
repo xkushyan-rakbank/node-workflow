@@ -3,9 +3,9 @@ import React from "react";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../../components/HorizontalIconCards/HorizontalIconCardsContainer";
 import HorizontalIconCardItem from "../../../components/HorizontalIconCards/HorizontalIconCardItem";
-import { useIconsByAccount } from "../../../utils/useIconsByAccount/index";
-import { InfoNote } from "../../../components/InfoNote/index";
-import { accountsNames } from "../../../constants/index";
+import { useIconsByAccount } from "../../../utils/useIconsByAccount";
+import { InfoNote } from "../../../components/InfoNote";
+import { accountsNames } from "../../../constants";
 import { accountTypesInfo, accountText } from "./constants";
 
 import { useStyles } from "./styled";
