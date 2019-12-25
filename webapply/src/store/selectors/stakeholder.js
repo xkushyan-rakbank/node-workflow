@@ -12,7 +12,7 @@ export const stakeholdersSelector = createSelector(
   (stakeholders, stakeholdersIds) =>
     stakeholders.map((item, index) => ({
       ...item,
-      id: stakeholdersIds[index]
+      id: stakeholdersIds[index].id
     }))
 );
 
@@ -26,13 +26,16 @@ export const percentageSelector = state => {
 };
 
 export const percentageSelectorWithoutCurrentStakeholder = (state, index) => {
-  const signatories = getSignatories(state);
+  const signatories = [...getSignatories(state)];
+  signatories.splice(index, 1);
+
   return signatories.reduce(
-    (acc, item, idx) =>
-      acc + idx === index ? 0 : Number(get(item, "kycDetails.shareHoldingPercentage", 0)),
+    (acc, item) => acc + Number(get(item, "kycDetails.shareHoldingPercentage", 0)),
     0
   );
 };
 
 export const checkIsHasSignatories = state =>
   stakeholdersSelector(state).some(stakeholder => get(stakeholder, "kycDetails.isSignatory"));
+
+export const getStakeholdersIds = state => state.stakeholders.stakeholdersIds;

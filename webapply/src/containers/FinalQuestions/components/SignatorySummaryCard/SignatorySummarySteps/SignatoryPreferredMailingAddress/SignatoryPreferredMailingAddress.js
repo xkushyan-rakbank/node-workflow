@@ -53,6 +53,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
         }}
         onSubmit={handleSubmit}
         validationSchema={signatoryPreferredMailingAddressSchema}
+        validateOnChange={false}
       >
         {({ values, setFieldValue }) => (
           <Form>

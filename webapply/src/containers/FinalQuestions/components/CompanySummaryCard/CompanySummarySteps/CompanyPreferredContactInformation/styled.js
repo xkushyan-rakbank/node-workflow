@@ -1,9 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
-  formWrapper: {
-    margin: "0 20px"
-  },
   title: {
     fontSize: "16px"
   },
@@ -39,8 +36,5 @@ export const useStyles = makeStyles({
     display: "flex",
     justifyContent: "flex-end",
     margin: "40px 0"
-  },
-  hidden: {
-    display: "none"
   }
 });

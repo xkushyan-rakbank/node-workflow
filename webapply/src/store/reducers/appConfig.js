@@ -14,6 +14,7 @@ export const initialState = {
   endpoints: {},
   prospect: {},
   error: "",
+  prospectError: false,
   searchInfo: { segment: "sme" },
   login: {},
   prospectModel: {}

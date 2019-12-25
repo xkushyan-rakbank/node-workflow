@@ -14,8 +14,6 @@ export const getOrganizationInfo = state => getProspect(state).organizationInfo 
 
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
 
-export const getIndustryMultiSelect = state => getOrgKYCDetails(state).industryMultiSelect || [];
-
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
@@ -77,3 +75,7 @@ export const getUploadedDocsCount = createGetDocsCountSelector(
 );
 
 export const getRequiredDocsCount = createGetDocsCountSelector();
+
+export const getProspectErrorMessage = state => state.appConfig.prospectError;
+
+export const getLoading = state => state.appConfig.loading;

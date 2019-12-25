@@ -14,7 +14,7 @@ export const StepComponent = ({
   setIsContinueDisabled,
   prospectInfo,
   handleContinue,
-  stepForm: Form
+  stepForm: Form,
 }) => {
   const classes = useStyles();
 

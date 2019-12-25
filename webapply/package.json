@@ -10,15 +10,16 @@
     "@material-ui/pickers": "^3.2.7",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
+    "cometd": "^3.1.10",
     "connected-react-router": "^6.5.2",
-    "core-js": "^3.2.1",
     "date-fns": "^2.0.0-beta.5",
     "formik": "^2.0.4",
     "history": "^4.9.0",
     "lodash": "^4.17.15",
-    "mutation-observer": "^1.0.3",
+    "nanoid": "^2.1.8",
     "node-forge": "^0.9.1",
     "node-sass": "^4.12.0",
+    "prop-types": "^15.7.1",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.3",
     "react-dom": "^16.8.6",
@@ -28,10 +29,12 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.8",
+    "react-text-mask": "^5.4.3",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
     "redux-wait-for-action": "0.0.8",
     "reselect": "^4.0.0",
+    "styled-components": "^5.0.0-beta.8",
     "yup": "^0.27.0"
   },
   "lint-staged": {
@@ -45,6 +48,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "server:mock": "cd ../wiremock/ && java -jar wiremock-standalone-2.24.1.jar",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "eslint": "eslint src/",
     "test": "jest",
@@ -100,6 +104,6 @@
     "lint-staged": "^9.2.1",
     "jest-junit": "^6.3.0",
     "prettier": "1.18.2",
-    "redux-mock-store": "^1.5.3"
+    "source-map-explorer": "^2.1.2"
   }
 }

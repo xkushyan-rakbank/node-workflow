@@ -88,7 +88,7 @@ export const CompanyBusinessRelationshipsComponent = ({
   }, [handleContinue]);
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           topCustomers: topCustomers.map(item => ({ ...item, id: uniqueId() })),
@@ -106,6 +106,7 @@ export const CompanyBusinessRelationshipsComponent = ({
         }}
         onSubmit={handleSubmit}
         validationSchema={companyBusinessRelationshipsSchema}
+        validateOnChange={false}
       >
         {({ values, setFieldValue, setFieldTouched }) => {
           return (
@@ -122,6 +123,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               name={`topCustomers[${index}].name`}
                               path={`prospect.orgKYCDetails.topCustomers[${index}].name`}
                               label="Customer name"
+                              contexualHelpText="List down the names of top existing or future customers. These customer names should be as per their respective Trade Licenses"
                               placeholder="Customer name"
                               component={Input}
                             />

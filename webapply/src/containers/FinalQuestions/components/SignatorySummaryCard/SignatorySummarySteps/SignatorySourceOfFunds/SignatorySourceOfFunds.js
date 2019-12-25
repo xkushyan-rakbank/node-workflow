@@ -37,6 +37,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
         }}
         onSubmit={handleSubmit}
         validationSchema={signatorySourceOfFundsSchema}
+        validateOnChange={false}
       >
         {({ values, setFieldValue, setFieldTouched }) => (
           <Form>
@@ -62,7 +63,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
               </Grid>
               <Grid
                 className={cx({
-                  [classes.hidden]: !(values.wealthType === OTHER_SOURCE_OF_WEALTH)
+                  hidden: !(values.wealthType === OTHER_SOURCE_OF_WEALTH)
                 })}
                 item
                 md={12}
