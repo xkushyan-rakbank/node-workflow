@@ -14,14 +14,9 @@ export const FormLayoutComponent = ({
   location: { key, pathname } = {},
   children,
   screeningResults = {},
-  updateViewId,
-  name,
-  mobileNo,
-  countryCode,
-  email
+  updateViewId
 }) => {
   const classes = useStyles({ pathname });
-  const mobileNumber = `${countryCode + mobileNo}`;
 
   useEffect(() => {
     updateViewId(pathname);
@@ -31,7 +26,7 @@ export const FormLayoutComponent = ({
     <NotificationsProvider>
       <Header />
       <div className={classes.formLayout}>
-        <FormNavigation name={name} mobileNumber={mobileNumber} email={email} />
+        <FormNavigation />
         <div className={classes.formWrapper}>
           <div className={classes.formInner}>
             <div className={classes.mainContainer}>

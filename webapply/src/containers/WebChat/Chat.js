@@ -1,5 +1,8 @@
 import React, { Suspense, lazy, useCallback, useReducer } from "react";
+import { connect } from "react-redux";
 import cx from "classnames";
+
+import { getApplicantInfo } from "../../store/selectors/appConfig";
 import chatIcon from "./../../assets/webchat/black.svg";
 import { useStyles } from "./styled";
 
@@ -42,21 +45,22 @@ const webChatReducer = (state, { type }) => {
   }
 };
 
-export const Chat = props => {
+const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(webChatReducer, initialState);
   const { isOpened, isClosed, isMinimized } = state;
   const toogleChat = isMinimized ? classes.mimimized : classes.expand;
+  const mobileNumber = `${countryCode + mobileNo}`;
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const openChat = useCallback(() =>
     isClosed ? dispatch({ type: "open" }) : dispatch({ type: "expand" })
   );
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const closeWebChat = useCallback(() => dispatch({ type: "close" }));
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const minimizeChat = useCallback(() => dispatch({ type: "minimize" }));
 
   return (
@@ -82,10 +86,25 @@ export const Chat = props => {
       {isOpened && (
         <div className={cx(classes.chatWrapper, toogleChat)}>
           <Suspense fallback={<div>Loading...</div>}>
-            <WebChatComponent onClose={closeWebChat} onMinimize={minimizeChat} {...props} />
+            <WebChatComponent
+              onClose={closeWebChat}
+              onMinimize={minimizeChat}
+              name={name}
+              mobileNumber={mobileNumber}
+              email={email}
+            />
           </Suspense>
         </div>
       )}
     </>
   );
 };
+
+const mapStateToProps = state => ({
+  name: getApplicantInfo(state).fullName,
+  mobileNo: getApplicantInfo(state).mobileNo,
+  countryCode: getApplicantInfo(state).countryCode,
+  email: getApplicantInfo(state).email
+});
+
+export const Chat = connect(mapStateToProps)(ChatComponent);
