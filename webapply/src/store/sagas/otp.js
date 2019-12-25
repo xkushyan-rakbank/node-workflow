@@ -1,4 +1,4 @@
-import { all, delay, call, put, select, takeLatest } from "redux-saga/effects";
+import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { otp } from "../../api/apiClient";
 import * as appConfigSelectors from "../selectors/appConfig";
 import * as otpActions from "../actions/otp";
@@ -18,7 +18,6 @@ function* generateOtp(action) {
 
 function* verifyOtp({ payload: otpToken }) {
   try {
-    console.log("verify otp");
     const state = yield select();
     const applicantInfo = appConfigSelectors.getApplicantInfo(state);
 
@@ -30,10 +29,6 @@ function* verifyOtp({ payload: otpToken }) {
       otpToken
     };
     const { data } = yield call(otp.verify, payload);
-    console.log("data");
-    console.log(data);
-    // TODO: only for develop - remove
-    yield delay(Math.random() > 0.5 ? 2000 : 1000);
     if (data.verified) {
       yield put(otpActions.verifyCodeSuccess());
     } else {
