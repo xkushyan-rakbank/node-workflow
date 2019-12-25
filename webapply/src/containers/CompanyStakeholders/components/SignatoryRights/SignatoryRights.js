@@ -9,8 +9,9 @@ import {
   AutoSaveField as Field
 } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
-import { yesNoOptions } from "../../../../constants/options";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
+import { yesNoOptions } from "../../../../constants/options";
+import { UAE } from "../../../../constants";
 
 const signatoryRightsSchema = Yup.object().shape({
   isSignatory: Yup.boolean().required("Required"),
@@ -36,6 +37,10 @@ export const SignatoryRights = ({ handleContinue, index }) => (
             component={InlineRadioGroup}
             options={yesNoOptions}
             label="Is this person a signatory?"
+            changeProspect={prospect => ({
+              ...prospect,
+              [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
+            })}
           />
           <Field
             name="authorityType"

@@ -110,6 +110,7 @@ export const accountsNames = {
 };
 
 export const UAE_CODE = "971";
+export const UAE = "AE";
 
 export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
 
