@@ -1,9 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
+import { getApplicantInfo } from "../../../../store/selectors/appConfig";
 import { InfoTitle } from "../../../../components/InfoTitle";
 import {
   CustomSelect,
@@ -50,6 +52,15 @@ const personalInformationSchema = Yup.object().shape({
 export const PersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
 
+  const applicantInfo = useSelector(getApplicantInfo);
+
+  const createChangeProspectHandler = values => prospect => ({
+    ...prospect,
+    [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
+      ? applicantInfo.fullName
+      : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
+  });
+
   return (
     <Formik
       initialValues={{
@@ -78,6 +89,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   resetForm();
                   setFieldValue("isShareholderACompany", !values.isShareholderACompany);
                 }}
+                changeProspect={createChangeProspectHandler(values)}
               />
               <ContexualHelp
                 title="Select this check box if another company holds any shares based on Memorandum of Association / Articles of Association / Partners agreement / Service Agreement / Share Certificate"
@@ -109,6 +121,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   placeholder="First name"
                   disabled={!!values.isShareholderACompany}
                   component={Input}
+                  changeProspect={createChangeProspectHandler(values)}
                   inputProps={{ maxLength: 30 }}
                 />
               </InputGroup>
@@ -121,6 +134,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Middle Name (Optional)"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
+                changeProspect={createChangeProspectHandler(values)}
                 inputProps={{ maxLength: 30 }}
               />
             </Grid>
@@ -134,6 +148,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Last name"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
+                changeProspect={createChangeProspectHandler(values)}
                 inputProps={{ maxLength: 30 }}
               />
             </Grid>
