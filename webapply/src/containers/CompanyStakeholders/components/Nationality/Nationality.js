@@ -13,7 +13,7 @@ import {
   Input
 } from "../../../../components/Form";
 import { getSignatories } from "../../../../store/selectors/appConfig";
-import { PASSPORT_NUMBER_REGEX } from "../../../../utils/validation";
+import { ALPHANUMERIC_REGEX } from "../../../../utils/validation";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { useStyles } from "./styled";
 
@@ -31,7 +31,8 @@ const nationalitySchema = Yup.object().shape({
       nationality: Yup.string().required("Required"),
       passportNumber: Yup.string()
         .required("Required")
-        .matches(PASSPORT_NUMBER_REGEX, "Special characters and space is not allowed")
+        .max(12, "Maximum 12 characters allowed")
+        .matches(ALPHANUMERIC_REGEX, "Special characters and space is not allowed")
     })
   )
 });

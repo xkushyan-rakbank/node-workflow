@@ -34,15 +34,18 @@ const CompanyStakeholdersComponent = ({
   stakeholders,
   percentage,
   history,
-  resetProspect
+  resetProspect,
+  stakeholdersIds
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isNewStakeholder, setIsNewStakeholder] = useState(false);
-
   const isLowPercentage = percentage < 100;
   const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
-  const isDisableNextStep = (stakeholders.length < 1 && !!editableStakeholder) || isLowPercentage;
+  const isDisableNextStep =
+    stakeholders.length < 1 ||
+    !stakeholdersIds.every(stakeholder => stakeholder.done) ||
+    isLowPercentage;
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
   or edit the shareholding % for the added stakeholders.`;
 
@@ -82,9 +85,9 @@ const CompanyStakeholdersComponent = ({
     <>
       <h2>Add your company’s stakeholders</h2>
       <p className="formDescription">
-        Now we need to know about those who have a say in your company. This includes shareholders,
-        signatories/power of attorney. Check our guide below to see which one applies to your
-        company.
+        Now we need to know about the key people in your company. This includes shareholders,
+        partners, signatories/Power of Attorney. Check our guide below to see which one applies to
+        your company
       </p>
 
       <div>

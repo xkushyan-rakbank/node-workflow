@@ -10,7 +10,7 @@ import {
   InputGroup,
   AutoSaveField as Field
 } from "../../components/Form/index";
-import { EMAIL_REGEX, PHONE_REGEX } from "../../utils/validation";
+import { PHONE_REGEX } from "../../utils/validation";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
@@ -25,7 +25,7 @@ import { useStyles } from "./styled";
 const comebackSchema = Yup.object({
   email: Yup.string()
     .required("You need to provide Email address")
-    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+    .email("This is not a valid Email address"),
   countryCode: Yup.string().required("Select country code"),
   mobileNo: Yup.string()
     .required("You need to provide mobile number")

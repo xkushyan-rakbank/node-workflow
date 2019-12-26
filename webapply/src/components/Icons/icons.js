@@ -18,6 +18,7 @@ import { ReactComponent as ValueAddedServices } from "../../assets/icons/value_a
 import { ReactComponent as QuestionMarkGray } from "../../assets/icons/question_mark_grey.svg";
 import { ReactComponent as Info } from "../../assets/icons/info.svg";
 import { ReactComponent as InfoYellow } from "../../assets/icons/infoYellow.svg";
+import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 
 export const iconComponents = {
   done: Done,
@@ -39,7 +40,8 @@ export const iconComponents = {
   valueAddedServices: ValueAddedServices,
   questionMarkGray: QuestionMarkGray,
   info: Info,
-  infoYellow: InfoYellow
+  infoYellow: InfoYellow,
+  arrowDown: ArrowDown
 };
 
 export const ICONS = {
@@ -62,5 +64,6 @@ export const ICONS = {
   valueAddedServices: "valueAddedServices",
   questionMarkGray: "questionMarkGray",
   info: "info",
-  infoYellow: "infoYellow"
+  infoYellow: "infoYellow",
+  arrowDown: "arrowDown"
 };

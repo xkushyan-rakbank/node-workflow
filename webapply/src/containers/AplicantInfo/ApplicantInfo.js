@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
+import { NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import {
   Input,
   CustomSelect,
@@ -28,7 +28,7 @@ const aplicantInfoSchema = Yup.object({
     .matches(NAME_REGEX, "This is not a valid name"),
   email: Yup.string()
     .required("You need to provide Email address")
-    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+    .email("This is not a valid Email address"),
   countryCode: Yup.string().required("Select country code"),
   mobileNo: Yup.string()
     .required("You need to provide mobile number")
@@ -75,6 +75,7 @@ const ApplicantInfoPage = ({
 
       <Formik
         initialValues={initialValues}
+        validateOnChange={false}
         validationSchema={aplicantInfoSchema}
         onSubmit={onSubmit}
       >
