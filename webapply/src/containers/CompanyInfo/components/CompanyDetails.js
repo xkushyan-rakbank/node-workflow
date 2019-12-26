@@ -11,7 +11,7 @@ import { MAX_COMPANY_NAME_LENGTH } from "../constants";
 const initialValues = {
   companyName: "",
   vatRegistrationNumber: "",
-  numberOfEmployees: "",
+  numberOfEmployees: "0",
   companyCategory: ""
 };
 
@@ -34,7 +34,7 @@ export const CompanyDetails = ({ handleContinue }) => (
     validationSchema={companyDetailsSchema}
     onSubmit={handleContinue}
   >
-    {() => (
+    {({ values, setFieldValue }) => (
       <Form>
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
@@ -76,6 +76,16 @@ export const CompanyDetails = ({ handleContinue }) => (
               label="Number of employees"
               path="prospect.organizationInfo.numberOfEmployees"
               component={Input}
+              changeProspect={(prospect, value) => {
+                if (value) {
+                  return prospect;
+                }
+
+                return {
+                  ...prospect,
+                  ["prospect.organizationInfo.numberOfEmployees"]: 0
+                };
+              }}
             />
           </Grid>
         </Grid>
