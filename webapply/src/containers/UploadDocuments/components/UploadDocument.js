@@ -64,10 +64,6 @@ export const UploadDocuments = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (document.uploadStatus === "NotUploaded") {
-    return null;
-  }
-
   return (
     <div className={classes.fileUploadPlaceholder}>
       <input
