@@ -212,7 +212,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     name="maxAmtSingleTxnCashAED"
                     label="Maximum amount in Cash"
                     path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
-                    placeholder="Maximum amount in Cash"
+                    placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
                   />
@@ -222,7 +222,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     name="maxAmtSingleTxnNonCashAED"
                     label="Maximum amount in Non-Cash"
                     path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
-                    placeholder="Maximum amount in Non-Cash"
+                    placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
                   />
