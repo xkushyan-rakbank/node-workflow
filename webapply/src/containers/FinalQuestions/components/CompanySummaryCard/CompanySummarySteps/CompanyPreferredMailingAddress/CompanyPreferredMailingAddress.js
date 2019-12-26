@@ -11,7 +11,7 @@ import {
   PO_NUMBER_REGEX,
   SPACE_OCCUPIED_OTHER_REGEX
 } from "../../../../../../utils/validation";
-import { OTHER_OPTION_CODE, BASE_PATH } from "./constants";
+import { OTHER_OPTION_CODE, BASE_PATH, MAX_OFFICE_NUMBER_LENGTH } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -62,6 +62,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   path={`${BASE_PATH}.addressFieldDesc`}
                   label="Office / Shop Number"
                   placeholder="Office / Shop Number"
+                  inputProps={{ maxLength: MAX_OFFICE_NUMBER_LENGTH }}
                   component={Input}
                 />
                 <Field
