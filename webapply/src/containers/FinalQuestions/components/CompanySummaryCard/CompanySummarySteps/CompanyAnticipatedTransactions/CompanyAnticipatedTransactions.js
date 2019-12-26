@@ -178,7 +178,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     name="totalMonthlyCashAmountInFigures"
                     path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                     label="Part of Monthly Total in Cash"
-                    placeholder="Part of Monthly Total in Cash"
+                    placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
                   />
@@ -188,7 +188,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     name="totalMonthlyNonCashAmountInFigures"
                     path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                     label="Part of Monthly Total in Non-Cash"
-                    placeholder="Part of Monthly Total in Non-Cash"
+                    placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
                   />
