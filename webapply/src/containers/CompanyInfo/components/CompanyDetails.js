@@ -22,9 +22,10 @@ const companyDetailsSchema = Yup.object({
   vatRegistrationNumber: Yup.string()
     .max(15, "Maximum 15 characters allowed")
     .matches(NUMBER_REGEX, "Not valid number"),
-  numberOfEmployees: Yup.number()
+  numberOfEmployees: Yup.string()
     .min(0, "must be more than 0")
-    .max(1000, "must be less than or equal to 1000"),
+    .max(1000, "must be less than or equal to 1000")
+    .matches(NUMBER_REGEX, "Not valid number"),
   companyCategory: Yup.string().required("You need to provide company category")
 });
 
@@ -34,7 +35,7 @@ export const CompanyDetails = ({ handleContinue }) => (
     validationSchema={companyDetailsSchema}
     onSubmit={handleContinue}
   >
-    {({ values, setFieldValue }) => (
+    {() => (
       <Form>
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
