@@ -28,7 +28,7 @@ export const CompanyStakeholderCard = ({
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>
-            {firstName ? `${firstName} ${middleName} ${lastName}` : "New Stakeholder"}
+            {[firstName, middleName, lastName].filter(item => item).join(" ") || "New Stakeholder"}
           </div>
           {isStatusShown && <StatusLoader loading={isStatusLoading} />}
         </div>
