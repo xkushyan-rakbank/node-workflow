@@ -6,7 +6,7 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 
-const ENCRYPT_METHODS = ["put", "post"];
+const ENCRYPT_METHODS = [];
 const SYM_KEY_HEADER = "x-sym-key";
 
 const getBaseURL = () =>

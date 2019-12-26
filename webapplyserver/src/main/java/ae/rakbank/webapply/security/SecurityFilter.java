@@ -66,7 +66,6 @@ public class SecurityFilter implements Filter {
             }
             response.setContentLength(result.length());
             response.getWriter().write(result);
-            response.getWriter().flush();
         }
     }
 
