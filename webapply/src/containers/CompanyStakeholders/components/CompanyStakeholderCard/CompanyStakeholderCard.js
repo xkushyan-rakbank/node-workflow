@@ -8,6 +8,7 @@ import { useStyles } from "./styled";
 export const CompanyStakeholderCard = ({
   firstName,
   lastName,
+  middleName,
   className,
   index,
   isStatusShown,
@@ -27,7 +28,7 @@ export const CompanyStakeholderCard = ({
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>
-            {firstName ? `${firstName} ${lastName}` : "New Stakeholder"}
+            {firstName ? `${firstName} ${middleName} ${lastName}` : "New Stakeholder"}
           </div>
           {isStatusShown && <StatusLoader loading={isStatusLoading} />}
         </div>
