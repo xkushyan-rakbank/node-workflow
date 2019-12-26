@@ -140,7 +140,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    "& img": {
+    "& svg": {
       width: "44px"
     }
   },

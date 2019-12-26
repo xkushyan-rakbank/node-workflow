@@ -5,13 +5,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
-import {
-  Input,
-  CustomSelect,
-  InputGroup,
-  AutoSaveField as Field
-} from "../../components/Form/index";
-import { PHONE_REGEX } from "../../utils/validation";
+import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
+import { PHONE_REGEX } from "./../../utils/validation";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
@@ -19,8 +14,8 @@ import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import { isOtpGenerated } from "../../store/selectors/otp";
-import routes from "../../routes";
-import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants/index";
+import routes from "./../../routes";
+import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { useStyles } from "./styled";
 
 const comebackSchema = Yup.object({
