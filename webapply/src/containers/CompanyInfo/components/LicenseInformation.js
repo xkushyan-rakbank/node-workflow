@@ -7,6 +7,7 @@ import { Input, DatePicker, CustomSelect, AutoSaveField as Field } from "../../.
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
+import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
 import { UAE } from "../../../constants";
 
 const initialValues = {
@@ -21,7 +22,6 @@ const initialValues = {
 const licenseInformationSchema = Yup.object({
   licenseNumber: Yup.string()
     .required("You need to provide license number")
-    .max(20, "Maximum 20 characters allowed")
     .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number"),
   licenseIssueDate: Yup.date().required("You need to provide issue date"),
   countryOfIncorporation: Yup.string().required("You need to provide country incorporation"),
@@ -46,6 +46,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               path="prospect.organizationInfo.licenseNumber"
               contexualHelpText="If License Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.Example CN-123/2018/456 to be entered as CN1232018456"
               component={Input}
+              inputProps={{ maxLength: MAX_LICENSE_NUMBER_LENGTH }}
             />
           </Grid>
           <Grid item md={6} sm={12}>
