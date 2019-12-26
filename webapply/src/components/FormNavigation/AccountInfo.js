@@ -10,7 +10,7 @@ import routes from "../../routes";
 
 import { useStyles } from "./styled";
 
-export const AccountInfo = ({ accountType }) => {
+export const AccountInfo = ({ accountType, islamicBanking }) => {
   const classes = useStyles();
   const history = useHistory();
   const { location: { pathname } = {} } = history;
@@ -32,7 +32,9 @@ export const AccountInfo = ({ accountType }) => {
               component="span"
               classes={{ root: classes.sectionSubtitle }}
             >
-              {accountsInfo[accountType].subtitle}
+              {islamicBanking
+                ? accountsInfo[accountType].islamicSubtitle
+                : accountsInfo[accountType].subtitle}
             </Typography>
           </div>
           <ContainedButton
