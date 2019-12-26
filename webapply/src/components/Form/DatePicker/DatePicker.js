@@ -21,18 +21,13 @@ export const DatePicker = ({
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
   contexualHelpText,
-  isDisableHoverListener,
-  placement
+  contexualHelpProps = {}
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
   return (
-    <ContexualHelp
-      title={contexualHelpText}
-      placement={placement}
-      isDisableHoverListener={isDisableHoverListener}
-    >
+    <ContexualHelp title={contexualHelpText} {...contexualHelpProps}>
       <FormControl className="formControl">
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <BaseDatePicker

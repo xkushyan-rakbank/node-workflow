@@ -75,7 +75,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               path="prospect.organizationInfo.countryOfIncorporation"
               datalistId="countryOfIncorporation"
               contexualHelpText="This should be the same as in Traву License. If the Company does not hold  an UAE Trade License, please share company registration details as per other company documents"
-              isDisableHoverListener={false}
+              contexualHelpProps={{ isDisableHoverListener: false }}
               component={CustomSelect}
             />
           </Grid>
@@ -88,7 +88,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               label="Date of incorporation"
               path="prospect.organizationInfo.dateOfIncorporation"
               contexualHelpText="This should be the same as in Traву License. If the Company does not hold  an UAE Trade License, please share company registration details as per other company documents"
-              isDisableHoverListener={false}
+              contexualHelpProps={{ isDisableHoverListener: false }}
               component={DatePicker}
             />
           </Grid>

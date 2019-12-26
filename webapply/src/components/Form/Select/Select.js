@@ -30,8 +30,7 @@ export const CustomSelect = ({
   isMulti = false,
   shrink,
   contexualHelpText,
-  placement,
-  isDisableHoverListener,
+  contexualHelpProps = {},
   ...rest
 }) => {
   const classes = useStyles();
@@ -57,11 +56,7 @@ export const CustomSelect = ({
         {label}
       </InputLabel>
 
-      <ContexualHelp
-        title={contexualHelpText}
-        placement={placement}
-        isDisableHoverListener={isDisableHoverListener}
-      >
+      <ContexualHelp title={contexualHelpText} {...contexualHelpProps}>
         <Select
           {...field}
           {...rest}
