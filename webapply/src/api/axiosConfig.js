@@ -6,11 +6,15 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 
-const ENCRYPT_METHODS = ["PUT", "POST"];
+const ENCRYPT_METHODS = ["put", "post"];
 const SYM_KEY_HEADER = "x-sym-key";
 
 const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
+
+export const uploadClient = axios.create({
+  baseURL: getBaseURL()
+});
 
 const instance = axios.create({
   baseURL: getBaseURL()
