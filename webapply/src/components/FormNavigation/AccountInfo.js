@@ -1,22 +1,19 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 
 import { ContainedButton } from "../Buttons/ContainedButton";
 import { MobileNotification } from "../Modals/index";
 
-import { getApplicationInfo } from "../../store/selectors/appConfig";
 import { accountsInfo } from "./constants";
 import routes from "../../routes";
 
 import { useStyles } from "./styled";
 
-export const AccountInfo = () => {
+export const AccountInfo = ({ accountType, islamicBanking }) => {
   const classes = useStyles();
   const history = useHistory();
   const { location: { pathname } = {} } = history;
-  const { accountType, islamicBanking } = useSelector(getApplicationInfo);
 
   const handleClick = path => () => history.push(path);
   const isApplicationOverview = pathname === routes.applicationOverview;

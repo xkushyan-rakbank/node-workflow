@@ -56,7 +56,7 @@ export const FormNavigationComponent = ({
         </Typography>
       </IslamicBankingSwitcherMobile>
       {checkIsShowAccountInfo(pathname) ? (
-        <AccountInfo />
+        <AccountInfo accountType={accountType} islamicBanking={islamicBanking} />
       ) : (
         pathname !== routes.login && (
           <ul>
