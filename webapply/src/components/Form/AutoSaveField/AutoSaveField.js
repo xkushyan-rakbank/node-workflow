@@ -52,7 +52,7 @@ export const AutoSaveField = ({
         const oldValue = get(appConfig, path);
 
         if (!isEqual(oldValue, value)) {
-          const prospect = changeProspect({ [path]: value }, value);
+          const prospect = changeProspect({ [path]: value }, value, path);
 
           dispatch(updateProspect(prospect));
         }
