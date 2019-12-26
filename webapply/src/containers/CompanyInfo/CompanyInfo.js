@@ -33,7 +33,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName, licenseIssueDate, countryOfIncorporation }
 }) => {
   const classes = useStyles();
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_3);
   const [isError, setError] = useState(false);
   const isForeignCompany = countryOfIncorporation && countryOfIncorporation !== UAE;
   let isEligible = false;

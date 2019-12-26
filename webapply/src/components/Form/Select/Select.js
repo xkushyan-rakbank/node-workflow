@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { getIn } from "formik";
 
-import { ErrorMessage, InfoTitle } from "./../../Notifications";
+import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
 import { useStyles } from "./styled";
 
 export const CustomSelect = ({
@@ -29,6 +29,9 @@ export const CustomSelect = ({
   form: { errors, touched },
   isMulti = false,
   shrink,
+  contexualHelpText,
+  placement,
+  isDisableHoverListener,
   ...rest
 }) => {
   const classes = useStyles();
@@ -54,29 +57,35 @@ export const CustomSelect = ({
         {label}
       </InputLabel>
 
-      <Select
-        {...field}
-        {...rest}
-        renderValue={renderValue}
-        multiple={multiple}
-        input={<OutlinedInput labelWidth={labelWidth} />}
-        IconComponent={KeyboardArrowDownIcon}
-        className={cx(classes.selectField, classes.selectFieldBasic)}
-        error={isError}
+      <ContexualHelp
+        title={contexualHelpText}
+        placement={placement}
+        isDisableHoverListener={isDisableHoverListener}
       >
-        {options.map(option => (
-          <MenuItem key={extractId(option)} value={extractValue(option)}>
-            {multiple ? (
-              <>
-                <ListItemText primary={extractLabel(option)} />
-                <Checkbox color="default" checked={field.value.includes(extractValue(option))} />
-              </>
-            ) : (
-              extractLabel(option)
-            )}
-          </MenuItem>
-        ))}
-      </Select>
+        <Select
+          {...field}
+          {...rest}
+          renderValue={renderValue}
+          multiple={multiple}
+          input={<OutlinedInput labelWidth={labelWidth} />}
+          IconComponent={KeyboardArrowDownIcon}
+          className={cx(classes.selectField, classes.selectFieldBasic)}
+          error={isError}
+        >
+          {options.map(option => (
+            <MenuItem key={extractId(option)} value={extractValue(option)}>
+              {multiple ? (
+                <>
+                  <ListItemText primary={extractLabel(option)} />
+                  <Checkbox color="default" checked={field.value.includes(extractValue(option))} />
+                </>
+              ) : (
+                extractLabel(option)
+              )}
+            </MenuItem>
+          ))}
+        </Select>
+      </ContexualHelp>
 
       {isError && <ErrorMessage error={errorMessage} />}
 
