@@ -34,13 +34,13 @@ function createUploader(prospectId, data, source) {
     emit = emitter;
     return () => {};
   });
-  const uploadProgressCb = ({ total, loaded }) => {
+  const onUploadProgress = ({ total, loaded }) => {
     const percentage = Math.round((loaded * 100) / total);
     emit(percentage);
     if (percentage === 100) emit(END);
   };
 
-  const uploadPromise = uploadProspectDocument.send({ prospectId, data, source, uploadProgressCb });
+  const uploadPromise = uploadProspectDocument.send({ prospectId, data, source, onUploadProgress });
   return [uploadPromise, chan];
 }
 

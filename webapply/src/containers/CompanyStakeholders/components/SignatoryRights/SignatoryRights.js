@@ -8,8 +8,10 @@ import {
   InlineRadioGroup,
   AutoSaveField as Field
 } from "../../../../components/Form";
-import { yesNoOptions } from "../../../../constants/options";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
+import { yesNoOptions } from "../../../../constants/options";
+import { UAE } from "../../../../constants";
 
 const signatoryRightsSchema = Yup.object().shape({
   isSignatory: Yup.boolean().required("Required"),
@@ -19,36 +21,39 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-export const SignatoryRights = ({ handleContinue, index }) => {
-  return (
-    <Formik
-      initialValues={{ authorityType: "", isSignatory: "" }}
-      onSubmit={handleContinue}
-      validationSchema={signatoryRightsSchema}
-    >
-      {({ values }) => (
-        <Form>
-          <Grid container>
-            <Field
-              name="isSignatory"
-              path={`prospect.signatoryInfo[${index}].kycDetails.isSignatory`}
-              component={InlineRadioGroup}
-              options={yesNoOptions}
-              label="Is this person a signatory?"
-            />
-            <Field
-              name="authorityType"
-              path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
-              disabled={!values.isSignatory}
-              component={CustomSelect}
-              label="Authority Type"
-              datalistId="authorityType"
-            />
-          </Grid>
+export const SignatoryRights = ({ handleContinue, index }) => (
+  <Formik
+    initialValues={{ authorityType: "", isSignatory: "" }}
+    onSubmit={handleContinue}
+    validationSchema={signatoryRightsSchema}
+    validateOnChange={false}
+  >
+    {withCompanyStakeholder(index, ({ values }) => (
+      <Form>
+        <Grid container>
+          <Field
+            name="isSignatory"
+            path={`prospect.signatoryInfo[${index}].kycDetails.isSignatory`}
+            component={InlineRadioGroup}
+            options={yesNoOptions}
+            label="Is this person a signatory?"
+            changeProspect={prospect => ({
+              ...prospect,
+              [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
+            })}
+          />
+          <Field
+            name="authorityType"
+            path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
+            disabled={!values.isSignatory}
+            component={CustomSelect}
+            label="Authority Type"
+            datalistId="authorityType"
+          />
+        </Grid>
 
-          <SubmitButton />
-        </Form>
-      )}
-    </Formik>
-  );
-};
+        <SubmitButton />
+      </Form>
+    ))}
+  </Formik>
+);

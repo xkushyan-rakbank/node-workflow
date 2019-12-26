@@ -28,10 +28,10 @@ const arrowGenerator = color => {
     },
     "&[x-placement*='left'] $tooltip": {
       "&::before": {
-        top: "20px",
+        top: "50%",
         left: "auto",
         right: "-6px",
-        transform: "rotate(-135deg)",
+        transform: " translate(0, 50%) rotate(-135deg)",
         borderWidth: "0.3em",
         marginLeft: 0
       }

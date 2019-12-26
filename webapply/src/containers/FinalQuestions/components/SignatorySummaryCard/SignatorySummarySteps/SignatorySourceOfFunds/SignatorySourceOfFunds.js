@@ -37,6 +37,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
         }}
         onSubmit={handleSubmit}
         validationSchema={signatorySourceOfFundsSchema}
+        validateOnChange={false}
       >
         {({ values, setFieldValue, setFieldTouched }) => (
           <Form>

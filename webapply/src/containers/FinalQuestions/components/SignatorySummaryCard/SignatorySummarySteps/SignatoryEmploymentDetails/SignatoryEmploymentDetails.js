@@ -62,6 +62,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
         }}
         onSubmit={handleSubmit}
         validationSchema={signatoryEmploymentDetailsSchema}
+        validateOnChange={false}
       >
         {({ values, setFieldValue }) => {
           const basePath = `prospect.signatoryInfo[${index}]`;

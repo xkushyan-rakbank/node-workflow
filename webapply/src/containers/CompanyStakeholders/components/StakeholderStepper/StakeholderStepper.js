@@ -39,7 +39,7 @@ const StakeholderStepperComponent = ({
     sendProspectToAPI().then(
       () => {
         if (step === STEP_6) {
-          setFillStakeholder(index);
+          setFillStakeholder(index, true);
         }
         handleSetNextStep();
       },

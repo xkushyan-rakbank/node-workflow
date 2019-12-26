@@ -77,6 +77,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
         }}
         onSubmit={handleSubmit}
         validationSchema={companyBranchesAndSubsidiariesSchema}
+        validateOnChange={false}
       >
         {({ values, setFieldValue, setFieldTouched }) => (
           <Form>

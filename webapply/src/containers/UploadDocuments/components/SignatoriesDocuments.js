@@ -15,14 +15,16 @@ export const SignatoriesDocuments = ({
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
-    const docUploadDetails = documents[`${index}_${signatorie.firstName}`];
+    const docUploadDetails = documents[`${index}_${signatorie.fullName}`];
+
     return (
-      docUploadDetails && (
+      docUploadDetails &&
+      docUploadDetails.length && (
         <div className={classes.signatoreyContainer} key={signatorie.signatoryId}>
           <div className={classes.contentWrapper}>
             <Avatar firstName={signatorie.firstName} lastName={signatorie.lastName} index={index} />
             <div className={classes.userInfo}>
-              <div className={classes.nameField}>{signatorie.firstName}</div>
+              <div className={classes.nameField}>{signatorie.fullName}</div>
               <div className={classes.SignatoryRights}>{signatorie.roles}</div>
               <div className={classes.shareholdingField}>
                 {signatorie.kycDetails.shareHoldingPercentage
@@ -31,19 +33,16 @@ export const SignatoriesDocuments = ({
               </div>
             </div>
           </div>
-          {get(docUploadDetails, "documents", []).map(
-            document =>
-              signatorie.firstName === document.signatoryName && (
-                <UploadDocuments
-                  key={document.documentKey}
-                  document={document}
-                  type="stakeholdersDocuments"
-                  docUpload={docUpload}
-                  cancelDocUpload={cancelDocUpload}
-                  progress={progress}
-                />
-              )
-          )}
+          {get(docUploadDetails, "documents", []).map(document => (
+            <UploadDocuments
+              key={document.documentKey}
+              document={document}
+              type="stakeholdersDocuments"
+              docUpload={docUpload}
+              cancelDocUpload={cancelDocUpload}
+              progress={progress}
+            />
+          ))}
         </div>
       )
     );

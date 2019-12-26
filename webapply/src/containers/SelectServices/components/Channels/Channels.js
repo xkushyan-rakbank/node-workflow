@@ -78,6 +78,7 @@ export const ChannelsComponent = ({
         }))
       }}
       validationSchema={channelsSchema}
+      validateOnChange={false}
       onSubmit={goToNext}
     >
       {({ values, setFieldValue }) => (

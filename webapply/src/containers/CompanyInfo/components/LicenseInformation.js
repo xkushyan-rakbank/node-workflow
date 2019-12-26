@@ -7,13 +7,14 @@ import { Input, DatePicker, CustomSelect, AutoSaveField as Field } from "../../.
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
+import { UAE } from "../../../constants";
 
 const initialValues = {
   licenseNumber: "",
   licenseIssueDate: "",
   licenseIssuingAuthority: "",
-  countryOfIncorporation: "AE",
-  dateOfIncorporation: null,
+  countryOfIncorporation: UAE,
+  dateOfIncorporation: "",
   yearsInBusiness: ""
 };
 
@@ -23,12 +24,15 @@ const licenseInformationSchema = Yup.object({
     .max(20, "Maximum 20 characters allowed")
     .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number"),
   licenseIssueDate: Yup.date().required("You need to provide issue date"),
-  countryOfIncorporation: Yup.string().required("You need to provide country incorporation")
+  countryOfIncorporation: Yup.string().required("You need to provide country incorporation"),
+  licenseIssuingAuthority: Yup.string().required("You need to provide license issuing authority"),
+  dateOfIncorporation: Yup.date().required("You need to provide issue date")
 });
 
 export const LicenseInformation = ({ handleContinue }) => (
   <Formik
     initialValues={initialValues}
+    validateOnChange={false}
     validationSchema={licenseInformationSchema}
     onSubmit={handleContinue}
   >

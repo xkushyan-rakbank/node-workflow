@@ -106,6 +106,7 @@ export const CompanyBusinessRelationshipsComponent = ({
         }}
         onSubmit={handleSubmit}
         validationSchema={companyBusinessRelationshipsSchema}
+        validateOnChange={false}
       >
         {({ values, setFieldValue, setFieldTouched }) => {
           return (

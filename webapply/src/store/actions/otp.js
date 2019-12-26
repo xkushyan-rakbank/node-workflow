@@ -25,9 +25,8 @@ export const setOtpPendingRequest = payload => ({
   payload
 });
 
-export const generateCodeSuccess = payload => ({
-  type: GENERATE_CODE_SUCCESS,
-  payload
+export const generateCodeSuccess = () => ({
+  type: GENERATE_CODE_SUCCESS
 });
 
 export const verifyCodeSuccess = () => ({
