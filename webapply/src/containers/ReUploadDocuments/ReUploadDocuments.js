@@ -9,7 +9,7 @@ import {
   extraDocUploadSuccess,
   deleteExtraDocUploadSuccess
 } from "../../store/actions/getProspectDocuments";
-import * as appConfigSelectors from "../../store/selectors/appConfig";
+import { getProspectDocuments } from "../../store/selectors/appConfig";
 
 const uploadFileSizeMax = 5;
 const maxExtraDocUpload = 7;
@@ -294,7 +294,7 @@ class EditApplicationComponent extends Component {
 
 const mapStateToProps = state => {
   return {
-    documents: appConfigSelectors.getProspectDocuments(state)
+    documents: getProspectDocuments(state)
   };
 };
 
