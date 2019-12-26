@@ -6,4 +6,4 @@ const mapStateToProps = state => ({
   servicePricingGuideUrl: getServicePricingGuideUrl(state)
 });
 
-export const AccountsComparison = connect(mapStateToProps)(AccountsComparisonComponent);
+export default connect(mapStateToProps)(AccountsComparisonComponent);

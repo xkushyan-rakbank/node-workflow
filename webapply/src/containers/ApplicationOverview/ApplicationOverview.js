@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import TwoSteps from "./TwoSteps";
+import { TwoSteps } from "./components/TwoSteps";
 
-import PreliminaryInformation from "./PreliminaryInformation";
+import { PreliminaryInformation } from "./components/PreliminaryInformation";
 import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 
