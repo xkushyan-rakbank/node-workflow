@@ -22,10 +22,10 @@ const companyDetailsSchema = Yup.object({
   vatRegistrationNumber: Yup.string()
     .max(15, "Maximum 15 characters allowed")
     .matches(NUMBER_REGEX, "Not valid number"),
-  numberOfEmployees: Yup.string()
+  numberOfEmployees: Yup.number()
+    .typeError("Not valid number")
     .min(0, "must be more than 0")
-    .max(1000, "must be less than or equal to 1000")
-    .matches(NUMBER_REGEX, "Not valid number"),
+    .max(1000, "must be less than or equal to 1000"),
   companyCategory: Yup.string().required("You need to provide company category")
 });
 
@@ -77,16 +77,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               label="Number of employees"
               path="prospect.organizationInfo.numberOfEmployees"
               component={Input}
-              changeProspect={(prospect, value) => {
-                if (value) {
-                  return prospect;
-                }
-
-                return {
-                  ...prospect,
-                  ["prospect.organizationInfo.numberOfEmployees"]: 0
-                };
-              }}
+              changeProspect={(_, value, path) => ({ [path]: value || "0" })}
             />
           </Grid>
         </Grid>
