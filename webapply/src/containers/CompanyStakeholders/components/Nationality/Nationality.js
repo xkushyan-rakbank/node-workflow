@@ -12,6 +12,7 @@ import {
   Checkbox,
   Input
 } from "../../../../components/Form";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { ALPHANUMERIC_REGEX } from "../../../../utils/validation";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
@@ -69,8 +70,9 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
         passportDetails: passportDetails.map(item => ({ ...item, id: uniqueId() }))
       }}
       validationSchema={nationalitySchema}
+      validateOnChange={false}
     >
-      {({ values, setFieldValue }) => (
+      {withCompanyStakeholder(index, ({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -141,7 +143,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
           </Grid>
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

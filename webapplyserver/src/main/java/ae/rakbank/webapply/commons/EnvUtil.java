@@ -55,5 +55,4 @@ public class EnvUtil {
   public static boolean isCheckRecaptcha() {
     return false;
   }
-
 }

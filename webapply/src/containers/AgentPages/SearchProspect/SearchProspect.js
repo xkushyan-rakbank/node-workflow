@@ -50,6 +50,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
       <Formik
         initialValues={initialValues}
         validationSchema={searchProspectSchema}
+        validateOnChange={false}
         onSubmit={handleSubmit}
       >
         {({ values }) => (

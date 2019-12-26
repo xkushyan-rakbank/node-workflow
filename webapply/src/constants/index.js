@@ -1,67 +1,9 @@
-import isUndefined from "lodash/isUndefined";
-import isArray from "lodash/isArray";
 import routes from "../routes";
 
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
   { value: "AuthorityType2", label: "AuthorityType2" }
 ];
-
-export const defineDynamicInputId = (id, indexes) => {
-  if (isArray(indexes) && indexes.length > 0) {
-    return `${id}_${indexes.join("_")}`;
-  }
-  return id;
-};
-
-export const defineInputFormatByConfig = fieldConfig => {
-  switch (fieldConfig.format) {
-    case "amount":
-      return "number";
-    case "email":
-      return "email";
-    case "date":
-      return "text";
-    default:
-      return "text";
-  }
-};
-
-export const defineInputMaxLengthByConfig = fieldConfig => {
-  const type = defineInputFormatByConfig(fieldConfig);
-  if (type !== "text" || isUndefined(fieldConfig.max)) {
-    return fieldConfig.maxlength;
-  }
-  return fieldConfig.max;
-};
-
-export const defineInputMinLengthByConfig = fieldConfig => {
-  const type = defineInputFormatByConfig(fieldConfig);
-  if (type !== "text" || isUndefined(fieldConfig.min)) {
-    return fieldConfig.minlength;
-  }
-  return fieldConfig.min;
-};
-
-export const fieldAttr = (id, fieldConfig, indexes) => {
-  return {
-    id: defineDynamicInputId(id, indexes),
-    type: defineInputFormatByConfig(fieldConfig),
-    min: fieldConfig.min,
-    max: fieldConfig.max,
-    maxLength: defineInputMaxLengthByConfig(fieldConfig),
-    minLength: defineInputMinLengthByConfig(fieldConfig),
-    pattern: fieldConfig.pattern,
-    required: !!fieldConfig.required,
-    readOnly: !!fieldConfig.readOnly
-  };
-};
-
-export const errorType = {
-  required: "required",
-  invalid: "invalid",
-  multiline: "multiline"
-};
 
 export const formStepper = [
   {
@@ -110,6 +52,7 @@ export const accountsNames = {
 };
 
 export const UAE_CODE = "971";
+export const UAE = "AE";
 
 export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
 
@@ -117,4 +60,4 @@ export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
 
-export const mobileResolution = 991;
+export const mobileResolution = 955;

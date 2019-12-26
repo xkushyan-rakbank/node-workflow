@@ -21,7 +21,12 @@ const industrySchema = Yup.object({
 });
 
 export const Industry = ({ handleContinue }) => (
-  <Formik initialValues={initialValues} validationSchema={industrySchema} onSubmit={handleContinue}>
+  <Formik
+    initialValues={initialValues}
+    validationSchema={industrySchema}
+    validateOnChange={false}
+    onSubmit={handleContinue}
+  >
     {({ values, setFieldValue }) => (
       <Form>
         <Grid container spacing={3}>

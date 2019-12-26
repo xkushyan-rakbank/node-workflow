@@ -46,7 +46,7 @@ function* setFillStakeholderSaga({ payload }) {
       ...previousValue,
       {
         ...currentValue,
-        done: payload.index === index ? true : currentValue.done
+        done: payload.index === index ? payload.done : currentValue.done
       }
     ],
     []

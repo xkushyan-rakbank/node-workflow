@@ -7,6 +7,7 @@ import { Form, Formik } from "formik";
 
 import { PercentageInput } from "./PercentageInput";
 import { InlineRadioGroup, AutoSaveField as Field, Input } from "../../../../components/Form";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
@@ -48,8 +49,9 @@ const ShareholdingStep = ({
       initialValues={initialValues}
       onSubmit={handleContinue}
       validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
+      validateOnChange={false}
     >
-      {({ values, setFieldValue }) => {
+      {withCompanyStakeholder(index, ({ values, setFieldValue }) => {
         const shareholderHandler = createShareholderHandler({ values, setFieldValue });
         return (
           <Form>
@@ -57,7 +59,7 @@ const ShareholdingStep = ({
               <Field
                 name="isShareholderACompany"
                 component={InlineRadioGroup}
-                path={`prospect.signatoryInfo[${index}].kycDetails.isShareholderACompany`}
+                path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}
                 options={yesNoOptions}
                 label="Is this person a shareholder?"
                 onChange={shareholderHandler}
@@ -81,7 +83,7 @@ const ShareholdingStep = ({
             <SubmitButton />
           </Form>
         );
-      }}
+      })}
     </Formik>
   );
 };

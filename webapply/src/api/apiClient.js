@@ -1,4 +1,4 @@
-import httpClient from "./axiosConfig";
+import httpClient, { uploadClient } from "./axiosConfig";
 import { buildURI, getQueryString } from "./../utils/buildURI";
 
 export const OTP_ACTION_GENERATE = "generate";
@@ -108,13 +108,13 @@ export const screening = {
 };
 
 export const uploadProspectDocument = {
-  send: ({ data, prospectId, source, uploadProgressCb }) => {
-    return httpClient.request({
+  send: ({ data, prospectId, source, onUploadProgress }) => {
+    return uploadClient.request({
       url: buildURI("docUploaderUri", prospectId),
       method: "POST",
       data,
       cancelToken: source.token,
-      onUploadProgress: progressEvent => uploadProgressCb(progressEvent)
+      onUploadProgress
     });
   }
 };

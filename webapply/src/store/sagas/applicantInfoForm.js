@@ -4,6 +4,7 @@ import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 import { updateProspectId, updateProspect, updateSaveType } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { setVerified } from "../actions/reCaptcha";
+import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
 import routes from "./../../routes";
 import { log } from "../../utils/loggger";
@@ -31,7 +32,7 @@ function* applicantInfoFormSaga(action) {
     } = yield call(prospect.create, prospectUpdated);
 
     yield put(setVerified(true));
-
+    yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
     yield call(history.push, routes.verifyOtp);
     yield put(updateSaveType("next"));

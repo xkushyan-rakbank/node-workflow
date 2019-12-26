@@ -15,7 +15,7 @@ import { FormLayout } from "./containers/FormLayout";
 import { SearchProspect } from "./containers/AgentPages/SearchProspect";
 import { SelectServices } from "./containers/SelectServices";
 import { AccountsComparison } from "./containers/AccountsComparison";
-import ApplicationOverview from "./containers/ApplicationOverview/ApplicationOverview";
+import { ApplicationOverview } from "./containers/ApplicationOverview/ApplicationOverview";
 import { DetailedAccount } from "./containers/DetailedAccount/DetailedAccount";
 import ComeBackLogin from "./containers/ComeBack/ComeBackLogin";
 import { ComeBackVerification } from "./containers/ComeBack/ComeBackVerification";

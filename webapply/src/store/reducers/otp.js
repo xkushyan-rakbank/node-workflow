@@ -1,4 +1,5 @@
 import * as actions from "../actions/otp";
+import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 
 const initialState = {
   isPending: false,
@@ -21,6 +22,7 @@ const otpReducer = (state = initialState, action) => {
         isPending: true
       };
     }
+    case APPLICANT_INFO_FORM:
     case actions.GENERATE_OTP_CODE: {
       return {
         ...state,

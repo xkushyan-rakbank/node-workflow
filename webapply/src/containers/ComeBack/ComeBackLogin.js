@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from "react";
+import cx from "classnames";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -77,10 +78,11 @@ const ComeBackLogin = ({
           mobileNo: ""
         }}
         validationSchema={comebackSchema}
+        validateOnChange={false}
         onSubmit={submitForm}
       >
         {({ values }) => (
-          <Form>
+          <Form className={classes.form}>
             <Field
               name="email"
               path="prospect.applicantInfo.email"
@@ -119,7 +121,7 @@ const ComeBackLogin = ({
                   />
                 </ErrorBoundaryForReCaptcha>
               )}
-              <div className="linkContainer">
+              <div className={cx(classes.btnWrapper, "linkContainer")}>
                 <SubmitButton
                   disabled={
                     !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !recaptchaToken)

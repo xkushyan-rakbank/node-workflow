@@ -71,6 +71,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
         }
       }}
       validationSchema={signingPreferencesSchema}
+      validateOnChange={false}
       onSubmit={goToNext}
     >
       {({ values, setFieldValue }) => (

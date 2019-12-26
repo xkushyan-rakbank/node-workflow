@@ -56,6 +56,7 @@ export const BlockConfirm = ({ setFormFields }) => {
         }}
         onSubmit={() => {}}
         validationSchema={blockConfirmSchema}
+        validateOnChange={false}
       >
         {({ values, setFieldValue }) => (
           <Form>

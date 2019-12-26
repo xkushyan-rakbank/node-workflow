@@ -36,6 +36,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
         }}
         onSubmit={handleSubmit}
         validationSchema={signatoryPersonalInformationSchema}
+        validateOnChange={false}
       >
         {({ values }) => (
           <Form>
