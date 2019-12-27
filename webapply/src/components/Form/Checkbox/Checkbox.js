@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { CustomCheckbox } from "./CustomCheckbox";
 import { InfoTitle } from "../../../components/InfoTitle";
-import { ErrorMessage } from "../../Notifications/index";
+import { ErrorMessage } from "../../Notifications";
 
 const useStyles = makeStyles({
   formControlRoot: {

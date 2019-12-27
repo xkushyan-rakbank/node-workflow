@@ -2,8 +2,7 @@ import React from "react";
 import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
 
-import { InfoTitle } from "../../Notifications/index";
-import { ErrorMessage } from "../../Notifications/index";
+import { InfoTitle, ErrorMessage } from "../../Notifications";
 import { CustomRadioButton } from "./CustomRadioButton";
 
 export const RadioButton = ({
