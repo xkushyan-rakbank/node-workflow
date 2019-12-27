@@ -32,7 +32,7 @@ export const SignatoriesDocuments = ({
               </div>
             </div>
           </div>
-          {get(docUploadDetails, "documents", []).map(document => (
+          {(docUploadDetails.documents || []).map(document => (
             <UploadDocuments
               key={document.documentKey}
               document={document}
