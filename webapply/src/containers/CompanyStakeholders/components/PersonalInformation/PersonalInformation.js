@@ -111,7 +111,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   disabled={!!values.isShareholderACompany}
                   component={CustomSelect}
                   shrink={false}
-                  datalistId="gender"
+                  datalistId="salutation"
                 />
 
                 <Field
