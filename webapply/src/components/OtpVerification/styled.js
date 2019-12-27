@@ -6,24 +6,27 @@ export const useStyles = makeStyles(theme => ({
     marginTop: 48,
     marginBottom: 40,
     borderRadius: 8,
+    height: 88,
     width: "110px",
     "&:last-child": {
       marginRight: 0
     },
     "& fieldset": {
-      borderRadius: 8,
-      border: "solid 1px rgba(194, 194, 194, 0.56)"
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#373737"
+      display: "none"
     },
     "& input": {
       boxSizing: "border-box",
       height: 88,
+      maxWidth: "110px",
       textAlign: "center",
       fontSize: 46,
       fontWeight: 600,
-      fontFamily: "Open Sans, sans-serif"
+      fontFamily: "Open Sans, sans-serif",
+      borderRadius: 8,
+      border: "solid 1px rgba(194, 194, 194, 0.56)"
+    },
+    "& input:focus": {
+      border: "solid 2px rgba(0, 0, 0, 0.87)"
     },
     [theme.breakpoints.down("md")]: {
       width: 85,
@@ -43,5 +46,8 @@ export const useStyles = makeStyles(theme => ({
         padding: "11px 12px 13px"
       }
     }
+  },
+  textField: {
+    border: "none"
   }
 }));
