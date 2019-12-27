@@ -33,6 +33,7 @@ export const CompanyDetails = ({ handleContinue }) => (
   <Formik
     initialValues={initialValues}
     validationSchema={companyDetailsSchema}
+    validateOnChange={false}
     onSubmit={handleContinue}
   >
     {() => (

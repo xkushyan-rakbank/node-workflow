@@ -1,5 +1,4 @@
 import React from "react";
-import get from "lodash/get";
 
 import { Avatar } from "./../../../components/Avatar/Avatar";
 import { UploadDocuments } from "./UploadDocument";

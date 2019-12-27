@@ -20,8 +20,16 @@ export const AutoSaveField = ({
   const dispatch = useDispatch();
   const appConfig = useSelector(state => state.appConfig);
   const uiConfig = useSelector(getUiConfig);
-  const { values, setFieldError, setFieldValue } = useFormikContext();
+  const {
+    values,
+    touched,
+    setFieldError,
+    setFieldValue,
+    validateForm,
+    setFieldTouched
+  } = useFormikContext();
   const value = getIn(values, name);
+  const touch = getIn(touched, name);
   const serverValidationError = useSelector(state => getInputServerValidityByPath(state, path));
   const [isLoadedDefaultValueFromStore, setIsLoadedDefaultValueFromStore] = useState(
     !isLoadDefaultValueFromStore
@@ -54,9 +62,15 @@ export const AutoSaveField = ({
         if (!isEqual(oldValue, value)) {
           const prospect = changeProspect({ [path]: value }, value, path);
 
-          dispatch(updateProspect(prospect));
+          validateForm().then(errors => {
+            if (!errors[name]) {
+              dispatch(updateProspect(prospect));
+            } else if (!touch) {
+              setFieldTouched(name);
+            }
+          });
         }
-      }, 750);
+      }, 500);
 
       if (timer) clearTimeout(timer);
       setTimer(newTimer);
