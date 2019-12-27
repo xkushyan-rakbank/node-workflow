@@ -13,14 +13,13 @@ import {
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
-
-const UAE = "AE";
+import { UAE } from "../../../../constants";
 
 const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
     residenceCountry: Yup.string().test("required", "Required", value => isSignatory || value),
     eidNumber: Yup.string().when("residenceCountry", {
-      is: value => !isSignatory && value === UAE,
+      is: value => value === UAE,
       then: Yup.string()
         .required("Required")
         .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
@@ -33,7 +32,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
   return (
     <Formik
       initialValues={{
-        residenceCountry: "",
+        residenceCountry: UAE,
         eidNumber: ""
       }}
       onSubmit={handleContinue}
@@ -58,7 +57,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
               <Field
                 name="eidNumber"
                 path={eidNumberPath}
-                disabled={isSignatory || values.residenceCountry !== UAE}
+                disabled={values.residenceCountry !== UAE}
                 component={EmiratesID}
                 changeProspect={(prospect, value) => ({
                   ...prospect,

@@ -2634,39 +2634,39 @@
   ],
   "spaceType": [
     {
-      "code": "OF",
-      "key": "OF",
-      "value": "OF",
+      "code": "1",
+      "key": "1",
+      "value": "1",
       "displayText": "Office"
     },
     {
-      "code": "W",
-      "key": "W",
-      "value": "W",
+      "code": "2",
+      "key": "2",
+      "value": "2",
       "displayText": "Warehouse"
     },
     {
-      "code": "K",
-      "key": "K",
-      "value": "K",
+      "code": "3",
+      "key": "3",
+      "value": "3",
       "displayText": "Kiosk"
     },
     {
-      "code": "S",
-      "key": "S",
-      "value": "S",
+      "code": "4",
+      "key": "4",
+      "value": "4",
       "displayText": "Shop"
     },
     {
-      "code": "FD",
-      "key": "FD",
-      "value": "FD",
+      "code": "5",
+      "key": "5",
+      "value": "5",
       "displayText": "Flexi desk"
     },
     {
-      "code": "OTHER",
-      "key": "OTHER",
-      "value": "OTHER",
+      "code": "6",
+      "key": "6",
+      "value": "6",
       "displayText": "Other"
     }
   ],

@@ -45,7 +45,7 @@ class Chat extends PureComponent {
 
   componentDidMount() {
     this.chatInstance.initChat(this.userInfo);
-    this.chatInstance.setMessagesCallback = this.onNewMessageArrival;
+    this.chatInstance.messagesCallback = this.onNewMessageArrival;
     this.chatInstance.setOnTypingEventsHandler(this.agentTypingHandler);
     this.chatInstance.setOnAgentLeftEventHandler(this.agentLeftHandler);
   }

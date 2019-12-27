@@ -7,23 +7,26 @@ import { Input, DatePicker, CustomSelect, AutoSaveField as Field } from "../../.
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
+import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
+import { UAE } from "../../../constants";
 
 const initialValues = {
   licenseNumber: "",
   licenseIssueDate: "",
   licenseIssuingAuthority: "",
-  countryOfIncorporation: "AE",
-  dateOfIncorporation: null,
+  countryOfIncorporation: UAE,
+  dateOfIncorporation: "",
   yearsInBusiness: ""
 };
 
 const licenseInformationSchema = Yup.object({
   licenseNumber: Yup.string()
     .required("You need to provide license number")
-    .max(20, "Maximum 20 characters allowed")
     .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number"),
   licenseIssueDate: Yup.date().required("You need to provide issue date"),
-  countryOfIncorporation: Yup.string().required("You need to provide country incorporation")
+  countryOfIncorporation: Yup.string().required("You need to provide country incorporation"),
+  licenseIssuingAuthority: Yup.string().required("You need to provide license issuing authority"),
+  dateOfIncorporation: Yup.date().required("You need to provide issue date")
 });
 
 export const LicenseInformation = ({ handleContinue }) => (
@@ -43,6 +46,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               path="prospect.organizationInfo.licenseNumber"
               contexualHelpText="If License Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.Example CN-123/2018/456 to be entered as CN1232018456"
               component={Input}
+              inputProps={{ maxLength: MAX_LICENSE_NUMBER_LENGTH }}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -71,6 +75,8 @@ export const LicenseInformation = ({ handleContinue }) => (
               label="Country of incorporation"
               path="prospect.organizationInfo.countryOfIncorporation"
               datalistId="countryOfIncorporation"
+              contexualHelpText="This should be the same as in Traву License. If the Company does not hold  an UAE Trade License, please share company registration details as per other company documents"
+              contexualHelpProps={{ isDisableHoverListener: false }}
               component={CustomSelect}
             />
           </Grid>
@@ -82,6 +88,8 @@ export const LicenseInformation = ({ handleContinue }) => (
               name="dateOfIncorporation"
               label="Date of incorporation"
               path="prospect.organizationInfo.dateOfIncorporation"
+              contexualHelpText="This should be the same as in Traву License. If the Company does not hold  an UAE Trade License, please share company registration details as per other company documents"
+              contexualHelpProps={{ isDisableHoverListener: false }}
               component={DatePicker}
             />
           </Grid>
