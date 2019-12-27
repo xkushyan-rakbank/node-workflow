@@ -12,7 +12,7 @@ const mapDispatchToProps = {
   searchApplications
 };
 
-export const SearchProspect = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SearchProspectComponent);

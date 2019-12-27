@@ -16,7 +16,7 @@ const mapDispatchToProps = {
   updateProspectId
 };
 
-export const SearchedAppInfo = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SearchedAppInfoComponent);

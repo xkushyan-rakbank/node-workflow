@@ -18,7 +18,7 @@ export const TwoSteps = () => {
       <div className={classes.firstGroup}>
         <SectionTitleWithInfo title="Two easy steps" />
         <div className={classes.indent}>
-        <IconCardsContainer>
+          <IconCardsContainer>
             <IconCardItem minWidth="200px" title="First" text="You fill a couple of questions">
               <Interrogation alt="interrogation" />
             </IconCardItem>

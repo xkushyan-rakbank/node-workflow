@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TagManager from "react-gtm-module";
 import { connect } from "react-redux";
-import closeBtn from "../assets/images/close.png";
-import companyIconSvg from "../assets/icons/file.png";
+import closeBtn from "../../assets/images/close.png";
+import companyIconSvg from "../../assets/icons/file.png";
 import {
   retrieveDocDetails,
   extraDocUploadSuccess,
   deleteExtraDocUploadSuccess
-} from "../store/actions/getProspectDocuments";
-import * as appConfigSelectors from "./../store/selectors/appConfig";
+} from "../../store/actions/getProspectDocuments";
+import { getProspectDocuments } from "../../store/selectors/appConfig";
 
 const uploadFileSizeMax = 5;
 const maxExtraDocUpload = 7;
@@ -139,7 +139,7 @@ const tagManagerArgs = {
   }
 };
 
-class EditApplication extends Component {
+class EditApplicationComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -294,7 +294,7 @@ class EditApplication extends Component {
 
 const mapStateToProps = state => {
   return {
-    documents: appConfigSelectors.getProspectDocuments(state)
+    documents: getProspectDocuments(state)
   };
 };
 
@@ -304,9 +304,9 @@ const mapDispatchToProps = {
   deleteExtraDocUploadSuccess
 };
 
-export default withStyles(style)(
+export const EditApplication = withStyles(style)(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(EditApplication)
+  )(EditApplicationComponent)
 );

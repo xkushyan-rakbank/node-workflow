@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 
 import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP, STEP_1, STEP_3 } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { SubmitApplication } from "./components/SubmitApplication";
+import SubmitApplication from "./components/SubmitApplication";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
@@ -29,8 +29,6 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     return <SubmitApplication />;
   }
 
-  const getIsDisableSubmitButton = () => accountType === accountsNames.starter && !rakValuePackage;
-
   return (
     <>
       <FormTitle
@@ -48,7 +46,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
           handleClick={setNextStep}
           label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
           justify="flex-end"
-          disabled={step <= STEP_3 || getIsDisableSubmitButton()}
+          disabled={step <= STEP_3 || (accountType === accountsNames.starter && !rakValuePackage)}
         />
       </div>
     </>
