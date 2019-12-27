@@ -14,7 +14,7 @@ import {
   InputGroup,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { EMAIL_REGEX, PHONE_REGEX } from "../../../../../../utils/validation";
+import { PHONE_REGEX } from "../../../../../../utils/validation";
 import { UAE_PHONE_CODE } from "./constants";
 
 import { useStyles } from "./styled";
@@ -26,7 +26,7 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
     .matches(PHONE_REGEX, "This is not a valid phone"),
   primaryEmail: Yup.string()
     .required("You need to provide Email address")
-    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+    .email("This is not a valid Email address"),
   primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
 });
 
@@ -44,7 +44,7 @@ export const CompanyPreferredContactInformationComponent = ({
   }, [handleContinue]);
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           primaryMobCountryCode: UAE_PHONE_CODE,
@@ -55,6 +55,7 @@ export const CompanyPreferredContactInformationComponent = ({
         }}
         onSubmit={handleSubmit}
         validationSchema={companyPreferredContactInformationSchema}
+        validateOnChange={false}
       >
         {({ setFieldValue }) => (
           <Form>
@@ -86,7 +87,7 @@ export const CompanyPreferredContactInformationComponent = ({
                 </InputGroup>
                 <div
                   className={cx(classes.relative, {
-                    [classes.hidden]: !isExistSecondaryPhoneNumber
+                    hidden: !isExistSecondaryPhoneNumber
                   })}
                 >
                   <InputGroup>

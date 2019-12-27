@@ -125,7 +125,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
   }, [handleContinue]);
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           annualFinTurnoverAmtInAED: "",
@@ -136,6 +136,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
         }}
         onSubmit={onSubmit}
         validationSchema={companyAnticipatedTransactionsSchema}
+        validateOnChange={false}
       >
         {({ values }) => {
           return (

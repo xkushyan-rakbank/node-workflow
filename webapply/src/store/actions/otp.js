@@ -4,10 +4,15 @@ export const SET_PENDING = "OTP/SET_PENDING";
 export const GENERATE_CODE_SUCCESS = "OTP/GENERATE_CODE_SUCCESS";
 export const VERIFY_CODE_SUCCESS = "OTP/VERIFY_CODE_SUCCESS";
 export const VERIFY_CODE_FAILED = "OTP/VERIFY_CODE_FAILED";
+export const VERIFY_CLEAR_ERROR = "VERIFY_CLEAR_ERROR";
 
 export const generateOtpCode = payload => ({
   type: GENERATE_OTP_CODE,
-  payload
+  payload: {
+    email: payload.email,
+    countryCode: payload.countryCode,
+    mobileNo: payload.mobileNo
+  }
 });
 
 export const verifyOtp = payload => ({
@@ -31,4 +36,8 @@ export const verifyCodeSuccess = () => ({
 
 export const verifyCodeFailed = () => ({
   type: VERIFY_CODE_FAILED
+});
+
+export const verifyClearError = () => ({
+  type: VERIFY_CLEAR_ERROR
 });

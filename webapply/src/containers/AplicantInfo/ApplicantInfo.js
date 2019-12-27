@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
+import { NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
 import {
   Input,
   CustomSelect,
@@ -18,7 +18,9 @@ import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
 import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
+import { BackLink } from "../../components/Buttons/BackLink";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import routes from "../../routes";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -26,7 +28,7 @@ const aplicantInfoSchema = Yup.object({
     .matches(NAME_REGEX, "This is not a valid name"),
   email: Yup.string()
     .required("You need to provide Email address")
-    .matches(EMAIL_REGEX, "This is not a valid Email address"),
+    .email("This is not a valid Email address"),
   countryCode: Yup.string().required("Select country code"),
   mobileNo: Yup.string()
     .required("You need to provide mobile number")
@@ -67,12 +69,14 @@ const ApplicantInfoPage = ({
     <>
       <h2>Let’s Start with the Basics</h2>
       <p className="formDescription">
-        First things first, you need a login, so you can come back to your application later.
+        First things first, you need a login, so you can come back to the application in case you
+        cannot complete it in one go.
       </p>
 
       <Formik
         initialValues={initialValues}
         validationSchema={aplicantInfoSchema}
+        validateOnChange={false}
         onSubmit={onSubmit}
       >
         {({ values }) => (
@@ -135,6 +139,7 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
+                <BackLink path={routes.accountsComparison} />
                 <SubmitButton
                   disabled={
                     !values.fullName ||

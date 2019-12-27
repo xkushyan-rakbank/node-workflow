@@ -14,24 +14,35 @@ import {
   DatePicker,
   InlineRadioGroup
 } from "../../../../components/Form";
+import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { yesNoOptions } from "../../../../constants/options";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
+
+import { NAME_REGEX } from "../../../../utils/validation";
+
 import { useStyles } from "./styled";
 
 const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("isShareholderACompany", {
-    is: false,
-    then: Yup.string().required("Required")
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.string()
+      .required("Required")
+      .matches(NAME_REGEX, "This is not a valid first name")
   }),
+  middleName: Yup.string().matches(NAME_REGEX, "This is not a valid middle name"),
   lastName: Yup.string().when("isShareholderACompany", {
-    is: false,
-    then: Yup.string().required("Required")
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.string()
+      .required("Required")
+      .matches(NAME_REGEX, "This is not a valid last name")
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
-    is: false,
-    then: Yup.date().required("Required")
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.date()
+      .typeError("This is not a valid date")
+      .required("Required")
   }),
   isPEP: Yup.boolean().required("Required")
 });
@@ -52,8 +63,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       }}
       onSubmit={handleContinue}
       validationSchema={personalInformationSchema}
+      validateOnChange={false}
     >
-      {({ values, setFieldValue, resetForm }) => (
+      {withCompanyStakeholder(index, ({ values, setFieldValue, resetForm }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -145,7 +157,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

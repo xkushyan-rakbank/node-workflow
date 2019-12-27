@@ -1,0 +1,1 @@
+export { CommonQuestions } from "./CommonQuestions";

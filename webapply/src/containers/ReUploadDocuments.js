@@ -230,7 +230,7 @@ class EditApplication extends Component {
                   </div>
                   <div className={this.props.classes.uploadFileName}>
                     <div id="Progress_Status">
-                      <div id="myprogressBar"></div>
+                      <div id="myProgressBar"></div>
                     </div>
                     <div id="progressStatus"></div>
                   </div>

@@ -26,6 +26,7 @@ export const AutoSaveField = ({
   const [isLoadedDefaultValueFromStore, setIsLoadedDefaultValueFromStore] = useState(
     !isLoadDefaultValueFromStore
   );
+  const [timer, setTimer] = useState(null);
 
   useEffect(() => {
     if (!isLoadedDefaultValueFromStore && path) {
@@ -47,13 +48,18 @@ export const AutoSaveField = ({
 
   useEffect(() => {
     if (isLoadedDefaultValueFromStore && path && appConfig) {
-      const oldValue = get(appConfig, path);
+      const newTimer = setTimeout(() => {
+        const oldValue = get(appConfig, path);
 
-      if (!isEqual(oldValue, value)) {
-        const prospect = changeProspect({ [path]: value }, value);
+        if (!isEqual(oldValue, value)) {
+          const prospect = changeProspect({ [path]: value }, value);
 
-        dispatch(updateProspect(prospect));
-      }
+          dispatch(updateProspect(prospect));
+        }
+      }, 750);
+
+      if (timer) clearTimeout(timer);
+      setTimer(newTimer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadedDefaultValueFromStore, value]);

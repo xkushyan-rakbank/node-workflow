@@ -87,202 +87,290 @@
   ],
   "branchCity": [
     {
-      "code": "AD",
-      "key": "AD",
-      "value": "AD",
+      "code": "1",
+      "key": "1",
+      "value": "1",
       "displayText": "Abu Dhabi",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Abu Dhabi 1",
-          "key": "Abu Dhabi 1",
-          "value": "Abu Dhabi 1",
-          "displayText": "Abu Dhabi 1"
+          "code": "054",
+          "key": "054",
+          "value": "054",
+          "displayText": "Al Jazira Branch"
         },
         {
-          "code": "Abu Dhabi 2",
-          "key": "Abu Dhabi 2",
-          "value": "Abu Dhabi 2",
-          "displayText": "Abu Dhabi 2"
+          "code": "030",
+          "key": "030",
+          "value": "030",
+          "displayText": "Khalidiya Branch"
+        },
+        {
+          "code": "039",
+          "key": "039",
+          "value": "039",
+          "displayText": "Mussafah Branch"
+        },
+        {
+          "code": "004",
+          "key": "004",
+          "value": "004",
+          "displayText": "Tourist Club Branch"
         }
       ]
     },
     {
-      "code": "A",
-      "key": "A",
-      "value": "A",
+      "code": "2",
+      "key": "2",
+      "value": "2",
       "displayText": "Ajman",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Ajman 1",
-          "key": "Ajman 1",
-          "value": "Ajman 1",
-          "displayText": "Ajman 1"
-        },
-        {
-          "code": "Ajman 2",
-          "key": "Ajman 2",
-          "value": "Ajman 2",
-          "displayText": "Ajman 2"
+          "code": "019",
+          "key": "019",
+          "value": "019",
+          "displayText": "Ajman Branch"
         }
       ]
     },
     {
-      "code": "AA",
-      "key": "AA",
-      "value": "AA",
+      "code": "3",
+      "key": "3",
+      "value": "3",
       "displayText": "Al Ain",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Al Ain 1",
-          "key": "Al Ain 1",
-          "value": "Al Ain 1",
-          "displayText": "Al Ain 1"
-        },
-        {
-          "code": "Al Ain 2",
-          "key": "Al Ain 2",
-          "value": "Al Ain 2",
-          "displayText": "Al Ain 2"
+          "code": "014",
+          "key": "014",
+          "value": "014",
+          "displayText": "Al Ain Branch"
         }
       ]
     },
     {
-      "code": "Dubai",
-      "key": "Dubai",
-      "value": "Dubai",
+      "code": "4",
+      "key": "4",
+      "value": "4",
       "displayText": "Dubai",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Dubai 1",
-          "key": "Dubai 1",
-          "value": "Dubai 1",
-          "displayText": "Dubai 1"
+          "code": "055",
+          "key": "055",
+          "value": "055",
+          "displayText": "Al Quoz Branch"
         },
         {
-          "code": "Dubai 2",
-          "key": "Dubai 2",
-          "value": "Dubai 2",
-          "displayText": "Dubai 2"
+          "code": "035",
+          "key": "035",
+          "value": "035",
+          "displayText": "Al Quoz Industrial Branch"
+        },
+        {
+          "code": "037",
+          "key": "037",
+          "value": "037",
+          "displayText": "Al Qusais Branch"
+        },
+        {
+          "code": "059",
+          "key": "059",
+          "value": "059",
+          "displayText": "Al Ras Branch"
+        },
+        {
+          "code": "003",
+          "key": "003",
+          "value": "003",
+          "displayText": "Deira Maktoum Branch"
+        },
+        {
+          "code": "025",
+          "key": "025",
+          "value": "025",
+          "displayText": "Deira Souk Branch"
+        },
+        {
+          "code": "088",
+          "key": "088",
+          "value": "088",
+          "displayText": "Dragon Mart 1, Branch"
+        },
+        {
+          "code": "064",
+          "key": "064",
+          "value": "064",
+          "displayText": "Dubai Investment Park Branch"
+        },
+        {
+          "code": "032",
+          "key": "032",
+          "value": "032",
+          "displayText": "Emmar Branch"
+        },
+        {
+          "code": "029",
+          "key": "029",
+          "value": "029",
+          "displayText": "IBN Battutta Branch"
+        },
+        {
+          "code": "066",
+          "key": "066",
+          "value": "066",
+          "displayText": "JAFZA Branch"
+        },
+        {
+          "code": "034",
+          "key": "034",
+          "value": "034",
+          "displayText": "Marina Diamond Branch"
+        },
+        {
+          "code": "038",
+          "key": "038",
+          "value": "038",
+          "displayText": "Mirdif Branch"
+        },
+        {
+          "code": "018",
+          "key": "018",
+          "value": "018",
+          "displayText": "Oudh Metha Branch"
+        },
+        {
+          "code": "012",
+          "key": "012",
+          "value": "012",
+          "displayText": "Sheikh Zayed Road Branch"
+        },
+        {
+          "code": "033",
+          "key": "033",
+          "value": "033",
+          "displayText": "Umm Hurair Branch"
         }
       ]
     },
     {
-      "code": "F",
-      "key": "F",
-      "value": "F",
+      "code": "5",
+      "key": "5",
+      "value": "5",
       "displayText": "Fujairah",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Fujairah 1",
-          "key": "Fujairah 1",
-          "value": "Fujairah 1",
-          "displayText": "Fujairah 1"
-        },
-        {
-          "code": "Fujairah 2",
-          "key": "Fujairah 2",
-          "value": "Fujairah 2",
-          "displayText": "Fujairah 2"
+          "code": "058",
+          "key": "058",
+          "value": "058",
+          "displayText": "Fujairah Branch"
         }
       ]
     },
     {
-      "code": "K",
-      "key": "K",
-      "value": "K",
+      "code": "6",
+      "key": "6",
+      "value": "6",
       "displayText": "Kalba",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Kalba 1",
-          "key": "Kalba 1",
-          "value": "Kalba 1",
-          "displayText": "Kalba 1"
-        },
-        {
-          "code": "Kalba 2",
-          "key": "Kalba 2",
-          "value": "Kalba 2",
-          "displayText": "Kalba 2"
+          "code": "007",
+          "key": "007",
+          "value": "007",
+          "displayText": "Kalba Branch"
         }
       ]
     },
     {
-      "code": "KH",
-      "key": "KH",
-      "value": "KH",
+      "code": "7",
+      "key": "7",
+      "value": "7",
       "displayText": "Khorfakkan",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Khorfakkan 1",
-          "key": "Khorfakkan 1",
-          "value": "Khorfakkan 1",
-          "displayText": "Khorfakkan 1"
-        },
-        {
-          "code": "Khorfakkan 2",
-          "key": "Khorfakkan 2",
-          "value": "Khorfakkan 2",
-          "displayText": "Khorfakkan 2"
+          "code": "028",
+          "key": "028",
+          "value": "028",
+          "displayText": "Khorfakkan Branch"
         }
       ]
     },
     {
-      "code": "RK",
-      "key": "RK",
-      "value": "RK",
+      "code": "8",
+      "key": "8",
+      "value": "8",
       "displayText": "Ras Al Khaimah",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Ras Al Khaimah 1",
-          "key": "Ras Al Khaimah 1",
-          "value": "Ras Al Khaimah 1",
-          "displayText": "Ras Al Khaimah 1"
+          "code": "031",
+          "key": "031",
+          "value": "031",
+          "displayText": "Al Dhait Branch"
         },
         {
-          "code": "Ras Al Khaimah 2",
-          "key": "Ras Al Khaimah 2",
-          "value": "Ras Al Khaimah 2",
-          "displayText": "Ras Al Khaimah 2"
+          "code": "065",
+          "key": "065",
+          "value": "065",
+          "displayText": "Al Hamra Branch"
+        },
+        {
+          "code": "008",
+          "key": "008",
+          "value": "008",
+          "displayText": "Al Kharan Branch"
+        },
+        {
+          "code": "005",
+          "key": "005",
+          "value": "005",
+          "displayText": "Al Madinah Branch"
+        },
+        {
+          "code": "016",
+          "key": "016",
+          "value": "016",
+          "displayText": "Al Mannai Branch"
+        },
+        {
+          "code": "002",
+          "key": "002",
+          "value": "002",
+          "displayText": "Nakheel Branch"
+        },
+        {
+          "code": "011",
+          "key": "011",
+          "value": "011",
+          "displayText": "RAMS Branch"
+        },
+        {
+          "code": "006",
+          "key": "006",
+          "value": "006",
+          "displayText": "Shaam Branch"
         }
       ]
     },
     {
-      "code": "SH",
-      "key": "SH",
-      "value": "SH",
+      "code": "9",
+      "key": "9",
+      "value": "9",
       "displayText": "Sharjah",
-      "subCategory": [
+      "subGroup": [
         {
-          "code": "Sharjah 1",
-          "key": "Sharjah 1",
-          "value": "Sharjah 1",
-          "displayText": "Sharjah 1"
+          "code": "024",
+          "key": "024",
+          "value": "024",
+          "displayText": "King Faisal Branch"
         },
         {
-          "code": "Sharjah 2",
-          "key": "Sharjah 2",
-          "value": "Sharjah 2",
-          "displayText": "Sharjah 2"
-        }
-      ]
-    },
-    {
-      "code": "U",
-      "key": "U",
-      "value": "U",
-      "displayText": "Umm Al Quwain",
-      "subCategory": [
-        {
-          "code": "Umm Al Quwain 1",
-          "key": "Umm Al Quwain 1",
-          "value": "Umm Al Quwain 1",
-          "displayText": "Umm Al Quwain 1"
+          "code": "057",
+          "key": "057",
+          "value": "057",
+          "displayText": "Rolla Branch"
         },
         {
-          "code": "Umm Al Quwain 2",
-          "key": "Umm Al Quwain 2",
-          "value": "Umm Al Quwain 2",
-          "displayText": "Umm Al Quwain 2"
+          "code": "036",
+          "key": "036",
+          "value": "036",
+          "displayText": "Sharjah Industrial Branch"
         }
       ]
     }
@@ -2576,9 +2664,9 @@
       "displayText": "Flexi desk"
     },
     {
-      "code": "O",
-      "key": "O",
-      "value": "O",
+      "code": "OTHER",
+      "key": "OTHER",
+      "value": "OTHER",
       "displayText": "Other"
     }
   ],
@@ -2890,44 +2978,445 @@
   ],
   "industry": [
     {
-      "code": "EES",
-      "key": "EES",
-      "value": "EES",
-      "displayText": "Energy Equipment & Services",
+      "code": "CNT",
+      "key": "CNT",
+      "value": "CNT",
+      "displayText": "CONSTRUCTION",
+      "subGroup": null
+    },
+    {
+      "code": "DLG",
+      "key": "DLG",
+      "value": "DLG",
+      "displayText": "DEALERS IN LUXURY GOODS",
+      "subGroup": null
+    },
+    {
+      "code": "EGH",
+      "key": "EGH",
+      "value": "EGH",
+      "displayText": "ELECTRICITY & GAS HEATER",
+      "subGroup": null
+    },
+    {
+      "code": "FI",
+      "key": "FI",
+      "value": "FI",
+      "displayText": "FINANCIAL INSTITUTION",
+      "subGroup": null
+    },
+    {
+      "code": "GT",
+      "key": "GT",
+      "value": "GT",
+      "displayText": "GENERAL TRADING",
+      "subGroup": null
+    },
+    {
+      "code": "AGA",
+      "key": "AGA",
+      "value": "AGA",
+      "displayText": "AGRICULTURE & ALLIED",
       "subGroup": [
         {
-          "code": "OGD",
-          "key": "OGD",
-          "value": "OGD",
-          "displayText": "Oil & Gas Drilling"
+          "code": "AGA",
+          "key": "AGA",
+          "value": "AGA",
+          "displayText": "AGRICULTURE & ALLIED ACTIVITIES"
         },
         {
-          "code": "OGES",
-          "key": "OGES",
-          "value": "OGES",
-          "displayText": "Oil & Gas Equipment & Services"
+          "code": "AB",
+          "key": "AB",
+          "value": "AB",
+          "displayText": "ALCHOHOLIC BEVERAGES"
+        },
+        {
+          "code": "BS",
+          "key": "BS",
+          "value": "BS",
+          "displayText": "BROKERS & SERVICES"
+        },
+        {
+          "code": "CTL",
+          "key": "CTL",
+          "value": "CTL",
+          "displayText": "CATTLE"
+        },
+        {
+          "code": "CW",
+          "key": "CW",
+          "value": "CW",
+          "displayText": "CIVIL WORK"
+        },
+        {
+          "code": "CNT",
+          "key": "CNT",
+          "value": "CNT",
+          "displayText": "CONSTRUCTION"
+        },
+        {
+          "code": "COC",
+          "key": "COC",
+          "value": "COC",
+          "displayText": "CULTIVATION OF CROPS"
+        },
+        {
+          "code": "DLG",
+          "key": "DLG",
+          "value": "DLG",
+          "displayText": "DEALERS IN LUXURY GOODS"
+        },
+        {
+          "code": "EW",
+          "key": "EW",
+          "value": "EW",
+          "displayText": "ELECTRICAL WORK"
+        },
+        {
+          "code": "EGW",
+          "key": "EGW",
+          "value": "EGW",
+          "displayText": "ELECTRICITY & GAS & WATER"
+        },
+        {
+          "code": "FHT",
+          "key": "FHT",
+          "value": "FHT",
+          "displayText": "FISHING HUNTING TRAPPING"
+        },
+        {
+          "code": "FRT",
+          "key": "FRT",
+          "value": "FRT",
+          "displayText": "FORESTRY"
+        },
+        {
+          "code": "GCC",
+          "key": "GCC",
+          "value": "GCC",
+          "displayText": "GENERAL CONTRACTORS - COMMERCIAL"
+        },
+        {
+          "code": "GCR",
+          "key": "GCR",
+          "value": "GCR",
+          "displayText": "GENERAL CONTRACTORS - RESIDENCIAL"
+        },
+        {
+          "code": "GCRE",
+          "key": "GCRE",
+          "value": "GCRE",
+          "displayText": "GENERAL CONTRACTORS - RETAIL"
+        },
+        {
+          "code": "ICGC",
+          "key": "ICGC",
+          "value": "ICGC",
+          "displayText": "INDUSTRIAL & CONSUMER GAS & CNG"
+        },
+        {
+          "code": "IT",
+          "key": "IT",
+          "value": "IT",
+          "displayText": "INVESTMENT & TRUSTS"
+        },
+        {
+          "code": "IC",
+          "key": "IC",
+          "value": "IC",
+          "displayText": "INVESTMENT COMPANIES"
+        },
+        {
+          "code": "OA",
+          "key": "OA",
+          "value": "OA",
+          "displayText": "OTHER ACTIVITIES"
+        },
+        {
+          "code": "OBCW",
+          "key": "OBCW",
+          "value": "OBCW",
+          "displayText": "OTHER BUILDING CONTRACTING WORKS"
+        },
+        {
+          "code": "OC",
+          "key": "OC",
+          "value": "OC",
+          "displayText": "OTHER CONSTRUCTION"
+        },
+        {
+          "code": "OL",
+          "key": "OL",
+          "value": "OL",
+          "displayText": "OTHER LIVESTOCK"
+        },
+        {
+          "code": "OTH",
+          "key": "OTH",
+          "value": "OTH",
+          "displayText": "OTHERS"
+        },
+        {
+          "code": "PF",
+          "key": "PF",
+          "value": "PF",
+          "displayText": "POULTRY FARMING"
+        },
+        {
+          "code": "RE",
+          "key": "RE",
+          "value": "RE",
+          "displayText": "REAL ESTATE"
+        },
+        {
+          "code": "RS",
+          "key": "RS",
+          "value": "RS",
+          "displayText": "ROADS & STREETS"
+        },
+        {
+          "code": "SHP",
+          "key": "SHP",
+          "value": "SHP",
+          "displayText": "SHEEP"
+        },
+        {
+          "code": "WSGP",
+          "key": "WSGP",
+          "value": "WSGP",
+          "displayText": "WATER & SEWERS &GAS PIPELINES"
+        },
+        {
+          "code": "WPIB",
+          "key": "WPIB",
+          "value": "WPIB",
+          "displayText": "WATER PRODUCTION INCLUDING BOTTLED WATER"
         }
       ]
     },
     {
-      "code": "OGC&F",
-      "key": "OGC&F",
-      "value": "OGC&F",
-      "displayText": "Oil, Gas & Consumable Fuels",
+      "code": "AB",
+      "key": "AB",
+      "value": "AB",
+      "displayText": "ALCHOHOLIC BEVERAGES",
       "subGroup": [
         {
-          "code": "IOG",
-          "key": "IOG",
-          "value": "IOG",
-          "displayText": "Integrated Oil & Gas"
+          "code": "AGA",
+          "key": "AGA",
+          "value": "AGA",
+          "displayText": "AGRICULTURE & ALLIED ACTIVITIES"
         },
         {
-          "code": "OGEP",
-          "key": "OGEP",
-          "value": "OGEP",
-          "displayText": "Oil & Gas Exploration & Production"
+          "code": "AB",
+          "key": "AB",
+          "value": "AB",
+          "displayText": "ALCHOHOLIC BEVERAGES"
+        },
+        {
+          "code": "BS",
+          "key": "BS",
+          "value": "BS",
+          "displayText": "BROKERS & SERVICES"
+        },
+        {
+          "code": "CTL",
+          "key": "CTL",
+          "value": "CTL",
+          "displayText": "CATTLE"
+        },
+        {
+          "code": "CW",
+          "key": "CW",
+          "value": "CW",
+          "displayText": "CIVIL WORK"
+        },
+        {
+          "code": "CNT",
+          "key": "CNT",
+          "value": "CNT",
+          "displayText": "CONSTRUCTION"
+        },
+        {
+          "code": "COC",
+          "key": "COC",
+          "value": "COC",
+          "displayText": "CULTIVATION OF CROPS"
+        },
+        {
+          "code": "DLG",
+          "key": "DLG",
+          "value": "DLG",
+          "displayText": "DEALERS IN LUXURY GOODS"
+        },
+        {
+          "code": "EW",
+          "key": "EW",
+          "value": "EW",
+          "displayText": "ELECTRICAL WORK"
+        },
+        {
+          "code": "EGW",
+          "key": "EGW",
+          "value": "EGW",
+          "displayText": "ELECTRICITY & GAS & WATER"
+        },
+        {
+          "code": "FHT",
+          "key": "FHT",
+          "value": "FHT",
+          "displayText": "FISHING HUNTING TRAPPING"
+        },
+        {
+          "code": "FRT",
+          "key": "FRT",
+          "value": "FRT",
+          "displayText": "FORESTRY"
+        },
+        {
+          "code": "GCC",
+          "key": "GCC",
+          "value": "GCC",
+          "displayText": "GENERAL CONTRACTORS - COMMERCIAL"
+        },
+        {
+          "code": "GCR",
+          "key": "GCR",
+          "value": "GCR",
+          "displayText": "GENERAL CONTRACTORS - RESIDENCIAL"
+        },
+        {
+          "code": "GCRE",
+          "key": "GCRE",
+          "value": "GCRE",
+          "displayText": "GENERAL CONTRACTORS - RETAIL"
+        },
+        {
+          "code": "ICGC",
+          "key": "ICGC",
+          "value": "ICGC",
+          "displayText": "INDUSTRIAL & CONSUMER GAS & CNG"
+        },
+        {
+          "code": "IT",
+          "key": "IT",
+          "value": "IT",
+          "displayText": "INVESTMENT & TRUSTS"
+        },
+        {
+          "code": "IC",
+          "key": "IC",
+          "value": "IC",
+          "displayText": "INVESTMENT COMPANIES"
+        },
+        {
+          "code": "OA",
+          "key": "OA",
+          "value": "OA",
+          "displayText": "OTHER ACTIVITIES"
+        },
+        {
+          "code": "OBCW",
+          "key": "OBCW",
+          "value": "OBCW",
+          "displayText": "OTHER BUILDING CONTRACTING WORKS"
+        },
+        {
+          "code": "OC",
+          "key": "OC",
+          "value": "OC",
+          "displayText": "OTHER CONSTRUCTION"
+        },
+        {
+          "code": "OL",
+          "key": "OL",
+          "value": "OL",
+          "displayText": "OTHER LIVESTOCK"
+        },
+        {
+          "code": "OTH",
+          "key": "OTH",
+          "value": "OTH",
+          "displayText": "OTHERS"
+        },
+        {
+          "code": "PF",
+          "key": "PF",
+          "value": "PF",
+          "displayText": "POULTRY FARMING"
+        },
+        {
+          "code": "RE",
+          "key": "RE",
+          "value": "RE",
+          "displayText": "REAL ESTATE"
+        },
+        {
+          "code": "RS",
+          "key": "RS",
+          "value": "RS",
+          "displayText": "ROADS & STREETS"
+        },
+        {
+          "code": "SHP",
+          "key": "SHP",
+          "value": "SHP",
+          "displayText": "SHEEP"
+        },
+        {
+          "code": "WSGP",
+          "key": "WSGP",
+          "value": "WSGP",
+          "displayText": "WATER & SEWERS &GAS PIPELINES"
+        },
+        {
+          "code": "WPIB",
+          "key": "WPIB",
+          "value": "WPIB",
+          "displayText": "WATER PRODUCTION INCLUDING BOTTLED WATER"
         }
       ]
+    },
+    {
+      "code": "MNF",
+      "key": "MNF",
+      "value": "MNF",
+      "displayText": "MANUFACTURING",
+      "subGroup": null
+    },
+    {
+      "code": "MIN",
+      "key": "MIN",
+      "value": "MIN",
+      "displayText": "MINING",
+      "subGroup": null
+    },
+    {
+      "code": "RT",
+      "key": "RT",
+      "value": "RT",
+      "displayText": "RETAIL TRADING",
+      "subGroup": null
+    },
+    {
+      "code": "SRV",
+      "key": "SRV",
+      "value": "SRV",
+      "displayText": "SERVICES",
+      "subGroup": null
+    },
+    {
+      "code": "TRN",
+      "key": "TRN",
+      "value": "TRN",
+      "displayText": "TRANSPORT",
+      "subGroup": null
+    },
+    {
+      "code": "WT",
+      "key": "WT",
+      "value": "WT",
+      "displayText": "WHOLESALE TRADING",
+      "subGroup": null
     }
   ],
   "emirate": [

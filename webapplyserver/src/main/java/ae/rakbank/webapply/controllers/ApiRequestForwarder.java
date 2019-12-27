@@ -49,434 +49,431 @@ import ae.rakbank.webapply.services.RecaptchaService;
 @RequestMapping("/api/v1")
 public class ApiRequestForwarder {
 
-	private static final Logger logger = LoggerFactory.getLogger(ApiRequestForwarder.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApiRequestForwarder.class);
 
-	@Autowired
-	FileHelper fileHelper;
+    @Autowired
+    FileHelper fileHelper;
 
-	@Autowired
-  OAuthService oauthClient;
-  
-	@Autowired
-	RecaptchaService captchaService;  
+    @Autowired
+    OAuthService oauthClient;
 
-	@Autowired
-	CSRFTokenHelper csrfTokenHelper;
+    @Autowired
+    RecaptchaService captchaService;
 
-	private JsonNode dehURIs = null;
+    @Autowired
+    CSRFTokenHelper csrfTokenHelper;
 
-	private String dehBaseUrl = null;
+    private JsonNode appConfigJSON = null;
 
-	private JsonNode appConfigJSON = null;
+    private JsonNode dehURIs = null;
 
-	@PostConstruct
-	public void init() {
-		appConfigJSON = fileHelper.getAppConfigJSON();
-		dehURIs = appConfigJSON.get("DehURIs");
-		dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
-	}
+    private String dehBaseUrl = null;
 
-	@PostMapping(value = "/usertypes/{segment}/prospects", produces = "application/json", consumes = "application/json")
-	@ResponseBody
-	public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestBody JsonNode requestBodyJSON, @PathVariable String segment, HttpServletRequest servletRequest) {
+    @PostConstruct
+    public void init() {
+        appConfigJSON = fileHelper.getAppConfigJSON();
+        dehURIs = appConfigJSON.get("DehURIs");
+        dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
+    }
 
-		logger.info("Begin createSMEProspect() method");
+    @PostMapping(value = "/usertypes/{segment}/prospects", produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                               @RequestBody JsonNode requestBodyJSON, @PathVariable String segment, HttpServletRequest servletRequest) {
 
-		logger.info(String.format("createSMEProspect() method args, RequestBody=[%s], segment=[%s]",
-				requestBodyJSON.toString(), segment));
+        logger.info("Begin createSMEProspect() method");
 
-		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        logger.info(String.format("createSMEProspect() method args, RequestBody=[%s], segment=[%s]", requestBodyJSON.toString(), segment));
 
-		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-			if (requestBodyJSON.has("recaptchaToken")) {
-        if (EnvUtil.isCheckRecaptcha()) {
-          logger.info("Validate reCAPTCHA before saving applicant info.");
-          String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
-          String ip = servletRequest.getRemoteAddr();
-          ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-          if (captchaResponse.getStatusCode().is2xxSuccessful()) {
-            logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
-          } else {
-            logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
-                captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
-          }
+            if (EnvUtil.isCheckRecaptcha() && requestBodyJSON.has("recaptchaToken")) {
+                logger.info("Validate reCAPTCHA before saving applicant info.");
+                String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
+                String ip = servletRequest.getRemoteAddr();
+                ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
 
-          logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
-              oauthResponse.getStatusCodeValue(), ip));
+                if (captchaResponse.getStatusCode().is2xxSuccessful()) {
+                    logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
+                }
+                else {
+                    logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
+                            captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
+                }
 
-          if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
-            return captchaResponse;
-          }
+                logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
+                        oauthResponse.getStatusCodeValue(), ip));
+
+                if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
+                    return captchaResponse;
+                }
+
+                ((ObjectNode) requestBodyJSON).remove("recaptchaToken");
+            }
+            else if (EnvUtil.isRecaptchaEnable()) {
+                ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
+                        "recaptchaToken is required");
+
+                return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+            }
+
+            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
+                    MediaType.APPLICATION_JSON);
+
+            String url = dehBaseUrl + dehURIs.get("createProspectUri").asText();
+
+            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
+
+            logger.info("Call createProspect endpoint: " + uriComponents.toString());
+
+            try {
+                ResponseEntity<?> createProspectResponse = invokeApiEndpoint(httpRequest, httpResponse,
+                        uriComponents.toString(), HttpMethod.POST, request, "createSMEProspect()", "createProspectUri",
+                        MediaType.APPLICATION_JSON, segment, null);
+
+                if (createProspectResponse.getStatusCode().is2xxSuccessful()) {
+                    String prospectId = ((JsonNode) createProspectResponse.getBody()).get("prospectId").asText();
+                    logger.info("Send OTP for prospectId:" + prospectId);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    ObjectNode otpRequest = objectMapper.createObjectNode();
+                    otpRequest.put("prospectId", prospectId);
+                    otpRequest.put("countryCode", requestBodyJSON.get("applicantInfo").get("countryCode").asText());
+                    otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
+                    otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
+                    otpRequest.put("action", "generate");
+                    ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, otpRequest, servletRequest, true);
+
+                    if (otpResponse.getStatusCode().is2xxSuccessful()) {
+                        return createProspectResponse;
+                    } else {
+                        return otpResponse;
+                    }
+
+                } else {
+                    return createProspectResponse;
+                }
+
+            }
+            catch (Exception e) {
+                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()), e);
+                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                        "Unable to call endpoint " + uriComponents.toString(), e);
+                return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
+        else {
+            logger.error(String.format("OAuth Error in createSMEProspect() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
-      } else if (EnvUtil.isRecaptchaEnable()) {
-				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
-        "recaptchaToken is required");
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    "oauth error, check logs for more info.");
 
-        return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
-      }
-      
-			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
-					MediaType.APPLICATION_JSON);
+            return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-			String url = dehBaseUrl + dehURIs.get("createProspectUri").asText();
-
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
+    @PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> updateSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                               @RequestBody JsonNode jsonNode, @PathVariable String prospectId, @PathVariable String segment) {
+        logger.info("Begin updateSMEProspect() method");
 
-			logger.info("Call createProspect endpoint: " + uriComponents.toString());
+        logger.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
+                jsonNode.toString(), segment, prospectId));
 
-			try {
-				ResponseEntity<?> createProspectResponse = invokeApiEndpoint(httpRequest, httpResponse,
-						uriComponents.toString(), HttpMethod.POST, request, "createSMEProspect()", "createProspectUri",
-						MediaType.APPLICATION_JSON, segment, null);
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-				if (createProspectResponse.getStatusCode().is2xxSuccessful()) {
-					String prospectId = ((JsonNode) createProspectResponse.getBody()).get("prospectId").asText();
-					logger.info("Send OTP for prospectId:" + prospectId);
-					ObjectMapper objectMapper = new ObjectMapper();
-					ObjectNode otpRequest = objectMapper.createObjectNode();
-					otpRequest.put("prospectId", prospectId);
-					otpRequest.put("countryCode", requestBodyJSON.get("applicantInfo").get("countryCode").asText());
-					otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
-					otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
-					otpRequest.put("action", "generate");
-          ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, otpRequest, servletRequest, true);
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-					if (otpResponse.getStatusCode().is2xxSuccessful()) {
-						return createProspectResponse;
-					} else {
-						return otpResponse;
-					}
+            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
+                    MediaType.APPLICATION_JSON);
 
-				} else {
-					return createProspectResponse;
-				}
+            String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
+            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
-						e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+            try {
 
-		} else {
+                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.PUT, request,
+                        "updateSMEProspect()", "updateProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
 
-			logger.error(String.format("OAuth Error in createSMEProspect() method , HttpStatus=[%s], message=[%s]",
-					oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
+            } catch (Exception e) {
+                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                        e);
+                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                        "Unable to call endpoint " + uriComponents.toString(), e);
+                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"oauth error, check logs for more info.");
+        } else {
+            logger.error(String.format("OAuth Error in updateSMEProspect() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-			return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    "oauth error, check logs for more info.");
 
-	}
+            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-	@PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
-	@ResponseBody
-	public ResponseEntity<?> updateSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestBody JsonNode jsonNode, @PathVariable String prospectId, @PathVariable String segment) {
-		logger.info("Begin updateSMEProspect() method");
+    @PostMapping(value = "/usertypes/{segment}/prospects/search", produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                            @RequestBody JsonNode jsonNode, @PathVariable String segment) {
 
-		logger.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
-				jsonNode.toString(), segment, prospectId));
+        logger.info("Begin searchProspect() method");
 
-		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        logger.debug(String.format("searchProspect() method args, RequestBody=[%s], segment=[%s]", jsonNode.toString(),
+                segment));
 
-		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
-					MediaType.APPLICATION_JSON);
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
+            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
+                    MediaType.APPLICATION_JSON);
 
-			try {
+            String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
+            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
 
-				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.PUT, request,
-						"updateSMEProspect()", "updateProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+            try {
 
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
-						e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
+                        "searchProspect()", "searchProspectUri", MediaType.APPLICATION_JSON, segment, null);
 
-		} else {
-			logger.error(String.format("OAuth Error in updateSMEProspect() method , HttpStatus=[%s], message=[%s]",
-					oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
+            } catch (Exception e) {
+                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                        e);
+                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                        "Unable to call endpoint " + uriComponents.toString(), e);
+                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"oauth error, check logs for more info.");
+        } else {
+            logger.error(String.format("OAuth Error in searchProspect() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    "oauth error, check logs for more info.");
 
-	@PostMapping(value = "/usertypes/{segment}/prospects/search", produces = "application/json", consumes = "application/json")
-	@ResponseBody
-	public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestBody JsonNode jsonNode, @PathVariable String segment) {
+            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-		logger.info("Begin searchProspect() method");
+    @GetMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                             @PathVariable String segment, @PathVariable String prospectId) {
+        logger.info("Begin getProspectById() method");
 
-		logger.debug(String.format("searchProspect() method args, RequestBody=[%s], segment=[%s]", jsonNode.toString(),
-				segment));
+        logger.debug(
+                String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
 
-		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
-					MediaType.APPLICATION_JSON);
+            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
+                    MediaType.APPLICATION_JSON);
 
-			String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
+            String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
+            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-			try {
+            try {
+                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+                        "getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
 
-				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
-						"searchProspect()", "searchProspectUri", MediaType.APPLICATION_JSON, segment, null);
+            } catch (Exception e) {
+                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                        e);
+                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                        "Unable to call endpoint " + uriComponents.toString(), e);
+                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
-						e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+        } else {
+            logger.error(String.format("OAuth Error in getProspectById() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-		} else {
-			logger.error(String.format("OAuth Error in searchProspect() method , HttpStatus=[%s], message=[%s]",
-					oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    "oauth error, check logs for more info.");
 
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"oauth error, check logs for more info.");
+            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+    @GetMapping(value = "/prospects/{prospectId}/documents/{documentId}")
+    @ResponseBody
+    public ResponseEntity<?> getProspectDocumentById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                                     @PathVariable String prospectId, @PathVariable String documentId) {
 
-	@GetMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@PathVariable String segment, @PathVariable String prospectId) {
-		logger.info("Begin getProspectById() method");
+        logger.info("Begin getProspectDocumentById() method");
 
-		logger.debug(
-				String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
+        logger.debug(String.format("getProspectDocumentById() method args, prospectId=[%s], documentId=[%s]",
+                prospectId, documentId));
 
-		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
-					MediaType.APPLICATION_JSON);
+            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
+                    MediaType.APPLICATION_OCTET_STREAM);
 
-			String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
+            String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
+            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
 
-			try {
-				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-						"getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+            try {
+                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+                        "getProspectDocumentById()", "getProspectDocumentByIdUri", MediaType.APPLICATION_OCTET_STREAM,
+                        null, prospectId);
 
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
-						e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+            } catch (Exception e) {
+                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                        e);
+                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                        "Unable to call endpoint " + uriComponents.toString(), e);
+                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-		} else {
-			logger.error(String.format("OAuth Error in getProspectById() method , HttpStatus=[%s], message=[%s]",
-					oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
+        } else {
+            logger.error(String.format("OAuth Error in getDocumentById() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"oauth error, check logs for more info.");
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    "oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-	@GetMapping(value = "/prospects/{prospectId}/documents/{documentId}")
-	@ResponseBody
-	public ResponseEntity<?> getProspectDocumentById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@PathVariable String prospectId, @PathVariable String documentId) {
+    @GetMapping(value = "/prospects/{prospectId}/documents", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> getProspectDocuments(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                                  @PathVariable String prospectId) {
 
-		logger.info("Begin getProspectDocumentById() method");
+        logger.info("Begin getProspectDocuments() method");
 
-		logger.debug(String.format("getProspectDocumentById() method args, prospectId=[%s], documentId=[%s]",
-				prospectId, documentId));
+        logger.debug(String.format("getProspectDocuments() method args, prospectId=[%s]", prospectId));
 
-		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
-					MediaType.APPLICATION_OCTET_STREAM);
+            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
+                    MediaType.APPLICATION_JSON);
 
-			String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
+            String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
+            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
 
-			try {
-				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-						"getProspectDocumentById()", "getProspectDocumentByIdUri", MediaType.APPLICATION_OCTET_STREAM,
-						null, prospectId);
+            try {
+                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+                        "getProspectDocuments()", "getProspectDocumentsUri", MediaType.APPLICATION_JSON, null,
+                        prospectId);
+            } catch (Exception e) {
+                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                        e);
+                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                        "Unable to call endpoint " + uriComponents.toString(), e);
+                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
-						e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+        } else {
 
-		} else {
-			logger.error(String.format("OAuth Error in getDocumentById() method , HttpStatus=[%s], message=[%s]",
-					oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
+            logger.error(String.format("OAuth Error in getProspectDocuments() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"oauth error, check logs for more info.");
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    "oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-	@GetMapping(value = "/prospects/{prospectId}/documents", produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<?> getProspectDocuments(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@PathVariable String prospectId) {
+    @PostMapping(value = "/users/authenticate", produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                   @RequestBody JsonNode requestBodyJSON) {
 
-		logger.info("Begin getProspectDocuments() method");
+        logger.info("Begin login() method");
 
-		logger.debug(String.format("getProspectDocuments() method args, prospectId=[%s]", prospectId));
+        logger.debug(String.format("login() method args, RequestBody=[%s]", requestBodyJSON.toString()));
 
-		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
-					MediaType.APPLICATION_JSON);
+            if (requestBodyJSON.has("recaptchaToken")) {
+                logger.info("Validate reCAPTCHA before saving applicant info.");
+                String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
+                String ip = httpRequest.getRemoteAddr();
+                ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
 
-			String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
-			UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
+                if (captchaResponse.getStatusCode().is2xxSuccessful()) {
+                    logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
+                } else {
+                    logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
+                            captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
+                }
 
-			try {
-				return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-						"getProspectDocuments()", "getProspectDocumentsUri", MediaType.APPLICATION_JSON, null,
-						prospectId);
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
-						e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-						"Unable to call endpoint " + uriComponents.toString(), e);
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+                logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
+                        oauthResponse.getStatusCodeValue(), ip));
 
-		} else {
+                if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
+                    return captchaResponse;
+                }
 
-			logger.error(String.format("OAuth Error in getProspectDocuments() method , HttpStatus=[%s], message=[%s]",
-					oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
+                ((ObjectNode) requestBodyJSON).remove("recaptchaToken");
+            } else if (EnvUtil.isRecaptchaEnable()) {
+                ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
+                        "recaptchaToken is required");
 
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"oauth error, check logs for more info.");
+                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+            }
 
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
+                    MediaType.APPLICATION_JSON);
 
-	@PostMapping(value = "/users/authenticate", produces = "application/json", consumes = "application/json")
-	@ResponseBody
-	public ResponseEntity<?> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestBody JsonNode requestBodyJSON) {
+            String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
 
-		logger.info("Begin login() method");
+            try {
+                return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request, "login()",
+                        "authenticateUserUri", MediaType.APPLICATION_JSON, null, null);
+            } catch (Exception e) {
+                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                        "Unable to call endpoint " + url, e);
+                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-		logger.debug(String.format("login() method args, RequestBody=[%s]", requestBodyJSON.toString()));
+        } else {
+            logger.error(String.format("OAuth Error in login() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    "oauth error, check logs for more info.");
 
-		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-      if (requestBodyJSON.has("recaptchaToken")) {
-				logger.info("Validate reCAPTCHA before saving applicant info.");
-				String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
-				String ip = httpRequest.getRemoteAddr();
-				ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
+    @PostMapping(value = "/otp", produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                               @RequestBody JsonNode requestJSON, HttpServletRequest servletRequest, boolean captchaVerified) {
 
-				if (captchaResponse.getStatusCode().is2xxSuccessful()) {
-					logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
-				} else {
-					logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
-							captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
-				}
+        logger.info(
+                String.format("Begin generateVerifyOTP() method, action=[%s], captchaVerified=%s, hasRecaptchaToken=%s",
+                        requestJSON.get("action").asText(), captchaVerified, requestJSON.has("recaptchaToken")));
 
-				logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
-						oauthResponse.getStatusCodeValue(), ip));
+        logger.debug(String.format("generateVerifyOTP() method args, RequestBody=[%s], ", requestJSON.toString()));
 
-				if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
-					return captchaResponse;
-				}
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
 
-				((ObjectNode) requestBodyJSON).remove("recaptchaToken");
-      } else if (EnvUtil.isRecaptchaEnable()) {
-				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
-						"recaptchaToken is required");
-
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
-      }
-
-			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
-					MediaType.APPLICATION_JSON);
-
-			String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
-
-			try {
-				return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request, "login()",
-						"authenticateUserUri", MediaType.APPLICATION_JSON, null, null);
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-						"Unable to call endpoint " + url, e);
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-
-		} else {
-			logger.error(String.format("OAuth Error in login() method , HttpStatus=[%s], message=[%s]",
-					oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
-
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"oauth error, check logs for more info.");
-
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@PostMapping(value = "/otp", produces = "application/json", consumes = "application/json")
-	@ResponseBody
-	public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			@RequestBody JsonNode requestJSON, HttpServletRequest servletRequest, boolean captchaVerified) {
-
-				logger.info(
-				String.format("Begin generateVerifyOTP() method, action=[%s], captchaVerified=%s, hasRecaptchaToken=%s",
-						requestJSON.get("action").asText(), captchaVerified, requestJSON.has("recaptchaToken")));
-
-		logger.debug(String.format("generateVerifyOTP() method args, RequestBody=[%s], ", requestJSON.toString()));
-
-		ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
-
-		if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
-      if (requestJSON.has("recaptchaToken")) {
-        ((ObjectNode) requestJSON).remove("recaptchaToken");
-      }
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+            if (requestJSON.has("recaptchaToken")) {
+                ((ObjectNode) requestJSON).remove("recaptchaToken");
+            }
       /*
       if (!captchaVerified) {
 				String action = requestJSON.get("action").asText();
@@ -512,99 +509,99 @@ public class ApiRequestForwarder {
       }
       */
 
-			HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
-					MediaType.APPLICATION_JSON);
+            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
+                    MediaType.APPLICATION_JSON);
 
-			String url = dehBaseUrl + dehURIs.get("otpUri").asText();
+            String url = dehBaseUrl + dehURIs.get("otpUri").asText();
 
-			try {
-				return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
-						"generateVerifyOTP()", "otpUri", MediaType.APPLICATION_JSON, null, null);
-			} catch (Exception e) {
-				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
-				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-						"Unable to call endpoint " + url, e);
-				return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+            try {
+                return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
+                        "generateVerifyOTP()", "otpUri", MediaType.APPLICATION_JSON, null, null);
+            } catch (Exception e) {
+                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                        "Unable to call endpoint " + url, e);
+                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
-		} else {
-			logger.error(String.format("OAuth Error in generateVerifyOTP() method , HttpStatus=[%s], message=[%s]",
-					oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
+        } else {
+            logger.error(String.format("OAuth Error in generateVerifyOTP() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					"oauth error, check logs for more info.");
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    "oauth error, check logs for more info.");
 
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-	private HttpEntity<JsonNode> getHttpEntityRequest(HttpServletRequest httpRequest, JsonNode requestBodyJSON,
-			ResponseEntity<JsonNode> oauthResponse, MediaType mediaType) {
-		/*
-		 * Enumeration<String> enumeration = httpRequest.getHeaderNames(); while
-		 * (enumeration.hasMoreElements()) { String headerName =
-		 * enumeration.nextElement(); String headerValue =
-		 * httpRequest.getHeader(headerName); headers.add(headerName, headerValue); }
-		 */
-		HttpHeaders headers = oauthClient.getOAuthHeaders(oauthResponse, mediaType);
+    private HttpEntity<JsonNode> getHttpEntityRequest(HttpServletRequest httpRequest, JsonNode requestBodyJSON,
+                                                      ResponseEntity<JsonNode> oauthResponse, MediaType mediaType) {
+        /*
+         * Enumeration<String> enumeration = httpRequest.getHeaderNames(); while
+         * (enumeration.hasMoreElements()) { String headerName =
+         * enumeration.nextElement(); String headerValue =
+         * httpRequest.getHeader(headerName); headers.add(headerName, headerValue); }
+         */
+        HttpHeaders headers = oauthClient.getOAuthHeaders(oauthResponse, mediaType);
 
-		return new HttpEntity<>(requestBodyJSON, headers);
-	}
+        return new HttpEntity<>(requestBodyJSON, headers);
+    }
 
-	private ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId,
-			MediaType mediaType, String segment, String prospectId) throws IOException {
+    private ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+                                                String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId,
+                                                MediaType mediaType, String segment, String prospectId) throws IOException {
 
-		logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request:[%s]", operationId, url,
-				request.toString()));
+        logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request:[%s]", operationId, url,
+                request.toString()));
 
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<?> response = null;
-		try {
-			if (MediaType.APPLICATION_JSON.equals(mediaType)) {
-				response = restTemplate.exchange(url, httpMethod, request, JsonNode.class);
-			} else {
-				response = restTemplate.exchange(url, httpMethod, request, Resource.class);
-			}
-		} catch (HttpClientErrorException e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
-          e.getResponseBodyAsString()), e);
-      List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
-      String errorJson;
-      
-      if (channelContext == null) {
-          errorJson = e.getResponseBodyAsString();
-      } else {
-          errorJson = channelContext.get(0);
-      }
-      JsonNode badReqResponse = new ObjectMapper().readTree(errorJson);
-			return new ResponseEntity<Object>(badReqResponse, null, HttpStatus.BAD_REQUEST);
-		} catch (HttpServerErrorException e) {
-			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
-					e.getResponseBodyAsString()), e);
-			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-					e.getResponseBodyAsString(), e);
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		// ResponseEntity headers is immutable, so create new HttpHeaders object
-    HttpHeaders headers = new HttpHeaders();
-		headers.addAll(response.getHeaders());
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<?> response = null;
+        try {
+            if (MediaType.APPLICATION_JSON.equals(mediaType)) {
+                response = restTemplate.exchange(url, httpMethod, request, JsonNode.class);
+            } else {
+                response = restTemplate.exchange(url, httpMethod, request, Resource.class);
+            }
+        } catch (HttpClientErrorException e) {
+            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
+                    e.getResponseBodyAsString()), e);
+            List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
+            String errorJson;
 
-		logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
-				url, response.getStatusCodeValue(), response.getBody()));
+            if (channelContext == null) {
+                errorJson = e.getResponseBodyAsString();
+            } else {
+                errorJson = channelContext.get(0);
+            }
+            JsonNode badReqResponse = new ObjectMapper().readTree(errorJson);
+            return new ResponseEntity<Object>(badReqResponse, null, HttpStatus.BAD_REQUEST);
+        } catch (HttpServerErrorException e) {
+            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
+                    e.getResponseBodyAsString()), e);
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                    e.getResponseBodyAsString(), e);
+            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        // ResponseEntity headers is immutable, so create new HttpHeaders object
+        HttpHeaders headers = new HttpHeaders();
+        headers.addAll(response.getHeaders());
 
-		if (response.getStatusCode().is2xxSuccessful()) {
-			logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-					operationId, url, response.getStatusCodeValue()));
+        logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
+                url, response.getStatusCodeValue(), response.getBody()));
 
-			csrfTokenHelper.createCSRFToken(httpRequest, headers);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+                    operationId, url, response.getStatusCodeValue()));
 
-		} else {
-			logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-					operationId, url, response.getStatusCodeValue()));
-		}
+            csrfTokenHelper.createCSRFToken(httpRequest, headers);
 
-		return new ResponseEntity<Object>(response.getBody(), headers, response.getStatusCode());
-	}
+        } else {
+            logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+                    operationId, url, response.getStatusCodeValue()));
+        }
+
+        return new ResponseEntity<Object>(response.getBody(), headers, response.getStatusCode());
+    }
 
 }

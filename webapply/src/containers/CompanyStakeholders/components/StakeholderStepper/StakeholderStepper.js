@@ -5,11 +5,14 @@ import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStake
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import { stakeHoldersSteps, STEP_1 } from "./../../constants";
+import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { useStep } from "../../../../components/StepComponent/useStep";
-import { changeEditableStakeholder } from "../../../../store/actions/stakeholders";
+import {
+  changeEditableStakeholder,
+  setFillStakeholder
+} from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 
 const timeInterval = 5000;
@@ -24,14 +27,24 @@ const StakeholderStepperComponent = ({
   deleteStakeholder,
   sendProspectToAPI,
   loading: isStatusLoading,
-  changeEditableStakeholder
+  changeEditableStakeholder,
+  setFillStakeholder
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
-  const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  const handleContinue = () =>
+    sendProspectToAPI().then(
+      () => {
+        if (step === STEP_6) {
+          setFillStakeholder(index, true);
+        }
+        handleSetNextStep();
+      },
+      () => {}
+    );
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
@@ -102,7 +115,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
-  changeEditableStakeholder
+  changeEditableStakeholder,
+  setFillStakeholder
 };
 
 export const StakeholderStepper = connect(

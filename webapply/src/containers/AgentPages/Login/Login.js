@@ -63,6 +63,7 @@ export const LoginComponent = ({
       <Formik
         initialValues={{ username: "", password: "" }}
         validationSchema={loginSchema}
+        validateOnChange={false}
         onSubmit={submitForm}
       >
         {({ values }) => (

@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { CustomSelect, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
+import { SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 
@@ -21,7 +21,12 @@ const industrySchema = Yup.object({
 });
 
 export const Industry = ({ handleContinue }) => (
-  <Formik initialValues={initialValues} validationSchema={industrySchema} onSubmit={handleContinue}>
+  <Formik
+    initialValues={initialValues}
+    validationSchema={industrySchema}
+    validateOnChange={false}
+    onSubmit={handleContinue}
+  >
     {({ values, setFieldValue }) => (
       <Form>
         <Grid container spacing={3}>
@@ -29,10 +34,10 @@ export const Industry = ({ handleContinue }) => (
             <Field
               multiple
               name="industry"
-              label="Company industry"
+              label="Industry"
               path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
               datalistId="industry"
-              component={CustomSelect}
+              component={SelectAutocomplete}
               onChange={e => {
                 setFieldValue("industry", e.target.value);
                 setFieldValue("subCategory", "");
@@ -42,7 +47,7 @@ export const Industry = ({ handleContinue }) => (
           <Grid item md={6} sm={12}>
             <Field
               name="subCategory"
-              label="Company subCategory"
+              label="Industry sub-category"
               path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
               component={SelectAutocomplete}
               datalistId="industry"

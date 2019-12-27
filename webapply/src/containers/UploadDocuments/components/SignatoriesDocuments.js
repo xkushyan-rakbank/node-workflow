@@ -1,12 +1,17 @@
 import React from "react";
 import get from "lodash/get";
 
-import { Avatar } from "../../../components/Avatar/Avatar";
-import UploadDocuments from "./../../../components/UploadDocument/UploadDocument";
-
+import { Avatar } from "./../../../components/Avatar/Avatar";
+import { UploadDocuments } from "./UploadDocument";
 import { useStyles } from "./styled";
 
-export const SignatoriesDocuments = ({ documents, signatories }) => {
+export const SignatoriesDocuments = ({
+  documents,
+  signatories,
+  docUpload,
+  cancelDocUpload,
+  progress
+}) => {
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
@@ -31,8 +36,11 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
               signatorie.firstName === document.signatoryName && (
                 <UploadDocuments
                   key={document.documentKey}
-                  documents={document}
+                  document={document}
                   type="stakeholdersDocuments"
+                  docUpload={docUpload}
+                  cancelDocUpload={cancelDocUpload}
+                  progress={progress}
                 />
               )
           )}

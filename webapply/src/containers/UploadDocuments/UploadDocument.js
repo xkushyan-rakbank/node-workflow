@@ -10,9 +10,12 @@ import { useStyles } from "./styled";
 export const UploadDocument = ({
   retrieveDocDetails,
   documents,
+  docUpload,
+  cancelDocUpload,
   companyName,
   signatories,
-  history
+  history,
+  progress
 }) => {
   const classes = useStyles();
 
@@ -32,7 +35,13 @@ export const UploadDocument = ({
         <>
           <div className={classes.sectionContainer}>
             <SectionTitle title="Company documents" className={classes.title} />
-            <CompanyDocuments documents={documents.companyDocuments} companyName={companyName} />
+            <CompanyDocuments
+              documents={documents.companyDocuments}
+              companyName={companyName}
+              docUpload={docUpload}
+              cancelDocUpload={cancelDocUpload}
+              progress={progress}
+            />
           </div>
           {documents.stakeholdersDocuments && (
             <div className={classes.sectionContainer}>
@@ -40,6 +49,9 @@ export const UploadDocument = ({
               <SignatoriesDocuments
                 documents={documents.stakeholdersDocuments}
                 signatories={signatories}
+                docUpload={docUpload}
+                cancelDocUpload={cancelDocUpload}
+                progress={progress}
               />
             </div>
           )}

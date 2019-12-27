@@ -37,6 +37,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
         receiveInterest: false
       }}
       validationSchema={accountDetailsSchema}
+      validateOnChange={false}
       onSubmit={goToNext}
     >
       {({ values, setFieldValue }) => (
@@ -68,10 +69,12 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
             <Grid item md={6} sm={12}>
               <Field
                 name="branchID"
-                datalistId="branchID"
+                datalistId="branchCity"
                 path="prospect.organizationInfo.branchID"
-                filterOptions={emirates =>
-                  emirates.filter(emirate => emirate.emirateCode === values.branchCity)
+                filterOptions={options =>
+                  options
+                    .filter(city => city.code === values.branchCity)
+                    .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
                 }
                 label="Branch"
                 placeholder="Branch"

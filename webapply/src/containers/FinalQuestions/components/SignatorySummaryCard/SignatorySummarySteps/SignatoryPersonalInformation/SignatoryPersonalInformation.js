@@ -3,19 +3,19 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./styled";
-import { MARITAL_STATUS_REGEX } from "../../../../../../utils/validation";
+import { MOTHERS_MAIDEN_NAME_REGEX } from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 
 export const signatoryPersonalInformationSchema = Yup.object().shape({
   maritalStatus: Yup.string().required("You need to provide marital status"),
-  mothersMaidenName: Yup.string().required("You need to provide mothers maiden name"),
+  mothersMaidenName: Yup.string()
+    .required("You need to provide mothers maiden name")
+    .matches(MOTHERS_MAIDEN_NAME_REGEX, "Invalid mothers maiden name value"),
   maritalStatusOthers: Yup.string().when("maritalStatus", {
     is: value => value === OTHER_OPTION_CODE,
-    then: Yup.string()
-      .required("You need to specify marital status")
-      .matches(MARITAL_STATUS_REGEX, "Invalid marital status value")
+    then: Yup.string().required("You need to specify marital status")
   })
 });
 
@@ -36,6 +36,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
         }}
         onSubmit={handleSubmit}
         validationSchema={signatoryPersonalInformationSchema}
+        validateOnChange={false}
       >
         {({ values }) => (
           <Form>

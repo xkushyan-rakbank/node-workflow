@@ -6,7 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import { InfoTitle } from "../../../../../../components/InfoTitle";
 import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { ADDRESS_NUMBER_REGEX, PO_NUMBER_REGEX } from "../../../../../../utils/validation";
+import {
+  ADDRESS_NUMBER_REGEX,
+  PO_NUMBER_REGEX,
+  SPACE_OCCUPIED_OTHER_REGEX
+} from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE, BASE_PATH } from "./constants";
 
 import { useStyles } from "./styled";
@@ -20,10 +24,7 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
   emirateCity: Yup.string().required("You need to provide emirate city"),
   typeOfSpaceOccupied: Yup.object().shape({
     spaceType: Yup.string().required("You need to provide space type"),
-    others: Yup.string().when("spaceType", {
-      is: value => value === OTHER_OPTION_CODE,
-      then: Yup.string().required("You need to specify space type")
-    })
+    others: Yup.string().matches(SPACE_OCCUPIED_OTHER_REGEX, "Invalid field value")
   })
 });
 
@@ -35,7 +36,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
   }, [handleContinue]);
 
   return (
-    <div className={classes.formWrapper}>
+    <div>
       <Formik
         initialValues={{
           addressFieldDesc: "",
@@ -50,6 +51,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
         }}
         onSubmit={handleSubmit}
         validationSchema={companyPreferredMailingAddressSchema}
+        validateOnChange={false}
       >
         {({ values }) => (
           <Form>
@@ -107,7 +109,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
             <div className={classes.infoTitleWrap}>
               <InfoTitle
                 classes={{ wrapper: classes.infoTitle }}
-                title="You guessed it, we will use this section for our communication with you"
+                title="You guessed it! We will use the information in this section to communicate with you"
               />
             </div>
             <div className={classes.buttonWrapper}>

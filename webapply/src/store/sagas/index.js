@@ -2,7 +2,7 @@ import { all, fork } from "redux-saga/effects";
 import appConfigSaga from "./appConfig";
 
 import applicantInfoSaga from "./applicantInfoForm";
-import sendProspectToAPI from "./sendProspectToAPI";
+import sendProspectToAPISagas from "./sendProspectToAPI";
 import otpSaga from "./otp";
 import loginForm from "./loginForm";
 import retrieveUploadDoc from "./getProspectDocuments";
@@ -16,7 +16,7 @@ export default function*() {
     fork(appConfigSaga),
     fork(otpSaga),
     fork(applicantInfoSaga),
-    fork(sendProspectToAPI),
+    fork(sendProspectToAPISagas),
     fork(loginForm),
     fork(retrieveUploadDoc),
     fork(searchProspectSaga),
