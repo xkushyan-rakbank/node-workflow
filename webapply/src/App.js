@@ -35,7 +35,7 @@ const ComeBackLogin = lazy(() => import("./containers/ComeBackLogin"));
 const ComeBackVerification = lazy(() => import("./containers/ComeBackVerification"));
 const MyApplications = lazy(() => import("./containers/MyApplications"));
 const SubmitApplication = lazy(() =>
-  import("./containers/SelectServices/components/SubmitApplication/index")
+  import("./containers/SelectServices/components/SubmitApplication")
 );
 const Agents = lazy(() => import("./containers/AgentPages"));
 
