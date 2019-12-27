@@ -105,9 +105,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.SubmitApplication}
                   component={SubmitApplication}
                 />
-
-                <ProspectProtectedRoute path="/agent" component={Agents} />
-
+                <Route path="/agent" component={Agents} />
                 <Redirect to={routes.accountsComparison} />
               </Switch>
             </Suspense>

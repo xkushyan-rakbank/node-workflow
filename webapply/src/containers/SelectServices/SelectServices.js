@@ -29,8 +29,6 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     return <SubmitApplication />;
   }
 
-  const getIsDisableSubmitButton = () => accountType === accountsNames.starter && !rakValuePackage;
-
   return (
     <>
       <FormTitle
@@ -48,7 +46,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
           handleClick={setNextStep}
           label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
           justify="flex-end"
-          disabled={step <= STEP_3 || getIsDisableSubmitButton()}
+          disabled={step <= STEP_3 || (accountType === accountsNames.starter && !rakValuePackage)}
         />
       </div>
     </>
