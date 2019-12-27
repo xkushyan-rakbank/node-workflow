@@ -18,8 +18,7 @@ export const SignatoriesDocuments = ({
     const docUploadDetails = documents[`${index}_${signatorie.fullName}`];
 
     return (
-      docUploadDetails &&
-      docUploadDetails.length && (
+      docUploadDetails && (
         <div className={classes.signatoreyContainer} key={signatorie.signatoryId}>
           <div className={classes.contentWrapper}>
             <Avatar firstName={signatorie.firstName} lastName={signatorie.lastName} index={index} />
