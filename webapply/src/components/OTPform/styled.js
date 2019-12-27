@@ -1,12 +1,17 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   centeredContainer: {
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     width: "100%",
-    marginTop: "174px"
+    marginTop: "174px",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "80px",
+      padding: "0 16px",
+      boxSizing: "border-box"
+    }
   },
   link: {
     textDecoration: "underline",
@@ -37,4 +42,4 @@ export const useStyles = makeStyles({
     width: "auto",
     margin: 0
   }
-});
+}));
