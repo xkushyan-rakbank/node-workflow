@@ -134,8 +134,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                                   <br />
                                   Example 2
                                   <br />
-                                  {`If the company is in the Retail Industry, you can mention
-                                  'Walk-in Customers'`}
+                                  If the company is in the Retail Industry, you can mention
+                                  {"'"}Walk-in Customers{"'"}
                                 </>
                               }
                               placeholder="Customer name"
