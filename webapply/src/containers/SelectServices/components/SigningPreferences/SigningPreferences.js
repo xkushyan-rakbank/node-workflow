@@ -81,7 +81,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
             name="accountSigningType"
             path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
             typeRadio
-            datalistId="accountSigningType"
+            datalistId="accountSignType"
             onSelect={e => {
               setFieldValue("accountSigningType", e.currentTarget.value);
               setFieldValue("accountSigningInstn", "");
