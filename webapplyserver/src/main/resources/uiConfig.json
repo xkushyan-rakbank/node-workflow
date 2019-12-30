@@ -7327,7 +7327,7 @@
 		"path": "$.prospect.signatoryInfo[*].accountSigningInfo.accountSigningType",
 		"name": "prospect.signatoryInfo[*].accountSigningInfo.accountSigningType",
 		"required": true,
-		"datalistId": "accountSigningType",
+		"datalistId": "accountSignType",
 		"readonlyFor": []
 	},
 	"SigAcntSig.accountSigningInstn": {
