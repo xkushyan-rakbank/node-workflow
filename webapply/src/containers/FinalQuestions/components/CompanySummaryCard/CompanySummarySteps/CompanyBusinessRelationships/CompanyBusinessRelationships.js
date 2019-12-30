@@ -123,7 +123,21 @@ export const CompanyBusinessRelationshipsComponent = ({
                               name={`topCustomers[${index}].name`}
                               path={`prospect.orgKYCDetails.topCustomers[${index}].name`}
                               label="Customer name"
-                              contexualHelpText="List down the names of top existing or future customers. These customer names should be as per their respective Trade Licenses"
+                              contexualHelpText={
+                                <>
+                                  List down the names of top existing or future customers. These
+                                  customer names should be as per their respective Trade Licenses.
+                                  <br />
+                                  Example 1
+                                  <br />
+                                  Airlift Global Automation and Heavy Equipment Rental LLC
+                                  <br />
+                                  Example 2
+                                  <br />
+                                  {`If the company is in the Retail Industry, you can mention
+                                  'Walk-in Customers'`}
+                                </>
+                              }
                               placeholder="Customer name"
                               component={Input}
                             />
