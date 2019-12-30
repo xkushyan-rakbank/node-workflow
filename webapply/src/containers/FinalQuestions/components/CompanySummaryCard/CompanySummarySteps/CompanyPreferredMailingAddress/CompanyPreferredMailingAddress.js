@@ -67,7 +67,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   path={`${BASE_PATH}.addressFieldDesc`}
                   label="Office / Shop Number"
                   placeholder="Office / Shop Number"
-                  contexualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
+                  contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
                   inputProps={{ maxLength: MAX_OFFICE_NUMBER_LENGTH }}
                   component={Input}
                 />

@@ -5,7 +5,7 @@ import { getIn } from "formik";
 import cx from "classnames";
 
 import { CustomRadioButton as Radio } from "../RadioButton/CustomRadioButton";
-import { ContexualHelp, ErrorMessage } from "../../Notifications";
+import { ContextualHelp, ErrorMessage } from "../../Notifications";
 import { useStyles } from "./styled";
 
 export const InlineRadioGroup = ({
@@ -15,8 +15,8 @@ export const InlineRadioGroup = ({
   options,
   required,
   onChange,
-  contexualHelpText,
-  contexualHelpProps = {}
+  contextualHelpText,
+  contextualHelpProps = {}
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
@@ -31,7 +31,7 @@ export const InlineRadioGroup = ({
       error={isError}
       className={classes.wrapper}
     >
-      <ContexualHelp title={contexualHelpText} {...contexualHelpProps}>
+      <ContextualHelp title={contextualHelpText} {...contextualHelpProps}>
         <RadioGroup
           aria-label={label}
           name={field.name}
@@ -46,7 +46,7 @@ export const InlineRadioGroup = ({
             ))}
           </div>
         </RadioGroup>
-      </ContexualHelp>
+      </ContextualHelp>
 
       {isError && <ErrorMessage error={errorMessage} />}
     </FormControl>

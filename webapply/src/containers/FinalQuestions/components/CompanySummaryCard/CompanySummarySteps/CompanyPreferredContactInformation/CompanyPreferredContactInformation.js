@@ -83,7 +83,7 @@ export const CompanyPreferredContactInformationComponent = ({
                     label="Mobile number"
                     placeholder="55xxxxxxx"
                     component={Input}
-                    contexualHelpText="This number will be used as primary contact for Transaction Alerts and queries related to Business."
+                    contextualHelpText="This number will be used as primary contact for Transaction Alerts and queries related to Business."
                   />
                 </InputGroup>
                 <div
