@@ -156,7 +156,7 @@ const styles = {
   }
 };
 
-const ApplicationSubmitted = ({ classes, AccountSubmittedInfo }) => {
+const ApplicationSubmittedComponent = ({ classes, AccountSubmittedInfo }) => {
   const { companyDocuments: CompanyDocuments, banking: Banking } = useIconsByAccount();
 
   return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
@@ -216,4 +216,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(ApplicationSubmitted));
+export const ApplicationSubmitted = withStyles(styles)(
+  connect(mapStateToProps)(ApplicationSubmittedComponent)
+);

@@ -32,7 +32,7 @@ const mapDispatchToProps = {
   cancelDocUpload
 };
 
-export const UploadDocuments = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(UploadDocument);

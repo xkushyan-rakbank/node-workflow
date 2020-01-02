@@ -11,7 +11,12 @@ import {
   PO_NUMBER_REGEX,
   SPACE_OCCUPIED_OTHER_REGEX
 } from "../../../../../../utils/validation";
-import { OTHER_OPTION_CODE, BASE_PATH, MAX_OFFICE_NUMBER_LENGTH } from "./constants";
+import {
+  OTHER_OPTION_CODE,
+  BASE_PATH,
+  MAX_OFFICE_NUMBER_LENGTH,
+  MAX_PO_BOX_NUMBER_LENGTH
+} from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -102,8 +107,9 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   name="poBox"
                   path={`${BASE_PATH}.poBox`}
                   label="PO Box Number"
-                  placeholder="PO Box Number"
+                  placeholder="123456"
                   component={Input}
+                  inputProps={{ maxLength: MAX_PO_BOX_NUMBER_LENGTH }}
                 />
                 <Field name="country" path={`${BASE_PATH}.country`} disabled component={Input} />
               </Grid>

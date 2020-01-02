@@ -1,4 +1,6 @@
-export const style = {
+import { makeStyles } from "@material-ui/styles";
+
+export const useStyles = makeStyles({
   error: {
     fontSize: "12px",
     marginTop: "10px",
@@ -8,7 +10,7 @@ export const style = {
       margin: "0",
       color: "#ea2b1e"
     },
-    "& img": {
+    "& svg": {
       marginRight: "5px"
     }
   },
@@ -17,4 +19,4 @@ export const style = {
     display: "flex",
     alignItems: "center"
   }
-};
+});

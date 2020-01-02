@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { updateAccountType, sendProspectToAPI: sendProspectToAPIPromisify };
 
-export const SelectServices = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SelectServicesComponent);

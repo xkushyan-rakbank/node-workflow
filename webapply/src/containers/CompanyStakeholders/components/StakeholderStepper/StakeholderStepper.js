@@ -22,6 +22,7 @@ const StakeholderStepperComponent = ({
   index,
   isNewStakeholder,
   firstName,
+  middleName,
   lastName,
   orderIndex,
   deleteStakeholder,
@@ -74,6 +75,7 @@ const StakeholderStepperComponent = ({
       isStatusShown={step !== STEP_1}
       firstName={firstName}
       lastName={lastName}
+      middleName={middleName}
       isStatusLoading={isStatusLoading}
       index={orderIndex}
     >

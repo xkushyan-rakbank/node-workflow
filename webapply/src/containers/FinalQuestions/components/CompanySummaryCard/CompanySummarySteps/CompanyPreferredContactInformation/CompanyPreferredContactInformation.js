@@ -81,9 +81,9 @@ export const CompanyPreferredContactInformationComponent = ({
                     name="primaryMobileNo"
                     path="prospect.organizationInfo.contactDetails.primaryMobileNo"
                     label="Mobile number"
-                    placeholder="Mobile number"
+                    placeholder="55xxxxxxx"
                     component={Input}
-                    contexualHelpText="This number will be used as primary contact for Transaction Alerts and queries related to Business."
+                    contexualHelpText="This number will be used as primary contact for Transaction Alerts and queries related to Business. If you give an international number, then Cheque book will not be issued."
                   />
                 </InputGroup>
                 <div
@@ -103,7 +103,7 @@ export const CompanyPreferredContactInformationComponent = ({
                       name="primaryPhoneNo"
                       path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
                       label="Mobile number"
-                      placeholder="Mobile number"
+                      placeholder="55xxxxxxx"
                       component={Input}
                     />
                   </InputGroup>

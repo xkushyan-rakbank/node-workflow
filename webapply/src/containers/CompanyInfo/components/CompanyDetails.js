@@ -11,7 +11,7 @@ import { MAX_COMPANY_NAME_LENGTH } from "../constants";
 const initialValues = {
   companyName: "",
   vatRegistrationNumber: "",
-  numberOfEmployees: "",
+  numberOfEmployees: "0",
   companyCategory: ""
 };
 
@@ -23,6 +23,7 @@ const companyDetailsSchema = Yup.object({
     .max(15, "Maximum 15 characters allowed")
     .matches(NUMBER_REGEX, "Not valid number"),
   numberOfEmployees: Yup.number()
+    .typeError("Not valid number")
     .min(0, "must be more than 0")
     .max(1000, "must be less than or equal to 1000"),
   companyCategory: Yup.string().required("You need to provide company category")
@@ -32,6 +33,7 @@ export const CompanyDetails = ({ handleContinue }) => (
   <Formik
     initialValues={initialValues}
     validationSchema={companyDetailsSchema}
+    validateOnChange={false}
     onSubmit={handleContinue}
   >
     {() => (
@@ -76,6 +78,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               label="Number of employees"
               path="prospect.organizationInfo.numberOfEmployees"
               component={Input}
+              changeProspect={(_, value, path) => ({ [path]: value || "0" })}
             />
           </Grid>
         </Grid>
