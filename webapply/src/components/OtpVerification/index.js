@@ -45,7 +45,6 @@ export const OtpVerification = ({ onChange, code }) => {
         onFocus={handleInputFocus}
         onChange={handleChange}
         value={value}
-        className={classes.textField}
       />
     </Grid>
   ));

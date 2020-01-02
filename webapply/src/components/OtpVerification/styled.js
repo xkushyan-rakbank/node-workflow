@@ -31,6 +31,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("md")]: {
       width: 85,
       "& input": {
+        maxWidth: "85px",
         height: 70
       }
     },
@@ -41,13 +42,11 @@ export const useStyles = makeStyles(theme => ({
       flexBasis: 0,
       flexGrow: 1,
       "& input": {
+        maxWidth: 48,
         height: 48,
         fontSize: 24,
         padding: "11px 12px 13px"
       }
     }
-  },
-  textField: {
-    border: "none"
   }
 }));
