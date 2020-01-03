@@ -7,6 +7,7 @@ import { MOTHERS_MAIDEN_NAME_REGEX } from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
+import { MAX_MOTHERS_MAIDEN_NAME_LENGTH } from "../../constants";
 
 export const signatoryPersonalInformationSchema = Yup.object().shape({
   maritalStatus: Yup.string().required("You need to provide marital status"),
@@ -57,6 +58,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                   label="Mother's maiden name"
                   placeholder="Mother's maiden name"
                   component={Input}
+                  inputProps={{ maxLength: MAX_MOTHERS_MAIDEN_NAME_LENGTH }}
                 />
               </Grid>
               {values.maritalStatus === OTHER_OPTION_CODE && (
