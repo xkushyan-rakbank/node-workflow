@@ -15,6 +15,7 @@ export const Input = ({
   placeholder,
   label,
   field,
+  shrink,
   infoTitle,
   form: { errors, touched },
   classes: extendedClasses,
@@ -40,6 +41,9 @@ export const Input = ({
             disabled={disabled}
             error={isError}
             InputProps={{ ...InputProps, classes: { input: classes.input } }}
+            InputLabelProps={{
+              shrink
+            }}
           />
         </ContexualHelp>
 
