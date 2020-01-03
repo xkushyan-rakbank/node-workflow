@@ -3,7 +3,7 @@ import Select from "react-select";
 import { getIn } from "formik";
 import { FormControl } from "@material-ui/core";
 
-import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
+import { ErrorMessage, ContextualHelp } from "./../../../Notifications";
 import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
 import { useStyles, customStyles } from "./styled";
 
@@ -25,7 +25,7 @@ export const SelectAutocomplete = ({
   form: { errors, touched, setFieldValue },
   multiple = false,
   disabled,
-  contexualHelpText,
+  contextualHelpText,
   ...props
 }) => {
   const classes = useStyles();
@@ -46,7 +46,7 @@ export const SelectAutocomplete = ({
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <ContexualHelp title={contexualHelpText}>
+      <ContextualHelp title={contextualHelpText}>
         <Select
           {...field}
           {...props}
@@ -72,7 +72,7 @@ export const SelectAutocomplete = ({
           }}
           getOptionLabel={extractLabel}
         />
-      </ContexualHelp>
+      </ContextualHelp>
       {isError && <ErrorMessage error={errorMessage} />}
     </FormControl>
   );

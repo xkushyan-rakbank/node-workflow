@@ -5,7 +5,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { getIn } from "formik";
 
 import { InfoTitle } from "../../InfoTitle";
-import { ErrorMessage, ContexualHelp } from "../../Notifications";
+import { ErrorMessage, ContextualHelp } from "../../Notifications";
 import { BaseDatePicker } from "./styled";
 
 export const DatePicker = ({
@@ -20,14 +20,14 @@ export const DatePicker = ({
   maxDate = new Date(),
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
-  contexualHelpText,
-  contexualHelpProps = {}
+  contextualHelpText,
+  contextualHelpProps = {}
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
   return (
-    <ContexualHelp title={contexualHelpText} {...contexualHelpProps}>
+    <ContextualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl className="formControl">
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <BaseDatePicker
@@ -61,6 +61,6 @@ export const DatePicker = ({
 
         {isError && <ErrorMessage error={errorMessage} />}
       </FormControl>
-    </ContexualHelp>
+    </ContextualHelp>
   );
 };
