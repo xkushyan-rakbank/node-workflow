@@ -38,6 +38,8 @@ export const Industry = ({ handleContinue }) => (
               path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
               datalistId="industry"
               component={SelectAutocomplete}
+              contexualHelpText="This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. Example: if business / commercial / licensed activity is 'E Commerce', please select industry as 'Service' & sub-industry as 'Computer & IT Industry' "
+              contexualHelpProps={{ isDisableHoverListener: false }}
               onChange={e => {
                 setFieldValue("industry", e.target.value);
                 setFieldValue("subCategory", "");
