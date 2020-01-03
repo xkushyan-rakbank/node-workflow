@@ -127,7 +127,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                           label="Passport Number"
                           placeholder="Passport Number"
                           component={Input}
-                          contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
+                          contexualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
                             Example: 'P-123/1950/456 to be entered as P1231950456'"
                         />
                         <Field

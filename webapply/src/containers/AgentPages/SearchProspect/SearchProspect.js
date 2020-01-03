@@ -60,7 +60,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
               path="searchInfo.fname"
               label="Applicant Name"
               placeholder="Applicant Name"
-              contextualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."
+              contexualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."
               component={Input}
             />
 
@@ -80,7 +80,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                     path="searchInfo.mobileNo"
                     label="Mobile Number"
                     placeholder="Mobile Number"
-                    contextualHelpText="This should be the mobile number of the person who has registered for WebApply and initiated the application on behalf of the company."
+                    contexualHelpText="This should be the mobile number of the person who has registered for WebApply and initiated the application on behalf of the company."
                     component={Input}
                   />
                 </InputGroup>
@@ -91,7 +91,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   path="searchInfo.email"
                   label="E-mail Address"
                   placeholder="E-mail Address"
-                  contextualHelpText="This should be the email id of the person who has registered for WebApply and initiated the application on behalf of the company."
+                  contexualHelpText="This should be the email id of the person who has registered for WebApply and initiated the application on behalf of the company."
                   component={Input}
                 />
               </Grid>

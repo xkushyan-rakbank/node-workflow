@@ -44,7 +44,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               name="companyName"
               label="Company Name"
               path="prospect.organizationInfo.companyName"
-              contextualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 30 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
+              contexualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 30 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
               infoTitle="This should be the same as in your Trade License"
               inputProps={{ maxLength: MAX_COMPANY_NAME_LENGTH }}
               component={Input}
@@ -55,7 +55,7 @@ export const CompanyDetails = ({ handleContinue }) => (
               name="companyCategory"
               label="Company Category"
               path="prospect.orgKYCDetails.companyCategory"
-              contextualHelpText="Select Foreign / Offshore / Non-Resident company if applicable. In case of a Free Zone company  select Free Zone. In case of Civil Company select  Partnerships. Select appropriate category in all other cases"
+              contexualHelpText="Select Foreign / Offshore / Non-Resident company if applicable. In case of a Free Zone company  select Free Zone. In case of Civil Company select  Partnerships. Select appropriate category in all other cases"
               datalistId="companyCategory"
               component={SelectAutocomplete}
             />
