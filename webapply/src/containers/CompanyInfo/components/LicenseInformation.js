@@ -44,7 +44,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               name="licenseNumber"
               label="License number"
               path="prospect.organizationInfo.licenseNumber"
-              contexualHelpText="If License Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.Example CN-123/2018/456 to be entered as CN1232018456"
+              contextualHelpText="If License Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.Example CN-123/2018/456 to be entered as CN1232018456"
               component={Input}
               inputProps={{ maxLength: MAX_LICENSE_NUMBER_LENGTH }}
             />
@@ -75,8 +75,8 @@ export const LicenseInformation = ({ handleContinue }) => (
               label="Country of incorporation"
               path="prospect.organizationInfo.countryOfIncorporation"
               datalistId="countryOfIncorporation"
-              contexualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
-              contexualHelpProps={{ isDisableHoverListener: false }}
+              contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
+              contextualHelpProps={{ isDisableHoverListener: false }}
               component={CustomSelect}
             />
           </Grid>
@@ -88,8 +88,8 @@ export const LicenseInformation = ({ handleContinue }) => (
               name="dateOfIncorporation"
               label="Date of incorporation"
               path="prospect.organizationInfo.dateOfIncorporation"
-              contexualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
-              contexualHelpProps={{ isDisableHoverListener: false }}
+              contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
+              contextualHelpProps={{ isDisableHoverListener: false }}
               component={DatePicker}
             />
           </Grid>

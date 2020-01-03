@@ -29,8 +29,8 @@ export const CustomSelect = ({
   form: { errors, touched },
   isMulti = false,
   shrink,
-  contexualHelpText,
-  contexualHelpProps = {},
+  contextualHelpText,
+  contextualHelpProps = {},
   ...rest
 }) => {
   const classes = useStyles();
@@ -56,7 +56,7 @@ export const CustomSelect = ({
         {label}
       </InputLabel>
 
-      <ContexualHelp title={contexualHelpText} {...contexualHelpProps}>
+      <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
           {...rest}

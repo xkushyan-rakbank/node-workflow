@@ -9,7 +9,7 @@ import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
 import { useStyles } from "./styled";
 
 export const Input = ({
-  contexualHelpText,
+  contextualHelpText,
   placement,
   disabled,
   placeholder,
@@ -29,7 +29,7 @@ export const Input = ({
   return (
     <>
       <FormControl classes={{ root: classes.formControlRoot }}>
-        <ContexualHelp title={contexualHelpText} placement={placement}>
+        <ContexualHelp title={contextualHelpText} placement={placement}>
           <TextField
             {...field}
             {...props}

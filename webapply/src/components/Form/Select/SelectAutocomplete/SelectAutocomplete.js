@@ -25,8 +25,8 @@ export const SelectAutocomplete = ({
   form: { errors, touched, setFieldValue },
   multiple = false,
   disabled,
-  contexualHelpText,
-  contexualHelpProps = {},
+  contextualHelpText,
+  contextualHelpProps,
   ...props
 }) => {
   const classes = useStyles();
@@ -47,7 +47,7 @@ export const SelectAutocomplete = ({
 
   return (
     <FormControl className="formControl" variant="outlined">
-      <ContexualHelp title={contexualHelpText} {...contexualHelpProps}>
+      <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
           {...props}
