@@ -49,8 +49,8 @@ export const SignatoryRights = ({ handleContinue, index }) => (
             component={CustomSelect}
             label="Authority Type"
             datalistId="authorityType"
-            contexualHelpProps={{ isDisableHoverListener: false }}
-            contexualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
+            contextualHelpProps={{ isDisableHoverListener: false }}
+            contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
           />
         </Grid>
 

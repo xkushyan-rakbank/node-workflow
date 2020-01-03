@@ -20,14 +20,14 @@ export const DatePicker = ({
   maxDate = new Date(),
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
-  contexualHelpText,
-  contexualHelpProps = {}
+  contextualHelpText,
+  contextualHelpProps = {}
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
   return (
-    <ContexualHelp title={contexualHelpText} {...contexualHelpProps}>
+    <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl className="formControl">
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <BaseDatePicker
