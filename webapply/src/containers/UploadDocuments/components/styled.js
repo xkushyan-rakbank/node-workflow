@@ -128,7 +128,7 @@ export const useStyles = makeStyles({
     color: "#373737"
   },
   fileUploadPlaceholder: {
-    height: "50px",
+    minHeight: "50px",
     display: "flex",
     alignItems: "center",
     padding: "0 25px",
@@ -146,10 +146,11 @@ export const useStyles = makeStyles({
     fontWeight: "normal",
     fontStyle: "normal",
     fontStretch: "normal",
-    lineHeight: ".6",
+    lineHeight: "1.4",
     letterSpacing: "normal",
     color: "#373737",
-    display: "block"
+    display: "block",
+    marginRight: 30
   },
 
   fileSizeMessage: {
@@ -163,6 +164,7 @@ export const useStyles = makeStyles({
   },
   ControlsBox: {
     width: "130px",
+    flex: "0 0 130px",
     height: "32px",
     borderRadius: "21px",
     border: "solid 1px #373737",
