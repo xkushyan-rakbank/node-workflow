@@ -5,7 +5,7 @@ import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStake
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
+import { stakeHoldersSteps, STEP_1, STEP_3, STEP_6 } from "./../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { useStep } from "../../../../components/StepComponent/useStep";
@@ -34,7 +34,7 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_3);
 
   const handleContinue = () =>
     sendProspectToAPI().then(

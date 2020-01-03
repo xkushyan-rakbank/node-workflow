@@ -44,6 +44,8 @@ export const SelectAutocomplete = ({
     ? options.find(option => extractValue(option) === field.value)
     : options.filter(option => field.value.includes(option.value));
 
+  console.log("renderValue", renderValue);
+
   return (
     <FormControl className="formControl" variant="outlined">
       <ContexualHelp title={contexualHelpText}>

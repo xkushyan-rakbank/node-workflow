@@ -92,6 +92,20 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                           component={SelectAutocomplete}
                           datalistId="country"
                           disabled={isDisabled()}
+                          filterOptions={options => {
+                            const nationalities = values.passportDetails.reduce((acc, curr) => {
+                              if (curr.nationality) {
+                                acc.push(curr.nationality);
+                              }
+                              return acc;
+                            }, []);
+
+                            if (passportIndex) {
+                              return options.filter(item => !nationalities.includes(item.value));
+                            }
+
+                            return options;
+                          }}
                           changeProspect={(prospect, value) => {
                             if (passportIndex) {
                               return prospect;
