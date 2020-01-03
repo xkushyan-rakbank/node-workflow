@@ -57,6 +57,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                   label="Mother's maiden name"
                   placeholder="Mother's maiden name"
                   component={Input}
+                  contextualHelpText="Provide mother's surname before marriage"
                 />
               </Grid>
               {values.maritalStatus === OTHER_OPTION_CODE && (
