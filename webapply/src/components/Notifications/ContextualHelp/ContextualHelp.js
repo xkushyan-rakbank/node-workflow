@@ -2,7 +2,7 @@ import React from "react";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useStyles } from "./styled";
 
-export const ContexualHelp = ({
+export const ContextualHelp = ({
   children,
   title = "",
   placement = "left",

@@ -123,7 +123,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               name={`topCustomers[${index}].name`}
                               path={`prospect.orgKYCDetails.topCustomers[${index}].name`}
                               label="Customer name"
-                              contexualHelpText={
+                              contextualHelpText={
                                 <>
                                   List down the names of top existing or future customers. These
                                   customer names should be as per their respective Trade Licenses.
