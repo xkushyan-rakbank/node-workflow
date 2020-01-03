@@ -19,7 +19,7 @@ import {
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { yesNoOptions } from "../../../../constants/options";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
-import { ContextualHelp } from "../../../../components/Notifications";
+import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 
 import { NAME_REGEX } from "../../../../utils/validation";
@@ -91,7 +91,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 }}
                 changeProspect={createChangeProspectHandler(values)}
               />
-              <ContextualHelp
+              <ContexualHelp
                 title="Select this check box if another company holds any shares based on Memorandum of Association / Articles of Association / Partners agreement / Service Agreement / Share Certificate"
                 placement="right"
                 isDisableHoverListener={false}
@@ -99,7 +99,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 <span className={classes.questionIcon}>
                   <Icon name={ICONS.question} alt="question" className={classes.iconSize} />
                 </span>
-              </ContextualHelp>
+              </ContexualHelp>
             </Grid>
           </Grid>
           <Grid item container spacing={3}>
@@ -123,7 +123,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
                   inputProps={{ maxLength: 30 }}
-                  contextualHelpText="Given Name of the stakeholder exactly the way it is mentioned in the passport"
+                  contexualHelpText="Given Name of the stakeholder exactly the way it is mentioned in the passport"
                 />
               </InputGroup>
             </Grid>
@@ -151,7 +151,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 component={Input}
                 changeProspect={createChangeProspectHandler(values)}
                 inputProps={{ maxLength: 30 }}
-                contextualHelpText="Surname of the stakeholder exactly the way it is mentioned in the passport"
+                contexualHelpText="Surname of the stakeholder exactly the way it is mentioned in the passport"
               />
             </Grid>
             <Grid item md={6} sm={12}>

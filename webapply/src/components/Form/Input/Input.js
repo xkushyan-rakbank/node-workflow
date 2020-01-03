@@ -4,12 +4,12 @@ import TextField from "@material-ui/core/TextField";
 import { getIn } from "formik";
 import cx from "classnames";
 
-import { ErrorMessage, InfoTitle, ContextualHelp } from "./../../Notifications";
+import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
 
 import { useStyles } from "./styled";
 
 export const Input = ({
-  contextualHelpText,
+  contexualHelpText,
   placement,
   disabled,
   placeholder,
@@ -29,7 +29,7 @@ export const Input = ({
   return (
     <>
       <FormControl classes={{ root: classes.formControlRoot }}>
-        <ContextualHelp title={contextualHelpText} placement={placement}>
+        <ContexualHelp title={contexualHelpText} placement={placement}>
           <TextField
             {...field}
             {...props}
@@ -41,7 +41,7 @@ export const Input = ({
             error={isError}
             InputProps={{ ...InputProps, classes: { input: classes.input } }}
           />
-        </ContextualHelp>
+        </ContexualHelp>
 
         {isError && <ErrorMessage error={errorMessage} />}
 
