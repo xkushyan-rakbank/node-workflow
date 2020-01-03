@@ -1,3 +1,3 @@
 export { InfoTitle } from "./InfoTitle/InfoTitle";
-export { ContextualHelp } from "./ContextualHelp/ContextualHelp";
+export { ContexualHelp } from "./ContexualHelp/ContexualHelp";
 export { ErrorMessage } from "./ErrorMessage/ErrorMessage";

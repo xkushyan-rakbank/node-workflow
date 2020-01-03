@@ -60,13 +60,15 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
       initialValues={{
         accountSigningType: "",
         accountSigningInstn: "",
-        signatories: [...new Array(MAX_SIGNATORIES)].map(() => ({
-          fullName: "",
-          primaryMobCountryCode: "",
-          primaryMobileNo: "",
-          primaryPhoneCountryCode: "",
-          primaryPhoneNo: ""
-        }))
+        organizationInfo: {
+          contactDetailsForTxnReconfirming: [...new Array(MAX_SIGNATORIES)].map(() => ({
+            fullName: "",
+            primaryMobCountryCode: "",
+            primaryMobileNo: "",
+            primaryPhoneCountryCode: "",
+            primaryPhoneNo: ""
+          }))
+        }
       }}
       validationSchema={signingPreferencesSchema}
       validateOnChange={false}
@@ -107,16 +109,19 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
           />
           <Divider />
           <ConfirmingTransactions />
-          <FieldArray name="signatories">
+          <FieldArray name="organizationInfo">
             {arrayHelpers => (
               <>
                 {[...Array(countOfSignatories).keys()].map(index => {
-                  const prospectPath = `prospect.signatoryInfo[${index}].contactDetails`;
+                  const prefix = "organizationInfo.contactDetailsForTxnReconfirming";
+                  const prospectPrefix = `prospect.${prefix}[${index}]`;
+                  const prefixPhone = `${prefix}.[${index}]`;
+
                   return (
                     <React.Fragment key={index}>
                       <Field
                         // TODO find out correct path also update validation schema !!
-                        name={`signatories[${index}].fullName`}
+                        name={`signatories.${index}.fullName`}
                         path={`prospect.signatoryInfo[${index}].fullName`}
                         label="Your Name"
                         placeholder="Your Name"
@@ -127,15 +132,15 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                         <Grid item md={6} sm={12}>
                           <InputGroup>
                             <Field
-                              name={`signatories[${index}].primaryMobCountryCode`}
-                              path={`${prospectPath}.primaryMobCountryCode`}
+                              name={`${prefixPhone}.primaryMobCountryCode`}
+                              path={`${prospectPrefix}.primaryMobCountryCode`}
                               datalistId="countryCode"
                               component={CustomSelect}
                               shrink={false}
                             />
                             <Field
-                              name={`signatories[${index}].primaryMobileNo`}
-                              path={`${prospectPath}.primaryMobileNo`}
+                              name={`${prefixPhone}.primaryMobileNo`}
+                              path={`${prospectPrefix}.primaryMobileNo`}
                               label="Primary mobile no."
                               placeholder="Primary mobile no."
                               component={Input}
@@ -146,15 +151,15 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                         <Grid item md={6} sm={12}>
                           <InputGroup>
                             <Field
-                              name={`signatories[${index}].primaryPhoneCountryCode`}
-                              path={`${prospectPath}.primaryPhoneCountryCode`}
+                              name={`${prefixPhone}.primaryPhoneCountryCode`}
+                              path={`${prospectPrefix}.primaryPhoneCountryCode`}
                               datalistId="countryCode"
                               component={CustomSelect}
                               shrink={false}
                             />
                             <Field
-                              name={`signatories[${index}].primaryPhoneNo`}
-                              path={`${prospectPath}.primaryPhoneNo`}
+                              name={`${prefixPhone}.primaryPhoneNo`}
+                              path={`${prospectPrefix}.primaryPhoneNo`}
                               label="Landline phone no. (optional)"
                               placeholder="Landline phone no. (optional)"
                               component={Input}
