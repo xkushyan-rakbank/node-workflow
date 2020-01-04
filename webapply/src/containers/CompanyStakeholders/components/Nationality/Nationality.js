@@ -92,6 +92,13 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                           component={SelectAutocomplete}
                           datalistId="country"
                           disabled={isDisabled()}
+                          filterOptions={options => {
+                            const nationalities = values.passportDetails
+                              .filter((item, index) => item.nationality && index !== passportIndex)
+                              .map(item => item.nationality);
+
+                            return options.filter(item => !nationalities.includes(item.value));
+                          }}
                           changeProspect={(prospect, value) => {
                             if (passportIndex) {
                               return prospect;
@@ -127,7 +134,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                           label="Passport Number"
                           placeholder="Passport Number"
                           component={Input}
-                          contexualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
+                          contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
                             Example: 'P-123/1950/456 to be entered as P1231950456'"
                         />
                         <Field

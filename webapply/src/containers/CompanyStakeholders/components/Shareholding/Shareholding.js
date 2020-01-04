@@ -63,8 +63,8 @@ const ShareholdingStep = ({
                 options={yesNoOptions}
                 label="Is this person a shareholder?"
                 onChange={shareholderHandler}
-                contexualHelpProps={{ isDisableHoverListener: false }}
-                contexualHelpText="Select 'Yes' if this person holds any shares based on Memorandum of Association/ Articles of Association/ Partners agreement/ Service Agreement/ Share Certificate"
+                contextualHelpProps={{ isDisableHoverListener: false }}
+                contextualHelpText="Select 'Yes' if this person holds any shares based on Memorandum of Association/ Articles of Association/ Partners agreement/ Service Agreement/ Share Certificate"
               />
               <Grid item md={12}>
                 <Field
@@ -78,7 +78,7 @@ const ShareholdingStep = ({
                     inputComponent: PercentageInput,
                     endAdornment: <InputAdornment position="end">%</InputAdornment>
                   }}
-                  contexualHelpText="Mention the percentage of shares held based on  Memorandum of Association/ Articles of Association/ Partners agreement/ Service Agreement/ Share Certificate"
+                  contextualHelpText="Mention the percentage of shares held based on  Memorandum of Association/ Articles of Association/ Partners agreement/ Service Agreement/ Share Certificate"
                 />
               </Grid>
             </Grid>

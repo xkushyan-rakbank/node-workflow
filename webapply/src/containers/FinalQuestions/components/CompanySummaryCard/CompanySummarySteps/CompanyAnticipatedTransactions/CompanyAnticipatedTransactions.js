@@ -186,7 +186,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
-                    contexualHelpText="Approximate amount that the company expects to receive in a month in Cash."
+                    contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -197,7 +197,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
-                    contexualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
+                    contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
                   />
                   <InfoTitle
                     classes={{
@@ -222,7 +222,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
-                    contexualHelpText="Approximate amount that the company expects to receive in single transaction in Cash "
+                    contextualHelpText="Approximate amount that the company expects to receive in single transaction in Cash "
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -233,7 +233,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
-                    contexualHelpText="Approximate amount that the company expects to receive in single transaction in modes other than Cash"
+                    contextualHelpText="Approximate amount that the company expects to receive in single transaction in modes other than Cash"
                   />
                   <InfoTitle
                     classes={{
