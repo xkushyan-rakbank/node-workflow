@@ -15,7 +15,7 @@ export const MOTHERS_MAIDEN_NAME_REGEX = /^([a-zA-Z])*$/;
 export const EMPLOYMENT_TYPE_REGEX = /^([a-zA-Z ]){1,50}$/;
 export const DESIGNATION_REGEX = /^([a-zA-Z]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
-export const EMIRATES_ID_REGEX = /^784-\d{4}-\d{7}-\d$/;
+export const EMIRATES_ID_REGEX = /^784\d{12}$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
 
 export const FILE_SIZE = 5 * 1048576;
