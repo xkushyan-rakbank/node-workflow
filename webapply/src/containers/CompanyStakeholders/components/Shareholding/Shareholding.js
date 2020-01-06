@@ -41,6 +41,8 @@ const ShareholdingStep = ({
 
     if (value !== values.isShareholderACompany && !value) {
       setFieldValue("shareHoldingPercentage", 0);
+    } else {
+      setFieldValue("shareHoldingPercentage", 33.33);
     }
   };
 
