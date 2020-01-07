@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
 
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
-import { STEP_1 } from "../CompanySummaryCard/constants";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
-import { useStep } from "../../../../components/StepComponent/useStep";
+import { useContextStep } from "../../../../components/StepComponent/useContextStep";
 
 export const FinalQuestionStepComponent = ({
   index = null,
   handleFinalStepContinue,
   sendProspectToAPI,
-  stepsArray
+  stepsArray,
+  fieldName,
+  initialStep
 }) => {
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useContextStep(
+    initialStep,
+    fieldName,
+    index
+  );
 
   const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);

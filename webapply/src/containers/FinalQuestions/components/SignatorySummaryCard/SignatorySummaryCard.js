@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import get from "lodash/get";
 import cx from "classnames";
 
@@ -6,7 +7,8 @@ import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps } from "./constants";
+import { signatoriesSteps, SIGNATORY_FIELD_NAME } from "./constants";
+import { StepStateContext } from "../../../../components/StepComponent/StepStateContext";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
@@ -18,6 +20,9 @@ export const SignatorySummaryCardComponent = ({
   setExpandedSignatoryIndex,
   handleFinalStepContinue
 }) => {
+  const state = useContext(StepStateContext);
+  const { location } = useHistory();
+  const availableSteps = state[location.pathname][SIGNATORY_FIELD_NAME][index] || [];
   const classes = useStyles();
 
   const handleExpandNextBlock = () => setExpandedSignatoryIndex(index + 1);
@@ -43,7 +48,7 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {expandedSignatoryIndex !== index && availableSignatoriesIndexes.includes(index) && (
+            {expandedSignatoryIndex !== index && availableSteps.includes(index) && (
               <LinkButton
                 clickHandler={() => {
                   setExpandedSignatoryIndex(index);
@@ -62,6 +67,7 @@ export const SignatorySummaryCardComponent = ({
           handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
+          fieldName={SIGNATORY_FIELD_NAME}
         />
       </div>
     </FormCard>

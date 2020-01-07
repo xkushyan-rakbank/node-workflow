@@ -1,11 +1,13 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import cx from "classnames";
 
 import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
-import { finalQuestionsSteps } from "./constants";
+import { finalQuestionsSteps, COMPANY_FIELD_NAME, STEP_1 } from "./constants";
+import { StepStateContext } from "../../../../components/StepComponent/StepStateContext";
 
 import { useStyles } from "./styled";
 
@@ -14,10 +16,13 @@ export const CompanySummaryCardComponent = ({
   switchExpandedMargin,
   companyName,
   handleFinalStepContinue,
-  sendProspectToAPI,
-  expandedSignatoryIndex
+  sendProspectToAPI
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const state = useContext(StepStateContext);
+  const { location } = useHistory();
+  const availableSteps = state[location.pathname][COMPANY_FIELD_NAME] || [];
+  const isAllStepsCompleted = availableSteps.length >= finalQuestionsSteps.length;
   const classes = useStyles();
 
   const handleClickStartHere = useCallback(() => {
@@ -34,7 +39,7 @@ export const CompanySummaryCardComponent = ({
       companyName={companyName}
       controls={
         !isExpanded &&
-        (expandedSignatoryIndex !== null ? (
+        (isAllStepsCompleted ? (
           <LinkButton clickHandler={() => setIsExpanded(true)} />
         ) : (
           <ContinueButton
@@ -52,6 +57,8 @@ export const CompanySummaryCardComponent = ({
           handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
+          fieldName={COMPANY_FIELD_NAME}
+          initialStep={isAllStepsCompleted ? null : STEP_1}
         />
       </div>
     </CompanyCard>
