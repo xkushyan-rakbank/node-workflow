@@ -21,7 +21,7 @@ module.exports = function(app) {
   app.use(
     "/docUploader",
     proxy({
-      target: "http://217.165.206.6:80",
+      target: "http://localhost:8081",
       changeOrigin: true
     })
   );
