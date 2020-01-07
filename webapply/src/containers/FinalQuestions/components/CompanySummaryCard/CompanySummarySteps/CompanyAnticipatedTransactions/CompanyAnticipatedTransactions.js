@@ -12,7 +12,7 @@ import { InfoTitle } from "../../../../../../components/Notifications";
 import { Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
-import { COMPANY_CURRENCY, YEAR_MONTH_COUNT } from "./constants";
+import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
 import { ANNUAL_TURNOVER_REGEX } from "../../../../../../utils/validation";
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
@@ -148,7 +148,12 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                     label="Annual turnover"
                     placeholder="Annual turnover"
-                    InputProps={commonInputProps}
+                    InputProps={{
+                      ...commonInputProps,
+                      inputProps: {
+                        maxLength: ANNUAL_TURNOVER_MAX_LENGTH
+                      }
+                    }}
                     component={Input}
                   />
                 </Grid>

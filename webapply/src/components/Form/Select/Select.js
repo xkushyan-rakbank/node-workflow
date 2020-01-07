@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { getIn } from "formik";
 
-import { ErrorMessage, InfoTitle, ContextualHelp } from "./../../Notifications";
+import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
 import { useStyles } from "./styled";
 
 export const CustomSelect = ({
@@ -56,7 +56,7 @@ export const CustomSelect = ({
         {label}
       </InputLabel>
 
-      <ContextualHelp title={contextualHelpText} {...contextualHelpProps}>
+      <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
           {...rest}
@@ -80,7 +80,7 @@ export const CustomSelect = ({
             </MenuItem>
           ))}
         </Select>
-      </ContextualHelp>
+      </ContexualHelp>
 
       {isError && <ErrorMessage error={errorMessage} />}
 
