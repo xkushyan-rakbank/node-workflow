@@ -155,6 +155,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                       }
                     }}
                     component={Input}
+                    contextualHelpText="Mention the Turnover per annum of the company. For new companies, give the expected turnover per annum"
                   />
                 </Grid>
               </Grid>
