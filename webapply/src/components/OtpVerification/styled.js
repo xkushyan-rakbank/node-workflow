@@ -19,6 +19,7 @@ export const useStyles = makeStyles(theme => ({
     },
     "& input": {
       boxSizing: "border-box",
+      maxWidth: 85,
       height: 88,
       textAlign: "center",
       fontSize: 46,
