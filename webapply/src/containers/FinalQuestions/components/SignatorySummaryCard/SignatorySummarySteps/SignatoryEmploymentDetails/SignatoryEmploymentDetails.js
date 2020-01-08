@@ -83,6 +83,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     datalistId="employmentType"
                     label="Employment Type"
                     component={CustomSelect}
+                    contextualHelpText="If self-employed then provide business details"
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
