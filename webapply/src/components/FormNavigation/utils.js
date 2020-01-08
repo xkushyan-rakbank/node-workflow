@@ -8,7 +8,8 @@ export const checkIsShowAccountInfo = pathname =>
     routes.MyApplications,
     routes.comeBackLogin,
     routes.comeBackLoginVerification,
-    routes.reUploadDocuments
+    routes.reUploadDocuments,
+    routes.ApplicationSubmitted
   ].includes(pathname);
 
 export const checkIsShowSmallBg = pathname =>
