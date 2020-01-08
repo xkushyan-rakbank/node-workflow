@@ -81,7 +81,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                 <Field
                   name="emirateCity"
                   path={`${BASE_PATH}.emirateCity`}
-                  datalistId="emirate"
+                  datalistId="emirateCity"
                   label="Emirate"
                   component={CustomSelect}
                 />
