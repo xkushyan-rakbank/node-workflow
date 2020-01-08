@@ -39,11 +39,8 @@ const ShareholdingStep = ({
     const value = JSON.parse(event.target.value);
     setFieldValue("isShareholderACompany", value);
 
-    if (value !== values.isShareholderACompany && !value) {
-      setFieldValue("shareHoldingPercentage", 0);
-    } else {
-      setFieldValue("shareHoldingPercentage", "");
-    }
+    const shareHoldingPercentage = value !== values.isShareholderACompany && !value ? 0 : "";
+    setFieldValue("shareHoldingPercentage", shareHoldingPercentage);
   };
 
   return (
