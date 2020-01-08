@@ -103,7 +103,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   name="emirateCity"
                   path={`${autoSavePathBase}.emirateCity`}
                   disabled={values.sameAsCompanyAddress}
-                  datalistId="emirate"
+                  datalistId="emirateCity"
                   label="Emirate"
                   component={CustomSelect}
                 />
