@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -35,8 +35,6 @@ const ShareholdingStep = ({
     ? { isShareholderACompany: true, shareHoldingPercentage: 100 }
     : { isShareholderACompany: "", shareHoldingPercentage: "" };
 
-  const [placeholder, setPlaceholder] = useState("Percentage");
-
   const createShareholderHandler = ({ values, setFieldValue }) => event => {
     const value = JSON.parse(event.target.value);
     setFieldValue("isShareholderACompany", value);
@@ -45,7 +43,6 @@ const ShareholdingStep = ({
       setFieldValue("shareHoldingPercentage", 0);
     } else {
       setFieldValue("shareHoldingPercentage", "");
-      setPlaceholder("33.33");
     }
   };
 
@@ -76,7 +73,7 @@ const ShareholdingStep = ({
                   name="shareHoldingPercentage"
                   path={`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`}
                   label="Percentage"
-                  placeholder={placeholder}
+                  placeholder={values.isShareholderACompany ? "33.33" : "Percentage"}
                   disabled={!values.isShareholderACompany}
                   component={Input}
                   InputProps={{
