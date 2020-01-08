@@ -2,6 +2,7 @@ import React from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import subDays from "date-fns/subDays";
 import { getIn } from "formik";
 
 import { InfoTitle } from "../../InfoTitle";
@@ -17,7 +18,7 @@ export const DatePicker = ({
   placeholder = "__/__/____",
   format = "dd/MM/yyyy",
   minDate = new Date("01-01-1950"),
-  maxDate = new Date(),
+  maxDate = subDays(new Date(), 1),
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
   contextualHelpText,
