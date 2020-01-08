@@ -122,6 +122,14 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 label="Company name"
                                 placeholder="Company name"
                                 component={Input}
+                                contextualHelpText={
+                                  <>
+                                    The name of the other company, branch or subsidiary should be as
+                                    per their respective Trade Licenses.
+                                    <br /> Example <br /> Airlift Global Automation and Heavy
+                                    Equipment Rental LLC
+                                  </>
+                                }
                               />
                             </Grid>
                             <Grid
@@ -230,6 +238,14 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 label="Company name"
                                 placeholder="Company name"
                                 component={Input}
+                                contextualHelpText={
+                                  <>
+                                    The name of the other company, branch or subsidiary should be as
+                                    per their respective Trade Licenses.
+                                    <br /> Example <br /> Airlift Global Automation and Heavy
+                                    Equipment Rental LLC
+                                  </>
+                                }
                               />
                             </Grid>
                             <Grid
