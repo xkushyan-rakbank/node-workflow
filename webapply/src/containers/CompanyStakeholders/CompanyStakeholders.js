@@ -8,6 +8,7 @@ import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../components/Modals";
+import { Icon, ICONS } from "../../components/Icons";
 import routes from "../../routes";
 import {
   changeEditableStakeholder,
@@ -22,7 +23,6 @@ import {
   stakeholdersState,
   percentageSelector
 } from "../../store/selectors/stakeholder";
-import { Icon, ICONS } from "../../components/Icons";
 
 import { useStyles } from "./styled";
 
