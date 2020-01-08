@@ -123,7 +123,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
                   inputProps={{ maxLength: 30 }}
-                  contexualHelpText="Given Name of the stakeholder exactly the way it is mentioned in the passport"
+                  contextualHelpText="Given Name of the stakeholder exactly the way it is mentioned in the passport"
                 />
               </InputGroup>
             </Grid>
@@ -151,7 +151,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 component={Input}
                 changeProspect={createChangeProspectHandler(values)}
                 inputProps={{ maxLength: 30 }}
-                contexualHelpText="Surname of the stakeholder exactly the way it is mentioned in the passport"
+                contextualHelpText="Surname of the stakeholder exactly the way it is mentioned in the passport"
               />
             </Grid>
             <Grid item md={6} sm={12}>

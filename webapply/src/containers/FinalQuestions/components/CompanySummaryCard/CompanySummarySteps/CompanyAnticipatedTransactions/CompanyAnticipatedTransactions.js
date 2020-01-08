@@ -12,7 +12,7 @@ import { InfoTitle } from "../../../../../../components/Notifications";
 import { Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
-import { COMPANY_CURRENCY, YEAR_MONTH_COUNT } from "./constants";
+import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
 import { ANNUAL_TURNOVER_REGEX } from "../../../../../../utils/validation";
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
@@ -147,9 +147,15 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     name="annualFinTurnoverAmtInAED"
                     path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                     label="Annual turnover"
-                    placeholder="Annual turnover"
-                    InputProps={commonInputProps}
+                    placeholder="9999999999.99"
+                    InputProps={{
+                      ...commonInputProps,
+                      inputProps: {
+                        maxLength: ANNUAL_TURNOVER_MAX_LENGTH
+                      }
+                    }}
                     component={Input}
+                    contextualHelpText="Mention the Turnover per annum of the company. For new companies, give the expected turnover per annum"
                   />
                 </Grid>
               </Grid>
@@ -181,7 +187,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
-                    contexualHelpText="Approximate amount that the company expects to receive in a month in Cash."
+                    contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -192,7 +198,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
-                    contexualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
+                    contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
                   />
                   <InfoTitle
                     classes={{
@@ -217,7 +223,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
-                    contexualHelpText="Approximate amount that the company expects to receive in single transaction in Cash "
+                    contextualHelpText="Approximate amount that the company expects to receive in single transaction in Cash "
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -228,7 +234,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     placeholder="99999999.99"
                     InputProps={commonInputProps}
                     component={Input}
-                    contexualHelpText="Approximate amount that the company expects to receive in single transaction in modes other than Cash"
+                    contextualHelpText="Approximate amount that the company expects to receive in single transaction in modes other than Cash"
                   />
                   <InfoTitle
                     classes={{

@@ -22,6 +22,7 @@ const getCountryOfResidenceSchema = isSignatory =>
       is: value => value === UAE,
       then: Yup.string()
         .required("Required")
+        .transform(value => value.replace(/-/g, ""))
         .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
     })
   });

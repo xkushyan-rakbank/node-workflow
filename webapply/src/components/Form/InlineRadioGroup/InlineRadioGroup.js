@@ -15,8 +15,8 @@ export const InlineRadioGroup = ({
   options,
   required,
   onChange,
-  contexualHelpText,
-  contexualHelpProps = {}
+  contextualHelpText,
+  contextualHelpProps = {}
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
@@ -31,7 +31,7 @@ export const InlineRadioGroup = ({
       error={isError}
       className={classes.wrapper}
     >
-      <ContexualHelp title={contexualHelpText} {...contexualHelpProps}>
+      <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <RadioGroup
           aria-label={label}
           name={field.name}
