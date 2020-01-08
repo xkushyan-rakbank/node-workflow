@@ -9,9 +9,9 @@ import { CustomRadioButton } from "../RadioButton/CustomRadioButton";
 import { InfoTitle, ErrorMessage } from "../../Notifications";
 
 export const CheckboxesWrapper = styled("div")({
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  alignItems: "flex-start"
+  display: "flex",
+  flexWrap: "wrap",
+  marginLeft: "-30px"
 });
 
 export const CheckboxGroup = ({
@@ -24,7 +24,8 @@ export const CheckboxGroup = ({
   field,
   form: { errors, touched },
   onSelect = () => {},
-  textArea
+  textArea,
+  classes
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
@@ -55,6 +56,7 @@ export const CheckboxGroup = ({
               label={extractLabel(item)}
               onSelect={onSelect}
               checked={(field.value || []).includes(extractValue(item))}
+              classes={classes}
             />
           ))}
         </CheckboxesWrapper>
