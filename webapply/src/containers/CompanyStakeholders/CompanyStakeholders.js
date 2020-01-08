@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
-import { ErrorMessage } from "../../components/Notifications";
+import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../components/Modals";
@@ -22,6 +22,8 @@ import {
   stakeholdersState,
   percentageSelector
 } from "../../store/selectors/stakeholder";
+import { Icon, ICONS } from "../../components/Icons";
+
 import { useStyles } from "./styled";
 
 const MAX_STAKEHOLDERS_LENGTH = 6;
@@ -89,6 +91,19 @@ const CompanyStakeholdersComponent = ({
         partners, signatories/Power of Attorney. Check our guide below to see which one applies to
         your company
       </p>
+
+      <div className={classes.stakeholdersTitleWrapper}>
+        <ContexualHelp
+          title="This stakeholder should be defined / mentioned in valid legal document of the Company. Examples: - Sole Proprietorship Company > Trade License - Partnership Company > Trade License / Partners agreement / Share Certificate, etc - Limited Liability Company (LLC) > Trade License / Memorandum of Association / Articles of Association, etc"
+          placement="right"
+          isDisableHoverListener={false}
+        >
+          <span className={classes.questionIcon}>
+            <Icon name={ICONS.question} alt="question" className={classes.iconSize} />
+          </span>
+        </ContexualHelp>
+        <span className={classes.stakeholderTitle}>Who is a stakeholder?</span>
+      </div>
 
       <div>
         {stakeholders.map((item, index) => {
