@@ -45,7 +45,7 @@ export const UploadDocument = ({
           </div>
           {documents.stakeholdersDocuments && (
             <div className={classes.sectionContainer}>
-              <SectionTitle title="Stakeholders documents" />
+              <SectionTitle title="Signatories documents" />
               <SignatoriesDocuments
                 documents={documents.stakeholdersDocuments}
                 signatories={signatories}
