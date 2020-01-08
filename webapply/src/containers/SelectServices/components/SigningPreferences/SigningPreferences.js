@@ -139,6 +139,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                               label="Primary mobile no."
                               placeholder="Primary mobile no."
                               component={Input}
+                              type="number"
                             />
                           </InputGroup>
                         </Grid>
@@ -158,6 +159,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                               label="Landline phone no. (optional)"
                               placeholder="Landline phone no. (optional)"
                               component={Input}
+                              type="number"
                             />
                           </InputGroup>
                         </Grid>

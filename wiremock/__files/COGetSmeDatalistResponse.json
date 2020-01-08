@@ -39,24 +39,27 @@
       "displayText": "Option 2"
     }
   ],
-  "accountSigningType": [
+  "accountSignType": [
     {
-      "code": "Any of us",
-      "key": "Any of us",
-      "value": "Any of us",
-      "label": "Any of us can Sign"
+      "code": "A2",
+      "key": "A2",
+      "value": "A2",
+      "displayText": "All of us",
+      "subGroup": null
     },
     {
-      "code": "All of us",
-      "key": "All of us",
-      "value": "All of us",
-      "label": "All of us Must Sign"
+      "code": "A1",
+      "key": "A1",
+      "value": "A1",
+      "displayText": "Any of us",
+      "subGroup": null
     },
     {
-      "code": "Others",
-      "key": "Others",
-      "value": "Others",
-      "label": "Other (Please Specify)"
+      "code": "A3",
+      "key": "A3",
+      "value": "A3",
+      "displayText": "Others",
+      "subGroup": null
     }
   ],
   "accountCurrencies": [
