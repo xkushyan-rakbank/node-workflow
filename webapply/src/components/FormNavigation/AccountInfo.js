@@ -18,6 +18,7 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
   const handleClick = path => () => history.push(path);
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isAccountsComparison = pathname === routes.accountsComparison;
+  const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;
 
   return (
     <div className={classes.contentContainer}>
@@ -57,11 +58,21 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
                   return "Good to see you back!";
                 case routes.comeBackLoginVerification:
                   return "Confirm that it's you";
+                case routes.ApplicationSubmitted:
+                  return "Check it out. Application submitted!";
                 default:
                   return "All businesses start with an account. Get yours now.";
               }
             })()}
           </Typography>
+          {isApplicationSubmitted && (
+            <ContainedButton
+              withRightArrow
+              justify="flex-start"
+              label="Start application"
+              handleClick={handleClick(routes.comeBackLogin)}
+            />
+          )}
           {isApplicationOverview && (
             <>
               <div className="hide-on-mobile">

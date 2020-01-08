@@ -19,5 +19,18 @@ export const useStyles = makeStyles({
     backgroundColor: "#ffffff",
     flexDirection: "column",
     marginTop: "24px"
+  },
+  stakeholdersTitleWrapper: {
+    marginTop: "60px",
+    display: "flex",
+    alignItems: "center"
+  },
+  stakeholderTitle: {
+    marginLeft: "10px",
+    fontSize: "14px"
+  },
+  iconSize: {
+    width: "24px",
+    height: "24px"
   }
 });

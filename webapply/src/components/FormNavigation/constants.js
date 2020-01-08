@@ -6,7 +6,7 @@ export const accountsInfo = {
   },
   "Current Account": {
     title: "Business Current Account",
-    subtitle: "Our most flexible account for growing businesses.",
+    subtitle: "Our most flexible account for established businesses.",
     islamicSubtitle: "Our most flexible account for established businesses "
   },
   RAKelite: {

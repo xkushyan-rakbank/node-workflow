@@ -37,9 +37,7 @@ export const SignatorySummaryCardComponent = ({
       content={
         <div className={classes.contentBox}>
           <div className={classes.infoBox}>
-            <div className={classes.name}>
-              {firstName && lastName ? `${firstName} ${lastName}` : fullName}
-            </div>
+            <div className={classes.name}>{fullName}</div>
             <div className={classes.signatoryField}>
               {get(signatory, "accountSigningInfo.authorityType")}
             </div>
