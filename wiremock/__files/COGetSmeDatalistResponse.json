@@ -3677,5 +3677,28 @@
       "value": "Court Appointed Arbitrator",
       "label": "Court Appointed Arbitrator"
     }
+  ],
+  "salutation": [
+    {
+      "code": "MR.",
+      "key": "MR.",
+      "value": "MR.",
+      "displayText": "MR",
+      "subGroup": null
+    },
+    {
+      "code": "MRS.",
+      "key": "MRS.",
+      "value": "MRS.",
+      "displayText": "MRS.",
+      "subGroup": null
+    },
+    {
+      "code": "MS.",
+      "key": "MS.",
+      "value": "MS.",
+      "displayText": "MS.",
+      "subGroup": null
+    }
   ]
 }

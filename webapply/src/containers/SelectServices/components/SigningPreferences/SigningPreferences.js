@@ -137,7 +137,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                               name={`signatories[${index}].primaryMobileNo`}
                               path={`${prospectPath}.primaryMobileNo`}
                               label="Primary mobile no."
-                              placeholder="Primary mobile no."
+                              placeholder="55xxxxxxx"
                               component={Input}
                               type="number"
                             />
@@ -157,7 +157,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                               name={`signatories[${index}].primaryPhoneNo`}
                               path={`${prospectPath}.primaryPhoneNo`}
                               label="Landline phone no. (optional)"
-                              placeholder="Landline phone no. (optional)"
+                              placeholder="42xxxxxx"
                               component={Input}
                               type="number"
                             />

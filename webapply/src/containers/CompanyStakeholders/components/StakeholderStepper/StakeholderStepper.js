@@ -24,6 +24,7 @@ const StakeholderStepperComponent = ({
   firstName,
   middleName,
   lastName,
+  fullName,
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
@@ -67,7 +68,7 @@ const StakeholderStepperComponent = ({
     isDisplayConfirmation ? handleDeleteStakeholder() : setIsDisplayConfirmation(true);
 
   if (isDisplayFinalScreen) {
-    return <SuccessFilledStakeholder name={`${firstName} ${lastName}`} />;
+    return <SuccessFilledStakeholder name={fullName} />;
   }
 
   return (
