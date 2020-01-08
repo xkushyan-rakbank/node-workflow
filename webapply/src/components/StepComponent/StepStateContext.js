@@ -1,12 +1,8 @@
 import React, { createContext, useMemo, useState } from "react";
-// import { useSelector } from "react-redux";
-
-// import { getSignatories } from "../../store/selectors/appConfig";
 
 export const StepStateContext = createContext({});
 
 export const StepState = ({ children }) => {
-  // const signatories = useSelector(getSignatories);
   const [state, setState] = useState({
     "/sme/FinalQuestions": {
       companySteps: [],
@@ -26,6 +22,17 @@ export const StepState = ({ children }) => {
           return item;
         });
         setState({ ...state, [path]: { ...state[path], [fieldName]: newSteps } });
+      },
+      addSignatory: (path, fieldName) =>
+        setState({
+          ...state,
+          [path]: { ...state[path], [fieldName]: [...state[path][fieldName], []] }
+        }),
+      removeSignatory: (path, fieldName, removedIndex) => {
+        const newSignatories = state[path][fieldName].filter(
+          (signatory, index) => removedIndex !== index
+        );
+        setState({ ...state, [path]: { ...state[path], [fieldName]: newSignatories } });
       }
     }),
     [state]

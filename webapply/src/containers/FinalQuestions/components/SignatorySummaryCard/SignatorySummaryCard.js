@@ -24,7 +24,8 @@ export const SignatorySummaryCardComponent = ({
   const isAllSignatoryStepsCompleted = availableSteps.length === signatoriesSteps.length;
 
   useEffect(() => {
-    setAvailableSteps(availableSignatorySteps[index]);
+    const steps = availableSignatorySteps[index] || [];
+    setAvailableSteps(steps);
   }, [availableSignatorySteps, index]);
 
   const handleExpandNextBlock = () => setExpandedSignatoryIndex(index + 1);
