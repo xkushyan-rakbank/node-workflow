@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useCallback, useEffect } from "react";
 import cx from "classnames";
 
 import { CompanyCard } from "../CompanyCard";
@@ -7,7 +6,6 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { finalQuestionsSteps, COMPANY_FIELD_NAME, STEP_1 } from "./constants";
-import { StepStateContext } from "../../../../components/StepComponent/StepStateContext";
 
 import { useStyles } from "./styled";
 
@@ -16,14 +14,17 @@ export const CompanySummaryCardComponent = ({
   switchExpandedMargin,
   companyName,
   handleFinalStepContinue,
-  sendProspectToAPI
+  sendProspectToAPI,
+  isAllCompanyStepsCompleted
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const state = useContext(StepStateContext);
-  const { location } = useHistory();
-  const availableSteps = state[location.pathname][COMPANY_FIELD_NAME] || [];
-  const isAllStepsCompleted = availableSteps.length >= finalQuestionsSteps.length;
   const classes = useStyles();
+
+  useEffect(() => {
+    if (isAllCompanyStepsCompleted) {
+      setIsExpanded(false);
+    }
+  }, [isAllCompanyStepsCompleted]);
 
   const handleClickStartHere = useCallback(() => {
     setIsExpanded(true);
@@ -39,7 +40,7 @@ export const CompanySummaryCardComponent = ({
       companyName={companyName}
       controls={
         !isExpanded &&
-        (isAllStepsCompleted ? (
+        (isAllCompanyStepsCompleted ? (
           <LinkButton clickHandler={() => setIsExpanded(true)} />
         ) : (
           <ContinueButton
@@ -58,7 +59,7 @@ export const CompanySummaryCardComponent = ({
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
           fieldName={COMPANY_FIELD_NAME}
-          initialStep={isAllStepsCompleted ? null : STEP_1}
+          initialStep={isAllCompanyStepsCompleted ? null : STEP_1}
         />
       </div>
     </CompanyCard>

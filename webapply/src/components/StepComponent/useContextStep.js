@@ -16,9 +16,6 @@ export const useContextStep = (initialStep, fieldName, index = null) => {
     availableSteps = state[location.pathname][fieldName] || [];
   }
 
-  console.log(availableSteps);
-  console.log(state);
-
   const handleSetNextStep = () => {
     const nextStep = step + 1;
 

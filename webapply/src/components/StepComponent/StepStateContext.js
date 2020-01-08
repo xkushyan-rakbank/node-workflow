@@ -1,8 +1,12 @@
 import React, { createContext, useMemo, useState } from "react";
+// import { useSelector } from "react-redux";
+
+// import { getSignatories } from "../../store/selectors/appConfig";
 
 export const StepStateContext = createContext({});
 
 export const StepState = ({ children }) => {
+  // const signatories = useSelector(getSignatories);
   const [state, setState] = useState({
     "/sme/FinalQuestions": {
       companySteps: [],
