@@ -147,7 +147,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     name="annualFinTurnoverAmtInAED"
                     path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                     label="Annual turnover"
-                    placeholder="Annual turnover"
+                    placeholder="9999999999.99"
                     InputProps={{
                       ...commonInputProps,
                       inputProps: {
