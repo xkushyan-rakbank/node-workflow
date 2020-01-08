@@ -12,6 +12,8 @@ export const STEP_5 = 5;
 
 export const COMPANY_FIELD_NAME = "companySteps";
 
+export const FINAL_QUESTIONS_PAGE = "finalQuestions";
+
 export const finalQuestionsSteps = [
   {
     step: STEP_1,

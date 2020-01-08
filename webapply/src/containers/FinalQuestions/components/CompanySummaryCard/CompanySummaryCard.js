@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useCallback } from "react";
+import { useSelector } from "react-redux";
 import cx from "classnames";
 
 import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
-import { finalQuestionsSteps, COMPANY_FIELD_NAME, STEP_1 } from "./constants";
-import { StepStateContext } from "../../../../components/StepComponent/StepStateContext";
+import { finalQuestionsSteps, COMPANY_FIELD_NAME, FINAL_QUESTIONS_PAGE, STEP_1 } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -19,10 +18,10 @@ export const CompanySummaryCardComponent = ({
   sendProspectToAPI
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const state = useContext(StepStateContext);
-  const { location } = useHistory();
-  const availableSteps = state[location.pathname][COMPANY_FIELD_NAME] || [];
-  const isAllStepsCompleted = availableSteps.length >= finalQuestionsSteps.length;
+  const completedSteps = useSelector(
+    state => state.completedSteps[FINAL_QUESTIONS_PAGE][COMPANY_FIELD_NAME] || []
+  );
+  const isAllStepsCompleted = completedSteps.length >= finalQuestionsSteps.length;
   const classes = useStyles();
 
   const handleClickStartHere = useCallback(() => {

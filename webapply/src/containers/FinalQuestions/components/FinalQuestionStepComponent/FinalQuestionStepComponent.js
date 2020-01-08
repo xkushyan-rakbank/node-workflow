@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
-import { useContextStep } from "../../../../components/StepComponent/useContextStep";
+import { FINAL_QUESTIONS_PAGE } from "../CompanySummaryCard/constants";
+import { useStoreStep } from "../../../../components/StepComponent/useStoreStep";
 
 export const FinalQuestionStepComponent = ({
   index = null,
@@ -12,8 +13,9 @@ export const FinalQuestionStepComponent = ({
   fieldName,
   initialStep
 }) => {
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useContextStep(
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStoreStep(
     initialStep,
+    FINAL_QUESTIONS_PAGE,
     fieldName,
     index
   );

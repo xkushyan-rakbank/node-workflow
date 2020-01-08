@@ -9,24 +9,13 @@ import { useStyles } from "./styled";
 
 export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
-  // const [availableSignatoriesIndexes, setAvailableSignatoriesIndexes] = useState([]);
   const [expandedSignatoryIndex, setExpandedSignatoryIndex] = useState(null);
   const classes = useStyles();
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
-  // const addAvailableSignatoryIndex = useCallback(
-  //   index => {
-  //     if (!availableSignatoriesIndexes.includes(index)) {
-  //       setAvailableSignatoriesIndexes([...availableSignatoriesIndexes, index]);
-  //     }
-  //   },
-  //   [setAvailableSignatoriesIndexes, availableSignatoriesIndexes]
-  // );
-
   const handleFinalStepContinue = index => {
     setExpandedSignatoryIndex(index);
-    // addAvailableSignatoryIndex(index);
   };
 
   const switchExpandedMargin = useCallback(() => setIsExpandedMargin(!isExpandedMargin), [
@@ -56,7 +45,6 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
             index={index}
             setExpandedSignatoryIndex={setExpandedSignatoryIndex}
             handleFinalStepContinue={handleFinalStepContinue}
-            // availableSignatoriesIndexes={availableSignatoriesIndexes}
           />
         ))}
       </div>
