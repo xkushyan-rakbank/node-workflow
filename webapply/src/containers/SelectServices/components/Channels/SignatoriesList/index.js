@@ -11,7 +11,7 @@ export const SignatoriesList = ({ stakeholders }) => {
 
   return (
     <>
-      <div className={classes.signatoryLabel}>Signatory name</div>
+      <div className={classes.signatoryLabel}>Signatory names on debit cards</div>
       <InfoTitle
         title="Names on debit cards have a limit of 19 characters"
         classes={{ wrapper: classes.infoTitle }}

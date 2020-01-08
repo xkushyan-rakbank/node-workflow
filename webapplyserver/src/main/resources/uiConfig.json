@@ -4954,7 +4954,7 @@
 		"path": "$.prospect.signatoryInfo[*].gender",
 		"name": "prospect.signatoryInfo[*].gender",
 		"required": true,
-		"datalistId": "gender",
+		"datalistId": "salutation",
 		"readonlyFor": [],
 		"datalist": null,
 		"description": "Mandatory for signatories/POA. Not required for shareholders."
@@ -9979,4 +9979,3 @@
 		"Login": "login"
 	}
 }
-  

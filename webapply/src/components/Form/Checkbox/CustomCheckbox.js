@@ -9,14 +9,21 @@ export const useStyles = makeStyles(theme => ({
   label: {
     fontSize: "14px",
     color: theme.palette.text.color
-  }
+  },
+  root: {}
 }));
 
-export const CustomCheckbox = ({ label, onSelect = () => {}, ...rest }) => {
-  const classes = useStyles();
+export const CustomCheckbox = ({
+  label,
+  onSelect = () => {},
+  classes: extendedClasses,
+  ...rest
+}) => {
+  const classes = useStyles({ classes: extendedClasses });
+
   return (
     <FormControlLabel
-      classes={{ label: classes.label }}
+      classes={{ label: classes.label, root: classes.root }}
       control={
         <Checkbox
           onClick={onSelect}

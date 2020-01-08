@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { ADDRESS_NUMBER_REGEX, PO_NUMBER_REGEX } from "../../../../../../utils/validation";
+import { ADDRESS_NUMBER_REGEX, ALPHANUMERIC_REGEX } from "../../../../../../utils/validation";
 import {
   CustomSelect,
   Input,
@@ -12,6 +12,7 @@ import {
   Checkbox
 } from "../../../../../../components/Form";
 import { DEFAULT_SIGNATORY_COUNTRY } from "./constants";
+import { MAX_PO_BOX_NUMBER_LENGTH } from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 
 import { useStyles } from "./styled";
 
@@ -20,7 +21,7 @@ const signatoryPreferredMailingAddressSchema = Yup.object().shape({
   addressLine1: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
-    .matches(PO_NUMBER_REGEX, "Invalid PO box number"),
+    .matches(ALPHANUMERIC_REGEX, "Invalid PO box number"),
   emirateCity: Yup.string().required("You need to provide emirate city")
 });
 
@@ -102,7 +103,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   name="emirateCity"
                   path={`${autoSavePathBase}.emirateCity`}
                   disabled={values.sameAsCompanyAddress}
-                  datalistId="emirate"
+                  datalistId="emirateCity"
                   label="Emirate"
                   component={CustomSelect}
                 />
@@ -115,6 +116,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   label="PO Box Number"
                   placeholder="PO Box Number"
                   component={Input}
+                  inputProps={{ maxLength: MAX_PO_BOX_NUMBER_LENGTH }}
                 />
                 <Field
                   name="country"
