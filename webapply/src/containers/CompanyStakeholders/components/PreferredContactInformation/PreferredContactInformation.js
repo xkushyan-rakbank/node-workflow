@@ -14,7 +14,12 @@ import {
 } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { getInputValueById } from "../../../../store/selectors/input";
-import { PHONE_REGEX } from "../../../../utils/validation";
+import {
+  PHONE_REGEX,
+  UAE_MOBILE_PHONE_REGEX,
+  UAE_LANDLINE_PHONE_REGEX
+} from "../../../../utils/validation";
+import { UAE_CODE } from "../../../../constants";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
@@ -23,8 +28,16 @@ const preferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required("Select country code"),
   primaryMobileNo: Yup.string()
     .required("You need to provide mobile number")
-    .matches(PHONE_REGEX, "This is not a valid phone"),
-  primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+    .when("primaryMobCountryCode", {
+      is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+      otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+    }),
+  primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
+    is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
+    then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "This is not a valid phone"),
+    otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+  })
 });
 
 const PreferredContactInformationStep = ({ isSignatory, index, handleContinue }) => (
