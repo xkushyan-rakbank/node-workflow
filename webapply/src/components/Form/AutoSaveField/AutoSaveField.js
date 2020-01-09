@@ -69,6 +69,8 @@ export const AutoSaveField = ({
               setFieldTouched(name);
             }
           });
+        } else {
+          setFieldError(name);
         }
       }, 500);
 
