@@ -21,7 +21,7 @@ export const useStyles = makeStyles({
     marginTop: "24px"
   },
   stakeholdersTitleWrapper: {
-    marginTop: "60px",
+    margin: "60px 0",
     display: "flex",
     alignItems: "center"
   },
