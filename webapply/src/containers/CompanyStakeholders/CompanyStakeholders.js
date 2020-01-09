@@ -87,7 +87,7 @@ const CompanyStakeholdersComponent = ({
     setOpen(false);
   };
 
-  if (stakeholdersLength > 5) {
+  if (stakeholdersLength > MAX_STAKEHOLDERS_LENGTH) {
     return <ApplicationStatus content={companyStatus.bigCompany} />;
   }
 
