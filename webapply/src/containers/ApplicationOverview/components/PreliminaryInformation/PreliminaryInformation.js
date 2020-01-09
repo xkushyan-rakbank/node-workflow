@@ -39,7 +39,7 @@ export const PreliminaryInformation = () => {
           <IconCardItem minWidth="100px" text="Emirates ID of all signatories">
             <EmirateId alt="emirates-id" />
           </IconCardItem>
-          <IconCardItem minWidth="100px" text="Company MoA*²">
+          <IconCardItem minWidth="100px" text="Other company documents²">
             <CompanyDocuments alt="company-documents" />
           </IconCardItem>
         </IconCardsContainer>
