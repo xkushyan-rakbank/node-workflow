@@ -47,3 +47,5 @@ export const companyStatus = {
       "It looks like your company is not registered in the UAE. But no worries! Let’s have someone call you back within X days to meet you in person and help you out."
   }
 };
+
+export const DEDUPE = "Dedupe";
