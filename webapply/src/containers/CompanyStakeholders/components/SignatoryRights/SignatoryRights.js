@@ -28,7 +28,7 @@ export const SignatoryRights = ({ handleContinue, index }) => (
     validationSchema={signatoryRightsSchema}
     validateOnChange={false}
   >
-    {withCompanyStakeholder(index, ({ values }) => (
+    {withCompanyStakeholder(index, ({ values, setFieldValue }) => (
       <Form>
         <Grid container>
           <Field
@@ -41,6 +41,11 @@ export const SignatoryRights = ({ handleContinue, index }) => (
               ...prospect,
               [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
             })}
+            onChange={event => {
+              const value = JSON.parse(event.target.value);
+              setFieldValue("isSignatory", value);
+              !value && setFieldValue("authorityType", "");
+            }}
           />
           <Field
             name="authorityType"
