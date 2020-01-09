@@ -13,7 +13,8 @@ const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
 
 export const uploadClient = axios.create({
-  baseURL: "https://dry-caverns-04680.herokuapp.com"
+  // baseURL: "https://dry-caverns-04680.herokuapp.com"
+  baseURL: getBaseURL()
 });
 
 const instance = axios.create({
