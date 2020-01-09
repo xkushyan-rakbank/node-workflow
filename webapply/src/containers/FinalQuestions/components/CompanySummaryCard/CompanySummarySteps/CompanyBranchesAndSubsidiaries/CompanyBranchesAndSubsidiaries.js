@@ -15,7 +15,6 @@ import {
   SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { InfoTitle } from "../../../../../../components/Notifications";
 import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
 import { ALPHANUMERIC_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
 
@@ -198,14 +197,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           arrayHelpers={arrayHelpers}
                         />
                       )}
-                      <Grid item sm={12}>
-                        <InfoTitle
-                          title="Company name should be same as mentioned in the registration documents"
-                          classes={{
-                            wrapper: classes.infoTitles
-                          }}
-                        />
-                      </Grid>
                     </>
                   )}
                 </>
@@ -300,14 +291,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           arrayHelpers={arrayHelpers}
                         />
                       )}
-                      <Grid item sm={12}>
-                        <InfoTitle
-                          title="Company name should be same as mentioned in the registration documents"
-                          classes={{
-                            wrapper: classes.infoTitles
-                          }}
-                        />
-                      </Grid>
                     </>
                   )}
                 </>
