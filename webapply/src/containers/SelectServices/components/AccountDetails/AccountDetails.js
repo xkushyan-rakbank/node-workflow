@@ -50,6 +50,8 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
             classes={{ root: classes.radioButtonRoot }}
+            contextualHelpProps={{ isDisableHoverListener: false }}
+            contextualHelpText="Cheque book, Debit card and Rakvalue will be issued for eligible AED accounts only"
           />
           <Divider />
           <Subtitle title="Select branch" classes={{ wrapper: classes.subtitleBranch }} />
