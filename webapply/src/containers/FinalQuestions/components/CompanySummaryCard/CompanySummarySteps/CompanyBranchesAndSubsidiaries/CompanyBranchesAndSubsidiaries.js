@@ -15,9 +15,9 @@ import {
   SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { InfoTitle } from "../../../../../../components/Notifications";
 import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
 import { ALPHANUMERIC_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
+import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 
 import { useStyles } from "./styled";
 
@@ -79,7 +79,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
         validationSchema={companyBranchesAndSubsidiariesSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue, setFieldTouched }) => (
+        {withCompanyFinalQuestions(({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <FieldArray name="entitiesInUAE">
               {arrayHelpers => (
@@ -198,14 +198,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           arrayHelpers={arrayHelpers}
                         />
                       )}
-                      <Grid item sm={12}>
-                        <InfoTitle
-                          title="Company name should be same as mentioned in the registration documents"
-                          classes={{
-                            wrapper: classes.infoTitles
-                          }}
-                        />
-                      </Grid>
                     </>
                   )}
                 </>
@@ -300,14 +292,6 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                           arrayHelpers={arrayHelpers}
                         />
                       )}
-                      <Grid item sm={12}>
-                        <InfoTitle
-                          title="Company name should be same as mentioned in the registration documents"
-                          classes={{
-                            wrapper: classes.infoTitles
-                          }}
-                        />
-                      </Grid>
                     </>
                   )}
                 </>
@@ -317,7 +301,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
               <ContinueButton type="submit" />
             </div>
           </Form>
-        )}
+        ))}
       </Formik>
     </div>
   );

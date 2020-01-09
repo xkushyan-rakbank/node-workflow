@@ -9,6 +9,7 @@ import {
   updateStakeholdersIds,
   SET_FILL_STAKEHOLDER
 } from "../actions/stakeholders";
+import { addSignatory, removeSignatory } from "../actions/completedSteps";
 import { setConfig } from "../actions/appConfig";
 
 function* createNewStakeholderSaga() {
@@ -21,6 +22,7 @@ function* createNewStakeholderSaga() {
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
 
   yield put(updateStakeholdersIds(stakeholdersIds));
+  yield put(addSignatory());
   yield put(changeEditableStakeholder(editableStakeholder));
   yield put(setConfig(config));
 }
@@ -30,12 +32,16 @@ function* deleteStakeholderSaga(action) {
   const config = cloneDeep(state.appConfig);
   const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
   const stakeholderIndex = stakeholdersIds.indexOf(action.stakeholderId);
+  const removedIndex = stakeholdersIds.indexOf(
+    stakeholdersIds.find(item => item.id === action.stakeholderId)
+  );
 
   config.prospect.signatoryInfo.splice(stakeholderIndex, 1);
   yield put(setConfig(config));
 
   stakeholdersIds.splice(stakeholderIndex, 1);
   yield put(updateStakeholdersIds(stakeholdersIds));
+  yield put(removeSignatory(removedIndex));
   yield put(changeEditableStakeholder());
 }
 

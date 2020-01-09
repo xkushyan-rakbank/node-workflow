@@ -14,6 +14,7 @@ import {
 } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { getSignatories } from "../../../../store/selectors/appConfig";
+import { updateProspect } from "../../../../store/actions/appConfig";
 import { ALPHANUMERIC_REGEX } from "../../../../utils/validation";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { useStyles } from "./styled";
@@ -38,10 +39,10 @@ const nationalitySchema = Yup.object().shape({
   )
 });
 
-export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
+export const NationalityStep = ({ index, passportDetails, handleContinue, updateProspect }) => {
   const classes = useStyles();
 
-  const createAddCityshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => () => {
+  const createAddCitizenshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => () => {
     const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
     const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
 
@@ -49,6 +50,10 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
       arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
     } else {
       values.passportDetails.forEach((el, index) => index >= passportIndex && arrayHelper.pop());
+      updateProspect({
+        [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: arrayHelper.form.values
+          .passportDetails
+      });
     }
     setFieldValue(name, !value);
   };
@@ -117,7 +122,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                             path={`${passportDetails}.hasAnotherCitizenship`}
                             label="This person has another citizenship"
                             component={Checkbox}
-                            onChange={createAddCityshipHandler(
+                            onChange={createAddCitizenshipHandler(
                               values,
                               arrayHelper,
                               passportIndex,
@@ -161,4 +166,11 @@ const mapStateToProps = (state, { index }) => ({
   passportDetails: get(getSignatories(state)[index], "kycDetails.passportDetails", [])
 });
 
-export const Nationality = connect(mapStateToProps)(NationalityStep);
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export const Nationality = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NationalityStep);

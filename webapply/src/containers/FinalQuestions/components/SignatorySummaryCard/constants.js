@@ -12,6 +12,8 @@ export const STEP_4 = 4;
 
 export const MAX_MOTHERS_MAIDEN_NAME_LENGTH = 30;
 
+export const SIGNATORY_FIELD_NAME = "signatorySteps";
+
 export const signatoriesSteps = [
   {
     step: STEP_1,

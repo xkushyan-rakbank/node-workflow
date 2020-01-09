@@ -6,7 +6,7 @@ import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps } from "./constants";
+import { signatoriesSteps, SIGNATORY_FIELD_NAME, STEP_1 } from "./constants";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
@@ -16,11 +16,11 @@ export const SignatorySummaryCardComponent = ({
   signatory: { firstName, lastName, fullName } = {},
   expandedSignatoryIndex,
   setExpandedSignatoryIndex,
-  handleFinalStepContinue
+  handleFinalStepContinue,
+  completedSignatoriesSteps
 }) => {
+  const isSignatoryStepsCompleted = completedSignatoriesSteps[index];
   const classes = useStyles();
-
-  const handleExpandNextBlock = () => setExpandedSignatoryIndex(index + 1);
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
 
@@ -41,7 +41,7 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {expandedSignatoryIndex !== index && availableSignatoriesIndexes.includes(index) && (
+            {expandedSignatoryIndex !== index && isSignatoryStepsCompleted && (
               <LinkButton
                 clickHandler={() => {
                   setExpandedSignatoryIndex(index);
@@ -57,9 +57,10 @@ export const SignatorySummaryCardComponent = ({
         <FinalQuestionStepComponent
           index={index}
           stepsArray={signatoriesSteps}
-          handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
+          fieldName={SIGNATORY_FIELD_NAME}
+          initialStep={STEP_1}
         />
       </div>
     </FormCard>
