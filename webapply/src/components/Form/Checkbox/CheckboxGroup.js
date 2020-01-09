@@ -11,7 +11,8 @@ import { InfoTitle, ErrorMessage } from "../../Notifications";
 export const CheckboxesWrapper = styled("div")({
   display: "flex",
   flexWrap: "wrap",
-  marginLeft: "-30px"
+  alignItems: "flex-start",
+  alignContent: "start"
 });
 
 export const CheckboxGroup = ({
@@ -41,6 +42,7 @@ export const CheckboxGroup = ({
                 value={extractValue(item)}
                 label={extractLabel(item)}
                 onSelect={onSelect}
+                classes={classes}
               />
             ))}
             {textArea}

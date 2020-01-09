@@ -88,6 +88,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
               }
             }}
             component={CheckboxGroup}
+            classes={{ root: classes.radioButtonRoot }}
             textArea={
               values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
                 <div className={classes.textAreaWrap}>
