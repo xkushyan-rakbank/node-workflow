@@ -16,7 +16,8 @@ export const InlineRadioGroup = ({
   required,
   onChange,
   contextualHelpText,
-  contextualHelpProps = {}
+  contextualHelpProps = {},
+  onSelect = () => {}
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
@@ -42,7 +43,13 @@ export const InlineRadioGroup = ({
           {label}
           <div className="box-group-grid">
             {options.map(item => (
-              <Radio color="secondary" key={item.key} value={item.value} label={item.label} />
+              <Radio
+                color="secondary"
+                key={item.key}
+                value={item.value}
+                label={item.label}
+                onSelect={onSelect}
+              />
             ))}
           </div>
         </RadioGroup>

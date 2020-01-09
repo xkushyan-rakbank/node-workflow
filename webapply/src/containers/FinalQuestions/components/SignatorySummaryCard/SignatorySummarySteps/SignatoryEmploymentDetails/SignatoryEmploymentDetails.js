@@ -83,6 +83,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     datalistId="employmentType"
                     label="Employment Type"
                     component={CustomSelect}
+                    contextualHelpProps={{ isDisableHoverListener: false }}
                     contextualHelpText="If self-employed then provide business details"
                   />
                 </Grid>
@@ -93,6 +94,20 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Total years of experience"
                     placeholder="Total years of experience"
                     component={Input}
+                    contextualHelpText={
+                      <>
+                        Starting with the most resent enter jobwise list of experience From
+                        Month-Year, To Month-Year, Company Name, Company Country, Position &
+                        Employment Type (Salaried / Self Employed)
+                        <br />
+                        <br />
+                        Example
+                        <br />
+                        APR-16 to &apos;Date&apos;, Reliance Biz, UAE, Proprietor, Self-Employed
+                        <br />
+                        AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
+                      </>
+                    }
                   />
                   <Field
                     name="designation"

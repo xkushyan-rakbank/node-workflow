@@ -88,6 +88,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
               }
             }}
             component={CheckboxGroup}
+            classes={{ root: classes.radioButtonRoot }}
             textArea={
               values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
                 <div className={classes.textAreaWrap}>
@@ -139,6 +140,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                               label="Primary mobile no."
                               placeholder="55xxxxxxx"
                               component={Input}
+                              type="number"
                             />
                           </InputGroup>
                         </Grid>
@@ -158,6 +160,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                               label="Landline phone no. (optional)"
                               placeholder="42xxxxxx"
                               component={Input}
+                              type="number"
                             />
                           </InputGroup>
                         </Grid>
