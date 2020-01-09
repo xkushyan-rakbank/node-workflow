@@ -308,6 +308,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               datalistId="country"
                               component={SelectAutocomplete}
                               disabled={values.isDontTradeGoodsYet}
+                              contextualHelpText="List down the top countries from where existing or future goods originate"
                               shrink
                             />
                             {!!index && (

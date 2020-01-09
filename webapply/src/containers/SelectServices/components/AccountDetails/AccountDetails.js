@@ -49,6 +49,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
             path="prospect.accountInfo[0].accountCurrencies"
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
+            classes={{ root: classes.radioButtonRoot }}
           />
           <Divider />
           <Subtitle title="Select branch" classes={{ wrapper: classes.subtitleBranch }} />

@@ -8,7 +8,7 @@ import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../c
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
   ADDRESS_NUMBER_REGEX,
-  PO_NUMBER_REGEX,
+  ALPHANUMERIC_REGEX,
   SPACE_OCCUPIED_OTHER_REGEX
 } from "../../../../../../utils/validation";
 import {
@@ -25,7 +25,7 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
   addressLine1: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
-    .matches(PO_NUMBER_REGEX, "Invalid PO box number"),
+    .matches(ALPHANUMERIC_REGEX, "Invalid PO box number"),
   emirateCity: Yup.string().required("You need to provide emirate city"),
   typeOfSpaceOccupied: Yup.object().shape({
     spaceType: Yup.string().required("You need to provide space type"),
@@ -81,7 +81,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                 <Field
                   name="emirateCity"
                   path={`${BASE_PATH}.emirateCity`}
-                  datalistId="emirate"
+                  datalistId="emirateCity"
                   label="Emirate"
                   component={CustomSelect}
                 />

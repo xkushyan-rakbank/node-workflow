@@ -39,9 +39,8 @@ const ShareholdingStep = ({
     const value = JSON.parse(event.target.value);
     setFieldValue("isShareholderACompany", value);
 
-    if (value !== values.isShareholderACompany && !value) {
-      setFieldValue("shareHoldingPercentage", 0);
-    }
+    const shareHoldingPercentage = value !== values.isShareholderACompany && !value ? 0 : "";
+    setFieldValue("shareHoldingPercentage", shareHoldingPercentage);
   };
 
   return (
@@ -71,7 +70,7 @@ const ShareholdingStep = ({
                   name="shareHoldingPercentage"
                   path={`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`}
                   label="Percentage"
-                  placeholder="Percentage"
+                  placeholder={values.isShareholderACompany ? "33.33" : "Percentage"}
                   disabled={!values.isShareholderACompany}
                   component={Input}
                   InputProps={{

@@ -147,7 +147,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     name="annualFinTurnoverAmtInAED"
                     path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                     label="Annual turnover"
-                    placeholder="Annual turnover"
+                    placeholder="9999999999.99"
                     InputProps={{
                       ...commonInputProps,
                       inputProps: {
@@ -155,6 +155,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                       }
                     }}
                     component={Input}
+                    contextualHelpText="Mention the Turnover per annum of the company. For new companies, give the expected turnover per annum"
                   />
                 </Grid>
               </Grid>
