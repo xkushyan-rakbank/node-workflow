@@ -70,7 +70,7 @@ export const AutoSaveField = ({
             }
           });
         } else {
-          setFieldError(name, false);
+          setFieldError(name);
         }
       }, 500);
 
