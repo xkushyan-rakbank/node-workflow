@@ -51,24 +51,21 @@ export const CheckboxGroup = ({
           </CheckboxesWrapper>
         </RadioGroup>
       ) : (
-        <CheckboxesWrapper>
-          {options.map(item => (
-            <ContexualHelp
-              key={extractId(item)}
-              title={contextualHelpText}
-              {...contextualHelpProps}
-            >
+        <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
+          <CheckboxesWrapper>
+            {options.map(item => (
               <CustomCheckbox
                 {...field}
+                key={extractId(item)}
                 value={extractValue(item)}
                 label={extractLabel(item)}
                 onSelect={onSelect}
                 checked={(field.value || []).includes(extractValue(item))}
                 classes={classes}
               />
-            </ContexualHelp>
-          ))}
-        </CheckboxesWrapper>
+            ))}
+          </CheckboxesWrapper>
+        </ContexualHelp>
       )}
 
       {hasError && <ErrorMessage error={errorMessage} />}
