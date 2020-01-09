@@ -9,7 +9,8 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../components/Modals";
 import { Icon, ICONS } from "../../components/Icons";
-import routes from "../../routes";
+import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
+
 import {
   changeEditableStakeholder,
   createNewStakeholder,
@@ -24,9 +25,9 @@ import {
   percentageSelector
 } from "../../store/selectors/stakeholder";
 
-import { useStyles } from "./styled";
-import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
+import routes from "../../routes";
 import { companyStatus } from "./constants";
+import { useStyles } from "./styled";
 
 const MAX_STAKEHOLDERS_LENGTH = 6;
 
@@ -39,8 +40,7 @@ const CompanyStakeholdersComponent = ({
   percentage,
   history,
   resetProspect,
-  stakeholdersIds,
-  stakeholdersLength
+  stakeholdersIds
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -87,7 +87,7 @@ const CompanyStakeholdersComponent = ({
     setOpen(false);
   };
 
-  if (stakeholdersLength > MAX_STAKEHOLDERS_LENGTH) {
+  if (stakeholders.length > MAX_STAKEHOLDERS_LENGTH) {
     return <ApplicationStatus content={companyStatus.bigCompany} />;
   }
 
@@ -165,13 +165,11 @@ const CompanyStakeholdersComponent = ({
 
 const mapStateToProps = state => {
   const { editableStakeholder, stakeholdersIds } = stakeholdersState(state);
-  const stakeholders = stakeholdersSelector(state);
   return {
     editableStakeholder,
     stakeholdersIds,
-    stakeholders,
+    stakeholders: stakeholdersSelector(state),
     percentage: percentageSelector(state),
-    stakeholdersLength: stakeholders.length,
     ...getSendProspectToAPIInfo(state)
   };
 };
