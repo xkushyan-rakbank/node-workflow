@@ -11,7 +11,7 @@ import { log } from "../../utils/loggger";
 function* searchProspectFormSaga({ payload }) {
   try {
     const inputParam = {
-      fullName: payload.fname || "",
+      applicantName: payload.fname || "",
       countryCode: payload.countryCode || "",
       mobileNo: payload.mobileNo || "",
       leadNumber: payload.leadNumber || "",
