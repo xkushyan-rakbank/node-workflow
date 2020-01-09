@@ -6,12 +6,13 @@ import { styled } from "@material-ui/styles";
 
 import { CustomCheckbox } from "./CustomCheckbox";
 import { CustomRadioButton } from "../RadioButton/CustomRadioButton";
-import { InfoTitle, ErrorMessage } from "../../Notifications";
+import { InfoTitle, ErrorMessage, ContexualHelp } from "../../Notifications";
 
 export const CheckboxesWrapper = styled("div")({
   display: "flex",
   flexWrap: "wrap",
-  marginLeft: "-30px"
+  alignItems: "flex-start",
+  alignContent: "start"
 });
 
 export const CheckboxGroup = ({
@@ -25,7 +26,9 @@ export const CheckboxGroup = ({
   form: { errors, touched },
   onSelect = () => {},
   textArea,
-  classes
+  classes,
+  contextualHelpText,
+  contextualHelpProps = {}
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
@@ -41,25 +44,28 @@ export const CheckboxGroup = ({
                 value={extractValue(item)}
                 label={extractLabel(item)}
                 onSelect={onSelect}
+                classes={classes}
               />
             ))}
             {textArea}
           </CheckboxesWrapper>
         </RadioGroup>
       ) : (
-        <CheckboxesWrapper>
-          {options.map(item => (
-            <CustomCheckbox
-              {...field}
-              key={extractId(item)}
-              value={extractValue(item)}
-              label={extractLabel(item)}
-              onSelect={onSelect}
-              checked={(field.value || []).includes(extractValue(item))}
-              classes={classes}
-            />
-          ))}
-        </CheckboxesWrapper>
+        <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
+          <CheckboxesWrapper>
+            {options.map(item => (
+              <CustomCheckbox
+                {...field}
+                key={extractId(item)}
+                value={extractValue(item)}
+                label={extractLabel(item)}
+                onSelect={onSelect}
+                checked={(field.value || []).includes(extractValue(item))}
+                classes={classes}
+              />
+            ))}
+          </CheckboxesWrapper>
+        </ContexualHelp>
       )}
 
       {hasError && <ErrorMessage error={errorMessage} />}

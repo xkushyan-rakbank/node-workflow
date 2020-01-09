@@ -218,6 +218,21 @@ export const CompanyBusinessRelationshipsComponent = ({
                             path={`prospect.orgKYCDetails.topSuppliers[${index}].name`}
                             label="Supplier name"
                             placeholder="Supplier name"
+                            contextualHelpText={
+                              <>
+                                List down the names of top existing or future suppliers. These
+                                supplier names should be as per their respective Trade Licenses.
+                                <br />
+                                Example 1
+                                <br />
+                                Airlift Global Automation and Heavy Equipment Rental LLC
+                                <br />
+                                Example 2
+                                <br />
+                                If the company is in the Retail Industry, you can mention
+                                {"'"}Walk-in Customers{"'"}
+                              </>
+                            }
                             component={Input}
                             disabled={values.isDontHaveSuppliersYet}
                           />

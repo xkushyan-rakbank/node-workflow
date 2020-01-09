@@ -59,6 +59,8 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                     }
                     setFieldValue("wealthType", e.target.value);
                   }}
+                  contextualHelpText="Select the most prominent source of capital to fund the company"
+                  contextualHelpProps={{ isDisableHoverListener: false }}
                   component={CustomSelect}
                 />
               </Grid>

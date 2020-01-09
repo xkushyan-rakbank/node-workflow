@@ -9,7 +9,8 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../components/Modals";
 import { Icon, ICONS } from "../../components/Icons";
-import routes from "../../routes";
+import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
+
 import {
   changeEditableStakeholder,
   createNewStakeholder,
@@ -24,6 +25,8 @@ import {
   percentageSelector
 } from "../../store/selectors/stakeholder";
 
+import routes from "../../routes";
+import { companyStatus } from "./constants";
 import { useStyles } from "./styled";
 
 const MAX_STAKEHOLDERS_LENGTH = 6;
@@ -42,6 +45,7 @@ const CompanyStakeholdersComponent = ({
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isNewStakeholder, setIsNewStakeholder] = useState(false);
+
   const isLowPercentage = percentage < 100;
   const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
   const isDisableNextStep =
@@ -82,6 +86,10 @@ const CompanyStakeholdersComponent = ({
     createNewStakeholder();
     setOpen(false);
   };
+
+  if (stakeholders.length > MAX_STAKEHOLDERS_LENGTH) {
+    return <ApplicationStatus content={companyStatus.bigCompany} />;
+  }
 
   return (
     <>

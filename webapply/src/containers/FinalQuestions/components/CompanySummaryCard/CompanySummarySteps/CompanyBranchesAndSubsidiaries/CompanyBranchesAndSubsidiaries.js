@@ -145,6 +145,20 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 label="Trade License Number"
                                 placeholder="Trade License Number"
                                 component={Input}
+                                contextualHelpText={
+                                  <>
+                                    The Licence Number of the other company, branch or subsidiary
+                                    should be as per their respective Trade License.
+                                    <br />
+                                    If License Number contains hyphen (-), oblique (/), spaces or
+                                    any other special character please enter only alphabets and
+                                    numbers
+                                    <br />
+                                    Example
+                                    <br />
+                                    CN-123/2019/456 to be entered as CN1232019456
+                                  </>
+                                }
                               />
                             </Grid>
                             <Grid

@@ -7,7 +7,7 @@ import { log } from "../../utils/loggger";
 function* retrieveApplicantInfoSaga({ payload }) {
   try {
     const inputParam = {
-      fullName: payload.fullName || "",
+      applicantName: payload.fullName || "",
       countryCode: payload.countryCode || "",
       mobileNo: payload.mobileNo || "",
       leadNumber: payload.leadNumber || "",
