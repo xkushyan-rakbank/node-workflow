@@ -5,7 +5,7 @@ import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
-import { finalQuestionsSteps } from "./constants";
+import { finalQuestionsSteps, COMPANY_FIELD_NAME, STEP_1 } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -15,7 +15,7 @@ export const CompanySummaryCardComponent = ({
   companyName,
   handleFinalStepContinue,
   sendProspectToAPI,
-  expandedSignatoryIndex
+  isCompanyStepsCompleted
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
@@ -34,7 +34,7 @@ export const CompanySummaryCardComponent = ({
       companyName={companyName}
       controls={
         !isExpanded &&
-        (expandedSignatoryIndex !== null ? (
+        (isCompanyStepsCompleted ? (
           <LinkButton clickHandler={() => setIsExpanded(true)} />
         ) : (
           <ContinueButton
@@ -52,6 +52,8 @@ export const CompanySummaryCardComponent = ({
           handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
+          fieldName={COMPANY_FIELD_NAME}
+          initialStep={STEP_1}
         />
       </div>
     </CompanyCard>

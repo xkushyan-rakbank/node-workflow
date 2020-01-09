@@ -13,6 +13,7 @@ import {
 } from "../../../../../../components/Form";
 import { DEFAULT_SIGNATORY_COUNTRY } from "./constants";
 import { MAX_PO_BOX_NUMBER_LENGTH } from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
+import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 
 import { useStyles } from "./styled";
 
@@ -56,7 +57,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
         validationSchema={signatoryPreferredMailingAddressSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue }) => (
+        {withSignatoriesFinalQuestions(index, ({ values, setFieldValue }) => (
           <Form>
             <Field
               name="sameAsCompanyAddress"
@@ -132,7 +133,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
               <ContinueButton type="submit" />
             </div>
           </Form>
-        )}
+        ))}
       </Formik>
     </div>
   );

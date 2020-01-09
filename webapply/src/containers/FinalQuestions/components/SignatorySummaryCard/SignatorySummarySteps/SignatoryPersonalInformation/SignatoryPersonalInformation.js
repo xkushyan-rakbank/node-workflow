@@ -8,6 +8,7 @@ import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { MAX_MOTHERS_MAIDEN_NAME_LENGTH } from "../../constants";
+import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 
 export const signatoryPersonalInformationSchema = Yup.object().shape({
   maritalStatus: Yup.string().required("You need to provide marital status"),
@@ -39,7 +40,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
         validationSchema={signatoryPersonalInformationSchema}
         validateOnChange={false}
       >
-        {({ values }) => (
+        {withSignatoriesFinalQuestions(index, ({ values }) => (
           <Form>
             <Grid spacing={3} container className={classes.flexContainer}>
               <Grid item md={6} sm={12}>
@@ -78,7 +79,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
               <ContinueButton type="submit" />
             </div>
           </Form>
-        )}
+        ))}
       </Formik>
     </div>
   );

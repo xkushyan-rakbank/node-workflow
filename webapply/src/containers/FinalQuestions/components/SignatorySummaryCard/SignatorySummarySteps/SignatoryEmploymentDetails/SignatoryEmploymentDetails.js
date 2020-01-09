@@ -16,9 +16,10 @@ import {
   COMPANY_NAME_REGEX,
   DESIGNATION_REGEX
 } from "../../../../../../utils/validation";
+import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
+import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 
 import { useStyles } from "./styled";
-import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required("You need to provide qualification"),
@@ -64,7 +65,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
         validationSchema={signatoryEmploymentDetailsSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue }) => {
+        {withSignatoriesFinalQuestions(index, ({ values, setFieldValue }) => {
           const basePath = `prospect.signatoryInfo[${index}]`;
           return (
             <Form>
@@ -155,7 +156,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
               </div>
             </Form>
           );
-        }}
+        })}
       </Formik>
     </div>
   );

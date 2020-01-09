@@ -16,6 +16,7 @@ import {
 } from "../../../../../../components/Form";
 import { PHONE_REGEX } from "../../../../../../utils/validation";
 import { UAE_PHONE_CODE } from "./constants";
+import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 
 import { useStyles } from "./styled";
 
@@ -57,7 +58,7 @@ export const CompanyPreferredContactInformationComponent = ({
         validationSchema={companyPreferredContactInformationSchema}
         validateOnChange={false}
       >
-        {({ setFieldValue }) => (
+        {withCompanyFinalQuestions(({ setFieldValue }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item md={6} sm={12}>
@@ -144,7 +145,7 @@ export const CompanyPreferredContactInformationComponent = ({
               <ContinueButton type="submit" />
             </div>
           </Form>
-        )}
+        ))}
       </Formik>
     </div>
   );

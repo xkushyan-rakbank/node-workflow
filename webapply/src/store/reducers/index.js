@@ -13,6 +13,7 @@ import stakeholders from "./stakeholders";
 import screenProspect from "./screenProspect";
 import validationErrors from "./validationErrors";
 import uploadDocuments from "./getProspectDocuments";
+import completedSteps from "./completedSteps";
 
 const reducers = history =>
   combineReducers({
@@ -29,7 +30,8 @@ const reducers = history =>
     stakeholders,
     screenProspect,
     validationErrors,
-    uploadDocuments
+    uploadDocuments,
+    completedSteps
   });
 
 export default reducers;
