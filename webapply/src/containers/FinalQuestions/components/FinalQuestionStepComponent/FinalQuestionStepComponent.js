@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
-import { FINAL_QUESTIONS_PAGE } from "../CompanySummaryCard/constants";
-import { useStoreStep } from "../../../../components/StepComponent/useStoreStep";
+import { useStep } from "../../../../components/StepComponent/useStep";
 
 export const FinalQuestionStepComponent = ({
   index = null,
@@ -13,20 +12,16 @@ export const FinalQuestionStepComponent = ({
   fieldName,
   initialStep
 }) => {
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStoreStep(
-    initialStep,
-    FINAL_QUESTIONS_PAGE,
-    fieldName,
-    index
-  );
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(initialStep);
 
   const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
     if (step > stepsArray.length) {
       const completedIndex = index !== null ? index + 1 : SIGNATORY_INITIAL_INDEX;
-      handleFinalStepContinue(completedIndex);
+      handleFinalStepContinue(completedIndex, index);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);

@@ -1,12 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { useSelector } from "react-redux";
 import cx from "classnames";
 
 import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
-import { finalQuestionsSteps, COMPANY_FIELD_NAME, FINAL_QUESTIONS_PAGE, STEP_1 } from "./constants";
+import { finalQuestionsSteps, COMPANY_FIELD_NAME, STEP_1 } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -15,13 +14,10 @@ export const CompanySummaryCardComponent = ({
   switchExpandedMargin,
   companyName,
   handleFinalStepContinue,
-  sendProspectToAPI
+  sendProspectToAPI,
+  isCompanyStepsCompleted
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const completedSteps = useSelector(
-    state => state.completedSteps[FINAL_QUESTIONS_PAGE][COMPANY_FIELD_NAME] || []
-  );
-  const isAllStepsCompleted = completedSteps.length === finalQuestionsSteps.length;
   const classes = useStyles();
 
   const handleClickStartHere = useCallback(() => {
@@ -38,7 +34,7 @@ export const CompanySummaryCardComponent = ({
       companyName={companyName}
       controls={
         !isExpanded &&
-        (isAllStepsCompleted ? (
+        (isCompanyStepsCompleted ? (
           <LinkButton clickHandler={() => setIsExpanded(true)} />
         ) : (
           <ContinueButton
@@ -57,7 +53,7 @@ export const CompanySummaryCardComponent = ({
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
           fieldName={COMPANY_FIELD_NAME}
-          initialStep={isAllStepsCompleted ? null : STEP_1}
+          initialStep={STEP_1}
         />
       </div>
     </CompanyCard>

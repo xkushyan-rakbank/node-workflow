@@ -17,6 +17,7 @@ import {
   MAX_OFFICE_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH
 } from "./constants";
+import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 
 import { useStyles } from "./styled";
 
@@ -58,7 +59,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
         validationSchema={companyPreferredMailingAddressSchema}
         validateOnChange={false}
       >
-        {({ values }) => (
+        {withCompanyFinalQuestions(({ values }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item md={6} sm={12}>
@@ -124,7 +125,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
               <ContinueButton type="submit" />
             </div>
           </Form>
-        )}
+        ))}
       </Formik>
     </div>
   );

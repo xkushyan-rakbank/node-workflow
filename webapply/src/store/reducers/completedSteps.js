@@ -1,35 +1,35 @@
 import {
-  SET_COMPANY_STEPS,
-  SET_SIGNATORY_STEPS,
+  SET_COMPANY_STEPS_COMPLETE,
+  SET_SIGNATORY_STEPS_COMPLETE,
   ADD_SIGNATORY,
   REMOVE_SIGNATORY
 } from "../actions/completedSteps";
 
 export const initialState = {
   finalQuestions: {
-    companySteps: [],
+    companySteps: false,
     signatorySteps: []
   }
 };
 
 const completedSteps = (state = initialState, action) => {
   switch (action.type) {
-    case SET_COMPANY_STEPS:
+    case SET_COMPANY_STEPS_COMPLETE:
       return {
         ...state,
         finalQuestions: {
           ...state.finalQuestions,
-          companySteps: action.steps
+          companySteps: action.value
         }
       };
-    case SET_SIGNATORY_STEPS:
+    case SET_SIGNATORY_STEPS_COMPLETE:
       return {
         ...state,
         finalQuestions: {
           ...state.finalQuestions,
           signatorySteps: state.finalQuestions.signatorySteps.map((signatory, index) => {
             if (index === action.payload.index) {
-              return action.payload.steps;
+              return action.payload.value;
             }
             return signatory;
           })
@@ -40,7 +40,7 @@ const completedSteps = (state = initialState, action) => {
         ...state,
         finalQuestions: {
           ...state.finalQuestions,
-          signatorySteps: [...state.finalQuestions.signatorySteps, []]
+          signatorySteps: [...state.finalQuestions.signatorySteps, false]
         }
       };
     case REMOVE_SIGNATORY:

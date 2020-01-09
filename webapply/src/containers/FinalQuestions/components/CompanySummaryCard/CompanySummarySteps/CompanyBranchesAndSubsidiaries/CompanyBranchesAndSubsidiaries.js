@@ -18,6 +18,7 @@ import {
 import { InfoTitle } from "../../../../../../components/Notifications";
 import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
 import { ALPHANUMERIC_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
+import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 
 import { useStyles } from "./styled";
 
@@ -79,7 +80,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
         validationSchema={companyBranchesAndSubsidiariesSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue, setFieldTouched }) => (
+        {withCompanyFinalQuestions(({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <FieldArray name="entitiesInUAE">
               {arrayHelpers => (
@@ -303,7 +304,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
               <ContinueButton type="submit" />
             </div>
           </Form>
-        )}
+        ))}
       </Formik>
     </div>
   );
