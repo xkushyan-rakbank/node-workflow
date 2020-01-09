@@ -7,7 +7,7 @@ import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps, SIGNATORY_FIELD_NAME } from "./constants";
+import { signatoriesSteps, SIGNATORY_FIELD_NAME, STEP_1 } from "./constants";
 import { FINAL_QUESTIONS_PAGE } from "../CompanySummaryCard/constants";
 
 export const SignatorySummaryCardComponent = ({
@@ -23,6 +23,7 @@ export const SignatorySummaryCardComponent = ({
   const completedSteps = useSelector(
     state => state.completedSteps[FINAL_QUESTIONS_PAGE][SIGNATORY_FIELD_NAME][index] || []
   );
+  const isAllStepsCompleted = completedSteps.length === signatoriesSteps.length;
   const classes = useStyles();
 
   const handleExpandNextBlock = () => setExpandedSignatoryIndex(index + 1);
@@ -46,7 +47,7 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {expandedSignatoryIndex !== index && completedSteps.includes(index) && (
+            {expandedSignatoryIndex !== index && isAllStepsCompleted && (
               <LinkButton
                 clickHandler={() => {
                   setExpandedSignatoryIndex(index);
@@ -66,6 +67,7 @@ export const SignatorySummaryCardComponent = ({
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
           fieldName={SIGNATORY_FIELD_NAME}
+          initialStep={isAllStepsCompleted ? null : STEP_1}
         />
       </div>
     </FormCard>

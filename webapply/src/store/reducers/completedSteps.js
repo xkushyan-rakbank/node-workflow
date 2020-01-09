@@ -28,8 +28,8 @@ const completedSteps = (state = initialState, action) => {
         finalQuestions: {
           ...state.finalQuestions,
           signatorySteps: state.finalQuestions.signatorySteps.map((signatory, index) => {
-            if (index === action.index) {
-              return action.steps;
+            if (index === action.payload.index) {
+              return action.payload.steps;
             }
             return signatory;
           })

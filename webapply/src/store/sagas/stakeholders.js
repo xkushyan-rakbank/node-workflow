@@ -38,7 +38,6 @@ function* deleteStakeholderSaga(action) {
 
   config.prospect.signatoryInfo.splice(stakeholderIndex, 1);
   yield put(setConfig(config));
-  console.log(action);
 
   stakeholdersIds.splice(stakeholderIndex, 1);
   yield put(updateStakeholdersIds(stakeholdersIds));

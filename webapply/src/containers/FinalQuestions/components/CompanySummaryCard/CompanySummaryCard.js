@@ -21,7 +21,7 @@ export const CompanySummaryCardComponent = ({
   const completedSteps = useSelector(
     state => state.completedSteps[FINAL_QUESTIONS_PAGE][COMPANY_FIELD_NAME] || []
   );
-  const isAllStepsCompleted = completedSteps.length >= finalQuestionsSteps.length;
+  const isAllStepsCompleted = completedSteps.length === finalQuestionsSteps.length;
   const classes = useStyles();
 
   const handleClickStartHere = useCallback(() => {
