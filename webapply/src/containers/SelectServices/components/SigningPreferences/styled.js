@@ -18,5 +18,8 @@ export const useStyles = makeStyles({
   },
   formControl: {
     marginBottom: "0"
+  },
+  radioButtonRoot: {
+    width: "calc(50% - 20px)"
   }
 });
