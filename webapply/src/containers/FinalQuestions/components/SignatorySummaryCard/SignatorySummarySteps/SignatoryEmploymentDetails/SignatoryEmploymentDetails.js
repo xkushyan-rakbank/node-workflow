@@ -83,6 +83,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     datalistId="employmentType"
                     label="Employment Type"
                     component={CustomSelect}
+                    contextualHelpProps={{ isDisableHoverListener: false }}
                     contextualHelpText="If self-employed then provide business details"
                   />
                 </Grid>
