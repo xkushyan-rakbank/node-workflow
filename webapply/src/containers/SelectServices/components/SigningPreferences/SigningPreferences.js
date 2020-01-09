@@ -3,8 +3,14 @@ import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
-import { PHONE_REGEX, NAME_REGEX } from "../../../../utils/validation";
+import {
+  PHONE_REGEX,
+  NAME_REGEX,
+  UAE_MOBILE_PHONE_REGEX,
+  UAE_LANDLINE_PHONE_REGEX
+} from "../../../../utils/validation";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
+import { UAE_CODE } from "../../../../constants";
 import { Subtitle } from "../../../../components/Subtitle";
 import {
   Input,
@@ -33,14 +39,22 @@ const signingPreferencesSchema = Yup.object({
     Yup.object().shape({
       fullName: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
       primaryMobCountryCode: Yup.string(),
-      primaryMobileNo: Yup.string()
-        .matches(PHONE_REGEX, "This is not a valid phone")
-        .when("fullName", {
-          is: value => !!value,
-          then: Yup.string().required("You need to provide mobile number")
-        }),
+      primaryMobileNo: Yup.string().when("fullName", {
+        is: value => !!value,
+        then: Yup.string()
+          .required("You need to provide mobile number")
+          .when("primaryMobCountryCode", {
+            is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
+            then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+            otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+          })
+      }),
       primaryPhoneCountryCode: Yup.string(),
-      primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+      primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
+        is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
+        then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "This is not a valid phone"),
+        otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+      })
     })
   )
 });
