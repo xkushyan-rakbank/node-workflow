@@ -25,6 +25,8 @@ import {
 } from "../../store/selectors/stakeholder";
 
 import { useStyles } from "./styled";
+import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
+import { companyStatus } from "./constants";
 
 const MAX_STAKEHOLDERS_LENGTH = 6;
 
@@ -37,11 +39,13 @@ const CompanyStakeholdersComponent = ({
   percentage,
   history,
   resetProspect,
-  stakeholdersIds
+  stakeholdersIds,
+  stakeholdersLength
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isNewStakeholder, setIsNewStakeholder] = useState(false);
+
   const isLowPercentage = percentage < 100;
   const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
   const isDisableNextStep =
@@ -82,6 +86,10 @@ const CompanyStakeholdersComponent = ({
     createNewStakeholder();
     setOpen(false);
   };
+
+  if (stakeholdersLength > 5) {
+    return <ApplicationStatus content={companyStatus.bigCompany} />;
+  }
 
   return (
     <>
@@ -157,11 +165,13 @@ const CompanyStakeholdersComponent = ({
 
 const mapStateToProps = state => {
   const { editableStakeholder, stakeholdersIds } = stakeholdersState(state);
+  const stakeholders = stakeholdersSelector(state);
   return {
     editableStakeholder,
     stakeholdersIds,
-    stakeholders: stakeholdersSelector(state),
+    stakeholders,
     percentage: percentageSelector(state),
+    stakeholdersLength: stakeholders.length,
     ...getSendProspectToAPIInfo(state)
   };
 };
