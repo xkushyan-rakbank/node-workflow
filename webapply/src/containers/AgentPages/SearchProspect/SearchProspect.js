@@ -5,7 +5,12 @@ import * as Yup from "yup";
 import omit from "lodash/omit";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "../../../components/Form";
-import { NAME_REGEX, ALPHANUMERIC_REGEX, PHONE_REGEX } from "../../../utils/validation";
+import {
+  NAME_REGEX,
+  ALPHANUMERIC_REGEX,
+  PHONE_REGEX,
+  UAE_MOBILE_PHONE_REGEX
+} from "../../../utils/validation";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { SearchResult } from "../SearchResult";
 import { UAE_CODE } from "../../../constants";
@@ -14,7 +19,11 @@ import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
   fname: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
-  mobileNo: Yup.string().matches(PHONE_REGEX, "This is not a valid mobile no."),
+  mobileNo: Yup.string().when("countryCode", {
+    is: countryCode => countryCode === UAE_CODE,
+    then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid mobile no."),
+    otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid mobile no.")
+  }),
   email: Yup.string().email("This is not a valid email"),
   raktrackNumber: Yup.string()
     .max(20, "Maximum 20 characters allowed")

@@ -14,9 +14,13 @@ import {
   InputGroup,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { PHONE_REGEX } from "../../../../../../utils/validation";
-import { UAE_PHONE_CODE } from "./constants";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
+import {
+  PHONE_REGEX,
+  UAE_MOBILE_PHONE_REGEX,
+  UAE_LANDLINE_PHONE_REGEX
+} from "../../../../../../utils/validation";
+import { UAE_CODE } from "../../../../../../constants";
 
 import { useStyles } from "./styled";
 
@@ -24,11 +28,19 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required("You need to provide code"),
   primaryMobileNo: Yup.string()
     .required("You need to provide number")
-    .matches(PHONE_REGEX, "This is not a valid phone"),
+    .when("primaryMobCountryCode", {
+      is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+      otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+    }),
   primaryEmail: Yup.string()
     .required("You need to provide Email address")
     .email("This is not a valid Email address"),
-  primaryPhoneNo: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+  primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
+    is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
+    then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "This is not a valid phone"),
+    otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+  })
 });
 
 export const CompanyPreferredContactInformationComponent = ({
@@ -48,11 +60,11 @@ export const CompanyPreferredContactInformationComponent = ({
     <div>
       <Formik
         initialValues={{
-          primaryMobCountryCode: UAE_PHONE_CODE,
+          primaryMobCountryCode: UAE_CODE,
           primaryMobileNo: "",
           primaryEmail: "",
           primaryPhoneNo: "",
-          primaryPhoneCountryCode: UAE_PHONE_CODE
+          primaryPhoneCountryCode: UAE_CODE
         }}
         onSubmit={handleSubmit}
         validationSchema={companyPreferredContactInformationSchema}
@@ -71,7 +83,7 @@ export const CompanyPreferredContactInformationComponent = ({
                     component={CustomSelect}
                     onChange={e => {
                       setFieldValue("primaryMobCountryCode", e.target.value);
-                      if (e.target.value !== UAE_PHONE_CODE && chequeBookApplied) {
+                      if (e.target.value !== UAE_CODE && chequeBookApplied) {
                         updateProspect({
                           "prospect.accountInfo[0].chequeBookApplied": false
                         });
@@ -111,7 +123,7 @@ export const CompanyPreferredContactInformationComponent = ({
                   <RemoveButton
                     onClick={() => {
                       setFieldValue("primaryPhoneNo", "");
-                      setFieldValue("primaryPhoneCountryCode", UAE_PHONE_CODE);
+                      setFieldValue("primaryPhoneCountryCode", UAE_CODE);
                       setIsExistSecondaryPhoneNumber(false);
                     }}
                     title="Delete"
