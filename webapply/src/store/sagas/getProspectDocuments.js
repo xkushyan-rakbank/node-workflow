@@ -55,11 +55,28 @@ function* getProspectDocumentsSaga() {
   const state = yield select();
   const prospectID = getProspectId(state) || "COSME0000000000000001";
   const config = cloneDeep(state.appConfig);
+  const fileName = "DUMMY.PDF";
+  const uploadStatus = "Uploaded";
 
   try {
-    const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
+    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID);
 
-    config.prospect.documents = response.data;
+    const companyDocuments = data.companyDocuments.map(doc => ({ ...doc, fileName, uploadStatus }));
+
+    const stakeholdersDocuments = Object.keys(data.stakeholdersDocuments).reduce((acc, item) => {
+      acc[item] = data.stakeholdersDocuments[item].documents.map((doc, index, documents) => ({
+        documents: {
+          ...doc,
+          fileName,
+          uploadStatus
+        }
+      }));
+      return acc;
+    }, {});
+
+    const hardCodedDocuments = { companyDocuments, stakeholdersDocuments };
+
+    config.prospect.documents = hardCodedDocuments;
     yield put(updateProspect(config));
   } catch (error) {
     log(error);
