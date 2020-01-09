@@ -41,11 +41,7 @@ export const SignatoryRights = ({ handleContinue, index }) => (
               ...prospect,
               [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
             })}
-            onChange={event => {
-              const value = JSON.parse(event.target.value);
-              setFieldValue("isSignatory", value);
-              !value && setFieldValue("authorityType", "");
-            }}
+            onSelect={() => setFieldValue("authorityType", "")}
           />
           <Field
             name="authorityType"
