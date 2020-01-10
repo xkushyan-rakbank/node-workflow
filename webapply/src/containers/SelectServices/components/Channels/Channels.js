@@ -29,7 +29,7 @@ const channelsSchema = Yup.object({
     Yup.object().shape({
       nameOnDebitCard: Yup.string()
         .matches(NAME_REGEX, "This is not a valid name")
-        .max(16, "Max length is 16 symbols")
+        .max(19, "Max length is 19 symbols")
         .required("Field is required")
     })
   )
