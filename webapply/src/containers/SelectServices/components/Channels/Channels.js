@@ -144,7 +144,9 @@ export const ChannelsComponent = ({
             classes={{ root: classes.rootGrid }}
           >
             <Grid item xs={9}>
-              <InfoTitle title="Paper statements will be mailed by courier to your preferred address" />
+              {!values.eStatements && (
+                <InfoTitle title="Paper statements will be mailed by courier to your preferred address" />
+              )}
             </Grid>
             <Grid item xs={3}>
               <ContinueButton type="submit" />
