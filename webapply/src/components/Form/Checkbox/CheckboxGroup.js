@@ -35,23 +35,23 @@ export const CheckboxGroup = ({
 
   return (
     <FormControl className="formControl">
-      {typeRadio ? (
-        <RadioGroup {...field}>
-          <CheckboxesWrapper>
-            {options.map(item => (
-              <CustomRadioButton
-                key={extractId(item)}
-                value={extractValue(item)}
-                label={extractLabel(item)}
-                onSelect={onSelect}
-                classes={classes}
-              />
-            ))}
-            {textArea}
-          </CheckboxesWrapper>
-        </RadioGroup>
-      ) : (
-        <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
+      <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
+        {typeRadio ? (
+          <RadioGroup {...field}>
+            <CheckboxesWrapper>
+              {options.map(item => (
+                <CustomRadioButton
+                  key={extractId(item)}
+                  value={extractValue(item)}
+                  label={extractLabel(item)}
+                  onSelect={onSelect}
+                  classes={classes}
+                />
+              ))}
+              {textArea}
+            </CheckboxesWrapper>
+          </RadioGroup>
+        ) : (
           <CheckboxesWrapper>
             {options.map(item => (
               <CustomCheckbox
@@ -65,8 +65,8 @@ export const CheckboxGroup = ({
               />
             ))}
           </CheckboxesWrapper>
-        </ContexualHelp>
-      )}
+        )}
+      </ContexualHelp>
 
       {hasError && <ErrorMessage error={errorMessage} />}
       {infoTitle && <InfoTitle title={infoTitle} />}
