@@ -56,7 +56,7 @@ export const ChannelsComponent = ({
   ...props
 }) => {
   const { isDisabledDebitCard, isDebitCardApplied } = checkIsDebitCardApplied(props);
-  const { isDisabledChequeBook, isChequeBookApplied } = checkIsChequeBookApplied(props);
+  const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(props);
   const classes = useStyles();
 
   useEffect(() => {
@@ -108,7 +108,7 @@ export const ChannelsComponent = ({
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
             infoTitle={CHEQUE_BOOK_INFO}
-            disabled={isDisabledChequeBook}
+            disabled={isChequeBookDisabled}
           />
 
           <Divider />
