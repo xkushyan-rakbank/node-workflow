@@ -76,9 +76,9 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
         accountSigningInstn: "",
         signatories: [...new Array(MAX_SIGNATORIES)].map(() => ({
           fullName: "",
-          primaryMobCountryCode: "971",
+          primaryMobCountryCode: UAE_CODE,
           primaryMobileNo: "",
-          primaryPhoneCountryCode: "971",
+          primaryPhoneCountryCode: UAE_CODE,
           primaryPhoneNo: ""
         }))
       }}
