@@ -3,17 +3,19 @@ import { UAE_CODE } from "../../../../constants";
 export const checkIsChequeBookApplied = ({
   primaryMobCountryCode,
   primaryPhoneCountryCode,
-  accountCurrencies: { isSelectForeignCurrencyAndLocal }
+  accountCurrencies: { isSelectedLocalCurrency }
 }) => {
   const isSelectedLocalMobilePhone = [primaryMobCountryCode, primaryPhoneCountryCode].includes(
     UAE_CODE
   );
 
-  if (isSelectForeignCurrencyAndLocal || isSelectedLocalMobilePhone) {
-    return { isDisabledChequeBook: true, isChequeBookApplied: true };
-  }
+  // AED currency was chosen -> cheque book is clickable
+  const isChequeBookDisabled = !isSelectedLocalCurrency;
 
-  return { isDisabledChequeBook: true, isChequeBookApplied: false };
+  // AED currency was chosen & local mobile phone was entered -> cheque book is checked by default
+  const isChequeBookApplied = isSelectedLocalCurrency && isSelectedLocalMobilePhone;
+
+  return { isChequeBookDisabled, isChequeBookApplied };
 };
 
 export const checkIsDebitCardApplied = ({
