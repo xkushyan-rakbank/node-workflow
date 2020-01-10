@@ -21,5 +21,12 @@ export const useStyles = makeStyles({
   },
   radioButtonRoot: {
     width: "calc(50% - 20px)"
+  },
+  confirmingTransaction: {
+    "& + $confirmingTransaction": {
+      paddingTop: "10px",
+      marginTop: "10px",
+      borderTop: "1px solid #e6e6e680"
+    }
   }
 });
