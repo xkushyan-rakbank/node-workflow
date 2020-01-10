@@ -76,9 +76,9 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
         accountSigningInstn: "",
         signatories: [...new Array(MAX_SIGNATORIES)].map(() => ({
           fullName: "",
-          primaryMobCountryCode: "",
+          primaryMobCountryCode: "971",
           primaryMobileNo: "",
-          primaryPhoneCountryCode: "",
+          primaryPhoneCountryCode: "971",
           primaryPhoneNo: ""
         }))
       }}
@@ -126,7 +126,8 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
             {arrayHelpers => (
               <>
                 {[...Array(countOfSignatories).keys()].map(index => {
-                  const prospectPath = `prospect.signatoryInfo[${index}].contactDetails`;
+                  // eslint-disable-next-line max-len
+                  const prospectPath = `prospect.organizationInfo.contactDetailsForTxnReconfirming.[${index}]`;
                   return (
                     <React.Fragment key={index}>
                       <Field
