@@ -138,7 +138,8 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
             {arrayHelpers => (
               <>
                 {[...Array(countOfSignatories).keys()].map(index => {
-                  const prospectPath = `prospect.signatoryInfo[${index}].contactDetails`;
+                  // eslint-disable-next-line max-len
+                  const prospectPath = `prospect.organizationInfo.contactDetailsForTxnReconfirming.[${index}]`;
                   return (
                     <React.Fragment key={index}>
                       <Field
