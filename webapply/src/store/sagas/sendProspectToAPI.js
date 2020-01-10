@@ -14,6 +14,8 @@ import {
 } from "redux-saga/effects";
 import get from "lodash/get";
 
+import { getCompanyInfoStatuses } from "./../selectors/companyInfo";
+import { getStakeholderStatuses } from "./../selectors/stakeholder";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -21,10 +23,11 @@ import {
   setScreeningResults,
   resetFormStep,
   PROSPECT_AUTO_SAVE,
-  sendProspectRequest
+  sendProspectRequest,
+  setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
-import { getProspect, getProspectId } from "../selectors/appConfig";
+import { getProspect, getProspectId, getScreenErrorReason } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
 import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
@@ -38,6 +41,31 @@ function* watchRequest() {
       yield call(sendProspectToAPI, continueActions.length ? continueActions[0] : actions[0]);
     }
     yield delay(1000);
+  }
+}
+
+function* watchScreeningResults() {
+  const chan = yield actionChannel("SET_SCREENING_RESULTS");
+  while (true) {
+    const state = yield select();
+    const { payload } = yield take(chan);
+    const { isDedupe, isBlackList } = getScreenErrorReason(payload);
+
+    const { isEligible, isForeignCompany, isVirtualCurrency } = getCompanyInfoStatuses(state);
+    const { isTooManyStakeholders } = getStakeholderStatuses(state);
+
+    switch (isDedupe || isBlackList) {
+      case isVirtualCurrency:
+        return yield put(setScreeningError("virtualCurrencies"));
+      case !isEligible:
+        return yield put(setScreeningError("notEligible"));
+      case isForeignCompany:
+        return yield put(setScreeningError("notRegisteredInUAE"));
+      case isTooManyStakeholders:
+        return yield put(setScreeningError("bigCompany"));
+      default:
+        return yield put(setScreeningError("default"));
+    }
   }
 }
 
@@ -105,6 +133,7 @@ export default function* sendProspectToAPISagas() {
   yield all([
     takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
     takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga),
-    fork(watchRequest)
+    fork(watchRequest),
+    fork(watchScreeningResults)
   ]);
 }
