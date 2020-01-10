@@ -37,6 +37,7 @@ export const screeningStatus = {
   },
   default: {
     icon: declinedRegular,
-    text: "default message"
+    text:
+      "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
   }
 };
