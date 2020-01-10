@@ -24,69 +24,76 @@ const companyDetailsSchema = Yup.object({
     .matches(NUMBER_REGEX, "Not valid number"),
   numberOfEmployees: Yup.number()
     .typeError("Not valid number")
-    .min(0, "must be more than 0")
+    .min(1, "must be more than 0")
     .max(1000, "must be less than or equal to 1000"),
   companyCategory: Yup.string().required("You need to provide company category")
 });
 
-export const CompanyDetails = ({ handleContinue }) => (
-  <Formik
-    initialValues={initialValues}
-    validationSchema={companyDetailsSchema}
-    validateOnChange={false}
-    onSubmit={handleContinue}
-  >
-    {() => (
-      <Form>
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Field
-              name="companyName"
-              label="Company Name"
-              path="prospect.organizationInfo.companyName"
-              contextualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 30 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
-              infoTitle="This should be the same as in your Trade License"
-              inputProps={{ maxLength: MAX_COMPANY_NAME_LENGTH }}
-              component={Input}
-            />
+export const CompanyDetails = ({ handleContinue }) => {
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={companyDetailsSchema}
+      validateOnChange={false}
+      onSubmit={handleContinue}
+    >
+      {({ values }) => (
+        <Form>
+          <Grid container spacing={3}>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="companyName"
+                label="Company Name"
+                path="prospect.organizationInfo.companyName"
+                contextualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 30 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
+                infoTitle="This should be the same as in your Trade License"
+                inputProps={{ maxLength: MAX_COMPANY_NAME_LENGTH }}
+                component={Input}
+              />
+            </Grid>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="companyCategory"
+                label="Company Category"
+                path="prospect.orgKYCDetails.companyCategory"
+                contextualHelpText="Select Foreign / Offshore / Non-Resident company if applicable. In case of a Free Zone company  select Free Zone. In case of Civil Company select  Partnerships. Select appropriate category in all other cases"
+                datalistId="companyCategory"
+                component={SelectAutocomplete}
+              />
+            </Grid>
           </Grid>
-          <Grid item md={6} sm={12}>
-            <Field
-              name="companyCategory"
-              label="Company Category"
-              path="prospect.orgKYCDetails.companyCategory"
-              contextualHelpText="Select Foreign / Offshore / Non-Resident company if applicable. In case of a Free Zone company  select Free Zone. In case of Civil Company select  Partnerships. Select appropriate category in all other cases"
-              datalistId="companyCategory"
-              component={SelectAutocomplete}
-            />
+          <Grid container spacing={3}>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="vatRegistrationNumber"
+                label="VAT registration number (Optional)"
+                placeholder="123456789012345"
+                shrink={true}
+                path="prospect.organizationInfo.vatRegistrationNumber"
+                infoTitle="This should be the same as your TRN number of UAE"
+                component={Input}
+              />
+            </Grid>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="numberOfEmployees"
+                label="Number of employees"
+                path="prospect.organizationInfo.numberOfEmployees"
+                component={Input}
+                value={
+                  !isNaN(values.numberOfEmployees)
+                    ? Number(values.numberOfEmployees)
+                    : values.numberOfEmployees
+                }
+                changeProspect={(_, value, path) => ({ [path]: value || "0" })}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Field
-              name="vatRegistrationNumber"
-              label="VAT registration number (Optional)"
-              placeholder="123456789012345"
-              shrink={true}
-              path="prospect.organizationInfo.vatRegistrationNumber"
-              infoTitle="This should be the same as your TRN number of UAE"
-              component={Input}
-            />
+          <Grid container direction="row" justify="flex-end" style={{ padding: 20 }}>
+            <ContinueButton type="submit" />
           </Grid>
-          <Grid item md={6} sm={12}>
-            <Field
-              name="numberOfEmployees"
-              label="Number of employees"
-              path="prospect.organizationInfo.numberOfEmployees"
-              component={Input}
-              changeProspect={(_, value, path) => ({ [path]: value || "0" })}
-            />
-          </Grid>
-        </Grid>
-        <Grid container direction="row" justify="flex-end" style={{ padding: 20 }}>
-          <ContinueButton type="submit" />
-        </Grid>
-      </Form>
-    )}
-  </Formik>
-);
+        </Form>
+      )}
+    </Formik>
+  );
+};
