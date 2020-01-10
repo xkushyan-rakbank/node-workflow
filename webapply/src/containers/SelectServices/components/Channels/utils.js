@@ -1,40 +1,47 @@
 import { UAE_CODE } from "../../../../constants";
+import {
+  ACCOUNTS_SIGNING_NAME_ALL_OF_US,
+  ACCOUNTS_SIGNING_NAME_ANY_OF_US,
+  ACCOUNTS_SIGNING_NAME_OTHER
+} from "../../constants";
 
-export const checkIsChequeBookApplied = ({
+export const checkIsChequeBookApplied = (
   primaryMobCountryCode,
   primaryPhoneCountryCode,
-  accountCurrencies: { isSelectedLocalCurrency }
-}) => {
-  const isSelectedLocalMobilePhone = [primaryMobCountryCode, primaryPhoneCountryCode].includes(
-    UAE_CODE
-  );
+  isLocalCurrencySelected
+) => {
+  const isLocalPhoneSelected = [primaryMobCountryCode, primaryPhoneCountryCode].includes(UAE_CODE);
 
-  const isChequeBookDisabled = !isSelectedLocalCurrency;
+  if (isLocalCurrencySelected && isLocalPhoneSelected) {
+    return { isChequeBookDisabled: true, isChequeBookApplied: true };
+  }
 
-  const isChequeBookApplied = isSelectedLocalCurrency && isSelectedLocalMobilePhone;
+  if (!isLocalCurrencySelected && !isLocalPhoneSelected) {
+    return { isChequeBookDisabled: true, isChequeBookApplied: false };
+  }
 
-  return { isChequeBookDisabled, isChequeBookApplied };
+  return { isChequeBookDisabled: false, isChequeBookApplied: false };
 };
 
-export const checkIsDebitCardApplied = ({
-  accountSigningInfo: { accountSigningType, authorityType },
-  accountCurrencies: { isSelectForeignCurrencyAndLocal, isSelectOnlyForeignCurrency }
-}) => {
-  const selectedSigningTypesAny = "Any of us";
-  const authorityTypeSP = "SP";
+export const checkIsDebitCardApplied = (
+  accountSigningType,
+  authorityType,
+  isLocalCurrencySelected
+) => {
+  const authorityTypeSP = "Sole proprietor";
 
-  const isAccountSigningTypeAnyOfUs = accountSigningType === selectedSigningTypesAny;
+  const isAccountSigningTypeAllOfUs = accountSigningType === ACCOUNTS_SIGNING_NAME_ALL_OF_US;
+  const isAccountSigningTypeAnyOfUs = accountSigningType === ACCOUNTS_SIGNING_NAME_ANY_OF_US;
+  const isAccountSigningTypeOther = accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER;
+  const isAuthorityTypeSP = authorityType === authorityTypeSP;
 
-  if (
-    isSelectForeignCurrencyAndLocal ||
-    isAccountSigningTypeAnyOfUs ||
-    authorityType === authorityTypeSP
-  ) {
-    return { isDisabledDebitCard: true, isDebitCardApplied: true };
+  if (isLocalCurrencySelected || isAccountSigningTypeAnyOfUs || isAuthorityTypeSP) {
+    return { isDebitCardDisabled: true, isDebitCardApplied: true };
   }
 
-  if (isSelectOnlyForeignCurrency) {
-    return { isDisabledDebitCard: false, isDebitCardApplied: false };
+  if (!isLocalCurrencySelected || isAccountSigningTypeAllOfUs || isAccountSigningTypeOther) {
+    return { isDebitCardDisabled: true, isDebitCardApplied: false };
   }
-  return { isDisabledDebitCard: false, isDebitCardApplied: false };
+
+  return { isDebitCardDisabled: false, isDebitCardApplied: false };
 };
