@@ -9,10 +9,10 @@ export const checkIsChequeBookApplied = ({
     UAE_CODE
   );
 
-  // AED currency was chosen -> cheque book is clickable
+  // AED currency chosen -> cheque book is clickable
   const isChequeBookDisabled = !isSelectedLocalCurrency;
 
-  // AED currency was chosen & local mobile phone was entered -> cheque book is checked by default
+  // AED currency chosen & local mobile phone entered -> cheque book is checked by default
   const isChequeBookApplied = isSelectedLocalCurrency && isSelectedLocalMobilePhone;
 
   return { isChequeBookDisabled, isChequeBookApplied };
