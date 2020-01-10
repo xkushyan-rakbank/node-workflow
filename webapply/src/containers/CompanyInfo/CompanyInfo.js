@@ -15,10 +15,11 @@ import {
   getApplicantInfo,
   getApplicationInfo,
   getOrganizationInfo,
+  getScreeningResults,
   getSendProspectToAPIInfo
 } from "../../store/selectors/appConfig";
 import { getIsVirtualCurrency } from "./../../store/selectors/companyInfo";
-import { companyInfoSteps, STEP_1, STEP_3, companyStatus } from "./constants";
+import { companyInfoSteps, STEP_1, STEP_3, companyStatus, DEDUPE } from "./constants";
 import { accountsNames, UAE } from "./../../constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
@@ -30,6 +31,7 @@ export const CompanyInfoPage = ({
   fullName,
   accountType,
   isVirtualCurrency,
+  screeningResults,
   organizationInfo: { companyName, licenseIssueDate, countryOfIncorporation }
 }) => {
   const classes = useStyles();
@@ -41,11 +43,12 @@ export const CompanyInfoPage = ({
     const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
     isEligible = !isIssuanceDateCorrect && accountType === accountsNames.starter;
   }
+  const isDedup = screeningResults && screeningResults[0].screeningType.includes(DEDUPE);
 
   const handleContinue = () =>
     sendProspectToAPI().then(
       () => {
-        if (isVirtualCurrency || isEligible || isForeignCompany) {
+        if (isVirtualCurrency || isEligible || isForeignCompany || (isDedup && step === STEP_3)) {
           setError(true);
         }
         handleSetNextStep();
@@ -65,6 +68,8 @@ export const CompanyInfoPage = ({
         return companyStatus.notEligible;
       case isForeignCompany:
         return companyStatus.notRegisteredInUAE;
+      case isDedup:
+        return companyStatus.dedupe;
       default:
         return;
     }
@@ -127,7 +132,8 @@ const mapStateToProps = state => ({
   fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state),
   isVirtualCurrency: getIsVirtualCurrency(state),
-  accountType: getApplicationInfo(state).accountType
+  accountType: getApplicationInfo(state).accountType,
+  screeningResults: getScreeningResults(state).screeningResults
 });
 
 const mapDispatchToProps = {
