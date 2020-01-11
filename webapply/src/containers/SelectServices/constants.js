@@ -34,3 +34,36 @@ export const servicesSteps = [
     icon: ICONS.valueAddedServices
   }
 ];
+export const options = [
+  {
+    code: "AED",
+    key: "AED",
+    value: "AED",
+    displayText: "AED",
+    subGroup: null
+  },
+  {
+    code: "USD",
+    key: "USD",
+    value: "USD",
+    displayText: "USD",
+    subGroup: null,
+    default: "AED"
+  },
+  {
+    code: "GBP",
+    key: "GBP",
+    value: "GBP",
+    displayText: "GBP",
+    subGroup: null,
+    default: "AED"
+  },
+  {
+    code: "EUR",
+    key: "EUR",
+    value: "EUR",
+    displayText: "EUR",
+    subGroup: null,
+    default: "AED"
+  }
+];
