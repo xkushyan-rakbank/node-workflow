@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { NAME_REGEX, PHONE_REGEX } from "./../../utils/validation";
+import { NAME_REGEX, PHONE_REGEX, UAE_MOBILE_PHONE_REGEX } from "./../../utils/validation";
 import {
   Input,
   CustomSelect,
@@ -32,7 +32,11 @@ const aplicantInfoSchema = Yup.object({
   countryCode: Yup.string().required("Select country code"),
   mobileNo: Yup.string()
     .required("You need to provide mobile number")
-    .matches(PHONE_REGEX, "This is not a valid phone")
+    .when("countryCode", {
+      is: countryCode => countryCode === UAE_CODE,
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+      otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+    })
 });
 
 const initialValues = {
