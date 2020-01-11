@@ -11,7 +11,7 @@ import {
 export const initialState = {
   loading: false,
   resetStep: false,
-  errorType: "",
+  screeningError: null,
   prospectCopy: {},
   screeningResults: {}
 };
@@ -47,12 +47,12 @@ const sendProspectToAPIReducer = (state = initialState, action) => {
     case SET_SCREENING_ERROR:
       return {
         ...state,
-        errorType: action.error
+        screeningError: action.error
       };
     case RESET_SCREENING_ERROR:
       return {
         ...state,
-        errorType: ""
+        screeningError: initialState.screeningError
       };
     default:
       return state;

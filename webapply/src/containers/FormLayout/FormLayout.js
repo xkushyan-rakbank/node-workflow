@@ -5,13 +5,12 @@ import Header from "../../components/Header";
 import HeaderTitle from "../../components/HeaderTitle";
 import { Notifications, NotificationsProvider } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
-import { screeningStatus } from "./constants";
 import { useStyles } from "./styled";
 
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},
   children,
-  screeningResults = {},
+  screeningResults: { screeningError },
   updateViewId,
   resetScreeningError
 }) => {
@@ -31,13 +30,10 @@ export const FormLayoutComponent = ({
           <div className={classes.formInner}>
             <div className={classes.mainContainer}>
               {!routerToAddPaddingInSlider.includes(pathname) && <HeaderTitle />}
+
               <Notifications />
 
-              {screeningResults.errorType ? (
-                <ApplicationStatus content={screeningStatus[`${screeningResults.errorType}`]} />
-              ) : (
-                children
-              )}
+              {screeningError ? <ApplicationStatus {...screeningError} /> : children}
             </div>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import { createSelector } from "reselect";
 import get from "lodash/get";
 import { getSignatories } from "./appConfig";
-import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 
 export const stakeholders = state => get(state, "appConfig.prospect.signatoryInfo", []);
 export const stakeholdersState = state => state.stakeholders;
@@ -40,12 +39,3 @@ export const checkIsHasSignatories = state =>
   stakeholdersSelector(state).some(stakeholder => get(stakeholder, "kycDetails.isSignatory"));
 
 export const getStakeholdersIds = state => state.stakeholders.stakeholdersIds;
-
-export const getStakeholderStatuses = state => {
-  const stakeholders = stakeholdersSelector(state);
-  const isTooManyStakeholders = stakeholders.length > MAX_STAKEHOLDERS_LENGTH;
-
-  return {
-    isTooManyStakeholders
-  };
-};

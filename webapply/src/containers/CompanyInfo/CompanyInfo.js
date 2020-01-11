@@ -12,7 +12,6 @@ import companyInfoIcon from "./../../assets/icons/companyInfo.png";
 import {
   getApplicantInfo,
   getOrganizationInfo,
-  getScreeningResults,
   getSendProspectToAPIInfo
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
@@ -89,8 +88,7 @@ export const CompanyInfoPage = ({
 const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
   fullName: getApplicantInfo(state).fullName,
-  organizationInfo: getOrganizationInfo(state),
-  screeningResults: getScreeningResults(state).screeningResults
+  organizationInfo: getOrganizationInfo(state)
 });
 
 const mapDispatchToProps = {

@@ -14,11 +14,16 @@ import {
 } from "redux-saga/effects";
 import get from "lodash/get";
 
-import { getCompanyInfoStatuses } from "./../selectors/companyInfo";
-import { getStakeholderStatuses } from "./../selectors/stakeholder";
+import {
+  getIsEligible,
+  getIsForeignCompany,
+  getIsVirtualCurrency
+} from "./../selectors/companyInfo";
+import { stakeholdersSelector } from "./../selectors/stakeholder";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
+  SEND_PROSPECT_TO_API_SUCCESS,
   sendProspectToAPIFail,
   setScreeningResults,
   resetFormStep,
@@ -30,7 +35,7 @@ import { log } from "../../utils/loggger";
 import { getProspect, getProspectId, getScreenErrorReason } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
-import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
+import { APP_STOP_SCREEN_RESULT, MAX_STAKEHOLDERS_LENGTH, screeningStatus } from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -44,27 +49,28 @@ function* watchRequest() {
   }
 }
 
-function* watchScreeningResults() {
+function* watchScreeningResults(props) {
   const chan = yield actionChannel("SET_SCREENING_RESULTS");
   while (true) {
     const state = yield select();
     const { payload } = yield take(chan);
     const { isDedupe, isBlackList } = getScreenErrorReason(payload);
-
-    const { isEligible, isForeignCompany, isVirtualCurrency } = getCompanyInfoStatuses(state);
-    const { isTooManyStakeholders } = getStakeholderStatuses(state);
+    const isEligible = getIsEligible(state);
+    const isForeignCompany = getIsForeignCompany(state);
+    const isVirtualCurrency = getIsVirtualCurrency(state);
+    const isTooManyStakeholders = stakeholdersSelector(state).length > MAX_STAKEHOLDERS_LENGTH;
 
     switch (isDedupe || isBlackList) {
-      case isVirtualCurrency:
-        return yield put(setScreeningError("virtualCurrencies"));
-      case !isEligible:
-        return yield put(setScreeningError("notEligible"));
+      case !isVirtualCurrency:
+        return yield put(setScreeningError(screeningStatus.virtualCurrencies));
+      case isEligible:
+        return yield put(setScreeningError(screeningStatus.notEligible));
       case isForeignCompany:
-        return yield put(setScreeningError("notRegisteredInUAE"));
+        return yield put(setScreeningError(screeningStatus.notRegisteredInUAE));
       case isTooManyStakeholders:
-        return yield put(setScreeningError("bigCompany"));
+        return yield put(setScreeningError(screeningStatus.bigCompany));
       default:
-        return yield put(setScreeningError("default"));
+        return yield put(setScreeningError(screeningStatus.default));
     }
   }
 }
@@ -85,7 +91,7 @@ function* sendProspectToAPISaga() {
 
 function* prospectAutoSave() {
   try {
-    while (true) {
+    while (yield take(SEND_PROSPECT_TO_API_SUCCESS)) {
       const state = yield select();
       const newProspect = getProspect(state);
 
