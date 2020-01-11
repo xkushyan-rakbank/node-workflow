@@ -183,19 +183,19 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                                   type="number"
                                 />
                               </InputGroup>
-
-                              {!!index && (
-                                <ArrayRemoveButton
-                                  arrayHelpers={arrayHelpers}
-                                  dataArray={values.signatories}
-                                  itemIndex={index}
-                                  updateProspect={updateProspect}
-                                  prospectPath="prospect.organizationInfo.contactDetailsForTxnReconfirming"
-                                  title="Delete"
-                                />
-                              )}
                             </Grid>
                           </Grid>
+
+                          {!!index && (
+                            <ArrayRemoveButton
+                              arrayHelpers={arrayHelpers}
+                              dataArray={values.signatories}
+                              itemIndex={index}
+                              updateProspect={updateProspect}
+                              prospectPath="prospect.organizationInfo.contactDetailsForTxnReconfirming"
+                              title="Delete"
+                            />
+                          )}
                         </div>
                       </React.Fragment>
                     );

@@ -23,6 +23,7 @@ export const useStyles = makeStyles({
     width: "calc(50% - 20px)"
   },
   confirmingTransaction: {
+    position: "relative",
     "& + $confirmingTransaction": {
       paddingTop: "10px",
       marginTop: "10px",
