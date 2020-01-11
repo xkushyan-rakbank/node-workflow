@@ -11,7 +11,7 @@ import {
 export const initialState = {
   loading: false,
   resetStep: false,
-  screeningError: null,
+  screeningError: {},
   prospectCopy: {},
   screeningResults: {}
 };

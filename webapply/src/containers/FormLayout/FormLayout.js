@@ -33,7 +33,7 @@ export const FormLayoutComponent = ({
 
               <Notifications />
 
-              {screeningError ? <ApplicationStatus {...screeningError} /> : children}
+              {screeningError.error ? <ApplicationStatus {...screeningError} /> : children}
             </div>
           </div>
         </div>
