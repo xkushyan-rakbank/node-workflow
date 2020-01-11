@@ -1,7 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
-import { Field as FormikField } from "formik";
 import * as Yup from "yup";
 
 import {
@@ -13,7 +12,7 @@ import {
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { options } from "../../constants";
+import { filterOptions } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -45,11 +44,15 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
       {({ values, setFieldValue }) => (
         <Form>
           <Subtitle title="Select currencies" />
-          <FormikField
+          <Field
             name="accountCurrencies"
-            options={options}
+            datalistId="accountCurrencies"
+            path="prospect.accountInfo[0].accountCurrencies"
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
+            filterOptions={options =>
+              options.filter(currency => currency.code === filterOptions[currency.code])
+            }
             classes={{ root: classes.radioButtonRoot }}
             contextualHelpProps={{ isDisableHoverListener: false }}
             contextualHelpText="Cheque book, Debit card and Rakvalue will be issued for eligible AED accounts only"
