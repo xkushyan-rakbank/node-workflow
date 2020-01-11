@@ -7,14 +7,14 @@ import { getOrgKYCDetails, getOrganizationInfo, getApplicationInfo } from "./app
 export const getIsEligible = state => {
   const { licenseIssueDate } = getOrganizationInfo(state);
   const accountType = getApplicationInfo(state).accountType;
-  let isEligible = false;
+  let isNotEligible = false;
 
   if (licenseIssueDate) {
     const isIssuanceDateCorrect = differenceInCalendarMonths(new Date(), licenseIssueDate) < 12;
-    isEligible = !isIssuanceDateCorrect && accountType === accountsNames.starter;
+    isNotEligible = !isIssuanceDateCorrect && accountType === accountsNames.starter;
   }
 
-  return isEligible;
+  return isNotEligible;
 };
 
 export const getIsForeignCompany = state => {

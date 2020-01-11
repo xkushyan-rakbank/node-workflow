@@ -6,7 +6,6 @@ export const SEND_PROSPECT_TO_API_FAIL = "SEND_PROSPECT_TO_API_FAIL";
 export const RESET_FORM_STEP = "RESET_FORM_STEP";
 export const PROSPECT_AUTO_SAVE = "PROSPECT_AUTO_SAVE";
 export const START_PROSPECT_AUTO_SAVE = "START_PROSPECT_AUTO_SAVE";
-export const SET_SCREENING_RESULTS = "SET_SCREENING_RESULTS";
 export const SET_SCREENING_ERROR = "SET_SCREENING_ERROR";
 export const RESET_SCREENING_ERROR = "RESET_SCREENING_ERROR";
 export const SEND_PROSPECT_REQUEST = "SEND_PROSPECT_REQUEST";
@@ -39,10 +38,6 @@ export const prospectAutoSave = () => {
 
 export const startProspectAutoSave = () => {
   return { type: START_PROSPECT_AUTO_SAVE };
-};
-
-export const setScreeningResults = payload => {
-  return { type: SET_SCREENING_RESULTS, payload };
 };
 
 export const setScreeningError = error => {

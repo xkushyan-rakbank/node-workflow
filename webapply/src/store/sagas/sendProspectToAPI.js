@@ -25,7 +25,6 @@ import {
   sendProspectToAPISuccess,
   SEND_PROSPECT_TO_API_SUCCESS,
   sendProspectToAPIFail,
-  setScreeningResults,
   resetFormStep,
   PROSPECT_AUTO_SAVE,
   sendProspectRequest,
@@ -49,19 +48,17 @@ function* watchRequest() {
   }
 }
 
-function* watchScreeningResults(props) {
-  const chan = yield actionChannel("SET_SCREENING_RESULTS");
+function* watchScreeningResults({ preScreening }) {
   while (true) {
     const state = yield select();
-    const { payload } = yield take(chan);
-    const { isDedupe, isBlackList } = getScreenErrorReason(payload);
+    const { isDedupe, isBlackList } = getScreenErrorReason(preScreening);
     const isEligible = getIsEligible(state);
     const isForeignCompany = getIsForeignCompany(state);
     const isVirtualCurrency = getIsVirtualCurrency(state);
     const isTooManyStakeholders = stakeholdersSelector(state).length > MAX_STAKEHOLDERS_LENGTH;
 
-    switch (isDedupe || isBlackList) {
-      case !isVirtualCurrency:
+    switch (true) {
+      case isVirtualCurrency:
         return yield put(setScreeningError(screeningStatus.virtualCurrencies));
       case isEligible:
         return yield put(setScreeningError(screeningStatus.notEligible));
@@ -69,6 +66,10 @@ function* watchScreeningResults(props) {
         return yield put(setScreeningError(screeningStatus.notRegisteredInUAE));
       case isTooManyStakeholders:
         return yield put(setScreeningError(screeningStatus.bigCompany));
+      case isDedupe:
+        return yield put(setScreeningError(screeningStatus.dedupe));
+      case isBlackList:
+        return yield put(setScreeningError(screeningStatus.blackList));
       default:
         return yield put(setScreeningError(screeningStatus.default));
     }
@@ -116,7 +117,7 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     yield put(sendProspectToAPISuccess(newProspect));
 
     if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
-      yield put(setScreeningResults(data.preScreening));
+      yield fork(watchScreeningResults, data);
     }
   } catch (error) {
     log({ error });
@@ -139,7 +140,6 @@ export default function* sendProspectToAPISagas() {
   yield all([
     takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
     takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga),
-    fork(watchRequest),
-    fork(watchScreeningResults)
+    fork(watchRequest)
   ]);
 }

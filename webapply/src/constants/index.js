@@ -82,7 +82,7 @@ export const screeningStatus = {
   },
   notEligible: {
     error: "not Eligible",
-    icon: declinedRegular,
+    icon: callbackRegular,
     text:
       "Oops, this product is not for you. Our RAKstarter account is for companies operating for less than a year. But don’t worry, we have other products suited for you.",
     link: true
