@@ -37,7 +37,6 @@ const sendProspectToAPIReducer = (state = initialState, action) => {
         ...state,
         resetStep: action.resetStep
       };
-
     case SET_SCREENING_ERROR:
       return {
         ...state,
