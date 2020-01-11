@@ -14,7 +14,6 @@ import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
-import nanoid from "nanoid";
 
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
@@ -56,35 +55,11 @@ function* getProspectDocumentsSaga() {
   const state = yield select();
   const prospectID = getProspectId(state) || "COSME0000000000000001";
   const config = cloneDeep(state.appConfig);
-  const docProps = {
-    fileName: "DUMMY.PDF",
-    uploadStatus: "Uploaded"
-  };
 
   try {
-    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID);
+    const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
 
-    const companyDocuments = data.companyDocuments.map(doc => ({
-      ...doc,
-      ...docProps,
-      documentKey: nanoid()
-    }));
-
-    const stakeholdersDocuments = Object.values(data.stakeholdersDocuments).reduce(
-      (acc, item) => ({
-        ...acc,
-        documents: item.documents.map(doc => ({
-          ...doc,
-          ...docProps,
-          documentKey: nanoid()
-        }))
-      }),
-      {}
-    );
-
-    const hardCodedDocuments = { ...data, companyDocuments, stakeholdersDocuments };
-
-    config.prospect.documents = hardCodedDocuments;
+    config.prospect.documents = response.data;
     yield put(updateProspect(config));
   } catch (error) {
     log(error);
