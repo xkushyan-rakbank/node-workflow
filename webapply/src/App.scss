@@ -174,13 +174,6 @@ input[type="number"]::-webkit-outer-spin-button {
   border: solid 1px #e8e8e8;
 }
 
-.box-group-grid {
-  display: '-ms-grid';
-  display: grid;
-  -ms-grid-columns: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-}
-
 .centeredText {
   text-align: center;
 }

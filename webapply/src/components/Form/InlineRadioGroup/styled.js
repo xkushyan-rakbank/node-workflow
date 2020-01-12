@@ -15,6 +15,10 @@ export const useStyles = makeStyles({
       marginLeft: "40px"
     }
   },
+  inlineFormRadioWrapper: {
+    display: "flex",
+    flexShrink: 0
+  },
   label: {
     marginRight: "42px"
   }
