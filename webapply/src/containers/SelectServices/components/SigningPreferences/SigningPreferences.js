@@ -88,7 +88,22 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <Subtitle title="Signing transactions" helpMessage="help message todo" />
+          <Subtitle
+            title="Signing transactions"
+            helpMessage={
+              <>
+                Select the signing instructions applicable for banking transactions and services.
+                For detailed instructions please select Other.
+                <br />
+                <br />
+                Select &quot;Any of us sign&quot; option for Single signatory/Sole proprietor
+                <br />
+                <br />
+                Business Debit card will be issued only if the selected option is &quot;Any of us
+                can sign&quot;
+              </>
+            }
+          />
           <Field
             name="accountSigningType"
             path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
@@ -101,18 +116,6 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                 updateProspect({ [pathSignatoryInfo]: "" });
               }
             }}
-            contextualHelpProps={{ isDisableHoverListener: false }}
-            contextualHelpText={
-              <>
-                Select the signing instructions applicable for banking transactions and services.
-                For detailed instructions please select Other.
-                <br />
-                Select &quot;Any of us sign&quot; option for Single signatory/Sole proprietor
-                <br />
-                Business Debit card will be issued only if the selected option is &quot;Any of us
-                can sign&quot;
-              </>
-            }
             component={CheckboxGroup}
             classes={{ root: classes.radioButtonRoot }}
             textArea={
