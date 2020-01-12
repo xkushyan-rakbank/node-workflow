@@ -24,7 +24,8 @@ import { UAE_CODE } from "../../../../constants";
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
     .required("You need to provide Email address")
-    .email("This is not a valid Email address"),
+    .email("This is not a valid Email address")
+    .max(50, "Maximum 50 characters allowed"),
   primaryMobCountryCode: Yup.string().required("Select country code"),
   primaryMobileNo: Yup.string()
     .required("You need to provide mobile number")
