@@ -4,10 +4,10 @@ import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.CSRFTokenHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.services.LogFileService;
 import ae.rakbank.webapply.services.OAuthService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -27,6 +28,8 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -57,6 +60,9 @@ public class WebApplyController {
 
     @Autowired
     CSRFTokenHelper csrfTokenHelper;
+
+    @Autowired
+    LogFileService logFileService;
 
     private JsonNode uiConfigJSON = null;
 
@@ -272,6 +278,29 @@ public class WebApplyController {
     public ResponseEntity<JsonNode> proxiDatalist(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
                                                   @RequestParam(required = false, defaultValue = "") String segment) {
         return getDatalistJSON(segment);
+    }
+
+    @GetMapping(value = "/logfile/names")
+    public ResponseEntity loadLogs() {
+        List<String> logFileNameList = logFileService.getLogFileNameList();
+        return new ResponseEntity<List>(logFileNameList, null, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/logfile/download")
+    public ResponseEntity loadLogs(@RequestParam(required = false) String fileName) {
+        File fileServerLogs = logFileService.getLogFile(fileName);
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(fileServerLogs);
+        } catch (IOException ioe) {
+            logger.error("Error download log file {}: ", fileName, ioe.getMessage());
+            ObjectNode objectNode = new ObjectMapper().createObjectNode();
+            objectNode.put("error", ioe.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(objectNode);
+        }
+        return ResponseEntity.ok().contentLength(fileServerLogs.length())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(new InputStreamResource(fileInputStream));
     }
 
     private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist,

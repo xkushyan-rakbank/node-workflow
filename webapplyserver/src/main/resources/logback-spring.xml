@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<property name="application" value="WebApplyServer" />
-	<property name="logsDir" value="${WEB_APPLY_DIR}/logs" />
+    <property resource="application.properties"/>
+	<property name="logsDir" value="${WEB_APPLY_DIR:-${default.web.apply.dir}}/${logging.dir}/" />
 
 	<appender name="Console"
 		class="ch.qos.logback.core.ConsoleAppender">
@@ -14,7 +14,7 @@
 
 	<appender name="RollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${logsDir}/${application}.log</file>
+		<file>${logsDir}/${logging.file.name}.log</file>
 		<encoder
 			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
@@ -22,12 +22,12 @@
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- rollover daily and when the file reaches 5 MegaBytes -->
-			<fileNamePattern>${logsDir}/${application}-%d{dd-MM-yyyy}.%i.log
+			<!-- rollover daily and when the file reaches 100 MegaBytes -->
+			<fileNamePattern>${logsDir}/${logging.file.name}-%d{dd-MM-yyyy}.%i.log
 			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>5MB</maxFileSize>
+				<maxFileSize>100MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 	</appender>
@@ -38,8 +38,7 @@
 		<appender-ref ref="RollingFile" />
 	</root>
 
-	<!-- LOG "com.baeldung*" at TRACE level -->
-	<logger name="ae.rakbank" level="debug">
+	<logger name="ae.rakbank" level="info">
 		<appender-ref ref="Console" />
 		<appender-ref ref="RollingFile" />
 	</logger>
