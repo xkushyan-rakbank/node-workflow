@@ -28,7 +28,8 @@ const aplicantInfoSchema = Yup.object({
     .matches(NAME_REGEX, "This is not a valid name"),
   email: Yup.string()
     .required("You need to provide Email address")
-    .email("This is not a valid Email address"),
+    .email("This is not a valid Email address")
+    .max(50, "Maximum 50 characters allowed"),
   countryCode: Yup.string().required("Select country code"),
   mobileNo: Yup.string()
     .required("You need to provide mobile number")
