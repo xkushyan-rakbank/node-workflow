@@ -16,7 +16,6 @@ export const Input = ({
   label,
   field,
   shrink,
-  tabIndex,
   infoTitle,
   form: { errors, touched },
   classes: extendedClasses,
@@ -42,8 +41,6 @@ export const Input = ({
             disabled={disabled}
             error={isError}
             InputProps={{ ...InputProps, classes: { input: classes.input } }}
-            // eslint-disable-next-line
-            inputProps={{ tabIndex }}
             InputLabelProps={{
               shrink
             }}
