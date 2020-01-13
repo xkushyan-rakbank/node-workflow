@@ -25,9 +25,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
-  return monthlyCreditsValue
-    ? `${monthlyCreditsValue} in Total Monthly Credits`
-    : "Total Monthly Credits";
+  return monthlyCreditsValue ? `${monthlyCreditsValue} in Total Monthly Credits` : "9999999999.99";
 };
 
 const checkValidNumberFromString = string => {
