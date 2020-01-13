@@ -69,7 +69,7 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
             <ContainedButton
               withRightArrow
               justify="flex-start"
-              label="Start application"
+              label="Check status"
               handleClick={handleClick(routes.comeBackLogin)}
             />
           )}
