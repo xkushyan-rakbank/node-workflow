@@ -30,5 +30,5 @@ export const getIsVirtualCurrency = state => {
 };
 
 export const getCompanyAsStakeholder = payload => {
-  return get(payload.screeningResults[0], "screeningType").includes("isShareholderACompany");
+  return payload.screeningResults[0].screeningType === "isShareholderACompany";
 };
