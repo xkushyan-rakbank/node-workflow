@@ -26,7 +26,11 @@ const licenseInformationSchema = Yup.object({
   licenseIssueDate: Yup.date().required("You need to provide issue date"),
   countryOfIncorporation: Yup.string().required("You need to provide country incorporation"),
   licenseIssuingAuthority: Yup.string().required("You need to provide license issuing authority"),
-  dateOfIncorporation: Yup.date().required("You need to provide issue date")
+  dateOfIncorporation: Yup.date().required("You need to provide issue date"),
+  yearsInBusiness: Yup.number()
+    .typeError("Not valid number")
+    .min(0, "Must be more than 0")
+    .max(999, "Must be less than 1000")
 });
 
 export const LicenseInformation = ({ handleContinue }) => (
