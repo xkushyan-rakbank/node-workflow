@@ -95,6 +95,7 @@ const ApplicantInfoPage = ({
                 label="Your Name"
                 placeholder="Your Name"
                 component={Input}
+                inputProps={{ tabIndex: 0 }}
               />
             )}
 
@@ -107,6 +108,7 @@ const ApplicantInfoPage = ({
                 label="Your E-mail Address"
                 placeholder="Email"
                 component={Input}
+                inputProps={{ tabIndex: 0 }}
               />
             )}
 
