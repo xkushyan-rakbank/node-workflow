@@ -28,3 +28,7 @@ export const getIsVirtualCurrency = state => {
 
   return get(getIndustryMultiSelect, "[0].industry", []).includes("Virtual currency");
 };
+
+export const getCompanyAsStakeholder = payload => {
+  return get(payload.screeningResults[0], "screeningType").includes("isShareholderACompany");
+};
