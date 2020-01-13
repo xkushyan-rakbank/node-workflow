@@ -26,7 +26,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
   };
 
   if (step === SUBMIT_APPLICATION_STEP) {
-    return <SubmitApplication />;
+    return <SubmitApplication setStep={setStep} />;
   }
 
   return (
