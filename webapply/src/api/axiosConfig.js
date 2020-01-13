@@ -13,7 +13,7 @@ const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
 
 export const uploadClient = axios.create({
-  baseURL: "https://217.165.206.6/docUploader"
+  baseURL: "https://217.165.206.6"
 });
 
 const instance = axios.create({
