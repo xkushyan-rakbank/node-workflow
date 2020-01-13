@@ -24,7 +24,8 @@ const companyDetailsSchema = Yup.object({
     .matches(NUMBER_REGEX, "Not valid number"),
   numberOfEmployees: Yup.number()
     .typeError("Not valid number")
-    .min(1, "must be more than 0")
+    .min(0, "must be more than 0")
+    .integer("must be an integer")
     .max(1000, "must be less than or equal to 1000"),
   companyCategory: Yup.string().required("You need to provide company category")
 });
@@ -80,11 +81,6 @@ export const CompanyDetails = ({ handleContinue }) => {
                 label="Number of employees"
                 path="prospect.organizationInfo.numberOfEmployees"
                 component={Input}
-                value={
-                  !isNaN(values.numberOfEmployees)
-                    ? Number(values.numberOfEmployees)
-                    : values.numberOfEmployees
-                }
                 changeProspect={(_, value, path) => ({ [path]: value || "0" })}
               />
             </Grid>
