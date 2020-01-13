@@ -61,7 +61,7 @@ function* setScreeningResults({ preScreening }) {
   const isEligible = getIsEligible(state);
   const isForeignCompany = getIsForeignCompany(state);
   const isVirtualCurrency = getIsVirtualCurrency(state);
-  const isShareholderACompany = getIsCompanyAsStakeholder(state.screeningResults);
+  const isShareholderACompany = getIsCompanyAsStakeholder(preScreening.screeningResults);
   const isTooManyStakeholders =
     stakeholdersSelector(state).length === MAX_STAKEHOLDERS_LENGTH ||
     signatoryQuantitySelector(state) === MAX_SIGNATORIES_LENGTH;
