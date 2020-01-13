@@ -35,9 +35,4 @@ export const servicesSteps = [
   }
 ];
 
-export const filterOptions = {
-  AED: "AED",
-  USD: "USD",
-  GBP: "GBP",
-  EUR: "EUR"
-};
+export const ALLOWED_CURRENCY = ["AED", "USD", "GBP", "EUR"];

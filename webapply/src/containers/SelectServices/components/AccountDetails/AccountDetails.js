@@ -12,7 +12,7 @@ import {
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { filterOptions } from "../../constants";
+import { ALLOWED_CURRENCY } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -51,7 +51,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
             filterOptions={options =>
-              options.filter(currency => currency.code === filterOptions[currency.code])
+              options.filter(currency => ALLOWED_CURRENCY.includes(currency.code))
             }
             classes={{ root: classes.radioButtonRoot }}
             contextualHelpProps={{ isDisableHoverListener: false }}
