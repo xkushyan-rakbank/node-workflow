@@ -93,7 +93,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     name="totalExperienceYrs"
                     path={`${basePath}.employmentDetails.totalExperienceYrs`}
                     label="Total years of experience"
-                    placeholder="Total years of experience"
+                    placeholder="Work Experience"
                     component={Input}
                     contextualHelpText={
                       <>
