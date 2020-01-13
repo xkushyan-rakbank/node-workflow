@@ -263,8 +263,8 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                               <Field
                                 name={`entitiesOutsideUAE[${index}].country`}
                                 path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
+                                datalistId="countryOfIncorporation"
                                 label="Country"
-                                datalistId="branchOutsideUAE"
                                 component={SelectAutocomplete}
                               />
                               {!!index && (
