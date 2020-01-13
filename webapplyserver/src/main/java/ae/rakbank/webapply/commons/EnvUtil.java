@@ -39,6 +39,10 @@ public class EnvUtil {
 		return "";
 	}
 
+	public static String getWebApplyDir() {
+		return WEB_APPLY_DIR;
+	}
+
 	public static boolean isProd() {
 		if ("prod".equalsIgnoreCase(env)) {
 			return true;

@@ -303,7 +303,7 @@
 				}
 			],
 			"accountSigningInfo": {
-				"accountSigningType": "",
+				"accountSigningType": "ALL",
 				"accountSigningInstn": "",
 				"authorityType": ""
 			},

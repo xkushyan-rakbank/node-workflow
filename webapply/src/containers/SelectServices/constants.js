@@ -34,3 +34,5 @@ export const servicesSteps = [
     icon: ICONS.valueAddedServices
   }
 ];
+
+export const ALLOWED_CURRENCY = ["AED", "USD", "GBP", "EUR"];

@@ -6,15 +6,14 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 
-const ENCRYPT_METHODS = [];
+const ENCRYPT_METHODS = ["post", "put"];
 const SYM_KEY_HEADER = "x-sym-key";
 
 const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
 
 export const uploadClient = axios.create({
-  // baseURL: "https://dry-caverns-04680.herokuapp.com"
-  baseURL: getBaseURL()
+  baseURL: "https://uatrmtc.rakbankonline.ae"
 });
 
 const instance = axios.create({
@@ -24,7 +23,7 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
 
-  if (rsaPublicKey && ENCRYPT_METHODS.includes(config.method)) {
+  if (rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
     const [encryptedPayload, encryptedSymKey, symKey] = encrypt(
       rsaPublicKey,
       JSON.stringify(config.data)

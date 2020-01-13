@@ -16,6 +16,11 @@ export const stakeholdersSelector = createSelector(
     }))
 );
 
+export const signatoryQuantitySelector = createSelector(
+  stakeholders,
+  stakeholders => stakeholders.filter(stakeholder => stakeholder.kycDetails.isSignatory).length
+);
+
 export const percentageSelector = state => {
   const stakeholdersList = stakeholders(state);
   return stakeholdersList.reduce(

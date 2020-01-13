@@ -15,19 +15,31 @@ import {
 import get from "lodash/get";
 
 import {
+  getIsEligible,
+  getIsForeignCompany,
+  getIsVirtualCurrency
+} from "./../selectors/companyInfo";
+import { stakeholdersSelector, signatoryQuantitySelector } from "./../selectors/stakeholder";
+import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
+  SEND_PROSPECT_TO_API_SUCCESS,
   sendProspectToAPIFail,
-  setScreeningResults,
   resetFormStep,
   PROSPECT_AUTO_SAVE,
-  sendProspectRequest
+  sendProspectRequest,
+  setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
-import { getProspect, getProspectId } from "../selectors/appConfig";
+import { getProspect, getProspectId, getIsDedupe, getIsBlackList } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
-import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
+import {
+  APP_STOP_SCREEN_RESULT,
+  MAX_STAKEHOLDERS_LENGTH,
+  MAX_SIGNATORIES_LENGTH,
+  screeningStatus
+} from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -38,6 +50,35 @@ function* watchRequest() {
       yield call(sendProspectToAPI, continueActions.length ? continueActions[0] : actions[0]);
     }
     yield delay(1000);
+  }
+}
+
+function* setScreeningResults({ preScreening }) {
+  const state = yield select();
+  const isDedupe = getIsDedupe(preScreening);
+  const isBlackList = getIsBlackList(preScreening);
+  const isEligible = getIsEligible(state);
+  const isForeignCompany = getIsForeignCompany(state);
+  const isVirtualCurrency = getIsVirtualCurrency(state);
+  const isTooManyStakeholders =
+    stakeholdersSelector(state).length === MAX_STAKEHOLDERS_LENGTH ||
+    signatoryQuantitySelector(state) === MAX_SIGNATORIES_LENGTH;
+
+  switch (true) {
+    case isVirtualCurrency:
+      return yield put(setScreeningError(screeningStatus.virtualCurrencies));
+    case isEligible:
+      return yield put(setScreeningError(screeningStatus.notEligible));
+    case isForeignCompany:
+      return yield put(setScreeningError(screeningStatus.notRegisteredInUAE));
+    case isTooManyStakeholders:
+      return yield put(setScreeningError(screeningStatus.bigCompany));
+    case isDedupe:
+      return yield put(setScreeningError(screeningStatus.dedupe));
+    case isBlackList:
+      return yield put(setScreeningError(screeningStatus.blackList));
+    default:
+      return yield put(setScreeningError(screeningStatus.default));
   }
 }
 
@@ -57,7 +98,7 @@ function* sendProspectToAPISaga() {
 
 function* prospectAutoSave() {
   try {
-    while (true) {
+    while (yield take(SEND_PROSPECT_TO_API_SUCCESS)) {
       const state = yield select();
       const newProspect = getProspect(state);
 
@@ -82,7 +123,7 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     yield put(sendProspectToAPISuccess(newProspect));
 
     if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
-      yield put(setScreeningResults(data.preScreening));
+      yield fork(setScreeningResults, data);
     }
   } catch (error) {
     log({ error });

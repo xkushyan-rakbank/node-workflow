@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
+import get from "lodash/get";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
@@ -23,6 +24,7 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { Divider } from "../Divider";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ConfirmingTransactions } from "./ConfirmingTransactions";
+import { ArrayRemoveButton } from "../../../FinalQuestions/components/Buttons/ArrayRemoveButton";
 
 import { useStyles } from "./styled";
 
@@ -37,18 +39,22 @@ const signingPreferencesSchema = Yup.object({
   }),
   signatories: Yup.array().of(
     Yup.object().shape({
-      fullName: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
-      primaryMobCountryCode: Yup.string(),
-      primaryMobileNo: Yup.string().when("fullName", {
-        is: value => !!value,
-        then: Yup.string()
-          .required("You need to provide mobile number")
-          .when("primaryMobCountryCode", {
-            is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-            then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
-            otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
-          })
-      }),
+      fullName: Yup.string()
+        .matches(NAME_REGEX, "This is not a valid name")
+        .required("Field is required"),
+      primaryMobCountryCode: Yup.string().required("Field is required"),
+      primaryMobileNo: Yup.string()
+        .when("fullName", {
+          is: value => !!value,
+          then: Yup.string()
+            .required("You need to provide mobile number")
+            .when("primaryMobCountryCode", {
+              is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
+              then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+              otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+            })
+        })
+        .required("Field is required"),
       primaryPhoneCountryCode: Yup.string(),
       primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
         is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
@@ -62,155 +68,203 @@ const pathSignatoryInfo = "prospect.signatoryInfo[0].accountSigningInfo.accountS
 
 export const SigningPreferencesComponent = ({ organizationInfo, goToNext, updateProspect }) => {
   const classes = useStyles();
-  const [countOfSignatories, setCountOfSignatories] = useState(
-    Math.max((organizationInfo.contactDetailsForTxnReconfirming || []).length, 1)
-  );
-  const handleAddNewPerson = useCallback(() => {
-    setCountOfSignatories(countOfSignatories + 1);
-  }, [countOfSignatories]);
 
   return (
     <Formik
       initialValues={{
         accountSigningType: "",
         accountSigningInstn: "",
-        signatories: [...new Array(MAX_SIGNATORIES)].map(() => ({
-          fullName: "",
-          primaryMobCountryCode: UAE_CODE,
-          primaryMobileNo: "",
-          primaryPhoneCountryCode: UAE_CODE,
-          primaryPhoneNo: ""
-        }))
+        signatories: [
+          {
+            fullName: "",
+            primaryMobCountryCode: UAE_CODE,
+            primaryMobileNo: "",
+            primaryPhoneCountryCode: UAE_CODE,
+            primaryPhoneNo: ""
+          }
+        ]
       }}
       validationSchema={signingPreferencesSchema}
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {({ values, setFieldValue }) => (
-        <Form>
-          <Subtitle title="Signing transactions" helpMessage="help message todo" />
-          <Field
-            name="accountSigningType"
-            path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
-            typeRadio
-            datalistId="accountSignType"
-            onSelect={e => {
-              setFieldValue("accountSigningType", e.currentTarget.value);
-              setFieldValue("accountSigningInstn", "");
-              if (values.accountSigningInstn) {
-                updateProspect({ [pathSignatoryInfo]: "" });
+      {({
+        values: { accountSigningInstn, accountSigningType, signatories },
+        setFieldValue,
+        errors
+      }) => {
+        const signatoriesErrors = Object.keys(get(errors, "signatories", [])).length;
+        const isMaxAddedSignatories = signatories.length === MAX_SIGNATORIES;
+
+        return (
+          <Form>
+            <Subtitle
+              title="Signing transactions"
+              helpMessage={
+                <>
+                  Select the signing instructions applicable for banking transactions and services.
+                  For detailed instructions please select Other.
+                  <br />
+                  <br />
+                  Select &quot;Any of us sign&quot; option for Single signatory/Sole proprietor
+                  <br />
+                  <br />
+                  Business Debit card will be issued only if the selected option is &quot;Any of us
+                  can sign&quot;
+                </>
               }
-            }}
-            contextualHelpProps={{ isDisableHoverListener: false }}
-            contextualHelpText={
-              <>
-                Select the signing instructions applicable for banking transactions and services.
-                For detailed instructions please select Other.
-                <br />
-                Select &quot;Any of us sign&quot; option for Single signatory/Sole proprietor
-                <br />
-                Business Debit card will be issued only if the selected option is &quot;Any of us
-                can sign&quot;
-              </>
-            }
-            component={CheckboxGroup}
-            classes={{ root: classes.radioButtonRoot }}
-            textArea={
-              values.accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
-                <div className={classes.textAreaWrap}>
-                  <Field
-                    name="accountSigningInstn"
-                    path={pathSignatoryInfo}
-                    placeholder="Please specify (Max 120 characters)"
-                    classes={{ formControlRoot: classes.formControl }}
-                    maxLength={120}
-                    multiline
-                    rows={2}
-                    component={Input}
-                  />
-                </div>
-              )
-            }
-          />
-          <Divider />
-          <ConfirmingTransactions />
-          <FieldArray name="signatories">
-            {arrayHelpers => (
-              <>
-                {[...Array(countOfSignatories).keys()].map(index => {
-                  // eslint-disable-next-line max-len
-                  const prospectPath = `prospect.organizationInfo.contactDetailsForTxnReconfirming.[${index}]`;
-                  return (
-                    <React.Fragment key={index}>
-                      <Field
-                        // TODO find out correct path also update validation schema !!
-                        name={`signatories[${index}].fullName`}
-                        path={`prospect.signatoryInfo[${index}].fullName`}
-                        label="Your Name"
-                        placeholder="Your Name"
-                        component={Input}
-                      />
+            />
+            <Field
+              name="accountSigningType"
+              path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
+              typeRadio
+              datalistId="accountSignType"
+              onSelect={e => {
+                setFieldValue("accountSigningType", e.currentTarget.value);
+                setFieldValue("accountSigningInstn", "");
+                if (accountSigningInstn) {
+                  updateProspect({ [pathSignatoryInfo]: "" });
+                }
+              }}
+              contextualHelpProps={{ isDisableHoverListener: false }}
+              contextualHelpText={
+                <>
+                  Select the signing instructions applicable for banking transactions and services.
+                  For detailed instructions please select Other.
+                  <br />
+                  Select &quot;Any of us sign&quot; option for Single signatory/Sole proprietor
+                  <br />
+                  Business Debit card will be issued only if the selected option is &quot;Any of us
+                  can sign&quot;
+                </>
+              }
+              component={CheckboxGroup}
+              classes={{ root: classes.radioButtonRoot }}
+              textArea={
+                accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
+                  <div className={classes.textAreaWrap}>
+                    <Field
+                      name="accountSigningInstn"
+                      path={pathSignatoryInfo}
+                      placeholder="Please specify (Max 120 characters)"
+                      classes={{ formControlRoot: classes.formControl }}
+                      maxLength={120}
+                      multiline
+                      rows={2}
+                      component={Input}
+                    />
+                  </div>
+                )
+              }
+            />
+            <Divider />
+            <ConfirmingTransactions />
 
-                      <Grid container spacing={3}>
-                        <Grid item md={6} sm={12}>
-                          <InputGroup>
-                            <Field
-                              name={`signatories[${index}].primaryMobCountryCode`}
-                              path={`${prospectPath}.primaryMobCountryCode`}
-                              datalistId="countryCode"
-                              component={CustomSelect}
-                              shrink={false}
-                            />
-                            <Field
-                              name={`signatories[${index}].primaryMobileNo`}
-                              path={`${prospectPath}.primaryMobileNo`}
-                              label="Primary mobile no."
-                              placeholder="55xxxxxxx"
-                              component={Input}
-                              type="number"
-                            />
-                          </InputGroup>
+            <FieldArray name="signatories">
+              {arrayHelpers => (
+                <>
+                  {signatories.map((data, index) => {
+                    // eslint-disable-next-line max-len
+                    const prospectPath = `prospect.organizationInfo.contactDetailsForTxnReconfirming.[${index}]`;
+
+                    return (
+                      <Grid
+                        containerkey={index}
+                        item
+                        sm={isMaxAddedSignatories ? 11 : 12}
+                        key={index}
+                        className={classes.confirmingTransaction}
+                      >
+                        <Field
+                          // TODO find out correct path also update validation schema !!
+                          name={`signatories[${index}].fullName`}
+                          path={`prospect.signatoryInfo[${index}].fullName`}
+                          label="Your Name"
+                          placeholder="Your Name"
+                          component={Input}
+                        />
+
+                        <Grid container spacing={3}>
+                          <Grid item md={6} sm={12}>
+                            <InputGroup>
+                              <Field
+                                name={`signatories[${index}].primaryMobCountryCode`}
+                                path={`${prospectPath}.primaryMobCountryCode`}
+                                datalistId="countryCode"
+                                component={CustomSelect}
+                                shrink={false}
+                              />
+                              <Field
+                                name={`signatories[${index}].primaryMobileNo`}
+                                path={`${prospectPath}.primaryMobileNo`}
+                                label="Primary mobile no."
+                                placeholder="55xxxxxxx"
+                                component={Input}
+                                type="number"
+                              />
+                            </InputGroup>
+                          </Grid>
+
+                          <Grid item md={6} sm={12}>
+                            <InputGroup>
+                              <Field
+                                name={`signatories[${index}].primaryPhoneCountryCode`}
+                                path={`${prospectPath}.primaryPhoneCountryCode`}
+                                datalistId="countryCode"
+                                component={CustomSelect}
+                                shrink={false}
+                              />
+                              <Field
+                                name={`signatories[${index}].primaryPhoneNo`}
+                                path={`${prospectPath}.primaryPhoneNo`}
+                                label="Landline phone no. (optional)"
+                                placeholder="42xxxxxx"
+                                component={Input}
+                                type="number"
+                              />
+                            </InputGroup>
+                          </Grid>
                         </Grid>
 
-                        <Grid item md={6} sm={12}>
-                          <InputGroup>
-                            <Field
-                              name={`signatories[${index}].primaryPhoneCountryCode`}
-                              path={`${prospectPath}.primaryPhoneCountryCode`}
-                              datalistId="countryCode"
-                              component={CustomSelect}
-                              shrink={false}
-                            />
-                            <Field
-                              name={`signatories[${index}].primaryPhoneNo`}
-                              path={`${prospectPath}.primaryPhoneNo`}
-                              label="Landline phone no. (optional)"
-                              placeholder="42xxxxxx"
-                              component={Input}
-                              type="number"
-                            />
-                          </InputGroup>
-                        </Grid>
+                        {isMaxAddedSignatories && (
+                          <ArrayRemoveButton
+                            className={classes.deleteContact}
+                            arrayHelpers={arrayHelpers}
+                            dataArray={signatories}
+                            itemIndex={index}
+                            updateProspect={updateProspect}
+                            prospectPath="prospect.organizationInfo.contactDetailsForTxnReconfirming"
+                            title="Delete"
+                          />
+                        )}
                       </Grid>
-                    </React.Fragment>
-                  );
-                })}
+                    );
+                  })}
 
-                {countOfSignatories < MAX_SIGNATORIES && (
-                  <AddButton
-                    title="Add another person"
-                    onClick={handleAddNewPerson}
-                    className={classes.addButton}
-                  />
-                )}
-              </>
-            )}
-          </FieldArray>
-          <div className={classes.buttonWrapper}>
-            <ContinueButton type="submit" />
-          </div>
-        </Form>
-      )}
+                  {signatories.length < MAX_SIGNATORIES && (
+                    <AddButton
+                      title="Add another person"
+                      onClick={() => {
+                        arrayHelpers.insert(signatories.length, {
+                          primaryMobCountryCode: UAE_CODE,
+                          primaryMobileNo: "",
+                          primaryPhoneCountryCode: UAE_CODE,
+                          primaryPhoneNo: ""
+                        });
+                      }}
+                      className={classes.addButton}
+                      disabled={!signatories[0].fullName.length || signatoriesErrors}
+                    />
+                  )}
+                </>
+              )}
+            </FieldArray>
+            <div className={classes.buttonWrapper}>
+              <ContinueButton type="submit" />
+            </div>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

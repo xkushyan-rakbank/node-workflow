@@ -21,5 +21,20 @@ export const useStyles = makeStyles({
   },
   radioButtonRoot: {
     width: "calc(50% - 20px)"
+  },
+  confirmingTransaction: {
+    position: "relative",
+    "& + $confirmingTransaction": {
+      paddingTop: "10px",
+      marginTop: "10px",
+      borderTop: "1px solid #e6e6e680",
+      "& $deleteContact": {
+        top: "22px"
+      }
+    }
+  },
+  deleteContact: {
+    top: "0",
+    right: "-66px"
   }
 });

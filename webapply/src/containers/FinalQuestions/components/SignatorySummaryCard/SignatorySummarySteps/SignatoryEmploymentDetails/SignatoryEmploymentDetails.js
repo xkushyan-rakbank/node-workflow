@@ -24,10 +24,9 @@ import { useStyles } from "./styled";
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required("You need to provide qualification"),
   employmentType: Yup.string().required("You need to provide employment type"),
-  totalExperienceYrs: Yup.number()
+  totalExperienceYrs: Yup.string()
     .required("You need to provide total experience")
-    .max(100, "Maximum value is 100")
-    .min(0, "Minimal value is 0"),
+    .max(50, "Maximum 50 characters allowed"),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
@@ -93,7 +92,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     name="totalExperienceYrs"
                     path={`${basePath}.employmentDetails.totalExperienceYrs`}
                     label="Total years of experience"
-                    placeholder="Total years of experience"
+                    placeholder="Work Experience"
                     component={Input}
                     contextualHelpText={
                       <>

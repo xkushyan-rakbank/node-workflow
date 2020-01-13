@@ -79,3 +79,11 @@ export const getRequiredDocsCount = createGetDocsCountSelector();
 export const getProspectErrorMessage = state => state.appConfig.prospectError;
 
 export const getLoading = state => state.appConfig.loading;
+
+export const getIsDedupe = payload => {
+  return get(payload.screeningResults[0], "screeningType").includes("Dedupe");
+};
+
+export const getIsBlackList = payload => {
+  return get(payload.screeningResults[0], "screeningType").includes("Backlist");
+};
