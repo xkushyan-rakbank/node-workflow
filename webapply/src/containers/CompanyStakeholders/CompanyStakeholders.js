@@ -9,7 +9,6 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../components/Modals";
 import { Icon, ICONS } from "../../components/Icons";
-import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 
 import {
   changeEditableStakeholder,
@@ -24,12 +23,9 @@ import {
   stakeholdersState,
   percentageSelector
 } from "../../store/selectors/stakeholder";
-
 import routes from "../../routes";
-import { companyStatus } from "./constants";
+import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
-
-const MAX_STAKEHOLDERS_LENGTH = 6;
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -86,10 +82,6 @@ const CompanyStakeholdersComponent = ({
     createNewStakeholder();
     setOpen(false);
   };
-
-  if (stakeholders.length > MAX_STAKEHOLDERS_LENGTH) {
-    return <ApplicationStatus content={companyStatus.bigCompany} />;
-  }
 
   return (
     <>

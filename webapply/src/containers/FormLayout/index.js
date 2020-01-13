@@ -2,16 +2,18 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 
-import { getScreeningResults } from "../../store/selectors/appConfig";
+import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
 import { updateViewId } from "../../store/actions/appConfig";
+import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
 import { FormLayoutComponent } from "./FormLayout";
 
 const mapStateToProps = state => ({
-  screeningResults: getScreeningResults(state)
+  screeningResults: getSendProspectToAPIInfo(state)
 });
 
 const mapDispatchToProps = {
-  updateViewId
+  updateViewId,
+  resetScreeningError
 };
 
 export const FormLayout = compose(

@@ -2,15 +2,16 @@ import {
   SEND_PROSPECT_TO_API,
   SEND_PROSPECT_TO_API_SUCCESS,
   SEND_PROSPECT_TO_API_FAIL,
-  SET_SCREENING_RESULTS,
+  SET_SCREENING_ERROR,
+  RESET_SCREENING_ERROR,
   RESET_FORM_STEP
 } from "../actions/sendProspectToAPI";
 
 export const initialState = {
   loading: false,
   resetStep: false,
-  prospectCopy: {},
-  screeningResults: {}
+  screeningError: {},
+  prospectCopy: {}
 };
 
 const sendProspectToAPIReducer = (state = initialState, action) => {
@@ -36,10 +37,15 @@ const sendProspectToAPIReducer = (state = initialState, action) => {
         ...state,
         resetStep: action.resetStep
       };
-    case SET_SCREENING_RESULTS:
+    case SET_SCREENING_ERROR:
       return {
         ...state,
-        screeningResults: action.payload
+        screeningError: action.payload
+      };
+    case RESET_SCREENING_ERROR:
+      return {
+        ...state,
+        screeningError: initialState.screeningError
       };
     default:
       return state;
