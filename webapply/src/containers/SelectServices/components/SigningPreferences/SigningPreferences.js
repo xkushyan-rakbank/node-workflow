@@ -84,9 +84,13 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {({ values, setFieldValue, errors }) => {
+      {({
+        values: { accountSigningInstn, accountSigningType, signatories },
+        setFieldValue,
+        errors
+      }) => {
         const signatoriesErrors = Object.keys(get(errors, "signatories", [])).length;
-        const { accountSigningInstn, accountSigningType, signatories } = values;
+        const isMaxAddedSignatories = signatories.length === MAX_SIGNATORIES;
 
         return (
           <Form>
@@ -143,7 +147,6 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                   {signatories.map((data, index) => {
                     // eslint-disable-next-line max-len
                     const prospectPath = `prospect.organizationInfo.contactDetailsForTxnReconfirming.[${index}]`;
-                    const isMaxAddedSignatories = signatories.length === MAX_SIGNATORIES;
 
                     return (
                       <Grid
@@ -208,7 +211,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                           <ArrayRemoveButton
                             className={classes.deleteContact}
                             arrayHelpers={arrayHelpers}
-                            dataArray={values.signatories}
+                            dataArray={signatories}
                             itemIndex={index}
                             updateProspect={updateProspect}
                             prospectPath="prospect.organizationInfo.contactDetailsForTxnReconfirming"
