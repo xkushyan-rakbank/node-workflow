@@ -55,7 +55,8 @@ export const accountsNames = {
 
 export const UAE_CODE = "971";
 export const UAE = "AE";
-export const MAX_STAKEHOLDERS_LENGTH = 6;
+export const MAX_STAKEHOLDERS_LENGTH = 12;
+export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
 
