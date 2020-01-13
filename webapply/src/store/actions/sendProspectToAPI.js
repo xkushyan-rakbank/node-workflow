@@ -41,7 +41,7 @@ export const startProspectAutoSave = () => {
 };
 
 export const setScreeningError = error => {
-  return { type: SET_SCREENING_ERROR, error };
+  return { type: SET_SCREENING_ERROR, payload: error };
 };
 
 export const resetScreeningError = () => {

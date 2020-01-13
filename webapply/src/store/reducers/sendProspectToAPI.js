@@ -40,7 +40,7 @@ const sendProspectToAPIReducer = (state = initialState, action) => {
     case SET_SCREENING_ERROR:
       return {
         ...state,
-        screeningError: action.error
+        screeningError: action.payload
       };
     case RESET_SCREENING_ERROR:
       return {

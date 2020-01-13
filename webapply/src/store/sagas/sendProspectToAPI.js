@@ -48,31 +48,29 @@ function* watchRequest() {
   }
 }
 
-function* watchScreeningResults({ preScreening }) {
-  while (true) {
-    const state = yield select();
-    const { isDedupe, isBlackList } = getScreenErrorReason(preScreening);
-    const isEligible = getIsEligible(state);
-    const isForeignCompany = getIsForeignCompany(state);
-    const isVirtualCurrency = getIsVirtualCurrency(state);
-    const isTooManyStakeholders = stakeholdersSelector(state).length > MAX_STAKEHOLDERS_LENGTH;
+function* setScreeningResults({ preScreening }) {
+  const state = yield select();
+  const { isDedupe, isBlackList } = getScreenErrorReason(preScreening);
+  const isEligible = getIsEligible(state);
+  const isForeignCompany = getIsForeignCompany(state);
+  const isVirtualCurrency = getIsVirtualCurrency(state);
+  const isTooManyStakeholders = stakeholdersSelector(state).length > MAX_STAKEHOLDERS_LENGTH;
 
-    switch (true) {
-      case isVirtualCurrency:
-        return yield put(setScreeningError(screeningStatus.virtualCurrencies));
-      case isEligible:
-        return yield put(setScreeningError(screeningStatus.notEligible));
-      case isForeignCompany:
-        return yield put(setScreeningError(screeningStatus.notRegisteredInUAE));
-      case isTooManyStakeholders:
-        return yield put(setScreeningError(screeningStatus.bigCompany));
-      case isDedupe:
-        return yield put(setScreeningError(screeningStatus.dedupe));
-      case isBlackList:
-        return yield put(setScreeningError(screeningStatus.blackList));
-      default:
-        return yield put(setScreeningError(screeningStatus.default));
-    }
+  switch (true) {
+    case isVirtualCurrency:
+      return yield put(setScreeningError(screeningStatus.virtualCurrencies));
+    case isEligible:
+      return yield put(setScreeningError(screeningStatus.notEligible));
+    case isForeignCompany:
+      return yield put(setScreeningError(screeningStatus.notRegisteredInUAE));
+    case isTooManyStakeholders:
+      return yield put(setScreeningError(screeningStatus.bigCompany));
+    case isDedupe:
+      return yield put(setScreeningError(screeningStatus.dedupe));
+    case isBlackList:
+      return yield put(setScreeningError(screeningStatus.blackList));
+    default:
+      return yield put(setScreeningError(screeningStatus.default));
   }
 }
 
@@ -117,7 +115,7 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     yield put(sendProspectToAPISuccess(newProspect));
 
     if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
-      yield fork(watchScreeningResults, data);
+      yield fork(setScreeningResults, data);
     }
   } catch (error) {
     log({ error });
