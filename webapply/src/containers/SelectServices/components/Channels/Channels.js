@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { checkIsDebitCardApplied, checkIsChequeBookApplied } from "./utils";
+import { checkIsChequeBookApplied } from "./utils";
 import { NAME_REGEX } from "../../../../utils/validation";
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
@@ -54,43 +54,34 @@ export const ChannelsComponent = ({
   updateProspect,
   primaryMobCountryCode,
   primaryPhoneCountryCode,
-  accountCurrencies: { isSelectedLocalCurrency },
-  accountSigningInfo
+  accountCurrencies: { isSelectedLocalCurrency }
 }) => {
   const classes = useStyles();
-
-  const { isDebitCardDisabled, isDebitCardApplied } = checkIsDebitCardApplied(
-    accountSigningInfo.accountSigningType,
-    accountSigningInfo.authorityType,
-    isSelectedLocalCurrency
-  );
   const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
     primaryMobCountryCode,
     primaryPhoneCountryCode,
     isSelectedLocalCurrency
   );
-  const isSignatoriesListActive = !isHasSignatories && isDebitCardApplied;
-
-  const initialValues = {
-    debitCardApplied: isDebitCardApplied,
-    chequeBookApplied: isChequeBookApplied,
-    eStatements: false,
-    mailStatements: false,
-    signatory: stakeholders.map(({ firstName, lastName }) => ({
-      nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
-    }))
-  };
+  const isSignatoriesListActive = !isHasSignatories && isSelectedLocalCurrency;
 
   useEffect(() => {
     updateProspect({
-      [pathDebitCardApplied]: isDebitCardApplied,
+      [pathDebitCardApplied]: isSelectedLocalCurrency,
       [pathChequeBookApplied]: isChequeBookApplied
     });
-  }, [isChequeBookApplied, isDebitCardApplied, updateProspect]);
+  }, [isChequeBookApplied, isSelectedLocalCurrency, updateProspect]);
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        debitCardApplied: isSelectedLocalCurrency,
+        chequeBookApplied: isChequeBookApplied,
+        eStatements: false,
+        mailStatements: false,
+        signatory: stakeholders.map(({ firstName, lastName }) => ({
+          nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
+        }))
+      }}
       validationSchema={channelsSchema}
       validateOnChange={false}
       onSubmit={goToNext}
@@ -106,7 +97,7 @@ export const ChannelsComponent = ({
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
             infoTitle={DEBIT_CARD_INFO}
-            disabled={isDebitCardDisabled}
+            disabled={true}
             isLoadDefaultValueFromStore={false}
           />
 

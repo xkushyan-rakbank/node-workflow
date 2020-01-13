@@ -10,8 +10,6 @@ export const STEP_3 = 3;
 export const STEP_4 = 4;
 export const GO_TO_SUBMIT_STEP = 5;
 export const SUBMIT_APPLICATION_STEP = 6;
-export const ACCOUNTS_SIGNING_NAME_ANY_OF_US = "A1";
-export const ACCOUNTS_SIGNING_NAME_ALL_OF_US = "A2";
 export const ACCOUNTS_SIGNING_NAME_OTHER = "A3";
 export const ACCOUNTS_SIGNING_NAME_ALL = "ALL";
 
