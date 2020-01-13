@@ -31,7 +31,7 @@ import {
   setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
-import { getProspect, getProspectId, getScreenErrorReason } from "../selectors/appConfig";
+import { getProspect, getProspectId, getIsDedupe, getIsBlackList } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
 import { APP_STOP_SCREEN_RESULT, MAX_STAKEHOLDERS_LENGTH, screeningStatus } from "../../constants";
@@ -50,7 +50,8 @@ function* watchRequest() {
 
 function* setScreeningResults({ preScreening }) {
   const state = yield select();
-  const { isDedupe, isBlackList } = getScreenErrorReason(preScreening);
+  const isDedupe = getIsDedupe(preScreening);
+  const isBlackList = getIsBlackList(preScreening);
   const isEligible = getIsEligible(state);
   const isForeignCompany = getIsForeignCompany(state);
   const isVirtualCurrency = getIsVirtualCurrency(state);
