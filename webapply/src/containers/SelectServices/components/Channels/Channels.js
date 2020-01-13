@@ -29,7 +29,7 @@ const channelsSchema = Yup.object({
     Yup.object().shape({
       nameOnDebitCard: Yup.string()
         .matches(NAME_REGEX, "This is not a valid name")
-        .max(16, "Max length is 16 symbols")
+        .max(19, "Max length is 19 symbols")
         .required("Field is required")
     })
   )
@@ -144,7 +144,9 @@ export const ChannelsComponent = ({
             classes={{ root: classes.rootGrid }}
           >
             <Grid item xs={9}>
-              <InfoTitle title="Paper statements will be mailed by courier to your preferred address" />
+              {!values.eStatements && (
+                <InfoTitle title="Paper statements will be mailed by courier to your preferred address" />
+              )}
             </Grid>
             <Grid item xs={3}>
               <ContinueButton type="submit" />

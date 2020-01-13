@@ -41,7 +41,7 @@ export const InlineRadioGroup = ({
           className={cx(classes.inlineFormControl, "smallText")}
         >
           {label}
-          <div className="box-group-grid">
+          <div className={classes.inlineFormRadioWrapper}>
             {options.map(item => (
               <Radio
                 color="secondary"

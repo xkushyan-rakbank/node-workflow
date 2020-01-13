@@ -103,6 +103,18 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                   updateProspect({ [pathSignatoryInfo]: "" });
                 }
               }}
+              contextualHelpProps={{ isDisableHoverListener: false }}
+              contextualHelpText={
+                <>
+                  Select the signing instructions applicable for banking transactions and services.
+                  For detailed instructions please select Other.
+                  <br />
+                  Select &quot;Any of us sign&quot; option for Single signatory/Sole proprietor
+                  <br />
+                  Business Debit card will be issued only if the selected option is &quot;Any of us
+                  can sign&quot;
+                </>
+              }
               component={CheckboxGroup}
               classes={{ root: classes.radioButtonRoot }}
               textArea={
