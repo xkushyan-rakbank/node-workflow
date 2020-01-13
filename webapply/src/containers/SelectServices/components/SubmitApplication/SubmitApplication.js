@@ -8,6 +8,7 @@ import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
+import { GO_TO_SUBMIT_STEP } from "../../constants";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -15,7 +16,8 @@ export const SubmitApplicationComponent = ({
   signatoryInfo,
   isAgentLoggedIn,
   applicationInfo,
-  organizationInfo: { companyName }
+  organizationInfo: { companyName },
+  setStep
 }) => {
   const handleSubmit = () => history.push(routes.ApplicationSubmitted);
   const [formFieldsValues, setFormFields] = useState({});
@@ -33,7 +35,7 @@ export const SubmitApplicationComponent = ({
       {!isAgentLoggedIn.loginStatus && <BlockConfirm setFormFields={setFormFields} />}
 
       <div className="linkContainer">
-        <BackLink path={routes.selectServices} />
+        <BackLink path={routes.selectServices} onClick={() => setStep(GO_TO_SUBMIT_STEP)} />
         <SubmitButton
           disabled={!(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed)}
           label="Submit"

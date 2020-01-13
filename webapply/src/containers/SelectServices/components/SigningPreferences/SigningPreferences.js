@@ -39,18 +39,22 @@ const signingPreferencesSchema = Yup.object({
   }),
   signatories: Yup.array().of(
     Yup.object().shape({
-      fullName: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
-      primaryMobCountryCode: Yup.string(),
-      primaryMobileNo: Yup.string().when("fullName", {
-        is: value => !!value,
-        then: Yup.string()
-          .required("You need to provide mobile number")
-          .when("primaryMobCountryCode", {
-            is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-            then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
-            otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
-          })
-      }),
+      fullName: Yup.string()
+        .matches(NAME_REGEX, "This is not a valid name")
+        .required("Field is required"),
+      primaryMobCountryCode: Yup.string().required("Field is required"),
+      primaryMobileNo: Yup.string()
+        .when("fullName", {
+          is: value => !!value,
+          then: Yup.string()
+            .required("You need to provide mobile number")
+            .when("primaryMobCountryCode", {
+              is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
+              then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+              otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+            })
+        })
+        .required("Field is required"),
       primaryPhoneCountryCode: Yup.string(),
       primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
         is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
@@ -94,7 +98,22 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
 
         return (
           <Form>
-            <Subtitle title="Signing transactions" helpMessage="help message todo" />
+            <Subtitle
+              title="Signing transactions"
+              helpMessage={
+                <>
+                  Select the signing instructions applicable for banking transactions and services.
+                  For detailed instructions please select Other.
+                  <br />
+                  <br />
+                  Select &quot;Any of us sign&quot; option for Single signatory/Sole proprietor
+                  <br />
+                  <br />
+                  Business Debit card will be issued only if the selected option is &quot;Any of us
+                  can sign&quot;
+                </>
+              }
+            />
             <Field
               name="accountSigningType"
               path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
