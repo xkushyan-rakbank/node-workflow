@@ -131,73 +131,79 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                   {signatories.map((data, index) => {
                     // eslint-disable-next-line max-len
                     const prospectPath = `prospect.organizationInfo.contactDetailsForTxnReconfirming.[${index}]`;
+                    const isMaxAddedSignatories = signatories.length === MAX_SIGNATORIES;
 
                     return (
-                      <React.Fragment key={index}>
-                        <div className={classes.confirmingTransaction}>
-                          <Field
-                            // TODO find out correct path also update validation schema !!
-                            name={`signatories[${index}].fullName`}
-                            path={`prospect.signatoryInfo[${index}].fullName`}
-                            label="Your Name"
-                            placeholder="Your Name"
-                            component={Input}
-                          />
+                      <Grid
+                        containerkey={index}
+                        item
+                        sm={isMaxAddedSignatories ? 11 : 12}
+                        key={index}
+                        className={classes.confirmingTransaction}
+                      >
+                        <Field
+                          // TODO find out correct path also update validation schema !!
+                          name={`signatories[${index}].fullName`}
+                          path={`prospect.signatoryInfo[${index}].fullName`}
+                          label="Your Name"
+                          placeholder="Your Name"
+                          component={Input}
+                        />
 
-                          <Grid container spacing={3}>
-                            <Grid item md={6} sm={12}>
-                              <InputGroup>
-                                <Field
-                                  name={`signatories[${index}].primaryMobCountryCode`}
-                                  path={`${prospectPath}.primaryMobCountryCode`}
-                                  datalistId="countryCode"
-                                  component={CustomSelect}
-                                  shrink={false}
-                                />
-                                <Field
-                                  name={`signatories[${index}].primaryMobileNo`}
-                                  path={`${prospectPath}.primaryMobileNo`}
-                                  label="Primary mobile no."
-                                  placeholder="55xxxxxxx"
-                                  component={Input}
-                                  type="number"
-                                />
-                              </InputGroup>
-                            </Grid>
-
-                            <Grid item md={6} sm={12}>
-                              <InputGroup>
-                                <Field
-                                  name={`signatories[${index}].primaryPhoneCountryCode`}
-                                  path={`${prospectPath}.primaryPhoneCountryCode`}
-                                  datalistId="countryCode"
-                                  component={CustomSelect}
-                                  shrink={false}
-                                />
-                                <Field
-                                  name={`signatories[${index}].primaryPhoneNo`}
-                                  path={`${prospectPath}.primaryPhoneNo`}
-                                  label="Landline phone no. (optional)"
-                                  placeholder="42xxxxxx"
-                                  component={Input}
-                                  type="number"
-                                />
-                              </InputGroup>
-                            </Grid>
+                        <Grid container spacing={3}>
+                          <Grid item md={6} sm={12}>
+                            <InputGroup>
+                              <Field
+                                name={`signatories[${index}].primaryMobCountryCode`}
+                                path={`${prospectPath}.primaryMobCountryCode`}
+                                datalistId="countryCode"
+                                component={CustomSelect}
+                                shrink={false}
+                              />
+                              <Field
+                                name={`signatories[${index}].primaryMobileNo`}
+                                path={`${prospectPath}.primaryMobileNo`}
+                                label="Primary mobile no."
+                                placeholder="55xxxxxxx"
+                                component={Input}
+                                type="number"
+                              />
+                            </InputGroup>
                           </Grid>
 
-                          {!!index && (
-                            <ArrayRemoveButton
-                              arrayHelpers={arrayHelpers}
-                              dataArray={values.signatories}
-                              itemIndex={index}
-                              updateProspect={updateProspect}
-                              prospectPath="prospect.organizationInfo.contactDetailsForTxnReconfirming"
-                              title="Delete"
-                            />
-                          )}
-                        </div>
-                      </React.Fragment>
+                          <Grid item md={6} sm={12}>
+                            <InputGroup>
+                              <Field
+                                name={`signatories[${index}].primaryPhoneCountryCode`}
+                                path={`${prospectPath}.primaryPhoneCountryCode`}
+                                datalistId="countryCode"
+                                component={CustomSelect}
+                                shrink={false}
+                              />
+                              <Field
+                                name={`signatories[${index}].primaryPhoneNo`}
+                                path={`${prospectPath}.primaryPhoneNo`}
+                                label="Landline phone no. (optional)"
+                                placeholder="42xxxxxx"
+                                component={Input}
+                                type="number"
+                              />
+                            </InputGroup>
+                          </Grid>
+                        </Grid>
+
+                        {isMaxAddedSignatories && (
+                          <ArrayRemoveButton
+                            className={classes.deleteContact}
+                            arrayHelpers={arrayHelpers}
+                            dataArray={values.signatories}
+                            itemIndex={index}
+                            updateProspect={updateProspect}
+                            prospectPath="prospect.organizationInfo.contactDetailsForTxnReconfirming"
+                            title="Delete"
+                          />
+                        )}
+                      </Grid>
                     );
                   })}
 
@@ -206,7 +212,6 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                       title="Add another person"
                       onClick={() => {
                         arrayHelpers.insert(signatories.length, {
-                          fullName: "",
                           primaryMobCountryCode: UAE_CODE,
                           primaryMobileNo: "",
                           primaryPhoneCountryCode: UAE_CODE,
