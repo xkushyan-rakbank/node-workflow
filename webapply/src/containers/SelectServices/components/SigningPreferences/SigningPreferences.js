@@ -37,18 +37,22 @@ const signingPreferencesSchema = Yup.object({
   }),
   signatories: Yup.array().of(
     Yup.object().shape({
-      fullName: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
-      primaryMobCountryCode: Yup.string(),
-      primaryMobileNo: Yup.string().when("fullName", {
-        is: value => !!value,
-        then: Yup.string()
-          .required("You need to provide mobile number")
-          .when("primaryMobCountryCode", {
-            is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-            then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
-            otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
-          })
-      }),
+      fullName: Yup.string()
+        .matches(NAME_REGEX, "This is not a valid name")
+        .required("Field is required"),
+      primaryMobCountryCode: Yup.string().required("Field is required"),
+      primaryMobileNo: Yup.string()
+        .when("fullName", {
+          is: value => !!value,
+          then: Yup.string()
+            .required("You need to provide mobile number")
+            .when("primaryMobCountryCode", {
+              is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
+              then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+              otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+            })
+        })
+        .required("Field is required"),
       primaryPhoneCountryCode: Yup.string(),
       primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
         is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
