@@ -19,7 +19,7 @@ import {
   getIsForeignCompany,
   getIsVirtualCurrency
 } from "./../selectors/companyInfo";
-import { stakeholdersSelector } from "./../selectors/stakeholder";
+import { stakeholdersSelector, signatoryQuantitySelector } from "./../selectors/stakeholder";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -34,7 +34,12 @@ import { log } from "../../utils/loggger";
 import { getProspect, getProspectId, getIsDedupe, getIsBlackList } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
-import { APP_STOP_SCREEN_RESULT, MAX_STAKEHOLDERS_LENGTH, screeningStatus } from "../../constants";
+import {
+  APP_STOP_SCREEN_RESULT,
+  MAX_STAKEHOLDERS_LENGTH,
+  MAX_SIGNATORIES_LENGTH,
+  screeningStatus
+} from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -55,7 +60,9 @@ function* setScreeningResults({ preScreening }) {
   const isEligible = getIsEligible(state);
   const isForeignCompany = getIsForeignCompany(state);
   const isVirtualCurrency = getIsVirtualCurrency(state);
-  const isTooManyStakeholders = stakeholdersSelector(state).length > MAX_STAKEHOLDERS_LENGTH;
+  const isTooManyStakeholders =
+    stakeholdersSelector(state).length === MAX_STAKEHOLDERS_LENGTH ||
+    signatoryQuantitySelector(state) === MAX_SIGNATORIES_LENGTH;
 
   switch (true) {
     case isVirtualCurrency:
