@@ -39,7 +39,18 @@ function* receiveAppConfigSaga() {
         ? state.appConfig.searchInfo.segment
         : ""
       : pathname.substring(1, pathname.lastIndexOf("/"));
-    const { accountType, islamicBanking } = getSelectedAccountInfo(state);
+    let { accountType, islamicBanking } = getSelectedAccountInfo(state);
+
+    const lsAccountType = JSON.parse(window.localStorage.getItem("selectedAccountType"));
+    const lsIslamicBanking = JSON.parse(window.localStorage.getItem("isIslamicType"));
+
+    if (!accountType && lsAccountType) {
+      accountType = lsAccountType;
+    }
+
+    if (!islamicBanking && lsIslamicBanking) {
+      islamicBanking = lsIslamicBanking;
+    }
 
     if (!isEmpty(endpoints)) {
       const product = getApplicationInfo.accountType;

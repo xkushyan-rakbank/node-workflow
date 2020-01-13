@@ -3,7 +3,6 @@ import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import { TableCompareComponent } from "./TableCompare";
 import { updateAccountType } from "../../../../store/actions/selectedAccountInfo";
-import { updateProspect } from "../../../../store/actions/appConfig";
 import { getApplicationInfo } from "../../../../store/selectors/appConfig";
 
 const mapStateToProps = state => ({
@@ -11,7 +10,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  updateProspect,
   updateAccountType
 };
 
