@@ -3709,28 +3709,28 @@
   ],
   "wealthType": [
     {
-      "code": "M",
-      "key": "M",
-      "value": "M",
-      "displayText": "Money"
+      "code": "3",
+      "key": "3",
+      "value": "3",
+      "displayText": "Family Funds"
     },
     {
-      "code": "RE",
-      "key": "RE",
-      "value": "RE",
-      "displayText": "Real Estate"
+      "code": "4",
+      "key": "4",
+      "value": "4",
+      "displayText": "Other (Please Specify)"
     },
     {
-      "code": "ORG",
-      "key": "ORG",
-      "value": "ORG",
-      "displayText": "Organizations"
+      "code": "1",
+      "key": "1",
+      "value": "1",
+      "displayText": "Personal Saving"
     },
     {
-      "code": "O",
-      "key": "O",
-      "value": "O",
-      "displayText": "Other"
+      "code": "2",
+      "key": "2",
+      "value": "2",
+      "displayText": "Profit from other Business"
     }
   ],
   "employmentType": [

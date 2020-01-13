@@ -98,6 +98,8 @@ export const LicenseInformation = ({ handleContinue }) => (
               name="yearsInBusiness"
               label="Years in business (Optional)"
               path="prospect.orgKYCDetails.yearsInBusiness"
+              contextualHelpText="The number of years the company has been in business"
+              contextualHelpProps={{ isDisableHoverListener: false }}
               component={Input}
             />
           </Grid>

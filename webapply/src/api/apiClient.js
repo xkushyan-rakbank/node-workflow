@@ -110,7 +110,6 @@ export const screening = {
 export const uploadProspectDocument = {
   send: ({ data, prospectId, source, onUploadProgress }) => {
     return uploadClient.request({
-      url: buildURI("docUploaderUri", prospectId),
       method: "POST",
       data,
       cancelToken: source.token,
