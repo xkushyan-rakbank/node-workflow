@@ -18,7 +18,7 @@ import {
   getIsEligible,
   getIsForeignCompany,
   getIsVirtualCurrency,
-  getCompanyAsStakeholder
+  getIsCompanyAsStakeholder
 } from "./../selectors/companyInfo";
 import { stakeholdersSelector, signatoryQuantitySelector } from "./../selectors/stakeholder";
 import {
@@ -61,7 +61,7 @@ function* setScreeningResults({ preScreening }) {
   const isEligible = getIsEligible(state);
   const isForeignCompany = getIsForeignCompany(state);
   const isVirtualCurrency = getIsVirtualCurrency(state);
-  const isShareholderACompany = getCompanyAsStakeholder(state);
+  const isShareholderACompany = getIsCompanyAsStakeholder(state.screeningResults);
   const isTooManyStakeholders =
     stakeholdersSelector(state).length === MAX_STAKEHOLDERS_LENGTH ||
     signatoryQuantitySelector(state) === MAX_SIGNATORIES_LENGTH;
