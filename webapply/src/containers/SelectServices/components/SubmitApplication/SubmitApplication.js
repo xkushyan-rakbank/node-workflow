@@ -8,7 +8,6 @@ import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
-import { GO_TO_SUBMIT_STEP } from "../../constants";
 import { SUBMIT } from "../../../../constants";
 
 export const SubmitApplicationComponent = ({
@@ -18,7 +17,6 @@ export const SubmitApplicationComponent = ({
   isAgentLoggedIn,
   applicationInfo,
   organizationInfo: { companyName },
-  setStep,
   sendProspectToAPI,
   updateActionType
 }) => {
@@ -42,7 +40,7 @@ export const SubmitApplicationComponent = ({
       {!isAgentLoggedIn.loginStatus && <BlockConfirm setFormFields={setFormFields} />}
 
       <div className="linkContainer">
-        <BackLink path={routes.selectServices} onClick={() => setStep(GO_TO_SUBMIT_STEP)} />
+        <BackLink path={routes.selectServices} />
         <SubmitButton
           disabled={!(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed)}
           label="Submit"
