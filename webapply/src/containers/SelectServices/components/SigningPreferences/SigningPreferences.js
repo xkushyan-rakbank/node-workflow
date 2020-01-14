@@ -5,10 +5,12 @@ import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
 import {
-  PHONE_REGEX,
   NAME_REGEX,
   UAE_MOBILE_PHONE_REGEX,
-  UAE_LANDLINE_PHONE_REGEX
+  UAE_LANDLINE_PHONE_REGEX,
+  NUMBER_REGEX,
+  MIN_NON_UAE_PHONE_LENGTH,
+  MAX_NON_UAE_PHONE_LENGTH
 } from "../../../../utils/validation";
 import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
 import { UAE_CODE } from "../../../../constants";
@@ -51,7 +53,25 @@ const signingPreferencesSchema = Yup.object({
             .when("primaryMobCountryCode", {
               is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
               then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
-              otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+              otherwise: Yup.string()
+                .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+                .min(
+                  MIN_NON_UAE_PHONE_LENGTH,
+                  "This is not a valid phone (min length is not reached)"
+                )
+                .test(
+                  "length validation",
+                  "This is not a valid phone (max length exceeded)",
+                  function(mobilePhone) {
+                    return (
+                      mobilePhone &&
+                      this.parent &&
+                      this.parent.primaryMobCountryCode &&
+                      this.parent.primaryMobCountryCode.length + mobilePhone.length <=
+                        MAX_NON_UAE_PHONE_LENGTH
+                    );
+                  }
+                )
             })
         })
         .required("Field is required"),
@@ -59,7 +79,15 @@ const signingPreferencesSchema = Yup.object({
       primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
         is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
         then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "This is not a valid phone"),
-        otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+        otherwise: Yup.string()
+          .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+          .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
+          .test("length validation", "This is not a valid phone (max length exceeded)", function() {
+            const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
+            return (
+              primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH
+            );
+          })
       })
     })
   )
