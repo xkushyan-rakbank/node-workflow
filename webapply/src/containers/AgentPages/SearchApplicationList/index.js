@@ -1,6 +1,7 @@
 import React from "react";
 import { generatePath } from "react-router";
 import { Link } from "react-router-dom";
+import get from "lodash";
 
 import routes from "../../../routes";
 
@@ -47,7 +48,7 @@ export const SearchApplicationList = ({ currentApplications }) => {
             </div>
           </div>
           <div>
-            <div className={classes.status}>{application.status.statusNotes}</div>
+            <div className={classes.status}>{get(application, "status.statusNotes")}</div>
           </div>
         </Link>
       ))}
