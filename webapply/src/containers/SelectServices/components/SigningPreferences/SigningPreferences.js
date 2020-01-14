@@ -174,7 +174,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                     <Field
                       name="accountSigningInstn"
                       path={pathSignatoryInfo}
-                      placeholder="Please specify (Max 50 characters)"
+                      placeholder="Please specify (Maximum 50 characters)"
                       classes={{ formControlRoot: classes.formControl }}
                       multiline
                       rows={2}
