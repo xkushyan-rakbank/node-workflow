@@ -8,7 +8,7 @@ import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
-import { SUBMIT } from "../../../../constants";
+import { SUBMIT, NEXT } from "../../../../constants";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -18,12 +18,14 @@ export const SubmitApplicationComponent = ({
   applicationInfo,
   organizationInfo: { companyName },
   sendProspectToAPI,
-  updateActionType
+  updateActionType,
+  updateSaveType
 }) => {
   const [formFieldsValues, setFormFields] = useState({});
 
   const handleSubmit = useCallback(() => {
     updateActionType(SUBMIT);
+    updateSaveType(NEXT);
     sendProspectToAPI().then(() => history.push(routes.ApplicationSubmitted));
   });
 
