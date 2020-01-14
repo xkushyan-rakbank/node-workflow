@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { checkIsDebitCardApplied, checkIsChequeBookApplied } from "./utils";
+import { checkIsChequeBookApplied } from "./utils";
 import { NAME_REGEX } from "../../../../utils/validation";
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
@@ -52,24 +52,29 @@ export const ChannelsComponent = ({
   stakeholders,
   goToNext,
   updateProspect,
-  debitCardApplied,
-  ...props
+  primaryMobCountryCode,
+  primaryPhoneCountryCode,
+  accountCurrencies: { isSelectedLocalCurrency }
 }) => {
-  const { isDisabledDebitCard, isDebitCardApplied } = checkIsDebitCardApplied(props);
-  const { isDisabledChequeBook, isChequeBookApplied } = checkIsChequeBookApplied(props);
   const classes = useStyles();
+  const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
+    primaryMobCountryCode,
+    primaryPhoneCountryCode,
+    isSelectedLocalCurrency
+  );
+  const isSignatoriesListActive = !isHasSignatories && isSelectedLocalCurrency;
 
   useEffect(() => {
     updateProspect({
-      [pathDebitCardApplied]: isDebitCardApplied,
+      [pathDebitCardApplied]: isSelectedLocalCurrency,
       [pathChequeBookApplied]: isChequeBookApplied
     });
-  }, [isChequeBookApplied, isDebitCardApplied, updateProspect]);
+  }, [isChequeBookApplied, isSelectedLocalCurrency, updateProspect]);
 
   return (
     <Formik
       initialValues={{
-        debitCardApplied: isDebitCardApplied,
+        debitCardApplied: isSelectedLocalCurrency,
         chequeBookApplied: isChequeBookApplied,
         eStatements: false,
         mailStatements: false,
@@ -92,10 +97,11 @@ export const ChannelsComponent = ({
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
             infoTitle={DEBIT_CARD_INFO}
-            disabled={isDisabledDebitCard}
+            disabled={true}
+            isLoadDefaultValueFromStore={false}
           />
 
-          {isHasSignatories && <SignatoriesList stakeholders={stakeholders} />}
+          {isSignatoriesListActive && <SignatoriesList stakeholders={stakeholders} />}
 
           <Divider classes={{ divider: classes.divider }} />
 
@@ -108,7 +114,8 @@ export const ChannelsComponent = ({
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
             infoTitle={CHEQUE_BOOK_INFO}
-            disabled={isDisabledChequeBook}
+            disabled={isChequeBookDisabled}
+            isLoadDefaultValueFromStore={false}
           />
 
           <Divider />
