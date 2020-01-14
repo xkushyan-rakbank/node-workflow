@@ -22,7 +22,7 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
 
   return (
     <div className={classes.contentContainer}>
-      {accountType && !isApplicationOverview && !isAccountsComparison ? (
+      {accountType && !isApplicationOverview && !isAccountsComparison && !isApplicationSubmitted ? (
         <>
           <div>
             <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
