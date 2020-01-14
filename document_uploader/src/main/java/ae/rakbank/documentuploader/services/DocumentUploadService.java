@@ -12,4 +12,5 @@ public interface DocumentUploadService {
 
 	void store(MultipartFile file, JsonNode requestBodyJSON, String prospectId) throws IOException, DocumentUploadException;
 
+	String sanitizeFilename(String fileName);
 }

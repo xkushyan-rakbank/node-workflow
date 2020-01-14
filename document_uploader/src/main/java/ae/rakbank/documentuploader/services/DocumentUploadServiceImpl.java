@@ -32,30 +32,42 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
 	@Autowired
 	private EnvironmentUtil environmentUtil;
 
-  @Override
-  public void store(MultipartFile file, JsonNode fileInfo, String prospectId)
-          throws IOException, DocumentUploadException {
-      Date date = new Date();
-      long time = date.getTime();
-      Timestamp ts = new Timestamp(time);
-      String originalFilename = prospectId + "_" + fileInfo.get("documentType").asText() + "_" + ts;
-      String documentKey = originalFilename + "."
-        + FilenameUtils.getExtension(file.getOriginalFilename());
-      if (file.isEmpty()) {
-          throw new DocumentUploadException("Failed to store empty file " + originalFilename);
-      }
-      if (originalFilename.contains("..")) {
-          // This is a security check
-          throw new DocumentUploadException(
-                  "Cannot store file with relative path outside current directory " + originalFilename);
-      }
-      try (InputStream inputStream = file.getInputStream()) {
-          logger.info("Initialiaing uploads dir: " + environmentUtil.getUploadDir());
-          uploadsDir = Paths.get(environmentUtil.getUploadDir());
-          Files.copy(inputStream, this.uploadsDir.resolve(documentKey), StandardCopyOption.REPLACE_EXISTING);
-          logger.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId,
-        this.uploadsDir.resolve(documentKey)));
-      }
-  }
+    @Override
+    public void store(MultipartFile file, JsonNode fileInfo, String prospectId) throws IOException, DocumentUploadException {
+        Date date = new Date();
+        long time = date.getTime();
+        Timestamp ts = new Timestamp(time);
+        String originalFilename = prospectId + "_" + sanitizeFilename(fileInfo.get("documentType").asText()) + "_" + ts;
+        String documentKey = originalFilename + "." + FilenameUtils.getExtension(file.getOriginalFilename());
+
+        if (file.isEmpty()) {
+            throw new DocumentUploadException("Failed to store empty file " + originalFilename);
+        }
+
+        if (originalFilename.contains("..")) {
+            // This is a security check
+            throw new DocumentUploadException(
+                    "Cannot store file with relative path outside current directory " + originalFilename);
+        }
+        try (InputStream inputStream = file.getInputStream()) {
+            logger.info("Initialiaing uploads dir: " + environmentUtil.getUploadDir());
+            uploadsDir = Paths.get(environmentUtil.getUploadDir());
+
+            Files.copy(inputStream, this.uploadsDir.resolve(documentKey), StandardCopyOption.REPLACE_EXISTING);
+            logger.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId,
+
+                    this.uploadsDir.resolve(documentKey)));
+        }
+        catch (Exception exc) {
+            logger.error(exc.getMessage());
+        }
+    }
+
+    public String sanitizeFilename(String fileName) {
+        // Unix limit is 255 for a fileName, but let's make it 100:
+        return fileName
+                .replaceAll("[:\\\\/*?|<>]", "_")
+                .substring(0, 100);
+    }
 
 }
