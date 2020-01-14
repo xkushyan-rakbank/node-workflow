@@ -3,10 +3,11 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
-import { ContinueButton } from "../../../components/Buttons/ContinueButton";
-import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../utils/validation";
-import { MAX_COMPANY_NAME_LENGTH } from "../constants";
+import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../../components/Form";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
+import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
+import { MAX_COMPANY_NAME_LENGTH } from "../../constants";
+import { NumberOfEmployeesInput } from "./NumberOfEmployeesInput";
 
 const initialValues = {
   companyName: "",
@@ -24,9 +25,9 @@ const companyDetailsSchema = Yup.object({
     .matches(NUMBER_REGEX, "Not valid number"),
   numberOfEmployees: Yup.number()
     .typeError("Not valid number")
-    .min(0, "must be more than 0")
-    .integer("must be an integer")
-    .max(1000, "must be less than or equal to 1000"),
+    .min(0, "Must be more than or equal to 0")
+    .max(1000, "Must be less than or equal to 1000")
+    .integer("Must be an integer"),
   companyCategory: Yup.string().required("You need to provide company category")
 });
 
@@ -38,7 +39,7 @@ export const CompanyDetails = ({ handleContinue }) => {
       validateOnChange={false}
       onSubmit={handleContinue}
     >
-      {({ values }) => (
+      {() => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
@@ -82,6 +83,9 @@ export const CompanyDetails = ({ handleContinue }) => {
                 path="prospect.organizationInfo.numberOfEmployees"
                 component={Input}
                 changeProspect={(_, value, path) => ({ [path]: value || "0" })}
+                InputProps={{
+                  inputComponent: NumberOfEmployeesInput
+                }}
               />
             </Grid>
           </Grid>
