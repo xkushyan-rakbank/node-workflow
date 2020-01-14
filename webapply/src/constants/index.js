@@ -69,6 +69,7 @@ export const mobileResolution = 955;
 export const APP_STOP_SCREEN_RESULT = "stop";
 
 export const SUBMIT = "submit";
+export const NEXT = "NEXT";
 
 export const screeningStatus = {
   dedupe: {
