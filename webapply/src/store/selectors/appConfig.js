@@ -80,10 +80,10 @@ export const getProspectErrorMessage = state => state.appConfig.prospectError;
 
 export const getLoading = state => state.appConfig.loading;
 
-export const getIsDedupe = payload => {
-  return get(payload.screeningResults[0], "screeningType").includes("Dedupe");
+export const getIsDedupe = preScreening => {
+  return get(preScreening, "screeningResults[0].screeningType") === "Dedupe";
 };
 
-export const getIsBlackList = payload => {
-  return get(payload.screeningResults[0], "screeningType").includes("Backlist");
+export const getIsBlackList = preScreening => {
+  return get(preScreening, "screeningResults[0].screeningType") === "Backlist";
 };

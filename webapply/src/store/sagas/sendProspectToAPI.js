@@ -17,7 +17,8 @@ import get from "lodash/get";
 import {
   getIsEligible,
   getIsForeignCompany,
-  getIsVirtualCurrency
+  getIsVirtualCurrency,
+  getIsCompanyAsStakeholder
 } from "./../selectors/companyInfo";
 import { stakeholdersSelector, signatoryQuantitySelector } from "./../selectors/stakeholder";
 import {
@@ -60,6 +61,7 @@ function* setScreeningResults({ preScreening }) {
   const isEligible = getIsEligible(state);
   const isForeignCompany = getIsForeignCompany(state);
   const isVirtualCurrency = getIsVirtualCurrency(state);
+  const isShareholderACompany = getIsCompanyAsStakeholder(preScreening.screeningResults);
   const isTooManyStakeholders =
     stakeholdersSelector(state).length === MAX_STAKEHOLDERS_LENGTH ||
     signatoryQuantitySelector(state) === MAX_SIGNATORIES_LENGTH;
@@ -77,6 +79,8 @@ function* setScreeningResults({ preScreening }) {
       return yield put(setScreeningError(screeningStatus.dedupe));
     case isBlackList:
       return yield put(setScreeningError(screeningStatus.blackList));
+    case isShareholderACompany:
+      return yield put(setScreeningError(screeningStatus.isShareholderACompany));
     default:
       return yield put(setScreeningError(screeningStatus.default));
   }
