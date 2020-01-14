@@ -24,9 +24,10 @@ import { useStyles } from "./styled";
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required("You need to provide qualification"),
   employmentType: Yup.string().required("You need to provide employment type"),
-  totalExperienceYrs: Yup.string()
+  totalExperienceYrs: Yup.number()
     .required("You need to provide total experience")
-    .max(50, "Maximum 50 characters allowed"),
+    .max(50, "Maximum 50 characters allowed")
+    .integer("must be an integer"),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
