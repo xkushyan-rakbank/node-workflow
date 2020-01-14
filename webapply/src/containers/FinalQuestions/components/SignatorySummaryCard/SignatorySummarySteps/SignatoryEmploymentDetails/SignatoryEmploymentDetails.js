@@ -27,7 +27,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   totalExperienceYrs: Yup.number()
     .required("You need to provide total experience")
     .max(50, "Maximum 50 characters allowed")
-    .integer("must be an integer"),
+    .integer("Must be an integer"),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
