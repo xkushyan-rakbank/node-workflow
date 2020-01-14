@@ -14,6 +14,7 @@ import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
+import differenceBy from "lodash/differenceBy";
 
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
@@ -27,6 +28,7 @@ import {
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
+import { getUniqueCompanyDocs } from "../../utils/documents";
 
 function createUploader(prospectId, data, source) {
   let emit;
@@ -59,7 +61,89 @@ function* getProspectDocumentsSaga() {
   try {
     const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
 
+    //remove
+    const response2 = {
+      companyDocuments: [
+        {
+          documentType: "TradeLicenseNo",
+          signatoryId: "",
+          signatoryName: "",
+          documentTitle: "",
+          documentKey: "MGHN43MD75_TL",
+          fileName: ""
+        },
+        {
+          documentType: "sdcs",
+          signatoryId: "",
+          signatoryName: "",
+          documentTitle: "",
+          documentKey: "MGHN43MD75_TL",
+          fileName: ""
+        },
+        {
+          documentType: "cscvvfsee",
+          signatoryId: "",
+          signatoryName: "",
+          documentTitle: "",
+          documentKey: "MGHN43MD75_TL",
+          fileName: ""
+        },
+        {
+          documentType: "TradeLicenssssssseNo4",
+          signatoryId: "",
+          signatoryName: "",
+          documentTitle: "",
+          documentKey: "MGHN43MD75_TL",
+          fileName: ""
+        }
+      ]
+    };
+
+    //remove
+    const response3 = {
+      stakeholdersDocuments: {
+        "0_": {
+          documents: [{ documentType: "Passport", signatoryId: "1", signatoryName: "Manohar" }]
+        },
+        "123_": {
+          documents: [{ documentType: "qkwfnni", signatoryId: "1", signatoryName: "Manohar" }]
+        }
+      }
+    };
+
     config.prospect.documents = response.data;
+
+    //remove
+    const companyDocsExist = config.prospect.documents.companyDocuments;
+    const companyDocsIncome = response2.companyDocuments;
+    const stakeholdersDocsIncome = response3.stakeholdersDocuments;
+    const stakeholdersDocsExist = config.prospect.documents.stakeholdersDocuments;
+
+    //companyDocs
+    const companyDocuments = getUniqueCompanyDocs(companyDocsExist, companyDocsIncome);
+
+    //stakeholdersDocs
+    const objectToCollection = obj => {
+      return Object.keys(obj)
+        .map(key => {
+          let array = Object.values(obj[key])
+            .flat()
+            .map(item => {
+              return { ...item, key };
+            });
+          return array;
+        })
+        .flat();
+    };
+
+    const firstObj = objectToCollection(stakeholdersDocsExist);
+    const secondObj = objectToCollection(stakeholdersDocsIncome);
+
+    const stacke = differenceBy(secondObj, firstObj, "documentType");
+
+    console.log(stacke);
+    console.log(companyDocuments);
+
     yield put(updateProspect(config));
   } catch (error) {
     log(error);
