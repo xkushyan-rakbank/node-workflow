@@ -34,7 +34,7 @@ const signingPreferencesSchema = Yup.object({
   accountSigningInstn: Yup.string().when("accountSigningType", {
     is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
     then: Yup.string()
-      .max(120, "Max length is 120 symbols")
+      .max(50, "Max length is 50 symbols")
       .required("Field is required")
   }),
   signatories: Yup.array().of(
@@ -146,12 +146,12 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                     <Field
                       name="accountSigningInstn"
                       path={pathSignatoryInfo}
-                      placeholder="Please specify (Max 120 characters)"
+                      placeholder="Please specify (Max 50 characters)"
                       classes={{ formControlRoot: classes.formControl }}
-                      maxLength={120}
                       multiline
                       rows={2}
                       component={Input}
+                      inputProps={{ maxLength: 50 }}
                     />
                   </div>
                 )
