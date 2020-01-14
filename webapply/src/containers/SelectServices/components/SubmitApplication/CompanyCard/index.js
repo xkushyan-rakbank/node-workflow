@@ -18,7 +18,7 @@ export const CompanyCard = ({
   const accountType = get(applicationInfo, "accountType");
   const rakValuePackage = get(applicationInfo, "rakValuePackage");
 
-  const currencies = get(account, "accountCurrencies").join(" & ");
+  const currencies = get(account, "accountCurrencies", []).join(" & ");
   const isDebitCardApplied = get(account, "debitCardApplied");
   const isChequeBookApplied = get(account, "chequeBookApplied");
   const isOnlineBankingApplied = get(account, "eStatements");
