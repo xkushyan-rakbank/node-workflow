@@ -1,4 +1,4 @@
-import { CompanyDetails } from "./components/CompanyDetails";
+import { CompanyDetails } from "./components/CompanyDetails/CompanyDetails";
 import { Industry } from "./components/Industry";
 import { LicenseInformation } from "./components/LicenseInformation";
 
