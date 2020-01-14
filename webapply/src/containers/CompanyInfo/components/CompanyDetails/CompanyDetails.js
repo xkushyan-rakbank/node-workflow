@@ -1,7 +1,7 @@
 import React from "react";
-import { Formik, Form } from "formik/dist/index";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import Grid from "@material-ui/core/Grid/index";
+import Grid from "@material-ui/core/Grid";
 
 import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
