@@ -31,6 +31,7 @@ const licenseInformationSchema = Yup.object({
     .typeError("Not valid number")
     .min(0, "Must be more than 0")
     .max(999, "Must be less than 1000")
+    .integer("Must be an integer")
 });
 
 export const LicenseInformation = ({ handleContinue }) => (
