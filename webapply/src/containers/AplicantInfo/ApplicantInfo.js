@@ -4,7 +4,13 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { NAME_REGEX, PHONE_REGEX, UAE_MOBILE_PHONE_REGEX } from "./../../utils/validation";
+import {
+  NAME_REGEX,
+  NUMBER_REGEX,
+  UAE_MOBILE_PHONE_REGEX,
+  MAX_NON_UAE_PHONE_LENGTH,
+  MIN_NON_UAE_PHONE_LENGTH
+} from "./../../utils/validation";
 import {
   Input,
   CustomSelect,
@@ -36,7 +42,13 @@ const aplicantInfoSchema = Yup.object({
     .when("countryCode", {
       is: countryCode => countryCode === UAE_CODE,
       then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
-      otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+      otherwise: Yup.string()
+        .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+        .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
+        .test("length validation", "This is not a valid phone (max length exceeded)", function() {
+          const { countryCode = "", mobileNo = "" } = this.parent;
+          return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+        })
     })
 });
 
