@@ -41,12 +41,12 @@ const signingPreferencesSchema = Yup.object({
   }),
   signatories: Yup.array().of(
     Yup.object().shape({
-      fullName: Yup.string()
+      TxnReconfirmingfullname: Yup.string()
         .matches(NAME_REGEX, "This is not a valid name")
         .required("Field is required"),
       primaryMobCountryCode: Yup.string().required("Field is required"),
       primaryMobileNo: Yup.string()
-        .when("fullName", {
+        .when("TxnReconfirmingfullname", {
           is: value => !!value,
           then: Yup.string()
             .required("You need to provide mobile number")
@@ -104,7 +104,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
         accountSigningInstn: "",
         signatories: [
           {
-            fullName: "",
+            TxnReconfirmingfullname: "",
             primaryMobCountryCode: UAE_CODE,
             primaryMobileNo: "",
             primaryPhoneCountryCode: UAE_CODE,
@@ -192,11 +192,10 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                         className={classes.confirmingTransaction}
                       >
                         <Field
-                          // TODO find out correct path also update validation schema !!
-                          name={`signatories[${index}].fullName`}
-                          path={`prospect.signatoryInfo[${index}].fullName`}
-                          label="Your Name"
-                          placeholder="Your Name"
+                          name={`signatories[${index}].TxnReconfirmingfullname`}
+                          path={`${prospectPath}.TxnReconfirmingfullname`}
+                          label="Full Name"
+                          placeholder="Full Name"
                           component={Input}
                         />
 
@@ -265,11 +264,12 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                           primaryMobCountryCode: UAE_CODE,
                           primaryMobileNo: "",
                           primaryPhoneCountryCode: UAE_CODE,
-                          primaryPhoneNo: ""
+                          primaryPhoneNo: "",
+                          TxnReconfirmingfullname: ""
                         });
                       }}
                       className={classes.addButton}
-                      disabled={!signatories[0].fullName.length || signatoriesErrors}
+                      disabled={!signatories[0].TxnReconfirmingfullname.length || signatoriesErrors}
                     />
                   )}
                 </>
