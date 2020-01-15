@@ -123,3 +123,12 @@ export const screeningStatus = {
       "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
   }
 };
+
+export const screeningTypes = {
+  virtualCurrency: "Virtual Currency Check",
+  countryOfIncorporation: "CountryOfIncorporation Check",
+  isShareHolderACompany: "IsShareHolderACompany Check",
+  RAKStarterAccount: "RAKStarter Account Check",
+  dedupe: "Dedupe Check",
+  blacklist: "Blacklist Check"
+};
