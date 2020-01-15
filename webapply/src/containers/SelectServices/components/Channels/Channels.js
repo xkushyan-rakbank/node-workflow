@@ -66,18 +66,14 @@ export const ChannelsComponent = ({
   const isSignatoriesListActive = !isHasSignatories && isSelectedLocalCurrency;
 
   const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
-  const setDebitCardValue = () => {
-    if (
-      [SIGNING_TRANSACTIONS_TYPE_ALL, SIGNING_TRANSACTIONS_TYPE_OTHER].includes(accountSigningType)
-    ) {
-      return false;
-    }
-    return isSelectedLocalCurrency;
-  };
+  const isDebitCardApplied =
+    ![SIGNING_TRANSACTIONS_TYPE_ALL, SIGNING_TRANSACTIONS_TYPE_OTHER].includes(
+      accountSigningType
+    ) && isSelectedLocalCurrency;
 
   useEffect(() => {
     updateProspect({
-      [pathDebitCardApplied]: setDebitCardValue(),
+      [pathDebitCardApplied]: isDebitCardApplied,
       [pathChequeBookApplied]: isChequeBookApplied
     });
   }, [isChequeBookApplied, isSelectedLocalCurrency, updateProspect]);
@@ -85,7 +81,7 @@ export const ChannelsComponent = ({
   return (
     <Formik
       initialValues={{
-        debitCardApplied: setDebitCardValue(),
+        debitCardApplied: isDebitCardApplied,
         chequeBookApplied: isChequeBookApplied,
         eStatements: false,
         mailStatements: false,
