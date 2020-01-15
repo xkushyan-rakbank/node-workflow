@@ -9,14 +9,11 @@ export const concatCompanyDocs = (existDocs, incomeDocs) => {
 
 const mergeObjectToCollection = obj =>
   Object.keys(obj)
-    .map(key => {
-      let array = Object.values(obj[key])
+    .map(key =>
+      Object.values(obj[key])
         .flat()
-        .map(item => {
-          return { ...item, key };
-        });
-      return array;
-    })
+        .map(item => ({ ...item, key }))
+    )
     .flat();
 
 export const concatStakeholdersDocs = (incomeDocs, existDocs) => {
