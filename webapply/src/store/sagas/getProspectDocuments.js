@@ -13,10 +13,9 @@ import {
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
-import differenceBy from "lodash/differenceBy";
 
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
-import { getProspectId } from "../selectors/appConfig";
+import { getProspectId, getProspectDocuments as getExistDocuments } from "../selectors/appConfig";
 import {
   RETRIEVE_DOC_UPLOADER,
   DOC_UPLOADER,
@@ -27,7 +26,7 @@ import {
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
-import { getUniqueCompanyDocs } from "../../utils/documents";
+import { getUniqueCompanyDocs, getUniqueStakeholdersDocs } from "../../utils/documents";
 
 function createUploader(prospectId, data, source) {
   let emit;
@@ -55,93 +54,30 @@ function* uploadProgressWatcher(chan, documentKey) {
 function* getProspectDocumentsSaga() {
   const state = yield select();
   const prospectID = getProspectId(state) || "COSME0000000000000001";
+  const existDocuments = getExistDocuments(state);
   const config = cloneDeep(state.appConfig);
 
   try {
-    const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
+    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID);
 
-    //remove
-    const response2 = {
-      companyDocuments: [
-        {
-          documentType: "TradeLicenseNo",
-          signatoryId: "",
-          signatoryName: "",
-          documentTitle: "",
-          documentKey: "MGHN43MD75_TL",
-          fileName: ""
-        },
-        {
-          documentType: "sdcs",
-          signatoryId: "",
-          signatoryName: "",
-          documentTitle: "",
-          documentKey: "MGHN43MD75_TL",
-          fileName: ""
-        },
-        {
-          documentType: "cscvvfsee",
-          signatoryId: "",
-          signatoryName: "",
-          documentTitle: "",
-          documentKey: "MGHN43MD75_TL",
-          fileName: ""
-        },
-        {
-          documentType: "TradeLicenssssssseNo4",
-          signatoryId: "",
-          signatoryName: "",
-          documentTitle: "",
-          documentKey: "MGHN43MD75_TL",
-          fileName: ""
-        }
-      ]
-    };
+    if (existDocuments) {
+      const companyDocuments = getUniqueCompanyDocs(
+        existDocuments.companyDocuments,
+        data.companyDocuments
+      );
+      const stakeholderDocuments = getUniqueStakeholdersDocs(
+        data.stakeholdersDocuments,
+        existDocuments.stakeholdersDocuments
+      );
 
-    //remove
-    const response3 = {
-      stakeholdersDocuments: {
-        "0_": {
-          documents: [{ documentType: "Passport", signatoryId: "1", signatoryName: "Manohar" }]
-        },
-        "123_": {
-          documents: [{ documentType: "qkwfnni", signatoryId: "1", signatoryName: "Manohar" }]
-        }
-      }
-    };
-
-    config.prospect.documents = response.data;
-
-    //remove
-    const companyDocsExist = config.prospect.documents.companyDocuments;
-    const companyDocsIncome = response2.companyDocuments;
-    const stakeholdersDocsIncome = response3.stakeholdersDocuments;
-    const stakeholdersDocsExist = config.prospect.documents.stakeholdersDocuments;
-
-    //companyDocs
-    const companyDocuments = getUniqueCompanyDocs(companyDocsExist, companyDocsIncome);
-
-    //stakeholdersDocs
-    const objectToCollection = obj => {
-      return Object.keys(obj)
-        .map(key => {
-          let array = Object.values(obj[key])
-            .flat()
-            .map(item => {
-              return { ...item, key };
-            });
-          return array;
-        })
-        .flat();
-    };
-
-    const firstObj = objectToCollection(stakeholdersDocsExist);
-    const secondObj = objectToCollection(stakeholdersDocsIncome);
-
-    const stacke = differenceBy(secondObj, firstObj, "documentType");
-
-    console.log(stacke);
-    console.log(companyDocuments);
+      config.prospect.documents = {
+        ...existDocuments,
+        ...companyDocuments,
+        ...stakeholderDocuments
+      };
+    } else {
+      config.prospect.documents = data;
+    }
 
     yield put(updateProspect(config));
   } catch (error) {
@@ -187,10 +123,12 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 function* uploadDocumentsFlowSaga({ payload }) {
   yield race({
     task: call(uploadDocumentsBgSync, payload),
-    cancel: take(
-      action =>
+    cancel: take(action => {
+      console.log("payload.documentKey", payload.documentKey);
+      return (
         action.type === CANCEL_DOC_UPLOAD && action.payload.documentKey === payload.documentKey
-    )
+      );
+    })
   });
 }
 
