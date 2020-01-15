@@ -14,7 +14,6 @@ import {
 } from "redux-saga/effects";
 import get from "lodash/get";
 
-import { stakeholdersSelector, signatoryQuantitySelector } from "./../selectors/stakeholder";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -29,13 +28,7 @@ import { log } from "../../utils/loggger";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
-import {
-  APP_STOP_SCREEN_RESULT,
-  MAX_STAKEHOLDERS_LENGTH,
-  MAX_SIGNATORIES_LENGTH,
-  screeningStatus,
-  screeningTypes
-} from "../../constants";
+import { APP_STOP_SCREEN_RESULT, screeningStatus, screeningTypes } from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -50,10 +43,14 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const state = yield select();
-
-  const currScreeningTypes = preScreening.screeningResults.map(
-    ({ screeningType }) => screeningType
+  const currScreeningTypes = preScreening.screeningResults.reduce(
+    (result, { screeningType, screeningReason }) => {
+      if (screeningReason === APP_STOP_SCREEN_RESULT) {
+        result.push(screeningType);
+      }
+      return result;
+    },
+    []
   );
 
   const isDedupe = currScreeningTypes.includes(screeningTypes.dedupe);
@@ -62,9 +59,7 @@ function* setScreeningResults({ preScreening }) {
   const isForeignCompany = currScreeningTypes.includes(screeningTypes.countryOfIncorporation);
   const isVirtualCurrency = currScreeningTypes.includes(screeningTypes.virtualCurrency);
   const isShareholderACompany = currScreeningTypes.includes(screeningTypes.isShareHolderACompany);
-  const isTooManyStakeholders =
-    stakeholdersSelector(state).length === MAX_STAKEHOLDERS_LENGTH ||
-    signatoryQuantitySelector(state) === MAX_SIGNATORIES_LENGTH;
+  const isTooManyStakeholders = currScreeningTypes.includes(screeningTypes.isTooManyStakeholders);
 
   switch (true) {
     case isVirtualCurrency:

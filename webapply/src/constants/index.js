@@ -56,7 +56,6 @@ export const accountsNames = {
 export const UAE_CODE = "971";
 export const UAE = "AE";
 export const MAX_STAKEHOLDERS_LENGTH = 12;
-export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
 
@@ -66,7 +65,7 @@ export const REQUEST_FAILED = "error";
 
 export const mobileResolution = 955;
 
-export const APP_STOP_SCREEN_RESULT = "stop";
+export const APP_STOP_SCREEN_RESULT = "Stop";
 
 export const SUBMIT = "submit";
 export const NEXT = "NEXT";
@@ -130,5 +129,6 @@ export const screeningTypes = {
   isShareHolderACompany: "IsShareHolderACompany Check",
   RAKStarterAccount: "RAKStarter Account Check",
   dedupe: "Dedupe Check",
-  blacklist: "Blacklist Check"
+  blacklist: "Blacklist Check",
+  isTooManyStakeholders: "ShareHolderCount Check"
 };
