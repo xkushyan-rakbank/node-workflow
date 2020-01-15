@@ -7,7 +7,7 @@ import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../../c
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
 import { MAX_COMPANY_NAME_LENGTH } from "../../constants";
-import { NumberFormatInput } from "../../../../utils/numberFormatInput";
+import { NumberFormatInput } from "../../../../components/Form/Input/NumberFormatInput";
 
 const initialValues = {
   companyName: "",

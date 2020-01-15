@@ -18,7 +18,7 @@ import {
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
-import { NumberFormatInput } from "../../../../../../utils/numberFormatInput";
+import { NumberFormatInput } from "../../../../../../components/Form/Input/NumberFormatInput";
 
 import { useStyles } from "./styled";
 
