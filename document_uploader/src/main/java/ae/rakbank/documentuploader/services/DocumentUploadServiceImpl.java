@@ -36,8 +36,7 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
     public void store(MultipartFile file, JsonNode fileInfo, String prospectId) throws IOException, DocumentUploadException {
         Date date = new Date();
         long time = date.getTime();
-        Timestamp ts = new Timestamp(time);
-        String originalFilename = prospectId + "_" + sanitizeFilename(fileInfo.get("documentType").asText()) + "_" + ts;
+        String originalFilename = prospectId + "_" + sanitizeFilename(fileInfo.get("documentType").asText()) + "_" + time;
         String documentKey = originalFilename + "." + FilenameUtils.getExtension(file.getOriginalFilename());
 
         if (file.isEmpty()) {
