@@ -64,164 +64,31 @@
   ],
   "accountCurrencies": [
     {
-      "code": "AED",
-      "key": "AED",
-      "value": "AED",
-      "displayText": "AED",
-      "subGroup": null
-    },
-    {
-      "code": "ATS",
-      "key": "ATS",
-      "value": "ATS",
-      "displayText": "ATS",
-      "subGroup": null
-    },
-    {
-      "code": "AUD",
-      "key": "AUD",
-      "value": "AUD",
-      "displayText": "AUD",
-      "subGroup": null
-    },
-    {
-      "code": "BEF",
-      "key": "BEF",
-      "value": "BEF",
-      "displayText": "BEF",
-      "subGroup": null
-    },
-    {
-      "code": "CAD",
-      "key": "CAD",
-      "value": "CAD",
-      "displayText": "CAD",
-      "subGroup": null
-    },
-    {
-      "code": "CHF",
-      "key": "CHF",
-      "value": "CHF",
-      "displayText": "CHF",
-      "subGroup": null
-    },
-    {
-      "code": "DEM",
-      "key": "DEM",
-      "value": "DEM",
-      "displayText": "DEM",
-      "subGroup": null
-    },
-    {
-      "code": "DKK",
-      "key": "DKK",
-      "value": "DKK",
-      "displayText": "DKK",
-      "subGroup": null
-    },
-    {
       "code": "EUR",
       "key": "EUR",
       "value": "EUR",
-      "displayText": "EUR",
-      "subGroup": null
-    },
-    {
-      "code": "FRF",
-      "key": "FRF",
-      "value": "FRF",
-      "displayText": "FRF",
+      "displayText": "EURO",
       "subGroup": null
     },
     {
       "code": "GBP",
       "key": "GBP",
       "value": "GBP",
-      "displayText": "GBP",
+      "displayText": "POUND STERLING",
       "subGroup": null
     },
     {
-      "code": "HKD",
-      "key": "HKD",
-      "value": "HKD",
-      "displayText": "HKD",
-      "subGroup": null
-    },
-    {
-      "code": "INR",
-      "key": "INR",
-      "value": "INR",
-      "displayText": "INR",
-      "subGroup": null
-    },
-    {
-      "code": "IRP",
-      "key": "IRP",
-      "value": "IRP",
-      "displayText": "IRP",
-      "subGroup": null
-    },
-    {
-      "code": "ITL",
-      "key": "ITL",
-      "value": "ITL",
-      "displayText": "ITL",
-      "subGroup": null
-    },
-    {
-      "code": "JPY",
-      "key": "JPY",
-      "value": "JPY",
-      "displayText": "JPY",
-      "subGroup": null
-    },
-    {
-      "code": "MYD",
-      "key": "MYD",
-      "value": "MYD",
-      "displayText": "MYD",
-      "subGroup": null
-    },
-    {
-      "code": "NLG",
-      "key": "NLG",
-      "value": "NLG",
-      "displayText": "NLG",
-      "subGroup": null
-    },
-    {
-      "code": "NOK",
-      "key": "NOK",
-      "value": "NOK",
-      "displayText": "NOK",
-      "subGroup": null
-    },
-    {
-      "code": "SAR",
-      "key": "SAR",
-      "value": "SAR",
-      "displayText": "SAR",
-      "subGroup": null
-    },
-    {
-      "code": "SEK",
-      "key": "SEK",
-      "value": "SEK",
-      "displayText": "SEK",
-      "subGroup": null
-    },
-    {
-      "code": "SGD",
-      "key": "SGD",
-      "value": "SGD",
-      "displayText": "SGD",
+      "code": "AED",
+      "key": "AED",
+      "value": "AED",
+      "displayText": "UAE DIRHAM",
       "subGroup": null
     },
     {
       "code": "USD",
       "key": "USD",
       "value": "USD",
-      "displayText": "USD",
+      "displayText": "US DOLLAR",
       "subGroup": null
     }
   ],
