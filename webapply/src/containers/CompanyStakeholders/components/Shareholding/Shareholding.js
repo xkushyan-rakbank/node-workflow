@@ -5,7 +5,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
-import { PercentageInput } from "./PercentageInput";
+import { PercentageInput } from "../../../../components/Form/Input/NumberFormatInput";
 import { InlineRadioGroup, AutoSaveField as Field, Input } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";

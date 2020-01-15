@@ -16,3 +16,7 @@ export const NumberFormatInput = ({ inputRef, onChange, ...props }) => (
     {...props}
   />
 );
+
+export const PercentageInput = props => (
+  <NumberFormatInput decimalSeparator="." decimalScale={2} {...props} />
+);
