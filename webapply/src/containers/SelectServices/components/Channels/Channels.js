@@ -76,7 +76,8 @@ export const ChannelsComponent = ({
       [pathDebitCardApplied]: isDebitCardApplied,
       [pathChequeBookApplied]: isChequeBookApplied
     });
-  }, [isChequeBookApplied, isSelectedLocalCurrency, updateProspect]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isChequeBookApplied, updateProspect]);
 
   return (
     <Formik
