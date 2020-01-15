@@ -36,8 +36,7 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
     public void store(MultipartFile file, JsonNode fileInfo, String prospectId) throws IOException, DocumentUploadException {
         Date date = new Date();
         long time = date.getTime();
-        Timestamp ts = new Timestamp(time);
-        String originalFilename = prospectId + "_" + sanitizeFilename(fileInfo.get("documentType").asText()) + "_" + ts;
+        String originalFilename = prospectId + "_" + sanitizeFilename(fileInfo.get("documentType").asText()) + "_" + time;
         String documentKey = originalFilename + "." + FilenameUtils.getExtension(file.getOriginalFilename());
 
         if (file.isEmpty()) {
@@ -64,9 +63,11 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
     }
 
     public String sanitizeFilename(String fileName) {
-        String saniString = fileName.replaceAll("[:\\\\/*?|<>]", "_");
-
-        return saniString.substring(0, Math.min(100, saniString.length()));
+        // Unix limit is 255 for a fileName, but let's make it 100:
+        int maxLength = Math.min(fileName.length(), 100);
+        return fileName
+                .replaceAll("[:\\\\/*?|<>]", "_")
+                .substring(0, maxLength);
     }
 
 }
