@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
 import { checkIsChequeBookApplied } from "./utils";
+import { SIGNING_TRANSACTIONS_TYPE_ALL, SIGNING_TRANSACTIONS_TYPE_OTHER } from "../../constants";
 import { NAME_REGEX } from "../../../../utils/validation";
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
@@ -64,17 +65,24 @@ export const ChannelsComponent = ({
   );
   const isSignatoriesListActive = !isHasSignatories && isSelectedLocalCurrency;
 
+  const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
+  const isDebitCardApplied =
+    ![SIGNING_TRANSACTIONS_TYPE_ALL, SIGNING_TRANSACTIONS_TYPE_OTHER].includes(
+      accountSigningType
+    ) && isSelectedLocalCurrency;
+
   useEffect(() => {
     updateProspect({
-      [pathDebitCardApplied]: isSelectedLocalCurrency,
+      [pathDebitCardApplied]: isDebitCardApplied,
       [pathChequeBookApplied]: isChequeBookApplied
     });
-  }, [isChequeBookApplied, isSelectedLocalCurrency, updateProspect]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isChequeBookApplied, updateProspect]);
 
   return (
     <Formik
       initialValues={{
-        debitCardApplied: isSelectedLocalCurrency,
+        debitCardApplied: isDebitCardApplied,
         chequeBookApplied: isChequeBookApplied,
         eStatements: false,
         mailStatements: false,

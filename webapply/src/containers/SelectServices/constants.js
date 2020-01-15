@@ -15,6 +15,9 @@ export const signingInfo = {
   A2: "Any of you can sign"
 };
 
+export const SIGNING_TRANSACTIONS_TYPE_ALL = "A2";
+export const SIGNING_TRANSACTIONS_TYPE_OTHER = "A3";
+
 export const servicesSteps = [
   {
     step: STEP_1,

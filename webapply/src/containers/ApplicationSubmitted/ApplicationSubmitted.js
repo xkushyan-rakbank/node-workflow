@@ -19,10 +19,12 @@ const styles = {
     alignItems: "center",
     flexDirection: "column",
     "& img": {
-      width: "115px",
-      marginBottom: "50px",
+      width: 120,
+      height: 126,
+      marginBottom: "40px",
       "@media only screen and (max-width: 1300px)": {
         width: "85px",
+        height: "auto",
         marginBottom: "20px"
       }
     }
@@ -155,11 +157,6 @@ const styles = {
     fontSize: "20px",
     color: "#373737"
   },
-  docCheckedIcon: {
-    marginBottom: 0,
-    width: 120,
-    height: 126
-  },
   waitCallIcon: {
     marginBottom: 0,
     width: 40,
@@ -171,7 +168,7 @@ const ApplicationSubmittedComponent = ({ classes, AccountSubmittedInfo }) => {
   return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
     <div className={classes.container}>
       <div className={classes.title}>
-        <img className={classes.docCheckedIcon} src={docChecked} alt="checked" />
+        <img src={docChecked} alt="checked" />
         <SectionTitleWithInfo title="Meet the brand new accounts for Designit Arabia" />
       </div>
       <div
