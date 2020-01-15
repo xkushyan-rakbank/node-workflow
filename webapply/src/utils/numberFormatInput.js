@@ -1,7 +1,7 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 
-export const NumberOfEmployeesInput = ({ inputRef, onChange, ...props }) => (
+export const NumberFormatInput = ({ inputRef, onChange, ...props }) => (
   <NumberFormat
     getInputRef={inputRef}
     onValueChange={({ value }) => {

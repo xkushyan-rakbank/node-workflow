@@ -18,6 +18,7 @@ import {
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
+import { NumberFormatInput } from "../../../../../../utils/numberFormatInput";
 
 import { useStyles } from "./styled";
 
@@ -95,6 +96,9 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Total years of experience"
                     placeholder="Work Experience"
                     component={Input}
+                    InputProps={{
+                      inputComponent: NumberFormatInput
+                    }}
                     contextualHelpText={
                       <>
                         Starting with the most resent enter jobwise list of experience From
