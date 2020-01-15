@@ -46,7 +46,7 @@ function* setScreeningResults({ preScreening }) {
   const currScreeningTypes = preScreening.screeningResults.reduce(
     (result, { screeningType, screeningReason }) => {
       if (screeningReason === APP_STOP_SCREEN_RESULT) {
-        result.push(screeningType);
+        return [...result, screeningType];
       }
       return result;
     },
