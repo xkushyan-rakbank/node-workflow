@@ -46,7 +46,6 @@ export const UploadDocuments = ({
     });
     const docProps = {
       uploadStatus: "Uploaded",
-      fileName: file.name,
       fileSize: file.size,
       submittedDt: file.lastModifiedDate,
       fileFormat: file.type
