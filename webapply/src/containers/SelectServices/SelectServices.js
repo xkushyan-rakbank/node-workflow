@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from "react";
 
-import { GO_TO_SUBMIT_STEP, SUBMIT_APPLICATION_STEP, STEP_1, STEP_3 } from "./constants";
+import { GO_TO_SUBMIT_STEP, STEP_1, STEP_3 } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import SubmitApplication from "./components/SubmitApplication";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
@@ -11,11 +10,19 @@ import { accountsNames } from "../../constants";
 
 import { useStyles } from "./styled";
 
-export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
+export const SelectServicesComponent = ({
+  accountType,
+  rakValuePackage,
+  sendProspectToAPI,
+  history
+}) => {
   const classes = useStyles();
   const [step, setStep] = useState(STEP_1);
 
   const setNextStep = useCallback(() => {
+    if (step === GO_TO_SUBMIT_STEP) {
+      return history.push("SubmitApplication");
+    }
     sendProspectToAPI().then(() => setStep(step + 1), () => {});
   }, [sendProspectToAPI, step]);
 
@@ -24,10 +31,6 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
       setStep(nextStep);
     }
   };
-
-  if (step === SUBMIT_APPLICATION_STEP) {
-    return <SubmitApplication />;
-  }
 
   return (
     <>

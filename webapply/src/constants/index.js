@@ -68,6 +68,9 @@ export const mobileResolution = 955;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
 
+export const SUBMIT = "submit";
+export const NEXT = "NEXT";
+
 export const screeningStatus = {
   dedupe: {
     error: "Dedupe",
@@ -106,6 +109,12 @@ export const screeningStatus = {
     icon: declinedRegular,
     text:
       "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAKBANK."
+  },
+  isShareholderACompany: {
+    error: "Company as stakeholder",
+    icon: callbackRegular,
+    text:
+      "Let’s make this easy for you! Since you have other companies listed as shareholders, let’s have someone call you back within X days to meet you in person and help you out."
   },
   default: {
     error: "Default",

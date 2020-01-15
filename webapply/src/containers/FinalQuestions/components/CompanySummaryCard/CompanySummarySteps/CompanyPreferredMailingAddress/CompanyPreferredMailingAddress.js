@@ -108,7 +108,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   name="poBox"
                   path={`${BASE_PATH}.poBox`}
                   label="PO Box Number"
-                  placeholder="123456"
+                  placeholder="AB1234"
                   component={Input}
                   inputProps={{ maxLength: MAX_PO_BOX_NUMBER_LENGTH }}
                 />

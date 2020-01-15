@@ -9,9 +9,11 @@ export const STEP_2 = 2;
 export const STEP_3 = 3;
 export const STEP_4 = 4;
 export const GO_TO_SUBMIT_STEP = 5;
-export const SUBMIT_APPLICATION_STEP = 6;
 export const ACCOUNTS_SIGNING_NAME_OTHER = "A3";
-export const ACCOUNTS_SIGNING_NAME_ALL = "ALL";
+export const signingInfo = {
+  A1: "All of you can sign",
+  A2: "Any of you can sign"
+};
 
 export const servicesSteps = [
   {

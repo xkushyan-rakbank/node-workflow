@@ -25,8 +25,8 @@ Text.defaultProps = {
   style: theme.palette.text
 };
 
-export const BackLink = ({ classeName = "", path }) => (
-  <Root className={classeName} to={path}>
+export const BackLink = ({ classeName = "", path, ...props }) => (
+  <Root className={classeName} to={path} {...props}>
     <ArrowBack alt="back" />
     <Text>Go back</Text>
   </Root>

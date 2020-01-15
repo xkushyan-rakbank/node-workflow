@@ -16,9 +16,11 @@ import {
 } from "../../../../../../components/Form";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
-  PHONE_REGEX,
   UAE_MOBILE_PHONE_REGEX,
-  UAE_LANDLINE_PHONE_REGEX
+  UAE_LANDLINE_PHONE_REGEX,
+  NUMBER_REGEX,
+  MIN_NON_UAE_PHONE_LENGTH,
+  MAX_NON_UAE_PHONE_LENGTH
 } from "../../../../../../utils/validation";
 import { UAE_CODE } from "../../../../../../constants";
 
@@ -31,7 +33,13 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
     .when("primaryMobCountryCode", {
       is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
       then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
-      otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+      otherwise: Yup.string()
+        .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+        .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
+        .test("length validation", "This is not a valid phone (max length exceeded)", function() {
+          const { primaryMobCountryCode = "", primaryMobileNo = "" } = this.parent;
+          return primaryMobCountryCode.length + primaryMobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+        })
     }),
   primaryEmail: Yup.string()
     .required("You need to provide Email address")
@@ -39,7 +47,13 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
     is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
     then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "This is not a valid phone"),
-    otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+    otherwise: Yup.string()
+      .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+      .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
+      .test("length validation", "This is not a valid phone (max length exceeded)", function() {
+        const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
+        return primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+      })
   })
 });
 

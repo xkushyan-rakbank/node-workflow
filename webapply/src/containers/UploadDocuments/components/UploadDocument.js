@@ -40,7 +40,10 @@ export const UploadDocuments = ({
       return setErrorMessage(error.message);
     }
 
-    const fileInfo = JSON.stringify({ documentKey });
+    const fileInfo = JSON.stringify({
+      documentKey,
+      documentType: document.documentType || ""
+    });
     const docProps = {
       uploadStatus: "Uploaded",
       fileName: file.name,

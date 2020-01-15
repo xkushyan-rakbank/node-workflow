@@ -47,7 +47,9 @@ export const SearchApplicationList = ({ currentApplications }) => {
             </div>
           </div>
           <div>
-            <div className={classes.status}>{application.status.statusNotes}</div>
+            {application.status && (
+              <div className={classes.status}>{application.status.statusNotes}</div>
+            )}
           </div>
         </Link>
       ))}

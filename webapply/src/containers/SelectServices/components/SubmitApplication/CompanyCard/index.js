@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 
-import { ACCOUNTS_SIGNING_NAME_ALL } from "../../../constants";
+import { ACCOUNTS_SIGNING_NAME_OTHER, signingInfo } from "../../../constants";
 
 import { Divider } from "../../Divider";
 
@@ -18,15 +18,15 @@ export const CompanyCard = ({
   const accountType = get(applicationInfo, "accountType");
   const rakValuePackage = get(applicationInfo, "rakValuePackage");
 
-  const currencies = get(account, "accountCurrencies").join(" & ");
+  const currencies = get(account, "accountCurrencies", []).join(" & ");
   const isDebitCardApplied = get(account, "debitCardApplied");
   const isChequeBookApplied = get(account, "chequeBookApplied");
   const isOnlineBankingApplied = get(account, "eStatements");
 
-  const accntSignInType = get(signatoryInfo[0], "accountSigningInfo.accountSigningType");
-  let accntSignInMsg;
-  if (accntSignInType === ACCOUNTS_SIGNING_NAME_ALL) {
-    accntSignInMsg = "Any of you can sign";
+  const accountSignInType = get(signatoryInfo[0], "accountSigningInfo.accountSigningType");
+  let accountSignInMsg;
+  if (accountSignInType !== ACCOUNTS_SIGNING_NAME_OTHER) {
+    accountSignInMsg = signingInfo[accountSignInType];
   }
 
   return (
@@ -54,7 +54,7 @@ export const CompanyCard = ({
       <div className={classes.secondaryTitle}>Services selected</div>
       <div className={classes.grayText}>{currencies}</div>
 
-      <div className={classes.grayText}>{accntSignInMsg}</div>
+      <div className={classes.grayText}>{accountSignInMsg}</div>
       {isDebitCardApplied && (
         <div className={classes.grayText}>Debit cards for all signatories</div>
       )}

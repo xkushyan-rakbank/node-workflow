@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import routes from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
@@ -8,6 +8,7 @@ import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
+import { SUBMIT, NEXT } from "../../../../constants";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -15,10 +16,18 @@ export const SubmitApplicationComponent = ({
   signatoryInfo,
   isAgentLoggedIn,
   applicationInfo,
-  organizationInfo: { companyName }
+  organizationInfo: { companyName },
+  sendProspectToAPI,
+  updateActionType,
+  updateSaveType
 }) => {
-  const handleSubmit = () => history.push(routes.ApplicationSubmitted);
   const [formFieldsValues, setFormFields] = useState({});
+
+  const handleSubmit = useCallback(() => {
+    updateActionType(SUBMIT);
+    updateSaveType(NEXT);
+    sendProspectToAPI().then(() => history.push(routes.ApplicationSubmitted));
+  });
 
   return (
     <>

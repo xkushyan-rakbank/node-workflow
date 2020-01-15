@@ -9,6 +9,8 @@ import {
   getOrganizationInfo,
   getIsAgentLoggedIn
 } from "../../../../store/selectors/appConfig";
+import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
+import { updateActionType, updateSaveType } from "../../../../store/actions/appConfig";
 import { SubmitApplicationComponent } from "./SubmitApplication";
 
 const mapStateToProps = state => ({
@@ -19,7 +21,16 @@ const mapStateToProps = state => ({
   isAgentLoggedIn: getIsAgentLoggedIn(state)
 });
 
+const mapDispatchToProps = {
+  sendProspectToAPI: sendProspectToAPIPromisify,
+  updateActionType,
+  updateSaveType
+};
+
 export default compose(
   withRouter,
-  connect(mapStateToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(SubmitApplicationComponent);

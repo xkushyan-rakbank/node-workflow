@@ -77,6 +77,7 @@ const ShareholdingStep = ({
                     inputComponent: PercentageInput,
                     endAdornment: <InputAdornment position="end">%</InputAdornment>
                   }}
+                  inputProps={{ maxLength: 6 }}
                   contextualHelpText="Mention the percentage of shares held based on  Memorandum of Association/ Articles of Association/ Partners agreement/ Service Agreement/ Share Certificate"
                 />
               </Grid>

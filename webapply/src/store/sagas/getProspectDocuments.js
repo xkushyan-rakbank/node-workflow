@@ -12,7 +12,6 @@ import {
 } from "redux-saga/effects";
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
-import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
 import differenceBy from "lodash/differenceBy";
 
@@ -163,7 +162,8 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 
     yield call(() => uploadPromise);
 
-    const config = { ...state.appConfig };
+    const config = cloneDeep(state.appConfig);
+
     const documents = config.prospect.documents[docOwner].map(doc => {
       if (doc.documentType === documentType) {
         return { ...doc, ...docProps };
@@ -171,7 +171,9 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 
       return doc;
     });
-    set(config, ["config", "prospect", "documents", docOwner], documents);
+
+    config.prospect.documents[docOwner] = documents;
+
     yield put(setConfig(config));
   } catch (error) {
     log(error);
@@ -194,7 +196,7 @@ function* uploadDocumentsFlowSaga({ payload }) {
 
 function* updateExtraProspectDocuments(action) {
   const state = yield select();
-  let config = { ...state.appConfig };
+  const config = cloneDeep(state.appConfig);
 
   config.prospect.documents.companyDocuments.push(action.payload);
   yield put(setConfig(config));
@@ -202,7 +204,7 @@ function* updateExtraProspectDocuments(action) {
 
 function* deleteExtraProspectDocuments(action) {
   const state = yield select();
-  let config = { ...state.appConfig };
+  const config = cloneDeep(state.appConfig);
 
   config.prospect.documents.companyDocuments.splice(action.payload);
   yield put(setConfig(config));
