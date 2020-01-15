@@ -23,7 +23,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
           </div>
         )}
         {app.status && [
-          <div key="statusNote">
+          <div key="status">
             <span className={classes.listStatus}>{app.status.statusNotes}</span>
           </div>,
           <div className={classes.action} key="action">

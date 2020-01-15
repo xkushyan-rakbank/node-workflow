@@ -4,12 +4,13 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 
-import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
 import * as accountInfoSelector from "../../store/selectors/appConfig";
 
 import dotsBg from "../../assets/images/dots_bg.png";
+import docChecked from "../../assets/icons/docChecked.png";
+import bankingClock from "../../assets/icons/bankingClock.png";
 
 const styles = {
   title: {
@@ -153,16 +154,24 @@ const styles = {
   resultNextStepInfo: {
     fontSize: "20px",
     color: "#373737"
+  },
+  docCheckedIcon: {
+    marginBottom: 0,
+    width: 120,
+    height: 126
+  },
+  waitCallIcon: {
+    marginBottom: 0,
+    width: 40,
+    height: 48
   }
 };
 
 const ApplicationSubmittedComponent = ({ classes, AccountSubmittedInfo }) => {
-  const { companyDocuments: CompanyDocuments, banking: Banking } = useIconsByAccount();
-
   return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
     <div className={classes.container}>
       <div className={classes.title}>
-        <CompanyDocuments alt="checked" />
+        <img className={classes.docCheckedIcon} src={docChecked} alt="checked" />
         <SectionTitleWithInfo title="Meet the brand new accounts for Designit Arabia" />
       </div>
       <div
@@ -178,7 +187,7 @@ const ApplicationSubmittedComponent = ({ classes, AccountSubmittedInfo }) => {
             })}
             key={accountData.id}
           >
-            <img src={dotsBg} className={classes.dottedBg} alt="background" />
+            <img src={dotsBg} className={classes.docCheckedIcon} alt="background" />
 
             <span className="info">Your AED account number</span>
             <div className="mainInfo">
@@ -196,7 +205,7 @@ const ApplicationSubmittedComponent = ({ classes, AccountSubmittedInfo }) => {
       </div>
       <div className={classes.divider}>{""}</div>
       <div className={classes.result}>
-        <Banking alt="wait call" />
+        <img className={classes.waitCallIcon} src={bankingClock} alt="wait call" />
         <Typography align="center" classes={{ root: classes.resultNextStep }}>
           What happens now
         </Typography>

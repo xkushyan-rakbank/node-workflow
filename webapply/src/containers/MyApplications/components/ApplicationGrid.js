@@ -34,17 +34,21 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
             </Typography>
           </>
         )}
-        <div className={classes.status}>{app.status.statusNotes}</div>
-        <div className={classes.blockAction}>
-          {ctaStatuses[app.status.statusNotes] ? (
-            <WhiteContainedButton
-              label={ctaStatuses[app.status.statusNotes]}
-              handleClick={() => getProspectInfo(app.prospectId)}
-            />
-          ) : (
-            <span>{notCtaStatuses[app.status.statusNotes]}</span>
-          )}
-        </div>
+        {app.status && [
+          <div key="status" className={classes.status}>
+            {app.status.statusNotes}
+          </div>,
+          <div key="action" className={classes.blockAction}>
+            {ctaStatuses[app.status.statusNotes] ? (
+              <WhiteContainedButton
+                label={ctaStatuses[app.status.statusNotes]}
+                handleClick={() => getProspectInfo(app.prospectId)}
+              />
+            ) : (
+              <span>{notCtaStatuses[app.status.statusNotes]}</span>
+            )}
+          </div>
+        ]}
       </div>
     </div>
   ));

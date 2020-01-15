@@ -64,10 +64,9 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
     }
 
     public String sanitizeFilename(String fileName) {
-        // Unix limit is 255 for a fileName, but let's make it 100:
-        return fileName
-                .replaceAll("[:\\\\/*?|<>]", "_")
-                .substring(0, 100);
+        String saniString = fileName.replaceAll("[:\\\\/*?|<>]", "_");
+
+        return saniString.substring(0, Math.min(100, saniString.length()));
     }
 
 }
