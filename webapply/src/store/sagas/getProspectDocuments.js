@@ -10,6 +10,7 @@ import {
   takeEvery,
   cancelled
 } from "redux-saga/effects";
+import get from "lodash/get";
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
@@ -76,13 +77,13 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 
     yield fork(uploadProgressWatcher, chan, documentKey);
 
-    yield call(() => uploadPromise);
+    const response = yield call(() => uploadPromise);
 
     const config = cloneDeep(state.appConfig);
 
     const documents = config.prospect.documents[docOwner].map(doc => {
       if (doc.documentType === documentType) {
-        return { ...doc, ...docProps };
+        return { ...doc, ...docProps, fileName: get(response, "data.fileName", "") };
       }
 
       return doc;

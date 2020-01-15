@@ -10,7 +10,5 @@ import ae.rakbank.documentuploader.commons.DocumentUploadException;
 
 public interface DocumentUploadService {
 
-	void store(MultipartFile file, JsonNode requestBodyJSON, String prospectId) throws IOException, DocumentUploadException;
-
-	String sanitizeFilename(String fileName);
+	String store(MultipartFile file, JsonNode requestBodyJSON, String prospectId) throws IOException, DocumentUploadException;
 }

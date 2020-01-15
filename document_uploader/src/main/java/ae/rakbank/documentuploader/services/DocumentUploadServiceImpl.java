@@ -33,7 +33,7 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
 	private EnvironmentUtil environmentUtil;
 
     @Override
-    public void store(MultipartFile file, JsonNode fileInfo, String prospectId) throws IOException, DocumentUploadException {
+    public String store(MultipartFile file, JsonNode fileInfo, String prospectId) throws IOException, DocumentUploadException {
         Date date = new Date();
         long time = date.getTime();
         String originalFilename = prospectId + "_" + sanitizeFilename(fileInfo.get("documentType").asText()) + "_" + time;
@@ -56,13 +56,17 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
             logger.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId,
 
                     this.uploadsDir.resolve(documentKey)));
+
+            return documentKey;
         }
         catch (Exception exc) {
             logger.error(exc.getMessage());
         }
+
+        return "";
     }
 
-    public String sanitizeFilename(String fileName) {
+    private String sanitizeFilename(String fileName) {
         // Unix limit is 255 for a fileName, but let's make it 100:
         int maxLength = Math.min(fileName.length(), 100);
         return fileName

@@ -10254,6 +10254,7 @@
 			},
 			"contactDetailsForTxnReconfirming": [
 				{
+					"TxnReconfirmingfullname": "",
 					"primaryMobileNo": "",
 					"primaryMobCountryCode": "",
 					"primaryPhoneNo": "",
