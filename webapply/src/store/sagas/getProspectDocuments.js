@@ -123,12 +123,10 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 function* uploadDocumentsFlowSaga({ payload }) {
   yield race({
     task: call(uploadDocumentsBgSync, payload),
-    cancel: take(action => {
-      console.log("payload.documentKey", payload.documentKey);
-      return (
+    cancel: take(
+      action =>
         action.type === CANCEL_DOC_UPLOAD && action.payload.documentKey === payload.documentKey
-      );
-    })
+    )
   });
 }
 
