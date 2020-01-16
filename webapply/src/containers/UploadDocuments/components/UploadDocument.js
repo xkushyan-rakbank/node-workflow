@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 import companyIconSvg from "../../../assets/icons/file.png";
 import { useStyles } from "./styled";
+import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -22,6 +23,7 @@ export const UploadDocuments = ({
   docUpload,
   icon,
   index,
+  stakeholderIndex,
   uploadErrorMessage,
   progress,
   cancelDocUpload,
@@ -33,6 +35,10 @@ export const UploadDocuments = ({
   const inputEl = useRef(null);
   const documentKey = useMemo(() => nanoid(), []);
   const isUploaded = document.uploadStatus === "Uploaded";
+
+  if (docOwner === STAKEHOLDER_DOCUMENTS) {
+    console.log("isUploaded", isUploaded);
+  }
 
   const fileUploadHandler = useCallback(() => {
     const file = inputEl.current.files[0];
@@ -71,16 +77,21 @@ export const UploadDocuments = ({
   }, [document]);
 
   const fileUploadCancel = useCallback(() => {
-    if (isUploaded) {
+    if (docOwner === COMPANY_DOCUMENTS) {
       updateProspect({
-        [`prospect.documents[${docOwner}][${index}].uploadStatus`]: "NotUploaded"
+        [`prospect.documents[${COMPANY_DOCUMENTS}][${index}].uploadStatus`]: "NotUploaded"
+      });
+    } else if (docOwner === STAKEHOLDER_DOCUMENTS) {
+      updateProspect({
+        [`prospect.documents[${STAKEHOLDER_DOCUMENTS}][${stakeholderIndex}].documents[${index}].uploadStatus`]: "NotUploaded"
       });
     }
     cancelDocUpload(documentKey);
     setSelectedFile(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log("selectedFile", selectedFile);
+  console.log("isUploaded", isUploaded);
   return (
     <div className={classes.fileUploadPlaceholder}>
       <input
