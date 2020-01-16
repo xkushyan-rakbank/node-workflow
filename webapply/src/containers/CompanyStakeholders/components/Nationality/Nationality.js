@@ -113,6 +113,9 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                             };
                           }}
                           shrink={true}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
                         />
                         {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
                           <Field
@@ -131,6 +134,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               passportIndex,
                               errors
                             )}
+                            inputProps={{ tabIndex: 0 }}
                           />
                         )}
                       </Grid>
@@ -143,12 +147,16 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           component={Input}
                           contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
                             Example: 'P-123/1950/456 to be entered as P1231950456'"
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
                         />
                         <Field
                           name={`passportDetails[${passportIndex}].diplomatPassport`}
                           path={`${passportDetails}.diplomatPassport`}
                           label="This is a diplomatic Passport"
                           component={Checkbox}
+                          inputProps={{ tabIndex: 0 }}
                         />
                       </Grid>
                     </React.Fragment>

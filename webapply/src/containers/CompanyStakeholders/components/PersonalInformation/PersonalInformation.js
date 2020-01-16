@@ -90,6 +90,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   setFieldValue("isShareholderACompany", !values.isShareholderACompany);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
+                inputProps={{ tabIndex: 0 }}
               />
               <ContexualHelp
                 title="Select this check box if another company holds any shares based on Memorandum of Association / Articles of Association / Partners agreement / Service Agreement / Share Certificate"
@@ -112,6 +113,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   component={CustomSelect}
                   shrink={false}
                   datalistId="salutation"
+                  inputProps={{ tabIndex: 0 }}
                 />
 
                 <Field
@@ -122,7 +124,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   disabled={!!values.isShareholderACompany}
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
-                  inputProps={{ maxLength: 30 }}
+                  InputProps={{
+                    inputProps: { maxLength: 30, tabIndex: 0 }
+                  }}
                   contextualHelpText="Given Name of the stakeholder exactly the way it is mentioned in the passport"
                 />
               </InputGroup>
@@ -136,7 +140,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 disabled={!!values.isShareholderACompany}
                 component={Input}
                 changeProspect={createChangeProspectHandler(values)}
-                inputProps={{ maxLength: 30 }}
+                InputProps={{
+                  inputProps: { maxLength: 30, tabIndex: 0 }
+                }}
               />
             </Grid>
           </Grid>
@@ -150,7 +156,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 disabled={!!values.isShareholderACompany}
                 component={Input}
                 changeProspect={createChangeProspectHandler(values)}
-                inputProps={{ maxLength: 30 }}
+                InputProps={{
+                  inputProps: { maxLength: 30, tabIndex: 0 }
+                }}
                 contextualHelpText="Surname of the stakeholder exactly the way it is mentioned in the passport"
               />
             </Grid>
@@ -162,6 +170,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Date of Birth"
                 disabled={!!values.isShareholderACompany}
                 component={DatePicker}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </Grid>
           </Grid>
@@ -173,6 +184,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             component={InlineRadioGroup}
             options={yesNoOptions}
             label="This Person, or a relative of this person by relation or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country."
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
           />
 
           <SubmitButton />

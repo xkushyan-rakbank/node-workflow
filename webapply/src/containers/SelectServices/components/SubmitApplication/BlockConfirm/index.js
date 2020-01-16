@@ -65,6 +65,7 @@ export const BlockConfirm = ({ setFormFields }) => {
               label={trueNdCompleteAcknldgelabel}
               onChange={e => setFieldsValue(e, setFieldValue, values)}
               component={Checkbox}
+              inputProps={{ tabIndex: 0 }}
             />
 
             <Field
@@ -72,9 +73,15 @@ export const BlockConfirm = ({ setFormFields }) => {
               label={termsAgreedLabel}
               onChange={e => setFieldsValue(e, setFieldValue, values)}
               component={Checkbox}
+              inputProps={{ tabIndex: 0 }}
             />
 
-            <Field name="needCommunication" label={needCommunicationLabel} component={Checkbox} />
+            <Field
+              name="needCommunication"
+              label={needCommunicationLabel}
+              component={Checkbox}
+              inputProps={{ tabIndex: 0 }}
+            />
           </Form>
         )}
       </Formik>
