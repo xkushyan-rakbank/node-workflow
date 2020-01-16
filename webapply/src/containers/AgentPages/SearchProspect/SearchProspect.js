@@ -79,6 +79,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
               placeholder="Applicant Name"
               contextualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."
               component={Input}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
 
             <Grid container spacing={3}>
@@ -90,6 +93,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                     datalistId="countryCode"
                     component={CustomSelect}
                     shrink={false}
+                    inputProps={{ tabIndex: 0 }}
                   />
 
                   <Field
@@ -99,6 +103,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                     placeholder="Mobile Number"
                     contextualHelpText="This should be the mobile number of the person who has registered for WebApply and initiated the application on behalf of the company."
                     component={Input}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 </InputGroup>
               </Grid>
@@ -110,6 +117,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   placeholder="E-mail Address"
                   contextualHelpText="This should be the email id of the person who has registered for WebApply and initiated the application on behalf of the company."
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
             </Grid>
@@ -121,6 +131,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   label="RAKtrack Lead Reference Number"
                   placeholder="RAKtrack Lead Reference Number"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -130,6 +143,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   label="Trade License Number"
                   placeholder="Track License Number"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
             </Grid>

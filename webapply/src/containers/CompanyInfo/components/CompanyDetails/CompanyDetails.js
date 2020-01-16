@@ -7,7 +7,7 @@ import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../../c
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
 import { MAX_COMPANY_NAME_LENGTH } from "../../constants";
-import { NumberOfEmployeesInput } from "./NumberOfEmployeesInput";
+import { NumberFormatInput } from "../../../../components/Form/Input/NumberFormatInput";
 
 const initialValues = {
   companyName: "",
@@ -49,8 +49,10 @@ export const CompanyDetails = ({ handleContinue }) => {
                 path="prospect.organizationInfo.companyName"
                 contextualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 30 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
                 infoTitle="This should be the same as in your Trade License"
-                inputProps={{ maxLength: MAX_COMPANY_NAME_LENGTH }}
                 component={Input}
+                InputProps={{
+                  inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
+                }}
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -61,6 +63,9 @@ export const CompanyDetails = ({ handleContinue }) => {
                 contextualHelpText="Select Foreign / Offshore / Non-Resident company if applicable. In case of a Free Zone company  select Free Zone. In case of Civil Company select  Partnerships. Select appropriate category in all other cases"
                 datalistId="companyCategory"
                 component={SelectAutocomplete}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </Grid>
           </Grid>
@@ -74,6 +79,9 @@ export const CompanyDetails = ({ handleContinue }) => {
                 path="prospect.organizationInfo.vatRegistrationNumber"
                 infoTitle="This should be the same as your TRN number of UAE"
                 component={Input}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -84,7 +92,8 @@ export const CompanyDetails = ({ handleContinue }) => {
                 component={Input}
                 changeProspect={(_, value, path) => ({ [path]: value || "0" })}
                 InputProps={{
-                  inputComponent: NumberOfEmployeesInput
+                  inputComponent: NumberFormatInput,
+                  inputProps: { tabIndex: 0 }
                 }}
               />
             </Grid>

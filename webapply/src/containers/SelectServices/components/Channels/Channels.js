@@ -107,6 +107,7 @@ export const ChannelsComponent = ({
             infoTitle={DEBIT_CARD_INFO}
             disabled={true}
             isLoadDefaultValueFromStore={false}
+            inputProps={{ tabIndex: 0 }}
           />
 
           {isSignatoriesListActive && <SignatoriesList stakeholders={stakeholders} />}
@@ -124,6 +125,7 @@ export const ChannelsComponent = ({
             infoTitle={CHEQUE_BOOK_INFO}
             disabled={isChequeBookDisabled}
             isLoadDefaultValueFromStore={false}
+            inputProps={{ tabIndex: 0 }}
           />
 
           <Divider />
@@ -139,6 +141,7 @@ export const ChannelsComponent = ({
               setFieldValue("mailStatements", false);
               setFieldValue("eStatements", true);
             }}
+            inputProps={{ tabIndex: 0 }}
           />
 
           <CustomCheckbox
@@ -150,6 +153,7 @@ export const ChannelsComponent = ({
               setFieldValue("eStatements", false);
               setFieldValue("mailStatements", true);
             }}
+            inputProps={{ tabIndex: 0 }}
           />
 
           <Grid

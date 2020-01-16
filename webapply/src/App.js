@@ -10,7 +10,7 @@ import { history } from "./store";
 import { FormLayout } from "./containers/FormLayout";
 import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
 
-import { ProspectProtectedRoute, AgentProtectedRoute } from "./components/Routers";
+import { ProspectProtectedRoute } from "./components/Routers";
 
 import { getEndpoints } from "./store/selectors/appConfig";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -99,7 +99,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.comeBackLoginVerification}
                   component={ComeBackVerification}
                 />
-                <AgentProtectedRoute
+                <ProspectProtectedRoute
                   exact
                   path={routes.MyApplications}
                   component={MyApplications}

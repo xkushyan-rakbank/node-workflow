@@ -62,6 +62,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
                   component={CustomSelect}
+                  inputProps={{ tabIndex: 0 }}
                 />
               </Grid>
               <Grid
@@ -78,6 +79,9 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   label="Other(Specify)"
                   placeholder="Other(Specify)"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
             </Grid>

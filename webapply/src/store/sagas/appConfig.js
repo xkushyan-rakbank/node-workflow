@@ -20,7 +20,7 @@ import {
 } from "../actions/appConfig";
 import { config } from "../../api/apiClient";
 import { history } from "./..";
-import { accountsNames, UAE_CODE } from "../../constants";
+import { accountsNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
@@ -56,11 +56,13 @@ function* receiveAppConfigSaga() {
     const prospectModel = cloneDeep(newConfig.prospect);
     if (newConfig.prospect) {
       newConfig.prospect.signatoryInfo = [];
+      newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
       if (!newConfig.prospect.applicantInfo.countryCode) {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
       newConfig.prospect.applicationInfo.accountType = accountType;
       newConfig.prospect.applicationInfo.islamicBanking = islamicBanking;
+      newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
     }
 
     yield put(saveProspectModel(prospectModel));
