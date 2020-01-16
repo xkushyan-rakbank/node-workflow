@@ -16,7 +16,7 @@ import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
-import { getProspectId } from "../selectors/appConfig";
+import { getProspectId, getProspectDocuments as getDocuments } from "../selectors/appConfig";
 import {
   RETRIEVE_DOC_UPLOADER,
   DOC_UPLOADER,
@@ -27,6 +27,7 @@ import {
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
+import { concatCompanyDocs, concatStakeholdersDocs } from "../../utils/documents";
 
 function createUploader(prospectId, data, source) {
   let emit;
@@ -54,12 +55,30 @@ function* uploadProgressWatcher(chan, documentKey) {
 function* getProspectDocumentsSaga() {
   const state = yield select();
   const prospectID = getProspectId(state) || "COSME0000000000000001";
+  const existDocuments = getDocuments(state);
   const config = cloneDeep(state.appConfig);
 
   try {
-    const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
+    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID);
 
-    config.prospect.documents = response.data;
+    if (existDocuments) {
+      const companyDocuments = concatCompanyDocs(
+        existDocuments.companyDocuments,
+        data.companyDocuments
+      );
+      const stakeholderDocuments = concatStakeholdersDocs(
+        data.stakeholdersDocuments,
+        existDocuments.stakeholdersDocuments
+      );
+
+      config.prospect.documents = {
+        companyDocuments,
+        stakeholderDocuments
+      };
+    } else {
+      config.prospect.documents = data;
+    }
+
     yield put(updateProspect(config));
   } catch (error) {
     log(error);
