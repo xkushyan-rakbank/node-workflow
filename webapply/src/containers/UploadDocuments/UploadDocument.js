@@ -15,7 +15,8 @@ export const UploadDocument = ({
   companyName,
   signatories,
   history,
-  progress
+  progress,
+  updateProspect
 }) => {
   const classes = useStyles();
 
@@ -40,6 +41,7 @@ export const UploadDocument = ({
               companyName={companyName}
               docUpload={docUpload}
               cancelDocUpload={cancelDocUpload}
+              updateProspect={updateProspect}
               progress={progress}
             />
           </div>
@@ -51,6 +53,7 @@ export const UploadDocument = ({
                 signatories={signatories}
                 docUpload={docUpload}
                 cancelDocUpload={cancelDocUpload}
+                updateProspect={updateProspect}
                 progress={progress}
               />
             </div>

@@ -9,7 +9,8 @@ export const CompanyDocuments = ({
   icon = "",
   docUpload,
   cancelDocUpload,
-  progress
+  progress,
+  updateProspect
 }) => {
   const classes = useStyles();
 
@@ -21,13 +22,15 @@ export const CompanyDocuments = ({
           <h3 className={classes.label}>{companyName}</h3>
         </div>
       </header>
-      {documents.map(document => (
+      {documents.map((document, index) => (
         <UploadDocuments
           key={document.documentKey}
+          index={index}
           document={document}
           type="companyDocuments"
           docUpload={docUpload}
           cancelDocUpload={cancelDocUpload}
+          updateProspect={updateProspect}
           progress={progress}
         />
       ))}
