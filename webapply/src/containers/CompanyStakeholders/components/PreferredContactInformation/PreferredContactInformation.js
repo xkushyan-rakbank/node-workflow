@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { InfoTitle } from "../../../../components/Notifications";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import {
   AutoSaveField as Field,
@@ -138,7 +137,6 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
             </InputGroup>
           </Grid>
         </Grid>
-        <InfoTitle title="Heads up! We can only issue chequebooks if you use a phone number from the UAE." />
 
         <SubmitButton />
       </Form>

@@ -55,8 +55,8 @@ export const accountsNames = {
 
 export const UAE_CODE = "971";
 export const UAE = "AE";
+export const UAE_CURRENCY = "AED";
 export const MAX_STAKEHOLDERS_LENGTH = 12;
-export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
 
@@ -66,7 +66,7 @@ export const REQUEST_FAILED = "error";
 
 export const mobileResolution = 955;
 
-export const APP_STOP_SCREEN_RESULT = "stop";
+export const APP_STOP_SCREEN_RESULT = "Stop";
 
 export const SUBMIT = "submit";
 export const NEXT = "NEXT";
@@ -122,4 +122,14 @@ export const screeningStatus = {
     text:
       "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
   }
+};
+
+export const screeningTypes = {
+  virtualCurrency: "Virtual Currency Check",
+  countryOfIncorporation: "CountryOfIncorporation Check",
+  isShareHolderACompany: "IsShareHolderACompany Check",
+  RAKStarterAccount: "RAKStarter Account Check",
+  dedupe: "Dedupe Check",
+  blacklist: "Blacklist Check",
+  isTooManyStakeholders: "ShareHolderCount Check"
 };

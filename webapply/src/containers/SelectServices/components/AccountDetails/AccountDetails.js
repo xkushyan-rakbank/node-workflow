@@ -12,7 +12,7 @@ import {
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { ALLOWED_CURRENCY } from "../../constants";
+import { DATA_CURRENCIES } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -26,7 +26,11 @@ const accountDetailsSchema = Yup.object({
   receiveInterest: Yup.bool()
 });
 
-export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBanking } }) => {
+export const AccountDetailsComponent = ({
+  goToNext,
+  applicationInfo: { islamicBanking },
+  updateProspect
+}) => {
   const classes = useStyles();
 
   return (
@@ -50,9 +54,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
             path="prospect.accountInfo[0].accountCurrencies"
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
-            filterOptions={options =>
-              options.filter(currency => ALLOWED_CURRENCY.includes(currency.code))
-            }
+            options={DATA_CURRENCIES}
             classes={{ root: classes.radioButtonRoot }}
             contextualHelpProps={{ isDisableHoverListener: false }}
             contextualHelpText="Cheque book, Debit card and Rakvalue will be issued for eligible AED accounts only"
@@ -87,6 +89,11 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                     .filter(city => city.code === values.branchCity)
                     .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
                 }
+                onChange={e => {
+                  setFieldValue("branchID", e.target.value);
+                  updateProspect({ "prospect.accountInfo[0].branchId": e.target.value });
+                  updateProspect({ "prospect.organizationInfo.branchID": e.target.value });
+                }}
                 label="Branch"
                 placeholder="Branch"
                 disabled={!values.branchCity}

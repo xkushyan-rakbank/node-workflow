@@ -58,14 +58,13 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
     setFieldValue(name, !value);
   };
 
-  const isDisabled = (values, passportIndex) => {
-    if (values && values.passportDetails.length > 1 && passportIndex) {
-      const passportDetailsLength = values.passportDetails.length;
-      const prevPassportIndex = passportDetailsLength - 2;
-      const prevNationalityPath = `passportDetails[${prevPassportIndex}].nationality`;
-
-      return passportDetailsLength - 1 === passportIndex && !getIn(values, prevNationalityPath);
-    }
+  const isAdditionalCitizenshipDisabled = (values, passportIndex, errors) => {
+    return (
+      !(
+        getIn(values, `passportDetails[${passportIndex}].nationality`, false) &&
+        getIn(values, `passportDetails[${passportIndex}].passportNumber`, false)
+      ) || !!getIn(errors, `passportDetails[${passportIndex}].passportNumber`, false)
+    );
   };
 
   return (
@@ -77,7 +76,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
       validationSchema={nationalitySchema}
       validateOnChange={false}
     >
-      {withCompanyStakeholder(index, ({ values, setFieldValue }) => (
+      {withCompanyStakeholder(index, ({ values, setFieldValue, errors }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -96,7 +95,6 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           label="Nationality"
                           component={SelectAutocomplete}
                           datalistId="country"
-                          disabled={isDisabled()}
                           filterOptions={options => {
                             const nationalities = values.passportDetails
                               .filter((item, index) => item.nationality && index !== passportIndex)
@@ -131,7 +129,11 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               passportIndex,
                               setFieldValue
                             )}
-                            disabled={isDisabled(values, passportIndex)}
+                            disabled={isAdditionalCitizenshipDisabled(
+                              values,
+                              passportIndex,
+                              errors
+                            )}
                             inputProps={{ tabIndex: 0 }}
                           />
                         )}

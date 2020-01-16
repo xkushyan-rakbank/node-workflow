@@ -7,7 +7,7 @@ import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../../c
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
 import { MAX_COMPANY_NAME_LENGTH } from "../../constants";
-import { NumberOfEmployeesInput } from "./NumberOfEmployeesInput";
+import { NumberFormatInput } from "../../../../components/Form/Input/NumberFormatInput";
 
 const initialValues = {
   companyName: "",
@@ -92,7 +92,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 component={Input}
                 changeProspect={(_, value, path) => ({ [path]: value || "0" })}
                 InputProps={{
-                  inputComponent: NumberOfEmployeesInput,
+                  inputComponent: NumberFormatInput,
                   inputProps: { tabIndex: 0 }
                 }}
               />

@@ -15,13 +15,6 @@ import {
 import get from "lodash/get";
 
 import {
-  getIsEligible,
-  getIsForeignCompany,
-  getIsVirtualCurrency,
-  getIsCompanyAsStakeholder
-} from "./../selectors/companyInfo";
-import { stakeholdersSelector, signatoryQuantitySelector } from "./../selectors/stakeholder";
-import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
   SEND_PROSPECT_TO_API_SUCCESS,
@@ -32,15 +25,10 @@ import {
   setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
-import { getProspect, getProspectId, getIsDedupe, getIsBlackList } from "../selectors/appConfig";
+import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
-import {
-  APP_STOP_SCREEN_RESULT,
-  MAX_STAKEHOLDERS_LENGTH,
-  MAX_SIGNATORIES_LENGTH,
-  screeningStatus
-} from "../../constants";
+import { APP_STOP_SCREEN_RESULT, screeningStatus, screeningTypes } from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -55,16 +43,23 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const state = yield select();
-  const isDedupe = getIsDedupe(preScreening);
-  const isBlackList = getIsBlackList(preScreening);
-  const isEligible = getIsEligible(state);
-  const isForeignCompany = getIsForeignCompany(state);
-  const isVirtualCurrency = getIsVirtualCurrency(state);
-  const isShareholderACompany = getIsCompanyAsStakeholder(preScreening.screeningResults);
-  const isTooManyStakeholders =
-    stakeholdersSelector(state).length === MAX_STAKEHOLDERS_LENGTH ||
-    signatoryQuantitySelector(state) === MAX_SIGNATORIES_LENGTH;
+  const currScreeningTypes = preScreening.screeningResults.reduce(
+    (result, { screeningType, screeningReason }) => {
+      if (screeningReason === APP_STOP_SCREEN_RESULT) {
+        return [...result, screeningType];
+      }
+      return result;
+    },
+    []
+  );
+
+  const isDedupe = currScreeningTypes.includes(screeningTypes.dedupe);
+  const isBlackList = currScreeningTypes.includes(screeningTypes.blacklist);
+  const isEligible = currScreeningTypes.includes(screeningTypes.RAKStarterAccount);
+  const isForeignCompany = currScreeningTypes.includes(screeningTypes.countryOfIncorporation);
+  const isVirtualCurrency = currScreeningTypes.includes(screeningTypes.virtualCurrency);
+  const isShareholderACompany = currScreeningTypes.includes(screeningTypes.isShareHolderACompany);
+  const isTooManyStakeholders = currScreeningTypes.includes(screeningTypes.isTooManyStakeholders);
 
   switch (true) {
     case isVirtualCurrency:

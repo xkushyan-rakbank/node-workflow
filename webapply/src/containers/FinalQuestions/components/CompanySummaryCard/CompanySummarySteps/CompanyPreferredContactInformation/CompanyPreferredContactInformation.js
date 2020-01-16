@@ -135,7 +135,7 @@ export const CompanyPreferredContactInformationComponent = ({
                     <Field
                       name="primaryPhoneNo"
                       path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
-                      label="Mobile number"
+                      label="Landline number"
                       placeholder="55xxxxxxx"
                       shrink={true}
                       component={Input}

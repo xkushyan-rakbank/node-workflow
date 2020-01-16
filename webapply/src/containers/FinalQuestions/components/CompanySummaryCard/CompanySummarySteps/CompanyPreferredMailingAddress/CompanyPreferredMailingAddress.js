@@ -22,8 +22,10 @@ import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import { useStyles } from "./styled";
 
 const companyPreferredMailingAddressSchema = Yup.object().shape({
-  addressFieldDesc: Yup.string().required("You need to provide address details"),
-  addressLine1: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+  addressLine1: Yup.string()
+    .required("You need to provide address details")
+    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+  addressLine2: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
     .matches(ALPHANUMERIC_REGEX, "Invalid PO box number"),
@@ -45,15 +47,15 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
     <div>
       <Formik
         initialValues={{
-          addressFieldDesc: "",
           addressLine1: "",
+          addressLine2: "",
           poBox: "",
           emirateCity: "",
           typeOfSpaceOccupied: {
             spaceType: "",
             others: ""
           },
-          country: ""
+          country: "United Arab Emirates"
         }}
         onSubmit={handleSubmit}
         validationSchema={companyPreferredMailingAddressSchema}
@@ -64,8 +66,8 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item md={6} sm={12}>
                 <Field
-                  name="addressFieldDesc"
-                  path={`${BASE_PATH}.addressFieldDesc`}
+                  name="addressLine1"
+                  path={`${BASE_PATH}.addressLine1`}
                   label="Office / Shop Number"
                   placeholder="Office / Shop Number"
                   contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
@@ -75,8 +77,8 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   component={Input}
                 />
                 <Field
-                  name="addressLine1"
-                  path={`${BASE_PATH}.addressLine1`}
+                  name="addressLine2"
+                  path={`${BASE_PATH}.addressLine2`}
                   label="Street / Location"
                   placeholder="Street / Location"
                   component={Input}
@@ -124,7 +126,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                     inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
                   }}
                 />
-                <Field name="country" path={`${BASE_PATH}.country`} disabled component={Input} />
+                <Field name="country" disabled component={Input} />
               </Grid>
             </Grid>
             <div className={classes.infoTitleWrap}>

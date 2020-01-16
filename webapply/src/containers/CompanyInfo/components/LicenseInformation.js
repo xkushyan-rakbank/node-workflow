@@ -9,6 +9,7 @@ import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
 import { UAE } from "../../../constants";
+import { NumberFormatInput } from "../../../components/Form/Input/NumberFormatInput";
 
 const initialValues = {
   licenseNumber: "",
@@ -117,6 +118,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               contextualHelpProps={{ isDisableHoverListener: false }}
               component={Input}
               InputProps={{
+                inputComponent: NumberFormatInput,
                 inputProps: { tabIndex: 0 }
               }}
             />

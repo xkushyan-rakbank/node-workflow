@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { OTHER_OPTION_CODE } from "./constants";
+import { OTHER_OPTION_CODE, OTHER_OPTION_VALUE } from "./constants";
 import {
   CustomSelect,
   Input,
@@ -18,6 +18,7 @@ import {
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
+import { NumberFormatInput } from "../../../../../../components/Form/Input/NumberFormatInput";
 
 import { useStyles } from "./styled";
 
@@ -86,7 +87,13 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Employment Type"
                     component={CustomSelect}
                     contextualHelpProps={{ isDisableHoverListener: false }}
-                    contextualHelpText="If self-employed then provide business details"
+                    contextualHelpText={
+                      <>
+                        If self-employed then provide business details
+                        <br />
+                        If unemployed, then select &apos;Other&apos;
+                      </>
+                    }
                     inputProps={{ tabIndex: 0 }}
                   />
                 </Grid>
@@ -97,6 +104,10 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Total years of experience"
                     placeholder="Work Experience"
                     component={Input}
+                    InputProps={{
+                      inputComponent: NumberFormatInput,
+                      inputProps: { tabIndex: 0 }
+                    }}
                     contextualHelpText={
                       <>
                         Starting with the most resent enter jobwise list of experience From
@@ -111,9 +122,6 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                         AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
                       </>
                     }
-                    InputProps={{
-                      inputProps: { tabIndex: 0 }
-                    }}
                   />
                   <Field
                     name="designation"
@@ -121,12 +129,13 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Designation"
                     placeholder="Designation"
                     component={Input}
+                    contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
                   />
                 </Grid>
-                {values.employmentType === OTHER_OPTION_CODE && (
+                {values.employmentType === OTHER_OPTION_VALUE && (
                   <Grid item md={12} sm={12}>
                     <Field
                       name="otherEmploymentType"
