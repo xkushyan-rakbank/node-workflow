@@ -114,11 +114,4 @@ public class SecurityFilter implements Filter {
         return null;
     }
 
-    /*
-    public String decrypt(String input, PublicKey key) throws IOException, GeneralSecurityException {
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, key);
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(cipher.doFinal(input.getBytes(UTF_8)));
-    }
-    */
 }
