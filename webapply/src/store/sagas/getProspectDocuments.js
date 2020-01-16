@@ -84,7 +84,6 @@ function* getProspectDocumentsSaga() {
         stakeholderDocuments
       };
     } else {
-      console.log(2);
       config.prospect.documents = data;
     }
 
