@@ -85,7 +85,13 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Employment Type"
                     component={CustomSelect}
                     contextualHelpProps={{ isDisableHoverListener: false }}
-                    contextualHelpText="If self-employed then provide business details"
+                    contextualHelpText={
+                      <>
+                        If self-employed then provide business details
+                        <br />
+                        If unemployed, then select &apos;Other&apos;
+                      </>
+                    }
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -116,6 +122,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Designation"
                     placeholder="Designation"
                     component={Input}
+                    contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
                   />
                 </Grid>
                 {values.employmentType === OTHER_OPTION_CODE && (
