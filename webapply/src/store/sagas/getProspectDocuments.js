@@ -29,7 +29,7 @@ import {
   concatCompanyDocs,
   concatStakeholdersDocs,
   mergeObjectToCollection,
-  changeDocumentProps
+  documentsMapper
 } from "../../utils/documents";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 
@@ -108,25 +108,18 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 
     const config = cloneDeep(state.appConfig);
     const documents = config.prospect.documents;
+    const additionalProps = { documentType, docProps, response };
 
     if (docOwner === COMPANY_DOCUMENTS) {
-      const companyDocuments = changeDocumentProps(
-        documents[COMPANY_DOCUMENTS],
-        documentType,
-        docProps,
-        response
-      );
+      const companyDocuments = documents[COMPANY_DOCUMENTS].map(documentsMapper(additionalProps));
 
       documents[COMPANY_DOCUMENTS] = companyDocuments;
     } else {
-      const stakeholdersDocuments = changeDocumentProps(
-        mergeObjectToCollection(documents[STAKEHOLDER_DOCUMENTS]),
-        documentType,
-        docProps,
-        response
+      const stakeholderDocuments = mergeObjectToCollection(documents[STAKEHOLDER_DOCUMENTS]).map(
+        documentsMapper(additionalProps)
       );
 
-      stakeholdersDocuments.forEach(
+      stakeholderDocuments.forEach(
         doc => (documents[STAKEHOLDER_DOCUMENTS][doc.key].documents[index] = doc)
       );
     }
