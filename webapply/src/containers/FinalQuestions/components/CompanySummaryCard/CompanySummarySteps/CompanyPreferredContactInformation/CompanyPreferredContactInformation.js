@@ -103,6 +103,7 @@ export const CompanyPreferredContactInformationComponent = ({
                         });
                       }
                     }}
+                    inputProps={{ tabIndex: 0 }}
                   />
                   <Field
                     name="primaryMobileNo"
@@ -112,6 +113,9 @@ export const CompanyPreferredContactInformationComponent = ({
                     shrink={true}
                     component={Input}
                     contextualHelpText="This number will be used as primary contact for Transaction Alerts and queries related to Business. If you give an international number, then Cheque book will not be issued."
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 </InputGroup>
                 <div
@@ -126,6 +130,7 @@ export const CompanyPreferredContactInformationComponent = ({
                       component={CustomSelect}
                       datalistId="countryCode"
                       shrink={false}
+                      inputProps={{ tabIndex: 0 }}
                     />
                     <Field
                       name="primaryPhoneNo"
@@ -134,6 +139,9 @@ export const CompanyPreferredContactInformationComponent = ({
                       placeholder="55xxxxxxx"
                       shrink={true}
                       component={Input}
+                      InputProps={{
+                        inputProps: { tabIndex: 0 }
+                      }}
                     />
                   </InputGroup>
                   <RemoveButton
@@ -154,6 +162,9 @@ export const CompanyPreferredContactInformationComponent = ({
                   label="Primary e-mail address"
                   placeholder="Primary e-mail address"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
             </Grid>

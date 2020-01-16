@@ -69,7 +69,9 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="Office / Shop Number"
                   placeholder="Office / Shop Number"
                   contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
-                  inputProps={{ maxLength: MAX_OFFICE_NUMBER_LENGTH }}
+                  InputProps={{
+                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                  }}
                   component={Input}
                 />
                 <Field
@@ -78,6 +80,9 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="Street / Location"
                   placeholder="Street / Location"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
                 <Field
                   name="emirateCity"
@@ -85,6 +90,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   datalistId="emirateCity"
                   label="Emirate"
                   component={CustomSelect}
+                  inputProps={{ tabIndex: 0 }}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -94,6 +100,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   datalistId="spaceType"
                   label="Type of Space Occupied"
                   component={CustomSelect}
+                  inputProps={{ tabIndex: 0 }}
                 />
                 {values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
                   <Field
@@ -102,6 +109,9 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                     label="Other(Specify)"
                     placeholder="Other(Specify)"
                     component={Input}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 )}
                 <Field
@@ -110,7 +120,9 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="PO Box Number"
                   placeholder="AB1234"
                   component={Input}
-                  inputProps={{ maxLength: MAX_PO_BOX_NUMBER_LENGTH }}
+                  InputProps={{
+                    inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
+                  }}
                 />
                 <Field name="country" path={`${BASE_PATH}.country`} disabled component={Input} />
               </Grid>

@@ -56,6 +56,9 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
             classes={{ root: classes.radioButtonRoot }}
             contextualHelpProps={{ isDisableHoverListener: false }}
             contextualHelpText="Cheque book, Debit card and Rakvalue will be issued for eligible AED accounts only"
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
           />
           <Divider />
           <Subtitle title="Select branch" classes={{ wrapper: classes.subtitleBranch }} />
@@ -71,6 +74,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                   setFieldValue("branchCity", e.target.value);
                   setFieldValue("branchID", "");
                 }}
+                inputProps={{ tabIndex: 0 }}
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -87,6 +91,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                 placeholder="Branch"
                 disabled={!values.branchCity}
                 component={CustomSelect}
+                inputProps={{ tabIndex: 0 }}
               />
             </Grid>
           </Grid>
@@ -100,6 +105,7 @@ export const AccountDetailsComponent = ({ goToNext, applicationInfo: { islamicBa
                 label="I don't wish to receive interest from my account"
                 classes={{ formControlRoot: classes.formControl }}
                 component={Checkbox}
+                inputProps={{ tabIndex: 0 }}
               />
             </>
           )}

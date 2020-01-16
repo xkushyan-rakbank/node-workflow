@@ -79,6 +79,9 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
               placeholder="E-mail Address"
               component={Input}
               disabled={!isSignatory}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
           </Grid>
         </Grid>
@@ -92,6 +95,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={false}
                 disabled={!isSignatory}
                 datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
               />
 
               <Field
@@ -102,6 +106,9 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={true}
                 component={Input}
                 disabled={!isSignatory}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </InputGroup>
           </Grid>
@@ -114,6 +121,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={false}
                 disabled={!isSignatory}
                 datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
               />
 
               <Field
@@ -123,6 +131,9 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 placeholder="Landline number (optional)"
                 component={Input}
                 disabled={!isSignatory}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </InputGroup>
           </Grid>
