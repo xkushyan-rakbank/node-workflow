@@ -24,13 +24,15 @@ export const UploadDocuments = ({
   index,
   uploadErrorMessage,
   progress,
-  cancelDocUpload
+  cancelDocUpload,
+  updateProspect
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
   const inputEl = useRef(null);
   const documentKey = useMemo(() => nanoid(), []);
+  const isUploaded = document.uploadStatus === "Uploaded";
 
   const fileUploadHandler = useCallback(() => {
     const file = inputEl.current.files[0];
@@ -69,6 +71,11 @@ export const UploadDocuments = ({
   }, [document]);
 
   const fileUploadCancel = useCallback(() => {
+    if (isUploaded) {
+      updateProspect({
+        [`prospect.documents[${docOwner}][${index}].uploadStatus`]: "NotUploaded"
+      });
+    }
     cancelDocUpload(documentKey);
     setSelectedFile(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,48 +93,50 @@ export const UploadDocuments = ({
       />
 
       <>
-        {!selectedFile && (
-          <div className={classes.ContentBox}>
-            {!selectedFile && <p className={classes.uploadedFileName}>{document.documentType}</p>}
-            {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
-            {!errorMessage && !selectedFile && (
-              <p className={classes.fileSizeMessage}>
-                Supported formats are PDF, JPG and PNG | 5MB maximum size
-              </p>
-            )}
-            {uploadErrorMessage && (
-              <p className={classes.ErrorExplanation}>Error while uploading</p>
-            )}
-          </div>
-        )}
-        {!selectedFile && (
-          <p
-            className={classes.ControlsBox}
-            justify="flex-end"
-            onClick={() => inputEl.current.click()}
-          >
-            Upload
-          </p>
-        )}
-      </>
-      <>
-        {selectedFile && (
+        {!selectedFile && !isUploaded ? (
+          <>
+            <div className={classes.ContentBox}>
+              {!selectedFile && <p className={classes.uploadedFileName}>{document.documentType}</p>}
+              {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
+              {!errorMessage && !selectedFile && (
+                <p className={classes.fileSizeMessage}>
+                  Supported formats are PDF, JPG and PNG | 5MB maximum size
+                </p>
+              )}
+              {uploadErrorMessage && (
+                <p className={classes.ErrorExplanation}>Error while uploading</p>
+              )}
+            </div>
+
+            <p
+              className={classes.ControlsBox}
+              justify="flex-end"
+              onClick={() => inputEl.current.click()}
+            >
+              Upload
+            </p>
+          </>
+        ) : (
           <>
             <div>{icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
             <div className={classes.contentBox}>
               <div className={classes.uploadFileName}>
-                {selectedFile.name}
-                <span className={classes.signatoryRights}>{selectedFile.size} Bytes</span>
+                {isUploaded ? document.fileName : selectedFile.name}
+                <span className={classes.signatoryRights}>
+                  {isUploaded ? document.fileSize : selectedFile.size} Bytes
+                </span>
               </div>
 
               <div className={classes.uploadFileName}>
                 <div id="Progress_Status">
                   <div
                     className={classes.myProgressBar}
-                    style={{ width: `${progress[documentKey] || 0}%` }}
+                    style={{ width: `${isUploaded ? 100 : progress[documentKey] || 0}%` }}
                   ></div>
                 </div>
-                <div className={classes.progressStatus}>{progress[documentKey] || 0}%</div>
+                <div className={classes.progressStatus}>
+                  {isUploaded ? 100 : progress[documentKey] || 0}%
+                </div>
               </div>
             </div>
             <p className={classes.cancel} onClick={fileUploadCancel}>

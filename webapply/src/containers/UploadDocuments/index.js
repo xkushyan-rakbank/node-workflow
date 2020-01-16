@@ -13,6 +13,7 @@ import {
   docUpload,
   cancelDocUpload
 } from "../../store/actions/getProspectDocuments";
+import { updateProspect } from "../../store/actions/appConfig";
 import { getInputValueById } from "../../store/selectors/input";
 
 const mapStateToProps = state => ({
@@ -29,7 +30,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   retrieveDocDetails,
   docUpload,
-  cancelDocUpload
+  cancelDocUpload,
+  updateProspect
 };
 
 export default connect(
