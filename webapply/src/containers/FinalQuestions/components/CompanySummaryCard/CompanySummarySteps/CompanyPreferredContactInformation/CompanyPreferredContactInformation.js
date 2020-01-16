@@ -1,11 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 
-import { AddButton } from "../../../../../../components/Buttons/AddButton";
-import { RemoveButton } from "../../../../../../components/Buttons/RemoveButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../../../components/Notifications";
 import {
@@ -63,7 +60,6 @@ export const CompanyPreferredContactInformationComponent = ({
   primaryPhoneNo,
   handleContinue
 }) => {
-  const [isExistSecondaryPhoneNumber, setIsExistSecondaryPhoneNumber] = useState(!!primaryPhoneNo);
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
@@ -86,7 +82,21 @@ export const CompanyPreferredContactInformationComponent = ({
       >
         {withCompanyFinalQuestions(({ setFieldValue }) => (
           <Form>
-            <Grid container spacing={3} className={classes.flexContainer}>
+            <Grid container spacing={3}>
+              <Grid item sm={12}>
+                <Field
+                  name="primaryEmail"
+                  path="prospect.organizationInfo.contactDetails.primaryEmail"
+                  label="E-mail Address"
+                  placeholder="E-mail Address"
+                  component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                />
+              </Grid>
+            </Grid>
+            <Grid item container spacing={3}>
               <Grid item md={6} sm={12}>
                 <InputGroup>
                   <Field
@@ -118,62 +128,32 @@ export const CompanyPreferredContactInformationComponent = ({
                     }}
                   />
                 </InputGroup>
-                <div
-                  className={cx(classes.relative, {
-                    hidden: !isExistSecondaryPhoneNumber
-                  })}
-                >
-                  <InputGroup>
-                    <Field
-                      name="primaryPhoneCountryCode"
-                      path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
-                      component={CustomSelect}
-                      datalistId="countryCode"
-                      shrink={false}
-                      inputProps={{ tabIndex: 0 }}
-                    />
-                    <Field
-                      name="primaryPhoneNo"
-                      path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
-                      label="Landline number"
-                      placeholder="55xxxxxxx"
-                      shrink={true}
-                      component={Input}
-                      InputProps={{
-                        inputProps: { tabIndex: 0 }
-                      }}
-                    />
-                  </InputGroup>
-                  <RemoveButton
-                    onClick={() => {
-                      setFieldValue("primaryPhoneNo", "");
-                      setFieldValue("primaryPhoneCountryCode", UAE_CODE);
-                      setIsExistSecondaryPhoneNumber(false);
-                    }}
-                    title="Delete"
-                    className={classes.container}
-                  />
-                </div>
               </Grid>
               <Grid item md={6} sm={12}>
-                <Field
-                  name="primaryEmail"
-                  path="prospect.organizationInfo.contactDetails.primaryEmail"
-                  label="Primary e-mail address"
-                  placeholder="Primary e-mail address"
-                  component={Input}
-                  InputProps={{
-                    inputProps: { tabIndex: 0 }
-                  }}
-                />
+                <InputGroup>
+                  <Field
+                    name="primaryPhoneCountryCode"
+                    path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
+                    component={CustomSelect}
+                    datalistId="countryCode"
+                    shrink={false}
+                    inputProps={{ tabIndex: 0 }}
+                  />
+
+                  <Field
+                    name="primaryPhoneNo"
+                    path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
+                    label="Landline number (optional)"
+                    placeholder="Landline number (optional)"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
+                  />
+                </InputGroup>
               </Grid>
             </Grid>
-            {!isExistSecondaryPhoneNumber && (
-              <AddButton
-                onClick={() => setIsExistSecondaryPhoneNumber(true)}
-                title="Add a landline number"
-              />
-            )}
+
             <div className={classes.infoTitleWrap}>
               <InfoTitle
                 classes={{ wrapper: classes.infoTitle }}
