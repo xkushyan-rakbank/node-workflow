@@ -12,7 +12,7 @@ import {
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { ALLOWED_CURRENCY } from "../../constants";
+import { DATA_CURRENCIES } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -54,12 +54,13 @@ export const AccountDetailsComponent = ({
             path="prospect.accountInfo[0].accountCurrencies"
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
-            filterOptions={options =>
-              options.filter(currency => ALLOWED_CURRENCY.includes(currency.code))
-            }
+            options={DATA_CURRENCIES}
             classes={{ root: classes.radioButtonRoot }}
             contextualHelpProps={{ isDisableHoverListener: false }}
             contextualHelpText="Cheque book, Debit card and Rakvalue will be issued for eligible AED accounts only"
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
           />
           <Divider />
           <Subtitle title="Select branch" classes={{ wrapper: classes.subtitleBranch }} />
@@ -75,6 +76,7 @@ export const AccountDetailsComponent = ({
                   setFieldValue("branchCity", e.target.value);
                   setFieldValue("branchID", "");
                 }}
+                inputProps={{ tabIndex: 0 }}
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -96,6 +98,7 @@ export const AccountDetailsComponent = ({
                 placeholder="Branch"
                 disabled={!values.branchCity}
                 component={CustomSelect}
+                inputProps={{ tabIndex: 0 }}
               />
             </Grid>
           </Grid>
@@ -109,6 +112,7 @@ export const AccountDetailsComponent = ({
                 label="I don't wish to receive interest from my account"
                 classes={{ formControlRoot: classes.formControl }}
                 component={Checkbox}
+                inputProps={{ tabIndex: 0 }}
               />
             </>
           )}

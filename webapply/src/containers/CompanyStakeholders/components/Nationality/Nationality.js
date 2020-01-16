@@ -58,14 +58,13 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
     setFieldValue(name, !value);
   };
 
-  const isDisabled = (values, passportIndex) => {
-    if (values && values.passportDetails.length > 1 && passportIndex) {
-      const passportDetailsLength = values.passportDetails.length;
-      const prevPassportIndex = passportDetailsLength - 2;
-      const prevNationalityPath = `passportDetails[${prevPassportIndex}].nationality`;
-
-      return passportDetailsLength - 1 === passportIndex && !getIn(values, prevNationalityPath);
-    }
+  const isAdditionalCitizenshipDisabled = (values, passportIndex, errors) => {
+    return (
+      !(
+        getIn(values, `passportDetails[${passportIndex}].nationality`, false) &&
+        getIn(values, `passportDetails[${passportIndex}].passportNumber`, false)
+      ) || !!getIn(errors, `passportDetails[${passportIndex}].passportNumber`, false)
+    );
   };
 
   return (
@@ -77,7 +76,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
       validationSchema={nationalitySchema}
       validateOnChange={false}
     >
-      {withCompanyStakeholder(index, ({ values, setFieldValue }) => (
+      {withCompanyStakeholder(index, ({ values, setFieldValue, errors }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -96,7 +95,6 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           label="Nationality"
                           component={SelectAutocomplete}
                           datalistId="country"
-                          disabled={isDisabled()}
                           filterOptions={options => {
                             const nationalities = values.passportDetails
                               .filter((item, index) => item.nationality && index !== passportIndex)
@@ -115,6 +113,9 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                             };
                           }}
                           shrink={true}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
                         />
                         {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
                           <Field
@@ -128,7 +129,12 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               passportIndex,
                               setFieldValue
                             )}
-                            disabled={isDisabled(values, passportIndex)}
+                            disabled={isAdditionalCitizenshipDisabled(
+                              values,
+                              passportIndex,
+                              errors
+                            )}
+                            inputProps={{ tabIndex: 0 }}
                           />
                         )}
                       </Grid>
@@ -141,12 +147,16 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           component={Input}
                           contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
                             Example: 'P-123/1950/456 to be entered as P1231950456'"
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
                         />
                         <Field
                           name={`passportDetails[${passportIndex}].diplomatPassport`}
                           path={`${passportDetails}.diplomatPassport`}
                           label="This is a diplomatic Passport"
                           component={Checkbox}
+                          inputProps={{ tabIndex: 0 }}
                         />
                       </Grid>
                     </React.Fragment>

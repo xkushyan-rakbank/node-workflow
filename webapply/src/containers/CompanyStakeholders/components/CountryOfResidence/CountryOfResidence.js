@@ -52,6 +52,9 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 disabled={isSignatory}
                 datalistId="country"
                 shrink
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -64,6 +67,9 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                   ...prospect,
                   [eidNumberPath]: value.replace(/-/g, "")
                 })}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </Grid>
           </Grid>

@@ -42,6 +42,9 @@ export const SignatoryRights = ({ handleContinue, index }) => (
               [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
             })}
             onSelect={() => setFieldValue("authorityType", "")}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
           />
           <Field
             name="authorityType"
@@ -52,6 +55,7 @@ export const SignatoryRights = ({ handleContinue, index }) => (
             datalistId="authorityType"
             contextualHelpProps={{ isDisableHoverListener: false }}
             contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
+            inputProps={{ tabIndex: 0 }}
           />
         </Grid>
 

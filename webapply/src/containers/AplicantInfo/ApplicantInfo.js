@@ -109,7 +109,9 @@ const ApplicantInfoPage = ({
                 label="Your Name"
                 placeholder="Your Name"
                 component={Input}
-                inputProps={{ tabIndex: 0 }}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             )}
 
@@ -122,7 +124,9 @@ const ApplicantInfoPage = ({
                 label="Your E-mail Address"
                 placeholder="Email"
                 component={Input}
-                inputProps={{ tabIndex: 0 }}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             )}
 
@@ -137,6 +141,7 @@ const ApplicantInfoPage = ({
                   datalistId="countryCode"
                   component={CustomSelect}
                   shrink={false}
+                  inputProps={{ tabIndex: 0 }}
                 />
 
                 <Field
@@ -145,6 +150,9 @@ const ApplicantInfoPage = ({
                   label="Your Mobile Number"
                   placeholder="Mobile Number"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </InputGroup>
             )}
