@@ -109,6 +109,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                         setFieldTouched("entitiesInUAE[0].emirate", false);
                       }
                     }}
+                    inputProps={{ tabIndex: 0 }}
                   />
                   {values.otherEntitiesInUAE && (
                     <>
@@ -130,6 +131,9 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                     Equipment Rental LLC
                                   </>
                                 }
+                                InputProps={{
+                                  inputProps: { tabIndex: 0 }
+                                }}
                               />
                             </Grid>
                             <Grid
@@ -158,6 +162,9 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                     CN-123/2019/456 to be entered as CN1232019456
                                   </>
                                 }
+                                InputProps={{
+                                  inputProps: { tabIndex: 0 }
+                                }}
                               />
                             </Grid>
                             <Grid
@@ -172,6 +179,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 datalistId="emirateCity"
                                 label="Emirate"
                                 component={CustomSelect}
+                                inputProps={{ tabIndex: 0 }}
                               />
                               {!!index && (
                                 <ArrayRemoveButton
@@ -231,6 +239,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                         setFieldTouched("entitiesOutsideUAE[0].country", false);
                       }
                     }}
+                    inputProps={{ tabIndex: 0 }}
                   />
                   {values.otherEntitiesOutsideUAE && (
                     <>
@@ -252,6 +261,9 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                     Equipment Rental LLC
                                   </>
                                 }
+                                InputProps={{
+                                  inputProps: { tabIndex: 0 }
+                                }}
                               />
                             </Grid>
                             <Grid
@@ -266,6 +278,9 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 datalistId="countryOfIncorporation"
                                 label="Country"
                                 component={SelectAutocomplete}
+                                InputProps={{
+                                  inputProps: { tabIndex: 0 }
+                                }}
                               />
                               {!!index && (
                                 <ArrayRemoveButton

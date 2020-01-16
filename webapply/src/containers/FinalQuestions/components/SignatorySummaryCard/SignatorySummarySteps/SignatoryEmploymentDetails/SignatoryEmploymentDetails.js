@@ -18,6 +18,7 @@ import {
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
+import { NumberFormatInput } from "../../../../../../components/Form/Input/NumberFormatInput";
 
 import { useStyles } from "./styled";
 
@@ -77,6 +78,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     datalistId="qualification"
                     label="Qualification"
                     component={CustomSelect}
+                    inputProps={{ tabIndex: 0 }}
                   />
                   <Field
                     name="employmentType"
@@ -92,6 +94,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                         If unemployed, then select &apos;Other&apos;
                       </>
                     }
+                    inputProps={{ tabIndex: 0 }}
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -101,6 +104,10 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Total years of experience"
                     placeholder="Work Experience"
                     component={Input}
+                    InputProps={{
+                      inputComponent: NumberFormatInput,
+                      inputProps: { tabIndex: 0 }
+                    }}
                     contextualHelpText={
                       <>
                         Starting with the most resent enter jobwise list of experience From
@@ -123,6 +130,9 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     placeholder="Designation"
                     component={Input}
                     contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 </Grid>
                 {values.employmentType === OTHER_OPTION_VALUE && (
@@ -133,6 +143,9 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                       label="Other(Specify)"
                       placeholder="Other(Specify)"
                       component={Input}
+                      InputProps={{
+                        inputProps: { tabIndex: 0 }
+                      }}
                     />
                   </Grid>
                 )}
@@ -145,6 +158,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                       const employerName = values.isWorkAtTheCompany ? "" : companyName;
                       setFieldValue("employerName", employerName);
                     }}
+                    inputProps={{ tabIndex: 0 }}
                   />
                 </Grid>
                 <Grid item sm={12}>
@@ -155,6 +169,9 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     placeholder="Employer name"
                     component={Input}
                     disabled={values.isWorkAtTheCompany}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 </Grid>
               </Grid>

@@ -48,6 +48,9 @@ export const Industry = ({ handleContinue }) => (
                 setFieldValue("industry", e.target.value);
                 setFieldValue("subCategory", "");
               }}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -64,6 +67,9 @@ export const Industry = ({ handleContinue }) => (
               }
               multiple
               disabled={!(values.industry || []).length}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
           </Grid>
         </Grid>

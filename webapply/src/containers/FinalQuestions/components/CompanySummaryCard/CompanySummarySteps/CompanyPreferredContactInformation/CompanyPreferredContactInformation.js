@@ -90,6 +90,9 @@ export const CompanyPreferredContactInformationComponent = ({
                   label="E-mail Address"
                   placeholder="E-mail Address"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
             </Grid>
@@ -110,8 +113,8 @@ export const CompanyPreferredContactInformationComponent = ({
                         });
                       }
                     }}
+                    inputProps={{ tabIndex: 0 }}
                   />
-
                   <Field
                     name="primaryMobileNo"
                     path="prospect.organizationInfo.contactDetails.primaryMobileNo"
@@ -120,6 +123,9 @@ export const CompanyPreferredContactInformationComponent = ({
                     shrink={true}
                     component={Input}
                     contextualHelpText="This number will be used as primary contact for Transaction Alerts and queries related to Business. If you give an international number, then Cheque book will not be issued."
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 </InputGroup>
               </Grid>
@@ -131,6 +137,7 @@ export const CompanyPreferredContactInformationComponent = ({
                     component={CustomSelect}
                     datalistId="countryCode"
                     shrink={false}
+                    inputProps={{ tabIndex: 0 }}
                   />
 
                   <Field
@@ -139,6 +146,9 @@ export const CompanyPreferredContactInformationComponent = ({
                     label="Landline number (optional)"
                     placeholder="Landline number (optional)"
                     component={Input}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 </InputGroup>
               </Grid>
