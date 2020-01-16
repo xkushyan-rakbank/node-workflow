@@ -36,9 +36,9 @@ export const SignatoriesDocuments = ({
           {(docUploadDetails.documents || []).map((document, index) => (
             <UploadDocuments
               key={document.documentKey}
+              document={document}
               index={index}
               stakeholderIndex={stakeholderIndex}
-              document={document}
               type="stakeholdersDocuments"
               docUpload={docUpload}
               cancelDocUpload={cancelDocUpload}
