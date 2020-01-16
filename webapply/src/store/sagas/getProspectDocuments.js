@@ -14,7 +14,6 @@ import get from "lodash/get";
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
-
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId } from "../selectors/appConfig";
 import {
@@ -66,7 +65,7 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, documentKey }) {
+function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, documentKey, index }) {
   const source = CancelToken.source();
 
   try {
@@ -81,15 +80,39 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 
     const config = cloneDeep(state.appConfig);
 
-    const documents = config.prospect.documents[docOwner].map(doc => {
-      if (doc.documentType === documentType) {
-        return { ...doc, ...docProps, fileName: get(response, "data.fileName", "") };
-      }
+    if (docOwner === "companyDocuments") {
+      const companyDocuments = config.prospect.documents[docOwner].map(doc => {
+        if (doc.documentType === documentType) {
+          return { ...doc, ...docProps, fileName: get(response, "data.fileName", "") };
+        }
 
-      return doc;
-    });
+        return doc;
+      });
+      config.prospect.documents[docOwner] = companyDocuments;
+    } else {
+      const mergeObjectToCollection = obj =>
+        Object.keys(obj)
+          .map(key =>
+            Object.values(obj[key])
+              .flat()
+              .map(item => ({ ...item, key }))
+          )
+          .flat();
 
-    config.prospect.documents[docOwner] = documents;
+      const stakeholdersDocuments = mergeObjectToCollection(
+        config.prospect.documents[docOwner]
+      ).map(doc => {
+        if (doc.documentType === documentType) {
+          return { ...doc, ...docProps, fileName: get(response, "data.fileName", "") };
+        }
+
+        return doc;
+      });
+
+      stakeholdersDocuments.forEach(
+        doc => (config.prospect.documents[docOwner][doc.key].documents[index] = doc)
+      );
+    }
 
     yield put(setConfig(config));
   } catch (error) {

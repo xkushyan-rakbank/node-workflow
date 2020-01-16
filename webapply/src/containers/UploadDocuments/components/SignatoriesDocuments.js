@@ -31,9 +31,10 @@ export const SignatoriesDocuments = ({
               </div>
             </div>
           </div>
-          {(docUploadDetails.documents || []).map(document => (
+          {(docUploadDetails.documents || []).map((document, index) => (
             <UploadDocuments
               key={document.documentKey}
+              index={index}
               document={document}
               type="stakeholdersDocuments"
               docUpload={docUpload}

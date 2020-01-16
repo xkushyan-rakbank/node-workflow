@@ -21,6 +21,7 @@ export const UploadDocuments = ({
   type: docOwner,
   docUpload,
   icon,
+  index,
   uploadErrorMessage,
   progress,
   cancelDocUpload
@@ -54,7 +55,14 @@ export const UploadDocuments = ({
     data.append("fileInfo", fileInfo);
     data.append("file", file);
 
-    docUpload({ data, docProps, docOwner, documentType: document.documentType, documentKey });
+    docUpload({
+      data,
+      docProps,
+      docOwner,
+      documentType: document.documentType,
+      documentKey,
+      index
+    });
     setErrorMessage(null);
     setSelectedFile(file);
     // eslint-disable-next-line react-hooks/exhaustive-deps
