@@ -110,7 +110,7 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
     const config = cloneDeep(state.appConfig);
     const documents = config.prospect.documents;
     const fileName = get(response, "data.fileName", "");
-    const additionalProps = { documentType, docProps: { ...docProps, fileName }, response };
+    const additionalProps = { documentType, docProps: { ...docProps, fileName } };
 
     if (docOwner === COMPANY_DOCUMENTS) {
       const companyDocuments = documents[COMPANY_DOCUMENTS].map(documentsMapper(additionalProps));
