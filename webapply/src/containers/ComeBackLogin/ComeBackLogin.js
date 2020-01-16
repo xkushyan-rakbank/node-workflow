@@ -104,6 +104,9 @@ const ComeBackLoginComponent = ({
               label="Your E-mail Address"
               placeholder="Email"
               component={Input}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
 
             <InputGroup>
@@ -115,6 +118,7 @@ const ComeBackLoginComponent = ({
                 extractLabel={item => item.displayText}
                 component={CustomSelect}
                 shrink={false}
+                inputProps={{ tabIndex: 0 }}
               />
 
               <Field
@@ -123,6 +127,9 @@ const ComeBackLoginComponent = ({
                 label="Your Mobile Number"
                 placeholder="Mobile Number"
                 component={Input}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </InputGroup>
 

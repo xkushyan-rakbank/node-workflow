@@ -5,7 +5,7 @@
         "signatoryId": "",
         "signatoryName": "",
         "documentTitle": "",
-        "documentKey": "MGHN43MD75_TL",
+        "documentKey": "",
         "fileName": "",
         "filePath": "",
         "url": "",
@@ -23,14 +23,14 @@
         "verifiedBy": "",
         "isEncrypted": false,
         "encryptionDetails": "",
-        "uploadStatus": "Uploaded"
+        "uploadStatus": ""
       },
       {
         "documentType": "MOA",
         "signatoryId": "",
         "signatoryName": "",
         "documentTitle": "",
-        "documentKey": "MGHN43MD75_MOA",
+        "documentKey": "",
         "fileName": "",
         "filePath": "",
         "url": "",
@@ -48,7 +48,7 @@
         "verifiedBy": "",
         "isEncrypted": false,
         "encryptionDetails": "",
-        "uploadStatus": "Uploaded"
+        "uploadStatus": ""
       }
     ],
     "stakeholdersDocuments": {
@@ -59,7 +59,7 @@
             "signatoryId": "1",
             "signatoryName": "Manohar",
             "documentTitle": "",
-            "documentKey": "MGHN43MD75_PP_0",
+            "documentKey": "",
             "fileName": "",
             "filePath": "",
             "url": "",
@@ -77,7 +77,7 @@
             "verifiedBy": "",
             "isEncrypted": false,
             "encryptionDetails": "",
-            "uploadStatus": "Uploaded"
+            "uploadStatus": ""
           }
         ]
       },
@@ -88,7 +88,7 @@
             "signatoryId": "2",
             "signatoryName": "Richard",
             "documentTitle": "",
-            "documentKey": "MGHN43MD75_PP_1",
+            "documentKey": "",
             "fileName": "",
             "filePath": "",
             "url": "",
@@ -106,7 +106,7 @@
             "verifiedBy": "",
             "isEncrypted": false,
             "encryptionDetails": "",
-            "uploadStatus": "Uploaded"
+            "uploadStatus": ""
           }
         ]
       }

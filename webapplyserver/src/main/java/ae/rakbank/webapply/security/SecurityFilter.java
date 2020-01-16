@@ -37,9 +37,12 @@ public class SecurityFilter implements Filter {
         if (skipEncryption((HttpServletRequest) request)) {
             logger.info("Encryption skipped");
             chain.doFilter(request, response);
-        } else {
+        }
+        else {
             logger.info("Encryption enabled");
             ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
+            responseWrapper.setCharacterEncoding("UTF-8");
+
             byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
             byte[] decryptedData = null;
             SecretKeySpec spec = null;
@@ -56,7 +59,8 @@ public class SecurityFilter implements Filter {
                 ObjectMapper mapper = new ObjectMapper();
                 result = mapper.writeValueAsString(failed);
                 responseWrapper.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            } else {
+            }
+            else {
                 HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
                         decryptedData);
 
@@ -64,6 +68,7 @@ public class SecurityFilter implements Filter {
 
                 result = encrypt(responseWrapper, spec);
             }
+
             logger.info("#! Content-Length of response: {} encrypt send: {}", result.length(), result);
             response.setContentLength(result.length());
             response.getWriter().write(result);
@@ -107,12 +112,6 @@ public class SecurityFilter implements Filter {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public String decrypt(String input, PublicKey key) throws IOException, GeneralSecurityException {
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, key);
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(cipher.doFinal(input.getBytes(UTF_8)));
     }
 
 }

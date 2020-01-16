@@ -50,6 +50,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                   datalistId="maritalStatus"
                   label="Marital Status"
                   component={CustomSelect}
+                  inputProps={{ tabIndex: 0 }}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -60,7 +61,9 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                   placeholder="Mother's maiden name"
                   component={Input}
                   contextualHelpText="Provide mother's surname before marriage"
-                  inputProps={{ maxLength: MAX_MOTHERS_MAIDEN_NAME_LENGTH }}
+                  InputProps={{
+                    inputProps: { maxLength: MAX_MOTHERS_MAIDEN_NAME_LENGTH, tabIndex: 0 }
+                  }}
                 />
               </Grid>
               {values.maritalStatus === OTHER_OPTION_CODE && (
@@ -71,6 +74,9 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                     label="Other(Specify)"
                     placeholder="Other(Specify)"
                     component={Input}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 </Grid>
               )}

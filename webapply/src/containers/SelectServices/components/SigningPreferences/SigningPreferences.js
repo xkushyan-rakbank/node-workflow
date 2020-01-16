@@ -167,7 +167,9 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                       multiline
                       rows={2}
                       component={Input}
-                      inputProps={{ maxLength: 50 }}
+                      InputProps={{
+                        inputProps: { maxLength: 50, tabIndex: 0 }
+                      }}
                     />
                   </div>
                 )
@@ -197,6 +199,9 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                           label="Full Name"
                           placeholder="Full Name"
                           component={Input}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
                         />
 
                         <Grid container spacing={3}>
@@ -208,6 +213,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                                 datalistId="countryCode"
                                 component={CustomSelect}
                                 shrink={false}
+                                inputProps={{ tabIndex: 0 }}
                               />
                               <Field
                                 name={`signatories[${index}].primaryMobileNo`}
@@ -216,6 +222,9 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                                 placeholder="55xxxxxxx"
                                 component={Input}
                                 type="number"
+                                InputProps={{
+                                  inputProps: { tabIndex: 0 }
+                                }}
                               />
                             </InputGroup>
                           </Grid>
@@ -228,6 +237,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                                 datalistId="countryCode"
                                 component={CustomSelect}
                                 shrink={false}
+                                inputProps={{ tabIndex: 0 }}
                               />
                               <Field
                                 name={`signatories[${index}].primaryPhoneNo`}
@@ -236,6 +246,9 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                                 placeholder="42xxxxxx"
                                 component={Input}
                                 type="number"
+                                InputProps={{
+                                  inputProps: { tabIndex: 0 }
+                                }}
                               />
                             </InputGroup>
                           </Grid>
