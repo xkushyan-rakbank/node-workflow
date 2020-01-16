@@ -13,9 +13,10 @@ import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
 
-export const PercentageInput = props => (
+const PercentageInput = props => (
   <NumberFormatInput decimalSeparator="." decimalScale={2} {...props} />
 );
+
 const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
     isShareholderACompany: Yup.boolean().required("Required"),
