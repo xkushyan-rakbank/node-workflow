@@ -169,7 +169,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                               <Field
                                 name={`entitiesInUAE[${index}].emirate`}
                                 path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
-                                datalistId="emirate"
+                                datalistId="emirateCity"
                                 label="Emirate"
                                 component={CustomSelect}
                               />
