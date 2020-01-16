@@ -14,7 +14,7 @@ import { Input, AutoSaveField as Field } from "../../../../../../components/Form
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
-import { ANNUAL_TURNOVER_REGEX } from "../../../../../../utils/validation";
+import { CURRENCY_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
@@ -54,10 +54,10 @@ const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
   annualFinTurnoverAmtInAED: Yup.string()
     .required("You need to provide annual turnover")
-    .matches(ANNUAL_TURNOVER_REGEX, "This is not a valid value"),
+    .matches(CURRENCY_REGEX, "This is not a valid value"),
   maxAmtSingleTxnCashAED: Yup.string()
     .required("You need to provide single transaction value")
-    .matches(ANNUAL_TURNOVER_REGEX, "This is not a valid value")
+    .matches(CURRENCY_REGEX, "This is not a valid value")
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -72,7 +72,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     ),
   maxAmtSingleTxnNonCashAED: Yup.string()
     .required("You need to provide single transaction value")
-    .matches(ANNUAL_TURNOVER_REGEX, "This is not a valid value")
+    .matches(CURRENCY_REGEX, "This is not a valid value")
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -87,7 +87,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     ),
   totalMonthlyCashAmountInFigures: Yup.string()
     .required("You need to provide total monthly amount in cash")
-    .matches(ANNUAL_TURNOVER_REGEX, "This is not a valid value")
+    .matches(CURRENCY_REGEX, "This is not a valid value")
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -102,7 +102,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     ),
   totalMonthlyNonCashAmountInFigures: Yup.string()
     .required("You need to provide total monthly amount in non-cash")
-    .matches(ANNUAL_TURNOVER_REGEX, "This is not a valid value")
+    .matches(CURRENCY_REGEX, "This is not a valid value")
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
