@@ -75,14 +75,14 @@ function* getProspectDocumentsSaga() {
         existDocuments.companyDocuments,
         data.companyDocuments
       );
-      const stakeholderDocuments = concatStakeholdersDocs(
+      const stakeholdersDocuments = concatStakeholdersDocs(
         data.stakeholdersDocuments,
         existDocuments.stakeholdersDocuments
       );
 
       config.prospect.documents = {
         companyDocuments,
-        stakeholderDocuments
+        stakeholdersDocuments
       };
     } else {
       config.prospect.documents = data;
