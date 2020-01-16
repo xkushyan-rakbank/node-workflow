@@ -21,6 +21,7 @@ export const DESIGNATION_REGEX = /^([a-zA-Z]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
 export const EMIRATES_ID_REGEX = /^784\d{12}$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
+export const TOTAL_EXPERIENCE_YEARS = /^[0-9]{1,255}$/;
 
 export const FILE_SIZE = 5 * 1048576;
 export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", "application/txt"];
