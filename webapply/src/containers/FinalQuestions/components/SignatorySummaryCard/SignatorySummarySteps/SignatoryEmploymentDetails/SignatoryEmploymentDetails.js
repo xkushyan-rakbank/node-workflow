@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { OTHER_OPTION_CODE } from "./constants";
+import { OTHER_OPTION_CODE, OTHER_OPTION_VALUE } from "./constants";
 import {
   CustomSelect,
   Input,
@@ -125,7 +125,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
                   />
                 </Grid>
-                {values.employmentType === OTHER_OPTION_CODE && (
+                {values.employmentType === OTHER_OPTION_VALUE && (
                   <Grid item md={12} sm={12}>
                     <Field
                       name="otherEmploymentType"
