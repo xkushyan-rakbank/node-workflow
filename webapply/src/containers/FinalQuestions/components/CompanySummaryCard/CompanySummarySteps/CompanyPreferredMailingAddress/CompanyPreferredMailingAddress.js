@@ -25,9 +25,7 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
   addressLine1: Yup.string()
     .required("You need to provide address details")
     .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
-  addressLine2: Yup.string()
-    .required("You need to provide address details")
-    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+  addressLine2: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
     .matches(ALPHANUMERIC_REGEX, "Invalid PO box number"),
@@ -57,7 +55,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
             spaceType: "",
             others: ""
           },
-          country: ""
+          country: "United Arab Emirates"
         }}
         onSubmit={handleSubmit}
         validationSchema={companyPreferredMailingAddressSchema}
@@ -116,7 +114,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   component={Input}
                   inputProps={{ maxLength: MAX_PO_BOX_NUMBER_LENGTH }}
                 />
-                <Field name="country" path={`${BASE_PATH}.country`} disabled component={Input} />
+                <Field name="country" disabled component={Input} />
               </Grid>
             </Grid>
             <div className={classes.infoTitleWrap}>
