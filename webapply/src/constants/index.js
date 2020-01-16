@@ -71,6 +71,8 @@ export const APP_STOP_SCREEN_RESULT = "stop";
 export const SUBMIT = "submit";
 export const NEXT = "NEXT";
 
+export const SIGNING_TRANSACTIONS_TYPE_ANY = "A1";
+
 export const screeningStatus = {
   dedupe: {
     error: "Dedupe",

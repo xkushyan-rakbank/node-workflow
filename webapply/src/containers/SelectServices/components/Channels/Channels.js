@@ -3,8 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { checkIsChequeBookApplied } from "./utils";
-import { SIGNING_TRANSACTIONS_TYPE_ALL, SIGNING_TRANSACTIONS_TYPE_OTHER } from "../../constants";
+import { checkIsChequeBookApplied, checkIsDebitCardApplied } from "./utils";
 import { NAME_REGEX } from "../../../../utils/validation";
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
@@ -54,22 +53,19 @@ export const ChannelsComponent = ({
   goToNext,
   updateProspect,
   primaryMobCountryCode,
-  primaryPhoneCountryCode,
   accountCurrencies: { isSelectedLocalCurrency }
 }) => {
   const classes = useStyles();
+  const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
   const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
     primaryMobCountryCode,
-    primaryPhoneCountryCode,
+    isSelectedLocalCurrency
+  );
+  const { isDebitCardDisabled, isDebitCardApplied } = checkIsDebitCardApplied(
+    accountSigningType,
     isSelectedLocalCurrency
   );
   const isSignatoriesListActive = !isHasSignatories && isSelectedLocalCurrency;
-
-  const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
-  const isDebitCardApplied =
-    ![SIGNING_TRANSACTIONS_TYPE_ALL, SIGNING_TRANSACTIONS_TYPE_OTHER].includes(
-      accountSigningType
-    ) && isSelectedLocalCurrency;
 
   useEffect(() => {
     updateProspect({
@@ -105,7 +101,7 @@ export const ChannelsComponent = ({
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
             infoTitle={DEBIT_CARD_INFO}
-            disabled={true}
+            disabled={isDebitCardDisabled}
             isLoadDefaultValueFromStore={false}
           />
 
