@@ -24,6 +24,8 @@ export const concatStakeholdersDocs = (incomeDocs, existDocs) => {
     "documentType"
   );
 
+  console.log(stakeholdersDocsDiff);
+
   stakeholdersDocsDiff.forEach(doc => existDocs[doc.key].documents.push(omit(doc, "key")));
 
   return existDocs;

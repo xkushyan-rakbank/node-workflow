@@ -90,8 +90,7 @@ export const UploadDocuments = ({
     setSelectedFile(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log("selectedFile", selectedFile);
-  console.log("isUploaded", isUploaded);
+
   return (
     <div className={classes.fileUploadPlaceholder}>
       <input
