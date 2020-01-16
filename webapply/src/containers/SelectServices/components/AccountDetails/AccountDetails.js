@@ -12,7 +12,7 @@ import {
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { DATA_CURRENCIES } from "../../../../constants";
+import { DATA_CURRENCIES } from "../../constants";
 
 import { useStyles } from "./styled";
 

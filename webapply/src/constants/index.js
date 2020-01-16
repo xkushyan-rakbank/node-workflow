@@ -71,37 +71,6 @@ export const APP_STOP_SCREEN_RESULT = "Stop";
 export const SUBMIT = "submit";
 export const NEXT = "NEXT";
 
-export const DATA_CURRENCIES = [
-  {
-    code: "AED",
-    key: "AED",
-    value: "AED",
-    displayText: "AED",
-    subGroup: null
-  },
-  {
-    code: "EUR",
-    key: "EUR",
-    value: "EUR",
-    displayText: "EUR",
-    subGroup: null
-  },
-  {
-    code: "USD",
-    key: "USD",
-    value: "USD",
-    displayText: "USD",
-    subGroup: null
-  },
-  {
-    code: "GBP",
-    key: "GBP",
-    value: "GBP",
-    displayText: "GBP",
-    subGroup: null
-  }
-];
-
 export const screeningStatus = {
   dedupe: {
     error: "Dedupe",
