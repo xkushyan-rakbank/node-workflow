@@ -12,7 +12,6 @@ import {
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { ALLOWED_CURRENCY } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -25,6 +24,37 @@ const accountDetailsSchema = Yup.object({
   branchID: Yup.string().required("Field is required"),
   receiveInterest: Yup.bool()
 });
+
+const DATA_CURRENCIES = [
+  {
+    code: "AED",
+    key: "AED",
+    value: "AED",
+    displayText: "AED",
+    subGroup: null
+  },
+  {
+    code: "EUR",
+    key: "EUR",
+    value: "EUR",
+    displayText: "EUR",
+    subGroup: null
+  },
+  {
+    code: "USD",
+    key: "USD",
+    value: "USD",
+    displayText: "USD",
+    subGroup: null
+  },
+  {
+    code: "GBP",
+    key: "GBP",
+    value: "GBP",
+    displayText: "GBP",
+    subGroup: null
+  }
+];
 
 export const AccountDetailsComponent = ({
   goToNext,
@@ -54,9 +84,7 @@ export const AccountDetailsComponent = ({
             path="prospect.accountInfo[0].accountCurrencies"
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
-            filterOptions={options =>
-              options.filter(currency => ALLOWED_CURRENCY.includes(currency.code))
-            }
+            options={DATA_CURRENCIES}
             classes={{ root: classes.radioButtonRoot }}
             contextualHelpProps={{ isDisableHoverListener: false }}
             contextualHelpText="Cheque book, Debit card and Rakvalue will be issued for eligible AED accounts only"
