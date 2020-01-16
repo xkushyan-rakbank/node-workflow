@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -32,6 +32,11 @@ export const AccountDetailsComponent = ({
   updateProspect
 }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    // This is temporary solution for back end side
+    updateProspect({ "prospect.accountInfo[0].accountCurrency": "AED" });
+  }, []);
 
   return (
     <Formik
