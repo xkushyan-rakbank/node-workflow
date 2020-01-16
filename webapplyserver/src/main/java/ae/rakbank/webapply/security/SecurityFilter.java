@@ -41,6 +41,8 @@ public class SecurityFilter implements Filter {
         else {
             logger.info("Encryption enabled");
             ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
+            responseWrapper.setCharacterEncoding("UTF-8");
+
             byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
             byte[] decryptedData = null;
             SecretKeySpec spec = null;
