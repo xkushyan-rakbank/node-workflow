@@ -10,7 +10,6 @@ import {
   takeEvery,
   cancelled
 } from "redux-saga/effects";
-import get from "lodash/get";
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
@@ -29,8 +28,10 @@ import { log } from "../../utils/loggger";
 import {
   concatCompanyDocs,
   concatStakeholdersDocs,
-  mergeObjectToCollection
+  mergeObjectToCollection,
+  changeDocumentProps
 } from "../../utils/documents";
+import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 
 function createUploader(prospectId, data, source) {
   let emit;
@@ -61,19 +62,14 @@ function* getProspectDocumentsSaga() {
   const existDocuments = getDocuments(state);
   const config = cloneDeep(state.appConfig);
   const isDocsUploaded =
-    existDocuments && existDocuments.length > 0 && existDocuments.stakeholdersDocuments;
-
-  console.log("1", existDocuments);
-  console.log("2", existDocuments.length > 0);
-  console.log("3", existDocuments.stakeholdersDocuments);
+    existDocuments &&
+    existDocuments.companyDocuments.length > 0 &&
+    existDocuments.stakeholdersDocuments;
 
   try {
     const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID);
 
-    console.log("isDocsUploaded", isDocsUploaded);
-
     if (isDocsUploaded) {
-      console.log(1);
       const companyDocuments = concatCompanyDocs(
         existDocuments.companyDocuments,
         data.companyDocuments
@@ -112,32 +108,27 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
     const response = yield call(() => uploadPromise);
 
     const config = cloneDeep(state.appConfig);
+    const documents = config.prospect.documents;
 
-    console.log("upload");
+    if (docOwner === COMPANY_DOCUMENTS) {
+      const companyDocuments = changeDocumentProps(
+        documents[COMPANY_DOCUMENTS],
+        documentType,
+        docProps,
+        response
+      );
 
-    if (docOwner === "companyDocuments") {
-      const companyDocuments = config.prospect.documents[docOwner].map(doc => {
-        if (doc.documentType === documentType) {
-          return { ...doc, ...docProps, fileName: get(response, "data.fileName", "") };
-        }
-
-        return doc;
-      });
-
-      config.prospect.documents[docOwner] = companyDocuments;
+      documents[COMPANY_DOCUMENTS] = companyDocuments;
     } else {
-      const stakeholdersDocuments = mergeObjectToCollection(
-        config.prospect.documents[docOwner]
-      ).map(doc => {
-        if (doc.documentType === documentType) {
-          return { ...doc, ...docProps, fileName: get(response, "data.fileName", "") };
-        }
-
-        return doc;
-      });
+      const stakeholdersDocuments = changeDocumentProps(
+        mergeObjectToCollection(documents[STAKEHOLDER_DOCUMENTS]),
+        documentType,
+        docProps,
+        response
+      );
 
       stakeholdersDocuments.forEach(
-        doc => (config.prospect.documents[docOwner][doc.key].documents[index] = doc)
+        doc => (documents[STAKEHOLDER_DOCUMENTS][doc.key].documents[index] = doc)
       );
     }
 

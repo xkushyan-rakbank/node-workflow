@@ -1,5 +1,6 @@
 import differenceBy from "lodash/differenceBy";
 import omit from "lodash/omit";
+import get from "lodash/get";
 
 export const concatCompanyDocs = (existDocs, incomeDocs) => {
   const companyDocsDiff = differenceBy(incomeDocs, existDocs, "documentType");
@@ -27,3 +28,12 @@ export const concatStakeholdersDocs = (incomeDocs, existDocs) => {
 
   return existDocs;
 };
+
+export const changeDocumentProps = (documents, documentType, docProps, response) =>
+  documents.map(doc => {
+    if (doc.documentType === documentType) {
+      return { ...doc, ...docProps, fileName: get(response, "data.fileName", "") };
+    }
+
+    return doc;
+  });

@@ -15,7 +15,8 @@ export const SignatoriesDocuments = ({
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
-    const docUploadDetails = documents[`${index}_${signatorie.fullName}`];
+    const stakeholderIndex = `${index}_${signatorie.fullName}`;
+    const docUploadDetails = documents[stakeholderIndex];
 
     return (
       docUploadDetails && (
@@ -36,8 +37,8 @@ export const SignatoriesDocuments = ({
             <UploadDocuments
               key={document.documentKey}
               index={index}
+              stakeholderIndex={stakeholderIndex}
               document={document}
-              index={index}
               type="stakeholdersDocuments"
               docUpload={docUpload}
               cancelDocUpload={cancelDocUpload}

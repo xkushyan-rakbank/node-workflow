@@ -68,6 +68,9 @@ export const mobileResolution = 955;
 
 export const APP_STOP_SCREEN_RESULT = "Stop";
 
+export const COMPANY_DOCUMENTS = "companyDocuments";
+export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
+
 export const SUBMIT = "submit";
 export const NEXT = "NEXT";
 
