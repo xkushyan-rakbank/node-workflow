@@ -26,7 +26,11 @@ import {
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
-import { concatCompanyDocs, concatStakeholdersDocs } from "../../utils/documents";
+import {
+  concatCompanyDocs,
+  concatStakeholdersDocs,
+  mergeObjectToCollection
+} from "../../utils/documents";
 
 function createUploader(prospectId, data, source) {
   let emit;
@@ -56,11 +60,20 @@ function* getProspectDocumentsSaga() {
   const prospectID = getProspectId(state) || "COSME0000000000000001";
   const existDocuments = getDocuments(state);
   const config = cloneDeep(state.appConfig);
+  const isDocsUploaded =
+    existDocuments && existDocuments.length > 0 && existDocuments.stakeholdersDocuments;
+
+  console.log("1", existDocuments);
+  console.log("2", existDocuments.length > 0);
+  console.log("3", existDocuments.stakeholdersDocuments);
 
   try {
     const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID);
 
-    if (existDocuments) {
+    console.log("isDocsUploaded", isDocsUploaded);
+
+    if (isDocsUploaded) {
+      console.log(1);
       const companyDocuments = concatCompanyDocs(
         existDocuments.companyDocuments,
         data.companyDocuments
@@ -75,6 +88,7 @@ function* getProspectDocumentsSaga() {
         stakeholderDocuments
       };
     } else {
+      console.log(2);
       config.prospect.documents = data;
     }
 
@@ -99,6 +113,8 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 
     const config = cloneDeep(state.appConfig);
 
+    console.log("upload");
+
     if (docOwner === "companyDocuments") {
       const companyDocuments = config.prospect.documents[docOwner].map(doc => {
         if (doc.documentType === documentType) {
@@ -107,17 +123,9 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 
         return doc;
       });
+
       config.prospect.documents[docOwner] = companyDocuments;
     } else {
-      const mergeObjectToCollection = obj =>
-        Object.keys(obj)
-          .map(key =>
-            Object.values(obj[key])
-              .flat()
-              .map(item => ({ ...item, key }))
-          )
-          .flat();
-
       const stakeholdersDocuments = mergeObjectToCollection(
         config.prospect.documents[docOwner]
       ).map(doc => {

@@ -7,7 +7,7 @@ export const concatCompanyDocs = (existDocs, incomeDocs) => {
   return [...existDocs, ...companyDocsDiff];
 };
 
-const mergeObjectToCollection = obj =>
+export const mergeObjectToCollection = obj =>
   Object.keys(obj)
     .map(key =>
       Object.values(obj[key])
