@@ -7,7 +7,7 @@ export const concatCompanyDocs = (existDocs, incomeDocs) => {
   return [...existDocs, ...companyDocsDiff];
 };
 
-const mergeObjectToCollection = obj =>
+export const mergeObjectToCollection = obj =>
   Object.keys(obj)
     .map(key =>
       Object.values(obj[key])
@@ -26,4 +26,12 @@ export const concatStakeholdersDocs = (incomeDocs, existDocs) => {
   stakeholdersDocsDiff.forEach(doc => existDocs[doc.key].documents.push(omit(doc, "key")));
 
   return existDocs;
+};
+
+export const createDocumentMapper = (documentType, additionalProps) => doc => {
+  if (doc.documentType === documentType) {
+    return { ...doc, ...additionalProps };
+  }
+
+  return doc;
 };
