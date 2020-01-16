@@ -12,6 +12,7 @@ import {
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
+import { DATA_CURRENCIES } from "../../../../constants";
 
 import { useStyles } from "./styled";
 
@@ -24,37 +25,6 @@ const accountDetailsSchema = Yup.object({
   branchID: Yup.string().required("Field is required"),
   receiveInterest: Yup.bool()
 });
-
-const DATA_CURRENCIES = [
-  {
-    code: "AED",
-    key: "AED",
-    value: "AED",
-    displayText: "AED",
-    subGroup: null
-  },
-  {
-    code: "EUR",
-    key: "EUR",
-    value: "EUR",
-    displayText: "EUR",
-    subGroup: null
-  },
-  {
-    code: "USD",
-    key: "USD",
-    value: "USD",
-    displayText: "USD",
-    subGroup: null
-  },
-  {
-    code: "GBP",
-    key: "GBP",
-    value: "GBP",
-    displayText: "GBP",
-    subGroup: null
-  }
-];
 
 export const AccountDetailsComponent = ({
   goToNext,
