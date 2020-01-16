@@ -13,6 +13,7 @@ import {
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId, getProspectDocuments as getDocuments } from "../selectors/appConfig";
 import {
@@ -108,7 +109,8 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
 
     const config = cloneDeep(state.appConfig);
     const documents = config.prospect.documents;
-    const additionalProps = { documentType, docProps, response };
+    const fileName = get(response, "data.fileName", "");
+    const additionalProps = { documentType, docProps: { ...docProps, fileName }, response };
 
     if (docOwner === COMPANY_DOCUMENTS) {
       const companyDocuments = documents[COMPANY_DOCUMENTS].map(documentsMapper(additionalProps));
