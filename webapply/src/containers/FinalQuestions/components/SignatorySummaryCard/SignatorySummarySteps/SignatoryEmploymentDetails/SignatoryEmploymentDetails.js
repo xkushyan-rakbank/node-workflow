@@ -14,7 +14,9 @@ import {
 import {
   EMPLOYMENT_TYPE_REGEX,
   COMPANY_NAME_REGEX,
-  DESIGNATION_REGEX
+  DESIGNATION_REGEX,
+  TOTAL_EXPERIENCE_YEARS,
+  NUMBER_REGEX
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
@@ -24,10 +26,10 @@ import { useStyles } from "./styled";
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required("You need to provide qualification"),
   employmentType: Yup.string().required("You need to provide employment type"),
-  totalExperienceYrs: Yup.number()
+  totalExperienceYrs: Yup.string()
     .required("You need to provide total experience")
-    .max(255, "Maximum 255 characters allowed")
-    .integer("Must be an integer"),
+    .matches(NUMBER_REGEX, "Must be an intege")
+    .matches(TOTAL_EXPERIENCE_YEARS, "Maximum 255 characters allowed"),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
