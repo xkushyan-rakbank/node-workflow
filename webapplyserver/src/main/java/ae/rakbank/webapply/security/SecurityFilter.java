@@ -10,19 +10,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.PublicKey;
+import java.nio.charset.Charset;
 
 @Component
 public class SecurityFilter implements Filter {
-    private static final String UTF_8 = "UTF-8";
 
     @Autowired
     private SecurityUtil securityUtil;
@@ -69,7 +66,7 @@ public class SecurityFilter implements Filter {
                 result = encrypt(responseWrapper, spec);
             }
 
-            logger.info("#! Content-Length of response: {} encrypt send: {}", result.length(), result);
+            logger.info("#! Charset: {}, Content-Length of response: {} encrypt send: {}", Charset.defaultCharset(), result.length(), result);
             response.setContentLength(result.length());
             response.getWriter().write(result);
         }
@@ -101,7 +98,7 @@ public class SecurityFilter implements Filter {
     }
 
     private boolean skipEncryption(HttpServletRequest request) {
-        return request.getHeader("x-sym-key") == null || request.getHeader("isForward") != null ? true : false;
+        return request.getHeader("x-sym-key") == null || request.getHeader("isForward") != null;
     }
 
     private byte[] getKeyFromRequest(HttpServletRequest request){
