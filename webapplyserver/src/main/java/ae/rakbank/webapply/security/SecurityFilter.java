@@ -66,7 +66,6 @@ public class SecurityFilter implements Filter {
                 result = encrypt(responseWrapper, spec);
             }
 
-            logger.info("#! Charset: {}, Content-Length of response: {} encrypt send: {}", Charset.defaultCharset(), result.length(), result);
             response.setContentLength(result.length());
             response.getWriter().write(result);
         }
