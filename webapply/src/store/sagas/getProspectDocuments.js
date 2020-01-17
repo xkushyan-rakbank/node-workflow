@@ -94,7 +94,15 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, documentKey, index }) {
+function* uploadDocumentsBgSync({
+  data,
+  docProps,
+  docOwner,
+  documentType,
+  documentKey,
+  index,
+  stakeholderIndex
+}) {
   const source = CancelToken.source();
 
   try {
@@ -123,9 +131,11 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
         createDocumentMapper(documentType, additionalProps)
       );
 
-      stakeholderDocuments.forEach(
-        doc => (documents[STAKEHOLDER_DOCUMENTS][doc.key].documents[index] = doc)
+      const uploadedDocumnet = stakeholderDocuments.find(
+        doc => doc.key === stakeholderIndex && doc.documentType === documentType
       );
+
+      documents[STAKEHOLDER_DOCUMENTS][uploadedDocumnet.key].documents[index] = uploadedDocumnet;
     }
 
     yield put(setConfig(config));
