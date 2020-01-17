@@ -14,6 +14,7 @@ import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
+import omit from "lodash/omit";
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId, getProspectDocuments as getDocuments } from "../selectors/appConfig";
 import {
@@ -135,7 +136,10 @@ function* uploadDocumentsBgSync({
         doc => doc.key === stakeholderIndex && doc.documentType === documentType
       );
 
-      documents[STAKEHOLDER_DOCUMENTS][uploadedDocumnet.key].documents[index] = uploadedDocumnet;
+      documents[STAKEHOLDER_DOCUMENTS][uploadedDocumnet.key].documents[index] = omit(
+        uploadedDocumnet,
+        "key"
+      );
     }
 
     yield put(setConfig(config));
