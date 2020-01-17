@@ -14,6 +14,7 @@ import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
+import omit from "lodash/omit";
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import { getProspectId, getProspectDocuments as getDocuments } from "../selectors/appConfig";
 import {
@@ -94,7 +95,15 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, documentKey, index }) {
+function* uploadDocumentsBgSync({
+  data,
+  docProps,
+  docOwner,
+  documentType,
+  documentKey,
+  index,
+  stakeholderIndex
+}) {
   const source = CancelToken.source();
 
   try {
@@ -123,8 +132,13 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
         createDocumentMapper(documentType, additionalProps)
       );
 
-      stakeholderDocuments.forEach(
-        doc => (documents[STAKEHOLDER_DOCUMENTS][doc.key].documents[index] = doc)
+      const uploadedDocumnet = stakeholderDocuments.find(
+        doc => doc.key === stakeholderIndex && doc.documentType === documentType
+      );
+
+      documents[STAKEHOLDER_DOCUMENTS][uploadedDocumnet.key].documents[index] = omit(
+        uploadedDocumnet,
+        "key"
       );
     }
 

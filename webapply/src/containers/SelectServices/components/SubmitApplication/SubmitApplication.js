@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 
 import routes from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
@@ -23,11 +23,11 @@ export const SubmitApplicationComponent = ({
 }) => {
   const [formFieldsValues, setFormFields] = useState({});
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = () => {
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
     sendProspectToAPI().then(() => history.push(routes.ApplicationSubmitted));
-  });
+  };
 
   return (
     <>

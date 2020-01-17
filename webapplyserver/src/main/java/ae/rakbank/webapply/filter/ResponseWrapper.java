@@ -96,9 +96,4 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 		return new String(getCaptureAsBytes(), getCharacterEncoding());
 	}
 
-//	@Override
-//	public String getCharacterEncoding() {
-//		return "UTF-8"; //this.response.getCharacterEncoding();
-//	}
-
 }
