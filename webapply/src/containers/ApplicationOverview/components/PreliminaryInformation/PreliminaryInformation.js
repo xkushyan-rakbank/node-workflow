@@ -5,7 +5,6 @@ import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInf
 import IconCardsContainer from "../../../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../../../components/IconCards/IconCardItem";
 import { CommonQuestions } from "../CommonQuestions";
-import HeaderTitle from "../../../../components/HeaderTitle";
 
 import { questions } from "./constants";
 
@@ -23,7 +22,6 @@ export const PreliminaryInformation = () => {
 
   return (
     <>
-      <HeaderTitle withMargin />
       <SectionTitleWithInfo
         title="Have these ready"
         info="Before we start, make sure you have these documents at hand"
