@@ -4,8 +4,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>webapplyserver</groupId>
 	<artifactId>webapply</artifactId>
-	<!-- <version>0.0.1-SNAPSHOT</version> -->
-	<packaging>war</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,38 +22,23 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.9</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.tomcat.embed</groupId>
-					<artifactId>tomcat-embed-websocket</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -81,17 +64,8 @@
 			<groupId>io.rest-assured</groupId>
 			<artifactId>spring-mock-mvc</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>com.amazonaws</groupId>-->
-			<!--<artifactId>aws-java-sdk-secretsmanager</artifactId>-->
-			<!--<version>1.11.415</version>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>com.amazonaws</groupId>-->
-			<!--<artifactId>aws-java-sdk-sqs</artifactId>-->
-			<!--<version>1.11.415</version>-->
-		<!--</dependency>-->
+    </dependency>
+
 	</dependencies>
 
 	<build>
@@ -121,17 +95,6 @@
 			</plugin>
 
 		</plugins>
-
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>static</directory>
-				<targetPath>static</targetPath>
-			</resource>
-		</resources>
 
 	</build>
 </project>
