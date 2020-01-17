@@ -28,29 +28,27 @@ export const Input = ({
   const isError = errorMessage && getIn(touched, field.name);
 
   return (
-    <>
-      <FormControl classes={{ root: classes.formControlRoot }}>
-        <ContexualHelp title={contextualHelpText} placement={placement}>
-          <TextField
-            {...field}
-            {...props}
-            label={label}
-            variant="outlined"
-            className={cx(classes.textField, { [classes.disabled]: disabled })}
-            placeholder={placeholder}
-            disabled={disabled}
-            error={isError}
-            InputProps={{ ...InputProps, classes: { input: classes.input } }}
-            InputLabelProps={{
-              shrink
-            }}
-          />
-        </ContexualHelp>
+    <FormControl classes={{ root: classes.formControlRoot }}>
+      <ContexualHelp title={contextualHelpText} placement={placement}>
+        <TextField
+          {...field}
+          {...props}
+          label={label}
+          variant="outlined"
+          className={cx(classes.textField, { [classes.disabled]: disabled })}
+          placeholder={placeholder}
+          disabled={disabled}
+          error={isError}
+          InputProps={{ ...InputProps, classes: { input: classes.input } }}
+          InputLabelProps={{
+            shrink
+          }}
+        />
+      </ContexualHelp>
 
-        {isError && <ErrorMessage error={errorMessage} />}
+      {isError && <ErrorMessage error={errorMessage} />}
 
-        {infoTitle && <InfoTitle title={infoTitle} />}
-      </FormControl>
-    </>
+      {infoTitle && <InfoTitle title={infoTitle} />}
+    </FormControl>
   );
 };
