@@ -18,7 +18,9 @@ import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQues
 import { useStyles } from "./styled";
 
 const signatoryPreferredMailingAddressSchema = Yup.object().shape({
-  addressFieldDesc: Yup.string().required("You need to provide address details"),
+  addressFieldDesc: Yup.string()
+    .required("You need to provide address details")
+    .max(50, "Maximum 50 characters allowed"),
   addressLine1: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
@@ -123,7 +125,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   path={`${autoSavePathBase}.poBox`}
                   disabled={values.sameAsCompanyAddress}
                   label="PO Box Number"
-                  placeholder="PO Box Number"
+                  placeholder="AB1234"
                   component={Input}
                   InputProps={{
                     inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
