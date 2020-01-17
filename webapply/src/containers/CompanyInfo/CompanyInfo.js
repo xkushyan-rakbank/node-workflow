@@ -23,7 +23,6 @@ export const CompanyInfoPage = ({
   history,
   loading,
   fullName,
-  screeningResults,
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();

@@ -24,7 +24,7 @@ export const SelectServicesComponent = ({
       return history.push("SubmitApplication");
     }
     sendProspectToAPI().then(() => setStep(step + 1), () => {});
-  }, [sendProspectToAPI, step]);
+  }, [sendProspectToAPI, step, history]);
 
   const createSetStepHandler = nextStep => () => {
     if (step > nextStep) {
