@@ -47,7 +47,7 @@
           "accountType": "",
           "accountSubType": "",
           "accountNo": "",
-          "accountCurrencies": "",
+          "accountCurrencies": [],
           "accountPurpose": "",
           "debitCardApplied": null,
           "chequeBookApplied": null,
