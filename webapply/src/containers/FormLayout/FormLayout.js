@@ -19,7 +19,7 @@ export const FormLayoutComponent = ({
   useEffect(() => {
     updateViewId(pathname);
     resetScreeningError();
-  }, [key, pathname, updateViewId]);
+  }, [key, pathname, updateViewId, resetScreeningError]);
 
   return (
     <NotificationsProvider>
