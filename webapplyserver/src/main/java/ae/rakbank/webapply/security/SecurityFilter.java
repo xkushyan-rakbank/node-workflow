@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 @Component
 public class SecurityFilter implements Filter {
@@ -66,7 +65,6 @@ public class SecurityFilter implements Filter {
                 result = encrypt(responseWrapper, spec);
             }
 
-            logger.info("#! Charset: {}, Content-Length of response: {} encrypt send: {}", Charset.defaultCharset(), result.length(), result);
             response.setContentLength(result.length());
             response.getWriter().write(result);
         }
