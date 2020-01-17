@@ -18,5 +18,10 @@ export const useStyles = makeStyles(theme => ({
   },
   sectionTitleIndent: {
     marginBottom: "24px"
+  },
+  industrySubCategory: {
+    "& .MuiMenuItem-root": {
+      fontSize: "10px"
+    }
   }
 }));

@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
+import { useStyles } from "../styled";
 
 const initialValues = {
   industry: [],
@@ -24,64 +25,68 @@ const industrySchema = Yup.object({
   })
 });
 
-export const Industry = ({ handleContinue }) => (
-  <Formik
-    initialValues={initialValues}
-    validationSchema={industrySchema}
-    validateOnChange={false}
-    onSubmit={handleContinue}
-  >
-    {({ values, setFieldValue }) => (
-      <Form>
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Field
-              multiple
-              name="industry"
-              label="Industry"
-              path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
-              datalistId="industry"
-              component={SelectAutocomplete}
-              contextualHelpText="This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. Example: if business / commercial / licensed activity is 'E Commerce', please select industry as 'Service' & sub-industry as 'Computer & IT Industry' "
-              contextualHelpProps={{ isDisableHoverListener: false }}
-              onChange={e => {
-                setFieldValue("industry", e.target.value);
-                setFieldValue("subCategory", "");
-              }}
-              InputProps={{
-                inputProps: { tabIndex: 0 }
-              }}
-            />
+export const Industry = ({ handleContinue }) => {
+  const classes = useStyles();
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={industrySchema}
+      validateOnChange={false}
+      onSubmit={handleContinue}
+    >
+      {({ values, setFieldValue }) => (
+        <Form>
+          <Grid container spacing={3}>
+            <Grid item md={6} sm={12}>
+              <Field
+                multiple
+                name="industry"
+                label="Industry"
+                path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
+                datalistId="industry"
+                component={SelectAutocomplete}
+                contextualHelpText="This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. Example: if business / commercial / licensed activity is 'E Commerce', please select industry as 'Service' & sub-industry as 'Computer & IT Industry' "
+                contextualHelpProps={{ isDisableHoverListener: false }}
+                onChange={e => {
+                  setFieldValue("industry", e.target.value);
+                  setFieldValue("subCategory", "");
+                }}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
+            </Grid>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="subCategory"
+                label="Industry sub-category"
+                path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
+                component={SelectAutocomplete}
+                datalistId="industry"
+                filterOptions={options =>
+                  options
+                    .filter(item => values.industry.includes(item.value))
+                    .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
+                }
+                multiple
+                disabled={!(values.industry || []).length}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+                className={classes.industrySubCategory}
+              />
+            </Grid>
           </Grid>
-          <Grid item md={6} sm={12}>
-            <Field
-              name="subCategory"
-              label="Industry sub-category"
-              path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
-              component={SelectAutocomplete}
-              datalistId="industry"
-              filterOptions={options =>
-                options
-                  .filter(item => values.industry.includes(item.value))
-                  .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
-              }
-              multiple
-              disabled={!(values.industry || []).length}
-              InputProps={{
-                inputProps: { tabIndex: 0 }
-              }}
-            />
+          <Grid container direction="row" justify="space-between" style={{ padding: 20 }}>
+            <Grid item xs={9}>
+              <InfoTitle title="These should be the same as in your Trade License. You can select multiple industries." />
+            </Grid>
+            <Grid item xs={3}>
+              <ContinueButton type="submit" />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container direction="row" justify="space-between" style={{ padding: 20 }}>
-          <Grid item xs={9}>
-            <InfoTitle title="These should be the same as in your Trade License. You can select multiple industries." />
-          </Grid>
-          <Grid item xs={3}>
-            <ContinueButton type="submit" />
-          </Grid>
-        </Grid>
-      </Form>
-    )}
-  </Formik>
-);
+        </Form>
+      )}
+    </Formik>
+  );
+};
