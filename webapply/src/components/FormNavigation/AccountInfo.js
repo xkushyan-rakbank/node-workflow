@@ -19,10 +19,15 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isAccountsComparison = pathname === routes.accountsComparison;
   const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;
+  const isMyApplications = pathname === routes.MyApplications;
 
   return (
     <div className={classes.contentContainer}>
-      {accountType && !isApplicationOverview && !isAccountsComparison && !isApplicationSubmitted ? (
+      {accountType &&
+      !isApplicationOverview &&
+      !isAccountsComparison &&
+      !isApplicationSubmitted &&
+      !isMyApplications ? (
         <>
           <div>
             <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
