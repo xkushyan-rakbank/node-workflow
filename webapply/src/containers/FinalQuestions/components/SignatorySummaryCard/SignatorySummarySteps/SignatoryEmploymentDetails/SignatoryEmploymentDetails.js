@@ -9,7 +9,8 @@ import {
   CustomSelect,
   Input,
   Checkbox,
-  AutoSaveField as Field
+  AutoSaveField as Field,
+  NumberFormat
 } from "../../../../../../components/Form";
 import {
   EMPLOYMENT_TYPE_REGEX,
@@ -20,7 +21,6 @@ import {
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
-import { NumberFormatInput } from "../../../../../../components/Form/Input/NumberFormatInput";
 
 import { useStyles } from "./styled";
 
@@ -107,7 +107,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     placeholder="Work Experience"
                     component={Input}
                     InputProps={{
-                      inputComponent: NumberFormatInput,
+                      inputComponent: NumberFormat,
                       inputProps: { tabIndex: 0 }
                     }}
                     contextualHelpText={

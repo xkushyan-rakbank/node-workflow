@@ -3,10 +3,10 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { SelectAutocomplete, AutoSaveField as Field } from "../../../components/Form";
-import { ContinueButton } from "../../../components/Buttons/ContinueButton";
-import { InfoTitle } from "../../../components/Notifications";
-import { useStyles } from "../styled";
+import { SelectAutocomplete, AutoSaveField as Field } from "../../../../components/Form";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
+import { InfoTitle } from "../../../../components/Notifications";
+import { useStyles } from "./styled";
 
 const initialValues = {
   industry: [],
@@ -27,6 +27,7 @@ const industrySchema = Yup.object({
 
 export const Industry = ({ handleContinue }) => {
   const classes = useStyles();
+
   return (
     <Formik
       initialValues={initialValues}
@@ -58,6 +59,9 @@ export const Industry = ({ handleContinue }) => {
             </Grid>
             <Grid item md={6} sm={12}>
               <Field
+                classes={{
+                  menuItem: classes.industrySubCategory
+                }}
                 name="subCategory"
                 label="Industry sub-category"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
@@ -73,11 +77,15 @@ export const Industry = ({ handleContinue }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
-                className={classes.industrySubCategory}
               />
             </Grid>
           </Grid>
-          <Grid container direction="row" justify="space-between" style={{ padding: 20 }}>
+          <Grid
+            className={classes.continueButtonGrid}
+            container
+            direction="row"
+            justify="space-between"
+          >
             <Grid item xs={9}>
               <InfoTitle title="These should be the same as in your Trade License. You can select multiple industries." />
             </Grid>
