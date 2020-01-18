@@ -60,7 +60,7 @@ public class SecurityUtil {
       Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
       cipher.init(Cipher.ENCRYPT_MODE, secretKey);
       
-      return Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes(UTF_8)));
+      return Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes(UTF_8)), Base64.NO_WRAP);
     } catch (Exception e) {
       LOG.error("error while encrypting data {}", e.getMessage());
     }
