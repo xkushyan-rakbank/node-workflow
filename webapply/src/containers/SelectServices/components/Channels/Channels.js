@@ -122,6 +122,8 @@ export const ChannelsComponent = ({
             disabled={isChequeBookDisabled}
             isLoadDefaultValueFromStore={false}
             inputProps={{ tabIndex: 0 }}
+            contextualHelpText="Cheque book will be printed with the company name given and will be send to the Company address"
+            contextualHelpProps={{ isDisableHoverListener: false }}
           />
 
           <Divider />
