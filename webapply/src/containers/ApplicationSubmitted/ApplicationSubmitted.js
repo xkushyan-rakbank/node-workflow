@@ -39,7 +39,7 @@ const ApplicationSubmittedComponent = ({ AccountSubmittedInfo }) => {
             <span className="info">Your AED account number</span>
             <div className="mainInfo">
               <span className="number">{accountData.accountNo}</span>
-              <span className="typeAccount">{accountData.accountCurrencies.join(" & ")}</span>
+              <span className="typeAccount">{accountData.accountCurrency}</span>
             </div>
           </div>
         ))}
