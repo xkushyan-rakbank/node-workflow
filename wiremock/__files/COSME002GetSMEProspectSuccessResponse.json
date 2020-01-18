@@ -407,6 +407,16 @@
       "reasonCode": "",
       "reasonStatus": ""
   },
+    "AuditTrailInfo": [
+        {
+            "modifiedBy": "userId",
+            "modifiedDateTime": "01.01.2000"
+        },
+        {
+            "modifiedBy": "agentId",
+            "modifiedDateTime": "01.02.2000"
+        }
+    ],
   "freeFieldsInfo": {
       "freeField1": "",
       "freeField2": "",
