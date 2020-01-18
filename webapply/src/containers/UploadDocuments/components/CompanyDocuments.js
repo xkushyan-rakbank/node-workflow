@@ -24,7 +24,7 @@ export const CompanyDocuments = ({
       </header>
       {documents.map((document, index) => (
         <UploadDocuments
-          key={document.documentKey}
+          key={`${document.documentType}-${document.documentKey}`}
           index={index}
           document={document}
           type="companyDocuments"

@@ -63,6 +63,7 @@ function* receiveAppConfigSaga() {
       newConfig.prospect.applicationInfo.accountType = accountType;
       newConfig.prospect.applicationInfo.islamicBanking = islamicBanking;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
+      newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
 
     yield put(saveProspectModel(prospectModel));
