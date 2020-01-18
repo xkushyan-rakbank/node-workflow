@@ -104,6 +104,8 @@ export const ChannelsComponent = ({
             disabled={isDebitCardDisabled}
             isLoadDefaultValueFromStore={false}
             inputProps={{ tabIndex: 0 }}
+            contextualHelpText="Business debit card will be send to the signatory's preferred mailing address"
+            contextualHelpProps={{ isDisableHoverListener: false }}
           />
 
           {isSignatoriesListActive && <SignatoriesList stakeholders={stakeholders} />}
