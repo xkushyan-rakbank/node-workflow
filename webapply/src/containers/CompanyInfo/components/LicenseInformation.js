@@ -3,13 +3,18 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { Input, DatePicker, CustomSelect, AutoSaveField as Field } from "../../../components/Form";
+import {
+  Input,
+  DatePicker,
+  CustomSelect,
+  AutoSaveField as Field,
+  NumberFormat
+} from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
 import { UAE } from "../../../constants";
-import { NumberFormatInput } from "../../../components/Form/Input/NumberFormatInput";
 
 const initialValues = {
   licenseNumber: "",
@@ -118,7 +123,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               contextualHelpProps={{ isDisableHoverListener: false }}
               component={Input}
               InputProps={{
-                inputComponent: NumberFormatInput,
+                inputComponent: NumberFormat,
                 inputProps: { tabIndex: 0 }
               }}
             />

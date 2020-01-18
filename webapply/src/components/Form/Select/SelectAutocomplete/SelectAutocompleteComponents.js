@@ -6,7 +6,7 @@ import { TextField, MenuItem, Chip, Checkbox } from "@material-ui/core";
 
 const inputComponent = ({ inputRef, ...props }) => <div ref={inputRef} {...props} />;
 
-export const Control = ({ selectProps, innerRef, children, innerProps, ...props }) => (
+export const Control = ({ selectProps, innerRef, children, innerProps }) => (
   <TextField
     fullWidth
     variant="outlined"
@@ -31,8 +31,7 @@ export const Option = ({
   isSelected,
   innerProps,
   children,
-  isMulti,
-  ...props
+  isMulti
 }) => (
   <MenuItem
     buttonRef={innerRef}
