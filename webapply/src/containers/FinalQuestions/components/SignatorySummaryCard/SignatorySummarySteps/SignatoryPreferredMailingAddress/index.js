@@ -4,9 +4,9 @@ import { SignatoryPreferredMailingAddressComponent } from "./SignatoryPreferredM
 import { getOrganizationInfo } from "../../../../../../store/selectors/appConfig";
 
 const mapStateToProps = state => ({
-  organisationAddressFieldDesc: get(
+  organisationAddressLine2: get(
     getOrganizationInfo(state),
-    "addressInfo[0].addressDetails[0].addressFieldDesc",
+    "addressInfo[0].addressDetails[0].addressLine2",
     ""
   ),
   organisationAddressLine1: get(

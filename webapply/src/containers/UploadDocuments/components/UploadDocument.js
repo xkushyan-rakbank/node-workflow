@@ -36,10 +36,6 @@ export const UploadDocuments = ({
   const documentKey = useMemo(() => nanoid(), []);
   const isUploaded = document.uploadStatus === "Uploaded";
 
-  if (docOwner === STAKEHOLDER_DOCUMENTS) {
-    console.log("isUploaded", isUploaded);
-  }
-
   const fileUploadHandler = useCallback(() => {
     const file = inputEl.current.files[0];
 
@@ -69,7 +65,8 @@ export const UploadDocuments = ({
       docOwner,
       documentType: document.documentType,
       documentKey,
-      index
+      index,
+      stakeholderIndex
     });
     setErrorMessage(null);
     setSelectedFile(file);
@@ -145,7 +142,7 @@ export const UploadDocuments = ({
                   ></div>
                 </div>
                 <div className={classes.progressStatus}>
-                  {isUploaded ? 100 : progress[documentKey] || 0}%
+                  {isUploaded ? 100 : progress[documentKey] - 1 || 0}%
                 </div>
               </div>
             </div>
