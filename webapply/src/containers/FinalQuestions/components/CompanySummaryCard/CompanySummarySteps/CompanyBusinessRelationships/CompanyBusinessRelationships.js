@@ -32,7 +32,7 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     Yup.object().shape({
       name: Yup.string()
         .required("You need to provide customer name")
-        .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
+        .matches(COMPANY_NAME_REGEX, "This not a valid company name"),
       country: Yup.string().required("You need to provide company country")
     })
   ),
