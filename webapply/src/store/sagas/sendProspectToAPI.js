@@ -119,6 +119,13 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     const { data } = yield call(prospect.update, prospectId, newProspect);
     newProspect.applicationInfo.saveType = saveType;
 
+    if (get(data, "accountInfo[0].accountNo", "")) {
+      data.accountInfo.forEach(
+        (item, index) =>
+          (newProspect.accountInfo[index].accountNo = data.accountInfo[index].accountNo)
+      );
+    }
+
     yield put(sendProspectToAPISuccess(newProspect));
 
     if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
