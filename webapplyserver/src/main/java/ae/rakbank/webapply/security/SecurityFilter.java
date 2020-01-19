@@ -68,10 +68,11 @@ public class SecurityFilter implements Filter {
 
             logger.info("result: {}", result);
             logger.info("length: {}", result.length());
-            // response.setContentLength(result.length());
-            PrintWriter writer = response.getWriter();
-            writer.write(result);
-            writer.flush();
+            logger.info("buffer: {}", response.getBufferSize());
+            logger.info("encoding: {}", response.getCharacterEncoding();
+            response.getWriter().write(result);
+            response.setContentLength(result.length());
+            response.flushBuffer();
         }
     }
 
