@@ -59,11 +59,11 @@ public class SecurityFilter implements Filter {
                 responseWrapper.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
             else {
-                // HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
-                //         decryptedData);
+                HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
+                        decryptedData);
 
                 logger.info("Length 0.2: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
-                // chain.doFilter(requestWrapper, responseWrapper);
+                chain.doFilter(requestWrapper, responseWrapper);
                 logger.info("Length 0.3: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
 
                 result = encrypt(responseWrapper, spec);
