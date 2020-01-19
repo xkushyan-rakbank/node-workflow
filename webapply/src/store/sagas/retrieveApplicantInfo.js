@@ -1,4 +1,4 @@
-import { all, call, put, select, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import * as actions from "../actions/retrieveApplicantInfo";
 import { displayScreenBasedOnViewId, setConfig } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect } from "../../api/apiClient";
@@ -27,17 +27,7 @@ function* getProspectIdInfo({ payload }) {
   try {
     const response = yield call(prospect.get, payload);
     const config = { prospect: response.data };
-    const state = yield select();
-    const agentId = state.login.loginResponse.agentId;
-    const isAppSubmitted = true;
-    const isUserEditingAppNow = false;
-    const isAnotherAgentEditingAppNow = false;
-    if (
-      (isAppSubmitted && (!agentId || isAnotherAgentEditingAppNow)) ||
-      (!isAppSubmitted && (isAnotherAgentEditingAppNow || isUserEditingAppNow))
-    ) {
-      return;
-    }
+
     yield put(setConfig(config));
     yield put(displayScreenBasedOnViewId());
   } catch (error) {
