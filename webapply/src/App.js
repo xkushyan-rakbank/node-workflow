@@ -18,7 +18,6 @@ import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 
 import { theme } from "./theme";
 import "./App.scss";
-import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
 
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
@@ -100,7 +99,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.comeBackLoginVerification}
                   component={ComeBackVerification}
                 />
-                <OTPProtectedRoute exact path={routes.MyApplications} component={MyApplications} />
+                <ProspectProtectedRoute
+                  exact
+                  path={routes.MyApplications}
+                  component={MyApplications}
+                />
                 <ProspectProtectedRoute
                   exact
                   path={routes.SubmitApplication}
