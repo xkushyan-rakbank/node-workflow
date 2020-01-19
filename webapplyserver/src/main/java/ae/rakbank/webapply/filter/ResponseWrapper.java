@@ -21,6 +21,22 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	}
 
 	@Override
+	public void addHeader(String name, String value) {
+		if ("Content-Length".equalsIgnoreCase(name)) {
+			return;
+		}
+		super.addHeader(name, value);
+	}
+
+	@Override
+	public void addIntHeader(String name, int value) {
+		if ("Content-Length".equalsIgnoreCase(name)) {
+			return;
+		}
+		super.addIntHeader(name, value);
+	}
+
+	@Override
 	public void setHeader(String name, String value) {
 		if ("Content-Length".equalsIgnoreCase(name)) {
 			return;
