@@ -6,14 +6,14 @@ export const useStyles = makeStyles({
     color: "rgba(255,255,255,.5)",
     listStyleType: "none",
     fontSize: "20px",
-    lineHeight: "1.2",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
     paddingLeft: "64px",
     fontWeight: "400",
+    lineHeight: "26px",
     "&:not(:last-child)": {
-      paddingBottom: "25px"
+      paddingBottom: "20px"
     },
     "& span": {
       position: "absolute",
@@ -42,6 +42,9 @@ export const useStyles = makeStyles({
   activeStepItem: {
     fontWeight: "600",
     color: "#fff",
+    "&:last-child:after": {
+      height: "100%"
+    },
     "&:after": {
       content: "''",
       position: "absolute",
