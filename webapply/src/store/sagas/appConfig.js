@@ -41,17 +41,6 @@ function* receiveAppConfigSaga() {
       : pathname.substring(1, pathname.lastIndexOf("/"));
     let { accountType, islamicBanking } = getSelectedAccountInfo(state);
 
-    const lsAccountType = JSON.parse(window.localStorage.getItem("selectedAccountType"));
-    const lsIslamicBanking = JSON.parse(window.localStorage.getItem("isIslamicType"));
-
-    if (!accountType && lsAccountType) {
-      accountType = lsAccountType;
-    }
-
-    if (!islamicBanking && lsIslamicBanking) {
-      islamicBanking = lsIslamicBanking;
-    }
-
     if (!isEmpty(endpoints)) {
       const product = getApplicationInfo.accountType;
       response = yield call(config.load, product, segment);
