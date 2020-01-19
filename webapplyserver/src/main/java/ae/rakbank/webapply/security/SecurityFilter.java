@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.apache.commons.io.IOUtils.toByteArray;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.*;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringReader;
 
 @Component
 public class SecurityFilter implements Filter {
@@ -67,8 +65,9 @@ public class SecurityFilter implements Filter {
                 result = encrypt(responseWrapper, spec);
             }
 
-            logger.info("Bytes, native: {}", result.getBytes().length());
-            logger.info("Bytes, ioutils: {}", toByteArray(new StringReader(result)).length());
+            logger.info("Length: {}", result.length());
+            logger.info("Bytes 1: {}", result.getBytes().length());
+            logger.info("Bytes 2: {}", result.getBytes("UTF-8").length());
 
             response.getWriter().write(result);
         }
