@@ -18,7 +18,7 @@ import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
-import { isOtpGenerated } from "../../store/selectors/otp";
+import { getIsOtpGenerated } from "../../store/selectors/otp";
 import routes from "./../../routes";
 import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
 import { useStyles } from "./styled";
@@ -162,7 +162,7 @@ const ComeBackLoginComponent = ({
 
 const mapStateToProps = state => ({
   recaptchaToken: state.reCaptcha.token,
-  isOtpGenerated: isOtpGenerated(state)
+  isOtpGenerated: getIsOtpGenerated(state)
 });
 
 const mapDispatchToProps = {

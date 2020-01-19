@@ -4,6 +4,6 @@
  */
 export const getOtp = state => state.otp;
 
-export const isOtpGenerated = state => state.otp.isGenerated;
+export const getIsOtpGenerated = state => state.otp.isGenerated;
 
-export const isOtpVerified = state => state.otp.isVerified;
+export const getIsOtpVerified = state => state.otp.isVerified;
