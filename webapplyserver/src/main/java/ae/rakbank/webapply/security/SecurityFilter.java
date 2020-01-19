@@ -29,6 +29,7 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         logger.info("Filter initialized");
+        logger.info("Length 0: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
         String result = null;
         if (skipEncryption((HttpServletRequest) request)) {
             logger.info("Encryption skipped");
@@ -66,10 +67,12 @@ public class SecurityFilter implements Filter {
             }
 
             logger.info("Length 1: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
-            response.setContentLength(result.length());
+            response.setContentLength(200);
             logger.info("Length 2: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
-            response.getWriter().write(result);
+            response.addHeader("Content-Length", "200");
             logger.info("Length 3: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
+            response.getWriter().write(result);
+            logger.info("Length 4: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
         }
     }
 
