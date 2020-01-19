@@ -71,8 +71,10 @@ public class SecurityFilter implements Filter {
             }
 
             logger.info("Length 1: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
-            response.getWriter().write(result);
+            response.setContentLength(result.length());
             logger.info("Length 2: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
+            response.getWriter().write(result);
+            logger.info("Length 3: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
         }
     }
 
