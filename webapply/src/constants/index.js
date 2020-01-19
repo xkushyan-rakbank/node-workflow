@@ -66,7 +66,8 @@ export const REQUEST_FAILED = "error";
 
 export const mobileResolution = 955;
 
-export const APP_STOP_SCREEN_RESULT = "Stop";
+export const APP_STOP_SCREEN_RESULT = "stop";
+export const APP_DECLINE_SCREEN_REASON = "Decline";
 
 export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
@@ -76,65 +77,48 @@ export const NEXT = "NEXT";
 
 export const SIGNING_TRANSACTIONS_TYPE_ANY = "A1";
 
-export const screeningStatus = {
-  dedupe: {
+export const screeningStatus = [
+  {
     error: "Dedupe",
     icon: callbackRegular,
-    text:
-      "It looks like we already know you and have your details! Let us save you time. We will call you back within X days to meet you in person and help you out."
+    screeningType: "Dedupe Check"
   },
-  virtualCurrencies: {
+  {
     error: "Virtual Currencies",
     icon: declinedRegular,
-    text:
-      "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAKBANK."
+    screeningType: "Virtual Currency Check"
   },
-  notEligible: {
+  {
     error: "not Eligible",
     icon: callbackRegular,
-    text:
-      "Oops, this product is not for you. Our RAKstarter account is for companies operating for less than a year. But don’t worry, we have other products suited for you.",
+    screeningType: "RAKStarter Account Check",
     link: true
   },
-  notRegisteredInUAE: {
+  {
     error: "Not Registered In UAE",
     icon: declinedRegular,
-    text:
-      "It looks like your company is not registered in the UAE. But no worries! Let’s have someone call you back within X days to meet you in person and help you out."
+    screeningType: "CountryOfIncorporation Check"
   },
-  bigCompany: {
+  {
     error: "Big Company",
     icon: callbackRegular,
-    text:
-      "Wow, you’re a big company!\n" +
-      "Let us save you time and have someone call you within X days to meet you in person and help you out."
+    screeningType: "ShareHolderCount Check"
   },
-  blackList: {
+  {
     error: "BlackList",
     icon: declinedRegular,
-    text:
-      "We apologise that we are unable to offer you a product as the details provided don’t meet out requirements. Thank you for your interest in RAKBANK."
+    screeningType: "Blacklist Check"
   },
-  isShareholderACompany: {
+  {
     error: "Company as stakeholder",
     icon: callbackRegular,
-    text:
-      "Let’s make this easy for you! Since you have other companies listed as shareholders, let’s have someone call you back within X days to meet you in person and help you out."
-  },
-  default: {
-    error: "Default",
-    icon: declinedRegular,
-    text:
-      "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
+    screeningType: "IsShareHolderACompany Check"
   }
-};
+];
 
-export const screeningTypes = {
-  virtualCurrency: "Virtual Currency Check",
-  countryOfIncorporation: "CountryOfIncorporation Check",
-  isShareHolderACompany: "IsShareHolderACompany Check",
-  RAKStarterAccount: "RAKStarter Account Check",
-  dedupe: "Dedupe Check",
-  blacklist: "Blacklist Check",
-  isTooManyStakeholders: "ShareHolderCount Check"
+export const screeningStatusDefault = {
+  error: "Default",
+  icon: declinedRegular,
+  text:
+    "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
 };

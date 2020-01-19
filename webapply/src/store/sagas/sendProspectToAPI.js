@@ -28,7 +28,12 @@ import { log } from "../../utils/loggger";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
-import { APP_STOP_SCREEN_RESULT, screeningStatus, screeningTypes } from "../../constants";
+import {
+  APP_STOP_SCREEN_RESULT,
+  screeningStatus,
+  APP_DECLINE_SCREEN_REASON,
+  screeningStatusDefault
+} from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -44,40 +49,23 @@ function* watchRequest() {
 
 function* setScreeningResults({ preScreening }) {
   const currScreeningTypes = preScreening.screeningResults.reduce(
-    (result, { screeningType, screeningReason }) => {
-      if (screeningReason === APP_STOP_SCREEN_RESULT) {
-        return [...result, screeningType];
+    (result, { screeningType, screeningReason, reasonNotes }) => {
+      if (screeningReason === APP_DECLINE_SCREEN_REASON) {
+        return [...result, { screeningType, reasonNotes }];
       }
       return result;
     },
     []
   );
 
-  const isDedupe = currScreeningTypes.includes(screeningTypes.dedupe);
-  const isBlackList = currScreeningTypes.includes(screeningTypes.blacklist);
-  const isEligible = currScreeningTypes.includes(screeningTypes.RAKStarterAccount);
-  const isForeignCompany = currScreeningTypes.includes(screeningTypes.countryOfIncorporation);
-  const isVirtualCurrency = currScreeningTypes.includes(screeningTypes.virtualCurrency);
-  const isShareholderACompany = currScreeningTypes.includes(screeningTypes.isShareHolderACompany);
-  const isTooManyStakeholders = currScreeningTypes.includes(screeningTypes.isTooManyStakeholders);
-
-  switch (true) {
-    case isVirtualCurrency:
-      return yield put(setScreeningError(screeningStatus.virtualCurrencies));
-    case isEligible:
-      return yield put(setScreeningError(screeningStatus.notEligible));
-    case isForeignCompany:
-      return yield put(setScreeningError(screeningStatus.notRegisteredInUAE));
-    case isTooManyStakeholders:
-      return yield put(setScreeningError(screeningStatus.bigCompany));
-    case isDedupe:
-      return yield put(setScreeningError(screeningStatus.dedupe));
-    case isBlackList:
-      return yield put(setScreeningError(screeningStatus.blackList));
-    case isShareholderACompany:
-      return yield put(setScreeningError(screeningStatus.isShareholderACompany));
-    default:
-      return yield put(setScreeningError(screeningStatus.default));
+  const screenError = screeningStatus.find(
+    ({ screeningType }) => screeningType === currScreeningTypes[0].screeningType
+  );
+  if (screenError) {
+    screenError.text = currScreeningTypes[0].reasonNotes;
+    yield put(setScreeningError(screenError));
+  } else {
+    yield put(setScreeningError(screeningStatusDefault));
   }
 }
 
