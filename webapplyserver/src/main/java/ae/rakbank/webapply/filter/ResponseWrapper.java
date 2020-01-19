@@ -23,7 +23,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	@Override
 	public void addHeader(String name, String value) {
 		if ("Content-Length".equalsIgnoreCase(name)) {
-			return;
+			value = "1024";
 		}
 		super.addHeader(name, value);
 	}
@@ -31,7 +31,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	@Override
 	public void addIntHeader(String name, int value) {
 		if ("Content-Length".equalsIgnoreCase(name)) {
-			return;
+			value = 1024;
 		}
 		super.addIntHeader(name, value);
 	}
@@ -39,7 +39,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	@Override
 	public void setHeader(String name, String value) {
 		if ("Content-Length".equalsIgnoreCase(name)) {
-			return;
+			value = "1024";
 		}
 		super.setHeader(name, value);
 	}
@@ -47,7 +47,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	@Override
 	public void setIntHeader(String name, int value) {
 		if ("Content-Length".equalsIgnoreCase(name)) {
-			return;
+			value = 1024;
 		}
 		super.setIntHeader(name, value);
 	}
