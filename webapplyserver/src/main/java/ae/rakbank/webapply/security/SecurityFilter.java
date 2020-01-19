@@ -66,8 +66,8 @@ public class SecurityFilter implements Filter {
             }
 
             logger.info("Length: {}", result.length());
-            logger.info("Bytes 1: {}", result.getBytes().length());
-            logger.info("Bytes 2: {}", result.getBytes("UTF-8").length());
+            logger.info("Bytes 1: {}", result.getBytes().length;
+            logger.info("Bytes 2: {}", result.getBytes("UTF-8").length;
 
             response.getWriter().write(result);
         }
