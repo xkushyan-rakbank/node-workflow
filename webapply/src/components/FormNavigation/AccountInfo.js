@@ -48,17 +48,15 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
       </Typography>
       {accountType && isDetailedAccountPage && (
         <>
-          <div>
-            <Typography
-              variant="subtitle1"
-              component="span"
-              classes={{ root: classes.sectionSubtitle }}
-            >
-              {islamicBanking
-                ? accountsInfo[accountType].islamicSubtitle
-                : accountsInfo[accountType].subtitle}
-            </Typography>
-          </div>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            classes={{ root: classes.sectionSubtitle }}
+          >
+            {islamicBanking
+              ? accountsInfo[accountType].islamicSubtitle
+              : accountsInfo[accountType].subtitle}
+          </Typography>
           <ContainedButton
             withRightArrow
             justify="flex-start"
