@@ -65,11 +65,9 @@ public class SecurityFilter implements Filter {
                 result = encrypt(responseWrapper, spec);
             }
 
-            logger.info("Result length: {}", result.length());
-
-            logger.info("Response length before: {}", ((HttpServletResponse) response).getContentLength());
-            response.getWriter().write(result);
-            logger.info("Response length after: {}", ((HttpServletResponse) response).getContentLength());
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("TEST_" + result + "_" + result);
         }
     }
 
