@@ -33,7 +33,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 		if ("Content-Length".equalsIgnoreCase(name)) {
 			return;
 		}
-		super.setHeader(name, value);
+		super.setIntHeader(name, value);
 	}
 
 	@Override
