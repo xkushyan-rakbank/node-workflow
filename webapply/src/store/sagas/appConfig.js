@@ -39,7 +39,7 @@ function* receiveAppConfigSaga() {
         ? state.appConfig.searchInfo.segment
         : ""
       : pathname.substring(1, pathname.lastIndexOf("/"));
-    let { accountType, islamicBanking } = getSelectedAccountInfo(state);
+    const { accountType, islamicBanking } = getSelectedAccountInfo(state);
 
     if (!isEmpty(endpoints)) {
       const product = getApplicationInfo.accountType;
