@@ -74,6 +74,9 @@ export const LoginComponent = ({
               label="User Name"
               placeholder="User Name"
               component={Input}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
 
             <Field
@@ -84,6 +87,9 @@ export const LoginComponent = ({
               placeholder="Your Password"
               onPaste={e => e.preventDefault()}
               component={Input}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
 
             <Grid container direction="row" justify="space-between" alignItems="center">

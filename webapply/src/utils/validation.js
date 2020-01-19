@@ -13,7 +13,7 @@ export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9])*$/;
 
 export const COMPANY_NAME_REGEX = /^([a-zA-Z '”`-]){1,30}$/;
 export const BANK_NAME_REGEX = /^([a-zA-Z. ]){1,50}$/;
-export const ANNUAL_TURNOVER_REGEX = /^[0-9]*([.][0-9]{1,2})*$/;
+export const CURRENCY_REGEX = /^[0-9]*([.][0-9]{1,2})?$/;
 export const ADDRESS_NUMBER_REGEX = /^[a-zA-Z0-9\\@\\#\\%\\*\\(\\)]{1,50}$/;
 export const MOTHERS_MAIDEN_NAME_REGEX = /^([a-zA-Z])*$/;
 export const EMPLOYMENT_TYPE_REGEX = /^([a-zA-Z ]){1,50}$/;
@@ -21,6 +21,7 @@ export const DESIGNATION_REGEX = /^([a-zA-Z]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
 export const EMIRATES_ID_REGEX = /^784\d{12}$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
+export const TOTAL_EXPERIENCE_YEARS = /^[0-9]{1,255}$/;
 
 export const FILE_SIZE = 5 * 1048576;
 export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", "application/txt"];

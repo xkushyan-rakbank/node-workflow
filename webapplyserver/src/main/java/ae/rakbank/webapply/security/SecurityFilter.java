@@ -10,19 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.PublicKey;
 
 @Component
 public class SecurityFilter implements Filter {
-    private static final String UTF_8 = "UTF-8";
 
     @Autowired
     private SecurityUtil securityUtil;
@@ -33,13 +29,18 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         logger.info("Filter initialized");
+        logger.info("Length 0: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
         String result = null;
         if (skipEncryption((HttpServletRequest) request)) {
             logger.info("Encryption skipped");
             chain.doFilter(request, response);
-        } else {
+        }
+        else {
             logger.info("Encryption enabled");
             ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
+            logger.info("Length 0.1: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
+            responseWrapper.setCharacterEncoding("UTF-8");
+
             byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
             byte[] decryptedData = null;
             SecretKeySpec spec = null;
@@ -56,17 +57,22 @@ public class SecurityFilter implements Filter {
                 ObjectMapper mapper = new ObjectMapper();
                 result = mapper.writeValueAsString(failed);
                 responseWrapper.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            } else {
-                HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
-                        decryptedData);
+            }
+            else {
+                // HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
+                //         decryptedData);
 
-                chain.doFilter(requestWrapper, responseWrapper);
+                logger.info("Length 0.2: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
+                // chain.doFilter(requestWrapper, responseWrapper);
+                logger.info("Length 0.3: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
 
                 result = encrypt(responseWrapper, spec);
+                logger.info("Length 0.4: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
             }
-            logger.info("#! Content-Length of response: {} encrypt send: {}", result.length(), result);
-            response.setContentLength(result.length());
+
+            logger.info("Length 1: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
             response.getWriter().write(result);
+            logger.info("Length 2: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
         }
     }
 
@@ -96,7 +102,7 @@ public class SecurityFilter implements Filter {
     }
 
     private boolean skipEncryption(HttpServletRequest request) {
-        return request.getHeader("x-sym-key") == null || request.getHeader("isForward") != null ? true : false;
+        return request.getHeader("x-sym-key") == null || request.getHeader("isForward") != null;
     }
 
     private byte[] getKeyFromRequest(HttpServletRequest request){
@@ -107,12 +113,6 @@ public class SecurityFilter implements Filter {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public String decrypt(String input, PublicKey key) throws IOException, GeneralSecurityException {
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, key);
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(cipher.doFinal(input.getBytes(UTF_8)));
     }
 
 }

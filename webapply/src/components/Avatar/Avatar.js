@@ -27,5 +27,9 @@ export const Avatar = ({
 
   const firstAndLastName = fullName ? fullName.split(/\s/) : [firstName, lastName];
   const initials = firstAndLastName.map(name => name.charAt(0)).join("");
-  return <ColoredAvatar color={avatarColors[index || 0]}>{initials}</ColoredAvatar>;
+  return (
+    <ColoredAvatar color={avatarColors[(index || 0) % avatarColors.length]}>
+      {initials}
+    </ColoredAvatar>
+  );
 };

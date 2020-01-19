@@ -32,7 +32,7 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     Yup.object().shape({
       name: Yup.string()
         .required("You need to provide customer name")
-        .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
+        .matches(COMPANY_NAME_REGEX, "This not a valid company name"),
       country: Yup.string().required("You need to provide company country")
     })
   ),
@@ -140,6 +140,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                             }
                             placeholder="Customer name"
                             component={Input}
+                            InputProps={{
+                              inputProps: { tabIndex: 0 }
+                            }}
                           />
                         </Grid>
                         <Grid
@@ -155,6 +158,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                             datalistId="country"
                             component={SelectAutocomplete}
                             shrink
+                            InputProps={{
+                              inputProps: { tabIndex: 0 }
+                            }}
                           />
                           {!!index && (
                             <ArrayRemoveButton
@@ -208,6 +214,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         setFieldTouched(`topSuppliers[${INITIAL_ARRAY_INDEX}].country`, false);
                       }
                     }}
+                    inputProps={{ tabIndex: 0 }}
                   />
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topSuppliers.map((item, index) => (
@@ -235,6 +242,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                             }
                             component={Input}
                             disabled={values.isDontHaveSuppliersYet}
+                            InputProps={{
+                              inputProps: { tabIndex: 0 }
+                            }}
                           />
                         </Grid>
                         <Grid
@@ -251,6 +261,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                             component={SelectAutocomplete}
                             disabled={values.isDontHaveSuppliersYet}
                             shrink
+                            InputProps={{
+                              inputProps: { tabIndex: 0 }
+                            }}
                           />
                           {!!index && (
                             <ArrayRemoveButton
@@ -306,6 +319,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         setFieldTouched(`topOriginGoodsCountries[${INITIAL_ARRAY_INDEX}]`, false);
                       }
                     }}
+                    inputProps={{ tabIndex: 0 }}
                   />
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topOriginGoodsCountries.map((item, index) => (
@@ -325,6 +339,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                             disabled={values.isDontTradeGoodsYet}
                             contextualHelpText="List down the top countries from where existing or future goods originate"
                             shrink
+                            InputProps={{
+                              inputProps: { tabIndex: 0 }
+                            }}
                           />
                           {!!index && (
                             <ArrayRemoveButton
@@ -379,6 +396,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         setFieldTouched(`${bankFieldPath}[${INITIAL_ARRAY_INDEX}]`, false);
                       }
                     }}
+                    inputProps={{ tabIndex: 0 }}
                   />
                   {values.otherBankingRelationshipsInfo.otherBankingRelationshipsExist && (
                     <>
@@ -399,6 +417,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                                   path={`${basisPath}.${bankFieldPath}[${index}].bankName`}
                                   placeholder="Bank name"
                                   component={Input}
+                                  InputProps={{
+                                    inputProps: { tabIndex: 0 }
+                                  }}
                                 />
                                 {!!index && (
                                   <ArrayRemoveButton

@@ -55,6 +55,7 @@ export const accountsNames = {
 
 export const UAE_CODE = "971";
 export const UAE = "AE";
+export const UAE_CURRENCY = "AED";
 export const MAX_STAKEHOLDERS_LENGTH = 12;
 
 export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
@@ -67,8 +68,13 @@ export const mobileResolution = 955;
 
 export const APP_STOP_SCREEN_RESULT = "Stop";
 
+export const COMPANY_DOCUMENTS = "companyDocuments";
+export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
+
 export const SUBMIT = "submit";
 export const NEXT = "NEXT";
+
+export const SIGNING_TRANSACTIONS_TYPE_ANY = "A1";
 
 export const screeningStatus = {
   dedupe: {

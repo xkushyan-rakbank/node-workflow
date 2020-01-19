@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { InfoTitle } from "../../../../components/Notifications";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import {
   AutoSaveField as Field,
@@ -79,6 +78,9 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
               placeholder="E-mail Address"
               component={Input}
               disabled={!isSignatory}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
           </Grid>
         </Grid>
@@ -92,6 +94,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={false}
                 disabled={!isSignatory}
                 datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
               />
 
               <Field
@@ -102,6 +105,9 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={true}
                 component={Input}
                 disabled={!isSignatory}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </InputGroup>
           </Grid>
@@ -114,6 +120,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={false}
                 disabled={!isSignatory}
                 datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
               />
 
               <Field
@@ -123,11 +130,13 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 placeholder="Landline number (optional)"
                 component={Input}
                 disabled={!isSignatory}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </InputGroup>
           </Grid>
         </Grid>
-        <InfoTitle title="Heads up! We can only issue chequebooks if you use a phone number from the UAE." />
 
         <SubmitButton />
       </Form>

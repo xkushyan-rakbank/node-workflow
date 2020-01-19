@@ -10,3 +10,4 @@ export { InlineRadioGroup } from "./InlineRadioGroup/InlineRadioGroup";
 export { RadioButton } from "./RadioButton/RadioButon";
 export { SkeletonLoader } from "./SkeletonLoader";
 export { EmiratesID } from "./Input/EmiratesID";
+export { NumberFormat } from "./Input/NumberFormat";

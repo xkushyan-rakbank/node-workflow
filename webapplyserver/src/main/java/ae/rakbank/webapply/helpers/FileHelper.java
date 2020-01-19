@@ -4,9 +4,11 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.util.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
@@ -42,25 +44,14 @@ public class FileHelper {
 
     public String loadFileContents(String filename, boolean fromConfigDirectory) {
         try {
-            File file = loadFile(filename, fromConfigDirectory);
-
-            if (file == null) {
-                return null;
-            }
-
-            return FileUtils.readFileToString(file, String.valueOf(StandardCharsets.UTF_8));
-        } catch (Exception e) {
-            logger.error("error loading " + filename, e);
-        }
-        return null;
-    }
-
-    public File loadFile(String filename, boolean fromConfigDirectory) {
-        try {
             if (fromConfigDirectory) {
-                return new File(EnvUtil.getConfigDir() + filename);
+                File file = new File(EnvUtil.getConfigDir() + filename);
+
+                return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
             } else {
-                return resourceLoader.getResource("classpath:" + filename).getFile();
+                Resource resource = resourceLoader.getResource("classpath:" + filename);
+
+                return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
             logger.error("error loading " + filename, e);

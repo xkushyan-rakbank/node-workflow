@@ -3,7 +3,13 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { Input, DatePicker, CustomSelect, AutoSaveField as Field } from "../../../components/Form";
+import {
+  Input,
+  DatePicker,
+  CustomSelect,
+  AutoSaveField as Field,
+  NumberFormat
+} from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
@@ -51,7 +57,9 @@ export const LicenseInformation = ({ handleContinue }) => (
               path="prospect.organizationInfo.licenseNumber"
               contextualHelpText="If License Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.Example CN-123/2018/456 to be entered as CN1232018456"
               component={Input}
-              inputProps={{ maxLength: MAX_LICENSE_NUMBER_LENGTH }}
+              InputProps={{
+                inputProps: { maxLength: MAX_LICENSE_NUMBER_LENGTH, tabIndex: 0 }
+              }}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -60,6 +68,9 @@ export const LicenseInformation = ({ handleContinue }) => (
               label="License issuing date"
               path="prospect.organizationInfo.licenseIssueDate"
               component={DatePicker}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
           </Grid>
         </Grid>
@@ -72,6 +83,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               path="prospect.organizationInfo.licenseIssuingAuthority"
               datalistId="licenseIssuingAuthority"
               component={CustomSelect}
+              inputProps={{ tabIndex: 0 }}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -83,6 +95,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
               contextualHelpProps={{ isDisableHoverListener: false }}
               component={CustomSelect}
+              inputProps={{ tabIndex: 0 }}
             />
           </Grid>
         </Grid>
@@ -96,6 +109,9 @@ export const LicenseInformation = ({ handleContinue }) => (
               contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
               contextualHelpProps={{ isDisableHoverListener: false }}
               component={DatePicker}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
           </Grid>
           <Grid item md={6} sm={12}>
@@ -106,6 +122,10 @@ export const LicenseInformation = ({ handleContinue }) => (
               contextualHelpText="The number of years the company has been in business"
               contextualHelpProps={{ isDisableHoverListener: false }}
               component={Input}
+              InputProps={{
+                inputComponent: NumberFormat,
+                inputProps: { tabIndex: 0 }
+              }}
             />
           </Grid>
         </Grid>

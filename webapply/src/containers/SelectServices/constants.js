@@ -15,9 +15,6 @@ export const signingInfo = {
   A2: "Any of you can sign"
 };
 
-export const SIGNING_TRANSACTIONS_TYPE_ALL = "A2";
-export const SIGNING_TRANSACTIONS_TYPE_OTHER = "A3";
-
 export const servicesSteps = [
   {
     step: STEP_1,
@@ -40,4 +37,33 @@ export const servicesSteps = [
   }
 ];
 
-export const ALLOWED_CURRENCY = ["AED", "USD", "GBP", "EUR"];
+export const DATA_CURRENCIES = [
+  {
+    code: "AED",
+    key: "AED",
+    value: "AED",
+    displayText: "AED",
+    subGroup: null
+  },
+  {
+    code: "EUR",
+    key: "EUR",
+    value: "EUR",
+    displayText: "EUR",
+    subGroup: null
+  },
+  {
+    code: "USD",
+    key: "USD",
+    value: "USD",
+    displayText: "USD",
+    subGroup: null
+  },
+  {
+    code: "GBP",
+    key: "GBP",
+    value: "GBP",
+    displayText: "GBP",
+    subGroup: null
+  }
+];

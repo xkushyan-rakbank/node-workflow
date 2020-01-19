@@ -1,8 +1,8 @@
 import React from "react";
-import NumberFormat from "react-number-format";
+import BaseNumberFormat from "react-number-format";
 
-export const PercentageInput = ({ inputRef, onChange, ...props }) => (
-  <NumberFormat
+export const NumberFormat = ({ inputRef, onChange, ...props }) => (
+  <BaseNumberFormat
     getInputRef={inputRef}
     onValueChange={({ value }) => {
       onChange({
@@ -13,8 +13,6 @@ export const PercentageInput = ({ inputRef, onChange, ...props }) => (
       });
     }}
     isNumericString
-    decimalSeparator="."
-    decimalScale={2}
     {...props}
   />
 );

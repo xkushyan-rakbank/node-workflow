@@ -18,8 +18,12 @@ import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQues
 import { useStyles } from "./styled";
 
 const signatoryPreferredMailingAddressSchema = Yup.object().shape({
-  addressFieldDesc: Yup.string().required("You need to provide address details"),
-  addressLine1: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+  addressLine2: Yup.string()
+    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value")
+    .max(50, "Maximum 50 characters allowed"),
+  addressLine1: Yup.string()
+    .required("You need to provide address details")
+    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
     .matches(ALPHANUMERIC_REGEX, "Invalid PO box number"),
@@ -29,7 +33,7 @@ const signatoryPreferredMailingAddressSchema = Yup.object().shape({
 export const SignatoryPreferredMailingAddressComponent = ({
   index,
   handleContinue,
-  organisationAddressFieldDesc,
+  organisationAddressLine2,
   organisationAddressLine1,
   organisationPoBox,
   organisationEmirateCity
@@ -47,7 +51,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
       <Formik
         initialValues={{
           sameAsCompanyAddress: false,
-          addressFieldDesc: "",
+          addressLine2: "",
           addressLine1: "",
           poBox: "",
           emirateCity: "",
@@ -66,8 +70,8 @@ export const SignatoryPreferredMailingAddressComponent = ({
               label="Same as Company Address"
               onSelect={() => {
                 setFieldValue(
-                  "addressFieldDesc",
-                  !values.sameAsCompanyAddress ? organisationAddressFieldDesc : ""
+                  "addressLine2",
+                  !values.sameAsCompanyAddress ? organisationAddressLine2 : ""
                 );
                 setFieldValue(
                   "addressLine1",
@@ -79,26 +83,33 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 );
                 setFieldValue("poBox", !values.sameAsCompanyAddress ? organisationPoBox : "");
               }}
+              inputProps={{ tabIndex: 0 }}
             />
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item sm={12}>
                 <Field
-                  name="addressFieldDesc"
-                  path={`${autoSavePathBase}.addressFieldDesc`}
+                  name="addressLine1"
+                  path={`${autoSavePathBase}.addressLine1`}
                   disabled={values.sameAsCompanyAddress}
                   label="Flat / Villa / Building"
                   placeholder="Flat / Villa / Building"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
                 <Field
-                  name="addressLine1"
-                  path={`${autoSavePathBase}.addressLine1`}
+                  name="addressLine2"
+                  path={`${autoSavePathBase}.addressLine2`}
                   disabled={values.sameAsCompanyAddress}
                   label="Street / Location"
                   placeholder="Street / Location"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
                 <Field
                   name="emirateCity"
@@ -107,6 +118,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   datalistId="emirateCity"
                   label="Emirate"
                   component={CustomSelect}
+                  inputProps={{ tabIndex: 0 }}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -115,9 +127,11 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   path={`${autoSavePathBase}.poBox`}
                   disabled={values.sameAsCompanyAddress}
                   label="PO Box Number"
-                  placeholder="PO Box Number"
+                  placeholder="AB1234"
                   component={Input}
-                  inputProps={{ maxLength: MAX_PO_BOX_NUMBER_LENGTH }}
+                  InputProps={{
+                    inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
+                  }}
                 />
                 <Field
                   name="country"
@@ -126,6 +140,9 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   placeholder="Country"
                   disabled
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
             </Grid>

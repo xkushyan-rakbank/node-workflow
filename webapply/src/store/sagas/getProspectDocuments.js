@@ -10,13 +10,13 @@ import {
   takeEvery,
   cancelled
 } from "redux-saga/effects";
-import get from "lodash/get";
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
-
+import get from "lodash/get";
+import omit from "lodash/omit";
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
-import { getProspectId } from "../selectors/appConfig";
+import { getProspectId, getProspectDocuments as getDocuments } from "../selectors/appConfig";
 import {
   RETRIEVE_DOC_UPLOADER,
   DOC_UPLOADER,
@@ -27,6 +27,13 @@ import {
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
+import {
+  concatCompanyDocs,
+  concatStakeholdersDocs,
+  mergeObjectToCollection,
+  createDocumentMapper
+} from "../../utils/documents";
+import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 
 function createUploader(prospectId, data, source) {
   let emit;
@@ -54,19 +61,49 @@ function* uploadProgressWatcher(chan, documentKey) {
 function* getProspectDocumentsSaga() {
   const state = yield select();
   const prospectID = getProspectId(state) || "COSME0000000000000001";
+  const existDocuments = getDocuments(state);
   const config = cloneDeep(state.appConfig);
+  const isDocsUploaded =
+    existDocuments &&
+    existDocuments.companyDocuments.length > 0 &&
+    existDocuments.stakeholdersDocuments;
 
   try {
-    const response = yield call(getProspectDocuments.retriveDocuments, prospectID);
+    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID);
 
-    config.prospect.documents = response.data;
+    if (isDocsUploaded) {
+      const companyDocuments = concatCompanyDocs(
+        existDocuments.companyDocuments,
+        data.companyDocuments
+      );
+      const stakeholdersDocuments = concatStakeholdersDocs(
+        data.stakeholdersDocuments,
+        existDocuments.stakeholdersDocuments
+      );
+
+      config.prospect.documents = {
+        companyDocuments,
+        stakeholdersDocuments
+      };
+    } else {
+      config.prospect.documents = data;
+    }
+
     yield put(updateProspect(config));
   } catch (error) {
     log(error);
   }
 }
 
-function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, documentKey }) {
+function* uploadDocumentsBgSync({
+  data,
+  docProps,
+  docOwner,
+  documentType,
+  documentKey,
+  index,
+  stakeholderIndex
+}) {
   const source = CancelToken.source();
 
   try {
@@ -80,16 +117,30 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentType, docume
     const response = yield call(() => uploadPromise);
 
     const config = cloneDeep(state.appConfig);
+    const documents = config.prospect.documents;
+    const fileName = get(response, "data.fileName", "");
+    const additionalProps = { ...docProps, fileName };
 
-    const documents = config.prospect.documents[docOwner].map(doc => {
-      if (doc.documentType === documentType) {
-        return { ...doc, ...docProps, fileName: get(response, "data.fileName", "") };
-      }
+    if (docOwner === COMPANY_DOCUMENTS) {
+      const companyDocuments = documents[COMPANY_DOCUMENTS].map(
+        createDocumentMapper(documentType, additionalProps)
+      );
 
-      return doc;
-    });
+      documents[COMPANY_DOCUMENTS] = companyDocuments;
+    } else {
+      const stakeholderDocuments = mergeObjectToCollection(documents[STAKEHOLDER_DOCUMENTS]).map(
+        createDocumentMapper(documentType, additionalProps)
+      );
 
-    config.prospect.documents[docOwner] = documents;
+      const uploadedDocumnet = stakeholderDocuments.find(
+        doc => doc.key === stakeholderIndex && doc.documentType === documentType
+      );
+
+      documents[STAKEHOLDER_DOCUMENTS][uploadedDocumnet.key].documents[index] = omit(
+        uploadedDocumnet,
+        "key"
+      );
+    }
 
     yield put(setConfig(config));
   } catch (error) {
