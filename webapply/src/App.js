@@ -10,6 +10,7 @@ import { history } from "./store";
 import { FormLayout } from "./containers/FormLayout";
 import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
 
+import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
 import { ProspectProtectedRoute } from "./components/Routers";
 
 import { getEndpoints } from "./store/selectors/appConfig";
@@ -99,11 +100,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.comeBackLoginVerification}
                   component={ComeBackVerification}
                 />
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.MyApplications}
-                  component={MyApplications}
-                />
+                <OTPProtectedRoute exact path={routes.MyApplications} component={MyApplications} />
                 <ProspectProtectedRoute
                   exact
                   path={routes.SubmitApplication}
