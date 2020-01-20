@@ -33,16 +33,9 @@
 		</rollingPolicy>
 	</appender>
 
-	<!-- LOG everything at INFO level -->
 	<root level="info">
 		<appender-ref ref="Console" />
 		<appender-ref ref="RollingFile" />
 	</root>
-
-	<!-- LOG "com.baeldung*" at TRACE level -->
-	<logger name="ae.rakbank" level="debug">
-		<appender-ref ref="Console" />
-		<appender-ref ref="RollingFile" />
-	</logger>
 
 </configuration>

@@ -3,11 +3,16 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { Input, SelectAutocomplete, AutoSaveField as Field } from "../../../../components/Form";
+import {
+  Input,
+  SelectAutocomplete,
+  AutoSaveField as Field,
+  NumberFormat
+} from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
+import { useStyles } from "./styled";
 import { MAX_COMPANY_NAME_LENGTH } from "../../constants";
-import { NumberFormatInput } from "../../../../components/Form/Input/NumberFormatInput";
 
 const initialValues = {
   companyName: "",
@@ -32,6 +37,8 @@ const companyDetailsSchema = Yup.object({
 });
 
 export const CompanyDetails = ({ handleContinue }) => {
+  const classes = useStyles();
+
   return (
     <Formik
       initialValues={initialValues}
@@ -92,13 +99,13 @@ export const CompanyDetails = ({ handleContinue }) => {
                 component={Input}
                 changeProspect={(_, value, path) => ({ [path]: value || "0" })}
                 InputProps={{
-                  inputComponent: NumberFormatInput,
+                  inputComponent: NumberFormat,
                   inputProps: { tabIndex: 0 }
                 }}
               />
             </Grid>
           </Grid>
-          <Grid container direction="row" justify="flex-end" style={{ padding: 20 }}>
+          <Grid className={classes.continueButtonGrid} container direction="row" justify="flex-end">
             <ContinueButton type="submit" />
           </Grid>
         </Form>

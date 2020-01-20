@@ -65,7 +65,6 @@ export const ChannelsComponent = ({
     accountSigningType,
     isSelectedLocalCurrency
   );
-  const isSignatoriesListActive = !isHasSignatories && isSelectedLocalCurrency;
 
   useEffect(() => {
     updateProspect({
@@ -106,7 +105,9 @@ export const ChannelsComponent = ({
             inputProps={{ tabIndex: 0 }}
           />
 
-          {isSignatoriesListActive && <SignatoriesList stakeholders={stakeholders} />}
+          {isHasSignatories && values.debitCardApplied && (
+            <SignatoriesList stakeholders={stakeholders} />
+          )}
 
           <Divider classes={{ divider: classes.divider }} />
 
@@ -122,6 +123,8 @@ export const ChannelsComponent = ({
             disabled={isChequeBookDisabled}
             isLoadDefaultValueFromStore={false}
             inputProps={{ tabIndex: 0 }}
+            contextualHelpText="Cheque book will be printed with the company name given and will be send to the Company address"
+            contextualHelpProps={{ isDisableHoverListener: false }}
           />
 
           <Divider />

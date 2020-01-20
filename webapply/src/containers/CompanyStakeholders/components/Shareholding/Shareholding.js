@@ -5,17 +5,19 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
-import { NumberFormatInput } from "../../../../components/Form/Input/NumberFormatInput";
-import { InlineRadioGroup, AutoSaveField as Field, Input } from "../../../../components/Form";
+import {
+  InlineRadioGroup,
+  AutoSaveField as Field,
+  Input,
+  NumberFormat
+} from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
 
-const PercentageInput = props => (
-  <NumberFormatInput decimalSeparator="." decimalScale={2} {...props} />
-);
+const PercentageInput = props => <NumberFormat decimalSeparator="." decimalScale={2} {...props} />;
 
 const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
