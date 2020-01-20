@@ -183,7 +183,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                 <>
                   {signatories.map((data, index) => {
                     // eslint-disable-next-line max-len
-                    const prospectPath = `prospect.organizationInfo.contactDetailsForTxnReconfirming.[${index}]`;
+                    const prospectPath = `prospect.organizationInfo.contactDetailsForTxnReconfirming[${index}]`;
 
                     return (
                       <Grid
