@@ -29,7 +29,7 @@ export const SelectAutocomplete = ({
   contextualHelpProps,
   ...props
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
@@ -51,8 +51,9 @@ export const SelectAutocomplete = ({
         <Select
           {...field}
           {...props}
-          options={options}
           classes={classes}
+          isOpen
+          options={options}
           styles={customStyles}
           components={components}
           value={renderValue}

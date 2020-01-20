@@ -1,5 +1,9 @@
 {
-  "accountNo": "",
+  "accountInfo": [
+    {
+      "accountNo": "0192766195001"
+    }
+  ],
   "prospectId": "COSME0000000000000001",
   "_links": {
     "self": {

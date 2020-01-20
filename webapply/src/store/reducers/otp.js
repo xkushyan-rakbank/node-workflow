@@ -54,6 +54,7 @@ const otpReducer = (state = initialState, action) => {
     case actions.VERIFY_CODE_SUCCESS: {
       return {
         ...state,
+        isGenerated: false,
         isVerified: true,
         verificationError: false,
         isPending: false
