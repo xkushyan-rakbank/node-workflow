@@ -9,7 +9,8 @@ const initialState = {
   mode: "",
   otpTokenValidityInSec: "",
   otpTokenValidUntil: "",
-  generatedAt: Date.now()
+  generatedAt: Date.now(),
+  numberOfvalidationErrors: 0
 };
 
 const otpReducer = (state = initialState, action) => {
@@ -65,7 +66,8 @@ const otpReducer = (state = initialState, action) => {
         ...state,
         isVerified: false,
         verificationError: true,
-        isPending: false
+        isPending: false,
+        numberOfvalidationErrors: state.numberOfvalidationErrors + 1
       };
     }
     case actions.VERIFY_CLEAR_ERROR: {
