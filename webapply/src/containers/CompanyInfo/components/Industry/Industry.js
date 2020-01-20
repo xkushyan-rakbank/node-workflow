@@ -3,7 +3,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { SelectAutocomplete, AutoSaveField as Field } from "../../../../components/Form";
+import { AutoSaveField as Field } from "../../../../components/Form";
+import { SelectAutocompleteWithSearchValidation } from "./SelectAutocompleteWithSearchValidation";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import { useStyles } from "./styled";
@@ -45,7 +46,7 @@ export const Industry = ({ handleContinue }) => {
                 label="Industry"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
                 datalistId="industry"
-                component={SelectAutocomplete}
+                component={SelectAutocompleteWithSearchValidation}
                 contextualHelpText="This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. Example: if business / commercial / licensed activity is 'E Commerce', please select industry as 'Service' & sub-industry as 'Computer & IT Industry' "
                 contextualHelpProps={{ isDisableHoverListener: false }}
                 onChange={e => {
@@ -65,7 +66,7 @@ export const Industry = ({ handleContinue }) => {
                 name="subCategory"
                 label="Industry sub-category"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
-                component={SelectAutocomplete}
+                component={SelectAutocompleteWithSearchValidation}
                 datalistId="industry"
                 filterOptions={options =>
                   options
