@@ -8,12 +8,12 @@ import { useStyles } from "./styled";
 import { ReactComponent as ConventionalIcon } from "../../assets/icons/conventional.svg";
 import { ReactComponent as IslamicIcon } from "../../assets/icons/islamic.svg";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
-import { updateIslamicType } from "../../store/actions/selectedAccountInfo";
+import { updateProspect } from "../../store/actions/appConfig";
 
-const IslamicBankingSwitcher = ({ applicationInfo, updateIslamicType }) => {
+const IslamicBankingSwitcher = ({ isIslamicBanking, updateProspect }) => {
   const classes = useStyles();
   const handleClick = islamicBanking => {
-    updateIslamicType(islamicBanking);
+    updateProspect({ "prospect.applicationInfo.islamicBanking": islamicBanking });
   };
 
   return (
@@ -26,7 +26,7 @@ const IslamicBankingSwitcher = ({ applicationInfo, updateIslamicType }) => {
       <Button
         classes={{
           root: cx(classes.buttonStyle, {
-            [classes.active]: applicationInfo.islamicBanking
+            [classes.active]: isIslamicBanking
           }),
           label: classes.labelStyle
         }}
@@ -38,7 +38,7 @@ const IslamicBankingSwitcher = ({ applicationInfo, updateIslamicType }) => {
       <Button
         classes={{
           root: cx(classes.buttonStyle, {
-            [classes.active]: !applicationInfo.islamicBanking
+            [classes.active]: !isIslamicBanking
           }),
           label: classes.labelStyle
         }}
@@ -52,11 +52,11 @@ const IslamicBankingSwitcher = ({ applicationInfo, updateIslamicType }) => {
 };
 
 const mapStateToProps = state => ({
-  applicationInfo: appConfigSelectors.getApplicationInfo(state)
+  isIslamicBanking: appConfigSelectors.getIsIslamicBanking(state)
 });
 
 const mapDispatchToProps = {
-  updateIslamicType
+  updateProspect
 };
 
 export default connect(

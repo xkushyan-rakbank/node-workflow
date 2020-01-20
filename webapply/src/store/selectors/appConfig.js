@@ -22,6 +22,10 @@ export const getSendProspectToAPIInfo = state => state.sendProspectToAPI || {};
 
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
+export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
+
+export const getAccountType = state => getApplicationInfo(state).accountType;
+
 export const getProspectId = state => getGeneralInfo(state).prospectId;
 
 export const getProceedStatus = state => state.applicationStatus.isProceed;

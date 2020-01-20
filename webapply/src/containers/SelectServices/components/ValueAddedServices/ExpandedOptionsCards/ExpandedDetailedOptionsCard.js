@@ -1,12 +1,14 @@
 import React from "react";
 import cx from "classnames";
 import { Link } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 import { accountsNames } from "../../../../../constants";
 import { useIconsByAccount } from "../../../../../utils/useIconsByAccount";
 
 import { ICONS, Icon } from "../../../../../components/Icons/Icon";
 import { ContainedButton } from "../../../../../components/Buttons/ContainedButton";
+import { getAccountType } from "../../../../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
 
@@ -30,10 +32,8 @@ const getUrlReadMore = (urls, islamicBanking, value) => {
 
 export const ExpandedDetailedOptionsCard = ({
   optionList,
-  isIncluded,
   cost,
   value,
-  accountType,
   className,
   buttonLabel,
   selectService,
@@ -42,6 +42,7 @@ export const ExpandedDetailedOptionsCard = ({
   id,
   readMoreUrls
 }) => {
+  const accountType = useSelector(getAccountType);
   const classes = useStyles();
   const { plus: Plus, max: Max } = useIconsByAccount();
   const href = getUrlReadMore(readMoreUrls, accountType, value);

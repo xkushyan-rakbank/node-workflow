@@ -4,6 +4,7 @@ import createReduxWaitForMiddleware from "redux-wait-for-action";
 import { routerMiddleware } from "connected-react-router";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import createFilter from "redux-persist-transform-filter";
 
 import reducers from "./reducers";
 import rootSaga from "./sagas";
@@ -19,7 +20,13 @@ export const configureStore = (initialState, history) => {
   const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["selectedAccountInfo"]
+    whitelist: ["appConfig"],
+    transforms: [
+      createFilter("appConfig", [
+        "prospect.applicationInfo.accountType",
+        "prospect.applicationInfo.islamicBanking"
+      ])
+    ]
   };
 
   const store = createStore(

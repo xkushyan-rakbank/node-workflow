@@ -8,7 +8,6 @@ import otp from "./otp";
 import login from "./loginForm";
 import searchProspect from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
-import selectedAccountInfo from "./selectedAccountInfo";
 import stakeholders from "./stakeholders";
 import screenProspect from "./screenProspect";
 import validationErrors from "./validationErrors";
@@ -26,7 +25,6 @@ const reducers = history =>
     login,
     searchProspect,
     retrieveApplicantInfo,
-    selectedAccountInfo,
     stakeholders,
     screenProspect,
     validationErrors,

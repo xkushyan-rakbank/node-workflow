@@ -2,20 +2,15 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import { TableCompareComponent } from "./TableCompare";
-import { updateAccountType } from "../../../../store/actions/selectedAccountInfo";
-import { getApplicationInfo } from "../../../../store/selectors/appConfig";
-
-const mapStateToProps = state => ({
-  applicationInfo: getApplicationInfo(state)
-});
+import { updateProspect } from "../../../../store/actions/appConfig";
 
 const mapDispatchToProps = {
-  updateAccountType
+  updateProspect
 };
 
 export const TableCompare = compose(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   ),
   withRouter

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../../components/HorizontalIconCards/HorizontalIconCardsContainer";
@@ -7,10 +8,12 @@ import { useIconsByAccount } from "../../../utils/useIconsByAccount";
 import { InfoNote } from "../../../components/InfoNote";
 import { accountsNames } from "../../../constants";
 import { accountTypesInfo, accountText } from "./constants";
+import { getAccountType } from "../../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
 
-export const AccountBenefitsComponent = ({ accountType }) => {
+export const AccountBenefits = () => {
+  const accountType = useSelector(getAccountType);
   const classes = useStyles();
 
   const icons = useIconsByAccount();

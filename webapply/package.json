@@ -32,6 +32,7 @@
     "react-text-mask": "^5.4.3",
     "redux": "^4.0.4",
     "redux-persist": "^6.0.0",
+    "redux-persist-transform-filter": "^0.0.20",
     "redux-saga": "^1.0.5",
     "redux-wait-for-action": "0.0.8",
     "reselect": "^4.0.0",

@@ -10,7 +10,6 @@ import searchProspectSaga from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import stakeholders from "./stakeholders";
 import screenProspect from "./screenProspect";
-import selectedAccountInfo from "./selectedAccountInfo";
 
 export default function*() {
   yield all([
@@ -23,7 +22,6 @@ export default function*() {
     fork(searchProspectSaga),
     fork(retrieveApplicantInfo),
     fork(stakeholders),
-    fork(screenProspect),
-    fork(selectedAccountInfo)
+    fork(screenProspect)
   ]);
 }

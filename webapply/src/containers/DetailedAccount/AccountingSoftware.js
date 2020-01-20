@@ -12,14 +12,15 @@ const useStyles = makeStyles({
   }
 });
 
-export const AccountingSoftware = ({ accountType }) => {
+export const AccountingSoftware = () => {
   const classes = useStyles();
+
   return (
     <>
       <div className={classes.indent}>
         <SectionTitleWithInfo title="Get things done with RAKvalue" info="Automate and save time" />
       </div>
-      <ExpandedOptionsCards accountType={accountType} />
+      <ExpandedOptionsCards />
     </>
   );
 };
