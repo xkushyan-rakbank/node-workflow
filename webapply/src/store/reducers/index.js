@@ -1,7 +1,5 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
-import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import appConfig from "./appConfig";
 import reCaptcha from "./reCaptcha";
 import serverValidation from "./serverValidation";
@@ -17,11 +15,6 @@ import validationErrors from "./validationErrors";
 import uploadDocuments from "./getProspectDocuments";
 import completedSteps from "./completedSteps";
 
-const selectedAccountInfoPersistConfig = {
-  key: "selectedAccountInfo",
-  storage
-};
-
 const reducers = history =>
   combineReducers({
     router: connectRouter(history),
@@ -33,7 +26,7 @@ const reducers = history =>
     login,
     searchProspect,
     retrieveApplicantInfo,
-    selectedAccountInfo: persistReducer(selectedAccountInfoPersistConfig, selectedAccountInfo),
+    selectedAccountInfo,
     stakeholders,
     screenProspect,
     validationErrors,
