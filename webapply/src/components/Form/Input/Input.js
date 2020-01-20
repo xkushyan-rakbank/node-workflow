@@ -5,6 +5,7 @@ import { getIn } from "formik";
 import cx from "classnames";
 
 import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
+import { checkBrowserIsIE } from "../../../utils/checkBrowserIsIE";
 
 import { useStyles } from "./styled";
 
@@ -27,6 +28,8 @@ export const Input = ({
 
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
+  const isIE = checkBrowserIsIE();
+  const inputLabelShrink = isIE && placeholder ? true : shrink;
 
   return (
     <FormControl classes={{ root: classes.formControlRoot }}>
@@ -42,7 +45,7 @@ export const Input = ({
           error={isError}
           InputProps={{ ...InputProps, classes: { input: classes.input } }}
           InputLabelProps={{
-            shrink
+            shrink: inputLabelShrink
           }}
         />
       </ContexualHelp>
