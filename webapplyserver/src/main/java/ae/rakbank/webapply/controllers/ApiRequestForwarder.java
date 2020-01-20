@@ -586,6 +586,7 @@ public class ApiRequestForwarder {
         // ResponseEntity headers is immutable, so create new HttpHeaders object
         HttpHeaders headers = new HttpHeaders();
         headers.addAll(response.getHeaders());
+        headers.remove("Content-Length");
 
         logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
                 url, response.getStatusCodeValue(), response.getBody()));
