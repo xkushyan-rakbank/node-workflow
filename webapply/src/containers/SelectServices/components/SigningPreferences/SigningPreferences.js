@@ -148,7 +148,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
               typeRadio
               datalistId="accountSignType"
               onSelect={e => {
-                setFieldValue("accountSigningType", e.currentTarget.value);
+                setFieldValue("accountSigningType", e.target.value);
                 setFieldValue("accountSigningInstn", "");
                 if (accountSigningInstn) {
                   updateProspect({ [pathSignatoryInfo]: "" });
