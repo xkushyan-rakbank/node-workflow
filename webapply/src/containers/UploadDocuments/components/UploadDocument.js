@@ -36,7 +36,9 @@ export const UploadDocuments = ({
   const documentKey = useMemo(() => nanoid(), []);
   const isUploaded = document.uploadStatus === "Uploaded";
 
-  const fileUploadHandler = useCallback(() => {
+  const fileUploadClick = event => (event.target.value = null);
+
+  const fileUploadChange = useCallback(() => {
     const file = inputEl.current.files[0];
 
     try {
@@ -94,7 +96,8 @@ export const UploadDocuments = ({
         className={classes.defaultInput}
         name="file"
         type="file"
-        onChange={fileUploadHandler}
+        onChange={fileUploadChange}
+        onClick={fileUploadClick}
         ref={inputEl}
         multiple
       />
