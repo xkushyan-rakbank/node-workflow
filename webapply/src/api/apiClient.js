@@ -14,6 +14,15 @@ export const config = {
   }
 };
 
+export const dataList = {
+  get: segment => {
+    return httpClient.request({
+      url: `webapply/api/v1/datalist?segment=${segment}`,
+      method: "GET"
+    });
+  }
+};
+
 export const authentication = {
   login: data => {
     return httpClient.request({
