@@ -53,9 +53,7 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
             uploadsDir = Paths.get(environmentUtil.getUploadDir());
 
             Files.copy(inputStream, this.uploadsDir.resolve(documentKey), StandardCopyOption.REPLACE_EXISTING);
-            logger.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId,
-
-                    this.uploadsDir.resolve(documentKey)));
+            logger.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId, this.uploadsDir.resolve(documentKey)));
 
             return documentKey;
         }
