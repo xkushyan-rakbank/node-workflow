@@ -12,7 +12,7 @@ import {
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
 import { useStyles } from "./styled";
-import { MAX_COMPANY_NAME_LENGTH } from "../../constants";
+import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 
 const initialValues = {
   companyName: "",
@@ -25,14 +25,15 @@ const companyDetailsSchema = Yup.object({
   companyName: Yup.string()
     .required("You need to provide company name")
     .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-  vatRegistrationNumber: Yup.string()
-    .max(15, "Maximum 15 characters allowed")
-    .matches(NUMBER_REGEX, "Not valid number"),
+  vatRegistrationNumber: Yup.string().matches(
+    NUMBER_REGEX,
+    "This is not a valid registration number"
+  ),
   numberOfEmployees: Yup.number()
     .typeError("Not valid number")
     .min(0, "Must be more than or equal to 0")
     .max(1000, "Must be less than or equal to 1000")
-    .integer("Must be an integer"),
+    .integer("This is not a valid number of employees"),
   companyCategory: Yup.string().required("You need to provide company category")
 });
 
@@ -87,7 +88,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 infoTitle="This should be the same as your TRN number of UAE"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { maxLength: MAX_REGISTRATION_NUMBER_LENGTH, tabIndex: 0 }
                 }}
               />
             </Grid>
