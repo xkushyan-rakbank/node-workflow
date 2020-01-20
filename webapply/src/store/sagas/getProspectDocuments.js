@@ -126,11 +126,11 @@ function* uploadDocumentsBgSync({
 
       documents[COMPANY_DOCUMENTS] = companyDocuments;
     } else {
-      const stakeholderDocuments = documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].documents.map(
-        createDocumentMapper(documentType, additionalProps)
-      );
+      const stakeholdersDocuments = documents[STAKEHOLDER_DOCUMENTS][
+        stakeholderIndex
+      ].documents.map(createDocumentMapper(documentType, additionalProps));
 
-      documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].documents = stakeholderDocuments;
+      documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].documents = stakeholdersDocuments;
     }
 
     yield put(setConfig(config));
