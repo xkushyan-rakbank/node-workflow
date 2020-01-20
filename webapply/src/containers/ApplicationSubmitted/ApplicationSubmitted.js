@@ -12,14 +12,16 @@ import docChecked from "../../assets/icons/docChecked.png";
 import bankingClock from "../../assets/icons/bankingClock.png";
 import { useStyles } from "./styled";
 
-const ApplicationSubmittedComponent = ({ AccountSubmittedInfo }) => {
+const ApplicationSubmittedComponent = ({ AccountSubmittedInfo, organizationInfo }) => {
   const classes = useStyles();
 
   return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
     <div className={classes.container}>
       <div className={classes.title}>
         <img src={docChecked} alt="checked" />
-        <SectionTitleWithInfo title="Meet the brand new accounts for Designit Arabia" />
+        <SectionTitleWithInfo
+          title={`Meet the brand new accounts for ${organizationInfo.companyName}`}
+        />
       </div>
       <div
         className={cx(classes.accountsNumbers, {
@@ -68,7 +70,8 @@ const ApplicationSubmittedComponent = ({ AccountSubmittedInfo }) => {
 
 const mapStateToProps = state => {
   return {
-    AccountSubmittedInfo: accountInfoSelector.getAccountSubmittedInfo(state)
+    AccountSubmittedInfo: accountInfoSelector.getAccountSubmittedInfo(state),
+    organizationInfo: accountInfoSelector.getOrganizationInfo(state)
   };
 };
 
