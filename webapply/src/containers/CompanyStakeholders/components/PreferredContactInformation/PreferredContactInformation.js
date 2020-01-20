@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { InfoTitle } from "../../../../components/Notifications";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import {
   AutoSaveField as Field,
@@ -15,28 +14,43 @@ import {
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { getInputValueById } from "../../../../store/selectors/input";
 import {
-  PHONE_REGEX,
   UAE_MOBILE_PHONE_REGEX,
-  UAE_LANDLINE_PHONE_REGEX
+  UAE_LANDLINE_PHONE_REGEX,
+  NUMBER_REGEX,
+  MIN_NON_UAE_PHONE_LENGTH,
+  MAX_NON_UAE_PHONE_LENGTH
 } from "../../../../utils/validation";
 import { UAE_CODE } from "../../../../constants";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
     .required("You need to provide Email address")
-    .email("This is not a valid Email address"),
+    .email("This is not a valid Email address")
+    .max(50, "Maximum 50 characters allowed"),
   primaryMobCountryCode: Yup.string().required("Select country code"),
   primaryMobileNo: Yup.string()
     .required("You need to provide mobile number")
     .when("primaryMobCountryCode", {
       is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
       then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
-      otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+      otherwise: Yup.string()
+        .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+        .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
+        .test("length validation", "This is not a valid phone (max length exceeded)", function() {
+          const { primaryMobCountryCode = "", primaryMobileNo = "" } = this.parent;
+          return primaryMobCountryCode.length + primaryMobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+        })
     }),
   primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
     is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
     then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "This is not a valid phone"),
-    otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid phone")
+    otherwise: Yup.string()
+      .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+      .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
+      .test("length validation", "This is not a valid phone (max length exceeded)", function() {
+        const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
+        return primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+      })
   })
 });
 
@@ -64,6 +78,9 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
               placeholder="E-mail Address"
               component={Input}
               disabled={!isSignatory}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
           </Grid>
         </Grid>
@@ -77,6 +94,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={false}
                 disabled={!isSignatory}
                 datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
               />
 
               <Field
@@ -87,6 +105,9 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={true}
                 component={Input}
                 disabled={!isSignatory}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </InputGroup>
           </Grid>
@@ -99,6 +120,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 shrink={false}
                 disabled={!isSignatory}
                 datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
               />
 
               <Field
@@ -108,11 +130,13 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 placeholder="Landline number (optional)"
                 component={Input}
                 disabled={!isSignatory}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </InputGroup>
           </Grid>
         </Grid>
-        <InfoTitle title="Heads up! We can only issue chequebooks if you use a phone number from the UAE." />
 
         <SubmitButton />
       </Form>

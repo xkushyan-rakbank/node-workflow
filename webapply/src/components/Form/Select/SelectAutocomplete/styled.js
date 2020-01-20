@@ -66,7 +66,7 @@ export const useStyles = makeStyles(theme => ({
 }));
 
 export const customStyles = {
-  menu: (provided, state) => ({
+  menu: provided => ({
     ...provided,
     zIndex: 2
   })

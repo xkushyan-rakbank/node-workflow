@@ -14,6 +14,15 @@ export const config = {
   }
 };
 
+export const dataList = {
+  get: segment => {
+    return httpClient.request({
+      url: `webapply/api/v1/datalist?segment=${segment}`,
+      method: "GET"
+    });
+  }
+};
+
 export const authentication = {
   login: data => {
     return httpClient.request({
@@ -110,6 +119,7 @@ export const screening = {
 export const uploadProspectDocument = {
   send: ({ data, prospectId, source, onUploadProgress }) => {
     return uploadClient.request({
+      url: buildURI("docUploaderUri", prospectId),
       method: "POST",
       data,
       cancelToken: source.token,

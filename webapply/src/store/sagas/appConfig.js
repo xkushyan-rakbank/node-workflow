@@ -18,11 +18,11 @@ import {
   UPDATE_SAVE_TYPE,
   saveProspectModel
 } from "../actions/appConfig";
+import { config, dataList } from "../../api/apiClient";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
-import { config } from "../../api/apiClient";
 import { history } from "./..";
-import { accountsNames, UAE_CODE } from "../../constants";
+import { accountsNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
 import {
   getEndpoints,
   getApplicationInfo,
@@ -57,15 +57,23 @@ function* receiveAppConfigSaga() {
       }
     }
 
+    const dataListResponse = yield call(dataList.get, segment);
     const newConfig = cloneDeep(response.data);
     const prospectModel = cloneDeep(newConfig.prospect);
     if (newConfig.prospect) {
       newConfig.prospect.signatoryInfo = [];
+      newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
       if (!newConfig.prospect.applicantInfo.countryCode) {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
       newConfig.prospect.applicationInfo.accountType = accountType;
       newConfig.prospect.applicationInfo.islamicBanking = isIslamicBanking;
+      newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
+      newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
+    }
+
+    if (dataListResponse) {
+      newConfig.dataList = dataListResponse.data;
     }
 
     yield put(saveProspectModel(prospectModel));

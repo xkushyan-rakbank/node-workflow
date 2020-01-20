@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { checkIsDebitCardApplied, checkIsChequeBookApplied } from "./utils";
+import { checkIsChequeBookApplied, checkIsDebitCardApplied } from "./utils";
 import { NAME_REGEX } from "../../../../utils/validation";
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
@@ -52,19 +52,27 @@ export const ChannelsComponent = ({
   stakeholders,
   goToNext,
   updateProspect,
-  debitCardApplied,
-  ...props
+  primaryMobCountryCode,
+  accountCurrencies: { isSelectedLocalCurrency }
 }) => {
-  const { isDisabledDebitCard, isDebitCardApplied } = checkIsDebitCardApplied(props);
-  const { isDisabledChequeBook, isChequeBookApplied } = checkIsChequeBookApplied(props);
   const classes = useStyles();
+  const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
+  const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
+    primaryMobCountryCode,
+    isSelectedLocalCurrency
+  );
+  const { isDebitCardDisabled, isDebitCardApplied } = checkIsDebitCardApplied(
+    accountSigningType,
+    isSelectedLocalCurrency
+  );
 
   useEffect(() => {
     updateProspect({
       [pathDebitCardApplied]: isDebitCardApplied,
       [pathChequeBookApplied]: isChequeBookApplied
     });
-  }, [isChequeBookApplied, isDebitCardApplied, updateProspect]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isChequeBookApplied, updateProspect]);
 
   return (
     <Formik
@@ -92,10 +100,16 @@ export const ChannelsComponent = ({
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
             infoTitle={DEBIT_CARD_INFO}
-            disabled={isDisabledDebitCard}
+            disabled={isDebitCardDisabled}
+            isLoadDefaultValueFromStore={false}
+            inputProps={{ tabIndex: 0 }}
+            contextualHelpText="Business debit card will be send to the signatory's preferred mailing address"
+            contextualHelpProps={{ isDisableHoverListener: false }}
           />
 
-          {isHasSignatories && <SignatoriesList stakeholders={stakeholders} />}
+          {isHasSignatories && values.debitCardApplied && (
+            <SignatoriesList stakeholders={stakeholders} />
+          )}
 
           <Divider classes={{ divider: classes.divider }} />
 
@@ -108,7 +122,11 @@ export const ChannelsComponent = ({
             classes={{ infoTitle: classes.infoTitle }}
             component={Checkbox}
             infoTitle={CHEQUE_BOOK_INFO}
-            disabled={isDisabledChequeBook}
+            disabled={isChequeBookDisabled}
+            isLoadDefaultValueFromStore={false}
+            inputProps={{ tabIndex: 0 }}
+            contextualHelpText="Cheque book will be printed with the company name given and will be send to the Company address"
+            contextualHelpProps={{ isDisableHoverListener: false }}
           />
 
           <Divider />
@@ -124,6 +142,7 @@ export const ChannelsComponent = ({
               setFieldValue("mailStatements", false);
               setFieldValue("eStatements", true);
             }}
+            inputProps={{ tabIndex: 0 }}
           />
 
           <CustomCheckbox
@@ -135,6 +154,7 @@ export const ChannelsComponent = ({
               setFieldValue("eStatements", false);
               setFieldValue("mailStatements", true);
             }}
+            inputProps={{ tabIndex: 0 }}
           />
 
           <Grid

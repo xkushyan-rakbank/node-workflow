@@ -5,13 +5,19 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
-import { PercentageInput } from "./PercentageInput";
-import { InlineRadioGroup, AutoSaveField as Field, Input } from "../../../../components/Form";
+import {
+  InlineRadioGroup,
+  AutoSaveField as Field,
+  Input,
+  NumberFormat
+} from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
+
+const PercentageInput = props => <NumberFormat decimalSeparator="." decimalScale={2} {...props} />;
 
 const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
@@ -64,6 +70,9 @@ const ShareholdingStep = ({
                 onChange={shareholderHandler}
                 contextualHelpProps={{ isDisableHoverListener: false }}
                 contextualHelpText="Select 'Yes' if this person holds any shares based on Memorandum of Association/ Articles of Association/ Partners agreement/ Service Agreement/ Share Certificate"
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
               <Grid item md={12}>
                 <Field
@@ -75,7 +84,8 @@ const ShareholdingStep = ({
                   component={Input}
                   InputProps={{
                     inputComponent: PercentageInput,
-                    endAdornment: <InputAdornment position="end">%</InputAdornment>
+                    endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                    inputProps: { maxLength: 6, tabIndex: 0 }
                   }}
                   contextualHelpText="Mention the percentage of shares held based on  Memorandum of Association/ Articles of Association/ Partners agreement/ Service Agreement/ Share Certificate"
                 />

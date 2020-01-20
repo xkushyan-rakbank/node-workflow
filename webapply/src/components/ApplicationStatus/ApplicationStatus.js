@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 
-export const ApplicationStatus = ({ statusFromServer, content }) => {
+export const ApplicationStatus = ({ icon, text, link }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.appStatus}>
-      <img src={content.icon} alt="error" />
+      <img src={icon} alt="error" />
       <div className={classes.message}>
-        <p>{statusFromServer ? statusFromServer.screeningReason : content.text}</p>
-        {statusFromServer && (
+        <p>{text}</p>
+        {link && (
           <Link to={routes.accountsComparison} className={classes.appStatusLink}>
             See products
           </Link>

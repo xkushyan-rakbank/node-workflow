@@ -6,9 +6,11 @@ import omit from "lodash/omit";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "../../../components/Form";
 import {
+  NUMBER_REGEX,
+  MIN_NON_UAE_PHONE_LENGTH,
+  MAX_NON_UAE_PHONE_LENGTH,
   NAME_REGEX,
   ALPHANUMERIC_REGEX,
-  PHONE_REGEX,
   UAE_MOBILE_PHONE_REGEX
 } from "../../../utils/validation";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
@@ -22,7 +24,13 @@ const searchProspectSchema = Yup.object({
   mobileNo: Yup.string().when("countryCode", {
     is: countryCode => countryCode === UAE_CODE,
     then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid mobile no."),
-    otherwise: Yup.string().matches(PHONE_REGEX, "This is not a valid mobile no.")
+    otherwise: Yup.string()
+      .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+      .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
+      .test("length validation", "This is not a valid phone (max length exceeded)", function() {
+        const { countryCode = "", mobileNo = "" } = this.parent;
+        return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+      })
   }),
   email: Yup.string().email("This is not a valid email"),
   raktrackNumber: Yup.string()
@@ -71,6 +79,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
               placeholder="Applicant Name"
               contextualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."
               component={Input}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
 
             <Grid container spacing={3}>
@@ -82,6 +93,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                     datalistId="countryCode"
                     component={CustomSelect}
                     shrink={false}
+                    inputProps={{ tabIndex: 0 }}
                   />
 
                   <Field
@@ -91,6 +103,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                     placeholder="Mobile Number"
                     contextualHelpText="This should be the mobile number of the person who has registered for WebApply and initiated the application on behalf of the company."
                     component={Input}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
                   />
                 </InputGroup>
               </Grid>
@@ -102,6 +117,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   placeholder="E-mail Address"
                   contextualHelpText="This should be the email id of the person who has registered for WebApply and initiated the application on behalf of the company."
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
             </Grid>
@@ -113,6 +131,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   label="RAKtrack Lead Reference Number"
                   placeholder="RAKtrack Lead Reference Number"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -122,6 +143,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   label="Trade License Number"
                   placeholder="Track License Number"
                   component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
             </Grid>

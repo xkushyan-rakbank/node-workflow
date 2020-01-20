@@ -15,7 +15,8 @@ export const UploadDocument = ({
   companyName,
   signatories,
   history,
-  progress
+  progress,
+  updateProspect
 }) => {
   const classes = useStyles();
 
@@ -40,17 +41,19 @@ export const UploadDocument = ({
               companyName={companyName}
               docUpload={docUpload}
               cancelDocUpload={cancelDocUpload}
+              updateProspect={updateProspect}
               progress={progress}
             />
           </div>
           {documents.stakeholdersDocuments && (
             <div className={classes.sectionContainer}>
-              <SectionTitle title="Signatories documents" />
+              <SectionTitle title="Stakeholders documents" />
               <SignatoriesDocuments
                 documents={documents.stakeholdersDocuments}
                 signatories={signatories}
                 docUpload={docUpload}
                 cancelDocUpload={cancelDocUpload}
+                updateProspect={updateProspect}
                 progress={progress}
               />
             </div>

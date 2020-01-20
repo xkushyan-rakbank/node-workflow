@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 import companyIconSvg from "../../../assets/icons/file.png";
 import { useStyles } from "./styled";
+import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -21,15 +22,19 @@ export const UploadDocuments = ({
   type: docOwner,
   docUpload,
   icon,
+  index,
+  stakeholderIndex,
   uploadErrorMessage,
   progress,
-  cancelDocUpload
+  cancelDocUpload,
+  updateProspect
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
   const inputEl = useRef(null);
   const documentKey = useMemo(() => nanoid(), []);
+  const isUploaded = document.uploadStatus === "Uploaded";
 
   const fileUploadHandler = useCallback(() => {
     const file = inputEl.current.files[0];
@@ -40,10 +45,12 @@ export const UploadDocuments = ({
       return setErrorMessage(error.message);
     }
 
-    const fileInfo = JSON.stringify({ documentKey });
+    const fileInfo = JSON.stringify({
+      documentKey,
+      documentType: document.documentType || ""
+    });
     const docProps = {
       uploadStatus: "Uploaded",
-      fileName: file.name,
       fileSize: file.size,
       submittedDt: file.lastModifiedDate,
       fileFormat: file.type
@@ -52,13 +59,30 @@ export const UploadDocuments = ({
     data.append("fileInfo", fileInfo);
     data.append("file", file);
 
-    docUpload({ data, docProps, docOwner, documentType: document.documentType, documentKey });
+    docUpload({
+      data,
+      docProps,
+      docOwner,
+      documentType: document.documentType,
+      documentKey,
+      index,
+      stakeholderIndex
+    });
     setErrorMessage(null);
     setSelectedFile(file);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [document]);
 
   const fileUploadCancel = useCallback(() => {
+    if (docOwner === COMPANY_DOCUMENTS) {
+      updateProspect({
+        [`prospect.documents[${COMPANY_DOCUMENTS}][${index}].uploadStatus`]: "NotUploaded"
+      });
+    } else if (docOwner === STAKEHOLDER_DOCUMENTS) {
+      updateProspect({
+        [`prospect.documents[${STAKEHOLDER_DOCUMENTS}][${stakeholderIndex}].documents[${index}].uploadStatus`]: "NotUploaded"
+      });
+    }
     cancelDocUpload(documentKey);
     setSelectedFile(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,48 +100,50 @@ export const UploadDocuments = ({
       />
 
       <>
-        {!selectedFile && (
-          <div className={classes.ContentBox}>
-            {!selectedFile && <p className={classes.uploadedFileName}>{document.documentType}</p>}
-            {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
-            {!errorMessage && !selectedFile && (
-              <p className={classes.fileSizeMessage}>
-                Supported formats are PDF, JPG and PNG | 5MB maximum size
-              </p>
-            )}
-            {uploadErrorMessage && (
-              <p className={classes.ErrorExplanation}>Error while uploading</p>
-            )}
-          </div>
-        )}
-        {!selectedFile && (
-          <p
-            className={classes.ControlsBox}
-            justify="flex-end"
-            onClick={() => inputEl.current.click()}
-          >
-            Upload
-          </p>
-        )}
-      </>
-      <>
-        {selectedFile && (
+        {!selectedFile && !isUploaded ? (
+          <>
+            <div className={classes.ContentBox}>
+              {!selectedFile && <p className={classes.uploadedFileName}>{document.documentType}</p>}
+              {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
+              {!errorMessage && !selectedFile && (
+                <p className={classes.fileSizeMessage}>
+                  Supported formats are PDF, JPG and PNG | 5MB maximum size
+                </p>
+              )}
+              {uploadErrorMessage && (
+                <p className={classes.ErrorExplanation}>Error while uploading</p>
+              )}
+            </div>
+
+            <p
+              className={classes.ControlsBox}
+              justify="flex-end"
+              onClick={() => inputEl.current.click()}
+            >
+              Upload
+            </p>
+          </>
+        ) : (
           <>
             <div>{icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
             <div className={classes.contentBox}>
               <div className={classes.uploadFileName}>
-                {selectedFile.name}
-                <span className={classes.signatoryRights}>{selectedFile.size} Bytes</span>
+                {isUploaded ? document.fileName : selectedFile.name}
+                <span className={classes.signatoryRights}>
+                  {isUploaded ? document.fileSize : selectedFile.size} Bytes
+                </span>
               </div>
 
               <div className={classes.uploadFileName}>
                 <div id="Progress_Status">
                   <div
                     className={classes.myProgressBar}
-                    style={{ width: `${progress[documentKey] || 0}%` }}
+                    style={{ width: `${isUploaded ? 100 : progress[documentKey] || 0}%` }}
                   ></div>
                 </div>
-                <div className={classes.progressStatus}>{progress[documentKey] || 0}%</div>
+                <div className={classes.progressStatus}>
+                  {isUploaded ? 100 : progress[documentKey] - 1 || 0}%
+                </div>
               </div>
             </div>
             <p className={classes.cancel} onClick={fileUploadCancel}>

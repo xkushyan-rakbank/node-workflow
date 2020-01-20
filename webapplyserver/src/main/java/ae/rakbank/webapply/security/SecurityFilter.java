@@ -10,19 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.PublicKey;
 
 @Component
 public class SecurityFilter implements Filter {
-    private static final String UTF_8 = "UTF-8";
 
     @Autowired
     private SecurityUtil securityUtil;
@@ -37,9 +33,12 @@ public class SecurityFilter implements Filter {
         if (skipEncryption((HttpServletRequest) request)) {
             logger.info("Encryption skipped");
             chain.doFilter(request, response);
-        } else {
+        }
+        else {
             logger.info("Encryption enabled");
             ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
+            responseWrapper.setCharacterEncoding("UTF-8");
+
             byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
             byte[] decryptedData = null;
             SecretKeySpec spec = null;
@@ -56,7 +55,8 @@ public class SecurityFilter implements Filter {
                 ObjectMapper mapper = new ObjectMapper();
                 result = mapper.writeValueAsString(failed);
                 responseWrapper.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            } else {
+            }
+            else {
                 HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
                         decryptedData);
 
@@ -64,6 +64,7 @@ public class SecurityFilter implements Filter {
 
                 result = encrypt(responseWrapper, spec);
             }
+
             response.setContentLength(result.length());
             response.getWriter().write(result);
         }
@@ -95,7 +96,7 @@ public class SecurityFilter implements Filter {
     }
 
     private boolean skipEncryption(HttpServletRequest request) {
-        return request.getHeader("x-sym-key") == null || request.getHeader("isForward") != null ? true : false;
+        return request.getHeader("x-sym-key") == null || request.getHeader("isForward") != null;
     }
 
     private byte[] getKeyFromRequest(HttpServletRequest request){
@@ -106,12 +107,6 @@ public class SecurityFilter implements Filter {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public String decrypt(String input, PublicKey key) throws IOException, GeneralSecurityException {
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, key);
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(cipher.doFinal(input.getBytes(UTF_8)));
     }
 
 }

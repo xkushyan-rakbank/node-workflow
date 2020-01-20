@@ -100,7 +100,7 @@ public class DocumentUploadController {
 	}
 
 	private ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
-		logger.error(String.format(
+		logger.info(String.format(
 				"[Begin] processUploadRequest() method, prospectId=%s, originalFilename=[%s], filesize=%s, fileInfo= %s",
 				prospectId, file.getOriginalFilename(), file.getSize(), fileInfo));
 
@@ -119,6 +119,7 @@ public class DocumentUploadController {
 	}
 
 	private ResponseEntity<Object> saveUploadedFile(MultipartFile file, JsonNode fileInfo, String prospectId) {
+    String fileName;
 
 		logger.info(
 				String.format("[Begin] saveUploadedFile() method, prospectId=%s, originalFilename=[%s], filesize=%s",
@@ -126,7 +127,7 @@ public class DocumentUploadController {
 
 		try {
 
-			docUploadService.store(file, fileInfo, prospectId);
+			fileName = docUploadService.store(file, fileInfo, prospectId);
 
 		} catch (DocumentUploadException e) {
 
@@ -155,7 +156,7 @@ public class DocumentUploadController {
 		HttpHeaders headers = new HttpHeaders();
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode responseJSON = objectMapper.createObjectNode();
-		responseJSON.put("fileName", file.getOriginalFilename());
+		responseJSON.put("fileName", fileName);
 		return new ResponseEntity<Object>(responseJSON, headers, HttpStatus.OK);
 	}
 

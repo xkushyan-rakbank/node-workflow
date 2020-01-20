@@ -52,6 +52,9 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 disabled={isSignatory}
                 datalistId="country"
                 shrink
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -60,10 +63,23 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 path={eidNumberPath}
                 disabled={values.residenceCountry !== UAE}
                 component={EmiratesID}
+                contextualHelpText={
+                  <>
+                    If Emirates ID contains hyphen (-), spaces or any other special character please
+                    enter only alphabets and numbers
+                    <br />
+                    Example
+                    <br />
+                    784-1950-1234567-8 to be entered as 784195012345678
+                  </>
+                }
                 changeProspect={(prospect, value) => ({
                   ...prospect,
                   [eidNumberPath]: value.replace(/-/g, "")
                 })}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
               />
             </Grid>
           </Grid>

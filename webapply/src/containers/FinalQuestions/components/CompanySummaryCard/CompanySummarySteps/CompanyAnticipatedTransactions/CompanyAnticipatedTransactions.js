@@ -14,7 +14,7 @@ import { Input, AutoSaveField as Field } from "../../../../../../components/Form
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
-import { ANNUAL_TURNOVER_REGEX } from "../../../../../../utils/validation";
+import { CURRENCY_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
@@ -25,9 +25,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
-  return monthlyCreditsValue
-    ? `${monthlyCreditsValue} in Total Monthly Credits`
-    : "Total Monthly Credits";
+  return monthlyCreditsValue ? `${monthlyCreditsValue} in Total Monthly Credits` : "9999999999.99";
 };
 
 const checkValidNumberFromString = string => {
@@ -56,9 +54,10 @@ const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
   annualFinTurnoverAmtInAED: Yup.string()
     .required("You need to provide annual turnover")
-    .matches(ANNUAL_TURNOVER_REGEX, "This is not a valid value"),
-  maxAmtSingleTxnCashAED: Yup.number()
+    .matches(CURRENCY_REGEX, "This is not a valid value"),
+  maxAmtSingleTxnCashAED: Yup.string()
     .required("You need to provide single transaction value")
+    .matches(CURRENCY_REGEX, "This is not a valid value")
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -71,8 +70,9 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
         );
       }
     ),
-  maxAmtSingleTxnNonCashAED: Yup.number()
+  maxAmtSingleTxnNonCashAED: Yup.string()
     .required("You need to provide single transaction value")
+    .matches(CURRENCY_REGEX, "This is not a valid value")
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -85,8 +85,9 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
         );
       }
     ),
-  totalMonthlyCashAmountInFigures: Yup.number()
+  totalMonthlyCashAmountInFigures: Yup.string()
     .required("You need to provide total monthly amount in cash")
+    .matches(CURRENCY_REGEX, "This is not a valid value")
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -99,8 +100,9 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
         );
       }
     ),
-  totalMonthlyNonCashAmountInFigures: Yup.number()
+  totalMonthlyNonCashAmountInFigures: Yup.string()
     .required("You need to provide total monthly amount in non-cash")
+    .matches(CURRENCY_REGEX, "This is not a valid value")
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -152,7 +154,8 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   InputProps={{
                     ...commonInputProps,
                     inputProps: {
-                      maxLength: ANNUAL_TURNOVER_MAX_LENGTH
+                      maxLength: ANNUAL_TURNOVER_MAX_LENGTH,
+                      tabIndex: 0
                     }
                   }}
                   component={Input}
@@ -169,7 +172,12 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     className={classes.disabledInput}
                     variant="outlined"
                     disabled
-                    InputProps={commonInputProps}
+                    InputProps={{
+                      ...commonInputProps,
+                      inputProps: {
+                        tabIndex: -1
+                      }
+                    }}
                     value={getTotalMonthlyCreditsText(
                       getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED)
                     )}
@@ -186,9 +194,12 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Cash"
                   placeholder="99999999.99"
-                  InputProps={commonInputProps}
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
+                  InputProps={{
+                    ...commonInputProps,
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -197,9 +208,12 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Non-Cash"
                   placeholder="99999999.99"
-                  InputProps={commonInputProps}
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
+                  InputProps={{
+                    ...commonInputProps,
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
                 <InfoTitle
                   classes={{
@@ -220,7 +234,10 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   label="Maximum amount in Cash"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
                   placeholder="99999999.99"
-                  InputProps={commonInputProps}
+                  InputProps={{
+                    ...commonInputProps,
+                    inputProps: { tabIndex: 0 }
+                  }}
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in single transaction in Cash "
                 />
@@ -231,7 +248,10 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   label="Maximum amount in Non-Cash"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
                   placeholder="99999999.99"
-                  InputProps={commonInputProps}
+                  InputProps={{
+                    ...commonInputProps,
+                    inputProps: { tabIndex: 0 }
+                  }}
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in single transaction in modes other than Cash"
                 />

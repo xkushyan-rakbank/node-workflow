@@ -22,19 +22,21 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
             <div className={classes.listAccount}>{app.applicantInfo.email}</div>
           </div>
         )}
-        <div>
-          <span className={classes.listStatus}>{app.status.statusNotes}</span>
-        </div>
-        <div className={classes.action}>
-          {ctaStatuses[app.status.statusNotes] ? (
-            <WhiteContainedButton
-              label={ctaStatuses[app.status.statusNotes]}
-              handleClick={() => getProspectInfo(app.prospectId)}
-            />
-          ) : (
-            <span>{notCtaStatuses[app.status.statusNotes]}</span>
-          )}
-        </div>
+        {app.status && [
+          <div key="status">
+            <span className={classes.listStatus}>{app.status.statusNotes}</span>
+          </div>,
+          <div className={classes.action} key="action">
+            {ctaStatuses[app.status.statusNotes] ? (
+              <WhiteContainedButton
+                label={ctaStatuses[app.status.statusNotes]}
+                handleClick={() => getProspectInfo(app.prospectId)}
+              />
+            ) : (
+              <span>{notCtaStatuses[app.status.statusNotes]}</span>
+            )}
+          </div>
+        ]}
       </div>
     </div>
   ));

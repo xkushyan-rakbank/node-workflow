@@ -1,24 +1,25 @@
 import React, { useEffect } from "react";
-
+import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 import { FormNavigation } from "../../components/FormNavigation";
 import Header from "../../components/Header";
-import HeaderTitle from "../../components/HeaderTitle";
+import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications, NotificationsProvider } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
-
 import { useStyles } from "./styled";
 
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},
   children,
-  screeningResults = {},
-  updateViewId
+  screeningResults: { screeningError },
+  updateViewId,
+  resetScreeningError
 }) => {
   const classes = useStyles({ pathname });
 
   useEffect(() => {
     updateViewId(pathname);
-  }, [key, pathname, updateViewId]);
+    resetScreeningError();
+  }, [key, pathname, updateViewId, resetScreeningError]);
 
   return (
     <NotificationsProvider>
@@ -29,9 +30,10 @@ export const FormLayoutComponent = ({
           <div className={classes.formInner}>
             <div className={classes.mainContainer}>
               {!routerToAddPaddingInSlider.includes(pathname) && <HeaderTitle />}
+
               <Notifications />
 
-              {children}
+              {screeningError.error ? <ApplicationStatus {...screeningError} /> : children}
             </div>
           </div>
         </div>

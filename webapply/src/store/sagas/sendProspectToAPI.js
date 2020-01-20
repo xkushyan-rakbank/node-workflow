@@ -17,17 +17,18 @@ import get from "lodash/get";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
+  SEND_PROSPECT_TO_API_SUCCESS,
   sendProspectToAPIFail,
-  setScreeningResults,
   resetFormStep,
   PROSPECT_AUTO_SAVE,
-  sendProspectRequest
+  sendProspectRequest,
+  setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
-import { APP_STOP_SCREEN_RESULT } from "../../containers/FormLayout/constants";
+import { APP_STOP_SCREEN_RESULT, screeningStatus, screeningTypes } from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -38,6 +39,45 @@ function* watchRequest() {
       yield call(sendProspectToAPI, continueActions.length ? continueActions[0] : actions[0]);
     }
     yield delay(1000);
+  }
+}
+
+function* setScreeningResults({ preScreening }) {
+  const currScreeningTypes = preScreening.screeningResults.reduce(
+    (result, { screeningType, screeningReason }) => {
+      if (screeningReason === APP_STOP_SCREEN_RESULT) {
+        return [...result, screeningType];
+      }
+      return result;
+    },
+    []
+  );
+
+  const isDedupe = currScreeningTypes.includes(screeningTypes.dedupe);
+  const isBlackList = currScreeningTypes.includes(screeningTypes.blacklist);
+  const isEligible = currScreeningTypes.includes(screeningTypes.RAKStarterAccount);
+  const isForeignCompany = currScreeningTypes.includes(screeningTypes.countryOfIncorporation);
+  const isVirtualCurrency = currScreeningTypes.includes(screeningTypes.virtualCurrency);
+  const isShareholderACompany = currScreeningTypes.includes(screeningTypes.isShareHolderACompany);
+  const isTooManyStakeholders = currScreeningTypes.includes(screeningTypes.isTooManyStakeholders);
+
+  switch (true) {
+    case isVirtualCurrency:
+      return yield put(setScreeningError(screeningStatus.virtualCurrencies));
+    case isEligible:
+      return yield put(setScreeningError(screeningStatus.notEligible));
+    case isForeignCompany:
+      return yield put(setScreeningError(screeningStatus.notRegisteredInUAE));
+    case isTooManyStakeholders:
+      return yield put(setScreeningError(screeningStatus.bigCompany));
+    case isDedupe:
+      return yield put(setScreeningError(screeningStatus.dedupe));
+    case isBlackList:
+      return yield put(setScreeningError(screeningStatus.blackList));
+    case isShareholderACompany:
+      return yield put(setScreeningError(screeningStatus.isShareholderACompany));
+    default:
+      return yield put(setScreeningError(screeningStatus.default));
   }
 }
 
@@ -57,7 +97,7 @@ function* sendProspectToAPISaga() {
 
 function* prospectAutoSave() {
   try {
-    while (true) {
+    while (yield take(SEND_PROSPECT_TO_API_SUCCESS)) {
       const state = yield select();
       const newProspect = getProspect(state);
 
@@ -79,10 +119,17 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     const { data } = yield call(prospect.update, prospectId, newProspect);
     newProspect.applicationInfo.saveType = saveType;
 
+    if (get(data, "accountInfo[0].accountNo", "")) {
+      data.accountInfo.forEach(
+        (item, index) =>
+          (newProspect.accountInfo[index].accountNo = data.accountInfo[index].accountNo)
+      );
+    }
+
     yield put(sendProspectToAPISuccess(newProspect));
 
     if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
-      yield put(setScreeningResults(data.preScreening));
+      yield fork(setScreeningResults, data);
     }
   } catch (error) {
     log({ error });

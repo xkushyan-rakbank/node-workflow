@@ -9,12 +9,14 @@ export const SignatoriesDocuments = ({
   signatories,
   docUpload,
   cancelDocUpload,
-  progress
+  progress,
+  updateProspect
 }) => {
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
-    const docUploadDetails = documents[`${index}_${signatorie.fullName}`];
+    const stakeholderIndex = `${index}_${signatorie.fullName}`;
+    const docUploadDetails = documents[stakeholderIndex];
 
     return (
       docUploadDetails && (
@@ -31,13 +33,16 @@ export const SignatoriesDocuments = ({
               </div>
             </div>
           </div>
-          {(docUploadDetails.documents || []).map(document => (
+          {(docUploadDetails.documents || []).map((document, index) => (
             <UploadDocuments
               key={document.documentKey}
               document={document}
+              index={index}
+              stakeholderIndex={stakeholderIndex}
               type="stakeholdersDocuments"
               docUpload={docUpload}
               cancelDocUpload={cancelDocUpload}
+              updateProspect={updateProspect}
               progress={progress}
             />
           ))}

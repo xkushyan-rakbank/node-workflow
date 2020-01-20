@@ -19,6 +19,8 @@ export const useStyles = makeStyles({
     }
   },
   message: {
+    boxSizing: "border-box",
+    maxWidth: "100%",
     textAlign: "center",
     color: "#373737",
     fontSize: 20,

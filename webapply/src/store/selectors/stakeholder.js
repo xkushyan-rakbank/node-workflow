@@ -12,8 +12,13 @@ export const stakeholdersSelector = createSelector(
   (stakeholders, stakeholdersIds) =>
     stakeholders.map((item, index) => ({
       ...item,
-      id: stakeholdersIds[index].id
+      id: (stakeholdersIds[index] || {}).id
     }))
+);
+
+export const signatoryQuantitySelector = createSelector(
+  stakeholders,
+  stakeholders => stakeholders.filter(stakeholder => stakeholder.kycDetails.isSignatory).length
 );
 
 export const percentageSelector = state => {

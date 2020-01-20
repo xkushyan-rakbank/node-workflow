@@ -9,9 +9,11 @@ export const STEP_2 = 2;
 export const STEP_3 = 3;
 export const STEP_4 = 4;
 export const GO_TO_SUBMIT_STEP = 5;
-export const SUBMIT_APPLICATION_STEP = 6;
 export const ACCOUNTS_SIGNING_NAME_OTHER = "A3";
-export const ACCOUNTS_SIGNING_NAME_ALL = "ALL";
+export const signingInfo = {
+  A1: "All of you can sign",
+  A2: "Any of you can sign"
+};
 
 export const servicesSteps = [
   {
@@ -32,5 +34,36 @@ export const servicesSteps = [
     title: "Value added services",
     component: ValueAddedServices,
     icon: ICONS.valueAddedServices
+  }
+];
+
+export const DATA_CURRENCIES = [
+  {
+    code: "AED",
+    key: "AED",
+    value: "AED",
+    displayText: "AED",
+    subGroup: null
+  },
+  {
+    code: "EUR",
+    key: "EUR",
+    value: "EUR",
+    displayText: "EUR",
+    subGroup: null
+  },
+  {
+    code: "USD",
+    key: "USD",
+    value: "USD",
+    displayText: "USD",
+    subGroup: null
+  },
+  {
+    code: "GBP",
+    key: "GBP",
+    value: "GBP",
+    displayText: "GBP",
+    subGroup: null
   }
 ];
