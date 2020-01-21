@@ -73,6 +73,9 @@ export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
 
 export const SUBMIT = "submit";
 export const NEXT = "NEXT";
+export const SAVE = "SAVE";
+export const CONTINUE = "continue";
+export const AUTO = "auto";
 
 export const SIGNING_TRANSACTIONS_TYPE_ANY = "A1";
 

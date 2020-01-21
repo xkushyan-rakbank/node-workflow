@@ -28,14 +28,20 @@ import { log } from "../../utils/loggger";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { prospect } from "../../api/apiClient";
-import { APP_STOP_SCREEN_RESULT, screeningStatus, screeningTypes } from "../../constants";
+import {
+  APP_STOP_SCREEN_RESULT,
+  screeningStatus,
+  screeningTypes,
+  CONTINUE,
+  AUTO
+} from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
   while (true) {
     const actions = yield flush(chan);
     if (actions.length) {
-      const continueActions = actions.filter(act => act.saveType === "continue");
+      const continueActions = actions.filter(act => act.saveType === CONTINUE);
       yield call(sendProspectToAPI, continueActions.length ? continueActions[0] : actions[0]);
     }
     yield delay(1000);
@@ -81,15 +87,16 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga() {
+function* sendProspectToAPISaga(action) {
   try {
+    const saveType = get(action, "saveType", CONTINUE);
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
 
     const state = yield select();
     const newProspect = getProspect(state);
 
-    yield put(sendProspectRequest("continue", newProspect));
+    yield put(sendProspectRequest(saveType, newProspect));
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }
@@ -101,7 +108,7 @@ function* prospectAutoSave() {
       const state = yield select();
       const newProspect = getProspect(state);
 
-      yield put(sendProspectRequest("auto", newProspect));
+      yield put(sendProspectRequest(AUTO, newProspect));
       yield delay(40000);
     }
   } finally {

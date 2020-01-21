@@ -1,14 +1,19 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import { history } from "./..";
 import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
-import { updateProspectId, updateProspect, updateSaveType } from "../actions/appConfig";
+import {
+  updateProspectId,
+  updateProspect,
+  updateSaveType,
+  updateActionType
+} from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { setVerified } from "../actions/reCaptcha";
 import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
 import routes from "./../../routes";
 import { log } from "../../utils/loggger";
-import { IS_RECAPTCHA_ENABLE } from "../../constants";
+import { IS_RECAPTCHA_ENABLE, NEXT, SAVE } from "../../constants";
 
 function* applicantInfoFormSaga(action) {
   try {
@@ -35,7 +40,8 @@ function* applicantInfoFormSaga(action) {
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
     yield call(history.push, routes.verifyOtp);
-    yield put(updateSaveType("next"));
+    yield put(updateActionType(SAVE));
+    yield put(updateSaveType(NEXT));
     yield put(resetInputsErrors());
   } catch (error) {
     log(error);
