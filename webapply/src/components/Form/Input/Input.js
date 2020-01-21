@@ -29,7 +29,6 @@ export const Input = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const isIE = checkBrowserIsIE();
-  const inputLabelShrink = isIE && placeholder ? true : shrink;
 
   return (
     <FormControl classes={{ root: classes.formControlRoot }}>
@@ -45,7 +44,7 @@ export const Input = ({
           error={isError}
           InputProps={{ ...InputProps, classes: { input: classes.input } }}
           InputLabelProps={{
-            shrink: inputLabelShrink
+            shrink: isIE && placeholder ? true : shrink
           }}
         />
       </ContexualHelp>
