@@ -64,43 +64,12 @@ export const useStyles = makeStyles({
     position: "relative",
     width: "24px",
     height: "24px",
-    border: "1px solid rgba(255,255,255,.5)",
-    borderRadius: "50%"
-  },
-  filledCircle: {
-    "&:before": {
-      content: "''",
-      position: "absolute",
-      left: "10px",
-      top: "6px",
-      width: "4px",
-      height: "9px",
-      borderBottom: "1px solid rgba(255,255,255, .5)",
-      borderRight: "1px solid rgba(255,255,255, .5)",
-      transform: "rotate(45deg)"
-    }
+    opacity: 0.5,
+    borderRadius: "50%",
+    border: "1px solid #fff"
   },
   activeCircle: {
     borderColor: "#fff",
-    "&:before": {
-      content: "''",
-      position: "absolute",
-      left: "10px",
-      top: "8px",
-      width: "6px",
-      height: "6px",
-      borderTop: "2px solid #fff",
-      borderRight: "2px solid #fff",
-      transform: "rotate(45deg)"
-    },
-    "&:after": {
-      content: "''",
-      position: "absolute",
-      left: "6px",
-      top: "11px",
-      width: "12px",
-      height: "2px",
-      backgroundColor: "#fff"
-    }
+    opacity: 1
   }
 });

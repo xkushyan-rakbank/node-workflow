@@ -25,7 +25,7 @@ export const StepComponent = ({
     return isFilled ? (
       <div className={classes.filledTitle}>
         <LinkButton title={title} className={classes.linkTitle} />
-        <Icon name={ICONS.done} className={classes.doneIcon} />
+        <Icon name={ICONS.doneGreen} className={classes.doneIcon} />
       </div>
     ) : (
       <div className={classes.disabledStep}>{title}</div>
