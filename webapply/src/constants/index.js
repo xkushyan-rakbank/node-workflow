@@ -66,19 +66,20 @@ export const REQUEST_FAILED = "error";
 
 export const mobileResolution = 955;
 
-export const APP_STOP_SCREEN_RESULT = "Stop";
+export const APP_STOP_SCREEN_RESULT = "stop";
+export const APP_COMPLETED_SCREENING_STATUS = "Completed";
 
 export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
 
 /* Action Types */
-export const SAVE = "SAVE";
+export const SAVE = "save";
 export const SUBMIT = "submit";
 
 /* Save Types */
 export const AUTO = "auto";
 export const CONTINUE = "continue";
-export const NEXT = "NEXT";
+export const NEXT = "next";
 
 export const SIGNING_TRANSACTIONS_TYPE_ANY = "A1";
 
