@@ -9,7 +9,7 @@ export const useStyles = makeStyles({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingLeft: "64px",
+    paddingLeft: "60px",
     fontWeight: "400",
     lineHeight: "26px",
     "&:not(:last-child)": {
@@ -62,17 +62,27 @@ export const useStyles = makeStyles({
   },
   circle: {
     position: "relative",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     width: "24px",
     height: "24px",
+    lineHeight: "24px",
     opacity: 0.5,
     borderRadius: "50%",
-    border: "1px solid #fff"
+    border: "1px solid #fff",
+    boxSizing: "border-box"
   },
   activeCircle: {
     borderColor: "#fff",
+    borderWidth: "2px",
     opacity: 1
   },
   doneIcon: {
+    width: "20px",
     fill: "#fff"
+  },
+  activeIcon: {
+    width: "17px"
   }
 });

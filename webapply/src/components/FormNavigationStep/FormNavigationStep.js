@@ -19,7 +19,7 @@ export const FormNavigationStep = ({ title, activeStep, filled }) => {
       {(activeStep || filled) && (
         <span className={cx([classes.circle, { [classes.activeCircle]: activeStep }])}>
           {activeStep ? (
-            <ArrowForwardIcon />
+            <ArrowForwardIcon className={classes.activeIcon} />
           ) : filled ? (
             <Icon name={ICONS.done} className={classes.doneIcon} />
           ) : null}
