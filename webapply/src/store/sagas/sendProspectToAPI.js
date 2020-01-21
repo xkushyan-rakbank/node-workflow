@@ -35,7 +35,8 @@ import {
   screeningTypes,
   CONTINUE,
   AUTO,
-  SUBMIT
+  SUBMIT,
+  APP_COMPLETED_SCREENING_STATUS
 } from "../../constants";
 
 function* watchRequest() {
@@ -52,8 +53,8 @@ function* watchRequest() {
 
 function* setScreeningResults({ preScreening }) {
   const currScreeningTypes = preScreening.screeningResults.reduce(
-    (result, { screeningType, screeningReason }) => {
-      if (screeningReason === APP_STOP_SCREEN_RESULT) {
+    (result, { screeningType, screeningReason, screeningStatus }) => {
+      if (screeningStatus !== APP_COMPLETED_SCREENING_STATUS) {
         return [...result, screeningType];
       }
       return result;
