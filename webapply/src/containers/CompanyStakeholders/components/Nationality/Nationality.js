@@ -21,7 +21,7 @@ import { useStyles } from "./styled";
 
 const MAX_ANOTHER_CITIZENSHIP = 4;
 const initialPassportDetails = {
-  nationality: "",
+  country: "",
   hasAnotherCitizenship: false,
   passportNumber: "",
   diplomatPassport: false
@@ -30,7 +30,7 @@ const initialPassportDetails = {
 const nationalitySchema = Yup.object().shape({
   passportDetails: Yup.array().of(
     Yup.object().shape({
-      nationality: Yup.string().required("Required"),
+      country: Yup.string().required("Required"),
       passportNumber: Yup.string()
         .required("Required")
         .max(12, "Maximum 12 characters allowed")
@@ -50,10 +50,14 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
       arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
     } else {
       values.passportDetails.forEach((el, index) => index >= passportIndex && arrayHelper.pop());
-      updateProspect({
-        [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: arrayHelper.form.values
-          .passportDetails
-      });
+      setTimeout(() => {
+        updateProspect({
+          // eslint-disable-next-line max-len
+          [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: arrayHelper.form.values.passportDetails.map(
+            ({ id, ...withoutId }) => withoutId
+          )
+        });
+      }, 0);
     }
     setFieldValue(name, !value);
   };
@@ -61,7 +65,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
   const isAdditionalCitizenshipDisabled = (values, passportIndex, errors) => {
     return (
       !(
-        getIn(values, `passportDetails[${passportIndex}].nationality`, false) &&
+        getIn(values, `passportDetails[${passportIndex}].country`, false) &&
         getIn(values, `passportDetails[${passportIndex}].passportNumber`, false)
       ) || !!getIn(errors, `passportDetails[${passportIndex}].passportNumber`, false)
     );
@@ -90,15 +94,15 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                       {!!passportIndex && <Grid item sm={12} className={classes.divider} />}
                       <Grid item md={6} sm={12}>
                         <Field
-                          name={`passportDetails[${passportIndex}].nationality`}
+                          name={`passportDetails[${passportIndex}].country`}
                           path={`${passportDetails}.country`}
                           label="Nationality"
                           component={SelectAutocomplete}
                           datalistId="country"
                           filterOptions={options => {
                             const nationalities = values.passportDetails
-                              .filter((item, index) => item.nationality && index !== passportIndex)
-                              .map(item => item.nationality);
+                              .filter((item, index) => item.country && index !== passportIndex)
+                              .map(item => item.country);
 
                             return options.filter(item => !nationalities.includes(item.value));
                           }}
@@ -109,7 +113,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
 
                             return {
                               ...prospect,
-                              [`prospect.signatoryInfo[${index}].kycDetails.nationality`]: value
+                              [`prospect.signatoryInfo[${index}].kycDetails.country`]: value
                             };
                           }}
                           shrink={true}
