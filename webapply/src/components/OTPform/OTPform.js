@@ -105,12 +105,12 @@ export const OTPformComponent = ({
                   error="Code verification failed."
                 />
               )}
-              {loginAttempt > MAX_ATTEMPT_ALLOWED || isDisplayMaxAttempError ? (
+              {(loginAttempt > MAX_ATTEMPT_ALLOWED || isDisplayMaxAttempError) && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="You have exceeded your maximum attempt. Please come back later and try again."
                 />
-              ) : null}
+              )}
 
               <span>
                 Didn’t get the code?{" "}
