@@ -29,10 +29,10 @@ import { ReactComponent as maxIslamic } from "../../assets/icons/islamic/rak-val
 import { ReactComponent as loungeIslamic } from "../../assets/icons/islamic/lounge.svg";
 import { ReactComponent as interrogationIslamic } from "../../assets/icons/islamic/interrogation.svg";
 import { ReactComponent as signatureIslamic } from "../../assets/icons/islamic/signature.svg";
-import { ReactComponent as licenseIslamic } from "../../assets/icons/conventional/trade-license.svg";
-import { ReactComponent as passportIslamic } from "../../assets/icons/conventional/passport-visa.svg";
-import { ReactComponent as emiratesIdIslamic } from "../../assets/icons/conventional/emirates-id.svg";
-import { ReactComponent as companyDocumentsIslamic } from "../../assets/icons/conventional/company-documents.svg";
+import { ReactComponent as licenseIslamic } from "../../assets/icons/islamic/trade-license.svg";
+import { ReactComponent as passportIslamic } from "../../assets/icons/islamic/passport-visa.svg";
+import { ReactComponent as emiratesIdIslamic } from "../../assets/icons/islamic/emirates-id.svg";
+import { ReactComponent as companyDocumentsIslamic } from "../../assets/icons/islamic/company-documents.svg";
 import { ReactComponent as bankingIslamic } from "../../assets/icons/islamic/banking.svg";
 import { ReactComponent as logoIslamic } from "../../assets/images/rakbankLogoIslamic.svg";
 import overviewIslamic from "../../assets/gif/overview_islamic.gif";
