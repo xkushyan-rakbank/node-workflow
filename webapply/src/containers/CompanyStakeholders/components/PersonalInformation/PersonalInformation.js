@@ -43,7 +43,7 @@ const personalInformationSchema = Yup.object().shape({
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
-      .typeError("This is not a valid date")
+      .typeError("")
       .required("Required")
   }),
   isPEP: Yup.boolean().required("Required")
