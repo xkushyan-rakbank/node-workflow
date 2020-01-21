@@ -23,18 +23,15 @@ const initialValues = {
 
 const companyDetailsSchema = Yup.object({
   companyName: Yup.string()
-    .required("You need to provide company name")
-    .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-  vatRegistrationNumber: Yup.string().matches(
-    NUMBER_REGEX,
-    "This is not a valid registration number"
-  ),
+    .required("Field company name is blank")
+    .matches(COMPANY_NAME_REGEX, "Field company name is invalid"),
+  vatRegistrationNumber: Yup.string().matches(NUMBER_REGEX, "Field registration number is invalid"),
   numberOfEmployees: Yup.number()
     .typeError("Not valid number")
     .min(0, "Must be more than or equal to 0")
     .max(1000, "Must be less than or equal to 1000")
-    .integer("This is not a valid number of employees"),
-  companyCategory: Yup.string().required("You need to provide company category")
+    .integer("Field number of employees is invalid"),
+  companyCategory: Yup.string().required("Field company category is blank")
 });
 
 export const CompanyDetails = ({ handleContinue }) => {

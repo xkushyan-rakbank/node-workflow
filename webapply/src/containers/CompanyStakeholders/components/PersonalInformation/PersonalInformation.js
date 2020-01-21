@@ -30,7 +30,7 @@ const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
-      .required("Required")
+      .required("You need to provide first name")
       .matches(NAME_REGEX, "This is not a valid first name")
   }),
   middleName: Yup.string().matches(NAME_REGEX, "This is not a valid middle name"),

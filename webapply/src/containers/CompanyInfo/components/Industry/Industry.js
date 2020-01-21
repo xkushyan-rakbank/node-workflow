@@ -15,12 +15,12 @@ const initialValues = {
 
 const industrySchema = Yup.object({
   industry: Yup.array()
-    .required("You need to provide industry")
+    .required("Field industry is blank")
     .max(12, "Maximum 12 options allowed"),
   subCategory: Yup.array().when("industry", {
     is: industry => !!industry,
     then: Yup.array()
-      .required("You need to provide sub-category")
+      .required("Field sub-category is blank")
       .max(12, "Maximum 12 options allowed")
   })
 });
