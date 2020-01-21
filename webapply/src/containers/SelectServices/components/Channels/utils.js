@@ -1,17 +1,20 @@
 import { UAE_CODE, SIGNING_TRANSACTIONS_TYPE_ANY } from "../../../../constants";
 
-export const checkIsChequeBookApplied = (primaryMobCountryCode, isLocalCurrencySelected) => {
+export const checkIsChequeBookApplied = (
+  primaryMobCountryCode,
+  { isSelectOnlyForeignCurrency }
+) => {
   const isLocalPhoneSelected = primaryMobCountryCode === UAE_CODE;
   return {
-    isChequeBookDisabled: !isLocalCurrencySelected || !isLocalPhoneSelected,
-    isChequeBookApplied: isLocalCurrencySelected && isLocalPhoneSelected
+    isChequeBookDisabled: true,
+    isChequeBookApplied: !isSelectOnlyForeignCurrency && isLocalPhoneSelected
   };
 };
 
-export const checkIsDebitCardApplied = (accountSigningType, isLocalCurrencySelected) => {
+export const checkIsDebitCardApplied = (accountSigningType, { isSelectedLocalCurrency }) => {
   const isAccountSignType = accountSigningType === SIGNING_TRANSACTIONS_TYPE_ANY;
-  const isDebitCardDisabled = !isLocalCurrencySelected || !isAccountSignType;
-  const isDebitCardApplied = isAccountSignType && isLocalCurrencySelected;
+  const isDebitCardDisabled = !isSelectedLocalCurrency || !isAccountSignType;
+  const isDebitCardApplied = isAccountSignType && isSelectedLocalCurrency;
   return {
     isDebitCardDisabled,
     isDebitCardApplied
