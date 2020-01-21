@@ -23,7 +23,6 @@ import { ReactComponent as Error } from "../../assets/images/error.svg";
 
 export const iconComponents = {
   done: Done,
-  doneGreen: Done,
   plus: Plus,
   question: Question,
   listGray: ListGray,
@@ -49,7 +48,6 @@ export const iconComponents = {
 
 export const ICONS = {
   done: "done",
-  doneGreen: "doneGreen",
   plus: "plus",
   question: "question",
   listGray: "listGray",
