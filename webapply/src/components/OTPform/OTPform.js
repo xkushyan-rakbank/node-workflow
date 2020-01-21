@@ -27,24 +27,24 @@ export const OTPformComponent = ({
   classes: extendetClasses
 }) => {
   const history = useHistory();
-
+  const { attempts, verificationError, isVerified, isPending } = otp;
   const [code, setCode] = useState(Array(6).fill(""));
   const [isValidCode, setIsValidCode] = useState(false);
   const [loginAttempt, setLoginAttempt] = useState(0);
 
   useEffect(() => {
-    if (otp.isVerified) {
+    if (isVerified) {
       history.push(redirectRoute);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [otp.isVerified]);
+  }, [isVerified]);
 
   useEffect(() => {
-    if (otp.verificationError) {
+    if (verificationError) {
       setCode(Array(6).fill(""));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [otp.verificationError]);
+  }, [verificationError]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => verifyClearError(), []);
@@ -76,11 +76,9 @@ export const OTPformComponent = ({
   const classes = useStyles({ classes: extendetClasses });
 
   const showValidationError = () => {
-    if (otp.verificationError) {
+    if (verificationError) {
       verifyClearError();
       setLoginAttempt(MAX_ATTEMPT_ALLOWED);
-    }
-    if (otp.numberOfvalidationErrors > MAX_NUMBER_VALIDATION_ERRORS) {
       return (
         <ErrorMessage
           classes={{ error: classes.error }}
@@ -110,7 +108,7 @@ export const OTPformComponent = ({
                 <OtpVerification code={code} onChange={handleSetCode} />
               </Grid>
 
-              {otp.verificationError && (
+              {verificationError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="Code verification failed."
@@ -122,8 +120,7 @@ export const OTPformComponent = ({
                   error="You have exceeded your maximum attempt. Please come back later and try again."
                 />
               )}
-              {otp.numberOfvalidationErrors === MAX_NUMBER_VALIDATION_ERRORS &&
-                showValidationError()}
+              {attempts === MAX_NUMBER_VALIDATION_ERRORS && showValidationError()}
               <span>
                 Didn’t get the code?{" "}
                 <span
@@ -131,7 +128,7 @@ export const OTPformComponent = ({
                   className={cx(classes.link, {
                     [classes.linkDisabled]:
                       loginAttempt >= MAX_ATTEMPT_ALLOWED ||
-                      otp.numberOfvalidationErrors >= MAX_NUMBER_VALIDATION_ERRORS
+                      attempts >= MAX_NUMBER_VALIDATION_ERRORS
                   })}
                 >
                   Send a new code
@@ -141,9 +138,9 @@ export const OTPformComponent = ({
 
             <div className={classes.linkContainer}>
               <SubmitButton
-                disabled={!isValidCode || otp.isPending}
+                disabled={!isValidCode || isPending}
                 justify="flex-end"
-                label={otp.isPending ? "Verify..." : "Next Step"}
+                label={isPending ? "Verify..." : "Next Step"}
                 submitButtonClassName={classes.submitButton}
               />
             </div>
