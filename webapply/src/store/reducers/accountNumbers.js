@@ -1,6 +1,6 @@
 import { UPDATE_ACCOUNT_NUMBERS } from "../actions/accountNumbers";
 
-export const initialState = [{}];
+export const initialState = [];
 
 const accountNumbers = (state = initialState, action) => {
   switch (action.type) {
