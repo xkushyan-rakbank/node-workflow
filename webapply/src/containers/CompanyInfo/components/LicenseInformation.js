@@ -56,7 +56,7 @@ export const LicenseInformation = ({ handleContinue }) => {
       validationSchema={licenseInformationSchema}
       onSubmit={handleContinue}
     >
-      {({ values, setFieldValue }) => (
+      {({ setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
