@@ -117,14 +117,12 @@ export const LicenseInformation = ({ handleContinue }) => {
                 path="prospect.organizationInfo.dateOfIncorporation"
                 contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
                 contextualHelpProps={{ isDisableHoverListener: false }}
-                validate={() => {
-                  values.dateOfIncorporation &&
-                    setFieldValue(
-                      "yearsInBusiness",
-                      getYearsInBusiness(values.dateOfIncorporation)
-                    );
-                }}
                 component={DatePicker}
+                onChange={value => {
+                  setFieldValue("dateOfIncorporation", value);
+                  setFieldValue("yearsInBusiness", getYearsInBusiness(value));
+                }}
+                getYearsInBusiness={getYearsInBusiness}
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}

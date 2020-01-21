@@ -22,7 +22,8 @@ export const DatePicker = ({
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
   contextualHelpText,
-  contextualHelpProps = {}
+  contextualHelpProps = {},
+  onChange = value => setFieldValue(field.name, value)
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
@@ -53,7 +54,7 @@ export const DatePicker = ({
               shrink: true
             }}
             {...field}
-            onChange={value => setFieldValue(field.name, value)}
+            onChange={onChange}
             {...datePickerProps}
             value={field.value === "" ? null : field.value}
           />
