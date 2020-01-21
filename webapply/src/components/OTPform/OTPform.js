@@ -31,6 +31,7 @@ export const OTPformComponent = ({
   const [code, setCode] = useState(Array(6).fill(""));
   const [isValidCode, setIsValidCode] = useState(false);
   const [loginAttempt, setLoginAttempt] = useState(0);
+  const [countErrors, setCountErrors] = useState(0);
 
   useEffect(() => {
     if (isVerified) {
@@ -53,8 +54,11 @@ export const OTPformComponent = ({
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(applicantInfo);
     }
+    if (attempts >= MAX_NUMBER_VALIDATION_ERRORS) {
+      setCountErrors(attempts);
+    }
     setLoginAttempt(loginAttempt + 1);
-  }, [loginAttempt, generateOtpCode, applicantInfo]);
+  }, [loginAttempt, generateOtpCode, applicantInfo, attempts]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
@@ -74,19 +78,6 @@ export const OTPformComponent = ({
   };
 
   const classes = useStyles({ classes: extendetClasses });
-
-  const showValidationError = () => {
-    if (verificationError) {
-      verifyClearError();
-      setLoginAttempt(MAX_ATTEMPT_ALLOWED);
-      return (
-        <ErrorMessage
-          classes={{ error: classes.error }}
-          error="You have exceeded your maximum attempt. Please come back later and try again."
-        />
-      );
-    }
-  };
 
   return (
     <div className={classes.centeredContainer}>
@@ -120,14 +111,19 @@ export const OTPformComponent = ({
                   error="You have exceeded your maximum attempt. Please come back later and try again."
                 />
               )}
-              {attempts === MAX_NUMBER_VALIDATION_ERRORS && showValidationError()}
+              {countErrors >= MAX_NUMBER_VALIDATION_ERRORS && (
+                <ErrorMessage
+                  classes={{ error: classes.error }}
+                  error="You have exceeded your maximum attempt. Please come back later and try again."
+                />
+              )}
               <span>
                 Didn’t get the code?{" "}
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
                     [classes.linkDisabled]:
-                      loginAttempt >= MAX_ATTEMPT_ALLOWED ||
+                      loginAttempt >= MAX_NUMBER_VALIDATION_ERRORS ||
                       attempts >= MAX_NUMBER_VALIDATION_ERRORS
                   })}
                 >
