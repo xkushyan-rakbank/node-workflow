@@ -27,6 +27,7 @@ import {
 import { log } from "../../utils/loggger";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
+import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
 import {
   APP_STOP_SCREEN_RESULT,
@@ -127,10 +128,14 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     const { data } = yield call(prospect.update, prospectId, newProspect);
     newProspect.applicationInfo.saveType = saveType;
 
-    if (get(data, "accountInfo[0].accountNo", "")) {
+    if (data.accountInfo && Array.isArray(data.accountInfo)) {
+      yield put(updateAccountNumbers(data.accountInfo));
       data.accountInfo.forEach(
-        (item, index) =>
-          (newProspect.accountInfo[index].accountNo = data.accountInfo[index].accountNo)
+        (_, index) =>
+          (newProspect.accountInfo[index] = {
+            ...newProspect.accountInfo[index],
+            accountNo: data.accountInfo[index].accountNo
+          })
       );
     }
 

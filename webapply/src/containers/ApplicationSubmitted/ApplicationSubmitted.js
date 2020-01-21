@@ -5,17 +5,17 @@ import { connect } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
-import * as accountInfoSelector from "../../store/selectors/appConfig";
+import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/appConfig";
 
 import dotsBg from "../../assets/images/dots_bg.png";
 import docChecked from "../../assets/icons/docChecked.png";
 import bankingClock from "../../assets/icons/bankingClock.png";
 import { useStyles } from "./styled";
 
-const ApplicationSubmittedComponent = ({ AccountSubmittedInfo, organizationInfo }) => {
+const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();
 
-  return AccountSubmittedInfo && AccountSubmittedInfo.length > 0 ? (
+  return accountNumbers.length > 0 ? (
     <div className={classes.container}>
       <div className={classes.title}>
         <img src={docChecked} alt="checked" />
@@ -25,23 +25,23 @@ const ApplicationSubmittedComponent = ({ AccountSubmittedInfo, organizationInfo 
       </div>
       <div
         className={cx(classes.accountsNumbers, {
-          [classes.accountsNumbersRow]: AccountSubmittedInfo.length % 2 === 0,
-          [classes.accountsNumbersColumn]: AccountSubmittedInfo.length % 2 !== 0
+          [classes.accountsNumbersRow]: accountNumbers.length % 2 === 0,
+          [classes.accountsNumbersColumn]: accountNumbers.length % 2 !== 0
         })}
       >
-        {AccountSubmittedInfo.map(accountData => (
+        {accountNumbers.map(accountData => (
           <div
             className={cx(classes.accountNumber, {
-              [classes.accountNumberRow]: AccountSubmittedInfo.length
+              [classes.accountNumberRow]: accountNumbers.length
             })}
-            key={accountData.id}
+            key={accountData.accountNumber}
           >
             <img src={dotsBg} className={classes.docCheckedIcon} alt="background" />
 
             <span className="info">Your AED account number</span>
             <div className="mainInfo">
               <span className="number">{accountData.accountNo}</span>
-              <span className="typeAccount">{accountData.accountCurrency}</span>
+              <span className="typeAccount">{accountData.currency}</span>
             </div>
           </div>
         ))}
@@ -70,8 +70,8 @@ const ApplicationSubmittedComponent = ({ AccountSubmittedInfo, organizationInfo 
 
 const mapStateToProps = state => {
   return {
-    AccountSubmittedInfo: accountInfoSelector.getAccountSubmittedInfo(state),
-    organizationInfo: accountInfoSelector.getOrganizationInfo(state)
+    accountNumbers: getAccountNumbers(state),
+    organizationInfo: getOrganizationInfo(state)
   };
 };
 
