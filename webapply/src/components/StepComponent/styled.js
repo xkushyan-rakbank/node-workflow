@@ -33,7 +33,8 @@ export const useStyles = makeStyles({
   },
   doneIcon: {
     width: "24px",
-    height: "22px"
+    height: "22px",
+    fill: "39C4A5"
   },
   formWrapper: {
     padding: "0 20px"
