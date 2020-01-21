@@ -68,8 +68,8 @@ export const OTPformComponent = ({
   const getTitle = () => {
     if (infoTitleResult) return;
     return applicantInfo.countryCode === UAE_CODE
-      ? "We have sent you a verification code on registered mobile number"
-      : "We have sent you a verification code on registered email address";
+      ? "We have sent you a verification code on your mobile number"
+      : "We have sent you a verification code on your e-mail address";
   };
 
   const classes = useStyles({ classes: extendetClasses });
@@ -82,7 +82,7 @@ export const OTPformComponent = ({
         info={
           infoTitleResult
             ? infoTitleResult
-            : "Please enter the six digits below, to confirm this is you"
+            : "Please input the six digits below, to confirm this is you"
         }
       />
 
