@@ -80,7 +80,7 @@ export const ChannelsComponent = ({
       initialValues={{
         debitCardApplied: isDebitCardApplied,
         chequeBookApplied: isChequeBookApplied,
-        eStatements: false,
+        eStatements: true,
         mailStatements: false,
         signatory: stakeholders.map(({ firstName, lastName }) => ({
           nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
@@ -139,6 +139,7 @@ export const ChannelsComponent = ({
             path="prospect.accountInfo[0].eStatements"
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
+            isLoadDefaultValueFromStore={false}
             onChange={() => {
               setFieldValue("mailStatements", false);
               setFieldValue("eStatements", true);
