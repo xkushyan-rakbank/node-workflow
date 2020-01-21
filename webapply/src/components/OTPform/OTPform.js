@@ -31,7 +31,7 @@ export const OTPformComponent = ({
   const [code, setCode] = useState(Array(6).fill(""));
   const [isValidCode, setIsValidCode] = useState(false);
   const [loginAttempt, setLoginAttempt] = useState(0);
-  const [countErrors, setCountErrors] = useState(0);
+  const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
 
   useEffect(() => {
     if (isVerified) {
@@ -55,7 +55,7 @@ export const OTPformComponent = ({
       generateOtpCode(applicantInfo);
     }
     if (attempts >= MAX_NUMBER_VALIDATION_ERRORS) {
-      setCountErrors(attempts);
+      setIsDisplayMaxAttempError(true);
     }
     setLoginAttempt(loginAttempt + 1);
   }, [loginAttempt, generateOtpCode, applicantInfo, attempts]);
@@ -99,7 +99,7 @@ export const OTPformComponent = ({
                 <OtpVerification code={code} onChange={handleSetCode} />
               </Grid>
 
-              {verificationError && (
+              {!isDisplayMaxAttempError && verificationError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="Code verification failed."
@@ -111,7 +111,7 @@ export const OTPformComponent = ({
                   error="You have exceeded your maximum attempt. Please come back later and try again."
                 />
               )}
-              {countErrors >= MAX_NUMBER_VALIDATION_ERRORS && (
+              {isDisplayMaxAttempError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="You have exceeded your maximum attempt. Please come back later and try again."
