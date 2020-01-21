@@ -8,6 +8,7 @@ import routes from "./routes";
 import { history } from "./store";
 
 import { FormLayout } from "./containers/FormLayout";
+import { ServerRequestLoadingScreen } from "./components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
 
 import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
@@ -57,7 +58,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
       <ConnectedRouter history={history}>
         <FinalQuestionsState>
           <FormLayout>
-            <Suspense fallback={null}>
+            <Suspense fallback={ServerRequestLoadingScreen}>
               <Switch>
                 <ProspectProtectedRoute
                   exact
