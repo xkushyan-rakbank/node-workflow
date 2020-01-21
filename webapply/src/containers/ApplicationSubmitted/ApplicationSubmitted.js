@@ -29,7 +29,7 @@ const ApplicationSubmittedComponent = ({ AccountSubmittedInfo, organizationInfo 
           [classes.accountsNumbersColumn]: AccountSubmittedInfo.length % 2 !== 0
         })}
       >
-        {AccountSubmittedInfo.map(accountData => (
+        {AccountSubmittedInfo.map((accountData, index) => (
           <div
             className={cx(classes.accountNumber, {
               [classes.accountNumberRow]: AccountSubmittedInfo.length
@@ -41,7 +41,7 @@ const ApplicationSubmittedComponent = ({ AccountSubmittedInfo, organizationInfo 
             <span className="info">Your AED account number</span>
             <div className="mainInfo">
               <span className="number">{accountData.accountNo}</span>
-              <span className="typeAccount">{accountData.accountCurrency}</span>
+              <span className="typeAccount">{accountData.accountCurrencies[index]}</span>
             </div>
           </div>
         ))}
