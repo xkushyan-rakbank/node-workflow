@@ -13,6 +13,7 @@ export const initialState = {
   uiConfig: {},
   endpoints: {},
   prospect: {},
+  dataList: {},
   error: "",
   prospectError: false,
   searchInfo: { segment: "sme" },

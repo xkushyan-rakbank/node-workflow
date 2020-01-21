@@ -18,7 +18,7 @@ import {
   UPDATE_SAVE_TYPE,
   saveProspectModel
 } from "../actions/appConfig";
-import { config } from "../../api/apiClient";
+import { config, dataList } from "../../api/apiClient";
 import { history } from "./..";
 import { accountsNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
@@ -52,6 +52,7 @@ function* receiveAppConfigSaga() {
       }
     }
 
+    const dataListResponse = yield call(dataList.get, segment);
     const newConfig = cloneDeep(response.data);
     const prospectModel = cloneDeep(newConfig.prospect);
     if (newConfig.prospect) {
@@ -64,6 +65,10 @@ function* receiveAppConfigSaga() {
       newConfig.prospect.applicationInfo.islamicBanking = islamicBanking;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
+    }
+
+    if (dataListResponse) {
+      newConfig.dataList = dataListResponse.data;
     }
 
     yield put(saveProspectModel(prospectModel));
