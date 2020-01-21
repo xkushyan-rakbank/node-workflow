@@ -71,5 +71,8 @@ export const useStyles = makeStyles({
   activeCircle: {
     borderColor: "#fff",
     opacity: 1
+  },
+  doneIcon: {
+    fill: "#fff"
   }
 });
