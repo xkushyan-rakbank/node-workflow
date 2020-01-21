@@ -50,14 +50,6 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
       arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
     } else {
       values.passportDetails.forEach((el, index) => index >= passportIndex && arrayHelper.pop());
-      setTimeout(() => {
-        updateProspect({
-          // eslint-disable-next-line max-len
-          [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: arrayHelper.form.values.passportDetails.map(
-            ({ id, ...withoutId }) => withoutId
-          )
-        });
-      }, 0);
     }
     setFieldValue(name, !value);
   };
@@ -133,6 +125,19 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               passportIndex,
                               setFieldValue
                             )}
+                            changeProspect={prospect => {
+                              if (passportIndex > 0) {
+                                return prospect;
+                              }
+
+                              return {
+                                ...prospect,
+                                // eslint-disable-next-line max-len
+                                [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: values.passportDetails.map(
+                                  ({ id, ...withoutId }) => withoutId
+                                )
+                              };
+                            }}
                             disabled={isAdditionalCitizenshipDisabled(
                               values,
                               passportIndex,
