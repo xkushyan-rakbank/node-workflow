@@ -139,7 +139,6 @@ export const ChannelsComponent = ({
             path="prospect.accountInfo[0].eStatements"
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
-            isLoadDefaultValueFromStore={false}
             onChange={() => {
               setFieldValue("mailStatements", false);
               setFieldValue("eStatements", true);
