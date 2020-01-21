@@ -48,21 +48,15 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const currScreeningTypes = preScreening.screeningResults.reduce(
-    (result, { screeningType, screeningReason, reasonNotes }) => {
-      if (screeningReason === APP_DECLINE_SCREEN_REASON) {
-        return [...result, { screeningType, reasonNotes }];
-      }
-      return result;
-    },
-    []
+  const currScreeningTypes = preScreening.screeningResults.find(
+    screeningResult => screeningResult.screeningReason === APP_DECLINE_SCREEN_REASON
+  );
+  const screenError = screeningStatus.find(
+    ({ screeningType }) => screeningType === currScreeningTypes.screeningType
   );
 
-  const screenError = screeningStatus.find(
-    ({ screeningType }) => screeningType === currScreeningTypes[0].screeningType
-  );
   if (screenError) {
-    screenError.text = currScreeningTypes[0].reasonNotes;
+    screenError.text = currScreeningTypes.reasonNotes;
     yield put(setScreeningError(screenError));
   } else {
     yield put(setScreeningError(screeningStatusDefault));
