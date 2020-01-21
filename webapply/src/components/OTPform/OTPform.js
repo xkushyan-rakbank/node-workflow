@@ -105,25 +105,20 @@ export const OTPformComponent = ({
                   error="Code verification failed."
                 />
               )}
-              {loginAttempt > MAX_ATTEMPT_ALLOWED && (
+              {loginAttempt > MAX_ATTEMPT_ALLOWED || isDisplayMaxAttempError ? (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="You have exceeded your maximum attempt. Please come back later and try again."
                 />
-              )}
-              {isDisplayMaxAttempError && (
-                <ErrorMessage
-                  classes={{ error: classes.error }}
-                  error="You have exceeded your maximum attempt. Please come back later and try again."
-                />
-              )}
+              ) : null}
+
               <span>
                 Didn’t get the code?{" "}
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
                     [classes.linkDisabled]:
-                      loginAttempt >= MAX_NUMBER_VALIDATION_ERRORS ||
+                      loginAttempt >= MAX_ATTEMPT_ALLOWED ||
                       attempts >= MAX_NUMBER_VALIDATION_ERRORS
                   })}
                 >
