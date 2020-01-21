@@ -33,7 +33,8 @@ import {
   screeningStatus,
   screeningTypes,
   CONTINUE,
-  AUTO
+  AUTO,
+  SUBMIT
 } from "../../constants";
 
 function* watchRequest() {
@@ -41,8 +42,8 @@ function* watchRequest() {
   while (true) {
     const actions = yield flush(chan);
     if (actions.length) {
-      const continueActions = actions.filter(act => act.saveType === CONTINUE);
-      yield call(sendProspectToAPI, continueActions.length ? continueActions[0] : actions[0]);
+      const action = actions.find(act => act.saveType === CONTINUE) || actions[0];
+      yield call(sendProspectToAPI, action);
     }
     yield delay(1000);
   }
@@ -89,7 +90,7 @@ function* setScreeningResults({ preScreening }) {
 
 function* sendProspectToAPISaga(action) {
   try {
-    const saveType = get(action, "saveType", CONTINUE);
+    const saveType = action.saveType || CONTINUE;
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
 
@@ -149,7 +150,7 @@ function* prospectAutoSaveFlowSaga() {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
     const { actionType } = yield take("UPDATE_ACTION_TYPE");
 
-    if (actionType === "submit") {
+    if (actionType === SUBMIT) {
       yield cancel(bgSyncAutoSave);
     }
   }
