@@ -35,6 +35,7 @@ export const useStyles = makeStyles({
     margin: "0 20px"
   },
   doneIcon: {
-    width: "24px"
+    width: "24px",
+    fill: "#39C4A5"
   }
 });

@@ -14,6 +14,7 @@ import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
 import { useStyles } from "./styled";
 
 export const MAX_ATTEMPT_ALLOWED = 3;
+export const MAX_NUMBER_VALIDATION_ERRORS = 4;
 
 export const OTPformComponent = ({
   otp,
@@ -26,24 +27,25 @@ export const OTPformComponent = ({
   classes: extendetClasses
 }) => {
   const history = useHistory();
-
+  const { attempts, verificationError, isVerified, isPending } = otp;
   const [code, setCode] = useState(Array(6).fill(""));
   const [isValidCode, setIsValidCode] = useState(false);
   const [loginAttempt, setLoginAttempt] = useState(0);
+  const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
 
   useEffect(() => {
-    if (otp.isVerified) {
+    if (isVerified) {
       history.push(redirectRoute);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [otp.isVerified]);
+  }, [isVerified]);
 
   useEffect(() => {
-    if (otp.verificationError) {
+    if (verificationError) {
       setCode(Array(6).fill(""));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [otp.verificationError]);
+  }, [verificationError]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => verifyClearError(), []);
@@ -52,8 +54,11 @@ export const OTPformComponent = ({
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(applicantInfo);
     }
+    if (attempts >= MAX_NUMBER_VALIDATION_ERRORS) {
+      setIsDisplayMaxAttempError(true);
+    }
     setLoginAttempt(loginAttempt + 1);
-  }, [loginAttempt, generateOtpCode, applicantInfo]);
+  }, [loginAttempt, generateOtpCode, applicantInfo, attempts]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
@@ -68,8 +73,8 @@ export const OTPformComponent = ({
   const getTitle = () => {
     if (infoTitleResult) return;
     return applicantInfo.countryCode === UAE_CODE
-      ? "We have sent you a verification code on registered mobile number"
-      : "We have sent you a verification code on registered email address";
+      ? "We have sent you a verification code on your mobile number"
+      : "We have sent you a verification code on your e-mail address";
   };
 
   const classes = useStyles({ classes: extendetClasses });
@@ -82,7 +87,7 @@ export const OTPformComponent = ({
         info={
           infoTitleResult
             ? infoTitleResult
-            : "Please enter the six digits below, to confirm this is you"
+            : "Please input the six digits below, to confirm this is you"
         }
       />
 
@@ -94,13 +99,13 @@ export const OTPformComponent = ({
                 <OtpVerification code={code} onChange={handleSetCode} />
               </Grid>
 
-              {otp.verificationError && (
+              {!isDisplayMaxAttempError && verificationError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="Code verification failed."
                 />
               )}
-              {loginAttempt > MAX_ATTEMPT_ALLOWED && (
+              {(loginAttempt > MAX_ATTEMPT_ALLOWED || isDisplayMaxAttempError) && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="You have exceeded your maximum attempt. Please come back later and try again."
@@ -112,7 +117,9 @@ export const OTPformComponent = ({
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]: loginAttempt >= MAX_ATTEMPT_ALLOWED
+                    [classes.linkDisabled]:
+                      loginAttempt >= MAX_ATTEMPT_ALLOWED ||
+                      attempts >= MAX_NUMBER_VALIDATION_ERRORS
                   })}
                 >
                   Send a new code
@@ -122,9 +129,9 @@ export const OTPformComponent = ({
 
             <div className={classes.linkContainer}>
               <SubmitButton
-                disabled={!isValidCode || otp.isPending}
+                disabled={!isValidCode || isPending}
                 justify="flex-end"
-                label={otp.isPending ? "Verify..." : "Next Step"}
+                label={isPending ? "Verify..." : "Next Step"}
                 submitButtonClassName={classes.submitButton}
               />
             </div>

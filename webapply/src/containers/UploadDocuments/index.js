@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
   uploadDocsEndpoints: getEndpoints(state),
   prospectID: getProspectId(state),
   uploadedDocsCount: getUploadedDocsCount(state),
-  requiredDocCount: getRequiredDocsCount(state),
+  requiredDocsCount: getRequiredDocsCount(state),
   progress: state.uploadDocuments.progress
 });
 
