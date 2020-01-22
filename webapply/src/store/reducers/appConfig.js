@@ -1,3 +1,5 @@
+import get from "lodash/get";
+
 import {
   RECEIVE_APPCONFIG,
   RECEIVE_APPCONFIG_SUCCESS,
@@ -57,7 +59,7 @@ const appConfigReducer = (state = initialState, action) => {
         prospect: {
           ...state.prospect,
           generalInfo: {
-            ...(state.prospect.generalInfo || {}),
+            ...get(state, "prospect.generalInfo", {}),
             prospectId: action.prospectId
           }
         }

@@ -7,7 +7,7 @@ import routes from "../../../routes";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
-import { disableArrayValues, searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1 } from "./constants";
+import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./constants";
 import { useStep } from "../../../components/StepComponent/useStep";
 
 import { useStyles } from "./styled";
@@ -52,6 +52,7 @@ export const SearchedAppInfoComponent = ({
     return null;
   }
 
+  const isDisabled = get(prospectInfo, "status.reasonCode") === STATUS_LOCKED;
   const fullName = get(prospectInfo, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
@@ -89,7 +90,7 @@ export const SearchedAppInfoComponent = ({
           label="Edit"
           justify="flex-end"
           handleClick={redirectUserPage}
-          disabled={disableArrayValues.includes(prospectInfo.status.statusNotes)}
+          disabled={isDisabled}
         />
       </div>
       <ConfirmDialog

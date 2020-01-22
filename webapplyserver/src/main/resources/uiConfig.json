@@ -9740,7 +9740,32 @@
 		"name": "searchInfo.countryCode",
 		"datalistId": "countryCode",
 		"readonlyFor": [],
-		"datalist": null,
+		"datalist": [
+			{
+				"code": "971",
+				"key": "971",
+				"value": "971",
+				"displayText": "+971"
+			},
+			{
+				"code": "992",
+				"key": "992",
+				"value": "992",
+				"displayText": "+992"
+			},
+			{
+				"code": "380",
+				"key": "380",
+				"value": "380",
+				"displayText": "+380"
+			},
+			{
+				"code": "391",
+				"key": "391",
+				"value": "391",
+				"displayText": "+391"
+			}
+		],
 		"description": "country code",
 		"pattern": "^[0-9]*$",
 		"maxlength": "3"
