@@ -7,8 +7,8 @@ export const SearchableSelectAutocomplete = ({ validateSearchField, ...props }) 
   const [searchValue, setSearchValue] = useState("");
   const [searchError, setSearchError] = useState("");
 
-  const handleSearchChange = async value => {
-    const error = await validateSearchField(value);
+  const handleSearchChange = value => {
+    const error = validateSearchField(value);
     setSearchError(error);
 
     if (!error) {
