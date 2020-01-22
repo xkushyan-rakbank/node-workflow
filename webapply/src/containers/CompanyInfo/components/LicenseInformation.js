@@ -41,11 +41,8 @@ const licenseInformationSchema = Yup.object({
     .integer("Must be an integer")
 });
 
-function changeDateProspectHandler(prospect, value, path) {
-  if (isValid(value)) {
-    return { [path]: format(value, DATE_FORMAT) };
-  }
-}
+const changeDateProspectHandler = (_, value, path) =>
+  isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
 export const LicenseInformation = ({ handleContinue }) => (
   <Formik
