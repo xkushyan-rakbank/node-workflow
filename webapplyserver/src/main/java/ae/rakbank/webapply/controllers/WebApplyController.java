@@ -515,42 +515,51 @@ public class WebApplyController {
     @GetMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                                             @PathVariable String segment, @PathVariable String prospectId) {
+                                             @RequestHeader String authorization,
+                                             @PathVariable String segment, 
+                                             @PathVariable String prospectId) {
         logger.info("Begin getProspectById() method");
-
         logger.debug(
                 String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
 
-        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        String token = getTokenFromAuthorizationHeader(authorization);
+        if (oauthClient.isAccessTokenValid(token, null, false)) {
+          ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
+          if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+              HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
+                      MediaType.APPLICATION_JSON);
 
-            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
-                    MediaType.APPLICATION_JSON);
+              String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
+              UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-            String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
-            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
+              try {
+                  return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+                          "getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+              } 
+              catch (Exception e) {
+                  logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                          e);
+                  ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                          "Unable to call endpoint " + uriComponents.toString(), e);
+                  return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+              }
+          } 
+          else {
+              logger.error(String.format("OAuth Error in getProspectById() method , HttpStatus=[%s], message=[%s]",
+                      oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-            try {
-                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-                        "getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+              ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                      "oauth error, check logs for more info.");
 
-            } catch (Exception e) {
-                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
-                        e);
-                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                        "Unable to call endpoint " + uriComponents.toString(), e);
-                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-        } else {
-            logger.error(String.format("OAuth Error in getProspectById() method , HttpStatus=[%s], message=[%s]",
-                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
-
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-
-            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+              return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+          }
+        }
+        else {
+          logger.error(String.format("OAuth token expired or invalid."));
+          ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                  "oauth error, check logs for more info.");
+          return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
