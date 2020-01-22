@@ -7,11 +7,13 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
 import { signatoriesSteps, SIGNATORY_FIELD_NAME, STEP_1 } from "./constants";
+import { checkIsAccountInfoTypeNumber } from "./utils";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
   index,
   signatory,
+  uiConfig,
   signatory: { fullName } = {},
   expandedSignatoryIndex,
   setExpandedSignatoryIndex,
@@ -22,6 +24,8 @@ export const SignatorySummaryCardComponent = ({
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
+  const authorityTypeValueFromProspect = get(signatory, "accountSigningInfo.authorityType");
+  const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, uiConfig);
 
   return (
     <FormCard
@@ -32,9 +36,7 @@ export const SignatorySummaryCardComponent = ({
         <div className={classes.contentBox}>
           <div className={classes.infoBox}>
             <div className={classes.name}>{fullName}</div>
-            <div className={classes.signatoryField}>
-              {get(signatory, "accountSigningInfo.authorityType")}
-            </div>
+            <div className={classes.signatoryField}>{authorityTypeValue}</div>
             <div className={classes.shareholdingField}>
               {percentage > 0 ? `Shareholding ${percentage}%` : "No shareholding"}
             </div>

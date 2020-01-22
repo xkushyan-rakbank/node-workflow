@@ -183,7 +183,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             path={`prospect.signatoryInfo[${index}].kycDetails.isPEP`}
             component={InlineRadioGroup}
             options={yesNoOptions}
-            label="This Person, or a relative of this person by relation or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country."
+            label="This Person, or a relative of this person by blood or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country."
             InputProps={{
               inputProps: { tabIndex: 0 }
             }}
