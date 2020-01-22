@@ -82,7 +82,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
               <Field
                 name="isShareholderACompany"
-                path={`prospect.signatoryInfo[${index}].kycDetails.isShareholderACompany`}
+                path={"prospect.orgKYCDetails.isShareholderACompany"}
                 label="This stakeholder is a company"
                 component={Checkbox}
                 onChange={() => {
