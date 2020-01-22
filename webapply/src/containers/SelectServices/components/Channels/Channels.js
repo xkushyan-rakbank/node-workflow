@@ -53,17 +53,18 @@ export const ChannelsComponent = ({
   goToNext,
   updateProspect,
   primaryMobCountryCode,
-  accountCurrencies: { isSelectedLocalCurrency }
+  accountCurrencies: selectedCurrency
 }) => {
   const classes = useStyles();
   const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
+
   const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
     primaryMobCountryCode,
-    isSelectedLocalCurrency
+    selectedCurrency
   );
   const { isDebitCardDisabled, isDebitCardApplied } = checkIsDebitCardApplied(
     accountSigningType,
-    isSelectedLocalCurrency
+    selectedCurrency
   );
 
   useEffect(() => {
@@ -79,7 +80,7 @@ export const ChannelsComponent = ({
       initialValues={{
         debitCardApplied: isDebitCardApplied,
         chequeBookApplied: isChequeBookApplied,
-        eStatements: false,
+        eStatements: true,
         mailStatements: false,
         signatory: stakeholders.map(({ firstName, lastName }) => ({
           nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
