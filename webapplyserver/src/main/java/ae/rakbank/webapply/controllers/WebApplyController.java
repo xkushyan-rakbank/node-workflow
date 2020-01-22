@@ -181,7 +181,6 @@ public class WebApplyController {
     @GetMapping(value = "/config", produces = "application/json")
     @ResponseBody
     public ResponseEntity<JsonNode> getWebApplyConfig(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                                                      @RequestHeader String authorization,
                                                       @RequestParam String role,
                                                       @RequestParam(required = false, defaultValue = "") String segment,
                                                       @RequestParam(required = false, defaultValue = "") String product,
@@ -199,6 +198,7 @@ public class WebApplyController {
         HttpHeaders headers = new HttpHeaders();
         csrfTokenHelper.createCSRFToken(httpRequest, headers);
 
+        /*
         String cacheKey = getCacheKey(segment, product, role, device);
         String cachedValue = getCache(cacheKey);
         if (StringUtils.isNotBlank(cachedValue)) {
@@ -207,8 +207,18 @@ public class WebApplyController {
             JsonNode cachedJson = mapper.readTree(cachedValue);
             return new ResponseEntity<JsonNode>(cachedJson, headers, HttpStatus.OK);
         }
+        */
 
-        ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment, getTokenFromAuthorizationHeader(authorization));
+        String authorization;
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+          authorization = oauthResponse.getBody().get("access_token").asText();
+        } else {
+          logger.error("Unable to call datalist API due to oauth error.");
+          return oauthResponse;         
+        }
+
+        ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment, authorization);
 
         JsonNode datalistJSON = null;
         if (datalistResponse.getStatusCode().is2xxSuccessful()) {
@@ -221,7 +231,7 @@ public class WebApplyController {
         JsonNode webApplyConfig = null;
         try {
             webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON,
-                    httpRequest.getHeader("Authorization"));
+                    authorization);
         }
         catch (IOException e) {
             logger.error("error occured while loading config files", e);
@@ -915,12 +925,12 @@ public class WebApplyController {
     }
 
     private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist,
-                                          Object authToken) throws Exception {
+                                          String authToken) throws Exception {
         return buildAppInitialState(segment, product, role, device, datalist, authToken, true);
     }
 
     private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist,
-                                          Object authToken, boolean includeUiConfig) throws Exception {
+                                          String authToken, boolean includeUiConfig) throws Exception {
         logger.info("Begin buildAppInitialState() method");
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode initStateJSON = objectMapper.createObjectNode();
@@ -931,24 +941,19 @@ public class WebApplyController {
         String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
         JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
         initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
+        initStateJSON.put("authorizationToken", authToken);
         initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
         initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
         initStateJSON.put("rakValuePlusReadMoreUrl", baseUrls.get("RAKvaluePlusReadMoreUrl").asText());
         initStateJSON.put("rakValueMaxReadMoreUrl", baseUrls.get("RAKvalueMaxReadMoreUrl").asText());
         initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
         initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
+        initStateJSON.put("authorizationToken", authToken);
 
         String publicKey = fileHelper.getRSAPublicKey();
 
         if (publicKey != null) {
             initStateJSON.put("rsaPublicKey", publicKey);
-        }
-
-        if (authToken != null && authToken != "") {
-            ResponseEntity<JsonNode> oauth = oauthClient.getOAuthToken();
-            if (oauth != null && oauth.getStatusCode().is2xxSuccessful()) {
-                initStateJSON.set("authorizationToken", oauth.getBody().get("Authorization"));
-            }
         }
 
         // deep clone the json nodes
