@@ -58,7 +58,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
       <ConnectedRouter history={history}>
         <FinalQuestionsState>
           <FormLayout>
-            <Suspense fallback={ServerRequestLoadingScreen}>
+            <Suspense fallback={ServerRequestLoadingScreen()}>
               <Switch>
                 <ProspectProtectedRoute
                   exact

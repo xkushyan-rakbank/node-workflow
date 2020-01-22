@@ -7,15 +7,9 @@ export const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     width: "100%",
-    borderRadius: 8,
-    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
-    border: "solid 1px #e8e8e8",
+    height: "100%",
     backgroundColor: "#ffffff",
     maxWidth: 780,
-    margin: "0 auto",
-    "& > img": {
-      marginBottom: "10px",
-      width: "350px"
-    }
+    margin: "0 auto"
   }
 });
