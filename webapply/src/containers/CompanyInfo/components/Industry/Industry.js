@@ -26,6 +26,13 @@ const industrySchema = Yup.object({
   })
 });
 
+const searchValueSchema = Yup.string().max(12, "Max length of search value is 12");
+const validateSearchValue = searchValue =>
+  searchValueSchema
+    .validate(searchValue)
+    .then(res => "")
+    .catch(err => err.message);
+
 export const Industry = ({ handleContinue }) => {
   const classes = useStyles();
 
@@ -46,6 +53,7 @@ export const Industry = ({ handleContinue }) => {
                 label="Industry"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
                 datalistId="industry"
+                validateSearchField={validateSearchValue}
                 component={SelectAutocompleteWithSearchValidation}
                 contextualHelpText="This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. Example: if business / commercial / licensed activity is 'E Commerce', please select industry as 'Service' & sub-industry as 'Computer & IT Industry' "
                 contextualHelpProps={{ isDisableHoverListener: false }}
@@ -66,6 +74,7 @@ export const Industry = ({ handleContinue }) => {
                 name="subCategory"
                 label="Industry sub-category"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
+                validateSearchField={validateSearchValue}
                 component={SelectAutocompleteWithSearchValidation}
                 datalistId="industry"
                 filterOptions={options =>

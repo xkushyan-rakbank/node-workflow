@@ -3,16 +3,16 @@ import React, { useState } from "react";
 import { ErrorMessage } from "../../../../components/Notifications";
 import { SelectAutocomplete } from "../../../../components/Form";
 
-export const SelectAutocompleteWithSearchValidation = ({ ...props }) => {
+export const SelectAutocompleteWithSearchValidation = ({ validateSearchField, ...props }) => {
   const [searchValue, setSearchValue] = useState("");
-  const [searchError, setSearchErrorearchValue] = useState("");
+  const [searchError, setSearchError] = useState("");
 
-  const handleSearchChange = value => {
-    if (value.length <= 12) {
+  const handleSearchChange = async value => {
+    const error = await validateSearchField(value);
+    setSearchError(error);
+
+    if (!error) {
       setSearchValue(value);
-      setSearchErrorearchValue("");
-    } else {
-      setSearchErrorearchValue("Max length of search field is 12!");
     }
   };
 
