@@ -79,10 +79,10 @@ public class OAuthService {
 		}
 		else {
 			ResponseEntity<JsonNode> response = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
-			if (response != null && response.getBody().get("access_token").equals(token)) {
+			if (response != null && response.getBody().get("access_token").asText().equals(token)) {
 				return true;
 			}
-			else if ((refreshToken != null && response.getBody().get("refresh_token").equals(refreshToken)) || force) {
+			else if ((refreshToken != null && response.getBody().get("refresh_token").asText().equals(refreshToken)) || force) {
 				getOAuthToken();
 				return true;
 			}
