@@ -30,6 +30,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
           <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
             {ctaStatuses[app.status.statusNotes] ? (
               <WhiteContainedButton
+                disabled
                 label={ctaStatuses[app.status.statusNotes]}
                 handleClick={() => getProspectInfo(app.prospectId)}
               />

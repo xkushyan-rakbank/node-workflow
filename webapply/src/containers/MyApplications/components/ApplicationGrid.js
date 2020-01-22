@@ -41,6 +41,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
           <div key="action" className={classes.blockAction}>
             {ctaStatuses[app.status.statusNotes] ? (
               <WhiteContainedButton
+                disabled
                 label={ctaStatuses[app.status.statusNotes]}
                 handleClick={() => getProspectInfo(app.prospectId)}
               />
