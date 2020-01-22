@@ -47,6 +47,7 @@ export const DatePicker = ({
             inputVariant="outlined"
             placeholder={placeholder}
             error={isError}
+            invalidDateMessage={false}
             KeyboardButtonProps={{
               "aria-label": "change date"
             }}
