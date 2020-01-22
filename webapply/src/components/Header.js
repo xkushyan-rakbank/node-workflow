@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import get from "lodash/get";
 import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
 
+import { getAccountType, getIsIslamicBanking } from "../store/selectors/appConfig";
 import { isOtpVerified } from "../store/selectors/otp";
 import routes from "./../routes";
 import { accountNames, mobileResolution } from "../constants";
@@ -65,16 +65,13 @@ const styles = {
   }
 };
 
-const Header = props => {
-  const {
-    classes,
-    applicationInfo,
-    location: { pathname },
-    isOtpVerified
-  } = props;
-  const accountType = get(applicationInfo, "accountType", "");
-  const islamicBanking = get(applicationInfo, "islamicBanking");
-
+const Header = ({
+  classes,
+  islamicBanking,
+  accountType,
+  location: { pathname },
+  isOtpVerified
+}) => {
   let accountTypeText = "";
   if (accountType === accountNames.elite) accountTypeText = "RAKelite";
   if (islamicBanking) accountTypeText = "RAKislamic";
@@ -96,7 +93,8 @@ const Header = props => {
 };
 
 const mapStateToProps = state => ({
-  applicationInfo: get(state, "appConfig.prospect.applicationInfo", {}),
+  islamicBanking: getIsIslamicBanking(state),
+  accountType: getAccountType(state),
   isOtpVerified: isOtpVerified(state)
 });
 

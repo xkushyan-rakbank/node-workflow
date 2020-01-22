@@ -2,23 +2,27 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import cx from "classnames";
 import { connect } from "react-redux";
+
 import * as loginSelector from "../../store/selectors/loginSelector";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
-import { accountNames } from "../../constants";
-import router from "../../routes";
 import { logout, formatLogin } from "../../store/actions/loginForm";
 import { formatSearchList } from "../../store/actions/searchProspect";
+import { getAccountType } from "../../store/selectors/appConfig";
+import { getIsIslamicBanking } from "../../store/selectors/appConfig";
+
+import { accountNames } from "../../constants";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 
-const HeaderTitleComponent = props => {
-  const {
-    applicationInfo: { islamicBanking, accountType },
-    organizationInfo: { companyName },
-    checkLoginStatus,
-    getAgentName,
-    withMargin
-  } = props;
+const HeaderTitleComponent = ({
+  islamicBanking,
+  accountType,
+  organizationInfo: { companyName },
+  checkLoginStatus,
+  getAgentName,
+  withMargin,
+  ...props
+}) => {
   const classes = useStyles();
   const { pathname } = useLocation();
 
@@ -41,13 +45,13 @@ const HeaderTitleComponent = props => {
       for <span>{companyName}</span>
     </>
   ) : null;
-  const isHideCompanyName = pathname === router.applicationOverview;
+  const isHideCompanyName = pathname === routes.applicationOverview;
 
   let portalTitle = "";
   const routesToShowPortalTitle = new Set([
-    router.login,
-    router.comeBackLoginVerification,
-    router.MyApplications
+    routes.login,
+    routes.comeBackLoginVerification,
+    routes.MyApplications
   ]);
   if (routesToShowPortalTitle.has(pathname)) portalTitle = "RAK Application Portal";
 
@@ -86,7 +90,8 @@ const HeaderTitleComponent = props => {
 const mapStateToProps = state => ({
   checkLoginStatus: loginSelector.checkLoginStatus(state),
   getAgentName: loginSelector.getAgentName(state),
-  applicationInfo: appConfigSelectors.getApplicationInfo(state),
+  islamicBanking: getIsIslamicBanking(state),
+  accountType: getAccountType(state),
   organizationInfo: appConfigSelectors.getOrganizationInfo(state)
 });
 

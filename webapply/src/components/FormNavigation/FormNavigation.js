@@ -13,10 +13,7 @@ import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
 
-export const FormNavigationComponent = ({
-  applicationInfo: { islamicBanking, accountType },
-  isLogin
-}) => {
+export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }) => {
   const {
     location: { pathname }
   } = useHistory();

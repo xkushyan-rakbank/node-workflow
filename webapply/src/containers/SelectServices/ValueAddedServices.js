@@ -1,8 +1,7 @@
 import { connect } from "react-redux";
 
-import { getUrlsReadMore } from "../../store/selectors/appConfig";
+import { getAccountType, getUrlsReadMore } from "../../store/selectors/appConfig";
 import { getGeneralInputProps } from "../../store/selectors/input";
-import { getSelectedAccountInfo } from "../../store/selectors/selectedAccountInfo";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getSelectedTypeCurrency } from "../../store/selectors/SelectServices";
 
@@ -12,7 +11,7 @@ const mapStateToProps = state => ({
   readMoreUrls: getUrlsReadMore(state),
   rakValuePackage: getGeneralInputProps(state, "Appl.rakValuePackage"),
   accountCurrencies: getSelectedTypeCurrency(state, "Acnt.accountCurrencies", [0]),
-  accountType: getSelectedAccountInfo(state).accountType
+  accountType: getAccountType(state)
 });
 
 const mapDispatchToProps = {
