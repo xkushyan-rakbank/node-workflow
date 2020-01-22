@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { ctaStatuses, notCtaStatuses } from "../constants";
+import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 
 import { useStyles } from "./styled";
 
@@ -41,7 +42,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
           <div key="action" className={classes.blockAction}>
             {ctaStatuses[app.status.statusNotes] ? (
               <WhiteContainedButton
-                disabled
+                disabled={app.status.reasonCode === STATUS_LOCKED}
                 label={ctaStatuses[app.status.statusNotes]}
                 handleClick={() => getProspectInfo(app.prospectId)}
               />

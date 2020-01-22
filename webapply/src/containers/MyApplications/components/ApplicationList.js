@@ -3,7 +3,7 @@ import cx from "classnames";
 
 import { ctaStatuses, notCtaStatuses } from "../constants";
 import { WhiteContainedButton } from "./WhiteContainedButton";
-
+import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
 
 export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
@@ -30,7 +30,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
           <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
             {ctaStatuses[app.status.statusNotes] ? (
               <WhiteContainedButton
-                disabled
+                disabled={app.status.reasonCode === STATUS_LOCKED}
                 label={ctaStatuses[app.status.statusNotes]}
                 handleClick={() => getProspectInfo(app.prospectId)}
               />
