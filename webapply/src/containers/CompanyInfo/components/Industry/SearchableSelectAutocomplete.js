@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ErrorMessage } from "../../../../components/Notifications";
 import { SelectAutocomplete } from "../../../../components/Form";
 
-export const SelectAutocompleteWithSearchValidation = ({ validateSearchField, ...props }) => {
+export const SearchableSelectAutocomplete = ({ validateSearchField, ...props }) => {
   const [searchValue, setSearchValue] = useState("");
   const [searchError, setSearchError] = useState("");
 
