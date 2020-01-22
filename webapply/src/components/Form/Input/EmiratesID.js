@@ -5,26 +5,7 @@ import { Input } from "./Input";
 import { ContexualHelp } from "../../Notifications";
 
 // eslint-disable-next-line prettier/prettier
-const MASK = [
-  "7",
-  "8",
-  "4",
-  "-",
-  /\d/,
-  /\d/,
-  /\d/,
-  /\d/,
-  "-",
-  /\d/,
-  /\d/,
-  /\d/,
-  /\d/,
-  /\d/,
-  /\d/,
-  /\d/,
-  "-",
-  /\d/
-];
+const MASK = ["7","8","4","-",/\d/,/\d/,/\d/,/\d/,"-",/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,"-",/\d/];
 
 const TextMask = ({ inputRef, ...rest }) => (
   <MaskedInput
