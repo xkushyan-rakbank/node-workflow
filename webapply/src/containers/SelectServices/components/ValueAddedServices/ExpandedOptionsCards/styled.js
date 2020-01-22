@@ -69,15 +69,6 @@ export const useStyles = makeStyles({
     fontSize: "14px",
     "& li": {
       marginBottom: "5px"
-    },
-    "& li::after": {
-      content: "''",
-      position: "absolute",
-      top: "10px",
-      left: "-15px",
-      width: "6px",
-      height: "1px",
-      backgroundColor: "#000"
     }
   },
   link: {
