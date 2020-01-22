@@ -15,7 +15,7 @@
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "",
-        "reasonCode": "LOCKED",
+        "reasonCode": "locked",
         "reasonStatus": ""
       },
       "applicantInfo": {
@@ -199,7 +199,7 @@
         "statusReason": "",
         "statusOverAll": "",
         "reasonNotes": "It looks like we already know you and have your details! Let us save you time. We will call you back within 1 day to meet you in person and help you out.",
-        "reasonCode": "LOCKED",
+        "reasonCode": "locked",
         "reasonStatus": ""
       },
       "applicantInfo": {
