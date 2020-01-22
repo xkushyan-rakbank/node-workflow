@@ -27,7 +27,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_3);
 
   const saveType = step === STEP_3 ? NEXT : undefined;
   const handleContinue = () =>

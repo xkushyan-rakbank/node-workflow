@@ -15,7 +15,7 @@ import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
-import { UAE } from "../../../constants";
+import { UAE, DATE_FORMAT } from "../../../constants";
 
 const initialValues = {
   licenseNumber: "",
@@ -43,7 +43,7 @@ const licenseInformationSchema = Yup.object({
 
 function changeDateProspectHandler(prospect, value, path) {
   if (isValid(value)) {
-    return { [path]: format(value, "yyyy-MM-dd") };
+    return { [path]: format(value, DATE_FORMAT) };
   }
 }
 

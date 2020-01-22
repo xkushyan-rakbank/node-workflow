@@ -129,3 +129,5 @@ export const screeningStatusDefault = {
   text:
     "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
 };
+
+export const DATE_FORMAT = "yyyy-MM-dd";

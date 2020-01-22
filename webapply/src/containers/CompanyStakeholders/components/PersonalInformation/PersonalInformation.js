@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
+import { format, isValid } from "date-fns";
 
 import { getApplicantInfo } from "../../../../store/selectors/appConfig";
 import { InfoTitle } from "../../../../components/InfoTitle";
@@ -18,6 +19,7 @@ import {
 } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { yesNoOptions } from "../../../../constants/options";
+import { DATE_FORMAT } from "../../../../constants";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
@@ -173,6 +175,11 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                changeProspect={(_, value, path) =>
+                  isValid(value) && {
+                    [path]: format(value, DATE_FORMAT)
+                  }
+                }
               />
             </Grid>
           </Grid>
