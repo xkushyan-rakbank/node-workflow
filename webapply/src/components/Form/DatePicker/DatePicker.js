@@ -6,7 +6,7 @@ import subDays from "date-fns/subDays";
 import { getIn } from "formik";
 
 import { InfoTitle } from "../../InfoTitle";
-import { ContexualHelp } from "../../Notifications";
+import { ErrorMessage, ContexualHelp } from "../../Notifications";
 import { BaseDatePicker } from "./styled";
 
 export const DatePicker = ({
@@ -47,6 +47,7 @@ export const DatePicker = ({
             inputVariant="outlined"
             placeholder={placeholder}
             error={isError}
+            invalidDateMessage={false}
             KeyboardButtonProps={{
               "aria-label": "change date"
             }}
@@ -60,6 +61,8 @@ export const DatePicker = ({
           />
         </MuiPickersUtilsProvider>
         {infoTitle && <InfoTitle title={infoTitle} />}
+
+        {isError && <ErrorMessage error={errorMessage} />}
       </FormControl>
     </ContexualHelp>
   );
