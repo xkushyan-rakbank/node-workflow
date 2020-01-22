@@ -10,6 +10,8 @@ export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
 export const getAccountInfo = state => getProspect(state).accountInfo || [];
 
+export const getAccountNumbers = state => state.accountNumbers;
+
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || [];
 
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};

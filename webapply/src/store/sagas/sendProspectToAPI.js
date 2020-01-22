@@ -27,69 +27,56 @@ import {
 import { log } from "../../utils/loggger";
 import { getProspect, getProspectId } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
+import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
-import { APP_STOP_SCREEN_RESULT, screeningStatus, screeningTypes } from "../../constants";
+import {
+  APP_STOP_SCREEN_RESULT,
+  screeningStatus,
+  APP_DECLINE_SCREEN_REASON,
+  screeningStatusDefault,
+  CONTINUE,
+  AUTO,
+  SUBMIT
+} from "../../constants";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
   while (true) {
     const actions = yield flush(chan);
     if (actions.length) {
-      const continueActions = actions.filter(act => act.saveType === "continue");
-      yield call(sendProspectToAPI, continueActions.length ? continueActions[0] : actions[0]);
+      const action = actions.find(act => act.saveType === CONTINUE) || actions[0];
+      yield call(sendProspectToAPI, action);
     }
     yield delay(1000);
   }
 }
 
 function* setScreeningResults({ preScreening }) {
-  const currScreeningTypes = preScreening.screeningResults.reduce(
-    (result, { screeningType, screeningReason }) => {
-      if (screeningReason === APP_STOP_SCREEN_RESULT) {
-        return [...result, screeningType];
-      }
-      return result;
-    },
-    []
+  const currScreeningTypes = preScreening.screeningResults.find(
+    screeningResult => screeningResult.screeningReason === APP_DECLINE_SCREEN_REASON
+  );
+  const screenError = screeningStatus.find(
+    ({ screeningType }) => screeningType === currScreeningTypes.screeningType
   );
 
-  const isDedupe = currScreeningTypes.includes(screeningTypes.dedupe);
-  const isBlackList = currScreeningTypes.includes(screeningTypes.blacklist);
-  const isEligible = currScreeningTypes.includes(screeningTypes.RAKStarterAccount);
-  const isForeignCompany = currScreeningTypes.includes(screeningTypes.countryOfIncorporation);
-  const isVirtualCurrency = currScreeningTypes.includes(screeningTypes.virtualCurrency);
-  const isShareholderACompany = currScreeningTypes.includes(screeningTypes.isShareHolderACompany);
-  const isTooManyStakeholders = currScreeningTypes.includes(screeningTypes.isTooManyStakeholders);
-
-  switch (true) {
-    case isVirtualCurrency:
-      return yield put(setScreeningError(screeningStatus.virtualCurrencies));
-    case isEligible:
-      return yield put(setScreeningError(screeningStatus.notEligible));
-    case isForeignCompany:
-      return yield put(setScreeningError(screeningStatus.notRegisteredInUAE));
-    case isTooManyStakeholders:
-      return yield put(setScreeningError(screeningStatus.bigCompany));
-    case isDedupe:
-      return yield put(setScreeningError(screeningStatus.dedupe));
-    case isBlackList:
-      return yield put(setScreeningError(screeningStatus.blackList));
-    case isShareholderACompany:
-      return yield put(setScreeningError(screeningStatus.isShareholderACompany));
-    default:
-      return yield put(setScreeningError(screeningStatus.default));
+  if (screenError) {
+    screenError.text = currScreeningTypes.reasonNotes;
+    yield put(setScreeningError(screenError));
+  } else {
+    yield put(setScreeningError(screeningStatusDefault));
   }
 }
 
-function* sendProspectToAPISaga() {
+function* sendProspectToAPISaga(action) {
   try {
+    const saveType = action.saveType || CONTINUE;
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
 
     const state = yield select();
     const newProspect = getProspect(state);
 
-    yield put(sendProspectRequest("continue", newProspect));
+    yield put(sendProspectRequest(saveType, newProspect));
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }
@@ -101,7 +88,7 @@ function* prospectAutoSave() {
       const state = yield select();
       const newProspect = getProspect(state);
 
-      yield put(sendProspectRequest("auto", newProspect));
+      yield put(sendProspectRequest(AUTO, newProspect));
       yield delay(40000);
     }
   } finally {
@@ -119,10 +106,14 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     const { data } = yield call(prospect.update, prospectId, newProspect);
     newProspect.applicationInfo.saveType = saveType;
 
-    if (get(data, "accountInfo[0].accountNo", "")) {
+    if (data.accountInfo && Array.isArray(data.accountInfo)) {
+      yield put(updateAccountNumbers(data.accountInfo));
       data.accountInfo.forEach(
-        (item, index) =>
-          (newProspect.accountInfo[index].accountNo = data.accountInfo[index].accountNo)
+        (_, index) =>
+          (newProspect.accountInfo[index] = {
+            ...newProspect.accountInfo[index],
+            accountNo: data.accountInfo[index].accountNo
+          })
       );
     }
 
@@ -142,7 +133,7 @@ function* prospectAutoSaveFlowSaga() {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
     const { actionType } = yield take("UPDATE_ACTION_TYPE");
 
-    if (actionType === "submit") {
+    if (actionType === SUBMIT) {
       yield cancel(bgSyncAutoSave);
     }
   }

@@ -3,10 +3,13 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
+import cx from "classnames";
+
+import { getAccountType, getIsIslamicBanking } from "../store/selectors/appConfig";
+import { isOtpVerified } from "../store/selectors/otp";
 import routes from "./../routes";
 import { accountsNames, mobileResolution } from "../constants";
 import logo from "../assets/images/rakbankLogo.svg";
-import { getAccountType, getIsIslamicBanking } from "../store/selectors/appConfig";
 
 const styles = {
   header: {
@@ -56,16 +59,19 @@ const styles = {
       left: "0",
       top: "3px"
     }
+  },
+  disabled: {
+    pointerEvents: "none"
   }
 };
 
-const Header = props => {
-  const {
-    classes,
-    islamicBanking,
-    accountType,
-    location: { pathname }
-  } = props;
+const Header = ({
+  classes,
+  islamicBanking,
+  accountType,
+  location: { pathname },
+  isOtpVerified
+}) => {
   let accountTypeText = "";
   if (accountType === accountsNames.elite) accountTypeText = "RAKelite";
   if (islamicBanking) accountTypeText = "RAKislamic";
@@ -76,7 +82,7 @@ const Header = props => {
 
   return (
     <header className={classes.header}>
-      <Link to={routes.accountsComparison}>
+      <Link to={routes.accountsComparison} className={cx({ [classes.disabled]: isOtpVerified })}>
         <div>
           <img src={logo} alt="rak bank" />
         </div>
@@ -88,7 +94,8 @@ const Header = props => {
 
 const mapStateToProps = state => ({
   islamicBanking: getIsIslamicBanking(state),
-  accountType: getAccountType(state)
+  accountType: getAccountType(state),
+  isOtpVerified: isOtpVerified(state)
 });
 
 export default compose(
