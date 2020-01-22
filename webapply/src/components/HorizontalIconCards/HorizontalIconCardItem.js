@@ -24,7 +24,7 @@ const style = {
   iconCardText: {
     display: "flex",
     flex: "1 1",
-    fontSize: "16px",
+    fontSize: "15px",
     textAlign: "left"
   },
   iconCardImg: {
