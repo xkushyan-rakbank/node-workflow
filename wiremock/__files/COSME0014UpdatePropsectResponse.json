@@ -1,7 +1,12 @@
 {
   "accountInfo": [
     {
-      "accountNo": "0192766195001"
+      "accountNo": "0192766195001",
+      "currency": "USD"
+    },
+    {
+      "accountNo": "0192766195002",
+      "currency": "EUR"
     }
   ],
   "prospectId": "COSME0000000000000001",
