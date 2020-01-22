@@ -30,23 +30,23 @@ const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
-      .required("You need to provide first name")
-      .matches(NAME_REGEX, "This is not a valid first name")
+      .required("Field First name is blank")
+      .matches(NAME_REGEX, "Field First name is invalid")
   }),
-  middleName: Yup.string().matches(NAME_REGEX, "This is not a valid middle name"),
+  middleName: Yup.string().matches(NAME_REGEX, "Field Middle name is invalid"),
   lastName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
-      .required("Required")
-      .matches(NAME_REGEX, "This is not a valid last name")
+      .required("Field Last name is blank")
+      .matches(NAME_REGEX, "Field Last name is invalid")
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
-      .typeError("This is not a valid date")
-      .required("Required")
+      .typeError("Field Date of birth is invalid")
+      .required("Field Date of birth is blank")
   }),
-  isPEP: Yup.boolean().required("Required")
+  isPEP: Yup.boolean().required("Field Is PEP is blank")
 });
 
 export const PersonalInformation = ({ index, handleContinue }) => {

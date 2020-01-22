@@ -16,6 +16,7 @@ import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { ALPHANUMERIC_REGEX } from "../../../../utils/validation";
+import { MAX_PASSPORT_NUMBER_LENGTH } from "./constants";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { useStyles } from "./styled";
 
@@ -30,11 +31,11 @@ const initialPassportDetails = {
 const nationalitySchema = Yup.object().shape({
   passportDetails: Yup.array().of(
     Yup.object().shape({
-      country: Yup.string().required("Required"),
+      country: Yup.string().required("Field Nationality is blank"),
       passportNumber: Yup.string()
-        .required("Required")
+        .required("Field Passport number is blank")
         .max(12, "Maximum 12 characters allowed")
-        .matches(ALPHANUMERIC_REGEX, "Special characters and space is not allowed")
+        .matches(ALPHANUMERIC_REGEX, "Field Passport number is invalid")
     })
   )
 });
@@ -157,7 +158,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
                             Example: 'P-123/1950/456 to be entered as P1231950456'"
                           InputProps={{
-                            inputProps: { tabIndex: 0 }
+                            inputProps: { maxLength: MAX_PASSPORT_NUMBER_LENGTH, tabIndex: 0 }
                           }}
                         />
                         <Field

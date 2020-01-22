@@ -19,7 +19,9 @@ import {
   INITIAL_ARRAY_INDEX,
   initialOtherBankDetails,
   initialTopOriginGoodsCountries,
-  initialTopSuppliers
+  initialTopSuppliers,
+  MAX_BANK_NAME_LENGTH,
+  MAX_COMPANY_NAME_LENGTH
 } from "./constants";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
@@ -31,9 +33,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
     Yup.object().shape({
       name: Yup.string()
-        .required("You need to provide customer name")
-        .matches(COMPANY_NAME_REGEX, "This not a valid company name"),
-      country: Yup.string().required("You need to provide company country")
+        .required("Field Customer name is blank")
+        .matches(COMPANY_NAME_REGEX, "Field Customer name is invalid"),
+      country: Yup.string().required("Field Country is blank")
     })
   ),
   isDontHaveSuppliersYet: Yup.boolean(),
@@ -42,9 +44,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     then: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .required("You need to provide company name")
-          .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-        country: Yup.string().required("You need to provide company country")
+          .required("Field Supplier name is blank")
+          .matches(COMPANY_NAME_REGEX, "Field Supplier name is invalid"),
+        country: Yup.string().required("Field Country is blank")
       })
     )
   }),
@@ -53,7 +55,7 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     is: false,
     then: Yup.array().of(
       Yup.object().shape({
-        country: Yup.string().required("You need to provide trade good country")
+        country: Yup.string().required("Field Country of origin is blank")
       })
     )
   }),
@@ -64,8 +66,8 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
       then: Yup.array().of(
         Yup.object().shape({
           bankName: Yup.string()
-            .matches(BANK_NAME_REGEX, "This is not a valid bank name")
-            .required("You need to provide bank name")
+            .matches(BANK_NAME_REGEX, "Field Bank name is invalid")
+            .required("Field Bank name is blank")
         })
       )
     })
@@ -141,7 +143,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                             placeholder="Customer name"
                             component={Input}
                             InputProps={{
-                              inputProps: { tabIndex: 0 }
+                              inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                             }}
                           />
                         </Grid>
@@ -243,7 +245,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                             component={Input}
                             disabled={values.isDontHaveSuppliersYet}
                             InputProps={{
-                              inputProps: { tabIndex: 0 }
+                              inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                             }}
                           />
                         </Grid>
@@ -418,7 +420,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                   placeholder="Bank name"
                                   component={Input}
                                   InputProps={{
-                                    inputProps: { tabIndex: 0 }
+                                    inputProps: { maxLength: MAX_BANK_NAME_LENGTH, tabIndex: 0 }
                                   }}
                                 />
                                 {!!index && (

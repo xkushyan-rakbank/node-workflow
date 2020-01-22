@@ -14,16 +14,21 @@ import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
+import { MAX_EMIRATE_ID_LENGTH } from "./constants";
 
 const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
-    residenceCountry: Yup.string().test("required", "Required", value => isSignatory || value),
+    residenceCountry: Yup.string().test(
+      "required",
+      "Field Country of residence is blank",
+      value => isSignatory || value
+    ),
     eidNumber: Yup.string().when("residenceCountry", {
       is: value => value === UAE,
       then: Yup.string()
-        .required("Required")
+        .required("Field Emirates ID is blank")
         .transform(value => value.replace(/-/g, ""))
-        .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
+        .matches(EMIRATES_ID_REGEX, "Field Emirates ID is invalid")
     })
   });
 
@@ -64,21 +69,21 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 disabled={values.residenceCountry !== UAE}
                 component={EmiratesID}
                 contextualHelpText={
-                    <>
-                        If Emirates ID contains hyphen (-), spaces or any other special character please
-                        enter only alphabets and numbers
-                        <br />
-                        Example
-                        <br />
-                        784-1950-1234567-8 to be entered as 784195012345678
-                    </>
+                  <>
+                    If Emirates ID contains hyphen (-), spaces or any other special character please
+                    enter only alphabets and numbers
+                    <br />
+                    Example
+                    <br />
+                    784-1950-1234567-8 to be entered as 784195012345678
+                  </>
                 }
                 changeProspect={(prospect, value) => ({
                   ...prospect,
                   [eidNumberPath]: value.replace(/-/g, "")
                 })}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { maxLength: MAX_EMIRATE_ID_LENGTH, tabIndex: 0 }
                 }}
               />
             </Grid>
