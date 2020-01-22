@@ -105,7 +105,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
 
                             return {
                               ...prospect,
-                              [`prospect.signatoryInfo[${index}].kycDetails.country`]: value
+                              [`prospect.signatoryInfo[${index}].kycDetails.nationality`]: value
                             };
                           }}
                           shrink={true}
