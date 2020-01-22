@@ -69,6 +69,10 @@ export const useStyles = makeStyles({
     fontSize: "14px",
     "& li": {
       marginBottom: "5px"
+    },
+    "& li::before": {
+      content: "'–'",
+      marginRight: "4px"
     }
   },
   link: {

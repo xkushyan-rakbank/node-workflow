@@ -71,7 +71,7 @@ export const ExpandedDetailedOptionsCard = ({
               {option.items && (
                 <ul className={classes.nestedOptions}>
                   {option.items.map(item => (
-                    <li key={item}>– {item}</li>
+                    <li key={item}>{item}</li>
                   ))}
                 </ul>
               )}
