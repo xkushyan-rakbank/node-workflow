@@ -81,3 +81,5 @@ export const getRequiredDocsCount = createGetDocsCountSelector();
 export const getProspectErrorMessage = state => state.appConfig.prospectError;
 
 export const getLoading = state => state.appConfig.loading;
+
+export const getAuthToken = state => state.appConfig.authorizationToken;

@@ -34,20 +34,22 @@ export const authentication = {
 };
 
 export const otp = {
-  generate: payload => {
+  generate: (payload, authToken) => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
+      headers: { Authorization: `Bearer ${authToken}` },
       data: {
         action: OTP_ACTION_GENERATE,
         ...payload
       }
     });
   },
-  verify: payload => {
+  verify: (payload, authToken) => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
+      headers: { Authorization: `Bearer ${authToken}` },
       data: {
         action: OTP_ACTION_VERIFY,
         ...payload
@@ -64,17 +66,19 @@ export const prospect = {
       data
     });
   },
-  update: (prospectId, data) => {
+  update: (prospectId, data, authToken) => {
     return httpClient.request({
       url: buildURI("updateProspectUri", prospectId),
       method: "PUT",
+      headers: { Authorization: `Bearer ${authToken}` },
       data
     });
   },
-  get: prospectId => {
+  get: (prospectId, authToken) => {
     return httpClient.request({
       url: buildURI("getProspectUri", prospectId),
-      method: "GET"
+      method: "GET",
+      headers: { Authorization: `Bearer ${authToken}` }
     });
   }
 };
@@ -90,19 +94,21 @@ export const retrieveApplicantInfos = {
 };
 
 export const getProspectDocuments = {
-  retriveDocuments: prospectId => {
+  retriveDocuments: (prospectId, authToken) => {
     return httpClient.request({
       url: buildURI("getProspectDocumentsUri", prospectId),
-      method: "GET"
+      method: "GET",
+      headers: { Authorization: `Bearer ${authToken}` }
     });
   }
 };
 
 export const search = {
-  searchApplication: data => {
+  searchApplication: (data, authToken) => {
     return httpClient.request({
       url: buildURI("searchProspectUri"),
       method: "POST",
+      headers: { Authorization: `Bearer ${authToken}` },
       data
     });
   }
@@ -117,10 +123,11 @@ export const screening = {
 };
 
 export const uploadProspectDocument = {
-  send: ({ data, prospectId, source, onUploadProgress }) => {
+  send: ({ data, prospectId, source, onUploadProgress, authToken }) => {
     return uploadClient.request({
       url: buildURI("docUploaderUri", prospectId),
       method: "POST",
+      headers: { Authorization: `Bearer ${authToken}` },
       data,
       cancelToken: source.token,
       onUploadProgress

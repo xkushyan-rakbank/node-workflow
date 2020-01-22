@@ -15,7 +15,11 @@ import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
-import { getProspectId, getProspectDocuments as getDocuments } from "../selectors/appConfig";
+import {
+  getProspectId,
+  getProspectDocuments as getDocuments,
+  getAuthToken
+} from "../selectors/appConfig";
 import {
   RETRIEVE_DOC_UPLOADER,
   DOC_UPLOADER,
@@ -33,7 +37,7 @@ import {
 } from "../../utils/documents";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 
-function createUploader(prospectId, data, source) {
+function createUploader(prospectId, data, source, authToken) {
   let emit;
   const chan = eventChannel(emitter => {
     emit = emitter;
@@ -45,7 +49,13 @@ function createUploader(prospectId, data, source) {
     if (percentage === 100) emit(END);
   };
 
-  const uploadPromise = uploadProspectDocument.send({ prospectId, data, source, onUploadProgress });
+  const uploadPromise = uploadProspectDocument.send({
+    prospectId,
+    data,
+    source,
+    onUploadProgress,
+    authToken
+  });
   return [uploadPromise, chan];
 }
 
@@ -58,6 +68,7 @@ function* uploadProgressWatcher(chan, documentKey) {
 
 function* getProspectDocumentsSaga() {
   const state = yield select();
+  const authToken = getAuthToken(state);
   const prospectID = getProspectId(state) || "COSME0000000000000001";
   const existDocuments = getDocuments(state);
   const config = cloneDeep(state.appConfig);
@@ -67,7 +78,7 @@ function* getProspectDocumentsSaga() {
     existDocuments.stakeholdersDocuments;
 
   try {
-    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID);
+    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID, authToken);
 
     if (isDocsUploaded) {
       const companyDocuments = concatCompanyDocs(
@@ -106,9 +117,10 @@ function* uploadDocumentsBgSync({
 
   try {
     const state = yield select();
+    const authToken = getAuthToken(state);
     const prospectId = getProspectId(state) || "COSME0017";
 
-    const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source);
+    const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, authToken);
 
     yield fork(uploadProgressWatcher, chan, documentKey);
 
