@@ -1,7 +1,5 @@
 package ae.rakbank.webapply.controllers;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,8 +29,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -525,42 +520,51 @@ public class WebApplyController {
     @GetMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                                             @PathVariable String segment, @PathVariable String prospectId) {
+                                             @RequestHeader String authorization,
+                                             @PathVariable String segment, 
+                                             @PathVariable String prospectId) {
         logger.info("Begin getProspectById() method");
-
         logger.debug(
                 String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
 
-        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        String token = getTokenFromAuthorizationHeader(authorization);
+        if (oauthClient.isAccessTokenValid(token, null, false)) {
+          ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
+          if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+              HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
+                      MediaType.APPLICATION_JSON);
 
-            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
-                    MediaType.APPLICATION_JSON);
+              String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
+              UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-            String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
-            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
+              try {
+                  return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+                          "getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+              } 
+              catch (Exception e) {
+                  logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                          e);
+                  ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                          "Unable to call endpoint " + uriComponents.toString(), e);
+                  return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+              }
+          } 
+          else {
+              logger.error(String.format("OAuth Error in getProspectById() method , HttpStatus=[%s], message=[%s]",
+                      oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
 
-            try {
-                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-                        "getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+              ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                      "oauth error, check logs for more info.");
 
-            } catch (Exception e) {
-                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
-                        e);
-                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                        "Unable to call endpoint " + uriComponents.toString(), e);
-                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-        } else {
-            logger.error(String.format("OAuth Error in getProspectById() method , HttpStatus=[%s], message=[%s]",
-                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
-
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-
-            return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+              return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+          }
+        }
+        else {
+          logger.error(String.format("OAuth token expired or invalid."));
+          ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                  "oauth error, check logs for more info.");
+          return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -830,33 +834,6 @@ public class WebApplyController {
             return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-    /*  Disabled log file methods:
-    @GetMapping(value = "/logfile/names")
-    public ResponseEntity loadLogs() {
-        List<String> logFileNameList = logFileService.getLogFileNameList();
-        return new ResponseEntity<List>(logFileNameList, null, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/logfile/download")
-    public ResponseEntity loadLogs(@RequestParam(required = false) String fileName) {
-        File fileServerLogs = logFileService.getLogFile(fileName);
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(fileServerLogs);
-        }
-        catch (IOException ioe) {
-            logger.error("Error download log file {}: ", fileName, ioe.getMessage());
-            ObjectNode objectNode = new ObjectMapper().createObjectNode();
-            objectNode.put("error", ioe.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(objectNode);
-        }
-        return ResponseEntity.ok().contentLength(fileServerLogs.length())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(new InputStreamResource(fileInputStream));
-    }
-    */
 
 
     // Core API Forwarding
