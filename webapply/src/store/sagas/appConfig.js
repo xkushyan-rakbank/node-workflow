@@ -20,7 +20,7 @@ import {
 } from "../actions/appConfig";
 import { config, dataList } from "../../api/apiClient";
 import { history } from "./..";
-import { accountsNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
+import { accountNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
 import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
 import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
@@ -46,7 +46,7 @@ function* receiveAppConfigSaga() {
       response = yield call(config.load, product, segment);
     } else {
       if (process.env.NODE_ENV === "development") {
-        response = yield call(config.load, accountsNames.starter, segment);
+        response = yield call(config.load, accountNames.starter, segment);
       } else {
         response = yield call(config.load, null, segment);
       }

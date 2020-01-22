@@ -5,7 +5,7 @@ import HorizontalIconCardsContainer from "../../../components/HorizontalIconCard
 import HorizontalIconCardItem from "../../../components/HorizontalIconCards/HorizontalIconCardItem";
 import { useIconsByAccount } from "../../../utils/useIconsByAccount";
 import { InfoNote } from "../../../components/InfoNote";
-import { accountsNames } from "../../../constants";
+import { accountNames } from "../../../constants";
 import { accountTypesInfo, accountText } from "./constants";
 
 import { useStyles } from "./styled";
@@ -15,7 +15,7 @@ export const AccountBenefitsComponent = ({ accountType }) => {
 
   const icons = useIconsByAccount();
   const data = accountType ? accountTypesInfo[accountType] : [];
-  const isShowInfoNote = accountType === accountsNames.starter;
+  const isShowInfoNote = accountType === accountNames.starter;
 
   return (
     <>

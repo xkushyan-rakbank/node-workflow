@@ -8,7 +8,7 @@ import { Chat } from "../../containers/WebChat/Chat";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
 import routes from "../../routes";
-import { accountsNames, formStepper, searchProspectStepper } from "../../constants";
+import { accountNames, formStepper, searchProspectStepper } from "../../constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
@@ -39,8 +39,8 @@ export const FormNavigationComponent = ({
   ].includes(pathname);
 
   const bgTypeClass = cx({
-    brown: !isAccountsComparison && accountType === accountsNames.elite,
-    green: !isAccountsComparison && islamicBanking && accountType !== accountsNames.elite
+    brown: !isAccountsComparison && accountType === accountNames.elite,
+    green: !isAccountsComparison && islamicBanking && accountType !== accountNames.elite
   });
 
   const toggleSwitcherShow = () => setIsSwitcherShow(!isSwitcherShow);

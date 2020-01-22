@@ -1,7 +1,7 @@
-import { accountsNames } from "../../../constants";
+import { accountNames } from "../../../constants";
 
 export const accountTypesInfo = {
-  RAKstarter: [
+  [accountNames.starter]: [
     { key: 1, text: "No minimum balance required", iconName: "balance" },
     { key: 2, text: "Available in AED, USD, EUR, GBP", iconName: "availability" },
     {
@@ -11,7 +11,7 @@ export const accountTypesInfo = {
     },
     { key: 4, text: "Dedicated Relationship Manager", iconName: "manager" }
   ],
-  "Current Account": [
+  [accountNames.currentAccount]: [
     { key: 1, text: "Low minimum balance required", iconName: "balance" },
     { key: 2, text: "Available in AED, USD, EUR, GBP", iconName: "availability" },
     {
@@ -21,7 +21,7 @@ export const accountTypesInfo = {
     },
     { key: 4, text: "Dedicated Relationship Manager", iconName: "manager" }
   ],
-  RAKelite: [
+  [accountNames.elite]: [
     {
       key: 1,
       text: "Fast track processing of all your banking requests",
@@ -48,7 +48,7 @@ export const accountTypesInfo = {
 };
 
 export const accountText = {
-  [accountsNames.starter]: "Unmatched benefits to make banking stress-free",
-  [accountsNames.currentAccount]: "Unmatched benefits for an unmatched price",
-  [accountsNames.elite]: "Unmatched privileges to take your business to the next level"
+  [accountNames.starter]: "Unmatched benefits to make banking stress-free",
+  [accountNames.currentAccount]: "Unmatched benefits for an unmatched price",
+  [accountNames.elite]: "Unmatched privileges to take your business to the next level"
 };
