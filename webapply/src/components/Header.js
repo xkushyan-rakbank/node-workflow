@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import get from "lodash/get";
 import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import routes from "./../routes";
 import { accountsNames, mobileResolution } from "../constants";
 import logo from "../assets/images/rakbankLogo.svg";
+import { getAccountType, getIsIslamicBanking } from "../store/selectors/appConfig";
 
 const styles = {
   header: {
@@ -62,12 +62,10 @@ const styles = {
 const Header = props => {
   const {
     classes,
-    applicationInfo,
+    islamicBanking,
+    accountType,
     location: { pathname }
   } = props;
-  const accountType = get(applicationInfo, "accountType", "");
-  const islamicBanking = get(applicationInfo, "islamicBanking");
-
   let accountTypeText = "";
   if (accountType === accountsNames.elite) accountTypeText = "RAKelite";
   if (islamicBanking) accountTypeText = "RAKislamic";
@@ -89,11 +87,8 @@ const Header = props => {
 };
 
 const mapStateToProps = state => ({
-  applicationInfo:
-    state.appConfig &&
-    state.appConfig.prospect &&
-    state.appConfig.prospect.applicationInfo &&
-    state.appConfig.prospect.applicationInfo
+  islamicBanking: getIsIslamicBanking(state),
+  accountType: getAccountType(state)
 });
 
 export default compose(
