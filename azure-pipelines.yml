@@ -9,9 +9,11 @@ pr:
   branches:
     include:
       - develop
+      - release
 #trigger: none
 trigger:
   - develop
+  - release
 #  - releases/*
 
 jobs:
@@ -34,7 +36,7 @@ jobs:
           npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
-        displayName: 'Buildling webapply Application'
+          displayName: 'Buildling webapply Application'
         enabled: true
       - bash : |
           cd webapply
@@ -91,7 +93,9 @@ jobs:
           cd webapplyserver
           mvn clean
           mvn install
-        displayName: 'Buildling webapplyServer Application'
+        env:
+          REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
+          displayName: 'Buildling webapplyServer Application'
         enabled: true
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'

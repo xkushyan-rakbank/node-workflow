@@ -82,6 +82,8 @@ const ApplicantInfoPage = ({
     setVerified(false);
   }, [setVerified]);
 
+  console.log("IS_RECAPTCHA_ENABLE");
+  console.log(IS_RECAPTCHA_ENABLE);
   return (
     <>
       <h2>Let’s Start with the Basics</h2>
