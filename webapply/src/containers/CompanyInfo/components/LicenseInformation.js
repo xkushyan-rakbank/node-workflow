@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
-import differenceInYears from "date-fns/differenceInYears";
+import { differenceInYears, format, isValid } from "date-fns";
 
 import {
   Input,
@@ -41,6 +41,12 @@ const licenseInformationSchema = Yup.object({
     .integer("Must be an integer")
 });
 
+function changeDateProspectHandler(prospect, value, path) {
+  if (isValid(value)) {
+    return { [path]: format(value, "yyyy-MM-dd") };
+  }
+}
+
 export const LicenseInformation = ({ handleContinue }) => (
   <Formik
     initialValues={initialValues}
@@ -72,6 +78,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
+              changeProspect={changeDateProspectHandler}
             />
           </Grid>
         </Grid>
@@ -114,6 +121,7 @@ export const LicenseInformation = ({ handleContinue }) => (
                 setFieldValue("dateOfIncorporation", value);
                 setFieldValue("yearsInBusiness", differenceInYears(new Date(), value));
               }}
+              changeProspect={changeDateProspectHandler}
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
