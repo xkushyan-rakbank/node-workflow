@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
+import differenceInYears from "date-fns/differenceInYears";
 
 import {
   Input,
@@ -47,7 +48,7 @@ export const LicenseInformation = ({ handleContinue }) => (
     validationSchema={licenseInformationSchema}
     onSubmit={handleContinue}
   >
-    {() => (
+    {({ setFieldValue }) => (
       <Form>
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
@@ -109,6 +110,10 @@ export const LicenseInformation = ({ handleContinue }) => (
               contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
               contextualHelpProps={{ isDisableHoverListener: false }}
               component={DatePicker}
+              onChange={value => {
+                setFieldValue("dateOfIncorporation", value);
+                setFieldValue("yearsInBusiness", differenceInYears(new Date(), value));
+              }}
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
