@@ -1,7 +1,5 @@
 package ae.rakbank.webapply.controllers;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,8 +29,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -829,33 +824,6 @@ public class WebApplyController {
             return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-    /*  Disabled log file methods:
-    @GetMapping(value = "/logfile/names")
-    public ResponseEntity loadLogs() {
-        List<String> logFileNameList = logFileService.getLogFileNameList();
-        return new ResponseEntity<List>(logFileNameList, null, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/logfile/download")
-    public ResponseEntity loadLogs(@RequestParam(required = false) String fileName) {
-        File fileServerLogs = logFileService.getLogFile(fileName);
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(fileServerLogs);
-        }
-        catch (IOException ioe) {
-            logger.error("Error download log file {}: ", fileName, ioe.getMessage());
-            ObjectNode objectNode = new ObjectMapper().createObjectNode();
-            objectNode.put("error", ioe.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(objectNode);
-        }
-        return ResponseEntity.ok().contentLength(fileServerLogs.length())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(new InputStreamResource(fileInputStream));
-    }
-    */
 
 
     // Core API Forwarding
