@@ -4,7 +4,11 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { ADDRESS_NUMBER_REGEX, ALPHANUMERIC_REGEX } from "../../../../../../utils/validation";
+import {
+  ADDRESS_NUMBER_REGEX,
+  ADDRESS_REGEX,
+  ALPHANUMERIC_REGEX
+} from "../../../../../../utils/validation";
 import {
   CustomSelect,
   Input,
@@ -19,7 +23,7 @@ import { useStyles } from "./styled";
 
 const signatoryPreferredMailingAddressSchema = Yup.object().shape({
   addressLine2: Yup.string()
-    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value")
+    .matches(ADDRESS_REGEX, "Invalid address value")
     .max(50, "Maximum 50 characters allowed"),
   addressLine1: Yup.string()
     .required("You need to provide address details")

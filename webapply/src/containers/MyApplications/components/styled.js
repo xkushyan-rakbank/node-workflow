@@ -13,6 +13,7 @@ export const useStyles = makeStyles({
     "& button": {
       backgroundColor: "transparent",
       border: "none",
+      outline: "none",
       borderRadius: "5px",
       width: 32,
       height: 32,
@@ -33,11 +34,10 @@ export const useStyles = makeStyles({
     marginTop: "45px"
   },
   veiwRow: {
-    display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
-    gridTemplateRows: "repeat(2, 1fr)",
-    gridColumnGap: 20,
-    gridRowGap: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
     marginTop: "45px"
   },
   centeredContainer: {
@@ -49,7 +49,9 @@ export const useStyles = makeStyles({
   }, //grid css start
   gridContainer: {
     flex: "0 0 50%",
-    height: "263px"
+    flexBasis: "calc(100% / 2)",
+    height: "263px",
+    maxWidth: "49%"
   },
   containerBg: {
     position: "absolute",
@@ -73,12 +75,14 @@ export const useStyles = makeStyles({
     height: "100%"
   },
   title: {
+    wordBreak: "break-all",
     fontWeight: "600",
     color: "#263d4c",
     lineHeight: "1.7",
     zIndex: 1
   },
   account: {
+    wordBreak: "break-all",
     color: "#86868b",
     zIndex: 1
   },
@@ -107,12 +111,19 @@ export const useStyles = makeStyles({
     "&:last-of-type": {
       border: "none"
     },
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
     padding: "24px 20px 19px 30px"
   },
+  oneThirdWidth: {
+    width: "33%"
+  },
+  fullWidth: {
+    width: "100%"
+  },
   companyName: {
+    wordBreak: "break-all",
     fontSize: "16px",
     fontWeight: 600,
     lineHeight: 1,

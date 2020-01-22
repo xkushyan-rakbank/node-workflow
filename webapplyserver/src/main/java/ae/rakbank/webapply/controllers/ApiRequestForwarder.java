@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -586,6 +585,7 @@ public class ApiRequestForwarder {
         // ResponseEntity headers is immutable, so create new HttpHeaders object
         HttpHeaders headers = new HttpHeaders();
         headers.addAll(response.getHeaders());
+        headers.remove("Content-Length");
 
         logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
                 url, response.getStatusCodeValue(), response.getBody()));

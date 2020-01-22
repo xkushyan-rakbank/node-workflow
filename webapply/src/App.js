@@ -10,7 +10,9 @@ import { history } from "./store";
 import { FormLayout } from "./containers/FormLayout";
 import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
 
+import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
 import { ProspectProtectedRoute } from "./components/Routers";
+import { AccountTypeProtectedRoute } from "./components/Routers/AccountTypeProtectedRoute";
 
 import { getEndpoints } from "./store/selectors/appConfig";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -63,7 +65,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   component={ApplicationSubmitted}
                 />
                 <Route exact path={routes.accountsComparison} component={AccountsComparison} />
-                <Route exact path={routes.applicantInfo} component={ApplicantInfo} />
+                <AccountTypeProtectedRoute
+                  exact
+                  path={routes.applicantInfo}
+                  component={ApplicantInfo}
+                />
                 <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
                 <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
                 <ProspectProtectedRoute
@@ -91,19 +97,23 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.selectServices}
                   component={SelectServices}
                 />
-                <Route exact path={routes.applicationOverview} component={ApplicationOverview} />
-                <Route exact path={routes.detailedAccount} component={DetailedAccount} />
+                <AccountTypeProtectedRoute
+                  exact
+                  path={routes.applicationOverview}
+                  component={ApplicationOverview}
+                />
+                <AccountTypeProtectedRoute
+                  exact
+                  path={routes.detailedAccount}
+                  component={DetailedAccount}
+                />
                 <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
                 <Route
                   exact
                   path={routes.comeBackLoginVerification}
                   component={ComeBackVerification}
                 />
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.MyApplications}
-                  component={MyApplications}
-                />
+                <OTPProtectedRoute exact path={routes.MyApplications} component={MyApplications} />
                 <ProspectProtectedRoute
                   exact
                   path={routes.SubmitApplication}

@@ -1,73 +1,39 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import cx from "classnames";
-import { compose } from "redux";
 import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
-import * as loginSelector from "./../store/selectors/loginSelector";
-import * as appConfigSelectors from "../store/selectors/appConfig";
-import { accountsNames, mobileResolution } from "../constants";
-import router from "../routes";
-import { logout, formatLogin } from "./../store/actions/loginForm";
-import { formatSearchList } from "./../store/actions/searchProspect";
-import routes from "../routes";
+import * as loginSelector from "../../store/selectors/loginSelector";
+import * as appConfigSelectors from "../../store/selectors/appConfig";
+import { accountsNames } from "../../constants";
+import router from "../../routes";
+import { logout, formatLogin } from "../../store/actions/loginForm";
+import { formatSearchList } from "../../store/actions/searchProspect";
+import routes from "../../routes";
+import { useStyles } from "./styled";
 
-const styles = {
-  headerTitle: {
-    backgroundColor: "#fff",
-    marginBottom: "115px",
-    "& span": {
-      width: "100%",
-      fontSize: "14px",
-      color: "#86868b",
-      "& span": {
-        fontWeight: "600"
-      }
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      display: "none"
-    }
-  },
-  withMargin: {
-    marginTop: "-130px"
-  },
-  headerTitleIn: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%"
-  },
-  logout: {
-    float: "right",
-    marginTop: "-20px",
-    cursor: "pointer"
-  }
-};
-
-const HeaderTitle = props => {
+const HeaderTitleComponent = props => {
   const {
-    classes,
-    location: { pathname },
     applicationInfo: { islamicBanking, accountType },
     organizationInfo: { companyName },
     checkLoginStatus,
     getAgentName,
     withMargin
   } = props;
+  const classes = useStyles();
+  const { pathname } = useLocation();
 
   let selectedAccountTypeName = "";
   switch (accountType) {
     case accountsNames.elite:
       selectedAccountTypeName = "RAKelite";
       break;
-    case accountsNames.starter:
-      selectedAccountTypeName = "RAKstarter";
-      break;
     case accountsNames.currentAccount:
       selectedAccountTypeName = "Current Account";
       break;
+    case accountsNames.starter:
     default:
       selectedAccountTypeName = "RAKstarter";
+      break;
   }
 
   const organizationName = companyName ? (
@@ -130,11 +96,7 @@ const mapDispatchToProps = {
   formatSearchList
 };
 
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  withStyles(styles),
-  withRouter
-)(HeaderTitle);
+export const HeaderTitle = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HeaderTitleComponent);
