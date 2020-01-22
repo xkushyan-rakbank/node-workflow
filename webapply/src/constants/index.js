@@ -47,8 +47,8 @@ export const submitApplication = {
   needCommunicationLabel: "I want to receive marketing and promotional communication from RakBank"
 };
 
-export const accountsNames = {
-  starter: "RAKstarter",
+export const accountNames = {
+  starter: "RAKStarter",
   currentAccount: "Current Account",
   elite: "RAKelite"
 };

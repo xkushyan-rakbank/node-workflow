@@ -4,7 +4,7 @@ import cx from "classnames";
 import { connect } from "react-redux";
 import * as loginSelector from "../../store/selectors/loginSelector";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
-import { accountsNames } from "../../constants";
+import { accountNames } from "../../constants";
 import router from "../../routes";
 import { logout, formatLogin } from "../../store/actions/loginForm";
 import { formatSearchList } from "../../store/actions/searchProspect";
@@ -24,15 +24,15 @@ const HeaderTitleComponent = props => {
 
   let selectedAccountTypeName = "";
   switch (accountType) {
-    case accountsNames.elite:
-      selectedAccountTypeName = "RAKelite";
+    case accountNames.elite:
+      selectedAccountTypeName = accountNames.elite;
       break;
-    case accountsNames.currentAccount:
-      selectedAccountTypeName = "Current Account";
+    case accountNames.currentAccount:
+      selectedAccountTypeName = accountNames.currentAccount;
       break;
-    case accountsNames.starter:
+    case accountNames.starter:
     default:
-      selectedAccountTypeName = "RAKstarter";
+      selectedAccountTypeName = accountNames.starter;
       break;
   }
 

@@ -8,7 +8,7 @@ import cx from "classnames";
 
 import { isOtpVerified } from "../store/selectors/otp";
 import routes from "./../routes";
-import { accountsNames, mobileResolution } from "../constants";
+import { accountNames, mobileResolution } from "../constants";
 import logo from "../assets/images/rakbankLogo.svg";
 
 const styles = {
@@ -76,9 +76,9 @@ const Header = props => {
   const islamicBanking = get(applicationInfo, "islamicBanking");
 
   let accountTypeText = "";
-  if (accountType === accountsNames.elite) accountTypeText = "RAKelite";
+  if (accountType === accountNames.elite) accountTypeText = "RAKelite";
   if (islamicBanking) accountTypeText = "RAKislamic";
-  if (accountType === accountsNames.elite && islamicBanking)
+  if (accountType === accountNames.elite && islamicBanking)
     accountTypeText = "RAKelite - RAKislamic";
 
   const isShowAccountType = routes.accountsComparison !== pathname && accountTypeText.length;

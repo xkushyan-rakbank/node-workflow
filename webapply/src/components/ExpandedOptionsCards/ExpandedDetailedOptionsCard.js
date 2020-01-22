@@ -5,7 +5,7 @@ import { Link } from "@material-ui/core";
 import { ContainedButton } from "../Buttons/ContainedButton";
 import check from "../../assets/icons/check_outline_ic.png";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
-import { mobileResolution } from "../../constants";
+import { accountNames, mobileResolution } from "../../constants";
 
 const style = {
   root: {
@@ -147,7 +147,7 @@ const ExpandedOptionsDetailedCard = ({
   id
 }) => {
   const renderTitle = () =>
-    accountType === "RAKstarter" && value === "RAKvalue PLUS"
+    accountType === accountNames.starter && value === "RAKvalue PLUS"
       ? "Included in RAKstarter"
       : "Available upgrade";
 
