@@ -100,7 +100,7 @@ public class DocumentUploadController {
 	}
 
 	private ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
-		logger.error(String.format(
+		logger.info(String.format(
 				"[Begin] processUploadRequest() method, prospectId=%s, originalFilename=[%s], filesize=%s, fileInfo= %s",
 				prospectId, file.getOriginalFilename(), file.getSize(), fileInfo));
 

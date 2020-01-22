@@ -27,6 +27,7 @@ export const SelectAutocomplete = ({
   disabled,
   contextualHelpText,
   contextualHelpProps,
+  onChange = value => setFieldValue(field.name, value),
   ...props
 }) => {
   const classes = useStyles(props);
@@ -38,7 +39,7 @@ export const SelectAutocomplete = ({
       ? (selected || []).map(item => extractValue(item))
       : extractValue(selected);
 
-    return setFieldValue(field.name, value);
+    return onChange(value);
   };
 
   const renderValue = !multiple

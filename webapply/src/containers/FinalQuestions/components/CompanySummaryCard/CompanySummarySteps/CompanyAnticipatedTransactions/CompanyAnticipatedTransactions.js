@@ -10,12 +10,14 @@ import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { InfoTitle } from "../../../../../../components/Notifications";
-import { Input, AutoSaveField as Field } from "../../../../../../components/Form";
+import { Input, AutoSaveField as Field, NumberFormat } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
 import { CURRENCY_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
+
+const FormatDecimalNumberInput = props => <NumberFormat decimalScale={2} {...props} />;
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
   if (!checkValidNumberFromString(annualFinancialTurnover)) {
@@ -155,7 +157,8 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     ...commonInputProps,
                     inputProps: {
                       maxLength: ANNUAL_TURNOVER_MAX_LENGTH,
-                      tabIndex: 0
+                      tabIndex: 0,
+                      inputComponent: FormatDecimalNumberInput
                     }
                   }}
                   component={Input}
@@ -198,6 +201,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
                   InputProps={{
                     ...commonInputProps,
+                    inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0 }
                   }}
                 />
@@ -212,6 +216,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
                   InputProps={{
                     ...commonInputProps,
+                    inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0 }
                   }}
                 />
@@ -236,6 +241,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   placeholder="99999999.99"
                   InputProps={{
                     ...commonInputProps,
+                    inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0 }
                   }}
                   component={Input}
@@ -250,6 +256,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   placeholder="99999999.99"
                   InputProps={{
                     ...commonInputProps,
+                    inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0 }
                   }}
                   component={Input}

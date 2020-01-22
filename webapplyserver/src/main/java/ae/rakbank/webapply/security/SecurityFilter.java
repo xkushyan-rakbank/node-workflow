@@ -29,7 +29,6 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         logger.info("Filter initialized");
-        logger.info("Length 0: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
         String result = null;
         if (skipEncryption((HttpServletRequest) request)) {
             logger.info("Encryption skipped");
@@ -38,7 +37,6 @@ public class SecurityFilter implements Filter {
         else {
             logger.info("Encryption enabled");
             ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
-            logger.info("Length 0.1: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
             responseWrapper.setCharacterEncoding("UTF-8");
 
             byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
@@ -59,20 +57,16 @@ public class SecurityFilter implements Filter {
                 responseWrapper.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
             else {
-                // HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
-                //         decryptedData);
+                HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
+                        decryptedData);
 
-                logger.info("Length 0.2: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
-                // chain.doFilter(requestWrapper, responseWrapper);
-                logger.info("Length 0.3: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
+                chain.doFilter(requestWrapper, responseWrapper);
 
                 result = encrypt(responseWrapper, spec);
-                logger.info("Length 0.4: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
             }
 
-            logger.info("Length 1: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
+            response.setContentLength(result.length());
             response.getWriter().write(result);
-            logger.info("Length 2: {}", ((HttpServletResponse) response).getHeader("Content-Length"));
         }
     }
 

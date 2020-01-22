@@ -16,28 +16,47 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
   const { location: { pathname } = {} } = history;
 
   const handleClick = path => () => history.push(path);
+
   const isApplicationOverview = pathname === routes.applicationOverview;
-  const isAccountsComparison = pathname === routes.accountsComparison;
   const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;
+  const isDetailedAccountPage = pathname === routes.detailedAccount;
 
   return (
     <div className={classes.contentContainer}>
-      {accountType && !isApplicationOverview && !isAccountsComparison && !isApplicationSubmitted ? (
+      <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+        {(() => {
+          switch (pathname) {
+            case routes.detailedAccount:
+              return accountType ? accountsInfo[accountType].title : "";
+            case routes.applicationOverview:
+              return "Opening an account has never been this simple.";
+            case routes.MyApplications:
+              return "Your  applications, at a glance";
+            case routes.comeBackLogin:
+              return "Good to see you back!";
+            case routes.comeBackLoginVerification:
+              return "Confirm that it's you";
+            case routes.ApplicationSubmitted:
+              return "Check it out. Application submitted!";
+            case routes.reUploadDocuments:
+              return "Edit your application";
+            case routes.accountsComparison:
+            default:
+              return "All businesses start with an account. Get yours now.";
+          }
+        })()}
+      </Typography>
+      {accountType && isDetailedAccountPage && (
         <>
-          <div>
-            <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-              {accountsInfo[accountType].title}
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              component="span"
-              classes={{ root: classes.sectionSubtitle }}
-            >
-              {islamicBanking
-                ? accountsInfo[accountType].islamicSubtitle
-                : accountsInfo[accountType].subtitle}
-            </Typography>
-          </div>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            classes={{ root: classes.sectionSubtitle }}
+          >
+            {islamicBanking
+              ? accountsInfo[accountType].islamicSubtitle
+              : accountsInfo[accountType].subtitle}
+          </Typography>
           <ContainedButton
             withRightArrow
             justify="flex-start"
@@ -45,49 +64,28 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
             handleClick={handleClick(routes.applicationOverview)}
           />
         </>
-      ) : (
+      )}
+      {isApplicationSubmitted && (
+        <ContainedButton
+          withRightArrow
+          justify="flex-start"
+          label="Check status"
+          handleClick={handleClick(routes.comeBackLogin)}
+        />
+      )}
+      {isApplicationOverview && (
         <>
-          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-            {(() => {
-              switch (pathname) {
-                case routes.applicationOverview:
-                  return "Opening an account has never been this simple.";
-                case routes.MyApplications:
-                  return "Your  applications, at a glance";
-                case routes.comeBackLogin:
-                  return "Good to see you back!";
-                case routes.comeBackLoginVerification:
-                  return "Confirm that it's you";
-                case routes.ApplicationSubmitted:
-                  return "Check it out. Application submitted!";
-                default:
-                  return "All businesses start with an account. Get yours now.";
-              }
-            })()}
-          </Typography>
-          {isApplicationSubmitted && (
+          <div className="hide-on-mobile">
             <ContainedButton
               withRightArrow
               justify="flex-start"
-              label="Check status"
-              handleClick={handleClick(routes.comeBackLogin)}
+              label="Start application"
+              handleClick={handleClick(routes.applicantInfo)}
             />
-          )}
-          {isApplicationOverview && (
-            <>
-              <div className="hide-on-mobile">
-                <ContainedButton
-                  withRightArrow
-                  justify="flex-start"
-                  label="Start application"
-                  handleClick={handleClick(routes.applicantInfo)}
-                />
-              </div>
-              <div className="show-on-mobile">
-                <MobileNotification />
-              </div>
-            </>
-          )}
+          </div>
+          <div className="show-on-mobile">
+            <MobileNotification />
+          </div>
         </>
       )}
     </div>

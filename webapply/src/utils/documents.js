@@ -16,7 +16,7 @@ export const mergeObjectToCollection = obj =>
     )
     .flat();
 
-export const concatStakeholdersDocs = (incomeDocs, existDocs) => {
+export const concatStakeholdersDocs = (incomeDocs, { ...existDocs }) => {
   const stakeholdersDocsDiff = differenceBy(
     mergeObjectToCollection(incomeDocs),
     mergeObjectToCollection(existDocs),

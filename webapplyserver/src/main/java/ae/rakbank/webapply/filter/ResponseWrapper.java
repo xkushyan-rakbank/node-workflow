@@ -21,22 +21,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 	}
 
 	@Override
-	public void setHeader(String name, String value) {
-		if ("Content-Length".equalsIgnoreCase(name)) {
-			return;
-		}
-		super.setHeader(name, value);
-	}
-
-	@Override
-	public void setIntHeader(String name, int value) {
-		if ("Content-Length".equalsIgnoreCase(name)) {
-			return;
-		}
-		super.setIntHeader(name, value);
-	}
-
-	@Override
 	public ServletOutputStream getOutputStream() {
 		if (writer != null) {
 			throw new IllegalStateException("getWriter() has already been called on this response.");

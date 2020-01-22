@@ -75,7 +75,6 @@ public class S3FileUploader {
 			Files.newDirectoryStream(Paths.get(environmentUtil.getScannedDocsDir())).forEach(path -> {
 				File file = path.toFile();
 
-				String objectKey = FilenameUtils.getBaseName(file.getName());
 				byte[] fileData;
 				try {
 					fileData = FileUtils.readFileToByteArray(file);
@@ -84,10 +83,10 @@ public class S3FileUploader {
 					String mimeType = fileTypeMap.getContentType(file.getName());
 
 					// create the object in S3 bucket
-					s3.putObject(ecsS3Factory.getS3Bucket(), objectKey, fileData, mimeType);
+					s3.putObject(ecsS3Factory.getS3Bucket(), file.getName(), fileData, mimeType);
 
 					logger.info(String.format("created object [%s/%s] for file [%s]", ecsS3Factory.getS3Bucket(),
-							objectKey, file.getName()));
+            file.getName(), file.getName()));
 
 					moveFileFromScannedDocsToS3Object(path, file);
 

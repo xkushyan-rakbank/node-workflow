@@ -8,6 +8,7 @@ import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../c
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
   ADDRESS_NUMBER_REGEX,
+  ADDRESS_REGEX,
   ALPHANUMERIC_REGEX,
   SPACE_OCCUPIED_OTHER_REGEX
 } from "../../../../../../utils/validation";
@@ -25,7 +26,7 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
   addressLine1: Yup.string()
     .required("You need to provide address details")
     .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
-  addressLine2: Yup.string().matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+  addressLine2: Yup.string().matches(ADDRESS_REGEX, "Invalid address value"),
   poBox: Yup.string()
     .required("You need to provide po box number")
     .matches(ALPHANUMERIC_REGEX, "Invalid PO box number"),

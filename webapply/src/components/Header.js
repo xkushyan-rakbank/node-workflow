@@ -4,6 +4,9 @@ import { compose } from "redux";
 import get from "lodash/get";
 import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
+import cx from "classnames";
+
+import { isOtpVerified } from "../store/selectors/otp";
 import routes from "./../routes";
 import { accountsNames, mobileResolution } from "../constants";
 import logo from "../assets/images/rakbankLogo.svg";
@@ -56,6 +59,9 @@ const styles = {
       left: "0",
       top: "3px"
     }
+  },
+  disabled: {
+    pointerEvents: "none"
   }
 };
 
@@ -63,7 +69,8 @@ const Header = props => {
   const {
     classes,
     applicationInfo,
-    location: { pathname }
+    location: { pathname },
+    isOtpVerified
   } = props;
   const accountType = get(applicationInfo, "accountType", "");
   const islamicBanking = get(applicationInfo, "islamicBanking");
@@ -78,7 +85,7 @@ const Header = props => {
 
   return (
     <header className={classes.header}>
-      <Link to={routes.accountsComparison}>
+      <Link to={routes.accountsComparison} className={cx({ [classes.disabled]: isOtpVerified })}>
         <div>
           <img src={logo} alt="rak bank" />
         </div>
@@ -89,11 +96,8 @@ const Header = props => {
 };
 
 const mapStateToProps = state => ({
-  applicationInfo:
-    state.appConfig &&
-    state.appConfig.prospect &&
-    state.appConfig.prospect.applicationInfo &&
-    state.appConfig.prospect.applicationInfo
+  applicationInfo: get(state, "appConfig.prospect.applicationInfo", {}),
+  isOtpVerified: isOtpVerified(state)
 });
 
 export default compose(

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
-import FormNavigationStep from "../FormNavigationStep";
+import { FormNavigationStep } from "../FormNavigationStep";
 import { Chat } from "../../containers/WebChat/Chat";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
@@ -15,9 +15,7 @@ import { useStyles } from "./styled";
 
 export const FormNavigationComponent = ({
   applicationInfo: { islamicBanking, accountType },
-  isLogin,
-  name,
-  isOtpVerified
+  isLogin
 }) => {
   const {
     location: { pathname }
@@ -30,6 +28,15 @@ export const FormNavigationComponent = ({
 
   const classes = useStyles();
   const isAccountsComparison = routes.accountsComparison === pathname;
+  const isChatVisible = ![
+    routes.accountsComparison,
+    routes.detailedAccount,
+    routes.applicationOverview,
+    routes.applicantInfo,
+    routes.verifyOtp,
+    routes.comeBackLogin,
+    routes.comeBackLoginVerification
+  ].includes(pathname);
 
   const bgTypeClass = cx({
     brown: !isAccountsComparison && accountType === accountsNames.elite,
@@ -71,7 +78,7 @@ export const FormNavigationComponent = ({
           </ul>
         )
       )}
-      {isOtpVerified && name && <Chat />}
+      {isChatVisible && <Chat />}
     </div>
   );
 };
