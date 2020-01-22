@@ -59,9 +59,10 @@ export const otp = {
 };
 
 export const prospect = {
-  create: data => {
+  create: (data, authToken) => {
     return httpClient.request({
       url: buildURI("createProspectUri"),
+      headers: { Authorization: `Bearer ${authToken}` },
       method: "POST",
       data
     });

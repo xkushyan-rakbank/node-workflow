@@ -13,6 +13,7 @@ import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
 import routes from "./../../routes";
 import { log } from "../../utils/loggger";
+import { getAuthToken } from "./../selectors/appConfig";
 import { IS_RECAPTCHA_ENABLE, NEXT, SAVE } from "../../constants";
 
 function* applicantInfoFormSaga(action) {
@@ -32,9 +33,11 @@ function* applicantInfoFormSaga(action) {
       prospectUpdated = { ...prospectUpdated, recaptchaToken };
     }
 
+    const authToken = getAuthToken(state);
+
     const {
       data: { prospectId }
-    } = yield call(prospect.create, prospectUpdated);
+    } = yield call(prospect.create, prospectUpdated, authToken);
 
     yield put(setVerified(true));
     yield put(generateCodeSuccess());
