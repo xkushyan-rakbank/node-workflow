@@ -18,11 +18,12 @@ import {
   UPDATE_SAVE_TYPE,
   saveProspectModel
 } from "../actions/appConfig";
-import { config, dataList } from "../../api/apiClient";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
+
+import { config, dataList } from "../../api/apiClient";
 import { history } from "./..";
-import { accountsNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
+import { accountNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
 import {
   getEndpoints,
   getApplicationInfo,
@@ -51,7 +52,7 @@ function* receiveAppConfigSaga() {
       response = yield call(config.load, accountType, segment);
     } else {
       if (process.env.NODE_ENV === "development") {
-        response = yield call(config.load, accountsNames.starter, segment);
+        response = yield call(config.load, accountNames.starter, segment);
       } else {
         response = yield call(config.load, null, segment);
       }

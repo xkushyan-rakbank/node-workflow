@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import cx from "classnames";
 import { connect } from "react-redux";
-import { accountsNames } from "../../constants";
+
 import * as loginSelector from "../../store/selectors/loginSelector";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 import { logout, formatLogin } from "../../store/actions/loginForm";
@@ -10,6 +10,7 @@ import { formatSearchList } from "../../store/actions/searchProspect";
 import { getAccountType } from "../../store/selectors/appConfig";
 import { getIsIslamicBanking } from "../../store/selectors/appConfig";
 
+import { accountNames } from "../../constants";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 
@@ -27,15 +28,15 @@ const HeaderTitleComponent = ({
 
   let selectedAccountTypeName = "";
   switch (accountType) {
-    case accountsNames.elite:
-      selectedAccountTypeName = "RAKelite";
+    case accountNames.elite:
+      selectedAccountTypeName = accountNames.elite;
       break;
-    case accountsNames.currentAccount:
-      selectedAccountTypeName = "Current Account";
+    case accountNames.currentAccount:
+      selectedAccountTypeName = accountNames.currentAccount;
       break;
-    case accountsNames.starter:
+    case accountNames.starter:
     default:
-      selectedAccountTypeName = "RAKstarter";
+      selectedAccountTypeName = accountNames.starter;
       break;
   }
 

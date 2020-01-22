@@ -1,11 +1,11 @@
-import { accountsNames } from "../../../../constants";
+import { accountNames } from "../../../../constants";
 import startups_ic from "../../../../assets/icons/startups_ic.svg";
 import businesses_ic from "../../../../assets/icons/growing_businesses_ic.svg";
 import established_businesses_ic from "../../../../assets/icons/established_businesses_ic.svg";
 
 export const accountTypesDescription = [
   {
-    name: accountsNames.starter,
+    name: accountNames.starter,
     icon: startups_ic,
     title: "For Startups and Entrepreneurs",
     description: [
@@ -13,10 +13,10 @@ export const accountTypesDescription = [
       "Preferential transaction fees",
       "Dedicated Relationship Manager"
     ],
-    buttonText: "RAKstarter"
+    buttonText: accountNames.starter
   },
   {
-    name: accountsNames.currentAccount,
+    name: accountNames.currentAccount,
     icon: businesses_ic,
     title: "For Growing Businesses",
     description: [
@@ -24,10 +24,10 @@ export const accountTypesDescription = [
       "Preferential transaction fees",
       "Dedicated Relationship Manager "
     ],
-    buttonText: "Current Account"
+    buttonText: accountNames.currentAccount
   },
   {
-    name: accountsNames.elite,
+    name: accountNames.elite,
     icon: established_businesses_ic,
     title: "For Established Businesses",
     description: [
@@ -35,7 +35,7 @@ export const accountTypesDescription = [
       "Host of lifestyle benefits",
       "Dedicated Relationship Manager"
     ],
-    buttonText: "RAKelite"
+    buttonText: accountNames.elite
   }
 ];
 export const SECTION_INDEX = 2;

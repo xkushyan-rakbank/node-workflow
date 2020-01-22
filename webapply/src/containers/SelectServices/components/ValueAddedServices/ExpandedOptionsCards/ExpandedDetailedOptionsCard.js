@@ -3,7 +3,7 @@ import cx from "classnames";
 import { Link } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
-import { accountsNames } from "../../../../../constants";
+import { accountNames } from "../../../../../constants";
 import { useIconsByAccount } from "../../../../../utils/useIconsByAccount";
 
 import { ICONS, Icon } from "../../../../../components/Icons/Icon";
@@ -96,7 +96,7 @@ export const ExpandedDetailedOptionsCard = ({
             className={classes.button}
             handleClick={() => handleClick(id)}
           />
-        ) : accountType === accountsNames.starter && value === rakValuePackagePlusName ? (
+        ) : accountType === accountNames.starter && value === rakValuePackagePlusName ? (
           "Included in RAKstarter"
         ) : (
           "Available upgrade"

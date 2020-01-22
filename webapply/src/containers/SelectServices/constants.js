@@ -12,7 +12,7 @@ export const GO_TO_SUBMIT_STEP = 5;
 export const ACCOUNTS_SIGNING_NAME_OTHER = "A3";
 export const signingInfo = {
   A1: "Any of you can sign",
-  A2: "All of you can sign"
+  A2: "All of us can sign"
 };
 
 export const servicesSteps = [
