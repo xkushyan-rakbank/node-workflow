@@ -14,10 +14,11 @@ export const sendProspectToAPI = () => {
   return { type: SEND_PROSPECT_TO_API };
 };
 
-export const sendProspectToAPIPromisify = () => ({
+export const sendProspectToAPIPromisify = saveType => ({
   type: SEND_PROSPECT_TO_API,
   [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
-  [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL
+  [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+  saveType
 });
 
 export const sendProspectToAPISuccess = prospectCopy => {

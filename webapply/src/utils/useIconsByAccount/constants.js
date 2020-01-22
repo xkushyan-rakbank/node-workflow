@@ -48,10 +48,10 @@ import { ReactComponent as maxElite } from "../../assets/icons/elite/rak-value-m
 import { ReactComponent as loungeElite } from "../../assets/icons/elite/lounge.svg";
 import { ReactComponent as interrogationElite } from "../../assets/icons/elite/interrogation.svg";
 import { ReactComponent as signatureElite } from "../../assets/icons/elite/signature.svg";
-import { ReactComponent as licenseElite } from "../../assets/icons/conventional/trade-license.svg";
-import { ReactComponent as passportElite } from "../../assets/icons/conventional/passport-visa.svg";
-import { ReactComponent as emiratesIdElite } from "../../assets/icons/conventional/emirates-id.svg";
-import { ReactComponent as companyDocumentsElite } from "../../assets/icons/conventional/company-documents.svg";
+import { ReactComponent as licenseElite } from "../../assets/icons/elite/trade-license.svg";
+import { ReactComponent as passportElite } from "../../assets/icons/elite/passport-visa.svg";
+import { ReactComponent as emiratesIdElite } from "../../assets/icons/elite/emirates-id.svg";
+import { ReactComponent as companyDocumentsElite } from "../../assets/icons/elite/company-documents.svg";
 import { ReactComponent as bankingElite } from "../../assets/icons/elite/banking.svg";
 import { ReactComponent as logoElite } from "../../assets/images/rakbankLogoElite.svg";
 import overviewElite from "../../assets/gif/overview_elite.gif";

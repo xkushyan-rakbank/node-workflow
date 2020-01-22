@@ -61,7 +61,7 @@ export const useStyles = makeStyles({
     },
     "& ul": {
       margin: "0",
-      padding: "5px 0 0 20px",
+      padding: "5px 0 0 25px",
       marginLeft: "40px",
       height: "271px",
       overflowY: "auto",
@@ -82,11 +82,7 @@ export const useStyles = makeStyles({
         outline: "1px solid red"
       },
       "& li": {
-        direction: "ltr",
-        paddingLeft: "40px",
-        "@media only screen and (max-width: 1250px)": {
-          paddingLeft: "20px"
-        }
+        direction: "ltr"
       }
     }
   },

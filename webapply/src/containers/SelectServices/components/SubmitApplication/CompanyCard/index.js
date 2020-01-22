@@ -59,7 +59,11 @@ export const CompanyCard = ({
         <div className={classes.grayText}>Debit cards for all signatories</div>
       )}
       {isChequeBookApplied && <div className={classes.grayText}>Cheque book for the company</div>}
-      {isOnlineBankingApplied && <div className={classes.grayText}>Online bank statements</div>}
+      {isOnlineBankingApplied ? (
+        <div className={classes.grayText}>Online bank statements</div>
+      ) : (
+        <div className={classes.grayText}>Paper statements</div>
+      )}
       <div className={classes.grayText}>{rakValuePackage}</div>
     </div>
   );
