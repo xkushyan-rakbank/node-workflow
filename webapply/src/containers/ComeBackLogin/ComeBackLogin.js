@@ -104,6 +104,7 @@ const ComeBackLoginComponent = ({
               label="Your E-mail Address"
               placeholder="Email"
               component={Input}
+              isLoadDefaultValueFromStore={false}
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
@@ -127,6 +128,7 @@ const ComeBackLoginComponent = ({
                 label="Your Mobile Number"
                 placeholder="Mobile Number"
                 component={Input}
+                isLoadDefaultValueFromStore={false}
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
