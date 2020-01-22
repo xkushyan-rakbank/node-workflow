@@ -23,7 +23,16 @@ import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 
 import { config, dataList } from "../../api/apiClient";
 import { history } from "./..";
-import { accountNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
+import {
+  accountNames,
+  UAE_CODE,
+  UAE,
+  UAE_CURRENCY,
+  QUERY_ACCOUNT_TYPE,
+  QUERY_IS_ISLAMIC_BANKING,
+  QUERY_IS_ISLAMIC_BANKING_FALSE,
+  QUERY_IS_ISLAMIC_BANKING_TRUE
+} from "../../constants";
 import {
   getEndpoints,
   getApplicationInfo,
@@ -45,8 +54,24 @@ function* receiveAppConfigSaga() {
         : ""
       : pathname.substring(1, pathname.lastIndexOf("/"));
 
-    const isIslamicBanking = getIsIslamicBanking(state);
-    const accountType = getAccountType(state);
+    const searchParams = new URLSearchParams(window.location.search);
+    const queryAccountType = searchParams.get(QUERY_ACCOUNT_TYPE);
+    const queryIsIslamicBanking = searchParams.get(QUERY_IS_ISLAMIC_BANKING);
+
+    let isIslamicBanking = getIsIslamicBanking(state);
+    let accountType = getAccountType(state);
+
+    if (Object.values(accountNames).includes(queryAccountType)) {
+      accountType = queryAccountType;
+    }
+
+    if (queryIsIslamicBanking === QUERY_IS_ISLAMIC_BANKING_FALSE) {
+      isIslamicBanking = false;
+    }
+
+    if (queryIsIslamicBanking === QUERY_IS_ISLAMIC_BANKING_TRUE) {
+      isIslamicBanking = true;
+    }
 
     if (!isEmpty(endpoints)) {
       response = yield call(config.load, accountType, segment);

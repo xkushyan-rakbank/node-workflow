@@ -131,3 +131,8 @@ export const screeningStatusDefault = {
 };
 
 export const DATE_FORMAT = "yyyy-MM-dd";
+
+export const QUERY_ACCOUNT_TYPE = "product";
+export const QUERY_IS_ISLAMIC_BANKING = "type";
+export const QUERY_IS_ISLAMIC_BANKING_TRUE = "RAKislamic";
+export const QUERY_IS_ISLAMIC_BANKING_FALSE = "Conventional";
