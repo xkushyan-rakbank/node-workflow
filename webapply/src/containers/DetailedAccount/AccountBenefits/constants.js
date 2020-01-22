@@ -3,7 +3,7 @@ import { accountNames } from "../../../constants";
 export const accountTypesInfo = {
   [accountNames.starter]: [
     { key: 1, text: "No minimum balance required", iconName: "balance" },
-    { key: 2, text: "Available in AED, USD, EUR, GBP", iconName: "availability" },
+    { key: 2, text: "Available in AED, USD, EUR & GBP", iconName: "availability" },
     {
       key: 3,
       text: "Preferential transaction fees through Digital Banking",
@@ -13,7 +13,7 @@ export const accountTypesInfo = {
   ],
   [accountNames.currentAccount]: [
     { key: 1, text: "Low minimum balance required", iconName: "balance" },
-    { key: 2, text: "Available in AED, USD, EUR, GBP", iconName: "availability" },
+    { key: 2, text: "Available in AED, USD, EUR & GBP", iconName: "availability" },
     {
       key: 3,
       text: "Preferential transaction fees through Digital Banking",
