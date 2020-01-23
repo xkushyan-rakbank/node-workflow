@@ -68,7 +68,9 @@ const ApplicantInfoPage = ({
   isConfigLoading
 }) => {
   useEffect(() => {
-    receiveAppConfig();
+    const pathname = window.location.pathname;
+    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+    receiveAppConfig(segment);
   }, [receiveAppConfig]);
 
   const onSubmit = useCallback(values => applicantInfoForm(values), [applicantInfoForm]);
