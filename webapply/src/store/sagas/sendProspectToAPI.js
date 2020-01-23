@@ -67,9 +67,8 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga(action) {
+function* sendProspectToAPISaga({ payload: { saveType } }) {
   try {
-    const saveType = action.saveType || CONTINUE;
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
 
