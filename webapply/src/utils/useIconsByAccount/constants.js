@@ -14,6 +14,8 @@ import { ReactComponent as companyDocumentsConventional } from "../../assets/ico
 import { ReactComponent as bankingConventional } from "../../assets/icons/conventional/banking.svg";
 import { ReactComponent as logoConventional } from "../../assets/images/rakbankLogo.svg";
 import overviewConventoinal from "../../assets/gif/overview_reg.gif";
+import paperPlaneRegular from "../../assets/gif/paperplane_regular.gif";
+import successRegular from "../../assets/videos/success_regular.mp4";
 
 /* RAKIslamic */
 import { ReactComponent as balanceIslamic } from "../../assets/icons/islamic/balance.svg";
@@ -37,8 +39,7 @@ import { ReactComponent as bankingIslamic } from "../../assets/icons/islamic/ban
 import { ReactComponent as logoIslamic } from "../../assets/images/rakbankLogoIslamic.svg";
 import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import paperPlaneIslamic from "../../assets/gif/paperplane_islamic.gif";
-import paperPlaneRegular from "../../assets/gif/paperplane_regular.gif";
-import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";
+import successIslamic from "../../assets/videos/success_islamic.mp4";
 
 /* RAKElite */
 import { ReactComponent as processingEliteIc } from "../../assets/icons/elite/processing.svg";
@@ -58,6 +59,8 @@ import { ReactComponent as companyDocumentsElite } from "../../assets/icons/elit
 import { ReactComponent as bankingElite } from "../../assets/icons/elite/banking.svg";
 import { ReactComponent as logoElite } from "../../assets/images/rakbankLogoElite.svg";
 import overviewElite from "../../assets/gif/overview_elite.gif";
+import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";
+import successElite from "../../assets/videos/success_elite.mp4";
 
 export const conventionalIconsSet = {
   availability: availabilityConventional,
@@ -75,7 +78,8 @@ export const conventionalIconsSet = {
   banking: bankingConventional,
   logo: logoConventional,
   overview: overviewConventoinal,
-  awaiting: paperPlaneRegular
+  awaiting: paperPlaneRegular,
+  success: successRegular
 };
 
 export const islamicIconsSet = {
@@ -99,7 +103,8 @@ export const islamicIconsSet = {
   banking: bankingIslamic,
   logo: logoIslamic,
   overview: overviewIslamic,
-  awaiting: paperPlaneIslamic
+  awaiting: paperPlaneIslamic,
+  success: successIslamic
 };
 
 export const eliteIconsSet = {
@@ -121,5 +126,6 @@ export const eliteIconsSet = {
   banking: bankingElite,
   logo: logoElite,
   overview: overviewElite,
-  awaiting: paperPlaneElite
+  awaiting: paperPlaneElite,
+  success: successElite
 };
