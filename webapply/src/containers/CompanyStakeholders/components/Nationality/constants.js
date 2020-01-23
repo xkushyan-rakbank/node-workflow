@@ -1,0 +1,1 @@
+export const MAX_PASSPORT_NUMBER_LENGTH = 12;

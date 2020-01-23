@@ -12,7 +12,8 @@ import {
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
 import { useStyles } from "./styled";
-import { MAX_COMPANY_NAME_LENGTH } from "../../constants";
+import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
+import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 const initialValues = {
   companyName: "",
@@ -23,17 +24,18 @@ const initialValues = {
 
 const companyDetailsSchema = Yup.object({
   companyName: Yup.string()
-    .required("You need to provide company name")
-    .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-  vatRegistrationNumber: Yup.string()
-    .max(15, "Maximum 15 characters allowed")
-    .matches(NUMBER_REGEX, "Not valid number"),
+    .required(getRequiredMessage("Company name"))
+    .matches(COMPANY_NAME_REGEX, getInvalidMessage("Company name")),
+  vatRegistrationNumber: Yup.string().matches(
+    NUMBER_REGEX,
+    getInvalidMessage("Registration number")
+  ),
   numberOfEmployees: Yup.number()
     .typeError("Not valid number")
     .min(0, "Must be more than or equal to 0")
     .max(1000, "Must be less than or equal to 1000")
-    .integer("Must be an integer"),
-  companyCategory: Yup.string().required("You need to provide company category")
+    .integer(getInvalidMessage("Number of employees")),
+  companyCategory: Yup.string().required(getRequiredMessage("Company category"))
 });
 
 export const CompanyDetails = ({ handleContinue }) => {
@@ -87,7 +89,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 infoTitle="This should be the same as your TRN number of UAE"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { maxLength: MAX_REGISTRATION_NUMBER_LENGTH, tabIndex: 0 }
                 }}
               />
             </Grid>

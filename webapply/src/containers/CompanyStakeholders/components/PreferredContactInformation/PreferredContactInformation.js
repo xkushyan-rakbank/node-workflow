@@ -20,37 +20,48 @@ import {
   MIN_NON_UAE_PHONE_LENGTH,
   MAX_NON_UAE_PHONE_LENGTH
 } from "../../../../utils/validation";
-import { UAE_CODE } from "../../../../constants";
+import { UAE_CODE, MAX_EMAIL_LENGTH } from "../../../../constants";
+import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
-    .required("You need to provide Email address")
-    .email("This is not a valid Email address")
-    .max(50, "Maximum 50 characters allowed"),
-  primaryMobCountryCode: Yup.string().required("Select country code"),
+    .required(getRequiredMessage("E-mail address"))
+    .email(getInvalidMessage("E-mail address"))
+    .max(50, getInvalidMessage("E-mail address")),
+  primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
   primaryMobileNo: Yup.string()
-    .required("You need to provide mobile number")
+    .required(getRequiredMessage("Mobile number"))
     .when("primaryMobCountryCode", {
       is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Mobile number")),
       otherwise: Yup.string()
-        .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
-        .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
-        .test("length validation", "This is not a valid phone (max length exceeded)", function() {
-          const { primaryMobCountryCode = "", primaryMobileNo = "" } = this.parent;
-          return primaryMobCountryCode.length + primaryMobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-        })
+        .matches(NUMBER_REGEX, getInvalidMessage("Mobile number"))
+        .min(MIN_NON_UAE_PHONE_LENGTH, "Field Mobile number is invalid (min length is not reached)")
+        .test(
+          "length validation",
+          "Field Mobile number is invalid (max length exceeded)",
+          function() {
+            const { primaryMobCountryCode = "", primaryMobileNo = "" } = this.parent;
+            return (
+              primaryMobCountryCode.length + primaryMobileNo.length <= MAX_NON_UAE_PHONE_LENGTH
+            );
+          }
+        )
     }),
   primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
     is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
-    then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "This is not a valid phone"),
+    then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "Field Landline number is invalid"),
     otherwise: Yup.string()
-      .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
-      .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
-      .test("length validation", "This is not a valid phone (max length exceeded)", function() {
-        const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
-        return primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-      })
+      .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
+      .min(MIN_NON_UAE_PHONE_LENGTH, "Field Landline number is invalid (min length is not reached)")
+      .test(
+        "length validation",
+        "Field Landline number is invalid (max length exceeded)",
+        function() {
+          const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
+          return primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+        }
+      )
   })
 });
 
@@ -79,7 +90,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
               component={Input}
               disabled={!isSignatory}
               InputProps={{
-                inputProps: { tabIndex: 0 }
+                inputProps: { maxLength: MAX_EMAIL_LENGTH, tabIndex: 0 }
               }}
             />
           </Grid>

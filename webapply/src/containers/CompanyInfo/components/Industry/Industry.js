@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 import { AutoSaveField as Field } from "../../../../components/Form";
 import { SearchableSelectAutocomplete } from "./SearchableSelectAutocomplete";
+import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import { useStyles } from "./styled";
@@ -16,12 +17,12 @@ const initialValues = {
 
 const industrySchema = Yup.object({
   industry: Yup.array()
-    .required("You need to provide industry")
+    .required(getRequiredMessage("Industry"))
     .max(12, "Maximum 12 options allowed"),
   subCategory: Yup.array().when("industry", {
     is: industry => !!industry,
     then: Yup.array()
-      .required("You need to provide sub-category")
+      .required(getRequiredMessage("Sub-category"))
       .max(12, "Maximum 12 options allowed")
   })
 });
