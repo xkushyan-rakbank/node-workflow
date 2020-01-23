@@ -36,8 +36,7 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  SUBMIT,
-  NEXT
+  SUBMIT
 } from "../../constants";
 
 function* watchRequest() {
@@ -68,7 +67,7 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga() {
+function* sendProspectToAPISaga({ payload: { saveType } }) {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
@@ -76,7 +75,7 @@ function* sendProspectToAPISaga() {
     const state = yield select();
     const newProspect = getProspect(state);
 
-    yield put(sendProspectRequest(NEXT, newProspect));
+    yield put(sendProspectRequest(saveType, newProspect));
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }

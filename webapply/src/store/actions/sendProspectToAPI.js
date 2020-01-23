@@ -1,5 +1,7 @@
 import { WAIT_FOR_ACTION, ERROR_ACTION } from "redux-wait-for-action";
 
+import { NEXT } from "../../constants";
+
 export const SEND_PROSPECT_TO_API = "SEND_PROSPECT_TO_API";
 export const SEND_PROSPECT_TO_API_SUCCESS = "SEND_PROSPECT_TO_API_SUCCESS";
 export const SEND_PROSPECT_TO_API_FAIL = "SEND_PROSPECT_TO_API_FAIL";
@@ -14,10 +16,11 @@ export const sendProspectToAPI = () => {
   return { type: SEND_PROSPECT_TO_API };
 };
 
-export const sendProspectToAPIPromisify = () => ({
+export const sendProspectToAPIPromisify = (saveType = NEXT) => ({
   type: SEND_PROSPECT_TO_API,
   [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
-  [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL
+  [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+  payload: { saveType }
 });
 
 export const sendProspectToAPISuccess = prospectCopy => {
