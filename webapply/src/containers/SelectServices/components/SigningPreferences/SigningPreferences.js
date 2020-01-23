@@ -34,7 +34,7 @@ const MAX_SIGNATORIES = 2;
 const signingPreferencesSchema = Yup.object({
   accountSigningType: Yup.string()
     .required("Field is required")
-    .min(2),
+    .min(2, "Field is required"),
   accountSigningInstn: Yup.string().when("accountSigningType", {
     is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
     then: Yup.string()
