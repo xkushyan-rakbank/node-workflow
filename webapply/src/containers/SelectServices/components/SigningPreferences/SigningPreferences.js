@@ -32,15 +32,15 @@ import { useStyles } from "./styled";
 
 const MAX_SIGNATORIES = 2;
 const signingPreferencesSchema = Yup.object({
-  accountSigningType: Yup.string().required("Field is required"),
-  accountSigningInstn: Yup.string()
-    .when("accountSigningType", {
-      is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
-      then: Yup.string()
-        .max(50, "Max length is 50 symbols")
-        .required("Field is required")
-    })
-    .required("Field is required"),
+  accountSigningType: Yup.string()
+    .required("Field is required")
+    .min(2),
+  accountSigningInstn: Yup.string().when("accountSigningType", {
+    is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
+    then: Yup.string()
+      .max(50, "Max length is 50 symbols")
+      .required("Field is required")
+  }),
   signatories: Yup.array().of(
     Yup.object().shape({
       TxnReconfirmingfullname: Yup.string()
