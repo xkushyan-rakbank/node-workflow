@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import { getIn } from "formik";
 import { FormControl } from "@material-ui/core";
@@ -33,6 +33,7 @@ export const SelectAutocomplete = ({
   const classes = useStyles(props);
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
+  const [isFocus, setFocus] = useState(false);
 
   const handleChange = selected => {
     const value = multiple
@@ -67,10 +68,12 @@ export const SelectAutocomplete = ({
           delimiter=","
           placeholder=""
           textFieldProps={{
+            onFocus: () => setFocus(true),
+            onBlur: () => setFocus(false),
             label,
             error: isError,
             InputLabelProps: {
-              shrink: !!renderValue
+              shrink: isFocus || !!renderValue
             }
           }}
           getOptionLabel={extractLabel}
