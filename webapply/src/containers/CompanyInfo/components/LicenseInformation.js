@@ -15,6 +15,7 @@ import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
 import { UAE } from "../../../constants";
+import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 
 const initialValues = {
   licenseNumber: "",
@@ -27,17 +28,17 @@ const initialValues = {
 
 const licenseInformationSchema = Yup.object({
   licenseNumber: Yup.string()
-    .required("You need to provide license number")
-    .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number"),
-  licenseIssueDate: Yup.date().required("You need to provide issue date"),
-  countryOfIncorporation: Yup.string().required("You need to provide country incorporation"),
-  licenseIssuingAuthority: Yup.string().required("You need to provide license issuing authority"),
-  dateOfIncorporation: Yup.date().required("You need to provide issue date"),
+    .required(getRequiredMessage("License number"))
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("License number")),
+  licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
+  countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
+  licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
+  dateOfIncorporation: Yup.date().required(getRequiredMessage("Date of incorporation")),
   yearsInBusiness: Yup.number()
     .typeError("Not valid number")
     .min(0, "Must be more than 0")
     .max(999, "Must be less than 1000")
-    .integer("Must be an integer")
+    .integer(getInvalidMessage("Years in business"))
 });
 
 export const LicenseInformation = ({ handleContinue }) => (

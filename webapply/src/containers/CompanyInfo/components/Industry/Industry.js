@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { SelectAutocomplete, AutoSaveField as Field } from "../../../../components/Form";
+import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import { useStyles } from "./styled";
@@ -15,12 +16,12 @@ const initialValues = {
 
 const industrySchema = Yup.object({
   industry: Yup.array()
-    .required("Field Industry is blank")
+    .required(getRequiredMessage("Industry"))
     .max(12, "Maximum 12 options allowed"),
   subCategory: Yup.array().when("industry", {
     is: industry => !!industry,
     then: Yup.array()
-      .required("Field Sub-category is blank")
+      .required(getRequiredMessage("Sub-category"))
       .max(12, "Maximum 12 options allowed")
   })
 });
