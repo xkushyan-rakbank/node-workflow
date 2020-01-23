@@ -16,8 +16,16 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
+import {
+  MAX_COMPANY_NAME_LENGTH,
+  MAX_TRADE_LICENSE_LENGTH
+} from "../CompanyBusinessRelationships/constants";
 import { ALPHANUMERIC_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
+import {
+  getRequiredMessage,
+  getInvalidMessage
+} from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
@@ -28,13 +36,13 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
     then: Yup.array().of(
       Yup.object().shape({
         companyName: Yup.string()
-          .required("You need to provide company name")
-          .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-        emirate: Yup.string().required("You need to provide emirate city"),
+          .required(getRequiredMessage("Company name"))
+          .matches(COMPANY_NAME_REGEX, getInvalidMessage("Company name")),
+        emirate: Yup.string().required(getRequiredMessage("Emirate")),
         tradeLicenseNo: Yup.string()
-          .required("You need to provide license number")
+          .required(getRequiredMessage("Trade license number"))
           .max(20, "Maximum 20 characters allowed")
-          .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number")
+          .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade license number"))
       })
     )
   }),
@@ -44,9 +52,9 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
     then: Yup.array().of(
       Yup.object().shape({
         companyName: Yup.string()
-          .required("You need to provide company name")
-          .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-        country: Yup.string().required("You need to provide company country")
+          .required(getRequiredMessage("Company name"))
+          .matches(COMPANY_NAME_REGEX, getInvalidMessage("Company name")),
+        country: Yup.string().required(getRequiredMessage("Country"))
       })
     )
   })
@@ -132,7 +140,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   </>
                                 }
                                 InputProps={{
-                                  inputProps: { tabIndex: 0 }
+                                  inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                                 }}
                               />
                             </Grid>
@@ -163,7 +171,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   </>
                                 }
                                 InputProps={{
-                                  inputProps: { tabIndex: 0 }
+                                  inputProps: { maxLength: MAX_TRADE_LICENSE_LENGTH, tabIndex: 0 }
                                 }}
                               />
                             </Grid>
@@ -262,7 +270,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   </>
                                 }
                                 InputProps={{
-                                  inputProps: { tabIndex: 0 }
+                                  inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                                 }}
                               />
                             </Grid>

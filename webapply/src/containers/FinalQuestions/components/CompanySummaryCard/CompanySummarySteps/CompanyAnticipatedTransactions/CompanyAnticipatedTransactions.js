@@ -16,6 +16,10 @@ import { useStyles } from "./styled";
 import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
 import { CURRENCY_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
+import {
+  getRequiredMessage,
+  getInvalidMessage
+} from "../../../../../../utils/getValidationMessage";
 
 const FormatDecimalNumberInput = props => <NumberFormat decimalScale={2} {...props} />;
 
@@ -55,11 +59,11 @@ const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
   annualFinTurnoverAmtInAED: Yup.string()
-    .required("You need to provide annual turnover")
-    .matches(CURRENCY_REGEX, "This is not a valid value"),
+    .required(getRequiredMessage("Annual turnover"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Annual turnover")),
   maxAmtSingleTxnCashAED: Yup.string()
-    .required("You need to provide single transaction value")
-    .matches(CURRENCY_REGEX, "This is not a valid value")
+    .required(getRequiredMessage("Part of Monthly Total in Cash"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Cash"))
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -73,8 +77,8 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   maxAmtSingleTxnNonCashAED: Yup.string()
-    .required("You need to provide single transaction value")
-    .matches(CURRENCY_REGEX, "This is not a valid value")
+    .required(getRequiredMessage("Part of Monthly Total in Non-Cash"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Non-Cash"))
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -88,8 +92,8 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   totalMonthlyCashAmountInFigures: Yup.string()
-    .required("You need to provide total monthly amount in cash")
-    .matches(CURRENCY_REGEX, "This is not a valid value")
+    .required(getRequiredMessage("Maximum amount in Cash"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Maximum amount in Cash"))
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -103,8 +107,8 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   totalMonthlyNonCashAmountInFigures: Yup.string()
-    .required("You need to provide total monthly amount in non-cash")
-    .matches(CURRENCY_REGEX, "This is not a valid value")
+    .required(getRequiredMessage("Maximum amount in Non-Cash"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Maximum amount in Non-Cash"))
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -155,10 +159,10 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,
+                    inputComponent: FormatDecimalNumberInput,
                     inputProps: {
                       maxLength: ANNUAL_TURNOVER_MAX_LENGTH,
-                      tabIndex: 0,
-                      inputComponent: FormatDecimalNumberInput
+                      tabIndex: 0
                     }
                   }}
                   component={Input}

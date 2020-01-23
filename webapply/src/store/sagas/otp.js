@@ -1,12 +1,14 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { otp } from "../../api/apiClient";
-import * as appConfigSelectors from "../selectors/appConfig";
+import { getApplicantInfo, getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
 import * as otpActions from "../actions/otp";
 import { log } from "../../utils/loggger";
 
 function* generateOtp(action) {
   try {
-    yield call(otp.generate, action.payload);
+    const state = yield select();
+    const headers = getAuthorizationHeader(state);
+    yield call(otp.generate, action.payload, headers);
 
     yield put(otpActions.generateCodeSuccess());
   } catch (error) {
@@ -19,16 +21,17 @@ function* generateOtp(action) {
 function* verifyOtp({ payload: otpToken }) {
   try {
     const state = yield select();
-    const applicantInfo = appConfigSelectors.getApplicantInfo(state);
+    const headers = getAuthorizationHeader(state);
+    const applicantInfo = getApplicantInfo(state);
 
     const payload = {
       email: applicantInfo.email,
-      prospectId: appConfigSelectors.getProspectId(state),
+      prospectId: getProspectId(state),
       mobileNo: applicantInfo.mobileNo,
       countryCode: applicantInfo.countryCode,
       otpToken
     };
-    const { data } = yield call(otp.verify, payload);
+    const { data } = yield call(otp.verify, payload, headers);
     if (data.verified) {
       yield put(otpActions.verifyCodeSuccess());
     } else {

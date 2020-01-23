@@ -12,12 +12,13 @@ import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { yesNoOptions } from "../../../../constants/options";
 import { UAE } from "../../../../constants";
+import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 const signatoryRightsSchema = Yup.object().shape({
-  isSignatory: Yup.boolean().required("Required"),
+  isSignatory: Yup.boolean().required("Field Is this person a signatory is not filled"),
   authorityType: Yup.string().when("isSignatory", {
     is: true,
-    then: Yup.string().required("Required")
+    then: Yup.string().required(getRequiredMessage("Authority type"))
   })
 });
 

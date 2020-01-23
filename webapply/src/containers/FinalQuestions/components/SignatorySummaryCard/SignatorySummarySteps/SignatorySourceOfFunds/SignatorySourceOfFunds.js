@@ -9,16 +9,20 @@ import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../c
 import { WEALTH_TYPE__REGEX } from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
+import {
+  getRequiredMessage,
+  getInvalidMessage
+} from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
 export const signatorySourceOfFundsSchema = Yup.object().shape({
-  wealthType: Yup.string().required("You need to provide wealth type"),
+  wealthType: Yup.string().required(getRequiredMessage("Source of funds")),
   others: Yup.string().when("wealthType", {
     is: value => value === OTHER_SOURCE_OF_WEALTH,
     then: Yup.string()
-      .required("You need to specify wealth type")
-      .matches(WEALTH_TYPE__REGEX, "Invalid wealth type value")
+      .required(getRequiredMessage("Other"))
+      .matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
   })
 });
 

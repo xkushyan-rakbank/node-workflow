@@ -16,24 +16,29 @@ import {
   OTHER_OPTION_CODE,
   BASE_PATH,
   MAX_OFFICE_NUMBER_LENGTH,
-  MAX_PO_BOX_NUMBER_LENGTH
+  MAX_PO_BOX_NUMBER_LENGTH,
+  MAX_OTHER_FIELD_LENGTH
 } from "./constants";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
+import {
+  getInvalidMessage,
+  getRequiredMessage
+} from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
 const companyPreferredMailingAddressSchema = Yup.object().shape({
   addressLine1: Yup.string()
-    .required("You need to provide address details")
-    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
-  addressLine2: Yup.string().matches(ADDRESS_REGEX, "Invalid address value"),
+    .required(getRequiredMessage("Office / Shop Number"))
+    .matches(ADDRESS_NUMBER_REGEX, getInvalidMessage("Office / Shop Number")),
+  addressLine2: Yup.string().matches(ADDRESS_REGEX, getInvalidMessage("Street / Location")),
   poBox: Yup.string()
-    .required("You need to provide po box number")
-    .matches(ALPHANUMERIC_REGEX, "Invalid PO box number"),
-  emirateCity: Yup.string().required("You need to provide emirate city"),
+    .required(getRequiredMessage("PO Box Number"))
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
+  emirateCity: Yup.string().required(getRequiredMessage("Emirate")),
   typeOfSpaceOccupied: Yup.object().shape({
-    spaceType: Yup.string().required("You need to provide space type"),
-    others: Yup.string().matches(SPACE_OCCUPIED_OTHER_REGEX, "Invalid field value")
+    spaceType: Yup.string().required(getRequiredMessage("Type of Space Occupied")),
+    others: Yup.string().matches(SPACE_OCCUPIED_OTHER_REGEX, getInvalidMessage("Other"))
   })
 });
 
@@ -84,7 +89,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   placeholder="Street / Location"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
                   }}
                 />
                 <Field
@@ -113,7 +118,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                     placeholder="Other(Specify)"
                     component={Input}
                     InputProps={{
-                      inputProps: { tabIndex: 0 }
+                      inputProps: { maxLength: MAX_OTHER_FIELD_LENGTH, tabIndex: 0 }
                     }}
                   />
                 )}

@@ -15,7 +15,6 @@ import {
   getSendProspectToAPIInfo
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
-import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
@@ -29,9 +28,8 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
-  const saveType = step === STEP_3 ? NEXT : undefined;
   const handleContinue = () =>
-    sendProspectToAPI(saveType).then(
+    sendProspectToAPI().then(
       () => {
         handleSetNextStep();
       },

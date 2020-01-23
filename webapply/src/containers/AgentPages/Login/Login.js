@@ -9,16 +9,17 @@ import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
 import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
 import { IS_RECAPTCHA_ENABLE } from "../../../constants";
+import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
 const loginSchema = Yup.object({
   username: Yup.string()
-    .required("You need to provide username")
-    .matches(USER_NAME_REGEX, "This is not a valid username"),
+    .required(getRequiredMessage("User name"))
+    .matches(USER_NAME_REGEX, getInvalidMessage("User name")),
   password: Yup.string()
-    .required("You need to provide password")
-    .matches(PASSWORD_REGEX, "This is not a valid password")
+    .required(getRequiredMessage("Password"))
+    .matches(PASSWORD_REGEX, getInvalidMessage("Password"))
 });
 
 export const LoginComponent = ({

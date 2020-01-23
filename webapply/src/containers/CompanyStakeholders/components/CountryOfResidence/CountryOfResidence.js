@@ -5,25 +5,26 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
 import { getInputValueById } from "../../../../store/selectors/input";
-import {
-  AutoSaveField as Field,
-  SelectAutocomplete,
-  EmiratesID
-} from "../../../../components/Form";
+import { AutoSaveField as Field, SelectAutocomplete, Input } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
+import { MAX_EMIRATE_ID_LENGTH } from "./constants";
+import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 
 const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
-    residenceCountry: Yup.string().test("required", "Required", value => isSignatory || value),
+    residenceCountry: Yup.string().test(
+      "required",
+      getRequiredMessage("Country of residence"),
+      value => isSignatory || value
+    ),
     eidNumber: Yup.string().when("residenceCountry", {
       is: value => value === UAE,
       then: Yup.string()
-        .required("Required")
-        .transform(value => value.replace(/-/g, ""))
-        .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
+        .required(getRequiredMessage("Emirates ID"))
+        .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
     })
   });
 
@@ -61,8 +62,10 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
               <Field
                 name="eidNumber"
                 path={eidNumberPath}
+                label="Emirates ID"
+                placeholder="Emirates ID"
                 disabled={values.residenceCountry !== UAE}
-                component={EmiratesID}
+                component={Input}
                 contextualHelpText={
                   <>
                     If Emirates ID contains hyphen (-), spaces or any other special character please
@@ -73,12 +76,8 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                     784-1950-1234567-8 to be entered as 784195012345678
                   </>
                 }
-                changeProspect={(prospect, value) => ({
-                  ...prospect,
-                  [eidNumberPath]: value.replace(/-/g, "")
-                })}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { maxLength: MAX_EMIRATE_ID_LENGTH, tabIndex: 0 }
                 }}
               />
             </Grid>
