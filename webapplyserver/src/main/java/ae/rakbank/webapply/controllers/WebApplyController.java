@@ -1218,4 +1218,14 @@ public class WebApplyController {
             return String.join("_", segment, product, role, device).toUpperCase().replace(" ", "_");
         }
     }
+
+    private String getCache(String key) {
+        logger.info("retrieve data from cache for key - " + key);
+        return (String) servletContext.getAttribute(key);
+    }
+
+    private void setCache(String key, String data) {
+        logger.info("adding data to cache key - " + key);
+        servletContext.setAttribute(key, data);
+    }
 }
