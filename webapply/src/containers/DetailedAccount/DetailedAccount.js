@@ -6,21 +6,22 @@ import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher/Isla
 import { AccountBenefits } from "./AccountBenefits";
 import { AccountingSoftware } from "./AccountingSoftware";
 
-import { getApplicationInfo } from "../../store/selectors/appConfig";
+import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 
 export const DetailedAccount = () => {
-  const { accountType, islamicBanking } = useSelector(getApplicationInfo);
+  const isIslamicBaning = useSelector(getIsIslamicBanking);
+  const accountType = useSelector(getAccountType);
 
   return (
     <>
       <div className="hide-on-mobile">
         <IslamicBankingSwitcher />
       </div>
-      <VerticalPaginationWrapper video={getVideoByAccountType(accountType, islamicBanking)}>
+      <VerticalPaginationWrapper video={getVideoByAccountType(accountType, isIslamicBaning)}>
         <div />
-        <AccountBenefits accountType={accountType} />
-        <AccountingSoftware accountType={accountType} />
+        <AccountBenefits />
+        <AccountingSoftware />
       </VerticalPaginationWrapper>
     </>
   );

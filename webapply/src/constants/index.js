@@ -47,8 +47,8 @@ export const submitApplication = {
   needCommunicationLabel: "I want to receive marketing and promotional communication from RakBank"
 };
 
-export const accountsNames = {
-  starter: "RAKstarter",
+export const accountNames = {
+  starter: "RAKStarter",
   currentAccount: "Current Account",
   elite: "RAKelite"
 };
@@ -129,3 +129,5 @@ export const screeningStatusDefault = {
   text:
     "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
 };
+
+export const DATE_FORMAT = "yyyy-MM-dd";

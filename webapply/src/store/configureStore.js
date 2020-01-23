@@ -2,6 +2,9 @@ import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import createReduxWaitForMiddleware from "redux-wait-for-action";
 import { routerMiddleware } from "connected-react-router";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import createFilter from "redux-persist-transform-filter";
 
 import reducers from "./reducers";
 import rootSaga from "./sagas";
@@ -14,8 +17,20 @@ export const configureStore = (initialState, history) => {
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 45 })) ||
     compose;
 
+  const persistConfig = {
+    key: "root",
+    storage,
+    whitelist: ["appConfig"],
+    transforms: [
+      createFilter("appConfig", [
+        "prospect.applicationInfo.accountType",
+        "prospect.applicationInfo.islamicBanking"
+      ])
+    ]
+  };
+
   const store = createStore(
-    reducers(history),
+    persistReducer(persistConfig, reducers(history)),
     initialState,
     composeEnhancers(
       applyMiddleware(sagaMiddleware, routerMiddleware(history), createReduxWaitForMiddleware())

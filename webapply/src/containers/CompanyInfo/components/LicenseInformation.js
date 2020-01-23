@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
-import differenceInYears from "date-fns/differenceInYears";
+import { differenceInYears, format, isValid } from "date-fns";
 
 import {
   Input,
@@ -15,7 +15,7 @@ import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
-import { UAE } from "../../../constants";
+import { UAE, DATE_FORMAT } from "../../../constants";
 
 const initialValues = {
   licenseNumber: "",
@@ -40,6 +40,9 @@ const licenseInformationSchema = Yup.object({
     .max(999, "Must be less than 1000")
     .integer("Must be an integer")
 });
+
+const changeDateProspectHandler = (_, value, path) =>
+  isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
 export const LicenseInformation = ({ handleContinue }) => (
   <Formik
@@ -72,6 +75,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
+              changeProspect={changeDateProspectHandler}
             />
           </Grid>
         </Grid>
@@ -114,6 +118,7 @@ export const LicenseInformation = ({ handleContinue }) => (
                 setFieldValue("dateOfIncorporation", value);
                 setFieldValue("yearsInBusiness", differenceInYears(new Date(), value));
               }}
+              changeProspect={changeDateProspectHandler}
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}

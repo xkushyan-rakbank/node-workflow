@@ -24,6 +24,10 @@ export const getSendProspectToAPIInfo = state => state.sendProspectToAPI || {};
 
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
+export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
+
+export const getAccountType = state => getApplicationInfo(state).accountType;
+
 export const getProspectId = state => getGeneralInfo(state).prospectId;
 
 export const getProceedStatus = state => state.applicationStatus.isProceed;
@@ -81,3 +85,13 @@ export const getRequiredDocsCount = createGetDocsCountSelector();
 export const getProspectErrorMessage = state => state.appConfig.prospectError;
 
 export const getLoading = state => state.appConfig.loading;
+
+export const getAuthToken = state => state.appConfig.authorizationToken;
+
+export const getAuthorizationHeader = state => {
+  const authToken = getAuthToken(state);
+
+  return {
+    headers: { Authorization: `Bearer ${authToken}` }
+  };
+};

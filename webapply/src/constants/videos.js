@@ -26,46 +26,46 @@ import accountComparisonPoster from "../assets/images/videoPosters/Account compa
 import accountComparisonVideo from "../assets/videos/Accountcomparison.webm";
 import accountComparisonVideoMP4 from "../assets/videos/Accountcomparison.mp4";
 
-import { accountsNames } from "./index";
+import { accountNames } from "./index";
 
 export const videos = [
   {
-    accountType: accountsNames.starter,
+    accountType: accountNames.starter,
     isIslamic: false,
     mp4: rakStarterVideo,
     webm: rakStarterVideoWebm,
     poster: rakStarterVideoPoster
   },
   {
-    accountType: accountsNames.starter,
+    accountType: accountNames.starter,
     isIslamic: true,
     mp4: rakStarterIslamicVideo,
     webm: rakStarterIslamicVideoWebm,
     poster: rakStarterIslamicVideoPoster
   },
   {
-    accountType: accountsNames.currentAccount,
+    accountType: accountNames.currentAccount,
     isIslamic: false,
     mp4: currentAccountVideo,
     webm: currentAccountVideoWebm,
     poster: currentAccountVideoPoster
   },
   {
-    accountType: accountsNames.currentAccount,
+    accountType: accountNames.currentAccount,
     isIslamic: true,
     mp4: currentAccountIslamicVideo,
     webm: currentAccountIslamicVideoWebm,
     poster: currentAccountIslamicVideoPoster
   },
   {
-    accountType: accountsNames.elite,
+    accountType: accountNames.elite,
     isIslamic: false,
     mp4: rakEliteVideo,
     webm: rakEliteVideoWebm,
     poster: rakEliteVideoPoster
   },
   {
-    accountType: accountsNames.elite,
+    accountType: accountNames.elite,
     isIslamic: true,
     mp4: rakEliteIslamicVideo,
     webm: rakEliteIslamicVideoWebm,

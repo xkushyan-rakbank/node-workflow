@@ -34,20 +34,22 @@ export const authentication = {
 };
 
 export const otp = {
-  generate: payload => {
+  generate: (payload, headers) => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
+      ...headers,
       data: {
         action: OTP_ACTION_GENERATE,
         ...payload
       }
     });
   },
-  verify: payload => {
+  verify: (payload, headers) => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
+      ...headers,
       data: {
         action: OTP_ACTION_VERIFY,
         ...payload
@@ -57,24 +59,27 @@ export const otp = {
 };
 
 export const prospect = {
-  create: data => {
+  create: (data, headers) => {
     return httpClient.request({
       url: buildURI("createProspectUri"),
       method: "POST",
+      ...headers,
       data
     });
   },
-  update: (prospectId, data) => {
+  update: (prospectId, data, headers) => {
     return httpClient.request({
       url: buildURI("updateProspectUri", prospectId),
       method: "PUT",
+      ...headers,
       data
     });
   },
-  get: prospectId => {
+  get: (prospectId, headers) => {
     return httpClient.request({
       url: buildURI("getProspectUri", prospectId),
-      method: "GET"
+      method: "GET",
+      ...headers
     });
   }
 };
@@ -90,19 +95,21 @@ export const retrieveApplicantInfos = {
 };
 
 export const getProspectDocuments = {
-  retriveDocuments: prospectId => {
+  retriveDocuments: (prospectId, headers) => {
     return httpClient.request({
       url: buildURI("getProspectDocumentsUri", prospectId),
-      method: "GET"
+      method: "GET",
+      ...headers
     });
   }
 };
 
 export const search = {
-  searchApplication: data => {
+  searchApplication: (data, headers) => {
     return httpClient.request({
       url: buildURI("searchProspectUri"),
       method: "POST",
+      ...headers,
       data
     });
   }
@@ -117,10 +124,11 @@ export const screening = {
 };
 
 export const uploadProspectDocument = {
-  send: ({ data, prospectId, source, onUploadProgress }) => {
+  send: ({ data, prospectId, source, onUploadProgress, headers }) => {
     return uploadClient.request({
       url: buildURI("docUploaderUri", prospectId),
       method: "POST",
+      ...headers,
       data,
       cancelToken: source.token,
       onUploadProgress
