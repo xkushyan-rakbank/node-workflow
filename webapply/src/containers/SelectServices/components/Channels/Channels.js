@@ -105,7 +105,10 @@ export const ChannelsComponent = ({
             isLoadDefaultValueFromStore={false}
             inputProps={{ tabIndex: 0 }}
             contextualHelpText="Business debit card will be send to the signatory's preferred mailing address"
-            contextualHelpProps={{ isDisableHoverListener: false }}
+            contextualHelpProps={{
+              isDisableHoverListener: false,
+              isShowContextualOnDisablEl: true
+            }}
           />
 
           {isHasSignatories && values.debitCardApplied && (
@@ -127,7 +130,10 @@ export const ChannelsComponent = ({
             isLoadDefaultValueFromStore={false}
             inputProps={{ tabIndex: 0 }}
             contextualHelpText="Cheque book will be printed with the company name given and will be send to the Company address"
-            contextualHelpProps={{ isDisableHoverListener: false }}
+            contextualHelpProps={{
+              isDisableHoverListener: false,
+              isShowContextualOnDisablEl: true
+            }}
           />
 
           <Divider />
