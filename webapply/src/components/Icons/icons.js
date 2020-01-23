@@ -18,6 +18,7 @@ import { ReactComponent as ValueAddedServices } from "../../assets/icons/value_a
 import { ReactComponent as QuestionMarkGray } from "../../assets/icons/question_mark_grey.svg";
 import { ReactComponent as Info } from "../../assets/icons/info.svg";
 import { ReactComponent as InfoYellow } from "../../assets/icons/infoYellow.svg";
+import { ReactComponent as InfoRed } from "../../assets/icons/infoRed.svg";
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 import { ReactComponent as Error } from "../../assets/images/error.svg";
 
@@ -42,6 +43,7 @@ export const iconComponents = {
   questionMarkGray: QuestionMarkGray,
   info: Info,
   infoYellow: InfoYellow,
+  infoRed: InfoRed,
   arrowDown: ArrowDown,
   error: Error
 };
@@ -67,6 +69,7 @@ export const ICONS = {
   questionMarkGray: "questionMarkGray",
   info: "info",
   infoYellow: "infoYellow",
+  infoRed: "infoRed",
   arrowDown: "arrowDown",
   error: "error"
 };
