@@ -45,19 +45,23 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
+    let pathname = "/sme/";
+    let accountType;
+    let isIslamicBanking;
     if (typeof window !== "undefined") {
       window.addEventListener("beforeunload", () => {
         localStorage.removeItem("videoAlreadyPlayed");
       });
 
-      const pathname = window.location.pathname;
-      const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+      pathname = window.location.pathname;
       const searchParams = new URLSearchParams(window.location.search);
-      const queryAccountType = searchParams.get(queryParams.PRODUCT);
-      const queryIsIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
-      receiveAppConfig(segment, queryAccountType, queryIsIslamicBanking);
+      accountType = searchParams.get(queryParams.PRODUCT);
+      isIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
     }
-    receiveAppConfig("/sme/");
+
+    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+
+    receiveAppConfig(segment, accountType, isIslamicBanking);
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
 
