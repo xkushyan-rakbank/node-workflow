@@ -273,13 +273,6 @@ public class WebApplyController {
         return new ResponseEntity<JsonNode>(response, headers, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/datalist", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<JsonNode> proxiDatalist(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                                                  @RequestParam(required = false, defaultValue = "") String segment) {
-        return getDatalistJSON(segment);
-    }
-
     @GetMapping(value = "/logfile/names")
     public ResponseEntity loadLogs() {
         List<String> logFileNameList = logFileService.getLogFileNameList();
@@ -320,6 +313,7 @@ public class WebApplyController {
         String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
         JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
         initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
+        initStateJSON.put("datalist", datalist);
         initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
         initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
         initStateJSON.put("rakValuePlusReadMoreUrl", baseUrls.get("RAKvaluePlusReadMoreUrl").asText());

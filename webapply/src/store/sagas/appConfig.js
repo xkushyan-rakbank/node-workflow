@@ -58,7 +58,6 @@ function* receiveAppConfigSaga() {
       }
     }
 
-    const dataListResponse = yield call(dataList.get, segment);
     const newConfig = cloneDeep(response.data);
     const prospectModel = cloneDeep(newConfig.prospect);
     if (newConfig.prospect) {
@@ -71,10 +70,6 @@ function* receiveAppConfigSaga() {
       newConfig.prospect.applicationInfo.islamicBanking = isIslamicBanking;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
-    }
-
-    if (dataListResponse) {
-      newConfig.dataList = dataListResponse.data;
     }
 
     yield put(saveProspectModel(prospectModel));
