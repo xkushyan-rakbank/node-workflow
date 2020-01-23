@@ -17,11 +17,13 @@ const initialValues = {
 
 const industrySchema = Yup.object({
   industry: Yup.array()
+    .of(Yup.string().required(getRequiredMessage("Industry")))
     .required(getRequiredMessage("Industry"))
     .max(12, "Maximum 12 options allowed"),
   subCategory: Yup.array().when("industry", {
     is: industry => !!industry,
     then: Yup.array()
+      .of(Yup.string().required(getRequiredMessage("Sub-category")))
       .required(getRequiredMessage("Sub-category"))
       .max(12, "Maximum 12 options allowed")
   })
