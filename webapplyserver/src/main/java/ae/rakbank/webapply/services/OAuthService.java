@@ -52,7 +52,6 @@ public class OAuthService {
 		JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
 		oAuthUri = appConfigJSON.get("OAuthURIs");
 		oAuthBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("OAuthBaseUrl").asText();
-
 		oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
 	}
 
@@ -66,11 +65,35 @@ public class OAuthService {
 		return true;
 	}
 
-	@SuppressWarnings("unchecked")
+	public boolean isAccessTokenValid(String token) {
+		return isAccessTokenValid(token, null, false);
+	}
+
+	public boolean isAccessTokenValid(String token, String refreshToken) {
+		return isAccessTokenValid(token, refreshToken, false);
+	}
+
+	public boolean isAccessTokenValid(String token, String refreshToken, Boolean force) {
+		if (isAccessTokenExpired()) {
+			return false;
+		}
+		else {
+			ResponseEntity<JsonNode> response = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
+			if (response != null && response.getBody().get("access_token").asText().equals(token)) {
+				return true;
+			}
+			else if ((refreshToken != null && response.getBody().get("refresh_token").asText().equals(refreshToken)) || force) {
+				getOAuthToken();
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
 	public ResponseEntity<JsonNode> getOAuthToken() {
-
 		logger.info("Begin getOAuthToken()");
-
 		String methodName = "getOAuthToken()";
 
 		ResponseEntity<JsonNode> response = null;
@@ -94,21 +117,21 @@ public class OAuthService {
 				HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
 
 				String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
-
 				try {
-
 					logger.info(String.format("Invoke API from %s method, Endpoint=[%s], retryCount=%s, request=[%s] ",
 							methodName, url, retryCounter, request.getBody().toString()));
 
 					try {
 						response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
-					} catch (HttpClientErrorException e) {
+					}
+					catch (HttpClientErrorException e) {
 						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
 								e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 						ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
 								e.getResponseBodyAsString(), e);
 						return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
-					} catch (HttpServerErrorException e) {
+					}
+					catch (HttpServerErrorException e) {
 						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
 								e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 						ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
@@ -124,6 +147,7 @@ public class OAuthService {
 						logger.info(String.format(
 								"API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s], retryCount=%s",
 								methodName, url, response.getStatusCodeValue(), retryCounter));
+
 						// minus 10 seconds to prevent access_token expire error while calling the API
 						int seconds = response.getBody().get("expires_in").asInt() - 10;
 						LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
@@ -132,32 +156,32 @@ public class OAuthService {
 						logger.info("New access_token expires on " + tokenExpiryDateTime.toString());
 
 						servletContext.setAttribute("OAuthTokenResponse", response);
-
 						break;
-					} else {
+					}
+					else {
 						logger.error(String.format(
 								"API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s], retryCount=%s",
 								methodName, url, response.getStatusCodeValue(), retryCounter));
 					}
 
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					logger.error("error occured while invoking oauth api", e);
 				}
 
-			}
-
+			} // end while
 		}
 
 		return (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
-
 	}
+
 
 	private MultiValueMap<String, String> buildOAuthRequest(ObjectMapper objectMapper) {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 
 		map.add("grant_type", oAuthConfigs.get("OAuthGrantType").asText());
 		map.add("client_id", oAuthConfigs.get("OAuthClientId").asText());
-		map.add("client_secret", oAuthConfigs.get("OAuthCleintSecret").asText());
+		map.add("client_secret", oAuthConfigs.get("OAuthClientSecret").asText());
 		map.add("bank_id", oAuthConfigs.get("OAuthBankId").asText());
 		map.add("channel_id", oAuthConfigs.get("OAuthChannelId").asText());
 		map.add("username", oAuthConfigs.get("OAuthUsername").asText());

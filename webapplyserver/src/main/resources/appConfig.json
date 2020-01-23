@@ -90,7 +90,7 @@
 		"local": {
 			"OAuthGrantType": "password",
 			"OAuthClientId": "0e50fbe72ae115ae5812",
-			"OAuthCleintSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
+			"OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
 			"OAuthBankId": "RAK",
 			"OAuthChannelId": "I",
 			"OAuthUsername": "RAK.VTUSER",
@@ -106,7 +106,7 @@
 		"dev": {
 			"OAuthGrantType": "password",
 			"OAuthClientId": "0e50fbe72ae115ae5812",
-			"OAuthCleintSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
+			"OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
 			"OAuthBankId": "RAK",
 			"OAuthChannelId": "I",
 			"OAuthUsername": "RAK.VTUSER",
@@ -122,7 +122,7 @@
 		"uat": {
 			"OAuthGrantType": "password",
 			"OAuthClientId": "0e50fbe72ae115ae5812",
-			"OAuthCleintSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
+			"OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
 			"OAuthBankId": "RAK",
 			"OAuthChannelId": "I",
 			"OAuthUsername": "RAK.VTUSER",
@@ -138,7 +138,7 @@
 		"prod": {
 			"OAuthGrantType": "password",
 			"OAuthClientId": "0e50fbe72ae115ae5812",
-			"OAuthCleintSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
+			"OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
 			"OAuthBankId": "RAK",
 			"OAuthChannelId": "I",
 			"OAuthUsername": "RAK.VTUSER",
