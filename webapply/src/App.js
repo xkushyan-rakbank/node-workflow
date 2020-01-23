@@ -45,10 +45,6 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
-    if (history.location.pathname === routes.applicantInfo) {
-      history.push(routes.detailedAccount);
-    }
-
     let pathname = "/sme/";
     let accountType;
     let isIslamicBanking;
@@ -68,6 +64,12 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
     receiveAppConfig(segment, accountType, isIslamicBanking);
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
+
+  useEffect(() => {
+    if (history.location.pathname === routes.applicantInfo) {
+      history.push(routes.detailedAccount);
+    }
+  }, []);
 
   return (
     <MuiThemeProvider theme={theme}>
