@@ -1,11 +1,12 @@
 import { connect } from "react-redux";
-import get from "lodash/get";
 
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { FormNavigationComponent } from "./FormNavigation";
+import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 
 const mapStateToProps = state => ({
-  applicationInfo: get(state, "appConfig.prospect.applicationInfo", {}),
+  islamicBanking: getIsIslamicBanking(state),
+  accountType: getAccountType(state),
   isLogin: checkLoginStatus(state)
 });
 

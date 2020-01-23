@@ -26,11 +26,7 @@ const accountDetailsSchema = Yup.object({
   receiveInterest: Yup.bool()
 });
 
-export const AccountDetailsComponent = ({
-  goToNext,
-  applicationInfo: { islamicBanking },
-  updateProspect
-}) => {
+export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspect }) => {
   const classes = useStyles();
 
   return (

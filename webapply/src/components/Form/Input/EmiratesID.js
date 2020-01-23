@@ -4,7 +4,8 @@ import MaskedInput from "react-text-mask";
 import { Input } from "./Input";
 import { ContexualHelp } from "../../Notifications";
 
-// eslint-disable-next-line prettier/prettier
+// eslint-disable-next-line
+// prettier-ignore
 const MASK = ["7","8","4","-",/\d/,/\d/,/\d/,/\d/,"-",/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,"-",/\d/];
 
 const TextMask = ({ inputRef, ...rest }) => (

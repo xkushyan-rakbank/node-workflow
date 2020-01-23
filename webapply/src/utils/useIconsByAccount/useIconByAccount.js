@@ -1,19 +1,21 @@
 import { useSelector } from "react-redux";
 
 import { islamicIconsSet, conventionalIconsSet, eliteIconsSet } from "./constants";
-import { accountsNames } from "../../constants/index";
+import { accountNames } from "../../constants";
+import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 
 export const useIconsByAccount = () => {
-  const applicationInfo = useSelector(state => state.appConfig.prospect.applicationInfo) || {};
+  const accountType = useSelector(getAccountType);
+  const isIslamicBanking = useSelector(getIsIslamicBanking);
 
-  if (applicationInfo.islamicBanking && applicationInfo.accountType !== accountsNames.elite) {
+  if (isIslamicBanking && accountType !== accountNames.elite) {
     return islamicIconsSet;
   }
 
   if (
-    applicationInfo.accountType === accountsNames.starter ||
-    applicationInfo.accountType === accountsNames.currentAccount ||
-    applicationInfo.accountType === ""
+    accountType === accountNames.starter ||
+    accountType === accountNames.currentAccount ||
+    accountType === ""
   ) {
     return conventionalIconsSet;
   }

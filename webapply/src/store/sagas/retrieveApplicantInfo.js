@@ -30,6 +30,7 @@ function* getProspectIdInfo({ payload }) {
     const authToken = getAuthToken(state);
     const response = yield call(prospect.get, payload, authToken);
     const config = { prospect: response.data };
+
     yield put(setConfig(config));
     yield put(displayScreenBasedOnViewId());
   } catch (error) {

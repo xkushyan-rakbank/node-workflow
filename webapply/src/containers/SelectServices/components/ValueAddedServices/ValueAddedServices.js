@@ -6,7 +6,7 @@ import {
   rakValuePackagePlusName
 } from "./ExpandedOptionsCards/ExpandedDetailedOptionsCard";
 import { rakValuesList } from "./ExpandedOptionsCards/constants";
-import { accountsNames } from "../../../../constants/index";
+import { accountNames } from "../../../../constants/index";
 
 import { useStyles } from "./styled";
 
@@ -23,7 +23,7 @@ const getButtonText = ({ _id, options, accountCurrencies, rakValuePackage, accou
     return options.notSelectedLabel;
   }
 
-  if (accountType === accountsNames.starter) {
+  if (accountType === accountNames.starter) {
     if (_id === rakValuePackagePlusName) {
       return options.buttonLabel;
     }
@@ -47,14 +47,14 @@ export const ValueAddedServicesComponent = ({
   const handleSelectValue = useCallback(
     selectedService => {
       const serviceName =
-        value === selectedService && accountType !== accountsNames.starter ? "" : selectedService;
+        value === selectedService && accountType !== accountNames.starter ? "" : selectedService;
       updateProspect({ [name]: serviceName });
     },
     [value, accountType, name, updateProspect]
   );
 
   useEffect(() => {
-    updateProspect({ [name]: accountType === accountsNames.starter ? "RAKvalue PLUS" : "" });
+    updateProspect({ [name]: accountType === accountNames.starter ? "RAKvalue PLUS" : "" });
   }, [accountType, name, updateProspect]);
   return (
     <>
