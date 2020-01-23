@@ -38,7 +38,7 @@ const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => 
           >
             <img src={dotsBg} className={classes.docCheckedIcon} alt="background" />
 
-            <span className="info">Your AED account number</span>
+            <span className="info">{`Your ${accountData.currency} account number`}</span>
             <div className="mainInfo">
               <span className="number">{accountData.accountNo}</span>
               <span className="typeAccount">{accountData.currency}</span>
