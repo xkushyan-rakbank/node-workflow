@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback, useMemo } from "react";
 import nanoid from "nanoid";
 import * as Yup from "yup";
-import isEmpty from "lodash/isEmpty";
 
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 import companyIconSvg from "../../../assets/icons/file.png";
@@ -37,7 +36,7 @@ export const UploadDocuments = ({
   const inputEl = useRef(null);
   const documentKey = useMemo(() => nanoid(), []);
   const isUploaded = document.uploadStatus === "Uploaded";
-  const isUploadError = !isEmpty(uploadErrorMessage) && uploadErrorMessage[documentKey];
+  const isUploadError = Object.keys(uploadErrorMessage).length && uploadErrorMessage[documentKey];
 
   const fileUploadClick = event => (event.target.value = null);
 

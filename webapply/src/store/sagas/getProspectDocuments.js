@@ -18,7 +18,8 @@ import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClien
 import {
   getProspectId,
   getProspectDocuments as getDocuments,
-  getAuthorizationHeader
+  getAuthorizationHeader,
+  getUploadDocumentsErrors
 } from "../selectors/appConfig";
 import {
   RETRIEVE_DOC_UPLOADER,
@@ -27,8 +28,7 @@ import {
   DELETE_EXTRA_DOC_UPLOAD_SUCCESS,
   uploadFilesProgress,
   CANCEL_DOC_UPLOAD,
-  uploadFilesFail,
-  uploadFilesSuccess
+  uploadFilesFail
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
@@ -119,8 +119,14 @@ function* uploadDocumentsBgSync({
 
   try {
     const state = yield select();
+    const config = cloneDeep(state.appConfig);
     const headers = getAuthorizationHeader(state);
     const prospectId = getProspectId(state) || "COSME0017";
+    const uploadDocError = getUploadDocumentsErrors(state);
+
+    if (uploadDocError[documentKey]) {
+      uploadDocError[documentKey] = null;
+    }
 
     const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, headers);
 
@@ -128,7 +134,6 @@ function* uploadDocumentsBgSync({
 
     const response = yield call(() => uploadPromise);
 
-    const config = cloneDeep(state.appConfig);
     const documents = config.prospect.documents;
     const fileName = get(response, "data.fileName", "");
     const additionalProps = { ...docProps, fileName };
@@ -148,9 +153,8 @@ function* uploadDocumentsBgSync({
     }
 
     yield put(setConfig(config));
-    yield put(uploadFilesSuccess({ [documentKey]: null }));
   } catch (error) {
-    yield put(uploadFilesFail({ [documentKey]: error }));
+    yield put(uploadFilesFail({ [documentKey]: { error } }));
   } finally {
     if (yield cancelled()) {
       source.cancel();

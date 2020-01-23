@@ -25,7 +25,7 @@ const mapStateToProps = state => ({
   uploadedDocsCount: getUploadedDocsCount(state),
   requiredDocsCount: getRequiredDocsCount(state),
   progress: state.uploadDocuments.progress,
-  uploadErrorMessage: state.uploadDocuments.error
+  uploadErrorMessage: state.uploadDocuments.uploadErrors
 });
 
 const mapDispatchToProps = {

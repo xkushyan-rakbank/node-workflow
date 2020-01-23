@@ -95,3 +95,5 @@ export const getAuthorizationHeader = state => {
     headers: { Authorization: `Bearer ${authToken}` }
   };
 };
+
+export const getUploadDocumentsErrors = state => state.uploadDocuments.uploadErrors;
