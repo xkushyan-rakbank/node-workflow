@@ -9,15 +9,19 @@ import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../c
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { MAX_MOTHERS_MAIDEN_NAME_LENGTH } from "../../constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
+import {
+  getInvalidMessage,
+  getRequiredMessage
+} from "../../../../../../utils/getValidationMessage";
 
 export const signatoryPersonalInformationSchema = Yup.object().shape({
-  maritalStatus: Yup.string().required("You need to provide marital status"),
+  maritalStatus: Yup.string().required(getRequiredMessage("Marital Status")),
   mothersMaidenName: Yup.string()
-    .required("You need to provide mothers maiden name")
-    .matches(MOTHERS_MAIDEN_NAME_REGEX, "Invalid mothers maiden name value"),
+    .required(getRequiredMessage("Mother's maiden name"))
+    .matches(MOTHERS_MAIDEN_NAME_REGEX, getInvalidMessage("Mother's maiden name")),
   maritalStatusOthers: Yup.string().when("maritalStatus", {
     is: value => value === OTHER_OPTION_CODE,
-    then: Yup.string().required("You need to specify marital status")
+    then: Yup.string().required(getRequiredMessage("Other"))
   })
 });
 

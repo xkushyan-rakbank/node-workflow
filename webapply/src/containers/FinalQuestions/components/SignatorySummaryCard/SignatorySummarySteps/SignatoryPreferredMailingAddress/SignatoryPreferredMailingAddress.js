@@ -16,22 +16,29 @@ import {
   Checkbox
 } from "../../../../../../components/Form";
 import { DEFAULT_SIGNATORY_COUNTRY } from "./constants";
-import { MAX_PO_BOX_NUMBER_LENGTH } from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
+import {
+  MAX_OFFICE_NUMBER_LENGTH,
+  MAX_PO_BOX_NUMBER_LENGTH
+} from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
+import {
+  getRequiredMessage,
+  getInvalidMessage
+} from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
 const signatoryPreferredMailingAddressSchema = Yup.object().shape({
   addressLine2: Yup.string()
-    .matches(ADDRESS_REGEX, "Invalid address value")
+    .matches(ADDRESS_REGEX, getInvalidMessage("Street / Location"))
     .max(50, "Maximum 50 characters allowed"),
   addressLine1: Yup.string()
-    .required("You need to provide address details")
-    .matches(ADDRESS_NUMBER_REGEX, "Invalid address value"),
+    .required(getRequiredMessage("Flat / Villa / Building"))
+    .matches(ADDRESS_NUMBER_REGEX, getInvalidMessage("Flat / Villa / Building")),
   poBox: Yup.string()
-    .required("You need to provide po box number")
-    .matches(ALPHANUMERIC_REGEX, "Invalid PO box number"),
-  emirateCity: Yup.string().required("You need to provide emirate city")
+    .required(getRequiredMessage("PO Box Number"))
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
+  emirateCity: Yup.string().required(getRequiredMessage("Emirate"))
 });
 
 export const SignatoryPreferredMailingAddressComponent = ({
@@ -99,7 +106,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   placeholder="Flat / Villa / Building"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
                   }}
                 />
               </Grid>
@@ -112,7 +119,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   placeholder="Street / Location"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
                   }}
                 />
                 <Field
