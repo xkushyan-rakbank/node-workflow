@@ -294,14 +294,6 @@ public class WebApplyController {
         return new ResponseEntity<JsonNode>(webApplyConfig, headers, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/datalist", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<JsonNode> proxiDatalist(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                                                  @RequestParam(required = false, defaultValue = "") String segment) {
-        return getDatalistJSON(segment, httpRequest.getHeader("Authorization"));
-    }
-
-
     @PostMapping(value = "/usertypes/{segment}/prospects", produces = "application/json", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
@@ -942,13 +934,13 @@ public class WebApplyController {
         JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
         initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
         initStateJSON.put("authorizationToken", authToken);
+        initStateJSON.put("datalist", datalist);
         initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
         initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
         initStateJSON.put("rakValuePlusReadMoreUrl", baseUrls.get("RAKvaluePlusReadMoreUrl").asText());
         initStateJSON.put("rakValueMaxReadMoreUrl", baseUrls.get("RAKvalueMaxReadMoreUrl").asText());
         initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
         initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
-        initStateJSON.put("authorizationToken", authToken);
 
         String publicKey = fileHelper.getRSAPublicKey();
 
