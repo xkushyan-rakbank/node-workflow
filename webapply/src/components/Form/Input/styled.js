@@ -83,5 +83,11 @@ export const useStyles = makeStyles({
     "&::placeholder": {
       color: "#86868b"
     }
+  },
+  iePlaceholder: {
+    position: "absolute",
+    color: "#666666",
+    top: "16px",
+    left: "16px"
   }
 });
