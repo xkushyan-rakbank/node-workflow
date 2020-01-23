@@ -9,6 +9,9 @@ export const useStyles = makeStyles({
     "& span": {
       display: "block"
     },
+    "& span:first-child": {
+      fontWeight: "600"
+    },
     "& span + span": {
       fontSize: "12px",
       color: "#888",
