@@ -1,4 +1,4 @@
-import { accountsNames } from "../../../../constants";
+import { accountNames } from "../../../../constants";
 import checkIc from "../../../../assets/icons/check.svg";
 
 export const accountsDataRows = [
@@ -49,17 +49,17 @@ export const accountsDataRows = [
 export const accountTypes = {
   starter: {
     id: "starter",
-    name: accountsNames.starter,
+    name: accountNames.starter,
     position: 2
   },
   currentAccount: {
     id: "currentAccount",
-    name: accountsNames.currentAccount,
+    name: accountNames.currentAccount,
     position: 3
   },
   elite: {
     id: "elite",
-    name: accountsNames.elite,
+    name: accountNames.elite,
     position: 4
   }
 };

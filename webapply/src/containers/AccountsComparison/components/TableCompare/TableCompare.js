@@ -8,12 +8,7 @@ import { sizes, accountTypes } from "./constants";
 import { useStyles } from "./styled";
 import routes from "../../../../routes";
 
-export const TableCompareComponent = ({
-  history,
-  updateProspect,
-  updateAccountType,
-  selectedAccount
-}) => {
+export const TableCompareComponent = ({ history, updateProspect, selectedAccount }) => {
   const { INITIAL_OFFSET, SELECTED_ELEM_WIDTH, OFFSET } = sizes;
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedAccountContainerWidth, setSelectedAccountContainerWidth] = useState(
@@ -73,7 +68,6 @@ export const TableCompareComponent = ({
   }
 
   const handleSelectAccount = accountType => {
-    updateAccountType(accountType);
     updateProspect({ "prospect.applicationInfo.accountType": accountType });
     history.push(routes.detailedAccount);
   };

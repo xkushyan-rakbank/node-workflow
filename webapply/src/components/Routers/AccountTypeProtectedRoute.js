@@ -3,10 +3,10 @@ import { Redirect, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import routes from "../../routes";
-import { getSelectedAccountInfo } from "../../store/selectors/selectedAccountInfo";
+import { getAccountType } from "../../store/selectors/appConfig";
 
 export const AccountTypeProtectedRoute = ({ component: Component, render, ...rest }) => {
-  const { accountType } = useSelector(getSelectedAccountInfo);
+  const accountType = useSelector(getAccountType);
 
   return (
     <Route

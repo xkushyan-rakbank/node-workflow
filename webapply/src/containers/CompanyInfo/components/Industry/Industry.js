@@ -3,7 +3,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
-import { SelectAutocomplete, AutoSaveField as Field } from "../../../../components/Form";
+import { AutoSaveField as Field } from "../../../../components/Form";
+import { SearchableSelectAutocomplete } from "./SearchableSelectAutocomplete";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import { useStyles } from "./styled";
@@ -25,6 +26,14 @@ const industrySchema = Yup.object({
   })
 });
 
+const validateSearchValue = searchValue => {
+  if (searchValue && searchValue.length > 12) {
+    return "Max length of search value is 12";
+  }
+
+  return "";
+};
+
 export const Industry = ({ handleContinue }) => {
   const classes = useStyles();
 
@@ -45,7 +54,8 @@ export const Industry = ({ handleContinue }) => {
                 label="Industry"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
                 datalistId="industry"
-                component={SelectAutocomplete}
+                validateSearchField={validateSearchValue}
+                component={SearchableSelectAutocomplete}
                 contextualHelpText="This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. Example: if business / commercial / licensed activity is 'E Commerce', please select industry as 'Service' & sub-industry as 'Computer & IT Industry' "
                 contextualHelpProps={{ isDisableHoverListener: false }}
                 onChange={selectedValue => {
@@ -65,7 +75,8 @@ export const Industry = ({ handleContinue }) => {
                 name="subCategory"
                 label="Industry sub-category"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
-                component={SelectAutocomplete}
+                validateSearchField={validateSearchValue}
+                component={SearchableSelectAutocomplete}
                 datalistId="industry"
                 filterOptions={options =>
                   options

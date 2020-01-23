@@ -18,14 +18,19 @@ import {
   UPDATE_SAVE_TYPE,
   saveProspectModel
 } from "../actions/appConfig";
+import { updateStakeholdersIds } from "../actions/stakeholders";
+import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
+
 import { config, dataList } from "../../api/apiClient";
 import { history } from "./..";
-import { accountsNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
-import { getEndpoints, getApplicationInfo } from "../selectors/appConfig";
-import { getSelectedAccountInfo } from "../selectors/selectedAccountInfo";
-import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
+import { accountNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
+import {
+  getEndpoints,
+  getApplicationInfo,
+  getIsIslamicBanking,
+  getAccountType
+} from "../selectors/appConfig";
 import routes from "./../../routes";
-import { updateStakeholdersIds } from "../actions/stakeholders";
 
 function* receiveAppConfigSaga() {
   try {
@@ -39,14 +44,15 @@ function* receiveAppConfigSaga() {
         ? state.appConfig.searchInfo.segment
         : ""
       : pathname.substring(1, pathname.lastIndexOf("/"));
-    const { accountType, islamicBanking } = getSelectedAccountInfo(state);
+
+    const isIslamicBanking = getIsIslamicBanking(state);
+    const accountType = getAccountType(state);
 
     if (!isEmpty(endpoints)) {
-      const product = getApplicationInfo.accountType;
-      response = yield call(config.load, product, segment);
+      response = yield call(config.load, accountType, segment);
     } else {
       if (process.env.NODE_ENV === "development") {
-        response = yield call(config.load, accountsNames.starter, segment);
+        response = yield call(config.load, accountNames.starter, segment);
       } else {
         response = yield call(config.load, null, segment);
       }
@@ -62,7 +68,7 @@ function* receiveAppConfigSaga() {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
       newConfig.prospect.applicationInfo.accountType = accountType;
-      newConfig.prospect.applicationInfo.islamicBanking = islamicBanking;
+      newConfig.prospect.applicationInfo.islamicBanking = isIslamicBanking;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }

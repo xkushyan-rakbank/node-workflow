@@ -6,7 +6,7 @@ import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
-import { accountsNames } from "../../constants";
+import { accountNames } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -49,7 +49,7 @@ export const SelectServicesComponent = ({
           handleClick={setNextStep}
           label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
           justify="flex-end"
-          disabled={step <= STEP_3 || (accountType === accountsNames.starter && !rakValuePackage)}
+          disabled={step <= STEP_3 || (accountType === accountNames.starter && !rakValuePackage)}
         />
       </div>
     </>

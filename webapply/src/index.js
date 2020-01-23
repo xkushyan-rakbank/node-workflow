@@ -5,17 +5,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import TagManager from "react-gtm-module";
+import { PersistGate } from "redux-persist/integration/react";
 
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { store } from "./store";
+import { persistor, store } from "./store";
 import { tagManagerArgs } from "./constants/gtm";
 
 TagManager.initialize(tagManagerArgs);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );
