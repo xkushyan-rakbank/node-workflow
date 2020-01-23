@@ -21,6 +21,7 @@ import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 
 import { theme } from "./theme";
 import "./App.scss";
+import { queryParams } from "./constants";
 
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
@@ -44,12 +45,23 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
+    let pathname = "/sme/";
+    let accountType;
+    let isIslamicBanking;
     if (typeof window !== "undefined") {
       window.addEventListener("beforeunload", () => {
         localStorage.removeItem("videoAlreadyPlayed");
       });
+
+      pathname = window.location.pathname;
+      const searchParams = new URLSearchParams(window.location.search);
+      accountType = searchParams.get(queryParams.PRODUCT);
+      isIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
     }
-    receiveAppConfig();
+
+    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+
+    receiveAppConfig(segment, accountType, isIslamicBanking);
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
 

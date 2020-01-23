@@ -132,3 +132,10 @@ export const screeningStatusDefault = {
 };
 
 export const DATE_FORMAT = "yyyy-MM-dd";
+
+export const queryParams = {
+  PRODUCT: "product",
+  IS_ISLAMIC: "type"
+};
+export const ISLAMIC_BANK = "RAKislamic";
+export const CONVENTIONAL_BANK = "Conventional";
