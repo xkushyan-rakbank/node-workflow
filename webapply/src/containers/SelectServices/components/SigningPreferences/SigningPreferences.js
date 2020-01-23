@@ -40,7 +40,9 @@ const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
 const MAX_RECONFIRMING_FULL_NAME_LENGTH = 79;
 
 const signingPreferencesSchema = Yup.object({
-  accountSigningType: Yup.string().required(getRequiredNotTextInputMessage("Signing transactions")),
+  accountSigningType: Yup.string()
+    .required(getRequiredNotTextInputMessage("Signing transactions"))
+    .min(2, "Field is required"),
   accountSigningInstn: Yup.string().when("accountSigningType", {
     is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
     then: Yup.string()
