@@ -28,10 +28,9 @@ import {
   UAE_CODE,
   UAE,
   UAE_CURRENCY,
-  QUERY_ACCOUNT_TYPE,
-  QUERY_IS_ISLAMIC_BANKING,
-  QUERY_IS_ISLAMIC_BANKING_FALSE,
-  QUERY_IS_ISLAMIC_BANKING_TRUE
+  queryParams,
+  CONVENTIONAL_BANK,
+  ISLAMIC_BANK
 } from "../../constants";
 import {
   getEndpoints,
@@ -55,23 +54,16 @@ function* receiveAppConfigSaga() {
       : pathname.substring(1, pathname.lastIndexOf("/"));
 
     const searchParams = new URLSearchParams(window.location.search);
-    const queryAccountType = searchParams.get(QUERY_ACCOUNT_TYPE);
-    const queryIsIslamicBanking = searchParams.get(QUERY_IS_ISLAMIC_BANKING);
+    const queryAccountType = searchParams.get(queryParams.PRODUCT);
+    const queryIsIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
 
-    let isIslamicBanking = getIsIslamicBanking(state);
-    let accountType = getAccountType(state);
+    const accountType = Object.values(accountNames).includes(queryAccountType)
+      ? queryAccountType
+      : getAccountType(state);
 
-    if (Object.values(accountNames).includes(queryAccountType)) {
-      accountType = queryAccountType;
-    }
-
-    if (queryIsIslamicBanking === QUERY_IS_ISLAMIC_BANKING_FALSE) {
-      isIslamicBanking = false;
-    }
-
-    if (queryIsIslamicBanking === QUERY_IS_ISLAMIC_BANKING_TRUE) {
-      isIslamicBanking = true;
-    }
+    const isIslamicBanking = [CONVENTIONAL_BANK, ISLAMIC_BANK].includes(queryIsIslamicBanking)
+      ? queryIsIslamicBanking === ISLAMIC_BANK
+      : getIsIslamicBanking(state);
 
     if (!isEmpty(endpoints)) {
       response = yield call(config.load, accountType, segment);
