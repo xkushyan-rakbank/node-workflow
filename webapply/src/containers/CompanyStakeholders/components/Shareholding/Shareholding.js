@@ -16,6 +16,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
+import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 const PercentageInput = props => <NumberFormat decimalSeparator="." decimalScale={2} {...props} />;
 
@@ -30,7 +31,7 @@ const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
         100 - totalPercentageWithoutCurrentStakeholder,
         "Shareholders can't hold more than 100% of shares in total"
       )
-      .required("Field Percentage is blank")
+      .required(getRequiredMessage("Percentage"))
   });
 
 const ShareholdingStep = ({

@@ -15,20 +15,21 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
 import { MAX_EMIRATE_ID_LENGTH } from "./constants";
+import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 
 const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
     residenceCountry: Yup.string().test(
       "required",
-      "Field Country of residence is blank",
+      getRequiredMessage("Country of residence"),
       value => isSignatory || value
     ),
     eidNumber: Yup.string().when("residenceCountry", {
       is: value => value === UAE,
       then: Yup.string()
-        .required("Field Emirates ID is blank")
+        .required(getRequiredMessage("Emirates ID"))
         .transform(value => value.replace(/-/g, ""))
-        .matches(EMIRATES_ID_REGEX, "Field Emirates ID is invalid")
+        .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
     })
   });
 

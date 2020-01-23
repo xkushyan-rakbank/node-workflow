@@ -18,6 +18,7 @@ import { updateProspect } from "../../../../store/actions/appConfig";
 import { ALPHANUMERIC_REGEX } from "../../../../utils/validation";
 import { MAX_PASSPORT_NUMBER_LENGTH } from "./constants";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
+import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 
 const MAX_ANOTHER_CITIZENSHIP = 4;
@@ -31,11 +32,11 @@ const initialPassportDetails = {
 const nationalitySchema = Yup.object().shape({
   passportDetails: Yup.array().of(
     Yup.object().shape({
-      country: Yup.string().required("Field Nationality is blank"),
+      country: Yup.string().required(getRequiredMessage("Nationality")),
       passportNumber: Yup.string()
-        .required("Field Passport number is blank")
+        .required(getRequiredMessage("Passport number"))
         .max(12, "Maximum 12 characters allowed")
-        .matches(ALPHANUMERIC_REGEX, "Field Passport number is invalid")
+        .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Passport number"))
     })
   )
 });

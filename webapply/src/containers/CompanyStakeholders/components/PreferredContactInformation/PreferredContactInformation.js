@@ -20,21 +20,22 @@ import {
   MIN_NON_UAE_PHONE_LENGTH,
   MAX_NON_UAE_PHONE_LENGTH
 } from "../../../../utils/validation";
-import { UAE_CODE } from "../../../../constants";
+import { UAE_CODE, MAX_EMAIL_LENGTH } from "../../../../constants";
+import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
-    .required("Field E-mail address is blank")
-    .email("Field E-mail address is invalid")
-    .max(50, "Field E-mail address is invalid"),
-  primaryMobCountryCode: Yup.string().required("Field Country code is blank"),
+    .required(getRequiredMessage("E-mail address"))
+    .email(getInvalidMessage("E-mail address"))
+    .max(50, getInvalidMessage("E-mail address")),
+  primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
   primaryMobileNo: Yup.string()
-    .required("Field Mobile number is blank")
+    .required(getRequiredMessage("Mobile number"))
     .when("primaryMobCountryCode", {
       is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "Field Mobile number is invalid"),
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Mobile number")),
       otherwise: Yup.string()
-        .matches(NUMBER_REGEX, "Field Mobile number is invalid")
+        .matches(NUMBER_REGEX, getInvalidMessage("Mobile number"))
         .min(MIN_NON_UAE_PHONE_LENGTH, "Field Mobile number is invalid (min length is not reached)")
         .test(
           "length validation",
@@ -51,7 +52,7 @@ const preferredContactInformationSchema = Yup.object().shape({
     is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
     then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "Field Landline number is invalid"),
     otherwise: Yup.string()
-      .matches(NUMBER_REGEX, "Field Landline number is invalid")
+      .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
       .min(MIN_NON_UAE_PHONE_LENGTH, "Field Landline number is invalid (min length is not reached)")
       .test(
         "length validation",
@@ -89,7 +90,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
               component={Input}
               disabled={!isSignatory}
               InputProps={{
-                inputProps: { tabIndex: 0 }
+                inputProps: { maxLength: MAX_EMAIL_LENGTH, tabIndex: 0 }
               }}
             />
           </Grid>
