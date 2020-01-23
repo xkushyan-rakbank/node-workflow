@@ -13,6 +13,10 @@ import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { DATA_CURRENCIES } from "../../constants";
+import {
+  getRequiredMessage,
+  getRequiredNotTextInputMessage
+} from "../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
@@ -20,9 +24,9 @@ const INFO_TITLE =
   "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval.";
 
 const accountDetailsSchema = Yup.object({
-  accountCurrencies: Yup.array().required("Field is required"),
-  branchCity: Yup.string().required("Field is required"),
-  branchID: Yup.string().required("Field is required"),
+  accountCurrencies: Yup.array().required(getRequiredNotTextInputMessage("Currencies")),
+  branchCity: Yup.string().required(getRequiredMessage("Emirate / City")),
+  branchID: Yup.string().required(getRequiredMessage("Branch")),
   receiveInterest: Yup.bool()
 });
 
