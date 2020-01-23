@@ -16,7 +16,10 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
-import { MAX_COMPANY_NAME_LENGTH } from "../CompanyBusinessRelationships/constants";
+import {
+  MAX_COMPANY_NAME_LENGTH,
+  MAX_TRADE_LICENSE_LENGTH
+} from "../CompanyBusinessRelationships/constants";
 import { ALPHANUMERIC_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
@@ -168,7 +171,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   </>
                                 }
                                 InputProps={{
-                                  inputProps: { tabIndex: 0 }
+                                  inputProps: { maxLength: MAX_TRADE_LICENSE_LENGTH, tabIndex: 0 }
                                 }}
                               />
                             </Grid>

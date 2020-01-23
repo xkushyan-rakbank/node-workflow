@@ -25,6 +25,10 @@ import {
 } from "./constants";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
+import {
+  getInvalidMessage,
+  getRequiredMessage
+} from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
@@ -33,9 +37,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
     Yup.object().shape({
       name: Yup.string()
-        .required("Field Customer name is blank")
-        .matches(COMPANY_NAME_REGEX, "Field Customer name is invalid"),
-      country: Yup.string().required("Field Country is blank")
+        .required(getRequiredMessage("Customer name"))
+        .matches(COMPANY_NAME_REGEX, getInvalidMessage("Customer name")),
+      country: Yup.string().required(getRequiredMessage("Country"))
     })
   ),
   isDontHaveSuppliersYet: Yup.boolean(),
@@ -44,9 +48,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     then: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .required("Field Supplier name is blank")
-          .matches(COMPANY_NAME_REGEX, "Field Supplier name is invalid"),
-        country: Yup.string().required("Field Country is blank")
+          .required(getRequiredMessage("Supplier name"))
+          .matches(COMPANY_NAME_REGEX, getInvalidMessage("Supplier name")),
+        country: Yup.string().required(getRequiredMessage("Country"))
       })
     )
   }),
@@ -55,7 +59,7 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     is: false,
     then: Yup.array().of(
       Yup.object().shape({
-        country: Yup.string().required("Field Country of origin is blank")
+        country: Yup.string().required(getRequiredMessage("Country of origin"))
       })
     )
   }),
@@ -66,8 +70,8 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
       then: Yup.array().of(
         Yup.object().shape({
           bankName: Yup.string()
-            .matches(BANK_NAME_REGEX, "Field Bank name is invalid")
-            .required("Field Bank name is blank")
+            .matches(BANK_NAME_REGEX, getInvalidMessage("Bank name"))
+            .required(getRequiredMessage("Bank name"))
         })
       )
     })

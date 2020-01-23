@@ -77,8 +77,8 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   maxAmtSingleTxnNonCashAED: Yup.string()
-    .required("You need to provide single transaction value")
-    .matches(CURRENCY_REGEX, "This is not a valid value")
+    .required(getRequiredMessage("Part of Monthly Total in Non-Cash"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Non-Cash"))
     .test(
       "is not exceed turnover",
       "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -92,8 +92,8 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   totalMonthlyCashAmountInFigures: Yup.string()
-    .required("You need to provide total monthly amount in cash")
-    .matches(CURRENCY_REGEX, "This is not a valid value")
+    .required(getRequiredMessage("Maximum amount in Cash"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Maximum amount in Cash"))
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -107,8 +107,8 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
       }
     ),
   totalMonthlyNonCashAmountInFigures: Yup.string()
-    .required(getRequiredMessage("Part of Monthly Total in Non-Cash"))
-    .matches(CURRENCY_REGEX, "This is not a valid value")
+    .required(getRequiredMessage("Maximum amount in Non-Cash"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Maximum amount in Non-Cash"))
     .test(
       "is matches with month turnover",
       "total amount in Cash and Non-cash should be equal to Total Monthly Credits",

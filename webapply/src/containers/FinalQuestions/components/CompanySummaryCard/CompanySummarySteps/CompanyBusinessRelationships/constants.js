@@ -2,6 +2,7 @@ export const INITIAL_ARRAY_INDEX = 0;
 
 export const MAX_BANK_NAME_LENGTH = 50;
 export const MAX_COMPANY_NAME_LENGTH = 30;
+export const MAX_TRADE_LICENSE_LENGTH = 20;
 
 export const limits = {
   CUSTOMER_COUNT: 5,
