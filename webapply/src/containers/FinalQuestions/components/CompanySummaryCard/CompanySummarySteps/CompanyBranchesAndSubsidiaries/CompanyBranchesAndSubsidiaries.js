@@ -42,7 +42,7 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
         tradeLicenseNo: Yup.string()
           .required(getRequiredMessage("Trade license number"))
           .max(20, "Maximum 20 characters allowed")
-          .matches(ALPHANUMERIC_REGEX, getRequiredMessage("Trade license number"))
+          .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade license number"))
       })
     )
   }),
