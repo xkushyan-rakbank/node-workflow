@@ -48,7 +48,7 @@ export const submitApplication = {
 };
 
 export const accountNames = {
-  starter: "RAKstarter",
+  starter: "RAKStarter",
   currentAccount: "Current Account",
   elite: "RAKelite"
 };
