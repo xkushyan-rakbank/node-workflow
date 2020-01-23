@@ -7,12 +7,12 @@ import {
 import { search } from "../../api/apiClient";
 import { updateProspect } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
-import { getAuthToken } from "../selectors/appConfig";
+import { getAuthorizationHeader } from "../selectors/appConfig";
 
 function* searchProspectFormSaga({ payload }) {
   try {
     const state = yield select();
-    const authToken = getAuthToken(state);
+    const headers = getAuthorizationHeader(state);
     const inputParam = {
       applicantName: payload.fname || "",
       countryCode: payload.countryCode || "",
@@ -22,7 +22,7 @@ function* searchProspectFormSaga({ payload }) {
       email: payload.email || "",
       eidNumber: ""
     };
-    const response = yield call(search.searchApplication, inputParam, authToken);
+    const response = yield call(search.searchApplication, inputParam, headers);
     yield put(searchApplicationsSuccess(response.data));
   } catch (error) {
     log(error);

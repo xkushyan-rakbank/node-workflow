@@ -25,7 +25,7 @@ import {
   setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
-import { getProspect, getProspectId, getAuthToken } from "../selectors/appConfig";
+import { getProspect, getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
@@ -102,9 +102,9 @@ function* sendProspectToAPI({ newProspect, saveType }) {
   try {
     const state = yield select();
     const prospectId = getProspectId(state) || "COSME0000000000000001";
-    const authToken = getAuthToken(state);
+    const headers = getAuthorizationHeader(state);
 
-    const { data } = yield call(prospect.update, prospectId, newProspect, authToken);
+    const { data } = yield call(prospect.update, prospectId, newProspect, headers);
     newProspect.applicationInfo.saveType = saveType;
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {

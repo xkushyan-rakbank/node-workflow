@@ -34,22 +34,22 @@ export const authentication = {
 };
 
 export const otp = {
-  generate: (payload, authToken) => {
+  generate: (payload, headers) => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
-      headers: { Authorization: `Bearer ${authToken}` },
+      ...headers,
       data: {
         action: OTP_ACTION_GENERATE,
         ...payload
       }
     });
   },
-  verify: (payload, authToken) => {
+  verify: (payload, headers) => {
     return httpClient.request({
       url: buildURI("otpUri"),
       method: "POST",
-      headers: { Authorization: `Bearer ${authToken}` },
+      ...headers,
       data: {
         action: OTP_ACTION_VERIFY,
         ...payload
@@ -59,27 +59,27 @@ export const otp = {
 };
 
 export const prospect = {
-  create: (data, authToken) => {
+  create: (data, headers) => {
     return httpClient.request({
       url: buildURI("createProspectUri"),
-      headers: { Authorization: `Bearer ${authToken}` },
       method: "POST",
+      ...headers,
       data
     });
   },
-  update: (prospectId, data, authToken) => {
+  update: (prospectId, data, headers) => {
     return httpClient.request({
       url: buildURI("updateProspectUri", prospectId),
       method: "PUT",
-      headers: { Authorization: `Bearer ${authToken}` },
+      ...headers,
       data
     });
   },
-  get: (prospectId, authToken) => {
+  get: (prospectId, headers) => {
     return httpClient.request({
       url: buildURI("getProspectUri", prospectId),
       method: "GET",
-      headers: { Authorization: `Bearer ${authToken}` }
+      ...headers
     });
   }
 };
@@ -95,21 +95,21 @@ export const retrieveApplicantInfos = {
 };
 
 export const getProspectDocuments = {
-  retriveDocuments: (prospectId, authToken) => {
+  retriveDocuments: (prospectId, headers) => {
     return httpClient.request({
       url: buildURI("getProspectDocumentsUri", prospectId),
       method: "GET",
-      headers: { Authorization: `Bearer ${authToken}` }
+      ...headers
     });
   }
 };
 
 export const search = {
-  searchApplication: (data, authToken) => {
+  searchApplication: (data, headers) => {
     return httpClient.request({
       url: buildURI("searchProspectUri"),
       method: "POST",
-      headers: { Authorization: `Bearer ${authToken}` },
+      ...headers,
       data
     });
   }
@@ -124,11 +124,11 @@ export const screening = {
 };
 
 export const uploadProspectDocument = {
-  send: ({ data, prospectId, source, onUploadProgress, authToken }) => {
+  send: ({ data, prospectId, source, onUploadProgress, headers }) => {
     return uploadClient.request({
       url: buildURI("docUploaderUri", prospectId),
       method: "POST",
-      headers: { Authorization: `Bearer ${authToken}` },
+      ...headers,
       data,
       cancelToken: source.token,
       onUploadProgress

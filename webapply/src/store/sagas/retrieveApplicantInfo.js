@@ -3,7 +3,7 @@ import * as actions from "../actions/retrieveApplicantInfo";
 import { displayScreenBasedOnViewId, setConfig } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
-import { getAuthToken } from "./../selectors/appConfig";
+import { getAuthorizationHeader } from "./../selectors/appConfig";
 
 function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -27,8 +27,8 @@ function* retrieveApplicantInfoSaga({ payload }) {
 function* getProspectIdInfo({ payload }) {
   try {
     const state = yield select();
-    const authToken = getAuthToken(state);
-    const response = yield call(prospect.get, payload, authToken);
+    const headers = getAuthorizationHeader(state);
+    const response = yield call(prospect.get, payload, headers);
     const config = { prospect: response.data };
 
     yield put(setConfig(config));

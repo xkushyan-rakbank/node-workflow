@@ -18,7 +18,7 @@ import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClien
 import {
   getProspectId,
   getProspectDocuments as getDocuments,
-  getAuthToken
+  getAuthorizationHeader
 } from "../selectors/appConfig";
 import {
   RETRIEVE_DOC_UPLOADER,
@@ -68,7 +68,7 @@ function* uploadProgressWatcher(chan, documentKey) {
 
 function* getProspectDocumentsSaga() {
   const state = yield select();
-  const authToken = getAuthToken(state);
+  const headers = getAuthorizationHeader(state);
   const prospectID = getProspectId(state) || "COSME0000000000000001";
   const existDocuments = getDocuments(state);
   const config = cloneDeep(state.appConfig);
@@ -78,7 +78,7 @@ function* getProspectDocumentsSaga() {
     existDocuments.stakeholdersDocuments;
 
   try {
-    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID, authToken);
+    const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID, headers);
 
     if (isDocsUploaded) {
       const companyDocuments = concatCompanyDocs(
@@ -117,10 +117,10 @@ function* uploadDocumentsBgSync({
 
   try {
     const state = yield select();
-    const authToken = getAuthToken(state);
+    const headers = getAuthorizationHeader(state);
     const prospectId = getProspectId(state) || "COSME0017";
 
-    const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, authToken);
+    const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, headers);
 
     yield fork(uploadProgressWatcher, chan, documentKey);
 
