@@ -20,8 +20,8 @@ import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 
 import { theme } from "./theme";
-import "./App.scss";
 import { queryParams } from "./constants";
+import "./App.scss";
 
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
@@ -45,6 +45,10 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
+    if (history.location.pathname === routes.applicantInfo) {
+      history.push(routes.detailedAccount);
+    }
+
     let pathname = "/sme/";
     let accountType;
     let isIslamicBanking;
