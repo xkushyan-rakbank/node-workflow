@@ -57,6 +57,7 @@ export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";
 export const MAX_STAKEHOLDERS_LENGTH = 12;
+export const MAX_EMAIL_LENGTH = 50;
 
 export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
 

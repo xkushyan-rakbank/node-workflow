@@ -16,19 +16,22 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getInputValueById } from "../../../../store/selectors/input";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
+import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 const PercentageInput = props => <NumberFormat decimalSeparator="." decimalScale={2} {...props} />;
 
 const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
-    isShareholderACompany: Yup.boolean().required("Required"),
+    isShareholderACompany: Yup.boolean().required(
+      "Field Is this person a shareholder is not filled"
+    ),
     shareHoldingPercentage: Yup.number()
       .min(0, "Shareholders can't hold less than 0% of shares in total")
       .max(
         100 - totalPercentageWithoutCurrentStakeholder,
         "Shareholders can't hold more than 100% of shares in total"
       )
-      .required("Required")
+      .required(getRequiredMessage("Percentage"))
   });
 
 const ShareholdingStep = ({

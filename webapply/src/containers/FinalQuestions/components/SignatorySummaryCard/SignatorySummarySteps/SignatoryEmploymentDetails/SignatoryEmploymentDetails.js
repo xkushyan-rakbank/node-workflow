@@ -4,7 +4,13 @@ import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { OTHER_OPTION_CODE, OTHER_OPTION_VALUE } from "./constants";
+import {
+  OTHER_OPTION_CODE,
+  OTHER_OPTION_VALUE,
+  MAX_EMPLOYMENT_TYPE_OTHER_LENGTH,
+  MAX_DESIGNATION_LENGTH
+} from "./constants";
+import { MAX_COMPANY_NAME_LENGTH } from "../../../../../CompanyInfo/constants";
 import {
   CustomSelect,
   Input,
@@ -21,28 +27,32 @@ import {
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
+import {
+  getRequiredMessage,
+  getInvalidMessage
+} from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
-  qualification: Yup.string().required("You need to provide qualification"),
-  employmentType: Yup.string().required("You need to provide employment type"),
+  qualification: Yup.string().required(getRequiredMessage("Qualification")),
+  employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
   totalExperienceYrs: Yup.string()
-    .required("You need to provide total experience")
-    .matches(NUMBER_REGEX, "Must be an intege")
+    .required(getRequiredMessage("Total years of experience"))
+    .matches(NUMBER_REGEX, getInvalidMessage("Total years of experience"))
     .matches(TOTAL_EXPERIENCE_YEARS, "Maximum 255 characters allowed"),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
-      .required("You need to specify employment type")
-      .matches(EMPLOYMENT_TYPE_REGEX, "Invalid employment type value")
+      .required(getRequiredMessage("Other"))
+      .matches(EMPLOYMENT_TYPE_REGEX, getInvalidMessage("Other"))
   }),
   employerName: Yup.string()
-    .required("You need to provide employer name")
-    .matches(COMPANY_NAME_REGEX, "Invalid employment name value"),
+    .required(getRequiredMessage("Employer name"))
+    .matches(COMPANY_NAME_REGEX, getInvalidMessage("Employer name")),
   designation: Yup.string()
-    .required("You need to provide designation")
-    .matches(DESIGNATION_REGEX, "Invalid designation value")
+    .required(getRequiredMessage("Designation"))
+    .matches(DESIGNATION_REGEX, getInvalidMessage("Designation"))
 });
 
 export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handleContinue }) => {
@@ -133,7 +143,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     component={Input}
                     contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
                     InputProps={{
-                      inputProps: { tabIndex: 0 }
+                      inputProps: { maxLength: MAX_DESIGNATION_LENGTH, tabIndex: 0 }
                     }}
                   />
                 </Grid>
@@ -146,7 +156,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                       placeholder="Other(Specify)"
                       component={Input}
                       InputProps={{
-                        inputProps: { tabIndex: 0 }
+                        inputProps: { maxLength: MAX_EMPLOYMENT_TYPE_OTHER_LENGTH, tabIndex: 0 }
                       }}
                     />
                   </Grid>
@@ -172,7 +182,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     component={Input}
                     disabled={values.isWorkAtTheCompany}
                     InputProps={{
-                      inputProps: { tabIndex: 0 }
+                      inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                     }}
                   />
                 </Grid>

@@ -29,34 +29,45 @@ import { ConfirmingTransactions } from "./ConfirmingTransactions";
 import { ArrayRemoveButton } from "../../../FinalQuestions/components/Buttons/ArrayRemoveButton";
 
 import { useStyles } from "./styled";
+import {
+  getRequiredMessage,
+  getRequiredNotTextInputMessage,
+  getInvalidMessage
+} from "../../../../utils/getValidationMessage";
 
 const MAX_SIGNATORIES = 2;
+const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
+const MAX_RECONFIRMING_FULL_NAME_LENGTH = 79;
+
 const signingPreferencesSchema = Yup.object({
   accountSigningType: Yup.string()
-    .required("Field is required")
+    .required(getRequiredNotTextInputMessage("Signing transactions"))
     .min(2, "Field is required"),
   accountSigningInstn: Yup.string().when("accountSigningType", {
     is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
     then: Yup.string()
-      .max(50, "Max length is 50 symbols")
-      .required("Field is required")
+      .max(MAX_ACCOUNT_SIGNING_INSTN_LENGTH, "Max length is 50 symbols")
+      .required(getRequiredMessage("Others"))
   }),
   signatories: Yup.array().of(
     Yup.object().shape({
       TxnReconfirmingfullname: Yup.string()
-        .matches(NAME_REGEX, "This is not a valid name")
-        .required("Field is required"),
-      primaryMobCountryCode: Yup.string().required("Field is required"),
+        .matches(NAME_REGEX, getInvalidMessage("Full name"))
+        .required(getRequiredMessage("Full name")),
+      primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
       primaryMobileNo: Yup.string()
         .when("TxnReconfirmingfullname", {
           is: value => !!value,
           then: Yup.string()
-            .required("You need to provide mobile number")
+            .required(getRequiredMessage("Primary mobile number"))
             .when("primaryMobCountryCode", {
               is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-              then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+              then: Yup.string().matches(
+                UAE_MOBILE_PHONE_REGEX,
+                getInvalidMessage("Primary mobile number")
+              ),
               otherwise: Yup.string()
-                .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+                .matches(NUMBER_REGEX, getInvalidMessage("Code"))
                 .min(
                   MIN_NON_UAE_PHONE_LENGTH,
                   "This is not a valid phone (min length is not reached)"
@@ -76,13 +87,13 @@ const signingPreferencesSchema = Yup.object({
                 )
             })
         })
-        .required("Field is required"),
+        .required(getRequiredMessage("Primary mobile number")),
       primaryPhoneCountryCode: Yup.string(),
       primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
         is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
-        then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "This is not a valid phone"),
+        then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, getInvalidMessage("Landline number")),
         otherwise: Yup.string()
-          .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+          .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
           .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
           .test("length validation", "This is not a valid phone (max length exceeded)", function() {
             const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
@@ -96,7 +107,7 @@ const signingPreferencesSchema = Yup.object({
 });
 const pathSignatoryInfo = "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn";
 
-export const SigningPreferencesComponent = ({ organizationInfo, goToNext, updateProspect }) => {
+export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
   const classes = useStyles();
 
   return (
@@ -170,7 +181,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                       rows={2}
                       component={Input}
                       InputProps={{
-                        inputProps: { maxLength: 50, tabIndex: 0 }
+                        inputProps: { maxLength: MAX_ACCOUNT_SIGNING_INSTN_LENGTH, tabIndex: 0 }
                       }}
                     />
                   </div>
@@ -202,7 +213,10 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                           placeholder="Full Name"
                           component={Input}
                           InputProps={{
-                            inputProps: { tabIndex: 0 }
+                            inputProps: {
+                              maxLength: MAX_RECONFIRMING_FULL_NAME_LENGTH,
+                              tabIndex: 0
+                            }
                           }}
                         />
 
@@ -220,7 +234,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                               <Field
                                 name={`signatories[${index}].primaryMobileNo`}
                                 path={`${prospectPath}.primaryMobileNo`}
-                                label="Primary mobile no."
+                                label="Primary mobile number"
                                 placeholder="55xxxxxxx"
                                 component={Input}
                                 type="number"
@@ -244,7 +258,7 @@ export const SigningPreferencesComponent = ({ organizationInfo, goToNext, update
                               <Field
                                 name={`signatories[${index}].primaryPhoneNo`}
                                 path={`${prospectPath}.primaryPhoneNo`}
-                                label="Landline phone no. (optional)"
+                                label="Landline number (optional)"
                                 placeholder="42xxxxxx"
                                 component={Input}
                                 type="number"

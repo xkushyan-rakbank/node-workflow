@@ -19,10 +19,16 @@ import {
   INITIAL_ARRAY_INDEX,
   initialOtherBankDetails,
   initialTopOriginGoodsCountries,
-  initialTopSuppliers
+  initialTopSuppliers,
+  MAX_BANK_NAME_LENGTH,
+  MAX_COMPANY_NAME_LENGTH
 } from "./constants";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
+import {
+  getInvalidMessage,
+  getRequiredMessage
+} from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
@@ -31,9 +37,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
     Yup.object().shape({
       name: Yup.string()
-        .required("You need to provide customer name")
-        .matches(COMPANY_NAME_REGEX, "This not a valid company name"),
-      country: Yup.string().required("You need to provide company country")
+        .required(getRequiredMessage("Customer name"))
+        .matches(COMPANY_NAME_REGEX, getInvalidMessage("Customer name")),
+      country: Yup.string().required(getRequiredMessage("Country"))
     })
   ),
   isDontHaveSuppliersYet: Yup.boolean(),
@@ -42,9 +48,9 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     then: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .required("You need to provide company name")
-          .matches(COMPANY_NAME_REGEX, "This is not a valid company name"),
-        country: Yup.string().required("You need to provide company country")
+          .required(getRequiredMessage("Supplier name"))
+          .matches(COMPANY_NAME_REGEX, getInvalidMessage("Supplier name")),
+        country: Yup.string().required(getRequiredMessage("Country"))
       })
     )
   }),
@@ -53,7 +59,7 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
     is: false,
     then: Yup.array().of(
       Yup.object().shape({
-        country: Yup.string().required("You need to provide trade good country")
+        country: Yup.string().required(getRequiredMessage("Country of origin"))
       })
     )
   }),
@@ -64,8 +70,8 @@ const companyBusinessRelationshipsSchema = Yup.object().shape({
       then: Yup.array().of(
         Yup.object().shape({
           bankName: Yup.string()
-            .matches(BANK_NAME_REGEX, "This is not a valid bank name")
-            .required("You need to provide bank name")
+            .matches(BANK_NAME_REGEX, getInvalidMessage("Bank name"))
+            .required(getRequiredMessage("Bank name"))
         })
       )
     })
@@ -141,7 +147,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                             placeholder="Customer name"
                             component={Input}
                             InputProps={{
-                              inputProps: { tabIndex: 0 }
+                              inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                             }}
                           />
                         </Grid>
@@ -243,7 +249,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                             component={Input}
                             disabled={values.isDontHaveSuppliersYet}
                             InputProps={{
-                              inputProps: { tabIndex: 0 }
+                              inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                             }}
                           />
                         </Grid>
@@ -418,7 +424,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                                   placeholder="Bank name"
                                   component={Input}
                                   InputProps={{
-                                    inputProps: { tabIndex: 0 }
+                                    inputProps: { maxLength: MAX_BANK_NAME_LENGTH, tabIndex: 0 }
                                   }}
                                 />
                                 {!!index && (

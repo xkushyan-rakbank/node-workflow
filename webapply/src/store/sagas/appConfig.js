@@ -21,7 +21,7 @@ import {
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 
-import { config, dataList } from "../../api/apiClient";
+import { config } from "../../api/apiClient";
 import { history } from "./..";
 import { accountNames, UAE_CODE, UAE, UAE_CURRENCY } from "../../constants";
 import {
