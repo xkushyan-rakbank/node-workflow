@@ -49,14 +49,15 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
       window.addEventListener("beforeunload", () => {
         localStorage.removeItem("videoAlreadyPlayed");
       });
-    }
-    const pathname = window.location.pathname;
-    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
-    const searchParams = new URLSearchParams(window.location.search);
-    const queryAccountType = searchParams.get(queryParams.PRODUCT);
-    const queryIsIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
 
-    receiveAppConfig(segment, queryAccountType, queryIsIslamicBanking);
+      const pathname = window.location.pathname;
+      const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+      const searchParams = new URLSearchParams(window.location.search);
+      const queryAccountType = searchParams.get(queryParams.PRODUCT);
+      const queryIsIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
+      receiveAppConfig(segment, queryAccountType, queryIsIslamicBanking);
+    }
+    receiveAppConfig("/sme/");
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
 

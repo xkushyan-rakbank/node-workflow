@@ -68,7 +68,7 @@ const ApplicantInfoPage = ({
   isConfigLoading
 }) => {
   useEffect(() => {
-    const pathname = window.location.pathname;
+    const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
     const segment = pathname.substring(1, pathname.lastIndexOf("/"));
     receiveAppConfig(segment);
   }, [receiveAppConfig]);
