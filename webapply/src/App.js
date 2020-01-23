@@ -21,6 +21,7 @@ import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 
 import { theme } from "./theme";
 import "./App.scss";
+import { queryParams } from "./constants";
 
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
@@ -49,7 +50,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
         localStorage.removeItem("videoAlreadyPlayed");
       });
     }
-    receiveAppConfig();
+    const searchParams = new URLSearchParams(window.location.search);
+    const queryAccountType = searchParams.get(queryParams.PRODUCT);
+    const queryIsIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
+
+    receiveAppConfig(queryAccountType, queryIsIslamicBanking);
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
 

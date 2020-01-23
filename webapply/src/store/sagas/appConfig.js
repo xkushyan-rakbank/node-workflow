@@ -28,7 +28,6 @@ import {
   UAE_CODE,
   UAE,
   UAE_CURRENCY,
-  queryParams,
   CONVENTIONAL_BANK,
   ISLAMIC_BANK
 } from "../../constants";
@@ -40,7 +39,7 @@ import {
 } from "../selectors/appConfig";
 import routes from "./../../routes";
 
-function* receiveAppConfigSaga() {
+function* receiveAppConfigSaga({ payload: { accountType, isIslamicBanking } }) {
   try {
     const state = yield select();
 
@@ -53,20 +52,12 @@ function* receiveAppConfigSaga() {
         : ""
       : pathname.substring(1, pathname.lastIndexOf("/"));
 
-    const searchParams = new URLSearchParams(window.location.search);
-    const queryAccountType = searchParams.get(queryParams.PRODUCT);
-    const queryIsIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
-
-    const accountType = Object.values(accountNames).includes(queryAccountType)
-      ? queryAccountType
+    const newAccountType = Object.values(accountNames).includes(accountType)
+      ? accountType
       : getAccountType(state);
 
-    const isIslamicBanking = [CONVENTIONAL_BANK, ISLAMIC_BANK].includes(queryIsIslamicBanking)
-      ? queryIsIslamicBanking === ISLAMIC_BANK
-      : getIsIslamicBanking(state);
-
     if (!isEmpty(endpoints)) {
-      response = yield call(config.load, accountType, segment);
+      response = yield call(config.load, newAccountType, segment);
     } else {
       if (process.env.NODE_ENV === "development") {
         response = yield call(config.load, accountNames.starter, segment);
@@ -84,8 +75,12 @@ function* receiveAppConfigSaga() {
       if (!newConfig.prospect.applicantInfo.countryCode) {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
-      newConfig.prospect.applicationInfo.accountType = accountType;
-      newConfig.prospect.applicationInfo.islamicBanking = isIslamicBanking;
+      newConfig.prospect.applicationInfo.accountType = newAccountType;
+      // prettier-ignore
+      // eslint-disable-next-line max-len
+      newConfig.prospect.applicationInfo.islamicBanking = [CONVENTIONAL_BANK, ISLAMIC_BANK].includes(isIslamicBanking)
+        ? isIslamicBanking === ISLAMIC_BANK
+        : getIsIslamicBanking(state);
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }

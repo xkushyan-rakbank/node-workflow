@@ -12,8 +12,8 @@ export const DISPLAY_SCREEN_BASED_ON_VIEW_ID = "DISPLAY_SCREEN_BASED_ON_VIEW_ID"
 export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
 export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
 
-export const receiveAppConfig = () => {
-  return { type: RECEIVE_APPCONFIG };
+export const receiveAppConfig = (accountType, isIslamicBanking) => {
+  return { type: RECEIVE_APPCONFIG, payload: { accountType, isIslamicBanking } };
 };
 
 export const receiveAppConfigSuccess = data => {
