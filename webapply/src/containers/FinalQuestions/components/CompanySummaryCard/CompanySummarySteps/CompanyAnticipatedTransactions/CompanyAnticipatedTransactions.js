@@ -159,10 +159,10 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,
+                    inputComponent: FormatDecimalNumberInput,
                     inputProps: {
                       maxLength: ANNUAL_TURNOVER_MAX_LENGTH,
-                      tabIndex: 0,
-                      inputComponent: FormatDecimalNumberInput
+                      tabIndex: 0
                     }
                   }}
                   component={Input}
