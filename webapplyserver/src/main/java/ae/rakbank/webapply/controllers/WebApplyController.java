@@ -72,7 +72,7 @@ public class WebApplyController {
 
     private String[] roles = {"customer", "agent"};
 
-    private String[] products = {"RAKstarter", "Current Account", "RAKelite"};
+    private String[] products = {"RAKStarter", "Current Account", "RAKelite"};
 
     private String[] segments = {"sme", "retail"};
 
@@ -237,7 +237,7 @@ public class WebApplyController {
         // add "mobile" to devices array
         String[] devices = {"desktop"};
         String[] segments = {"sme"};
-        String[] products = {"RAKstarter", "Current Account", "RAKelite"};
+        String[] products = {"RAKStarter", "Current Account", "RAKelite"};
         String[] roles = {"customer", "agent"};
         for (String segment : segments) {
             ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);

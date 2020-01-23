@@ -27,6 +27,7 @@ function* getProspectIdInfo({ payload }) {
   try {
     const response = yield call(prospect.get, payload);
     const config = { prospect: response.data };
+
     yield put(setConfig(config));
     yield put(displayScreenBasedOnViewId());
   } catch (error) {

@@ -1,21 +1,24 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import HorizontalIconCardsContainer from "../../../components/HorizontalIconCards/HorizontalIconCardsContainer";
 import HorizontalIconCardItem from "../../../components/HorizontalIconCards/HorizontalIconCardItem";
 import { useIconsByAccount } from "../../../utils/useIconsByAccount";
 import { InfoNote } from "../../../components/InfoNote";
-import { accountsNames } from "../../../constants";
+import { accountNames } from "../../../constants";
 import { accountTypesInfo, accountText } from "./constants";
+import { getAccountType } from "../../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
 
-export const AccountBenefitsComponent = ({ accountType }) => {
+export const AccountBenefits = () => {
+  const accountType = useSelector(getAccountType);
   const classes = useStyles();
 
   const icons = useIconsByAccount();
   const data = accountType ? accountTypesInfo[accountType] : [];
-  const isShowInfoNote = accountType === accountsNames.starter;
+  const isShowInfoNote = accountType === accountNames.starter;
 
   return (
     <>

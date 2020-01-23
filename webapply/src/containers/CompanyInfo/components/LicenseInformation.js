@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
+import { differenceInYears, format, isValid } from "date-fns";
 
 import {
   Input,
@@ -14,7 +15,7 @@ import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
 import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
-import { UAE } from "../../../constants";
+import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 
 const initialValues = {
@@ -41,6 +42,9 @@ const licenseInformationSchema = Yup.object({
     .integer(getInvalidMessage("Years in business"))
 });
 
+const changeDateProspectHandler = (_, value, path) =>
+  isValid(value) && { [path]: format(value, DATE_FORMAT) };
+
 export const LicenseInformation = ({ handleContinue }) => (
   <Formik
     initialValues={initialValues}
@@ -48,7 +52,7 @@ export const LicenseInformation = ({ handleContinue }) => (
     validationSchema={licenseInformationSchema}
     onSubmit={handleContinue}
   >
-    {() => (
+    {({ setFieldValue }) => (
       <Form>
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
@@ -72,6 +76,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
+              changeProspect={changeDateProspectHandler}
             />
           </Grid>
         </Grid>
@@ -110,6 +115,11 @@ export const LicenseInformation = ({ handleContinue }) => (
               contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
               contextualHelpProps={{ isDisableHoverListener: false }}
               component={DatePicker}
+              onChange={value => {
+                setFieldValue("dateOfIncorporation", value);
+                setFieldValue("yearsInBusiness", differenceInYears(new Date(), value));
+              }}
+              changeProspect={changeDateProspectHandler}
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
