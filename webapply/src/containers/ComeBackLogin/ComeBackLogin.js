@@ -21,20 +21,21 @@ import { generateOtpCode } from "../../store/actions/otp";
 import { isOtpGenerated } from "../../store/selectors/otp";
 import routes from "./../../routes";
 import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
+import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 
 const comebackSchema = Yup.object({
   email: Yup.string()
-    .required("You need to provide Email address")
-    .email("This is not a valid Email address"),
-  countryCode: Yup.string().required("Select country code"),
+    .required(getRequiredMessage("Your E-mail Address"))
+    .email(getInvalidMessage("Your E-mail Address")),
+  countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
-    .required("You need to provide mobile number")
+    .required(getRequiredMessage("Your Mobile Number"))
     .when("countryCode", {
       is: countryCode => countryCode === UAE_CODE,
       then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
       otherwise: Yup.string()
-        .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+        .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
         .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
         .test("length validation", "This is not a valid phone (max length exceeded)", function() {
           const { countryCode = "", mobileNo = "" } = this.parent;
