@@ -26,7 +26,9 @@ import {
   EXTRA_DOC_UPLOAD_SUCCESS,
   DELETE_EXTRA_DOC_UPLOAD_SUCCESS,
   uploadFilesProgress,
-  CANCEL_DOC_UPLOAD
+  CANCEL_DOC_UPLOAD,
+  uploadFilesFail,
+  uploadFilesSuccess
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
@@ -146,8 +148,9 @@ function* uploadDocumentsBgSync({
     }
 
     yield put(setConfig(config));
+    yield put(uploadFilesSuccess({ [documentKey]: null }));
   } catch (error) {
-    log(error);
+    yield put(uploadFilesFail({ [documentKey]: error }));
   } finally {
     if (yield cancelled()) {
       source.cancel();

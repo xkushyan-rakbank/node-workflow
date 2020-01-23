@@ -24,7 +24,8 @@ const mapStateToProps = state => ({
   prospectID: getProspectId(state),
   uploadedDocsCount: getUploadedDocsCount(state),
   requiredDocsCount: getRequiredDocsCount(state),
-  progress: state.uploadDocuments.progress
+  progress: state.uploadDocuments.progress,
+  uploadErrorMessage: state.uploadDocuments.error
 });
 
 const mapDispatchToProps = {
