@@ -39,18 +39,20 @@ import {
 } from "../selectors/appConfig";
 import routes from "./../../routes";
 
-function* receiveAppConfigSaga({ payload: { accountType, isIslamicBanking } }) {
+function* receiveAppConfigSaga({
+  payload: { accountType, isIslamicBanking, segment: pathSegment }
+}) {
   try {
     const state = yield select();
 
     const endpoints = getEndpoints(state);
-    const pathname = window.location.pathname;
     let response = null;
-    const segment = pathname.includes("/agent")
-      ? state.login.loginStatus
-        ? state.appConfig.searchInfo.segment
-        : ""
-      : pathname.substring(1, pathname.lastIndexOf("/"));
+    const segment =
+      pathSegment === "agent"
+        ? state.login.loginStatus
+          ? state.appConfig.searchInfo.segment
+          : ""
+        : pathSegment;
 
     const newAccountType = Object.values(accountNames).includes(accountType)
       ? accountType
@@ -76,9 +78,10 @@ function* receiveAppConfigSaga({ payload: { accountType, isIslamicBanking } }) {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
       newConfig.prospect.applicationInfo.accountType = newAccountType;
-      // prettier-ignore
-      // eslint-disable-next-line max-len
-      newConfig.prospect.applicationInfo.islamicBanking = [CONVENTIONAL_BANK, ISLAMIC_BANK].includes(isIslamicBanking)
+      newConfig.prospect.applicationInfo.islamicBanking = [
+        CONVENTIONAL_BANK,
+        ISLAMIC_BANK
+      ].includes(isIslamicBanking)
         ? isIslamicBanking === ISLAMIC_BANK
         : getIsIslamicBanking(state);
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
