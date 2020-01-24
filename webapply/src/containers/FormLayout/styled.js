@@ -33,6 +33,7 @@ export const useStyles = makeStyles({
   formInner: {
     display: "flex",
     height: "100%",
+    padding: "0 15px",
     "& nextButton": {
       margin: "42px 0 0 !important"
     },
@@ -42,6 +43,7 @@ export const useStyles = makeStyles({
   },
   mainContainer: {
     width: "832px",
+    minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
     padding: ({ pathname }) => (routerToAddPaddingInSlider.includes(pathname) ? "0" : "35px 0 0"),

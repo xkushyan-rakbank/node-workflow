@@ -8,7 +8,7 @@ import {
   sideNavWidthXL
 } from "../../constants/styles";
 
-import { mobileResolution } from "../../constants";
+import { mobileResolution, normalScrollHeight } from "../../constants";
 
 const blobImages = {
   red: require("../../assets/images/bg-blobs/bg-blob-red.png"),
@@ -24,21 +24,31 @@ const blobImages = {
 
 export const useStyles = makeStyles({
   formNav: {
-    flex: `0 0 ${sideNavWidthXL}px`,
-    position: "relative",
-    paddingTop: "170px",
+    flex: `0 0 ${(sideNavWidthMD / 1220) * 100}%`,
+    minWidth: `${sideNavWidthXL}px`,
+    // position: "relative",
+    paddingTop: "18vh",
     zIndex: "11",
+    [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
+      height: "100vh",
+      boxSizing: "border-box"
+    },
+    [`@media only screen and (min-width: ${mobileResolution +
+      1}px) and (max-height: ${normalScrollHeight}px)`]: {
+      position: "sticky",
+      top: 0
+    },
     [portraitOrientationQueryIPads]: {
       paddingTop: "270px"
     },
     "@media only screen and (max-width: 1420px)": {
-      flex: `0 0 ${sideNavWidthLG}px`
+      minWidth: `${sideNavWidthLG}px`
     },
     "@media only screen and (max-width: 1300px)": {
-      flex: `0 0 ${sideNavWidthMD}px`
+      minWidth: `${sideNavWidthMD}px`
     },
     "@media only screen and (max-width: 1220px)": {
-      flex: `0 0 ${sideNavWidthSM}px`
+      minWidth: `${sideNavWidthSM}px`
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       display: "flex",

@@ -65,6 +65,7 @@ export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
 
 export const mobileResolution = 955;
+export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
 export const APP_COMPLETED_SCREENING_STATUS = "Completed";

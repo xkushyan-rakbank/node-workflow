@@ -8,7 +8,6 @@ export const useStyles = makeStyles({
     top: "30px",
     right: "40px",
     zIndex: 21, // 20 still not visible
-    width: "266px",
     borderRadius: "6px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.08)",
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
@@ -24,8 +23,8 @@ export const useStyles = makeStyles({
     }
   },
   buttonStyle: {
-    width: "50%",
-    padding: "2px 8px",
+    minWidth: "133px",
+    padding: "2px 15px",
     outline: "none ",
     fontSize: "16px",
     textTransform: "none",

@@ -7,13 +7,14 @@ export const useStyles = makeStyles({
     flexGrow: 1,
     flexDirection: "column",
     minWidth: "270px",
-    maxHeight: "572px",
     padding: "40px 30px 25px 30px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
     marginRight: "20px",
+    flex: "0 0 calc(50% - 10px)",
+    boxSizing: "border-box",
     "&:last-child": {
       marginRight: 0
     }

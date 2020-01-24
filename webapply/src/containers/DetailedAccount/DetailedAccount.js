@@ -8,10 +8,12 @@ import { AccountingSoftware } from "./AccountingSoftware";
 
 import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
+import { useStyles } from "./styled";
 
 export const DetailedAccount = () => {
   const isIslamicBaning = useSelector(getIsIslamicBanking);
   const accountType = useSelector(getAccountType);
+  const classes = useStyles();
 
   return (
     <>
@@ -19,7 +21,7 @@ export const DetailedAccount = () => {
         <IslamicBankingSwitcher />
       </div>
       <VerticalPaginationWrapper video={getVideoByAccountType(accountType, isIslamicBaning)}>
-        <div />
+        <div className={classes.videoWrapper} />
         <AccountBenefits />
         <AccountingSoftware />
       </VerticalPaginationWrapper>

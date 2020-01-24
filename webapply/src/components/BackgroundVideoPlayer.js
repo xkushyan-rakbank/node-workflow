@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import expandMoreIcon from "../assets/icons/arrow-down.png";
 import { sideNavWidthXL, sideNavWidthLG, sideNavWidthMD } from "../constants/styles";
-import { mobileResolution } from "../constants";
+import { mobileResolution, normalScrollHeight } from "../constants";
 const appRootEl = document.getElementById("root");
 
 const styles = {
@@ -20,7 +20,10 @@ const styles = {
     overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 11,
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [`
+      @media only screen and (max-width: ${mobileResolution}px), 
+      (max-height: ${normalScrollHeight}px)
+    `]: {
       top: "0!important"
     }
   },
@@ -59,16 +62,18 @@ const styles = {
     }
   },
   scrollButton: {
-    width: "195px",
-    height: "56px",
+    minWidth: "195px",
+    minHeight: "56px",
     borderRadius: "28px",
     backgroundColor: "#fff",
     boxShadow: "none",
     fontSize: "18px",
     textTransform: "inherit",
     letterSpacing: "normal",
+    padding: "12px 30px",
+    height: "auto",
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      height: "48px"
+      minHeight: "48px"
     }
   },
   expandMoreIc: {
