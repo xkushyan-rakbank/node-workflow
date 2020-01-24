@@ -27,7 +27,7 @@ export const Input = ({
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
-  const [isFocused, setFocused] = useState(false);
+  const [hasFocus, setFocus] = useState(false);
 
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
@@ -49,19 +49,19 @@ export const Input = ({
           InputLabelProps={{ shrink }}
           onFocus={() => {
             if (isIE) {
-              setFocused(true);
+              setFocus(true);
             }
             onFocus && onFocus();
           }}
           onBlur={() => {
             if (isIE) {
-              setFocused(false);
+              setFocus(false);
             }
             onBlur && onBlur();
           }}
         />
       </ContexualHelp>
-      {isIE && field.value.length === 0 && isFocused && (
+      {isIE && field.value.length === 0 && hasFocus && (
         <div className={classes.iePlaceholder}>{placeholder}</div>
       )}
 
