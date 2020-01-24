@@ -15,7 +15,7 @@ import { ReactComponent as bankingConventional } from "../../assets/icons/conven
 import { ReactComponent as logoConventional } from "../../assets/images/rakbankLogo.svg";
 import overviewConventoinal from "../../assets/gif/overview_reg.gif";
 import paperPlaneRegular from "../../assets/gif/paperplane_regular.gif";
-import successRegular from "../../assets/videos/success_regular.mp4";
+import successRegular from "../../assets/gif/submitted_regular.gif";
 
 /* RAKIslamic */
 import { ReactComponent as balanceIslamic } from "../../assets/icons/islamic/balance.svg";
@@ -39,7 +39,7 @@ import { ReactComponent as bankingIslamic } from "../../assets/icons/islamic/ban
 import { ReactComponent as logoIslamic } from "../../assets/images/rakbankLogoIslamic.svg";
 import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import paperPlaneIslamic from "../../assets/gif/paperplane_islamic.gif";
-import successIslamic from "../../assets/videos/success_islamic.mp4";
+import successIslamic from "../../assets/gif/success_islamic.gif";
 
 /* RAKElite */
 import { ReactComponent as processingEliteIc } from "../../assets/icons/elite/processing.svg";
@@ -60,7 +60,7 @@ import { ReactComponent as bankingElite } from "../../assets/icons/elite/banking
 import { ReactComponent as logoElite } from "../../assets/images/rakbankLogoElite.svg";
 import overviewElite from "../../assets/gif/overview_elite.gif";
 import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";
-import successElite from "../../assets/videos/success_elite.mp4";
+import successElite from "../../assets/gif/success_elite.gif";
 
 export const conventionalIconsSet = {
   availability: availabilityConventional,
