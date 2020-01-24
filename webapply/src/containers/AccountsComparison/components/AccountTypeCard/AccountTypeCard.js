@@ -1,5 +1,5 @@
 import React from "react";
-import check_ic from "../../../../assets/images/check.png";
+import check_ic from "../../../../assets/images/icons/circle_checked_o.svg";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 

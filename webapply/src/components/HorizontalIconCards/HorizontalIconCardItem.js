@@ -7,9 +7,9 @@ const style = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "380px",
-    height: "122px",
-    margin: "10px 10px 10px 0",
+    width: "calc(50% - 20px)",
+    minHeight: "122px",
+    margin: "10px",
     padding: "27px 20px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",
@@ -19,6 +19,9 @@ const style = {
     boxSizing: "border-box",
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       margin: "5px auto"
+    },
+    ["@media only screen and (max-width: 767px)"]: {
+      width: "100%"
     }
   },
   iconCardText: {

@@ -16,6 +16,7 @@ import { ReactComponent as logoConventional } from "../../assets/images/rakbankL
 import overviewConventoinal from "../../assets/gif/overview_reg.gif";
 import paperPlaneRegular from "../../assets/gif/paperplane_regular.gif";
 import submittedRegular from "../../assets/gif/submitted_regular.gif";
+import successRegular from "../../assets/gif/submitted_regular.gif";
 
 /* RAKIslamic */
 import { ReactComponent as balanceIslamic } from "../../assets/icons/islamic/balance.svg";
@@ -40,6 +41,7 @@ import { ReactComponent as logoIslamic } from "../../assets/images/rakbankLogoIs
 import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import paperPlaneIslamic from "../../assets/gif/paperplane_islamic.gif";
 import submittedIslamic from "../../assets/gif/submitted_islamic.gif";
+import successIslamic from "../../assets/gif/success_islamic.gif";
 
 /* RAKElite */
 import { ReactComponent as processingEliteIc } from "../../assets/icons/elite/processing.svg";
@@ -61,6 +63,7 @@ import { ReactComponent as logoElite } from "../../assets/images/rakbankLogoElit
 import overviewElite from "../../assets/gif/overview_elite.gif";
 import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";
 import submittedElite from "../../assets/gif/submitted_elite.gif";
+import successElite from "../../assets/gif/success_elite.gif";
 
 export const conventionalIconsSet = {
   availability: availabilityConventional,
@@ -79,7 +82,8 @@ export const conventionalIconsSet = {
   logo: logoConventional,
   overview: overviewConventoinal,
   awaiting: paperPlaneRegular,
-  submitted: submittedRegular
+  submitted: submittedRegular,
+  success: successRegular
 };
 
 export const islamicIconsSet = {
@@ -104,7 +108,8 @@ export const islamicIconsSet = {
   logo: logoIslamic,
   overview: overviewIslamic,
   awaiting: paperPlaneIslamic,
-  submitted: submittedIslamic
+  submitted: submittedIslamic,
+  success: successIslamic
 };
 
 export const eliteIconsSet = {
@@ -127,5 +132,6 @@ export const eliteIconsSet = {
   logo: logoElite,
   overview: overviewElite,
   awaiting: paperPlaneElite,
-  submitted: submittedElite
+  submitted: submittedElite,
+  success: successElite
 };

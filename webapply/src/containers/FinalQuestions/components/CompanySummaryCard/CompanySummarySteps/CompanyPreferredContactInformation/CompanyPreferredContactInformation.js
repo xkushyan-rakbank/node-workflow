@@ -44,6 +44,7 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
     }),
   primaryEmail: Yup.string()
     .required(getRequiredMessage("E-mail Address"))
+    .max(50, "Maximum 50 characters allowed")
     .email(getInvalidMessage("E-mail Address")),
   primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
     is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
