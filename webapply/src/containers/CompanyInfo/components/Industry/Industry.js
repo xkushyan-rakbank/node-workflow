@@ -72,9 +72,6 @@ export const Industry = ({ handleContinue }) => {
             </Grid>
             <Grid item md={6} sm={12}>
               <Field
-                classes={{
-                  menuItem: classes.industrySubCategory
-                }}
                 name="subCategory"
                 label="Industry sub-category"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
