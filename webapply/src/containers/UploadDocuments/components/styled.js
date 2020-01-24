@@ -128,7 +128,7 @@ export const useStyles = makeStyles({
     color: "#373737"
   },
   fileUploadPlaceholder: {
-    height: "50px",
+    minHeight: "50px",
     display: "flex",
     alignItems: "center",
     padding: "0 25px",
@@ -227,7 +227,6 @@ export const useStyles = makeStyles({
     lineHeight: ".6",
     letterSpacing: "normal",
     color: "#ea2925",
-    margin: "4px 0 0 ",
     "& svg": {
       marginRight: " 10px"
     }
