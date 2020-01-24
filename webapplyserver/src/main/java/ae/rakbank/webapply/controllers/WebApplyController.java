@@ -930,11 +930,13 @@ public class WebApplyController {
         setWebApplyEndpoints(objectMapper, initStateJSON, role);
         initStateJSON.set("prospect", getProspect(segment, product));
 
+        boolean recaptchaEnable = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaEnable").asText("N").equals("Y");
         String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
         JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
         initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
         initStateJSON.put("authorizationToken", authToken);
         initStateJSON.put("datalist", datalist);
+        initStateJSON.put("recaptchaEnable", recaptchaEnable);
         initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
         initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
         initStateJSON.put("rakValuePlusReadMoreUrl", baseUrls.get("RAKvaluePlusReadMoreUrl").asText());
