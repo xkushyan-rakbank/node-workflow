@@ -14,12 +14,12 @@ import { useIconsByAccount } from "../../utils/useIconsByAccount";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();
-  const icons = useIconsByAccount();
+  const { submitted } = useIconsByAccount();
 
   return accountNumbers.length > 0 ? (
     <div className={classes.container}>
       <div className={classes.title}>
-        <img src={icons["submitted"]} alt="checked" />
+        <img src={submitted} alt="checked" />
         <SectionTitleWithInfo
           title={`Meet the brand new accounts for ${organizationInfo.companyName}`}
         />
