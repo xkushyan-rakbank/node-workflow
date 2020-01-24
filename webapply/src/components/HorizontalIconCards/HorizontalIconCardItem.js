@@ -19,6 +19,9 @@ const style = {
     boxSizing: "border-box",
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       margin: "5px auto"
+    },
+    ["@media only screen and (max-width: 767px)"]: {
+      width: "100%"
     }
   },
   iconCardText: {

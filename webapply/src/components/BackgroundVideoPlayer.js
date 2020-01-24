@@ -20,10 +20,8 @@ const styles = {
     overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 11,
-    [`
-      @media only screen and (max-width: ${mobileResolution}px), 
-      (max-height: ${normalScrollHeight}px)
-    `]: {
+    [`@media only screen and (max-width: ${mobileResolution}px), 
+    (max-height: ${normalScrollHeight}px)`]: {
       top: "0!important"
     }
   },
