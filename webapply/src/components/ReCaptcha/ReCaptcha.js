@@ -1,6 +1,5 @@
 import React from "react";
 import ReCaptchaNotRobot from "./ReCaptchaNotRobot";
-import { IS_RECAPTCHA_ENABLE } from "../../constants";
 
 export const COMPONENTS_BY_TYPE = {
   NOT_ROBOT: ReCaptchaNotRobot
@@ -36,16 +35,14 @@ class ReCaptcha extends React.PureComponent {
   }
 
   addReCaptchaScriptToDOM() {
-    if (IS_RECAPTCHA_ENABLE) {
-      const script = document.createElement("script");
-      script.setAttribute("async", "");
-      script.setAttribute("defer", "");
-      script.setAttribute(
-        "src",
-        "https://www.google.com/recaptcha/api.js?onload=recaptchaOnloadCallback&render=explicit&hl=en"
-      );
-      document.body.appendChild(script);
-    }
+    const script = document.createElement("script");
+    script.setAttribute("async", "");
+    script.setAttribute("defer", "");
+    script.setAttribute(
+      "src",
+      "https://www.google.com/recaptcha/api.js?onload=recaptchaOnloadCallback&render=explicit&hl=en"
+    );
+    document.body.appendChild(script);
   }
 
   componentWillUnmount() {

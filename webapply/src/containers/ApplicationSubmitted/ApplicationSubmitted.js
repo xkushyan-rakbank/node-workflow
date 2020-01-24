@@ -8,17 +8,18 @@ import { InfoNote } from "../../components/InfoNote";
 import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/appConfig";
 
 import dotsBg from "../../assets/images/dots_bg.png";
-import docChecked from "../../assets/icons/docChecked.png";
 import bankingClock from "../../assets/icons/bankingClock.png";
 import { useStyles } from "./styled";
+import { useIconsByAccount } from "../../utils/useIconsByAccount";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();
+  const { submitted } = useIconsByAccount();
 
   return accountNumbers.length > 0 ? (
     <div className={classes.container}>
       <div className={classes.title}>
-        <img src={docChecked} alt="checked" />
+        <img src={submitted} alt="checked" />
         <SectionTitleWithInfo
           title={`Meet the brand new accounts for ${organizationInfo.companyName}`}
         />

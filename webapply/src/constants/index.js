@@ -59,8 +59,6 @@ export const UAE_CURRENCY = "AED";
 export const MAX_STAKEHOLDERS_LENGTH = 12;
 export const MAX_EMAIL_LENGTH = 50;
 
-export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
-
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";

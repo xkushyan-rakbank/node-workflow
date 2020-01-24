@@ -8,7 +8,7 @@ import {
   sideNavWidthXL
 } from "../../constants/styles";
 
-import { mobileResolution, normalScrollHeight } from "../../constants";
+import { mobileResolution } from "../../constants";
 
 const blobImages = {
   red: require("../../assets/images/bg-blobs/bg-blob-red.png"),
@@ -26,15 +26,12 @@ export const useStyles = makeStyles({
   formNav: {
     flex: `0 0 ${(sideNavWidthMD / 1220) * 100}%`,
     minWidth: `${sideNavWidthXL}px`,
-    // position: "relative",
+    position: "relative",
     paddingTop: "18vh",
     zIndex: "11",
     [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
       height: "100vh",
-      boxSizing: "border-box"
-    },
-    [`@media only screen and (min-width: ${mobileResolution +
-      1}px) and (max-height: ${normalScrollHeight}px)`]: {
+      boxSizing: "border-box",
       position: "sticky",
       top: 0
     },
