@@ -673,7 +673,10 @@ public class WebApplyController {
         logger.info("Begin login() method");
         logger.debug(String.format("login() method args, RequestBody=[%s]", requestBodyJSON.toString()));
 
-        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken(
+          requestBodyJSON.path("username").asText(null),
+          requestBodyJSON.path("password").asText(null)
+        );
         if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
             if (requestBodyJSON.has("recaptchaToken")) {
                 logger.info("Validate reCAPTCHA before saving applicant info.");
@@ -704,26 +707,7 @@ public class WebApplyController {
                 return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
             }
 
-            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
-                    MediaType.APPLICATION_JSON);
-
-            String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
-
-            try {
-                ResponseEntity<?> resp = invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request, "login()",
-                        "authenticateUserUri", MediaType.APPLICATION_JSON, null, null);
-                if (resp.getBody() instanceof JsonNode) {
-                    ((ObjectNode) resp.getBody()).set("oauth", oauthResponse.getBody());
-                }
-                return resp;
-            }
-            catch (Exception e) {
-                logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
-                ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                        "Unable to call endpoint " + url, e);
-                return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
+            return oauthResponse;
         }
         else {
             logger.error(String.format("OAuth Error in login() method , HttpStatus=[%s], message=[%s]",
