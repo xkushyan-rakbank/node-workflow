@@ -47,17 +47,17 @@ export const Input = ({
           error={isError}
           InputProps={{ ...InputProps, classes: { input: classes.input } }}
           InputLabelProps={{ shrink }}
-          onFocus={() => {
+          onFocus={event => {
             if (isIE) {
               setFocus(true);
             }
-            onFocus && onFocus();
+            onFocus && onFocus(event);
           }}
-          onBlur={() => {
+          onBlur={event => {
             if (isIE) {
               setFocus(false);
             }
-            onBlur && onBlur();
+            onBlur && onBlur(event);
           }}
         />
       </ContexualHelp>
