@@ -8,14 +8,12 @@ export const useStyles = makeStyles({
     alignItems: "center",
     width: "100%",
     borderRadius: 8,
-    boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
-    border: "solid 1px #e8e8e8",
     backgroundColor: "#ffffff",
-    maxWidth: 780,
+    maxWidth: "650px",
     margin: "0 auto",
     "& > img": {
-      marginBottom: "10px",
-      width: "350px"
+      marginBottom: "-55px",
+      width: "460px"
     }
   },
   message: {
@@ -24,9 +22,9 @@ export const useStyles = makeStyles({
     textAlign: "center",
     color: "#373737",
     fontSize: 20,
-    padding: "0 80px 80px",
+    lineHeight: 1.5,
     "& > p": {
-      fontSize: "16px"
+      marginBottom: "27px"
     }
   },
   appStatusLink: {
