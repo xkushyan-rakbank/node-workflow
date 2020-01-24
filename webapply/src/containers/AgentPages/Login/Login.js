@@ -8,7 +8,6 @@ import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../utils/validation";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
 import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
-import { IS_RECAPTCHA_ENABLE } from "../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
@@ -27,14 +26,15 @@ export const LoginComponent = ({
   setToken,
   setVerified,
   verifyToken,
-  recaptchaToken
+  recaptchaToken,
+  isRecaptchaEnable
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
 
-      if (IS_RECAPTCHA_ENABLE) {
+      if (isRecaptchaEnable) {
         loginData.recaptchaToken = recaptchaToken;
       }
 
@@ -95,7 +95,7 @@ export const LoginComponent = ({
 
             <Grid container direction="row" justify="space-between" alignItems="center">
               <ErrorBoundaryForReCaptcha>
-                {IS_RECAPTCHA_ENABLE && (
+                {isRecaptchaEnable && (
                   <ReCaptcha
                     onVerify={handleReCaptchaVerify}
                     onExpired={handleVerifiedFailed}
@@ -109,7 +109,7 @@ export const LoginComponent = ({
                   label="Next Step"
                   disabled={
                     Object.values(values).some(value => !value) ||
-                    (IS_RECAPTCHA_ENABLE && !recaptchaToken)
+                    (isRecaptchaEnable && !recaptchaToken)
                   }
                 />
               </div>

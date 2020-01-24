@@ -13,8 +13,8 @@ import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
 import routes from "./../../routes";
 import { log } from "../../utils/loggger";
-import { getAuthorizationHeader } from "./../selectors/appConfig";
-import { IS_RECAPTCHA_ENABLE, NEXT, SAVE } from "../../constants";
+import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
+import { NEXT, SAVE } from "../../constants";
 
 function* applicantInfoFormSaga(action) {
   try {
@@ -27,10 +27,11 @@ function* applicantInfoFormSaga(action) {
 
     yield put(updateProspect({ prospect: prospectUpdated }));
 
-    if (IS_RECAPTCHA_ENABLE) {
-      const state = yield select();
-      const recaptchaToken = state.reCaptcha.token;
-      prospectUpdated = { ...prospectUpdated, recaptchaToken };
+    if (getIsRecaptchaEnable(state)) {
+      prospectUpdated = {
+        ...prospectUpdated,
+        recaptchaToken: state.reCaptcha.token
+      };
     }
 
     const headers = getAuthorizationHeader(state);
