@@ -90,13 +90,9 @@ public class OAuthService {
 				return false;
 			}
 		}
-  }
-  
-  public ResponseEntity<JsonNode> getOAuthToken() {
-    return getOAuthToken(null, null);
-  }
+	}
 
-	public ResponseEntity<JsonNode> getOAuthToken(String username, String password) {
+	public ResponseEntity<JsonNode> getOAuthToken() {
 		logger.info("Begin getOAuthToken()");
 		String methodName = "getOAuthToken()";
 
@@ -112,11 +108,7 @@ public class OAuthService {
 				RestTemplate restTemplate = new RestTemplate();
 
 				ObjectMapper objectMapper = new ObjectMapper();
-        MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper);
-        if (username != null || password != null) {
-          requestMap.set("username", username);
-          requestMap.set("password", password);
-        }
+				MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper);
 
 				HttpHeaders headers = new HttpHeaders();
 				headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -197,7 +189,7 @@ public class OAuthService {
 		map.add("language_id", oAuthConfigs.get("OAuthLangId").asText());
 		map.add("login_flag", oAuthConfigs.get("OAuthLoginFlag").asText());
 		map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());
-    map.add("statemode", oAuthConfigs.get("OAuthStateMode").asText());
+		map.add("statemode", oAuthConfigs.get("OAuthStateMode").asText());
 		return map;
 	}
 
