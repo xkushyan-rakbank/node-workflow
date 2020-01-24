@@ -32,7 +32,7 @@ import { prospect } from "../../api/apiClient";
 import {
   APP_STOP_SCREEN_RESULT,
   screeningStatus,
-  APP_DECLINE_SCREEN_REASON,
+  APP_COMPLETED_SCREENING_STATUS,
   screeningStatusDefault,
   CONTINUE,
   AUTO,
@@ -52,15 +52,17 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const currScreeningTypes = preScreening.screeningResults.find(
-    screeningResult => screeningResult.screeningReason === APP_DECLINE_SCREEN_REASON
+  const currScreeningTypes = preScreening.screeningResults.filter(
+    screeningResult => screeningResult.screeningStatus !== APP_COMPLETED_SCREENING_STATUS
   );
+  const firstError = currScreeningTypes[0];
+
   const screenError = screeningStatus.find(
-    ({ screeningType }) => screeningType === currScreeningTypes.screeningType
+    ({ screeningType }) => screeningType === firstError.screeningType
   );
 
   if (screenError) {
-    screenError.text = currScreeningTypes.reasonNotes;
+    screenError.text = firstError.reasonNotes;
     yield put(setScreeningError(screenError));
   } else {
     yield put(setScreeningError(screeningStatusDefault));
