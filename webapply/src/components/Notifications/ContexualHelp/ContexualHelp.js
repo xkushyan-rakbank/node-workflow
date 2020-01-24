@@ -6,8 +6,7 @@ export const ContexualHelp = ({
   children,
   title = "",
   placement = "left",
-  isDisableHoverListener = true,
-  isShowContextualOnDisablEl
+  isDisableHoverListener = true
 }) => {
   const classes = useStyles();
 
@@ -22,7 +21,7 @@ export const ContexualHelp = ({
       placement={placement}
       title={title}
     >
-      {isShowContextualOnDisablEl ? <span>{children}</span> : children}
+      {children}
     </Tooltip>
   );
 };
