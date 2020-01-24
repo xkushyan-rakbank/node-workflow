@@ -104,7 +104,7 @@ export const screeningStatus = [
   },
   {
     error: "Not Registered In UAE",
-    icon: declinedRegular,
+    icon: callbackRegular,
     screeningType: "CountryOfIncorporation Check"
   },
   {
