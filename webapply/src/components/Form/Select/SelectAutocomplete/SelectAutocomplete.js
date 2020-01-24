@@ -33,7 +33,7 @@ export const SelectAutocomplete = ({
   const classes = useStyles(props);
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
-  const [isFocus, setFocus] = useState(false);
+  const [hasFocus, setFocus] = useState(false);
 
   const handleChange = selected => {
     const value = multiple
@@ -73,7 +73,7 @@ export const SelectAutocomplete = ({
             label,
             error: isError,
             InputLabelProps: {
-              shrink: isFocus || !!renderValue
+              shrink: hasFocus || !!renderValue
             }
           }}
           getOptionLabel={extractLabel}
