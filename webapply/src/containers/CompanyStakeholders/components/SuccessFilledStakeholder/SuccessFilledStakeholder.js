@@ -9,7 +9,7 @@ export const SuccessFilledStakeholder = ({ name }) => {
 
   return (
     <div className={classes.wrapper}>
-      <img src={icons["success"]} alt="SuccessStakeholder" />
+      <img src={icons.success} alt="SuccessStakeholder" />
       <div className={classes.successTitle}>
         Congrats! You have added
         <br /> <b>{name}</b> as a stakeholder
