@@ -4,10 +4,10 @@ import { useIconsByAccount } from "../../utils/useIconsByAccount";
 
 export const ServerRequestLoadingScreen = () => {
   const classes = useStyles();
-  const icons = useIconsByAccount();
+  const { awaiting } = useIconsByAccount();
   return (
     <div className={classes.appStatus}>
-      <img src={icons["awaiting"]} alt="error" />
+      <img src={awaiting} alt="error" />
     </div>
   );
 };
