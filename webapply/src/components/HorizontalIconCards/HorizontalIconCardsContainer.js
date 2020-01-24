@@ -6,7 +6,8 @@ const style = {
     display: "flex",
     flexWrap: "wrap",
     alignContent: "baseline",
-    minHeight: "388px"
+    minHeight: "388px",
+    margin: "0 -5px"
   }
 };
 

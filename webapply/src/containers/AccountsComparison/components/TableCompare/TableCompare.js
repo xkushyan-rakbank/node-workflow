@@ -9,11 +9,8 @@ import { useStyles } from "./styled";
 import routes from "../../../../routes";
 
 export const TableCompareComponent = ({ history, updateProspect, selectedAccount }) => {
-  const { INITIAL_OFFSET, SELECTED_ELEM_WIDTH, OFFSET } = sizes;
+  const { INITIAL_OFFSET, OFFSET } = sizes;
   const [offset, setOffset] = useState(INITIAL_OFFSET);
-  const [selectedAccountContainerWidth, setSelectedAccountContainerWidth] = useState(
-    SELECTED_ELEM_WIDTH
-  );
   const [activeAccount, setActiveAccount] = useState(accountTypes.currentAccount.position);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
   const classes = useStyles();
@@ -23,17 +20,6 @@ export const TableCompareComponent = ({ history, updateProspect, selectedAccount
   const RAKElite = useRef(null);
   const refs = [RAKstarter, CurrentAccount, RAKElite];
   const highlightSelectedAccount = useCallback(handleHighlightSelectedAccount, [selectedAccount]);
-
-  useEffect(() => {
-    const updateDimensionSelectedAccountContainer = () => {
-      const accountContainerWidth = RAKstarter.current.clientWidth - OFFSET * 2;
-      setSelectedAccountContainerWidth(accountContainerWidth);
-    };
-    updateDimensionSelectedAccountContainer();
-    return () => {
-      window.removeEventListener("resize", updateDimensionSelectedAccountContainer);
-    };
-  }, [OFFSET]);
 
   useEffect(() => {
     highlightSelectedAccount(selectedAccount);
@@ -84,7 +70,7 @@ export const TableCompareComponent = ({ history, updateProspect, selectedAccount
         <div className={classes.tableContainer}>
           <Paper
             classes={{ root: classes.selectedAccountContainer }}
-            style={{ left: `${offset}px`, width: selectedAccountContainerWidth }}
+            style={{ left: `${offset}px` }}
           />
           <Table classes={{ root: classes.tableRoot }}>
             <StyledTableHeader
