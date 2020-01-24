@@ -24,7 +24,7 @@ const industrySchema = Yup.object({
     is: industry => !!industry,
     then: Yup.array()
       .of(Yup.string().required(getRequiredMessage("Sub-category")))
-      // .required(getRequiredMessage("Sub-category"))
+      .required(getRequiredMessage("Sub-category"))
       .max(12, "Maximum 12 options allowed")
   })
 });
