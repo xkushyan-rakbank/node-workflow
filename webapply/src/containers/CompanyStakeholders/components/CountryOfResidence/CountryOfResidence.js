@@ -63,7 +63,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 name="eidNumber"
                 path={eidNumberPath}
                 label="Emirates ID"
-                placeholder="Emirates ID"
+                placeholder="784-1950-1234567-8"
                 disabled={values.residenceCountry !== UAE}
                 component={Input}
                 contextualHelpText={

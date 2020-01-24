@@ -73,7 +73,8 @@ export const useStyles = makeStyles({
       paddingRight: "0"
     },
     "& th:first-child, & td:first-child": {
-      paddingLeft: "0"
+      paddingLeft: "0",
+      width: "200px"
     }
   }
 });
