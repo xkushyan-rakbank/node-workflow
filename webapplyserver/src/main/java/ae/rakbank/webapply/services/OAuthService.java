@@ -2,8 +2,6 @@ package ae.rakbank.webapply.services;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -37,16 +35,11 @@ public class OAuthService {
 
 	private static final Logger logger = LoggerFactory.getLogger(OAuthService.class);
 
-
-
-	private FileHelper fileHelper;
-	private ServletContext servletContext;
+	@Autowired
+	FileHelper fileHelper;
 
 	@Autowired
-	public OAuthService(FileHelper fileHelper, ServletContext servletContext) {
-		this.fileHelper = fileHelper;
-		this.servletContext = servletContext;
-	}
+	ServletContext servletContext;
 
 	private JsonNode oAuthUri = null;
 
@@ -100,10 +93,6 @@ public class OAuthService {
 	}
 
 	public ResponseEntity<JsonNode> getOAuthToken() {
-		return getOAuthToken(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
-	}
-
-	public ResponseEntity<JsonNode> getOAuthToken(String username, String password) {
 		logger.info("Begin getOAuthToken()");
 		String methodName = "getOAuthToken()";
 
@@ -119,7 +108,7 @@ public class OAuthService {
 				RestTemplate restTemplate = new RestTemplate();
 
 				ObjectMapper objectMapper = new ObjectMapper();
-				MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper, username, password);
+				MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper);
 
 				HttpHeaders headers = new HttpHeaders();
 				headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -187,7 +176,7 @@ public class OAuthService {
 	}
 
 
-	private MultiValueMap<String, String> buildOAuthRequest(ObjectMapper objectMapper, String username, String password) {
+	private MultiValueMap<String, String> buildOAuthRequest(ObjectMapper objectMapper) {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 
 		map.add("grant_type", oAuthConfigs.get("OAuthGrantType").asText());
@@ -195,8 +184,8 @@ public class OAuthService {
 		map.add("client_secret", oAuthConfigs.get("OAuthClientSecret").asText());
 		map.add("bank_id", oAuthConfigs.get("OAuthBankId").asText());
 		map.add("channel_id", oAuthConfigs.get("OAuthChannelId").asText());
-		map.add("username", username);
-		map.add("password", password);
+		map.add("username", oAuthConfigs.get("OAuthUsername").asText());
+		map.add("password", oAuthConfigs.get("OAuthPassword").asText());
 		map.add("language_id", oAuthConfigs.get("OAuthLangId").asText());
 		map.add("login_flag", oAuthConfigs.get("OAuthLoginFlag").asText());
 		map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());
