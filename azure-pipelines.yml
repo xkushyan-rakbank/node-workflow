@@ -136,7 +136,8 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -144,7 +145,24 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
-                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/webapplyServer/"
+                    "target": "onboarding/develop/$(Build.BuildNumber)/webapplyServer/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload to UAT'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
+                    "target": "onboarding/release/$(Build.BuildNumber)/webapplyServer/"
                 }
               ]
             }
@@ -194,7 +212,8 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -202,7 +221,24 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
-                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/document_uploader/"
+                    "target": "onboarding/develop/$(Build.BuildNumber)/document_uploader/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload to UAT'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
+                    "target": "onboarding/releae/$(Build.BuildNumber)/document_uploader/"
                 }
               ]
             }
