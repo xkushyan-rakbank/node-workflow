@@ -5,6 +5,10 @@ import TextField from "@material-ui/core/TextField";
 import { digitRegExp } from "../../constants";
 import { useStyles } from "./styled";
 
+const BACKSPACE_KEY = 8;
+const LEFT_ARROW_KEY = 37;
+const RIGHT_ARROW_KEY = 39;
+
 const inputRefs = [];
 const bindNodeRef = index => node => {
   inputRefs[index] = node;
@@ -32,18 +36,33 @@ export const OtpVerification = ({ onChange, code }) => {
     [code, onChange]
   );
 
+  const handleKeyUp = event => {
+    const { keyCode, target } = event;
+    const inputIndex = parseInt(target.name, 10);
+    const prevInput = inputRefs[inputIndex - 1];
+    const nextInput = inputRefs[inputIndex + 1];
+    if (keyCode === BACKSPACE_KEY && prevInput) {
+      prevInput.focus();
+    }
+    if (keyCode === LEFT_ARROW_KEY && prevInput) {
+      prevInput.focus();
+    }
+    if (keyCode === RIGHT_ARROW_KEY && nextInput) {
+      nextInput.focus();
+    }
+  };
+
   return code.map((value, index) => (
     <Grid key={index} className={classes.squareInput}>
       <TextField
+        autoFocus={index === 0}
         type="text"
-        name={`${index}`}
+        name={String(index)}
         variant="outlined"
-        inputProps={{
-          maxLength: 1,
-          ref: bindNodeRef(index)
-        }}
+        inputProps={{ maxLength: 1, ref: bindNodeRef(index) }}
         onFocus={handleInputFocus}
         onChange={handleChange}
+        onKeyUp={handleKeyUp}
         value={value}
       />
     </Grid>
