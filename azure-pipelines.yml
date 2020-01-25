@@ -67,7 +67,7 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -79,12 +79,12 @@ jobs:
                 }
               ]
             }
-          condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
           collectBuildInfo: true
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to UAT'
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -96,7 +96,7 @@ jobs:
                 }
               ]
             }
-          condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
           collectBuildInfo: true          
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
         displayName: 'Publish Build Info to Artifactory'
