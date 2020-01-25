@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
 
 import VideoBackground from "./BackgroundVideoPlayer";
-import { mobileResolution, normalScrollHeight } from "../constants";
+import { mobileResolution, normalScrollHeight, tabletResolution } from "../constants";
 
 const transitionDuration = 400;
 const style = {
@@ -35,6 +35,11 @@ const style = {
     paddingTop: "18vh",
     boxSizing: "border-box",
     padding: "0 26px",
+    [`@media only screen and
+     (max-width: ${tabletResolution}px)
+      and (min-width: ${mobileResolution}px)`]: {
+      padding: "18vh 20px"
+    },
     "@media only screen and (max-height: 900px)": {
       justifyContent: "center",
       paddingTop: "0px"
