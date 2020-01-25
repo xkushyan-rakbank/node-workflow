@@ -80,7 +80,7 @@ jobs:
               ]
             }
         condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
-          collectBuildInfo: true
+        collectBuildInfo: true
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
@@ -97,7 +97,7 @@ jobs:
               ]
             }
         condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
-          collectBuildInfo: true          
+        collectBuildInfo: true          
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
         displayName: 'Publish Build Info to Artifactory'
         inputs:
