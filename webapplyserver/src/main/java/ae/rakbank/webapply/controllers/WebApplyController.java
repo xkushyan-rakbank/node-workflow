@@ -56,23 +56,23 @@ public class WebApplyController {
     @Value("${app.name}")
     private String appName;
 
-    @Autowired
     FileHelper fileHelper;
-
-    @Autowired
     OAuthService oauthClient;
-
-    @Autowired
     RecaptchaService captchaService;
-
-    @Autowired
     CSRFTokenHelper csrfTokenHelper;
-
-    @Autowired
     ServletContext servletContext;
+    LogFileService logFileService;
 
     @Autowired
-    LogFileService logFileService;
+    public WebApplyController(FileHelper fileHelper, OAuthService oauthClient, RecaptchaService captchaService, CSRFTokenHelper csrfTokenHelper, ServletContext servletContext, LogFileService logFileService) {
+        this.fileHelper = fileHelper;
+        this.oauthClient = oauthClient;
+        this.captchaService = captchaService;
+        this.csrfTokenHelper = csrfTokenHelper;
+        this.servletContext = servletContext;
+        this.logFileService = logFileService;
+    }
+
 
     private JsonNode appConfigJSON = null;
 
