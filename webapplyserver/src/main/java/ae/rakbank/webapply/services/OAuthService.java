@@ -37,8 +37,6 @@ public class OAuthService {
 
 	private static final Logger logger = LoggerFactory.getLogger(OAuthService.class);
 
-
-
 	private FileHelper fileHelper;
 	private ServletContext servletContext;
 
