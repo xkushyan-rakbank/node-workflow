@@ -258,7 +258,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
                               <Field
                                 name={`signatories[${index}].primaryPhoneNo`}
                                 path={`${prospectPath}.primaryPhoneNo`}
-                                label="Landline number (optional)"
+                                label="Landline phone no. (optional)"
                                 placeholder="42xxxxxx"
                                 component={Input}
                                 type="number"
