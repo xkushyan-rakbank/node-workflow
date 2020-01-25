@@ -16,9 +16,9 @@ export const formStepper = [
   },
   { step: 2, title: "Company Information", path: routes.companyInfo },
   { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
-  { step: 4, title: "Final questions", path: routes.finalQuestions },
+  { step: 4, title: "Final Questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
-  { step: 6, title: "Select services", path: routes.selectServices }
+  { step: 6, title: "Select Services", path: routes.selectServices }
 ];
 
 export const searchProspectStepper = [
