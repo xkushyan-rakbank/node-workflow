@@ -56,12 +56,12 @@ public class WebApplyController {
     @Value("${app.name}")
     private String appName;
 
-    FileHelper fileHelper;
-    OAuthService oauthClient;
-    RecaptchaService captchaService;
-    CSRFTokenHelper csrfTokenHelper;
-    ServletContext servletContext;
-    LogFileService logFileService;
+    private FileHelper fileHelper;
+    private OAuthService oauthClient;
+    private RecaptchaService captchaService;
+    private CSRFTokenHelper csrfTokenHelper;
+    private ServletContext servletContext;
+    private LogFileService logFileService;
 
     @Autowired
     public WebApplyController(FileHelper fileHelper, OAuthService oauthClient, RecaptchaService captchaService, CSRFTokenHelper csrfTokenHelper, ServletContext servletContext, LogFileService logFileService) {

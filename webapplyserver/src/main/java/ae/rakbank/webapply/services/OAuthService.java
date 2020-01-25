@@ -37,11 +37,16 @@ public class OAuthService {
 
 	private static final Logger logger = LoggerFactory.getLogger(OAuthService.class);
 
-	@Autowired
-	FileHelper fileHelper;
+
+
+	private FileHelper fileHelper;
+	private ServletContext servletContext;
 
 	@Autowired
-	ServletContext servletContext;
+	public OAuthService(FileHelper fileHelper, ServletContext servletContext) {
+		this.fileHelper = fileHelper;
+		this.servletContext = servletContext;
+	}
 
 	private JsonNode oAuthUri = null;
 
