@@ -49,10 +49,21 @@ public class OAuthService {
 
 	@PostConstruct
 	public void init() {
+
+		logger.debug("[OAuthService]: Start init method in OAuthService..");
+
 		JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
+		logger.debug("[OAuthService]: appConfigJSON is injected successfully ");
+
 		oAuthUri = appConfigJSON.get("OAuthURIs");
+		logger.debug("[OAuthService]: oAuthUri is injected successfully");
+
 		oAuthBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("OAuthBaseUrl").asText();
+		logger.debug("[OAuthService]: oAuthBaseUrl is injected successfully");
+
 		oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
+		logger.debug("[OAuthService]: oAuthConfigs is injected successfully");
+		logger.debug("[OAuthService]: init method in OAuthService is finished successfully");
 	}
 
 	private boolean isAccessTokenExpired() {
