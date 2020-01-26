@@ -99,7 +99,7 @@ export const ExpandedDetailedOptionsCard = ({
         ) : accountType === accountNames.starter && value === rakValuePackagePlusName ? (
           "Included in RAKstarter"
         ) : (
-          "Available upgrade"
+          "Upgrade available"
         )}
       </div>
     </div>
