@@ -69,7 +69,7 @@ export const ExpandedDetailedOptionsCard = ({
               <div
                 className={cx("text", classes.indent)}
                 dangerouslySetInnerHTML={{
-                  __html: islamicBanking ? option.textIslamic : option.text
+                  __html: islamicBanking && option.textIslamic ? option.textIslamic : option.text
                 }}
               />
               {option.items && (
