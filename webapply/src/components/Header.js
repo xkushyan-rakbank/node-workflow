@@ -13,7 +13,7 @@ import logo from "../assets/images/rakbankLogo.svg";
 
 const styles = {
   header: {
-    position: "fixed",
+    position: "absolute",
     top: "30px",
     left: "40px",
     display: "flex",
