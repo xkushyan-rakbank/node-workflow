@@ -9,7 +9,8 @@ import {
   DatePicker,
   CustomSelect,
   AutoSaveField as Field,
-  NumberFormat
+  NumberFormat,
+  SelectAutocomplete
 } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
@@ -88,7 +89,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               label="License issuing authority"
               path="prospect.organizationInfo.licenseIssuingAuthority"
               datalistId="licenseIssuingAuthority"
-              component={CustomSelect}
+              component={SelectAutocomplete}
               inputProps={{ tabIndex: 0 }}
             />
           </Grid>
