@@ -1,26 +1,35 @@
 package ae.rakbank.webapply.commons;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+@Builder
+@Getter
+@AllArgsConstructor
 public class ApiError {
 
 	private HttpStatus status;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-	private LocalDateTime timestamp;
+	private Integer statusCode;
+	private String timestamp;
 	private String message;
 	private String debugMessage;
 	private String exception;
+	private StackTraceElement[] stackTrace;
 
 	private ApiError() {
-		timestamp = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		timestamp = LocalDateTime.now().format(formatter);
 	}
 
 	public ApiError(HttpStatus status) {
@@ -54,7 +63,6 @@ public class ApiError {
 		if (!EnvUtil.isProd()) {
 			this.exception = ex.getMessage();
 		}
-
 	}
 
 	ApiError(HttpStatus status, String message, Throwable ex) {
@@ -74,9 +82,12 @@ public class ApiError {
 	public String getMessage() {
 		return message;
 	}
-
 	public HttpStatus getStatus() {
 		return status;
+	}
+
+	public void setStackTrace(StackTraceElement[] stackTrace) {
+		this.stackTrace = stackTrace;
 	}
 
 	public String getException() {
@@ -86,7 +97,12 @@ public class ApiError {
 		return null;
 	}
 
-	public JsonNode toJson() {
+	public String toJsonString() throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(this);
+	}
+
+	public JsonNode toJsonNode() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode errorResponse = objectMapper.createObjectNode();
 		errorResponse.put("errorType", status.name());
@@ -101,5 +117,4 @@ public class ApiError {
 		errorResponse.set("errors", errors);
 		return errorResponse;
 	}
-
 }

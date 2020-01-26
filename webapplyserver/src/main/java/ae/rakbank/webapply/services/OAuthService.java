@@ -133,14 +133,14 @@ public class OAuthService {
 								e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 						ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
 								e.getResponseBodyAsString(), e);
-						return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
 					}
 					catch (HttpServerErrorException e) {
 						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
 								e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 						ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 								e.getResponseBodyAsString(), e);
-						return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+						return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 					}
 
 					logger.info(String.format(
