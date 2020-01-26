@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
-import { getSendProspectToAPIInfo, getUiConfig } from "../../../../store/selectors/appConfig";
+import { getSendProspectToAPIInfo, getDatalist } from "../../../../store/selectors/appConfig";
 import { SignatorySummaryCardComponent } from "./SignatorySummaryCard";
 
 const mapStateToProps = state => ({
-  uiConfig: getUiConfig(state),
+  datalist: getDatalist(state),
   ...getSendProspectToAPIInfo(state)
 });
 
