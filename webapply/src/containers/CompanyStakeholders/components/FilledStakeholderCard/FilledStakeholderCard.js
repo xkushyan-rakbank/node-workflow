@@ -9,7 +9,7 @@ export const FilledStakeholderCard = ({
   firstName,
   middleName,
   lastName,
-  signatoryRights,
+  accountSigningInfo,
   changeEditableStep,
   index,
   kycDetails: { shareHoldingPercentage } = {}
@@ -25,7 +25,9 @@ export const FilledStakeholderCard = ({
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>{`${firstName} ${middleName} ${lastName}`}</div>
-          {signatoryRights && <div className={classes.signatoryField}>Signatory Rights</div>}
+          {accountSigningInfo && accountSigningInfo.authorityType && (
+            <div className={classes.signatoryField}>{accountSigningInfo.authorityType}</div>
+          )}
           <div
             className={classes.shareholdingField}
           >{`Shareholding ${shareHoldingPercentage}%`}</div>
