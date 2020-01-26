@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import get from "lodash/get";
 
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import {
@@ -12,7 +13,7 @@ import {
   InputGroup
 } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
-import { getInputValueById } from "../../../../store/selectors/input";
+import { getSignatories } from "../../../../store/selectors/appConfig";
 import {
   UAE_MOBILE_PHONE_REGEX,
   UAE_LANDLINE_PHONE_REGEX,
@@ -156,7 +157,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
 );
 
 const mapStateToProps = (state, { index }) => ({
-  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index])
+  isSignatory: get(getSignatories(state)[index], "kycDetails.isSignatory", false)
 });
 
 export const PreferredContactInformation = connect(mapStateToProps)(

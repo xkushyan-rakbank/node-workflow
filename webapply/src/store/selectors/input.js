@@ -13,14 +13,6 @@ export const getDynamicInputName = (config, indexes) => {
     : config.name;
 };
 
-export const getInputNameById = (state, id, indexes = []) => {
-  return getDynamicInputName(getFieldConfigById(state, id), indexes);
-};
-
-export const getInputValueById = (state, id, indexes = []) => {
-  return get(state.appConfig, getInputNameById(state, id, indexes));
-};
-
 export const getGeneralInputProps = (state, id, indexes) => {
   const config = getFieldConfigById(state, id);
   const name = getDynamicInputName(config, indexes);
