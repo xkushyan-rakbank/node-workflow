@@ -135,7 +135,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               component={Input}
               InputProps={{
                 inputComponent: NumberFormat,
-                inputProps: { tabIndex: 0 }
+                inputProps: { tabIndex: 0, allowNegative: false, decimalScale: 0 }
               }}
             />
           </Grid>

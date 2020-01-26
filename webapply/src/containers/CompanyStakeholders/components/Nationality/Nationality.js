@@ -119,7 +119,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           <Field
                             name={`passportDetails[${passportIndex}].hasAnotherCitizenship`}
                             path={`${passportDetails}.hasAnotherCitizenship`}
-                            label="This person has another citizenship"
+                            label="This person has a second citizenship"
                             component={Checkbox}
                             onChange={createAddCitizenshipHandler(
                               values,
@@ -153,8 +153,8 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                         <Field
                           name={`passportDetails[${passportIndex}].passportNumber`}
                           path={`${passportDetails}.passportNumber`}
-                          label="Passport Number"
-                          placeholder="Passport Number"
+                          label="Passport number"
+                          placeholder="Passport number"
                           component={Input}
                           contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
                             Example: 'P-123/1950/456 to be entered as P1231950456'"
@@ -165,7 +165,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                         <Field
                           name={`passportDetails[${passportIndex}].diplomatPassport`}
                           path={`${passportDetails}.diplomatPassport`}
-                          label="This is a diplomatic Passport"
+                          label="This is a diplomatic passport"
                           component={Checkbox}
                           inputProps={{ tabIndex: 0 }}
                         />

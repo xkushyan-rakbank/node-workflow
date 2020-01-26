@@ -68,6 +68,7 @@ export const Industry = ({ handleContinue }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                tabSelectsValue={false}
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -88,6 +89,7 @@ export const Industry = ({ handleContinue }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                tabSelectsValue={false}
               />
             </Grid>
           </Grid>
