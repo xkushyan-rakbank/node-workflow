@@ -21,7 +21,7 @@ import { useStyles } from "./styled";
 const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
 // eslint-disable-next-line max-len
 const DEBIT_CARD_INFO =
-  "Debit cards will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
+  "Business debit cards will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
 // eslint-disable-next-line max-len
 const CHEQUE_BOOK_INFO =
   "Cheque book will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
@@ -94,7 +94,7 @@ export const ChannelsComponent = ({
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <Subtitle title="Debit Cards" />
+          <Subtitle title="Business debit Cards" />
           <Tooltip
             classes={classes}
             placement="left"
@@ -104,7 +104,7 @@ export const ChannelsComponent = ({
               <Field
                 name="debitCardApplied"
                 path={pathDebitCardApplied}
-                label="I want debit cards for all the company signatories"
+                label="I want business debit cards for all the company signatories"
                 classes={{ infoTitle: classes.infoTitle }}
                 component={Checkbox}
                 infoTitle={DEBIT_CARD_INFO}
