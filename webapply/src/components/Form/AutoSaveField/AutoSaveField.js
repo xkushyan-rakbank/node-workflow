@@ -6,7 +6,7 @@ import isEqual from "lodash/isEqual";
 
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
-import { getUiConfig } from "../../../store/selectors/appConfig";
+import { getDatalist } from "../../../store/selectors/appConfig";
 
 export const AutoSaveField = ({
   name,
@@ -19,7 +19,7 @@ export const AutoSaveField = ({
 }) => {
   const dispatch = useDispatch();
   const appConfig = useSelector(state => state.appConfig);
-  const uiConfig = useSelector(getUiConfig);
+  const datalist = useSelector(getDatalist);
   const {
     values,
     touched,
@@ -81,10 +81,10 @@ export const AutoSaveField = ({
   }, [isLoadedDefaultValueFromStore, value]);
 
   const options = useMemo(() => {
-    if (path && datalistId && uiConfig) {
-      const fieldConfig = Object.values(uiConfig).find(item => item.datalistId === datalistId);
+    if (path && datalistId && datalist) {
+      const fieldConfig = datalist[datalistId] || [];
 
-      return filterOptions(get(fieldConfig, "datalist", []));
+      return filterOptions(fieldConfig);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, datalistId, filterOptions]);

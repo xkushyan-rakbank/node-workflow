@@ -2,6 +2,8 @@ import get from "lodash/get";
 
 export const getUiConfig = state => state.appConfig.uiConfig || {};
 
+export const getDatalist = state => state.appConfig.datalist || {};
+
 export const getEndpoints = state => state.appConfig.endpoints || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
