@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { routerToAddPaddingInSlider } from "../../constants/styles";
+import {
+  routerToAddPaddingInSlider,
+  sideNavWidthLG,
+  sideNavWidthMD,
+  sideNavWidthSM
+} from "../../constants/styles";
 import { mobileResolution } from "../../constants";
 
 export const useStyles = makeStyles({
@@ -33,6 +38,7 @@ export const useStyles = makeStyles({
     flex: "1 1 auto",
     minHeight: "0px",
     minWidth: "1px",
+    paddingLeft: `${sideNavWidthLG}px`,
     "& h2": {
       fontSize: "46px",
       fontWeight: "600",
@@ -44,7 +50,17 @@ export const useStyles = makeStyles({
       }
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      paddingBottom: 40
+      paddingBottom: 40,
+      paddingLeft: 0
+    },
+    [`@media only screen and (max-width: 1420px) and (min-width: ${mobileResolution + 1}px)`]: {
+      paddingLeft: `${sideNavWidthLG}px`
+    },
+    [`@media only screen and (max-width: 1300px) and (min-width: ${mobileResolution + 1}px)`]: {
+      paddingLeft: `${sideNavWidthMD}px`
+    },
+    [`@media only screen and (max-width: 1220px) and (min-width: ${mobileResolution + 1}px)`]: {
+      paddingLeft: `${sideNavWidthSM}px`
     }
   },
   formInner: {
