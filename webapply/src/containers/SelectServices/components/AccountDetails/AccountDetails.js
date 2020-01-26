@@ -21,7 +21,7 @@ import {
 import { useStyles } from "./styled";
 
 const INFO_TITLE =
-  "You will get a separate account number for each currency you select. Note that currencies other than AED are subject to internal approval.";
+  "You will get a separate account number for each currency you select. Note that only AED accounts are eligible for business debit card, cheque book and RAKvalue package";
 
 const accountDetailsSchema = Yup.object({
   accountCurrencies: Yup.array().required(getRequiredNotTextInputMessage("Currencies")),
