@@ -8,11 +8,11 @@ import { useIconsByAccount } from "../../../../../utils/useIconsByAccount";
 
 import { ICONS, Icon } from "../../../../../components/Icons/Icon";
 import { ContainedButton } from "../../../../../components/Buttons/ContainedButton";
-import { getAccountType, getIsIslamicBanking } from "../../../../../store/selectors/appConfig";
+import { getAccountType } from "../../../../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
 
-export const rakValuePackagePlusName = "RAKvalue SME PLUS";
+export const rakValuePackagePlusName = "RAKvalue PLUS";
 
 const getUrlReadMore = (urls, islamicBanking, value) => {
   const {
@@ -43,8 +43,6 @@ export const ExpandedDetailedOptionsCard = ({
   readMoreUrls
 }) => {
   const accountType = useSelector(getAccountType);
-  const islamicBanking = useSelector(getIsIslamicBanking);
-
   const classes = useStyles();
   const { plus: Plus, max: Max } = useIconsByAccount();
   const href = getUrlReadMore(readMoreUrls, accountType, value);
@@ -68,9 +66,7 @@ export const ExpandedDetailedOptionsCard = ({
               <Icon className={classes.listIcon} name={ICONS.checkOutline} alt="check" />
               <div
                 className={cx("text", classes.indent)}
-                dangerouslySetInnerHTML={{
-                  __html: islamicBanking && option.textIslamic ? option.textIslamic : option.text
-                }}
+                dangerouslySetInnerHTML={{ __html: option.text }}
               />
               {option.items && (
                 <ul className={classes.nestedOptions}>

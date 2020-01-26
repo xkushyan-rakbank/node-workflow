@@ -60,7 +60,7 @@ export const useStyles = makeStyles({
     "& th": {
       fontSize: "14px",
       color: "#888888",
-      padding: "0 3px 0 0",
+      padding: "0 5px 0 0",
       fontFamily: "Open Sans"
     },
     "& td": {

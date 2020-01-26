@@ -40,7 +40,7 @@ export const LoginComponent = ({
 
       loginInfoForm(loginData);
     },
-    [loginInfoForm, recaptchaToken, isRecaptchaEnable]
+    [loginInfoForm, recaptchaToken]
   );
   const handleReCaptchaVerify = useCallback(
     token => {

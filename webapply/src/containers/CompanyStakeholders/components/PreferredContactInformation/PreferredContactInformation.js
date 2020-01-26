@@ -85,8 +85,8 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
             <Field
               name="primaryEmail"
               path={`prospect.signatoryInfo[${index}].contactDetails.primaryEmail`}
-              label="E-mail address"
-              placeholder="E-mail address"
+              label="E-mail Address"
+              placeholder="E-mail Address"
               component={Input}
               disabled={!isSignatory}
               InputProps={{

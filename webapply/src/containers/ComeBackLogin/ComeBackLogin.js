@@ -65,7 +65,7 @@ const ComeBackLoginComponent = ({
 
       generateOtpCode(loginData);
     },
-    [generateOtpCode, recaptchaToken, isRecaptchaEnable]
+    [generateOtpCode, recaptchaToken]
   );
   const handleReCaptchaVerify = useCallback(
     token => {

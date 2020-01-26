@@ -48,7 +48,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
               <Field
                 name="residenceCountry"
                 path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
-                label="Country of residence"
+                label="Country of Residence"
                 component={SelectAutocomplete}
                 disabled={isSignatory}
                 datalistId="country"
