@@ -26,7 +26,8 @@ import {
   EXTRA_DOC_UPLOAD_SUCCESS,
   DELETE_EXTRA_DOC_UPLOAD_SUCCESS,
   uploadFilesProgress,
-  CANCEL_DOC_UPLOAD
+  CANCEL_DOC_UPLOAD,
+  uploadFilesFail
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
@@ -117,6 +118,7 @@ function* uploadDocumentsBgSync({
 
   try {
     const state = yield select();
+    const config = cloneDeep(state.appConfig);
     const headers = getAuthorizationHeader(state);
     const prospectId = getProspectId(state) || "COSME0017";
 
@@ -126,7 +128,6 @@ function* uploadDocumentsBgSync({
 
     const response = yield call(() => uploadPromise);
 
-    const config = cloneDeep(state.appConfig);
     const documents = config.prospect.documents;
     const fileName = get(response, "data.fileName", "");
     const additionalProps = { ...docProps, fileName };
@@ -147,7 +148,7 @@ function* uploadDocumentsBgSync({
 
     yield put(setConfig(config));
   } catch (error) {
-    log(error);
+    yield put(uploadFilesFail({ [documentKey]: { error } }));
   } finally {
     if (yield cancelled()) {
       source.cancel();
