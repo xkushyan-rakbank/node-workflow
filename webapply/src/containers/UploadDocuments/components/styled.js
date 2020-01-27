@@ -137,7 +137,7 @@ export const useStyles = makeStyles({
   ContentBox: {
     alignItems: "center",
     flexGrow: "1",
-    paddingLeft: "18px"
+    padding: "7px 18px"
   },
 
   uploadedFileName: {
@@ -158,7 +158,11 @@ export const useStyles = makeStyles({
     fontStyle: "normal",
     fontStretch: "normal",
     lineHeight: ".6",
-    letterSpacing: "normal"
+    letterSpacing: "normal",
+    margin: "10px 0 0 0",
+    "& p": {
+      margin: 0
+    }
   },
   ControlsBox: {
     width: "130px",
@@ -190,7 +194,8 @@ export const useStyles = makeStyles({
     lineHeight: "1.17",
     letterSpacing: "normal",
     color: "#373737",
-    paddingLeft: "5px"
+    display: "flex",
+    alignItems: "center"
   },
   signatoryRights: {
     width: "39px",
