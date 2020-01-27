@@ -84,7 +84,6 @@ export const CompanyDetails = ({ handleContinue }) => {
                 name="vatRegistrationNumber"
                 label="VAT registration number (Optional)"
                 placeholder="123456789012345"
-                shrink={true}
                 path="prospect.organizationInfo.vatRegistrationNumber"
                 infoTitle="This should be the same as your TRN number of UAE"
                 component={Input}
