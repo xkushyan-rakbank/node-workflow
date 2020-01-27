@@ -1,7 +1,7 @@
 import {
   UPLOAD_FILES_PROGRESS,
   UPLOAD_FILES_FAIL,
-  UPLOAD_FILES_SUCCESS
+  DOC_UPLOADER
 } from "../actions/getProspectDocuments";
 import { handleActions } from "../../utils/redux-utils";
 
@@ -12,6 +12,10 @@ export const initialState = {
 
 export default handleActions(
   {
+    [DOC_UPLOADER]: (state, { docProps: documentKey }) => ({
+      ...state,
+      uploadErrors: { ...state.uploadErrors, [documentKey]: null }
+    }),
     [UPLOAD_FILES_PROGRESS]: (state, { progress }) => ({
       ...state,
       progress: { ...state.progress, ...progress }
@@ -19,10 +23,6 @@ export default handleActions(
     [UPLOAD_FILES_FAIL]: (state, error) => ({
       ...state,
       uploadErrors: { ...state.uploadErrors, ...error }
-    }),
-    [UPLOAD_FILES_SUCCESS]: (state, { payload }) => ({
-      ...state,
-      uploadErrors: { ...state.uploadErrors, ...payload }
     })
   },
   initialState
