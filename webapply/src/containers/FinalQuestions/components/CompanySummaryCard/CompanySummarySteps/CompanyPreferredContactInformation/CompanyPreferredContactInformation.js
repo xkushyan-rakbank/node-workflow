@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { InfoTitle } from "../../../../../../components/Notifications";
 import {
   CustomSelect,
   Input,
@@ -158,13 +157,6 @@ export const CompanyPreferredContactInformationComponent = ({
                 </InputGroup>
               </Grid>
             </Grid>
-
-            <div className={classes.infoTitleWrap}>
-              <InfoTitle
-                classes={{ wrapper: classes.infoTitle }}
-                title="Heads up! We can only send chequebooks if you use a phone number from the UAE."
-              />
-            </div>
             <div className={classes.buttonWrapper}>
               <ContinueButton type="submit" />
             </div>
