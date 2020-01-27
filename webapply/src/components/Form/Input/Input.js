@@ -62,7 +62,7 @@ export const Input = ({
         />
       </ContexualHelp>
       {isIE && field.value.length === 0 && hasFocus && (
-        <mark className={classes.iePlaceholder}>{placeholder}</mark>
+        <div className={classes.iePlaceholder}>{placeholder}</div>
       )}
 
       {isError && <ErrorMessage error={errorMessage} />}

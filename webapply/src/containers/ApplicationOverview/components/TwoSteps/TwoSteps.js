@@ -19,10 +19,10 @@ export const TwoSteps = () => {
         <SectionTitleWithInfo title="Two easy steps" />
         <div className={classes.indent}>
           <IconCardsContainer>
-            <IconCardItem minWidth="200px" title="First" text="You answer a few questions">
+            <IconCardItem minWidth="200px" title="First" text="You fill a couple of questions">
               <Interrogation alt="interrogation" />
             </IconCardItem>
-            <IconCardItem minWidth="200px" title="Then" text="We meet you to get your signature">
+            <IconCardItem minWidth="200px" title="Then" text="We call you to sign the account">
               <Signature alt="signature" />
             </IconCardItem>
           </IconCardsContainer>

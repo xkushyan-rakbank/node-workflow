@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
 
 import { checkIsChequeBookApplied, checkIsDebitCardApplied } from "./utils";
 import { NAME_REGEX } from "../../../../utils/validation";
@@ -21,7 +20,7 @@ import { useStyles } from "./styled";
 const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
 // eslint-disable-next-line max-len
 const DEBIT_CARD_INFO =
-  "Business debit cards will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
+  "Debit cards will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
 // eslint-disable-next-line max-len
 const CHEQUE_BOOK_INFO =
   "Cheque book will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
@@ -94,26 +93,22 @@ export const ChannelsComponent = ({
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <Subtitle title="Business debit Cards" />
-          <Tooltip
-            classes={classes}
-            placement="left"
-            title={"Business debit card will be send to the signatory's preferred mailing address"}
-          >
-            <span>
-              <Field
-                name="debitCardApplied"
-                path={pathDebitCardApplied}
-                label="I want business debit cards for all the company signatories"
-                classes={{ infoTitle: classes.infoTitle }}
-                component={Checkbox}
-                infoTitle={DEBIT_CARD_INFO}
-                disabled={isDebitCardDisabled}
-                isLoadDefaultValueFromStore={false}
-                inputProps={{ tabIndex: 0 }}
-              />
-            </span>
-          </Tooltip>
+          <Subtitle title="Debit Cards" />
+
+          <Field
+            name="debitCardApplied"
+            path={pathDebitCardApplied}
+            label="I want debit cards for all the company signatories"
+            classes={{ infoTitle: classes.infoTitle }}
+            component={Checkbox}
+            infoTitle={DEBIT_CARD_INFO}
+            disabled={isDebitCardDisabled}
+            isLoadDefaultValueFromStore={false}
+            inputProps={{ tabIndex: 0 }}
+            contextualHelpText="Business debit card will be send to the signatory's preferred mailing address"
+            contextualHelpProps={{ isDisableHoverListener: false }}
+          />
+
           {isHasSignatories && values.debitCardApplied && (
             <SignatoriesList stakeholders={stakeholders} />
           )}
@@ -121,27 +116,21 @@ export const ChannelsComponent = ({
           <Divider classes={{ divider: classes.divider }} />
 
           <Subtitle title="Cheque book" />
-          <Tooltip
-            classes={classes}
-            placement="left"
-            title={
-              "Cheque book will be printed with the company name given and will be send to the Company address"
-            }
-          >
-            <span>
-              <Field
-                name="chequeBookApplied"
-                path={pathChequeBookApplied}
-                label="I want a cheque book for the company"
-                classes={{ infoTitle: classes.infoTitle }}
-                component={Checkbox}
-                infoTitle={CHEQUE_BOOK_INFO}
-                disabled={isChequeBookDisabled}
-                isLoadDefaultValueFromStore={false}
-                inputProps={{ tabIndex: 0 }}
-              />
-            </span>
-          </Tooltip>
+
+          <Field
+            name="chequeBookApplied"
+            path={pathChequeBookApplied}
+            label="I want a cheque book for the company"
+            classes={{ infoTitle: classes.infoTitle }}
+            component={Checkbox}
+            infoTitle={CHEQUE_BOOK_INFO}
+            disabled={isChequeBookDisabled}
+            isLoadDefaultValueFromStore={false}
+            inputProps={{ tabIndex: 0 }}
+            contextualHelpText="Cheque book will be printed with the company name given and will be send to the Company address"
+            contextualHelpProps={{ isDisableHoverListener: false }}
+          />
+
           <Divider />
 
           <Subtitle title="Bank statements" />
