@@ -36,7 +36,7 @@ export const UploadDocuments = ({
   const inputEl = useRef(null);
   const documentKey = useMemo(() => nanoid(), []);
   const isUploaded = document.uploadStatus === "Uploaded";
-  const isUploadError = Object.keys(uploadErrorMessage).length && uploadErrorMessage[documentKey];
+  const isUploadError = uploadErrorMessage[documentKey];
 
   const fileUploadClick = event => (event.target.value = null);
 
