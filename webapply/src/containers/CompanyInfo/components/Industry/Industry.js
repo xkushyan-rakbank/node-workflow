@@ -1,40 +1,87 @@
 import React from "react";
-import { Formik, Form } from "formik";
+import { connect } from "react-redux";
+import { Formik, FieldArray, Form, getIn } from "formik";
 import * as Yup from "yup";
+import uniqueId from "lodash/uniqueId";
 import Grid from "@material-ui/core/Grid";
+import get from "lodash/get";
 
-import { AutoSaveField as Field } from "../../../../components/Form";
-import { SelectAutocomplete } from "../../../../components/Form";
+import { getOrgKYCDetails } from "../../../../store/selectors/appConfig";
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
+import { MAX_INDUSTRIES_LENGTH } from "../../constants";
+
+import { AutoSaveField as Field, SelectAutocomplete } from "../../../../components/Form";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
+import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import { useStyles } from "../../styled";
 
-const initialValues = {
-  industry: [],
-  subCategory: []
+const initialIndustry = {
+  industry: "",
+  subCategory: ""
 };
 
-const industrySchema = Yup.object({
-  industry: Yup.array()
-    .of(Yup.string().required(getRequiredMessage("Industry")))
-    .required(getRequiredMessage("Industry"))
-    .max(12, "Maximum 12 options allowed"),
-  subCategory: Yup.array().when("industry", {
-    is: industry => !!industry,
-    then: Yup.array()
-      .of(Yup.string().required(getRequiredMessage("Sub-category")))
-      .required(getRequiredMessage("Sub-category"))
-      .max(12, "Maximum 12 options allowed")
-  })
+const industrySchema = Yup.object().shape({
+  industries: Yup.array().of(
+    Yup.object().shape({
+      industry: Yup.string().required(getRequiredMessage("Industry")),
+      subCategory: Yup.string().when("industry", {
+        is: industry => !!industry,
+        then: Yup.string().required(getRequiredMessage("Sub-category"))
+      })
+    })
+  )
 });
 
-export const Industry = ({ handleContinue }) => {
+export const IndustryStep = ({ handleContinue, industries, updateProspect }) => {
   const classes = useStyles();
+
+  const addIndustryHandler = arrayHelper => () => {
+    arrayHelper.push({ ...initialIndustry, id: uniqueId() });
+  };
+
+  const isAdditionalIndustryDisabled = (values, industryIndex) => {
+    return !(
+      getIn(values, `industries[${industryIndex}].industry`, false) &&
+      getIn(values, `industries[${industryIndex}].subCategory`, false)
+    );
+  };
+
+  const handleDelete = (industryIndex, values, setFieldValue) => {
+    const newValues = values.industries.filter((_, index) => industryIndex !== index);
+    const newValuesIndustries = newValues.length ? newValues.map(item => item.industry) : [""];
+    const newValuesSubCategories = newValues.length
+      ? newValues.map(item => item.subCategory)
+      : [""];
+    setFieldValue(
+      "industries",
+      newValues.length ? newValues : [{ ...initialIndustry, id: uniqueId() }]
+    );
+    updateProspect({
+      "prospect.orgKYCDetails.industryMultiSelect[0]": {
+        industry: newValuesIndustries,
+        subCategory: newValuesSubCategories
+      }
+    });
+  };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        industries:
+          get(industries, "[0].industry[0].length", 0) > 0
+            ? industries[0].industry.map((item, index) => ({
+                industry: item,
+                subCategory: industries[0].subCategory[index],
+                id: uniqueId()
+              }))
+            : industries.map(item => ({
+                ...item,
+                id: uniqueId()
+              }))
+      }}
       validationSchema={industrySchema}
       validateOnChange={false}
       onSubmit={handleContinue}
@@ -42,46 +89,112 @@ export const Industry = ({ handleContinue }) => {
       {({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
-              <Field
-                multiple
-                name="industry"
-                label="Industry"
-                path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
-                datalistId="industry"
-                component={SelectAutocomplete}
-                contextualHelpText="This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. Example: if business / commercial / licensed activity is 'E Commerce', please select industry as 'Service' & sub-industry as 'Computer & IT Industry' "
-                contextualHelpProps={{ isDisableHoverListener: false }}
-                onChange={selectedValue => {
-                  setFieldValue("industry", selectedValue);
-                  setFieldValue("subCategory", "");
-                }}
-                InputProps={{
-                  inputProps: { tabIndex: 0 }
-                }}
-                tabSelectsValue={false}
-              />
-            </Grid>
-            <Grid item md={6} sm={12}>
-              <Field
-                name="subCategory"
-                label="Industry sub-category"
-                path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
-                component={SelectAutocomplete}
-                datalistId="industry"
-                filterOptions={options =>
-                  options
-                    .filter(item => values.industry.includes(item.value))
-                    .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
-                }
-                multiple
-                disabled={!(values.industry || []).length}
-                InputProps={{
-                  inputProps: { tabIndex: 0 }
-                }}
-                tabSelectsValue={false}
-              />
-            </Grid>
+            <FieldArray
+              name="industries"
+              render={arrayHelper =>
+                values.industries.map((item, industryIndex) => {
+                  // eslint-disable-next-line max-len
+                  const currentIndustry = `prospect.orgKYCDetails.industryMultiSelect[0].industry[${industryIndex}]`;
+                  // eslint-disable-next-line max-len
+                  const currentSubCategory = `prospect.orgKYCDetails.industryMultiSelect[0].subCategory[${industryIndex}]`;
+
+                  const isHaveIndustryAndSubCategory = item.industry && item.subCategory;
+
+                  return (
+                    <React.Fragment key={item.id}>
+                      <Grid item md={isHaveIndustryAndSubCategory ? 5 : 6} sm={12}>
+                        <Field
+                          name={`industries[${industryIndex}].industry`}
+                          path={currentIndustry}
+                          label="Industry"
+                          component={SelectAutocomplete}
+                          datalistId="industry"
+                          changeProspect={(prospect, value) => {
+                            if (industryIndex) {
+                              return prospect;
+                            }
+
+                            return {
+                              ...prospect,
+                              // eslint-disable-next-line max-len
+                              [`prospect.orgKYCDetails.industryMultiSelect[0].industry[${industryIndex}]`]: value
+                            };
+                          }}
+                          shrink={true}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
+                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
+                        />
+                      </Grid>
+                      <Grid item md={isHaveIndustryAndSubCategory ? 5 : 6} sm={12}>
+                        <Field
+                          name={`industries[${industryIndex}].subCategory`}
+                          path={currentSubCategory}
+                          label="Industry sub-category"
+                          component={SelectAutocomplete}
+                          datalistId="industry"
+                          filterOptions={options => {
+                            // All previous industries with selected industry
+                            const previousSelectedIndustries = values.industries.filter(
+                              item => item.industry === values.industries[industryIndex].industry
+                            );
+                            // All previous selected subcategories for selected industry
+                            const previousSelectedSubCategories = previousSelectedIndustries.map(
+                              item => item.subCategory
+                            );
+
+                            return options
+                              .filter(({ value }) => item.industry.includes(value))
+                              .reduce((acc, curr) => {
+                                // All subCategories for selected industry
+                                const allSubCategories = curr.subGroup;
+                                // Array with current selected subCategory
+                                const currentSelectedValue = allSubCategories.filter(
+                                  ({ value }) => value === item.subCategory
+                                );
+                                // Not selected subCategories yet
+                                const availableSubCategories = allSubCategories.filter(
+                                  sub => !previousSelectedSubCategories.includes(sub.value)
+                                );
+
+                                return curr.subGroup && availableSubCategories
+                                  ? [...acc, ...availableSubCategories, ...currentSelectedValue]
+                                  : acc;
+                              }, []);
+                          }}
+                          disabled={!item.industry}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
+                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
+                        />
+                      </Grid>
+                      <Grid item md={isHaveIndustryAndSubCategory ? 2 : 0} sm={12}>
+                        {isHaveIndustryAndSubCategory && (
+                          <LinkButton
+                            className={classes.deleteButton}
+                            clickHandler={() => handleDelete(industryIndex, values, setFieldValue)}
+                            title="Delete"
+                          />
+                        )}
+                      </Grid>
+
+                      <Grid item md={12} sm={12}>
+                        {values.industries.length === industryIndex + 1 &&
+                          values.industries.length < MAX_INDUSTRIES_LENGTH && (
+                            <AddButton
+                              title="Add another industry"
+                              onClick={addIndustryHandler(arrayHelper)}
+                              disabled={isAdditionalIndustryDisabled(values, industryIndex)}
+                            />
+                          )}
+                      </Grid>
+                    </React.Fragment>
+                  );
+                })
+              }
+            />
           </Grid>
           <Grid
             className={classes.continueButton}
@@ -97,3 +210,18 @@ export const Industry = ({ handleContinue }) => {
     </Formik>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    industries: get(getOrgKYCDetails(state), "industryMultiSelect", [])
+  };
+};
+
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export const Industry = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IndustryStep);
