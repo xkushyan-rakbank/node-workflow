@@ -34,7 +34,7 @@ export const FinalQuestionStepComponent = ({
       step={item.step}
       title={item.title}
       infoTitle={item.infoTitle}
-      isActiveStep={step === item.step}
+      isActiveStep={5 === item.step}
       isFilled={availableSteps.includes(item.step)}
       handleClick={createSetStepHandler(item.step)}
       handleContinue={handleContinue}

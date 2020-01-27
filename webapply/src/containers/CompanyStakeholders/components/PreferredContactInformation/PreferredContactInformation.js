@@ -113,7 +113,6 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
                 label="Mobile Number"
                 placeholder="55xxxxxxx"
-                shrink={true}
                 component={Input}
                 disabled={!isSignatory}
                 InputProps={{
