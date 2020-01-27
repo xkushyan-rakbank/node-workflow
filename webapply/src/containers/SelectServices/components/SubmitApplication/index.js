@@ -8,7 +8,7 @@ import {
   getSignatories,
   getOrganizationInfo,
   getIsAgentLoggedIn,
-  getIsApiInfoLoading
+  getIsSendingProspect
 } from "../../../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { updateActionType, updateSaveType } from "../../../../store/actions/appConfig";
@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
   signatoryInfo: getSignatories(state),
   organizationInfo: getOrganizationInfo(state),
   isAgentLoggedIn: getIsAgentLoggedIn(state),
-  isApplicationSubmitting: getIsApiInfoLoading(state)
+  isApplicationSubmitting: getIsSendingProspect(state)
 });
 
 const mapDispatchToProps = {

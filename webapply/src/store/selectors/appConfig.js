@@ -22,7 +22,7 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
 export const getSendProspectToAPIInfo = state => state.sendProspectToAPI || {};
 
-export const getIsApiInfoLoading = state => getSendProspectToAPIInfo(state).loading;
+export const getIsSendingProspect = state => getSendProspectToAPIInfo(state).loading;
 
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
