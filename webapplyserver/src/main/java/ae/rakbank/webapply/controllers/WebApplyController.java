@@ -644,7 +644,6 @@ public class WebApplyController {
                             "Unable to call endpoint " + uriComponents.toString(), e);
                     return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
-
             }
             else {
 
@@ -706,7 +705,7 @@ public class WebApplyController {
                 return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
             }
 
-            //TODO add required fields to response!! (agentName, agentId, agentRole, deptName)
+            //TODO add required fields to the response!!!   (agentName, agentId, agentRole, deptName)
 
             return oauthResponse;
         }

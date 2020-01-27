@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @AllArgsConstructor
 public class ApiError {
 
+    public static final String timestampPattern = "yyyy-MM-dd HH:mm:ss,SSS";
+
 	private HttpStatus status;
 	private Integer statusCode;
 	private String timestamp;
@@ -28,7 +30,7 @@ public class ApiError {
 	private StackTraceElement[] stackTrace;
 
 	private ApiError() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
 		timestamp = LocalDateTime.now().format(formatter);
 	}
 

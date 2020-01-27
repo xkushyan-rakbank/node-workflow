@@ -3,6 +3,7 @@ package ae.rakbank.webapply.controllers;
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.exception.ApiException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @RestControllerAdvice
 public class AdviceController extends ResponseEntityExceptionHandler {
 
@@ -27,6 +29,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
             headers = apiException.getHeaders();
             headers.set("Exception", apiException.getClass().getSimpleName());
         }
+        headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
 
         HttpStatus status;
         if (apiException.getStatus() == null) {
@@ -42,33 +45,34 @@ public class AdviceController extends ResponseEntityExceptionHandler {
             apiError = apiException.getApiError();
             apiError.setStackTrace(apiException.getStackTrace());
         }
-
-        try {
-            String jsonString = apiError.toJsonString();
-            return new ResponseEntity<>(jsonString, headers, status);
-        } catch (JsonProcessingException e) {
-            return new ResponseEntity<>("Failed to convert ApiError object to json: " + e.getMessage(), headers, status);
-        }
+        return sendResponse(apiException, headers, status, apiError);
     }
 
     @ExceptionHandler({ Exception.class })
-    public ResponseEntity<Object> handleException(Exception ex) {
+    public ResponseEntity<Object> handleException(Exception apiException) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Exception", ex.getClass().getSimpleName());
+        headers.set("Exception", apiException.getClass().getSimpleName());
+        headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        ApiError apiError = getDefaultApiError(ex, status);
+        ApiError apiError = getDefaultApiError(apiException, status);
+        return sendResponse(apiException, headers, status, apiError);
+    }
+
+    private ResponseEntity<Object> sendResponse(Exception apiException, HttpHeaders headers, HttpStatus status, ApiError apiError) {
         try {
             String jsonString = apiError.toJsonString();
+            log.error(jsonString, apiException);
             return new ResponseEntity<>(jsonString, headers, status);
         } catch (JsonProcessingException e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>("Failed to convert ApiError object to json: " + e.getMessage(), headers, status);
         }
     }
 
     private ApiError getDefaultApiError(Exception ex, HttpStatus status) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApiError.timestampPattern);
         return ApiError.builder()
                 .exception(ex.getClass().getSimpleName())
                 .message(ex.getMessage())
