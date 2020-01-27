@@ -85,8 +85,7 @@ export const UploadDocuments = ({
       });
     } else if (docOwner === STAKEHOLDER_DOCUMENTS) {
       updateProspect({
-        [`prospect.documents[${STAKEHOLDER_DOCUMENTS}][${stakeholderIndex}].d
-  ocuments[${index}].uploadStatus`]: "NotUploaded"
+        [`prospect.documents[${STAKEHOLDER_DOCUMENTS}][${stakeholderIndex}].documents[${index}].uploadStatus`]: "NotUploaded"
       });
     }
     cancelDocUpload(documentKey);
