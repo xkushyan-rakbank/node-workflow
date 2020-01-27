@@ -3,14 +3,17 @@ export const rakValuesList = [
     optionList: [
       {
         text: "One stop business solution <strong>Basic</strong>",
-        items: ["Automated accounting", "Smart invoicing", "Integrated VAT solution"]
+        items: ["Connected banking experience", "Automated accounting", "Integrated VAT solution"]
       },
-      { text: "Business insurance <strong>Basic</strong>" },
-      { text: "Host of other banking benefits" }
+      {
+        text: "Business insurance <strong>Basic</strong>",
+        textIslamic: "Business takaful <strong>Basic</strong>"
+      },
+      { text: "Host of other banking and lifestyle benefits" }
     ],
     isIncluded: true,
     cost: 49,
-    value: "RAKvalue PLUS",
+    value: "RAKvalue SME PLUS",
     buttonLabel: "Keep PLUS",
     notSelectedLabel: "Upgrade to PLUS",
     disabledLabelForForeignCurrency: "Not Applicable",
@@ -20,14 +23,17 @@ export const rakValuesList = [
     optionList: [
       {
         text: "One stop business solution <strong>Advanced</strong>",
-        items: ["Automated accounting", "Smart invoicing", "Integrated VAT solution"]
+        items: ["Connected banking experience", "Automated accounting", "Integrated VAT solution"]
       },
-      { text: "Business insurance <strong>Advanced</strong>" },
-      { text: "Host of other banking benefits" }
+      {
+        text: "Business insurance <strong>Advanced</strong>",
+        textIslamic: "Business takaful <strong>Advanced</strong>"
+      },
+      { text: "Host of other banking and lifestyle benefits" }
     ],
     isIncluded: false,
     cost: 149,
-    value: "RAKvalue MAX",
+    value: "RAKvalue SME MAX",
     buttonLabel: "Keep MAX",
     notSelectedLabel: "Upgrade to MAX",
     disabledLabelForForeignCurrency: "Not Applicable",
