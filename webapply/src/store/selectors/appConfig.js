@@ -22,6 +22,8 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
 export const getSendProspectToAPIInfo = state => state.sendProspectToAPI || {};
 
+export const getIsSendingProspect = state => getSendProspectToAPIInfo(state).loading;
+
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
 export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
@@ -38,7 +40,9 @@ export const getScreeningResults = state => state.sendProspectToAPI.screeningRes
 
 export const getLoginParam = state => state.appConfig.login;
 
-export const getIsAgentLoggedIn = state => state.login;
+export const getAgentLogin = state => state.login;
+
+export const getIsAgentLoggedIn = state => getAgentLogin(state).loginStatus;
 
 export const getSearchInfo = state => state.appConfig.searchInfo || {};
 
