@@ -136,7 +136,7 @@ export const UploadDocuments = ({
             <div>{icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
             <div className={classes.contentBox}>
               <div className={classes.uploadFileName}>
-                {isUploaded ? document.fileName : selectedFile.name}
+                {selectedFile.name}
                 <span className={classes.signatoryRights}>
                   {isUploaded ? document.fileSize : selectedFile.size} Bytes
                 </span>
