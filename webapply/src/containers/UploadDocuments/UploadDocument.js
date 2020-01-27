@@ -69,7 +69,7 @@ export const UploadDocument = ({
       <div className="linkContainer">
         <BackLink path={routes.finalQuestions} />
         <SubmitButton
-          disabled={false}
+          disabled={requiredDocsCount > uploadedDocsCount}
           handleClick={goToSelectService}
           label="Next Step"
           justify="flex-end"

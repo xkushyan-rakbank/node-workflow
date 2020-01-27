@@ -89,7 +89,7 @@ export const getLoading = state => state.appConfig.loading;
 export const getAuthToken = state => state.appConfig.authorizationToken;
 
 export const getAuthorizationHeader = state => {
-  const authToken = getAuthToken(state) || "19DE3367D0983CDECA7C806594E40E52F3F5BDCA";
+  const authToken = getAuthToken(state);
 
   return {
     headers: { Authorization: `Bearer ${authToken}` }
