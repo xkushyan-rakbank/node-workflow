@@ -32,7 +32,6 @@ const style = {
     flexDirection: "column",
     height: "100vh",
     position: "relative",
-    paddingTop: "18vh",
     boxSizing: "border-box",
     padding: "0 26px",
     [`@media only screen and
