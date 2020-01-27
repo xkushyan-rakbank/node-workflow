@@ -35,7 +35,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
     <Formik
       initialValues={{
         residenceCountry: UAE,
-        eidNumber: ""
+        eidNumber: "784"
       }}
       onSubmit={handleContinue}
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
