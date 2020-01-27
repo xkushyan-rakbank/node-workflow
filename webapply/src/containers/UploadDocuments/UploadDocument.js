@@ -18,7 +18,8 @@ export const UploadDocument = ({
   progress,
   updateProspect,
   uploadedDocsCount,
-  requiredDocsCount
+  requiredDocsCount,
+  uploadErrorMessage
 }) => {
   const classes = useStyles();
 
@@ -45,6 +46,7 @@ export const UploadDocument = ({
               cancelDocUpload={cancelDocUpload}
               updateProspect={updateProspect}
               progress={progress}
+              uploadErrorMessage={uploadErrorMessage}
             />
           </div>
           {documents.stakeholdersDocuments && (
@@ -57,6 +59,7 @@ export const UploadDocument = ({
                 cancelDocUpload={cancelDocUpload}
                 updateProspect={updateProspect}
                 progress={progress}
+                uploadErrorMessage={uploadErrorMessage}
               />
             </div>
           )}

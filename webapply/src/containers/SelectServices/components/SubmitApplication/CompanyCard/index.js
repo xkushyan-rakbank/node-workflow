@@ -56,7 +56,7 @@ export const CompanyCard = ({
 
       <div className={classes.grayText}>{accountSignInMsg}</div>
       {isDebitCardApplied && (
-        <div className={classes.grayText}>Debit cards for all signatories</div>
+        <div className={classes.grayText}>Business debit cards for all signatories</div>
       )}
       {isChequeBookApplied && <div className={classes.grayText}>Cheque book for the company</div>}
       {isOnlineBankingApplied ? (

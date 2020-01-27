@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { InfoTitle } from "../../../../../../components/Notifications";
 import {
   CustomSelect,
   Input,
@@ -125,7 +124,6 @@ export const CompanyPreferredContactInformationComponent = ({
                     path="prospect.organizationInfo.contactDetails.primaryMobileNo"
                     label="Mobile number"
                     placeholder="55xxxxxxx"
-                    shrink={true}
                     component={Input}
                     contextualHelpText="This number will be used as primary contact for Transaction Alerts and queries related to Business. If you give an international number, then Cheque book will not be issued."
                     InputProps={{
@@ -158,13 +156,6 @@ export const CompanyPreferredContactInformationComponent = ({
                 </InputGroup>
               </Grid>
             </Grid>
-
-            <div className={classes.infoTitleWrap}>
-              <InfoTitle
-                classes={{ wrapper: classes.infoTitle }}
-                title="Heads up! We can only send chequebooks if you use a phone number from the UAE."
-              />
-            </div>
             <div className={classes.buttonWrapper}>
               <ContinueButton type="submit" />
             </div>

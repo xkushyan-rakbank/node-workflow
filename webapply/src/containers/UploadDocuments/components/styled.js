@@ -132,8 +132,7 @@ export const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     padding: "0 25px",
-    borderTop: "solid 1px rgba(230, 230, 230, 0.5)",
-    cursor: "pointer"
+    borderTop: "solid 1px rgba(230, 230, 230, 0.5)"
   },
   ContentBox: {
     alignItems: "center",
@@ -219,15 +218,25 @@ export const useStyles = makeStyles({
     paddingLeft: "11px"
   },
   ErrorExplanation: {
+    display: "flex",
+    alignItems: "center",
     fontSize: "12px",
     fontWeight: "normal",
     fontStyle: "normal",
     fontStretch: "normal",
     lineHeight: ".6",
     letterSpacing: "normal",
-    color: "#ea2925"
+    color: "#ea2925",
+    margin: "4px 0 0 ",
+    "& svg": {
+      marginRight: " 10px"
+    }
   },
-
+  tryAgain: {
+    textDecoration: "underline",
+    marinLeft: "3px",
+    cursor: "pointer"
+  },
   cancel: {
     width: 20,
     border: "solid 1px #e8e8e8",
@@ -240,7 +249,8 @@ export const useStyles = makeStyles({
     justifyContent: "center",
     padding: 1,
     fontSize: 15,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    cursor: "pointer"
   },
   defaultInput: {
     display: "none"

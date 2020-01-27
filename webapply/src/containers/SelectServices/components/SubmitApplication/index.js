@@ -7,7 +7,8 @@ import {
   getAccountInfo,
   getSignatories,
   getOrganizationInfo,
-  getIsAgentLoggedIn
+  getIsAgentLoggedIn,
+  getIsSendingProspect
 } from "../../../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { updateActionType, updateSaveType } from "../../../../store/actions/appConfig";
@@ -18,7 +19,8 @@ const mapStateToProps = state => ({
   accountInfo: getAccountInfo(state),
   signatoryInfo: getSignatories(state),
   organizationInfo: getOrganizationInfo(state),
-  isAgentLoggedIn: getIsAgentLoggedIn(state)
+  isAgentLoggedIn: getIsAgentLoggedIn(state),
+  isApplicationSubmitting: getIsSendingProspect(state)
 });
 
 const mapDispatchToProps = {

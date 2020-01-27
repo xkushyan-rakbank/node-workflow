@@ -673,7 +673,11 @@ public class WebApplyController {
         logger.info("Begin login() method");
         logger.debug(String.format("login() method args, RequestBody=[%s]", requestBodyJSON.toString()));
 
-        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+//        ResponseEntity<JsonNode> oauthResponse = oauthClient.getOAuthToken();
+
+        ResponseEntity<JsonNode> oauthResponse =
+                oauthClient.getOAuthToken(requestBodyJSON.get("username").asText(), requestBodyJSON.get("password").asText());
+
         if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
             if (requestBodyJSON.has("recaptchaToken")) {
                 logger.info("Validate reCAPTCHA before saving applicant info.");
@@ -704,7 +708,11 @@ public class WebApplyController {
                 return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
             }
 
-            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
+            //TODO add required fields !!
+
+            return oauthResponse;
+
+            /*HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
                     MediaType.APPLICATION_JSON);
 
             String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
@@ -722,7 +730,7 @@ public class WebApplyController {
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         "Unable to call endpoint " + url, e);
                 return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            }*/
 
         }
         else {

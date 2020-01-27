@@ -8,7 +8,7 @@ export const accountsInfo = {
   },
   [accountNames.currentAccount]: {
     title: "Business Current Account",
-    subtitle: "Our most flexible account for established businesses.",
+    subtitle: "Our most flexible account for growing businesses",
     islamicSubtitle: "Our most flexible account for established businesses "
   },
   [accountNames.elite]: {

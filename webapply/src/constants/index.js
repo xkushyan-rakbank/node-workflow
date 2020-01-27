@@ -16,9 +16,9 @@ export const formStepper = [
   },
   { step: 2, title: "Company Information", path: routes.companyInfo },
   { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
-  { step: 4, title: "Final questions", path: routes.finalQuestions },
+  { step: 4, title: "Final Questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
-  { step: 6, title: "Select services", path: routes.selectServices }
+  { step: 6, title: "Select Services", path: routes.selectServices }
 ];
 
 export const searchProspectStepper = [
@@ -64,6 +64,7 @@ export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
 
 export const mobileResolution = 955;
+export const tabletResolution = 1200;
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";

@@ -84,7 +84,6 @@ export const CompanyDetails = ({ handleContinue }) => {
                 name="vatRegistrationNumber"
                 label="VAT registration number (Optional)"
                 placeholder="123456789012345"
-                shrink={true}
                 path="prospect.organizationInfo.vatRegistrationNumber"
                 infoTitle="This should be the same as your TRN number of UAE"
                 component={Input}
@@ -102,7 +101,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 changeProspect={(_, value, path) => ({ [path]: value || "0" })}
                 InputProps={{
                   inputComponent: NumberFormat,
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, allowNegative: false, decimalScale: 0 }
                 }}
               />
             </Grid>
