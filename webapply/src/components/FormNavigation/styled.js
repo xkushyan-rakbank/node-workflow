@@ -38,14 +38,17 @@ export const useStyles = makeStyles({
     [portraitOrientationQueryIPads]: {
       paddingTop: "270px"
     },
-    "@media only screen and (max-width: 1420px)": {
-      minWidth: `${sideNavWidthLG}px`
+    [`@media only screen and (min-width: ${mobileResolution}px) and (max-width: 1420px)`]: {
+      minWidth: `${sideNavWidthLG}px`,
+      maxWidth: `${sideNavWidthLG}px`
     },
-    "@media only screen and (max-width: 1300px)": {
-      minWidth: `${sideNavWidthMD}px`
+    [`@media only screen and (min-width: ${mobileResolution}px) and (max-width: 1300px)`]: {
+      minWidth: `${sideNavWidthMD}px`,
+      maxWidth: `${sideNavWidthMD}px`
     },
-    "@media only screen and (max-width: 1220px)": {
-      minWidth: `${sideNavWidthSM}px`
+    [`@media only screen and (min-width: ${mobileResolution}px) and (max-width: 1220px)`]: {
+      minWidth: `${sideNavWidthSM}px`,
+      maxWidth: `${sideNavWidthSM}px`
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       display: "flex",
