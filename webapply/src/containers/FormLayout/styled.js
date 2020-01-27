@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 
+import { mobileResolution, tabletResolution } from "../../constants";
 import {
   routerToAddPaddingInSlider,
   sideNavWidthLG,
   sideNavWidthMD,
   sideNavWidthSM
 } from "../../constants/styles";
-import { mobileResolution } from "../../constants";
 
 export const useStyles = makeStyles({
   formLayout: {
@@ -72,6 +72,12 @@ export const useStyles = makeStyles({
     },
     [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
       overflowY: "auto"
+    },
+    [`@media only screen and
+     (max-width: ${tabletResolution}px)
+      and (min-width: ${mobileResolution}px)`]: {
+      padding: "0",
+      justifyContent: "center"
     }
   },
   mainContainer: {

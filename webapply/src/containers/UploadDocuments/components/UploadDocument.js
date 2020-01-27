@@ -99,7 +99,6 @@ export const UploadDocuments = ({
         onChange={fileUploadChange}
         onClick={fileUploadClick}
         ref={inputEl}
-        multiple
       />
 
       <>
