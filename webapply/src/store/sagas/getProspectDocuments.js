@@ -18,8 +18,7 @@ import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClien
 import {
   getProspectId,
   getProspectDocuments as getDocuments,
-  getAuthorizationHeader,
-  getUploadDocumentsErrors
+  getAuthorizationHeader
 } from "../selectors/appConfig";
 import {
   RETRIEVE_DOC_UPLOADER,
@@ -122,11 +121,6 @@ function* uploadDocumentsBgSync({
     const config = cloneDeep(state.appConfig);
     const headers = getAuthorizationHeader(state);
     const prospectId = getProspectId(state) || "COSME0017";
-    const uploadDocError = getUploadDocumentsErrors(state);
-
-    if (uploadDocError[documentKey]) {
-      uploadDocError[documentKey] = null;
-    }
 
     const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, headers);
 
