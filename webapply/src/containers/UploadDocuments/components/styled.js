@@ -242,18 +242,8 @@ export const useStyles = makeStyles({
     cursor: "pointer"
   },
   cancel: {
-    width: 20,
-    border: "solid 1px #e8e8e8",
-    height: 20,
+    width: 24,
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
-    borderRadius: 25,
-    backgroundColor: "#ffffff",
-    margin: 0,
-    display: "flex",
-    justifyContent: "center",
-    padding: 1,
-    fontSize: 15,
-    fontWeight: "bold",
     cursor: "pointer"
   },
   defaultInput: {

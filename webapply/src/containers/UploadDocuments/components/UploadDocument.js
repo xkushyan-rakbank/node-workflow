@@ -38,6 +38,7 @@ export const UploadDocuments = ({
   const isUploaded = document.uploadStatus === "Uploaded";
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
+  const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
 
   const fileUploadClick = event => (event.target.value = null);
 
@@ -98,39 +99,6 @@ export const UploadDocuments = ({
     setSelectedFile(null);
   });
 
-  const uploadingProress = () => {
-    const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
-    return (
-      <div className={classes.uploadFileName}>
-        <div id="Progress_Status">
-          <div className={classes.myProgressBar} style={{ width: `${percentComplete}%` }}></div>
-        </div>
-        <div className={classes.progressStatus}>{percentComplete}%</div>
-      </div>
-    );
-  };
-
-  const uploadingError = () => (
-    <p className={classes.ErrorExplanation}>
-      <Icon name={ICONS.infoRed} alt="upload error" />
-      Oops! We couldn’t upload the document.
-      <span className={classes.tryAgain} onClick={reUploadHandler}>
-        Please try again.
-      </span>
-    </p>
-  );
-
-  const uploadingStatus = () => {
-    switch (true) {
-      case isUploading:
-        return uploadingProress();
-      case isUploadError:
-        return uploadingError();
-      case isUploaded:
-        return null;
-    }
-  };
-
   return (
     <div className={classes.fileUploadPlaceholder}>
       <input
@@ -158,9 +126,29 @@ export const UploadDocuments = ({
         </p>
 
         <div className={classes.fileSizeMessage}>
-          {selectedFile || isUploaded ? (
-            uploadingStatus()
-          ) : (
+          {isUploading && (
+            <div className={classes.uploadFileName}>
+              <div id="Progress_Status">
+                <div
+                  className={classes.myProgressBar}
+                  style={{ width: `${percentComplete}%` }}
+                ></div>
+              </div>
+              <div className={classes.progressStatus}>{percentComplete}%</div>
+            </div>
+          )}
+
+          {isUploadError && (
+            <p className={classes.ErrorExplanation}>
+              <Icon name={ICONS.infoRed} alt="upload error" />
+              Oops! We couldn’t upload the document.
+              <span className={classes.tryAgain} onClick={reUploadHandler}>
+                Please try again.
+              </span>
+            </p>
+          )}
+
+          {!selectedFile && !errorMessage && (
             <p>Supported formats are PDF, JPG and PNG | 5MB maximum size</p>
           )}
         </div>
@@ -169,9 +157,12 @@ export const UploadDocuments = ({
       </div>
 
       {selectedFile || isUploaded ? (
-        <p className={classes.cancel} onClick={fileUploadCancel}>
-          x
-        </p>
+        <Icon
+          name={ICONS.close}
+          className={classes.cancel}
+          onClick={fileUploadCancel}
+          alt="cancel upload"
+        />
       ) : (
         <p
           className={classes.ControlsBox}
