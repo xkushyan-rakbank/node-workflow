@@ -9,6 +9,7 @@ import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { SUBMIT, NEXT } from "../../../../constants";
+import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -19,7 +20,8 @@ export const SubmitApplicationComponent = ({
   organizationInfo: { companyName },
   sendProspectToAPI,
   updateActionType,
-  updateSaveType
+  updateSaveType,
+  isApplicationSubmitting
 }) => {
   const [formFieldsValues, setFormFields] = useState({});
 
@@ -28,6 +30,10 @@ export const SubmitApplicationComponent = ({
     updateSaveType(NEXT);
     sendProspectToAPI().then(() => history.push(routes.ApplicationSubmitted));
   };
+
+  if (isApplicationSubmitting) {
+    return <ServerRequestLoadingScreen />;
+  }
 
   return (
     <>
