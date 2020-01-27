@@ -25,6 +25,7 @@ export const StyledTableCellWitHoverHandlerComponent = ({
       <span>{info}</span>
       {ic && <img src={ic} alt="" />}
       <div>{title}</div>
+      {order === selectedCurrentColumn && <span />}
     </TableCell>
   );
 };

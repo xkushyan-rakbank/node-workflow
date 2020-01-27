@@ -45,20 +45,6 @@ export const useStyles = makeStyles({
       borderBottom: "none",
       zIndex: "1"
     },
-    "& tr:not(:last-child) td": {
-      "&:before": {
-        content: "''",
-        position: "absolute",
-        left: 0,
-        right: 0,
-        margin: "0 auto",
-        width: "90%",
-        height: 1,
-        backgroundColor: "#f7f8f9",
-        display: "block",
-        top: 0
-      }
-    },
     "& tr:nth-of-type(even) td": {
       "&:before": {
         bottom: "0px"
