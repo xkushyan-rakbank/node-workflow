@@ -102,7 +102,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 changeProspect={(_, value, path) => ({ [path]: value || "0" })}
                 InputProps={{
                   inputComponent: NumberFormat,
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, allowNegative: false, decimalScale: 0 }
                 }}
               />
             </Grid>

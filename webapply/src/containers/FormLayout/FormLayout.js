@@ -6,15 +6,28 @@ import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications, NotificationsProvider } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { useStyles } from "./styled";
+import { accountNames } from "../../constants";
+import routes from "../../routes";
 
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},
   children,
   screeningResults: { screeningError },
   updateViewId,
-  resetScreeningError
+  resetScreeningError,
+  islamicBanking,
+  accountType
 }) => {
-  const classes = useStyles({ pathname });
+  const isAccountsComparison = routes.accountsComparison === pathname;
+  const classes = useStyles({
+    pathname,
+    color:
+      !isAccountsComparison && accountType === accountNames.elite
+        ? "brown"
+        : !isAccountsComparison && islamicBanking && accountType !== accountNames.elite
+        ? "green"
+        : "red"
+  });
 
   useEffect(() => {
     updateViewId(pathname);
@@ -23,8 +36,8 @@ export const FormLayoutComponent = ({
 
   return (
     <NotificationsProvider>
-      <Header />
       <div className={classes.formLayout}>
+        <Header />
         <FormNavigation />
         <div className={classes.formWrapper}>
           <div className={classes.formInner}>
