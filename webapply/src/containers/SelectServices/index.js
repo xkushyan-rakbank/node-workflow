@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
+import get from "lodash/get";
 
-import { getInputValueById } from "../../store/selectors/input";
+import { getApplicationInfo } from "../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 
 import { SelectServicesComponent } from "./SelectServices";
@@ -8,7 +9,7 @@ import { getAccountType } from "../../store/selectors/appConfig";
 
 const mapStateToProps = state => ({
   accountType: getAccountType(state),
-  rakValuePackage: getInputValueById(state, "Appl.rakValuePackage")
+  rakValuePackage: get(getApplicationInfo(state), "rakValuePackage", "")
 });
 
 const mapDispatchToProps = { sendProspectToAPI: sendProspectToAPIPromisify };
