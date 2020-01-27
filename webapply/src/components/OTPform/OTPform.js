@@ -69,17 +69,16 @@ export const OTPformComponent = ({
     [setIsValidCode, setCode]
   );
 
-  const renderTitle = () => {
-    const target = applicantInfo.countryCode === UAE_CODE ? "mobile number" : "e-mail address";
-    // eslint-disable-next-line max-len
-    return `We have sent you a verification code on your ${target}. Please input the six digits below, to confirm this is you`;
-  };
-
   const classes = useStyles({ classes: extendetClasses });
 
   return (
     <div className={classes.centeredContainer}>
-      <SectionTitleWithInfo classes={{ title: classes.title }} info={renderTitle()} />
+      <SectionTitleWithInfo
+        classes={{ title: classes.title }}
+        info={`We have sent you a verification code on your ${
+          applicantInfo.countryCode === UAE_CODE ? "mobile number" : "e-mail address"
+        }. Please input the six digits below, to confirm this is you`}
+      />
 
       <Formik initialValues={code} onSubmit={submitForm}>
         {() => (
