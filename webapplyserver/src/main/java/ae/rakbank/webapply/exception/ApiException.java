@@ -20,22 +20,24 @@ public class ApiException extends RuntimeException {
 
     public ApiException(String errorMessage) {
         super(errorMessage);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
-        timestamp = LocalDateTime.now().format(formatter);
+        initTimestamp();
     }
 
     public ApiException(String errorMessage, Exception e) {
         super(errorMessage, e);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
-        timestamp = LocalDateTime.now().format(formatter);
+        initTimestamp();
     }
 
     public ApiException(Exception e, ApiError apiError, HttpHeaders headers, HttpStatus status) {
         super(apiError.getMessage(), e);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
-        timestamp = LocalDateTime.now().format(formatter);
+        initTimestamp();
         this.headers = headers;
         this.status = status;
         this.apiError = apiError;
+    }
+
+    private void initTimestamp() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
+        timestamp = LocalDateTime.now().format(formatter);
     }
 }

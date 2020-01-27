@@ -175,11 +175,7 @@ public class OAuthService {
 
 			} // end while
 		}
-
-
-		throw new HttpServerErrorException(HttpStatus.HTTP_VERSION_NOT_SUPPORTED);
-
-//		return (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
+		return (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
 	}
 
 

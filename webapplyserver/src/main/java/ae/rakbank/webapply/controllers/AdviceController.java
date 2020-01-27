@@ -49,15 +49,15 @@ public class AdviceController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({ Exception.class })
-    public ResponseEntity<Object> handleException(Exception apiException) {
+    public ResponseEntity<Object> handleException(Exception exception) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Exception", apiException.getClass().getSimpleName());
+        headers.set("Exception", exception.getClass().getSimpleName());
         headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        ApiError apiError = getDefaultApiError(apiException, status, null);
-        return sendResponse(apiException, headers, status, apiError);
+        ApiError apiError = getDefaultApiError(exception, status, null);
+        return sendResponse(exception, headers, status, apiError);
     }
 
     private ResponseEntity<Object> sendResponse(Exception apiException, HttpHeaders headers, HttpStatus status, ApiError apiError) {
@@ -85,7 +85,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
                 .message(ex.getMessage())
                 .timestamp(actualTimestamp)
                 .stackTrace(ex.getStackTrace())
-                .message("Unexpected error")
+                .message(ex.getMessage())
                 .status(status)
                 .statusCode(status.value())
                 .build();
