@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../constants";
+import { mobileResolution, normalScrollHeight } from "../../constants";
 
 export const useStyles = makeStyles({
   container: {
@@ -11,6 +11,10 @@ export const useStyles = makeStyles({
     textDecoration: "underline"
   },
   videoWrapper: {
+    [`@media only screen and (min-width: ${mobileResolution +
+      1}px), (max-height: ${normalScrollHeight}px)`]: {
+      height: "100vh"
+    },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       height: "calc(100vh - 260px)"
     }

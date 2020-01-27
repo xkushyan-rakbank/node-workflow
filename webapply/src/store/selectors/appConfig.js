@@ -95,3 +95,5 @@ export const getAuthorizationHeader = state => {
     headers: { Authorization: `Bearer ${authToken}` }
   };
 };
+
+export const getIsRecaptchaEnable = state => state.appConfig.recaptchaEnable;

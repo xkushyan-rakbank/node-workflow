@@ -3,12 +3,13 @@ import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
 
 import VideoBackground from "./BackgroundVideoPlayer";
-import { mobileResolution } from "../constants";
+import { mobileResolution, normalScrollHeight, tabletResolution } from "../constants";
 
 const transitionDuration = 400;
 const style = {
   paginationWrapper: {
-    [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
+    [`@media only screen and (min-width: ${mobileResolution + 1}px) 
+    and (min-height: ${normalScrollHeight + 1}px)`]: {
       position: "relative",
       height: "100vh",
       overflowY: "hidden"
@@ -19,9 +20,11 @@ const style = {
     left: 0,
     width: "100%",
     transition: `top ${transitionDuration}ms`,
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [`@media only screen and (max-width: ${mobileResolution}px), 
+    (max-height: ${normalScrollHeight}px)`]: {
       position: "static",
-      top: "0!important"
+      top: "0!important",
+      paddingBottom: 15
     }
   },
   childWrapper: {
@@ -29,14 +32,19 @@ const style = {
     flexDirection: "column",
     height: "100vh",
     position: "relative",
-    paddingTop: "170px",
     boxSizing: "border-box",
     padding: "0 26px",
+    [`@media only screen and
+     (max-width: ${tabletResolution}px)
+      and (min-width: ${mobileResolution}px)`]: {
+      padding: "18vh 20px"
+    },
     "@media only screen and (max-height: 900px)": {
       justifyContent: "center",
       paddingTop: "0px"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [`@media only screen and (max-width: ${mobileResolution}px), 
+    (max-height: ${normalScrollHeight}px)`]: {
       height: "auto",
       padding: "40px 16px 0"
     }
@@ -57,7 +65,8 @@ const style = {
     "@media only screen and (max-width: 1360px)": {
       right: "15px"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [`@media only screen and (max-width: ${mobileResolution}px), 
+    (max-height: ${normalScrollHeight}px)`]: {
       display: "none"
     }
   },

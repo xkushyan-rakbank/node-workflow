@@ -5,10 +5,27 @@ import { mobileResolution } from "../../constants";
 
 export const useStyles = makeStyles({
   formLayout: {
+    position: "relative",
     display: "flex",
     height: "100%",
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       flexWrap: "wrap"
+    },
+    "@media only screen and (min-width: 1920px)": {
+      maxWidth: "1920px",
+      marginLeft: "auto",
+      marginRight: "auto",
+      "&:before": {
+        content: "''",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        width: "calc((100vw - 1918px) / 2)",
+        height: "100%",
+        backgroundColor: ({ color }) =>
+          color === "brown" ? "#b36446" : color === "green" ? "#407b35" : "#eb2f16",
+        zIndex: 12
+      }
     }
   },
   formWrapper: {
@@ -33,6 +50,7 @@ export const useStyles = makeStyles({
   formInner: {
     display: "flex",
     height: "100%",
+    padding: "0 15px",
     "& nextButton": {
       margin: "42px 0 0 !important"
     },
@@ -42,10 +60,14 @@ export const useStyles = makeStyles({
   },
   mainContainer: {
     width: "832px",
+    minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
     padding: ({ pathname }) => (routerToAddPaddingInSlider.includes(pathname) ? "0" : "35px 0 0"),
-    paddingTop: "35px"
+    paddingTop: "35px",
+    "@media only screen and (min-width: 1920px)": {
+      minWidth: "auto"
+    }
   },
   mainContainerFullHeight: {
     padding: "0 50px 0"

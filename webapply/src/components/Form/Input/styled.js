@@ -63,6 +63,9 @@ export const useStyles = makeStyles({
       },
       "& input": {
         paddingLeft: 107
+      },
+      "& mark": {
+        left: "106px"
       }
     }
   },
@@ -83,5 +86,14 @@ export const useStyles = makeStyles({
     "&::placeholder": {
       color: "#86868b"
     }
+  },
+  iePlaceholder: {
+    position: "absolute",
+    color: "#86868b",
+    top: "16px",
+    left: "16px",
+    backgroundColor: "transparent",
+    opacity: "0.42",
+    letterSpacing: "-0.7px"
   }
 });

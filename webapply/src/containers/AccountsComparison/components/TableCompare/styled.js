@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../../../constants";
+import { mobileResolution, tabletResolution } from "../../../../constants";
 
 export const useStyles = makeStyles({
   paperRoot: {
@@ -32,12 +32,12 @@ export const useStyles = makeStyles({
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     border: "solid 1px #e8e8e8",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    minWidth: "calc(25% - 10px)"
   },
   tableRoot: {
     tableLayout: "fixed",
     width: "100%",
-    maxWidth: "780px",
     borderRadius: "8px",
     position: "relative",
     margin: "40px 0 30px 0",
@@ -73,7 +73,13 @@ export const useStyles = makeStyles({
       paddingRight: "0"
     },
     "& th:first-child, & td:first-child": {
-      paddingLeft: "0"
+      paddingLeft: "0",
+      width: "200px",
+      [`@media only screen and (max-width: ${tabletResolution}px)
+       and 
+       (min-width: ${mobileResolution}px)`]: {
+        width: "auto"
+      }
     }
   }
 });

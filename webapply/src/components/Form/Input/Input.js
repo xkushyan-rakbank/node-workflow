@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import { getIn } from "formik";
@@ -22,9 +22,12 @@ export const Input = ({
   form: { errors, touched },
   classes: extendedClasses,
   InputProps,
+  onFocus,
+  onBlur,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
+  const [hasFocus, setFocus] = useState(false);
 
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
@@ -43,11 +46,24 @@ export const Input = ({
           disabled={disabled}
           error={isError}
           InputProps={{ ...InputProps, classes: { input: classes.input } }}
-          InputLabelProps={{
-            shrink: isIE && placeholder ? true : shrink
+          InputLabelProps={{ shrink }}
+          onFocus={event => {
+            if (isIE) {
+              setFocus(true);
+            }
+            onFocus && onFocus(event);
+          }}
+          onBlur={event => {
+            if (isIE) {
+              setFocus(false);
+            }
+            onBlur && onBlur(event);
           }}
         />
       </ContexualHelp>
+      {isIE && field.value.length === 0 && hasFocus && (
+        <mark className={classes.iePlaceholder}>{placeholder}</mark>
+      )}
 
       {isError && <ErrorMessage error={errorMessage} />}
 

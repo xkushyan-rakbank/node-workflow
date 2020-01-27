@@ -11,9 +11,9 @@ export const SignatoriesList = ({ stakeholders }) => {
 
   return (
     <>
-      <div className={classes.signatoryLabel}>Signatory name on debit cards</div>
+      <div className={classes.signatoryLabel}>Signatory names on business debit cards</div>
       <InfoTitle
-        title="Names on debit cards have a limit of 19 characters"
+        title="Names on business debit cards have a limit of 19 characters"
         classes={{ wrapper: classes.infoTitle }}
       />
 
@@ -32,8 +32,8 @@ export const SignatoriesList = ({ stakeholders }) => {
                     <Field
                       name={`signatory.${index}.nameOnDebitCard`}
                       path={`${prefix}.debitCardInfo.authSignatoryDetails.nameOnDebitCard`}
-                      label="Name on debit card"
-                      placeholder="Name on debit card"
+                      label="Name on business debit card"
+                      placeholder="Name on business debit card"
                       classes={{ formControlRoot: classes.rootInput }}
                       component={Input}
                     />

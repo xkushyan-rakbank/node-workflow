@@ -141,7 +141,6 @@ export const UploadDocuments = ({
         onChange={fileUploadChange}
         onClick={fileUploadClick}
         ref={inputEl}
-        multiple
       />
 
       {(selectedFile || isUploaded) && <img src={companyIconSvg} alt="companyIconSvg" />}

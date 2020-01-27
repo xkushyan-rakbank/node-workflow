@@ -17,11 +17,13 @@ const initialValues = {
 
 const industrySchema = Yup.object({
   industry: Yup.array()
+    .of(Yup.string().required(getRequiredMessage("Industry")))
     .required(getRequiredMessage("Industry"))
     .max(12, "Maximum 12 options allowed"),
   subCategory: Yup.array().when("industry", {
     is: industry => !!industry,
     then: Yup.array()
+      .of(Yup.string().required(getRequiredMessage("Sub-category")))
       .required(getRequiredMessage("Sub-category"))
       .max(12, "Maximum 12 options allowed")
   })
@@ -66,13 +68,11 @@ export const Industry = ({ handleContinue }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                tabSelectsValue={false}
               />
             </Grid>
             <Grid item md={6} sm={12}>
               <Field
-                classes={{
-                  menuItem: classes.industrySubCategory
-                }}
                 name="subCategory"
                 label="Industry sub-category"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
@@ -89,6 +89,7 @@ export const Industry = ({ handleContinue }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                tabSelectsValue={false}
               />
             </Grid>
           </Grid>

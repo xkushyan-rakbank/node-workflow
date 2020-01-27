@@ -21,11 +21,12 @@ import {
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
-import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
+import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 
@@ -66,10 +67,14 @@ const ApplicantInfoPage = ({
   setToken,
   setVerified,
   reCaptchaToken,
+  isRecaptchaEnable,
   isConfigLoading
 }) => {
   useEffect(() => {
-    receiveAppConfig();
+    const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
+    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+
+    receiveAppConfig(segment);
   }, [receiveAppConfig]);
 
   const onSubmit = useCallback(values => applicantInfoForm(values), [applicantInfoForm]);
@@ -157,7 +162,7 @@ const ApplicantInfoPage = ({
             )}
 
             <Grid container direction="row" justify="space-between" alignItems="center">
-              {IS_RECAPTCHA_ENABLE && (
+              {isRecaptchaEnable && (
                 <ErrorBoundaryForReCaptcha>
                   <ReCaptcha
                     onVerify={handleReCaptchaVerify}
@@ -173,7 +178,7 @@ const ApplicantInfoPage = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
+                    (isRecaptchaEnable && !reCaptchaToken)
                   }
                   justify="flex-end"
                   label="Next Step"
@@ -189,7 +194,8 @@ const ApplicantInfoPage = ({
 
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
-  isConfigLoading: state.appConfig.loading
+  isConfigLoading: state.appConfig.loading,
+  isRecaptchaEnable: getIsRecaptchaEnable(state)
 });
 
 const mapDispatchToProps = {

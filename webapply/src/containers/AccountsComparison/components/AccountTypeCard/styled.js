@@ -1,12 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { portraitOrientationQueryIPads } from "../../../../constants/styles";
+import { mobileResolution, tabletResolution } from "../../../../constants";
 
 export const useStyles = makeStyles({
   container: {
     border: "solid 1px #e8e8e8",
-    width: 247,
-    height: 526,
-    maxHeight: 526,
+    minWidth: 247,
+    height: "calc(100% - 20px)",
+    width: "100%",
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     backgroundColor: "#fff",
@@ -16,11 +17,23 @@ export const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    [`@media only screen 
+    and (max-width: ${tabletResolution}px)
+    and (min-width: ${mobileResolution}px)`]: {
+      minWidth: "200px",
+      maxWidth: "210px",
+      "& button": {
+        height: "46px",
+        padding: "0 21px",
+        fontSize: "11px"
+      }
+    },
     [portraitOrientationQueryIPads]: {
       padding: "5px 24px 11px",
       marginTop: "10px",
       width: "100%",
-      height: "auto"
+      height: "auto",
+      minWidth: "200px"
     }
   },
   header: {
@@ -82,7 +95,8 @@ export const useStyles = makeStyles({
   },
   buttonWrapper: {
     width: "100%",
-    height: "40px",
+    minHeight: "40px",
+    marginTop: "20px",
     display: "flex",
     justifyContent: "center",
     "& span": {
