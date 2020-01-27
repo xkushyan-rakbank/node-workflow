@@ -96,4 +96,4 @@ export const getAuthorizationHeader = state => {
   };
 };
 
-export const getUploadDocumentsErrors = state => state.uploadDocuments.uploadErrors;
+export const getIsRecaptchaEnable = state => state.appConfig.recaptchaEnable;

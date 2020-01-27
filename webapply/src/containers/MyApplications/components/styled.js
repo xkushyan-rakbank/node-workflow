@@ -30,8 +30,10 @@ export const useStyles = makeStyles({
     }
   },
   viewColumn: {
+    boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     flexDirection: "column",
-    marginTop: "45px"
+    marginTop: "45px",
+    borderRadius: "8px"
   },
   veiwRow: {
     display: "flex",
@@ -100,11 +102,10 @@ export const useStyles = makeStyles({
     zIndex: "1"
   }, //list css start
   wrapper: {
-    marginBottom: "24px",
-    borderRadius: "8px",
-    boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#ffffff",
-    width: "100%"
+    width: "100%",
+    "&:not(:last-child)": {
+      borderBottom: "1px solid #e6e6e6"
+    }
   },
   applicationRow: {
     borderBottom: "1px solid #e6e6e6",

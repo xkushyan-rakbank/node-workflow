@@ -23,6 +23,7 @@ import { DATE_FORMAT } from "../../../../constants";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
+import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 import { NAME_REGEX } from "../../../../utils/validation";
 
@@ -32,23 +33,25 @@ const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
-      .required("Required")
-      .matches(NAME_REGEX, "This is not a valid first name")
+      .required(getRequiredMessage("First name"))
+      .matches(NAME_REGEX, getInvalidMessage("First name"))
   }),
-  middleName: Yup.string().matches(NAME_REGEX, "This is not a valid middle name"),
+  middleName: Yup.string().matches(NAME_REGEX, getInvalidMessage("Middle name")),
   lastName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
-      .required("Required")
-      .matches(NAME_REGEX, "This is not a valid last name")
+      .required(getRequiredMessage("Last name"))
+      .matches(NAME_REGEX, getInvalidMessage("Last name"))
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
-      .typeError("This is not a valid date")
-      .required("Required")
+      .typeError(getInvalidMessage("Date of birth"))
+      .required(getRequiredMessage("Date of birth"))
   }),
-  isPEP: Yup.boolean().required("Required")
+  isPEP: Yup.boolean().required(
+    "Field Is Person has held a position in the government or in a government-owned company/organizatio not filled"
+  )
 });
 
 export const PersonalInformation = ({ index, handleContinue }) => {

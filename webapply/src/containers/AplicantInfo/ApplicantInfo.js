@@ -21,29 +21,31 @@ import {
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
-import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
+import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
+import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
-    .required("You need to provide name ")
-    .matches(NAME_REGEX, "This is not a valid name"),
+    .required(getRequiredMessage("Your Name"))
+    .matches(NAME_REGEX, getInvalidMessage("Your Name")),
   email: Yup.string()
-    .required("You need to provide Email address")
-    .email("This is not a valid Email address")
+    .required(getRequiredMessage("Your E-mail Address"))
+    .email(getInvalidMessage("Your E-mail Address"))
     .max(50, "Maximum 50 characters allowed"),
-  countryCode: Yup.string().required("Select country code"),
+  countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
-    .required("You need to provide mobile number")
+    .required(getRequiredMessage("Your Mobile Number"))
     .when("countryCode", {
       is: countryCode => countryCode === UAE_CODE,
       then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
       otherwise: Yup.string()
-        .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+        .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
         .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
         .test("length validation", "This is not a valid phone (max length exceeded)", function() {
           const { countryCode = "", mobileNo = "" } = this.parent;
@@ -65,10 +67,14 @@ const ApplicantInfoPage = ({
   setToken,
   setVerified,
   reCaptchaToken,
+  isRecaptchaEnable,
   isConfigLoading
 }) => {
   useEffect(() => {
-    receiveAppConfig();
+    const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
+    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+
+    receiveAppConfig(segment);
   }, [receiveAppConfig]);
 
   const onSubmit = useCallback(values => applicantInfoForm(values), [applicantInfoForm]);
@@ -156,7 +162,7 @@ const ApplicantInfoPage = ({
             )}
 
             <Grid container direction="row" justify="space-between" alignItems="center">
-              {IS_RECAPTCHA_ENABLE && (
+              {isRecaptchaEnable && (
                 <ErrorBoundaryForReCaptcha>
                   <ReCaptcha
                     onVerify={handleReCaptchaVerify}
@@ -172,7 +178,7 @@ const ApplicantInfoPage = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    (IS_RECAPTCHA_ENABLE && !reCaptchaToken)
+                    (isRecaptchaEnable && !reCaptchaToken)
                   }
                   justify="flex-end"
                   label="Next Step"
@@ -188,7 +194,8 @@ const ApplicantInfoPage = ({
 
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
-  isConfigLoading: state.appConfig.loading
+  isConfigLoading: state.appConfig.loading,
+  isRecaptchaEnable: getIsRecaptchaEnable(state)
 });
 
 const mapDispatchToProps = {

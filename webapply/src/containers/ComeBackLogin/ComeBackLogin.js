@@ -19,22 +19,24 @@ import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import { isOtpGenerated } from "../../store/selectors/otp";
+import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "./../../routes";
-import { IS_RECAPTCHA_ENABLE, UAE_CODE } from "../../constants";
+import { UAE_CODE } from "../../constants";
+import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 
 const comebackSchema = Yup.object({
   email: Yup.string()
-    .required("You need to provide Email address")
-    .email("This is not a valid Email address"),
-  countryCode: Yup.string().required("Select country code"),
+    .required(getRequiredMessage("Your E-mail Address"))
+    .email(getInvalidMessage("Your E-mail Address")),
+  countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
-    .required("You need to provide mobile number")
+    .required(getRequiredMessage("Your Mobile Number"))
     .when("countryCode", {
       is: countryCode => countryCode === UAE_CODE,
       then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
       otherwise: Yup.string()
-        .matches(NUMBER_REGEX, "This is not a valid phone not number (wrong characters)")
+        .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
         .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
         .test("length validation", "This is not a valid phone (max length exceeded)", function() {
           const { countryCode = "", mobileNo = "" } = this.parent;
@@ -49,20 +51,21 @@ const ComeBackLoginComponent = ({
   isOtpGenerated,
   setToken,
   setVerified,
-  recaptchaToken
+  recaptchaToken,
+  isRecaptchaEnable
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
 
-      if (IS_RECAPTCHA_ENABLE) {
+      if (isRecaptchaEnable) {
         loginData.recaptchaToken = recaptchaToken;
       }
 
       generateOtpCode(loginData);
     },
-    [generateOtpCode, recaptchaToken]
+    [generateOtpCode, recaptchaToken, isRecaptchaEnable]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -136,7 +139,7 @@ const ComeBackLoginComponent = ({
             </InputGroup>
 
             <Grid container direction="row" justify="space-between" alignItems="center">
-              {IS_RECAPTCHA_ENABLE && (
+              {isRecaptchaEnable && (
                 <ErrorBoundaryForReCaptcha>
                   <ReCaptcha
                     onVerify={handleReCaptchaVerify}
@@ -148,7 +151,7 @@ const ComeBackLoginComponent = ({
               <div className={cx(classes.btnWrapper, "linkContainer")}>
                 <SubmitButton
                   disabled={
-                    !values.email || !values.mobileNo || (IS_RECAPTCHA_ENABLE && !recaptchaToken)
+                    !values.email || !values.mobileNo || (isRecaptchaEnable && !recaptchaToken)
                   }
                   justify="flex-end"
                   label="Next"
@@ -164,7 +167,8 @@ const ComeBackLoginComponent = ({
 
 const mapStateToProps = state => ({
   recaptchaToken: state.reCaptcha.token,
-  isOtpGenerated: isOtpGenerated(state)
+  isOtpGenerated: isOtpGenerated(state),
+  isRecaptchaEnable: getIsRecaptchaEnable(state)
 });
 
 const mapDispatchToProps = {

@@ -32,7 +32,7 @@ import { prospect } from "../../api/apiClient";
 import {
   APP_STOP_SCREEN_RESULT,
   screeningStatus,
-  APP_DECLINE_SCREEN_REASON,
+  APP_COMPLETED_SCREENING_STATUS,
   screeningStatusDefault,
   CONTINUE,
   AUTO,
@@ -52,24 +52,24 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const currScreeningTypes = preScreening.screeningResults.find(
-    screeningResult => screeningResult.screeningReason === APP_DECLINE_SCREEN_REASON
+  const currScreeningType = preScreening.screeningResults.find(
+    screeningResult => screeningResult.screeningStatus !== APP_COMPLETED_SCREENING_STATUS
   );
+
   const screenError = screeningStatus.find(
-    ({ screeningType }) => screeningType === currScreeningTypes.screeningType
+    ({ screeningType }) => screeningType === (currScreeningType || {}).screeningType
   );
 
   if (screenError) {
-    screenError.text = currScreeningTypes.reasonNotes;
+    screenError.text = currScreeningType.reasonNotes;
     yield put(setScreeningError(screenError));
   } else {
     yield put(setScreeningError(screeningStatusDefault));
   }
 }
 
-function* sendProspectToAPISaga(action) {
+function* sendProspectToAPISaga({ payload: { saveType } }) {
   try {
-    const saveType = action.saveType || CONTINUE;
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
 

@@ -10,15 +10,21 @@ import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
+import { MAX_EMIRATE_ID_LENGTH } from "./constants";
+import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 
 const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
-    residenceCountry: Yup.string().test("required", "Required", value => isSignatory || value),
+    residenceCountry: Yup.string().test(
+      "required",
+      getRequiredMessage("Country of residence"),
+      value => isSignatory || value
+    ),
     eidNumber: Yup.string().when("residenceCountry", {
       is: value => value === UAE,
       then: Yup.string()
-        .required("Required")
-        .matches(EMIRATES_ID_REGEX, "Emirates ID should be in the format of 15 digits")
+        .required(getRequiredMessage("Emirates ID"))
+        .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
     })
   });
 
@@ -42,7 +48,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
               <Field
                 name="residenceCountry"
                 path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
-                label="Country of Residence"
+                label="Country of residence"
                 component={SelectAutocomplete}
                 disabled={isSignatory}
                 datalistId="country"
@@ -57,7 +63,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 name="eidNumber"
                 path={eidNumberPath}
                 label="Emirates ID"
-                placeholder="Emirates ID"
+                placeholder="784-1950-1234567-8"
                 disabled={values.residenceCountry !== UAE}
                 component={Input}
                 contextualHelpText={
@@ -71,7 +77,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                   </>
                 }
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { maxLength: MAX_EMIRATE_ID_LENGTH, tabIndex: 0 }
                 }}
               />
             </Grid>

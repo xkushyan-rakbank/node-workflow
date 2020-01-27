@@ -2,7 +2,7 @@ import cometd from "cometd";
 import has from "lodash/has";
 import { callSafely } from "./GenericUtils";
 
-const chatUrl = "https://conv.rakbankonline.ae/CHATDEV";
+const chatUrl = "https://uatrmt.rakbankonline.ae/RMTCHAT";
 const chatChannel = "/service/chatV2/digital-chat";
 const connectedStatus = "connected";
 const ChatOperationTypes = Object.freeze({

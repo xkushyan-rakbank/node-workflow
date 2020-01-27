@@ -7,13 +7,14 @@ export const useStyles = makeStyles({
     flexGrow: 1,
     flexDirection: "column",
     minWidth: "270px",
-    maxHeight: "572px",
     padding: "40px 30px 25px 30px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
     marginRight: "20px",
+    flex: "0 0 calc(50% - 10px)",
+    boxSizing: "border-box",
     "&:last-child": {
       marginRight: 0
     }
@@ -70,14 +71,9 @@ export const useStyles = makeStyles({
     "& li": {
       marginBottom: "5px"
     },
-    "& li::after": {
-      content: "''",
-      position: "absolute",
-      top: "10px",
-      left: "-15px",
-      width: "6px",
-      height: "1px",
-      backgroundColor: "#000"
+    "& li::before": {
+      content: "'–'",
+      marginRight: "4px"
     }
   },
   link: {

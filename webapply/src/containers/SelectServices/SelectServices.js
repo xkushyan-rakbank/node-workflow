@@ -36,8 +36,7 @@ export const SelectServicesComponent = ({
     <>
       <FormTitle
         title="Services for your account"
-        info="Enough of us asking. Now it’s your turn to say which services you want, whether it is
-        foreign currencies, cards or chequebooks."
+        info="Enough of us asking. Now it’s your turn to say which services you want, whether it is currencies, bossiness debit cards or cheque books."
       />
 
       <ServicesSteps step={step} clickHandler={createSetStepHandler} handleContinue={setNextStep} />

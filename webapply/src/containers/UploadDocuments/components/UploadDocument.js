@@ -113,7 +113,9 @@ export const UploadDocuments = ({
         {!selectedFile && !isUploaded ? (
           <>
             <div className={classes.ContentBox}>
-              {!selectedFile && <p className={classes.uploadedFileName}>{document.documentType}</p>}
+              {!selectedFile && (
+                <p className={classes.uploadedFileName}>Upload {document.documentType}</p>
+              )}
               {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
               {!errorMessage && !selectedFile && (
                 <p className={classes.fileSizeMessage}>

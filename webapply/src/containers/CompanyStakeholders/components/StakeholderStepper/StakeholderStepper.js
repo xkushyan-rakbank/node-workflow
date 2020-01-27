@@ -6,7 +6,6 @@ import { StepComponent } from "./../StepComponent/StepComponent";
 import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
-import { NEXT } from "../../../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { useStep } from "../../../../components/StepComponent/useStep";
@@ -39,7 +38,7 @@ const StakeholderStepperComponent = ({
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
   const handleContinue = () =>
-    sendProspectToAPI(NEXT).then(
+    sendProspectToAPI().then(
       () => {
         if (step === STEP_6) {
           setFillStakeholder(index, true);

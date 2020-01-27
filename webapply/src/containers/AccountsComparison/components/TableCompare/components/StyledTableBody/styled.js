@@ -40,8 +40,8 @@ export const useStyles = makeStyles({
     backgroundColor: "#fff",
     height: "auto",
     border: "1px solid #373737",
-    padding: "3px 0",
-    width: "120px",
+    padding: "3px 15px",
+    minWidth: "120px",
     fontFamily: "Open Sans",
     "&:hover": {
       backgroundColor: "#000",
@@ -60,7 +60,7 @@ export const useStyles = makeStyles({
     "& th": {
       fontSize: "14px",
       color: "#888888",
-      padding: "0 5px 0 0",
+      padding: "0 3px 0 0",
       fontFamily: "Open Sans"
     },
     "& td": {
@@ -156,8 +156,9 @@ export const useStyles = makeStyles({
       fontWeight: "400"
     },
     "& button": {
-      width: "150px",
-      height: "40px",
+      minWidth: "150px",
+      minHeight: "40px",
+      height: "auto",
       backgroundColor: "#000",
       "& span:first-child": {
         color: "#fff",

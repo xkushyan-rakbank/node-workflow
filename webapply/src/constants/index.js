@@ -16,9 +16,9 @@ export const formStepper = [
   },
   { step: 2, title: "Company Information", path: routes.companyInfo },
   { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
-  { step: 4, title: "Final questions", path: routes.finalQuestions },
+  { step: 4, title: "Final Questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
-  { step: 6, title: "Select services", path: routes.selectServices }
+  { step: 6, title: "Select Services", path: routes.selectServices }
 ];
 
 export const searchProspectStepper = [
@@ -57,14 +57,14 @@ export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";
 export const MAX_STAKEHOLDERS_LENGTH = 12;
-
-export const IS_RECAPTCHA_ENABLE = process.env.REACT_APP_RECAPTCHA_ENABLE !== "N";
+export const MAX_EMAIL_LENGTH = 50;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
 
 export const mobileResolution = 955;
+export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
 export const APP_COMPLETED_SCREENING_STATUS = "Completed";
@@ -103,7 +103,7 @@ export const screeningStatus = [
   },
   {
     error: "Not Registered In UAE",
-    icon: declinedRegular,
+    icon: callbackRegular,
     screeningType: "CountryOfIncorporation Check"
   },
   {
@@ -131,3 +131,10 @@ export const screeningStatusDefault = {
 };
 
 export const DATE_FORMAT = "yyyy-MM-dd";
+
+export const queryParams = {
+  PRODUCT: "product",
+  IS_ISLAMIC: "type"
+};
+export const ISLAMIC_BANK = "RAKislamic";
+export const CONVENTIONAL_BANK = "Conventional";

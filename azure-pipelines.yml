@@ -28,6 +28,18 @@ jobs:
         inputs:
           versionSpec: 10.x
 
+      - bash: |
+          sh set-endpoint-and-recaptcha.sh $(Dev_build) N
+          echo "##vso[task.setvariable variable=REACT_APP_RECAPTCHA_ENABLE;]N"
+          echo "##vso[task.setvariable variable=RECAPTCHA_ENABLE;]N"
+        displayName: 'Set Endpoint and Recaptcha status in .env.production file'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
+      - bash: |
+          sh set-endpoint-and-recaptcha.sh $(Dev_build) Y
+          echo "##vso[task.setvariable variable=REACT_APP_RECAPTCHA_ENABLE;]Y"
+          echo "##vso[task.setvariable variable=RECAPTCHA_ENABLE;]Y"
+        displayName: 'Set Endpoint and Recaptcha status in .env.production file'
+        condition: and(succeeded(),ne(variables.Dev_Build, 'True'))
       - bash : |
           cd webapply
           npm install
@@ -55,7 +67,8 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -63,11 +76,28 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/webapply/"
+                    "target": "onboarding/develop/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
           collectBuildInfo: true
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload to UAT'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
+                    "target": "onboarding/release/$(Build.BuildNumber)/webapply/"
+                }
+              ]
+            }
+          collectBuildInfo: true          
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
         displayName: 'Publish Build Info to Artifactory'
         inputs:
@@ -106,7 +136,8 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -114,7 +145,24 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
-                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/webapplyServer/"
+                    "target": "onboarding/develop/$(Build.BuildNumber)/webapplyServer/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload to UAT'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
+                    "target": "onboarding/release/$(Build.BuildNumber)/webapplyServer/"
                 }
               ]
             }
@@ -164,7 +212,8 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -172,7 +221,24 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
-                    "target": "onboarding/$(Build.SourceBranchName)/$(Build.BuildNumber)/document_uploader/"
+                    "target": "onboarding/develop/$(Build.BuildNumber)/document_uploader/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload to UAT'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
+                    "target": "onboarding/releae/$(Build.BuildNumber)/document_uploader/"
                 }
               ]
             }

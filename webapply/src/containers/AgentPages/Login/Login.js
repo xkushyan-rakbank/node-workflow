@@ -8,17 +8,17 @@ import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../utils/validation";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
 import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
-import { IS_RECAPTCHA_ENABLE } from "../../../constants";
+import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
 const loginSchema = Yup.object({
   username: Yup.string()
-    .required("You need to provide username")
-    .matches(USER_NAME_REGEX, "This is not a valid username"),
+    .required(getRequiredMessage("User name"))
+    .matches(USER_NAME_REGEX, getInvalidMessage("User name")),
   password: Yup.string()
-    .required("You need to provide password")
-    .matches(PASSWORD_REGEX, "This is not a valid password")
+    .required(getRequiredMessage("Password"))
+    .matches(PASSWORD_REGEX, getInvalidMessage("Password"))
 });
 
 export const LoginComponent = ({
@@ -26,20 +26,21 @@ export const LoginComponent = ({
   setToken,
   setVerified,
   verifyToken,
-  recaptchaToken
+  recaptchaToken,
+  isRecaptchaEnable
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
 
-      if (IS_RECAPTCHA_ENABLE) {
+      if (isRecaptchaEnable) {
         loginData.recaptchaToken = recaptchaToken;
       }
 
       loginInfoForm(loginData);
     },
-    [loginInfoForm, recaptchaToken]
+    [loginInfoForm, recaptchaToken, isRecaptchaEnable]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -94,7 +95,7 @@ export const LoginComponent = ({
 
             <Grid container direction="row" justify="space-between" alignItems="center">
               <ErrorBoundaryForReCaptcha>
-                {IS_RECAPTCHA_ENABLE && (
+                {isRecaptchaEnable && (
                   <ReCaptcha
                     onVerify={handleReCaptchaVerify}
                     onExpired={handleVerifiedFailed}
@@ -108,7 +109,7 @@ export const LoginComponent = ({
                   label="Next Step"
                   disabled={
                     Object.values(values).some(value => !value) ||
-                    (IS_RECAPTCHA_ENABLE && !recaptchaToken)
+                    (isRecaptchaEnable && !recaptchaToken)
                   }
                 />
               </div>

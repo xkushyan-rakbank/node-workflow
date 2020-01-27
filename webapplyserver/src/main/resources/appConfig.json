@@ -98,7 +98,8 @@
 			"OAuthLangId": "001",
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
-			"OAuthStateMode": "N",
+      "OAuthStateMode": "N",
+      "ReCaptchaEnable": "Y",
 			"ReCaptchaSiteKey": "6LcypLgUAAAAAMQvT4SqSDCbJ7JFYY7x0OGJTpTm",
 			"ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R",
 			"RSAPublicKeyFilename": "RSAPublicKey.txt"
@@ -114,7 +115,8 @@
 			"OAuthLangId": "001",
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
-			"OAuthStateMode": "N",
+      "OAuthStateMode": "N",
+      "ReCaptchaEnable": "Y",
 			"ReCaptchaSiteKey": "",
 			"ReCaptchaSecret": "",
 			"RSAPublicKeyFilename": ""
@@ -130,7 +132,8 @@
 			"OAuthLangId": "001",
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
-			"OAuthStateMode": "N",
+      "OAuthStateMode": "N",
+      "ReCaptchaEnable": "Y",
 			"ReCaptchaSiteKey": "",
 			"ReCaptchaSecret": "",
 			"RSAPublicKeyFilename": ""
@@ -146,7 +149,8 @@
 			"OAuthLangId": "001",
 			"OAuthLoginFlag": "2",
 			"OAuthLoginType": "1",
-			"OAuthStateMode": "N",
+      "OAuthStateMode": "N",
+      "ReCaptchaEnable": "Y",
 			"ReCaptchaSiteKey": "",
 			"ReCaptchaSecret": "",
 			"RSAPublicKeyFilename": ""

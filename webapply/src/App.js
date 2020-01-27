@@ -20,6 +20,7 @@ import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 
 import { theme } from "./theme";
+import { queryParams } from "./constants";
 import "./App.scss";
 
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
@@ -44,14 +45,31 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
+    let pathname = "/sme/";
+    let accountType;
+    let isIslamicBanking;
     if (typeof window !== "undefined") {
       window.addEventListener("beforeunload", () => {
         localStorage.removeItem("videoAlreadyPlayed");
       });
+
+      pathname = window.location.pathname;
+      const searchParams = new URLSearchParams(window.location.search);
+      accountType = searchParams.get(queryParams.PRODUCT);
+      isIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
     }
-    receiveAppConfig();
+
+    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+
+    receiveAppConfig(segment, accountType, isIslamicBanking);
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
+
+  useEffect(() => {
+    if (history.location.pathname === routes.applicantInfo) {
+      history.push(routes.detailedAccount);
+    }
+  }, []);
 
   return (
     <MuiThemeProvider theme={theme}>
