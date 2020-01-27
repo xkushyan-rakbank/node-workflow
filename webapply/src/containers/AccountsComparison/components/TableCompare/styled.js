@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../../../constants";
+import { mobileResolution, tabletResolution } from "../../../../constants";
 
 export const useStyles = makeStyles({
   paperRoot: {
@@ -74,7 +74,12 @@ export const useStyles = makeStyles({
     },
     "& th:first-child, & td:first-child": {
       paddingLeft: "0",
-      width: "200px"
+      width: "200px",
+      [`@media only screen and (max-width: ${tabletResolution}px)
+       and 
+       (min-width: ${mobileResolution}px)`]: {
+        width: "auto"
+      }
     }
   }
 });
