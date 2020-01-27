@@ -124,7 +124,6 @@ export const CompanyPreferredContactInformationComponent = ({
                     path="prospect.organizationInfo.contactDetails.primaryMobileNo"
                     label="Mobile number"
                     placeholder="55xxxxxxx"
-                    shrink={true}
                     component={Input}
                     contextualHelpText="This number will be used as primary contact for Transaction Alerts and queries related to Business. If you give an international number, then Cheque book will not be issued."
                     InputProps={{

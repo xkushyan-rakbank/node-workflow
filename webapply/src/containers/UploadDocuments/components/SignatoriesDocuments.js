@@ -10,7 +10,8 @@ export const SignatoriesDocuments = ({
   docUpload,
   cancelDocUpload,
   progress,
-  updateProspect
+  updateProspect,
+  uploadErrorMessage
 }) => {
   const classes = useStyles();
 
@@ -44,6 +45,7 @@ export const SignatoriesDocuments = ({
               cancelDocUpload={cancelDocUpload}
               updateProspect={updateProspect}
               progress={progress}
+              uploadErrorMessage={uploadErrorMessage}
             />
           ))}
         </div>
