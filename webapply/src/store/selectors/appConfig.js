@@ -40,7 +40,9 @@ export const getScreeningResults = state => state.sendProspectToAPI.screeningRes
 
 export const getLoginParam = state => state.appConfig.login;
 
-export const getIsAgentLoggedIn = state => state.login;
+export const getAgentLogin = state => state.login;
+
+export const getIsAgentLoggedIn = state => getAgentLogin(state).loginStatus;
 
 export const getSearchInfo = state => state.appConfig.searchInfo || {};
 

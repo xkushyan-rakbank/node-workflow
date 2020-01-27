@@ -45,7 +45,7 @@ export const SubmitApplicationComponent = ({
         account={account}
       />
 
-      {!isAgentLoggedIn.loginStatus && <BlockConfirm setFormFields={setFormFields} />}
+      {!isAgentLoggedIn && <BlockConfirm setFormFields={setFormFields} />}
 
       <div className="linkContainer">
         <BackLink path={routes.selectServices} />
