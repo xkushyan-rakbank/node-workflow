@@ -40,7 +40,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
 
         ApiError apiError;
         if (apiException.getApiError() == null) {
-            apiError = getDefaultApiError(apiException, status);
+            apiError = getDefaultApiError(apiException, status, apiException.getTimestamp());
         } else {
             apiError = apiException.getApiError();
             apiError.setStackTrace(apiException.getStackTrace());
@@ -56,7 +56,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        ApiError apiError = getDefaultApiError(apiException, status);
+        ApiError apiError = getDefaultApiError(apiException, status, null);
         return sendResponse(apiException, headers, status, apiError);
     }
 
@@ -71,12 +71,19 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         }
     }
 
-    private ApiError getDefaultApiError(Exception ex, HttpStatus status) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApiError.timestampPattern);
+    private ApiError getDefaultApiError(Exception ex, HttpStatus status, String timestamp) {
+        String actualTimestamp;
+        if (timestamp != null) {
+            actualTimestamp = timestamp;
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApiError.timestampPattern);
+            actualTimestamp = LocalDateTime.now().format(formatter);
+        }
+
         return ApiError.builder()
                 .exception(ex.getClass().getSimpleName())
                 .message(ex.getMessage())
-                .timestamp(LocalDateTime.now().format(formatter))
+                .timestamp(actualTimestamp)
                 .stackTrace(ex.getStackTrace())
                 .message("Unexpected error")
                 .status(status)
