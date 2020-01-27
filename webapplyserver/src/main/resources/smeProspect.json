@@ -47,7 +47,7 @@
 			"accountPurpose": "",
 			"debitCardApplied": false,
 			"chequeBookApplied": false,
-			"eStatements": false,
+			"eStatements": true,
 			"mailStatements": false,
 			"receiveInterest": false,
 			"deliverByCourier": false
