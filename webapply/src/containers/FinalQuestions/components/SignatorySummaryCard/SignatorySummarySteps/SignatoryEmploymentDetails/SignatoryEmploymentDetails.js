@@ -163,7 +163,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                 )}
                 <Grid item sm={12}>
                   <FinalQuestionField
-                    name="isWorkAtTheCompany"
+                    name={`isWorkAtTheCompany${index}`}
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
                     onSelect={() => {
@@ -180,7 +180,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Employer name"
                     placeholder="Employer name"
                     component={Input}
-                    disabled={values.isWorkAtTheCompany}
+                    disabled={values[`isWorkAtTheCompany${index}`]}
                     InputProps={{
                       inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                     }}
