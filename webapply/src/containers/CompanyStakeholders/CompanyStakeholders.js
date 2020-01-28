@@ -16,7 +16,7 @@ import {
   deleteStakeholder
 } from "../../store/actions/stakeholders";
 import { resetProspect } from "../../store/actions/appConfig";
-import { getSendProspectToAPIInfo } from "../../store/selectors/appConfig";
+import { getSendProspectToAPIInfo, getDatalist } from "../../store/selectors/appConfig";
 import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import {
   stakeholdersSelector,
@@ -36,7 +36,8 @@ const CompanyStakeholdersComponent = ({
   percentage,
   history,
   resetProspect,
-  stakeholdersIds
+  stakeholdersIds,
+  datalist
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -122,6 +123,7 @@ const CompanyStakeholdersComponent = ({
               key={item.id}
               index={index}
               changeEditableStep={editStakeholderHandler}
+              datalist={datalist}
             />
           );
         })}
@@ -158,6 +160,7 @@ const CompanyStakeholdersComponent = ({
 const mapStateToProps = state => {
   const { editableStakeholder, stakeholdersIds } = stakeholdersState(state);
   return {
+    datalist: getDatalist(state),
     editableStakeholder,
     stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
