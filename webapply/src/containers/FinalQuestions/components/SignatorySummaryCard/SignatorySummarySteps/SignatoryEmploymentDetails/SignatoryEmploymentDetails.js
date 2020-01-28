@@ -38,8 +38,8 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required(getRequiredMessage("Qualification")),
   employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
   totalExperienceYrs: Yup.string()
-    .required(getRequiredMessage("Total years of experience"))
-    .matches(NUMBER_REGEX, getInvalidMessage("Total years of experience"))
+    .required(getRequiredMessage("Number of years of experience"))
+    .matches(NUMBER_REGEX, getInvalidMessage("Number of years of experience"))
     .matches(TOTAL_EXPERIENCE_YEARS, "Maximum 255 characters allowed"),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
@@ -113,7 +113,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                   <Field
                     name="totalExperienceYrs"
                     path={`${basePath}.employmentDetails.totalExperienceYrs`}
-                    label="Total years of experience"
+                    label="Number of years of experience"
                     placeholder="Work Experience"
                     component={Input}
                     InputProps={{

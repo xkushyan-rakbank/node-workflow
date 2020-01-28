@@ -14,7 +14,7 @@ import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
 import { useStyles } from "./styled";
 
 export const MAX_ATTEMPT_ALLOWED = 3;
-export const MAX_NUMBER_VALIDATION_ERRORS = 5;
+export const MAX_NUMBER_VALIDATION_ERRORS = 4;
 
 export const OTPformComponent = ({
   otp,

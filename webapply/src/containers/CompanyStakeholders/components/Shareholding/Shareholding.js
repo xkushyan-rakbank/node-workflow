@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
+import get from "lodash/get";
 import { Form, Formik } from "formik";
 
 import {
@@ -13,7 +14,7 @@ import {
 } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
-import { getInputValueById } from "../../../../store/selectors/input";
+import { getSignatories } from "../../../../store/selectors/appConfig";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
@@ -109,7 +110,8 @@ const mapStateToProps = (state, { index }) => {
     index
   );
   return {
-    isSoleProprietor: getInputValueById(state, "SigAcntSig.authorityType", [index]) === "SP",
+    isSoleProprietor:
+      get(getSignatories(state)[index], "accountSigningInfo.authorityType", "") === "SP",
     totalPercentageWithoutCurrentStakeholder
   };
 };

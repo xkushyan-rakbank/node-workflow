@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import get from "lodash/get";
 
-import { getInputValueById } from "../../../../store/selectors/input";
+import { getSignatories } from "../../../../store/selectors/appConfig";
 import { AutoSaveField as Field, SelectAutocomplete, Input } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
@@ -35,7 +36,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
     <Formik
       initialValues={{
         residenceCountry: UAE,
-        eidNumber: ""
+        eidNumber: "784"
       }}
       onSubmit={handleContinue}
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
@@ -91,7 +92,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
 };
 
 const mapStateToProps = (state, { index }) => ({
-  isSignatory: getInputValueById(state, "SigKycd.isSignatory", [index], false)
+  isSignatory: get(getSignatories(state)[index], "kycDetails.isSignatory", false)
 });
 
 export const CountryOfResidence = connect(mapStateToProps)(CountryOfResidenceStep);

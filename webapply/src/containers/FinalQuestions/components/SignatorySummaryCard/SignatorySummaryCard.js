@@ -13,7 +13,7 @@ export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
   index,
   signatory,
-  uiConfig,
+  datalist,
   signatory: { fullName } = {},
   expandedSignatoryIndex,
   setExpandedSignatoryIndex,
@@ -25,7 +25,7 @@ export const SignatorySummaryCardComponent = ({
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
   const authorityTypeValueFromProspect = get(signatory, "accountSigningInfo.authorityType");
-  const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, uiConfig);
+  const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
 
   return (
     <FormCard

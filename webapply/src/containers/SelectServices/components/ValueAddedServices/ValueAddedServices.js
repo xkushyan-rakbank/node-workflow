@@ -7,6 +7,7 @@ import {
 } from "./ExpandedOptionsCards/ExpandedDetailedOptionsCard";
 import { rakValuesList } from "./ExpandedOptionsCards/constants";
 import { accountNames } from "../../../../constants/index";
+import { RAK_VALUE_PACKAGE_PATH } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -16,8 +17,8 @@ const getButtonText = ({ _id, options, accountCurrencies, rakValuePackage, accou
     return options.disabledLabelForForeignCurrency;
   }
 
-  if (rakValuePackage.value) {
-    if (rakValuePackage.value === options._id) {
+  if (rakValuePackage) {
+    if (rakValuePackage === options._id) {
       return options.buttonLabel;
     }
     return options.notSelectedLabel;
@@ -38,7 +39,6 @@ export const ValueAddedServicesComponent = ({
   readMoreUrls,
   updateProspect,
   rakValuePackage,
-  rakValuePackage: { name, value },
   accountCurrencies
 }) => {
   const { isSelectOnlyForeignCurrency } = accountCurrencies;
@@ -47,15 +47,19 @@ export const ValueAddedServicesComponent = ({
   const handleSelectValue = useCallback(
     selectedService => {
       const serviceName =
-        value === selectedService && accountType !== accountNames.starter ? "" : selectedService;
-      updateProspect({ [name]: serviceName });
+        rakValuePackage === selectedService && accountType !== accountNames.starter
+          ? ""
+          : selectedService;
+      updateProspect({ [RAK_VALUE_PACKAGE_PATH]: serviceName });
     },
-    [value, accountType, name, updateProspect]
+    [rakValuePackage, accountType, RAK_VALUE_PACKAGE_PATH, updateProspect]
   );
 
   useEffect(() => {
-    updateProspect({ [name]: accountType === accountNames.starter ? "RAKvalue PLUS" : "" });
-  }, [accountType, name, updateProspect]);
+    updateProspect({
+      [RAK_VALUE_PACKAGE_PATH]: accountType === accountNames.starter ? "RAKvalue PLUS" : ""
+    });
+  }, [accountType, RAK_VALUE_PACKAGE_PATH, updateProspect]);
   return (
     <>
       <div className={cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency })}>
@@ -64,7 +68,7 @@ export const ValueAddedServicesComponent = ({
             key={value}
             value={value}
             id={_id}
-            isSelected={value === rakValuePackage.value && !isSelectOnlyForeignCurrency}
+            isSelected={value === rakValuePackage && !isSelectOnlyForeignCurrency}
             buttonLabel={getButtonText({
               _id,
               options: rakValuesList[index],
