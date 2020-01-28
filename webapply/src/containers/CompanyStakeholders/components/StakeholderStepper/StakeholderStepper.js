@@ -7,13 +7,18 @@ import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessF
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
-import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
+import {
+  sendProspectToAPIPromisify,
+  setScreeningError
+} from "../../../../store/actions/sendProspectToAPI";
 import { useStep } from "../../../../components/StepComponent/useStep";
 import {
   changeEditableStakeholder,
   setFillStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
+import { stakeholderScreeningStatus } from "../../../../constants";
+import { quantityErrorSelector } from "../../../../store/selectors/stakeholder";
 
 const timeInterval = 5000;
 
@@ -30,7 +35,9 @@ const StakeholderStepperComponent = ({
   sendProspectToAPI,
   loading: isStatusLoading,
   changeEditableStakeholder,
-  setFillStakeholder
+  setFillStakeholder,
+  isTooManyStakeholders,
+  setScreeningError
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
@@ -40,6 +47,10 @@ const StakeholderStepperComponent = ({
   const handleContinue = () =>
     sendProspectToAPI().then(
       () => {
+        if (isTooManyStakeholders) {
+          setScreeningError(stakeholderScreeningStatus);
+        }
+
         if (step === STEP_6) {
           setFillStakeholder(index, true);
         }
@@ -113,13 +124,15 @@ const StakeholderStepperComponent = ({
 
 const mapStateToProps = state => ({
   isStatusShown: state.stakeholders.isStatusShown,
+  isTooManyStakeholders: quantityErrorSelector(state),
   ...getSendProspectToAPIInfo(state)
 });
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
   changeEditableStakeholder,
-  setFillStakeholder
+  setFillStakeholder,
+  setScreeningError
 };
 
 export const StakeholderStepper = connect(

@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 import get from "lodash/get";
 import { getSignatories } from "./appConfig";
+import { MAX_SIGNATORIES_LENGTH, MAX_SHAREHOLDERS_LENGTH } from "./../../constants";
 
 export const stakeholders = state => get(state, "appConfig.prospect.signatoryInfo", []);
 export const stakeholdersState = state => state.stakeholders;
@@ -16,9 +17,15 @@ export const stakeholdersSelector = createSelector(
     }))
 );
 
-export const signatoryQuantitySelector = createSelector(
+export const quantityErrorSelector = createSelector(
   stakeholders,
-  stakeholders => stakeholders.filter(stakeholder => stakeholder.kycDetails.isSignatory).length
+  stakeholders => {
+    const shareholders = stakeholders.filter(stakeholder => stakeholder.kycDetails.isShareholder);
+    const signatories = stakeholders.filter(stakeholder => stakeholder.kycDetails.isSignatory);
+    return (
+      shareholders.length > MAX_SHAREHOLDERS_LENGTH || signatories.length > MAX_SIGNATORIES_LENGTH
+    );
+  }
 );
 
 export const percentageSelector = state => {

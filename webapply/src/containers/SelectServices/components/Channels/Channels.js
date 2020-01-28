@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
 
 import { checkIsChequeBookApplied, checkIsDebitCardApplied } from "./utils";
 import { NAME_REGEX } from "../../../../utils/validation";
@@ -15,6 +14,7 @@ import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 import { ICONS, Icon } from "../../../../components/Icons/Icon";
 import { Divider } from "../Divider";
+import { ContexualHelp } from "../../../../components/Notifications";
 
 import { useStyles } from "./styled";
 
@@ -95,7 +95,8 @@ export const ChannelsComponent = ({
       {({ values, setFieldValue }) => (
         <Form>
           <Subtitle title="Business debit Cards" />
-          <Tooltip
+          <ContexualHelp
+            isDisableHoverListener={false}
             classes={classes}
             placement="left"
             title={"Business debit card will be send to the signatory's preferred mailing address"}
@@ -113,7 +114,7 @@ export const ChannelsComponent = ({
                 inputProps={{ tabIndex: 0 }}
               />
             </span>
-          </Tooltip>
+          </ContexualHelp>
           {isHasSignatories && values.debitCardApplied && (
             <SignatoriesList stakeholders={stakeholders} />
           )}
@@ -121,7 +122,8 @@ export const ChannelsComponent = ({
           <Divider classes={{ divider: classes.divider }} />
 
           <Subtitle title="Cheque book" />
-          <Tooltip
+          <ContexualHelp
+            isDisableHoverListener={false}
             classes={classes}
             placement="left"
             title={
@@ -141,7 +143,7 @@ export const ChannelsComponent = ({
                 inputProps={{ tabIndex: 0 }}
               />
             </span>
-          </Tooltip>
+          </ContexualHelp>
           <Divider />
 
           <Subtitle title="Bank statements" />

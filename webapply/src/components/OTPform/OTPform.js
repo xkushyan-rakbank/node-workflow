@@ -23,7 +23,6 @@ export const OTPformComponent = ({
   applicantInfo,
   redirectRoute,
   generateOtpCode,
-  infoTitleResult,
   classes: extendetClasses
 }) => {
   const history = useHistory();
@@ -70,25 +69,15 @@ export const OTPformComponent = ({
     [setIsValidCode, setCode]
   );
 
-  const getTitle = () => {
-    if (infoTitleResult) return;
-    return applicantInfo.countryCode === UAE_CODE
-      ? "We have sent you a verification code on your mobile number"
-      : "We have sent you a verification code on your e-mail address";
-  };
-
   const classes = useStyles({ classes: extendetClasses });
 
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
         classes={{ title: classes.title }}
-        title={getTitle()}
-        info={
-          infoTitleResult
-            ? infoTitleResult
-            : "Please input the six digits below, to confirm this is you"
-        }
+        info={`We have sent you a verification code on your ${
+          applicantInfo.countryCode === UAE_CODE ? "mobile number" : "e-mail address"
+        }. Please enter the six digits below, to confirm this is you`}
       />
 
       <Formik initialValues={code} onSubmit={submitForm}>

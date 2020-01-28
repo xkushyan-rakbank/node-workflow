@@ -147,7 +147,7 @@ export const CompanyPreferredContactInformationComponent = ({
                     name="primaryPhoneNo"
                     path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
                     label="Landline number (optional)"
-                    placeholder="Landline number (optional)"
+                    placeholder="42xxxxxx"
                     component={Input}
                     InputProps={{
                       inputProps: { tabIndex: 0 }
