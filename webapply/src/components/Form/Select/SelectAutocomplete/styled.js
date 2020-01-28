@@ -7,6 +7,9 @@ export const useStyles = makeStyles(theme => ({
     padding: 0,
     minHeight: "56px",
     height: "auto",
+    "& > *": {
+      minHeight: "56px"
+    },
     "& + fieldset": {
       borderRadius: "8px ",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
