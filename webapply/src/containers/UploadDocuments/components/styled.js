@@ -128,7 +128,7 @@ export const useStyles = makeStyles({
     color: "#373737"
   },
   fileUploadPlaceholder: {
-    height: "50px",
+    minHeight: "50px",
     display: "flex",
     alignItems: "center",
     padding: "0 25px",
@@ -137,7 +137,7 @@ export const useStyles = makeStyles({
   ContentBox: {
     alignItems: "center",
     flexGrow: "1",
-    paddingLeft: "18px"
+    padding: "7px 18px"
   },
 
   uploadedFileName: {
@@ -158,7 +158,11 @@ export const useStyles = makeStyles({
     fontStyle: "normal",
     fontStretch: "normal",
     lineHeight: ".6",
-    letterSpacing: "normal"
+    letterSpacing: "normal",
+    margin: "10px 0 0 0",
+    "& p": {
+      margin: 0
+    }
   },
   ControlsBox: {
     width: "130px",
@@ -190,7 +194,8 @@ export const useStyles = makeStyles({
     lineHeight: "1.17",
     letterSpacing: "normal",
     color: "#373737",
-    paddingLeft: "5px"
+    display: "flex",
+    alignItems: "center"
   },
   signatoryRights: {
     width: "39px",
@@ -227,7 +232,6 @@ export const useStyles = makeStyles({
     lineHeight: ".6",
     letterSpacing: "normal",
     color: "#ea2925",
-    margin: "4px 0 0 ",
     "& svg": {
       marginRight: " 10px"
     }
@@ -238,18 +242,8 @@ export const useStyles = makeStyles({
     cursor: "pointer"
   },
   cancel: {
-    width: 20,
-    border: "solid 1px #e8e8e8",
-    height: 20,
+    width: 24,
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
-    borderRadius: 25,
-    backgroundColor: "#ffffff",
-    margin: 0,
-    display: "flex",
-    justifyContent: "center",
-    padding: 1,
-    fontSize: 15,
-    fontWeight: "bold",
     cursor: "pointer"
   },
   defaultInput: {
