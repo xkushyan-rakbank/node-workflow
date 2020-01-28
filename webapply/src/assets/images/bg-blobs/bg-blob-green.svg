@@ -1,47 +1,38 @@
-<svg width="530px" height="940px" viewBox="0 0 530 940" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="530px" height="937px" viewBox="0 0 530 937" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>green-web-blob</title>
+    <desc>Created with Sketch.</desc>
     <defs>
-        <path id="a" d="M.316.449h1680v940H.316z"/>
-        <ellipse id="c" cx="1709.649" cy="1749.061" rx="1709.649" ry="1749.061"/>
-        <linearGradient id="f" x1="100%" x2="0%" y1="50%" y2="50%">
-            <stop offset="0%" stop-color="#04543B"/>
-            <stop offset="100%" stop-color="#166A2C"/>
+        <rect id="path-1" x="-2.72848411e-12" y="9.09494702e-13" width="940" height="531"></rect>
+        <ellipse id="path-3" cx="1709.64945" cy="1749.06148" rx="1709.64945" ry="1749.06148"></ellipse>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-5">
+            <stop stop-color="#2A6E35" offset="0%"></stop>
+            <stop stop-color="#166A2C" offset="100%"></stop>
         </linearGradient>
-        <ellipse id="e" cx="1709.649" cy="1749.061" rx="1709.649" ry="1749.061"/>
     </defs>
-    <g fill="none" fill-rule="evenodd">
-        <mask id="b" fill="#fff">
-            <use xlink:href="#a"/>
-        </mask>
-        <g mask="url(#b)">
-            <g transform="matrix(0 1 1 0 -2969.057 -1190.578)">
-                <mask id="d" fill="#fff">
-                    <use xlink:href="#c"/>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Background/-Islamic-blob-Copy-2" transform="translate(-1.000000, -3.000000)">
+            <g id="green-web-blob" transform="translate(267.000000, 473.500000) scale(1, -1) rotate(-90.000000) translate(-267.000000, -473.500000) translate(-203.000000, 208.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
                 </mask>
-                <use fill="#04543B" xlink:href="#c"/>
-                <g mask="url(#d)">
-                    <g transform="translate(3.131)">
-                        <mask id="g" fill="#fff">
-                            <use xlink:href="#e"/>
+                <g id="Mask" opacity="0"></g>
+                <g id="blobs" mask="url(#mask-2)">
+                    <g transform="translate(-1191.000000, -2969.000000)">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
                         </mask>
-                        <use fill="url(#f)" xlink:href="#e"/>
-                        <g mask="url(#g)">
-                            <g transform="translate(322.516 918.537)">
-                                <ellipse cx="1182.038" cy="1291.393" fill="#5B8020" opacity=".705" rx="1182.038" ry="1208.181"/>
-                                <path stroke="#979797" stroke-opacity=".01" d="M.5.5h2425.7v2562.583H.5z"/>
-                            </g>
-                        </g>
-                        <g mask="url(#g)">
-                            <g transform="translate(216.055 1212.981)">
-                                <ellipse cx="1163.251" cy="1150.572" fill="#B2DE61" opacity=".247" rx="969.114" ry="990.548"/>
-                                <path stroke="#979797" stroke-opacity=".01" d="M.5.5h2269.139v2229.733H.5z"/>
+                        <use id="Mask" stroke="none" fill="#04543B" fill-rule="evenodd" xlink:href="#path-3"></use>
+                        <g id="content" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-4)">
+                            <g transform="translate(3.131226, 0.000000)">
+                                <ellipse id="Mask" fill="url(#linearGradient-5)" cx="1709.64945" cy="1749.06148" rx="1709.64945" ry="1749.06148"></ellipse>
+                                <ellipse id="Midle" fill="#397431" opacity="0.705147879" cx="1504.55414" cy="2209.93037" rx="1182.03785" ry="1208.18062"></ellipse>
+                                <ellipse id="Oval-Copy" fill="#417B35" cx="1379.3051" cy="2363.55334" rx="969.114479" ry="990.548082"></ellipse>
                             </g>
                         </g>
                     </g>
                 </g>
-                <g fill="#04543B" mask="url(#d)" opacity=".32">
-                    <path d="M1117.848 1920.287h1189.866v2134.72H1117.848z"/>
-                </g>
-                <path fill="#417C35" d="M1315.345 2653.228h711.21v1153h-711.21z" mask="url(#d)" opacity=".6" transform="rotate(-90 1670.95 3229.728)"/>
             </g>
         </g>
     </g>
