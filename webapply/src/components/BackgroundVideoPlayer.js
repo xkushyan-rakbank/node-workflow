@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
-import expandMoreIcon from "../assets/icons/arrow-down.png";
+import expandMoreIcon from "../assets/icons/arrowDown.svg";
 import { sideNavWidthXL, sideNavWidthLG, sideNavWidthMD } from "../constants/styles";
 import { mobileResolution, normalScrollHeight } from "../constants";
 const appRootEl = document.getElementById("root");
