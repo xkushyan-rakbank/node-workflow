@@ -32,7 +32,7 @@ export const useStyles = makeStyles({
     [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
       height: "100vh",
       boxSizing: "border-box",
-      position: "sticky",
+      position: "fixed",
       top: 0
     },
     [portraitOrientationQueryIPads]: {
