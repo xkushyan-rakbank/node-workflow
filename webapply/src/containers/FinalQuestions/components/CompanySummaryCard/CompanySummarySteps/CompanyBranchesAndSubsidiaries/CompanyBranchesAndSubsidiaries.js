@@ -15,6 +15,7 @@ import {
   SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
+import { UAE } from "../../../../../../constants";
 import { limits, initialEntitiesInUAE, initialEntitiesOutsideUAE } from "./constants";
 import {
   MAX_COMPANY_NAME_LENGTH,
@@ -282,6 +283,9 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             >
                               <Field
                                 name={`entitiesOutsideUAE[${index}].country`}
+                                filterOptions={countries => {
+                                  return countries.filter(country => country.code !== UAE);
+                                }}
                                 path={`${basisPath}.entitiesOutsideUAE[${index}].country`}
                                 datalistId="countryOfIncorporation"
                                 label="Country"
