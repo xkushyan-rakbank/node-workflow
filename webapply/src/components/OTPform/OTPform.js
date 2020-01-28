@@ -77,7 +77,7 @@ export const OTPformComponent = ({
         classes={{ title: classes.title }}
         info={`We have sent you a verification code on your ${
           applicantInfo.countryCode === UAE_CODE ? "mobile number" : "e-mail address"
-        }. Please input the six digits below, to confirm this is you`}
+        }. Please enter the six digits below, to confirm this is you`}
       />
 
       <Formik initialValues={code} onSubmit={submitForm}>
