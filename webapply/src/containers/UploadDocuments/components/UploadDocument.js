@@ -148,7 +148,7 @@ export const UploadDocuments = ({
             </p>
           )}
 
-          {!selectedFile && !errorMessage && (
+          {!selectedFile && !isUploaded && !errorMessage && (
             <p>Supported formats are PDF, JPG and PNG | 5MB maximum size</p>
           )}
         </div>
