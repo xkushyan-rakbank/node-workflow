@@ -11,13 +11,13 @@ import {
 import { mobileResolution } from "../../constants";
 
 const blobImages = {
-  red: require("../../assets/images/bg-blobs/bg-blob-red.png"),
+  red: require("../../assets/images/bg-blobs/bg-blob-red.svg"),
   redS: require("../../assets/images/bg-blobs/bg-blob-s-red.png"),
   redM: require("../../assets/images/bg-blobs/bg-blob-m-red.png"),
-  brown: require("../../assets/images/bg-blobs/bg-blob-brown.png"),
+  brown: require("../../assets/images/bg-blobs/bg-blob-brown.svg"),
   brownS: require("../../assets/images/bg-blobs/bg-blob-s-brown.png"),
   brownM: require("../../assets/images/bg-blobs/bg-blob-m-brown.png"),
-  green: require("../../assets/images/bg-blobs/bg-blob-green.png"),
+  green: require("../../assets/images/bg-blobs/bg-blob-green.svg"),
   greenS: require("../../assets/images/bg-blobs/bg-blob-s-green.png"),
   greenM: require("../../assets/images/bg-blobs/bg-blob-m-green.png")
 };

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="530px" height="937px" viewBox="0 0 530 937" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>green-web-blob</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="-2.72848411e-12" y="9.09494702e-13" width="940" height="531"></rect>
+        <ellipse id="path-3" cx="1709.64945" cy="1749.06148" rx="1709.64945" ry="1749.06148"></ellipse>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-5">
+            <stop stop-color="#2A6E35" offset="0%"></stop>
+            <stop stop-color="#166A2C" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Background/-Islamic-blob-Copy-2" transform="translate(-1.000000, -3.000000)">
+            <g id="green-web-blob" transform="translate(267.000000, 473.500000) scale(1, -1) rotate(-90.000000) translate(-267.000000, -473.500000) translate(-203.000000, 208.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask" opacity="0"></g>
+                <g id="blobs" mask="url(#mask-2)">
+                    <g transform="translate(-1191.000000, -2969.000000)">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <use id="Mask" stroke="none" fill="#04543B" fill-rule="evenodd" xlink:href="#path-3"></use>
+                        <g id="content" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-4)">
+                            <g transform="translate(3.131226, 0.000000)">
+                                <ellipse id="Mask" fill="url(#linearGradient-5)" cx="1709.64945" cy="1749.06148" rx="1709.64945" ry="1749.06148"></ellipse>
+                                <ellipse id="Midle" fill="#397431" opacity="0.705147879" cx="1504.55414" cy="2209.93037" rx="1182.03785" ry="1208.18062"></ellipse>
+                                <ellipse id="Oval-Copy" fill="#417B35" cx="1379.3051" cy="2363.55334" rx="969.114479" ry="990.548082"></ellipse>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="530px" height="940px" viewBox="0 0 530 940" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>Background/ Brown blob@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0.316261456" y="0.449922422" width="1680" height="940"></rect>
+        <rect id="path-3" x="0" y="0" width="961.965335" height="1467.08026"></rect>
+        <linearGradient x1="64.0422103%" y1="47.4422213%" x2="60.1341547%" y2="103.647766%" id="linearGradient-5">
+            <stop stop-color="#BC6D4C" offset="0%"></stop>
+            <stop stop-color="#974231" offset="100%"></stop>
+        </linearGradient>
+        <ellipse id="path-6" cx="1400.62153" cy="1541.84493" rx="1400.62153" ry="1541.84493"></ellipse>
+        <linearGradient x1="62.5728002%" y1="80.3727353%" x2="48.4534236%" y2="102.286701%" id="linearGradient-8">
+            <stop stop-color="#BC6D4C" offset="0%"></stop>
+            <stop stop-color="#974231" offset="100%"></stop>
+        </linearGradient>
+        <ellipse id="path-9" cx="1400.62153" cy="1541.84493" rx="1400.62153" ry="1541.84493"></ellipse>
+        <linearGradient x1="91.3356958%" y1="0%" x2="8.6643042%" y2="90.9061955%" id="linearGradient-11">
+            <stop stop-color="#C37955" offset="0%"></stop>
+            <stop stop-color="#974231" offset="100%"></stop>
+        </linearGradient>
+        <ellipse id="path-12" cx="968.378437" cy="1138.39786" rx="968.378437" ry="1065.04384"></ellipse>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-13">
+            <stop stop-color="#A5553D" offset="0%"></stop>
+            <stop stop-color="#CD855D" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Background/-Brown-blob" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-9" transform="translate(840.500000, 470.500000) scale(-1, 1) translate(-840.500000, -470.500000) ">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Rectangle"></g>
+            <g id="bakgrunn" mask="url(#mask-2)">
+                <g transform="translate(1591.000000, 482.000000) scale(-1, -1) rotate(-90.000000) translate(-1591.000000, -482.000000) translate(1109.000000, -253.000000)" id="Misc/Background-Blob">
+                    <g transform="translate(482.000000, 735.000000) rotate(-90.000000) translate(-482.000000, -735.000000) translate(-252.500000, 253.500000)">
+                        <g id="background-blob/_medium" transform="translate(734.395538, 481.231462) rotate(90.000000) translate(-734.395538, -481.231462) translate(253.395538, -252.768538)">
+                            <mask id="mask-4" fill="white">
+                                <use xlink:href="#path-3"></use>
+                            </mask>
+                            <g id="Rectangle"></g>
+                            <g id="blobs" mask="url(#mask-4)">
+                                <g transform="translate(-920.921481, -1910.025648)">
+                                    <mask id="mask-7" fill="white">
+                                        <use xlink:href="#path-6"></use>
+                                    </mask>
+                                    <use id="Mask" stroke="none" fill="url(#linearGradient-5)" fill-rule="evenodd" xlink:href="#path-6"></use>
+                                    <g id="content" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-7)">
+                                        <g transform="translate(2.565241, 0.000000)">
+                                            <mask id="mask-10" fill="white">
+                                                <use xlink:href="#path-9"></use>
+                                            </mask>
+                                            <use id="Mask" stroke="none" fill="url(#linearGradient-8)" fill-rule="evenodd" xlink:href="#path-9"></use>
+                                            <g id="Midle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-10)">
+                                                <g transform="translate(264.219812, 809.715452)">
+                                                    <g id="Midle" stroke="none" opacity="0.705147879" fill-rule="evenodd">
+                                                        <use fill="url(#linearGradient-11)" xlink:href="#path-12"></use>
+                                                        <use fill="#BE6F4D" xlink:href="#path-12"></use>
+                                                    </g>
+                                                    <rect id="Rectangle" stroke-opacity="0.01" stroke="#979797" stroke-width="1" x="0.5" y="0.5" width="1987.06169" height="2258.86786"></rect>
+                                                </g>
+                                            </g>
+                                            <g id="Front" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-10)">
+                                                <g transform="translate(177.001622, 1069.275806)">
+                                                    <ellipse id="Oval-Copy" stroke="none" fill="#FFA877" fill-rule="evenodd" opacity="0.132905506" cx="952.986992" cy="1014.2603" rx="793.942056" ry="873.194886"></ellipse>
+                                                    <rect id="Rectangle" stroke-opacity="0.01" stroke="#979797" stroke-width="1" fill="none" x="0.5" y="0.5" width="1858.79965" height="1965.45181"></rect>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                    <g id="gradient" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-7)" opacity="0.32">
+                                        <g transform="translate(915.790999, 1692.784917)" fill="url(#linearGradient-13)" id="Rectangle">
+                                            <rect x="0" y="0" width="974.791539" height="1881.81257"></rect>
+                                        </g>
+                                    </g>
+                                    <rect id="Rectangle" stroke="none" fill="#A5553D" fill-rule="evenodd" opacity="0.407366071" mask="url(#mask-7)" x="846.237648" y="1774.9659" width="1258.82183" height="1342.56421"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

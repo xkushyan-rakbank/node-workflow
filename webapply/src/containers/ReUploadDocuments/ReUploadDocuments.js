@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TagManager from "react-gtm-module";
 import { connect } from "react-redux";
-import closeBtn from "../../assets/images/close.png";
+import closeBtn from "../../assets/icons/close.svg";
 import companyIconSvg from "../../assets/icons/file.png";
 import {
   retrieveDocDetails,
