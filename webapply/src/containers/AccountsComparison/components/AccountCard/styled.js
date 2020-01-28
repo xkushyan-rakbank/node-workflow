@@ -31,6 +31,7 @@ export const useStyles = makeStyles({
   },
   cardsContainerItem: {
     padding: "0 10px",
+    width: "33.333%",
     [`@media only screen and
      (max-width: ${tabletResolution}px) and
      (min-width: ${mobileResolution}px)`]: {
