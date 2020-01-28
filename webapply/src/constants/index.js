@@ -1,3 +1,4 @@
+import React from "react";
 import routes from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
@@ -57,6 +58,8 @@ export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";
 export const MAX_STAKEHOLDERS_LENGTH = 12;
+export const MAX_SIGNATORIES_LENGTH = 8;
+export const MAX_SHAREHOLDERS_LENGTH = 4;
 export const MAX_EMAIL_LENGTH = 50;
 
 export const REQUEST_LOADING = "loading";
@@ -129,6 +132,18 @@ export const screeningStatusDefault = {
   icon: declinedRegular,
   text:
     "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
+};
+
+export const stakeholderScreeningStatus = {
+  error: "Big Company",
+  icon: callbackRegular,
+  text: (
+    <React.Fragment>
+      Wow, you’re a big company!
+      <br /> Let us save you time and have someone call you within X days to meet you in person and
+      help you out.
+    </React.Fragment>
+  )
 };
 
 export const DATE_FORMAT = "yyyy-MM-dd";
