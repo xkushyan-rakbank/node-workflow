@@ -69,6 +69,12 @@ export const useStyles = makeStyles({
         }
       }
     },
+
+    "@media only screen and (min-width: 1920px)": {
+      //Added that value to fill the black gap in DetailedAccount video while zooming out
+      minWidth: "19vw"
+    },
+
     "& ul": {
       margin: "0",
       padding: "5px 0 0 25px",
