@@ -40,7 +40,6 @@ export const DatePicker = ({
             maxDate={maxDate}
             disabled={disabled}
             disableFuture={disableFuture}
-            disableToolbar
             margin="normal"
             variant="inline"
             format={format}
