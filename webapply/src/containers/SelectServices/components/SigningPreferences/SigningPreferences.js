@@ -34,6 +34,7 @@ import {
   getRequiredNotTextInputMessage,
   getInvalidMessage
 } from "../../../../utils/getValidationMessage";
+import { sortByOrder } from "../../../../utils/sortByOrder";
 
 const MAX_SIGNATORIES = 2;
 const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
@@ -160,6 +161,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
               path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
               typeRadio
               datalistId="accountSignType"
+              filterOptions={options => sortByOrder(options, ["100", "000", "101"])}
               onSelect={e => {
                 setFieldValue("accountSigningType", e.target.value);
                 setFieldValue("accountSigningInstn", "");

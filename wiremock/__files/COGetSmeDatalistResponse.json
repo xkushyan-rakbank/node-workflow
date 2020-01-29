@@ -8404,24 +8404,24 @@
   ],
   "accountSignType": [
     {
-      "code": "A2",
-      "key": "A2",
-      "value": "A2",
-      "displayText": "All of us",
+      "code": "101",
+      "key": "101",
+      "value": "101",
+      "displayText": "All of us must sign",
       "subGroup": null
     },
     {
-      "code": "A1",
-      "key": "A1",
-      "value": "A1",
-      "displayText": "Any of us",
+      "code": "100",
+      "key": "100",
+      "value": "100",
+      "displayText": "Any of us can sign",
       "subGroup": null
     },
     {
-      "code": "A3",
-      "key": "A3",
-      "value": "A3",
-      "displayText": "Others",
+      "code": "000",
+      "key": "000",
+      "value": "000",
+      "displayText": "Other (please specify)",
       "subGroup": null
     }
   ],
