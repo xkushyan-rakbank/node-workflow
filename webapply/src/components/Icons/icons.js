@@ -21,7 +21,7 @@ import { ReactComponent as InfoYellow } from "../../assets/icons/infoYellow.svg"
 import { ReactComponent as InfoRed } from "../../assets/icons/infoRed.svg";
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 import { ReactComponent as Error } from "../../assets/images/error.svg";
-import { ReactComponent as File } from "../../assets/icons/file.png";
+import { ReactComponent as File } from "../../assets/icons/file.svg";
 
 export const iconComponents = {
   done: Done,

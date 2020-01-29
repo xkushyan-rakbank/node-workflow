@@ -3,7 +3,7 @@ import nanoid from "nanoid";
 import * as Yup from "yup";
 
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
-import companyIconSvg from "../../../assets/icons/file.png";
+import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
@@ -110,7 +110,7 @@ export const UploadDocuments = ({
         ref={inputEl}
       />
 
-      {(selectedFile || isUploaded) && <img src={companyIconSvg} alt="companyIconSvg" />}
+      {(selectedFile || isUploaded) && <FileIcon width="20" height="26" alt="companyIconSvg" />}
 
       <div className={classes.ContentBox}>
         <p className={classes.uploadedFileName}>
@@ -129,10 +129,7 @@ export const UploadDocuments = ({
           {isUploading && (
             <div className={classes.uploadFileName}>
               <div id="Progress_Status">
-                <div
-                  className={classes.myProgressBar}
-                  style={{ width: `${percentComplete}%` }}
-                ></div>
+                <div className={classes.myProgressBar} style={{ width: `${percentComplete}%` }} />
               </div>
               <div className={classes.progressStatus}>{percentComplete}%</div>
             </div>
