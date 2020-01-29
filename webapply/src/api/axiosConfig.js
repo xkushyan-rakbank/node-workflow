@@ -102,14 +102,15 @@ instance.interceptors.response.use(
 
     if (status === 400 && jsonData.errorType === "ReCaptchaError") {
       store.dispatch(setError(data.errors));
-    } else if ((status === 400 || status === 500) && jsonData.errorType === "FieldsValidation") {
-      NotificationsManager.add &&
-        NotificationsManager.add({
-          title: "Validation Error",
-          message: jsonData.errors[0] ? jsonData.errors[0].message : "Validation Error"
-        });
     } else if (status === 400 && jsonData.errors) {
       store.dispatch(setInputsErrors(data.errors));
+      if (jsonData.errorType === "FieldsValidation") {
+        NotificationsManager.add &&
+          NotificationsManager.add({
+            title: "Validation Error On Server",
+            message: jsonData.errors[0] ? jsonData.errors[0].message : "Validation Error"
+          });
+      }
     } else {
       log(jsonData);
       NotificationsManager.add && NotificationsManager.add();
