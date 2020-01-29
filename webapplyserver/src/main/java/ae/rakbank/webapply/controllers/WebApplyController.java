@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.LogFileService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -124,7 +125,7 @@ public class WebApplyController {
         if (!EnvUtil.isProd()) {
             response.put("project", appName);
         }
-        return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
 
@@ -142,7 +143,10 @@ public class WebApplyController {
         String[] roles = {"customer", "agent"};
         for (String segment : segments) {
             ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);
-            JsonNode datalistJSON = null;
+            if (datalistResponse == null) {
+                throw new ApiException("No segment value with 'sme' key");
+            }
+            JsonNode datalistJSON;
             if (datalistResponse.getStatusCode().is2xxSuccessful()) {
                 datalistJSON = datalistResponse.getBody();
             }
@@ -161,8 +165,7 @@ public class WebApplyController {
                                     "unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[%s]",
                                     device, segment, product, role));
                             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-                            return new ResponseEntity<JsonNode>(error.toJsonNode(), headers,
-                                    HttpStatus.INTERNAL_SERVER_ERROR);
+                            throw new ApiException(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
                         }
                     }
                 }
@@ -174,25 +177,25 @@ public class WebApplyController {
         response.put("message", "reload configs successful");
         ResponseEntity<JsonNode> oauth = getOauthFromContext();
         response.set("oauth", oauth.getBody());
-        return new ResponseEntity<JsonNode>(response, headers, HttpStatus.OK);
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
 
     @GetMapping(value = "/config", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<JsonNode> getWebApplyConfig(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+    public ResponseEntity<JsonNode> getWebApplyConfig(HttpServletRequest httpRequest,
                                                       @RequestParam String role,
                                                       @RequestParam(required = false, defaultValue = "") String segment,
                                                       @RequestParam(required = false, defaultValue = "") String product,
                                                       @RequestParam(required = false, defaultValue = "desktop") String device)
-    throws Exception {
-        logger.info("Begin getWebApplyConfig() method");
+            throws Exception {
 
+        logger.info("Begin getWebApplyConfig() method");
         String invalidCriteriaError = validCriteriaParams(segment, product, role, device);
         if (StringUtils.isNotBlank(invalidCriteriaError)) {
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid segment, product or role.",
                     invalidCriteriaError);
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
+            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
         }
 
         HttpHeaders headers = new HttpHeaders();
@@ -220,7 +223,7 @@ public class WebApplyController {
 
         ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment, authorization);
 
-        JsonNode datalistJSON = null;
+        JsonNode datalistJSON;
         if (datalistResponse.getStatusCode().is2xxSuccessful()) {
             datalistJSON = datalistResponse.getBody();
         }
@@ -230,16 +233,15 @@ public class WebApplyController {
 
         JsonNode webApplyConfig = null;
         try {
-            webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON,
-                    authorization);
+            webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON, authorization);
         }
         catch (IOException e) {
             logger.error("error occured while loading config files", e);
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<JsonNode>(webApplyConfig, headers, HttpStatus.OK);
+        return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
     }
 
     @GetMapping(value = "/config/reduced", produces = "application/json")
@@ -256,7 +258,7 @@ public class WebApplyController {
         if (StringUtils.isNotBlank(invalidCriteriaError)) {
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid segment, product or role.",
                     invalidCriteriaError);
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
+            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
         }
 
         HttpHeaders headers = new HttpHeaders();
@@ -268,12 +270,12 @@ public class WebApplyController {
             logger.info("cached data found for key - " + cacheKey);
             ObjectMapper mapper = new ObjectMapper();
             JsonNode cachedJson = mapper.readTree(cachedValue);
-            return new ResponseEntity<JsonNode>(cachedJson, headers, HttpStatus.OK);
+            return new ResponseEntity<>(cachedJson, headers, HttpStatus.OK);
         }
 
         ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment, httpRequest.getHeader("Authorization"));
 
-        JsonNode datalistJSON = null;
+        JsonNode datalistJSON;
         if (datalistResponse.getStatusCode().is2xxSuccessful()) {
             datalistJSON = datalistResponse.getBody();
         }
@@ -281,7 +283,7 @@ public class WebApplyController {
             return datalistResponse;
         }
 
-        JsonNode webApplyConfig = null;
+        JsonNode webApplyConfig;
         try {
             webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON,
                     httpRequest.getHeader("Authorization"), false);
@@ -289,9 +291,9 @@ public class WebApplyController {
         catch (IOException e) {
             logger.error("error occured while loading config files", e);
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<JsonNode>(webApplyConfig, headers, HttpStatus.OK);
+        return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
     }
 
     @PostMapping(value = "/usertypes/{segment}/prospects", produces = "application/json", consumes = "application/json")
@@ -382,7 +384,7 @@ public class WebApplyController {
                     logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()), e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
             else {
@@ -392,14 +394,14 @@ public class WebApplyController {
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         "oauth error, check logs for more info.");
 
-                return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         else {
             logger.error(String.format("OAuth token expired or invalid."));
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     "oauth error, check logs for more info.");
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -435,7 +437,7 @@ public class WebApplyController {
                             e.getMessage()), e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
             }
@@ -446,14 +448,14 @@ public class WebApplyController {
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         "oauth error, check logs for more info.");
 
-                return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         else {
             logger.error(String.format("OAuth token expired or invalid."));
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     "oauth error, check logs for more info.");
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -477,21 +479,17 @@ public class WebApplyController {
 
                 String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
-
                 try {
-
                     return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
                             "searchProspect()", "searchProspectUri", MediaType.APPLICATION_JSON, segment, null);
-
                 }
                 catch (Exception e) {
                     logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
                             e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
-
             }
             else {
                 logger.error(String.format("OAuth Error in searchProspect() method , HttpStatus=[%s], message=[%s]",
@@ -499,13 +497,13 @@ public class WebApplyController {
 
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         "oauth error, check logs for more info.");
-                return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         else {
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     "oauth error, check logs for more info.");
-            return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -529,7 +527,6 @@ public class WebApplyController {
 
               String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
               UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
-
               try {
                   return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
                           "getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
@@ -539,24 +536,22 @@ public class WebApplyController {
                           e);
                   ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                           "Unable to call endpoint " + uriComponents.toString(), e);
-                  return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                  throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
               }
           } 
           else {
               logger.error(String.format("OAuth Error in getProspectById() method , HttpStatus=[%s], message=[%s]",
                       oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
-
               ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                       "oauth error, check logs for more info.");
-
-              return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+              throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
           }
         }
         else {
           logger.error(String.format("OAuth token expired or invalid."));
           ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                   "oauth error, check logs for more info.");
-          return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+          throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -577,10 +572,8 @@ public class WebApplyController {
 
                 HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
                         MediaType.APPLICATION_OCTET_STREAM);
-
                 String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
-
                 try {
                     return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
                             "getProspectDocumentById()", "getProspectDocumentByIdUri", MediaType.APPLICATION_OCTET_STREAM,
@@ -591,25 +584,22 @@ public class WebApplyController {
                             e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
-
             }
             else {
                 logger.error(String.format("OAuth Error in getDocumentById() method , HttpStatus=[%s], message=[%s]",
                         oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
-
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         "oauth error, check logs for more info.");
-
-                return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         else {
             logger.error(String.format("OAuth token expired or invalid."));
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     "oauth error, check logs for more info.");
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -628,10 +618,8 @@ public class WebApplyController {
 
                 HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
                         MediaType.APPLICATION_JSON);
-
                 String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
-
                 try {
                     return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
                             "getProspectDocuments()", "getProspectDocumentsUri", MediaType.APPLICATION_JSON, null,
@@ -642,25 +630,22 @@ public class WebApplyController {
                             e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
             else {
-
                 logger.error(String.format("OAuth Error in getProspectDocuments() method , HttpStatus=[%s], message=[%s]",
                         oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
-
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         "oauth error, check logs for more info.");
-
-                return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         else {
             logger.error(String.format("OAuth token expired or invalid."));
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     "oauth error, check logs for more info.");
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -674,8 +659,11 @@ public class WebApplyController {
 
         ResponseEntity<JsonNode> oauthResponse =
                 oauthClient.getOAuthToken(requestBodyJSON.get("username").asText(), requestBodyJSON.get("password").asText());
+        if (oauthResponse == null) {
+            throw new ApiException("The response from OAuth service is null");
+        }
 
-        if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
+        if (oauthResponse.getStatusCode().is2xxSuccessful()) {
             if (requestBodyJSON.has("recaptchaToken")) {
                 logger.info("Validate reCAPTCHA before saving applicant info.");
                 String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
@@ -701,8 +689,7 @@ public class WebApplyController {
             else if (EnvUtil.isRecaptchaEnable()) {
                 ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
                         "recaptchaToken is required");
-
-                return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
+                throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
             }
 
             //TODO add required fields to the response!!!   (agentName, agentId, agentRole, deptName)
@@ -715,8 +702,7 @@ public class WebApplyController {
 
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     "oauth error, check logs for more info.");
-
-            return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -789,25 +775,23 @@ public class WebApplyController {
                     logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + url, e);
-                    return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
             }
             else {
                 logger.error(String.format("OAuth Error in generateVerifyOTP() method , HttpStatus=[%s], message=[%s]",
                         oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
-
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         "oauth error, check logs for more info.");
-
-                return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         else {
             logger.error(String.format("OAuth token expired or invalid."));
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     "oauth error, check logs for more info.");
-            return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -855,14 +839,16 @@ public class WebApplyController {
                 errorJson = channelContext.get(0);
             }
             JsonNode badReqResponse = new ObjectMapper().readTree(errorJson);
-            return new ResponseEntity<Object>(badReqResponse, null, HttpStatus.BAD_REQUEST);
+            throw new ApiException(badReqResponse.asText(), HttpStatus.BAD_REQUEST);
+
         }
         catch (HttpServerErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     e.getResponseBodyAsString(), e);
-            return new ResponseEntity<Object>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
 
         // ResponseEntity headers is immutable, so create new HttpHeaders object
@@ -1149,14 +1135,14 @@ public class WebApplyController {
                         e.getResponseBodyAsString()), e);
                 ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
                         e.getResponseBodyAsString(), e);
-                return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
+                throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
             }
             catch (HttpServerErrorException e) {
                 logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
                         e.getResponseBodyAsString()), e);
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         e.getResponseBodyAsString(), e);
-                return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
             ObjectNode datalist = (ObjectNode) response.getBody();
@@ -1166,7 +1152,7 @@ public class WebApplyController {
             logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s]",
                     methodName, url, response.getStatusCodeValue()));
 
-            return new ResponseEntity<JsonNode>(datalist, null, HttpStatus.OK);
+            return new ResponseEntity<>(datalist, null, HttpStatus.OK);
         }
         else {
             logger.error("Unable to call datalist API due to oauth error.");

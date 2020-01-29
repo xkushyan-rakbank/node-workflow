@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 public class ApiError {
 
@@ -26,77 +28,57 @@ public class ApiError {
 	private String timestamp;
 	private String message;
 	private String debugMessage;
-	private String exception;
+	private String exceptionClassName;
 	private StackTraceElement[] stackTrace;
 
 	private ApiError() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
-		timestamp = LocalDateTime.now().format(formatter);
+		initTimestamp();
 	}
 
 	public ApiError(HttpStatus status) {
 		this();
+		initTimestamp();
 		this.status = status;
+		this.statusCode = status.value();
 	}
 
 	public ApiError(HttpStatus status, Throwable ex) {
 		this();
+		initTimestamp();
 		this.status = status;
+		this.statusCode = status.value();
 		this.message = "Unexpected error";
 		setException(ex);
 	}
 
 	public ApiError(HttpStatus status, String message, String debugMessage) {
 		this();
+		initTimestamp();
 		this.status = status;
+		this.statusCode = status.value();
 		this.message = message;
 		this.debugMessage = debugMessage;
 	}
 
 	public ApiError(HttpStatus status, String message, String debugMessage, Throwable ex) {
 		this();
+		initTimestamp();
 		this.status = status;
+		this.statusCode = status.value();
 		this.message = message;
 		this.debugMessage = debugMessage;
 		setException(ex);
 	}
 
+	private void initTimestamp() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
+		timestamp = LocalDateTime.now().format(formatter);
+	}
+
 	private void setException(Throwable ex) {
-		if (!EnvUtil.isProd()) {
-			this.exception = ex.getMessage();
-		}
-	}
-
-	ApiError(HttpStatus status, String message, Throwable ex) {
-		this();
-		this.status = status;
-		this.message = message;
-		setException(ex);
-	}
-
-	public String getDebugMessage() {
-		if (!EnvUtil.isProd()) {
-			return debugMessage;
-		}
-		return null;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-	public HttpStatus getStatus() {
-		return status;
-	}
-
-	public void setStackTrace(StackTraceElement[] stackTrace) {
-		this.stackTrace = stackTrace;
-	}
-
-	public String getException() {
-		if (!EnvUtil.isProd()) {
-			return exception;
-		}
-		return null;
+		this.exceptionClassName = ex.getClass().getSimpleName();
+		this.message = ex.getMessage();
+		this.stackTrace = ex.getStackTrace();
 	}
 
 	public String toJsonString() throws JsonProcessingException {
@@ -104,6 +86,8 @@ public class ApiError {
 		return mapper.writeValueAsString(this);
 	}
 
+
+	//Legacy implementation, not all the fields used
 	public JsonNode toJsonNode() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode errorResponse = objectMapper.createObjectNode();
@@ -114,7 +98,7 @@ public class ApiError {
 		error.put("errorType", "Internal Server Error");
 		error.put("message", message);
 		error.put("developerText", debugMessage);
-		error.put("exception", exception);
+		error.put("exceptionClassName", exceptionClassName);
 		errors.add(error);
 		errorResponse.set("errors", errors);
 		return errorResponse;

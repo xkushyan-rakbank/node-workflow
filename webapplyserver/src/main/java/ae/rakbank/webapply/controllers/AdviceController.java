@@ -44,7 +44,9 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         } else {
             apiError = apiException.getApiError();
             apiError.setStackTrace(apiException.getStackTrace());
+            apiError.setExceptionClassName(apiException.getClass().getSimpleName());
         }
+
         return sendResponse(apiException, headers, status, apiError);
     }
 
@@ -81,11 +83,10 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         }
 
         return ApiError.builder()
-                .exception(ex.getClass().getSimpleName())
+                .exceptionClassName(ex.getClass().getSimpleName())
                 .message(ex.getMessage())
                 .timestamp(actualTimestamp)
                 .stackTrace(ex.getStackTrace())
-                .message(ex.getMessage())
                 .status(status)
                 .statusCode(status.value())
                 .build();
