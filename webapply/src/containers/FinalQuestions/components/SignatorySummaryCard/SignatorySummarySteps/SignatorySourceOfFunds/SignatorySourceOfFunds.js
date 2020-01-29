@@ -5,24 +5,24 @@ import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
+import {
+  Input,
+  SelectAutocomplete,
+  AutoSaveField as Field
+} from "../../../../../../components/Form";
 import { WEALTH_TYPE__REGEX } from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
-import {
-  getRequiredMessage,
-  getInvalidMessage
-} from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
 
 export const signatorySourceOfFundsSchema = Yup.object().shape({
-  wealthType: Yup.string().required(getRequiredMessage("Source of funds")),
+  wealthType: Yup.array().required("You need to provide wealth type"),
   others: Yup.string().when("wealthType", {
-    is: value => value === OTHER_SOURCE_OF_WEALTH,
+    is: value => value.includes(OTHER_SOURCE_OF_WEALTH),
     then: Yup.string()
-      .required(getRequiredMessage("Other"))
-      .matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
+      .required("You need to specify wealth type")
+      .matches(WEALTH_TYPE__REGEX, "Invalid wealth type value")
   })
 });
 
@@ -37,7 +37,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          wealthType: "",
+          wealthType: [],
           others: ""
         }}
         onSubmit={handleSubmit}
@@ -49,29 +49,29 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item md={12} sm={12}>
                 <Field
+                  multiple
                   name="wealthType"
                   path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.wealthType`}
                   datalistId="wealthType"
                   label="Source of funds"
-                  onChange={e => {
+                  onChange={selectedValue => {
+                    setFieldValue("wealthType", selectedValue);
                     if (
-                      e.target.value !== OTHER_SOURCE_OF_WEALTH &&
-                      values.wealthType === OTHER_SOURCE_OF_WEALTH
+                      !selectedValue.includes(OTHER_SOURCE_OF_WEALTH) &&
+                      values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                     ) {
                       setFieldValue("others", "");
                       setFieldTouched("others", false);
                     }
-                    setFieldValue("wealthType", e.target.value);
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
-                  component={CustomSelect}
-                  inputProps={{ tabIndex: 0 }}
+                  component={SelectAutocomplete}
                 />
               </Grid>
               <Grid
                 className={cx({
-                  hidden: values.wealthType !== OTHER_SOURCE_OF_WEALTH
+                  hidden: !values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                 })}
                 item
                 md={12}
