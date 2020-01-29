@@ -26,7 +26,7 @@ export const OTPformComponent = ({
   classes: extendetClasses
 }) => {
   const history = useHistory();
-  const { attempts, verificationError, isVerified, isPending } = otp;
+  const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
   const [code, setCode] = useState(Array(6).fill(""));
   const [isValidCode, setIsValidCode] = useState(false);
   const [loginAttempt, setLoginAttempt] = useState(0);
@@ -50,6 +50,7 @@ export const OTPformComponent = ({
   useEffect(() => () => verifyClearError(), []);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
+    if (isGenerating) return;
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(applicantInfo);
     }
@@ -57,7 +58,7 @@ export const OTPformComponent = ({
       setIsDisplayMaxAttempError(true);
     }
     setLoginAttempt(loginAttempt + 1);
-  }, [loginAttempt, generateOtpCode, applicantInfo, attempts]);
+  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, attempts]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
@@ -118,7 +119,7 @@ export const OTPformComponent = ({
 
             <div className={classes.linkContainer}>
               <SubmitButton
-                disabled={!isValidCode || isPending}
+                disabled={!isValidCode || isPending || isGenerating}
                 justify="flex-end"
                 label={isPending ? "Verify..." : "Next Step"}
                 submitButtonClassName={classes.submitButton}

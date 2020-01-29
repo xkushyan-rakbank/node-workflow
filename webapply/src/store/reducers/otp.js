@@ -2,8 +2,9 @@ import * as actions from "../actions/otp";
 import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 
 const initialState = {
-  isPending: false,
+  isGenerating: false,
   isGenerated: false,
+  isPending: false,
   isVerified: false,
   verificationError: false,
   mode: "",
@@ -29,11 +30,12 @@ const otpReducer = (state = initialState, action) => {
         ...state,
         verificationError: false,
         isVerified: false,
+        isGenerating: true,
         isGenerated: false,
         mode: "",
         otpTokenValidityInSec: "",
         otpTokenValidUntil: "",
-        isPending: true,
+        isPending: false,
         error: ""
       };
     }
@@ -43,10 +45,17 @@ const otpReducer = (state = initialState, action) => {
         isPending: action.payload
       };
     }
+    case actions.SET_GENERATING: {
+      return {
+        ...state,
+        isGenerating: action.payload
+      };
+    }
     case actions.GENERATE_CODE_SUCCESS: {
       return {
         ...state,
         ...action.payload,
+        isGenerating: false,
         isGenerated: true,
         isPending: false,
         generatedAt: Date.now()
@@ -55,6 +64,7 @@ const otpReducer = (state = initialState, action) => {
     case actions.VERIFY_CODE_SUCCESS: {
       return {
         ...state,
+        isGenerating: false,
         isGenerated: false,
         isVerified: true,
         verificationError: false,
