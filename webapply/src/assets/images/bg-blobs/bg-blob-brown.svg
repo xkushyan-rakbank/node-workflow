@@ -1,83 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="530px" height="940px" viewBox="0 0 530 940" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
-    <title>Background/ Brown blob@1x</title>
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>elite-web-blob</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <rect id="path-1" x="0.316261456" y="0.449922422" width="1680" height="940"></rect>
-        <rect id="path-3" x="0" y="0" width="961.965335" height="1467.08026"></rect>
-        <linearGradient x1="64.0422103%" y1="47.4422213%" x2="60.1341547%" y2="103.647766%" id="linearGradient-5">
-            <stop stop-color="#BC6D4C" offset="0%"></stop>
-            <stop stop-color="#974231" offset="100%"></stop>
+        <rect id="path-1" x="0.316261456" y="0.449922422" width="530" height="940"></rect>
+        <linearGradient x1="-5.88826491%" y1="39.3986646%" x2="100%" y2="39.3986646%" id="linearGradient-3">
+            <stop stop-color="#642B23" offset="0%"></stop>
+            <stop stop-color="#A06049" offset="51.9600298%"></stop>
+            <stop stop-color="#DE946E" offset="100%"></stop>
         </linearGradient>
-        <ellipse id="path-6" cx="1400.62153" cy="1541.84493" rx="1400.62153" ry="1541.84493"></ellipse>
-        <linearGradient x1="62.5728002%" y1="80.3727353%" x2="48.4534236%" y2="102.286701%" id="linearGradient-8">
-            <stop stop-color="#BC6D4C" offset="0%"></stop>
-            <stop stop-color="#974231" offset="100%"></stop>
+        <linearGradient x1="90.6934529%" y1="4.74445311%" x2="11.7970264%" y2="91.5282373%" id="linearGradient-4">
+            <stop stop-color="#FF6A00" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#660808" stop-opacity="0.5" offset="100%"></stop>
         </linearGradient>
-        <ellipse id="path-9" cx="1400.62153" cy="1541.84493" rx="1400.62153" ry="1541.84493"></ellipse>
-        <linearGradient x1="91.3356958%" y1="0%" x2="8.6643042%" y2="90.9061955%" id="linearGradient-11">
-            <stop stop-color="#C37955" offset="0%"></stop>
-            <stop stop-color="#974231" offset="100%"></stop>
-        </linearGradient>
-        <ellipse id="path-12" cx="968.378437" cy="1138.39786" rx="968.378437" ry="1065.04384"></ellipse>
-        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-13">
-            <stop stop-color="#A5553D" offset="0%"></stop>
-            <stop stop-color="#CD855D" offset="100%"></stop>
-        </linearGradient>
+        <path d="M1050.98602,0.5 L1050.99966,1073.46198 C887.511598,1133.01259 711.001607,1165.5 526.898007,1165.5 C341.744083,1165.5 164.270658,1132.64085 -0.000503653477,1072.44011 L0.00738906145,0.5 L1050.98602,0.5 Z" id="path-5"></path>
     </defs>
-    <g id="Background/-Brown-blob" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group-9" transform="translate(840.500000, 470.500000) scale(-1, 1) translate(-840.500000, -470.500000) ">
-            <mask id="mask-2" fill="white">
-                <use xlink:href="#path-1"></use>
-            </mask>
-            <g id="Rectangle"></g>
-            <g id="bakgrunn" mask="url(#mask-2)">
-                <g transform="translate(1591.000000, 482.000000) scale(-1, -1) rotate(-90.000000) translate(-1591.000000, -482.000000) translate(1109.000000, -253.000000)" id="Misc/Background-Blob">
-                    <g transform="translate(482.000000, 735.000000) rotate(-90.000000) translate(-482.000000, -735.000000) translate(-252.500000, 253.500000)">
-                        <g id="background-blob/_medium" transform="translate(734.395538, 481.231462) rotate(90.000000) translate(-734.395538, -481.231462) translate(253.395538, -252.768538)">
-                            <mask id="mask-4" fill="white">
-                                <use xlink:href="#path-3"></use>
-                            </mask>
-                            <g id="Rectangle"></g>
-                            <g id="blobs" mask="url(#mask-4)">
-                                <g transform="translate(-920.921481, -1910.025648)">
-                                    <mask id="mask-7" fill="white">
-                                        <use xlink:href="#path-6"></use>
-                                    </mask>
-                                    <use id="Mask" stroke="none" fill="url(#linearGradient-5)" fill-rule="evenodd" xlink:href="#path-6"></use>
-                                    <g id="content" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-7)">
-                                        <g transform="translate(2.565241, 0.000000)">
-                                            <mask id="mask-10" fill="white">
-                                                <use xlink:href="#path-9"></use>
-                                            </mask>
-                                            <use id="Mask" stroke="none" fill="url(#linearGradient-8)" fill-rule="evenodd" xlink:href="#path-9"></use>
-                                            <g id="Midle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-10)">
-                                                <g transform="translate(264.219812, 809.715452)">
-                                                    <g id="Midle" stroke="none" opacity="0.705147879" fill-rule="evenodd">
-                                                        <use fill="url(#linearGradient-11)" xlink:href="#path-12"></use>
-                                                        <use fill="#BE6F4D" xlink:href="#path-12"></use>
-                                                    </g>
-                                                    <rect id="Rectangle" stroke-opacity="0.01" stroke="#979797" stroke-width="1" x="0.5" y="0.5" width="1987.06169" height="2258.86786"></rect>
-                                                </g>
-                                            </g>
-                                            <g id="Front" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-10)">
-                                                <g transform="translate(177.001622, 1069.275806)">
-                                                    <ellipse id="Oval-Copy" stroke="none" fill="#FFA877" fill-rule="evenodd" opacity="0.132905506" cx="952.986992" cy="1014.2603" rx="793.942056" ry="873.194886"></ellipse>
-                                                    <rect id="Rectangle" stroke-opacity="0.01" stroke="#979797" stroke-width="1" fill="none" x="0.5" y="0.5" width="1858.79965" height="1965.45181"></rect>
-                                                </g>
-                                            </g>
-                                        </g>
-                                    </g>
-                                    <g id="gradient" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" mask="url(#mask-7)" opacity="0.32">
-                                        <g transform="translate(915.790999, 1692.784917)" fill="url(#linearGradient-13)" id="Rectangle">
-                                            <rect x="0" y="0" width="974.791539" height="1881.81257"></rect>
-                                        </g>
-                                    </g>
-                                    <rect id="Rectangle" stroke="none" fill="#A5553D" fill-rule="evenodd" opacity="0.407366071" mask="url(#mask-7)" x="846.237648" y="1774.9659" width="1258.82183" height="1342.56421"></rect>
-                                </g>
-                            </g>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Background/-Elite-blob-Copy" transform="translate(0.000000, -1.000000)">
+            <g id="elite-web-blob" transform="translate(265.500000, 470.500000) scale(-1, 1) translate(-265.500000, -470.500000) ">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Rectangle"></g>
+                <g id="Group" mask="url(#mask-2)">
+                    <g transform="translate(584.000000, 527.000000) rotate(-270.000000) translate(-584.000000, -527.000000) translate(58.000000, -56.000000)" id="Combined-Shape">
+                        <g fill="none">
+                            <use fill="url(#linearGradient-3)" xlink:href="#path-5"></use>
+                            <use fill-opacity="0.5" fill="url(#linearGradient-4)" xlink:href="#path-5"></use>
                         </g>
+                        <path d="M1051.49982,449.000503 L1051.48878,1072.92578 C888.003341,1132.49982 711.496181,1165 527.395534,1165 C342.244578,1165 164.773999,1132.12793 0.505471976,1071.90352 L0.501348755,1004.83485 C71.6579852,1023.42751 146.331296,1033.32564 223.317251,1033.32564 C605.416185,1033.32564 930.546278,789.498566 1051.49982,449.000503 Z" fill-opacity="0.208752185" fill="#000000" opacity="0.428850446"></path>
+                        <path d="M1051.4996,821.000354 L1051.48827,1072.84632 C888.002323,1132.47177 711.494616,1165 527.393398,1165 C342.241868,1165 164.770739,1132.09956 0.501701701,1071.82317 L0.499426799,1037.24425 C107.068435,1072.82516 221.095373,1092.096 339.620968,1092.096 C612.928099,1092.096 862.315267,989.63034 1051.4996,821.000354 Z" fill-opacity="0.0650131119" fill="#000000"></path>
                     </g>
                 </g>
             </g>
