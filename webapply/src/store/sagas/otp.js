@@ -32,7 +32,7 @@ function* verifyOtp({ payload: otpToken }) {
       otpToken
     };
     const { data } = yield call(otp.verify, payload, headers);
-    if (data.verified || !data.verified) {
+    if (data.verified) {
       yield put(otpActions.verifyCodeSuccess());
     } else {
       yield put(otpActions.verifyCodeFailed());
