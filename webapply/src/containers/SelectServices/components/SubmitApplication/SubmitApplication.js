@@ -20,18 +20,21 @@ export const SubmitApplicationComponent = ({
   organizationInfo: { companyName },
   sendProspectToAPI,
   updateActionType,
-  updateSaveType,
-  isApplicationSubmitting
+  updateSaveType
 }) => {
   const [formFieldsValues, setFormFields] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = () => {
+    setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
-    sendProspectToAPI().then(() => history.push(routes.ApplicationSubmitted));
+    sendProspectToAPI()
+      .then(() => history.push(routes.ApplicationSubmitted))
+      .finally(() => setIsSubmitting(false));
   };
 
-  if (isApplicationSubmitting) {
+  if (isSubmitting) {
     return <ServerRequestLoadingScreen />;
   }
 
@@ -50,7 +53,10 @@ export const SubmitApplicationComponent = ({
       <div className="linkContainer">
         <BackLink path={routes.selectServices} />
         <SubmitButton
-          disabled={!(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed)}
+          disabled={
+            !(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed) ||
+            isSubmitting
+          }
           label="Submit"
           justify="flex-end"
           handleClick={handleSubmit}
