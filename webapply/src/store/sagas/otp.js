@@ -14,7 +14,7 @@ function* generateOtp(action) {
   } catch (error) {
     log(error);
   } finally {
-    yield put(otpActions.setOtpPendingRequest(false));
+    yield put(otpActions.setGeneratingCode(false));
   }
 }
 
