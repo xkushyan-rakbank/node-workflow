@@ -108,7 +108,7 @@ instance.interceptors.response.use(
       NotificationsManager.add &&
         NotificationsManager.add({
           title: "Validation Error",
-          message: !jsonData.errors[0] && jsonData.errors[0].message
+          message: jsonData.errors[0] ? jsonData.errors[0].message : "Validation Error"
         });
     } else {
       log(jsonData);
