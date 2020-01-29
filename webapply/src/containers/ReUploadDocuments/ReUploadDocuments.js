@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TagManager from "react-gtm-module";
 import { connect } from "react-redux";
-import closeBtn from "../../assets/icons/close.svg";
-import companyIconSvg from "../../assets/icons/file.png";
+import { ReactComponent as AddIcon } from "../../assets/icons/add-icon.svg";
+import { ReactComponent as FileIcon } from "../../assets/icons/file.svg";
 import {
   retrieveDocDetails,
   extraDocUploadSuccess,
@@ -221,7 +221,9 @@ class EditApplicationComponent extends Component {
           if (documents.documentType === "others") {
             return (
               <div className={this.props.classes.fileUploadPlaceholder} key={index} id={index}>
-                <div>{this.props.icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
+                <div>
+                  {this.props.icon || <FileIcon width="20" height="26" alt="companyIconSvg" />}
+                </div>
                 <div className={this.props.classes.contentBox}>
                   <div className={this.props.classes.uploadFileName}>
                     {" "}
@@ -230,9 +232,9 @@ class EditApplicationComponent extends Component {
                   </div>
                   <div className={this.props.classes.uploadFileName}>
                     <div id="Progress_Status">
-                      <div id="myProgressBar"></div>
+                      <div id="myProgressBar" />
                     </div>
-                    <div id="progressStatus"></div>
+                    <div id="progressStatus" />
                   </div>
                   {/* )} */}
                 </div>
@@ -269,7 +271,7 @@ class EditApplicationComponent extends Component {
         {otherDocuments}
         {companyDocumentLength < maxExtraDocUpload ? (
           <div className={this.props.classes.sectionContainer}>
-            <img src={closeBtn} alt="closeBtn" onClick={() => this.fileInput.click()} />
+            <AddIcon width="24" height="24" alt="closeBtn" onClick={() => this.fileInput.click()} />
             <span className={this.props.classes.sectionContainerTitle}>
               {companyDocumentLength === 0 ? <> Add another document</> : <>Upload document</>}
             </span>

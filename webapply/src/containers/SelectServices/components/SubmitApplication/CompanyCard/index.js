@@ -5,7 +5,8 @@ import { ACCOUNTS_SIGNING_NAME_OTHER, signingInfo } from "../../../constants";
 
 import { Divider } from "../../Divider";
 
-import brief from "../../../../../assets/icons/brief.png";
+import { ReactComponent as Brief } from "../../../../../assets/icons/brief.svg";
+
 import { useStyles } from "./styled";
 
 export const CompanyCard = ({
@@ -32,7 +33,7 @@ export const CompanyCard = ({
   return (
     <div className={classes.card}>
       <div className={classes.icon}>
-        <img src={brief} alt="brief" width={24} height={24} />
+        <Brief alt="brief" width={24} height={24} />
       </div>
       <div className={classes.mainTitle}>{companyName}</div>
       <div className={classes.grayText}>{accountType}</div>
