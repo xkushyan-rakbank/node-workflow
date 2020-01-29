@@ -12,14 +12,14 @@ import { mobileResolution } from "../../constants";
 
 const blobImages = {
   red: require("../../assets/images/bg-blobs/bg-blob-red.svg"),
-  redS: require("../../assets/images/bg-blobs/bg-blob-s-red.png"),
-  redM: require("../../assets/images/bg-blobs/bg-blob-m-red.png"),
+  redS: require("../../assets/images/bg-blobs/bg-blob-s-red.svg"),
+  redM: require("../../assets/images/bg-blobs/bg-blob-m-red.svg"),
   brown: require("../../assets/images/bg-blobs/bg-blob-brown.svg"),
-  brownS: require("../../assets/images/bg-blobs/bg-blob-s-brown.png"),
-  brownM: require("../../assets/images/bg-blobs/bg-blob-m-brown.png"),
+  brownS: require("../../assets/images/bg-blobs/bg-blob-s-brown.svg"),
+  brownM: require("../../assets/images/bg-blobs/bg-blob-m-brown.svg"),
   green: require("../../assets/images/bg-blobs/bg-blob-green.svg"),
-  greenS: require("../../assets/images/bg-blobs/bg-blob-s-green.png"),
-  greenM: require("../../assets/images/bg-blobs/bg-blob-m-green.png")
+  greenS: require("../../assets/images/bg-blobs/bg-blob-s-green.svg"),
+  greenM: require("../../assets/images/bg-blobs/bg-blob-m-green.svg")
 };
 
 export const useStyles = makeStyles({
