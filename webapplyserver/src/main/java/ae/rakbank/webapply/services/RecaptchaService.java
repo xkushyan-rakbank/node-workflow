@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import ae.rakbank.webapply.exception.ApiException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,13 +73,13 @@ public class RecaptchaService {
 					e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
 					e.getResponseBodyAsString(), e);
-			return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
 		} catch (HttpServerErrorException e) {
 			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
 					e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					e.getResponseBodyAsString(), e);
-			return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		Map<String, Object> responseBody = recaptchaResponse.getBody();
