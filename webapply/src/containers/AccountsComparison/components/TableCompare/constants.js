@@ -21,19 +21,19 @@ export const accountsDataRows = [
     elite: { text: "Zero" }
   },
   {
-    info: ["Free Cheque book ", "every year"],
-    starter: { ic: checkIc },
-    currentAccount: { ic: checkIc },
-    elite: { ic: checkIc }
-  },
-  {
     info: ["Monthly Digital", "Banking fees"],
     starter: { text: "Zero" },
     currentAccount: { text: "AED 25" },
     elite: { text: "AED 25" }
   },
   {
-    info: ["Lifestyle", "benefits"],
+    info: ["Free Teller Transactions"],
+    starter: { text: "-" },
+    currentAccount: { text: "-" },
+    elite: { ic: checkIc }
+  },
+  {
+    info: ["Lifestyle benefits"],
     starter: { ic: checkIc },
     currentAccount: { text: "-" },
     elite: { ic: checkIc }
