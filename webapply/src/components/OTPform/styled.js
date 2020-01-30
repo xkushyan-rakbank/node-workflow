@@ -6,12 +6,18 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     flexDirection: "column",
     width: "100%",
-    marginTop: "174px",
+    height: "100%",
     [theme.breakpoints.down("sm")]: {
       marginTop: "80px",
       padding: "0 16px",
       boxSizing: "border-box"
     }
+  },
+  form: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
   },
   link: {
     textDecoration: "underline",
@@ -31,13 +37,16 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "flex-end",
     marginTop: "42px",
-    marginBottom: "42px"
+    marginBottom: "80px"
   },
   nextButton: {
     width: "auto",
     margin: 0
   },
-  title: {},
+
+  title: {
+    marginTop: "174px"
+  },
   submitButton: {
     width: "auto",
     margin: 0

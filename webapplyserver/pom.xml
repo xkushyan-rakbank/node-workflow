@@ -76,6 +76,11 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 			<version>1.51</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.10</version>
+		</dependency>
 
 		<dependency>
 			<groupId>io.rest-assured</groupId>

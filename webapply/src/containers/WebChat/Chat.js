@@ -69,3 +69,4 @@ const mapStateToProps = state => ({
 });
 
 export const Chat = connect(mapStateToProps)(ChatComponent);
+export default Chat;

@@ -86,6 +86,7 @@ const ComeBackLoginComponent = ({
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
+        className={classes.title}
         title="Wondering about your application? You came to the right place."
         info="Please enter the login you used when you first applied"
       />
@@ -101,60 +102,63 @@ const ComeBackLoginComponent = ({
       >
         {({ values }) => (
           <Form className={classes.form}>
-            <Field
-              name="email"
-              path="prospect.applicantInfo.email"
-              label="Your E-mail Address"
-              placeholder="Email"
-              component={Input}
-              isLoadDefaultValueFromStore={false}
-              InputProps={{
-                inputProps: { tabIndex: 0 }
-              }}
-            />
-
-            <InputGroup>
+            <div>
               <Field
-                name="countryCode"
-                path="prospect.applicantInfo.countryCode"
-                required
-                datalistId="countryCode"
-                extractLabel={item => item.displayText}
-                component={CustomSelect}
-                shrink={false}
-                inputProps={{ tabIndex: 0 }}
-              />
-
-              <Field
-                name="mobileNo"
-                path="prospect.applicantInfo.mobileNo"
-                label="Your Mobile Number"
-                placeholder="Mobile Number"
+                name="email"
+                path="prospect.applicantInfo.email"
+                label="Your E-mail Address"
+                placeholder="Email"
                 component={Input}
                 isLoadDefaultValueFromStore={false}
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
               />
-            </InputGroup>
 
-            <Grid container direction="row" justify="space-between" alignItems="center">
-              {isRecaptchaEnable && (
-                <ErrorBoundaryForReCaptcha>
-                  <ReCaptcha
-                    onVerify={handleReCaptchaVerify}
-                    onExpired={handleVerifiedFailed}
-                    onError={handleVerifiedFailed}
-                  />
-                </ErrorBoundaryForReCaptcha>
-              )}
+              <InputGroup>
+                <Field
+                  name="countryCode"
+                  path="prospect.applicantInfo.countryCode"
+                  required
+                  datalistId="countryCode"
+                  extractLabel={item => item.displayText}
+                  component={CustomSelect}
+                  shrink={false}
+                  inputProps={{ tabIndex: 0 }}
+                />
+
+                <Field
+                  name="mobileNo"
+                  path="prospect.applicantInfo.mobileNo"
+                  label="Your Mobile Number"
+                  placeholder="Mobile Number"
+                  component={Input}
+                  isLoadDefaultValueFromStore={false}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                />
+              </InputGroup>
+              <Grid container direction="row" justify="flex-start" alignItems="center">
+                {isRecaptchaEnable && (
+                  <ErrorBoundaryForReCaptcha>
+                    <ReCaptcha
+                      onVerify={handleReCaptchaVerify}
+                      onExpired={handleVerifiedFailed}
+                      onError={handleVerifiedFailed}
+                    />
+                  </ErrorBoundaryForReCaptcha>
+                )}
+              </Grid>
+            </div>
+            <Grid container direction="row" justify="flex-end" alignItems="center">
               <div className={cx(classes.btnWrapper, "linkContainer")}>
                 <SubmitButton
                   disabled={
                     !values.email || !values.mobileNo || (isRecaptchaEnable && !recaptchaToken)
                   }
                   justify="flex-end"
-                  label="Next"
+                  label="Next step"
                 />
               </div>
             </Grid>

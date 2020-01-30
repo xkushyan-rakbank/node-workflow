@@ -118,10 +118,10 @@ export const UploadDocuments = ({
       <div className={classes.ContentBox}>
         <p className={classes.uploadedFileName}>
           {isUploading
-            ? `Uploading ${document.documentType}`
+            ? `Uploading ${document.documentTitle}`
             : isUploaded
             ? fileName + document.fileSize
-            : document.documentType}
+            : document.documentTitle}
 
           {selectedFile && (
             <span className={classes.signatoryRights}>{selectedFile.size} Bytes</span>
