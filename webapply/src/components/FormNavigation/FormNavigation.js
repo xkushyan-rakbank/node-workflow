@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { useHistory } from "react-router-dom";
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import { FormNavigationStep } from "../FormNavigationStep";
-import { Chat } from "../../containers/WebChat/Chat";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
 import routes from "../../routes";
@@ -12,6 +11,8 @@ import { accountNames, formStepper, searchProspectStepper } from "../../constant
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
+
+const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
 export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }) => {
   const {
@@ -75,7 +76,11 @@ export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }
           </ul>
         )
       )}
-      {isChatVisible && <Chat />}
+      {isChatVisible && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Chat />
+        </Suspense>
+      )}
     </div>
   );
 };

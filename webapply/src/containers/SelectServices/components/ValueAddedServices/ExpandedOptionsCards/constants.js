@@ -9,7 +9,7 @@ export const rakValuesList = [
         text: "Business insurance <strong>Basic</strong>",
         textIslamic: "Business takaful <strong>Basic</strong>"
       },
-      { text: "Host of other banking benefits" }
+      { text: "Host of other banking and lifestyle benefits" }
     ],
     isIncluded: true,
     cost: 49,
@@ -29,7 +29,7 @@ export const rakValuesList = [
         text: "Business insurance <strong>Advanced</strong>",
         textIslamic: "Business takaful <strong>Advanced</strong>"
       },
-      { text: "Host of other banking benefits" }
+      { text: "Host of other banking and lifestyle benefits" }
     ],
     isIncluded: false,
     cost: 149,

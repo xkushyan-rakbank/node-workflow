@@ -89,7 +89,11 @@ export const AUTO = "auto";
 export const CONTINUE = "continue";
 export const NEXT = "next";
 
-export const SIGNING_TRANSACTIONS_TYPE_ANY = "A1";
+export const SIGNING_TRANSACTIONS_TYPE = {
+  ALL: "101",
+  ANY: "100",
+  OTHER: "000"
+};
 
 export const screeningStatus = [
   {
@@ -143,7 +147,7 @@ export const stakeholderScreeningStatus = {
   text: (
     <React.Fragment>
       Wow, you’re a big company!
-      <br /> Let us save you time and have someone call you within X days to meet you in person and
+      <br /> Let us save you time and have someone call you within 1 day to meet you in person and
       help you out.
     </React.Fragment>
   )
