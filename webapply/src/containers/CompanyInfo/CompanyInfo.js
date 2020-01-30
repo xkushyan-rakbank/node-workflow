@@ -17,6 +17,7 @@ import {
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
+import { GA, events } from "../../utils/ga";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
@@ -38,7 +39,10 @@ export const CompanyInfoPage = ({
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
-  const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
+  const handleClickNextStep = useCallback(() => {
+    GA.triggerEvent(events.COMPANY_INFORMATION_SUBMITTED);
+    history.push(routes.stakeholdersInfo);
+  }, [history]);
 
   return (
     <>

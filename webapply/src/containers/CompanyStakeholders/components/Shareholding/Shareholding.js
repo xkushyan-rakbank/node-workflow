@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -18,6 +18,7 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
+import { GA, events } from "../../../../utils/ga";
 
 const PercentageInput = props => <NumberFormat decimalSeparator="." decimalScale={2} {...props} />;
 
@@ -41,6 +42,11 @@ const ShareholdingStep = ({
   isSoleProprietor,
   index
 }) => {
+  const handleContinueGA = useCallback(() => {
+    GA.triggerEvent(events.COMPANY_STAKEHOLDER_SHAREHOLDING_CONTINUE);
+    handleContinue();
+  }, [handleContinue]);
+
   const initialValues = isSoleProprietor
     ? { isShareholderACompany: true, shareHoldingPercentage: 100 }
     : { isShareholderACompany: "", shareHoldingPercentage: "" };
@@ -56,7 +62,7 @@ const ShareholdingStep = ({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={handleContinue}
+      onSubmit={handleContinueGA}
       validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
       validateOnChange={false}
     >

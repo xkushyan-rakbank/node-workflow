@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -19,6 +19,7 @@ import {
 } from "../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { GA, events } from "../../../../utils/ga";
 
 const INFO_TITLE =
   "You will get a separate account number for each currency you select. Note that only AED accounts are eligible for business debit card, cheque book and RAKvalue package";
@@ -33,6 +34,11 @@ const accountDetailsSchema = Yup.object({
 export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspect }) => {
   const classes = useStyles();
 
+  const goToNextGA = useCallback(() => {
+    GA.triggerEvent(events.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE);
+    goToNext();
+  }, [goToNext]);
+
   return (
     <Formik
       initialValues={{
@@ -43,7 +49,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
       }}
       validationSchema={accountDetailsSchema}
       validateOnChange={false}
-      onSubmit={goToNext}
+      onSubmit={goToNextGA}
     >
       {({ values, setFieldValue }) => (
         <Form>

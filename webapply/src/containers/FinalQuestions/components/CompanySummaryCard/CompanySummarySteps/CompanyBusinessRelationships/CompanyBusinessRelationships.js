@@ -32,6 +32,7 @@ import {
 
 import { useStyles } from "./styled";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
+import { GA, events } from "../../../../../../utils/ga";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
@@ -91,6 +92,7 @@ export const CompanyBusinessRelationshipsComponent = ({
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
 
   const handleSubmit = useCallback(() => {
+    GA.triggerEvent(events.FINAL_QUESTION_BUSINESS_RELATIONSHIPS_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

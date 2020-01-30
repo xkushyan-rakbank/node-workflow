@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
@@ -17,6 +17,7 @@ import { Divider } from "../Divider";
 import { ContexualHelp } from "../../../../components/Notifications";
 
 import { useStyles } from "./styled";
+import { GA, events } from "../../../../utils/ga";
 
 const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
 // eslint-disable-next-line max-len
@@ -58,6 +59,12 @@ export const ChannelsComponent = ({
   accountCurrencies: selectedCurrency
 }) => {
   const classes = useStyles();
+
+  const goToNextGA = useCallback(() => {
+    GA.triggerEvent(events.SELECT_SERVICE_CHANNELS_CONTINUE);
+    goToNext();
+  }, [goToNext]);
+
   const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
 
   const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
@@ -90,7 +97,7 @@ export const ChannelsComponent = ({
       }}
       validationSchema={channelsSchema}
       validateOnChange={false}
-      onSubmit={goToNext}
+      onSubmit={goToNextGA}
     >
       {({ values, setFieldValue }) => (
         <Form>

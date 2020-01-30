@@ -26,6 +26,7 @@ import {
 import routes from "../../routes";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
+import { GA, events } from "../../utils/ga";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -52,7 +53,10 @@ const CompanyStakeholdersComponent = ({
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
   or edit the shareholding % for the added stakeholders.`;
 
-  const goToFinalQuestions = () => history.push(routes.finalQuestions);
+  const goToFinalQuestions = () => {
+    GA.triggerEvent(events.COMPANY_STAKEHOLDER_SUBMITTED);
+    history.push(routes.finalQuestions);
+  };
 
   const handleDeleteStakeholder = useCallback(id => deleteHandler(id), [deleteHandler]);
 

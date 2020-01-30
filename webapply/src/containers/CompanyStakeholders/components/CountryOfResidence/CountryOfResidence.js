@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { Form, Formik } from "formik";
@@ -13,6 +13,7 @@ import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
 import { MAX_EMIRATE_ID_LENGTH } from "./constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
+import { GA, events } from "../../../../utils/ga";
 
 const getCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
@@ -31,14 +32,17 @@ const getCountryOfResidenceSchema = isSignatory =>
 
 const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
   const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
-
+  const handleContinueGA = useCallback(() => {
+    GA.triggerEvent(events.COMPANY_STAKEHOLDER_COUNTRY_OF_RESIDENCE_CONTINUE);
+    handleContinue();
+  }, [handleContinue]);
   return (
     <Formik
       initialValues={{
         residenceCountry: UAE,
         eidNumber: "784"
       }}
-      onSubmit={handleContinue}
+      onSubmit={handleContinueGA}
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >

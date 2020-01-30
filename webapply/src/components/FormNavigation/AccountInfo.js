@@ -9,13 +9,27 @@ import { accountsInfo } from "./constants";
 import routes from "../../routes";
 
 import { useStyles } from "./styled";
+import { GA, events } from "../../utils/ga";
 
 export const AccountInfo = ({ accountType, islamicBanking }) => {
   const classes = useStyles();
   const history = useHistory();
   const { location: { pathname } = {} } = history;
 
-  const handleClick = path => () => history.push(path);
+  const handleClick = path => () => {
+    switch (path) {
+      case routes.applicationOverview:
+        GA.triggerEvent(events.PRODUCT_APPLY);
+        break;
+      case routes.applicantInfo:
+        GA.triggerEvent(events.PRODUCT_START);
+        break;
+      default:
+        GA.triggerEvent(events.COMEBACK_START);
+        break;
+    }
+    return history.push(path);
+  };
 
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;

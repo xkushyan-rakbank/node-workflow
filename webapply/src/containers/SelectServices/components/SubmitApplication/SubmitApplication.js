@@ -10,6 +10,7 @@ import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { SUBMIT, NEXT } from "../../../../constants";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
+import { GA, events } from "../../../../utils/ga";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -30,7 +31,10 @@ export const SubmitApplicationComponent = ({
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
     sendProspectToAPI()
-      .then(() => history.push(routes.ApplicationSubmitted))
+      .then(() => {
+        GA.triggerEvent(events.FORM_SUBMITTED);
+        history.push(routes.ApplicationSubmitted);
+      })
       .finally(() => setIsSubmitting(false));
   };
 

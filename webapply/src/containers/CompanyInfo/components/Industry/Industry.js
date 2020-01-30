@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
@@ -9,6 +9,7 @@ import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import { useStyles } from "./styled";
+import { GA, events } from "../../../../utils/ga";
 
 const initialValues = {
   industry: [],
@@ -32,12 +33,17 @@ const industrySchema = Yup.object({
 export const Industry = ({ handleContinue }) => {
   const classes = useStyles();
 
+  const handleContinueGA = useCallback(() => {
+    GA.triggerEvent(events.COMPANY_INFORMATION_INDUSTRY_CONTINUE);
+    handleContinue();
+  }, [handleContinue]);
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={industrySchema}
       validateOnChange={false}
-      onSubmit={handleContinue}
+      onSubmit={handleContinueGA}
     >
       {({ values, setFieldValue }) => (
         <Form>

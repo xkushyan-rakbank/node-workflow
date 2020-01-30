@@ -3,6 +3,8 @@ import { otp } from "../../api/apiClient";
 import { getApplicantInfo, getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
 import * as otpActions from "../actions/otp";
 import { log } from "../../utils/loggger";
+import { GA, events } from "../../utils/ga";
+import routes from "../../routes";
 
 function* generateOtp(action) {
   try {
@@ -34,6 +36,10 @@ function* verifyOtp({ payload: otpToken }) {
     const { data } = yield call(otp.verify, payload, headers);
     if (data.verified) {
       yield put(otpActions.verifyCodeSuccess());
+      if (state.router.location.pathname.includes(routes.comeBackLoginVerification)) {
+        GA.triggerEvent(events.COMEBACK_OTP_SUBMITTED);
+      }
+      GA.triggerEvent(events.PRODUCT_OTP_SUBMITTED);
     } else {
       yield put(otpActions.verifyCodeFailed());
     }

@@ -29,6 +29,7 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { GA, events } from "../../../../../../utils/ga";
 
 const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
   otherEntitiesInUAE: Yup.boolean(),
@@ -70,6 +71,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
+    GA.triggerEvent(events.FINAL_QUESTION_BRANCHES_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

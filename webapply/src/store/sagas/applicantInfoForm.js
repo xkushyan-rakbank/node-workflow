@@ -15,6 +15,7 @@ import routes from "./../../routes";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
 import { NEXT, SAVE } from "../../constants";
+import { GA, events } from "../../utils/ga";
 
 function* applicantInfoFormSaga(action) {
   try {
@@ -43,6 +44,7 @@ function* applicantInfoFormSaga(action) {
     yield put(setVerified(true));
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
+    yield call(GA.triggerEvent, events.PRODUCT_BASIC_INFORMATION);
     yield call(history.push, routes.verifyOtp);
     yield put(updateActionType(SAVE));
     yield put(updateSaveType(NEXT));

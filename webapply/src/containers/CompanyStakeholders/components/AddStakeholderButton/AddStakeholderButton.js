@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Button from "@material-ui/core/Button/Button";
 
 import { useStyles } from "./styled";
 import { ICONS, Icon } from "../../../../components/Icons";
+import { GA, events } from "../../../../utils/ga";
 
 export const AddStakeholderButton = ({
   label = "Add Another Stakeholder",
@@ -10,6 +11,11 @@ export const AddStakeholderButton = ({
   ...rest
 }) => {
   const classes = useStyles();
+
+  const handleClickGA = useCallback(() => {
+    GA.triggerEvent(events.COMPANY_STAKEHOLDER_ADD_NEW_CONTINUE);
+    handleClick();
+  }, [handleClick]);
 
   return (
     <Button
@@ -20,7 +26,7 @@ export const AddStakeholderButton = ({
       classes={{
         root: classes.buttonStyle
       }}
-      onClick={handleClick}
+      onClick={handleClickGA}
       {...rest}
     >
       <Icon name={ICONS.plus} className={classes.icon} />

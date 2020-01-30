@@ -9,6 +9,7 @@ import routes from "../../routes";
 import { accountNames } from "../../constants";
 
 import { useStyles } from "./styled";
+import { GA, events } from "../../utils/ga";
 
 export const SelectServicesComponent = ({
   accountType,
@@ -21,6 +22,7 @@ export const SelectServicesComponent = ({
 
   const setNextStep = useCallback(() => {
     if (step === GO_TO_SUBMIT_STEP) {
+      GA.triggerEvent(events.SELECT_SERVICE_SUBMITTED);
       return history.push("SubmitApplication");
     }
     sendProspectToAPI().then(() => setStep(step + 1), () => {});

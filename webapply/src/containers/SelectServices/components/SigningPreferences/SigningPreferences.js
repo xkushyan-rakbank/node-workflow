@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import get from "lodash/get";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
@@ -35,6 +35,7 @@ import {
   getInvalidMessage
 } from "../../../../utils/getValidationMessage";
 import { sortByOrder } from "../../../../utils/sortByOrder";
+import { GA, events } from "../../../../utils/ga";
 
 const MAX_SIGNATORIES = 2;
 const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
@@ -111,6 +112,11 @@ const pathSignatoryInfo = "prospect.signatoryInfo[0].accountSigningInfo.accountS
 export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
   const classes = useStyles();
 
+  const goToNextGA = useCallback(() => {
+    GA.triggerEvent(events.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE);
+    goToNext();
+  }, [goToNext]);
+
   return (
     <Formik
       initialValues={{
@@ -128,7 +134,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
       }}
       validationSchema={signingPreferencesSchema}
       validateOnChange={false}
-      onSubmit={goToNext}
+      onSubmit={goToNextGA}
     >
       {({
         values: { accountSigningInstn, accountSigningType, signatories },

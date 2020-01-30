@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
@@ -14,6 +14,7 @@ import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
 import { useStyles } from "./styled";
 import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
+import { GA, events } from "../../../../utils/ga";
 
 const initialValues = {
   companyName: "",
@@ -41,12 +42,17 @@ const companyDetailsSchema = Yup.object({
 export const CompanyDetails = ({ handleContinue }) => {
   const classes = useStyles();
 
+  const handleContinueGA = useCallback(() => {
+    GA.triggerEvent(events.COMPANY_INFORMATION_DETAILS_CONTINUE);
+    handleContinue();
+  }, [handleContinue]);
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={companyDetailsSchema}
       validateOnChange={false}
-      onSubmit={handleContinue}
+      onSubmit={handleContinueGA}
     >
       {() => (
         <Form>
