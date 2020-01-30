@@ -2,15 +2,17 @@ import pick from "lodash/pick";
 import { store } from "../store";
 
 // Google Analytics Layer
+// https://developers.google.com/tag-manager/devguide#events
 
 export const GA = {
   triggerEvent: (event = "") => {
     const applicationInfo = store.getState().appConfig.prospect.applicationInfo;
     const account = pick(applicationInfo, ["accountType", "islamicBanking"]);
+    // TODO make getter for productTypes
+    // TODO call correct Google Analytics function
     // window.dataLayer = window.dataLayer || [];
     // window.dataLayer.push({ event, ProductName: productName });
-    // TODO make getter for productTypes
-    console.warn({ event, ProductName: account.accountType });
+    console.log("Google Analytics", { event, ProductName: account.accountType });
   }
 };
 
@@ -24,8 +26,8 @@ export const productTypes = {
 };
 
 export const events = {
-  PRODUCT_PAGE: "ProductPage",
-  PRODUCT_REVIEW_PAGE: "ProductReviewPage",
+  PRODUCT_PAGE: "ProductPage", // ???
+  PRODUCT_REVIEW_PAGE: "ProductReviewPage", // ???
   PRODUCT_APPLY: "ProductApply",
   PRODUCT_START: "ProductStart",
   PRODUCT_BASIC_INFORMATION: "ProductBasicInformation",
@@ -53,7 +55,7 @@ export const events = {
   FINAL_QUESTION_PERSONAL_INFORMATION_CONTINUE: "FinalQuestion_PersonalInformation_Continue",
   FINAL_QUESTION_EMPLOYMENT_CONTINUE: "FinalQuestion_EmploymentDetails_Continue",
   FINAL_QUESTION_SOURCE_OF_FUND_CONTINUE: "FinalQuestion_SourceOfFund_Continue",
-  FINAL_QUESTION_SOURCE_OF_FUND_SUBMITTED: "FinalQuestion_SourceOfFund_Submitted",
+  FINAL_QUESTION_SOURCE_OF_FUND_SUBMITTED: "FinalQuestion_SourceOfFund_Submitted", // ???
   SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE: "SelectService_AccountDetails_Continue",
   SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE: "SelectService_SigningPreference_Continue",
   SELECT_SERVICE_CHANNELS_CONTINUE: "SelectService_Channels_Continue",
