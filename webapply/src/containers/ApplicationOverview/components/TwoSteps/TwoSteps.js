@@ -10,23 +10,44 @@ import { useStyles } from "./styled";
 
 export const TwoSteps = () => {
   const classes = useStyles();
-  const { interrogation: Interrogation, signature: Signature, overview } = useIconsByAccount();
+  const {
+    overview,
+    license: License,
+    emiratesId: EmirateId,
+    companyDocuments: CompanyDocuments,
+    passport: Passport
+  } = useIconsByAccount();
 
   return (
     <>
       <HeaderTitle />
       <div className={classes.firstGroup}>
-        <SectionTitleWithInfo title="Two easy steps" />
-        <div className={classes.indent}>
-          <IconCardsContainer>
-            <IconCardItem minWidth="200px" title="First" text="You answer a few questions">
-              <Interrogation alt="interrogation" />
+        <SectionTitleWithInfo
+          title="Have these ready"
+          info="Before we start, make sure you have these documents at hand"
+        />
+
+        <div className={classes.cardsWrapper}>
+          <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
+            <IconCardItem minWidth="100px" text="Trade License">
+              <License alt="trade-license" />
             </IconCardItem>
-            <IconCardItem minWidth="200px" title="Then" text="We meet you to get your signature">
-              <Signature alt="signature" />
+            <IconCardItem minWidth="100px" text="Passport of all signatories¹">
+              <Passport alt="passport-visa" />
+            </IconCardItem>
+            <IconCardItem minWidth="100px" text="Emirates ID of all signatories">
+              <EmirateId alt="emirates-id" />
+            </IconCardItem>
+            <IconCardItem minWidth="100px" text="Other company documents²">
+              <CompanyDocuments alt="company-documents" />
             </IconCardItem>
           </IconCardsContainer>
         </div>
+      </div>
+      <div className={classes.note}>
+        1. Not applicable to UAE nationals. 2. Memorandum of Association, Articles of Association,
+        Share Certificate, Partners Agreement or Service Agreement, whichever is applicable to your
+        company.
       </div>
       <div className={classes.secondGroup}>
         <div>
