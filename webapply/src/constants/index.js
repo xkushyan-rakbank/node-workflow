@@ -89,7 +89,11 @@ export const AUTO = "auto";
 export const CONTINUE = "continue";
 export const NEXT = "next";
 
-export const SIGNING_TRANSACTIONS_TYPE_ANY = "A1";
+export const SIGNING_TRANSACTIONS_TYPE = {
+  ALL: "101",
+  ANY: "100",
+  OTHER: "000"
+};
 
 export const screeningStatus = [
   {
