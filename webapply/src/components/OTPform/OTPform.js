@@ -75,15 +75,16 @@ export const OTPformComponent = ({
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
-        classes={{ title: classes.title }}
-        info={`We have sent you a verification code on your ${
+        className={classes.title}
+        title={`We have sent you a verification code on your ${
           applicantInfo.countryCode === UAE_CODE ? "mobile number" : "e-mail address"
-        }. Please enter the six digits below, to confirm this is you`}
+        }`}
+        info="Please enter the six digits below, to confirm this is you"
       />
 
       <Formik initialValues={code} onSubmit={submitForm}>
         {() => (
-          <Form>
+          <Form className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
                 <OtpVerification code={code} onChange={handleSetCode} />
