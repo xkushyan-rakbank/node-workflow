@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { routerToAddPaddingInSlider } from "../../constants/styles";
+import {
+  routerToAddPaddingInSlider,
+  sideNavWidthLG,
+  sideNavWidthMD,
+  sideNavWidthSM
+} from "../../constants/styles";
 import { mobileResolution } from "../../constants";
 
 export const useStyles = makeStyles({
@@ -12,20 +17,7 @@ export const useStyles = makeStyles({
       flexWrap: "wrap"
     },
     "@media only screen and (min-width: 1920px)": {
-      maxWidth: "1920px",
-      marginLeft: "auto",
-      marginRight: "auto",
-      "&:before": {
-        content: "''",
-        position: "fixed",
-        left: 0,
-        top: 0,
-        width: "calc((100vw - 1918px) / 2)",
-        height: "100%",
-        backgroundColor: ({ color }) =>
-          color === "brown" ? "#b36446" : color === "green" ? "#407b35" : "#eb2f16",
-        zIndex: 12
-      }
+      maxWidth: "1920px"
     }
   },
   formWrapper: {
@@ -33,6 +25,7 @@ export const useStyles = makeStyles({
     flex: "1 1 auto",
     minHeight: "0px",
     minWidth: "1px",
+    paddingLeft: `${sideNavWidthLG}px`,
     "& h2": {
       fontSize: "46px",
       fontWeight: "600",
@@ -44,7 +37,17 @@ export const useStyles = makeStyles({
       }
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      paddingBottom: 40
+      paddingBottom: 40,
+      paddingLeft: 0
+    },
+    [`@media only screen and (max-width: 1420px) and (min-width: ${mobileResolution + 1}px)`]: {
+      paddingLeft: `${sideNavWidthLG}px`
+    },
+    [`@media only screen and (max-width: 1300px) and (min-width: ${mobileResolution + 1}px)`]: {
+      paddingLeft: `${sideNavWidthMD}px`
+    },
+    [`@media only screen and (max-width: 1220px) and (min-width: ${mobileResolution + 1}px)`]: {
+      paddingLeft: `${sideNavWidthSM}px`
     }
   },
   formInner: {

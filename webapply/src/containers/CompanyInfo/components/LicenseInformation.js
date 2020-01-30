@@ -91,6 +91,7 @@ export const LicenseInformation = ({ handleContinue }) => (
               datalistId="licenseIssuingAuthority"
               component={SelectAutocomplete}
               inputProps={{ tabIndex: 0 }}
+              otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
             />
           </Grid>
           <Grid item md={6} sm={12}>

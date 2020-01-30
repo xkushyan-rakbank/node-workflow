@@ -7,7 +7,7 @@ import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 
 import { useStyles } from "./styled";
 
-import waves_background from "../../../assets/images/waves_bg.png";
+import { ReactComponent as WavesBG } from "../../../assets/images/waves_bg.svg";
 
 export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
@@ -15,7 +15,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
   return applicantInfo.map(app => (
     <div className={classes.gridContainer} key={app.prospectId}>
       <div className={classes.application}>
-        <img src={waves_background} className={classes.containerBg} alt="waves background" />
+        <WavesBG className={classes.containerBg} alt="waves background" />
         {app.organizationInfo.companyName ? (
           <>
             <Typography variant="h6" component="span" classes={{ root: classes.title }}>

@@ -3,7 +3,7 @@ import nanoid from "nanoid";
 import * as Yup from "yup";
 
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
-import companyIconSvg from "../../../assets/icons/file.png";
+import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
@@ -36,7 +36,9 @@ export const UploadDocuments = ({
   const inputEl = useRef(null);
   const documentKey = useMemo(() => nanoid(), []);
   const isUploaded = document.uploadStatus === "Uploaded";
+  const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
+  const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
 
   const fileUploadClick = event => (event.target.value = null);
 
@@ -108,68 +110,65 @@ export const UploadDocuments = ({
         ref={inputEl}
       />
 
-      <>
-        {!selectedFile && !isUploaded ? (
-          <>
-            <div className={classes.ContentBox}>
-              {!selectedFile && (
-                <p className={classes.uploadedFileName}>Upload {document.documentType}</p>
-              )}
-              {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
-              {!errorMessage && !selectedFile && (
-                <p className={classes.fileSizeMessage}>
-                  Supported formats are PDF, JPG and PNG | 5MB maximum size
-                </p>
-              )}
-            </div>
+      {(selectedFile || isUploaded) && <FileIcon width="20" height="26" alt="companyIconSvg" />}
 
-            <p
-              className={classes.ControlsBox}
-              justify="flex-end"
-              onClick={() => inputEl.current.click()}
-            >
-              Upload
-            </p>
-          </>
-        ) : (
-          <>
-            <div>{icon || <img src={companyIconSvg} alt="companyIconSvg" />}</div>
-            <div className={classes.contentBox}>
-              <div className={classes.uploadFileName}>
-                {isUploaded ? document.fileName : selectedFile.name}
-                <span className={classes.signatoryRights}>
-                  {isUploaded ? document.fileSize : selectedFile.size} Bytes
-                </span>
+      <div className={classes.ContentBox}>
+        <p className={classes.uploadedFileName}>
+          {isUploading
+            ? `Uploading ${document.documentTitle}`
+            : isUploaded
+            ? document.fileName + document.fileSize
+            : document.documentTitle}
+
+          {selectedFile && (
+            <span className={classes.signatoryRights}>{selectedFile.size} Bytes</span>
+          )}
+        </p>
+
+        <div className={classes.fileSizeMessage}>
+          {isUploading && (
+            <div className={classes.uploadFileName}>
+              <div id="Progress_Status">
+                <div className={classes.myProgressBar} style={{ width: `${percentComplete}%` }} />
               </div>
-
-              {isUploadError ? (
-                <p className={classes.ErrorExplanation}>
-                  <Icon name={ICONS.infoRed} alt="upload error" />
-                  Oops! We couldn’t upload the document.
-                  <span className={classes.tryAgain} onClick={reUploadHandler}>
-                    Please try again.
-                  </span>
-                </p>
-              ) : (
-                <div className={classes.uploadFileName}>
-                  <div id="Progress_Status">
-                    <div
-                      className={classes.myProgressBar}
-                      style={{ width: `${isUploaded ? 100 : progress[documentKey] || 0}%` }}
-                    ></div>
-                  </div>
-                  <div className={classes.progressStatus}>
-                    {isUploaded ? 100 : progress[documentKey] || 0}%
-                  </div>
-                </div>
-              )}
+              <div className={classes.progressStatus}>{percentComplete}%</div>
             </div>
-            <p className={classes.cancel} onClick={fileUploadCancel}>
-              x
+          )}
+
+          {isUploadError && (
+            <p className={classes.ErrorExplanation}>
+              <Icon name={ICONS.infoRed} alt="upload error" />
+              Oops! We couldn’t upload the document.
+              <span className={classes.tryAgain} onClick={reUploadHandler}>
+                Please try again.
+              </span>
             </p>
-          </>
-        )}
-      </>
+          )}
+
+          {!selectedFile && !isUploaded && !errorMessage && (
+            <p>Supported formats are PDF, JPG and PNG | 5MB maximum size</p>
+          )}
+        </div>
+
+        {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
+      </div>
+
+      {selectedFile || isUploaded ? (
+        <Icon
+          name={ICONS.close}
+          className={classes.cancel}
+          onClick={fileUploadCancel}
+          alt="cancel upload"
+        />
+      ) : (
+        <p
+          className={classes.ControlsBox}
+          justify="flex-end"
+          onClick={() => inputEl.current.click()}
+        >
+          Upload
+        </p>
+      )}
     </div>
   );
 };

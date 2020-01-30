@@ -27,6 +27,20 @@ export const useStyles = makeStyles({
   tableCellActive: {
     "& span:first-child": {
       fontWeight: "600"
+    },
+    "& span": {
+      "&:before": {
+        content: "''",
+        position: "absolute",
+        left: 0,
+        right: 0,
+        margin: "0 auto",
+        width: "90%",
+        height: 1,
+        backgroundColor: "#e8e8e8",
+        display: "block",
+        top: 0
+      }
     }
   }
 });

@@ -9,6 +9,7 @@ import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { SUBMIT, NEXT } from "../../../../constants";
+import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -22,12 +23,20 @@ export const SubmitApplicationComponent = ({
   updateSaveType
 }) => {
   const [formFieldsValues, setFormFields] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = () => {
+    setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
-    sendProspectToAPI().then(() => history.push(routes.ApplicationSubmitted));
+    sendProspectToAPI()
+      .then(() => history.push(routes.ApplicationSubmitted))
+      .finally(() => setIsSubmitting(false));
   };
+
+  if (isSubmitting) {
+    return <ServerRequestLoadingScreen />;
+  }
 
   return (
     <>
@@ -39,12 +48,15 @@ export const SubmitApplicationComponent = ({
         account={account}
       />
 
-      {!isAgentLoggedIn.loginStatus && <BlockConfirm setFormFields={setFormFields} />}
+      {!isAgentLoggedIn && <BlockConfirm setFormFields={setFormFields} />}
 
       <div className="linkContainer">
         <BackLink path={routes.selectServices} />
         <SubmitButton
-          disabled={!(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed)}
+          disabled={
+            !(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed) ||
+            isSubmitting
+          }
           label="Submit"
           justify="flex-end"
           handleClick={handleSubmit}

@@ -3,43 +3,43 @@ import checkIc from "../../../../assets/icons/check.svg";
 
 export const accountsDataRows = [
   {
-    info: "Monthly Average <br> Credit Balance",
+    info: ["Monthly Average ", "Credit Balance"],
     starter: { text: "Zero" },
     currentAccount: { text: "AED 25,000", info: "or equivalent at entity level" },
     elite: { text: "AED 500,000", info: "or equivalent at entity level" }
   },
   {
-    info: "Monthly charges for not <br> maintaining average balance",
+    info: ["Monthly charges for not ", "maintaining average balance"],
     starter: { text: "Zero" },
     currentAccount: { text: "AED 50" },
     elite: { text: "AED 250" }
   },
   {
-    info: "Monthly Maintenance fees",
+    info: ["Monthly Maintenance fees ", ""],
     starter: { text: "AED 99" },
     currentAccount: { text: "AED 50" },
     elite: { text: "Zero" }
   },
   {
-    info: "Free Cheque book <br> every year",
+    info: ["Free Cheque book ", "every year"],
     starter: { ic: checkIc },
     currentAccount: { ic: checkIc },
     elite: { ic: checkIc }
   },
   {
-    info: "Free Teller Transactions",
-    starter: { text: "-" },
+    info: ["Monthly Digital", "Banking fees"],
+    starter: { text: "Zero" },
+    currentAccount: { text: "AED 25" },
+    elite: { text: "AED 25" }
+  },
+  {
+    info: ["Lifestyle", "benefits"],
+    starter: { ic: checkIc },
     currentAccount: { text: "-" },
     elite: { ic: checkIc }
   },
   {
-    info: "Lifestyle benefits",
-    starter: { text: "-" },
-    currentAccount: { text: "-" },
-    elite: { ic: checkIc }
-  },
-  {
-    info: "RAKvalue Package <br> (PLUS and MAX)",
+    info: ["RAKvalue Package ", "(PLUS and MAX)"],
     starter: { text: "Mandatory", info: "(PLUS - AED 49)" },
     currentAccount: { text: "Optional" },
     elite: { text: "Optional" }

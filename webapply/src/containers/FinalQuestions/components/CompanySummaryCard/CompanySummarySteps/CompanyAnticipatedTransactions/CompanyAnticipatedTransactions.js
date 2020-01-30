@@ -149,13 +149,14 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
         validateOnChange={false}
       >
         {withCompanyFinalQuestions(({ values }) => (
-          <Form>
+          <Form autocomplete="off">
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item sm={12}>
                 <Field
                   name="annualFinTurnoverAmtInAED"
                   path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                   label="Annual turnover"
+                  autocomplete="none"
                   placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,
@@ -178,6 +179,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   <TextField
                     className={classes.disabledInput}
                     variant="outlined"
+                    autocomplete="none"
                     disabled
                     InputProps={{
                       ...commonInputProps,
@@ -200,7 +202,8 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="totalMonthlyCashAmountInFigures"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Cash"
-                  placeholder="99999999.99"
+                  placeholder="9999999999.99"
+                  autocomplete="none"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
                   InputProps={{
@@ -213,9 +216,10 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
               <Grid item md={6} sm={12}>
                 <Field
                   name="totalMonthlyNonCashAmountInFigures"
+                  autocomplete="none"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Non-Cash"
-                  placeholder="99999999.99"
+                  placeholder="9999999999.99"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
                   InputProps={{
@@ -241,8 +245,9 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                 <Field
                   name="maxAmtSingleTxnCashAED"
                   label="Maximum amount in Cash"
+                  autocomplete="none"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
-                  placeholder="99999999.99"
+                  placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -257,7 +262,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="maxAmtSingleTxnNonCashAED"
                   label="Maximum amount in Non-Cash"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
-                  placeholder="99999999.99"
+                  placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,

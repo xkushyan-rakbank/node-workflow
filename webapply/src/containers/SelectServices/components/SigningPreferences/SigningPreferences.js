@@ -12,7 +12,7 @@ import {
   MIN_NON_UAE_PHONE_LENGTH,
   MAX_NON_UAE_PHONE_LENGTH
 } from "../../../../utils/validation";
-import { ACCOUNTS_SIGNING_NAME_OTHER } from "../../constants";
+import { SIGNING_TRANSACTIONS_TYPE } from "../../../../constants";
 import { UAE_CODE } from "../../../../constants";
 import { Subtitle } from "../../../../components/Subtitle";
 import {
@@ -34,6 +34,7 @@ import {
   getRequiredNotTextInputMessage,
   getInvalidMessage
 } from "../../../../utils/getValidationMessage";
+import { sortByOrder } from "../../../../utils/sortByOrder";
 
 const MAX_SIGNATORIES = 2;
 const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
@@ -44,7 +45,7 @@ const signingPreferencesSchema = Yup.object({
     .required(getRequiredNotTextInputMessage("Signing transactions"))
     .min(2, "Field is required"),
   accountSigningInstn: Yup.string().when("accountSigningType", {
-    is: selectedAccountType => selectedAccountType === ACCOUNTS_SIGNING_NAME_OTHER,
+    is: selectedAccountType => selectedAccountType === SIGNING_TRANSACTIONS_TYPE.OTHER,
     then: Yup.string()
       .max(MAX_ACCOUNT_SIGNING_INSTN_LENGTH, "Max length is 50 symbols")
       .required(getRequiredMessage("Others"))
@@ -160,6 +161,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
               path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
               typeRadio
               datalistId="accountSignType"
+              filterOptions={options => sortByOrder(options, ["100", "000", "101"])}
               onSelect={e => {
                 setFieldValue("accountSigningType", e.target.value);
                 setFieldValue("accountSigningInstn", "");
@@ -170,7 +172,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
               component={CheckboxGroup}
               classes={{ root: classes.radioButtonRoot }}
               textArea={
-                accountSigningType === ACCOUNTS_SIGNING_NAME_OTHER && (
+                accountSigningType === SIGNING_TRANSACTIONS_TYPE.OTHER && (
                   <div className={classes.textAreaWrap}>
                     <Field
                       name="accountSigningInstn"

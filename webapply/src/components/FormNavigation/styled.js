@@ -11,15 +11,15 @@ import {
 import { mobileResolution } from "../../constants";
 
 const blobImages = {
-  red: require("../../assets/images/bg-blobs/bg-blob-red.png"),
-  redS: require("../../assets/images/bg-blobs/bg-blob-s-red.png"),
-  redM: require("../../assets/images/bg-blobs/bg-blob-m-red.png"),
-  brown: require("../../assets/images/bg-blobs/bg-blob-brown.png"),
-  brownS: require("../../assets/images/bg-blobs/bg-blob-s-brown.png"),
-  brownM: require("../../assets/images/bg-blobs/bg-blob-m-brown.png"),
-  green: require("../../assets/images/bg-blobs/bg-blob-green.png"),
-  greenS: require("../../assets/images/bg-blobs/bg-blob-s-green.png"),
-  greenM: require("../../assets/images/bg-blobs/bg-blob-m-green.png")
+  red: require("../../assets/images/bg-blobs/bg-blob-red.svg"),
+  redS: require("../../assets/images/bg-blobs/bg-blob-s-red.svg"),
+  redM: require("../../assets/images/bg-blobs/bg-blob-m-red.svg"),
+  brown: require("../../assets/images/bg-blobs/bg-blob-brown.svg"),
+  brownS: require("../../assets/images/bg-blobs/bg-blob-s-brown.svg"),
+  brownM: require("../../assets/images/bg-blobs/bg-blob-m-brown.svg"),
+  green: require("../../assets/images/bg-blobs/bg-blob-green.svg"),
+  greenS: require("../../assets/images/bg-blobs/bg-blob-s-green.svg"),
+  greenM: require("../../assets/images/bg-blobs/bg-blob-m-green.svg")
 };
 
 export const useStyles = makeStyles({
@@ -32,7 +32,7 @@ export const useStyles = makeStyles({
     [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
       height: "100vh",
       boxSizing: "border-box",
-      position: "sticky",
+      position: "fixed",
       top: 0
     },
     [portraitOrientationQueryIPads]: {
@@ -69,6 +69,12 @@ export const useStyles = makeStyles({
         }
       }
     },
+
+    "@media only screen and (min-width: 1920px)": {
+      //Added that value to fill the black gap in DetailedAccount video while zooming out
+      minWidth: "19vw"
+    },
+
     "& ul": {
       margin: "0",
       padding: "5px 0 0 25px",

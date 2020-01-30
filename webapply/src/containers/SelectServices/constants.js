@@ -9,10 +9,11 @@ export const STEP_2 = 2;
 export const STEP_3 = 3;
 export const STEP_4 = 4;
 export const GO_TO_SUBMIT_STEP = 5;
-export const ACCOUNTS_SIGNING_NAME_OTHER = "A3";
+
+// TODO get this data from datalist
 export const signingInfo = {
-  A1: "Any of you can sign",
-  A2: "All of us can sign"
+  "100": "Any of us can sign",
+  "101": "All of us must sign"
 };
 
 export const servicesSteps = [

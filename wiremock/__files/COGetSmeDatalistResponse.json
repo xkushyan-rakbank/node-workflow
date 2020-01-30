@@ -1,529 +1,4 @@
 {
-  "countryCode": [
-    {
-      "code": "971",
-      "key": "971",
-      "value": "971",
-      "displayText": "+971"
-    },
-    {
-      "code": "992",
-      "key": "992",
-      "value": "992",
-      "displayText": "+992"
-    },
-    {
-      "code": "380",
-      "key": "380",
-      "value": "380",
-      "displayText": "+380"
-    },
-    {
-      "code": "391",
-      "key": "391",
-      "value": "391",
-      "displayText": "+391"
-    }
-  ],
-  "applyOnbehalf": [
-    {
-      "code": "option1",
-      "key": "option1",
-      "value": "option1",
-      "displayText": "Option 1"
-    },
-    {
-      "code": "option2",
-      "key": "option2",
-      "value": "option2",
-      "displayText": "Option 2"
-    }
-  ],
-  "accountSignType": [
-    {
-      "code": "A2",
-      "key": "A2",
-      "value": "A2",
-      "displayText": "All of us",
-      "subGroup": null
-    },
-    {
-      "code": "A1",
-      "key": "A1",
-      "value": "A1",
-      "displayText": "Any of us",
-      "subGroup": null
-    },
-    {
-      "code": "A3",
-      "key": "A3",
-      "value": "A3",
-      "displayText": "Others",
-      "subGroup": null
-    }
-  ],
-  "accountCurrencies": [
-    {
-      "code": "EUR",
-      "key": "EUR",
-      "value": "EUR",
-      "displayText": "EURO",
-      "subGroup": null
-    },
-    {
-      "code": "GBP",
-      "key": "GBP",
-      "value": "GBP",
-      "displayText": "POUND STERLING",
-      "subGroup": null
-    },
-    {
-      "code": "AED",
-      "key": "AED",
-      "value": "AED",
-      "displayText": "UAE DIRHAM",
-      "subGroup": null
-    },
-    {
-      "code": "USD",
-      "key": "USD",
-      "value": "USD",
-      "displayText": "US DOLLAR",
-      "subGroup": null
-    }
-  ],
-  "branchCity": [
-    {
-      "code": "1",
-      "key": "1",
-      "value": "1",
-      "displayText": "Abu Dhabi",
-      "subGroup": [
-        {
-          "code": "054",
-          "key": "054",
-          "value": "054",
-          "displayText": "Al Jazira Branch"
-        },
-        {
-          "code": "030",
-          "key": "030",
-          "value": "030",
-          "displayText": "Khalidiya Branch"
-        },
-        {
-          "code": "039",
-          "key": "039",
-          "value": "039",
-          "displayText": "Mussafah Branch"
-        },
-        {
-          "code": "004",
-          "key": "004",
-          "value": "004",
-          "displayText": "Tourist Club Branch"
-        }
-      ]
-    },
-    {
-      "code": "2",
-      "key": "2",
-      "value": "2",
-      "displayText": "Ajman",
-      "subGroup": [
-        {
-          "code": "019",
-          "key": "019",
-          "value": "019",
-          "displayText": "Ajman Branch"
-        }
-      ]
-    },
-    {
-      "code": "3",
-      "key": "3",
-      "value": "3",
-      "displayText": "Al Ain",
-      "subGroup": [
-        {
-          "code": "014",
-          "key": "014",
-          "value": "014",
-          "displayText": "Al Ain Branch"
-        }
-      ]
-    },
-    {
-      "code": "4",
-      "key": "4",
-      "value": "4",
-      "displayText": "Dubai",
-      "subGroup": [
-        {
-          "code": "055",
-          "key": "055",
-          "value": "055",
-          "displayText": "Al Quoz Branch"
-        },
-        {
-          "code": "035",
-          "key": "035",
-          "value": "035",
-          "displayText": "Al Quoz Industrial Branch"
-        },
-        {
-          "code": "037",
-          "key": "037",
-          "value": "037",
-          "displayText": "Al Qusais Branch"
-        },
-        {
-          "code": "059",
-          "key": "059",
-          "value": "059",
-          "displayText": "Al Ras Branch"
-        },
-        {
-          "code": "003",
-          "key": "003",
-          "value": "003",
-          "displayText": "Deira Maktoum Branch"
-        },
-        {
-          "code": "025",
-          "key": "025",
-          "value": "025",
-          "displayText": "Deira Souk Branch"
-        },
-        {
-          "code": "088",
-          "key": "088",
-          "value": "088",
-          "displayText": "Dragon Mart 1, Branch"
-        },
-        {
-          "code": "064",
-          "key": "064",
-          "value": "064",
-          "displayText": "Dubai Investment Park Branch"
-        },
-        {
-          "code": "032",
-          "key": "032",
-          "value": "032",
-          "displayText": "Emmar Branch"
-        },
-        {
-          "code": "029",
-          "key": "029",
-          "value": "029",
-          "displayText": "IBN Battutta Branch"
-        },
-        {
-          "code": "066",
-          "key": "066",
-          "value": "066",
-          "displayText": "JAFZA Branch"
-        },
-        {
-          "code": "034",
-          "key": "034",
-          "value": "034",
-          "displayText": "Marina Diamond Branch"
-        },
-        {
-          "code": "038",
-          "key": "038",
-          "value": "038",
-          "displayText": "Mirdif Branch"
-        },
-        {
-          "code": "018",
-          "key": "018",
-          "value": "018",
-          "displayText": "Oudh Metha Branch"
-        },
-        {
-          "code": "012",
-          "key": "012",
-          "value": "012",
-          "displayText": "Sheikh Zayed Road Branch"
-        },
-        {
-          "code": "033",
-          "key": "033",
-          "value": "033",
-          "displayText": "Umm Hurair Branch"
-        }
-      ]
-    },
-    {
-      "code": "5",
-      "key": "5",
-      "value": "5",
-      "displayText": "Fujairah",
-      "subGroup": [
-        {
-          "code": "058",
-          "key": "058",
-          "value": "058",
-          "displayText": "Fujairah Branch"
-        }
-      ]
-    },
-    {
-      "code": "6",
-      "key": "6",
-      "value": "6",
-      "displayText": "Kalba",
-      "subGroup": [
-        {
-          "code": "007",
-          "key": "007",
-          "value": "007",
-          "displayText": "Kalba Branch"
-        }
-      ]
-    },
-    {
-      "code": "7",
-      "key": "7",
-      "value": "7",
-      "displayText": "Khorfakkan",
-      "subGroup": [
-        {
-          "code": "028",
-          "key": "028",
-          "value": "028",
-          "displayText": "Khorfakkan Branch"
-        }
-      ]
-    },
-    {
-      "code": "8",
-      "key": "8",
-      "value": "8",
-      "displayText": "Ras Al Khaimah",
-      "subGroup": [
-        {
-          "code": "031",
-          "key": "031",
-          "value": "031",
-          "displayText": "Al Dhait Branch"
-        },
-        {
-          "code": "065",
-          "key": "065",
-          "value": "065",
-          "displayText": "Al Hamra Branch"
-        },
-        {
-          "code": "008",
-          "key": "008",
-          "value": "008",
-          "displayText": "Al Kharan Branch"
-        },
-        {
-          "code": "005",
-          "key": "005",
-          "value": "005",
-          "displayText": "Al Madinah Branch"
-        },
-        {
-          "code": "016",
-          "key": "016",
-          "value": "016",
-          "displayText": "Al Mannai Branch"
-        },
-        {
-          "code": "002",
-          "key": "002",
-          "value": "002",
-          "displayText": "Nakheel Branch"
-        },
-        {
-          "code": "011",
-          "key": "011",
-          "value": "011",
-          "displayText": "RAMS Branch"
-        },
-        {
-          "code": "006",
-          "key": "006",
-          "value": "006",
-          "displayText": "Shaam Branch"
-        }
-      ]
-    },
-    {
-      "code": "9",
-      "key": "9",
-      "value": "9",
-      "displayText": "Sharjah",
-      "subGroup": [
-        {
-          "code": "024",
-          "key": "024",
-          "value": "024",
-          "displayText": "King Faisal Branch"
-        },
-        {
-          "code": "057",
-          "key": "057",
-          "value": "057",
-          "displayText": "Rolla Branch"
-        },
-        {
-          "code": "036",
-          "key": "036",
-          "value": "036",
-          "displayText": "Sharjah Industrial Branch"
-        }
-      ]
-    }
-  ],
-  "branchID": [
-    {
-      "emirateCode": "AD",
-      "code": "Abu Dhabi 1",
-      "key": "Abu Dhabi 1",
-      "value": "Abu Dhabi 1",
-      "label": "Abu Dhabi 1"
-    },
-    {
-      "emirateCode": "AD",
-      "code": "Abu Dhabi 2",
-      "key": "Abu Dhabi 2",
-      "value": "Abu Dhabi 2",
-      "label": "Abu Dhabi 2"
-    },
-    {
-      "emirateCode": "A",
-      "code": "Ajman 1",
-      "key": "Ajman 1",
-      "value": "Ajman 1",
-      "label": "Ajman 1"
-    },
-    {
-      "emirateCode": "A",
-      "code": "Ajman 2",
-      "key": "Ajman 2",
-      "value": "Ajman 2",
-      "label": "Ajman 2"
-    },
-    {
-      "emirateCode": "AA",
-      "code": "Al Ain 1",
-      "key": "Al Ain 1",
-      "value": "Al Ain 1",
-      "label": "Al Ain 1"
-    },
-    {
-      "emirateCode": "AA",
-      "code": "Al Ain 2",
-      "key": "Al Ain 2",
-      "value": "Al Ain 2",
-      "label": "Al Ain 2"
-    },
-    {
-      "emirateCode": "Dubai",
-      "code": "Dubai 1",
-      "key": "Dubai 1",
-      "value": "Dubai 1",
-      "label": "Dubai 1"
-    },
-    {
-      "emirateCode": "Dubai",
-      "code": "Dubai 2",
-      "key": "Dubai 2",
-      "value": "Dubai 2",
-      "label": "Dubai 2"
-    },
-    {
-      "emirateCode": "F",
-      "code": "Fujairah 1",
-      "key": "Fujairah 1",
-      "value": "Fujairah 1",
-      "label": "Fujairah 1"
-    },
-    {
-      "emirateCode": "F",
-      "code": "Fujairah 2",
-      "key": "Fujairah 2",
-      "value": "Fujairah 2",
-      "label": "Fujairah 2"
-    },
-    {
-      "emirateCode": "K",
-      "code": "Kalba 1",
-      "key": "Kalba 1",
-      "value": "Kalba 1",
-      "label": "Kalba 1"
-    },
-    {
-      "emirateCode": "K",
-      "code": "Kalba 2",
-      "key": "Kalba 2",
-      "value": "Kalba 2",
-      "label": "Kalba 2"
-    },
-    {
-      "emirateCode": "KH",
-      "code": "Khorfakkan 1",
-      "key": "Khorfakkan 1",
-      "value": "Khorfakkan 1",
-      "label": "Khorfakkan 1"
-    },
-    {
-      "emirateCode": "KH",
-      "code": "Khorfakkan 2",
-      "key": "Khorfakkan 2",
-      "value": "Khorfakkan 2",
-      "label": "Khorfakkan 2"
-    },
-    {
-      "emirateCode": "RK",
-      "code": "Ras Al Khaimah 1",
-      "key": "Ras Al Khaimah 1",
-      "value": "Ras Al Khaimah 1",
-      "label": "Ras Al Khaimah 1"
-    },
-    {
-      "emirateCode": "RK",
-      "code": "Ras Al Khaimah 2",
-      "key": "Ras Al Khaimah 2",
-      "value": "Ras Al Khaimah 2",
-      "label": "Ras Al Khaimah 2"
-    },
-    {
-      "emirateCode": "SH",
-      "code": "Sharjah 1",
-      "key": "Sharjah 1",
-      "value": "Sharjah 1",
-      "label": "Sharjah 1"
-    },
-    {
-      "emirateCode": "SH",
-      "code": "Sharjah 2",
-      "key": "Sharjah 2",
-      "value": "Sharjah 2",
-      "label": "Sharjah 2"
-    },
-    {
-      "emirateCode": "U",
-      "code": "Umm Al Quwain 1",
-      "key": "Umm Al Quwain 1",
-      "value": "Umm Al Quwain 1",
-      "label": "Umm Al Quwain 1"
-    },
-    {
-      "emirateCode": "U",
-      "code": "Umm Al Quwain 2",
-      "key": "Umm Al Quwain 2",
-      "value": "Umm Al Quwain 2",
-      "label": "Umm Al Quwain 2"
-    }
-  ],
   "countryOfIncorporation": [
     {
       "code": "AF",
@@ -2241,574 +1716,1619 @@
       "subGroup": null
     }
   ],
-  "licenseIssuingAuthority": [
-    {
-      "code": "ABD",
-      "key": "ABD",
-      "value": "ABD",
-      "displayText": "ABU DHABI",
-      "subGroup": null
-    },
-    {
-      "code": "AJM",
-      "key": "AJM",
-      "value": "AJM",
-      "displayText": "AJMAN",
-      "subGroup": null
-    },
-    {
-      "code": "AJFZ",
-      "key": "AJFZ",
-      "value": "AJFZ",
-      "displayText": "AJMAN FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "AAFZ",
-      "key": "AAFZ",
-      "value": "AAFZ",
-      "displayText": "AL AWIR FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "COC",
-      "key": "COC",
-      "value": "COC",
-      "displayText": "CHAMBER OF COMMERCE",
-      "subGroup": null
-    },
-    {
-      "code": "DOED",
-      "key": "DOED",
-      "value": "DOED",
-      "displayText": "DEPARTMENT OF ECONOMIC DEVELOPMENT",
-      "subGroup": null
-    },
-    {
-      "code": "DNRD",
-      "key": "DNRD",
-      "value": "DNRD",
-      "displayText": "DEPARTMENT OF NATURALISATION AND RESIDENCY DUBAI",
-      "subGroup": null
-    },
-    {
-      "code": "DUB",
-      "key": "DUB",
-      "value": "DUB",
-      "displayText": "DUBAI",
-      "subGroup": null
-    },
-    {
-      "code": "DAFZ",
-      "key": "DAFZ",
-      "value": "DAFZ",
-      "displayText": "DUBAI AIRPORT FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "DAC",
-      "key": "DAC",
-      "value": "DAC",
-      "displayText": "DUBAI AVIATION CITY",
-      "subGroup": null
-    },
-    {
-      "code": "DCCA",
-      "key": "DCCA",
-      "value": "DCCA",
-      "displayText": "DUBAI CREATIVE CLUSTERS AUTHORITY",
-      "subGroup": null
-    },
-    {
-      "code": "DHCC",
-      "key": "DHCC",
-      "value": "DHCC",
-      "displayText": "DUBAI HEALTH CARE CITY(DHCC)",
-      "subGroup": null
-    },
-    {
-      "code": "DHUC",
-      "key": "DHUC",
-      "value": "DHUC",
-      "displayText": "DUBAI HUMANITARIAN CITY",
-      "subGroup": null
-    },
-    {
-      "code": "DINC",
-      "key": "DINC",
-      "value": "DINC",
-      "displayText": "DUBAI INTERNET CITY",
-      "subGroup": null
-    },
-    {
-      "code": "DIFC",
-      "key": "DIFC",
-      "value": "DIFC",
-      "displayText": "DUBAI INTL. FINANCIAL CENTRE",
-      "subGroup": null
-    },
-    {
-      "code": "DMC",
-      "key": "DMC",
-      "value": "DMC",
-      "displayText": "DUBAI MEDIA CITY",
-      "subGroup": null
-    },
-    {
-      "code": "DSO",
-      "key": "DSO",
-      "value": "DSO",
-      "displayText": "DUBAI SILICON OASIS FZ",
-      "subGroup": null
-    },
-    {
-      "code": "DCMZ",
-      "key": "DCMZ",
-      "value": "DCMZ",
-      "displayText": "DUCAMZ",
-      "subGroup": null
-    },
-    {
-      "code": "DMCC",
-      "key": "DMCC",
-      "value": "DMCC",
-      "displayText": "DXB METAL & COMMODITIES CENTRE",
-      "subGroup": null
-    },
-    {
-      "code": "EIA",
-      "key": "EIA",
-      "value": "EIA",
-      "displayText": "EMIRATES ID AUTHORITY",
-      "subGroup": null
-    },
-    {
-      "code": "FUJ",
-      "key": "FUJ",
-      "value": "FUJ",
-      "displayText": "FUJAIRAH",
-      "subGroup": null
-    },
-    {
-      "code": "FFZ",
-      "key": "FFZ",
-      "value": "FFZ",
-      "displayText": "FUJAIRAH FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "GADP",
-      "key": "GADP",
-      "value": "GADP",
-      "displayText": "GOLD AND DIAMOND PARK",
-      "subGroup": null
-    },
-    {
-      "code": "GOR",
-      "key": "GOR",
-      "value": "GOR",
-      "displayText": "GOVT OF RAK - DEPARTMENT OF CIVIL AVIATION",
-      "subGroup": null
-    },
-    {
-      "code": "GOFZ",
-      "key": "GOFZ",
-      "value": "GOFZ",
-      "displayText": "GOVT. OF UAQ FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "HFZ",
-      "key": "HFZ",
-      "value": "HFZ",
-      "displayText": "HAMRIYA FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "JBL",
-      "key": "JBL",
-      "value": "JBL",
-      "displayText": "JEBEL ALI FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "JLT",
-      "key": "JLT",
-      "value": "JLT",
-      "displayText": "JUMEIRAH LAKE TOWERSY",
-      "subGroup": null
-    },
-    {
-      "code": "KNV",
-      "key": "KNV",
-      "value": "KNV",
-      "displayText": "KNOWLEDGE VILLAGE",
-      "subGroup": null
-    },
-    {
-      "code": "MGD",
-      "key": "MGD",
-      "value": "MGD",
-      "displayText": "MIGRATION DEFAULT",
-      "subGroup": null
-    },
-    {
-      "code": "OVRS",
-      "key": "OVRS",
-      "value": "OVRS",
-      "displayText": "OVERSEAS",
-      "subGroup": null
-    },
-    {
-      "code": "RAFZ",
-      "key": "RAFZ",
-      "value": "RAFZ",
-      "displayText": "RAK AIRPORT FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "RFZ",
-      "key": "RFZ",
-      "value": "RFZ",
-      "displayText": "RAK FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "RIA",
-      "key": "RIA",
-      "value": "RIA",
-      "displayText": "RAK INVESTMENT AUTHORITY",
-      "subGroup": null
-    },
-    {
-      "code": "RKV",
-      "key": "RKV",
-      "value": "RKV",
-      "displayText": "RAK KNOWLEDGE VILLAGE",
-      "subGroup": null
-    },
-    {
-      "code": "RTZ",
-      "key": "RTZ",
-      "value": "RTZ",
-      "displayText": "RAK TRADE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "RAK",
-      "key": "RAK",
-      "value": "RAK",
-      "displayText": "RAS AL KHAIMAH",
-      "subGroup": null
-    },
-    {
-      "code": "SFZ",
-      "key": "SFZ",
-      "value": "SFZ",
-      "displayText": "SAIF ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "SHJ",
-      "key": "SHJ",
-      "value": "SHJ",
-      "displayText": "SHARJAH",
-      "subGroup": null
-    },
-    {
-      "code": "SHFZ",
-      "key": "SHFZ",
-      "value": "SHFZ",
-      "displayText": "SHARJAH FREE ZONE",
-      "subGroup": null
-    },
-    {
-      "code": "TPRK",
-      "key": "TPRK",
-      "value": "TPRK",
-      "displayText": "TECHNO PARK",
-      "subGroup": null
-    },
-    {
-      "code": "TPCF",
-      "key": "TPCF",
-      "value": "TPCF",
-      "displayText": "TRAKHEES-PORTS,CUSTOMS&FREEZON",
-      "subGroup": null
-    },
-    {
-      "code": "UMAQ",
-      "key": "UMAQ",
-      "value": "UMAQ",
-      "displayText": "UMM AL QUWAIN",
-      "subGroup": null
-    },
-    {
-      "code": "ZCRP",
-      "key": "ZCRP",
-      "value": "ZCRP",
-      "displayText": "ZONES CORP",
-      "subGroup": null
-    }
-  ],
-  "emirateCity": [
-    {
-      "code": "AD",
-      "key": "AD",
-      "value": "AD",
-      "displayText": "Abu Dhabi"
-    },
-    {
-      "code": "A",
-      "key": "A",
-      "value": "A",
-      "displayText": "Ajman"
-    },
-    {
-      "code": "AA",
-      "key": "AA",
-      "value": "AA",
-      "displayText": "Al Ain"
-    },
-    {
-      "code": "Dubai",
-      "key": "Dubai",
-      "value": "Dubai",
-      "displayText": "Dubai"
-    },
-    {
-      "code": "F",
-      "key": "F",
-      "value": "F",
-      "displayText": "Fujairah"
-    },
-    {
-      "code": "K",
-      "key": "K",
-      "value": "K",
-      "displayText": "Kalba"
-    },
-    {
-      "code": "KH",
-      "key": "KH",
-      "value": "KH",
-      "displayText": "Khorfakkan"
-    },
-    {
-      "code": "RK",
-      "key": "RK",
-      "value": "RK",
-      "displayText": "Ras Al Khaimah"
-    },
-    {
-      "code": "SH",
-      "key": "SH",
-      "value": "SH",
-      "displayText": "Sharjah"
-    },
-    {
-      "code": "U",
-      "key": "U",
-      "value": "U",
-      "displayText": "Umm Al Quwain"
-    }
-  ],
-  "country": [
-    {
-      "code": "AE",
-      "key": "AE",
-      "value": "AE",
-      "displayText": "Emirate"
-    },
-    {
-      "code": "USA",
-      "key": "USA",
-      "value": "USA",
-      "displayText": "United States"
-    },
-    {
-      "code": "UA",
-      "key": "UA",
-      "value": "UA",
-      "displayText": "Ukraine"
-    },
-    {
-      "code": "GB",
-      "key": "GB",
-      "value": "GB",
-      "displayText": "Great Britain"
-    }
-  ],
-  "spaceType": [
+  "countryCode": [
     {
       "code": "1",
       "key": "1",
       "value": "1",
-      "displayText": "Office"
+      "displayText": "+1",
+      "subGroup": null
     },
     {
-      "code": "2",
-      "key": "2",
-      "value": "2",
-      "displayText": "Warehouse"
+      "code": "1-242",
+      "key": "1-242",
+      "value": "1-242",
+      "displayText": "+1-242",
+      "subGroup": null
     },
     {
-      "code": "3",
-      "key": "3",
-      "value": "3",
-      "displayText": "Kiosk"
+      "code": "1-246",
+      "key": "1-246",
+      "value": "1-246",
+      "displayText": "+1-246",
+      "subGroup": null
     },
     {
-      "code": "4",
-      "key": "4",
-      "value": "4",
-      "displayText": "Shop"
+      "code": "1-264",
+      "key": "1-264",
+      "value": "1-264",
+      "displayText": "+1-264",
+      "subGroup": null
     },
     {
-      "code": "5",
-      "key": "5",
-      "value": "5",
-      "displayText": "Flexi desk"
+      "code": "1-268",
+      "key": "1-268",
+      "value": "1-268",
+      "displayText": "+1-268",
+      "subGroup": null
     },
     {
-      "code": "6",
-      "key": "6",
-      "value": "6",
-      "displayText": "Other"
-    }
-  ],
-  "primaryMobCountryCode": [
-    {
-      "code": "UAE",
-      "key": "UAE",
-      "value": "UAE",
-      "displayText": "+971"
+      "code": "1-284",
+      "key": "1-284",
+      "value": "1-284",
+      "displayText": "+1-284",
+      "subGroup": null
     },
     {
-      "code": "EUR",
-      "key": "EUR",
-      "value": "EUR",
-      "displayText": "+992"
+      "code": "1-340",
+      "key": "1-340",
+      "value": "1-340",
+      "displayText": "+1-340",
+      "subGroup": null
     },
     {
-      "code": "UA",
-      "key": "UA",
-      "value": "UA",
-      "displayText": "+380"
+      "code": "1-345",
+      "key": "1-345",
+      "value": "1-345",
+      "displayText": "+1-345",
+      "subGroup": null
     },
     {
-      "code": "GB",
-      "key": "GB",
-      "value": "GB",
-      "displayText": "+391"
-    }
-  ],
-  "primaryPhoneCountryCode": [
-    {
-      "code": "UAE",
-      "key": "UAE",
-      "value": "UAE",
-      "displayText": "+971"
+      "code": "1-441",
+      "key": "1-441",
+      "value": "1-441",
+      "displayText": "+1-441",
+      "subGroup": null
     },
     {
-      "code": "EUR",
-      "key": "EUR",
-      "value": "EUR",
-      "displayText": "+992"
+      "code": "1-473",
+      "key": "1-473",
+      "value": "1-473",
+      "displayText": "+1-473",
+      "subGroup": null
     },
     {
-      "code": "UA",
-      "key": "UA",
-      "value": "UA",
-      "displayText": "+380"
+      "code": "1-649",
+      "key": "1-649",
+      "value": "1-649",
+      "displayText": "+1-649",
+      "subGroup": null
     },
     {
-      "code": "GB",
-      "key": "GB",
-      "value": "GB",
-      "displayText": "+391"
-    }
-  ],
-  "secondaryPhoneCountryCode": [
-    {
-      "code": "UAE",
-      "key": "UAE",
-      "value": "UAE",
-      "displayText": "+971"
+      "code": "1-664",
+      "key": "1-664",
+      "value": "1-664",
+      "displayText": "+1-664",
+      "subGroup": null
     },
     {
-      "code": "EUR",
-      "key": "EUR",
-      "value": "EUR",
-      "displayText": "+992"
+      "code": "1-670",
+      "key": "1-670",
+      "value": "1-670",
+      "displayText": "+1-670",
+      "subGroup": null
     },
     {
-      "code": "UA",
-      "key": "UA",
-      "value": "UA",
-      "displayText": "+380"
+      "code": "1-671",
+      "key": "1-671",
+      "value": "1-671",
+      "displayText": "+1-671",
+      "subGroup": null
     },
     {
-      "code": "GB",
-      "key": "GB",
-      "value": "GB",
-      "displayText": "+391"
-    }
-  ],
-  "secondaryMobileCountryCode": [
-    {
-      "code": "UAE",
-      "key": "UAE",
-      "value": "UAE",
-      "displayText": "+971"
+      "code": "1-684",
+      "key": "1-684",
+      "value": "1-684",
+      "displayText": "+1-684",
+      "subGroup": null
     },
     {
-      "code": "EUR",
-      "key": "EUR",
-      "value": "EUR",
-      "displayText": "+992"
+      "code": "1-721",
+      "key": "1-721",
+      "value": "1-721",
+      "displayText": "+1-721",
+      "subGroup": null
     },
     {
-      "code": "UA",
-      "key": "UA",
-      "value": "UA",
-      "displayText": "+380"
+      "code": "1-758",
+      "key": "1-758",
+      "value": "1-758",
+      "displayText": "+1-758",
+      "subGroup": null
     },
     {
-      "code": "GB",
-      "key": "GB",
-      "value": "GB",
-      "displayText": "+391"
-    }
-  ],
-  "constitutionType": [
-    {
-      "code": "LTD",
-      "key": "LTD",
-      "value": "LTD",
-      "displayText": "LTD Company"
+      "code": "1-767",
+      "key": "1-767",
+      "value": "1-767",
+      "displayText": "+1-767",
+      "subGroup": null
     },
     {
-      "code": "DAC",
-      "key": "DAC",
-      "value": "DAC",
-      "displayText": "DAC Company"
+      "code": "1-784",
+      "key": "1-784",
+      "value": "1-784",
+      "displayText": "+1-784",
+      "subGroup": null
     },
     {
-      "code": "PLC",
-      "key": "PLC",
-      "value": "PLC",
-      "displayText": "PLC Company"
+      "code": "1-787",
+      "key": "1-787",
+      "value": "1-787",
+      "displayText": "+1-787",
+      "subGroup": null
+    },
+    {
+      "code": "1-809",
+      "key": "1-809",
+      "value": "1-809",
+      "displayText": "+1-809",
+      "subGroup": null
+    },
+    {
+      "code": "1-868",
+      "key": "1-868",
+      "value": "1-868",
+      "displayText": "+1-868",
+      "subGroup": null
+    },
+    {
+      "code": "1-869",
+      "key": "1-869",
+      "value": "1-869",
+      "displayText": "+1-869",
+      "subGroup": null
+    },
+    {
+      "code": "1-876",
+      "key": "1-876",
+      "value": "1-876",
+      "displayText": "+1-876",
+      "subGroup": null
+    },
+    {
+      "code": "20",
+      "key": "20",
+      "value": "20",
+      "displayText": "+20",
+      "subGroup": null
+    },
+    {
+      "code": "211",
+      "key": "211",
+      "value": "211",
+      "displayText": "+211",
+      "subGroup": null
+    },
+    {
+      "code": "212",
+      "key": "212",
+      "value": "212",
+      "displayText": "+212",
+      "subGroup": null
+    },
+    {
+      "code": "213",
+      "key": "213",
+      "value": "213",
+      "displayText": "+213",
+      "subGroup": null
+    },
+    {
+      "code": "216",
+      "key": "216",
+      "value": "216",
+      "displayText": "+216",
+      "subGroup": null
+    },
+    {
+      "code": "218",
+      "key": "218",
+      "value": "218",
+      "displayText": "+218",
+      "subGroup": null
+    },
+    {
+      "code": "220",
+      "key": "220",
+      "value": "220",
+      "displayText": "+220",
+      "subGroup": null
+    },
+    {
+      "code": "221",
+      "key": "221",
+      "value": "221",
+      "displayText": "+221",
+      "subGroup": null
+    },
+    {
+      "code": "222",
+      "key": "222",
+      "value": "222",
+      "displayText": "+222",
+      "subGroup": null
+    },
+    {
+      "code": "223",
+      "key": "223",
+      "value": "223",
+      "displayText": "+223",
+      "subGroup": null
+    },
+    {
+      "code": "224",
+      "key": "224",
+      "value": "224",
+      "displayText": "+224",
+      "subGroup": null
+    },
+    {
+      "code": "225",
+      "key": "225",
+      "value": "225",
+      "displayText": "+225",
+      "subGroup": null
+    },
+    {
+      "code": "226",
+      "key": "226",
+      "value": "226",
+      "displayText": "+226",
+      "subGroup": null
+    },
+    {
+      "code": "227",
+      "key": "227",
+      "value": "227",
+      "displayText": "+227",
+      "subGroup": null
+    },
+    {
+      "code": "228",
+      "key": "228",
+      "value": "228",
+      "displayText": "+228",
+      "subGroup": null
+    },
+    {
+      "code": "229",
+      "key": "229",
+      "value": "229",
+      "displayText": "+229",
+      "subGroup": null
+    },
+    {
+      "code": "230",
+      "key": "230",
+      "value": "230",
+      "displayText": "+230",
+      "subGroup": null
+    },
+    {
+      "code": "231",
+      "key": "231",
+      "value": "231",
+      "displayText": "+231",
+      "subGroup": null
+    },
+    {
+      "code": "232",
+      "key": "232",
+      "value": "232",
+      "displayText": "+232",
+      "subGroup": null
+    },
+    {
+      "code": "233",
+      "key": "233",
+      "value": "233",
+      "displayText": "+233",
+      "subGroup": null
+    },
+    {
+      "code": "234",
+      "key": "234",
+      "value": "234",
+      "displayText": "+234",
+      "subGroup": null
+    },
+    {
+      "code": "235",
+      "key": "235",
+      "value": "235",
+      "displayText": "+235",
+      "subGroup": null
+    },
+    {
+      "code": "236",
+      "key": "236",
+      "value": "236",
+      "displayText": "+236",
+      "subGroup": null
+    },
+    {
+      "code": "237",
+      "key": "237",
+      "value": "237",
+      "displayText": "+237",
+      "subGroup": null
+    },
+    {
+      "code": "238",
+      "key": "238",
+      "value": "238",
+      "displayText": "+238",
+      "subGroup": null
+    },
+    {
+      "code": "239",
+      "key": "239",
+      "value": "239",
+      "displayText": "+239",
+      "subGroup": null
+    },
+    {
+      "code": "240",
+      "key": "240",
+      "value": "240",
+      "displayText": "+240",
+      "subGroup": null
+    },
+    {
+      "code": "241",
+      "key": "241",
+      "value": "241",
+      "displayText": "+241",
+      "subGroup": null
+    },
+    {
+      "code": "242",
+      "key": "242",
+      "value": "242",
+      "displayText": "+242",
+      "subGroup": null
+    },
+    {
+      "code": "243",
+      "key": "243",
+      "value": "243",
+      "displayText": "+243",
+      "subGroup": null
+    },
+    {
+      "code": "244",
+      "key": "244",
+      "value": "244",
+      "displayText": "+244",
+      "subGroup": null
+    },
+    {
+      "code": "245",
+      "key": "245",
+      "value": "245",
+      "displayText": "+245",
+      "subGroup": null
+    },
+    {
+      "code": "246",
+      "key": "246",
+      "value": "246",
+      "displayText": "+246",
+      "subGroup": null
+    },
+    {
+      "code": "248",
+      "key": "248",
+      "value": "248",
+      "displayText": "+248",
+      "subGroup": null
+    },
+    {
+      "code": "249",
+      "key": "249",
+      "value": "249",
+      "displayText": "+249",
+      "subGroup": null
+    },
+    {
+      "code": "250",
+      "key": "250",
+      "value": "250",
+      "displayText": "+250",
+      "subGroup": null
+    },
+    {
+      "code": "251",
+      "key": "251",
+      "value": "251",
+      "displayText": "+251",
+      "subGroup": null
+    },
+    {
+      "code": "252",
+      "key": "252",
+      "value": "252",
+      "displayText": "+252",
+      "subGroup": null
+    },
+    {
+      "code": "253",
+      "key": "253",
+      "value": "253",
+      "displayText": "+253",
+      "subGroup": null
+    },
+    {
+      "code": "254",
+      "key": "254",
+      "value": "254",
+      "displayText": "+254",
+      "subGroup": null
+    },
+    {
+      "code": "255",
+      "key": "255",
+      "value": "255",
+      "displayText": "+255",
+      "subGroup": null
+    },
+    {
+      "code": "256",
+      "key": "256",
+      "value": "256",
+      "displayText": "+256",
+      "subGroup": null
+    },
+    {
+      "code": "257",
+      "key": "257",
+      "value": "257",
+      "displayText": "+257",
+      "subGroup": null
+    },
+    {
+      "code": "258",
+      "key": "258",
+      "value": "258",
+      "displayText": "+258",
+      "subGroup": null
+    },
+    {
+      "code": "260",
+      "key": "260",
+      "value": "260",
+      "displayText": "+260",
+      "subGroup": null
+    },
+    {
+      "code": "261",
+      "key": "261",
+      "value": "261",
+      "displayText": "+261",
+      "subGroup": null
+    },
+    {
+      "code": "262",
+      "key": "262",
+      "value": "262",
+      "displayText": "+262",
+      "subGroup": null
+    },
+    {
+      "code": "263",
+      "key": "263",
+      "value": "263",
+      "displayText": "+263",
+      "subGroup": null
+    },
+    {
+      "code": "264",
+      "key": "264",
+      "value": "264",
+      "displayText": "+264",
+      "subGroup": null
+    },
+    {
+      "code": "265",
+      "key": "265",
+      "value": "265",
+      "displayText": "+265",
+      "subGroup": null
+    },
+    {
+      "code": "266",
+      "key": "266",
+      "value": "266",
+      "displayText": "+266",
+      "subGroup": null
+    },
+    {
+      "code": "267",
+      "key": "267",
+      "value": "267",
+      "displayText": "+267",
+      "subGroup": null
+    },
+    {
+      "code": "268",
+      "key": "268",
+      "value": "268",
+      "displayText": "+268",
+      "subGroup": null
+    },
+    {
+      "code": "269",
+      "key": "269",
+      "value": "269",
+      "displayText": "+269",
+      "subGroup": null
+    },
+    {
+      "code": "27",
+      "key": "27",
+      "value": "27",
+      "displayText": "+27",
+      "subGroup": null
+    },
+    {
+      "code": "290",
+      "key": "290",
+      "value": "290",
+      "displayText": "+290",
+      "subGroup": null
+    },
+    {
+      "code": "291",
+      "key": "291",
+      "value": "291",
+      "displayText": "+291",
+      "subGroup": null
+    },
+    {
+      "code": "297",
+      "key": "297",
+      "value": "297",
+      "displayText": "+297",
+      "subGroup": null
+    },
+    {
+      "code": "298",
+      "key": "298",
+      "value": "298",
+      "displayText": "+298",
+      "subGroup": null
+    },
+    {
+      "code": "299",
+      "key": "299",
+      "value": "299",
+      "displayText": "+299",
+      "subGroup": null
+    },
+    {
+      "code": "30",
+      "key": "30",
+      "value": "30",
+      "displayText": "+30",
+      "subGroup": null
+    },
+    {
+      "code": "31",
+      "key": "31",
+      "value": "31",
+      "displayText": "+31",
+      "subGroup": null
+    },
+    {
+      "code": "32",
+      "key": "32",
+      "value": "32",
+      "displayText": "+32",
+      "subGroup": null
+    },
+    {
+      "code": "33",
+      "key": "33",
+      "value": "33",
+      "displayText": "+33",
+      "subGroup": null
+    },
+    {
+      "code": "34",
+      "key": "34",
+      "value": "34",
+      "displayText": "+34",
+      "subGroup": null
+    },
+    {
+      "code": "350",
+      "key": "350",
+      "value": "350",
+      "displayText": "+350",
+      "subGroup": null
+    },
+    {
+      "code": "351",
+      "key": "351",
+      "value": "351",
+      "displayText": "+351",
+      "subGroup": null
+    },
+    {
+      "code": "352",
+      "key": "352",
+      "value": "352",
+      "displayText": "+352",
+      "subGroup": null
+    },
+    {
+      "code": "353",
+      "key": "353",
+      "value": "353",
+      "displayText": "+353",
+      "subGroup": null
+    },
+    {
+      "code": "354",
+      "key": "354",
+      "value": "354",
+      "displayText": "+354",
+      "subGroup": null
+    },
+    {
+      "code": "355",
+      "key": "355",
+      "value": "355",
+      "displayText": "+355",
+      "subGroup": null
+    },
+    {
+      "code": "356",
+      "key": "356",
+      "value": "356",
+      "displayText": "+356",
+      "subGroup": null
+    },
+    {
+      "code": "357",
+      "key": "357",
+      "value": "357",
+      "displayText": "+357",
+      "subGroup": null
+    },
+    {
+      "code": "358",
+      "key": "358",
+      "value": "358",
+      "displayText": "+358",
+      "subGroup": null
+    },
+    {
+      "code": "359",
+      "key": "359",
+      "value": "359",
+      "displayText": "+359",
+      "subGroup": null
+    },
+    {
+      "code": "36",
+      "key": "36",
+      "value": "36",
+      "displayText": "+36",
+      "subGroup": null
+    },
+    {
+      "code": "370",
+      "key": "370",
+      "value": "370",
+      "displayText": "+370",
+      "subGroup": null
+    },
+    {
+      "code": "371",
+      "key": "371",
+      "value": "371",
+      "displayText": "+371",
+      "subGroup": null
+    },
+    {
+      "code": "372",
+      "key": "372",
+      "value": "372",
+      "displayText": "+372",
+      "subGroup": null
+    },
+    {
+      "code": "373",
+      "key": "373",
+      "value": "373",
+      "displayText": "+373",
+      "subGroup": null
+    },
+    {
+      "code": "374",
+      "key": "374",
+      "value": "374",
+      "displayText": "+374",
+      "subGroup": null
+    },
+    {
+      "code": "375",
+      "key": "375",
+      "value": "375",
+      "displayText": "+375",
+      "subGroup": null
+    },
+    {
+      "code": "376",
+      "key": "376",
+      "value": "376",
+      "displayText": "+376",
+      "subGroup": null
+    },
+    {
+      "code": "377",
+      "key": "377",
+      "value": "377",
+      "displayText": "+377",
+      "subGroup": null
+    },
+    {
+      "code": "378",
+      "key": "378",
+      "value": "378",
+      "displayText": "+378",
+      "subGroup": null
+    },
+    {
+      "code": "379",
+      "key": "379",
+      "value": "379",
+      "displayText": "+379",
+      "subGroup": null
+    },
+    {
+      "code": "380",
+      "key": "380",
+      "value": "380",
+      "displayText": "+380",
+      "subGroup": null
+    },
+    {
+      "code": "381",
+      "key": "381",
+      "value": "381",
+      "displayText": "+381",
+      "subGroup": null
+    },
+    {
+      "code": "382",
+      "key": "382",
+      "value": "382",
+      "displayText": "+382",
+      "subGroup": null
+    },
+    {
+      "code": "383",
+      "key": "383",
+      "value": "383",
+      "displayText": "+383",
+      "subGroup": null
+    },
+    {
+      "code": "385",
+      "key": "385",
+      "value": "385",
+      "displayText": "+385",
+      "subGroup": null
+    },
+    {
+      "code": "386",
+      "key": "386",
+      "value": "386",
+      "displayText": "+386",
+      "subGroup": null
+    },
+    {
+      "code": "387",
+      "key": "387",
+      "value": "387",
+      "displayText": "+387",
+      "subGroup": null
+    },
+    {
+      "code": "389",
+      "key": "389",
+      "value": "389",
+      "displayText": "+389",
+      "subGroup": null
+    },
+    {
+      "code": "39",
+      "key": "39",
+      "value": "39",
+      "displayText": "+39",
+      "subGroup": null
+    },
+    {
+      "code": "40",
+      "key": "40",
+      "value": "40",
+      "displayText": "+40",
+      "subGroup": null
+    },
+    {
+      "code": "41",
+      "key": "41",
+      "value": "41",
+      "displayText": "+41",
+      "subGroup": null
+    },
+    {
+      "code": "420",
+      "key": "420",
+      "value": "420",
+      "displayText": "+420",
+      "subGroup": null
+    },
+    {
+      "code": "421",
+      "key": "421",
+      "value": "421",
+      "displayText": "+421",
+      "subGroup": null
+    },
+    {
+      "code": "423",
+      "key": "423",
+      "value": "423",
+      "displayText": "+423",
+      "subGroup": null
+    },
+    {
+      "code": "43",
+      "key": "43",
+      "value": "43",
+      "displayText": "+43",
+      "subGroup": null
+    },
+    {
+      "code": "44",
+      "key": "44",
+      "value": "44",
+      "displayText": "+44",
+      "subGroup": null
+    },
+    {
+      "code": "44-1481",
+      "key": "44-1481",
+      "value": "44-1481",
+      "displayText": "+44-1481",
+      "subGroup": null
+    },
+    {
+      "code": "44-1534",
+      "key": "44-1534",
+      "value": "44-1534",
+      "displayText": "+44-1534",
+      "subGroup": null
+    },
+    {
+      "code": "44-1624",
+      "key": "44-1624",
+      "value": "44-1624",
+      "displayText": "+44-1624",
+      "subGroup": null
+    },
+    {
+      "code": "45",
+      "key": "45",
+      "value": "45",
+      "displayText": "+45",
+      "subGroup": null
+    },
+    {
+      "code": "46",
+      "key": "46",
+      "value": "46",
+      "displayText": "+46",
+      "subGroup": null
+    },
+    {
+      "code": "47",
+      "key": "47",
+      "value": "47",
+      "displayText": "+47",
+      "subGroup": null
+    },
+    {
+      "code": "48",
+      "key": "48",
+      "value": "48",
+      "displayText": "+48",
+      "subGroup": null
+    },
+    {
+      "code": "49",
+      "key": "49",
+      "value": "49",
+      "displayText": "+49",
+      "subGroup": null
+    },
+    {
+      "code": "500",
+      "key": "500",
+      "value": "500",
+      "displayText": "+500",
+      "subGroup": null
+    },
+    {
+      "code": "501",
+      "key": "501",
+      "value": "501",
+      "displayText": "+501",
+      "subGroup": null
+    },
+    {
+      "code": "502",
+      "key": "502",
+      "value": "502",
+      "displayText": "+502",
+      "subGroup": null
+    },
+    {
+      "code": "503",
+      "key": "503",
+      "value": "503",
+      "displayText": "+503",
+      "subGroup": null
+    },
+    {
+      "code": "504",
+      "key": "504",
+      "value": "504",
+      "displayText": "+504",
+      "subGroup": null
+    },
+    {
+      "code": "505",
+      "key": "505",
+      "value": "505",
+      "displayText": "+505",
+      "subGroup": null
+    },
+    {
+      "code": "506",
+      "key": "506",
+      "value": "506",
+      "displayText": "+506",
+      "subGroup": null
+    },
+    {
+      "code": "507",
+      "key": "507",
+      "value": "507",
+      "displayText": "+507",
+      "subGroup": null
+    },
+    {
+      "code": "508",
+      "key": "508",
+      "value": "508",
+      "displayText": "+508",
+      "subGroup": null
+    },
+    {
+      "code": "509",
+      "key": "509",
+      "value": "509",
+      "displayText": "+509",
+      "subGroup": null
+    },
+    {
+      "code": "51",
+      "key": "51",
+      "value": "51",
+      "displayText": "+51",
+      "subGroup": null
+    },
+    {
+      "code": "52",
+      "key": "52",
+      "value": "52",
+      "displayText": "+52",
+      "subGroup": null
+    },
+    {
+      "code": "53",
+      "key": "53",
+      "value": "53",
+      "displayText": "+53",
+      "subGroup": null
+    },
+    {
+      "code": "54",
+      "key": "54",
+      "value": "54",
+      "displayText": "+54",
+      "subGroup": null
+    },
+    {
+      "code": "55",
+      "key": "55",
+      "value": "55",
+      "displayText": "+55",
+      "subGroup": null
+    },
+    {
+      "code": "56",
+      "key": "56",
+      "value": "56",
+      "displayText": "+56",
+      "subGroup": null
+    },
+    {
+      "code": "57",
+      "key": "57",
+      "value": "57",
+      "displayText": "+57",
+      "subGroup": null
+    },
+    {
+      "code": "58",
+      "key": "58",
+      "value": "58",
+      "displayText": "+58",
+      "subGroup": null
+    },
+    {
+      "code": "590",
+      "key": "590",
+      "value": "590",
+      "displayText": "+590",
+      "subGroup": null
+    },
+    {
+      "code": "591",
+      "key": "591",
+      "value": "591",
+      "displayText": "+591",
+      "subGroup": null
+    },
+    {
+      "code": "592",
+      "key": "592",
+      "value": "592",
+      "displayText": "+592",
+      "subGroup": null
+    },
+    {
+      "code": "593",
+      "key": "593",
+      "value": "593",
+      "displayText": "+593",
+      "subGroup": null
+    },
+    {
+      "code": "595",
+      "key": "595",
+      "value": "595",
+      "displayText": "+595",
+      "subGroup": null
+    },
+    {
+      "code": "597",
+      "key": "597",
+      "value": "597",
+      "displayText": "+597",
+      "subGroup": null
+    },
+    {
+      "code": "598",
+      "key": "598",
+      "value": "598",
+      "displayText": "+598",
+      "subGroup": null
+    },
+    {
+      "code": "599",
+      "key": "599",
+      "value": "599",
+      "displayText": "+599",
+      "subGroup": null
+    },
+    {
+      "code": "60",
+      "key": "60",
+      "value": "60",
+      "displayText": "+60",
+      "subGroup": null
+    },
+    {
+      "code": "61",
+      "key": "61",
+      "value": "61",
+      "displayText": "+61",
+      "subGroup": null
+    },
+    {
+      "code": "62",
+      "key": "62",
+      "value": "62",
+      "displayText": "+62",
+      "subGroup": null
+    },
+    {
+      "code": "63",
+      "key": "63",
+      "value": "63",
+      "displayText": "+63",
+      "subGroup": null
+    },
+    {
+      "code": "64",
+      "key": "64",
+      "value": "64",
+      "displayText": "+64",
+      "subGroup": null
+    },
+    {
+      "code": "65",
+      "key": "65",
+      "value": "65",
+      "displayText": "+65",
+      "subGroup": null
+    },
+    {
+      "code": "66",
+      "key": "66",
+      "value": "66",
+      "displayText": "+66",
+      "subGroup": null
+    },
+    {
+      "code": "670",
+      "key": "670",
+      "value": "670",
+      "displayText": "+670",
+      "subGroup": null
+    },
+    {
+      "code": "672",
+      "key": "672",
+      "value": "672",
+      "displayText": "+672",
+      "subGroup": null
+    },
+    {
+      "code": "673",
+      "key": "673",
+      "value": "673",
+      "displayText": "+673",
+      "subGroup": null
+    },
+    {
+      "code": "674",
+      "key": "674",
+      "value": "674",
+      "displayText": "+674",
+      "subGroup": null
+    },
+    {
+      "code": "675",
+      "key": "675",
+      "value": "675",
+      "displayText": "+675",
+      "subGroup": null
+    },
+    {
+      "code": "676",
+      "key": "676",
+      "value": "676",
+      "displayText": "+676",
+      "subGroup": null
+    },
+    {
+      "code": "677",
+      "key": "677",
+      "value": "677",
+      "displayText": "+677",
+      "subGroup": null
+    },
+    {
+      "code": "678",
+      "key": "678",
+      "value": "678",
+      "displayText": "+678",
+      "subGroup": null
+    },
+    {
+      "code": "679",
+      "key": "679",
+      "value": "679",
+      "displayText": "+679",
+      "subGroup": null
+    },
+    {
+      "code": "680",
+      "key": "680",
+      "value": "680",
+      "displayText": "+680",
+      "subGroup": null
+    },
+    {
+      "code": "681",
+      "key": "681",
+      "value": "681",
+      "displayText": "+681",
+      "subGroup": null
+    },
+    {
+      "code": "682",
+      "key": "682",
+      "value": "682",
+      "displayText": "+682",
+      "subGroup": null
+    },
+    {
+      "code": "683",
+      "key": "683",
+      "value": "683",
+      "displayText": "+683",
+      "subGroup": null
+    },
+    {
+      "code": "685",
+      "key": "685",
+      "value": "685",
+      "displayText": "+685",
+      "subGroup": null
+    },
+    {
+      "code": "686",
+      "key": "686",
+      "value": "686",
+      "displayText": "+686",
+      "subGroup": null
+    },
+    {
+      "code": "687",
+      "key": "687",
+      "value": "687",
+      "displayText": "+687",
+      "subGroup": null
+    },
+    {
+      "code": "688",
+      "key": "688",
+      "value": "688",
+      "displayText": "+688",
+      "subGroup": null
+    },
+    {
+      "code": "689",
+      "key": "689",
+      "value": "689",
+      "displayText": "+689",
+      "subGroup": null
+    },
+    {
+      "code": "690",
+      "key": "690",
+      "value": "690",
+      "displayText": "+690",
+      "subGroup": null
+    },
+    {
+      "code": "691",
+      "key": "691",
+      "value": "691",
+      "displayText": "+691",
+      "subGroup": null
+    },
+    {
+      "code": "692",
+      "key": "692",
+      "value": "692",
+      "displayText": "+692",
+      "subGroup": null
+    },
+    {
+      "code": "7",
+      "key": "7",
+      "value": "7",
+      "displayText": "+7",
+      "subGroup": null
+    },
+    {
+      "code": "81",
+      "key": "81",
+      "value": "81",
+      "displayText": "+81",
+      "subGroup": null
+    },
+    {
+      "code": "82",
+      "key": "82",
+      "value": "82",
+      "displayText": "+82",
+      "subGroup": null
+    },
+    {
+      "code": "84",
+      "key": "84",
+      "value": "84",
+      "displayText": "+84",
+      "subGroup": null
+    },
+    {
+      "code": "850",
+      "key": "850",
+      "value": "850",
+      "displayText": "+850",
+      "subGroup": null
+    },
+    {
+      "code": "852",
+      "key": "852",
+      "value": "852",
+      "displayText": "+852",
+      "subGroup": null
+    },
+    {
+      "code": "853",
+      "key": "853",
+      "value": "853",
+      "displayText": "+853",
+      "subGroup": null
+    },
+    {
+      "code": "855",
+      "key": "855",
+      "value": "855",
+      "displayText": "+855",
+      "subGroup": null
+    },
+    {
+      "code": "856",
+      "key": "856",
+      "value": "856",
+      "displayText": "+856",
+      "subGroup": null
+    },
+    {
+      "code": "86",
+      "key": "86",
+      "value": "86",
+      "displayText": "+86",
+      "subGroup": null
+    },
+    {
+      "code": "880",
+      "key": "880",
+      "value": "880",
+      "displayText": "+880",
+      "subGroup": null
+    },
+    {
+      "code": "886",
+      "key": "886",
+      "value": "886",
+      "displayText": "+886",
+      "subGroup": null
+    },
+    {
+      "code": "90",
+      "key": "90",
+      "value": "90",
+      "displayText": "+90",
+      "subGroup": null
+    },
+    {
+      "code": "91",
+      "key": "91",
+      "value": "91",
+      "displayText": "+91",
+      "subGroup": null
+    },
+    {
+      "code": "92",
+      "key": "92",
+      "value": "92",
+      "displayText": "+92",
+      "subGroup": null
+    },
+    {
+      "code": "93",
+      "key": "93",
+      "value": "93",
+      "displayText": "+93",
+      "subGroup": null
+    },
+    {
+      "code": "94",
+      "key": "94",
+      "value": "94",
+      "displayText": "+94",
+      "subGroup": null
+    },
+    {
+      "code": "95",
+      "key": "95",
+      "value": "95",
+      "displayText": "+95",
+      "subGroup": null
+    },
+    {
+      "code": "960",
+      "key": "960",
+      "value": "960",
+      "displayText": "+960",
+      "subGroup": null
+    },
+    {
+      "code": "961",
+      "key": "961",
+      "value": "961",
+      "displayText": "+961",
+      "subGroup": null
+    },
+    {
+      "code": "962",
+      "key": "962",
+      "value": "962",
+      "displayText": "+962",
+      "subGroup": null
+    },
+    {
+      "code": "963",
+      "key": "963",
+      "value": "963",
+      "displayText": "+963",
+      "subGroup": null
+    },
+    {
+      "code": "964",
+      "key": "964",
+      "value": "964",
+      "displayText": "+964",
+      "subGroup": null
+    },
+    {
+      "code": "965",
+      "key": "965",
+      "value": "965",
+      "displayText": "+965",
+      "subGroup": null
+    },
+    {
+      "code": "966",
+      "key": "966",
+      "value": "966",
+      "displayText": "+966",
+      "subGroup": null
+    },
+    {
+      "code": "967",
+      "key": "967",
+      "value": "967",
+      "displayText": "+967",
+      "subGroup": null
+    },
+    {
+      "code": "968",
+      "key": "968",
+      "value": "968",
+      "displayText": "+968",
+      "subGroup": null
+    },
+    {
+      "code": "970",
+      "key": "970",
+      "value": "970",
+      "displayText": "+970",
+      "subGroup": null
+    },
+    {
+      "code": "971",
+      "key": "971",
+      "value": "971",
+      "displayText": "+971",
+      "subGroup": null
+    },
+    {
+      "code": "972",
+      "key": "972",
+      "value": "972",
+      "displayText": "+972",
+      "subGroup": null
+    },
+    {
+      "code": "973",
+      "key": "973",
+      "value": "973",
+      "displayText": "+973",
+      "subGroup": null
+    },
+    {
+      "code": "974",
+      "key": "974",
+      "value": "974",
+      "displayText": "+974",
+      "subGroup": null
+    },
+    {
+      "code": "975",
+      "key": "975",
+      "value": "975",
+      "displayText": "+975",
+      "subGroup": null
+    },
+    {
+      "code": "976",
+      "key": "976",
+      "value": "976",
+      "displayText": "+976",
+      "subGroup": null
+    },
+    {
+      "code": "977",
+      "key": "977",
+      "value": "977",
+      "displayText": "+977",
+      "subGroup": null
+    },
+    {
+      "code": "98",
+      "key": "98",
+      "value": "98",
+      "displayText": "+98",
+      "subGroup": null
+    },
+    {
+      "code": "992",
+      "key": "992",
+      "value": "992",
+      "displayText": "+992",
+      "subGroup": null
+    },
+    {
+      "code": "993",
+      "key": "993",
+      "value": "993",
+      "displayText": "+993",
+      "subGroup": null
+    },
+    {
+      "code": "994",
+      "key": "994",
+      "value": "994",
+      "displayText": "+994",
+      "subGroup": null
+    },
+    {
+      "code": "995",
+      "key": "995",
+      "value": "995",
+      "displayText": "+995",
+      "subGroup": null
+    },
+    {
+      "code": "996",
+      "key": "996",
+      "value": "996",
+      "displayText": "+996",
+      "subGroup": null
+    },
+    {
+      "code": "998",
+      "key": "998",
+      "value": "998",
+      "displayText": "+998",
+      "subGroup": null
     }
   ],
   "companyCategory": [
-    {
-      "code": "RF",
-      "key": "RF",
-      "value": "RF",
-      "displayText": " Ruling Family",
-      "subGroup": null
-    },
     {
       "code": "CT",
       "key": "CT",
@@ -2929,6 +3449,13 @@
       "subGroup": null
     },
     {
+      "code": "RF",
+      "key": "RF",
+      "value": "RF",
+      "displayText": "Ruling Family",
+      "subGroup": null
+    },
+    {
       "code": "SBD",
       "key": "SBD",
       "value": "SBD",
@@ -2957,38 +3484,1942 @@
       "subGroup": null
     }
   ],
-  "topOriginGoodsCountries": [
+  "industry": [
     {
-      "code": "AE",
-      "key": "AE",
-      "value": "AE",
-      "displayText": "Emirate"
+      "code": "AA",
+      "key": "AA",
+      "value": "AA",
+      "displayText": "AGRICULTURE & ALLIED",
+      "subGroup": [
+        {
+          "code": "1",
+          "key": "1",
+          "value": "1",
+          "displayText": "AGRICULTURE & ALLIED ACTIVITIES"
+        },
+        {
+          "code": "3",
+          "key": "3",
+          "value": "3",
+          "displayText": "CATTLE"
+        },
+        {
+          "code": "4",
+          "key": "4",
+          "value": "4",
+          "displayText": "CULTIVATION OF CROPS"
+        },
+        {
+          "code": "2",
+          "key": "2",
+          "value": "2",
+          "displayText": "FISHING HUNTING TRAPPING"
+        },
+        {
+          "code": "5",
+          "key": "5",
+          "value": "5",
+          "displayText": "FORESTRY"
+        },
+        {
+          "code": "6",
+          "key": "6",
+          "value": "6",
+          "displayText": "OTHER ACTIVITIES"
+        },
+        {
+          "code": "7",
+          "key": "7",
+          "value": "7",
+          "displayText": "OTHER LIVESTOCK"
+        },
+        {
+          "code": "8",
+          "key": "8",
+          "value": "8",
+          "displayText": "POULTRY FARMING"
+        },
+        {
+          "code": "9",
+          "key": "9",
+          "value": "9",
+          "displayText": "SHEEP"
+        }
+      ]
     },
     {
-      "code": "USA",
-      "key": "USA",
-      "value": "USA",
-      "displayText": "United States"
+      "code": "ALCH",
+      "key": "ALCH",
+      "value": "ALCH",
+      "displayText": "ALCHOHOLIC BEVERAGES",
+      "subGroup": [
+        {
+          "code": "10",
+          "key": "10",
+          "value": "10",
+          "displayText": "ALCHOHOLIC BEVERAGES"
+        }
+      ]
     },
     {
-      "code": "UA",
-      "key": "UA",
-      "value": "UA",
-      "displayText": "Ukraine"
+      "code": "CONST",
+      "key": "CONST",
+      "value": "CONST",
+      "displayText": "CONSTRUCTION",
+      "subGroup": [
+        {
+          "code": "12",
+          "key": "12",
+          "value": "12",
+          "displayText": "CIVIL WORK"
+        },
+        {
+          "code": "11",
+          "key": "11",
+          "value": "11",
+          "displayText": "CONSTRUCTION"
+        },
+        {
+          "code": "13",
+          "key": "13",
+          "value": "13",
+          "displayText": "ELECTRICAL WORK"
+        },
+        {
+          "code": "14",
+          "key": "14",
+          "value": "14",
+          "displayText": "GENERAL CONTRACTORS - COMMERCIAL"
+        },
+        {
+          "code": "15",
+          "key": "15",
+          "value": "15",
+          "displayText": "GENERAL CONTRACTORS - RESIDENCIAL"
+        },
+        {
+          "code": "16",
+          "key": "16",
+          "value": "16",
+          "displayText": "GENERAL CONTRACTORS - RETAIL"
+        },
+        {
+          "code": "17",
+          "key": "17",
+          "value": "17",
+          "displayText": "OTHER BUILDING CONTRACTING WORKS"
+        },
+        {
+          "code": "18",
+          "key": "18",
+          "value": "18",
+          "displayText": "OTHER CONSTRUCTION"
+        },
+        {
+          "code": "19",
+          "key": "19",
+          "value": "19",
+          "displayText": "ROADS & STREETS"
+        },
+        {
+          "code": "20",
+          "key": "20",
+          "value": "20",
+          "displayText": "WATER & SEWERS &GAS PIPELINES"
+        }
+      ]
     },
     {
-      "code": "GB",
-      "key": "GB",
-      "value": "GB",
-      "displayText": "Great Britain"
+      "code": "LUX",
+      "key": "LUX",
+      "value": "LUX",
+      "displayText": "DEALERS IN LUXURY GOODS",
+      "subGroup": [
+        {
+          "code": "21",
+          "key": "21",
+          "value": "21",
+          "displayText": "DEALERS IN LUXURY GOODS"
+        }
+      ]
+    },
+    {
+      "code": "G",
+      "key": "G",
+      "value": "G",
+      "displayText": "ELECTRICITY & GAS & WATER",
+      "subGroup": [
+        {
+          "code": "22",
+          "key": "22",
+          "value": "22",
+          "displayText": "ELECTRICITY & GAS & WATER"
+        },
+        {
+          "code": "23",
+          "key": "23",
+          "value": "23",
+          "displayText": "INDUSTRIAL & CONSUMER GAS & CNG"
+        },
+        {
+          "code": "24",
+          "key": "24",
+          "value": "24",
+          "displayText": "WATER PRODUCTION INCLUDING BOTTLED WATER"
+        }
+      ]
+    },
+    {
+      "code": "FI",
+      "key": "FI",
+      "value": "FI",
+      "displayText": "FINANCIAL INSTITUTION",
+      "subGroup": [
+        {
+          "code": "25",
+          "key": "25",
+          "value": "25",
+          "displayText": "BROKERS & SERVICES"
+        },
+        {
+          "code": "26",
+          "key": "26",
+          "value": "26",
+          "displayText": "INVESTMENT & TRUSTS"
+        },
+        {
+          "code": "27",
+          "key": "27",
+          "value": "27",
+          "displayText": "INVESTMENT COMPANIES"
+        },
+        {
+          "code": "28",
+          "key": "28",
+          "value": "28",
+          "displayText": "OTHERS"
+        },
+        {
+          "code": "29",
+          "key": "29",
+          "value": "29",
+          "displayText": "REAL ESTATE"
+        },
+        {
+          "code": "30",
+          "key": "30",
+          "value": "30",
+          "displayText": "STOCK, SHARE & BOND BROKERS"
+        }
+      ]
+    },
+    {
+      "code": "GT",
+      "key": "GT",
+      "value": "GT",
+      "displayText": "GENERAL TRADING",
+      "subGroup": [
+        {
+          "code": "31",
+          "key": "31",
+          "value": "31",
+          "displayText": "Alcoholic Beverages"
+        },
+        {
+          "code": "32",
+          "key": "32",
+          "value": "32",
+          "displayText": "Beverages"
+        },
+        {
+          "code": "33",
+          "key": "33",
+          "value": "33",
+          "displayText": "Books, Magazines & Paper Products."
+        },
+        {
+          "code": "34",
+          "key": "34",
+          "value": "34",
+          "displayText": "Cement"
+        },
+        {
+          "code": "35",
+          "key": "35",
+          "value": "35",
+          "displayText": "Chemical Products (Excluding Petrol)"
+        },
+        {
+          "code": "36",
+          "key": "36",
+          "value": "36",
+          "displayText": "Computer & Office Equipment"
+        },
+        {
+          "code": "37",
+          "key": "37",
+          "value": "37",
+          "displayText": "Construction Materials"
+        },
+        {
+          "code": "38",
+          "key": "38",
+          "value": "38",
+          "displayText": "Crude Petro & Natural Gas"
+        },
+        {
+          "code": "39",
+          "key": "39",
+          "value": "39",
+          "displayText": "Cutlery, H&tools & Hardware"
+        },
+        {
+          "code": "40",
+          "key": "40",
+          "value": "40",
+          "displayText": "Dealers In Luxury Goods"
+        },
+        {
+          "code": "41",
+          "key": "41",
+          "value": "41",
+          "displayText": "Electrical Household Appliances"
+        },
+        {
+          "code": "42",
+          "key": "42",
+          "value": "42",
+          "displayText": "Fabricated Metal Products."
+        },
+        {
+          "code": "43",
+          "key": "43",
+          "value": "43",
+          "displayText": "Fertilizers & Pesticides"
+        },
+        {
+          "code": "44",
+          "key": "44",
+          "value": "44",
+          "displayText": "Food & Beverages"
+        },
+        {
+          "code": "45",
+          "key": "45",
+          "value": "45",
+          "displayText": "Furniture & Furnshings"
+        },
+        {
+          "code": "85",
+          "key": "85",
+          "value": "85",
+          "displayText": "GENERAL TRADING COMPANY"
+        },
+        {
+          "code": "46",
+          "key": "46",
+          "value": "46",
+          "displayText": "Glass & Glass Products"
+        },
+        {
+          "code": "47",
+          "key": "47",
+          "value": "47",
+          "displayText": "Goods Supply To Military, Army & Defence"
+        },
+        {
+          "code": "48",
+          "key": "48",
+          "value": "48",
+          "displayText": "Hardware & Building Materials"
+        },
+        {
+          "code": "49",
+          "key": "49",
+          "value": "49",
+          "displayText": "Industrial Agriculture Machines & Equipment"
+        },
+        {
+          "code": "50",
+          "key": "50",
+          "value": "50",
+          "displayText": "Information Technology"
+        },
+        {
+          "code": "51",
+          "key": "51",
+          "value": "51",
+          "displayText": "Jewellery & Related Arts"
+        },
+        {
+          "code": "52",
+          "key": "52",
+          "value": "52",
+          "displayText": "Leather, Leather Products & Footwear"
+        },
+        {
+          "code": "53",
+          "key": "53",
+          "value": "53",
+          "displayText": "Lumber & Wood Products"
+        },
+        {
+          "code": "54",
+          "key": "54",
+          "value": "54",
+          "displayText": "Machines & Equipment"
+        },
+        {
+          "code": "55",
+          "key": "55",
+          "value": "55",
+          "displayText": "Medicinal & Pharma Products"
+        },
+        {
+          "code": "56",
+          "key": "56",
+          "value": "56",
+          "displayText": "Metal Products Including Aluminum"
+        },
+        {
+          "code": "57",
+          "key": "57",
+          "value": "57",
+          "displayText": "Miscellaneous Products Of Petroleum"
+        },
+        {
+          "code": "58",
+          "key": "58",
+          "value": "58",
+          "displayText": "Mobile Phones & Accessories"
+        },
+        {
+          "code": "59",
+          "key": "59",
+          "value": "59",
+          "displayText": "Motor Vehicles"
+        },
+        {
+          "code": "60",
+          "key": "60",
+          "value": "60",
+          "displayText": "Opticals"
+        },
+        {
+          "code": "61",
+          "key": "61",
+          "value": "61",
+          "displayText": "Paints, Varnishes & Lacquer"
+        },
+        {
+          "code": "62",
+          "key": "62",
+          "value": "62",
+          "displayText": "Paper, Paper Products & Stationery."
+        },
+        {
+          "code": "63",
+          "key": "63",
+          "value": "63",
+          "displayText": "Personal Goods & Jewellery"
+        },
+        {
+          "code": "65",
+          "key": "65",
+          "value": "65",
+          "displayText": "Petroleum Refinery"
+        },
+        {
+          "code": "64",
+          "key": "64",
+          "value": "64",
+          "displayText": "Petroleum Refinery & Chemical Products"
+        },
+        {
+          "code": "66",
+          "key": "66",
+          "value": "66",
+          "displayText": "Pharmacies & Drug Stores"
+        },
+        {
+          "code": "67",
+          "key": "67",
+          "value": "67",
+          "displayText": "Plants & Flowers"
+        },
+        {
+          "code": "68",
+          "key": "68",
+          "value": "68",
+          "displayText": "Plastic Products"
+        },
+        {
+          "code": "69",
+          "key": "69",
+          "value": "69",
+          "displayText": "Printing & Publishing"
+        },
+        {
+          "code": "70",
+          "key": "70",
+          "value": "70",
+          "displayText": "Radio, TV & Communication Equipment"
+        },
+        {
+          "code": "71",
+          "key": "71",
+          "value": "71",
+          "displayText": "Rent A Car"
+        },
+        {
+          "code": "72",
+          "key": "72",
+          "value": "72",
+          "displayText": "Rubber & Plastic Products"
+        },
+        {
+          "code": "73",
+          "key": "73",
+          "value": "73",
+          "displayText": "Sanitary & Bathroom Fittings"
+        },
+        {
+          "code": "74",
+          "key": "74",
+          "value": "74",
+          "displayText": "Soaps, Perfumes & Cosmetics"
+        },
+        {
+          "code": "75",
+          "key": "75",
+          "value": "75",
+          "displayText": "Specific Commodities (Not Elsewhere Classified)"
+        },
+        {
+          "code": "76",
+          "key": "76",
+          "value": "76",
+          "displayText": "Stationary"
+        },
+        {
+          "code": "77",
+          "key": "77",
+          "value": "77",
+          "displayText": "Stone, Clay & Glass Products"
+        },
+        {
+          "code": "78",
+          "key": "78",
+          "value": "78",
+          "displayText": "Textile,Fabric & Clothing"
+        },
+        {
+          "code": "79",
+          "key": "79",
+          "value": "79",
+          "displayText": "Textiles & Wearing Apparel"
+        },
+        {
+          "code": "80",
+          "key": "80",
+          "value": "80",
+          "displayText": "Tiles & Structural Clay Products"
+        },
+        {
+          "code": "81",
+          "key": "81",
+          "value": "81",
+          "displayText": "Tobacco"
+        },
+        {
+          "code": "82",
+          "key": "82",
+          "value": "82",
+          "displayText": "Transport Equipment & Petrol"
+        },
+        {
+          "code": "83",
+          "key": "83",
+          "value": "83",
+          "displayText": "Tyre & Tubes"
+        },
+        {
+          "code": "84",
+          "key": "84",
+          "value": "84",
+          "displayText": "Used Cars"
+        }
+      ]
+    },
+    {
+      "code": "MFG",
+      "key": "MFG",
+      "value": "MFG",
+      "displayText": "MANUFACTURING",
+      "subGroup": [
+        {
+          "code": "87",
+          "key": "87",
+          "value": "87",
+          "displayText": "BASIC INDUSTRIAL CHEMICAL (EXCEPT FERTILIZERS)"
+        },
+        {
+          "code": "88",
+          "key": "88",
+          "value": "88",
+          "displayText": "BASIC METAL PRODUSCTS INCLUDING ALUMINIUM"
+        },
+        {
+          "code": "89",
+          "key": "89",
+          "value": "89",
+          "displayText": "BEVERAGES"
+        },
+        {
+          "code": "90",
+          "key": "90",
+          "value": "90",
+          "displayText": "CEMENT"
+        },
+        {
+          "code": "91",
+          "key": "91",
+          "value": "91",
+          "displayText": "CHEMICAL PRODUCTS (EXCLUDING PETROL)"
+        },
+        {
+          "code": "92",
+          "key": "92",
+          "value": "92",
+          "displayText": "COMPUTER & OFFICE EQUIPMENT"
+        },
+        {
+          "code": "93",
+          "key": "93",
+          "value": "93",
+          "displayText": "CONSTRUCTION MATERIALS"
+        },
+        {
+          "code": "94",
+          "key": "94",
+          "value": "94",
+          "displayText": "CUTLERY, HAND TOOLS & HARDWARE"
+        },
+        {
+          "code": "95",
+          "key": "95",
+          "value": "95",
+          "displayText": "ELECTRICAL & HOUSEHOLD APPLIANCES"
+        },
+        {
+          "code": "96",
+          "key": "96",
+          "value": "96",
+          "displayText": "ELECTRICAL PRODUCTS"
+        },
+        {
+          "code": "97",
+          "key": "97",
+          "value": "97",
+          "displayText": "FABRICATED METAL PRODUCTS"
+        },
+        {
+          "code": "98",
+          "key": "98",
+          "value": "98",
+          "displayText": "FERTILIZERS & PESTICIDES"
+        },
+        {
+          "code": "99",
+          "key": "99",
+          "value": "99",
+          "displayText": "FOOD"
+        },
+        {
+          "code": "100",
+          "key": "100",
+          "value": "100",
+          "displayText": "FURNITURE & FIXTURES"
+        },
+        {
+          "code": "101",
+          "key": "101",
+          "value": "101",
+          "displayText": "GLASS & GLASS PRODUCTS"
+        },
+        {
+          "code": "102",
+          "key": "102",
+          "value": "102",
+          "displayText": "INDUSTRIAL, AGRICULTURAL MACHINES & EQUIPMENT"
+        },
+        {
+          "code": "103",
+          "key": "103",
+          "value": "103",
+          "displayText": "IRON & BASIC INDUSTRIES"
+        },
+        {
+          "code": "104",
+          "key": "104",
+          "value": "104",
+          "displayText": "JEWELLERY & RELATED ARTS"
+        },
+        {
+          "code": "105",
+          "key": "105",
+          "value": "105",
+          "displayText": "LEATHER, LEATHER PRODUCTS & FOOTWEAR"
+        },
+        {
+          "code": "106",
+          "key": "106",
+          "value": "106",
+          "displayText": "LUMBER & WOOD PRODUCTS"
+        },
+        {
+          "code": "107",
+          "key": "107",
+          "value": "107",
+          "displayText": "MACHINES & EQUIPMENT (EXCEPT ELECTRICAL)"
+        },
+        {
+          "code": "86",
+          "key": "86",
+          "value": "86",
+          "displayText": "MANUFACTURING"
+        },
+        {
+          "code": "108",
+          "key": "108",
+          "value": "108",
+          "displayText": "MEDICINAL & PHARMA PRODUCTS"
+        },
+        {
+          "code": "109",
+          "key": "109",
+          "value": "109",
+          "displayText": "MISCELLANEOUS PRODUCTS OF PETROLEUM"
+        },
+        {
+          "code": "110",
+          "key": "110",
+          "value": "110",
+          "displayText": "MOTOR VEHICLES"
+        },
+        {
+          "code": "111",
+          "key": "111",
+          "value": "111",
+          "displayText": "NON-FERROUS METAL BASIC INDUSTRIES"
+        },
+        {
+          "code": "112",
+          "key": "112",
+          "value": "112",
+          "displayText": "OPTICALS"
+        },
+        {
+          "code": "113",
+          "key": "113",
+          "value": "113",
+          "displayText": "OTHER CHEMICAL PRODUCTS"
+        },
+        {
+          "code": "114",
+          "key": "114",
+          "value": "114",
+          "displayText": "OTHER MANUFACTURING"
+        },
+        {
+          "code": "115",
+          "key": "115",
+          "value": "115",
+          "displayText": "OTHER PETROLEUM (NOT INCLUDED ELSEWHERE)"
+        },
+        {
+          "code": "116",
+          "key": "116",
+          "value": "116",
+          "displayText": "OTHER TRANSPORT EQUIPMENT"
+        },
+        {
+          "code": "117",
+          "key": "117",
+          "value": "117",
+          "displayText": "PAINTS, VARNISHES & LACQUER"
+        },
+        {
+          "code": "118",
+          "key": "118",
+          "value": "118",
+          "displayText": "PAPER & PAPER PRODUCTS"
+        },
+        {
+          "code": "119",
+          "key": "119",
+          "value": "119",
+          "displayText": "PERSONAL GOODS"
+        },
+        {
+          "code": "121",
+          "key": "121",
+          "value": "121",
+          "displayText": "PETROLEUM REFINERY"
+        },
+        {
+          "code": "120",
+          "key": "120",
+          "value": "120",
+          "displayText": "PETROLEUM REFINERY & CHEMICAL PRODUCTS"
+        },
+        {
+          "code": "122",
+          "key": "122",
+          "value": "122",
+          "displayText": "PLASTIC PRODUCTS"
+        },
+        {
+          "code": "123",
+          "key": "123",
+          "value": "123",
+          "displayText": "PRINTING & PUBLISHING"
+        },
+        {
+          "code": "124",
+          "key": "124",
+          "value": "124",
+          "displayText": "RADIO, TV & COMMUNICATION EQUIPMENT"
+        },
+        {
+          "code": "125",
+          "key": "125",
+          "value": "125",
+          "displayText": "RUBBER & PLASTIC PRODUCTS"
+        },
+        {
+          "code": "126",
+          "key": "126",
+          "value": "126",
+          "displayText": "SANITARY & BATHROOM FITTINGS"
+        },
+        {
+          "code": "127",
+          "key": "127",
+          "value": "127",
+          "displayText": "SHIPBUILDING & REPAIRING"
+        },
+        {
+          "code": "128",
+          "key": "128",
+          "value": "128",
+          "displayText": "SOAPS, PERFUMES & COSMETICS"
+        },
+        {
+          "code": "129",
+          "key": "129",
+          "value": "129",
+          "displayText": "STATIONARY"
+        },
+        {
+          "code": "130",
+          "key": "130",
+          "value": "130",
+          "displayText": "STONE, CLAY & GLASS PRODUCTS"
+        },
+        {
+          "code": "131",
+          "key": "131",
+          "value": "131",
+          "displayText": "TEXTILE, FABRIC & CLOTHING"
+        },
+        {
+          "code": "132",
+          "key": "132",
+          "value": "132",
+          "displayText": "TILES & STRUCTURAL CLAY PRODUCTS"
+        },
+        {
+          "code": "133",
+          "key": "133",
+          "value": "133",
+          "displayText": "TOBACCO"
+        },
+        {
+          "code": "134",
+          "key": "134",
+          "value": "134",
+          "displayText": "TRANSPORT EQUIP & PETROL"
+        },
+        {
+          "code": "135",
+          "key": "135",
+          "value": "135",
+          "displayText": "TYRE & TUBES"
+        }
+      ]
+    },
+    {
+      "code": "MQ",
+      "key": "MQ",
+      "value": "MQ",
+      "displayText": "MINING & QUARRY",
+      "subGroup": [
+        {
+          "code": "136",
+          "key": "136",
+          "value": "136",
+          "displayText": "COAL EXTRACTION"
+        },
+        {
+          "code": "137",
+          "key": "137",
+          "value": "137",
+          "displayText": "CRUDE PETROL & NATURAL GAS"
+        },
+        {
+          "code": "138",
+          "key": "138",
+          "value": "138",
+          "displayText": "METAL MINING"
+        },
+        {
+          "code": "141",
+          "key": "141",
+          "value": "141",
+          "displayText": "MINING & QUARRYING"
+        },
+        {
+          "code": "139",
+          "key": "139",
+          "value": "139",
+          "displayText": "NON METALLIC MINING"
+        },
+        {
+          "code": "140",
+          "key": "140",
+          "value": "140",
+          "displayText": "OTHER MINING"
+        }
+      ]
+    },
+    {
+      "code": "RT",
+      "key": "RT",
+      "value": "RT",
+      "displayText": "RETAIL TRADING",
+      "subGroup": [
+        {
+          "code": "169",
+          "key": "169",
+          "value": "169",
+          "displayText": "AUTOMOTIVE"
+        },
+        {
+          "code": "142",
+          "key": "142",
+          "value": "142",
+          "displayText": "Alcoholic Beverages"
+        },
+        {
+          "code": "170",
+          "key": "170",
+          "value": "170",
+          "displayText": "BASIC METAL PRODUCTS INCLUDING ALUMINIUM"
+        },
+        {
+          "code": "171",
+          "key": "171",
+          "value": "171",
+          "displayText": "BOOKS, MAGAZINES & PAPER PRODUCTS"
+        },
+        {
+          "code": "172",
+          "key": "172",
+          "value": "172",
+          "displayText": "BOOKS, MAGAZINES & PAPER PRODUCTS"
+        },
+        {
+          "code": "143",
+          "key": "143",
+          "value": "143",
+          "displayText": "Beverages"
+        },
+        {
+          "code": "173",
+          "key": "173",
+          "value": "173",
+          "displayText": "CATTLE"
+        },
+        {
+          "code": "174",
+          "key": "174",
+          "value": "174",
+          "displayText": "CEMENT"
+        },
+        {
+          "code": "175",
+          "key": "175",
+          "value": "175",
+          "displayText": "CHEMICAL PRODUCTS (EXCLUDING PETROL)"
+        },
+        {
+          "code": "176",
+          "key": "176",
+          "value": "176",
+          "displayText": "COAL EXTRACTION"
+        },
+        {
+          "code": "177",
+          "key": "177",
+          "value": "177",
+          "displayText": "COMPUTER & OFFICE EQUIPMENT"
+        },
+        {
+          "code": "178",
+          "key": "178",
+          "value": "178",
+          "displayText": "CRUDE PETRO & NATURAL GAS"
+        },
+        {
+          "code": "144",
+          "key": "144",
+          "value": "144",
+          "displayText": "Construction Materials"
+        },
+        {
+          "code": "145",
+          "key": "145",
+          "value": "145",
+          "displayText": "Cutlery, Hand Tools & Hardware"
+        },
+        {
+          "code": "146",
+          "key": "146",
+          "value": "146",
+          "displayText": "Dealers In Luxury Goods"
+        },
+        {
+          "code": "179",
+          "key": "179",
+          "value": "179",
+          "displayText": "ELECTRICAL & HOUSEHOLD APPLIANCANCES"
+        },
+        {
+          "code": "180",
+          "key": "180",
+          "value": "180",
+          "displayText": "ELECTRICAL PRODUCTS"
+        },
+        {
+          "code": "181",
+          "key": "181",
+          "value": "181",
+          "displayText": "ELECTRONIC & ELECTRICAL EQUIPMENT"
+        },
+        {
+          "code": "182",
+          "key": "182",
+          "value": "182",
+          "displayText": "FABRICATED METAL PRODUCTS"
+        },
+        {
+          "code": "183",
+          "key": "183",
+          "value": "183",
+          "displayText": "FISHING HUNTING TRAPPING"
+        },
+        {
+          "code": "184",
+          "key": "184",
+          "value": "184",
+          "displayText": "FOOD & BEVERAGES"
+        },
+        {
+          "code": "185",
+          "key": "185",
+          "value": "185",
+          "displayText": "FURNITURE, FURNISHINGS & HOUSE HOLD ITEMS"
+        },
+        {
+          "code": "147",
+          "key": "147",
+          "value": "147",
+          "displayText": "Fertilizers & Pesticides"
+        },
+        {
+          "code": "148",
+          "key": "148",
+          "value": "148",
+          "displayText": "Glass & Glass Products"
+        },
+        {
+          "code": "149",
+          "key": "149",
+          "value": "149",
+          "displayText": "Goods Supply To Military, Army & Defence"
+        },
+        {
+          "code": "186",
+          "key": "186",
+          "value": "186",
+          "displayText": "HARDWARE & BUILDERS MATERIALS"
+        },
+        {
+          "code": "187",
+          "key": "187",
+          "value": "187",
+          "displayText": "HOTELS&LODGING&BOARDING HOUSING"
+        },
+        {
+          "code": "150",
+          "key": "150",
+          "value": "150",
+          "displayText": "Industrial Agriculture Machines & Equipment"
+        },
+        {
+          "code": "151",
+          "key": "151",
+          "value": "151",
+          "displayText": "Information Technology"
+        },
+        {
+          "code": "152",
+          "key": "152",
+          "value": "152",
+          "displayText": "Jewellery & Related Arts"
+        },
+        {
+          "code": "188",
+          "key": "188",
+          "value": "188",
+          "displayText": "LEATHER&LEATHER PROD&FOOTWEAR"
+        },
+        {
+          "code": "189",
+          "key": "189",
+          "value": "189",
+          "displayText": "LUMBER&WOOD PRODUCTS"
+        },
+        {
+          "code": "190",
+          "key": "190",
+          "value": "190",
+          "displayText": "MACHINES & EQUIPMENT EXCEPT ELECTRICAL"
+        },
+        {
+          "code": "191",
+          "key": "191",
+          "value": "191",
+          "displayText": "MOBILE PHONES & ACCESSORIES"
+        },
+        {
+          "code": "192",
+          "key": "192",
+          "value": "192",
+          "displayText": "MOTOR VEHICLES"
+        },
+        {
+          "code": "153",
+          "key": "153",
+          "value": "153",
+          "displayText": "Medicinal & Pharma Products"
+        },
+        {
+          "code": "154",
+          "key": "154",
+          "value": "154",
+          "displayText": "Metal Products Includling Aluminium"
+        },
+        {
+          "code": "155",
+          "key": "155",
+          "value": "155",
+          "displayText": "Miscellaneous Products Of Petroleum"
+        },
+        {
+          "code": "193",
+          "key": "193",
+          "value": "193",
+          "displayText": "OPTICALS"
+        },
+        {
+          "code": "194",
+          "key": "194",
+          "value": "194",
+          "displayText": "OTHER RETAIL TRADE"
+        },
+        {
+          "code": "195",
+          "key": "195",
+          "value": "195",
+          "displayText": "PAINT, VARNISH & LACQUERS"
+        },
+        {
+          "code": "196",
+          "key": "196",
+          "value": "196",
+          "displayText": "PAPER & PAPER PRODUCTS"
+        },
+        {
+          "code": "197",
+          "key": "197",
+          "value": "197",
+          "displayText": "PERSONAL GOODS & JEWELLERY"
+        },
+        {
+          "code": "198",
+          "key": "198",
+          "value": "198",
+          "displayText": "PHARMACIES & DRUG STORES"
+        },
+        {
+          "code": "199",
+          "key": "199",
+          "value": "199",
+          "displayText": "PLANTS & FLOWERS"
+        },
+        {
+          "code": "156",
+          "key": "156",
+          "value": "156",
+          "displayText": "Paper, Paper Products & Stationery"
+        },
+        {
+          "code": "157",
+          "key": "157",
+          "value": "157",
+          "displayText": "Petrol Refinery & Chemical Products"
+        },
+        {
+          "code": "158",
+          "key": "158",
+          "value": "158",
+          "displayText": "Petroleum Refinery"
+        },
+        {
+          "code": "159",
+          "key": "159",
+          "value": "159",
+          "displayText": "Plastic Products"
+        },
+        {
+          "code": "160",
+          "key": "160",
+          "value": "160",
+          "displayText": "Printing & Publishing"
+        },
+        {
+          "code": "200",
+          "key": "200",
+          "value": "200",
+          "displayText": "RESTAURANTS & CATERING"
+        },
+        {
+          "code": "201",
+          "key": "201",
+          "value": "201",
+          "displayText": "RUBBER & PLASTIC PRODUCTS"
+        },
+        {
+          "code": "161",
+          "key": "161",
+          "value": "161",
+          "displayText": "Radio & TV & Communication Equipment"
+        },
+        {
+          "code": "162",
+          "key": "162",
+          "value": "162",
+          "displayText": "Rent A Car"
+        },
+        {
+          "code": "202",
+          "key": "202",
+          "value": "202",
+          "displayText": "SPECIFIC COMMODITIES (Not Elsewhere Classified)"
+        },
+        {
+          "code": "203",
+          "key": "203",
+          "value": "203",
+          "displayText": "STATIONARY"
+        },
+        {
+          "code": "204",
+          "key": "204",
+          "value": "204",
+          "displayText": "STONE, CLAY & GLASS PRODUCTS"
+        },
+        {
+          "code": "205",
+          "key": "205",
+          "value": "205",
+          "displayText": "SUPERMARKETS & DEPARTMENT STORES"
+        },
+        {
+          "code": "163",
+          "key": "163",
+          "value": "163",
+          "displayText": "Sanitary & Bathroom Fittings"
+        },
+        {
+          "code": "164",
+          "key": "164",
+          "value": "164",
+          "displayText": "Soaps, Perfumes & Cosmetics"
+        },
+        {
+          "code": "165",
+          "key": "165",
+          "value": "165",
+          "displayText": "Specific Commodities (Not Elsewhere Classified)"
+        },
+        {
+          "code": "206",
+          "key": "206",
+          "value": "206",
+          "displayText": "TEXTILES & WEARING APPAREL"
+        },
+        {
+          "code": "207",
+          "key": "207",
+          "value": "207",
+          "displayText": "TOBACCO"
+        },
+        {
+          "code": "208",
+          "key": "208",
+          "value": "208",
+          "displayText": "TRANSPORT EQUIPMENT & PETROL"
+        },
+        {
+          "code": "166",
+          "key": "166",
+          "value": "166",
+          "displayText": "Textile, Fabric & Clothing"
+        },
+        {
+          "code": "167",
+          "key": "167",
+          "value": "167",
+          "displayText": "Tiles & Structural Clay Products"
+        },
+        {
+          "code": "168",
+          "key": "168",
+          "value": "168",
+          "displayText": "Tyre & Tubes"
+        },
+        {
+          "code": "209",
+          "key": "209",
+          "value": "209",
+          "displayText": "USED CARS"
+        }
+      ]
+    },
+    {
+      "code": "SER",
+      "key": "SER",
+      "value": "SER",
+      "displayText": "SERVICES",
+      "subGroup": [
+        {
+          "code": "215",
+          "key": "215",
+          "value": "215",
+          "displayText": "ACCOUNTING & CONSULTING"
+        },
+        {
+          "code": "216",
+          "key": "216",
+          "value": "216",
+          "displayText": "ADVERTISING"
+        },
+        {
+          "code": "210",
+          "key": "210",
+          "value": "210",
+          "displayText": "ARCHITECTURAL & CONSULTING ENGINEERING"
+        },
+        {
+          "code": "217",
+          "key": "217",
+          "value": "217",
+          "displayText": "BUSINESS"
+        },
+        {
+          "code": "234",
+          "key": "234",
+          "value": "234",
+          "displayText": "CARGO LOGISTICS & FORWARDING"
+        },
+        {
+          "code": "211",
+          "key": "211",
+          "value": "211",
+          "displayText": "COMMERCIAL BROKERS"
+        },
+        {
+          "code": "218",
+          "key": "218",
+          "value": "218",
+          "displayText": "COMMUNITY"
+        },
+        {
+          "code": "235",
+          "key": "235",
+          "value": "235",
+          "displayText": "COMPUTER & IT INDUSTRY"
+        },
+        {
+          "code": "212",
+          "key": "212",
+          "value": "212",
+          "displayText": "CONSULTING OTHERS"
+        },
+        {
+          "code": "219",
+          "key": "219",
+          "value": "219",
+          "displayText": "EDUCATIONAL"
+        },
+        {
+          "code": "220",
+          "key": "220",
+          "value": "220",
+          "displayText": "ENTERTAINMENT"
+        },
+        {
+          "code": "236",
+          "key": "236",
+          "value": "236",
+          "displayText": "FURNITURE & FURNSHINGS"
+        },
+        {
+          "code": "233",
+          "key": "233",
+          "value": "233",
+          "displayText": "GENERAL CONTRACTORS"
+        },
+        {
+          "code": "237",
+          "key": "237",
+          "value": "237",
+          "displayText": "INDUSTRIAL & AGRICULTURE MACHINES EQUIPMENT"
+        },
+        {
+          "code": "213",
+          "key": "213",
+          "value": "213",
+          "displayText": "MANPOWER & RECRUITMENT COMPANY"
+        },
+        {
+          "code": "221",
+          "key": "221",
+          "value": "221",
+          "displayText": "MEDICAL"
+        },
+        {
+          "code": "238",
+          "key": "238",
+          "value": "238",
+          "displayText": "METAL PRODUCTS INCLUDING ALUMININUM"
+        },
+        {
+          "code": "222",
+          "key": "222",
+          "value": "222",
+          "displayText": "MOTELS &HOTELS&RESTAURANTS"
+        },
+        {
+          "code": "223",
+          "key": "223",
+          "value": "223",
+          "displayText": "MOTOR VEHICLES"
+        },
+        {
+          "code": "224",
+          "key": "224",
+          "value": "224",
+          "displayText": "OTHERS"
+        },
+        {
+          "code": "225",
+          "key": "225",
+          "value": "225",
+          "displayText": "PACKING & PACKAGING"
+        },
+        {
+          "code": "226",
+          "key": "226",
+          "value": "226",
+          "displayText": "PERSONAL"
+        },
+        {
+          "code": "214",
+          "key": "214",
+          "value": "214",
+          "displayText": "PETRO REFINERY & CHEMICAL PRODUCTS"
+        },
+        {
+          "code": "239",
+          "key": "239",
+          "value": "239",
+          "displayText": "PRINTING & PUBLISHING"
+        },
+        {
+          "code": "227",
+          "key": "227",
+          "value": "227",
+          "displayText": "REAL ESTATE DEVELOPMENT (INDUSTRIAL)"
+        },
+        {
+          "code": "228",
+          "key": "228",
+          "value": "228",
+          "displayText": "REAL ESTATE DEVELOPMENT (RESIDENTIAL)"
+        },
+        {
+          "code": "229",
+          "key": "229",
+          "value": "229",
+          "displayText": "RECREATION"
+        },
+        {
+          "code": "230",
+          "key": "230",
+          "value": "230",
+          "displayText": "REPAIR"
+        },
+        {
+          "code": "231",
+          "key": "231",
+          "value": "231",
+          "displayText": "SOCIAL WELFARE"
+        },
+        {
+          "code": "240",
+          "key": "240",
+          "value": "240",
+          "displayText": "STONE, CLAY & GLASS PRODUCTS"
+        },
+        {
+          "code": "242",
+          "key": "242",
+          "value": "242",
+          "displayText": "TOURISM & TRAVEL COMPANY"
+        },
+        {
+          "code": "241",
+          "key": "241",
+          "value": "241",
+          "displayText": "TRANSPORT EQUIPMENT & PETROL"
+        },
+        {
+          "code": "232",
+          "key": "232",
+          "value": "232",
+          "displayText": "TRAVEL AGENTS"
+        },
+        {
+          "code": "243",
+          "key": "243",
+          "value": "243",
+          "displayText": "VIRTUAL CURRENCY"
+        }
+      ]
+    },
+    {
+      "code": "TSC",
+      "key": "TSC",
+      "value": "TSC",
+      "displayText": "TRANSPORT",
+      "subGroup": [
+        {
+          "code": "246",
+          "key": "246",
+          "value": "246",
+          "displayText": "AIR TRANSPORTATION"
+        },
+        {
+          "code": "247",
+          "key": "247",
+          "value": "247",
+          "displayText": "COMMUNICATION SERVICES"
+        },
+        {
+          "code": "248",
+          "key": "248",
+          "value": "248",
+          "displayText": "FREIGHT TRANSPORT BY ROAD"
+        },
+        {
+          "code": "245",
+          "key": "245",
+          "value": "245",
+          "displayText": "INFORMATION TECHNOLOGY"
+        },
+        {
+          "code": "249",
+          "key": "249",
+          "value": "249",
+          "displayText": "OTHERS"
+        },
+        {
+          "code": "250",
+          "key": "250",
+          "value": "250",
+          "displayText": "POSTAL SERVICES"
+        },
+        {
+          "code": "244",
+          "key": "244",
+          "value": "244",
+          "displayText": "RENT A CAR"
+        },
+        {
+          "code": "251",
+          "key": "251",
+          "value": "251",
+          "displayText": "SERVICE ALLIED TRANSPORT (Not Elsewhere Classified)"
+        },
+        {
+          "code": "254",
+          "key": "254",
+          "value": "254",
+          "displayText": "SUPPORT SERVICE AIR TRANSPORT"
+        },
+        {
+          "code": "255",
+          "key": "255",
+          "value": "255",
+          "displayText": "SUPPORT SERVICE LAND TRANSPORT"
+        },
+        {
+          "code": "253",
+          "key": "253",
+          "value": "253",
+          "displayText": "SUPPORT SERVICES WATER TRANSPORT"
+        },
+        {
+          "code": "252",
+          "key": "252",
+          "value": "252",
+          "displayText": "SUPPORT SERVICES WATER TRANSPORT"
+        },
+        {
+          "code": "256",
+          "key": "256",
+          "value": "256",
+          "displayText": "TAXIS & OTHER LAND TRANSPORT"
+        },
+        {
+          "code": "257",
+          "key": "257",
+          "value": "257",
+          "displayText": "TRANSPORT, STORAGE & COMMUNICATION"
+        },
+        {
+          "code": "258",
+          "key": "258",
+          "value": "258",
+          "displayText": "WAREHOUSING & STORAGE"
+        },
+        {
+          "code": "259",
+          "key": "259",
+          "value": "259",
+          "displayText": "WATER TRANSPORTATION"
+        }
+      ]
+    },
+    {
+      "code": "WST",
+      "key": "WST",
+      "value": "WST",
+      "displayText": "WHOLESALE TRADING",
+      "subGroup": [
+        {
+          "code": "262",
+          "key": "262",
+          "value": "262",
+          "displayText": "BASIC METAL PRODUCTS INCLUDING ALUMINIUM"
+        },
+        {
+          "code": "263",
+          "key": "263",
+          "value": "263",
+          "displayText": "CATTLE"
+        },
+        {
+          "code": "264",
+          "key": "264",
+          "value": "264",
+          "displayText": "CEMENT"
+        },
+        {
+          "code": "265",
+          "key": "265",
+          "value": "265",
+          "displayText": "CHEMICAL PRODUCTS (EXCLUDING PETROL)"
+        },
+        {
+          "code": "266",
+          "key": "266",
+          "value": "266",
+          "displayText": "COAL EXTRACTION"
+        },
+        {
+          "code": "267",
+          "key": "267",
+          "value": "267",
+          "displayText": "COMPUTER & OFFICE EQUIPMENT"
+        },
+        {
+          "code": "268",
+          "key": "268",
+          "value": "268",
+          "displayText": "CONSTRUCTION MATERIALS"
+        },
+        {
+          "code": "269",
+          "key": "269",
+          "value": "269",
+          "displayText": "CRUDE PETRO & NATURAL GAS"
+        },
+        {
+          "code": "270",
+          "key": "270",
+          "value": "270",
+          "displayText": "ELECTRICAL & HOUSEHOLD APPLIANCES"
+        },
+        {
+          "code": "271",
+          "key": "271",
+          "value": "271",
+          "displayText": "ELECTRICAL GOODS"
+        },
+        {
+          "code": "272",
+          "key": "272",
+          "value": "272",
+          "displayText": "FABRICATED METAL PRODUCTS"
+        },
+        {
+          "code": "273",
+          "key": "273",
+          "value": "273",
+          "displayText": "FISHING HUNTING TRAPPING"
+        },
+        {
+          "code": "274",
+          "key": "274",
+          "value": "274",
+          "displayText": "FOOD, DRINK & TOBACCO"
+        },
+        {
+          "code": "275",
+          "key": "275",
+          "value": "275",
+          "displayText": "FURNITURE & HOME FURNISHING"
+        },
+        {
+          "code": "276",
+          "key": "276",
+          "value": "276",
+          "displayText": "GENERAL IMPORTERS & EXPORTERS"
+        },
+        {
+          "code": "277",
+          "key": "277",
+          "value": "277",
+          "displayText": "HARDWARE & BUILDING MATERIALS"
+        },
+        {
+          "code": "278",
+          "key": "278",
+          "value": "278",
+          "displayText": "INDUSTRIAL  AGRICULTURE MACHINES & EQUIPMENT"
+        },
+        {
+          "code": "279",
+          "key": "279",
+          "value": "279",
+          "displayText": "JEWELLERY & RELATED ARTS"
+        },
+        {
+          "code": "280",
+          "key": "280",
+          "value": "280",
+          "displayText": "LEATHER, LEATHER PRODUCTS & FOOTWEAR"
+        },
+        {
+          "code": "281",
+          "key": "281",
+          "value": "281",
+          "displayText": "LIVESTOCK"
+        },
+        {
+          "code": "282",
+          "key": "282",
+          "value": "282",
+          "displayText": "LUMBER & WOOD PRODUCTS"
+        },
+        {
+          "code": "283",
+          "key": "283",
+          "value": "283",
+          "displayText": "MACHINES & EQUIPMENT"
+        },
+        {
+          "code": "284",
+          "key": "284",
+          "value": "284",
+          "displayText": "MEDICINAL & PHARMA PRODUCTS"
+        },
+        {
+          "code": "260",
+          "key": "260",
+          "value": "260",
+          "displayText": "MOBILE PHONES"
+        },
+        {
+          "code": "285",
+          "key": "285",
+          "value": "285",
+          "displayText": "MOTOR VEHICLES"
+        },
+        {
+          "code": "286",
+          "key": "286",
+          "value": "286",
+          "displayText": "OPTICALS"
+        },
+        {
+          "code": "287",
+          "key": "287",
+          "value": "287",
+          "displayText": "PAINT, VARNISH & LACQUERS"
+        },
+        {
+          "code": "288",
+          "key": "288",
+          "value": "288",
+          "displayText": "PAPER, PAPER PRODUCTS & STATIONERY"
+        },
+        {
+          "code": "289",
+          "key": "289",
+          "value": "289",
+          "displayText": "PERSONAL GOODS"
+        },
+        {
+          "code": "261",
+          "key": "261",
+          "value": "261",
+          "displayText": "PLANTS & FLOWERS"
+        },
+        {
+          "code": "290",
+          "key": "290",
+          "value": "290",
+          "displayText": "RUBBER & PLASTIC PRODUCTS"
+        },
+        {
+          "code": "291",
+          "key": "291",
+          "value": "291",
+          "displayText": "SHEEP"
+        },
+        {
+          "code": "292",
+          "key": "292",
+          "value": "292",
+          "displayText": "SPECIFIC COMMODITIES (Not Elsewhere Classified)"
+        },
+        {
+          "code": "293",
+          "key": "293",
+          "value": "293",
+          "displayText": "STONE, CLAY & GLASS PRODUCTS"
+        },
+        {
+          "code": "294",
+          "key": "294",
+          "value": "294",
+          "displayText": "SUPERMARKETS & DEPARTMENT STORES"
+        },
+        {
+          "code": "295",
+          "key": "295",
+          "value": "295",
+          "displayText": "TEXTILE, FABRIC & CLOTHING"
+        },
+        {
+          "code": "296",
+          "key": "296",
+          "value": "296",
+          "displayText": "TRANSPORT EQUIPMENT"
+        },
+        {
+          "code": "297",
+          "key": "297",
+          "value": "297",
+          "displayText": "WHOLESALE TRADE OTHERS (Not Elsewhere Classified)"
+        }
+      ]
     }
   ],
-  "industry": [
+  "industrySubCategory": [
+    {
+      "code": "AGA",
+      "key": "AGA",
+      "value": "AGA",
+      "displayText": "AGRICULTURE & ALLIED ACTIVITIES",
+      "subGroup": null
+    },
+    {
+      "code": "AB",
+      "key": "AB",
+      "value": "AB",
+      "displayText": "ALCHOHOLIC BEVERAGES",
+      "subGroup": null
+    },
+    {
+      "code": "BS",
+      "key": "BS",
+      "value": "BS",
+      "displayText": "BROKERS & SERVICES",
+      "subGroup": null
+    },
+    {
+      "code": "CTL",
+      "key": "CTL",
+      "value": "CTL",
+      "displayText": "CATTLE",
+      "subGroup": null
+    },
+    {
+      "code": "CW",
+      "key": "CW",
+      "value": "CW",
+      "displayText": "CIVIL WORK",
+      "subGroup": null
+    },
     {
       "code": "CNT",
       "key": "CNT",
       "value": "CNT",
       "displayText": "CONSTRUCTION",
+      "subGroup": null
+    },
+    {
+      "code": "COC",
+      "key": "COC",
+      "value": "COC",
+      "displayText": "CULTIVATION OF CROPS",
       "subGroup": null
     },
     {
@@ -2999,687 +5430,405 @@
       "subGroup": null
     },
     {
-      "code": "EGH",
-      "key": "EGH",
-      "value": "EGH",
-      "displayText": "ELECTRICITY & GAS HEATER",
+      "code": "EW",
+      "key": "EW",
+      "value": "EW",
+      "displayText": "ELECTRICAL WORK",
       "subGroup": null
     },
     {
-      "code": "FI",
-      "key": "FI",
-      "value": "FI",
-      "displayText": "FINANCIAL INSTITUTION",
+      "code": "EGW",
+      "key": "EGW",
+      "value": "EGW",
+      "displayText": "ELECTRICITY & GAS & WATER",
       "subGroup": null
     },
     {
-      "code": "GT",
-      "key": "GT",
-      "value": "GT",
-      "displayText": "GENERAL TRADING",
+      "code": "FHT",
+      "key": "FHT",
+      "value": "FHT",
+      "displayText": "FISHING HUNTING TRAPPING",
       "subGroup": null
     },
     {
-      "code": "AGA",
-      "key": "AGA",
-      "value": "AGA",
-      "displayText": "AGRICULTURE & ALLIED",
-      "subGroup": [
-        {
-          "code": "AGA",
-          "key": "AGA",
-          "value": "AGA",
-          "displayText": "AGRICULTURE & ALLIED ACTIVITIES"
-        },
-        {
-          "code": "AB",
-          "key": "AB",
-          "value": "AB",
-          "displayText": "ALCHOHOLIC BEVERAGES"
-        },
-        {
-          "code": "BS",
-          "key": "BS",
-          "value": "BS",
-          "displayText": "BROKERS & SERVICES"
-        },
-        {
-          "code": "CTL",
-          "key": "CTL",
-          "value": "CTL",
-          "displayText": "CATTLE"
-        },
-        {
-          "code": "CW",
-          "key": "CW",
-          "value": "CW",
-          "displayText": "CIVIL WORK"
-        },
-        {
-          "code": "CNT",
-          "key": "CNT",
-          "value": "CNT",
-          "displayText": "CONSTRUCTION"
-        },
-        {
-          "code": "COC",
-          "key": "COC",
-          "value": "COC",
-          "displayText": "CULTIVATION OF CROPS"
-        },
-        {
-          "code": "DLG",
-          "key": "DLG",
-          "value": "DLG",
-          "displayText": "DEALERS IN LUXURY GOODS"
-        },
-        {
-          "code": "EW",
-          "key": "EW",
-          "value": "EW",
-          "displayText": "ELECTRICAL WORK"
-        },
-        {
-          "code": "EGW",
-          "key": "EGW",
-          "value": "EGW",
-          "displayText": "ELECTRICITY & GAS & WATER"
-        },
-        {
-          "code": "FHT",
-          "key": "FHT",
-          "value": "FHT",
-          "displayText": "FISHING HUNTING TRAPPING"
-        },
-        {
-          "code": "FRT",
-          "key": "FRT",
-          "value": "FRT",
-          "displayText": "FORESTRY"
-        },
-        {
-          "code": "GCC",
-          "key": "GCC",
-          "value": "GCC",
-          "displayText": "GENERAL CONTRACTORS - COMMERCIAL"
-        },
-        {
-          "code": "GCR",
-          "key": "GCR",
-          "value": "GCR",
-          "displayText": "GENERAL CONTRACTORS - RESIDENCIAL"
-        },
-        {
-          "code": "GCRE",
-          "key": "GCRE",
-          "value": "GCRE",
-          "displayText": "GENERAL CONTRACTORS - RETAIL"
-        },
-        {
-          "code": "ICGC",
-          "key": "ICGC",
-          "value": "ICGC",
-          "displayText": "INDUSTRIAL & CONSUMER GAS & CNG"
-        },
-        {
-          "code": "IT",
-          "key": "IT",
-          "value": "IT",
-          "displayText": "INVESTMENT & TRUSTS"
-        },
-        {
-          "code": "IC",
-          "key": "IC",
-          "value": "IC",
-          "displayText": "INVESTMENT COMPANIES"
-        },
-        {
-          "code": "OA",
-          "key": "OA",
-          "value": "OA",
-          "displayText": "OTHER ACTIVITIES"
-        },
-        {
-          "code": "OBCW",
-          "key": "OBCW",
-          "value": "OBCW",
-          "displayText": "OTHER BUILDING CONTRACTING WORKS"
-        },
-        {
-          "code": "OC",
-          "key": "OC",
-          "value": "OC",
-          "displayText": "OTHER CONSTRUCTION"
-        },
-        {
-          "code": "OL",
-          "key": "OL",
-          "value": "OL",
-          "displayText": "OTHER LIVESTOCK"
-        },
-        {
-          "code": "OTH",
-          "key": "OTH",
-          "value": "OTH",
-          "displayText": "OTHERS"
-        },
-        {
-          "code": "PF",
-          "key": "PF",
-          "value": "PF",
-          "displayText": "POULTRY FARMING"
-        },
-        {
-          "code": "RE",
-          "key": "RE",
-          "value": "RE",
-          "displayText": "REAL ESTATE"
-        },
-        {
-          "code": "RS",
-          "key": "RS",
-          "value": "RS",
-          "displayText": "ROADS & STREETS"
-        },
-        {
-          "code": "SHP",
-          "key": "SHP",
-          "value": "SHP",
-          "displayText": "SHEEP"
-        },
-        {
-          "code": "WSGP",
-          "key": "WSGP",
-          "value": "WSGP",
-          "displayText": "WATER & SEWERS &GAS PIPELINES"
-        },
-        {
-          "code": "WPIB",
-          "key": "WPIB",
-          "value": "WPIB",
-          "displayText": "WATER PRODUCTION INCLUDING BOTTLED WATER"
-        }
-      ]
-    },
-    {
-      "code": "AB",
-      "key": "AB",
-      "value": "AB",
-      "displayText": "ALCHOHOLIC BEVERAGES",
-      "subGroup": [
-        {
-          "code": "AGA",
-          "key": "AGA",
-          "value": "AGA",
-          "displayText": "AGRICULTURE & ALLIED ACTIVITIES"
-        },
-        {
-          "code": "AB",
-          "key": "AB",
-          "value": "AB",
-          "displayText": "ALCHOHOLIC BEVERAGES"
-        },
-        {
-          "code": "BS",
-          "key": "BS",
-          "value": "BS",
-          "displayText": "BROKERS & SERVICES"
-        },
-        {
-          "code": "CTL",
-          "key": "CTL",
-          "value": "CTL",
-          "displayText": "CATTLE"
-        },
-        {
-          "code": "CW",
-          "key": "CW",
-          "value": "CW",
-          "displayText": "CIVIL WORK"
-        },
-        {
-          "code": "CNT",
-          "key": "CNT",
-          "value": "CNT",
-          "displayText": "CONSTRUCTION"
-        },
-        {
-          "code": "COC",
-          "key": "COC",
-          "value": "COC",
-          "displayText": "CULTIVATION OF CROPS"
-        },
-        {
-          "code": "DLG",
-          "key": "DLG",
-          "value": "DLG",
-          "displayText": "DEALERS IN LUXURY GOODS"
-        },
-        {
-          "code": "EW",
-          "key": "EW",
-          "value": "EW",
-          "displayText": "ELECTRICAL WORK"
-        },
-        {
-          "code": "EGW",
-          "key": "EGW",
-          "value": "EGW",
-          "displayText": "ELECTRICITY & GAS & WATER"
-        },
-        {
-          "code": "FHT",
-          "key": "FHT",
-          "value": "FHT",
-          "displayText": "FISHING HUNTING TRAPPING"
-        },
-        {
-          "code": "FRT",
-          "key": "FRT",
-          "value": "FRT",
-          "displayText": "FORESTRY"
-        },
-        {
-          "code": "GCC",
-          "key": "GCC",
-          "value": "GCC",
-          "displayText": "GENERAL CONTRACTORS - COMMERCIAL"
-        },
-        {
-          "code": "GCR",
-          "key": "GCR",
-          "value": "GCR",
-          "displayText": "GENERAL CONTRACTORS - RESIDENCIAL"
-        },
-        {
-          "code": "GCRE",
-          "key": "GCRE",
-          "value": "GCRE",
-          "displayText": "GENERAL CONTRACTORS - RETAIL"
-        },
-        {
-          "code": "ICGC",
-          "key": "ICGC",
-          "value": "ICGC",
-          "displayText": "INDUSTRIAL & CONSUMER GAS & CNG"
-        },
-        {
-          "code": "IT",
-          "key": "IT",
-          "value": "IT",
-          "displayText": "INVESTMENT & TRUSTS"
-        },
-        {
-          "code": "IC",
-          "key": "IC",
-          "value": "IC",
-          "displayText": "INVESTMENT COMPANIES"
-        },
-        {
-          "code": "OA",
-          "key": "OA",
-          "value": "OA",
-          "displayText": "OTHER ACTIVITIES"
-        },
-        {
-          "code": "OBCW",
-          "key": "OBCW",
-          "value": "OBCW",
-          "displayText": "OTHER BUILDING CONTRACTING WORKS"
-        },
-        {
-          "code": "OC",
-          "key": "OC",
-          "value": "OC",
-          "displayText": "OTHER CONSTRUCTION"
-        },
-        {
-          "code": "OL",
-          "key": "OL",
-          "value": "OL",
-          "displayText": "OTHER LIVESTOCK"
-        },
-        {
-          "code": "OTH",
-          "key": "OTH",
-          "value": "OTH",
-          "displayText": "OTHERS"
-        },
-        {
-          "code": "PF",
-          "key": "PF",
-          "value": "PF",
-          "displayText": "POULTRY FARMING"
-        },
-        {
-          "code": "RE",
-          "key": "RE",
-          "value": "RE",
-          "displayText": "REAL ESTATE"
-        },
-        {
-          "code": "RS",
-          "key": "RS",
-          "value": "RS",
-          "displayText": "ROADS & STREETS"
-        },
-        {
-          "code": "SHP",
-          "key": "SHP",
-          "value": "SHP",
-          "displayText": "SHEEP"
-        },
-        {
-          "code": "WSGP",
-          "key": "WSGP",
-          "value": "WSGP",
-          "displayText": "WATER & SEWERS &GAS PIPELINES"
-        },
-        {
-          "code": "WPIB",
-          "key": "WPIB",
-          "value": "WPIB",
-          "displayText": "WATER PRODUCTION INCLUDING BOTTLED WATER"
-        }
-      ]
-    },
-    {
-      "code": "MNF",
-      "key": "MNF",
-      "value": "MNF",
-      "displayText": "MANUFACTURING",
+      "code": "FRT",
+      "key": "FRT",
+      "value": "FRT",
+      "displayText": "FORESTRY",
       "subGroup": null
     },
     {
-      "code": "MIN",
-      "key": "MIN",
-      "value": "MIN",
-      "displayText": "MINING",
+      "code": "GCC",
+      "key": "GCC",
+      "value": "GCC",
+      "displayText": "GENERAL CONTRACTORS - COMMERCIAL",
+      "subGroup": null
+    },
+    {
+      "code": "GCR",
+      "key": "GCR",
+      "value": "GCR",
+      "displayText": "GENERAL CONTRACTORS - RESIDENCIAL",
+      "subGroup": null
+    },
+    {
+      "code": "GCRE",
+      "key": "GCRE",
+      "value": "GCRE",
+      "displayText": "GENERAL CONTRACTORS - RETAIL",
+      "subGroup": null
+    },
+    {
+      "code": "ICGC",
+      "key": "ICGC",
+      "value": "ICGC",
+      "displayText": "INDUSTRIAL & CONSUMER GAS & CNG",
+      "subGroup": null
+    },
+    {
+      "code": "IT",
+      "key": "IT",
+      "value": "IT",
+      "displayText": "INVESTMENT & TRUSTS",
+      "subGroup": null
+    },
+    {
+      "code": "IC",
+      "key": "IC",
+      "value": "IC",
+      "displayText": "INVESTMENT COMPANIES",
+      "subGroup": null
+    },
+    {
+      "code": "OA",
+      "key": "OA",
+      "value": "OA",
+      "displayText": "OTHER ACTIVITIES",
+      "subGroup": null
+    },
+    {
+      "code": "OBCW",
+      "key": "OBCW",
+      "value": "OBCW",
+      "displayText": "OTHER BUILDING CONTRACTING WORKS",
+      "subGroup": null
+    },
+    {
+      "code": "OC",
+      "key": "OC",
+      "value": "OC",
+      "displayText": "OTHER CONSTRUCTION",
+      "subGroup": null
+    },
+    {
+      "code": "OL",
+      "key": "OL",
+      "value": "OL",
+      "displayText": "OTHER LIVESTOCK",
+      "subGroup": null
+    },
+    {
+      "code": "OTH",
+      "key": "OTH",
+      "value": "OTH",
+      "displayText": "OTHERS",
+      "subGroup": null
+    },
+    {
+      "code": "PF",
+      "key": "PF",
+      "value": "PF",
+      "displayText": "POULTRY FARMING",
+      "subGroup": null
+    },
+    {
+      "code": "RE",
+      "key": "RE",
+      "value": "RE",
+      "displayText": "REAL ESTATE",
+      "subGroup": null
+    },
+    {
+      "code": "RS",
+      "key": "RS",
+      "value": "RS",
+      "displayText": "ROADS & STREETS",
+      "subGroup": null
+    },
+    {
+      "code": "SHP",
+      "key": "SHP",
+      "value": "SHP",
+      "displayText": "SHEEP",
+      "subGroup": null
+    },
+    {
+      "code": "WSGP",
+      "key": "WSGP",
+      "value": "WSGP",
+      "displayText": "WATER & SEWERS &GAS PIPELINES",
+      "subGroup": null
+    },
+    {
+      "code": "WPIB",
+      "key": "WPIB",
+      "value": "WPIB",
+      "displayText": "WATER PRODUCTION INCLUDING BOTTLED WATER",
+      "subGroup": null
+    }
+  ],
+  "licenseIssuingAuthority": [
+    {
+      "code": "AZ",
+      "key": "AZ",
+      "value": "AZ",
+      "displayText": "AJMAN FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "AA",
+      "key": "AA",
+      "value": "AA",
+      "displayText": "AL AWIR FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "COC",
+      "key": "COC",
+      "value": "COC",
+      "displayText": "CHAMBER OF COMMERCE",
+      "subGroup": null
+    },
+    {
+      "code": "DED",
+      "key": "DED",
+      "value": "DED",
+      "displayText": "DEPARTMENT OF ECONOMIC DEVELOPMENT",
+      "subGroup": null
+    },
+    {
+      "code": "DNRD",
+      "key": "DNRD",
+      "value": "DNRD",
+      "displayText": "DEPARTMENT OF NATURALISATION AND RESIDENCY DUBAI",
+      "subGroup": null
+    },
+    {
+      "code": "DA",
+      "key": "DA",
+      "value": "DA",
+      "displayText": "DUBAI AIRPORT FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "DV",
+      "key": "DV",
+      "value": "DV",
+      "displayText": "DUBAI AVIATION CITY",
+      "subGroup": null
+    },
+    {
+      "code": "DCCA",
+      "key": "DCCA",
+      "value": "DCCA",
+      "displayText": "DUBAI CREATIVE CLUSTERS AUTHORITY",
+      "subGroup": null
+    },
+    {
+      "code": "DC",
+      "key": "DC",
+      "value": "DC",
+      "displayText": "DUBAI HEALTH CARE CITY(DHCC)",
+      "subGroup": null
+    },
+    {
+      "code": "DH",
+      "key": "DH",
+      "value": "DH",
+      "displayText": "DUBAI HUMANITARIAN CITY",
+      "subGroup": null
+    },
+    {
+      "code": "DI",
+      "key": "DI",
+      "value": "DI",
+      "displayText": "DUBAI INTERNET CITY",
+      "subGroup": null
+    },
+    {
+      "code": "DF",
+      "key": "DF",
+      "value": "DF",
+      "displayText": "DUBAI INTL. FINANCIAL CENTRE",
+      "subGroup": null
+    },
+    {
+      "code": "DM",
+      "key": "DM",
+      "value": "DM",
+      "displayText": "DUBAI MEDIA CITY",
+      "subGroup": null
+    },
+    {
+      "code": "SO",
+      "key": "SO",
+      "value": "SO",
+      "displayText": "DUBAI SILICON OASIS FZ",
+      "subGroup": null
+    },
+    {
+      "code": "DUCAMZ",
+      "key": "DUCAMZ",
+      "value": "DUCAMZ",
+      "displayText": "DUCAMZ",
+      "subGroup": null
+    },
+    {
+      "code": "DG",
+      "key": "DG",
+      "value": "DG",
+      "displayText": "DXB METAL & COMMODITIES CENTRE",
+      "subGroup": null
+    },
+    {
+      "code": "EIDA",
+      "key": "EIDA",
+      "value": "EIDA",
+      "displayText": "EMIRATES ID AUTHORITY",
+      "subGroup": null
+    },
+    {
+      "code": "FZ",
+      "key": "FZ",
+      "value": "FZ",
+      "displayText": "FUJAIRAH FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "GD",
+      "key": "GD",
+      "value": "GD",
+      "displayText": "GOLD AND DIAMOND PARK",
+      "subGroup": null
+    },
+    {
+      "code": "RAV",
+      "key": "RAV",
+      "value": "RAV",
+      "displayText": "GOVT OF RAK - DEPARTMENT OF CIVIL AVIATION",
+      "subGroup": null
+    },
+    {
+      "code": "UZ",
+      "key": "UZ",
+      "value": "UZ",
+      "displayText": "GOVT. OF UAQ FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "HZ",
+      "key": "HZ",
+      "value": "HZ",
+      "displayText": "HAMRIYA FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "JA",
+      "key": "JA",
+      "value": "JA",
+      "displayText": "JEBEL ALI FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "JL",
+      "key": "JL",
+      "value": "JL",
+      "displayText": "JUMEIRAH LAKE TOWERS",
+      "subGroup": null
+    },
+    {
+      "code": "KV",
+      "key": "KV",
+      "value": "KV",
+      "displayText": "KNOWLEDGE VILLAGE",
+      "subGroup": null
+    },
+    {
+      "code": "OS",
+      "key": "OS",
+      "value": "OS",
+      "displayText": "OVERSEAS",
+      "subGroup": null
+    },
+    {
+      "code": "RA",
+      "key": "RA",
+      "value": "RA",
+      "displayText": "RAK AIRPORT FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "RZ",
+      "key": "RZ",
+      "value": "RZ",
+      "displayText": "RAK FREE ZONE",
+      "subGroup": null
+    },
+    {
+      "code": "RI",
+      "key": "RI",
+      "value": "RI",
+      "displayText": "RAK INVESTMENT AUTHORITY",
+      "subGroup": null
+    },
+    {
+      "code": "RK",
+      "key": "RK",
+      "value": "RK",
+      "displayText": "RAK KNOWLEDGE VILLAGE",
       "subGroup": null
     },
     {
       "code": "RT",
       "key": "RT",
       "value": "RT",
-      "displayText": "RETAIL TRADING",
+      "displayText": "RAK TRADE ZONE",
       "subGroup": null
     },
     {
-      "code": "SRV",
-      "key": "SRV",
-      "value": "SRV",
-      "displayText": "SERVICES",
+      "code": "SAIFZ",
+      "key": "SAIFZ",
+      "value": "SAIFZ",
+      "displayText": "SAIF ZONE",
       "subGroup": null
     },
     {
-      "code": "TRN",
-      "key": "TRN",
-      "value": "TRN",
-      "displayText": "TRANSPORT",
+      "code": "SZ",
+      "key": "SZ",
+      "value": "SZ",
+      "displayText": "SHARJAH FREE ZONE",
       "subGroup": null
     },
     {
-      "code": "WT",
-      "key": "WT",
-      "value": "WT",
-      "displayText": "WHOLESALE TRADING",
+      "code": "TP",
+      "key": "TP",
+      "value": "TP",
+      "displayText": "TECHNO PARK",
       "subGroup": null
-    }
-  ],
-  "emirate": [
-    {
-      "code": "AD",
-      "key": "AD",
-      "value": "AD",
-      "displayText": "Abu Dhabi"
     },
     {
-      "code": "A",
-      "key": "A",
-      "value": "A",
-      "displayText": "Ajman"
+      "code": "TZ",
+      "key": "TZ",
+      "value": "TZ",
+      "displayText": "TRAKHEES-PORTS,CUSTOMS&FREEZON",
+      "subGroup": null
     },
     {
-      "code": "AA",
-      "key": "AA",
-      "value": "AA",
-      "displayText": "Al Ain"
-    },
-    {
-      "code": "Dubai",
-      "key": "Dubai",
-      "value": "Dubai",
-      "displayText": "Dubai"
-    },
-    {
-      "code": "F",
-      "key": "F",
-      "value": "F",
-      "displayText": "Fujairah"
-    },
-    {
-      "code": "K",
-      "key": "K",
-      "value": "K",
-      "displayText": "Kalba"
-    },
-    {
-      "code": "KH",
-      "key": "KH",
-      "value": "KH",
-      "displayText": "Khorfakkan"
-    },
-    {
-      "code": "RK",
-      "key": "RK",
-      "value": "RK",
-      "displayText": "Ras Al Khaimah"
-    },
-    {
-      "code": "SH",
-      "key": "SH",
-      "value": "SH",
-      "displayText": "Sharjah"
-    },
-    {
-      "code": "U",
-      "key": "U",
-      "value": "U",
-      "displayText": "Umm Al Quwain"
-    }
-  ],
-  "gender": [
-    {
-      "code": "Mr.",
-      "key": "Mr.",
-      "value": "Mr.",
-      "label": "Mr."
-    },
-    {
-      "code": "Mrs.",
-      "key": "Mrs.",
-      "value": "Mrs.",
-      "label": "Mrs."
-    },
-    {
-      "code": "Ms.",
-      "key": "Ms.",
-      "value": "Ms.",
-      "label": "Ms."
-    }
-  ],
-  "maritalStatus": [
-    {
-      "code": "M",
-      "key": "M",
-      "value": "M",
-      "displayText": "Married"
-    },
-    {
-      "code": "S",
-      "key": "S",
-      "value": "S",
-      "displayText": "Single"
-    },
-    {
-      "code": "O",
-      "key": "O",
-      "value": "O",
-      "displayText": "Others"
-    }
-  ],
-  "nationality": [
-    {
-      "code": "AE",
-      "key": "AE",
-      "value": "AE",
-      "displayText": "United Arab Emirates"
-    },
-    {
-      "code": "SP",
-      "key": "SP",
-      "value": "SP",
-      "displayText": "Spain"
-    },
-    {
-      "code": "ITA",
-      "key": "ITA",
-      "value": "ITA",
-      "displayText": "Italy"
-    },
-    {
-      "code": "USA",
-      "key": "USA",
-      "value": "USA",
-      "displayText": "USA"
-    }
-  ],
-  "qualification": [
-    {
-      "code": "UG",
-      "key": "UG",
-      "value": "UG",
-      "displayText": "Under Graduate"
-    },
-    {
-      "code": "G",
-      "key": "G",
-      "value": "G",
-      "displayText": "Graduate"
-    },
-    {
-      "code": "PG",
-      "key": "PG",
-      "value": "PG",
-      "displayText": "Post Graduate"
-    }
-  ],
-  "wealthType": [
-    {
-      "code": "3",
-      "key": "3",
-      "value": "3",
-      "displayText": "Family Funds"
-    },
-    {
-      "code": "4",
-      "key": "4",
-      "value": "4",
-      "displayText": "Other (Please Specify)"
-    },
-    {
-      "code": "1",
-      "key": "1",
-      "value": "1",
-      "displayText": "Personal Saving"
-    },
-    {
-      "code": "2",
-      "key": "2",
-      "value": "2",
-      "displayText": "Profit from other Business"
-    }
-  ],
-  "employmentType": [
-    {
-      "code": "S",
-      "key": "S",
-      "value": "S",
-      "displayText": "Salaried"
-    },
-    {
-      "code": "SE",
-      "key": "SE",
-      "value": "SE",
-      "displayText": "Self-Employed"
-    },
-    {
-      "code": "H",
-      "key": "H",
-      "value": "H",
-      "displayText": "Housewife"
-    },
-    {
-      "code": "Other",
-      "key": "Other",
-      "value": "Other",
-      "displayText": "Other"
-    }
-  ],
-  "authorityType": [
-    {
-      "code": "Sole proprietor",
-      "key": "Sole proprietor",
-      "value": "Sole proprietor",
-      "label": "Sole proprietor"
-    },
-    {
-      "code": "Power of Attorney",
-      "key": "Power of Attorney",
-      "value": "Power of Attorney",
-      "label": "Power of Attorney"
-    },
-    {
-      "code": "Partnership Agreement",
-      "key": "Partnership Agreement",
-      "value": "Partnership Agreement",
-      "label": "Partnership Agreement"
-    },
-    {
-      "code": "Memorandum/Articles of Association",
-      "key": "Memorandum/Articles of Association",
-      "value": "Memorandum/Articles of Association",
-      "label": "Memorandum/Articles of Association"
-    },
-    {
-      "code": "Board Resolution",
-      "key": "Board Resolution",
-      "value": "Board Resolution",
-      "label": "Board Resolution"
-    },
-    {
-      "code": "Shareholder Resolution",
-      "key": "Shareholder Resolution",
-      "value": "Shareholder Resolution",
-      "label": "Shareholder Resolution"
-    },
-    {
-      "code": "Legal Guardian (For minor)",
-      "key": "Legal Guardian (For minor)",
-      "value": "Legal Guardian (For minor)",
-      "label": "Legal Guardian (For minor)"
-    },
-    {
-      "code": "Legal Heir / Successor",
-      "key": "Legal Heir / Successor",
-      "value": "Legal Heir / Successor",
-      "label": "Legal Heir / Successor"
-    },
-    {
-      "code": "Court Appointed Arbitrator",
-      "key": "Court Appointed Arbitrator",
-      "value": "Court Appointed Arbitrator",
-      "label": "Court Appointed Arbitrator"
+      "code": "ZC",
+      "key": "ZC",
+      "value": "ZC",
+      "displayText": "ZONES CORP",
+      "subGroup": null
     }
   ],
   "salutation": [
@@ -3703,6 +5852,2591 @@
       "value": "MS.",
       "displayText": "MS.",
       "subGroup": null
+    }
+  ],
+  "authorityType": [
+    {
+      "code": "5",
+      "key": "5",
+      "value": "5",
+      "displayText": "Board Resolution",
+      "subGroup": null
+    },
+    {
+      "code": "9",
+      "key": "9",
+      "value": "9",
+      "displayText": "Court Appointed Arbitrator",
+      "subGroup": null
+    },
+    {
+      "code": "7",
+      "key": "7",
+      "value": "7",
+      "displayText": "Legal Guardian (For minor)",
+      "subGroup": null
+    },
+    {
+      "code": "8",
+      "key": "8",
+      "value": "8",
+      "displayText": "Legal Heir / Successor",
+      "subGroup": null
+    },
+    {
+      "code": "4",
+      "key": "4",
+      "value": "4",
+      "displayText": "Memorandum/Articles of Association",
+      "subGroup": null
+    },
+    {
+      "code": "3",
+      "key": "3",
+      "value": "3",
+      "displayText": "Partnership Agreement",
+      "subGroup": null
+    },
+    {
+      "code": "2",
+      "key": "2",
+      "value": "2",
+      "displayText": "Power of Attorney",
+      "subGroup": null
+    },
+    {
+      "code": "6",
+      "key": "6",
+      "value": "6",
+      "displayText": "Shareholder Resolution",
+      "subGroup": null
+    },
+    {
+      "code": "1",
+      "key": "1",
+      "value": "1",
+      "displayText": "Sole proprietor",
+      "subGroup": null
+    }
+  ],
+  "accountCurrencies": [
+    {
+      "code": "EUR",
+      "key": "EUR",
+      "value": "EUR",
+      "displayText": "EURO",
+      "subGroup": null
+    },
+    {
+      "code": "GBP",
+      "key": "GBP",
+      "value": "GBP",
+      "displayText": "POUND STERLING",
+      "subGroup": null
+    },
+    {
+      "code": "AED",
+      "key": "AED",
+      "value": "AED",
+      "displayText": "UAE DIRHAM",
+      "subGroup": null
+    },
+    {
+      "code": "USD",
+      "key": "USD",
+      "value": "USD",
+      "displayText": "US DOLLAR",
+      "subGroup": null
+    }
+  ],
+  "branchCity": [
+    {
+      "code": "1",
+      "key": "1",
+      "value": "1",
+      "displayText": "Abu Dhabi",
+      "subGroup": [
+        {
+          "code": "054",
+          "key": "054",
+          "value": "054",
+          "displayText": "Al Jazira Branch"
+        },
+        {
+          "code": "030",
+          "key": "030",
+          "value": "030",
+          "displayText": "Khalidiya Branch"
+        },
+        {
+          "code": "039",
+          "key": "039",
+          "value": "039",
+          "displayText": "Mussafah Branch"
+        },
+        {
+          "code": "004",
+          "key": "004",
+          "value": "004",
+          "displayText": "Tourist Club Branch"
+        }
+      ]
+    },
+    {
+      "code": "2",
+      "key": "2",
+      "value": "2",
+      "displayText": "Ajman",
+      "subGroup": [
+        {
+          "code": "019",
+          "key": "019",
+          "value": "019",
+          "displayText": "Ajman Branch"
+        }
+      ]
+    },
+    {
+      "code": "3",
+      "key": "3",
+      "value": "3",
+      "displayText": "Al Ain",
+      "subGroup": [
+        {
+          "code": "014",
+          "key": "014",
+          "value": "014",
+          "displayText": "Al Ain Branch"
+        }
+      ]
+    },
+    {
+      "code": "4",
+      "key": "4",
+      "value": "4",
+      "displayText": "Dubai",
+      "subGroup": [
+        {
+          "code": "055",
+          "key": "055",
+          "value": "055",
+          "displayText": "Al Quoz Branch"
+        },
+        {
+          "code": "035",
+          "key": "035",
+          "value": "035",
+          "displayText": "Al Quoz Industrial Branch"
+        },
+        {
+          "code": "037",
+          "key": "037",
+          "value": "037",
+          "displayText": "Al Qusais Branch"
+        },
+        {
+          "code": "059",
+          "key": "059",
+          "value": "059",
+          "displayText": "Al Ras Branch"
+        },
+        {
+          "code": "003",
+          "key": "003",
+          "value": "003",
+          "displayText": "Deira Maktoum Branch"
+        },
+        {
+          "code": "025",
+          "key": "025",
+          "value": "025",
+          "displayText": "Deira Souk Branch"
+        },
+        {
+          "code": "088",
+          "key": "088",
+          "value": "088",
+          "displayText": "Dragon Mart 1, Branch"
+        },
+        {
+          "code": "064",
+          "key": "064",
+          "value": "064",
+          "displayText": "Dubai Investment Park Branch"
+        },
+        {
+          "code": "032",
+          "key": "032",
+          "value": "032",
+          "displayText": "Emmar Branch"
+        },
+        {
+          "code": "029",
+          "key": "029",
+          "value": "029",
+          "displayText": "IBN Battutta Branch"
+        },
+        {
+          "code": "066",
+          "key": "066",
+          "value": "066",
+          "displayText": "JAFZA Branch"
+        },
+        {
+          "code": "034",
+          "key": "034",
+          "value": "034",
+          "displayText": "Marina Diamond Branch"
+        },
+        {
+          "code": "038",
+          "key": "038",
+          "value": "038",
+          "displayText": "Mirdif Branch"
+        },
+        {
+          "code": "018",
+          "key": "018",
+          "value": "018",
+          "displayText": "Oudh Metha Branch"
+        },
+        {
+          "code": "012",
+          "key": "012",
+          "value": "012",
+          "displayText": "Sheikh Zayed Road Branch"
+        },
+        {
+          "code": "033",
+          "key": "033",
+          "value": "033",
+          "displayText": "Umm Hurair Branch"
+        }
+      ]
+    },
+    {
+      "code": "5",
+      "key": "5",
+      "value": "5",
+      "displayText": "Fujairah",
+      "subGroup": [
+        {
+          "code": "058",
+          "key": "058",
+          "value": "058",
+          "displayText": "Fujairah Branch"
+        }
+      ]
+    },
+    {
+      "code": "6",
+      "key": "6",
+      "value": "6",
+      "displayText": "Kalba",
+      "subGroup": [
+        {
+          "code": "007",
+          "key": "007",
+          "value": "007",
+          "displayText": "Kalba Branch"
+        }
+      ]
+    },
+    {
+      "code": "7",
+      "key": "7",
+      "value": "7",
+      "displayText": "Khorfakkan",
+      "subGroup": [
+        {
+          "code": "028",
+          "key": "028",
+          "value": "028",
+          "displayText": "Khorfakkan Branch"
+        }
+      ]
+    },
+    {
+      "code": "8",
+      "key": "8",
+      "value": "8",
+      "displayText": "Ras Al Khaimah",
+      "subGroup": [
+        {
+          "code": "031",
+          "key": "031",
+          "value": "031",
+          "displayText": "Al Dhait Branch"
+        },
+        {
+          "code": "065",
+          "key": "065",
+          "value": "065",
+          "displayText": "Al Hamra Branch"
+        },
+        {
+          "code": "008",
+          "key": "008",
+          "value": "008",
+          "displayText": "Al Kharan Branch"
+        },
+        {
+          "code": "005",
+          "key": "005",
+          "value": "005",
+          "displayText": "Al Madinah Branch"
+        },
+        {
+          "code": "016",
+          "key": "016",
+          "value": "016",
+          "displayText": "Al Mannai Branch"
+        },
+        {
+          "code": "002",
+          "key": "002",
+          "value": "002",
+          "displayText": "Nakheel Branch"
+        },
+        {
+          "code": "011",
+          "key": "011",
+          "value": "011",
+          "displayText": "RAMS Branch"
+        },
+        {
+          "code": "006",
+          "key": "006",
+          "value": "006",
+          "displayText": "Shaam Branch"
+        }
+      ]
+    },
+    {
+      "code": "9",
+      "key": "9",
+      "value": "9",
+      "displayText": "Sharjah",
+      "subGroup": [
+        {
+          "code": "024",
+          "key": "024",
+          "value": "024",
+          "displayText": "King Faisal Branch"
+        },
+        {
+          "code": "057",
+          "key": "057",
+          "value": "057",
+          "displayText": "Rolla Branch"
+        },
+        {
+          "code": "036",
+          "key": "036",
+          "value": "036",
+          "displayText": "Sharjah Industrial Branch"
+        }
+      ]
+    }
+  ],
+  "branchID": [
+    {
+      "code": "002",
+      "key": "002",
+      "value": "002",
+      "displayText": "AL NAKHEEL BRANCH",
+      "subGroup": null
+    },
+    {
+      "code": "001",
+      "key": "001",
+      "value": "001",
+      "displayText": "BRANCH ID 001",
+      "subGroup": null
+    },
+    {
+      "code": "003B",
+      "key": "003B",
+      "value": "003B",
+      "displayText": "BRANCH ID 003B",
+      "subGroup": null
+    }
+  ],
+  "constitutionType": [
+    {
+      "code": "ACT",
+      "key": "ACT",
+      "value": "ACT",
+      "displayText": "ACTIVE CONSENT STATUS",
+      "subGroup": null
+    },
+    {
+      "code": "EXP",
+      "key": "EXP",
+      "value": "EXP",
+      "displayText": "EXPIRED CONSENT STATUS",
+      "subGroup": null
+    },
+    {
+      "code": "INP",
+      "key": "INP",
+      "value": "INP",
+      "displayText": "IN_PROGRESS CONSENT STATUS",
+      "subGroup": null
+    },
+    {
+      "code": "REV",
+      "key": "REV",
+      "value": "REV",
+      "displayText": "REVOKED CONSENT STATUS",
+      "subGroup": null
+    },
+    {
+      "code": "SUS",
+      "key": "SUS",
+      "value": "SUS",
+      "displayText": "SUSPENDED CONSENT STATUS",
+      "subGroup": null
+    }
+  ],
+  "emirate": [
+    {
+      "code": "AUH",
+      "key": "AUH",
+      "value": "AUH",
+      "displayText": "Abu Dhabi",
+      "subGroup": null
+    },
+    {
+      "code": "AJM",
+      "key": "AJM",
+      "value": "AJM",
+      "displayText": "Ajman",
+      "subGroup": null
+    },
+    {
+      "code": "AAN",
+      "key": "AAN",
+      "value": "AAN",
+      "displayText": "Al Ain",
+      "subGroup": null
+    },
+    {
+      "code": "DXB",
+      "key": "DXB",
+      "value": "DXB",
+      "displayText": "Dubai",
+      "subGroup": null
+    },
+    {
+      "code": "FUH",
+      "key": "FUH",
+      "value": "FUH",
+      "displayText": "Fujairah",
+      "subGroup": null
+    },
+    {
+      "code": "KAL",
+      "key": "KAL",
+      "value": "KAL",
+      "displayText": "Kalba",
+      "subGroup": null
+    },
+    {
+      "code": "KKS",
+      "key": "KKS",
+      "value": "KKS",
+      "displayText": "Khorfakkan",
+      "subGroup": null
+    },
+    {
+      "code": "RAK",
+      "key": "RAK",
+      "value": "RAK",
+      "displayText": "Ras Al Khaimah",
+      "subGroup": null
+    },
+    {
+      "code": "SHJ",
+      "key": "SHJ",
+      "value": "SHJ",
+      "displayText": "Sharjah",
+      "subGroup": null
+    }
+  ],
+  "gender": [
+    {
+      "code": "F",
+      "key": "F",
+      "value": "F",
+      "displayText": "Female",
+      "subGroup": null
+    },
+    {
+      "code": "M",
+      "key": "M",
+      "value": "M",
+      "displayText": "Male",
+      "subGroup": null
+    },
+    {
+      "code": "O",
+      "key": "O",
+      "value": "O",
+      "displayText": "Others",
+      "subGroup": null
+    }
+  ],
+  "maritalStatus": [
+    {
+      "code": "M",
+      "key": "M",
+      "value": "M",
+      "displayText": "MARRIED",
+      "subGroup": null
+    },
+    {
+      "code": "O",
+      "key": "O",
+      "value": "O",
+      "displayText": "OTHERS",
+      "subGroup": null
+    },
+    {
+      "code": "S",
+      "key": "S",
+      "value": "S",
+      "displayText": "SINGLE",
+      "subGroup": null
+    }
+  ],
+  "qualification": [
+    {
+      "code": "2",
+      "key": "2",
+      "value": "2",
+      "displayText": "GRADUATE",
+      "subGroup": null
+    },
+    {
+      "code": "3",
+      "key": "3",
+      "value": "3",
+      "displayText": "POST GRADUATE",
+      "subGroup": null
+    },
+    {
+      "code": "1",
+      "key": "1",
+      "value": "1",
+      "displayText": "UNDER GRADUATE",
+      "subGroup": null
+    }
+  ],
+  "wealthType": [
+    {
+      "code": "3",
+      "key": "3",
+      "value": "3",
+      "displayText": "Family Funds",
+      "subGroup": null
+    },
+    {
+      "code": "4",
+      "key": "4",
+      "value": "4",
+      "displayText": "Others (Please Specify)",
+      "subGroup": null
+    },
+    {
+      "code": "1",
+      "key": "1",
+      "value": "1",
+      "displayText": "Personal Saving",
+      "subGroup": null
+    },
+    {
+      "code": "2",
+      "key": "2",
+      "value": "2",
+      "displayText": "Profit from other Business",
+      "subGroup": null
+    }
+  ],
+  "employmentType": [
+    {
+      "code": "Housewife",
+      "key": "Housewife",
+      "value": "Housewife",
+      "displayText": "HOUSEWIFE",
+      "subGroup": null
+    },
+    {
+      "code": "Other",
+      "key": "Other",
+      "value": "Other",
+      "displayText": "OTHER",
+      "subGroup": null
+    },
+    {
+      "code": "Salaried",
+      "key": "Salaried",
+      "value": "Salaried",
+      "displayText": "SALARIED",
+      "subGroup": null
+    },
+    {
+      "code": "SelfEmployed",
+      "key": "SelfEmployed",
+      "value": "SelfEmployed",
+      "displayText": "SELF EMPLOYED",
+      "subGroup": null
+    }
+  ],
+  "emirateCity": [
+    {
+      "code": "AUH",
+      "key": "AUH",
+      "value": "AUH",
+      "displayText": "Abu Dhabi",
+      "subGroup": null
+    },
+    {
+      "code": "AJM",
+      "key": "AJM",
+      "value": "AJM",
+      "displayText": "Ajman",
+      "subGroup": null
+    },
+    {
+      "code": "AAN",
+      "key": "AAN",
+      "value": "AAN",
+      "displayText": "Al Ain",
+      "subGroup": null
+    },
+    {
+      "code": "DXB",
+      "key": "DXB",
+      "value": "DXB",
+      "displayText": "Dubai",
+      "subGroup": null
+    },
+    {
+      "code": "FUH",
+      "key": "FUH",
+      "value": "FUH",
+      "displayText": "Fujairah",
+      "subGroup": null
+    },
+    {
+      "code": "KAL",
+      "key": "KAL",
+      "value": "KAL",
+      "displayText": "Kalba",
+      "subGroup": null
+    },
+    {
+      "code": "KKS",
+      "key": "KKS",
+      "value": "KKS",
+      "displayText": "Khorfakkan",
+      "subGroup": null
+    },
+    {
+      "code": "RAK",
+      "key": "RAK",
+      "value": "RAK",
+      "displayText": "Ras Al Khaimah",
+      "subGroup": null
+    },
+    {
+      "code": "SHJ",
+      "key": "SHJ",
+      "value": "SHJ",
+      "displayText": "Sharjah",
+      "subGroup": null
+    },
+    {
+      "code": "UAQ",
+      "key": "UAQ",
+      "value": "UAQ",
+      "displayText": "Umm Al Quwain",
+      "subGroup": null
+    }
+  ],
+  "designation": [
+    {
+      "code": "C1",
+      "key": "C1",
+      "value": "C1",
+      "displayText": "CEO",
+      "subGroup": null
+    },
+    {
+      "code": "CW1",
+      "key": "CW1",
+      "value": "CW1",
+      "displayText": "CONSTRUCTION WORKER",
+      "subGroup": null
+    },
+    {
+      "code": "D1",
+      "key": "D1",
+      "value": "D1",
+      "displayText": "DOCTOR",
+      "subGroup": null
+    },
+    {
+      "code": "E1",
+      "key": "E1",
+      "value": "E1",
+      "displayText": "ENGINEER",
+      "subGroup": null
+    },
+    {
+      "code": "T1",
+      "key": "T1",
+      "value": "T1",
+      "displayText": "TEACHER",
+      "subGroup": null
+    }
+  ],
+  "country": [
+    {
+      "code": "AF",
+      "key": "AF",
+      "value": "AF",
+      "displayText": "Afghanistan",
+      "subGroup": null
+    },
+    {
+      "code": "AX",
+      "key": "AX",
+      "value": "AX",
+      "displayText": "Alan Islands",
+      "subGroup": null
+    },
+    {
+      "code": "AL",
+      "key": "AL",
+      "value": "AL",
+      "displayText": "Albania",
+      "subGroup": null
+    },
+    {
+      "code": "DZ",
+      "key": "DZ",
+      "value": "DZ",
+      "displayText": "Algeria",
+      "subGroup": null
+    },
+    {
+      "code": "AS",
+      "key": "AS",
+      "value": "AS",
+      "displayText": "American Samoa",
+      "subGroup": null
+    },
+    {
+      "code": "AD",
+      "key": "AD",
+      "value": "AD",
+      "displayText": "Andorra",
+      "subGroup": null
+    },
+    {
+      "code": "AO",
+      "key": "AO",
+      "value": "AO",
+      "displayText": "Angola",
+      "subGroup": null
+    },
+    {
+      "code": "AI",
+      "key": "AI",
+      "value": "AI",
+      "displayText": "Anguilla",
+      "subGroup": null
+    },
+    {
+      "code": "AQ",
+      "key": "AQ",
+      "value": "AQ",
+      "displayText": "Antartica",
+      "subGroup": null
+    },
+    {
+      "code": "AG",
+      "key": "AG",
+      "value": "AG",
+      "displayText": "Antigua and Barbuda",
+      "subGroup": null
+    },
+    {
+      "code": "AR",
+      "key": "AR",
+      "value": "AR",
+      "displayText": "Argentina",
+      "subGroup": null
+    },
+    {
+      "code": "AM",
+      "key": "AM",
+      "value": "AM",
+      "displayText": "Armenia",
+      "subGroup": null
+    },
+    {
+      "code": "AW",
+      "key": "AW",
+      "value": "AW",
+      "displayText": "Aruba",
+      "subGroup": null
+    },
+    {
+      "code": "AU",
+      "key": "AU",
+      "value": "AU",
+      "displayText": "Australia",
+      "subGroup": null
+    },
+    {
+      "code": "AT",
+      "key": "AT",
+      "value": "AT",
+      "displayText": "Austria",
+      "subGroup": null
+    },
+    {
+      "code": "AZ",
+      "key": "AZ",
+      "value": "AZ",
+      "displayText": "Azerbaijan",
+      "subGroup": null
+    },
+    {
+      "code": "BS",
+      "key": "BS",
+      "value": "BS",
+      "displayText": "Bahamas",
+      "subGroup": null
+    },
+    {
+      "code": "BH",
+      "key": "BH",
+      "value": "BH",
+      "displayText": "Bahrain",
+      "subGroup": null
+    },
+    {
+      "code": "BD",
+      "key": "BD",
+      "value": "BD",
+      "displayText": "Bangladesh",
+      "subGroup": null
+    },
+    {
+      "code": "BB",
+      "key": "BB",
+      "value": "BB",
+      "displayText": "Barbados",
+      "subGroup": null
+    },
+    {
+      "code": "BY",
+      "key": "BY",
+      "value": "BY",
+      "displayText": "Belarus",
+      "subGroup": null
+    },
+    {
+      "code": "BE",
+      "key": "BE",
+      "value": "BE",
+      "displayText": "Belgium",
+      "subGroup": null
+    },
+    {
+      "code": "BZ",
+      "key": "BZ",
+      "value": "BZ",
+      "displayText": "Belize",
+      "subGroup": null
+    },
+    {
+      "code": "BJ",
+      "key": "BJ",
+      "value": "BJ",
+      "displayText": "Benin",
+      "subGroup": null
+    },
+    {
+      "code": "BM",
+      "key": "BM",
+      "value": "BM",
+      "displayText": "Bermuda",
+      "subGroup": null
+    },
+    {
+      "code": "BT",
+      "key": "BT",
+      "value": "BT",
+      "displayText": "Bhutan",
+      "subGroup": null
+    },
+    {
+      "code": "BO",
+      "key": "BO",
+      "value": "BO",
+      "displayText": "Bolivia",
+      "subGroup": null
+    },
+    {
+      "code": "BA",
+      "key": "BA",
+      "value": "BA",
+      "displayText": "Bosnia-Herzegovina",
+      "subGroup": null
+    },
+    {
+      "code": "BW",
+      "key": "BW",
+      "value": "BW",
+      "displayText": "Botswana",
+      "subGroup": null
+    },
+    {
+      "code": "BV",
+      "key": "BV",
+      "value": "BV",
+      "displayText": "Bouvet Island",
+      "subGroup": null
+    },
+    {
+      "code": "BR",
+      "key": "BR",
+      "value": "BR",
+      "displayText": "Brazil",
+      "subGroup": null
+    },
+    {
+      "code": "IO",
+      "key": "IO",
+      "value": "IO",
+      "displayText": "British Indian Oc Te",
+      "subGroup": null
+    },
+    {
+      "code": "BN",
+      "key": "BN",
+      "value": "BN",
+      "displayText": "Brunei Darussalam",
+      "subGroup": null
+    },
+    {
+      "code": "BG",
+      "key": "BG",
+      "value": "BG",
+      "displayText": "Bulgaria",
+      "subGroup": null
+    },
+    {
+      "code": "BF",
+      "key": "BF",
+      "value": "BF",
+      "displayText": "Burkina Fasso",
+      "subGroup": null
+    },
+    {
+      "code": "BI",
+      "key": "BI",
+      "value": "BI",
+      "displayText": "Burundi",
+      "subGroup": null
+    },
+    {
+      "code": "KH",
+      "key": "KH",
+      "value": "KH",
+      "displayText": "Cambodia",
+      "subGroup": null
+    },
+    {
+      "code": "CM",
+      "key": "CM",
+      "value": "CM",
+      "displayText": "Cameroon",
+      "subGroup": null
+    },
+    {
+      "code": "CA",
+      "key": "CA",
+      "value": "CA",
+      "displayText": "Canada",
+      "subGroup": null
+    },
+    {
+      "code": "CV",
+      "key": "CV",
+      "value": "CV",
+      "displayText": "Cape Verde",
+      "subGroup": null
+    },
+    {
+      "code": "KY",
+      "key": "KY",
+      "value": "KY",
+      "displayText": "Cayman Islands",
+      "subGroup": null
+    },
+    {
+      "code": "CF",
+      "key": "CF",
+      "value": "CF",
+      "displayText": "Central African Rep",
+      "subGroup": null
+    },
+    {
+      "code": "TD",
+      "key": "TD",
+      "value": "TD",
+      "displayText": "Chad",
+      "subGroup": null
+    },
+    {
+      "code": "CL",
+      "key": "CL",
+      "value": "CL",
+      "displayText": "Chile",
+      "subGroup": null
+    },
+    {
+      "code": "CN",
+      "key": "CN",
+      "value": "CN",
+      "displayText": "China",
+      "subGroup": null
+    },
+    {
+      "code": "CX",
+      "key": "CX",
+      "value": "CX",
+      "displayText": "Christmas Island",
+      "subGroup": null
+    },
+    {
+      "code": "CC",
+      "key": "CC",
+      "value": "CC",
+      "displayText": "Cocos (Keeling) Is",
+      "subGroup": null
+    },
+    {
+      "code": "CO",
+      "key": "CO",
+      "value": "CO",
+      "displayText": "Columbia",
+      "subGroup": null
+    },
+    {
+      "code": "KM",
+      "key": "KM",
+      "value": "KM",
+      "displayText": "Comoros",
+      "subGroup": null
+    },
+    {
+      "code": "CG",
+      "key": "CG",
+      "value": "CG",
+      "displayText": "Congo",
+      "subGroup": null
+    },
+    {
+      "code": "CD",
+      "key": "CD",
+      "value": "CD",
+      "displayText": "Congo, The Democratic Republic of The",
+      "subGroup": null
+    },
+    {
+      "code": "CK",
+      "key": "CK",
+      "value": "CK",
+      "displayText": "Cook Islands",
+      "subGroup": null
+    },
+    {
+      "code": "CR",
+      "key": "CR",
+      "value": "CR",
+      "displayText": "Costa Rica",
+      "subGroup": null
+    },
+    {
+      "code": "CI",
+      "key": "CI",
+      "value": "CI",
+      "displayText": "Cote dIvoire",
+      "subGroup": null
+    },
+    {
+      "code": "HR",
+      "key": "HR",
+      "value": "HR",
+      "displayText": "Croatia",
+      "subGroup": null
+    },
+    {
+      "code": "CW",
+      "key": "CW",
+      "value": "CW",
+      "displayText": "Curacao",
+      "subGroup": null
+    },
+    {
+      "code": "CY",
+      "key": "CY",
+      "value": "CY",
+      "displayText": "Cyprus",
+      "subGroup": null
+    },
+    {
+      "code": "CZ",
+      "key": "CZ",
+      "value": "CZ",
+      "displayText": "Czech Republic",
+      "subGroup": null
+    },
+    {
+      "code": "DK",
+      "key": "DK",
+      "value": "DK",
+      "displayText": "Denmark",
+      "subGroup": null
+    },
+    {
+      "code": "DJ",
+      "key": "DJ",
+      "value": "DJ",
+      "displayText": "Djibouti",
+      "subGroup": null
+    },
+    {
+      "code": "DM",
+      "key": "DM",
+      "value": "DM",
+      "displayText": "Dominica",
+      "subGroup": null
+    },
+    {
+      "code": "DO",
+      "key": "DO",
+      "value": "DO",
+      "displayText": "Dominican Republic",
+      "subGroup": null
+    },
+    {
+      "code": "EC",
+      "key": "EC",
+      "value": "EC",
+      "displayText": "Ecuador",
+      "subGroup": null
+    },
+    {
+      "code": "EG",
+      "key": "EG",
+      "value": "EG",
+      "displayText": "Egypt",
+      "subGroup": null
+    },
+    {
+      "code": "SV",
+      "key": "SV",
+      "value": "SV",
+      "displayText": "El Salvador",
+      "subGroup": null
+    },
+    {
+      "code": "GQ",
+      "key": "GQ",
+      "value": "GQ",
+      "displayText": "Equatorial Guinea",
+      "subGroup": null
+    },
+    {
+      "code": "ER",
+      "key": "ER",
+      "value": "ER",
+      "displayText": "Eritrea",
+      "subGroup": null
+    },
+    {
+      "code": "EE",
+      "key": "EE",
+      "value": "EE",
+      "displayText": "Estonia",
+      "subGroup": null
+    },
+    {
+      "code": "ET",
+      "key": "ET",
+      "value": "ET",
+      "displayText": "Ethiopia",
+      "subGroup": null
+    },
+    {
+      "code": "FO",
+      "key": "FO",
+      "value": "FO",
+      "displayText": "Faeroe Islands",
+      "subGroup": null
+    },
+    {
+      "code": "FK",
+      "key": "FK",
+      "value": "FK",
+      "displayText": "Falkland Islands",
+      "subGroup": null
+    },
+    {
+      "code": "FJ",
+      "key": "FJ",
+      "value": "FJ",
+      "displayText": "Fiji",
+      "subGroup": null
+    },
+    {
+      "code": "FI",
+      "key": "FI",
+      "value": "FI",
+      "displayText": "Finland",
+      "subGroup": null
+    },
+    {
+      "code": "FR",
+      "key": "FR",
+      "value": "FR",
+      "displayText": "France",
+      "subGroup": null
+    },
+    {
+      "code": "GF",
+      "key": "GF",
+      "value": "GF",
+      "displayText": "French Guiana",
+      "subGroup": null
+    },
+    {
+      "code": "PF",
+      "key": "PF",
+      "value": "PF",
+      "displayText": "French Polynesia",
+      "subGroup": null
+    },
+    {
+      "code": "TF",
+      "key": "TF",
+      "value": "TF",
+      "displayText": "French Sthn Terr.",
+      "subGroup": null
+    },
+    {
+      "code": "GA",
+      "key": "GA",
+      "value": "GA",
+      "displayText": "Gabon",
+      "subGroup": null
+    },
+    {
+      "code": "GM",
+      "key": "GM",
+      "value": "GM",
+      "displayText": "Gambia",
+      "subGroup": null
+    },
+    {
+      "code": "GE",
+      "key": "GE",
+      "value": "GE",
+      "displayText": "Georgia",
+      "subGroup": null
+    },
+    {
+      "code": "DE",
+      "key": "DE",
+      "value": "DE",
+      "displayText": "Germany",
+      "subGroup": null
+    },
+    {
+      "code": "GH",
+      "key": "GH",
+      "value": "GH",
+      "displayText": "Ghana",
+      "subGroup": null
+    },
+    {
+      "code": "GI",
+      "key": "GI",
+      "value": "GI",
+      "displayText": "Gibraltar",
+      "subGroup": null
+    },
+    {
+      "code": "GR",
+      "key": "GR",
+      "value": "GR",
+      "displayText": "Greece",
+      "subGroup": null
+    },
+    {
+      "code": "GL",
+      "key": "GL",
+      "value": "GL",
+      "displayText": "Greenland",
+      "subGroup": null
+    },
+    {
+      "code": "GD",
+      "key": "GD",
+      "value": "GD",
+      "displayText": "Grenada",
+      "subGroup": null
+    },
+    {
+      "code": "GP",
+      "key": "GP",
+      "value": "GP",
+      "displayText": "Guadeloupe",
+      "subGroup": null
+    },
+    {
+      "code": "GU",
+      "key": "GU",
+      "value": "GU",
+      "displayText": "Guam",
+      "subGroup": null
+    },
+    {
+      "code": "GT",
+      "key": "GT",
+      "value": "GT",
+      "displayText": "Guatemala",
+      "subGroup": null
+    },
+    {
+      "code": "GG",
+      "key": "GG",
+      "value": "GG",
+      "displayText": "Guernsey C.I.",
+      "subGroup": null
+    },
+    {
+      "code": "GN",
+      "key": "GN",
+      "value": "GN",
+      "displayText": "Guinea",
+      "subGroup": null
+    },
+    {
+      "code": "GW",
+      "key": "GW",
+      "value": "GW",
+      "displayText": "Guinea-Bissau",
+      "subGroup": null
+    },
+    {
+      "code": "GY",
+      "key": "GY",
+      "value": "GY",
+      "displayText": "Guyana",
+      "subGroup": null
+    },
+    {
+      "code": "HT",
+      "key": "HT",
+      "value": "HT",
+      "displayText": "Haiti",
+      "subGroup": null
+    },
+    {
+      "code": "HM",
+      "key": "HM",
+      "value": "HM",
+      "displayText": "Heard and McDonald Is",
+      "subGroup": null
+    },
+    {
+      "code": "HN",
+      "key": "HN",
+      "value": "HN",
+      "displayText": "Honduras",
+      "subGroup": null
+    },
+    {
+      "code": "HK",
+      "key": "HK",
+      "value": "HK",
+      "displayText": "Hong Kong",
+      "subGroup": null
+    },
+    {
+      "code": "HU",
+      "key": "HU",
+      "value": "HU",
+      "displayText": "Hungary",
+      "subGroup": null
+    },
+    {
+      "code": "IS",
+      "key": "IS",
+      "value": "IS",
+      "displayText": "Iceland",
+      "subGroup": null
+    },
+    {
+      "code": "IN",
+      "key": "IN",
+      "value": "IN",
+      "displayText": "India",
+      "subGroup": null
+    },
+    {
+      "code": "ID",
+      "key": "ID",
+      "value": "ID",
+      "displayText": "Indonesia",
+      "subGroup": null
+    },
+    {
+      "code": "IQ",
+      "key": "IQ",
+      "value": "IQ",
+      "displayText": "Iraq",
+      "subGroup": null
+    },
+    {
+      "code": "IE",
+      "key": "IE",
+      "value": "IE",
+      "displayText": "Ireland",
+      "subGroup": null
+    },
+    {
+      "code": "IM",
+      "key": "IM",
+      "value": "IM",
+      "displayText": "Isle of Man",
+      "subGroup": null
+    },
+    {
+      "code": "IT",
+      "key": "IT",
+      "value": "IT",
+      "displayText": "Italy",
+      "subGroup": null
+    },
+    {
+      "code": "JM",
+      "key": "JM",
+      "value": "JM",
+      "displayText": "Jamaica",
+      "subGroup": null
+    },
+    {
+      "code": "JP",
+      "key": "JP",
+      "value": "JP",
+      "displayText": "Japan",
+      "subGroup": null
+    },
+    {
+      "code": "JE",
+      "key": "JE",
+      "value": "JE",
+      "displayText": "Jersey C.I.",
+      "subGroup": null
+    },
+    {
+      "code": "JO",
+      "key": "JO",
+      "value": "JO",
+      "displayText": "Jordan",
+      "subGroup": null
+    },
+    {
+      "code": "KZ",
+      "key": "KZ",
+      "value": "KZ",
+      "displayText": "Kazakhstan",
+      "subGroup": null
+    },
+    {
+      "code": "KE",
+      "key": "KE",
+      "value": "KE",
+      "displayText": "Kenya",
+      "subGroup": null
+    },
+    {
+      "code": "KI",
+      "key": "KI",
+      "value": "KI",
+      "displayText": "Kiribati",
+      "subGroup": null
+    },
+    {
+      "code": "KR",
+      "key": "KR",
+      "value": "KR",
+      "displayText": "Korea",
+      "subGroup": null
+    },
+    {
+      "code": "XK",
+      "key": "XK",
+      "value": "XK",
+      "displayText": "Kosovo",
+      "subGroup": null
+    },
+    {
+      "code": "KW",
+      "key": "KW",
+      "value": "KW",
+      "displayText": "Kuwait",
+      "subGroup": null
+    },
+    {
+      "code": "KG",
+      "key": "KG",
+      "value": "KG",
+      "displayText": "Kyrgyzstan",
+      "subGroup": null
+    },
+    {
+      "code": "LA",
+      "key": "LA",
+      "value": "LA",
+      "displayText": "Lao Peoples Dem Rep",
+      "subGroup": null
+    },
+    {
+      "code": "LV",
+      "key": "LV",
+      "value": "LV",
+      "displayText": "Latvia",
+      "subGroup": null
+    },
+    {
+      "code": "LB",
+      "key": "LB",
+      "value": "LB",
+      "displayText": "Lebanon",
+      "subGroup": null
+    },
+    {
+      "code": "LS",
+      "key": "LS",
+      "value": "LS",
+      "displayText": "Lesotho",
+      "subGroup": null
+    },
+    {
+      "code": "LR",
+      "key": "LR",
+      "value": "LR",
+      "displayText": "Liberia",
+      "subGroup": null
+    },
+    {
+      "code": "LY",
+      "key": "LY",
+      "value": "LY",
+      "displayText": "Libyan Arab Jamah",
+      "subGroup": null
+    },
+    {
+      "code": "LI",
+      "key": "LI",
+      "value": "LI",
+      "displayText": "Liechtenstein",
+      "subGroup": null
+    },
+    {
+      "code": "LT",
+      "key": "LT",
+      "value": "LT",
+      "displayText": "Lithuania",
+      "subGroup": null
+    },
+    {
+      "code": "LU",
+      "key": "LU",
+      "value": "LU",
+      "displayText": "Luxembourg",
+      "subGroup": null
+    },
+    {
+      "code": "MO",
+      "key": "MO",
+      "value": "MO",
+      "displayText": "Macau",
+      "subGroup": null
+    },
+    {
+      "code": "MK",
+      "key": "MK",
+      "value": "MK",
+      "displayText": "Macedonia, Republic of",
+      "subGroup": null
+    },
+    {
+      "code": "MG",
+      "key": "MG",
+      "value": "MG",
+      "displayText": "Madagascar",
+      "subGroup": null
+    },
+    {
+      "code": "MW",
+      "key": "MW",
+      "value": "MW",
+      "displayText": "Malawi",
+      "subGroup": null
+    },
+    {
+      "code": "MY",
+      "key": "MY",
+      "value": "MY",
+      "displayText": "Malaysia",
+      "subGroup": null
+    },
+    {
+      "code": "MV",
+      "key": "MV",
+      "value": "MV",
+      "displayText": "Maldives",
+      "subGroup": null
+    },
+    {
+      "code": "ML",
+      "key": "ML",
+      "value": "ML",
+      "displayText": "Mali",
+      "subGroup": null
+    },
+    {
+      "code": "MT",
+      "key": "MT",
+      "value": "MT",
+      "displayText": "Malta",
+      "subGroup": null
+    },
+    {
+      "code": "MH",
+      "key": "MH",
+      "value": "MH",
+      "displayText": "Marshall Islands",
+      "subGroup": null
+    },
+    {
+      "code": "MQ",
+      "key": "MQ",
+      "value": "MQ",
+      "displayText": "Martinique",
+      "subGroup": null
+    },
+    {
+      "code": "MR",
+      "key": "MR",
+      "value": "MR",
+      "displayText": "Mauritania",
+      "subGroup": null
+    },
+    {
+      "code": "MU",
+      "key": "MU",
+      "value": "MU",
+      "displayText": "Mauritius",
+      "subGroup": null
+    },
+    {
+      "code": "YT",
+      "key": "YT",
+      "value": "YT",
+      "displayText": "Mayotte",
+      "subGroup": null
+    },
+    {
+      "code": "MX",
+      "key": "MX",
+      "value": "MX",
+      "displayText": "Mexico",
+      "subGroup": null
+    },
+    {
+      "code": "FM",
+      "key": "FM",
+      "value": "FM",
+      "displayText": "Micronesia",
+      "subGroup": null
+    },
+    {
+      "code": "MD",
+      "key": "MD",
+      "value": "MD",
+      "displayText": "Moldova, Republic of",
+      "subGroup": null
+    },
+    {
+      "code": "MC",
+      "key": "MC",
+      "value": "MC",
+      "displayText": "Monaco",
+      "subGroup": null
+    },
+    {
+      "code": "MN",
+      "key": "MN",
+      "value": "MN",
+      "displayText": "Mongolia",
+      "subGroup": null
+    },
+    {
+      "code": "MS",
+      "key": "MS",
+      "value": "MS",
+      "displayText": "Monserrat",
+      "subGroup": null
+    },
+    {
+      "code": "ME",
+      "key": "ME",
+      "value": "ME",
+      "displayText": "Montenegro",
+      "subGroup": null
+    },
+    {
+      "code": "MA",
+      "key": "MA",
+      "value": "MA",
+      "displayText": "Morocco",
+      "subGroup": null
+    },
+    {
+      "code": "MZ",
+      "key": "MZ",
+      "value": "MZ",
+      "displayText": "Mozambique",
+      "subGroup": null
+    },
+    {
+      "code": "MM",
+      "key": "MM",
+      "value": "MM",
+      "displayText": "Myanmar",
+      "subGroup": null
+    },
+    {
+      "code": "NA",
+      "key": "NA",
+      "value": "NA",
+      "displayText": "Namibia",
+      "subGroup": null
+    },
+    {
+      "code": "NR",
+      "key": "NR",
+      "value": "NR",
+      "displayText": "Nauru",
+      "subGroup": null
+    },
+    {
+      "code": "NP",
+      "key": "NP",
+      "value": "NP",
+      "displayText": "Nepal",
+      "subGroup": null
+    },
+    {
+      "code": "AN",
+      "key": "AN",
+      "value": "AN",
+      "displayText": "Neth Antilles",
+      "subGroup": null
+    },
+    {
+      "code": "NL",
+      "key": "NL",
+      "value": "NL",
+      "displayText": "Netherlands",
+      "subGroup": null
+    },
+    {
+      "code": "NC",
+      "key": "NC",
+      "value": "NC",
+      "displayText": "New Caledonia",
+      "subGroup": null
+    },
+    {
+      "code": "NZ",
+      "key": "NZ",
+      "value": "NZ",
+      "displayText": "New Zealand",
+      "subGroup": null
+    },
+    {
+      "code": "NI",
+      "key": "NI",
+      "value": "NI",
+      "displayText": "Nicaragua",
+      "subGroup": null
+    },
+    {
+      "code": "NE",
+      "key": "NE",
+      "value": "NE",
+      "displayText": "Niger",
+      "subGroup": null
+    },
+    {
+      "code": "NG",
+      "key": "NG",
+      "value": "NG",
+      "displayText": "Nigeria",
+      "subGroup": null
+    },
+    {
+      "code": "NU",
+      "key": "NU",
+      "value": "NU",
+      "displayText": "Niue",
+      "subGroup": null
+    },
+    {
+      "code": "NF",
+      "key": "NF",
+      "value": "NF",
+      "displayText": "Norfolk Island",
+      "subGroup": null
+    },
+    {
+      "code": "MP",
+      "key": "MP",
+      "value": "MP",
+      "displayText": "Northern Mariana Is",
+      "subGroup": null
+    },
+    {
+      "code": "NO",
+      "key": "NO",
+      "value": "NO",
+      "displayText": "Norway",
+      "subGroup": null
+    },
+    {
+      "code": "OM",
+      "key": "OM",
+      "value": "OM",
+      "displayText": "Oman",
+      "subGroup": null
+    },
+    {
+      "code": "PK",
+      "key": "PK",
+      "value": "PK",
+      "displayText": "Pakistan",
+      "subGroup": null
+    },
+    {
+      "code": "PW",
+      "key": "PW",
+      "value": "PW",
+      "displayText": "Palau",
+      "subGroup": null
+    },
+    {
+      "code": "PS",
+      "key": "PS",
+      "value": "PS",
+      "displayText": "Palestine",
+      "subGroup": null
+    },
+    {
+      "code": "PA",
+      "key": "PA",
+      "value": "PA",
+      "displayText": "Panama",
+      "subGroup": null
+    },
+    {
+      "code": "PZ",
+      "key": "PZ",
+      "value": "PZ",
+      "displayText": "Panama Canal Zone",
+      "subGroup": null
+    },
+    {
+      "code": "PG",
+      "key": "PG",
+      "value": "PG",
+      "displayText": "Papua New Guinea",
+      "subGroup": null
+    },
+    {
+      "code": "PY",
+      "key": "PY",
+      "value": "PY",
+      "displayText": "Paraguay",
+      "subGroup": null
+    },
+    {
+      "code": "PE",
+      "key": "PE",
+      "value": "PE",
+      "displayText": "Peru",
+      "subGroup": null
+    },
+    {
+      "code": "PH",
+      "key": "PH",
+      "value": "PH",
+      "displayText": "Philippines",
+      "subGroup": null
+    },
+    {
+      "code": "PN",
+      "key": "PN",
+      "value": "PN",
+      "displayText": "Pitcairn",
+      "subGroup": null
+    },
+    {
+      "code": "PL",
+      "key": "PL",
+      "value": "PL",
+      "displayText": "Poland",
+      "subGroup": null
+    },
+    {
+      "code": "PT",
+      "key": "PT",
+      "value": "PT",
+      "displayText": "Portugal",
+      "subGroup": null
+    },
+    {
+      "code": "PR",
+      "key": "PR",
+      "value": "PR",
+      "displayText": "Puerto Rico",
+      "subGroup": null
+    },
+    {
+      "code": "QA",
+      "key": "QA",
+      "value": "QA",
+      "displayText": "Qatar",
+      "subGroup": null
+    },
+    {
+      "code": "RE",
+      "key": "RE",
+      "value": "RE",
+      "displayText": "Reunion",
+      "subGroup": null
+    },
+    {
+      "code": "RO",
+      "key": "RO",
+      "value": "RO",
+      "displayText": "Romania",
+      "subGroup": null
+    },
+    {
+      "code": "RU",
+      "key": "RU",
+      "value": "RU",
+      "displayText": "Russian Federation",
+      "subGroup": null
+    },
+    {
+      "code": "RW",
+      "key": "RW",
+      "value": "RW",
+      "displayText": "Rwanda",
+      "subGroup": null
+    },
+    {
+      "code": "BL",
+      "key": "BL",
+      "value": "BL",
+      "displayText": "Saint Barthelemy",
+      "subGroup": null
+    },
+    {
+      "code": "LC",
+      "key": "LC",
+      "value": "LC",
+      "displayText": "Saint Lucia",
+      "subGroup": null
+    },
+    {
+      "code": "MF",
+      "key": "MF",
+      "value": "MF",
+      "displayText": "Saint Martin",
+      "subGroup": null
+    },
+    {
+      "code": "WS",
+      "key": "WS",
+      "value": "WS",
+      "displayText": "Samoa",
+      "subGroup": null
+    },
+    {
+      "code": "SM",
+      "key": "SM",
+      "value": "SM",
+      "displayText": "San Marino",
+      "subGroup": null
+    },
+    {
+      "code": "ST",
+      "key": "ST",
+      "value": "ST",
+      "displayText": "Sao Tome and Principe",
+      "subGroup": null
+    },
+    {
+      "code": "SA",
+      "key": "SA",
+      "value": "SA",
+      "displayText": "Saudi Arabia",
+      "subGroup": null
+    },
+    {
+      "code": "SN",
+      "key": "SN",
+      "value": "SN",
+      "displayText": "Senegal",
+      "subGroup": null
+    },
+    {
+      "code": "RS",
+      "key": "RS",
+      "value": "RS",
+      "displayText": "Serbia",
+      "subGroup": null
+    },
+    {
+      "code": "SC",
+      "key": "SC",
+      "value": "SC",
+      "displayText": "Seychelles",
+      "subGroup": null
+    },
+    {
+      "code": "SL",
+      "key": "SL",
+      "value": "SL",
+      "displayText": "Sierra Leone",
+      "subGroup": null
+    },
+    {
+      "code": "SG",
+      "key": "SG",
+      "value": "SG",
+      "displayText": "Singapore",
+      "subGroup": null
+    },
+    {
+      "code": "SK",
+      "key": "SK",
+      "value": "SK",
+      "displayText": "Slovakia",
+      "subGroup": null
+    },
+    {
+      "code": "SI",
+      "key": "SI",
+      "value": "SI",
+      "displayText": "Slovenia",
+      "subGroup": null
+    },
+    {
+      "code": "SB",
+      "key": "SB",
+      "value": "SB",
+      "displayText": "Solomon Islands",
+      "subGroup": null
+    },
+    {
+      "code": "SO",
+      "key": "SO",
+      "value": "SO",
+      "displayText": "Somalia",
+      "subGroup": null
+    },
+    {
+      "code": "ZA",
+      "key": "ZA",
+      "value": "ZA",
+      "displayText": "South Africa",
+      "subGroup": null
+    },
+    {
+      "code": "GS",
+      "key": "GS",
+      "value": "GS",
+      "displayText": "South Georgia-St-ISL",
+      "subGroup": null
+    },
+    {
+      "code": "SS",
+      "key": "SS",
+      "value": "SS",
+      "displayText": "South Sudan",
+      "subGroup": null
+    },
+    {
+      "code": "ES",
+      "key": "ES",
+      "value": "ES",
+      "displayText": "Spain",
+      "subGroup": null
+    },
+    {
+      "code": "LK",
+      "key": "LK",
+      "value": "LK",
+      "displayText": "Sri Lanka",
+      "subGroup": null
+    },
+    {
+      "code": "SH",
+      "key": "SH",
+      "value": "SH",
+      "displayText": "St Helena",
+      "subGroup": null
+    },
+    {
+      "code": "KN",
+      "key": "KN",
+      "value": "KN",
+      "displayText": "St Kitts and Nevis",
+      "subGroup": null
+    },
+    {
+      "code": "PM",
+      "key": "PM",
+      "value": "PM",
+      "displayText": "St Pierre and Miquelon",
+      "subGroup": null
+    },
+    {
+      "code": "VC",
+      "key": "VC",
+      "value": "VC",
+      "displayText": "St Vincent and the Gre",
+      "subGroup": null
+    },
+    {
+      "code": "SR",
+      "key": "SR",
+      "value": "SR",
+      "displayText": "Suriname",
+      "subGroup": null
+    },
+    {
+      "code": "SJ",
+      "key": "SJ",
+      "value": "SJ",
+      "displayText": "Svalbard and Jan Mayan",
+      "subGroup": null
+    },
+    {
+      "code": "SZ",
+      "key": "SZ",
+      "value": "SZ",
+      "displayText": "Swaziland",
+      "subGroup": null
+    },
+    {
+      "code": "SE",
+      "key": "SE",
+      "value": "SE",
+      "displayText": "Sweden",
+      "subGroup": null
+    },
+    {
+      "code": "CH",
+      "key": "CH",
+      "value": "CH",
+      "displayText": "Switzerland",
+      "subGroup": null
+    },
+    {
+      "code": "TW",
+      "key": "TW",
+      "value": "TW",
+      "displayText": "Taiwan",
+      "subGroup": null
+    },
+    {
+      "code": "TJ",
+      "key": "TJ",
+      "value": "TJ",
+      "displayText": "Tajikistan",
+      "subGroup": null
+    },
+    {
+      "code": "TZ",
+      "key": "TZ",
+      "value": "TZ",
+      "displayText": "Tanzania, Utd Rep of",
+      "subGroup": null
+    },
+    {
+      "code": "TH",
+      "key": "TH",
+      "value": "TH",
+      "displayText": "Thailand",
+      "subGroup": null
+    },
+    {
+      "code": "TL",
+      "key": "TL",
+      "value": "TL",
+      "displayText": "Timor-Leste",
+      "subGroup": null
+    },
+    {
+      "code": "TG",
+      "key": "TG",
+      "value": "TG",
+      "displayText": "Togo",
+      "subGroup": null
+    },
+    {
+      "code": "TK",
+      "key": "TK",
+      "value": "TK",
+      "displayText": "Tokelau",
+      "subGroup": null
+    },
+    {
+      "code": "TO",
+      "key": "TO",
+      "value": "TO",
+      "displayText": "Tonga",
+      "subGroup": null
+    },
+    {
+      "code": "TT",
+      "key": "TT",
+      "value": "TT",
+      "displayText": "Trinidad and Tobago",
+      "subGroup": null
+    },
+    {
+      "code": "TN",
+      "key": "TN",
+      "value": "TN",
+      "displayText": "Tunisia",
+      "subGroup": null
+    },
+    {
+      "code": "TC",
+      "key": "TC",
+      "value": "TC",
+      "displayText": "Turka and Caicos Is",
+      "subGroup": null
+    },
+    {
+      "code": "TR",
+      "key": "TR",
+      "value": "TR",
+      "displayText": "Turkey",
+      "subGroup": null
+    },
+    {
+      "code": "TM",
+      "key": "TM",
+      "value": "TM",
+      "displayText": "Turkmenistan",
+      "subGroup": null
+    },
+    {
+      "code": "TV",
+      "key": "TV",
+      "value": "TV",
+      "displayText": "Tuvalu",
+      "subGroup": null
+    },
+    {
+      "code": "UM",
+      "key": "UM",
+      "value": "UM",
+      "displayText": "US Minor Outlaying I",
+      "subGroup": null
+    },
+    {
+      "code": "UG",
+      "key": "UG",
+      "value": "UG",
+      "displayText": "Uganda",
+      "subGroup": null
+    },
+    {
+      "code": "UA",
+      "key": "UA",
+      "value": "UA",
+      "displayText": "Ukraine",
+      "subGroup": null
+    },
+    {
+      "code": "AE",
+      "key": "AE",
+      "value": "AE",
+      "displayText": "United Arab Emirates",
+      "subGroup": null
+    },
+    {
+      "code": "GB",
+      "key": "GB",
+      "value": "GB",
+      "displayText": "United Kingdom",
+      "subGroup": null
+    },
+    {
+      "code": "US",
+      "key": "US",
+      "value": "US",
+      "displayText": "United States of America",
+      "subGroup": null
+    },
+    {
+      "code": "UY",
+      "key": "UY",
+      "value": "UY",
+      "displayText": "Uruguay",
+      "subGroup": null
+    },
+    {
+      "code": "UZ",
+      "key": "UZ",
+      "value": "UZ",
+      "displayText": "Uzbekistan",
+      "subGroup": null
+    },
+    {
+      "code": "VU",
+      "key": "VU",
+      "value": "VU",
+      "displayText": "Vanuatu",
+      "subGroup": null
+    },
+    {
+      "code": "VA",
+      "key": "VA",
+      "value": "VA",
+      "displayText": "Vatican City State",
+      "subGroup": null
+    },
+    {
+      "code": "VE",
+      "key": "VE",
+      "value": "VE",
+      "displayText": "Venezuela",
+      "subGroup": null
+    },
+    {
+      "code": "VN",
+      "key": "VN",
+      "value": "VN",
+      "displayText": "Vietnam",
+      "subGroup": null
+    },
+    {
+      "code": "VG",
+      "key": "VG",
+      "value": "VG",
+      "displayText": "Virgin Islands, Brit",
+      "subGroup": null
+    },
+    {
+      "code": "VI",
+      "key": "VI",
+      "value": "VI",
+      "displayText": "Virgin Islands, U.S.",
+      "subGroup": null
+    },
+    {
+      "code": "WF",
+      "key": "WF",
+      "value": "WF",
+      "displayText": "Wallis and Futuna Is",
+      "subGroup": null
+    },
+    {
+      "code": "EH",
+      "key": "EH",
+      "value": "EH",
+      "displayText": "Western Sahara",
+      "subGroup": null
+    },
+    {
+      "code": "YE",
+      "key": "YE",
+      "value": "YE",
+      "displayText": "Yemen",
+      "subGroup": null
+    },
+    {
+      "code": "YU",
+      "key": "YU",
+      "value": "YU",
+      "displayText": "Yugoslavia",
+      "subGroup": null
+    },
+    {
+      "code": "ZM",
+      "key": "ZM",
+      "value": "ZM",
+      "displayText": "Zambia",
+      "subGroup": null
+    },
+    {
+      "code": "ZW",
+      "key": "ZW",
+      "value": "ZW",
+      "displayText": "Zimbabwe",
+      "subGroup": null
+    }
+  ],
+  "nationality": [
+    {
+      "code": "GERMAN",
+      "key": "GERMAN",
+      "value": "GERMAN",
+      "displayText": "Germany",
+      "subGroup": null
+    },
+    {
+      "code": "INDIAN",
+      "key": "INDIAN",
+      "value": "INDIAN",
+      "displayText": "India",
+      "subGroup": null
+    },
+    {
+      "code": "AMERICAN",
+      "key": "AMERICAN",
+      "value": "AMERICAN",
+      "displayText": "US",
+      "subGroup": null
+    }
+  ],
+  "spaceType": [
+    {
+      "code": "5",
+      "key": "5",
+      "value": "5",
+      "displayText": "Flexi desk",
+      "subGroup": null
+    },
+    {
+      "code": "3",
+      "key": "3",
+      "value": "3",
+      "displayText": "Kiosk",
+      "subGroup": null
+    },
+    {
+      "code": "1",
+      "key": "1",
+      "value": "1",
+      "displayText": "Office",
+      "subGroup": null
+    },
+    {
+      "code": "6",
+      "key": "6",
+      "value": "6",
+      "displayText": "Other (Specify)",
+      "subGroup": null
+    },
+    {
+      "code": "4",
+      "key": "4",
+      "value": "4",
+      "displayText": "Shop",
+      "subGroup": null
+    },
+    {
+      "code": "2",
+      "key": "2",
+      "value": "2",
+      "displayText": "Warehouse",
+      "subGroup": null
+    }
+  ],
+  "flag": [
+    {
+      "code": "N",
+      "key": "N",
+      "value": "N",
+      "displayText": "No",
+      "subGroup": null
+    },
+    {
+      "code": "Y",
+      "key": "Y",
+      "value": "Y",
+      "displayText": "Yes",
+      "subGroup": null
+    }
+  ],
+  "accountSignType": [
+    {
+      "code": "101",
+      "key": "101",
+      "value": "101",
+      "displayText": "All of us must sign",
+      "subGroup": null
+    },
+    {
+      "code": "100",
+      "key": "100",
+      "value": "100",
+      "displayText": "Any of us can sign",
+      "subGroup": null
+    },
+    {
+      "code": "000",
+      "key": "000",
+      "value": "000",
+      "displayText": "Other (please specify)",
+      "subGroup": null
+    }
+  ],
+  "YesNoList": [
+    {
+      "code": "Y",
+      "key": "Y",
+      "value": true,
+      "displayText": "Yes"
+    },
+    {
+      "code": "N",
+      "key": "N",
+      "value": false,
+      "displayText": "No"
     }
   ]
 }

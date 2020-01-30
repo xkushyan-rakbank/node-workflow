@@ -21,6 +21,7 @@ import { ReactComponent as InfoYellow } from "../../assets/icons/infoYellow.svg"
 import { ReactComponent as InfoRed } from "../../assets/icons/infoRed.svg";
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 import { ReactComponent as Error } from "../../assets/images/error.svg";
+import { ReactComponent as File } from "../../assets/icons/file.svg";
 
 export const iconComponents = {
   done: Done,
@@ -45,7 +46,8 @@ export const iconComponents = {
   infoYellow: InfoYellow,
   infoRed: InfoRed,
   arrowDown: ArrowDown,
-  error: Error
+  error: Error,
+  file: File
 };
 
 export const ICONS = {
@@ -71,5 +73,6 @@ export const ICONS = {
   infoYellow: "infoYellow",
   infoRed: "infoRed",
   arrowDown: "arrowDown",
-  error: "error"
+  error: "error",
+  file: "file"
 };

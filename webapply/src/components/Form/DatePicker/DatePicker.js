@@ -17,7 +17,7 @@ export const DatePicker = ({
   infoTitle,
   placeholder = "__/__/____",
   format = "dd/MM/yyyy",
-  minDate = new Date("01-01-1950"),
+  minDate = new Date(1950, 0, 1),
   maxDate = subDays(new Date(), 1),
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
@@ -40,9 +40,7 @@ export const DatePicker = ({
             maxDate={maxDate}
             disabled={disabled}
             disableFuture={disableFuture}
-            disableToolbar
             margin="normal"
-            variant="inline"
             format={format}
             inputVariant="outlined"
             placeholder={placeholder}
