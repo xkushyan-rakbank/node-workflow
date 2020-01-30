@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import get from "lodash/get";
 import { getSignatories } from "./appConfig";
 import {
+  MAX_STAKEHOLDERS_LENGTH,
   MAX_SIGNATORIES_LENGTH,
   MAX_SHAREHOLDERS_LENGTH,
   MAX_POA_SIGNATORIES_LENGTH,
@@ -32,6 +33,7 @@ export const quantityErrorSelector = createSelector(
     );
 
     return (
+      stakeholders.length > MAX_STAKEHOLDERS_LENGTH ||
       shareholders.length > MAX_SHAREHOLDERS_LENGTH ||
       signatories.length > MAX_SIGNATORIES_LENGTH ||
       poaSignatory.length > MAX_POA_SIGNATORIES_LENGTH
