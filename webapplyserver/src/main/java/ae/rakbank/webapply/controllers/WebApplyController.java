@@ -165,7 +165,7 @@ public class WebApplyController {
                                     "unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[%s]",
                                     device, segment, product, role));
                             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-                            throw new ApiException(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+                            throw new ApiException(e, error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
                         }
                     }
                 }
@@ -238,7 +238,7 @@ public class WebApplyController {
         catch (IOException e) {
             logger.error("error occured while loading config files", e);
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
@@ -291,7 +291,7 @@ public class WebApplyController {
         catch (IOException e) {
             logger.error("error occured while loading config files", e);
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
     }
@@ -384,7 +384,7 @@ public class WebApplyController {
                     logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()), e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
             else {
@@ -437,7 +437,7 @@ public class WebApplyController {
                             e.getMessage()), e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
             }
@@ -488,7 +488,7 @@ public class WebApplyController {
                             e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
             else {
@@ -536,7 +536,7 @@ public class WebApplyController {
                           e);
                   ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                           "Unable to call endpoint " + uriComponents.toString(), e);
-                  throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                  throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
               }
           } 
           else {
@@ -584,7 +584,7 @@ public class WebApplyController {
                             e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
             else {
@@ -630,7 +630,7 @@ public class WebApplyController {
                             e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + uriComponents.toString(), e);
-                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
             else {
@@ -775,7 +775,7 @@ public class WebApplyController {
                     logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
                     ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                             "Unable to call endpoint " + url, e);
-                    throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
             }
@@ -1135,14 +1135,14 @@ public class WebApplyController {
                         e.getResponseBodyAsString()), e);
                 ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
                         e.getResponseBodyAsString(), e);
-                throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
+                throw new ApiException(e, error, null, HttpStatus.BAD_REQUEST);
             }
             catch (HttpServerErrorException e) {
                 logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
                         e.getResponseBodyAsString()), e);
                 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                         e.getResponseBodyAsString(), e);
-                throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
             ObjectNode datalist = (ObjectNode) response.getBody();
