@@ -41,7 +41,6 @@ export const DatePicker = ({
             disabled={disabled}
             disableFuture={disableFuture}
             margin="normal"
-            variant="inline"
             format={format}
             inputVariant="outlined"
             placeholder={placeholder}
