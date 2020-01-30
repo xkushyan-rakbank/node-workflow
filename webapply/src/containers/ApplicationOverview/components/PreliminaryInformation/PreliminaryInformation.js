@@ -13,39 +13,20 @@ import { useStyles } from "./styled";
 export const PreliminaryInformation = () => {
   const classes = useStyles();
 
-  const {
-    license: License,
-    passport: Passport,
-    emiratesId: EmirateId,
-    companyDocuments: CompanyDocuments
-  } = useIconsByAccount();
+  const { interrogation: Interrogation, signature: Signature } = useIconsByAccount();
 
   return (
     <>
-      <SectionTitleWithInfo
-        title="Have these ready"
-        info="Before we start, make sure you have these documents at hand"
-      />
-      <div className={classes.cardsWrapper}>
-        <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
-          <IconCardItem minWidth="100px" text="Trade License">
-            <License alt="trade-license" />
+      <SectionTitleWithInfo title="Two easy steps" />
+      <div className={classes.indent}>
+        <IconCardsContainer>
+          <IconCardItem minWidth="200px" title="First" text="You answer a few questions">
+            <Interrogation alt="interrogation" />
           </IconCardItem>
-          <IconCardItem minWidth="100px" text="Passport of all signatories¹">
-            <Passport alt="passport-visa" />
-          </IconCardItem>
-          <IconCardItem minWidth="100px" text="Emirates ID of all signatories">
-            <EmirateId alt="emirates-id" />
-          </IconCardItem>
-          <IconCardItem minWidth="100px" text="Other company documents²">
-            <CompanyDocuments alt="company-documents" />
+          <IconCardItem minWidth="200px" title="Then" text="We meet you to get your signature">
+            <Signature alt="signature" />
           </IconCardItem>
         </IconCardsContainer>
-      </div>
-      <div className={classes.note}>
-        1. Not applicable to UAE nationals. 2. Memorandum of Association, Articles of Association,
-        Share Certificate, Partners Agreement or Service Agreement, whichever is applicable to your
-        company.
       </div>
       <div className={classes.answers}>
         <div className={classes.title}>Have more questions? Here are some answers</div>
