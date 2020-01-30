@@ -33,7 +33,7 @@ const companyDetailsSchema = Yup.object({
   numberOfEmployees: Yup.number()
     .typeError("Not valid number")
     .min(0, "Must be more than or equal to 0")
-    .max(1000, "Must be less than or equal to 1000")
+    .max(10000, "Must be less than or equal to 10,000")
     .integer(getInvalidMessage("Number of employees")),
   companyCategory: Yup.string().required(getRequiredMessage("Company category"))
 });
