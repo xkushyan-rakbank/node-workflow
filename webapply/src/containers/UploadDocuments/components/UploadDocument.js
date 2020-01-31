@@ -35,7 +35,6 @@ export const UploadDocuments = ({
   const classes = useStyles();
   const inputEl = useRef(null);
   const documentKey = useMemo(() => nanoid(), []);
-  const [fileName, setFileName] = useState("");
   const isUploaded = document.uploadStatus === "Uploaded";
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
@@ -77,7 +76,6 @@ export const UploadDocuments = ({
     });
     setErrorMessage(null);
     setSelectedFile(file);
-    setFileName(file.name);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [document]);
 
@@ -93,7 +91,6 @@ export const UploadDocuments = ({
     }
     cancelDocUpload(documentKey);
     setSelectedFile(null);
-    setFileName("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -120,7 +117,7 @@ export const UploadDocuments = ({
           {isUploading
             ? `Uploading ${document.documentTitle}`
             : isUploaded
-            ? fileName + document.fileSize
+            ? selectedFile.name + document.fileSize
             : document.documentTitle}
 
           {selectedFile && (
