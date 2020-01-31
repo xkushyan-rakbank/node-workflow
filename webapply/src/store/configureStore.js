@@ -5,6 +5,7 @@ import { routerMiddleware } from "connected-react-router";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import createFilter from "redux-persist-transform-filter";
+import { createAnalytics } from "./actions/googleAnalytics";
 
 import reducers from "./reducers";
 import rootSaga from "./sagas";
@@ -33,7 +34,12 @@ export const configureStore = (initialState, history) => {
     persistReducer(persistConfig, reducers(history)),
     initialState,
     composeEnhancers(
-      applyMiddleware(sagaMiddleware, routerMiddleware(history), createReduxWaitForMiddleware())
+      applyMiddleware(
+        createAnalytics(),
+        sagaMiddleware,
+        routerMiddleware(history),
+        createReduxWaitForMiddleware()
+      )
     )
   );
 
