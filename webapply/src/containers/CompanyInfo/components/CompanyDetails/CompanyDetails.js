@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
+import cx from "classnames";
 
 import {
   Input,
@@ -11,9 +12,9 @@ import {
 } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
-import { useStyles } from "./styled";
 import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
+import { useStyles } from "../../styled";
 
 const initialValues = {
   companyName: "",
@@ -106,7 +107,12 @@ export const CompanyDetails = ({ handleContinue }) => {
               />
             </Grid>
           </Grid>
-          <Grid className={classes.continueButtonGrid} container direction="row" justify="flex-end">
+          <Grid
+            className={cx(classes.continueButton, classes.detailsContinueButton)}
+            container
+            direction="row"
+            justify="flex-end"
+          >
             <ContinueButton type="submit" />
           </Grid>
         </Form>
