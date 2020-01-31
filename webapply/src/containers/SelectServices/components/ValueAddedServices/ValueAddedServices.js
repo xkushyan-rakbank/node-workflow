@@ -52,16 +52,14 @@ export const ValueAddedServicesComponent = ({
           : selectedService;
       updateProspect({ [RAK_VALUE_PACKAGE_PATH]: serviceName });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [rakValuePackage, accountType, RAK_VALUE_PACKAGE_PATH, updateProspect]
+    [rakValuePackage, accountType, updateProspect]
   );
 
   useEffect(() => {
     updateProspect({
       [RAK_VALUE_PACKAGE_PATH]: accountType === accountNames.starter ? "RAKvalue PLUS" : ""
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountType, RAK_VALUE_PACKAGE_PATH, updateProspect]);
+  }, [accountType, updateProspect]);
   return (
     <>
       <div className={cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency })}>
