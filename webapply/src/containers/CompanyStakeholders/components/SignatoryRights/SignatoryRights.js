@@ -4,8 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
 import {
-  CustomSelect,
   InlineRadioGroup,
+  SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
@@ -51,7 +51,8 @@ export const SignatoryRights = ({ handleContinue, index }) => (
             name="authorityType"
             path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
             disabled={!values.isSignatory}
-            component={CustomSelect}
+            isSearchable={false}
+            component={SelectAutocomplete}
             label="Authority Type"
             datalistId="authorityType"
             contextualHelpProps={{ isDisableHoverListener: false }}

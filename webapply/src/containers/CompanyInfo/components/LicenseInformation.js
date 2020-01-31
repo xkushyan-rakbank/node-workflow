@@ -7,9 +7,9 @@ import { differenceInYears, format, isValid } from "date-fns";
 import {
   Input,
   DatePicker,
-  CustomSelect,
   AutoSaveField as Field,
-  NumberFormat
+  NumberFormat,
+  SelectAutocomplete
 } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
@@ -88,7 +88,8 @@ export const LicenseInformation = ({ handleContinue }) => (
               label="License issuing authority"
               path="prospect.organizationInfo.licenseIssuingAuthority"
               datalistId="licenseIssuingAuthority"
-              component={CustomSelect}
+              isSearchable={false}
+              component={SelectAutocomplete}
               inputProps={{ tabIndex: 0 }}
             />
           </Grid>
@@ -100,7 +101,8 @@ export const LicenseInformation = ({ handleContinue }) => (
               datalistId="countryOfIncorporation"
               contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
               contextualHelpProps={{ isDisableHoverListener: false }}
-              component={CustomSelect}
+              isSearchable={false}
+              component={SelectAutocomplete}
               inputProps={{ tabIndex: 0 }}
             />
           </Grid>
