@@ -117,7 +117,7 @@ export const UploadDocuments = ({
           {isUploading
             ? `Uploading ${document.documentTitle}`
             : isUploaded
-            ? document.fileName + document.fileSize
+            ? `${selectedFile.name} ${selectedFile.fileSize}`
             : document.documentTitle}
 
           {selectedFile && (
