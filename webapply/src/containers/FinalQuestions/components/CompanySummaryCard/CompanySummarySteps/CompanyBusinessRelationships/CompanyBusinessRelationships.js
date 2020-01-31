@@ -124,7 +124,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topCustomers.map((item, index) => (
                       <React.Fragment key={item.id}>
-                        <Grid item md={index === 0 ? 6 : 5} sm={12}>
+                        <Grid item md={values.topCustomers.length > 1 ? 5 : 6} sm={12}>
                           <Field
                             name={`topCustomers[${index}].name`}
                             path={`prospect.orgKYCDetails.topCustomers[${index}].name`}
@@ -153,7 +153,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         </Grid>
                         <Grid
                           item
-                          md={index === 0 ? 6 : 5}
+                          md={values.topCustomers.length > 1 ? 5 : 6}
                           sm={12}
                           className={cx(classes.relative, { [classes.tablet]: !index })}
                         >
@@ -168,7 +168,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               inputProps: { tabIndex: 0 }
                             }}
                           />
-                          {!!index && (
+                          {values.topCustomers.length > 1 && (
                             <ArrayRemoveButton
                               arrayHelpers={arrayHelpers}
                               dataArray={topCustomers}
@@ -225,7 +225,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topSuppliers.map((item, index) => (
                       <React.Fragment key={item.id}>
-                        <Grid item md={index === 0 ? 6 : 5} sm={12}>
+                        <Grid item md={values.topSuppliers.length > 1 ? 5 : 6} sm={12}>
                           <Field
                             name={`topSuppliers[${index}].name`}
                             path={`prospect.orgKYCDetails.topSuppliers[${index}].name`}
@@ -255,7 +255,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         </Grid>
                         <Grid
                           item
-                          md={index === 0 ? 6 : 5}
+                          md={values.topSuppliers.length > 1 ? 5 : 6}
                           sm={12}
                           className={cx(classes.relative, { [classes.tablet]: !index })}
                         >
@@ -271,7 +271,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               inputProps: { tabIndex: 0 }
                             }}
                           />
-                          {!!index && (
+                          {values.topSuppliers.length > 1 && (
                             <ArrayRemoveButton
                               arrayHelpers={arrayHelpers}
                               dataArray={topSuppliers}
@@ -332,7 +332,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                       <React.Fragment key={item.id}>
                         <Grid
                           item
-                          md={index === 0 ? 12 : 10}
+                          md={values.topOriginGoodsCountries.length > 1 ? 10 : 12}
                           sm={12}
                           className={cx(classes.relative, { [classes.tablet]: !index })}
                         >
@@ -349,7 +349,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               inputProps: { tabIndex: 0 }
                             }}
                           />
-                          {!!index && (
+                          {values.topOriginGoodsCountries.length > 1 && (
                             <ArrayRemoveButton
                               arrayHelpers={arrayHelpers}
                               dataArray={topOriginGoodsCountries}
@@ -412,7 +412,11 @@ export const CompanyBusinessRelationshipsComponent = ({
                             <React.Fragment key={item.id}>
                               <Grid
                                 item
-                                md={index === 0 ? 12 : 10}
+                                md={
+                                  values.otherBankingRelationshipsInfo.otherBankDetails.length > 1
+                                    ? 10
+                                    : 12
+                                }
                                 sm={12}
                                 className={cx(classes.relative, {
                                   [classes.tablet]: !index
@@ -427,7 +431,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                                     inputProps: { maxLength: MAX_BANK_NAME_LENGTH, tabIndex: 0 }
                                   }}
                                 />
-                                {!!index && (
+                                {values.otherBankingRelationshipsInfo.otherBankDetails.length >
+                                  1 && (
                                   <ArrayRemoveButton
                                     arrayHelpers={arrayHelpers}
                                     dataArray={otherBankDetails}

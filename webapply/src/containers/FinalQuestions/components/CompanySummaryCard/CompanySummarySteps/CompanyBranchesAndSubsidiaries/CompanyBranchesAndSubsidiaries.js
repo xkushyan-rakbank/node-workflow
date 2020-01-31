@@ -125,7 +125,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       <Grid container spacing={3} className={classes.flexContainer}>
                         {values.entitiesInUAE.map((item, index) => (
                           <React.Fragment key={item.id}>
-                            <Grid item sm={12}>
+                            <Grid item sm={12} md={values.entitiesInUAE.length > 1 ? 10 : 12}>
                               <Field
                                 name={`entitiesInUAE[${index}].companyName`}
                                 path={`${basisPath}.entitiesInUAE[${index}].companyName`}
@@ -147,7 +147,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             </Grid>
                             <Grid
                               item
-                              md={6}
+                              md={values.entitiesInUAE.length > 1 ? 5 : 6}
                               sm={12}
                               className={cx(classes.relative, { [classes.tablet]: !index })}
                             >
@@ -178,7 +178,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             </Grid>
                             <Grid
                               item
-                              md={6}
+                              md={values.entitiesInUAE.length > 1 ? 5 : 6}
                               sm={12}
                               className={cx(classes.relative, { [classes.tablet]: !index })}
                             >
@@ -190,14 +190,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 component={CustomSelect}
                                 inputProps={{ tabIndex: 0 }}
                               />
-                              {!!index && (
+                              {values.entitiesInUAE.length > 1 && (
                                 <ArrayRemoveButton
                                   arrayHelpers={arrayHelpers}
                                   dataArray={entitiesInUAE}
                                   itemIndex={index}
                                   updateProspect={updateProspect}
                                   prospectPath="prospect.orgKYCDetails.entitiesInUAE"
-                                  className={classes.container}
                                   title="Delete"
                                 />
                               )}
@@ -255,7 +254,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       <Grid container spacing={3} className={classes.flexContainer}>
                         {values.entitiesOutsideUAE.map((item, index) => (
                           <React.Fragment key={item.id}>
-                            <Grid item md={6} sm={12}>
+                            <Grid item md={values.entitiesOutsideUAE.length > 1 ? 5 : 6} sm={12}>
                               <Field
                                 name={`entitiesOutsideUAE[${index}].companyName`}
                                 path={`${basisPath}.entitiesOutsideUAE[${index}].companyName`}
@@ -277,9 +276,9 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             </Grid>
                             <Grid
                               item
-                              md={6}
+                              md={values.entitiesOutsideUAE.length > 1 ? 5 : 6}
                               sm={12}
-                              className={cx({ [classes.relative]: !!index })}
+                              className={classes.relative}
                             >
                               <Field
                                 name={`entitiesOutsideUAE[${index}].country`}
@@ -294,14 +293,13 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   inputProps: { tabIndex: 0 }
                                 }}
                               />
-                              {!!index && (
+                              {values.entitiesOutsideUAE.length > 1 && (
                                 <ArrayRemoveButton
                                   arrayHelpers={arrayHelpers}
                                   dataArray={entitiesOutsideUAE}
                                   itemIndex={index}
                                   updateProspect={updateProspect}
                                   prospectPath="prospect.orgKYCDetails.entitiesOutsideUAE"
-                                  className={classes.container}
                                   title="Delete"
                                 />
                               )}
