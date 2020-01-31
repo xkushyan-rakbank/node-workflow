@@ -13,5 +13,9 @@ export const useStyles = makeStyles({
     display: "flex",
     justifyContent: "flex-end",
     margin: "40px 0"
+  },
+  infoTitles: {
+    position: "relative",
+    top: "-10px"
   }
 });
