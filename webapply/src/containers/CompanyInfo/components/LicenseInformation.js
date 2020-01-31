@@ -151,12 +151,8 @@ export const LicenseInformation = ({ handleContinue }) => {
             justify="space-between"
             className={classes.continueButton}
           >
-            {/*<Grid item xs={9}>*/}
             <InfoTitle title="These details be the same as in your Trade License" />
-            {/*</Grid>*/}
-            {/*<Grid item xs={3} className={classes.continueButton}>*/}
             <ContinueButton type="submit" />
-            {/*</Grid>*/}
           </Grid>
         </Form>
       )}
