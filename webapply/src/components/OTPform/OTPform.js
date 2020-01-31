@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 import { useHistory } from "react-router-dom";
 
-import { UAE_CODE } from "../../constants";
+import { UAE_CODE, digitRegExp } from "../../constants";
 
 import { ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -28,7 +28,6 @@ export const OTPformComponent = ({
   const history = useHistory();
   const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
   const [code, setCode] = useState(Array(6).fill(""));
-  const [isValidCode, setIsValidCode] = useState(false);
   const [loginAttempt, setLoginAttempt] = useState(0);
   const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
 
@@ -62,14 +61,7 @@ export const OTPformComponent = ({
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
-  const handleSetCode = useCallback(
-    ({ isValid, code }) => {
-      setIsValidCode(isValid);
-      setCode(code);
-    },
-    [setIsValidCode, setCode]
-  );
-
+  const isValid = code.every(value => digitRegExp.test(value));
   const classes = useStyles({ classes: extendetClasses });
 
   return (
@@ -87,7 +79,7 @@ export const OTPformComponent = ({
           <Form className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification code={code} onChange={handleSetCode} />
+                <OtpVerification code={code} onChange={setCode} />
               </Grid>
 
               {!isDisplayMaxAttempError && verificationError && (
@@ -120,7 +112,7 @@ export const OTPformComponent = ({
 
             <div className={classes.linkContainer}>
               <SubmitButton
-                disabled={!isValidCode || isPending || isGenerating}
+                disabled={!isValid || isPending || isGenerating}
                 justify="flex-end"
                 label={isPending ? "Verify..." : "Next Step"}
                 submitButtonClassName={classes.submitButton}
