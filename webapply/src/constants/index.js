@@ -62,8 +62,6 @@ export const MAX_STAKEHOLDERS_LENGTH = 12;
 export const MAX_SHAREHOLDERS_LENGTH = 4;
 export const MAX_SIGNATORIES_LENGTH = 8;
 
-export const POA = "2";
-
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
