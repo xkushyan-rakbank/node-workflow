@@ -4,9 +4,7 @@ import { getSignatories } from "./appConfig";
 import {
   MAX_STAKEHOLDERS_LENGTH,
   MAX_SIGNATORIES_LENGTH,
-  MAX_SHAREHOLDERS_LENGTH,
-  MAX_POA_SIGNATORIES_LENGTH,
-  POA
+  MAX_SHAREHOLDERS_LENGTH
 } from "./../../constants";
 
 export const stakeholders = state => get(state, "appConfig.prospect.signatoryInfo", []);
@@ -28,15 +26,11 @@ export const quantityErrorSelector = createSelector(
   stakeholders => {
     const shareholders = stakeholders.filter(stakeholder => stakeholder.kycDetails.isShareholder);
     const signatories = stakeholders.filter(stakeholder => stakeholder.kycDetails.isSignatory);
-    const poaSignatory = signatories.filter(
-      signatory => signatory.accountSigningInfo.authorityType === POA
-    );
 
     return (
       stakeholders.length > MAX_STAKEHOLDERS_LENGTH ||
       shareholders.length > MAX_SHAREHOLDERS_LENGTH ||
-      signatories.length > MAX_SIGNATORIES_LENGTH ||
-      poaSignatory.length > MAX_POA_SIGNATORIES_LENGTH
+      signatories.length > MAX_SIGNATORIES_LENGTH
     );
   }
 );
