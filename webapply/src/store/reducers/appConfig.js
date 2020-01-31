@@ -29,7 +29,7 @@ const appConfigReducer = (state = initialState, action) => {
     case REHYDRATE: {
       return {
         ...state,
-        prospect: action.payload.appConfig.prospect
+        prospect: get(action, "payload.appConfig.prospect", state.prospect)
       };
     }
     case RECEIVE_APPCONFIG:
