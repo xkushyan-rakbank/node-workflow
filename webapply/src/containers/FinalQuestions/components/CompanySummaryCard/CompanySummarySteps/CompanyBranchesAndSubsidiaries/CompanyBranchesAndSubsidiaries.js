@@ -39,7 +39,7 @@ const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
         companyName: Yup.string()
           .required(getRequiredMessage("Company name"))
           .matches(COMPANY_NAME_REGEX, getInvalidMessage("Company name")),
-        emirate: Yup.string().required(getRequiredMessage("Emirate")),
+        emirate: Yup.string().required(getRequiredMessage("Emirate/ City")),
         tradeLicenseNo: Yup.string()
           .required(getRequiredMessage("Trade license number"))
           .max(20, "Maximum 20 characters allowed")
@@ -186,7 +186,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 name={`entitiesInUAE[${index}].emirate`}
                                 path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
                                 datalistId="emirateCity"
-                                label="Emirate"
+                                label="Emirate/ City"
                                 component={CustomSelect}
                                 inputProps={{ tabIndex: 0 }}
                               />
