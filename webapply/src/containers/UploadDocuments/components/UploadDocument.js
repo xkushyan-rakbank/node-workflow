@@ -94,6 +94,7 @@ export const UploadDocuments = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const reUploadHandler = useCallback(() => {
     inputEl.current.click();
     setSelectedFile(null);
