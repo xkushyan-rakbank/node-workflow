@@ -8,7 +8,7 @@ import { SelectAutocomplete } from "../../../../components/Form";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
-import { useStyles } from "./styled";
+import { useStyles } from "../../styled";
 
 const initialValues = {
   industry: [],
@@ -84,17 +84,13 @@ export const Industry = ({ handleContinue }) => {
             </Grid>
           </Grid>
           <Grid
-            className={classes.continueButtonGrid}
+            className={classes.continueButton}
             container
             direction="row"
             justify="space-between"
           >
-            <Grid item xs={9}>
-              <InfoTitle title="These should be the same as in your Trade License. You can select multiple industries." />
-            </Grid>
-            <Grid item xs={3}>
-              <ContinueButton type="submit" />
-            </Grid>
+            <InfoTitle title="These should be the same as in your Trade License. You can select multiple industries." />
+            <ContinueButton type="submit" />
           </Grid>
         </Form>
       )}
