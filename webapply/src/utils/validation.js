@@ -10,6 +10,7 @@ export const MAX_NON_UAE_PHONE_LENGTH = 22;
 export const NUMBER_REGEX = /^[0-9]*$/;
 
 export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9])*$/;
+export const ALPHANUMERIC_WITH_HYPHEN_REGEX = /^([a-zA-Z0-9-])*$/;
 
 export const COMPANY_NAME_REGEX = /^([a-zA-Z '”`-]){1,30}$/;
 export const BANK_NAME_REGEX = /^([a-zA-Z. ]){1,50}$/;

@@ -54,14 +54,14 @@ export const ValueAddedServicesComponent = ({
       updateProspect({ [RAK_VALUE_PACKAGE_PATH]: serviceName });
       GA.triggerEvent(events.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE);
     },
-    [rakValuePackage, accountType, RAK_VALUE_PACKAGE_PATH, updateProspect]
+    [rakValuePackage, accountType, updateProspect]
   );
 
   useEffect(() => {
     updateProspect({
       [RAK_VALUE_PACKAGE_PATH]: accountType === accountNames.starter ? "RAKvalue PLUS" : ""
     });
-  }, [accountType, RAK_VALUE_PACKAGE_PATH, updateProspect]);
+  }, [accountType, updateProspect]);
   return (
     <>
       <div className={cx(classes.formWrapper, { [classes.disabled]: isSelectOnlyForeignCurrency })}>

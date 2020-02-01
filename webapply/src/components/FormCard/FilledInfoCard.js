@@ -7,7 +7,7 @@ const useStyles = makeStyles({
   contentWrapper: {
     display: "flex",
     alignItems: "center",
-    height: "62px",
+    height: "40px",
     margin: "30px 32px 30px 20px"
   }
 });

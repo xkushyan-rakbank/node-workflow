@@ -14,7 +14,7 @@ import {
 } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
-import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
+import { ALPHANUMERIC_WITH_HYPHEN_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
@@ -32,7 +32,7 @@ const initialValues = {
 const licenseInformationSchema = Yup.object({
   licenseNumber: Yup.string()
     .required(getRequiredMessage("License number"))
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("License number")),
+    .matches(ALPHANUMERIC_WITH_HYPHEN_REGEX, getInvalidMessage("License number")),
   licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
   countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
   licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
