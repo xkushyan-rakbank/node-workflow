@@ -5,7 +5,7 @@ import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
-import { finalQuestionsSteps, COMPANY_FIELD_NAME, STEP_1 } from "./constants";
+import { finalQuestionsSteps, COMPANY_PATH, STEP_1, FINAL_QUESTIONS_PAGE } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -52,7 +52,8 @@ export const CompanySummaryCardComponent = ({
           handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
-          fieldName={COMPANY_FIELD_NAME}
+          path={COMPANY_PATH}
+          page={FINAL_QUESTIONS_PAGE}
           initialStep={STEP_1}
         />
       </div>

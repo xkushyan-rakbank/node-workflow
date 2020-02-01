@@ -2,17 +2,23 @@ import React, { useEffect } from "react";
 
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
-import { useStep } from "../../../../components/StepComponent/useStep";
+import { useReduxStep } from "../../../../components/StepComponent/useReduxStep";
 
 export const FinalQuestionStepComponent = ({
   index = null,
   handleFinalStepContinue,
   sendProspectToAPI,
   stepsArray,
-  fieldName,
-  initialStep
+  initialStep,
+  page,
+  path
 }) => {
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(initialStep);
+  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
+    initialStep,
+    page,
+    path,
+    index
+  );
 
   const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
 
@@ -35,7 +41,7 @@ export const FinalQuestionStepComponent = ({
       title={item.title}
       infoTitle={item.infoTitle}
       isActiveStep={step === item.step}
-      isFilled={availableSteps.includes(item.step)}
+      isFilled={completedSteps.includes(item.step)}
       handleClick={createSetStepHandler(item.step)}
       handleContinue={handleContinue}
       stepForm={item.component}

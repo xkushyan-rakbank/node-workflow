@@ -1,14 +1,9 @@
-export const SET_COMPANY_STEPS_COMPLETE = "SET_COMPANY_STEPS_COMPLETE";
-export const SET_SIGNATORY_STEPS_COMPLETE = "SET_SIGNATORY_STEPS_COMPLETE";
+export const SET_COMPLETED_STEPS = "SET_COMPLETED_STEPS";
 export const ADD_SIGNATORY = "ADD_SIGNATORY";
 export const REMOVE_SIGNATORY = "REMOVE_SIGNATORY";
 
-export const setCompanyStepsComplete = value => {
-  return { type: SET_COMPANY_STEPS_COMPLETE, value };
-};
-
-export const setSignatoryStepsComplete = (index, value) => {
-  return { type: SET_SIGNATORY_STEPS_COMPLETE, payload: { index, value } };
+export const setCompletedSteps = (path, steps) => {
+  return { type: SET_COMPLETED_STEPS, payload: { path, steps } };
 };
 
 export const addSignatory = () => {

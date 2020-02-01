@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import cx from "classnames";
 
 import routes from "../../routes";
@@ -7,15 +7,12 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
+import { COMPANY_PATH, FINAL_QUESTIONS_PAGE } from "./components/CompanySummaryCard/constants";
 import {
-  COMPANY_FIELD_NAME,
-  FINAL_QUESTIONS_PAGE
-} from "./components/CompanySummaryCard/constants";
-import { SIGNATORY_FIELD_NAME } from "./components/SignatorySummaryCard/constants";
-import {
-  setCompanyStepsComplete,
-  setSignatoryStepsComplete
-} from "../../store/actions/completedSteps";
+  signatoriesSteps,
+  SIGNATORY_FIELD_NAME
+} from "./components/SignatorySummaryCard/constants";
+import { finalQuestionsSteps } from "./components/CompanySummaryCard/constants";
 
 import { useStyles } from "./styled";
 
@@ -23,10 +20,9 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
   const [expandedSignatoryIndex, setExpandedSignatoryIndex] = useState(null);
   const classes = useStyles();
-  const dispatch = useDispatch();
 
-  const isCompanyStepsCompleted = useSelector(
-    state => state.completedSteps[FINAL_QUESTIONS_PAGE][COMPANY_FIELD_NAME]
+  const completedCompanySteps = useSelector(
+    state => state.completedSteps[FINAL_QUESTIONS_PAGE][COMPANY_PATH] || []
   );
   const completedSignatoriesSteps = useSelector(
     state => state.completedSteps[FINAL_QUESTIONS_PAGE][SIGNATORY_FIELD_NAME] || []
@@ -34,13 +30,8 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
-  const handleFinalStepContinue = (nextIndex, index = null) => {
+  const handleFinalStepContinue = nextIndex => {
     setExpandedSignatoryIndex(nextIndex);
-    if (index !== null) {
-      dispatch(setSignatoryStepsComplete(index, true));
-    } else {
-      dispatch(setCompanyStepsComplete(true));
-    }
   };
 
   const switchExpandedMargin = useCallback(() => setIsExpandedMargin(!isExpandedMargin), [
@@ -59,7 +50,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         <CompanySummaryCard
           switchExpandedMargin={switchExpandedMargin}
           handleFinalStepContinue={handleFinalStepContinue}
-          isCompanyStepsCompleted={isCompanyStepsCompleted}
+          isCompanyStepsCompleted={finalQuestionsSteps.length === completedCompanySteps.length}
         />
       </div>
       <div className={classes.sectionContainer}>
@@ -79,8 +70,10 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         <BackLink path={routes.stakeholdersInfo} />
         <SubmitButton
           disabled={
-            !isCompanyStepsCompleted ||
-            completedSignatoriesSteps.some(signatoryCompletedSteps => !signatoryCompletedSteps)
+            finalQuestionsSteps.length !== completedCompanySteps.length ||
+            completedSignatoriesSteps.some(
+              signatoryCompletedSteps => signatoryCompletedSteps.length < signatoriesSteps.length
+            )
           }
           handleClick={goToUploadDocument}
           label="Next Step"

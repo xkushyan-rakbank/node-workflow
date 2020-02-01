@@ -1,46 +1,25 @@
-import {
-  SET_COMPANY_STEPS_COMPLETE,
-  SET_SIGNATORY_STEPS_COMPLETE,
-  ADD_SIGNATORY,
-  REMOVE_SIGNATORY
-} from "../actions/completedSteps";
+import { SET_COMPLETED_STEPS, ADD_SIGNATORY, REMOVE_SIGNATORY } from "../actions/completedSteps";
 
 export const initialState = {
   finalQuestions: {
-    companySteps: false,
+    companySteps: [],
     signatorySteps: []
   }
 };
 
 const completedSteps = (state = initialState, action) => {
   switch (action.type) {
-    case SET_COMPANY_STEPS_COMPLETE:
+    case SET_COMPLETED_STEPS:
       return {
         ...state,
-        finalQuestions: {
-          ...state.finalQuestions,
-          companySteps: action.value
-        }
-      };
-    case SET_SIGNATORY_STEPS_COMPLETE:
-      return {
-        ...state,
-        finalQuestions: {
-          ...state.finalQuestions,
-          signatorySteps: state.finalQuestions.signatorySteps.map((signatory, index) => {
-            if (index === action.payload.index) {
-              return action.payload.value;
-            }
-            return signatory;
-          })
-        }
+        [action.payload.path]: action.payload.steps
       };
     case ADD_SIGNATORY:
       return {
         ...state,
         finalQuestions: {
           ...state.finalQuestions,
-          signatorySteps: [...state.finalQuestions.signatorySteps, false]
+          signatorySteps: [...state.finalQuestions.signatorySteps, []]
         }
       };
     case REMOVE_SIGNATORY:

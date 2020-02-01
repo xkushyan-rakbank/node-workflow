@@ -10,7 +10,7 @@ export const STEP_3 = 3;
 export const STEP_4 = 4;
 export const STEP_5 = 5;
 
-export const COMPANY_FIELD_NAME = "companySteps";
+export const COMPANY_PATH = "companySteps";
 
 export const FINAL_QUESTIONS_PAGE = "finalQuestions";
 
