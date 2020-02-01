@@ -38,7 +38,7 @@ const signatoryPreferredMailingAddressSchema = Yup.object().shape({
   poBox: Yup.string()
     .required(getRequiredMessage("PO Box Number"))
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
-  emirateCity: Yup.string().required(getRequiredMessage("Emirate"))
+  emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City"))
 });
 
 export const SignatoryPreferredMailingAddressComponent = ({
@@ -127,7 +127,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   path={`${autoSavePathBase}.emirateCity`}
                   disabled={values.sameAsCompanyAddress}
                   datalistId="emirateCity"
-                  label="Emirate"
+                  label="Emirate/ City"
                   component={CustomSelect}
                   inputProps={{ tabIndex: 0 }}
                 />
