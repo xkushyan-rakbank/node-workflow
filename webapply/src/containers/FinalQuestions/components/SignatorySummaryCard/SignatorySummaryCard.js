@@ -6,8 +6,9 @@ import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps, SIGNATORY_FIELD_NAME, STEP_1 } from "./constants";
+import { signatoriesSteps, SIGNATORY_PATH, STEP_1 } from "./constants";
 import { checkIsAccountInfoTypeNumber } from "./utils";
+import { FINAL_QUESTIONS_PAGE } from "../CompanySummaryCard/constants";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
@@ -20,7 +21,7 @@ export const SignatorySummaryCardComponent = ({
   handleFinalStepContinue,
   completedSignatoriesSteps
 }) => {
-  const isSignatoryStepsCompleted = completedSignatoriesSteps[index];
+  const completedSteps = completedSignatoriesSteps[index];
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
@@ -42,7 +43,8 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {expandedSignatoryIndex !== index && isSignatoryStepsCompleted && (
+            {// eslint-disable-next-line max-len
+            expandedSignatoryIndex !== index && completedSteps.length === signatoriesSteps.length && (
               <LinkButton
                 clickHandler={() => {
                   setExpandedSignatoryIndex(index);
@@ -60,7 +62,8 @@ export const SignatorySummaryCardComponent = ({
           stepsArray={signatoriesSteps}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
-          fieldName={SIGNATORY_FIELD_NAME}
+          path={SIGNATORY_PATH}
+          page={FINAL_QUESTIONS_PAGE}
           initialStep={STEP_1}
         />
       </div>
