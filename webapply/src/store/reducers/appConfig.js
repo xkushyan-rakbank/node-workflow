@@ -14,7 +14,11 @@ export const initialState = {
   loading: false,
   uiConfig: {},
   endpoints: {},
-  prospect: {},
+  prospect: {
+    applicationInfo: {
+      islamicBanking: false
+    }
+  },
   dataList: {},
   error: "",
   prospectError: false,
