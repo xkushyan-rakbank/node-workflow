@@ -1,8 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { stakeholdersSelector } from "../../../../store/selectors/stakeholder";
 import {
   InlineRadioGroup,
   SelectAutocomplete,
@@ -22,14 +25,17 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-export const SignatoryRights = ({ handleContinue, index }) => (
+const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => (
   <Formik
-    initialValues={{ authorityType: "", isSignatory: "" }}
+    initialValues={{
+      authorityType: stakeholders[index].accountSigningInfo.authorityType,
+      isSignatory: ""
+    }}
     onSubmit={handleContinue}
     validationSchema={signatoryRightsSchema}
     validateOnChange={false}
   >
-    {withCompanyStakeholder(index, ({ values, setFieldValue }) => (
+    {withCompanyStakeholder(index, ({ values, setFieldValue, setFieldTouched }) => (
       <Form>
         <Grid container>
           <Field
@@ -42,7 +48,15 @@ export const SignatoryRights = ({ handleContinue, index }) => (
               ...prospect,
               [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
             })}
-            onSelect={() => setFieldValue("authorityType", "")}
+            onSelect={() => {
+              if (values.isSignatory) {
+                setFieldValue("authorityType", "");
+                updateProspect({
+                  [`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`]: ""
+                });
+                setFieldTouched("authorityType", false);
+              }
+            }}
             InputProps={{
               inputProps: { tabIndex: 0 }
             }}
@@ -66,3 +80,16 @@ export const SignatoryRights = ({ handleContinue, index }) => (
     ))}
   </Formik>
 );
+
+const mapStateToProps = state => ({
+  stakeholders: stakeholdersSelector(state)
+});
+
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export const SignatoryRights = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignatoryRightsComponent);

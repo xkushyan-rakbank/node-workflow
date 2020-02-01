@@ -10,7 +10,6 @@ import { ArrayAddButton } from "../../../Buttons/ArrayAddButton";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
   Checkbox,
-  CustomSelect,
   Input,
   SelectAutocomplete,
   AutoSaveField as Field
@@ -186,7 +185,8 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
                                 datalistId="emirateCity"
                                 label="Emirate"
-                                component={CustomSelect}
+                                isSearchable={false}
+                                component={SelectAutocomplete}
                                 inputProps={{ tabIndex: 0 }}
                               />
                               {!!index && (
