@@ -32,7 +32,7 @@ export const useStyles = makeStyles({
   viewColumn: {
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     flexDirection: "column",
-    marginTop: "45px",
+    marginTop: "40px",
     borderRadius: "8px"
   },
   veiwRow: {
@@ -40,7 +40,7 @@ export const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap: "wrap",
-    marginTop: "45px"
+    marginTop: "20px"
   },
   centeredContainer: {
     display: "flex",
@@ -51,6 +51,7 @@ export const useStyles = makeStyles({
   }, //grid css start
   gridContainer: {
     flex: "0 0 50%",
+    marginTop: "20px",
     flexBasis: "calc(100% / 2)",
     height: "263px",
     maxWidth: "49%"

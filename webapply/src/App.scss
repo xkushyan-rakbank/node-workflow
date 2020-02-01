@@ -1,50 +1,51 @@
 // Open Sans Light
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 300;
   font-style: normal;
   font-display: swap;
-  src: url('assets/fonts/OpenSans-Light.eot');
-  src: local('Open Sans'), url('assets/fonts/OpenSans-Light.eot?#iefix') format('embedded-opentype'),
-  url('assets/fonts/OpenSans-Light.woff') format('woff'),
-  url('assets/fonts/OpenSans-Light.ttf')  format('truetype'),
-  url('assets/fonts/OpenSans-Light.svg#svgFontName') format('svg');
+  src: url("assets/fonts/OpenSans-Light.eot");
+  src: local("Open Sans"), url("assets/fonts/OpenSans-Light.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/OpenSans-Light.woff") format("woff"),
+    url("assets/fonts/OpenSans-Light.ttf") format("truetype"),
+    url("assets/fonts/OpenSans-Light.svg#svgFontName") format("svg");
 }
 // Open Sans Regular
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url('assets/fonts/OpenSans-Regular.eot');
-  src: local('Open Sans'), url('assets/fonts/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
-  url('assets/fonts/OpenSans-Regular.woff') format('woff'),
-  url('assets/fonts/OpenSans-Regular.ttf')  format('truetype'),
-  url('assets/fonts/OpenSans-Regular.svg#svgFontName') format('svg');
+  src: url("assets/fonts/OpenSans-Regular.eot");
+  src: local("Open Sans"),
+    url("assets/fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/OpenSans-Regular.woff") format("woff"),
+    url("assets/fonts/OpenSans-Regular.ttf") format("truetype"),
+    url("assets/fonts/OpenSans-Regular.svg#svgFontName") format("svg");
 }
 // Open Sans SemiBold
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 600;
   font-style: normal;
   font-display: swap;
-  src: url('assets/fonts/OpenSans-SemiBold.eot');
-  src: url('assets/fonts/OpenSans-SemiBold.eot?#iefix') format('embedded-opentype'),
-  url('assets/fonts/OpenSans-SemiBold.woff') format('woff'),
-  url('assets/fonts/OpenSans-SemiBold.ttf')  format('truetype'),
-  url('assets/fonts/OpenSans-SemiBold.svg#svgFontName') format('svg');
+  src: url("assets/fonts/OpenSans-SemiBold.eot");
+  src: url("assets/fonts/OpenSans-SemiBold.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/OpenSans-SemiBold.woff") format("woff"),
+    url("assets/fonts/OpenSans-SemiBold.ttf") format("truetype"),
+    url("assets/fonts/OpenSans-SemiBold.svg#svgFontName") format("svg");
 }
 // Open Sans Bold
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url('assets/fonts/OpenSans-Bold.eot');
-  src: url('assets/fonts/OpenSans-Bold.eot?#iefix') format('embedded-opentype'),
-  url('assets/fonts/OpenSans-Bold.woff') format('woff'),
-  url('assets/fonts/OpenSans-Bold.ttf')  format('truetype'),
-  url('assets/fonts/OpenSans-Bold.svg#svgFontName') format('svg');
+  src: url("assets/fonts/OpenSans-Bold.eot");
+  src: url("assets/fonts/OpenSans-Bold.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/OpenSans-Bold.woff") format("woff"),
+    url("assets/fonts/OpenSans-Bold.ttf") format("truetype"),
+    url("assets/fonts/OpenSans-Bold.svg#svgFontName") format("svg");
 }
 
 $mobileResolution: 955;
@@ -372,10 +373,6 @@ h3 {
 
 .MuiOutlinedInput-inputSelect {
   padding-right: 56px !important;
-}
-
-.MuiMenu-paper {
-  margin-top: 54px;
 }
 
 .hidden {

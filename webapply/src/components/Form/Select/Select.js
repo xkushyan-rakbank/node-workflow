@@ -38,6 +38,18 @@ export const CustomSelect = ({
   const [labelWidth, setLabelWidth] = React.useState(0);
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
+  const MenuProps = {
+    getContentAnchorEl: null,
+    anchorOrigin: {
+      vertical: "bottom",
+      horizontal: "left"
+    },
+    PaperProps: {
+      style: {
+        maxHeight: 300
+      }
+    }
+  };
 
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
@@ -66,6 +78,7 @@ export const CustomSelect = ({
           IconComponent={KeyboardArrowDownIcon}
           className={cx(classes.selectField, classes.selectFieldBasic)}
           error={isError}
+          MenuProps={MenuProps}
         >
           {options.map(option => (
             <MenuItem key={extractId(option)} value={extractValue(option)}>

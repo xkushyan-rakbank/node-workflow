@@ -4,7 +4,7 @@ export const EXTRA_DOC_UPLOAD_SUCCESS = "EXTRA_DOC_UPLOAD_SUCCESS";
 export const DELETE_EXTRA_DOC_UPLOAD_SUCCESS = "DELETE_EXTRA_DOC_UPLOAD_SUCCESS";
 export const CANCEL_DOC_UPLOAD = "CANCEL_DOC_UPLOAD";
 export const START_DOC_UPLOAD = "START_DOC_UPLOAD";
-
+export const UPLOAD_FILES_FAIL = "UPLOAD_FILES_FAIL";
 export const UPLOAD_FILES_PROGRESS = "UPLOAD_FILES_PROGRESS";
 
 export const retrieveDocDetails = () => {
@@ -29,4 +29,8 @@ export const cancelDocUpload = documentKey => {
 
 export const uploadFilesProgress = progress => {
   return { type: UPLOAD_FILES_PROGRESS, progress };
+};
+
+export const uploadFilesFail = error => {
+  return { type: UPLOAD_FILES_FAIL, error };
 };

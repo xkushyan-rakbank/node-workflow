@@ -128,17 +128,16 @@ export const useStyles = makeStyles({
     color: "#373737"
   },
   fileUploadPlaceholder: {
-    height: "50px",
+    minHeight: "50px",
     display: "flex",
     alignItems: "center",
     padding: "0 25px",
-    borderTop: "solid 1px rgba(230, 230, 230, 0.5)",
-    cursor: "pointer"
+    borderTop: "solid 1px rgba(230, 230, 230, 0.5)"
   },
   ContentBox: {
     alignItems: "center",
     flexGrow: "1",
-    paddingLeft: "18px"
+    padding: "7px 18px"
   },
 
   uploadedFileName: {
@@ -159,7 +158,11 @@ export const useStyles = makeStyles({
     fontStyle: "normal",
     fontStretch: "normal",
     lineHeight: ".6",
-    letterSpacing: "normal"
+    letterSpacing: "normal",
+    margin: "10px 0 0 0",
+    "& p": {
+      margin: 0
+    }
   },
   ControlsBox: {
     width: "130px",
@@ -191,7 +194,8 @@ export const useStyles = makeStyles({
     lineHeight: "1.17",
     letterSpacing: "normal",
     color: "#373737",
-    paddingLeft: "5px"
+    display: "flex",
+    alignItems: "center"
   },
   signatoryRights: {
     width: "39px",
@@ -219,28 +223,28 @@ export const useStyles = makeStyles({
     paddingLeft: "11px"
   },
   ErrorExplanation: {
+    display: "flex",
+    alignItems: "center",
     fontSize: "12px",
     fontWeight: "normal",
     fontStyle: "normal",
     fontStretch: "normal",
     lineHeight: ".6",
     letterSpacing: "normal",
-    color: "#ea2925"
+    color: "#ea2925",
+    "& svg": {
+      marginRight: " 10px"
+    }
   },
-
+  tryAgain: {
+    textDecoration: "underline",
+    marinLeft: "3px",
+    cursor: "pointer"
+  },
   cancel: {
-    width: 20,
-    border: "solid 1px #e8e8e8",
-    height: 20,
+    width: 24,
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
-    borderRadius: 25,
-    backgroundColor: "#ffffff",
-    margin: 0,
-    display: "flex",
-    justifyContent: "center",
-    padding: 1,
-    fontSize: 15,
-    fontWeight: "bold"
+    cursor: "pointer"
   },
   defaultInput: {
     display: "none"

@@ -9,9 +9,6 @@ export const useStyles = makeStyles({
     "& span": {
       display: "block"
     },
-    "& span:first-child": {
-      fontWeight: "600"
-    },
     "& span + span": {
       fontSize: "12px",
       color: "#888",
@@ -28,20 +25,21 @@ export const useStyles = makeStyles({
     }
   },
   tableCellActive: {
-    fontWeight: "bold",
     "& span:first-child": {
       fontWeight: "600"
     },
-    "& span:last-child": {
-      fontWeight: "400"
-    },
-    "& button": {
-      width: "150px",
-      height: "40px",
-      backgroundColor: "#000",
-      "& span:first-child": {
-        color: "#fff",
-        fontSize: "16px"
+    "& span": {
+      "&:before": {
+        content: "''",
+        position: "absolute",
+        left: 0,
+        right: 0,
+        margin: "0 auto",
+        width: "90%",
+        height: 1,
+        backgroundColor: "#e8e8e8",
+        display: "block",
+        top: 0
       }
     }
   }

@@ -4,11 +4,11 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { AutoSaveField as Field } from "../../../../components/Form";
-import { SearchableSelectAutocomplete } from "./SearchableSelectAutocomplete";
+import { SelectAutocomplete } from "../../../../components/Form";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
-import { useStyles } from "./styled";
+import { useStyles } from "../../styled";
 
 const initialValues = {
   industry: [],
@@ -28,14 +28,6 @@ const industrySchema = Yup.object({
       .max(12, "Maximum 12 options allowed")
   })
 });
-
-const validateSearchValue = searchValue => {
-  if (searchValue && searchValue.length > 12) {
-    return "Max length of search value is 12";
-  }
-
-  return "";
-};
 
 export const Industry = ({ handleContinue }) => {
   const classes = useStyles();
@@ -57,8 +49,7 @@ export const Industry = ({ handleContinue }) => {
                 label="Industry"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].industry"
                 datalistId="industry"
-                validateSearchField={validateSearchValue}
-                component={SearchableSelectAutocomplete}
+                component={SelectAutocomplete}
                 contextualHelpText="This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. Example: if business / commercial / licensed activity is 'E Commerce', please select industry as 'Service' & sub-industry as 'Computer & IT Industry' "
                 contextualHelpProps={{ isDisableHoverListener: false }}
                 onChange={selectedValue => {
@@ -76,8 +67,7 @@ export const Industry = ({ handleContinue }) => {
                 name="subCategory"
                 label="Industry sub-category"
                 path="prospect.orgKYCDetails.industryMultiSelect[0].subCategory"
-                validateSearchField={validateSearchValue}
-                component={SearchableSelectAutocomplete}
+                component={SelectAutocomplete}
                 datalistId="industry"
                 filterOptions={options =>
                   options
@@ -94,17 +84,13 @@ export const Industry = ({ handleContinue }) => {
             </Grid>
           </Grid>
           <Grid
-            className={classes.continueButtonGrid}
+            className={classes.continueButton}
             container
             direction="row"
             justify="space-between"
           >
-            <Grid item xs={9}>
-              <InfoTitle title="These should be the same as in your Trade License. You can select multiple industries." />
-            </Grid>
-            <Grid item xs={3}>
-              <ContinueButton type="submit" />
-            </Grid>
+            <InfoTitle title="These should be the same as in your Trade License. You can select multiple industries." />
+            <ContinueButton type="submit" />
           </Grid>
         </Form>
       )}

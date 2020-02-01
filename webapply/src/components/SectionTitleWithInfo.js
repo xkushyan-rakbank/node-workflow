@@ -21,12 +21,12 @@ const useStyles = makeStyles({
   }
 });
 
-export const SectionTitleWithInfo = ({ title, info, classes: extendedClasses }) => {
+export const SectionTitleWithInfo = ({ className, title, info, classes: extendedClasses }) => {
   const classes = useStyles({ classes: extendedClasses });
   return (
-    <>
+    <div className={className}>
       <h3 className={classes.title}>{title}</h3>
       <span className={classes.info}>{info}</span>
-    </>
+    </div>
   );
 };

@@ -17,20 +17,7 @@ export const useStyles = makeStyles({
       flexWrap: "wrap"
     },
     "@media only screen and (min-width: 1920px)": {
-      maxWidth: "1920px",
-      marginLeft: "auto",
-      marginRight: "auto",
-      "&:before": {
-        content: "''",
-        position: "fixed",
-        left: 0,
-        top: 0,
-        width: "calc((100vw - 1918px) / 2)",
-        height: "100%",
-        backgroundColor: ({ color }) =>
-          color === "brown" ? "#b36446" : color === "green" ? "#407b35" : "#eb2f16",
-        zIndex: 12
-      }
+      maxWidth: "1920px"
     }
   },
   formWrapper: {

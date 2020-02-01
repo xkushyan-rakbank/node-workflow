@@ -5,6 +5,7 @@ import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
+import { InfoTitle } from "../../../../../../components/Notifications";
 import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
 import { WEALTH_TYPE__REGEX } from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
@@ -67,6 +68,12 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   contextualHelpProps={{ isDisableHoverListener: false }}
                   component={CustomSelect}
                   inputProps={{ tabIndex: 0 }}
+                />
+                <InfoTitle
+                  classes={{
+                    wrapper: classes.infoTitles
+                  }}
+                  title="You can select multiple values"
                 />
               </Grid>
               <Grid

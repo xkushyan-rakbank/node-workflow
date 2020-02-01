@@ -29,6 +29,11 @@ import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
+import {
+  getReCaptchaError,
+  getReCaptchaPending,
+  getReCaptchaVerified
+} from "../../store/selectors/reCaptcha";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -68,7 +73,10 @@ const ApplicantInfoPage = ({
   setVerified,
   reCaptchaToken,
   isRecaptchaEnable,
-  isConfigLoading
+  isReCaptchaVerified,
+  isConfigLoading,
+  isReCaptchaError,
+  isReCaptchaPending
 }) => {
   useEffect(() => {
     const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
@@ -172,13 +180,25 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
+                {console.log(
+                  "isReCaptchaVerified:",
+                  isReCaptchaVerified,
+                  "isRecaptchaEnable:",
+                  isRecaptchaEnable
+                )}
+                {console.log(
+                  "isReCaptchaError",
+                  isReCaptchaError,
+                  "isReCaptchaPending",
+                  isReCaptchaPending
+                )}
                 <BackLink path={routes.accountsComparison} />
                 <SubmitButton
                   disabled={
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    (isRecaptchaEnable && !reCaptchaToken)
+                    (isRecaptchaEnable && !reCaptchaToken && isReCaptchaVerified)
                   }
                   justify="flex-end"
                   label="Next Step"
@@ -195,7 +215,10 @@ const ApplicantInfoPage = ({
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
   isConfigLoading: state.appConfig.loading,
-  isRecaptchaEnable: getIsRecaptchaEnable(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  isReCaptchaVerified: getReCaptchaVerified(state),
+  isReCaptchaError: getReCaptchaError(state),
+  isReCaptchaPending: getReCaptchaPending(state)
 });
 
 const mapDispatchToProps = {

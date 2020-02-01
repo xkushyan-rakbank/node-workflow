@@ -8,7 +8,7 @@ import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import companyInfoIcon from "./../../assets/icons/companyInfo.png";
+import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
   getOrganizationInfo,
@@ -42,7 +42,7 @@ export const CompanyInfoPage = ({
 
   return (
     <>
-      <h2>Tell Us about Your Company</h2>
+      <h2 className={classes.pageTitle}>Tell Us about Your Company</h2>
       <p className={classes.username}>Welcome, {fullName}!</p>
       <p className={cx(classes.sectionTitleIndent, classes.username)}>
         Now that we know each other, we want to know a bit more about your company.

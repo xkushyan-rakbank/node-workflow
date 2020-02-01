@@ -100,7 +100,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   name="emirateCity"
                   path={`${BASE_PATH}.emirateCity`}
                   datalistId="emirateCity"
-                  label="Emirate"
+                  label="Emirate / City"
                   isSearchable={false}
                   component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}

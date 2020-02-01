@@ -7,6 +7,9 @@ export const useStyles = makeStyles(theme => ({
     padding: 0,
     minHeight: "56px",
     height: "auto",
+    "& > *": {
+      minHeight: "56px"
+    },
     "& + fieldset": {
       borderRadius: "8px ",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
@@ -66,8 +69,22 @@ export const useStyles = makeStyles(theme => ({
 }));
 
 export const customStyles = {
-  menu: provided => ({
-    ...provided,
-    zIndex: 2
-  })
+  menu: (provided, { selectProps: { otherProps } }) => {
+    const width = otherProps && otherProps.menuFullWidth ? "auto" : "100%";
+    return {
+      ...provided,
+      zIndex: 2,
+      width
+    };
+  },
+  singleValue: (provided, { selectProps: { otherProps } }) => {
+    const whiteSpace = otherProps && otherProps.sinleValueWrap ? "normal" : "nowrap";
+    const fontSize = otherProps && otherProps.sinleValueWrap ? "15px" : "inherit";
+    return {
+      ...provided,
+      padding: "2px",
+      whiteSpace,
+      fontSize
+    };
+  }
 };

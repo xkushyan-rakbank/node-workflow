@@ -1,4 +1,5 @@
 import get from "lodash/get";
+import { REHYDRATE } from "redux-persist";
 
 import {
   RECEIVE_APPCONFIG,
@@ -14,7 +15,11 @@ export const initialState = {
   loading: false,
   uiConfig: {},
   endpoints: {},
-  prospect: {},
+  prospect: {
+    applicationInfo: {
+      islamicBanking: false
+    }
+  },
   dataList: {},
   error: "",
   prospectError: false,
@@ -25,6 +30,12 @@ export const initialState = {
 
 const appConfigReducer = (state = initialState, action) => {
   switch (action.type) {
+    case REHYDRATE: {
+      return {
+        ...state,
+        prospect: get(action, "payload.appConfig.prospect", state.prospect)
+      };
+    }
     case RECEIVE_APPCONFIG:
       return {
         ...state,

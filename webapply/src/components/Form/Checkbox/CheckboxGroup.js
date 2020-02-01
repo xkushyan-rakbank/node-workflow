@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
 import { RadioGroup } from "@material-ui/core";
@@ -18,6 +18,7 @@ export const CheckboxesWrapper = styled("div")({
 export const CheckboxGroup = ({
   typeRadio,
   options,
+  filterOptions = options => options,
   extractId = option => option.key,
   extractValue = option => option.value,
   extractLabel = item => item.label || item.displayText,
@@ -33,13 +34,15 @@ export const CheckboxGroup = ({
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
 
+  const opts = useMemo(() => filterOptions(options), [options, filterOptions]);
+
   return (
     <FormControl className="formControl">
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         {typeRadio ? (
           <RadioGroup {...field}>
             <CheckboxesWrapper>
-              {options.map(item => (
+              {opts.map(item => (
                 <CustomRadioButton
                   key={extractId(item)}
                   value={extractValue(item)}
@@ -53,7 +56,7 @@ export const CheckboxGroup = ({
           </RadioGroup>
         ) : (
           <CheckboxesWrapper>
-            {options.map(item => (
+            {opts.map(item => (
               <CustomCheckbox
                 {...field}
                 key={extractId(item)}

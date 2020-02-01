@@ -29,10 +29,6 @@ export const useStyles = makeStyles({
     position: "relative",
     marginBottom: "20px"
   },
-  container: {
-    top: "calc(100% - 10px)",
-    right: "12px"
-  },
   buttonWrapper: {
     width: "100%",
     display: "flex",

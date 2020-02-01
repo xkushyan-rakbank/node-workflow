@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../../../constants";
+import { mobileResolution, tabletResolution } from "../../../../constants";
 
 import { portraitOrientationQueryIPads } from "../../../../constants/styles";
 
@@ -7,11 +7,20 @@ export const useStyles = makeStyles({
   cardsContainer: {
     display: "flex",
     flexWrap: "nowrap",
-    overflow: "auto",
+    overflow: "hidden",
     margin: "20px -26px -25px",
     padding: "0 16px 25px",
     [portraitOrientationQueryIPads]: {
       flexDirection: "column"
+    },
+    [`@media only screen and
+     (max-width: ${tabletResolution}px) and
+     (min-width: ${mobileResolution}px)`]: {
+      marginLeft: 0,
+      marginRight: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      justifyContent: "space-around"
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       marginLeft: -16,
@@ -22,6 +31,12 @@ export const useStyles = makeStyles({
   },
   cardsContainerItem: {
     padding: "0 10px",
+    width: "33.333%",
+    [`@media only screen and
+     (max-width: ${tabletResolution}px) and
+     (min-width: ${mobileResolution}px)`]: {
+      padding: "0 8px"
+    },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       "&:first-child": {
         paddingLeft: 16

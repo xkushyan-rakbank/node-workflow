@@ -10,8 +10,8 @@ export const accountTypesDescription = [
     title: "For Startups and Entrepreneurs",
     description: [
       "Zero balance account",
-      "Preferential transaction fees",
-      "Dedicated Relationship Manager"
+      "Free remittances & preferential forex rates",
+      "Free accounting package & business insurance"
     ],
     buttonText: accountNames.starter
   },
@@ -31,9 +31,9 @@ export const accountTypesDescription = [
     icon: established_businesses_ic,
     title: "For Established Businesses",
     description: [
-      "Free unlimited remittances",
+      "Select free services",
       "Host of lifestyle benefits",
-      "Dedicated Relationship Manager"
+      "Priority servicing & Dedicated Relationship Manager"
     ],
     buttonText: accountNames.elite
   }
