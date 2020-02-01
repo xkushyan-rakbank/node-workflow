@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
+import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
@@ -28,7 +29,7 @@ const signatoryRightsSchema = Yup.object().shape({
 const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => (
   <Formik
     initialValues={{
-      authorityType: stakeholders[index].accountSigningInfo.authorityType,
+      authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
       isSignatory: ""
     }}
     onSubmit={handleContinue}
