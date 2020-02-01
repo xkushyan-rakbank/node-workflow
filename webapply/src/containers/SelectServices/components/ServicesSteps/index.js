@@ -24,7 +24,7 @@ export const ServicesSteps = ({ step, clickHandler, handleContinue }) => {
               [classes.valueAddedServices]: step === GO_TO_SUBMIT_STEP
             })}
           >
-            <Component goToNext={handleContinue} activeStep={step} />
+            <Component goToNext={() => handleContinue(stepData.event_name)} activeStep={step} />
           </div>
         )}
       </div>

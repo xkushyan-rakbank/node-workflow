@@ -23,7 +23,6 @@ import {
 } from "../../../../utils/validation";
 import { UAE_CODE, MAX_EMAIL_LENGTH } from "../../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { GA, events } from "../../../../utils/ga";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
@@ -69,7 +68,6 @@ const preferredContactInformationSchema = Yup.object().shape({
 
 const PreferredContactInformationStep = ({ isSignatory, index, handleContinue }) => {
   const handleContinueGA = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_STAKEHOLDER_PREFERRED_CONTACT_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

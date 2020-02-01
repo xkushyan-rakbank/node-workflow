@@ -14,7 +14,6 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
 import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { GA, events } from "../../../../utils/ga";
 import { useStyles } from "../../styled";
 
 const initialValues = {
@@ -44,7 +43,6 @@ export const CompanyDetails = ({ handleContinue }) => {
   const classes = useStyles();
 
   const handleContinueGA = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_INFORMATION_DETAILS_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

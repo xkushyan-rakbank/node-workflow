@@ -28,7 +28,6 @@ import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getVali
 import { NAME_REGEX } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
-import { GA, events } from "../../../../utils/ga";
 
 const personalInformationSchema = Yup.object().shape({
   firstName: Yup.string().when("isShareholderACompany", {
@@ -61,7 +60,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
   const applicantInfo = useSelector(getApplicantInfo);
 
   const handleContinueGA = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_STAKEHOLDER_PERSONAL_INFORMATION_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

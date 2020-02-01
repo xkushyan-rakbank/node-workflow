@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { connect } from "react-redux";
+import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
@@ -26,7 +27,8 @@ import {
 import routes from "../../routes";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
-import { GA, events } from "../../utils/ga";
+import { events } from "../../utils/ga";
+import { STEP_1 } from "../FinalQuestions/components/CompanySummaryCard/constants";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -38,7 +40,8 @@ const CompanyStakeholdersComponent = ({
   history,
   resetProspect,
   stakeholdersIds,
-  datalist
+  datalist,
+  sendGoogleAnalyticsMetrics
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -54,7 +57,7 @@ const CompanyStakeholdersComponent = ({
   or edit the shareholding % for the added stakeholders.`;
 
   const goToFinalQuestions = () => {
-    GA.triggerEvent(events.COMPANY_STAKEHOLDER_SUBMITTED);
+    sendGoogleAnalyticsMetrics(events.COMPANY_STAKEHOLDER_SUBMITTED);
     history.push(routes.finalQuestions);
   };
 
@@ -120,6 +123,7 @@ const CompanyStakeholdersComponent = ({
               deleteStakeholder={handleDeleteStakeholder}
               isNewStakeholder={isNewStakeholder}
               orderIndex={index}
+              initialStep={STEP_1}
             />
           ) : (
             <FilledStakeholderCard
@@ -135,7 +139,10 @@ const CompanyStakeholdersComponent = ({
 
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
-          <AddStakeholderButton handleClick={addNewStakeholder} />
+          <AddStakeholderButton
+            handleClick={addNewStakeholder}
+            handleContinue={sendGoogleAnalyticsMetrics}
+          />
         </div>
       )}
 
@@ -178,7 +185,8 @@ const mapDispatchToProps = {
   sendProspectToAPI,
   createNewStakeholder,
   changeEditableStakeholder,
-  resetProspect
+  resetProspect,
+  sendGoogleAnalyticsMetrics
 };
 
 export const CompanyStakeholders = connect(

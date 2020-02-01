@@ -18,7 +18,6 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { GA, events } from "../../../../utils/ga";
 
 const PercentageInput = props => <NumberFormat decimalSeparator="." decimalScale={2} {...props} />;
 
@@ -43,7 +42,6 @@ const ShareholdingStep = ({
   index
 }) => {
   const handleContinueGA = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_STAKEHOLDER_SHAREHOLDING_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

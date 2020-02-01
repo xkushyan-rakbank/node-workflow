@@ -26,7 +26,6 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { GA, events } from "../../../../../../utils/ga";
 
 const companyPreferredMailingAddressSchema = Yup.object().shape({
   addressLine1: Yup.string()
@@ -47,7 +46,6 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
-    GA.triggerEvent(events.FINAL_QUESTION_PREFERRED_MAILING_ADDRESS_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import routes from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
@@ -9,8 +10,9 @@ import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { SUBMIT, NEXT } from "../../../../constants";
+import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
-import { GA, events } from "../../../../utils/ga";
+import { events } from "../../../../utils/ga";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -25,14 +27,14 @@ export const SubmitApplicationComponent = ({
 }) => {
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const dispatch = useDispatch();
   const handleSubmit = () => {
     setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
     sendProspectToAPI()
       .then(() => {
-        GA.triggerEvent(events.FORM_SUBMITTED);
+        dispatch(sendGoogleAnalyticsMetrics(events.FORM_SUBMITTED));
         history.push(routes.ApplicationSubmitted);
       })
       .finally(() => setIsSubmitting(false));

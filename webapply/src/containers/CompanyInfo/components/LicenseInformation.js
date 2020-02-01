@@ -18,7 +18,6 @@ import { ALPHANUMERIC_WITH_HYPHEN_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
-import { GA, events } from "../../../utils/ga";
 
 const initialValues = {
   licenseNumber: "",
@@ -49,7 +48,6 @@ const changeDateProspectHandler = (_, value, path) =>
 
 export const LicenseInformation = ({ handleContinue }) => {
   const handleContinueGA = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_INFORMATION_LICENSE_CONTINUE);
     handleContinue();
   }, [handleContinue]);
   return (

@@ -13,7 +13,6 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { yesNoOptions } from "../../../../constants/options";
 import { UAE } from "../../../../constants";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { GA, events } from "../../../../utils/ga";
 
 const signatoryRightsSchema = Yup.object().shape({
   isSignatory: Yup.boolean().required("Field Is this person a signatory is not filled"),
@@ -25,7 +24,6 @@ const signatoryRightsSchema = Yup.object().shape({
 
 export const SignatoryRights = ({ handleContinue, index }) => {
   const handleContinueGA = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_STAKEHOLDER_SIGNATORY_RIGHTS_CONTINUE);
     handleContinue();
   }, [handleContinue]);
   return (

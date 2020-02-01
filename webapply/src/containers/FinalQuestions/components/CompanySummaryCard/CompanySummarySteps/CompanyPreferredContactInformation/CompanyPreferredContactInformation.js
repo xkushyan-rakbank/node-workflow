@@ -25,7 +25,6 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { GA, events } from "../../../../../../utils/ga";
 
 const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
@@ -66,9 +65,7 @@ export const CompanyPreferredContactInformationComponent = ({
   handleContinue
 }) => {
   const classes = useStyles();
-
   const handleSubmit = useCallback(() => {
-    GA.triggerEvent(events.FINAL_QUESTION_PREFERRED_CONTACT_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

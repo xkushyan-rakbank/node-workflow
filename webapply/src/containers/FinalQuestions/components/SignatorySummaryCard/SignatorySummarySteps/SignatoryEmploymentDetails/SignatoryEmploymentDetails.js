@@ -33,7 +33,6 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { GA, events } from "../../../../../../utils/ga";
 
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required(getRequiredMessage("Qualification")),
@@ -60,7 +59,6 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
-    GA.triggerEvent(events.FINAL_QUESTION_EMPLOYMENT_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

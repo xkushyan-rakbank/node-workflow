@@ -42,9 +42,9 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics] = useStep(STEP_1);
 
-  const handleContinue = () =>
+  const handleContinue = event => () => {
     sendProspectToAPI().then(
       () => {
         if (isTooManyStakeholders) {
@@ -58,6 +58,9 @@ const StakeholderStepperComponent = ({
       },
       () => {}
     );
+    handleAnalytics(event);
+  };
+
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
@@ -101,7 +104,7 @@ const StakeholderStepperComponent = ({
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
             clickHandler={createSetStepHandler(item.step)}
-            handleContinue={handleContinue}
+            handleContinue={handleContinue(item.event_name)}
             stepForm={item.component}
           />
         ))}

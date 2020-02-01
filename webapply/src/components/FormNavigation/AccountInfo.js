@@ -1,7 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
-
+import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 import { ContainedButton } from "../Buttons/ContainedButton";
 import { MobileNotification } from "../Modals/index";
 
@@ -9,23 +10,23 @@ import { accountsInfo } from "./constants";
 import routes from "../../routes";
 
 import { useStyles } from "./styled";
-import { GA, events } from "../../utils/ga";
+import { events } from "../../utils/ga";
 
 export const AccountInfo = ({ accountType, islamicBanking }) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { location: { pathname } = {} } = history;
-
   const handleClick = path => () => {
     switch (path) {
       case routes.applicationOverview:
-        GA.triggerEvent(events.PRODUCT_APPLY);
+        dispatch(sendGoogleAnalyticsMetrics(events.PRODUCT_APPLY));
         break;
       case routes.applicantInfo:
-        GA.triggerEvent(events.PRODUCT_START);
+        dispatch(sendGoogleAnalyticsMetrics(events.PRODUCT_START));
         break;
       default:
-        GA.triggerEvent(events.COMEBACK_START);
+        dispatch(sendGoogleAnalyticsMetrics(events.COMEBACK_START));
         break;
     }
     return history.push(path);

@@ -17,7 +17,6 @@ import { Divider } from "../Divider";
 import { ContexualHelp } from "../../../../components/Notifications";
 
 import { useStyles } from "./styled";
-import { GA, events } from "../../../../utils/ga";
 
 const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
 // eslint-disable-next-line max-len
@@ -61,7 +60,6 @@ export const ChannelsComponent = ({
   const classes = useStyles();
 
   const goToNextGA = useCallback(() => {
-    GA.triggerEvent(events.SELECT_SERVICE_CHANNELS_CONTINUE);
     goToNext();
   }, [goToNext]);
 

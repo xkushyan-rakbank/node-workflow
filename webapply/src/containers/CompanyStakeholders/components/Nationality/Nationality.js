@@ -20,7 +20,6 @@ import { MAX_PASSPORT_NUMBER_LENGTH } from "./constants";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 import { useStyles } from "./styled";
-import { GA, events } from "../../../../utils/ga";
 
 const MAX_ANOTHER_CITIZENSHIP = 4;
 const initialPassportDetails = {
@@ -46,7 +45,6 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
   const classes = useStyles();
 
   const handleContinueGA = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_STAKEHOLDER_NATIONALITY_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

@@ -9,6 +9,7 @@ import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
+import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 import {
   getApplicantInfo,
   getOrganizationInfo,
@@ -17,30 +18,33 @@ import {
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
-import { GA, events } from "../../utils/ga";
+import { events } from "../../utils/ga";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
   history,
   loading,
   fullName,
+  sendGoogleAnalyticsMetrics,
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics] = useStep(STEP_1);
 
-  const handleContinue = () =>
+  const handleContinue = event => () => {
     sendProspectToAPI().then(
       () => {
         handleSetNextStep();
       },
       () => {}
     );
+    handleAnalytics(event);
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_INFORMATION_SUBMITTED);
+    sendGoogleAnalyticsMetrics(events.COMPANY_INFORMATION_SUBMITTED);
     history.push(routes.stakeholdersInfo);
   }, [history]);
 
@@ -69,7 +73,7 @@ export const CompanyInfoPage = ({
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
             handleClick={createSetStepHandler(item.step)}
-            handleContinue={handleContinue}
+            handleContinue={handleContinue(item.event_name)}
             stepForm={item.component}
           />
         ))}
@@ -95,7 +99,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI: sendProspectToAPIPromisify
+  sendProspectToAPI: sendProspectToAPIPromisify,
+  sendGoogleAnalyticsMetrics
 };
 
 export const CompanyInfo = connect(

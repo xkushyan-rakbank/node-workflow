@@ -8,7 +8,6 @@ import { SelectAutocomplete } from "../../../../components/Form";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
-import { GA, events } from "../../../../utils/ga";
 import { useStyles } from "../../styled";
 
 const initialValues = {
@@ -34,7 +33,6 @@ export const Industry = ({ handleContinue }) => {
   const classes = useStyles();
 
   const handleContinueGA = useCallback(() => {
-    GA.triggerEvent(events.COMPANY_INFORMATION_INDUSTRY_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

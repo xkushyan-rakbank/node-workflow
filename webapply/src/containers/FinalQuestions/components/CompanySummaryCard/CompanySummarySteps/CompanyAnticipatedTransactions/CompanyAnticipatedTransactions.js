@@ -20,7 +20,6 @@ import {
   getRequiredMessage,
   getInvalidMessage
 } from "../../../../../../utils/getValidationMessage";
-import { GA, events } from "../../../../../../utils/ga";
 
 const FormatDecimalNumberInput = props => <NumberFormat decimalScale={2} {...props} />;
 
@@ -132,7 +131,6 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
   const classes = useStyles();
 
   const onSubmit = useCallback(() => {
-    GA.triggerEvent(events.FINAL_QUESTION_ANTICIPATED_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

@@ -1,21 +1,19 @@
-import analytics from "redux-analytics";
-import { GA } from "../../utils/ga";
+export const SEND_GOOGLE_ANALYTICS_METRICS = "SEND_GOOGLE_ANALYTICS_METRICS";
 
-export const googleAnalyticsMiddleware = analytics(({ type, payload }) =>
-  GA.triggerEvent(type, payload)
-);
-const handleAction = (store, next, action, options) => {
-  if (!action.meta || !action.meta.analytics) {
-    return next(action);
-  }
+export function addMeta(action, event) {
+  const analytics = {
+    eventType: event
+  };
 
-  const { eventType, eventPayload } = action.meta.analytics;
+  return { ...action, meta: { analytics } };
+}
 
-  googleAnalyticsMiddleware(eventType, eventPayload);
-
-  return next(action);
-};
-
-export function createAnalytics(options = {}) {
-  return store => next => action => handleAction(store, next, action, options);
+export function sendGoogleAnalyticsMetrics(eventName) {
+  return addMeta(
+    {
+      type: SEND_GOOGLE_ANALYTICS_METRICS,
+      eventName
+    },
+    eventName
+  );
 }

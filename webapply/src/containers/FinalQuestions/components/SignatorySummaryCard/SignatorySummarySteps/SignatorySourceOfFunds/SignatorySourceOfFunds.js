@@ -15,7 +15,6 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { GA, events } from "../../../../../../utils/ga";
 
 export const signatorySourceOfFundsSchema = Yup.object().shape({
   wealthType: Yup.string().required(getRequiredMessage("Source of funds")),
@@ -31,7 +30,6 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
-    GA.triggerEvent(events.FINAL_QUESTION_SOURCE_OF_FUND_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 

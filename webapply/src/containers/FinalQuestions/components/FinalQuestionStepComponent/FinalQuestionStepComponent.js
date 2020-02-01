@@ -12,9 +12,14 @@ export const FinalQuestionStepComponent = ({
   fieldName,
   initialStep
 }) => {
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(initialStep);
+  const [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics] = useStep(
+    initialStep
+  );
 
-  const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  const handleContinue = eventName => () => {
+    handleAnalytics(eventName);
+    sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
@@ -37,7 +42,7 @@ export const FinalQuestionStepComponent = ({
       isActiveStep={step === item.step}
       isFilled={availableSteps.includes(item.step)}
       handleClick={createSetStepHandler(item.step)}
-      handleContinue={handleContinue}
+      handleContinue={handleContinue(item.event_name)}
       stepForm={item.component}
     />
   ));

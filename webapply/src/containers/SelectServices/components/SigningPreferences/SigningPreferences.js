@@ -35,7 +35,6 @@ import {
   getInvalidMessage
 } from "../../../../utils/getValidationMessage";
 import { sortByOrder } from "../../../../utils/sortByOrder";
-import { GA, events } from "../../../../utils/ga";
 
 const MAX_SIGNATORIES = 2;
 const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
@@ -113,7 +112,6 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
   const classes = useStyles();
 
   const goToNextGA = useCallback(() => {
-    GA.triggerEvent(events.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE);
     goToNext();
   }, [goToNext]);
 

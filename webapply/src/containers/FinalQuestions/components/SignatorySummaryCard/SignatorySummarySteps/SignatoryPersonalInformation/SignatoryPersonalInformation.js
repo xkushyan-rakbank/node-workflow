@@ -13,7 +13,6 @@ import {
   getInvalidMessage,
   getRequiredMessage
 } from "../../../../../../utils/getValidationMessage";
-import { GA, events } from "../../../../../../utils/ga";
 
 export const signatoryPersonalInformationSchema = Yup.object().shape({
   maritalStatus: Yup.string().required(getRequiredMessage("Marital Status")),
@@ -30,7 +29,6 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
-    GA.triggerEvent(events.FINAL_QUESTION_PERSONAL_INFORMATION_CONTINUE);
     handleContinue();
   }, [handleContinue]);
 
