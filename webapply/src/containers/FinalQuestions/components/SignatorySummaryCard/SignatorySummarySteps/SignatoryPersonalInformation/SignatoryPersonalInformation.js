@@ -5,7 +5,11 @@ import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./styled";
 import { MOTHERS_MAIDEN_NAME_REGEX } from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
-import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
+import {
+  Input,
+  AutoSaveField as Field,
+  SelectAutocomplete
+} from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { MAX_MOTHERS_MAIDEN_NAME_LENGTH } from "../../constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
@@ -53,7 +57,8 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                   path={`prospect.signatoryInfo[${index}].maritalStatus`}
                   datalistId="maritalStatus"
                   label="Marital Status"
-                  component={CustomSelect}
+                  isSearchable={false}
+                  component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />
               </Grid>

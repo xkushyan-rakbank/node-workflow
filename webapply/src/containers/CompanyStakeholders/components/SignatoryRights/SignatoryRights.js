@@ -1,11 +1,15 @@
 import React, { useCallback } from "react";
+import { connect } from "react-redux";
 import { Formik, Form } from "formik";
+import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { stakeholdersSelector } from "../../../../store/selectors/stakeholder";
 import {
-  CustomSelect,
   InlineRadioGroup,
+  SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../components/Form";
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
@@ -22,18 +26,21 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-export const SignatoryRights = ({ handleContinue, index }) => {
+const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => {
   const handleContinueGA = useCallback(() => {
     handleContinue();
   }, [handleContinue]);
   return (
     <Formik
-      initialValues={{ authorityType: "", isSignatory: "" }}
-      onSubmit={handleContinueGA}
+      initialValues={{
+        authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
+        isSignatory: ""
+      }}
       validationSchema={signatoryRightsSchema}
       validateOnChange={false}
+      onSubmit={handleContinueGA}
     >
-      {withCompanyStakeholder(index, ({ values, setFieldValue }) => (
+      {withCompanyStakeholder(index, ({ values, setFieldValue, setFieldTouched }) => (
         <Form>
           <Grid container>
             <Field
@@ -46,7 +53,15 @@ export const SignatoryRights = ({ handleContinue, index }) => {
                 ...prospect,
                 [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
               })}
-              onSelect={() => setFieldValue("authorityType", "")}
+              onSelect={() => {
+                if (values.isSignatory) {
+                  setFieldValue("authorityType", "");
+                  updateProspect({
+                    [`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`]: ""
+                  });
+                  setFieldTouched("authorityType", false);
+                }
+              }}
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
@@ -55,7 +70,8 @@ export const SignatoryRights = ({ handleContinue, index }) => {
               name="authorityType"
               path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
               disabled={!values.isSignatory}
-              component={CustomSelect}
+              isSearchable={false}
+              component={SelectAutocomplete}
               label="Authority Type"
               datalistId="authorityType"
               contextualHelpProps={{ isDisableHoverListener: false }}
@@ -70,3 +86,16 @@ export const SignatoryRights = ({ handleContinue, index }) => {
     </Formik>
   );
 };
+
+const mapStateToProps = state => ({
+  stakeholders: stakeholdersSelector(state)
+});
+
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export const SignatoryRights = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignatoryRightsComponent);

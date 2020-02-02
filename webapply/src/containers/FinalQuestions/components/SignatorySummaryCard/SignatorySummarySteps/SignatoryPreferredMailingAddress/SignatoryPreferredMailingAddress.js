@@ -10,10 +10,10 @@ import {
   ALPHANUMERIC_REGEX
 } from "../../../../../../utils/validation";
 import {
-  CustomSelect,
   Input,
   AutoSaveField as Field,
-  Checkbox
+  Checkbox,
+  SelectAutocomplete
 } from "../../../../../../components/Form";
 import { DEFAULT_SIGNATORY_COUNTRY } from "./constants";
 import {
@@ -128,7 +128,8 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   disabled={values.sameAsCompanyAddress}
                   datalistId="emirateCity"
                   label="Emirate/ City"
-                  component={CustomSelect}
+                  isSearchable={false}
+                  component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />
               </Grid>
