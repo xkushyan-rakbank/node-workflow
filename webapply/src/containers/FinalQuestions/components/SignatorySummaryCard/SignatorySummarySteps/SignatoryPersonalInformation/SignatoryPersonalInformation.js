@@ -12,7 +12,6 @@ import {
 } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { MAX_MOTHERS_MAIDEN_NAME_LENGTH } from "../../constants";
-import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 import {
   getInvalidMessage,
   getRequiredMessage
@@ -48,7 +47,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
         validationSchema={signatoryPersonalInformationSchema}
         validateOnChange={false}
       >
-        {withSignatoriesFinalQuestions(index, ({ values }) => (
+        {({ values }) => (
           <Form>
             <Grid spacing={3} container className={classes.flexContainer}>
               <Grid item md={6} sm={12}>
@@ -94,7 +93,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
               <ContinueButton type="submit" />
             </div>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

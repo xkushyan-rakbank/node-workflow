@@ -24,7 +24,6 @@ import {
   MAX_COMPANY_NAME_LENGTH
 } from "./constants";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
-import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
   getInvalidMessage,
   getRequiredMessage
@@ -84,8 +83,7 @@ export const CompanyBusinessRelationshipsComponent = ({
   topSuppliers,
   topOriginGoodsCountries,
   otherBankDetails,
-  updateProspect,
-  options
+  updateProspect
 }) => {
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
@@ -116,7 +114,7 @@ export const CompanyBusinessRelationshipsComponent = ({
         validationSchema={companyBusinessRelationshipsSchema}
         validateOnChange={false}
       >
-        {withCompanyFinalQuestions(({ values, setFieldValue, setFieldTouched }) => {
+        {({ values, setFieldValue, setFieldTouched }) => {
           const isTopCustomers = values.topCustomers.length > 1;
           const isTopSuppliers = values.topSuppliers.length > 1;
           const isTopOriginGoodsCountries = values.topOriginGoodsCountries.length > 1;
@@ -470,7 +468,7 @@ export const CompanyBusinessRelationshipsComponent = ({
               </div>
             </Form>
           );
-        })}
+        }}
       </Formik>
     </div>
   );

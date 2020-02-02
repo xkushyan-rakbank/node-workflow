@@ -26,7 +26,6 @@ import {
   NUMBER_REGEX
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
-import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -78,7 +77,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
         validationSchema={signatoryEmploymentDetailsSchema}
         validateOnChange={false}
       >
-        {withSignatoriesFinalQuestions(index, ({ values, setFieldValue }) => {
+        {({ values, setFieldValue }) => {
           const basePath = `prospect.signatoryInfo[${index}]`;
           return (
             <Form>
@@ -192,7 +191,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
               </div>
             </Form>
           );
-        })}
+        }}
       </Formik>
     </div>
   );

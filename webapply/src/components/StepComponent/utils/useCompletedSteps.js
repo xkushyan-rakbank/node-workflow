@@ -4,7 +4,7 @@ export const useCompletedStep = (page, path, index) => {
   const pageCompletedSteps = useSelector(state => state.completedSteps[page] || {});
   let completedSteps;
 
-  if (index) {
+  if (index !== null) {
     completedSteps = pageCompletedSteps[path][index] || [];
   } else {
     completedSteps = pageCompletedSteps[path] || [];

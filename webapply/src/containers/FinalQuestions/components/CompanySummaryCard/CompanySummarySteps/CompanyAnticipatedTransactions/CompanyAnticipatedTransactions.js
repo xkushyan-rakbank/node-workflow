@@ -126,7 +126,7 @@ const commonInputProps = {
   endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
 };
 
-export const CompanyAnticipatedTransactions = ({ handleContinue, options }) => {
+export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
   const classes = useStyles();
 
   const onSubmit = useCallback(() => {

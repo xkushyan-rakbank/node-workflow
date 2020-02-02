@@ -45,7 +45,7 @@ const companyPreferredMailingAddressSchema = Yup.object().shape({
   })
 });
 
-export const CompanyPreferredMailingAddress = ({ handleContinue, options }) => {
+export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
