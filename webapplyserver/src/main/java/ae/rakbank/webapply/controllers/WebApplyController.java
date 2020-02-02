@@ -1,6 +1,7 @@
 package ae.rakbank.webapply.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -351,40 +352,37 @@ public class WebApplyController {
 
                 logger.info("Call createProspect endpoint: " + uriComponents.toString());
 
+                ResponseEntity<?> createProspectResponse;
                 try {
-                    ResponseEntity<?> createProspectResponse = invokeApiEndpoint(httpRequest, httpResponse,
+                    createProspectResponse = invokeApiEndpoint(httpRequest, httpResponse,
                             uriComponents.toString(), HttpMethod.POST, request, "createSMEProspect()", "createProspectUri",
                             MediaType.APPLICATION_JSON, segment, null);
-                    if (createProspectResponse.getStatusCode().is2xxSuccessful()) {
-                        String prospectId = ((JsonNode) createProspectResponse.getBody()).get("prospectId").asText();
-                        logger.info("Send OTP for prospectId:" + prospectId);
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        ObjectNode otpRequest = objectMapper.createObjectNode();
-                        otpRequest.put("prospectId", prospectId);
-                        otpRequest.put("countryCode", requestBodyJSON.get("applicantInfo").get("countryCode").asText());
-                        otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
-                        otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
-                        otpRequest.put("action", "generate");
-                        ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, authorization, otpRequest,
-                                servletRequest, true);
+                } catch (IOException e) {
+                    throw new ApiException(String.format("Invoke API from %s method, Endpoint=[%s], request:[%s]",
+                            uriComponents.toString(), url, request.toString()), e);
+                }
+                if (createProspectResponse.getStatusCode().is2xxSuccessful()) {
+                    String prospectId = ((JsonNode) createProspectResponse.getBody()).get("prospectId").asText();
+                    logger.info("Send OTP for prospectId:" + prospectId);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    ObjectNode otpRequest = objectMapper.createObjectNode();
+                    otpRequest.put("prospectId", prospectId);
+                    otpRequest.put("countryCode", requestBodyJSON.get("applicantInfo").get("countryCode").asText());
+                    otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
+                    otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
+                    otpRequest.put("action", "generate");
+                    ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, authorization, otpRequest,
+                            servletRequest, true);
 
-                        if (otpResponse.getStatusCode().is2xxSuccessful()) {
-                            return createProspectResponse;
-                        }
-                        else {
-                            return otpResponse;
-                        }
-                    }
-                    else {
+                    if (otpResponse.getStatusCode().is2xxSuccessful()) {
                         return createProspectResponse;
                     }
-
+                    else {
+                        return otpResponse;
+                    }
                 }
-                catch (Exception e) {
-                    logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()), e);
-                    ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                            "Unable to call endpoint " + uriComponents.toString(), e);
-                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                else {
+                    return createProspectResponse;
                 }
             }
             else {
@@ -398,10 +396,12 @@ public class WebApplyController {
             }
         }
         else {
-            logger.error(String.format("OAuth token expired or invalid."));
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -788,10 +788,12 @@ public class WebApplyController {
             }
         }
         else {
-            logger.error(String.format("OAuth token expired or invalid."));
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
         }
     }
 

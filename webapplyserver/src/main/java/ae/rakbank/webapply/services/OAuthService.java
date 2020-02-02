@@ -79,15 +79,20 @@ public class OAuthService {
 			return false;
 		}
 		else {
-			ResponseEntity<JsonNode> response = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
-			if (response != null && response.getBody().get("access_token").asText().equals(token)) {
+			ResponseEntity<JsonNode> oauthResponse = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
+			if (oauthResponse != null && oauthResponse.getBody().get("access_token").asText().equals(token)) {
 				return true;
 			}
-			else if ((refreshToken != null && response.getBody().get("refresh_token").asText().equals(refreshToken)) || force) {
+			else if ((refreshToken != null && oauthResponse.getBody().get("refresh_token").asText().equals(refreshToken)) || force) {
 				getOAuthToken();
 				return true;
 			}
 			else {
+				logger.error("The token and/or refresh token is invalid, " +
+						"token in request: " + token
+						+ ", actual context token: " + oauthResponse.getBody().get("access_token").asText()
+						+ ", refresh token in request: " + refreshToken
+						+ ", actual context refresh token: " + oauthResponse.getBody().get("refresh_token").asText());
 				return false;
 			}
 		}
