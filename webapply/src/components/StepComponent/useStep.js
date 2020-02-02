@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 
@@ -21,9 +21,12 @@ export const useStep = (initialStep, initialAvailableSteps = [initialStep]) => {
     }
   };
 
-  const handleAnalytics = eventName => {
-    return dispatch(sendGoogleAnalyticsMetrics(eventName));
-  };
+  const handleAnalytics = useCallback(
+    eventName => {
+      return dispatch(sendGoogleAnalyticsMetrics(eventName));
+    },
+    [sendGoogleAnalyticsMetrics]
+  );
 
   return [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics];
 };
