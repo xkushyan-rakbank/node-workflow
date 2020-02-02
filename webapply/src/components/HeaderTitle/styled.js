@@ -17,6 +17,9 @@ export const useStyles = makeStyles({
       display: "none"
     }
   },
+  withoutMarginBottom: {
+    marginBottom: 0
+  },
   withMargin: {
     marginTop: "-130px"
   },
