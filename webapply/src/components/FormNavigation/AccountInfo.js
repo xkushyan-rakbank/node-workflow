@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
@@ -17,20 +17,23 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { location: { pathname } = {} } = history;
-  const handleClick = path => () => {
-    switch (path) {
-      case routes.applicationOverview:
-        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_APPLY));
-        break;
-      case routes.applicantInfo:
-        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_START));
-        break;
-      default:
-        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.COMEBACK_START));
-        break;
-    }
-    return history.push(path);
-  };
+  const handleClick = useCallback(
+    path => () => {
+      switch (path) {
+        case routes.applicationOverview:
+          dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_APPLY));
+          break;
+        case routes.applicantInfo:
+          dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_START));
+          break;
+        default:
+          dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.COMEBACK_START));
+          break;
+      }
+      return history.push(path);
+    },
+    [sendGoogleAnalyticsMetrics]
+  );
 
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;
