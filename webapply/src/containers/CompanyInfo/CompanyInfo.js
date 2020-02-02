@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
-import { useStep } from "../../components/StepComponent/useStep";
+import { useReduxStep } from "../../components/StepComponent/useReduxStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
@@ -14,7 +14,7 @@ import {
   getOrganizationInfo,
   getSendProspectToAPIInfo
 } from "../../store/selectors/appConfig";
-import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
+import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE, COMPANY_INFO_PATH } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
@@ -26,7 +26,11 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
+    STEP_1,
+    COMPANY_INFO_PAGE,
+    COMPANY_INFO_PATH
+  );
 
   const handleContinue = () =>
     sendProspectToAPI().then(
@@ -63,7 +67,7 @@ export const CompanyInfoPage = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={availableSteps.includes(item.step)}
+            isFilled={completedSteps.includes(item.step)}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
@@ -75,7 +79,7 @@ export const CompanyInfoPage = ({
         <ContainedButton
           justify="flex-end"
           label="Next Step"
-          disabled={step <= STEP_3}
+          disabled={completedSteps.length !== companyInfoSteps.length}
           handleClick={handleClickNextStep}
           withRightArrow
         />

@@ -1,6 +1,9 @@
 import { SET_COMPLETED_STEPS, ADD_SIGNATORY, REMOVE_SIGNATORY } from "../actions/completedSteps";
 
 export const initialState = {
+  companyInfo: {
+    companySteps: []
+  },
   finalQuestions: {
     companySteps: [],
     signatorySteps: []
