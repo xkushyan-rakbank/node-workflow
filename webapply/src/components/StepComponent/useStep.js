@@ -25,6 +25,7 @@ export const useStep = (initialStep, initialAvailableSteps = [initialStep]) => {
     eventName => {
       return dispatch(sendGoogleAnalyticsMetrics(eventName));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [sendGoogleAnalyticsMetrics]
   );
 

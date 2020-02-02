@@ -56,7 +56,7 @@ export const ValueAddedServicesComponent = ({
       updateProspect({ [RAK_VALUE_PACKAGE_PATH]: serviceName });
       dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE));
     },
-    [rakValuePackage, accountType, updateProspect]
+    [rakValuePackage, accountType, updateProspect, dispatch]
   );
 
   useEffect(() => {

@@ -68,7 +68,8 @@ const StakeholderStepperComponent = ({
       setScreeningError,
       sendProspectToAPI,
       isTooManyStakeholders,
-      step
+      step,
+      index
     ]
   );
 

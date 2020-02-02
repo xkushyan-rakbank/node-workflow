@@ -32,7 +32,7 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
       }
       return history.push(path);
     },
-    [sendGoogleAnalyticsMetrics]
+    [dispatch, history]
   );
 
   const isApplicationOverview = pathname === routes.applicationOverview;
