@@ -1,6 +1,7 @@
 package ae.rakbank.webapply.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -398,10 +399,12 @@ public class WebApplyController {
             }
         }
         else {
-            logger.error(String.format("OAuth token expired or invalid."));
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, "OAuth token expired or invalid", errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -788,10 +791,12 @@ public class WebApplyController {
             }
         }
         else {
-            logger.error(String.format("OAuth token expired or invalid."));
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, "OAuth token expired or invalid", errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
         }
     }
 
