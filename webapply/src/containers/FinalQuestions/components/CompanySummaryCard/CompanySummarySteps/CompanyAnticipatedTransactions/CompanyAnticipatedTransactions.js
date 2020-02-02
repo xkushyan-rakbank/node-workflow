@@ -15,7 +15,6 @@ import { ContinueButton } from "../../../../../../components/Buttons/ContinueBut
 import { useStyles } from "./styled";
 import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
 import { CURRENCY_REGEX } from "../../../../../../utils/validation";
-import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -127,7 +126,7 @@ const commonInputProps = {
   endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
 };
 
-export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
+export const CompanyAnticipatedTransactions = ({ handleContinue, options }) => {
   const classes = useStyles();
 
   const onSubmit = useCallback(() => {
@@ -148,7 +147,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
         validationSchema={companyAnticipatedTransactionsSchema}
         validateOnChange={false}
       >
-        {withCompanyFinalQuestions(({ values }) => (
+        {({ values }) => (
           <Form autocomplete="off">
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item sm={12}>
@@ -283,7 +282,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
               <ContinueButton type="submit" />
             </div>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

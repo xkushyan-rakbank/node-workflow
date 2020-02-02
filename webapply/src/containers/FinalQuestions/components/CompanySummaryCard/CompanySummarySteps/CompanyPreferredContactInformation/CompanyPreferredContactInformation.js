@@ -10,7 +10,6 @@ import {
   InputGroup,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
   UAE_MOBILE_PHONE_REGEX,
   UAE_LANDLINE_PHONE_REGEX,
@@ -61,7 +60,7 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
 export const CompanyPreferredContactInformationComponent = ({
   chequeBookApplied,
   updateProspect,
-  primaryPhoneNo,
+  options,
   handleContinue
 }) => {
   const classes = useStyles();
@@ -84,7 +83,7 @@ export const CompanyPreferredContactInformationComponent = ({
         validationSchema={companyPreferredContactInformationSchema}
         validateOnChange={false}
       >
-        {withCompanyFinalQuestions(({ setFieldValue }) => (
+        {({ setFieldValue }) => (
           <Form>
             <Grid container spacing={3}>
               <Grid item sm={12}>
@@ -160,7 +159,7 @@ export const CompanyPreferredContactInformationComponent = ({
               <ContinueButton type="submit" />
             </div>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

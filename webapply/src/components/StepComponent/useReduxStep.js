@@ -1,21 +1,15 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { setCompletedSteps } from "../../store/actions/completedSteps";
+import { useCompletedStep } from "./utils/useCompletedSteps";
+import { addCompletedStep } from "./utils/addCompletedStep";
 
 export const useReduxStep = (initialStep, page, path, index = null) => {
   const [step, setStep] = useState(initialStep);
   const dispatch = useDispatch();
 
-  const pageCompletedSteps = useSelector(state => state.completedSteps[page] || {});
-
-  let completedSteps;
-
-  if (index !== null) {
-    completedSteps = pageCompletedSteps[path][index] || [];
-  } else {
-    completedSteps = pageCompletedSteps[path] || [];
-  }
+  const [pageCompletedSteps, completedSteps] = useCompletedStep(page, path, index);
 
   const handleSetNextStep = () => {
     const nextStep = step + 1;
@@ -23,25 +17,7 @@ export const useReduxStep = (initialStep, page, path, index = null) => {
     setStep(nextStep);
 
     if (!completedSteps.includes(step)) {
-      let steps;
-
-      if (index !== null) {
-        steps = {
-          ...pageCompletedSteps,
-          [path]: pageCompletedSteps[path].map((item, idx) => {
-            if (index === idx) {
-              return [...item, step];
-            }
-            return item;
-          })
-        };
-      } else {
-        steps = {
-          ...pageCompletedSteps,
-          [path]: [...pageCompletedSteps[path], step]
-        };
-      }
-
+      const steps = addCompletedStep(pageCompletedSteps, completedSteps, step, page, path, index);
       dispatch(setCompletedSteps(page, steps));
     }
   };

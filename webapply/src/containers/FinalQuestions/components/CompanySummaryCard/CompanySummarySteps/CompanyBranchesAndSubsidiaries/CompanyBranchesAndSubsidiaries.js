@@ -22,7 +22,6 @@ import {
   MAX_TRADE_LICENSE_LENGTH
 } from "../CompanyBusinessRelationships/constants";
 import { ALPHANUMERIC_REGEX, COMPANY_NAME_REGEX } from "../../../../../../utils/validation";
-import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -65,7 +64,8 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
   handleContinue,
   entitiesInUAE,
   entitiesOutsideUAE,
-  updateProspect
+  updateProspect,
+  options
 }) => {
   const classes = useStyles();
 
@@ -88,7 +88,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
         validationSchema={companyBranchesAndSubsidiariesSchema}
         validateOnChange={false}
       >
-        {withCompanyFinalQuestions(({ values, setFieldValue, setFieldTouched }) => (
+        {({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <FieldArray name="entitiesInUAE">
               {arrayHelpers => (
@@ -328,7 +328,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
               <ContinueButton type="submit" />
             </div>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

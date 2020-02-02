@@ -24,7 +24,6 @@ import {
   MAX_COMPANY_NAME_LENGTH
 } from "./constants";
 import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
-import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
   getInvalidMessage,
   getRequiredMessage
@@ -84,7 +83,8 @@ export const CompanyBusinessRelationshipsComponent = ({
   topSuppliers,
   topOriginGoodsCountries,
   otherBankDetails,
-  updateProspect
+  updateProspect,
+  options
 }) => {
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
@@ -115,7 +115,7 @@ export const CompanyBusinessRelationshipsComponent = ({
         validationSchema={companyBusinessRelationshipsSchema}
         validateOnChange={false}
       >
-        {withCompanyFinalQuestions(({ values, setFieldValue, setFieldTouched }) => (
+        {({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <FieldArray name="topCustomers">
               {arrayHelpers => (
@@ -462,7 +462,7 @@ export const CompanyBusinessRelationshipsComponent = ({
               <ContinueButton type="submit" />
             </div>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

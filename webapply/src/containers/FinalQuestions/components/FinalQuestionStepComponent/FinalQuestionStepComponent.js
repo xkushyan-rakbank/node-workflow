@@ -35,6 +35,8 @@ export const FinalQuestionStepComponent = ({
   return stepsArray.map(item => (
     <StepComponent
       index={index}
+      page={page}
+      path={path}
       key={item.step}
       steps={stepsArray}
       step={item.step}

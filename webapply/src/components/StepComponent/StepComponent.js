@@ -10,6 +10,9 @@ export const StepComponent = ({
   isFilled = false,
   isActiveStep,
   index,
+  page,
+  path,
+  step,
   handleClick,
   stepForm: Form,
   ...props
@@ -35,7 +38,9 @@ export const StepComponent = ({
       <div className={classes.stepTitleWrapper} onClick={handleClick}>
         {renderTitle()}
       </div>
-      <div className={classes.formWrapper}>{isActiveStep && <Form index={index} {...props} />}</div>
+      <div className={classes.formWrapper}>
+        {isActiveStep && <Form index={index} options={{ index, page, path, step }} {...props} />}
+      </div>
     </>
   );
 };
