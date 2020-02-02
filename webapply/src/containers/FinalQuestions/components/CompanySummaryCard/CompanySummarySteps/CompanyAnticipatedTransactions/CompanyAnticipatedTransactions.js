@@ -58,8 +58,8 @@ const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
   annualFinTurnoverAmtInAED: Yup.string()
-    .required(getRequiredMessage("Annual turnover"))
-    .matches(CURRENCY_REGEX, getInvalidMessage("Annual turnover")),
+    .required(getRequiredMessage("Annual Financial Turnover"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Annual Financial Turnover")),
   maxAmtSingleTxnCashAED: Yup.string()
     .required(getRequiredMessage("Part of Monthly Total in Cash"))
     .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Cash"))
@@ -149,12 +149,13 @@ export const CompanyAnticipatedTransactions = ({ handleContinue, options }) => {
       >
         {({ values }) => (
           <Form autocomplete="off">
+            <h4 className={classes.groupLabel}>Annual turnover</h4>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item sm={12}>
                 <Field
                   name="annualFinTurnoverAmtInAED"
                   path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
-                  label="Annual turnover"
+                  label="Annual Financial Turnover"
                   autocomplete="none"
                   placeholder="9999999999.99"
                   InputProps={{
