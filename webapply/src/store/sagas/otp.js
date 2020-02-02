@@ -2,8 +2,9 @@ import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { otp } from "../../api/apiClient";
 import { getApplicantInfo, getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
 import * as otpActions from "../actions/otp";
+import { sendGoogleAnalyticsMetrics } from "../actions/googleAnalytics";
 import { log } from "../../utils/loggger";
-import { GA, events } from "../../utils/ga";
+import { GA_EVENTS } from "../../utils/ga";
 import routes from "../../routes";
 
 function* generateOtp(action) {
@@ -37,9 +38,9 @@ function* verifyOtp({ payload: otpToken }) {
     if (data.verified) {
       yield put(otpActions.verifyCodeSuccess());
       if (state.router.location.pathname.includes(routes.comeBackLoginVerification)) {
-        GA.triggerEvent(events.COMEBACK_OTP_SUBMITTED);
+        sendGoogleAnalyticsMetrics(GA_EVENTS.COMEBACK_OTP_SUBMITTED);
       }
-      GA.triggerEvent(events.PRODUCT_OTP_SUBMITTED);
+      sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_OTP_SUBMITTED);
     } else {
       yield put(otpActions.verifyCodeFailed());
     }

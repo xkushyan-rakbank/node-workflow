@@ -11,7 +11,7 @@ import { accountNames } from "../../constants";
 import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 
 import { useStyles } from "./styled";
-import { events } from "../../utils/ga";
+import { GA_EVENTS } from "../../utils/ga";
 
 export const SelectServicesComponent = ({
   accountType,
@@ -26,13 +26,13 @@ export const SelectServicesComponent = ({
   const setNextStep = useCallback(
     event => {
       if (step === GO_TO_SUBMIT_STEP) {
-        dispatch(sendGoogleAnalyticsMetrics(events.SELECT_SERVICE_SUBMITTED));
+        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.SELECT_SERVICE_SUBMITTED));
         return history.push("SubmitApplication");
       }
       sendProspectToAPI().then(() => setStep(step + 1), () => {});
       dispatch(sendGoogleAnalyticsMetrics(event));
     },
-    [sendProspectToAPI, step, history]
+    [sendProspectToAPI, step, history, sendGoogleAnalyticsMetrics]
   );
 
   const createSetStepHandler = nextStep => () => {

@@ -3,7 +3,7 @@ import { AccountDetails } from "./AccountDetails";
 import { SigningPreferences } from "./SigningPreferences";
 import { Channels } from "./Channels";
 import { ValueAddedServices } from "./ValueAddedServices";
-import { events } from "../../utils/ga";
+import { GA_EVENTS } from "../../utils/ga";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
@@ -23,14 +23,14 @@ export const servicesSteps = [
     title: "Account details",
     component: AccountDetails,
     icon: ICONS.accountDetails,
-    event_name: events.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
+    event_name: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
   },
   {
     step: STEP_2,
     title: "Signing preferences",
     component: SigningPreferences,
     icon: ICONS.signingPreferences,
-    event_name: events.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE
+    event_name: GA_EVENTS.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE
   },
   {
     step: STEP_3,
@@ -38,14 +38,14 @@ export const servicesSteps = [
     component: Channels,
     icon: ICONS.channels,
     titleInfo: "",
-    event_name: events.SELECT_SERVICE_CHANNELS_CONTINUE
+    event_name: GA_EVENTS.SELECT_SERVICE_CHANNELS_CONTINUE
   },
   {
     step: STEP_4,
     title: "Value added services",
     component: ValueAddedServices,
     icon: ICONS.valueAddedServices,
-    event_name: events.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
+    event_name: GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
   }
 ];
 

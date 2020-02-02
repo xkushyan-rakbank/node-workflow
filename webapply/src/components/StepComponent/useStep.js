@@ -22,7 +22,6 @@ export const useStep = (initialStep, initialAvailableSteps = [initialStep]) => {
   };
 
   const handleAnalytics = eventName => {
-    console.log(eventName);
     return dispatch(sendGoogleAnalyticsMetrics(eventName));
   };
 

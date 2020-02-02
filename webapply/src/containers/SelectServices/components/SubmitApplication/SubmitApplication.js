@@ -12,7 +12,7 @@ import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { SUBMIT, NEXT } from "../../../../constants";
 import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
-import { events } from "../../../../utils/ga";
+import { GA_EVENTS } from "../../../../utils/ga";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -34,7 +34,7 @@ export const SubmitApplicationComponent = ({
     updateSaveType(NEXT);
     sendProspectToAPI()
       .then(() => {
-        dispatch(sendGoogleAnalyticsMetrics(events.FORM_SUBMITTED));
+        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.FORM_SUBMITTED));
         history.push(routes.ApplicationSubmitted);
       })
       .finally(() => setIsSubmitting(false));

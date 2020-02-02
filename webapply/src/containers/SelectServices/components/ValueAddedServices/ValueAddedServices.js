@@ -11,7 +11,7 @@ import { accountNames } from "../../../../constants/index";
 import { RAK_VALUE_PACKAGE_PATH } from "./constants";
 
 import { useStyles } from "./styled";
-import { events } from "../../../../utils/ga";
+import { GA_EVENTS } from "../../../../utils/ga";
 
 const getButtonText = ({ _id, options, accountCurrencies, rakValuePackage, accountType }) => {
   const { isSelectOnlyForeignCurrency } = accountCurrencies;
@@ -54,7 +54,7 @@ export const ValueAddedServicesComponent = ({
           ? ""
           : selectedService;
       updateProspect({ [RAK_VALUE_PACKAGE_PATH]: serviceName });
-      dispatch(sendGoogleAnalyticsMetrics(events.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE));
+      dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE));
     },
     [rakValuePackage, accountType, updateProspect]
   );

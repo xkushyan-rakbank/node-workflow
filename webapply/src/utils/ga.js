@@ -25,7 +25,7 @@ export const productTypes = {
   RAK_ELITE_ISLAMIC: "RAKeliteBusiness-Islamic"
 };
 
-export const events = {
+export const GA_EVENTS = {
   PRODUCT_PAGE: "ProductPage", // ???
   PRODUCT_REVIEW_PAGE: "ProductReviewPage", // ???
   PRODUCT_APPLY: "ProductApply",

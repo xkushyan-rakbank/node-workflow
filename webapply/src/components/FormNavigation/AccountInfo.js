@@ -10,7 +10,7 @@ import { accountsInfo } from "./constants";
 import routes from "../../routes";
 
 import { useStyles } from "./styled";
-import { events } from "../../utils/ga";
+import { GA_EVENTS } from "../../utils/ga";
 
 export const AccountInfo = ({ accountType, islamicBanking }) => {
   const classes = useStyles();
@@ -20,13 +20,13 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
   const handleClick = path => () => {
     switch (path) {
       case routes.applicationOverview:
-        dispatch(sendGoogleAnalyticsMetrics(events.PRODUCT_APPLY));
+        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_APPLY));
         break;
       case routes.applicantInfo:
-        dispatch(sendGoogleAnalyticsMetrics(events.PRODUCT_START));
+        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_START));
         break;
       default:
-        dispatch(sendGoogleAnalyticsMetrics(events.COMEBACK_START));
+        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.COMEBACK_START));
         break;
     }
     return history.push(path);

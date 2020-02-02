@@ -18,7 +18,7 @@ import {
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
-import { events } from "../../utils/ga";
+import { GA_EVENTS } from "../../utils/ga";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
@@ -31,22 +31,25 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics] = useStep(STEP_1);
 
-  const handleContinue = event => () => {
-    sendProspectToAPI().then(
-      () => {
-        handleSetNextStep();
-      },
-      () => {}
-    );
-    handleAnalytics(event);
-  };
+  const handleContinue = useCallback(
+    event => () => {
+      sendProspectToAPI().then(
+        () => {
+          handleSetNextStep();
+        },
+        () => {}
+      );
+      handleAnalytics(event);
+    },
+    [handleSetNextStep, sendProspectToAPI, handleAnalytics]
+  );
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    sendGoogleAnalyticsMetrics(events.COMPANY_INFORMATION_SUBMITTED);
+    sendGoogleAnalyticsMetrics(GA_EVENTS.COMPANY_INFORMATION_SUBMITTED);
     history.push(routes.stakeholdersInfo);
-  }, [history]);
+  }, [history, sendGoogleAnalyticsMetrics]);
 
   return (
     <>

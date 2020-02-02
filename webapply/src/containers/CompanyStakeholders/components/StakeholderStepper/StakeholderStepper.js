@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
@@ -44,22 +44,33 @@ const StakeholderStepperComponent = ({
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
   const [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics] = useStep(STEP_1);
 
-  const handleContinue = event => () => {
-    sendProspectToAPI().then(
-      () => {
-        if (isTooManyStakeholders) {
-          setScreeningError(stakeholderScreeningStatus);
-        }
+  const handleContinue = useCallback(
+    event => () => {
+      sendProspectToAPI().then(
+        () => {
+          if (isTooManyStakeholders) {
+            setScreeningError(stakeholderScreeningStatus);
+          }
 
-        if (step === STEP_6) {
-          setFillStakeholder(index, true);
-        }
-        handleSetNextStep();
-      },
-      () => {}
-    );
-    handleAnalytics(event);
-  };
+          if (step === STEP_6) {
+            setFillStakeholder(index, true);
+          }
+          handleSetNextStep();
+        },
+        () => {}
+      );
+      handleAnalytics(event);
+    },
+    [
+      handleAnalytics,
+      handleSetNextStep,
+      setFillStakeholder,
+      setScreeningError,
+      sendProspectToAPI,
+      isTooManyStakeholders,
+      step
+    ]
+  );
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
