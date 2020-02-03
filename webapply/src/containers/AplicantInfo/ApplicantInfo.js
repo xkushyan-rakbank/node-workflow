@@ -75,8 +75,6 @@ const ApplicantInfoPage = ({
   isRecaptchaEnable,
   isReCaptchaVerified,
   isConfigLoading,
-  isReCaptchaError,
-  isReCaptchaPending,
   isLoading
 }) => {
   useEffect(() => {
@@ -188,7 +186,7 @@ const ApplicantInfoPage = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    (!reCaptchaToken && !isReCaptchaVerified && !isReCaptchaError)
+                    (!reCaptchaToken && !isReCaptchaVerified && isLoading)
                   }
                   justify="flex-end"
                   label="Next Step"
