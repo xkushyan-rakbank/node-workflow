@@ -309,7 +309,10 @@ public class WebApplyController {
 
 
         String token = getTokenFromAuthorizationHeader(authorization);
-        if (oauthClient.isAccessTokenValid(token, null, true)) {
+//        if (oauthClient.validateAccessToken(token, null, true)) {
+
+        oauthClient.validateAccessToken(token, null, true);
+
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
@@ -394,7 +397,7 @@ public class WebApplyController {
 
                 throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
+        /*}
         else {
             String errorMessage = "OAuth token expired or invalid, "
                     + "Actual time: " + LocalDateTime.now()
@@ -402,7 +405,7 @@ public class WebApplyController {
             logger.error(errorMessage);
             ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
             throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
-        }
+        }*/
     }
 
     @PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
@@ -417,7 +420,10 @@ public class WebApplyController {
                 jsonNode.toString(), segment, prospectId));
 
         String token = getTokenFromAuthorizationHeader(authorization);
-        if (oauthClient.isAccessTokenValid(token, null, false)) {
+//        if (oauthClient.validateAccessToken(token, null, false)) {
+
+            oauthClient.validateAccessToken(token, null, false);
+
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
                 HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
@@ -450,13 +456,15 @@ public class WebApplyController {
 
                 throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
+        /*}
         else {
-            logger.error(String.format("OAuth token expired or invalid."));
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
+        }*/
     }
 
     @PostMapping(value = "/usertypes/{segment}/prospects/search", produces = "application/json", consumes = "application/json")
@@ -470,7 +478,10 @@ public class WebApplyController {
                 segment));
 
         String token = getTokenFromAuthorizationHeader(authorization);
-        if (oauthClient.isAccessTokenValid(token, null, false)) {
+//        if (oauthClient.validateAccessToken(token, null, false)) {
+
+            oauthClient.validateAccessToken(token, null, false);
+
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
@@ -499,12 +510,15 @@ public class WebApplyController {
                         "oauth error, check logs for more info.");
                 throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
+        /*}
         else {
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
+        }*/
     }
 
     @GetMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json")
@@ -518,7 +532,10 @@ public class WebApplyController {
                 String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
 
         String token = getTokenFromAuthorizationHeader(authorization);
-        if (oauthClient.isAccessTokenValid(token, null, false)) {
+//        if (oauthClient.validateAccessToken(token, null, false)) {
+
+            oauthClient.validateAccessToken(token, null, false);
+
           ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
           if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
@@ -546,13 +563,15 @@ public class WebApplyController {
                       "oauth error, check logs for more info.");
               throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
           }
-        }
+        /*}
         else {
-          logger.error(String.format("OAuth token expired or invalid."));
-          ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                  "oauth error, check logs for more info.");
-          throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
+        }*/
     }
 
     @GetMapping(value = "/prospects/{prospectId}/documents/{documentId}")
@@ -566,7 +585,10 @@ public class WebApplyController {
                 prospectId, documentId));
 
         String token = getTokenFromAuthorizationHeader(authorization);
-        if (oauthClient.isAccessTokenValid(token, null, false)) {
+//        if (oauthClient.validateAccessToken(token, null, false)) {
+
+            oauthClient.validateAccessToken(token, null, false);
+
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
@@ -594,13 +616,15 @@ public class WebApplyController {
                         "oauth error, check logs for more info.");
                 throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
+        /*}
         else {
-            logger.error(String.format("OAuth token expired or invalid."));
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
+        }*/
     }
 
     @GetMapping(value = "/prospects/{prospectId}/documents", produces = "application/json")
@@ -612,7 +636,10 @@ public class WebApplyController {
         logger.debug(String.format("getProspectDocuments() method args, prospectId=[%s]", prospectId));
 
         String token = getTokenFromAuthorizationHeader(authorization);
-        if (oauthClient.isAccessTokenValid(token, null, false)) {
+//        if (oauthClient.validateAccessToken(token, null, false)) {
+
+            oauthClient.validateAccessToken(token, null, false);
+
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
@@ -640,13 +667,15 @@ public class WebApplyController {
                         "oauth error, check logs for more info.");
                 throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
+        /*}
         else {
-            logger.error(String.format("OAuth token expired or invalid."));
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            String errorMessage = "OAuth token expired or invalid, "
+                    + "Actual time: " + LocalDateTime.now()
+                    + ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+            throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
+        }*/
     }
 
     @PostMapping(value = "/users/authenticate", produces = "application/json", consumes = "application/json")
@@ -722,7 +751,10 @@ public class WebApplyController {
         logger.debug(String.format("generateVerifyOTP() method args, RequestBody=[%s], ", requestJSON.toString()));
 
         String token = getTokenFromAuthorizationHeader(authorization);
-        if (oauthClient.isAccessTokenValid(token, null, false)) {
+//        if (oauthClient.validateAccessToken(token, null, false)) {
+
+            oauthClient.validateAccessToken(token, null, false);
+
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
                 if (requestJSON.has("recaptchaToken")) {
@@ -786,7 +818,7 @@ public class WebApplyController {
                         "oauth error, check logs for more info.");
                 throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
+        /*}
         else {
             String errorMessage = "OAuth token expired or invalid, "
                     + "Actual time: " + LocalDateTime.now()
@@ -794,7 +826,7 @@ public class WebApplyController {
             logger.error(errorMessage);
             ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
             throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
-        }
+        }*/
     }
 
 
