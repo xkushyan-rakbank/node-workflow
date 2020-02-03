@@ -28,7 +28,8 @@ import { useStyles } from "./styled";
 const comebackSchema = Yup.object({
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
-    .email(getInvalidMessage("Your E-mail Address")),
+    .email(getInvalidMessage("Your E-mail Address"))
+    .max(50, "Maximum 50 characters allowed"),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
