@@ -20,6 +20,7 @@ import {
   OTHER_OPTION_CODE,
   BASE_PATH,
   MAX_OFFICE_NUMBER_LENGTH,
+  MAX_STREET_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH,
   MAX_OTHER_FIELD_LENGTH
 } from "./constants";
@@ -93,7 +94,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   placeholder="Street / Location"
                   component={Input}
                   InputProps={{
-                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                    inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
                   }}
                 />
                 <Field
