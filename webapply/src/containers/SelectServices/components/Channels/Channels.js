@@ -14,6 +14,7 @@ import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 import { ICONS, Icon } from "../../../../components/Icons/Icon";
 import { Divider } from "../Divider";
+import { INITIAL_INDEX } from "../../constants";
 import { ContexualHelp } from "../../../../components/Notifications";
 
 import { useStyles } from "./styled";
@@ -46,8 +47,8 @@ const CustomCheckbox = props => (
   />
 );
 
-const pathDebitCardApplied = "prospect.accountInfo[0].debitCardApplied";
-const pathChequeBookApplied = "prospect.accountInfo[0].chequeBookApplied";
+const pathDebitCardApplied = `prospect.accountInfo[${INITIAL_INDEX}].debitCardApplied`;
+const pathChequeBookApplied = `prospect.accountInfo[${INITIAL_INDEX}].chequeBookApplied`;
 
 export const ChannelsComponent = ({
   isHasSignatories,
@@ -150,7 +151,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="eStatements"
-            path="prospect.accountInfo[0].eStatements"
+            path={`prospect.accountInfo[${INITIAL_INDEX}].eStatements`}
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
@@ -162,7 +163,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="mailStatements"
-            path="prospect.accountInfo[0].mailStatements"
+            path={`prospect.accountInfo[${INITIAL_INDEX}].mailStatements`}
             label="I want paper statements (monthly charges apply)"
             classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {
