@@ -24,7 +24,6 @@ const loginSchema = Yup.object({
 export const LoginComponent = ({
   loginInfoForm,
   setToken,
-  setVerified,
   verifyToken,
   recaptchaToken,
   isRecaptchaEnable
@@ -49,8 +48,8 @@ export const LoginComponent = ({
     [setToken]
   );
   const handleVerifiedFailed = useCallback(() => {
-    setVerified(false);
-  }, [setVerified]);
+    setToken(null);
+  }, []);
 
   useEffect(() => {
     if (recaptchaToken) {

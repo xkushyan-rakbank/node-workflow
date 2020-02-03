@@ -11,7 +11,6 @@ import {
   updateActionType
 } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
-import { setVerified } from "../actions/reCaptcha";
 import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
@@ -40,13 +39,12 @@ function* applicantInfoFormSaga(action) {
       data: { prospectId }
     } = yield call(prospect.create, prospectUpdated, headers);
 
-    yield put(setVerified(true));
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
-    yield put(applicantInfoFormSuccess());
     yield put(updateActionType(SAVE));
     yield put(updateSaveType(NEXT));
     yield put(resetInputsErrors());
+    yield put(applicantInfoFormSuccess());
   } catch (error) {
     yield put(applicantInfoFormFail(error));
     log(error);

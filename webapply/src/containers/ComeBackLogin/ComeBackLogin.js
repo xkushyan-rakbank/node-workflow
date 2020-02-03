@@ -16,7 +16,7 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
-import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import { setToken } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import { isOtpGenerated } from "../../store/selectors/otp";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
@@ -50,7 +50,6 @@ const ComeBackLoginComponent = ({
   generateOtpCode,
   isOtpGenerated,
   setToken,
-  setVerified,
   recaptchaToken,
   isRecaptchaEnable
 }) => {
@@ -74,8 +73,8 @@ const ComeBackLoginComponent = ({
     [setToken]
   );
   const handleVerifiedFailed = useCallback(() => {
-    setVerified(false);
-  }, [setVerified]);
+    setToken(null);
+  }, []);
 
   useEffect(() => {
     if (isOtpGenerated) {
@@ -177,8 +176,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   generateOtpCode,
-  setToken,
-  setVerified
+  setToken
 };
 
 export const ComeBackLogin = connect(

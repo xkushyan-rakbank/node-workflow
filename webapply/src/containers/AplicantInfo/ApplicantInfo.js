@@ -28,8 +28,8 @@ import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { setToken, setVerified } from "../../store/actions/reCaptcha";
-import { getIsRecaptchaEnable, getLoading } from "../../store/selectors/appConfig";
+import { setToken } from "../../store/actions/reCaptcha";
+import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 import { history } from "../../store";
@@ -69,7 +69,6 @@ const ApplicantInfoPage = ({
   applicantInfoFormPromisify,
   receiveAppConfig,
   setToken,
-  setVerified,
   reCaptchaToken,
   isRecaptchaEnable,
   isConfigLoading
@@ -102,9 +101,8 @@ const ApplicantInfoPage = ({
     [setToken]
   );
   const handleVerifiedFailed = useCallback(() => {
-    setVerified(false);
     setToken(null);
-  }, [setVerified]);
+  }, []);
 
   return (
     <>
@@ -197,7 +195,8 @@ const ApplicantInfoPage = ({
                     !values.email ||
                     !values.mobileNo ||
                     isLoading ||
-                    !reCaptchaToken
+                    !reCaptchaToken ||
+                    !isRecaptchaEnable
                   }
                   justify="flex-end"
                   label="Next Step"
@@ -214,16 +213,14 @@ const ApplicantInfoPage = ({
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
   isConfigLoading: state.appConfig.loading,
-  isRecaptchaEnable: getIsRecaptchaEnable(state),
-  isLoading: getLoading(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state)
 });
 
 const mapDispatchToProps = {
   receiveAppConfig,
   applicantInfoFormPromisify,
   applicantInfoFormSuccess,
-  setToken,
-  setVerified
+  setToken
 };
 
 export const ApplicantInfo = connect(
