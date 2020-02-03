@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { mobileResolutionMD, desktopResolution, mobileResolution } from "../../../../../constants";
 
 export const useStyles = makeStyles({
   root: {
@@ -15,12 +16,12 @@ export const useStyles = makeStyles({
     marginRight: "20px",
     flex: "0 0 calc(50% - 10px)",
     boxSizing: "border-box",
-    "@media only screen and (max-width: 850px)": {
+    [`@media only screen and (max-width: ${mobileResolutionMD}px)`]: {
       margin: 20
     },
     "&:last-child": {
       marginRight: 0,
-      "@media only screen and (max-width: 850px)": {
+      [`@media only screen and (max-width: ${mobileResolutionMD}px)`]: {
         margin: 20
       }
     }
@@ -136,7 +137,7 @@ export const useStyles = makeStyles({
     "&:hover $closeButton": {
       display: "block"
     },
-    "@media only screen and (max-width: 1300px)": {
+    [`@media only screen and (max-width: ${desktopResolution}px)`]: {
       maxHeight: "220px",
       padding: "10px 20px 10px 20px"
     }
@@ -145,7 +146,7 @@ export const useStyles = makeStyles({
     fontSize: "20px",
     borderBottom: "solid 1px #e8e8e8",
     paddingBottom: "20px",
-    "@media only screen and (max-width: 1300px)": {
+    [`@media only screen and (max-width: ${desktopResolution}px)`]: {
       paddingBottom: "10px"
     }
   },
@@ -188,7 +189,7 @@ export const useStyles = makeStyles({
   cardOptions: {
     paddingLeft: "20px",
     fontSize: "20px",
-    "@media only screen and (max-width: 1300px)": {
+    [`@media only screen and (max-width: ${desktopResolution}px)`]: {
       "& li": {
         fontSize: "16px"
       },
@@ -196,7 +197,7 @@ export const useStyles = makeStyles({
     },
     "& li:not(:last-child)": {
       marginBottom: "20px",
-      "@media only screen and (max-width: 1300px)": {
+      [`@media only screen and (max-width: ${desktopResolution}px)`]: {
         marginBottom: "5px"
       }
     }
@@ -208,7 +209,7 @@ export const useStyles = makeStyles({
   },
   cardLinkWrapper: {
     marginBottom: "40px",
-    "@media only screen and (max-width: 1300px)": {
+    [`@media only screen and (max-width: ${desktopResolution}px)`]: {
       marginBottom: "10px"
     }
   },
@@ -251,7 +252,7 @@ export const useStyles = makeStyles({
     width: "100%",
     flexWrap: "nowrap",
     justifyContent: "center",
-    "@media only screen and (max-width: 850px)": {
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       justifyContent: "flex-start",
       flexWrap: "wrap"
     }
