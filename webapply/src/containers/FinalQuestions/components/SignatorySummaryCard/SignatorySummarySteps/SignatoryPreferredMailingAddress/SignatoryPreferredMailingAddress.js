@@ -18,6 +18,7 @@ import {
 import { DEFAULT_SIGNATORY_COUNTRY } from "./constants";
 import {
   MAX_OFFICE_NUMBER_LENGTH,
+  MAX_STREET_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH
 } from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
@@ -119,7 +120,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   placeholder="Street / Location"
                   component={Input}
                   InputProps={{
-                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                    inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
                   }}
                 />
                 <Field

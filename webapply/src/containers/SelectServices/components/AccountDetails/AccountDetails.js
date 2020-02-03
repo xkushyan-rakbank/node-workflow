@@ -9,6 +9,7 @@ import {
   SelectAutocomplete,
   Checkbox
 } from "../../../../components/Form";
+import { INITIAL_INDEX } from "../../constants";
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
@@ -55,7 +56,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
           <Field
             name="accountCurrencies"
             datalistId="accountCurrencies"
-            path="prospect.accountInfo[0].accountCurrencies"
+            path={`prospect.accountInfo[${INITIAL_INDEX}].accountCurrencies`}
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
             options={DATA_CURRENCIES}
@@ -96,7 +97,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 }
                 onChange={id => {
                   setFieldValue("branchID", id);
-                  updateProspect({ "prospect.accountInfo[0].branchId": id });
+                  updateProspect({ [`prospect.accountInfo[${INITIAL_INDEX}].branchId`]: id });
                   updateProspect({ "prospect.organizationInfo.branchID": id });
                 }}
                 label="Branch"
@@ -114,7 +115,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
               <Subtitle title="Select interest" classes={{ wrapper: classes.subtitleInterest }} />
               <Field
                 name="receiveInterest"
-                path="prospect.accountInfo[0].receiveInterest"
+                path={`prospect.accountInfo[${INITIAL_INDEX}].receiveInterest`}
                 label="I don't wish to receive interest from my account"
                 classes={{ formControlRoot: classes.formControl }}
                 component={Checkbox}

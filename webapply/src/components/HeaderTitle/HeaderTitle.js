@@ -21,6 +21,7 @@ const HeaderTitleComponent = ({
   checkLoginStatus,
   getAgentName,
   withMargin,
+  withoutMarginBottom,
   ...props
 }) => {
   const classes = useStyles();
@@ -63,7 +64,13 @@ const HeaderTitleComponent = ({
   };
 
   return (
-    <div className={cx(classes.headerTitle, withMargin && classes.withMargin)}>
+    <div
+      className={cx(
+        classes.headerTitle,
+        withoutMarginBottom && classes.withoutMarginBottom,
+        withMargin && classes.withMargin
+      )}
+    >
       <div className={classes.headerTitleIn}>
         <span>
           {portalTitle.length ? (

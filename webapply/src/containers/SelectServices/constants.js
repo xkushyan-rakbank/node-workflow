@@ -11,6 +11,8 @@ export const STEP_3 = 3;
 export const STEP_4 = 4;
 export const GO_TO_SUBMIT_STEP = 5;
 
+export const INITIAL_INDEX = 0;
+
 // TODO get this data from datalist
 export const signingInfo = {
   "100": "Any of us can sign",

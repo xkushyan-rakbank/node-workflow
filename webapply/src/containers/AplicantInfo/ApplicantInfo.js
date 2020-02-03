@@ -198,7 +198,7 @@ const ApplicantInfoPage = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    (isRecaptchaEnable && !reCaptchaToken && isReCaptchaVerified)
+                    (isRecaptchaEnable && !reCaptchaToken)
                   }
                   justify="flex-end"
                   label="Next Step"
