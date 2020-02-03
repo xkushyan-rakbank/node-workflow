@@ -54,7 +54,7 @@ export const CompanySummaryCardComponent = ({
           sendProspectToAPI={sendProspectToAPI}
           path={COMPANY_PATH}
           page={FINAL_QUESTIONS_PAGE}
-          initialStep={STEP_1}
+          initialStep={!isCompanyStepsCompleted && STEP_1}
         />
       </div>
     </CompanyCard>
