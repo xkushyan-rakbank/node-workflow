@@ -15,8 +15,14 @@ export const useStyles = makeStyles({
     marginRight: "20px",
     flex: "0 0 calc(50% - 10px)",
     boxSizing: "border-box",
+    "@media only screen and (max-width: 850px)": {
+      margin: 20
+    },
     "&:last-child": {
-      marginRight: 0
+      marginRight: 0,
+      "@media only screen and (max-width: 850px)": {
+        margin: 20
+      }
     }
   },
   title: {
@@ -243,10 +249,11 @@ export const useStyles = makeStyles({
   cardsRoot: {
     display: "flex",
     width: "100%",
-    flexWrap: "wrap",
+    flexWrap: "nowrap",
     justifyContent: "center",
     "@media only screen and (max-width: 850px)": {
-      justifyContent: "flex-start"
+      justifyContent: "flex-start",
+      flexWrap: "wrap"
     }
   }
 });
