@@ -7,7 +7,7 @@ import cx from "classnames";
 import { format, isValid } from "date-fns";
 
 import { getApplicantInfo } from "../../../../store/selectors/appConfig";
-import { checkStringLength } from "./utils";
+import { formatFullNameLength } from "./utils";
 import { InfoTitle } from "../../../../components/InfoTitle";
 import {
   CustomSelect,
@@ -62,13 +62,12 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
-    [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
-      ? checkStringLength(applicantInfo.fullName)
-      : checkStringLength(
-          [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
-        )
+    [`prospect.signatoryInfo[${index}].fullName`]: formatFullNameLength(
+      values.isShareholderACompany
+        ? applicantInfo.fullName
+        : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
+    )
   });
-  checkStringLength(applicantInfo.fullName);
 
   return (
     <Formik

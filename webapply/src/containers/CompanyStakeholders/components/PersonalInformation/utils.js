@@ -1,8 +1,8 @@
-import { MAX_LENGTH } from "../../constants";
+import { FULL_NAME_MAX_LENGTH } from "../../constants";
 
-export function checkStringLength(fullName) {
-  if (fullName.length > MAX_LENGTH) {
-    const extraLength = fullName.length - MAX_LENGTH;
+export function formatFullNameLength(fullName) {
+  if (fullName.length > FULL_NAME_MAX_LENGTH) {
+    const extraLength = fullName.length - FULL_NAME_MAX_LENGTH;
     const [firstName, middleName, lastName] = fullName.split(" ");
     const reducedMiddleName = middleName.substring(0, middleName.length - extraLength - 1);
 
