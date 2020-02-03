@@ -14,6 +14,7 @@ import {
 } from "../../../../utils/validation";
 import { SIGNING_TRANSACTIONS_TYPE } from "../../../../constants";
 import { UAE_CODE } from "../../../../constants";
+import { INITIAL_INDEX } from "../../constants";
 import { Subtitle } from "../../../../components/Subtitle";
 import {
   Input,
@@ -106,7 +107,8 @@ const signingPreferencesSchema = Yup.object({
     })
   )
 });
-const pathSignatoryInfo = "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn";
+// eslint-disable-next-line max-len
+const pathSignatoryInfo = `prospect.signatoryInfo[${INITIAL_INDEX}].accountSigningInfo.accountSigningInstn`;
 
 export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
   const classes = useStyles();
@@ -158,7 +160,10 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
             />
             <Field
               name="accountSigningType"
-              path="prospect.signatoryInfo[0].accountSigningInfo.accountSigningType"
+              path={
+                // eslint-disable-next-line max-len
+                `prospect.signatoryInfo[${INITIAL_INDEX}].accountSigningInfo.accountSigningType`
+              }
               typeRadio
               datalistId="accountSignType"
               filterOptions={options => sortByOrder(options, ["100", "000", "101"])}

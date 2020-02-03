@@ -20,7 +20,7 @@ export const TwoSteps = () => {
 
   return (
     <>
-      <HeaderTitle />
+      <HeaderTitle withoutMarginBottom />
       <div className={classes.firstGroup}>
         <SectionTitleWithInfo
           title="Have these ready"
