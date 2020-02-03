@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-import { useSelector } from "react-redux";
 import cx from "classnames";
 
 import routes from "../../routes";
@@ -10,6 +9,7 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { COMPANY_PATH, FINAL_QUESTIONS_PAGE } from "./components/CompanySummaryCard/constants";
 import { signatoriesSteps, SIGNATORY_PATH } from "./components/SignatorySummaryCard/constants";
 import { finalQuestionsSteps } from "./components/CompanySummaryCard/constants";
+import { useCompletedStep } from "../../components/StepComponent/utils/useCompletedSteps";
 
 import { useStyles } from "./styled";
 
@@ -19,12 +19,8 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isCompanyExpanded, setIsCompanyExpanded] = useState(false);
   const classes = useStyles();
 
-  const completedCompanySteps = useSelector(
-    state => state.completedSteps[FINAL_QUESTIONS_PAGE][COMPANY_PATH] || []
-  );
-  const completedSignatoriesSteps = useSelector(
-    state => state.completedSteps[FINAL_QUESTIONS_PAGE][SIGNATORY_PATH] || []
-  );
+  const completedCompanySteps = useCompletedStep(FINAL_QUESTIONS_PAGE, COMPANY_PATH);
+  const completedSignatoriesSteps = useCompletedStep(FINAL_QUESTIONS_PAGE, SIGNATORY_PATH);
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
