@@ -356,14 +356,14 @@ public class WebApplyController {
                 logger.info("Call createProspect endpoint: " + uriComponents.toString());
 
                 ResponseEntity<?> createProspectResponse;
-                try {
-                    createProspectResponse = invokeApiEndpoint(httpRequest, httpResponse,
-                            uriComponents.toString(), HttpMethod.POST, request, "createSMEProspect()", "createProspectUri",
-                            MediaType.APPLICATION_JSON, segment, null);
+                createProspectResponse = invokeApiEndpoint(httpRequest, httpResponse,
+                        uriComponents.toString(), HttpMethod.POST, request, "createSMEProspect()", "createProspectUri",
+                        MediaType.APPLICATION_JSON, segment, null);
+                /*try {
                 } catch (IOException e) {
                     throw new ApiException(String.format("Invoke API from %s method, Endpoint=[%s], request:[%s]",
                             uriComponents.toString(), url, request.toString()), e);
-                }
+                }*/
                 if (createProspectResponse.getStatusCode().is2xxSuccessful()) {
                     String prospectId = ((JsonNode) createProspectResponse.getBody()).get("prospectId").asText();
                     logger.info("Send OTP for prospectId:" + prospectId);
@@ -846,13 +846,13 @@ public class WebApplyController {
 
     private ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
                                                 String url, HttpMethod httpMethod, HttpEntity<JsonNode> request, String operationId, String uriId,
-                                                MediaType mediaType, String segment, String prospectId) throws IOException {
+                                                MediaType mediaType, String segment, String prospectId)  {
 
         logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request:[%s]", operationId, url,
                 request.toString()));
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<?> response = null;
+        ResponseEntity<?> response;
         try {
             if (MediaType.APPLICATION_JSON.equals(mediaType)) {
                 response = restTemplate.exchange(url, httpMethod, request, JsonNode.class);
@@ -862,27 +862,28 @@ public class WebApplyController {
             }
         }
         catch (HttpClientErrorException e) {
-            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
+            logger.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
+            HttpHeaders responseHeaders = e.getResponseHeaders();
             List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
-            String errorJson;
 
+            String errorMessage;
             if (channelContext == null) {
-                errorJson = e.getResponseBodyAsString();
+                errorMessage = e.getResponseBodyAsString();
             } else {
-                errorJson = channelContext.get(0);
+                errorMessage = channelContext.get(0);
             }
-            JsonNode badReqResponse = new ObjectMapper().readTree(errorJson);
-            throw new ApiException(badReqResponse.asText(), HttpStatus.BAD_REQUEST);
 
+            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, errorMessage, e.getResponseBodyAsString(), e);
+//            JsonNode badReqResponse = new ObjectMapper().readTree(errorJson);
+            throw new ApiException(error, responseHeaders, HttpStatus.BAD_REQUEST);
         }
         catch (HttpServerErrorException e) {
-            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
+            logger.error(String.format("HttpServerErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     e.getResponseBodyAsString(), e);
             throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
 
         // ResponseEntity headers is immutable, so create new HttpHeaders object
@@ -898,14 +899,13 @@ public class WebApplyController {
                     operationId, url, response.getStatusCodeValue()));
 
             csrfTokenHelper.createCSRFToken(httpRequest, headers);
-
         }
         else {
             logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
                     operationId, url, response.getStatusCodeValue()));
         }
 
-        return new ResponseEntity<Object>(response.getBody(), headers, response.getStatusCode());
+        return new ResponseEntity<>(response.getBody(), headers, response.getStatusCode());
     }
 
 
