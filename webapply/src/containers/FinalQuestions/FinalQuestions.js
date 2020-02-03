@@ -16,6 +16,7 @@ import { useStyles } from "./styled";
 export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
   const [expandedSignatoryIndex, setExpandedSignatoryIndex] = useState(null);
+  const [isCompanyExpanded, setIsCompanyExpanded] = useState(false);
   const classes = useStyles();
 
   const completedCompanySteps = useSelector(
@@ -28,6 +29,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
   const handleFinalStepContinue = nextIndex => {
+    setIsCompanyExpanded(false);
     setExpandedSignatoryIndex(nextIndex);
   };
 
@@ -48,6 +50,8 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
           switchExpandedMargin={switchExpandedMargin}
           handleFinalStepContinue={handleFinalStepContinue}
           isCompanyStepsCompleted={finalQuestionsSteps.length === completedCompanySteps.length}
+          isCompanyExpanded={isCompanyExpanded}
+          setIsCompanyExpanded={setIsCompanyExpanded}
         />
       </div>
       <div className={classes.sectionContainer}>
