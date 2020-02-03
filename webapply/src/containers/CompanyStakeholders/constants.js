@@ -5,6 +5,7 @@ import { Nationality } from "./components/Nationality/Nationality";
 import { CountryOfResidence } from "./components/CountryOfResidence/CountryOfResidence";
 import { PreferredContactInformation } from "./components/PreferredContactInformation/PreferredContactInformation";
 
+export const FULL_NAME_MAX_LENGTH = 79;
 export const STEP_1 = 1;
 export const STEP_2 = 2;
 export const STEP_3 = 3;

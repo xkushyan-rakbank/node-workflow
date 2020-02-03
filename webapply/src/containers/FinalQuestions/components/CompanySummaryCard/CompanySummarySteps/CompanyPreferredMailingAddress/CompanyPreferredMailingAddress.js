@@ -19,7 +19,6 @@ import {
 import {
   OTHER_OPTION_CODE,
   BASE_PATH,
-  MAX_OFFICE_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH,
   MAX_OTHER_FIELD_LENGTH
@@ -82,7 +81,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   placeholder="Office / Shop Number"
                   contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
                   InputProps={{
-                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                    inputProps: { tabIndex: 0 }
                   }}
                   component={Input}
                 />
