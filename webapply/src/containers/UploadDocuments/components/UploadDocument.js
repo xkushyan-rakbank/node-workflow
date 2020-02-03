@@ -97,7 +97,7 @@ export const UploadDocuments = ({
   const reUploadHandler = useCallback(() => {
     inputEl.current.click();
     setSelectedFile(null);
-  });
+  }, []);
 
   return (
     <div className={classes.fileUploadPlaceholder}>
