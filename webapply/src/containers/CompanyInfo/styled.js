@@ -28,5 +28,13 @@ export const useStyles = makeStyles(theme => ({
   },
   detailsContinueButton: {
     marginTop: 5
+  },
+  continueButtonGrid: {
+    padding: 20
+  },
+  deleteButton: {
+    height: "100%",
+    paddingBottom: "20px",
+    outline: "none"
   }
 }));

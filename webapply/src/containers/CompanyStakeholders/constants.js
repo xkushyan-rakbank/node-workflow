@@ -6,6 +6,7 @@ import { CountryOfResidence } from "./components/CountryOfResidence/CountryOfRes
 import { PreferredContactInformation } from "./components/PreferredContactInformation/PreferredContactInformation";
 import { GA_EVENTS } from "../../utils/ga";
 
+export const FULL_NAME_MAX_LENGTH = 79;
 export const STEP_1 = 1;
 export const STEP_2 = 2;
 export const STEP_3 = 3;
