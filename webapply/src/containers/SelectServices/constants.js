@@ -70,3 +70,6 @@ export const DATA_CURRENCIES = [
     subGroup: null
   }
 ];
+
+export const SELECT_SERVICES_PAGE = "selectServices";
+export const SELECT_SERVICES_PATH = "selectServicesSteps";

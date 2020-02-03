@@ -1,12 +1,14 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 
-import { GO_TO_SUBMIT_STEP, STEP_1, STEP_3 } from "./constants";
+import { GO_TO_SUBMIT_STEP, STEP_1 } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
 import { accountNames } from "../../constants";
+import { useReduxStep } from "../../components/StepComponent/useReduxStep";
+import { SELECT_SERVICES_PAGE, SELECT_SERVICES_PATH, servicesSteps } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -17,20 +19,20 @@ export const SelectServicesComponent = ({
   history
 }) => {
   const classes = useStyles();
-  const [step, setStep] = useState(STEP_1);
+
+  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
+    STEP_1,
+    SELECT_SERVICES_PAGE,
+    SELECT_SERVICES_PATH
+  );
+
+  const handleClickNextStep = useCallback(() => history.push(routes.SubmitApplication), [history]);
 
   const setNextStep = useCallback(() => {
-    if (step === GO_TO_SUBMIT_STEP) {
-      return history.push("SubmitApplication");
-    }
-    sendProspectToAPI().then(() => setStep(step + 1), () => {});
-  }, [sendProspectToAPI, step, history]);
+    sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+  }, [sendProspectToAPI, handleSetNextStep]);
 
-  const createSetStepHandler = nextStep => () => {
-    if (step > nextStep) {
-      setStep(nextStep);
-    }
-  };
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   return (
     <>
@@ -45,10 +47,13 @@ export const SelectServicesComponent = ({
         <BackLink path={routes.uploadDocuments} />
         <SubmitButton
           className={classes.submitButton}
-          handleClick={setNextStep}
+          handleClick={handleClickNextStep}
           label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
           justify="flex-end"
-          disabled={step <= STEP_3 || (accountType === accountNames.starter && !rakValuePackage)}
+          disabled={
+            completedSteps.length !== servicesSteps.length ||
+            (accountType === accountNames.starter && !rakValuePackage)
+          }
         />
       </div>
     </>
