@@ -18,7 +18,7 @@ import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import { setToken } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
-import { isOtpGenerated } from "../../store/selectors/otp";
+import { getIsGenerating, isOtpGenerated } from "../../store/selectors/otp";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
@@ -51,7 +51,8 @@ const ComeBackLoginComponent = ({
   isOtpGenerated,
   setToken,
   recaptchaToken,
-  isRecaptchaEnable
+  isRecaptchaEnable,
+  isGenerating
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
@@ -154,7 +155,10 @@ const ComeBackLoginComponent = ({
               <div className={cx(classes.btnWrapper, "linkContainer")}>
                 <SubmitButton
                   disabled={
-                    !values.email || !values.mobileNo || (isRecaptchaEnable && !recaptchaToken)
+                    !values.email ||
+                    !values.mobileNo ||
+                    isGenerating ||
+                    (isRecaptchaEnable && !recaptchaToken)
                   }
                   justify="flex-end"
                   label="Next step"
@@ -171,7 +175,8 @@ const ComeBackLoginComponent = ({
 const mapStateToProps = state => ({
   recaptchaToken: state.reCaptcha.token,
   isOtpGenerated: isOtpGenerated(state),
-  isRecaptchaEnable: getIsRecaptchaEnable(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  isGenerating: getIsGenerating(state)
 });
 
 const mapDispatchToProps = {
