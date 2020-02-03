@@ -32,7 +32,6 @@ export const SelectServicesComponent = ({
       sendProspectToAPI().then(() => setStep(step + 1), () => {});
       dispatch(sendGoogleAnalyticsMetrics(event));
     },
-    //eslint-disable-next-line import/no-extraneous-dependencies
     [sendProspectToAPI, step, history, dispatch]
   );
 
