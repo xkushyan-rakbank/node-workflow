@@ -59,7 +59,7 @@ export const ChannelsComponent = ({
   accountCurrencies: selectedCurrency
 }) => {
   const classes = useStyles();
-  const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
+  const { accountSigningType, authorityType } = stakeholders[0].accountSigningInfo;
 
   const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
     primaryMobCountryCode,
@@ -67,7 +67,8 @@ export const ChannelsComponent = ({
   );
   const { isDebitCardDisabled, isDebitCardApplied } = checkIsDebitCardApplied(
     accountSigningType,
-    selectedCurrency
+    selectedCurrency,
+    authorityType
   );
 
   useEffect(() => {
