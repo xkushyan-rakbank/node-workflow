@@ -4,6 +4,9 @@ export const initialState = {
   selectServices: {
     selectServicesSteps: []
   },
+  companyStakeholders: {
+    stakeholdersSteps: []
+  },
   companyInfo: {
     companySteps: []
   },
@@ -26,6 +29,10 @@ const completedSteps = (state = initialState, action) => {
         finalQuestions: {
           ...state.finalQuestions,
           signatorySteps: [...state.finalQuestions.signatorySteps, []]
+        },
+        companyStakeholders: {
+          ...state.companyStakeholders,
+          stakeholdersSteps: [...state.companyStakeholders.stakeholdersSteps, []]
         }
       };
     case REMOVE_SIGNATORY:
@@ -34,6 +41,12 @@ const completedSteps = (state = initialState, action) => {
         finalQuestions: {
           ...state.finalQuestions,
           signatorySteps: state.finalQuestions.signatorySteps.filter(
+            (signatory, index) => index !== action.index
+          )
+        },
+        companyStakeholders: {
+          ...state.companyStakeholders,
+          stakeholdersSteps: state.companyStakeholders.stakeholdersSteps.filter(
             (signatory, index) => index !== action.index
           )
         }

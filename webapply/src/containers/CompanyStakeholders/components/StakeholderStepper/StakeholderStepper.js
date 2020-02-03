@@ -11,7 +11,6 @@ import {
   sendProspectToAPIPromisify,
   setScreeningError
 } from "../../../../store/actions/sendProspectToAPI";
-import { useStep } from "../../../../components/StepComponent/useStep";
 import {
   changeEditableStakeholder,
   setFillStakeholder
@@ -19,6 +18,8 @@ import {
 import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
 import { quantityErrorSelector } from "../../../../store/selectors/stakeholder";
+import { COMPANY_STAKEHOLDER_PAGE, COMPANY_STAKEHOLDER_PATH } from "./../../constants";
+import { useReduxStep } from "../../../../components/StepComponent/useReduxStep";
 
 const timeInterval = 5000;
 
@@ -42,7 +43,12 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
+    STEP_1,
+    COMPANY_STAKEHOLDER_PAGE,
+    COMPANY_STAKEHOLDER_PATH,
+    index
+  );
 
   const handleContinue = () =>
     sendProspectToAPI().then(
@@ -99,7 +105,7 @@ const StakeholderStepperComponent = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={availableSteps.includes(item.step)}
+            isFilled={completedSteps.includes(item.step)}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}

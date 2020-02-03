@@ -37,3 +37,6 @@ export const stakeHoldersSteps = [
     component: PreferredContactInformation
   }
 ];
+
+export const COMPANY_STAKEHOLDER_PAGE = "companyStakeholders";
+export const COMPANY_STAKEHOLDER_PATH = "stakeholdersSteps";
