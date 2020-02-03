@@ -34,7 +34,7 @@ const comebackSchema = Yup.object({
     .required(getRequiredMessage("Your Mobile Number"))
     .when("countryCode", {
       is: countryCode => countryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "Field Mobile number is invalid"),
       otherwise: Yup.string()
         .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
         .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
