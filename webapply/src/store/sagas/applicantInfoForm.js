@@ -1,6 +1,9 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
-import { history } from "./..";
-import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
+import {
+  APPLICANT_INFO_FORM,
+  applicantInfoFormFail,
+  applicantInfoFormSuccess
+} from "../actions/applicantInfoForm";
 import {
   updateProspectId,
   updateProspect,
@@ -11,7 +14,6 @@ import { resetInputsErrors } from "./../actions/serverValidation";
 import { setVerified } from "../actions/reCaptcha";
 import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
-import routes from "./../../routes";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
 import { NEXT, SAVE } from "../../constants";
@@ -24,9 +26,7 @@ function* applicantInfoFormSaga(action) {
       ...state.appConfig.prospect,
       applicantInfo: action.data
     };
-
     yield put(updateProspect({ prospect: prospectUpdated }));
-
     if (getIsRecaptchaEnable(state)) {
       prospectUpdated = {
         ...prospectUpdated,
@@ -43,11 +43,12 @@ function* applicantInfoFormSaga(action) {
     yield put(setVerified(true));
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
-    yield call(history.push, routes.verifyOtp);
+    yield put(applicantInfoFormSuccess());
     yield put(updateActionType(SAVE));
     yield put(updateSaveType(NEXT));
     yield put(resetInputsErrors());
   } catch (error) {
+    yield put(applicantInfoFormFail(error));
     log(error);
   }
 }

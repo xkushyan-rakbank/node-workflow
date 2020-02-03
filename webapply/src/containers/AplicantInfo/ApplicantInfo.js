@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
@@ -20,7 +20,10 @@ import {
 } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
-import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
+import {
+  applicantInfoFormPromisify,
+  applicantInfoFormSuccess
+} from "../../store/actions/applicantInfoForm";
 import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
@@ -29,11 +32,7 @@ import { setToken, setVerified } from "../../store/actions/reCaptcha";
 import { getIsRecaptchaEnable, getLoading } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
-import {
-  getReCaptchaError,
-  getReCaptchaPending,
-  getReCaptchaVerified
-} from "../../store/selectors/reCaptcha";
+import { history } from "../../store";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -67,16 +66,15 @@ const initialValues = {
 };
 
 const ApplicantInfoPage = ({
-  applicantInfoForm,
+  applicantInfoFormPromisify,
   receiveAppConfig,
   setToken,
   setVerified,
   reCaptchaToken,
   isRecaptchaEnable,
-  isReCaptchaVerified,
-  isConfigLoading,
-  isLoading
+  isConfigLoading
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
     const segment = pathname.substring(1, pathname.lastIndexOf("/"));
@@ -84,16 +82,28 @@ const ApplicantInfoPage = ({
     receiveAppConfig(segment);
   }, [receiveAppConfig]);
 
-  const onSubmit = useCallback(values => applicantInfoForm(values), [applicantInfoForm]);
+  const onSubmit = useCallback(
+    values => {
+      setIsLoading(true);
+      applicantInfoFormPromisify(values)
+        .then(() => {
+          history.push(routes.verifyOtp);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+    [applicantInfoFormPromisify]
+  );
   const handleReCaptchaVerify = useCallback(
     token => {
       setToken(token);
-      setVerified(true);
     },
     [setToken]
   );
   const handleVerifiedFailed = useCallback(() => {
     setVerified(false);
+    setToken(null);
   }, [setVerified]);
 
   return (
@@ -186,7 +196,8 @@ const ApplicantInfoPage = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    (!reCaptchaToken && !isReCaptchaVerified && isLoading)
+                    isLoading ||
+                    !reCaptchaToken
                   }
                   justify="flex-end"
                   label="Next Step"
@@ -204,15 +215,13 @@ const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
   isConfigLoading: state.appConfig.loading,
   isRecaptchaEnable: getIsRecaptchaEnable(state),
-  isReCaptchaVerified: getReCaptchaVerified(state),
-  isReCaptchaError: getReCaptchaError(state),
-  isReCaptchaPending: getReCaptchaPending(state),
   isLoading: getLoading(state)
 });
 
 const mapDispatchToProps = {
   receiveAppConfig,
-  applicantInfoForm,
+  applicantInfoFormPromisify,
+  applicantInfoFormSuccess,
   setToken,
   setVerified
 };
