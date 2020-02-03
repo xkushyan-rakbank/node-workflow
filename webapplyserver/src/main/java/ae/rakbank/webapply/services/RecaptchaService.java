@@ -73,15 +73,22 @@ public class RecaptchaService {
 					e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
 					e.getResponseBodyAsString(), e);
-			return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
+			throw new ApiException(e, error, null, HttpStatus.BAD_REQUEST);
 		} catch (HttpServerErrorException e) {
 			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
 					e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 					e.getResponseBodyAsString(), e);
-			throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
+		ResponseEntity<JsonNode> errorResponse = validateReCaptchaResponse(ip, recaptchaResponse);
+		if (errorResponse != null) return errorResponse;
+
+		return null;
+	}
+
+	private ResponseEntity<JsonNode> validateReCaptchaResponse(String ip, ResponseEntity<Map> recaptchaResponse) {
 		Map<String, Object> responseBody = recaptchaResponse.getBody();
 		boolean recaptchaTokenVerified = (Boolean) responseBody.get("success");
 
@@ -89,14 +96,16 @@ public class RecaptchaService {
 				recaptchaResponse.getStatusCodeValue(), recaptchaTokenVerified, recaptchaResponse.getBody()));
 
 		if (recaptchaResponse.getStatusCode().is2xxSuccessful() && recaptchaTokenVerified) {
+			logger.debug("ReCaptca validation is succeed");
 			return ResponseEntity.ok().build();
 		} else if (recaptchaResponse.getStatusCode().is5xxServerError()) {
 
 			JsonNode errorResponse = ErrorResponse.createJsonResponse(HttpStatus.INTERNAL_SERVER_ERROR,
 					"ReCaptchaError", "Internal Server Error", null, null);
 
+			logger.error("Internal server error in ReCaptcha service, status code is: " + recaptchaResponse.getStatusCode());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-		} else if (recaptchaResponse.getStatusCode().is4xxClientError() || !recaptchaTokenVerified) {
+		} else if (recaptchaResponse.getStatusCode().is4xxClientError()) {
 			List<String> errorCodes = (List) responseBody.get("error-codes");
 			String errorMessage = errorCodes.stream().map(s -> RecaptchaUtil.RECAPTCHA_ERROR_CODE.get(s))
 					.collect(Collectors.joining(", "));
@@ -106,9 +115,19 @@ public class RecaptchaService {
 			JsonNode errorResponse = ErrorResponse.createJsonResponse(HttpStatus.BAD_REQUEST, "ReCaptchaError",
 					errorMessage, errorMessage, null);
 
+			logger.error("Error response from ReCaptcha service, status code is: " + recaptchaResponse.getStatusCode());
 			return ResponseEntity.badRequest().body(errorResponse);
+		} else if (!recaptchaTokenVerified) {
+			List<String> errorCodes = (List) responseBody.get("error-codes");
+			String errorMessage = errorCodes.stream().map(s -> RecaptchaUtil.RECAPTCHA_ERROR_CODE.get(s))
+					.collect(Collectors.joining(", "));
+			errorMessage = StringUtils.defaultIfBlank(errorMessage, "The validation of reCaptcha is not succeed");
+			JsonNode errorResponse = ErrorResponse.createJsonResponse(HttpStatus.UNPROCESSABLE_ENTITY, "ReCaptchaError",
+					errorMessage, errorMessage, null);
+
+			logger.warn("ReCaptcha was not verified successfully, the verify result is: " + responseBody.get("error-codes").toString());
+			ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
 		}
 		return null;
-
 	}
 }

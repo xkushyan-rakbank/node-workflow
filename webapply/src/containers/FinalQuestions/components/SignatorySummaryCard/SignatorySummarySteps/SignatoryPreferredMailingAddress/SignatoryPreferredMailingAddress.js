@@ -10,14 +10,15 @@ import {
   ALPHANUMERIC_REGEX
 } from "../../../../../../utils/validation";
 import {
-  CustomSelect,
   Input,
   AutoSaveField as Field,
-  Checkbox
+  Checkbox,
+  SelectAutocomplete
 } from "../../../../../../components/Form";
 import { DEFAULT_SIGNATORY_COUNTRY } from "./constants";
 import {
   MAX_OFFICE_NUMBER_LENGTH,
+  MAX_STREET_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH
 } from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
@@ -38,7 +39,7 @@ const signatoryPreferredMailingAddressSchema = Yup.object().shape({
   poBox: Yup.string()
     .required(getRequiredMessage("PO Box Number"))
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
-  emirateCity: Yup.string().required(getRequiredMessage("Emirate"))
+  emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City"))
 });
 
 export const SignatoryPreferredMailingAddressComponent = ({
@@ -119,7 +120,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   placeholder="Street / Location"
                   component={Input}
                   InputProps={{
-                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                    inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
                   }}
                 />
                 <Field
@@ -127,8 +128,9 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   path={`${autoSavePathBase}.emirateCity`}
                   disabled={values.sameAsCompanyAddress}
                   datalistId="emirateCity"
-                  label="Emirate"
-                  component={CustomSelect}
+                  label="Emirate/ City"
+                  isSearchable={false}
+                  component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />
               </Grid>

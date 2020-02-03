@@ -145,7 +145,7 @@ export const useStyles = makeStyles({
     fontWeight: "normal",
     fontStyle: "normal",
     fontStretch: "normal",
-    lineHeight: ".6",
+    lineHeight: "1",
     letterSpacing: "normal",
     color: "#373737",
     display: "block"

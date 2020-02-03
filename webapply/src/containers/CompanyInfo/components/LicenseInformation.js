@@ -7,14 +7,13 @@ import { differenceInYears, format, isValid } from "date-fns";
 import {
   Input,
   DatePicker,
-  CustomSelect,
   AutoSaveField as Field,
   NumberFormat,
   SelectAutocomplete
 } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
-import { ALPHANUMERIC_REGEX } from "../../../utils/validation";
+import { ALPHANUMERIC_WITH_HYPHEN_REGEX } from "../../../utils/validation";
 import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
@@ -32,7 +31,7 @@ const initialValues = {
 const licenseInformationSchema = Yup.object({
   licenseNumber: Yup.string()
     .required(getRequiredMessage("License number"))
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("License number")),
+    .matches(ALPHANUMERIC_WITH_HYPHEN_REGEX, getInvalidMessage("License number")),
   licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
   countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
   licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
@@ -92,6 +91,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 label="License issuing authority"
                 path="prospect.organizationInfo.licenseIssuingAuthority"
                 datalistId="licenseIssuingAuthority"
+                isSearchable={false}
                 component={SelectAutocomplete}
                 inputProps={{ tabIndex: 0 }}
                 otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
@@ -105,7 +105,8 @@ export const LicenseInformation = ({ handleContinue }) => {
                 datalistId="countryOfIncorporation"
                 contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
                 contextualHelpProps={{ isDisableHoverListener: false }}
-                component={CustomSelect}
+                isSearchable
+                component={SelectAutocomplete}
                 inputProps={{ tabIndex: 0 }}
               />
             </Grid>

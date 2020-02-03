@@ -76,8 +76,7 @@ export const UploadDocuments = ({
     });
     setErrorMessage(null);
     setSelectedFile(file);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [document]);
+  }, [document, docOwner, docUpload, documentKey, index, stakeholderIndex]);
 
   const fileUploadCancel = useCallback(() => {
     if (docOwner === COMPANY_DOCUMENTS) {
@@ -91,8 +90,7 @@ export const UploadDocuments = ({
     }
     cancelDocUpload(documentKey);
     setSelectedFile(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cancelDocUpload, docOwner, documentKey, index, stakeholderIndex, updateProspect]);
 
   const reUploadHandler = useCallback(() => {
     inputEl.current.click();
@@ -117,7 +115,7 @@ export const UploadDocuments = ({
           {isUploading
             ? `Uploading ${document.documentTitle}`
             : isUploaded
-            ? `${selectedFile.name} ${selectedFile.size}`
+            ? `${selectedFile.name}`
             : document.documentTitle}
 
           {selectedFile && (

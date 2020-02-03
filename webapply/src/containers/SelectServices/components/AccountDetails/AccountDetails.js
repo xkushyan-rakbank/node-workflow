@@ -6,9 +6,10 @@ import * as Yup from "yup";
 import {
   AutoSaveField as Field,
   CheckboxGroup,
-  CustomSelect,
+  SelectAutocomplete,
   Checkbox
 } from "../../../../components/Form";
+import { INITIAL_INDEX } from "../../constants";
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
@@ -51,7 +52,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
           <Field
             name="accountCurrencies"
             datalistId="accountCurrencies"
-            path="prospect.accountInfo[0].accountCurrencies"
+            path={`prospect.accountInfo[${INITIAL_INDEX}].accountCurrencies`}
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
             options={DATA_CURRENCIES}
@@ -71,9 +72,10 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 datalistId="branchCity"
                 path="prospect.organizationInfo.branchCity"
                 label="Emirate / City"
-                component={CustomSelect}
-                onChange={e => {
-                  setFieldValue("branchCity", e.target.value);
+                isSearchable={false}
+                component={SelectAutocomplete}
+                onChange={id => {
+                  setFieldValue("branchCity", id);
                   setFieldValue("branchID", "");
                 }}
                 inputProps={{ tabIndex: 0 }}
@@ -89,16 +91,17 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                     .filter(city => city.code === values.branchCity)
                     .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
                 }
-                onChange={e => {
-                  setFieldValue("branchID", e.target.value);
-                  updateProspect({ "prospect.accountInfo[0].branchId": e.target.value });
-                  updateProspect({ "prospect.organizationInfo.branchID": e.target.value });
+                onChange={id => {
+                  setFieldValue("branchID", id);
+                  updateProspect({ [`prospect.accountInfo[${INITIAL_INDEX}].branchId`]: id });
+                  updateProspect({ "prospect.organizationInfo.branchID": id });
                 }}
                 label="Branch"
                 placeholder="Branch"
                 disabled={!values.branchCity}
-                component={CustomSelect}
                 inputProps={{ tabIndex: 0 }}
+                isSearchable={false}
+                component={SelectAutocomplete}
               />
             </Grid>
           </Grid>
@@ -108,7 +111,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
               <Subtitle title="Select interest" classes={{ wrapper: classes.subtitleInterest }} />
               <Field
                 name="receiveInterest"
-                path="prospect.accountInfo[0].receiveInterest"
+                path={`prospect.accountInfo[${INITIAL_INDEX}].receiveInterest`}
                 label="I don't wish to receive interest from my account"
                 classes={{ formControlRoot: classes.formControl }}
                 component={Checkbox}

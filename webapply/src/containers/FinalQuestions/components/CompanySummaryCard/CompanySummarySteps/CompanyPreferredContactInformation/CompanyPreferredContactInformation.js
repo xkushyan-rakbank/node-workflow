@@ -10,6 +10,7 @@ import {
   InputGroup,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
+import { InfoTitle } from "../../../../../../components/InfoTitle";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
   UAE_MOBILE_PHONE_REGEX,
@@ -42,9 +43,9 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
         })
     }),
   primaryEmail: Yup.string()
-    .required(getRequiredMessage("E-mail Address"))
+    .required(getRequiredMessage("Primary e-mail address"))
     .max(50, "Maximum 50 characters allowed")
-    .email(getInvalidMessage("E-mail Address")),
+    .email(getInvalidMessage("Primary e-mail address")),
   primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
     is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
     then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, getInvalidMessage("Landline number")),
@@ -91,8 +92,8 @@ export const CompanyPreferredContactInformationComponent = ({
                 <Field
                   name="primaryEmail"
                   path="prospect.organizationInfo.contactDetails.primaryEmail"
-                  label="E-mail Address"
-                  placeholder="E-mail Address"
+                  label="Primary e-mail address"
+                  placeholder="Primary e-mail address"
                   component={Input}
                   InputProps={{
                     inputProps: { tabIndex: 0 }
@@ -156,6 +157,12 @@ export const CompanyPreferredContactInformationComponent = ({
                 </InputGroup>
               </Grid>
             </Grid>
+            <div className={classes.infoTitleWrap}>
+              <InfoTitle
+                classes={{ wrapper: classes.infoTitle }}
+                title="We will use the information in this section to communicate with you."
+              />
+            </div>
             <div className={classes.buttonWrapper}>
               <ContinueButton type="submit" />
             </div>

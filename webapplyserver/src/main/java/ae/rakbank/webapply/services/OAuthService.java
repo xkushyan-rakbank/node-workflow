@@ -66,29 +66,43 @@ public class OAuthService {
 		return true;
 	}
 
-	public boolean isAccessTokenValid(String token) {
-		return isAccessTokenValid(token, null, false);
+	/*public boolean validateAccessToken(String token) {
+		return validateAccessToken(token, null, false);
 	}
 
-	public boolean isAccessTokenValid(String token, String refreshToken) {
-		return isAccessTokenValid(token, refreshToken, false);
-	}
+	public boolean validateAccessToken(String token, String refreshToken) {
+		return validateAccessToken(token, refreshToken, false);
+	}*/
 
-	public boolean isAccessTokenValid(String token, String refreshToken, Boolean force) {
+	public void validateAccessToken(String token, String refreshToken, Boolean force) {
 		if (isAccessTokenExpired()) {
-			return false;
+			String errorMessage = "Access token expired or not present in servlet context, "
+					+ "Actual time: " + LocalDateTime.now()
+					+ ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+			logger.error(errorMessage);
+			ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+			throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
 		}
 		else {
-			ResponseEntity<JsonNode> response = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
-			if (response != null && response.getBody().get("access_token").asText().equals(token)) {
-				return true;
+			ResponseEntity<JsonNode> oauthResponse = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
+			if (oauthResponse != null && oauthResponse.getBody().get("access_token").asText().equals(token)) {
+				logger.info("Access token is valid");
 			}
-			else if ((refreshToken != null && response.getBody().get("refresh_token").asText().equals(refreshToken)) || force) {
+			else if ((refreshToken != null && oauthResponse.getBody().get("refresh_token").asText().equals(refreshToken)) || force) {
+				logger.warn("Access token is invalid, try to get new one with refresh token..");
 				getOAuthToken();
-				return true;
+				logger.info("Access token was updated successfully with refresh token.");
 			}
 			else {
-				return false;
+				logger.error("Access token and/or refresh token is invalid, " +
+						"token in request: " + token
+						+ ", actual context token: " + oauthResponse.getBody().get("access_token").asText()
+						+ ", refresh token in request: " + refreshToken
+						+ ", actual context refresh token: " + oauthResponse.getBody().get("refresh_token").asText());
+
+				String errorMessage = "Access token and/or refresh token is invalid.";
+				ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+				throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
 			}
 		}
 	}

@@ -34,7 +34,7 @@ const companyDetailsSchema = Yup.object({
   numberOfEmployees: Yup.number()
     .typeError("Not valid number")
     .min(0, "Must be more than or equal to 0")
-    .max(10000, "Must be less than or equal to 10,000")
+    .max(99999, "Must be less than or equal to 99,999")
     .integer(getInvalidMessage("Number of employees")),
   companyCategory: Yup.string().required(getRequiredMessage("Company category"))
 });
@@ -102,7 +102,11 @@ export const CompanyDetails = ({ handleContinue }) => {
                 changeProspect={(_, value, path) => ({ [path]: value || "0" })}
                 InputProps={{
                   inputComponent: NumberFormat,
-                  inputProps: { tabIndex: 0, allowNegative: false }
+                  inputProps: {
+                    tabIndex: 0,
+                    allowNegative: false,
+                    decimalScale: 0
+                  }
                 }}
               />
             </Grid>
