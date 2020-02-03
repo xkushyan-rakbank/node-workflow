@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
@@ -11,6 +11,8 @@ import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { history } from "../../../store";
+import routes from "../../../routes";
 
 const loginSchema = Yup.object({
   username: Yup.string()
@@ -22,24 +24,30 @@ const loginSchema = Yup.object({
 });
 
 export const LoginComponent = ({
-  loginInfoForm,
+  loginInfoFormPromisify,
   setToken,
   verifyToken,
   recaptchaToken,
   isRecaptchaEnable
 }) => {
   const classes = useStyles();
+  const [isLoading, setIsLoading] = useState(false);
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
-
       if (isRecaptchaEnable) {
         loginData.recaptchaToken = recaptchaToken;
       }
-
-      loginInfoForm(loginData);
+      setIsLoading(true);
+      loginInfoFormPromisify(loginData)
+        .then(() => {
+          history.push(routes.searchProspect);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     },
-    [loginInfoForm, recaptchaToken, isRecaptchaEnable]
+    [loginInfoFormPromisify, recaptchaToken, isRecaptchaEnable]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -78,7 +86,6 @@ export const LoginComponent = ({
                 inputProps: { tabIndex: 0 }
               }}
             />
-
             <Field
               name="password"
               type="password"
@@ -91,7 +98,6 @@ export const LoginComponent = ({
                 inputProps: { tabIndex: 0 }
               }}
             />
-
             <Grid container direction="row" justify="space-between" alignItems="center">
               <ErrorBoundaryForReCaptcha>
                 {isRecaptchaEnable && (
@@ -108,6 +114,7 @@ export const LoginComponent = ({
                   label="Next Step"
                   disabled={
                     Object.values(values).some(value => !value) ||
+                    isLoading ||
                     (isRecaptchaEnable && !recaptchaToken)
                   }
                 />
