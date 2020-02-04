@@ -7,7 +7,6 @@ export const GA = {
     const account = pick(applicationInfo, ["accountType", "islamicBanking"]);
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event, ProductName: account.accountType });
-    console.log("Google Analytics", { event, ProductName: account.accountType });
   }
 };
 
