@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { setToken, verifyToken } from "../../../store/actions/reCaptcha";
+import { setToken } from "../../../store/actions/reCaptcha";
 import { loginInfoFormPromisify } from "../../../store/actions/loginForm";
 import { getIsRecaptchaEnable } from "../../../store/selectors/appConfig";
 import { LoginComponent } from "./Login";
@@ -11,9 +11,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loginInfoFormPromisify,
-  setToken,
-  verifyToken
+  login: loginInfoFormPromisify,
+  setToken
 };
 
 export default connect(

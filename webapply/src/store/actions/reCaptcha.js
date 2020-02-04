@@ -9,7 +9,3 @@ export const setToken = payload => {
 export const setError = payload => {
   return { type: SET_ERROR, payload };
 };
-
-export const verifyToken = () => {
-  return { type: VERIFY_TOKEN };
-};

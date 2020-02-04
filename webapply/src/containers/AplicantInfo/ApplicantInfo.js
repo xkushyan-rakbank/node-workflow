@@ -20,10 +20,7 @@ import {
 } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
-import {
-  applicantInfoFormPromisify,
-  applicantInfoFormSuccess
-} from "../../store/actions/applicantInfoForm";
+import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
 import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
@@ -32,7 +29,6 @@ import { setToken } from "../../store/actions/reCaptcha";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
-import { history } from "../../store";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -66,12 +62,13 @@ const initialValues = {
 };
 
 const ApplicantInfoPage = ({
-  applicantInfoFormPromisify,
+  submit,
   receiveAppConfig,
   setToken,
   reCaptchaToken,
   isRecaptchaEnable,
-  isConfigLoading
+  isConfigLoading,
+  history
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -84,7 +81,7 @@ const ApplicantInfoPage = ({
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
-      applicantInfoFormPromisify(values)
+      submit(values)
         .then(() => {
           history.push(routes.verifyOtp);
         })
@@ -92,7 +89,7 @@ const ApplicantInfoPage = ({
           setIsLoading(false);
         });
     },
-    [applicantInfoFormPromisify]
+    [submit]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -102,7 +99,7 @@ const ApplicantInfoPage = ({
   );
   const handleVerifiedFailed = useCallback(() => {
     setToken(null);
-  }, []);
+  }, [setToken]);
 
   return (
     <>
@@ -217,8 +214,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   receiveAppConfig,
-  applicantInfoFormPromisify,
-  applicantInfoFormSuccess,
+  submit: applicantInfoFormPromisify,
   setToken
 };
 

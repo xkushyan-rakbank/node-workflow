@@ -75,7 +75,7 @@ const ComeBackLoginComponent = ({
   );
   const handleVerifiedFailed = useCallback(() => {
     setToken(null);
-  }, []);
+  }, [setToken]);
 
   useEffect(() => {
     if (isOtpGenerated) {
