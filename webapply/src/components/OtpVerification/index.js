@@ -39,14 +39,17 @@ export const OtpVerification = ({ onChange, code }) => {
     const inputIndex = parseInt(target.name, 10);
     const prevInput = inputRefs[inputIndex - 1];
     const nextInput = inputRefs[inputIndex + 1];
-    if (keyCode === BACKSPACE_KEY && prevInput) {
-      prevInput.focus();
-    }
-    if (keyCode === LEFT_ARROW_KEY && prevInput) {
-      prevInput.focus();
-    }
-    if (keyCode === RIGHT_ARROW_KEY && nextInput) {
-      nextInput.focus();
+    switch (keyCode) {
+      case BACKSPACE_KEY:
+      case LEFT_ARROW_KEY:
+        prevInput && prevInput.focus();
+        return;
+
+      case RIGHT_ARROW_KEY:
+        nextInput && nextInput.focus();
+        return;
+      default:
+        return;
     }
   };
 
@@ -55,7 +58,7 @@ export const OtpVerification = ({ onChange, code }) => {
       <TextField
         autoFocus={index === 0}
         type="text"
-        name={String(index)}
+        name={`${index}`}
         variant="outlined"
         inputProps={{ maxLength: 1, ref: bindNodeRef(index) }}
         onFocus={handleInputFocus}
