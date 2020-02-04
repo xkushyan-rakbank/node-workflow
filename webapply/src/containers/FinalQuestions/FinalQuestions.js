@@ -53,7 +53,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
       <h2>Final questions</h2>
       <p className={cx(classes.description, { [classes.smallMargin]: !isExpandedMargin })}>
         We’re almost there! Here we ask a bit about the background of the company and that of the
-        signatories. We promise there’s no more questions after this section.
+        signatories. We promise there are no more questions after this section.
       </p>
       <div className={classes.sectionContainer}>
         <CompanySummaryCard

@@ -27,7 +27,6 @@ export const FormConfirm = () => {
 
       <OTPform
         redirectRoute={routes.companyInfo}
-        infoTitleResult="We have sent you a verification code. Please input the six digits below, to confirm this is you."
         classes={{
           centeredContainer: classes.centeredContainer,
           title: classes.title

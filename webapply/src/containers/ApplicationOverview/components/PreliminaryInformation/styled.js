@@ -4,6 +4,7 @@ import { mobileResolution } from "../../../../constants";
 
 export const useStyles = makeStyles({
   answers: {
+    marginTop: "40px",
     borderRadius: "8px",
     overflow: "auto",
     "@media only screen and (max-width: 991px)": {
@@ -20,15 +21,6 @@ export const useStyles = makeStyles({
       minWidth: "auto",
       padding: "20px 16px",
       borderRadius: "8px 8px 0 0"
-    }
-  },
-  note: {
-    marginBottom: "60px",
-    fontSize: "12px",
-    textAlign: "center",
-    color: "#888888",
-    "@media only screen and (max-height: 800px)": {
-      marginBottom: "15px"
     }
   },
   cardsWrapper: {

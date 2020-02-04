@@ -7,14 +7,13 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
 import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/appConfig";
 
-import dotsBg from "../../assets/images/dots_bg.png";
-import bankingClock from "../../assets/icons/bankingClock.png";
+import { ReactComponent as DotsBg } from "../../assets/images/dots_bg.svg";
 import { useStyles } from "./styled";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();
-  const { submitted } = useIconsByAccount();
+  const { submitted, bankingClock: BankingClock } = useIconsByAccount();
 
   return accountNumbers.length > 0 ? (
     <div className={classes.container}>
@@ -37,7 +36,7 @@ const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => 
             })}
             key={accountData.accountNumber}
           >
-            <img src={dotsBg} className={classes.docCheckedIcon} alt="background" />
+            <DotsBg className={classes.dottedBg} alt="background" />
 
             <span className="info">{`Your ${accountData.currency} account number`}</span>
             <div className="mainInfo">
@@ -55,7 +54,7 @@ const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => 
       </div>
       <div className={classes.divider}>{""}</div>
       <div className={classes.result}>
-        <img className={classes.waitCallIcon} src={bankingClock} alt="wait call" />
+        <BankingClock className={classes.waitCallIcon} alt="wait call" />
         <Typography align="center" classes={{ root: classes.resultNextStep }}>
           What happens now
         </Typography>

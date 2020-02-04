@@ -20,7 +20,7 @@ const style = {
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       margin: "5px auto"
     },
-    ["@media only screen and (max-width: 767px)"]: {
+    "@media only screen and (max-width: 767px)": {
       width: "100%"
     }
   },

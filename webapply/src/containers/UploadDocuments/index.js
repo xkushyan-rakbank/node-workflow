@@ -1,4 +1,6 @@
 import { connect } from "react-redux";
+import get from "lodash/get";
+
 import {
   getProspectDocuments,
   getSignatories,
@@ -14,17 +16,18 @@ import {
   cancelDocUpload
 } from "../../store/actions/getProspectDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
-import { getInputValueById } from "../../store/selectors/input";
+import { getOrganizationInfo } from "../../store/selectors/appConfig";
 
 const mapStateToProps = state => ({
   documents: getProspectDocuments(state),
-  companyName: getInputValueById(state, "Org.companyName"),
+  companyName: get(getOrganizationInfo(state), "companyName", ""),
   signatories: getSignatories(state),
   uploadDocsEndpoints: getEndpoints(state),
   prospectID: getProspectId(state),
   uploadedDocsCount: getUploadedDocsCount(state),
   requiredDocsCount: getRequiredDocsCount(state),
-  progress: state.uploadDocuments.progress
+  progress: state.uploadDocuments.progress,
+  uploadErrorMessage: state.uploadDocuments.uploadErrors
 });
 
 const mapDispatchToProps = {

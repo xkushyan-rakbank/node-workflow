@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
@@ -20,12 +20,12 @@ import {
 } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
-import { applicantInfoForm } from "../../store/actions/applicantInfoForm";
+import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
 import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import { setToken } from "../../store/actions/reCaptcha";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
@@ -62,14 +62,15 @@ const initialValues = {
 };
 
 const ApplicantInfoPage = ({
-  applicantInfoForm,
+  submit,
   receiveAppConfig,
   setToken,
-  setVerified,
   reCaptchaToken,
   isRecaptchaEnable,
-  isConfigLoading
+  isConfigLoading,
+  history
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
     const segment = pathname.substring(1, pathname.lastIndexOf("/"));
@@ -77,7 +78,19 @@ const ApplicantInfoPage = ({
     receiveAppConfig(segment);
   }, [receiveAppConfig]);
 
-  const onSubmit = useCallback(values => applicantInfoForm(values), [applicantInfoForm]);
+  const onSubmit = useCallback(
+    values => {
+      setIsLoading(true);
+      submit(values)
+        .then(() => {
+          history.push(routes.verifyOtp);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+    [submit]
+  );
   const handleReCaptchaVerify = useCallback(
     token => {
       setToken(token);
@@ -85,8 +98,8 @@ const ApplicantInfoPage = ({
     [setToken]
   );
   const handleVerifiedFailed = useCallback(() => {
-    setVerified(false);
-  }, [setVerified]);
+    setToken(null);
+  }, [setToken]);
 
   return (
     <>
@@ -178,7 +191,8 @@ const ApplicantInfoPage = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    (isRecaptchaEnable && !reCaptchaToken)
+                    isLoading ||
+                    (!reCaptchaToken && isRecaptchaEnable)
                   }
                   justify="flex-end"
                   label="Next Step"
@@ -200,9 +214,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   receiveAppConfig,
-  applicantInfoForm,
-  setToken,
-  setVerified
+  submit: applicantInfoFormPromisify,
+  setToken
 };
 
 export const ApplicantInfo = connect(

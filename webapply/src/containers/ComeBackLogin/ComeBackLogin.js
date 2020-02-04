@@ -16,9 +16,9 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
-import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import { setToken } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
-import { isOtpGenerated } from "../../store/selectors/otp";
+import { getIsGenerating, isOtpGenerated } from "../../store/selectors/otp";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
@@ -28,13 +28,14 @@ import { useStyles } from "./styled";
 const comebackSchema = Yup.object({
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
-    .email(getInvalidMessage("Your E-mail Address")),
+    .email(getInvalidMessage("Your E-mail Address"))
+    .max(50, "Maximum 50 characters allowed"),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
     .when("countryCode", {
       is: countryCode => countryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "Field Mobile number is invalid"),
       otherwise: Yup.string()
         .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
         .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
@@ -50,9 +51,9 @@ const ComeBackLoginComponent = ({
   generateOtpCode,
   isOtpGenerated,
   setToken,
-  setVerified,
   recaptchaToken,
-  isRecaptchaEnable
+  isRecaptchaEnable,
+  isGenerating
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
@@ -65,7 +66,7 @@ const ComeBackLoginComponent = ({
 
       generateOtpCode(loginData);
     },
-    [generateOtpCode, recaptchaToken]
+    [generateOtpCode, recaptchaToken, isRecaptchaEnable]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -74,8 +75,8 @@ const ComeBackLoginComponent = ({
     [setToken]
   );
   const handleVerifiedFailed = useCallback(() => {
-    setVerified(false);
-  }, [setVerified]);
+    setToken(null);
+  }, [setToken]);
 
   useEffect(() => {
     if (isOtpGenerated) {
@@ -86,6 +87,7 @@ const ComeBackLoginComponent = ({
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
+        className={classes.title}
         title="Wondering about your application? You came to the right place."
         info="Please enter the login you used when you first applied"
       />
@@ -101,60 +103,66 @@ const ComeBackLoginComponent = ({
       >
         {({ values }) => (
           <Form className={classes.form}>
-            <Field
-              name="email"
-              path="prospect.applicantInfo.email"
-              label="Your E-mail Address"
-              placeholder="Email"
-              component={Input}
-              isLoadDefaultValueFromStore={false}
-              InputProps={{
-                inputProps: { tabIndex: 0 }
-              }}
-            />
-
-            <InputGroup>
+            <div>
               <Field
-                name="countryCode"
-                path="prospect.applicantInfo.countryCode"
-                required
-                datalistId="countryCode"
-                extractLabel={item => item.displayText}
-                component={CustomSelect}
-                shrink={false}
-                inputProps={{ tabIndex: 0 }}
-              />
-
-              <Field
-                name="mobileNo"
-                path="prospect.applicantInfo.mobileNo"
-                label="Your Mobile Number"
-                placeholder="Mobile Number"
+                name="email"
+                path="prospect.applicantInfo.email"
+                label="Your E-mail Address"
+                placeholder="Email"
                 component={Input}
                 isLoadDefaultValueFromStore={false}
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
               />
-            </InputGroup>
 
-            <Grid container direction="row" justify="space-between" alignItems="center">
-              {isRecaptchaEnable && (
-                <ErrorBoundaryForReCaptcha>
-                  <ReCaptcha
-                    onVerify={handleReCaptchaVerify}
-                    onExpired={handleVerifiedFailed}
-                    onError={handleVerifiedFailed}
-                  />
-                </ErrorBoundaryForReCaptcha>
-              )}
+              <InputGroup>
+                <Field
+                  name="countryCode"
+                  path="prospect.applicantInfo.countryCode"
+                  required
+                  datalistId="countryCode"
+                  extractLabel={item => item.displayText}
+                  component={CustomSelect}
+                  shrink={false}
+                  inputProps={{ tabIndex: 0 }}
+                />
+
+                <Field
+                  name="mobileNo"
+                  path="prospect.applicantInfo.mobileNo"
+                  label="Your Mobile Number"
+                  placeholder="Mobile Number"
+                  component={Input}
+                  isLoadDefaultValueFromStore={false}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                />
+              </InputGroup>
+              <Grid container direction="row" justify="flex-start" alignItems="center">
+                {isRecaptchaEnable && (
+                  <ErrorBoundaryForReCaptcha>
+                    <ReCaptcha
+                      onVerify={handleReCaptchaVerify}
+                      onExpired={handleVerifiedFailed}
+                      onError={handleVerifiedFailed}
+                    />
+                  </ErrorBoundaryForReCaptcha>
+                )}
+              </Grid>
+            </div>
+            <Grid container direction="row" justify="flex-end" alignItems="center">
               <div className={cx(classes.btnWrapper, "linkContainer")}>
                 <SubmitButton
                   disabled={
-                    !values.email || !values.mobileNo || (isRecaptchaEnable && !recaptchaToken)
+                    !values.email ||
+                    !values.mobileNo ||
+                    isGenerating ||
+                    (isRecaptchaEnable && !recaptchaToken)
                   }
                   justify="flex-end"
-                  label="Next"
+                  label="Next step"
                 />
               </div>
             </Grid>
@@ -168,13 +176,13 @@ const ComeBackLoginComponent = ({
 const mapStateToProps = state => ({
   recaptchaToken: state.reCaptcha.token,
   isOtpGenerated: isOtpGenerated(state),
-  isRecaptchaEnable: getIsRecaptchaEnable(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  isGenerating: getIsGenerating(state)
 });
 
 const mapDispatchToProps = {
   generateOtpCode,
-  setToken,
-  setVerified
+  setToken
 };
 
 export const ComeBackLogin = connect(

@@ -1,11 +1,13 @@
 import { connect } from "react-redux";
+import get from "lodash/get";
+
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
-import { getInputValueById } from "../../../../store/selectors/input";
+import { getOrganizationInfo } from "../../../../store/selectors/appConfig";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import { CompanySummaryCardComponent } from "./CompanySummaryCard";
 
 const mapStateToProps = state => ({
-  companyName: getInputValueById(state, "Org.companyName"),
+  companyName: get(getOrganizationInfo(state), "companyName", ""),
   ...getSendProspectToAPIInfo(state)
 });
 

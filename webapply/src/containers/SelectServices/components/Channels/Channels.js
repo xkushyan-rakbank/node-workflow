@@ -14,13 +14,15 @@ import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 import { ICONS, Icon } from "../../../../components/Icons/Icon";
 import { Divider } from "../Divider";
+import { INITIAL_INDEX } from "../../constants";
+import { ContexualHelp } from "../../../../components/Notifications";
 
 import { useStyles } from "./styled";
 
 const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
 // eslint-disable-next-line max-len
 const DEBIT_CARD_INFO =
-  "Debit cards will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
+  "Business debit cards will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
 // eslint-disable-next-line max-len
 const CHEQUE_BOOK_INFO =
   "Cheque book will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
@@ -45,8 +47,8 @@ const CustomCheckbox = props => (
   />
 );
 
-const pathDebitCardApplied = "prospect.accountInfo[0].debitCardApplied";
-const pathChequeBookApplied = "prospect.accountInfo[0].chequeBookApplied";
+const pathDebitCardApplied = `prospect.accountInfo[${INITIAL_INDEX}].debitCardApplied`;
+const pathChequeBookApplied = `prospect.accountInfo[${INITIAL_INDEX}].chequeBookApplied`;
 
 export const ChannelsComponent = ({
   isHasSignatories,
@@ -93,22 +95,27 @@ export const ChannelsComponent = ({
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <Subtitle title="Debit Cards" />
-
-          <Field
-            name="debitCardApplied"
-            path={pathDebitCardApplied}
-            label="I want debit cards for all the company signatories"
-            classes={{ infoTitle: classes.infoTitle }}
-            component={Checkbox}
-            infoTitle={DEBIT_CARD_INFO}
-            disabled={isDebitCardDisabled}
-            isLoadDefaultValueFromStore={false}
-            inputProps={{ tabIndex: 0 }}
-            contextualHelpText="Business debit card will be send to the signatory's preferred mailing address"
-            contextualHelpProps={{ isDisableHoverListener: false }}
-          />
-
+          <Subtitle title="Business debit Cards" />
+          <ContexualHelp
+            isDisableHoverListener={false}
+            classes={classes}
+            placement="left"
+            title={"Business debit card will be send to the signatory's preferred mailing address"}
+          >
+            <span>
+              <Field
+                name="debitCardApplied"
+                path={pathDebitCardApplied}
+                label="I want business debit cards for all the company signatories"
+                classes={{ infoTitle: classes.infoTitle }}
+                component={Checkbox}
+                infoTitle={DEBIT_CARD_INFO}
+                disabled={isDebitCardDisabled}
+                isLoadDefaultValueFromStore={false}
+                inputProps={{ tabIndex: 0 }}
+              />
+            </span>
+          </ContexualHelp>
           {isHasSignatories && values.debitCardApplied && (
             <SignatoriesList stakeholders={stakeholders} />
           )}
@@ -116,28 +123,35 @@ export const ChannelsComponent = ({
           <Divider classes={{ divider: classes.divider }} />
 
           <Subtitle title="Cheque book" />
-
-          <Field
-            name="chequeBookApplied"
-            path={pathChequeBookApplied}
-            label="I want a cheque book for the company"
-            classes={{ infoTitle: classes.infoTitle }}
-            component={Checkbox}
-            infoTitle={CHEQUE_BOOK_INFO}
-            disabled={isChequeBookDisabled}
-            isLoadDefaultValueFromStore={false}
-            inputProps={{ tabIndex: 0 }}
-            contextualHelpText="Cheque book will be printed with the company name given and will be send to the Company address"
-            contextualHelpProps={{ isDisableHoverListener: false }}
-          />
-
+          <ContexualHelp
+            isDisableHoverListener={false}
+            classes={classes}
+            placement="left"
+            title={
+              "Cheque book will be printed with the company name given and will be send to the Company address"
+            }
+          >
+            <span>
+              <Field
+                name="chequeBookApplied"
+                path={pathChequeBookApplied}
+                label="I want a cheque book for the company"
+                classes={{ infoTitle: classes.infoTitle }}
+                component={Checkbox}
+                infoTitle={CHEQUE_BOOK_INFO}
+                disabled={isChequeBookDisabled}
+                isLoadDefaultValueFromStore={false}
+                inputProps={{ tabIndex: 0 }}
+              />
+            </span>
+          </ContexualHelp>
           <Divider />
 
           <Subtitle title="Bank statements" />
 
           <CustomCheckbox
             name="eStatements"
-            path="prospect.accountInfo[0].eStatements"
+            path={`prospect.accountInfo[${INITIAL_INDEX}].eStatements`}
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
@@ -149,7 +163,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="mailStatements"
-            path="prospect.accountInfo[0].mailStatements"
+            path={`prospect.accountInfo[${INITIAL_INDEX}].mailStatements`}
             label="I want paper statements (monthly charges apply)"
             classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {

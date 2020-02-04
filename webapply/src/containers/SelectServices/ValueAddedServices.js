@@ -1,7 +1,12 @@
 import { connect } from "react-redux";
+import get from "lodash/get";
 
-import { getAccountType, getUrlsReadMore } from "../../store/selectors/appConfig";
-import { getGeneralInputProps } from "../../store/selectors/input";
+import {
+  getAccountInfo,
+  getAccountType,
+  getUrlsReadMore,
+  getApplicationInfo
+} from "../../store/selectors/appConfig";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getSelectedTypeCurrency } from "../../store/selectors/SelectServices";
 
@@ -9,8 +14,10 @@ import { ValueAddedServicesComponent } from "./components/ValueAddedServices/Val
 
 const mapStateToProps = state => ({
   readMoreUrls: getUrlsReadMore(state),
-  rakValuePackage: getGeneralInputProps(state, "Appl.rakValuePackage"),
-  accountCurrencies: getSelectedTypeCurrency(state, "Acnt.accountCurrencies", [0]),
+  rakValuePackage: get(getApplicationInfo(state), "rakValuePackage", ""),
+  accountCurrencies: getSelectedTypeCurrency(
+    get(getAccountInfo(state)[0], "accountCurrencies", "")
+  ),
   accountType: getAccountType(state)
 });
 

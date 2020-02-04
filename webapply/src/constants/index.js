@@ -1,3 +1,4 @@
+import React from "react";
 import routes from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 import declinedRegular from "./../assets/gif/declined_regular.gif";
@@ -16,9 +17,9 @@ export const formStepper = [
   },
   { step: 2, title: "Company Information", path: routes.companyInfo },
   { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
-  { step: 4, title: "Final questions", path: routes.finalQuestions },
+  { step: 4, title: "Final Questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
-  { step: 6, title: "Select services", path: routes.selectServices }
+  { step: 6, title: "Select Services", path: routes.selectServices }
 ];
 
 export const searchProspectStepper = [
@@ -56,14 +57,19 @@ export const accountNames = {
 export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";
-export const MAX_STAKEHOLDERS_LENGTH = 12;
 export const MAX_EMAIL_LENGTH = 50;
+export const MAX_STAKEHOLDERS_LENGTH = 12;
+export const MAX_SHAREHOLDERS_LENGTH = 4;
+export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
 
+export const mobileResolutionMD = 850;
 export const mobileResolution = 955;
+export const tabletResolution = 1200;
+export const desktopResolution = 1300;
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
@@ -82,7 +88,11 @@ export const AUTO = "auto";
 export const CONTINUE = "continue";
 export const NEXT = "next";
 
-export const SIGNING_TRANSACTIONS_TYPE_ANY = "A1";
+export const SIGNING_TRANSACTIONS_TYPE = {
+  ALL: "101",
+  ANY: "100",
+  OTHER: "000"
+};
 
 export const screeningStatus = [
   {
@@ -128,6 +138,18 @@ export const screeningStatusDefault = {
   icon: declinedRegular,
   text:
     "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
+};
+
+export const stakeholderScreeningStatus = {
+  error: "Big Company",
+  icon: callbackRegular,
+  text: (
+    <React.Fragment>
+      Wow, you’re a big company!
+      <br /> Let us save you time and have someone call you within 1 day to meet you in person and
+      help you out.
+    </React.Fragment>
+  )
 };
 
 export const DATE_FORMAT = "yyyy-MM-dd";

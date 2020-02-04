@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 import { useHistory } from "react-router-dom";
 
-import { UAE_CODE } from "../../constants";
+import { UAE_CODE, digitRegExp } from "../../constants";
 
 import { ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -13,8 +13,8 @@ import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
 
 import { useStyles } from "./styled";
 
-export const MAX_ATTEMPT_ALLOWED = 4;
-export const MAX_NUMBER_VALIDATION_ERRORS = 5;
+export const MAX_ATTEMPT_ALLOWED = 3;
+export const MAX_NUMBER_VALIDATION_ERRORS = 4;
 
 export const OTPformComponent = ({
   otp,
@@ -23,13 +23,11 @@ export const OTPformComponent = ({
   applicantInfo,
   redirectRoute,
   generateOtpCode,
-  infoTitleResult,
   classes: extendetClasses
 }) => {
   const history = useHistory();
-  const { attempts, verificationError, isVerified, isPending } = otp;
+  const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
   const [code, setCode] = useState(Array(6).fill(""));
-  const [isValidCode, setIsValidCode] = useState(false);
   const [loginAttempt, setLoginAttempt] = useState(0);
   const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
 
@@ -51,6 +49,7 @@ export const OTPformComponent = ({
   useEffect(() => () => verifyClearError(), []);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
+    if (isGenerating) return;
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(applicantInfo);
     }
@@ -58,45 +57,29 @@ export const OTPformComponent = ({
       setIsDisplayMaxAttempError(true);
     }
     setLoginAttempt(loginAttempt + 1);
-  }, [loginAttempt, generateOtpCode, applicantInfo, attempts]);
+  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, attempts]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
-  const handleSetCode = useCallback(
-    ({ isValid, code }) => {
-      setIsValidCode(isValid);
-      setCode(code);
-    },
-    [setIsValidCode, setCode]
-  );
-
-  const getTitle = () => {
-    if (infoTitleResult) return;
-    return applicantInfo.countryCode === UAE_CODE
-      ? "We have sent you a verification code on your mobile number"
-      : "We have sent you a verification code on your e-mail address";
-  };
-
+  const isValid = code.every(value => digitRegExp.test(value));
   const classes = useStyles({ classes: extendetClasses });
 
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
-        classes={{ title: classes.title }}
-        title={getTitle()}
-        info={
-          infoTitleResult
-            ? infoTitleResult
-            : "Please input the six digits below, to confirm this is you"
-        }
+        className={classes.title}
+        title={`We have sent you a verification code on your ${
+          applicantInfo.countryCode === UAE_CODE ? "mobile number" : "e-mail address"
+        }`}
+        info="Please enter the six digits below, to confirm this is you"
       />
 
       <Formik initialValues={code} onSubmit={submitForm}>
         {() => (
-          <Form>
+          <Form className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification code={code} onChange={handleSetCode} />
+                <OtpVerification code={code} onChange={setCode} />
               </Grid>
 
               {!isDisplayMaxAttempError && verificationError && (
@@ -129,7 +112,7 @@ export const OTPformComponent = ({
 
             <div className={classes.linkContainer}>
               <SubmitButton
-                disabled={!isValidCode || isPending}
+                disabled={!isValid || isPending || isGenerating}
                 justify="flex-end"
                 label={isPending ? "Verify..." : "Next Step"}
                 submitButtonClassName={classes.submitButton}

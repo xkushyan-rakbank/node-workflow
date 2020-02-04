@@ -58,7 +58,7 @@ export const SelectAutocomplete = ({
           options={options}
           styles={customStyles}
           components={components}
-          value={renderValue}
+          value={renderValue || ""}
           onChange={handleChange}
           isMulti={multiple}
           isDisabled={disabled}
@@ -71,7 +71,7 @@ export const SelectAutocomplete = ({
             onFocus: () => setFocus(true),
             onBlur: () => setFocus(false),
             label,
-            error: isError,
+            error: !!isError,
             InputLabelProps: {
               shrink: hasFocus || !!renderValue
             }

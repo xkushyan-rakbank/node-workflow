@@ -30,6 +30,15 @@ export const useStyles = makeStyles({
       flexWrap: "wrap"
     }
   },
+  note: {
+    marginBottom: "60px",
+    fontSize: "12px",
+    textAlign: "center",
+    color: "#888888",
+    "@media only screen and (max-height: 800px)": {
+      marginBottom: "15px"
+    }
+  },
   title: {
     color: "#373737",
     fontSize: 20,

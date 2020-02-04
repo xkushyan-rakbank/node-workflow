@@ -47,7 +47,7 @@
 			"accountPurpose": "",
 			"debitCardApplied": false,
 			"chequeBookApplied": false,
-			"eStatements": false,
+			"eStatements": true,
 			"mailStatements": false,
 			"receiveInterest": false,
 			"deliverByCourier": false
@@ -244,7 +244,7 @@
 					}
 				],
 				"emirateIdDetails": {
-					"eidNumber": "",
+					"eidNumber": "784",
 					"eidExpiryDt": ""
 				},
 				"selfGovtPosition": "",
@@ -303,7 +303,7 @@
 				}
 			],
 			"accountSigningInfo": {
-				"accountSigningType": "ALL",
+				"accountSigningType": "",
 				"accountSigningInstn": "",
 				"authorityType": ""
 			},

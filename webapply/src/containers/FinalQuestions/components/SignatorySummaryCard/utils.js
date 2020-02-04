@@ -1,11 +1,7 @@
-export const checkIsAccountInfoTypeNumber = (authorityTypeValue, uiConfig) => {
-  if (isNaN(Number(authorityTypeValue))) {
-    return authorityTypeValue;
-  }
-
-  const fieldConfig = Object.values(uiConfig).find(item => item.datalistId === "authorityType");
+export const checkIsAccountInfoTypeNumber = (authorityTypeValue, datalist) => {
+  const fieldConfig = datalist.authorityType;
   const authorityTypeFromDatalist =
-    (fieldConfig.datalist || []).find(item => item.value === authorityTypeValue) || {};
+    (fieldConfig || []).find(item => item.value === authorityTypeValue) || {};
 
   return authorityTypeFromDatalist.displayText || "";
 };

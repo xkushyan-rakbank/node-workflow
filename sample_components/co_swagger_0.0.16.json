@@ -1,13 +1,13 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "0.0.5",
+    "version": "0.0.13",
     "title": "Customer Onboarding At RAK Bank",
     "termsOfService": "http://rakbank.ae/api/terms/",
     "contact": {
       "email": "api-support@rakbank.ae"
     },
-    "description": "A typical customer onboarding process involves multiple activities. It starts with evaluating the customer's requirement, followed by due-diligence, completion of legal aspects, account opening and making it operational."
+    "description": "A typical customer onboarding process involves multiple activities. It starts with evaluating the customer's requirement, followed by due-diligence, completion of legal aspects, account opening and making it operational.  Note - When DEH/Oauth services are down , no response will be sent from DEH. - Response for OTP will have only the mode rest will be null"
   },
   "host": "rakbank.ae",
   "basePath": "/api/customer-onboarding/v1",
@@ -110,7 +110,7 @@
       }
     },
     "/banks/RAK/usertypes/{userType}/prospects/search": {
-      "get": {
+      "post": {
         "summary": "search prospect by usertype, mobileNo, leadNumber",
         "operationId": "searchProspect",
         "tags": [
@@ -242,7 +242,7 @@
             }
           },
           "400": {
-            "description": "400 is the generic client-side error status. Errors can be like malformed request syntax, invalid request message parameters etc. ",
+            "description": "400 is the generic client-side error status.  ",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -264,7 +264,7 @@
           "Upload Prospect Document"
         ],
         "consumes": [
-          "application/json"
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -278,13 +278,42 @@
             "type": "string"
           },
           {
-            "in": "body",
-            "name": "body",
-            "description": "ProspectDocument object to update existing prospect documents",
+            "in": "formData",
+            "name": "uploadfile",
+            "type": "file",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProspectDocument"
-            }
+            "description": "The file to upload."
+          },
+          {
+            "in": "formData",
+            "name": "documentKey",
+            "type": "string",
+            "description": "documentKey of the document",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "documentTitle",
+            "type": "string",
+            "description": "title of the document"
+          },
+          {
+            "in": "formData",
+            "name": "fileName",
+            "type": "string",
+            "description": "fileName with extension"
+          },
+          {
+            "in": "formData",
+            "name": "fileFormat",
+            "type": "string",
+            "description": "Document MIME types/format"
+          },
+          {
+            "in": "formData",
+            "name": "fileSize",
+            "type": "integer",
+            "description": "file size of the document"
           }
         ],
         "responses": {
@@ -309,7 +338,7 @@
         }
       },
       "get": {
-        "summary": "Get documents uploaded against the given prospectId",
+        "summary": "Get list of documents required for the application. This API is also used to retrieve uploaded documents.",
         "operationId": "getDocumentsByProspectId",
         "tags": [
           "Get Prospect Documents"
@@ -354,7 +383,7 @@
           "Reupload Document"
         ],
         "consumes": [
-          "application/json"
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -364,17 +393,46 @@
             "name": "prospectId",
             "in": "path",
             "required": true,
-            "description": "The id of the prospect for which documents are to be updated",
+            "description": "The id of the prospect for which documents are to be uploaded",
             "type": "string"
           },
           {
-            "in": "body",
-            "name": "body",
-            "description": "ProspectDocument object to update existing prospect documents",
+            "in": "formData",
+            "name": "uploadfile",
+            "type": "file",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProspectDocument"
-            }
+            "description": "The file to upload."
+          },
+          {
+            "in": "formData",
+            "name": "documentKey",
+            "type": "string",
+            "description": "documentKey of the document",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "documentTitle",
+            "type": "string",
+            "description": "title of the document"
+          },
+          {
+            "in": "formData",
+            "name": "fileName",
+            "type": "string",
+            "description": "fileName with extension"
+          },
+          {
+            "in": "formData",
+            "name": "fileFormat",
+            "type": "string",
+            "description": "Document MIME types/format"
+          },
+          {
+            "in": "formData",
+            "name": "fileSize",
+            "type": "integer",
+            "description": "file size of the document"
           }
         ],
         "responses": {
@@ -399,12 +457,12 @@
         }
       }
     },
-    "/banks/RAK/prospects/{prospectId}/documents/{documentId}": {
+    "/banks/RAK/prospects/{prospectId}/documents/{documentKey}": {
       "get": {
-        "summary": "get document by documentId",
-        "operationId": "getDocumentById",
+        "summary": "get document by documentKey. This API is invoked when agent clicks print/download",
+        "operationId": "getDocumentByKey",
         "tags": [
-          "Get Document by Id"
+          "Get Document by DocumentKey"
         ],
         "consumes": [
           "application/json"
@@ -421,10 +479,10 @@
             "type": "string"
           },
           {
-            "name": "documentId",
+            "name": "documentKey",
             "in": "path",
             "required": true,
-            "description": "The id of the document",
+            "description": "unique key of the document",
             "type": "string"
           }
         ],
@@ -432,11 +490,17 @@
           "200": {
             "description": "return document",
             "schema": {
-              "$ref": "#/definitions/ProspectDocument"
+              "type": "file"
             }
           },
           "400": {
             "description": "400 is the generic client-side error status. Errors can be like malformed request syntax, invalid request message parameters etc.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "document not found",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -520,7 +584,10 @@
         ],
         "responses": {
           "200": {
-            "description": "login successful"
+            "description": "login successful",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
           },
           "400": {
             "description": "400 is the generic client-side error status. Errors can be like malformed request syntax, invalid request message parameters etc.",
@@ -681,6 +748,23 @@
     }
   },
   "definitions": {
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "agentName": {
+          "type": "string"
+        },
+        "agentId": {
+          "type": "string"
+        },
+        "agentRole": {
+          "type": "string"
+        },
+        "deptName": {
+          "type": "string"
+        }
+      }
+    },
     "GenerateOTPResponse": {
       "type": "object",
       "properties": {
@@ -693,32 +777,27 @@
           ]
         },
         "otpTokenValidityInSec": {
-          "type": "integer"
+          "type": "string"
         },
         "otpTokenValidUntil": {
-          "type": "string",
-          "format": "date-time"
+          "type": "string"
         }
       }
     },
     "ProspectStatusInfo": {
       "type": "object",
       "required": [
-        "statusType",
-        "statusFlag",
-        "statusReason",
-        "statusOverAll",
-        "reasonCode",
-        "reasonStatus"
+        "statusCode",
+        "statusNotes"
       ],
       "properties": {
         "statusType": {
           "type": "string",
-          "description": ""
+          "description": "same as Queuename e.g. CBWC_Maker, DigiOnboard_Doc_Hold"
         },
         "statusCode": {
           "type": "string",
-          "description": ""
+          "description": "A1 to A5"
         },
         "statusFlag": {
           "type": "string",
@@ -726,7 +805,7 @@
         },
         "statusNotes": {
           "type": "string",
-          "description": ""
+          "description": "same as StatusDesc e.g. Assessing, Documents needed, Account activated"
         },
         "statusReason": {
           "type": "string",
@@ -752,6 +831,9 @@
     },
     "PreScreeningInfo": {
       "type": "object",
+      "required": [
+        "statusOverAll"
+      ],
       "properties": {
         "statusOverAll": {
           "type": "string",
@@ -764,6 +846,11 @@
           "type": "array",
           "items": {
             "type": "object",
+            "required": [
+              "screeningType",
+              "screeningStatus",
+              "screeningReason"
+            ],
             "properties": {
               "screeningType": {
                 "type": "string",
@@ -909,6 +996,104 @@
               "status": {
                 "$ref": "#/definitions/ProspectStatusInfo"
               },
+              "applicationInfo": {
+                "type": "object",
+                "properties": {
+                  "createdDate": {
+                    "type": "string",
+                    "description": "system date time",
+                    "format": "dateTime"
+                  },
+                  "lastModifiedDate": {
+                    "type": "string",
+                    "description": "system date time",
+                    "format": "dateTime"
+                  },
+                  "createdBy": {
+                    "type": "string",
+                    "description": "name of the applicant"
+                  },
+                  "lastModifiedBy": {
+                    "type": "string",
+                    "description": "Id of sales agent or modifier"
+                  },
+                  "segment": {
+                    "type": "string"
+                  },
+                  "accountType": {
+                    "type": "string"
+                  },
+                  "viewId": {
+                    "type": "string",
+                    "enum": [
+                      "/ApplicationSubmitted",
+                      "/MyApplications",
+                      "/ComeBackVerification",
+                      "/ComeBackLogin",
+                      "/AccountsComparison",
+                      "/ApplicationOverview",
+                      "/DetailedAccount",
+                      "/ApplicantInfo",
+                      "/VerifyOTP",
+                      "/CompanyInfo",
+                      "/StakeholdersInfo",
+                      "/FinalQuestions",
+                      "/UploadDocuments",
+                      "/ReUploadDocuments",
+                      "/SelectServices",
+                      "/SearchProspect",
+                      "/Login",
+                      "/SearchedAppInfo",
+                      "/SubmitApplication"
+                    ]
+                  },
+                  "actionType": {
+                    "type": "string",
+                    "default": "Save",
+                    "enum": [
+                      "save",
+                      "submit"
+                    ]
+                  }
+                }
+              },
+              "signatoryInfo": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "fullName"
+                  ],
+                  "properties": {
+                    "signatoryId": {
+                      "type": "string"
+                    },
+                    "fullName": {
+                      "type": "string"
+                    },
+                    "screeningInfo": {
+                      "$ref": "#/definitions/PreScreeningInfo"
+                    }
+                  }
+                }
+              },
+              "organizationInfo": {
+                "type": "object",
+                "properties": {
+                  "licenseNumber": {
+                    "type": "string"
+                  },
+                  "leadNumber": {
+                    "type": "string"
+                  },
+                  "companyName": {
+                    "type": "string"
+                  },
+                  "screeningInfo": {
+                    "$ref": "#/definitions/PreScreeningInfo"
+                  }
+                }
+              },
               "applicantInfo": {
                 "type": "object",
                 "properties": {
@@ -946,7 +1131,7 @@
     "SearchProspectRequest": {
       "type": "object",
       "properties": {
-        "fname": {
+        "applicantName": {
           "type": "string",
           "maxLength": 50
         },
@@ -1034,7 +1219,7 @@
         "residenceCountry",
         "isUAEResident",
         "passportDetails",
-        "selfGovtPosition",
+        "selfGovtPositionx",
         "relativeGovtPosition"
       ],
       "properties": {
@@ -1051,6 +1236,10 @@
           "maxLength": 80,
           "pattern": "^[a-zA-Z]*$"
         },
+        "isShareholderACompany": {
+          "type": "boolean",
+          "default": false
+        },
         "isSignatory": {
           "type": "boolean",
           "default": false
@@ -1060,9 +1249,9 @@
           "default": false
         },
         "shareHoldingPercentage": {
-          "type": "integer",
+          "type": "string",
           "description": "Mandatory for shareholders (isShareholder).",
-          "maximum": 100
+          "maxLength": 6
         },
         "dateOfBirth": {
           "type": "string",
@@ -1111,11 +1300,20 @@
                 "maxLength": 100,
                 "pattern": "^[a-zA-Z0-9]*$"
               },
+              "country": {
+                "type": "string",
+                "maxLength": 100,
+                "pattern": "^[a-zA-Z0-9]*$"
+              },
               "passportExpiryDate": {
                 "type": "string",
                 "format": "date"
               },
               "diplomatPassport": {
+                "type": "boolean",
+                "default": false
+              },
+              "hasAnotherCitizenship": {
                 "type": "boolean",
                 "default": false
               }
@@ -1157,6 +1355,10 @@
             "Held more than 5 years back",
             "Never held"
           ]
+        },
+        "isPEP": {
+          "type": "boolean",
+          "default": false
         },
         "qualification": {
           "type": "string",
@@ -1575,12 +1777,19 @@
           "pattern": "^[0-9]*$",
           "maxLength": 15
         },
+        "email": {
+          "type": "string",
+          "description": "email Id of the applicant",
+          "format": "email",
+          "maxLength": 50
+        },
         "action": {
           "type": "string",
           "description": "send, resend, or verify the OTP",
           "enum": [
             "generate",
-            "verify"
+            "verify",
+            "resend"
           ]
         },
         "otpToken": {
@@ -1599,6 +1808,7 @@
       "properties": {
         "groupId": {
           "type": "array",
+          "description": "use fieldName as GroupId value, prefix parent object if fieldName already used for other LOVs",
           "items": {
             "type": "object",
             "required": [
@@ -1654,16 +1864,7 @@
     "SmeProspect": {
       "type": "object",
       "required": [
-        "applicantInfo",
-        "applicationInfo",
-        "accountInfo",
-        "organizationInfo",
-        "generalInfo",
-        "signatoryInfo",
-        "channelServicesInfo",
-        "documents",
-        "orgKYCDetails",
-        "freeFieldsInfo"
+        "applicantInfo"
       ],
       "properties": {
         "applicantInfo": {
@@ -1780,6 +1981,9 @@
             "saveType"
           ],
           "properties": {
+            "segment": {
+              "type": "string"
+            },
             "viewId": {
               "type": "string",
               "description": "last visited page on mobile/web apply application",
@@ -1796,6 +2000,13 @@
                 "RAKStarter",
                 "Current Account",
                 "RAKelite"
+              ]
+            },
+            "rakValuePackage": {
+              "type": "string",
+              "enum": [
+                "RAKvalue PLUS",
+                "RAKvalue MAX"
               ]
             },
             "leadNumber": {
@@ -1839,7 +2050,7 @@
             },
             "createdBy": {
               "type": "string",
-              "description": "prospectId if created by customer"
+              "description": "name of the applicant"
             },
             "lastModifiedBy": {
               "type": "string",
@@ -1879,7 +2090,7 @@
             "required": [
               "branchId",
               "accountType",
-              "accountCurrencies"
+              "accountCurrency"
             ],
             "properties": {
               "branchId": {
@@ -1907,9 +2118,22 @@
                 "type": "string"
               },
               "accountCurrencies": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Multi-selection of currency",
+                "enum": [
+                  "AED",
+                  "GBP",
+                  "USD",
+                  "EUR"
+                ]
+              },
+              "accountCurrency": {
                 "type": "string",
                 "default": "AED",
-                "description": "Multi-selection of currency",
+                "description": "account currency",
                 "enum": [
                   "AED",
                   "GBP",
@@ -2039,7 +2263,6 @@
             "licenseNumber": {
               "type": "string",
               "description": "Trade Licence or Certificate of Incorporation and user entered value",
-              "pattern": "^[a-zA-Z0-9]*$",
               "maxLength": 20
             },
             "licenseIssueDate": {
@@ -2266,6 +2489,11 @@
                   "primaryMobCountryCode"
                 ],
                 "properties": {
+                  "TxnReconfirmingfullname": {
+                    "type": "string",
+                    "maxLength": 79,
+                    "pattern": "^[a-zA-Z ]*$"
+                  },
                   "primaryMobileNo": {
                     "type": "string",
                     "maxLength": 50,
@@ -2349,7 +2577,7 @@
               },
               "fullName": {
                 "type": "string",
-                "maxLength": 80,
+                "maxLength": 79,
                 "pattern": "^[a-zA-Z ]*$"
               },
               "gender": {
@@ -2744,6 +2972,9 @@
         "prospectStatusInfo": {
           "$ref": "#/definitions/ProspectStatusInfo"
         },
+        "AuditTrailInfo": {
+          "$ref": "#/definitions/AuditTrailInfo"
+        },
         "freeFieldsInfo": {
           "type": "object",
           "properties": {
@@ -2793,7 +3024,7 @@
         "stakeholdersDocuments": {
           "type": "object",
           "properties": {
-            "stakeholderName": {
+            "index_stakeholderName": {
               "type": "object",
               "properties": {
                 "documents": {
@@ -2817,7 +3048,8 @@
         "fileFormat",
         "fileDescription",
         "submittedBy",
-        "submittedDt"
+        "submittedDt",
+        "documentKey"
       ],
       "properties": {
         "documentType": {
@@ -2844,6 +3076,10 @@
           "type": "string",
           "description": "same as filename",
           "pattern": "^[a-zA-Z0-9. ]*$"
+        },
+        "documentKey": {
+          "type": "string",
+          "description": "document key is used to store the file in S3"
         },
         "fileName": {
           "type": "string",
@@ -2926,6 +3162,11 @@
           "description": "Indicates whether the file uploaded is an encrypted file or not",
           "default": false
         },
+        "required": {
+          "type": "boolean",
+          "description": "Indicates whether the file is required or optional",
+          "default": true
+        },
         "encryptionDetails": {
           "type": "string",
           "description": "Specifies the encryption details",
@@ -2933,11 +3174,27 @@
         },
         "uploadStatus": {
           "type": "string",
+          "default": "NotUploaded",
           "enum": [
             "Uploaded",
-            "Reuploaded",
+            "ReuploadedScanPending",
+            "UploadedScanPending",
             "NotUploaded"
           ]
+        }
+      }
+    },
+    "AuditTrailInfo": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "modifiedBy": {
+            "type": "string"
+          },
+          "modifiedDateTime": {
+            "type": "string",
+            "format": "DateTime"
+          }
         }
       }
     },

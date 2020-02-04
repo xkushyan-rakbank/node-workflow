@@ -59,8 +59,8 @@ const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
   annualFinTurnoverAmtInAED: Yup.string()
-    .required(getRequiredMessage("Annual turnover"))
-    .matches(CURRENCY_REGEX, getInvalidMessage("Annual turnover")),
+    .required(getRequiredMessage("Annual Financial Turnover"))
+    .matches(CURRENCY_REGEX, getInvalidMessage("Annual Financial Turnover")),
   maxAmtSingleTxnCashAED: Yup.string()
     .required(getRequiredMessage("Part of Monthly Total in Cash"))
     .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Cash"))
@@ -149,13 +149,15 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
         validateOnChange={false}
       >
         {withCompanyFinalQuestions(({ values }) => (
-          <Form>
+          <Form autoComplete="off">
+            <h4 className={classes.groupLabel}>Annual turnover</h4>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item sm={12}>
                 <Field
                   name="annualFinTurnoverAmtInAED"
                   path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
-                  label="Annual turnover"
+                  label="Annual Financial Turnover"
+                  autocomplete="none"
                   placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,
@@ -178,6 +180,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   <TextField
                     className={classes.disabledInput}
                     variant="outlined"
+                    autoComplete="off"
                     disabled
                     InputProps={{
                       ...commonInputProps,
@@ -200,7 +203,8 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="totalMonthlyCashAmountInFigures"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Cash"
-                  placeholder="99999999.99"
+                  placeholder="9999999999.99"
+                  autoComplete="off"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
                   InputProps={{
@@ -213,9 +217,10 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
               <Grid item md={6} sm={12}>
                 <Field
                   name="totalMonthlyNonCashAmountInFigures"
+                  autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Non-Cash"
-                  placeholder="99999999.99"
+                  placeholder="9999999999.99"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
                   InputProps={{
@@ -241,8 +246,9 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                 <Field
                   name="maxAmtSingleTxnCashAED"
                   label="Maximum amount in Cash"
+                  autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
-                  placeholder="99999999.99"
+                  placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -257,7 +263,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="maxAmtSingleTxnNonCashAED"
                   label="Maximum amount in Non-Cash"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
-                  placeholder="99999999.99"
+                  placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,

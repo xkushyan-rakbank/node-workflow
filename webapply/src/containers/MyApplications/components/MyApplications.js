@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
 
+import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ICONS } from "../../../components/Icons";
 import { ApplicationList } from "./ApplicationList";
 import { ApplicationGrid } from "./ApplicationGrid";
@@ -19,10 +19,14 @@ export const MyApplications = ({ searchResults, getProspectInfo }) => {
 
   return (
     <div className={classes.centeredContainer}>
-      <Grid container direction="row" alignItems="center" justify="space-between">
-        <Typography classes={{ root: classes.rootTitle }} variant="h5">
-          My applications
-        </Typography>
+      <Grid
+        container
+        classes={{ root: "hide-on-mobile" }}
+        direction="row"
+        alignItems="center"
+        justify="space-between"
+      >
+        <SectionTitleWithInfo className={classes.title} title="My applications" />
         <Box classes={{ root: classes.rootChangeViewContainer }}>
           <ButtonWithIcon
             icon={ICONS.listGray}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
@@ -11,6 +11,7 @@ import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import routes from "../../../routes";
 
 const loginSchema = Yup.object({
   username: Yup.string()
@@ -21,26 +22,25 @@ const loginSchema = Yup.object({
     .matches(PASSWORD_REGEX, getInvalidMessage("Password"))
 });
 
-export const LoginComponent = ({
-  loginInfoForm,
-  setToken,
-  setVerified,
-  verifyToken,
-  recaptchaToken,
-  isRecaptchaEnable
-}) => {
+export const LoginComponent = ({ login, setToken, recaptchaToken, isRecaptchaEnable, history }) => {
   const classes = useStyles();
+  const [isLoading, setIsLoading] = useState(false);
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
-
       if (isRecaptchaEnable) {
         loginData.recaptchaToken = recaptchaToken;
       }
-
-      loginInfoForm(loginData);
+      setIsLoading(true);
+      login(loginData)
+        .then(() => {
+          history.push(routes.searchProspect);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     },
-    [loginInfoForm, recaptchaToken]
+    [login, recaptchaToken, isRecaptchaEnable]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -49,14 +49,8 @@ export const LoginComponent = ({
     [setToken]
   );
   const handleVerifiedFailed = useCallback(() => {
-    setVerified(false);
-  }, [setVerified]);
-
-  useEffect(() => {
-    if (recaptchaToken) {
-      verifyToken();
-    }
-  }, [recaptchaToken, verifyToken]);
+    setToken(null);
+  }, [setToken]);
 
   return (
     <div className={classes.baseForm}>
@@ -79,7 +73,6 @@ export const LoginComponent = ({
                 inputProps: { tabIndex: 0 }
               }}
             />
-
             <Field
               name="password"
               type="password"
@@ -92,7 +85,6 @@ export const LoginComponent = ({
                 inputProps: { tabIndex: 0 }
               }}
             />
-
             <Grid container direction="row" justify="space-between" alignItems="center">
               <ErrorBoundaryForReCaptcha>
                 {isRecaptchaEnable && (
@@ -109,6 +101,7 @@ export const LoginComponent = ({
                   label="Next Step"
                   disabled={
                     Object.values(values).some(value => !value) ||
+                    isLoading ||
                     (isRecaptchaEnable && !recaptchaToken)
                   }
                 />

@@ -10,6 +10,7 @@ import { ReactComponent as signatureConventional } from "../../assets/icons/conv
 import { ReactComponent as licenseConventional } from "../../assets/icons/conventional/trade-license.svg";
 import { ReactComponent as passportConventional } from "../../assets/icons/conventional/passport-visa.svg";
 import { ReactComponent as emiratesIdConventional } from "../../assets/icons/conventional/emirates-id.svg";
+import { ReactComponent as bankingClockConventional } from "../../assets/icons/conventional/bankingClock.svg";
 import { ReactComponent as companyDocumentsConventional } from "../../assets/icons/conventional/company-documents.svg";
 import { ReactComponent as bankingConventional } from "../../assets/icons/conventional/banking.svg";
 import { ReactComponent as logoConventional } from "../../assets/images/rakbankLogo.svg";
@@ -38,6 +39,7 @@ import { ReactComponent as emiratesIdIslamic } from "../../assets/icons/islamic/
 import { ReactComponent as companyDocumentsIslamic } from "../../assets/icons/islamic/company-documents.svg";
 import { ReactComponent as bankingIslamic } from "../../assets/icons/islamic/banking.svg";
 import { ReactComponent as logoIslamic } from "../../assets/images/rakbankLogoIslamic.svg";
+import { ReactComponent as bankingClockIslamic } from "../../assets/icons/islamic/bankingClockIslamic.svg";
 import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import paperPlaneIslamic from "../../assets/gif/paperplane_islamic.gif";
 import submittedIslamic from "../../assets/gif/submitted_islamic.gif";
@@ -60,6 +62,7 @@ import { ReactComponent as emiratesIdElite } from "../../assets/icons/elite/emir
 import { ReactComponent as companyDocumentsElite } from "../../assets/icons/elite/company-documents.svg";
 import { ReactComponent as bankingElite } from "../../assets/icons/elite/banking.svg";
 import { ReactComponent as logoElite } from "../../assets/images/rakbankLogoElite.svg";
+import { ReactComponent as bankingClockElite } from "../../assets/icons/elite/bankingClockElite.svg";
 import overviewElite from "../../assets/gif/overview_elite.gif";
 import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";
 import submittedElite from "../../assets/gif/submitted_elite.gif";
@@ -83,7 +86,8 @@ export const conventionalIconsSet = {
   overview: overviewConventoinal,
   awaiting: paperPlaneRegular,
   submitted: submittedRegular,
-  success: successRegular
+  success: successRegular,
+  bankingClock: bankingClockConventional
 };
 
 export const islamicIconsSet = {
@@ -109,7 +113,8 @@ export const islamicIconsSet = {
   overview: overviewIslamic,
   awaiting: paperPlaneIslamic,
   submitted: submittedIslamic,
-  success: successIslamic
+  success: successIslamic,
+  bankingClock: bankingClockIslamic
 };
 
 export const eliteIconsSet = {
@@ -133,5 +138,6 @@ export const eliteIconsSet = {
   overview: overviewElite,
   awaiting: paperPlaneElite,
   submitted: submittedElite,
-  success: successElite
+  success: successElite,
+  bankingClock: bankingClockElite
 };

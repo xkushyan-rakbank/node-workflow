@@ -4,7 +4,11 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { InfoTitle } from "../../../../../../components/InfoTitle";
-import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
+import {
+  Input,
+  AutoSaveField as Field,
+  SelectAutocomplete
+} from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
   ADDRESS_NUMBER_REGEX,
@@ -15,9 +19,10 @@ import {
 import {
   OTHER_OPTION_CODE,
   BASE_PATH,
-  MAX_OFFICE_NUMBER_LENGTH,
+  MAX_STREET_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH,
-  MAX_OTHER_FIELD_LENGTH
+  MAX_OTHER_FIELD_LENGTH,
+  MAX_OFFICE_NUMBER_LENGTH
 } from "./constants";
 import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
@@ -88,16 +93,18 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="Street / Location"
                   placeholder="Street / Location"
                   component={Input}
+                  multiline
                   InputProps={{
-                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                    inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
                   }}
                 />
                 <Field
                   name="emirateCity"
                   path={`${BASE_PATH}.emirateCity`}
                   datalistId="emirateCity"
-                  label="Emirate"
-                  component={CustomSelect}
+                  label="Emirate / City"
+                  isSearchable={false}
+                  component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />
               </Grid>
@@ -107,7 +114,8 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
                   datalistId="spaceType"
                   label="Type of Space Occupied"
-                  component={CustomSelect}
+                  isSearchable={false}
+                  component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />
                 {values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (

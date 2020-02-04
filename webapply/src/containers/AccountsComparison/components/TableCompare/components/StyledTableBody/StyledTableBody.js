@@ -26,11 +26,14 @@ export const StyledTableBodyComponent = ({
               align="right"
               component="th"
               scope="row"
-              dangerouslySetInnerHTML={{ __html: info }}
               className={cx({
                 [classes.tableCellActive]: selectedCurrentColumn === FIRST_ROW_POSITION
               })}
-            ></TableCell>
+            >
+              {info[0]}
+              <br />
+              {info[1]}
+            </TableCell>
 
             <StyledTableCellWitHoverHandler
               selectedCurrentColumn={selectedCurrentColumn}

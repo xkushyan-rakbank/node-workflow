@@ -1,22 +1,27 @@
 import React from "react";
 import cx from "classnames";
+import get from "lodash/get";
 
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { Avatar } from "../../../../components/Avatar/Avatar";
 import { useStyles } from "./styled";
+import { checkIsAccountInfoTypeNumber } from "../../../FinalQuestions/components/SignatorySummaryCard/utils";
 
 export const FilledStakeholderCard = ({
   firstName,
   middleName,
   lastName,
-  signatoryRights,
+  accountSigningInfo,
   changeEditableStep,
   index,
-  kycDetails: { shareHoldingPercentage } = {}
+  kycDetails: { shareHoldingPercentage } = {},
+  datalist
 }) => {
   const classes = useStyles();
 
   const editStakeholder = () => changeEditableStep(index);
+  const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");
+  const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
 
   return (
     <div className={cx(classes.wrapper)}>
@@ -25,7 +30,9 @@ export const FilledStakeholderCard = ({
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>{`${firstName} ${middleName} ${lastName}`}</div>
-          {signatoryRights && <div className={classes.signatoryField}>Signatory Rights</div>}
+          {accountSigningInfo && authorityTypeValueFromProspect && (
+            <div className={classes.signatoryField}>{authorityTypeValue}</div>
+          )}
           <div
             className={classes.shareholdingField}
           >{`Shareholding ${shareHoldingPercentage}%`}</div>

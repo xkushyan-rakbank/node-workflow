@@ -6,6 +6,7 @@ import java.util.Collections;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
+import ae.rakbank.webapply.exception.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,34 +66,52 @@ public class OAuthService {
 		return true;
 	}
 
-	public boolean isAccessTokenValid(String token) {
-		return isAccessTokenValid(token, null, false);
+	/*public boolean validateAccessToken(String token) {
+		return validateAccessToken(token, null, false);
 	}
 
-	public boolean isAccessTokenValid(String token, String refreshToken) {
-		return isAccessTokenValid(token, refreshToken, false);
-	}
+	public boolean validateAccessToken(String token, String refreshToken) {
+		return validateAccessToken(token, refreshToken, false);
+	}*/
 
-	public boolean isAccessTokenValid(String token, String refreshToken, Boolean force) {
+	public void validateAccessToken(String token, String refreshToken, Boolean force) {
 		if (isAccessTokenExpired()) {
-			return false;
+			String errorMessage = "Access token expired or not present in servlet context, "
+					+ "Actual time: " + LocalDateTime.now()
+					+ ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
+			logger.error(errorMessage);
+			ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+			throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
 		}
 		else {
-			ResponseEntity<JsonNode> response = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
-			if (response != null && response.getBody().get("access_token").asText().equals(token)) {
-				return true;
+			ResponseEntity<JsonNode> oauthResponse = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
+			if (oauthResponse != null && oauthResponse.getBody().get("access_token").asText().equals(token)) {
+				logger.info("Access token is valid");
 			}
-			else if ((refreshToken != null && response.getBody().get("refresh_token").asText().equals(refreshToken)) || force) {
+			else if ((refreshToken != null && oauthResponse.getBody().get("refresh_token").asText().equals(refreshToken)) || force) {
+				logger.warn("Access token is invalid, try to get new one with refresh token..");
 				getOAuthToken();
-				return true;
+				logger.info("Access token was updated successfully with refresh token.");
 			}
 			else {
-				return false;
+				logger.error("Access token and/or refresh token is invalid, " +
+						"token in request: " + token
+						+ ", actual context token: " + oauthResponse.getBody().get("access_token").asText()
+						+ ", refresh token in request: " + refreshToken
+						+ ", actual context refresh token: " + oauthResponse.getBody().get("refresh_token").asText());
+
+				String errorMessage = "Access token and/or refresh token is invalid.";
+				ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
+				throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
 			}
 		}
 	}
 
 	public ResponseEntity<JsonNode> getOAuthToken() {
+		return getOAuthToken(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
+	}
+
+	public ResponseEntity<JsonNode> getOAuthToken(String username, String password) {
 		logger.info("Begin getOAuthToken()");
 		String methodName = "getOAuthToken()";
 
@@ -108,7 +127,7 @@ public class OAuthService {
 				RestTemplate restTemplate = new RestTemplate();
 
 				ObjectMapper objectMapper = new ObjectMapper();
-				MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper);
+				MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper, username, password);
 
 				HttpHeaders headers = new HttpHeaders();
 				headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -129,14 +148,14 @@ public class OAuthService {
 								e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 						ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
 								e.getResponseBodyAsString(), e);
-						return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
 					}
 					catch (HttpServerErrorException e) {
 						logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
 								e.getRawStatusCode(), e.getResponseBodyAsString()), e);
 						ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
 								e.getResponseBodyAsString(), e);
-						return new ResponseEntity<JsonNode>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+						return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 					}
 
 					logger.info(String.format(
@@ -171,12 +190,11 @@ public class OAuthService {
 
 			} // end while
 		}
-
 		return (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
 	}
 
 
-	private MultiValueMap<String, String> buildOAuthRequest(ObjectMapper objectMapper) {
+	private MultiValueMap<String, String> buildOAuthRequest(ObjectMapper objectMapper, String username, String password) {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 
 		map.add("grant_type", oAuthConfigs.get("OAuthGrantType").asText());
@@ -184,8 +202,8 @@ public class OAuthService {
 		map.add("client_secret", oAuthConfigs.get("OAuthClientSecret").asText());
 		map.add("bank_id", oAuthConfigs.get("OAuthBankId").asText());
 		map.add("channel_id", oAuthConfigs.get("OAuthChannelId").asText());
-		map.add("username", oAuthConfigs.get("OAuthUsername").asText());
-		map.add("password", oAuthConfigs.get("OAuthPassword").asText());
+		map.add("username", username);
+		map.add("password", password);
 		map.add("language_id", oAuthConfigs.get("OAuthLangId").asText());
 		map.add("login_flag", oAuthConfigs.get("OAuthLoginFlag").asText());
 		map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());

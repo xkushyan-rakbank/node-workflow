@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { mobileResolution } from "../../../constants";
 
 export const useStyles = makeStyles({
   rootTitle: {
@@ -32,25 +33,33 @@ export const useStyles = makeStyles({
   viewColumn: {
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     flexDirection: "column",
-    marginTop: "45px",
-    borderRadius: "8px"
+    marginTop: "40px",
+    borderRadius: "8px",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      boxShadow: "none",
+      marginTop: 0
+    }
   },
   veiwRow: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap: "wrap",
-    marginTop: "45px"
+    marginTop: "20px"
   },
   centeredContainer: {
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     width: "100%",
-    marginTop: "174px"
+    marginTop: "174px",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      marginTop: "80px"
+    }
   }, //grid css start
   gridContainer: {
     flex: "0 0 50%",
+    marginTop: "20px",
     flexBasis: "calc(100% / 2)",
     height: "263px",
     maxWidth: "49%"
@@ -104,7 +113,13 @@ export const useStyles = makeStyles({
   wrapper: {
     width: "100%",
     "&:not(:last-child)": {
-      borderBottom: "1px solid #e6e6e6"
+      borderBottom: "1px solid #e6e6e6",
+      [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+        borderBottom: "none"
+      }
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      borderBottom: "none"
     }
   },
   applicationRow: {
@@ -115,10 +130,22 @@ export const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    padding: "24px 20px 19px 30px"
+    padding: "24px 20px 19px 30px",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      height: "180px",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      textAlign: "center",
+      padding: "40px",
+      marginBottom: "10px",
+      boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)"
+    }
   },
   oneThirdWidth: {
-    width: "33%"
+    width: "33%",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      width: "auto"
+    }
   },
   fullWidth: {
     width: "100%"

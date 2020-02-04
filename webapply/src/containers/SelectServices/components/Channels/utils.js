@@ -1,4 +1,4 @@
-import { UAE_CODE, SIGNING_TRANSACTIONS_TYPE_ANY } from "../../../../constants";
+import { UAE_CODE, SIGNING_TRANSACTIONS_TYPE } from "../../../../constants";
 
 export const checkIsChequeBookApplied = (primaryMobCountryCode, { isSelectedLocalCurrency }) => {
   const isLocalPhoneSelected = primaryMobCountryCode === UAE_CODE;
@@ -9,7 +9,7 @@ export const checkIsChequeBookApplied = (primaryMobCountryCode, { isSelectedLoca
 };
 
 export const checkIsDebitCardApplied = (accountSigningType, { isSelectedLocalCurrency }) => {
-  const isAccountSignType = accountSigningType === SIGNING_TRANSACTIONS_TYPE_ANY;
+  const isAccountSignType = accountSigningType === SIGNING_TRANSACTIONS_TYPE.ANY;
   return {
     isDebitCardDisabled: true,
     isDebitCardApplied: isAccountSignType && isSelectedLocalCurrency

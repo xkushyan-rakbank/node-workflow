@@ -44,7 +44,7 @@ export const Input = ({
           className={cx(classes.textField, { [classes.disabled]: disabled })}
           placeholder={placeholder}
           disabled={disabled}
-          error={isError}
+          error={!!isError}
           InputProps={{ ...InputProps, classes: { input: classes.input } }}
           InputLabelProps={{ shrink }}
           onFocus={event => {
@@ -62,7 +62,7 @@ export const Input = ({
         />
       </ContexualHelp>
       {isIE && field.value.length === 0 && hasFocus && (
-        <div className={classes.iePlaceholder}>{placeholder}</div>
+        <mark className={classes.iePlaceholder}>{placeholder}</mark>
       )}
 
       {isError && <ErrorMessage error={errorMessage} />}

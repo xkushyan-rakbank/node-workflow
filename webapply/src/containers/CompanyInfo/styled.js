@@ -1,6 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
+  pageTitle: {
+    fontSize: "48px",
+    lineHeight: 1.17
+  },
   topIndent: {
     marginTop: "40px"
   },
@@ -17,6 +21,20 @@ export const useStyles = makeStyles(theme => ({
     color: theme.palette.text.color
   },
   sectionTitleIndent: {
-    marginBottom: "24px"
+    marginBottom: "60px"
+  },
+  continueButton: {
+    margin: "20px 0 40px 0"
+  },
+  detailsContinueButton: {
+    marginTop: 5
+  },
+  continueButtonGrid: {
+    padding: 20
+  },
+  deleteButton: {
+    height: "100%",
+    paddingBottom: "20px",
+    outline: "none"
   }
 }));

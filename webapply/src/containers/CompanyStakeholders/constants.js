@@ -4,8 +4,8 @@ import { Shareholding } from "./components/Shareholding/Shareholding";
 import { Nationality } from "./components/Nationality/Nationality";
 import { CountryOfResidence } from "./components/CountryOfResidence/CountryOfResidence";
 import { PreferredContactInformation } from "./components/PreferredContactInformation/PreferredContactInformation";
-import callbackRegular from "../../assets/gif/callback_regular.gif";
 
+export const FULL_NAME_MAX_LENGTH = 79;
 export const STEP_1 = 1;
 export const STEP_2 = 2;
 export const STEP_3 = 3;
@@ -37,12 +37,3 @@ export const stakeHoldersSteps = [
     component: PreferredContactInformation
   }
 ];
-
-export const companyStatus = {
-  bigCompany: {
-    icon: callbackRegular,
-    text:
-      "Wow, you’re a big company!\n" +
-      "Let us save you time and have someone call you within X days to meet you in person and help you out."
-  }
-};

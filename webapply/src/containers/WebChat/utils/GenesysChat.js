@@ -212,7 +212,8 @@ export class GenesysChat {
       userData: {
         key1: "v1",
         key2: "v2",
-        message: this.userInfo.message
+        message: this.userInfo.message,
+        ChannelID: "WBA"
       },
       auth: {
         username: "genesys",

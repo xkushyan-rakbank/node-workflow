@@ -10,7 +10,8 @@ export const CompanyDocuments = ({
   docUpload,
   cancelDocUpload,
   progress,
-  updateProspect
+  updateProspect,
+  uploadErrorMessage
 }) => {
   const classes = useStyles();
 
@@ -32,6 +33,7 @@ export const CompanyDocuments = ({
           cancelDocUpload={cancelDocUpload}
           updateProspect={updateProspect}
           progress={progress}
+          uploadErrorMessage={uploadErrorMessage}
         />
       ))}
     </div>

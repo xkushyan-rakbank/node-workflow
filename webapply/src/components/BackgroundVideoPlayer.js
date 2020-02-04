@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
-import expandMoreIcon from "../assets/icons/arrow-down.png";
+import expandMoreIcon from "../assets/icons/arrowDown.svg";
 import { sideNavWidthXL, sideNavWidthLG, sideNavWidthMD } from "../constants/styles";
 import { mobileResolution, normalScrollHeight } from "../constants";
 const appRootEl = document.getElementById("root");
@@ -38,6 +38,9 @@ const styles = {
     overflow: "hidden",
     [`@media only screen and (max-width: ${mobileResolution}px) and (max-height: 750px)`]: {
       paddingTop: "130px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      height: "min-content"
     }
   },
   buttonContainer: {
