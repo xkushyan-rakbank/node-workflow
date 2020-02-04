@@ -378,8 +378,20 @@ public class WebApplyController {
                 String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.PUT, request,
-                        "updateSMEProspect()", "updateProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+                try {
+
+                    return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.PUT, request,
+                            "updateSMEProspect()", "updateProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+
+                }
+                catch (Exception e) {
+                    logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(),
+                            e.getMessage()), e);
+                    ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                            "Unable to call endpoint " + uriComponents.toString(), e);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
             }
             else {
                 logger.error(String.format("OAuth Error in updateSMEProspect() method , HttpStatus=[%s], message=[%s]",
@@ -421,11 +433,20 @@ public class WebApplyController {
 
                 HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
                         MediaType.APPLICATION_JSON);
+
                 String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
-
-                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
-                        "searchProspect()", "searchProspectUri", MediaType.APPLICATION_JSON, segment, null);
+                try {
+                    return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.POST, request,
+                            "searchProspect()", "searchProspectUri", MediaType.APPLICATION_JSON, segment, null);
+                }
+                catch (Exception e) {
+                    logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                            e);
+                    ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                            "Unable to call endpoint " + uriComponents.toString(), e);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
             else {
                 logger.error(String.format("OAuth Error in searchProspect() method , HttpStatus=[%s], message=[%s]",
@@ -466,11 +487,20 @@ public class WebApplyController {
 
               HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
                       MediaType.APPLICATION_JSON);
+
               String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
               UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
-
-              return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-                      "getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+              try {
+                  return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+                          "getProspectById()", "getProspectUri", MediaType.APPLICATION_JSON, segment, prospectId);
+              } 
+              catch (Exception e) {
+                  logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                          e);
+                  ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                          "Unable to call endpoint " + uriComponents.toString(), e);
+                  throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+              }
           } 
           else {
               logger.error(String.format("OAuth Error in getProspectById() method , HttpStatus=[%s], message=[%s]",
@@ -512,10 +542,18 @@ public class WebApplyController {
                         MediaType.APPLICATION_OCTET_STREAM);
                 String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
+                try {
+                    return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+                            "getProspectDocumentById()", "getProspectDocumentByIdUri", MediaType.APPLICATION_OCTET_STREAM,
+                            null, prospectId);
 
-                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-                        "getProspectDocumentById()", "getProspectDocumentByIdUri", MediaType.APPLICATION_OCTET_STREAM,
-                        null, prospectId);
+                } catch (Exception e) {
+                    logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                            e);
+                    ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                            "Unable to call endpoint " + uriComponents.toString(), e);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
             else {
                 logger.error(String.format("OAuth Error in getDocumentById() method , HttpStatus=[%s], message=[%s]",
@@ -555,10 +593,18 @@ public class WebApplyController {
                         MediaType.APPLICATION_JSON);
                 String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
-
-                return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
-                        "getProspectDocuments()", "getProspectDocumentsUri", MediaType.APPLICATION_JSON, null,
-                        prospectId);
+                try {
+                    return invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(), HttpMethod.GET, request,
+                            "getProspectDocuments()", "getProspectDocumentsUri", MediaType.APPLICATION_JSON, null,
+                            prospectId);
+                }
+                catch (Exception e) {
+                    logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", uriComponents.toString(), e.getMessage()),
+                            e);
+                    ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                            "Unable to call endpoint " + uriComponents.toString(), e);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
             else {
                 logger.error(String.format("OAuth Error in getProspectDocuments() method , HttpStatus=[%s], message=[%s]",
@@ -679,10 +725,19 @@ public class WebApplyController {
 
                 HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
                         MediaType.APPLICATION_JSON);
+
                 String url = dehBaseUrl + dehURIs.get("otpUri").asText();
 
-                return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
-                        "generateVerifyOTP()", "otpUri", MediaType.APPLICATION_JSON, null, null);
+                try {
+                    return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
+                            "generateVerifyOTP()", "otpUri", MediaType.APPLICATION_JSON, null, null);
+                } catch (Exception e) {
+                    logger.error(String.format("Endpoint=[%s], HttpStatus=[%s]", url, e.getMessage()), e);
+                    ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+                            "Unable to call endpoint " + url, e);
+                    throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+
             }
             else {
                 logger.error(String.format("OAuth Error in generateVerifyOTP() method , HttpStatus=[%s], message=[%s]",
@@ -735,8 +790,8 @@ public class WebApplyController {
             }
         }
         catch (HttpClientErrorException e) {
-            logger.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
-                    e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+            logger.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
+                    e.getResponseBodyAsString()), e);
             HttpHeaders responseHeaders = e.getResponseHeaders();
             List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
 
@@ -752,8 +807,8 @@ public class WebApplyController {
             throw new ApiException(error, responseHeaders, HttpStatus.BAD_REQUEST);
         }
         catch (HttpServerErrorException e) {
-            logger.error(String.format("HttpServerErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
-                    e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+            logger.error(String.format("HttpServerErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url, e.getRawStatusCode(),
+                    e.getResponseBodyAsString()), e);
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     e.getResponseBodyAsString(), e);
             throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
