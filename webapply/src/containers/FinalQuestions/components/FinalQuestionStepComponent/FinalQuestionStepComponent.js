@@ -36,7 +36,7 @@ export const FinalQuestionStepComponent = ({
       title={item.title}
       infoTitle={item.infoTitle}
       isActiveStep={step === item.step}
-      isFilled={completedSteps.includes(item.step)}
+      isFilled={completedSteps.some(step => step.id === item.step && step.isCompleted)}
       handleClick={createSetStepHandler(item.step)}
       handleContinue={handleContinue}
       stepForm={item.component}

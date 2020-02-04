@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { useSelector } from "react-redux";
 import cx from "classnames";
 
 import routes from "../../routes";
@@ -6,12 +7,13 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { COMPANY_PATH, FINAL_QUESTIONS_PAGE } from "./components/CompanySummaryCard/constants";
-import { signatoriesSteps } from "./components/SignatorySummaryCard/constants";
+import { FINAL_QUESTIONS_COMPANY_ID } from "./components/CompanySummaryCard/constants";
 import { finalQuestionsSteps } from "./components/CompanySummaryCard/constants";
 import { useCompletedStep } from "../../components/StepComponent/utils/useCompletedSteps";
+import { getCompletedSignatoriesSteps } from "../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
+import { signatoriesSteps } from "./components/SignatorySummaryCard/constants";
 
 export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
@@ -19,8 +21,8 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isCompanyExpanded, setIsCompanyExpanded] = useState(false);
   const classes = useStyles();
 
-  const completedCompanySteps = useCompletedStep(FINAL_QUESTIONS_PAGE, COMPANY_PATH);
-  const completedSignatoriesSteps = useCompletedStep(FINAL_QUESTIONS_PAGE);
+  const completedCompanySteps = useCompletedStep(FINAL_QUESTIONS_COMPANY_ID).steps;
+  const completedSignatoriesSteps = useSelector(getCompletedSignatoriesSteps);
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
@@ -45,7 +47,10 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         <CompanySummaryCard
           switchExpandedMargin={switchExpandedMargin}
           handleFinalStepContinue={handleFinalStepContinue}
-          isCompanyStepsCompleted={finalQuestionsSteps.length === completedCompanySteps.length}
+          isCompanyStepsCompleted={
+            finalQuestionsSteps.length === completedCompanySteps.length &&
+            !completedCompanySteps.some(item => !item.isCompleted)
+          }
           isCompanyExpanded={isCompanyExpanded}
           setIsCompanyExpanded={setIsCompanyExpanded}
         />
@@ -68,8 +73,11 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         <SubmitButton
           disabled={
             finalQuestionsSteps.length !== completedCompanySteps.length ||
+            completedCompanySteps.some(item => !item.isCompleted) ||
             completedSignatoriesSteps.some(
-              signatoryCompletedSteps => signatoryCompletedSteps.length < signatoriesSteps.length
+              signatory =>
+                signatory.steps.length !== signatoriesSteps.length ||
+                signatory.steps.some(item => !item.isCompleted)
             )
           }
           handleClick={goToUploadDocument}

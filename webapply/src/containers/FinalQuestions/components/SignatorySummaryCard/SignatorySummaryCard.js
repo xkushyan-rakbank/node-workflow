@@ -8,7 +8,7 @@ import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
 import { signatoriesSteps, STEP_1 } from "./constants";
 import { checkIsAccountInfoTypeNumber } from "./utils";
-import { FINAL_QUESTIONS_PAGE } from "../CompanySummaryCard/constants";
+import { COMPANY_SIGNATORY_ID } from "./constants";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
@@ -21,7 +21,9 @@ export const SignatorySummaryCardComponent = ({
   handleFinalStepContinue,
   completedSignatoriesSteps
 }) => {
-  const completedSteps = completedSignatoriesSteps[index];
+  const completedSteps = completedSignatoriesSteps.find(
+    item => parseInt(item.flowId.match(/\d+/)) === index
+  ).steps;
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
@@ -43,14 +45,15 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {// eslint-disable-next-line max-len
-            expandedSignatoryIndex !== index && completedSteps.length === signatoriesSteps.length && (
-              <LinkButton
-                clickHandler={() => {
-                  setExpandedSignatoryIndex(index);
-                }}
-              />
-            )}
+            {expandedSignatoryIndex !== index &&
+              completedSteps.length === signatoriesSteps.length &&
+              !completedSteps.some(step => !step.isCompleted) && (
+                <LinkButton
+                  clickHandler={() => {
+                    setExpandedSignatoryIndex(index);
+                  }}
+                />
+              )}
           </div>
         </div>
       }
@@ -62,7 +65,7 @@ export const SignatorySummaryCardComponent = ({
           stepsArray={signatoriesSteps}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
-          page={FINAL_QUESTIONS_PAGE}
+          page={`${COMPANY_SIGNATORY_ID}${index}`}
           initialStep={STEP_1}
         />
       </div>

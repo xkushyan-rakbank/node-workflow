@@ -1,5 +1,7 @@
 import get from "lodash/get";
 
+import { COMPANY_SIGNATORY_ID } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
+
 export const getDatalist = state => state.appConfig.datalist || {};
 
 export const getEndpoints = state => state.appConfig.endpoints || {};
@@ -29,6 +31,9 @@ export const getApplicationInfo = state => getProspect(state).applicationInfo ||
 export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
 
 export const getAccountType = state => getApplicationInfo(state).accountType;
+
+export const getCompletedSignatoriesSteps = state =>
+  state.completedSteps.filter(item => item.flowId.includes(COMPANY_SIGNATORY_ID)) || [];
 
 export const getProspectId = state => getGeneralInfo(state).prospectId;
 

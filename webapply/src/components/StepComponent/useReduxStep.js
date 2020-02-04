@@ -26,7 +26,7 @@ export const useReduxStep = (initialStep, id) => {
   };
 
   const handleSetStep = nextStep => {
-    if (completedSteps.steps.some(item => item.id === step)) {
+    if (completedSteps.steps.some(step => step.id === nextStep && step.isCompleted)) {
       setStep(nextStep);
     }
   };
