@@ -44,7 +44,7 @@ export const Input = ({
           className={cx(classes.textField, { [classes.disabled]: disabled })}
           placeholder={placeholder}
           disabled={disabled}
-          error={isError}
+          error={!!isError}
           InputProps={{ ...InputProps, classes: { input: classes.input } }}
           InputLabelProps={{ shrink }}
           onFocus={event => {

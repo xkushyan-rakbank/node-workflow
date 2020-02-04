@@ -26,7 +26,8 @@ export const useStyles = makeStyles({
       marginLeft: -16,
       marginRight: -16,
       paddingLeft: 0,
-      paddingRight: 0
+      paddingRight: 0,
+      overflowX: "auto"
     }
   },
   cardsContainerItem: {
@@ -38,6 +39,7 @@ export const useStyles = makeStyles({
       padding: "0 8px"
     },
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      minWidth: "min-content",
       "&:first-child": {
         paddingLeft: 16
       },

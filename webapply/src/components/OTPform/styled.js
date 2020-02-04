@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { mobileResolution } from "../../constants";
 
 export const useStyles = makeStyles(theme => ({
   centeredContainer: {
@@ -11,6 +12,9 @@ export const useStyles = makeStyles(theme => ({
       marginTop: "80px",
       padding: "0 16px",
       boxSizing: "border-box"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      marginTop: 0
     }
   },
   form: {
@@ -45,7 +49,10 @@ export const useStyles = makeStyles(theme => ({
   },
 
   title: {
-    marginTop: "174px"
+    marginTop: "174px",
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      marginTop: "80px"
+    }
   },
   submitButton: {
     width: "auto",

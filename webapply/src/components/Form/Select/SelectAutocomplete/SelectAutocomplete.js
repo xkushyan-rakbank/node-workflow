@@ -71,7 +71,7 @@ export const SelectAutocomplete = ({
             onFocus: () => setFocus(true),
             onBlur: () => setFocus(false),
             label,
-            error: isError,
+            error: !!isError,
             InputLabelProps: {
               shrink: hasFocus || !!renderValue
             }

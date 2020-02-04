@@ -112,16 +112,12 @@ instance.interceptors.response.use(
             title: "Validation Error On Server",
             message: jsonData.errors[0] ? jsonData.errors[0].message : "Validation Error"
           });
-      } else {
-        NotificationsManager.add &&
-          NotificationsManager.add({
-            title: jsonData.errorType,
-            message: jsonData.errors[0] && jsonData.errors[0].message
-          });
       }
     } else {
       log(jsonData);
-      NotificationsManager.add && NotificationsManager.add({ message: jsonData });
+      console.log("jsonData.debugMessage");
+      console.log(jsonData.debugMessage);
+      NotificationsManager.add && NotificationsManager.add({ message: jsonData.message });
     }
 
     return Promise.reject(error);

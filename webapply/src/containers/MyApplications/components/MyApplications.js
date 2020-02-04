@@ -19,7 +19,13 @@ export const MyApplications = ({ searchResults, getProspectInfo }) => {
 
   return (
     <div className={classes.centeredContainer}>
-      <Grid container direction="row" alignItems="center" justify="space-between">
+      <Grid
+        container
+        classes={{ root: "hide-on-mobile" }}
+        direction="row"
+        alignItems="center"
+        justify="space-between"
+      >
         <SectionTitleWithInfo className={classes.title} title="My applications" />
         <Box classes={{ root: classes.rootChangeViewContainer }}>
           <ButtonWithIcon

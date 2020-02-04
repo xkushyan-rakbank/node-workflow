@@ -61,9 +61,7 @@ export const useStyles = makeStyles({
     "& th:first-child, & td:first-child": {
       paddingLeft: "0",
       width: "200px",
-      [`@media only screen and (max-width: ${tabletResolution}px)
-       and 
-       (min-width: ${mobileResolution}px)`]: {
+      [`@media only screen and (max-width: ${tabletResolution}px)`]: {
         width: "auto"
       }
     }
