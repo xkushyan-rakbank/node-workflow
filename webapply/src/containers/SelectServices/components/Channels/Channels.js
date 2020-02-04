@@ -59,19 +59,12 @@ export const ChannelsComponent = ({
   accountCurrencies: selectedCurrency
 }) => {
   const classes = useStyles();
-
   const goToNextGA = useCallback(() => {
     goToNext();
   }, [goToNext]);
-
-  const accountSigningType = stakeholders[0].accountSigningInfo.accountSigningType;
-
-  const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
-    primaryMobCountryCode,
-    selectedCurrency
-  );
-  const { isDebitCardDisabled, isDebitCardApplied } = checkIsDebitCardApplied(
-    accountSigningType,
+  const isChequeBookApplied = checkIsChequeBookApplied(primaryMobCountryCode, selectedCurrency);
+  const isDebitCardApplied = checkIsDebitCardApplied(
+    stakeholders[0].accountSigningInfo,
     selectedCurrency
   );
 
@@ -115,7 +108,7 @@ export const ChannelsComponent = ({
                 classes={{ infoTitle: classes.infoTitle }}
                 component={Checkbox}
                 infoTitle={DEBIT_CARD_INFO}
-                disabled={isDebitCardDisabled}
+                disabled
                 isLoadDefaultValueFromStore={false}
                 inputProps={{ tabIndex: 0 }}
               />
@@ -144,7 +137,7 @@ export const ChannelsComponent = ({
                 classes={{ infoTitle: classes.infoTitle }}
                 component={Checkbox}
                 infoTitle={CHEQUE_BOOK_INFO}
-                disabled={isChequeBookDisabled}
+                disabled
                 isLoadDefaultValueFromStore={false}
                 inputProps={{ tabIndex: 0 }}
               />
