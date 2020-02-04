@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 
-import { STEP_3, STEP_1, STEP_4 } from "./constants";
+import { STEP_3, STEP_1, STEP_4, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
@@ -8,7 +8,6 @@ import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
 import { accountNames } from "../../constants";
 import { useReduxStep } from "../../components/StepComponent/useReduxStep";
-import { SELECT_SERVICES_PAGE, SELECT_SERVICES_PATH } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -23,8 +22,7 @@ export const SelectServicesComponent = ({
 
   const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
     STEP_1,
-    SELECT_SERVICES_PAGE,
-    SELECT_SERVICES_PATH
+    SELECT_SERVICES_PAGE_ID
   );
 
   const handleClickNextStep = useCallback(() => {
@@ -32,7 +30,7 @@ export const SelectServicesComponent = ({
       history.push(routes.SubmitApplication);
       return;
     }
-    if (!completedSteps.includes(STEP_4)) {
+    if (completedSteps.length < STEP_4) {
       handleSetNextStep();
     }
     setIsSubmit(true);

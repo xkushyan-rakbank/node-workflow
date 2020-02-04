@@ -22,7 +22,8 @@ export const ServicesSteps = ({
         <ServicesStepTitle
           step={stepData}
           isEditAvailable={
-            (activeStep !== stepData.step || isSubmit) && completedSteps.includes(stepData.step)
+            (activeStep !== stepData.step || isSubmit) &&
+            completedSteps.some(step => step.id === stepData.step && step.isCompleted)
           }
           createClickHandler={clickHandler}
         />

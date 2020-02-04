@@ -70,5 +70,4 @@ export const DATA_CURRENCIES = [
   }
 ];
 
-export const SELECT_SERVICES_PAGE = "selectServices";
-export const SELECT_SERVICES_PATH = "selectServicesSteps";
+export const SELECT_SERVICES_PAGE_ID = "selectServices";
