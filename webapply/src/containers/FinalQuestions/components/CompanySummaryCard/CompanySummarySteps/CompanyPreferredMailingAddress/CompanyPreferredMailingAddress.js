@@ -103,7 +103,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   path={`${BASE_PATH}.emirateCity`}
                   datalistId="emirateCity"
                   label="Emirate / City"
-                  isSearchable={false}
+                  isSearchable
                   component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />
@@ -114,7 +114,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
                   datalistId="spaceType"
                   label="Type of Space Occupied"
-                  isSearchable={false}
+                  isSearchable
                   component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />
