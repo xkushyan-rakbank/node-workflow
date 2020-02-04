@@ -21,7 +21,9 @@ export const DetailedAccount = () => {
         <IslamicBankingSwitcher />
       </div>
       <VerticalPaginationWrapper video={getVideoByAccountType(accountType, isIslamicBaning)}>
-        <div className={classes.videoWrapper} />
+        <div className="hide-on-mobile">
+          <div className={classes.videoWrapper} />
+        </div>
         <AccountBenefits />
         <AccountingSoftware />
       </VerticalPaginationWrapper>
