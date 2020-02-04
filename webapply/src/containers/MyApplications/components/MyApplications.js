@@ -19,23 +19,27 @@ export const MyApplications = ({ searchResults, getProspectInfo }) => {
 
   return (
     <div className={classes.centeredContainer}>
-      <div className="hide-on-mobile">
-        <Grid container direction="row" alignItems="center" justify="space-between">
-          <SectionTitleWithInfo className={classes.title} title="My applications" />
-          <Box classes={{ root: classes.rootChangeViewContainer }}>
-            <ButtonWithIcon
-              icon={ICONS.listGray}
-              isSelected={selectedView === LIST_VIEW}
-              handleClick={() => setSelectedView(LIST_VIEW)}
-            />
-            <ButtonWithIcon
-              icon={ICONS.grid}
-              isSelected={selectedView === GRID_VIEW}
-              handleClick={() => setSelectedView(GRID_VIEW)}
-            />
-          </Box>
-        </Grid>
-      </div>
+      <Grid
+        container
+        classes={{ root: "hide-on-mobile" }}
+        direction="row"
+        alignItems="center"
+        justify="space-between"
+      >
+        <SectionTitleWithInfo className={classes.title} title="My applications" />
+        <Box classes={{ root: classes.rootChangeViewContainer }}>
+          <ButtonWithIcon
+            icon={ICONS.listGray}
+            isSelected={selectedView === LIST_VIEW}
+            handleClick={() => setSelectedView(LIST_VIEW)}
+          />
+          <ButtonWithIcon
+            icon={ICONS.grid}
+            isSelected={selectedView === GRID_VIEW}
+            handleClick={() => setSelectedView(GRID_VIEW)}
+          />
+        </Box>
+      </Grid>
 
       {searchResults && (
         <div
