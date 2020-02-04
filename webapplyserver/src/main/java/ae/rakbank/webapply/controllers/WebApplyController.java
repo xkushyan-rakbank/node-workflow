@@ -585,9 +585,7 @@ public class WebApplyController {
                 oauthClient.getOAuthToken(requestBodyJSON.get("username").asText(), requestBodyJSON.get("password").asText());
         if (oauthResponse == null) {
             throw new ApiException("The response from OAuth service is null");
-        }
-
-        if (!oauthResponse.getStatusCode().is2xxSuccessful()) {
+        } else if (!oauthResponse.getStatusCode().is2xxSuccessful()) {
             String errorMessage = String.format("OAuth Error in login() method , HttpStatus=[%s], message=[%s]",
                     oauthResponse.getStatusCodeValue(), oauthResponse.getBody());
             logger.error(errorMessage);
@@ -598,17 +596,13 @@ public class WebApplyController {
         if (requestBodyJSON.has("recaptchaToken")) {
             ResponseEntity<?> captchaResponse = validateReCaptcha(requestBodyJSON, httpRequest, oauthResponse);
             if (captchaResponse != null) return captchaResponse;
-        }
-        else if (EnvUtil.isRecaptchaEnable()) {
+        } else if (EnvUtil.isRecaptchaEnable()) {
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
                     "reCAPTCHA Token is required");
             throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
         }
 
-
         //TODO need to test next call!!!   (agentName, agentId, agentRole, deptName)
-
-
 
         HttpEntity<JsonNode> request = getHttpEntityRequest(requestBodyJSON, oauthResponse, MediaType.APPLICATION_JSON);
         String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
