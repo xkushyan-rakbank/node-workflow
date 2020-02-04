@@ -149,7 +149,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
         validateOnChange={false}
       >
         {withCompanyFinalQuestions(({ values }) => (
-          <Form autocomplete="off">
+          <Form autoComplete="off">
             <h4 className={classes.groupLabel}>Annual turnover</h4>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item sm={12}>
@@ -180,7 +180,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   <TextField
                     className={classes.disabledInput}
                     variant="outlined"
-                    autocomplete="none"
+                    autoComplete="off"
                     disabled
                     InputProps={{
                       ...commonInputProps,
@@ -204,7 +204,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Cash"
                   placeholder="9999999999.99"
-                  autocomplete="none"
+                  autoComplete="off"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
                   InputProps={{
@@ -217,7 +217,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
               <Grid item md={6} sm={12}>
                 <Field
                   name="totalMonthlyNonCashAmountInFigures"
-                  autocomplete="none"
+                  autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Non-Cash"
                   placeholder="9999999999.99"
@@ -246,7 +246,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                 <Field
                   name="maxAmtSingleTxnCashAED"
                   label="Maximum amount in Cash"
-                  autocomplete="none"
+                  autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
                   placeholder="9999999999.99"
                   InputProps={{

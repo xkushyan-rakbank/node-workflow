@@ -38,6 +38,9 @@ const styles = {
     overflow: "hidden",
     [`@media only screen and (max-width: ${mobileResolution}px) and (max-height: 750px)`]: {
       paddingTop: "130px"
+    },
+    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      height: "min-content"
     }
   },
   buttonContainer: {

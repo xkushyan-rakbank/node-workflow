@@ -16,9 +16,9 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
-import { setToken, setVerified } from "../../store/actions/reCaptcha";
+import { setToken } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
-import { isOtpGenerated } from "../../store/selectors/otp";
+import { getIsGenerating, isOtpGenerated } from "../../store/selectors/otp";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
@@ -51,9 +51,9 @@ const ComeBackLoginComponent = ({
   generateOtpCode,
   isOtpGenerated,
   setToken,
-  setVerified,
   recaptchaToken,
-  isRecaptchaEnable
+  isRecaptchaEnable,
+  isGenerating
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
@@ -75,8 +75,8 @@ const ComeBackLoginComponent = ({
     [setToken]
   );
   const handleVerifiedFailed = useCallback(() => {
-    setVerified(false);
-  }, [setVerified]);
+    setToken(null);
+  }, [setToken]);
 
   useEffect(() => {
     if (isOtpGenerated) {
@@ -156,7 +156,10 @@ const ComeBackLoginComponent = ({
               <div className={cx(classes.btnWrapper, "linkContainer")}>
                 <SubmitButton
                   disabled={
-                    !values.email || !values.mobileNo || (isRecaptchaEnable && !recaptchaToken)
+                    !values.email ||
+                    !values.mobileNo ||
+                    isGenerating ||
+                    (isRecaptchaEnable && !recaptchaToken)
                   }
                   justify="flex-end"
                   label="Next step"
@@ -173,13 +176,13 @@ const ComeBackLoginComponent = ({
 const mapStateToProps = state => ({
   recaptchaToken: state.reCaptcha.token,
   isOtpGenerated: isOtpGenerated(state),
-  isRecaptchaEnable: getIsRecaptchaEnable(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  isGenerating: getIsGenerating(state)
 });
 
 const mapDispatchToProps = {
   generateOtpCode,
-  setToken,
-  setVerified
+  setToken
 };
 
 export const ComeBackLogin = connect(

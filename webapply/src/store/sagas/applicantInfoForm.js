@@ -1,6 +1,9 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
-import { history } from "./..";
-import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
+import {
+  APPLICANT_INFO_FORM,
+  applicantInfoFormFail,
+  applicantInfoFormSuccess
+} from "../actions/applicantInfoForm";
 import {
   updateProspectId,
   updateProspect,
@@ -8,11 +11,9 @@ import {
   updateActionType
 } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
-import { setVerified } from "../actions/reCaptcha";
 import { generateCodeSuccess } from "../actions/otp";
 import { sendGoogleAnalyticsMetrics } from "../actions/googleAnalytics";
 import { prospect } from "../../api/apiClient";
-import routes from "./../../routes";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
 import { NEXT, SAVE } from "../../constants";
@@ -26,9 +27,7 @@ function* applicantInfoFormSaga(action) {
       ...state.appConfig.prospect,
       applicantInfo: action.data
     };
-
     yield put(updateProspect({ prospect: prospectUpdated }));
-
     if (getIsRecaptchaEnable(state)) {
       prospectUpdated = {
         ...prospectUpdated,
@@ -42,15 +41,15 @@ function* applicantInfoFormSaga(action) {
       data: { prospectId }
     } = yield call(prospect.create, prospectUpdated, headers);
 
-    yield put(setVerified(true));
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
     yield call(sendGoogleAnalyticsMetrics, GA_EVENTS.PRODUCT_BASIC_INFORMATION);
-    yield call(history.push, routes.verifyOtp);
     yield put(updateActionType(SAVE));
     yield put(updateSaveType(NEXT));
     yield put(resetInputsErrors());
+    yield put(applicantInfoFormSuccess());
   } catch (error) {
+    yield put(applicantInfoFormFail(error));
     log(error);
   }
 }
