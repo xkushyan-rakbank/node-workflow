@@ -288,7 +288,7 @@ public class WebApplyController {
                 return new ResponseEntity<>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
             }
 
-            HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestBodyJSON, oauthResponse,
+            HttpEntity<JsonNode> request = getHttpEntityRequest(requestBodyJSON, oauthResponse,
                     MediaType.APPLICATION_JSON);
             String url = dehBaseUrl + dehURIs.get("createProspectUri").asText();
             UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
@@ -372,8 +372,7 @@ public class WebApplyController {
 
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
-                HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
-                        MediaType.APPLICATION_JSON);
+                HttpEntity<JsonNode> request = getHttpEntityRequest(jsonNode, oauthResponse, MediaType.APPLICATION_JSON);
 
                 String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
@@ -419,8 +418,7 @@ public class WebApplyController {
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-                HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, jsonNode, oauthResponse,
-                        MediaType.APPLICATION_JSON);
+                HttpEntity<JsonNode> request = getHttpEntityRequest(jsonNode, oauthResponse, MediaType.APPLICATION_JSON);
                 String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
 
@@ -464,8 +462,7 @@ public class WebApplyController {
           ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
           if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-              HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
-                      MediaType.APPLICATION_JSON);
+              HttpEntity<JsonNode> request = getHttpEntityRequest(null, oauthResponse, MediaType.APPLICATION_JSON);
               String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
               UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
@@ -508,8 +505,7 @@ public class WebApplyController {
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-                HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
-                        MediaType.APPLICATION_OCTET_STREAM);
+                HttpEntity<JsonNode> request = getHttpEntityRequest(null, oauthResponse, MediaType.APPLICATION_OCTET_STREAM);
                 String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
 
@@ -551,8 +547,7 @@ public class WebApplyController {
             ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
             if (oauthResponse != null && oauthResponse.getStatusCode().is2xxSuccessful()) {
 
-                HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, null, oauthResponse,
-                        MediaType.APPLICATION_JSON);
+                HttpEntity<JsonNode> request = getHttpEntityRequest(null, oauthResponse, MediaType.APPLICATION_JSON);
                 String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
                 UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
 
@@ -592,29 +587,37 @@ public class WebApplyController {
             throw new ApiException("The response from OAuth service is null");
         }
 
-        if (oauthResponse.getStatusCode().is2xxSuccessful()) {
-            if (requestBodyJSON.has("recaptchaToken")) {
-                ResponseEntity<?> captchaResponse = validateReCaptcha(requestBodyJSON, httpRequest, oauthResponse);
-                if (captchaResponse != null) return captchaResponse;
-            }
-            else if (EnvUtil.isRecaptchaEnable()) {
-                ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
-                        "reCAPTCHA Token is required");
-                throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
-            }
-
-            //TODO add required fields to the response if it required!!!   (agentName, agentId, agentRole, deptName)
-
-            return oauthResponse;
-        }
-        else {
-            logger.error(String.format("OAuth Error in login() method , HttpStatus=[%s], message=[%s]",
-                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody()));
-
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    "oauth error, check logs for more info.");
+        if (!oauthResponse.getStatusCode().is2xxSuccessful()) {
+            String errorMessage = String.format("OAuth Error in login() method , HttpStatus=[%s], message=[%s]",
+                    oauthResponse.getStatusCodeValue(), oauthResponse.getBody());
+            logger.error(errorMessage);
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error", errorMessage);
             throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        if (requestBodyJSON.has("recaptchaToken")) {
+            ResponseEntity<?> captchaResponse = validateReCaptcha(requestBodyJSON, httpRequest, oauthResponse);
+            if (captchaResponse != null) return captchaResponse;
+        }
+        else if (EnvUtil.isRecaptchaEnable()) {
+            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
+                    "reCAPTCHA Token is required");
+            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
+        }
+
+
+        //TODO need to test next call!!!   (agentName, agentId, agentRole, deptName)
+
+
+
+        HttpEntity<JsonNode> request = getHttpEntityRequest(requestBodyJSON, oauthResponse, MediaType.APPLICATION_JSON);
+        String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
+        ResponseEntity<?> loginResponse = invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request, "login()",
+                "authenticateUserUri", MediaType.APPLICATION_JSON, null, null);
+        if (loginResponse.getBody() instanceof JsonNode) {
+            ((ObjectNode) loginResponse.getBody()).set("oauth", oauthResponse.getBody());
+        }
+        return loginResponse;
     }
 
     @PostMapping(value = "/otp", produces = "application/json", consumes = "application/json")
@@ -677,8 +680,7 @@ public class WebApplyController {
             }
             */
 
-                HttpEntity<JsonNode> request = getHttpEntityRequest(httpRequest, requestJSON, oauthResponse,
-                        MediaType.APPLICATION_JSON);
+                HttpEntity<JsonNode> request = getHttpEntityRequest(requestJSON, oauthResponse, MediaType.APPLICATION_JSON);
                 String url = dehBaseUrl + dehURIs.get("otpUri").asText();
 
                 return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
@@ -705,8 +707,8 @@ public class WebApplyController {
 
     // Core API Forwarding
     //====================================================================================
-    private HttpEntity<JsonNode> getHttpEntityRequest(HttpServletRequest httpRequest, JsonNode requestBodyJSON,
-                                                      ResponseEntity<JsonNode> oauthResponse, MediaType mediaType) {
+    private HttpEntity<JsonNode> getHttpEntityRequest(JsonNode requestBodyJSON, ResponseEntity<JsonNode> oauthResponse,
+                                                      MediaType mediaType) {
         /*
          * Enumeration<String> enumeration = httpRequest.getHeaderNames(); while
          * (enumeration.hasMoreElements()) { String headerName =
