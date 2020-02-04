@@ -17,7 +17,10 @@ const completedSteps = (state = initialState, action) => {
     case REMOVE_SIGNATORY: {
       const restSteps = state.filter(
         step =>
-          step.flowId.includes(COMPANY_STAKEHOLDER_ID) || step.flowId.includes(COMPANY_SIGNATORY_ID)
+          !(
+            step.flowId.includes(COMPANY_STAKEHOLDER_ID) ||
+            step.flowId.includes(COMPANY_SIGNATORY_ID)
+          )
       );
       const signatorySteps = state.filter(step => step.flowId.includes(COMPANY_SIGNATORY_ID));
       const stakeholderSteps = state.filter(step => step.flowId.includes(COMPANY_STAKEHOLDER_ID));
