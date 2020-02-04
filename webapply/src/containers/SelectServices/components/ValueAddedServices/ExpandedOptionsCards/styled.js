@@ -254,7 +254,8 @@ export const useStyles = makeStyles({
     justifyContent: "center",
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       justifyContent: "flex-start",
-      flexWrap: "wrap"
+      overflowX: "auto",
+      paddingBottom: "15px"
     }
   }
 });
