@@ -1,14 +1,6 @@
 import { useSelector } from "react-redux";
 
-export const useCompletedStep = (page, path, index) => {
-  const pageCompletedSteps = useSelector(state => state.completedSteps[page] || {});
-  let completedSteps;
-
-  if (index !== null) {
-    completedSteps = pageCompletedSteps[path][index] || [];
-  } else {
-    completedSteps = pageCompletedSteps[path] || [];
-  }
-
-  return [pageCompletedSteps, completedSteps];
-};
+export const useCompletedStep = id =>
+  useSelector(
+    state => state.completedSteps.find(item => item.flowId === id) || { flowId: id, steps: [] }
+  );

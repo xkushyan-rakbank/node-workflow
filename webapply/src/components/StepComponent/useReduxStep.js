@@ -3,30 +3,33 @@ import { useDispatch } from "react-redux";
 
 import { setCompletedSteps } from "../../store/actions/completedSteps";
 import { useCompletedStep } from "./utils/useCompletedSteps";
-import { addCompletedStep } from "./utils/addCompletedStep";
 
-export const useReduxStep = (initialStep, page, path, index = null) => {
+export const useReduxStep = (initialStep, id) => {
   const [step, setStep] = useState(initialStep);
   const dispatch = useDispatch();
 
-  const [pageCompletedSteps, completedSteps] = useCompletedStep(page, path, index);
+  const completedSteps = useCompletedStep(id);
 
   const handleSetNextStep = () => {
     const nextStep = step + 1;
 
     setStep(nextStep);
 
-    if (!completedSteps.includes(step)) {
-      const steps = addCompletedStep(pageCompletedSteps, completedSteps, step, page, path, index);
-      dispatch(setCompletedSteps(page, steps));
+    if (!completedSteps.steps.some(item => item.id === step)) {
+      dispatch(
+        setCompletedSteps(id, {
+          ...completedSteps,
+          steps: [...completedSteps.steps, { id: step, isAvailable: true, isCompleted: true }]
+        })
+      );
     }
   };
 
   const handleSetStep = nextStep => {
-    if (completedSteps.includes(nextStep)) {
+    if (completedSteps.steps.some(item => item.id === step)) {
       setStep(nextStep);
     }
   };
 
-  return [step, handleSetStep, completedSteps, handleSetNextStep];
+  return [step, handleSetStep, completedSteps.steps, handleSetNextStep];
 };

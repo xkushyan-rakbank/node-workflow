@@ -1,28 +1,11 @@
 import { SET_COMPLETED_STEPS, ADD_SIGNATORY, REMOVE_SIGNATORY } from "../actions/completedSteps";
 
-export const initialState = {
-  selectServices: {
-    selectServicesSteps: []
-  },
-  companyStakeholders: {
-    stakeholdersSteps: []
-  },
-  companyInfo: {
-    companySteps: []
-  },
-  finalQuestions: {
-    companySteps: [],
-    signatorySteps: []
-  }
-};
+export const initialState = [];
 
 const completedSteps = (state = initialState, action) => {
   switch (action.type) {
     case SET_COMPLETED_STEPS:
-      return {
-        ...state,
-        [action.payload.path]: action.payload.steps
-      };
+      return [...state.filter(item => item.id !== action.payload.steps.id), action.payload.steps];
     case ADD_SIGNATORY:
       return {
         ...state,

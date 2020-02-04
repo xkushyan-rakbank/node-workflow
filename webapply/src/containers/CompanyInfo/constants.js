@@ -25,6 +25,4 @@ export const companyInfoSteps = [
   { step: STEP_3, title: "License Information", component: LicenseInformation }
 ];
 
-export const COMPANY_INFO_PAGE = "companyInfo";
-
-export const COMPANY_INFO_PATH = "companySteps";
+export const COMPANY_INFO_PAGE_ID = "companyInfo";

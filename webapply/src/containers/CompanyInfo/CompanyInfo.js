@@ -14,7 +14,7 @@ import {
   getOrganizationInfo,
   getSendProspectToAPIInfo
 } from "../../store/selectors/appConfig";
-import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE, COMPANY_INFO_PATH } from "./constants";
+import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
@@ -28,8 +28,7 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
     STEP_1,
-    COMPANY_INFO_PAGE,
-    COMPANY_INFO_PATH
+    COMPANY_INFO_PAGE_ID
   );
 
   const handleContinue = () =>
@@ -67,7 +66,7 @@ export const CompanyInfoPage = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={completedSteps.includes(item.step)}
+            isFilled={completedSteps.some(step => step.id === item.step && step.isCompleted)}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
@@ -79,7 +78,10 @@ export const CompanyInfoPage = ({
         <ContainedButton
           justify="flex-end"
           label="Next Step"
-          disabled={completedSteps.length !== companyInfoSteps.length}
+          disabled={
+            completedSteps.length !== companyInfoSteps.length ||
+            completedSteps.some(item => !item.isCompleted)
+          }
           handleClick={handleClickNextStep}
           withRightArrow
         />
