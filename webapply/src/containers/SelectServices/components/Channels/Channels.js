@@ -59,16 +59,11 @@ export const ChannelsComponent = ({
   accountCurrencies: selectedCurrency
 }) => {
   const classes = useStyles();
-  const { accountSigningType, authorityType } = stakeholders[0].accountSigningInfo;
 
-  const { isChequeBookDisabled, isChequeBookApplied } = checkIsChequeBookApplied(
-    primaryMobCountryCode,
+  const isChequeBookApplied = checkIsChequeBookApplied(primaryMobCountryCode, selectedCurrency);
+  const isDebitCardApplied = checkIsDebitCardApplied(
+    stakeholders[0].accountSigningInfo,
     selectedCurrency
-  );
-  const { isDebitCardDisabled, isDebitCardApplied } = checkIsDebitCardApplied(
-    accountSigningType,
-    selectedCurrency,
-    authorityType
   );
 
   useEffect(() => {
@@ -111,7 +106,7 @@ export const ChannelsComponent = ({
                 classes={{ infoTitle: classes.infoTitle }}
                 component={Checkbox}
                 infoTitle={DEBIT_CARD_INFO}
-                disabled={isDebitCardDisabled}
+                disabled
                 isLoadDefaultValueFromStore={false}
                 inputProps={{ tabIndex: 0 }}
               />
@@ -140,7 +135,7 @@ export const ChannelsComponent = ({
                 classes={{ infoTitle: classes.infoTitle }}
                 component={Checkbox}
                 infoTitle={CHEQUE_BOOK_INFO}
-                disabled={isChequeBookDisabled}
+                disabled
                 isLoadDefaultValueFromStore={false}
                 inputProps={{ tabIndex: 0 }}
               />

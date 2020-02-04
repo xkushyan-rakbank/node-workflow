@@ -6,22 +6,16 @@ import {
 
 export const checkIsChequeBookApplied = (primaryMobCountryCode, { isSelectedLocalCurrency }) => {
   const isLocalPhoneSelected = primaryMobCountryCode === UAE_CODE;
-  return {
-    isChequeBookDisabled: true,
-    isChequeBookApplied: isSelectedLocalCurrency && isLocalPhoneSelected
-  };
+  return isSelectedLocalCurrency && isLocalPhoneSelected;
 };
 
 export const checkIsDebitCardApplied = (
-  accountSigningType,
-  { isSelectedLocalCurrency },
-  authorityType
+  { accountSigningType, authorityType },
+  { isSelectedLocalCurrency }
 ) => {
   const isAccountSignType = accountSigningType === SIGNING_TRANSACTIONS_TYPE.ANY;
-  return {
-    isDebitCardDisabled: true,
-    isDebitCardApplied:
-      authorityType === AUTHORITY_TYPE_SOLE_PROPRIETOR_ID ||
-      (isAccountSignType && isSelectedLocalCurrency)
-  };
+  return (
+    authorityType === AUTHORITY_TYPE_SOLE_PROPRIETOR_ID ||
+    (isAccountSignType && isSelectedLocalCurrency)
+  );
 };
