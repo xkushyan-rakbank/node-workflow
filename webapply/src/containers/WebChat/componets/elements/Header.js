@@ -8,6 +8,7 @@ const HeaderStyled = styled.div`
   font-size: 16px;
   display: flex;
   align-items: center;
+  position: relative
   justify-content: space-between;
   padding: 15px;
   color: #373737;
@@ -21,9 +22,10 @@ const BackButton = styled.button`
   outline: none;
   position: absolute;
   left: 25px;
+  top: 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   cursor: pointer;
   :hover {
     opacity: 0.6;
