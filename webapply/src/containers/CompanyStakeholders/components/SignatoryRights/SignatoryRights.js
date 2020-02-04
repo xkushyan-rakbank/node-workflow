@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import get from "lodash/get";
@@ -26,66 +26,61 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => {
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-  return (
-    <Formik
-      initialValues={{
-        authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
-        isSignatory: ""
-      }}
-      validationSchema={signatoryRightsSchema}
-      validateOnChange={false}
-      onSubmit={handleContinueGA}
-    >
-      {withCompanyStakeholder(index, ({ values, setFieldValue, setFieldTouched }) => (
-        <Form>
-          <Grid container>
-            <Field
-              name="isSignatory"
-              path={`prospect.signatoryInfo[${index}].kycDetails.isSignatory`}
-              component={InlineRadioGroup}
-              options={yesNoOptions}
-              label="Is this person a signatory?"
-              changeProspect={prospect => ({
-                ...prospect,
-                [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
-              })}
-              onSelect={() => {
-                if (values.isSignatory) {
-                  setFieldValue("authorityType", "");
-                  updateProspect({
-                    [`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`]: ""
-                  });
-                  setFieldTouched("authorityType", false);
-                }
-              }}
-              InputProps={{
-                inputProps: { tabIndex: 0 }
-              }}
-            />
-            <Field
-              name="authorityType"
-              path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
-              disabled={!values.isSignatory}
-              isSearchable={false}
-              component={SelectAutocomplete}
-              label="Authority Type"
-              datalistId="authorityType"
-              contextualHelpProps={{ isDisableHoverListener: false }}
-              contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
-              inputProps={{ tabIndex: 0 }}
-            />
-          </Grid>
+const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => (
+  <Formik
+    initialValues={{
+      authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
+      isSignatory: ""
+    }}
+    onSubmit={handleContinue}
+    validationSchema={signatoryRightsSchema}
+    validateOnChange={false}
+  >
+    {withCompanyStakeholder(index, ({ values, setFieldValue, setFieldTouched }) => (
+      <Form>
+        <Grid container>
+          <Field
+            name="isSignatory"
+            path={`prospect.signatoryInfo[${index}].kycDetails.isSignatory`}
+            component={InlineRadioGroup}
+            options={yesNoOptions}
+            label="Is this person a signatory?"
+            changeProspect={prospect => ({
+              ...prospect,
+              [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
+            })}
+            onSelect={() => {
+              if (values.isSignatory) {
+                setFieldValue("authorityType", "");
+                updateProspect({
+                  [`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`]: ""
+                });
+                setFieldTouched("authorityType", false);
+              }
+            }}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
+          />
+          <Field
+            name="authorityType"
+            path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
+            disabled={!values.isSignatory}
+            isSearchable={false}
+            component={SelectAutocomplete}
+            label="Authority Type"
+            datalistId="authorityType"
+            contextualHelpProps={{ isDisableHoverListener: false }}
+            contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
+            inputProps={{ tabIndex: 0 }}
+          />
+        </Grid>
 
-          <SubmitButton />
-        </Form>
-      ))}
-    </Formik>
-  );
-};
+        <SubmitButton />
+      </Form>
+    ))}
+  </Formik>
+);
 
 const mapStateToProps = state => ({
   stakeholders: stakeholdersSelector(state)

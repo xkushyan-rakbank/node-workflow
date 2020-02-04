@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { Form, Formik } from "formik";
@@ -66,100 +66,94 @@ const preferredContactInformationSchema = Yup.object().shape({
   })
 });
 
-const PreferredContactInformationStep = ({ isSignatory, index, handleContinue }) => {
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-
-  return (
-    <Formik
-      initialValues={{
-        primaryEmail: "",
-        primaryMobCountryCode: "",
-        primaryMobileNo: "",
-        primaryPhoneCountryCode: "",
-        primaryPhoneNo: ""
-      }}
-      onSubmit={handleContinueGA}
-      validationSchema={isSignatory && preferredContactInformationSchema}
-      validateOnChange={false}
-    >
-      {withCompanyStakeholder(index, () => (
-        <Form>
-          <Grid container spacing={3}>
-            <Grid item sm={12}>
+const PreferredContactInformationStep = ({ isSignatory, index, handleContinue }) => (
+  <Formik
+    initialValues={{
+      primaryEmail: "",
+      primaryMobCountryCode: "",
+      primaryMobileNo: "",
+      primaryPhoneCountryCode: "",
+      primaryPhoneNo: ""
+    }}
+    onSubmit={handleContinue}
+    validationSchema={isSignatory && preferredContactInformationSchema}
+    validateOnChange={false}
+  >
+    {withCompanyStakeholder(index, () => (
+      <Form>
+        <Grid container spacing={3}>
+          <Grid item sm={12}>
+            <Field
+              name="primaryEmail"
+              path={`prospect.signatoryInfo[${index}].contactDetails.primaryEmail`}
+              label="E-mail address"
+              placeholder="E-mail address"
+              component={Input}
+              disabled={!isSignatory}
+              InputProps={{
+                inputProps: { maxLength: MAX_EMAIL_LENGTH, tabIndex: 0 }
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid item container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <InputGroup>
               <Field
-                name="primaryEmail"
-                path={`prospect.signatoryInfo[${index}].contactDetails.primaryEmail`}
-                label="E-mail address"
-                placeholder="E-mail address"
+                name="primaryMobCountryCode"
+                path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
+                component={CustomSelect}
+                shrink={false}
+                disabled={!isSignatory}
+                datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
+              />
+
+              <Field
+                name="primaryMobileNo"
+                path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
+                label="Mobile Number"
+                placeholder="55xxxxxxx"
                 component={Input}
                 disabled={!isSignatory}
                 InputProps={{
-                  inputProps: { maxLength: MAX_EMAIL_LENGTH, tabIndex: 0 }
+                  inputProps: { tabIndex: 0 }
                 }}
               />
-            </Grid>
+            </InputGroup>
           </Grid>
-          <Grid item container spacing={3}>
-            <Grid item md={6} sm={12}>
-              <InputGroup>
-                <Field
-                  name="primaryMobCountryCode"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
-                  component={CustomSelect}
-                  shrink={false}
-                  disabled={!isSignatory}
-                  datalistId="countryCode"
-                  inputProps={{ tabIndex: 0 }}
-                />
+          <Grid item md={6} sm={12}>
+            <InputGroup>
+              <Field
+                name="primaryPhoneCountryCode"
+                path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneCountryCode`}
+                component={CustomSelect}
+                shrink={false}
+                disabled={!isSignatory}
+                datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
+              />
 
-                <Field
-                  name="primaryMobileNo"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
-                  label="Mobile Number"
-                  placeholder="55xxxxxxx"
-                  component={Input}
-                  disabled={!isSignatory}
-                  InputProps={{
-                    inputProps: { tabIndex: 0 }
-                  }}
-                />
-              </InputGroup>
-            </Grid>
-            <Grid item md={6} sm={12}>
-              <InputGroup>
-                <Field
-                  name="primaryPhoneCountryCode"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneCountryCode`}
-                  component={CustomSelect}
-                  shrink={false}
-                  disabled={!isSignatory}
-                  datalistId="countryCode"
-                  inputProps={{ tabIndex: 0 }}
-                />
-
-                <Field
-                  name="primaryPhoneNo"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneNo`}
-                  label="Landline number (optional)"
-                  placeholder="Landline number (optional)"
-                  component={Input}
-                  disabled={!isSignatory}
-                  InputProps={{
-                    inputProps: { tabIndex: 0 }
-                  }}
-                />
-              </InputGroup>
-            </Grid>
+              <Field
+                name="primaryPhoneNo"
+                path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneNo`}
+                label="Landline number (optional)"
+                placeholder="Landline number (optional)"
+                component={Input}
+                disabled={!isSignatory}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
+            </InputGroup>
           </Grid>
+        </Grid>
 
-          <SubmitButton />
-        </Form>
-      ))}
-    </Formik>
-  );
-};
+        <SubmitButton />
+      </Form>
+    ))}
+  </Formik>
+);
 
 const mapStateToProps = (state, { index }) => ({
   isSignatory: get(getSignatories(state)[index], "kycDetails.isSignatory", false)

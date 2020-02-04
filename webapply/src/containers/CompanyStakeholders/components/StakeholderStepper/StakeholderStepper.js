@@ -19,6 +19,7 @@ import {
 import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
 import { quantityErrorSelector } from "../../../../store/selectors/stakeholder";
+import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 
 const timeInterval = 5000;
 
@@ -42,7 +43,7 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
   const handleContinue = useCallback(
     event => () => {
@@ -59,10 +60,9 @@ const StakeholderStepperComponent = ({
         },
         () => {}
       );
-      handleAnalytics(event);
+      sendGoogleAnalyticsMetrics(event);
     },
     [
-      handleAnalytics,
       handleSetNextStep,
       setFillStakeholder,
       setScreeningError,
@@ -147,7 +147,8 @@ const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
   changeEditableStakeholder,
   setFillStakeholder,
-  setScreeningError
+  setScreeningError,
+  sendGoogleAnalyticsMetrics
 };
 
 export const StakeholderStepper = connect(

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -60,10 +60,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
   const applicantInfo = useSelector(getApplicantInfo);
 
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
     [`prospect.signatoryInfo[${index}].fullName`]: formatFullNameLength(
@@ -84,7 +80,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
         dateOfBirth: "",
         isPEP: ""
       }}
-      onSubmit={handleContinueGA}
+      onSubmit={handleContinue}
       validationSchema={personalInformationSchema}
       validateOnChange={false}
     >

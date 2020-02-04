@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -41,10 +41,6 @@ const ShareholdingStep = ({
   isSoleProprietor,
   index
 }) => {
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-
   const initialValues = isSoleProprietor
     ? { isShareholderACompany: true, shareHoldingPercentage: 100 }
     : { isShareholderACompany: "", shareHoldingPercentage: "" };
@@ -60,7 +56,7 @@ const ShareholdingStep = ({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={handleContinueGA}
+      onSubmit={handleContinue}
       validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
       validateOnChange={false}
     >

@@ -29,7 +29,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName }
 }) => {
   const classes = useStyles();
-  const [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics] = useStep(STEP_1);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
   const handleContinue = useCallback(
     event => () => {
@@ -39,9 +39,9 @@ export const CompanyInfoPage = ({
         },
         () => {}
       );
-      handleAnalytics(event);
+      sendGoogleAnalyticsMetrics(event);
     },
-    [handleSetNextStep, sendProspectToAPI, handleAnalytics]
+    [handleSetNextStep, sendProspectToAPI]
   );
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);

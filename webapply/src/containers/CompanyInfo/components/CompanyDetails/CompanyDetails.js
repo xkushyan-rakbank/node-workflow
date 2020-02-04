@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
@@ -42,16 +42,12 @@ const companyDetailsSchema = Yup.object({
 export const CompanyDetails = ({ handleContinue }) => {
   const classes = useStyles();
 
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={companyDetailsSchema}
       validateOnChange={false}
-      onSubmit={handleContinueGA}
+      onSubmit={handleContinue}
     >
       {() => (
         <Form>

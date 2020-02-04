@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form, FieldArray, getIn } from "formik";
@@ -44,10 +44,6 @@ const nationalitySchema = Yup.object().shape({
 export const NationalityStep = ({ index, passportDetails, handleContinue, updateProspect }) => {
   const classes = useStyles();
 
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-
   const createAddCitizenshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => () => {
     const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
     const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
@@ -71,7 +67,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
 
   return (
     <Formik
-      onSubmit={handleContinueGA}
+      onSubmit={handleContinue}
       initialValues={{
         passportDetails: passportDetails.map(item => ({ ...item, id: uniqueId() }))
       }}

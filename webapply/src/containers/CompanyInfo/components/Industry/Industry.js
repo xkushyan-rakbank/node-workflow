@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Formik, FieldArray, Form, getIn } from "formik";
 import * as Yup from "yup";
@@ -66,9 +66,6 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
       }
     });
   };
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
 
   return (
     <Formik
@@ -87,7 +84,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
       }}
       validationSchema={industrySchema}
       validateOnChange={false}
-      onSubmit={handleContinueGA}
+      onSubmit={handleContinue}
     >
       {({ values, setFieldValue }) => (
         <Form>

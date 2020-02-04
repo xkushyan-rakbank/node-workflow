@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
@@ -43,15 +43,12 @@ const changeDateProspectHandler = (_, value, path) =>
   isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
 export const LicenseInformation = ({ handleContinue }) => {
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
   return (
     <Formik
       initialValues={initialValues}
       validateOnChange={false}
       validationSchema={licenseInformationSchema}
-      onSubmit={handleContinueGA}
+      onSubmit={handleContinue}
     >
       {({ setFieldValue }) => (
         <Form>

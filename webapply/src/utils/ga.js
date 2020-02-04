@@ -1,15 +1,10 @@
 import pick from "lodash/pick";
 import { store } from "../store";
 
-// Google Analytics Layer
-// https://developers.google.com/tag-manager/devguide#events
-
 export const GA = {
   triggerEvent: (event = "") => {
     const applicationInfo = store.getState().appConfig.prospect.applicationInfo;
     const account = pick(applicationInfo, ["accountType", "islamicBanking"]);
-    // TODO make getter for productTypes
-    // TODO call correct Google Analytics function
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event, ProductName: account.accountType });
     console.log("Google Analytics", { event, ProductName: account.accountType });

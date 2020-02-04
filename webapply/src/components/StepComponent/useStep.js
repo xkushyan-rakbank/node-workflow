@@ -1,11 +1,8 @@
-import { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
+import { useState } from "react";
 
 export const useStep = (initialStep, initialAvailableSteps = [initialStep]) => {
   const [step, setStep] = useState(initialStep);
   const [availableSteps, setAvailableSteps] = useState(initialAvailableSteps);
-  const dispatch = useDispatch();
 
   const handleSetNextStep = () => {
     const nextStep = step + 1;
@@ -21,13 +18,5 @@ export const useStep = (initialStep, initialAvailableSteps = [initialStep]) => {
     }
   };
 
-  const handleAnalytics = useCallback(
-    eventName => {
-      return dispatch(sendGoogleAnalyticsMetrics(eventName));
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sendGoogleAnalyticsMetrics]
-  );
-
-  return [step, handleSetStep, availableSteps, handleSetNextStep, handleAnalytics];
+  return [step, handleSetStep, availableSteps, handleSetNextStep];
 };

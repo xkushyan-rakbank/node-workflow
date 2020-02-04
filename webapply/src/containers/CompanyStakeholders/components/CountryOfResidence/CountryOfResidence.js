@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { Form, Formik } from "formik";
@@ -31,16 +31,14 @@ const getCountryOfResidenceSchema = isSignatory =>
 
 const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
   const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
-  const handleContinueGA = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
+
   return (
     <Formik
       initialValues={{
         residenceCountry: UAE,
         eidNumber: "784"
       }}
-      onSubmit={handleContinueGA}
+      onSubmit={handleContinue}
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >
