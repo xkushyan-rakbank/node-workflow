@@ -38,5 +38,4 @@ export const stakeHoldersSteps = [
   }
 ];
 
-export const COMPANY_STAKEHOLDER_PAGE = "companyStakeholders";
-export const COMPANY_STAKEHOLDER_PATH = "stakeholdersSteps";
+export const COMPANY_STAKEHOLDER_ID = "companyStakeholder_";

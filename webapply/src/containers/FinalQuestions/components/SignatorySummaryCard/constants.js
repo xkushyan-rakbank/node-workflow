@@ -12,7 +12,7 @@ export const STEP_4 = 4;
 
 export const MAX_MOTHERS_MAIDEN_NAME_LENGTH = 30;
 
-export const SIGNATORY_PATH = "signatorySteps";
+export const COMPANY_SIGNATORY_ID = "companySignatory_";
 
 export const signatoriesSteps = [
   {

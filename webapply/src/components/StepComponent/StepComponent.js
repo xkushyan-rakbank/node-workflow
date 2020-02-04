@@ -11,7 +11,6 @@ export const StepComponent = ({
   isActiveStep,
   index,
   page,
-  path,
   step,
   handleClick,
   stepForm: Form,

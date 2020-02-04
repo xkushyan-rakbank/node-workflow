@@ -18,7 +18,7 @@ import {
 import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
 import { quantityErrorSelector } from "../../../../store/selectors/stakeholder";
-import { COMPANY_STAKEHOLDER_PAGE, COMPANY_STAKEHOLDER_PATH } from "./../../constants";
+import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useReduxStep } from "../../../../components/StepComponent/useReduxStep";
 
 const timeInterval = 5000;
@@ -45,9 +45,7 @@ const StakeholderStepperComponent = ({
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
   const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
     STEP_1,
-    COMPANY_STAKEHOLDER_PAGE,
-    COMPANY_STAKEHOLDER_PATH,
-    index
+    `${COMPANY_STAKEHOLDER_ID}${index}`
   );
 
   const handleContinue = () =>
@@ -105,7 +103,7 @@ const StakeholderStepperComponent = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={step === item.step}
-            isFilled={completedSteps.includes(item.step)}
+            isFilled={completedSteps.some(step => step.id === item.step && step.isCompleted)}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}

@@ -7,7 +7,7 @@ import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { COMPANY_PATH, FINAL_QUESTIONS_PAGE } from "./components/CompanySummaryCard/constants";
-import { signatoriesSteps, SIGNATORY_PATH } from "./components/SignatorySummaryCard/constants";
+import { signatoriesSteps } from "./components/SignatorySummaryCard/constants";
 import { finalQuestionsSteps } from "./components/CompanySummaryCard/constants";
 import { useCompletedStep } from "../../components/StepComponent/utils/useCompletedSteps";
 
@@ -20,7 +20,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const classes = useStyles();
 
   const completedCompanySteps = useCompletedStep(FINAL_QUESTIONS_PAGE, COMPANY_PATH);
-  const completedSignatoriesSteps = useCompletedStep(FINAL_QUESTIONS_PAGE, SIGNATORY_PATH);
+  const completedSignatoriesSteps = useCompletedStep(FINAL_QUESTIONS_PAGE);
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 

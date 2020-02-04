@@ -22,7 +22,7 @@ function* createNewStakeholderSaga() {
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
 
   yield put(updateStakeholdersIds(stakeholdersIds));
-  yield put(addSignatory());
+  yield put(addSignatory(state.stakeholders.stakeholdersIds.length));
   yield put(changeEditableStakeholder(editableStakeholder));
   yield put(setConfig(config));
 }

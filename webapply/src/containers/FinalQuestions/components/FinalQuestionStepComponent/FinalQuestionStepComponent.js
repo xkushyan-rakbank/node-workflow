@@ -10,15 +10,9 @@ export const FinalQuestionStepComponent = ({
   sendProspectToAPI,
   stepsArray,
   initialStep,
-  page,
-  path
+  page
 }) => {
-  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
-    initialStep,
-    page,
-    path,
-    index
-  );
+  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(initialStep, page);
 
   const handleContinue = () => sendProspectToAPI().then(() => handleSetNextStep(), () => {});
 
@@ -36,7 +30,6 @@ export const FinalQuestionStepComponent = ({
     <StepComponent
       index={index}
       page={page}
-      path={path}
       key={item.step}
       steps={stepsArray}
       step={item.step}

@@ -6,7 +6,7 @@ import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps, SIGNATORY_PATH, STEP_1 } from "./constants";
+import { signatoriesSteps, STEP_1 } from "./constants";
 import { checkIsAccountInfoTypeNumber } from "./utils";
 import { FINAL_QUESTIONS_PAGE } from "../CompanySummaryCard/constants";
 
@@ -62,7 +62,6 @@ export const SignatorySummaryCardComponent = ({
           stepsArray={signatoriesSteps}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
-          path={SIGNATORY_PATH}
           page={FINAL_QUESTIONS_PAGE}
           initialStep={STEP_1}
         />
