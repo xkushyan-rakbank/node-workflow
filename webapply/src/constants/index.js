@@ -92,8 +92,6 @@ export const SIGNING_TRANSACTIONS_TYPE = {
   OTHER: "000"
 };
 
-export const AUTHORITY_TYPE_SOLE_PROPRIETOR_ID = "SP";
-
 export const screeningStatus = [
   {
     error: "Dedupe",
