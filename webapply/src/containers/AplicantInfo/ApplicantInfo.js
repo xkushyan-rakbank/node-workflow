@@ -96,7 +96,7 @@ const ApplicantInfoPage = ({
           setIsLoading(false);
         });
     },
-    [submit]
+    [submit, history]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
