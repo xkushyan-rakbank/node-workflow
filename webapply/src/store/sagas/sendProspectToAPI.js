@@ -13,7 +13,7 @@ import {
   flush
 } from "redux-saga/effects";
 import get from "lodash/get";
-import { getIconsBySelectedAccount } from "../../utils/useIconsByAccount/getIconsBySelectedAccount";
+import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 
 import {
   SEND_PROSPECT_TO_API,
@@ -77,7 +77,7 @@ function* setScreeningResults({ preScreening }) {
       setScreeningError({
         ...screenError,
         text: currScreeningType.reasonNotes,
-        icon: getIconsBySelectedAccount(accountType, isIslamicBanking, screeningType)
+        icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType)
       })
     );
   } else {

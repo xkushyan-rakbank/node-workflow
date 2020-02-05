@@ -5,7 +5,7 @@ import {
   eliteErrorScreenGifIcon
 } from "./constants";
 
-export const getIconsBySelectedAccount = (
+export const getErrorScreensIcons = (
   accountType = "RAKStarter",
   isIslamicBanking = false,
   screeningType = "Dedupe Check"
