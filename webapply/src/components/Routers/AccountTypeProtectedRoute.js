@@ -4,24 +4,22 @@ import { useSelector } from "react-redux";
 
 import routes from "../../routes";
 import { getAccountType } from "../../store/selectors/appConfig";
+import { queryParams } from "../../constants";
 
 export const AccountTypeProtectedRoute = ({ component: Component, render, ...rest }) => {
-  const accountType = useSelector(getAccountType);
+  const searchParams = new URLSearchParams(
+    typeof window !== "undefined" ? window.location.search : ""
+  );
+  const accountType = useSelector(getAccountType) || searchParams.get(queryParams.PRODUCT);
 
   return (
     <Route
       {...rest}
-      render={props =>
-        accountType || process.env.NODE_ENV === "development" ? (
-          Component ? (
-            <Component {...props} />
-          ) : (
-            render(props)
-          )
-        ) : (
-          <Redirect to={routes.accountsComparison} />
-        )
-      }
+      render={props => {
+        if (!accountType) return <Redirect to={routes.accountsComparison} />;
+
+        return Component ? <Component {...props} /> : render(props);
+      }}
     />
   );
 };

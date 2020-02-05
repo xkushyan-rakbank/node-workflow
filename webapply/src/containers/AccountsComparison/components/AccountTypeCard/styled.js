@@ -47,7 +47,8 @@ export const useStyles = makeStyles({
     "& span": {
       display: "block",
       marginTop: 26,
-      width: "100%"
+      width: "100%",
+      whiteSpace: "pre-wrap"
     },
     "@media only screen and (max-width: 1220px)": {
       "& span": {
@@ -78,6 +79,7 @@ export const useStyles = makeStyles({
       color: "#373737",
       listStyle: "none",
       position: "relative",
+      whiteSpace: "pre-wrap",
       "& img": {
         position: "absolute",
         left: "-23px",
