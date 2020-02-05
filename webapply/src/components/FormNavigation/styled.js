@@ -184,6 +184,7 @@ export const useStyles = makeStyles({
     display: "block",
     fontWeight: "normal",
     fontFamily: "Open Sans",
+    whiteSpace: "pre-wrap",
     "@media only screen and (max-width: 1220px)": {
       paddingRight: "25px"
     },
