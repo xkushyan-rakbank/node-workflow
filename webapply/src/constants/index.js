@@ -160,4 +160,4 @@ export const queryParams = {
 };
 export const ISLAMIC_BANK = "RAKislamic";
 export const CONVENTIONAL_BANK = "Conventional";
-export const MEGABYTE_IN_BYTES = 1048576;
+export const BYTES_IN_MEGABYTE = 1048576;
