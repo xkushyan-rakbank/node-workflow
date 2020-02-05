@@ -7,7 +7,9 @@ import { getAccountType } from "../../store/selectors/appConfig";
 import { queryParams } from "../../constants";
 
 export const AccountTypeProtectedRoute = ({ component: Component, render, ...rest }) => {
-  const searchParams = new URLSearchParams(window.location.search);
+  const searchParams = new URLSearchParams(
+    typeof window !== "undefined" ? window.location.search : ""
+  );
   const accountType = useSelector(getAccountType) || searchParams.get(queryParams.PRODUCT);
 
   return (
