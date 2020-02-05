@@ -7,6 +7,7 @@ import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
+import { MEGABYTE_IN_BYTES } from "../../../constants";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -39,7 +40,6 @@ export const UploadDocuments = ({
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
   const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
-  const mbInBytes = 1048576;
 
   const fileUploadClick = event => (event.target.value = null);
 
@@ -121,7 +121,7 @@ export const UploadDocuments = ({
 
           {selectedFile && (
             <span className={classes.signatoryRights}>
-              {(selectedFile.size / mbInBytes).toFixed(1)} MB
+              {(selectedFile.size / MEGABYTE_IN_BYTES).toFixed(1)} MB
             </span>
           )}
         </p>
