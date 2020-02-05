@@ -10,15 +10,12 @@ export const getErrorScreensIcons = (
   isIslamicBanking = false,
   screeningType = "Dedupe Check"
 ) => {
-  if (isIslamicBanking && accountType !== accountNames.elite) {
+  const { elite, starter, currentAccount } = accountNames;
+  if (isIslamicBanking && accountType !== elite) {
     return islamicErrorScreenGifIcon[screeningType];
   }
 
-  if (
-    accountType === accountNames.starter ||
-    accountType === accountNames.currentAccount ||
-    accountType === ""
-  ) {
+  if ([starter, currentAccount, ""].includes(accountType)) {
     return regularErrorScreenGifIcon[screeningType];
   }
 
