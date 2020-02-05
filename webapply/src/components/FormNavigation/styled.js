@@ -181,6 +181,7 @@ export const useStyles = makeStyles({
     lineHeight: "1.5",
     color: "#fff",
     marginBottom: 50,
+    maxWidth: 289,
     display: "block",
     fontWeight: "normal",
     fontFamily: "Open Sans",
