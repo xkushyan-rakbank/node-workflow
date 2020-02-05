@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
+import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper/VerticalPaginationWrapper";
 import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher/IslamicBankingSwitcher";
 import { AccountBenefits } from "./AccountBenefits";
 import { AccountingSoftware } from "./AccountingSoftware";

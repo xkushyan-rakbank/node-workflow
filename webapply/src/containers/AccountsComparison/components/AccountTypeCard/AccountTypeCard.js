@@ -10,7 +10,6 @@ export const AccountTypeCardComponent = ({
   buttonText,
   handleClick,
   handleClickMobile,
-  scrollToIndex,
   accountType
 }) => {
   const classes = useStyles();
@@ -39,8 +38,7 @@ export const AccountTypeCardComponent = ({
 
       <div className={classes.buttonWrapper}>
         <ContinueButton
-          handleClick={() => handleClick({ scrollToIndex, accountType })}
-          name={scrollToIndex}
+          handleClick={() => handleClick(accountType)}
           label={buttonText}
           classes={{ buttonStyle: classes.continueButtonRoot }}
           className="hide-on-mobile"
@@ -48,7 +46,6 @@ export const AccountTypeCardComponent = ({
         <div className="show-on-mobile">
           <ContinueButton
             handleClick={handleClickMobile}
-            name={scrollToIndex}
             label={buttonText}
             classes={{ buttonStyle: classes.continueButtonRoot }}
           />

@@ -1,7 +1,7 @@
 import React from "react";
 import { AccountTypeCard } from "../AccountTypeCard";
 import { useStyles } from "./styled";
-import { accountTypesDescription, SECTION_INDEX } from "./constants";
+import { accountTypesDescription } from "./constants";
 
 export const AccountCardComponent = ({ handleClick, handleClickMobile }) => {
   const classes = useStyles();
@@ -15,7 +15,6 @@ export const AccountCardComponent = ({ handleClick, handleClickMobile }) => {
               title={title}
               description={description}
               buttonText={buttonText}
-              scrollToIndex={SECTION_INDEX}
               accountType={name}
               handleClick={handleClick}
               handleClickMobile={handleClickMobile}
