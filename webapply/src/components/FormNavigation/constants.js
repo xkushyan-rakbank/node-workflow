@@ -3,8 +3,8 @@ import { accountNames } from "../../constants";
 export const accountsInfo = {
   [accountNames.starter]: {
     title: "RAKstarter account",
-    subtitle: "A zero balance account, for startups & entrepreneurs.",
-    islamicSubtitle: "A zero balance account, for startups & entrepreneurs."
+    subtitle: "A zero balance account, for startups \n& entrepreneurs.",
+    islamicSubtitle: "A zero balance account, for startups \n& entrepreneurs."
   },
   [accountNames.currentAccount]: {
     title: "Business Current Account",
