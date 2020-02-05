@@ -119,7 +119,9 @@ export const UploadDocuments = ({
             : document.documentTitle}
 
           {selectedFile && (
-            <span className={classes.signatoryRights}>{selectedFile.size} Bytes</span>
+            <span className={classes.signatoryRights}>
+              {(selectedFile.size / 1048576).toFixed(1)} MB
+            </span>
           )}
         </p>
 
