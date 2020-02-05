@@ -27,8 +27,8 @@ export const sendProspectToAPISuccess = prospectCopy => {
   return { type: SEND_PROSPECT_TO_API_SUCCESS, prospectCopy };
 };
 
-export const sendProspectToAPIFail = () => {
-  return { type: SEND_PROSPECT_TO_API_FAIL };
+export const sendProspectToAPIFail = error => {
+  return { type: SEND_PROSPECT_TO_API_FAIL, error };
 };
 
 export const resetFormStep = ({ resetStep }) => {

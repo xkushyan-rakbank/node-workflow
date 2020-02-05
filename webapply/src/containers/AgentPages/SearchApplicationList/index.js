@@ -47,8 +47,10 @@ export const SearchApplicationList = ({ currentApplications }) => {
             </div>
           </div>
           <div>
-            {application.status && (
+            {application.status ? (
               <div className={classes.status}>{application.status.statusNotes}</div>
+            ) : (
+              <div className={classes.status}>pending</div>
             )}
           </div>
         </Link>

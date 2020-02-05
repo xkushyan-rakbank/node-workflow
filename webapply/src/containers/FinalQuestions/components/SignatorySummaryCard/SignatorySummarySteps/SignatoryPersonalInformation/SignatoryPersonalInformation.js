@@ -11,7 +11,7 @@ import {
   SelectAutocomplete
 } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { MAX_MOTHERS_MAIDEN_NAME_LENGTH } from "../../constants";
+import { MAX_MOTHERS_MAIDEN_NAME_LENGTH, MAX_LENGTH_MARITAL_OTHERS_STATUS } from "../../constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 import {
   getInvalidMessage,
@@ -84,7 +84,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                     placeholder="Other(Specify)"
                     component={Input}
                     InputProps={{
-                      inputProps: { tabIndex: 0 }
+                      inputProps: { maxLength: MAX_LENGTH_MARITAL_OTHERS_STATUS, tabIndex: 0 }
                     }}
                   />
                 </Grid>
