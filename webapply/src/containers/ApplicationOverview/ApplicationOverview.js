@@ -3,13 +3,13 @@ import React from "react";
 import { TwoSteps } from "./components/TwoSteps";
 
 import { PreliminaryInformation } from "./components/PreliminaryInformation";
-import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper/VerticalPaginationWrapper";
+import { VerticalPagination } from "../../components/VerticalPagination";
 
 export const ApplicationOverview = () => {
   return (
-    <VerticalPaginationWrapper>
+    <VerticalPagination>
       <TwoSteps withHeader />
       <PreliminaryInformation />
-    </VerticalPaginationWrapper>
+    </VerticalPagination>
   );
 };

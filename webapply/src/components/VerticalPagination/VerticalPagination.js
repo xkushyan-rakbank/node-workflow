@@ -7,17 +7,21 @@ import { useStyles, transitionDuration } from "./styled";
 
 const PreventOverscrolling = createGlobalStyle`
 body {
-  overflow: hidden
+  @media (min-width: 956px) and (min-height: 741px) {
+      overflow: hidden;
+    }
 }`;
 
-const VerticalPaginationWrapper = ({
+export const VerticalPaginationContext = React.createContext({});
+
+export const VerticalPaginationComponent = ({
   children,
   showVideoOnMobile = false,
   scrollToSecondSection,
   video
 }) => {
   const classes = useStyles();
-  const [currentElement, setCurrentElement] = useState(0);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
   const scrollings = useRef([]);
@@ -26,7 +30,7 @@ const VerticalPaginationWrapper = ({
 
   const handleWheel = e => {
     const offset = e.deltaY < 0 ? -1 : 1;
-    const nextSectionIndex = currentElement + offset;
+    const nextSectionIndex = currentSectionIndex + offset;
 
     if (nextSectionIndex < 0 || nextSectionIndex > children.length - 1) {
       return;
@@ -71,7 +75,7 @@ const VerticalPaginationWrapper = ({
       isCanScroll.current = true;
     }, transitionDuration * 2);
 
-    setCurrentElement(sectionIndex);
+    setCurrentSectionIndex(sectionIndex);
   };
 
   const handleClick = e => {
@@ -79,13 +83,18 @@ const VerticalPaginationWrapper = ({
   };
 
   return (
-    <>
+    <VerticalPaginationContext.Provider
+      value={{
+        currentSectionIndex,
+        scrollToSection
+      }}
+    >
       <PreventOverscrolling />
       <div className={classes.paginationWrapper} onWheel={handleWheel}>
         {poster && (
           <VideoBackground
             video={video}
-            nextElementPosition={currentElement}
+            nextElementPosition={currentSectionIndex}
             videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
             scrollToSection={scrollToSection}
             handleClick={handleClick}
@@ -94,7 +103,7 @@ const VerticalPaginationWrapper = ({
         )}
         <div
           className={classes.paginationContent}
-          style={{ transform: `translateY(-${100 * currentElement}vh)` }}
+          style={{ transform: `translateY(-${100 * currentSectionIndex}vh)` }}
         >
           {React.Children.map(children, child => (
             <div
@@ -107,19 +116,19 @@ const VerticalPaginationWrapper = ({
           ))}
         </div>
       </div>
-      {(poster && currentElement === 0) || (
+      {(poster && currentSectionIndex === 0) || (
         <div className={classes.paginationDots}>
           {children.map((_, i) => (
             <button
               key={i}
-              className={cx(classes.paginationDot, { [classes.current]: currentElement === i })}
+              className={cx(classes.paginationDot, {
+                [classes.current]: currentSectionIndex === i
+              })}
               onClick={() => scrollToSection(i)}
             />
           ))}
         </div>
       )}
-    </>
+    </VerticalPaginationContext.Provider>
   );
 };
-
-export default VerticalPaginationWrapper;

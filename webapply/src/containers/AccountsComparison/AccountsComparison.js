@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper/VerticalPaginationWrapper";
+import { VerticalPagination } from "../../components/VerticalPagination";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
@@ -25,13 +25,13 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
     tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const scrollToSection = accountType => {
+  const setAccountType = accountType => {
     setSelectedAccount(accountType);
   };
 
   return (
     <div className={classes.container}>
-      <VerticalPaginationWrapper
+      <VerticalPagination
         video={getVideoByAccountType()}
         scrollToSecondSection={scrollToSecondSection}
         showVideoOnMobile
@@ -42,7 +42,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
             title="Business accounts for every business stage"
             info="Available in both conventional and islamic variants"
           />
-          <AccountCard handleClick={scrollToSection} handleClickMobile={scrollToTable} />
+          <AccountCard setAccountType={setAccountType} handleClickMobile={scrollToTable} />
           <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
         </div>
 
@@ -69,7 +69,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
             }
           />
         </div>
-      </VerticalPaginationWrapper>
+      </VerticalPagination>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper/VerticalPaginationWrapper";
+import { VerticalPagination } from "../../components/VerticalPagination";
 import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher/IslamicBankingSwitcher";
 import { AccountBenefits } from "./AccountBenefits";
 import { AccountingSoftware } from "./AccountingSoftware";
@@ -20,11 +20,11 @@ export const DetailedAccount = () => {
       <div className="hide-on-mobile">
         <IslamicBankingSwitcher />
       </div>
-      <VerticalPaginationWrapper video={getVideoByAccountType(accountType, isIslamicBaning)}>
+      <VerticalPagination video={getVideoByAccountType(accountType, isIslamicBaning)}>
         <div className={classes.videoWrapper} />
         <AccountBenefits />
         <AccountingSoftware />
-      </VerticalPaginationWrapper>
+      </VerticalPagination>
     </>
   );
 };
