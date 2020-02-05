@@ -158,7 +158,7 @@ export const useStyles = makeStyles({
     lineHeight: "1.17",
     fontWeight: 600,
     fontFamily: "Open Sans",
-    marginBottom: "50px",
+    marginBottom: "20px",
     "@media only screen and (max-width: 1300px)": {
       paddingRight: "16px",
       fontSize: "40px"
@@ -180,7 +180,7 @@ export const useStyles = makeStyles({
     fontSize: "16px",
     lineHeight: "1.5",
     color: "#fff",
-    marginBottom: 50,
+    marginBottom: 60,
     display: "block",
     fontWeight: "normal",
     fontFamily: "Open Sans",
