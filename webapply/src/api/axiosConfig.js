@@ -115,7 +115,9 @@ instance.interceptors.response.use(
       }
     } else {
       log(jsonData);
-      NotificationsManager.add && NotificationsManager.add({ message: jsonData.slice(0, 100) });
+      console.log("jsonData.debugMessage");
+      console.log(jsonData);
+      NotificationsManager.add && NotificationsManager.add();
     }
 
     return Promise.reject(error);

@@ -125,7 +125,7 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     }
   } catch (error) {
     log({ error });
-    yield put(sendProspectToAPIFail());
+    yield put(sendProspectToAPIFail(error));
   }
 }
 

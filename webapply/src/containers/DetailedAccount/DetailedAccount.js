@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 import { useSelector } from "react-redux";
 
 import { VerticalPagination } from "../../components/VerticalPagination";
@@ -21,7 +22,7 @@ export const DetailedAccount = () => {
         <IslamicBankingSwitcher />
       </div>
       <VerticalPagination video={getVideoByAccountType(accountType, isIslamicBaning)}>
-        <div className={classes.videoWrapper} />
+        <div className={cx("hide-on-mobile", classes.videoWrapper)} />
         <AccountBenefits />
         <AccountingSoftware />
       </VerticalPagination>

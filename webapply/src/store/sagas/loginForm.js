@@ -16,7 +16,7 @@ export function* loginFormSaga({ payload }) {
     yield put(loginInfoFormSuccess(response.data));
   } catch (error) {
     log(error);
-    yield put(loginInfoFormError());
+    yield put(loginInfoFormError(error));
   }
 }
 
