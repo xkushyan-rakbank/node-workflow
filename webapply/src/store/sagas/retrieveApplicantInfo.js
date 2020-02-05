@@ -32,12 +32,6 @@ function* getProspectIdInfo({ payload }) {
     const config = { prospect: response.data };
 
     yield put(setConfig(config));
-  } catch (error) {
-    log(error);
-  }
-}
-function* getScreenByViewId() {
-  try {
     yield put(displayScreenBasedOnViewId());
   } catch (error) {
     log(error);
@@ -47,5 +41,4 @@ function* getScreenByViewId() {
 export default function* retrieveApplicantSaga() {
   yield all([takeLatest(actions.RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga)]);
   yield all([takeLatest(actions.GET_PROSPECT_INFO, getProspectIdInfo)]);
-  yield all([takeLatest(actions.GET_SCREEN_BY_VIEW_ID, getScreenByViewId)]);
 }

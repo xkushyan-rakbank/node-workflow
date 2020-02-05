@@ -18,7 +18,7 @@ export const SearchedAppInfoComponent = ({
   updateProspectId,
   retrieveDocDetails,
   getProspectInfo,
-  getScreenByViewID
+  displayScreenBasedOnViewId
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
@@ -39,8 +39,8 @@ export const SearchedAppInfoComponent = ({
   }, [setIsDisplayConfirmDialog]);
 
   const confirmHandler = useCallback(() => {
-    getScreenByViewID();
-  }, [getScreenByViewID]);
+    displayScreenBasedOnViewId();
+  }, [displayScreenBasedOnViewId]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);

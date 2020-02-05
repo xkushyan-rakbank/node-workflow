@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
-import { updateProspectId } from "../../../store/actions/appConfig";
-import { getProspectInfo, getScreenByViewID } from "../../../store/actions/retrieveApplicantInfo";
+import { updateProspectId, displayScreenBasedOnViewId } from "../../../store/actions/appConfig";
+import { getProspectInfo } from "../../../store/actions/retrieveApplicantInfo";
 import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
 import { getSearchResult } from "../../../store/selectors/searchProspect";
 import { SearchedAppInfoComponent } from "./SearchedAppInfo";
@@ -14,7 +14,7 @@ const mapDispatchToProps = {
   retrieveDocDetails,
   getProspectInfo,
   updateProspectId,
-  getScreenByViewID
+  displayScreenBasedOnViewId
 };
 
 export default connect(
