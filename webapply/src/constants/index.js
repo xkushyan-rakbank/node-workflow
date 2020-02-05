@@ -144,11 +144,23 @@ export const stakeholderScreeningStatus = {
   error: "Big Company",
   icon: callbackRegular,
   text: (
-    <React.Fragment>
+    <>
       Wow, you’re a big company!
       <br /> Let us save you time and have someone call you within 1 day to meet you in person and
       help you out.
-    </React.Fragment>
+    </>
+  )
+};
+
+export const screeningStatusNotRegistered = {
+  error: "Not Registered In UAE",
+  icon: callbackRegular,
+  text: (
+    <>
+      It looks like your company is not registered in the UAE. <br />
+      But no worries! Let’s have someone call you back within X days to <br />
+      meet you in person and help you out.
+    </>
   )
 };
 
