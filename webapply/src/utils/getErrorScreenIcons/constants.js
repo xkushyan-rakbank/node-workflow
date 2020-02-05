@@ -5,7 +5,7 @@ import declinedElite from "../../assets/gif/declined_elite.gif";
 import declinedRegular from "../../assets/gif/declined_regular.gif";
 import declinedIslamic from "../../assets/gif/declined_islamic.gif";
 
-const ERRORS_TYPE = {
+export const ERRORS_TYPE = {
   DEDUPE: "Dedupe Check",
   VIRTUAL_CURRENCIES: "Virtual Currency Check",
   NOT_ELIGIBLE: "RAKStarter Account Check",
