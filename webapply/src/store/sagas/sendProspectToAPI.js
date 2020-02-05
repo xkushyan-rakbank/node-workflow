@@ -13,6 +13,7 @@ import {
   flush
 } from "redux-saga/effects";
 import get from "lodash/get";
+import { getIconsBySelectedAccount } from "../../utils/useIconsByAccount/getIconsBySelectedAccount";
 
 import {
   SEND_PROSPECT_TO_API,
@@ -25,7 +26,13 @@ import {
   setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
-import { getProspect, getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
+import {
+  getProspect,
+  getProspectId,
+  getAuthorizationHeader,
+  getAccountType,
+  getIsIslamicBanking
+} from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
@@ -59,9 +66,14 @@ function* setScreeningResults({ preScreening }) {
   const screenError = screeningStatus.find(
     ({ screeningType }) => screeningType === (currScreeningType || {}).screeningType
   );
+  const state = yield select();
+  const accountType = getAccountType(state);
+  const isIslamicBanking = getIsIslamicBanking(state);
+  const { screeningType } = screenError;
 
   if (screenError) {
     screenError.text = currScreeningType.reasonNotes;
+    screenError.icon = getIconsBySelectedAccount(accountType, isIslamicBanking, screeningType);
     yield put(setScreeningError(screenError));
   } else {
     yield put(setScreeningError(screeningStatusDefault));

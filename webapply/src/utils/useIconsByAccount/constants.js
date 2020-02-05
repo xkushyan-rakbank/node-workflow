@@ -18,6 +18,8 @@ import overviewConventoinal from "../../assets/gif/overview_reg.gif";
 import paperPlaneRegular from "../../assets/gif/paperplane_regular.gif";
 import submittedRegular from "../../assets/gif/submitted_regular.gif";
 import successRegular from "../../assets/gif/submitted_regular.gif";
+import callbackRegular from "../../assets/gif/callback_regular.gif";
+import declinedRegular from "../../assets/gif/declined_regular.gif";
 
 /* RAKIslamic */
 import { ReactComponent as balanceIslamic } from "../../assets/icons/islamic/balance.svg";
@@ -44,6 +46,8 @@ import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import paperPlaneIslamic from "../../assets/gif/paperplane_islamic.gif";
 import submittedIslamic from "../../assets/gif/submitted_islamic.gif";
 import successIslamic from "../../assets/gif/success_islamic.gif";
+import callbackIslamic from "../../assets/gif/callback_islamic.gif";
+import declinedIslamic from "../../assets/gif/declined_islamic.gif";
 
 /* RAKElite */
 import { ReactComponent as processingEliteIc } from "../../assets/icons/elite/processing.svg";
@@ -67,6 +71,8 @@ import overviewElite from "../../assets/gif/overview_elite.gif";
 import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";
 import submittedElite from "../../assets/gif/submitted_elite.gif";
 import successElite from "../../assets/gif/success_elite.gif";
+import callbackElite from "../../assets/gif/callback_elite.gif";
+import declinedElite from "../../assets/gif/declined_elite.gif";
 
 export const conventionalIconsSet = {
   availability: availabilityConventional,
@@ -140,4 +146,40 @@ export const eliteIconsSet = {
   submitted: submittedElite,
   success: successElite,
   bankingClock: bankingClockElite
+};
+const ERRORS_TYPE = {
+  DEDUPE: "Dedupe Check",
+  VIRTUAL_CURRENCIES: "Virtual Currency Check",
+  NOT_ELIGIBLE: "RAKStarter Account Check",
+  NOT_REGISTERED: "CountryOfIncorporation Check",
+  BIG_COMPANY: "ShareHolderCount Check",
+  BLACKLIST: "Blacklist Check",
+  COMPANY_AS_STAKEHOLDER: "IsShareHolderACompany Check"
+};
+export const regularErrorScreenGifIcon = {
+  [ERRORS_TYPE.DEDUPE]: callbackRegular,
+  [ERRORS_TYPE.VIRTUAL_CURRENCIES]: declinedRegular,
+  [ERRORS_TYPE.NOT_ELIGIBLE]: callbackRegular,
+  [ERRORS_TYPE.NOT_REGISTERED]: callbackRegular,
+  [ERRORS_TYPE.BIG_COMPANY]: callbackRegular,
+  [ERRORS_TYPE.BLACKLIST]: declinedIslamic,
+  [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackRegular
+};
+export const islamicErrorScreenGifIcon = {
+  [ERRORS_TYPE.DEDUPE]: callbackIslamic,
+  [ERRORS_TYPE.VIRTUAL_CURRENCIES]: declinedIslamic,
+  [ERRORS_TYPE.NOT_ELIGIBLE]: callbackIslamic,
+  [ERRORS_TYPE.NOT_REGISTERED]: callbackIslamic,
+  [ERRORS_TYPE.BIG_COMPANY]: callbackIslamic,
+  [ERRORS_TYPE.BLACKLIST]: declinedIslamic,
+  [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackIslamic
+};
+export const eliteErrorScreenGifIcon = {
+  [ERRORS_TYPE.DEDUPE]: callbackElite,
+  [ERRORS_TYPE.VIRTUAL_CURRENCIES]: declinedElite,
+  [ERRORS_TYPE.NOT_ELIGIBLE]: callbackElite,
+  [ERRORS_TYPE.NOT_REGISTERED]: callbackElite,
+  [ERRORS_TYPE.BIG_COMPANY]: callbackElite,
+  [ERRORS_TYPE.BLACKLIST]: declinedElite,
+  [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackElite
 };
