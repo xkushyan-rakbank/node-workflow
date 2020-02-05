@@ -17,7 +17,7 @@ import {
   getApplicantInfo,
   getOrganizationInfo,
   getSendProspectToAPIInfo,
-  getIsRegisteredStatus
+  getIsRegisteredInUAE
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
@@ -30,7 +30,7 @@ export const CompanyInfoPage = ({
   fullName,
   organizationInfo: { companyName },
   setScreeningError,
-  isNotRegisteredInUAE
+  isRegisteredInUAE
 }) => {
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
@@ -38,8 +38,8 @@ export const CompanyInfoPage = ({
   const handleContinue = () =>
     sendProspectToAPI().then(
       () => {
-        if (!isNotRegisteredInUAE) {
-          setScreeningError(screeningStatusNotRegistered);
+        if (!isRegisteredInUAE) {
+          return setScreeningError(screeningStatusNotRegistered);
         }
         handleSetNextStep();
       },
@@ -98,7 +98,7 @@ const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
   fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state),
-  isNotRegisteredInUAE: getIsRegisteredStatus(state)
+  isRegisteredInUAE: getIsRegisteredInUAE(state)
 });
 
 const mapDispatchToProps = {
