@@ -23,7 +23,6 @@ export const UploadDocuments = ({
   document,
   type: docOwner,
   docUpload,
-  icon,
   index,
   stakeholderIndex,
   uploadErrorMessage,
@@ -115,7 +114,7 @@ export const UploadDocuments = ({
         <p className={classes.uploadedFileName}>
           {isUploading
             ? `Uploading ${document.documentTitle}`
-            : isUploaded
+            : isUploaded && selectedFile
             ? `${selectedFile.name}`
             : document.documentTitle}
 
