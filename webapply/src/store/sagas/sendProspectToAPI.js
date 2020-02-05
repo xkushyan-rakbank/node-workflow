@@ -66,15 +66,20 @@ function* setScreeningResults({ preScreening }) {
   const screenError = screeningStatus.find(
     ({ screeningType }) => screeningType === (currScreeningType || {}).screeningType
   );
-  const state = yield select();
-  const accountType = getAccountType(state);
-  const isIslamicBanking = getIsIslamicBanking(state);
-  const { screeningType } = screenError;
 
   if (screenError) {
-    screenError.text = currScreeningType.reasonNotes;
-    screenError.icon = getIconsBySelectedAccount(accountType, isIslamicBanking, screeningType);
-    yield put(setScreeningError(screenError));
+    const state = yield select();
+    const accountType = getAccountType(state);
+    const isIslamicBanking = getIsIslamicBanking(state);
+    const { screeningType } = screenError;
+
+    yield put(
+      setScreeningError({
+        ...screenError,
+        text: currScreeningType.reasonNotes,
+        icon: getIconsBySelectedAccount(accountType, isIslamicBanking, screeningType)
+      })
+    );
   } else {
     yield put(setScreeningError(screeningStatusDefault));
   }
