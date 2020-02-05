@@ -152,6 +152,18 @@ export const stakeholderScreeningStatus = {
   )
 };
 
+export const screeningStatusNotRegistered = {
+  error: "Not Registered In UAE",
+  icon: callbackRegular,
+  text: (
+    <>
+      It looks like your company is not registered in the UAE. <br />
+      But no worries! Let’s have someone call you back within X days to <br />
+      meet you in person and help you out.
+    </>
+  )
+};
+
 export const DATE_FORMAT = "yyyy-MM-dd";
 
 export const queryParams = {

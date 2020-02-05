@@ -52,6 +52,11 @@ export const getReCaptchaSiteKey = state => state.appConfig.reCaptchaSiteKey;
 
 export const getServicePricingGuideUrl = state => state.appConfig.servicePricingGuideUrl;
 
+const UAE = "AE";
+export const getIsRegisteredStatus = state =>
+  getProspect(state).organizationInfo &&
+  getProspect(state).organizationInfo.countryOfIncorporation === UAE;
+
 export const getUrlsReadMore = state => ({
   rakValuePlusReadMoreUrl: state.appConfig.rakValuePlusReadMoreUrl,
   rakValueMaxReadMoreUrl: state.appConfig.rakValueMaxReadMoreUrl,

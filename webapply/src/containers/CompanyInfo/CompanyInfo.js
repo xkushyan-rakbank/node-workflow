@@ -7,12 +7,17 @@ import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
-import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+import {
+  sendProspectToAPIPromisify,
+  setScreeningError
+} from "../../store/actions/sendProspectToAPI";
+import { screeningStatusNotRegistered } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
   getOrganizationInfo,
-  getSendProspectToAPIInfo
+  getSendProspectToAPIInfo,
+  getIsRegisteredStatus
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
@@ -23,7 +28,9 @@ export const CompanyInfoPage = ({
   history,
   loading,
   fullName,
-  organizationInfo: { companyName }
+  organizationInfo: { companyName },
+  setScreeningError,
+  isNotRegisteredInUAE
 }) => {
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
@@ -31,6 +38,9 @@ export const CompanyInfoPage = ({
   const handleContinue = () =>
     sendProspectToAPI().then(
       () => {
+        if (!isNotRegisteredInUAE) {
+          setScreeningError(screeningStatusNotRegistered);
+        }
         handleSetNextStep();
       },
       () => {}
@@ -87,11 +97,13 @@ export const CompanyInfoPage = ({
 const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
   fullName: getApplicantInfo(state).fullName,
-  organizationInfo: getOrganizationInfo(state)
+  organizationInfo: getOrganizationInfo(state),
+  isNotRegisteredInUAE: getIsRegisteredStatus(state)
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI: sendProspectToAPIPromisify
+  sendProspectToAPI: sendProspectToAPIPromisify,
+  setScreeningError
 };
 
 export const CompanyInfo = connect(
