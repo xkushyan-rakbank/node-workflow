@@ -39,6 +39,7 @@ export const UploadDocuments = ({
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
   const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
+  const mbInBytes = 1048576;
 
   const fileUploadClick = event => (event.target.value = null);
 
@@ -120,7 +121,7 @@ export const UploadDocuments = ({
 
           {selectedFile && (
             <span className={classes.signatoryRights}>
-              {(selectedFile.size / 1048576).toFixed(1)} MB
+              {(selectedFile.size / mbInBytes).toFixed(1)} MB
             </span>
           )}
         </p>
