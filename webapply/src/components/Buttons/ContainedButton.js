@@ -17,7 +17,7 @@ const styles = {
     borderRadius: "28px",
     outline: "none ",
     fontSize: "18px",
-    textTransform: "none !important",
+    textTransform: "none",
     padding: "0 32px",
     backgroundColor: "#000",
     "& svg": {
@@ -34,7 +34,8 @@ const styles = {
     lineHeight: "24px",
     textAlign: "left",
     color: "#ffffff",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    textTransform: "none"
   }
 };
 
