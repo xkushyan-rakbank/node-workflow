@@ -37,7 +37,8 @@ const StakeholderStepperComponent = ({
   changeEditableStakeholder,
   setFillStakeholder,
   isTooManyStakeholders,
-  setScreeningError
+  setScreeningError,
+  showAddButton
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
@@ -53,6 +54,7 @@ const StakeholderStepperComponent = ({
 
         if (step === STEP_6) {
           setFillStakeholder(index, true);
+          showAddButton();
         }
         handleSetNextStep();
       },
@@ -107,7 +109,7 @@ const StakeholderStepperComponent = ({
         ))}
       </div>
 
-      {!isNewStakeholder && deleteStakeholder && (
+      {deleteStakeholder && (
         <div className={classes.footerPart}>
           <LinkButton
             title={

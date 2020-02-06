@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
@@ -43,10 +43,24 @@ const CompanyStakeholdersComponent = ({
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [isShowingAddButton, setIsShowingAddButton] = useState(
+    stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
+  );
   const [isNewStakeholder, setIsNewStakeholder] = useState(false);
 
+  // Used to show add button after add stakeholder(if it is not limit)
+  const handleShowAddButton = useCallback(() => {
+    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
+  }, [setIsShowingAddButton, stakeholders]);
+
+  useEffect(() => {
+    if (!stakeholders.length) {
+      setIsNewStakeholder(true);
+      createNewStakeholder();
+    }
+  }, [setIsNewStakeholder, createNewStakeholder, stakeholders.length, isShowingAddButton]);
+
   const isLowPercentage = percentage < 100;
-  const isShowingAddButton = stakeholders.length < MAX_STAKEHOLDERS_LENGTH;
   const isDisableNextStep =
     stakeholders.length < 1 ||
     !stakeholdersIds.every(stakeholder => stakeholder.done) ||
@@ -55,7 +69,14 @@ const CompanyStakeholdersComponent = ({
 
   const goToFinalQuestions = () => history.push(routes.finalQuestions);
 
-  const handleDeleteStakeholder = useCallback(id => deleteHandler(id), [deleteHandler]);
+  const handleDeleteStakeholder = useCallback(
+    id => {
+      setIsShowingAddButton(stakeholders.length !== 1);
+      changeEditableStakeholder("");
+      deleteHandler(id);
+    },
+    [stakeholders.length, deleteHandler, setIsShowingAddButton, changeEditableStakeholder]
+  );
 
   const editStakeholderHandler = useCallback(
     index => {
@@ -69,6 +90,7 @@ const CompanyStakeholdersComponent = ({
   );
 
   const addNewStakeholder = () => {
+    setIsShowingAddButton(false);
     if (editableStakeholder) {
       setOpen(true);
     } else {
@@ -76,7 +98,6 @@ const CompanyStakeholdersComponent = ({
       createNewStakeholder();
     }
   };
-
   const handleClose = () => setOpen(false);
 
   const handleConfirm = () => {
@@ -111,6 +132,7 @@ const CompanyStakeholdersComponent = ({
         {stakeholders.map((item, index) => {
           return editableStakeholder === index ? (
             <StakeholderStepper
+              showAddButton={handleShowAddButton}
               {...item}
               key={item.id}
               index={editableStakeholder}
@@ -123,6 +145,7 @@ const CompanyStakeholdersComponent = ({
               {...item}
               key={item.id}
               index={index}
+              editDisabled={editableStakeholder}
               changeEditableStep={editStakeholderHandler}
               datalist={datalist}
             />
@@ -139,14 +162,12 @@ const CompanyStakeholdersComponent = ({
           <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
       )}
-
-      {!!stakeholders.length && isLowPercentage && (
+      {stakeholders.length && isLowPercentage ? (
         <ErrorMessage
           error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
-  or edit the shareholding % for the added stakeholders.`}
+          or edit the shareholding % for the added stakeholders.`}
         />
-      )}
-
+      ) : null}
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
 

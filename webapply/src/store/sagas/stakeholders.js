@@ -31,15 +31,14 @@ function* deleteStakeholderSaga(action) {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
   const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
-  const stakeholderIndex = stakeholdersIds.indexOf(action.stakeholderId);
   const removedIndex = stakeholdersIds.indexOf(
     stakeholdersIds.find(item => item.id === action.stakeholderId)
   );
 
-  config.prospect.signatoryInfo.splice(stakeholderIndex, 1);
+  config.prospect.signatoryInfo.splice(removedIndex, 1);
   yield put(setConfig(config));
 
-  stakeholdersIds.splice(stakeholderIndex, 1);
+  stakeholdersIds.splice(removedIndex, 1);
   yield put(updateStakeholdersIds(stakeholdersIds));
   yield put(removeSignatory(removedIndex));
   yield put(changeEditableStakeholder());
