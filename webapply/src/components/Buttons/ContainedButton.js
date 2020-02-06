@@ -51,10 +51,9 @@ const BaseButton = ({
   withRightArrow,
   classes,
   name,
-  style
+  ...props
 }) => (
   <Button
-    style={style}
     variant={variant}
     component={component}
     color={color}
@@ -66,6 +65,7 @@ const BaseButton = ({
     disabled={disabled}
     onClick={handleClick}
     name={name}
+    {...props}
   >
     {label}
     {withRightArrow && <ArrowIcon alt="rightArrowWhite" />}
