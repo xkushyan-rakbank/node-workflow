@@ -21,10 +21,10 @@ export const setStepIsActive = (flowId, stepIndex) => {
   return { type: SET_STEP_IS_ACTIVE, payload: { flowId, stepIndex } };
 };
 
-export const addSignatory = index => {
-  return { type: ADD_SIGNATORY, index };
+export const addSignatory = signatoryId => {
+  return { type: ADD_SIGNATORY, signatoryId };
 };
 
-export const removeSignatory = index => {
-  return { type: REMOVE_SIGNATORY, index };
+export const removeSignatory = signatoryId => {
+  return { type: REMOVE_SIGNATORY, signatoryId };
 };

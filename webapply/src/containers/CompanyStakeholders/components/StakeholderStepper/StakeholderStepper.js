@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import get from "lodash/get";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
@@ -17,7 +18,7 @@ import {
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
-import { quantityErrorSelector } from "../../../../store/selectors/stakeholder";
+import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useReduxStep } from "../../../../hooks/useReduxStep";
 
@@ -43,10 +44,11 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
-    STEP_1,
-    `${COMPANY_STAKEHOLDER_ID}${index}`
+  const stakeholdersIds = useSelector(getStakeholdersIds);
+  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+    `${COMPANY_STAKEHOLDER_ID}${stakeholdersIds[index].id}`
   );
+  const activeStep = get(availableSteps.find(step => step.isActive), "id", null);
 
   const handleContinue = () =>
     sendProspectToAPI().then(
@@ -55,24 +57,24 @@ const StakeholderStepperComponent = ({
           setScreeningError(stakeholderScreeningStatus);
         }
 
-        if (step === STEP_6) {
+        if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
         }
-        handleSetNextStep();
+        handleSetNextStep(activeStep, activeStep !== stakeHoldersSteps.length);
       },
       () => {}
     );
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
-    if (step <= stakeHoldersSteps.length) return;
+    if (activeStep <= stakeHoldersSteps.length) return;
     changeFinalScreenDisplay(true);
     const interval = setInterval(() => {
       changeFinalScreenDisplay(false);
       changeEditableStakeholder();
     }, timeInterval);
     return () => clearInterval(interval);
-  }, [step, changeEditableStakeholder]);
+  }, [activeStep, changeEditableStakeholder]);
 
   const handleDeleteStakeholder = () => {
     setIsDisplayConfirmation(false);
@@ -88,7 +90,7 @@ const StakeholderStepperComponent = ({
 
   return (
     <CompanyStakeholderCard
-      isStatusShown={step !== STEP_1}
+      isStatusShown={activeStep !== STEP_1}
       firstName={firstName}
       lastName={lastName}
       middleName={middleName}
@@ -102,8 +104,8 @@ const StakeholderStepperComponent = ({
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}
-            isActiveStep={step === item.step}
-            isFilled={completedSteps.some(step => step.id === item.step && step.isCompleted)}
+            isActiveStep={activeStep === item.step}
+            isFilled={availableSteps.some(step => step.id === item.step && step.isCompleted)}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}

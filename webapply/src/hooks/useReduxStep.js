@@ -7,11 +7,11 @@ const INITIAL_INDEX = 1;
 export const useReduxStep = flowId => {
   const dispatch = useDispatch();
 
-  const completedSteps = useSelector(
+  const availableSteps = useSelector(
     state => state.completedSteps.find(item => item.flowId === flowId) || { flowId, steps: [] }
   ).steps;
 
-  if (!completedSteps.length) {
+  if (!availableSteps.length) {
     dispatch(
       setInitialStep(flowId, {
         id: INITIAL_INDEX,
@@ -30,7 +30,7 @@ export const useReduxStep = flowId => {
     );
 
     if (isNextStepExists) {
-      if (!completedSteps.some(item => item.id === nextStep)) {
+      if (!availableSteps.some(item => item.id === nextStep)) {
         dispatch(
           addStep(flowId, { id: nextStep, isActive: false, isAvailable: false, isCompleted: false })
         );
@@ -40,10 +40,10 @@ export const useReduxStep = flowId => {
   };
 
   const handleSetStep = nextStep => {
-    if (completedSteps.some(step => step.id === nextStep && step.isAvailable)) {
+    if (availableSteps.some(step => step.id === nextStep && step.isAvailable)) {
       dispatch(setStepIsActive(flowId, nextStep));
     }
   };
 
-  return [completedSteps, handleSetStep, handleSetNextStep];
+  return [availableSteps, handleSetStep, handleSetNextStep];
 };

@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
+import get from "lodash/get";
 
 import { useReduxStep } from "../../hooks/useReduxStep";
 import { FormCard } from "../../components/FormCard/FormCard";
@@ -33,8 +34,8 @@ export const CompanyInfoPage = ({
   isRegisteredInUAE
 }) => {
   const classes = useStyles();
-  const [completedSteps, handleSetStep, handleSetNextStep] = useReduxStep(COMPANY_INFO_PAGE_ID);
-  const activeStep = completedSteps.find(step => step.isActive) || { id: null };
+  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(COMPANY_INFO_PAGE_ID);
+  const activeStep = get(availableSteps.find(step => step.isActive), "id", null);
 
   const handleContinue = () =>
     sendProspectToAPI().then(
@@ -42,7 +43,7 @@ export const CompanyInfoPage = ({
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);
         }
-        handleSetNextStep(activeStep.id, activeStep.id !== companyInfoSteps.length);
+        handleSetNextStep(activeStep, activeStep !== companyInfoSteps.length);
       },
       () => {}
     );
@@ -63,7 +64,7 @@ export const CompanyInfoPage = ({
         content={
           <>
             <div className={classes.title}>
-              {activeStep.id !== STEP_1 ? companyName : "Company Name"}
+              {activeStep !== STEP_1 ? companyName : "Company Name"}
             </div>
             {loading && <StatusLoader />}
           </>
@@ -75,8 +76,8 @@ export const CompanyInfoPage = ({
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}
-            isActiveStep={activeStep.id === item.step}
-            isFilled={completedSteps.some(step => step.id === item.step && step.isCompleted)}
+            isActiveStep={activeStep === item.step}
+            isFilled={availableSteps.some(step => step.id === item.step && step.isCompleted)}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue}
             stepForm={item.component}
@@ -90,8 +91,8 @@ export const CompanyInfoPage = ({
           justify="flex-end"
           label="Next Step"
           disabled={
-            completedSteps.length !== companyInfoSteps.length ||
-            completedSteps.some(item => !item.isCompleted)
+            availableSteps.length !== companyInfoSteps.length ||
+            availableSteps.some(item => !item.isCompleted)
           }
           handleClick={handleClickNextStep}
           withRightArrow
