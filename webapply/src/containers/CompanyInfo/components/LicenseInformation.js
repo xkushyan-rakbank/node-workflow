@@ -17,6 +17,7 @@ import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "../styled";
+import { LICENSE_NUMBER } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
@@ -28,7 +29,9 @@ const initialValues = {
 };
 
 const licenseInformationSchema = Yup.object({
-  licenseNumber: Yup.string().required(getRequiredMessage("License number")),
+  licenseNumber: Yup.string()
+    .required(getRequiredMessage("License number"))
+    .matches(LICENSE_NUMBER, getInvalidMessage("License number")),
   licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
   countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
   licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
