@@ -17,7 +17,7 @@ const styles = {
     borderRadius: "28px",
     outline: "none ",
     fontSize: "18px",
-    textTransform: "none",
+    textTransform: "none !important",
     padding: "0 32px",
     backgroundColor: "#000",
     "& svg": {
