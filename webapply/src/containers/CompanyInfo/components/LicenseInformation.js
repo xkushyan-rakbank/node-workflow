@@ -13,10 +13,11 @@ import {
 } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/Notifications";
-import { MAX_LICENSE_NUMBER_LENGTH } from "../constants";
+import { MAX_LICENSE_NUMBER_LENGTH, MAX_YEARS_IN_BUSINESS_LENGTH } from "../constants";
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "../styled";
+import { LICENSE_NUMBER } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
@@ -28,15 +29,15 @@ const initialValues = {
 };
 
 const licenseInformationSchema = Yup.object({
-  licenseNumber: Yup.string().required(getRequiredMessage("License number")),
+  licenseNumber: Yup.string()
+    .required(getRequiredMessage("License number"))
+    .matches(LICENSE_NUMBER, getInvalidMessage("License number")),
   licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
   countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
   licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
   dateOfIncorporation: Yup.date().required(getRequiredMessage("Date of incorporation")),
   yearsInBusiness: Yup.number()
-    .typeError("Not valid number")
     .min(0, "Must be more than 0")
-    .max(999, "Must be less than 1000")
     .integer(getInvalidMessage("Years in business"))
 });
 
@@ -138,7 +139,12 @@ export const LicenseInformation = ({ handleContinue }) => {
                 component={Input}
                 InputProps={{
                   inputComponent: NumberFormat,
-                  inputProps: { tabIndex: 0, allowNegative: false, decimalScale: 0 }
+                  inputProps: {
+                    maxLength: MAX_YEARS_IN_BUSINESS_LENGTH,
+                    tabIndex: 0,
+                    allowNegative: false,
+                    decimalScale: 0
+                  }
                 }}
               />
             </Grid>

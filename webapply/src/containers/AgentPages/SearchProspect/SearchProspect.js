@@ -21,7 +21,7 @@ import { getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
-  fname: Yup.string().matches(NAME_REGEX, "This is not a valid name"),
+  fname: Yup.string().matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
   mobileNo: Yup.string().when("countryCode", {
     is: countryCode => countryCode === UAE_CODE,
     then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, `${getInvalidMessage("Mobile Number")}`),
@@ -40,13 +40,13 @@ const searchProspectSchema = Yup.object({
         }
       )
   }),
-  email: Yup.string().email("This is not a valid email"),
+  email: Yup.string().email(getInvalidMessage("Email")),
   raktrackNumber: Yup.string()
     .max(20, "Maximum 20 characters allowed")
-    .matches(ALPHANUMERIC_REGEX, "This is not a valid rak track lead reference number"),
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("RAKtrack Lead Reference Number")),
   tradeLicenseNo: Yup.string()
     .max(20, "Maximum 20 characters allowed")
-    .matches(ALPHANUMERIC_REGEX, "This is not a valid trade license number")
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade License Number"))
 });
 
 const initialValues = {
