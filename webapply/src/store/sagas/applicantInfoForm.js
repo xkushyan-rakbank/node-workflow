@@ -17,13 +17,13 @@ import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
 import { NEXT, SAVE } from "../../constants";
 
-function* applicantInfoFormSaga(action) {
+function* applicantInfoFormSaga({ payload }) {
   try {
     const state = yield select();
 
     let prospectUpdated = {
       ...state.appConfig.prospect,
-      applicantInfo: action.data
+      applicantInfo: payload
     };
     yield put(updateProspect({ prospect: prospectUpdated }));
     if (getIsRecaptchaEnable(state)) {

@@ -12,11 +12,11 @@ import {
 } from "./constants";
 import { MAX_COMPANY_NAME_LENGTH } from "../../../../../CompanyInfo/constants";
 import {
-  CustomSelect,
   Input,
   Checkbox,
   AutoSaveField as Field,
-  NumberFormat
+  NumberFormat,
+  SelectAutocomplete
 } from "../../../../../../components/Form";
 import {
   EMPLOYMENT_TYPE_REGEX,
@@ -88,7 +88,8 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     path={`${basePath}.kycDetails.qualification`}
                     datalistId="qualification"
                     label="Qualification"
-                    component={CustomSelect}
+                    isSearchable
+                    component={SelectAutocomplete}
                     inputProps={{ tabIndex: 0 }}
                   />
                   <Field
@@ -96,7 +97,8 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     path={`${basePath}.employmentDetails.employmentType`}
                     datalistId="employmentType"
                     label="Employment Type"
-                    component={CustomSelect}
+                    isSearchable
+                    component={SelectAutocomplete}
                     contextualHelpProps={{ isDisableHoverListener: false }}
                     contextualHelpText={
                       <>
