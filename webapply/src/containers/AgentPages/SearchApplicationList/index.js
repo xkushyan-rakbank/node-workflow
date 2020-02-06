@@ -50,7 +50,7 @@ export const SearchApplicationList = ({ currentApplications }) => {
             {application.status ? (
               <div className={classes.status}>{application.status.statusNotes}</div>
             ) : (
-              <div className={classes.status}>pending</div>
+              <div className={classes.status}>Incomplete</div>
             )}
           </div>
         </Link>
