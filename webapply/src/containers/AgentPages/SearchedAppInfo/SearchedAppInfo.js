@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import get from "lodash/get";
-
+import { useHistory } from "react-router-dom";
 import { FormCard } from "../../../components/FormCard/FormCard";
 import { StepComponent } from "../../../components/StepComponent/StepComponent";
 import routes from "../../../routes";
@@ -17,9 +17,9 @@ export const SearchedAppInfoComponent = ({
   match,
   updateProspectId,
   retrieveDocDetails,
-  getProspectInfo,
-  displayScreenBasedOnViewId
+  getProspectInfo
 }) => {
+  const history = useHistory();
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, handleSetStep] = useStep(STEP_1, initialAvailableSteps);
@@ -39,8 +39,8 @@ export const SearchedAppInfoComponent = ({
   }, [setIsDisplayConfirmDialog]);
 
   const confirmHandler = useCallback(() => {
-    displayScreenBasedOnViewId();
-  }, [displayScreenBasedOnViewId]);
+    history.push(routes.companyInfo);
+  }, [history]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
