@@ -6,6 +6,7 @@ export const useStep = (initialStep, initialAvailableSteps = [initialStep]) => {
 
   const handleSetNextStep = () => {
     const nextStep = step + 1;
+
     setStep(nextStep);
     if (!availableSteps.includes(nextStep)) {
       setAvailableSteps([...availableSteps, nextStep]);
