@@ -22,7 +22,7 @@ export const MyApplications = () => {
     <BaseComponent
       searchResults={searchResults}
       getProspectInfo={prospectId => dispatch(getProspectInfo(prospectId))}
-      displayScreenBasedOnViewId={() => displayScreenBasedOnViewId()}
+      displayScreenBasedOnViewId={() => dispatch(displayScreenBasedOnViewId())}
     />
   );
 };

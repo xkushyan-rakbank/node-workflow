@@ -64,6 +64,12 @@ export const ApplicationGrid = ({
           : [
               <div key="status" className={classes.status}>
                 Incomplete
+              </div>,
+              <div key="action" className={classes.blockAction}>
+                <WhiteContainedButton
+                  label="Finish Application"
+                  handleClick={() => handleProceedClick(app)}
+                />
               </div>
             ]}
       </div>
