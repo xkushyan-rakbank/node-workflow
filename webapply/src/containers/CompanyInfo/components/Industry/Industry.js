@@ -170,7 +170,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                         />
                       </Grid>
-                      <Grid item md={isHaveIndustryAndSubCategory ? 2 : 0} sm={12}>
+                      <Grid item md={isHaveIndustryAndSubCategory ? 2 : false} sm={12}>
                         {isHaveIndustryAndSubCategory && (
                           <LinkButton
                             className={classes.deleteButton}

@@ -119,7 +119,7 @@ instance.interceptors.response.use(
       console.log(jsonData);
       NotificationsManager.add &&
         NotificationsManager.add({
-          message: jsonData && jsonData.status ? `${jsonData.status} ${jsonData.debugMessage}` : ""
+          message: jsonData && jsonData.status ? `${jsonData.status} ${jsonData.message}` : null
         });
     }
 
