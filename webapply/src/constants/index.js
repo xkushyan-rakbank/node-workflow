@@ -149,7 +149,7 @@ export const screeningStatusNotRegistered = {
   text: (
     <>
       It looks like your company is not registered in the UAE. <br />
-      But no worries! Let’s have someone call you back within X days to <br />
+      But no worries! Let’s have someone call you back within 1 day to <br />
       meet you in person and help you out.
     </>
   )
