@@ -1,7 +1,6 @@
 import React from "react";
 import routes from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
-import declinedRegular from "./../assets/gif/declined_regular.gif";
 
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
@@ -97,45 +96,37 @@ export const SIGNING_TRANSACTIONS_TYPE = {
 export const screeningStatus = [
   {
     error: "Dedupe",
-    icon: callbackRegular,
     screeningType: "Dedupe Check"
   },
   {
     error: "Virtual Currencies",
-    icon: declinedRegular,
     screeningType: "Virtual Currency Check"
   },
   {
     error: "not Eligible",
-    icon: callbackRegular,
     screeningType: "RAKStarter Account Check",
     link: true
   },
   {
     error: "Not Registered In UAE",
-    icon: callbackRegular,
     screeningType: "CountryOfIncorporation Check"
   },
   {
     error: "Big Company",
-    icon: callbackRegular,
     screeningType: "ShareHolderCount Check"
   },
   {
     error: "BlackList",
-    icon: declinedRegular,
     screeningType: "Blacklist Check"
   },
   {
     error: "Company as stakeholder",
-    icon: callbackRegular,
     screeningType: "IsShareHolderACompany Check"
   }
 ];
 
 export const screeningStatusDefault = {
   error: "Default",
-  icon: declinedRegular,
   text:
     "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
 };
