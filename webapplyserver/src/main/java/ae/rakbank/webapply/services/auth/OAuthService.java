@@ -33,7 +33,7 @@ import ae.rakbank.webapply.helpers.FileHelper;
 
 @Component
 @RequiredArgsConstructor
-public class OAuthService {
+class OAuthService {
 	private static final Logger logger = LoggerFactory.getLogger(OAuthService.class);
 
 	private final FileHelper fileHelper;
@@ -51,18 +51,8 @@ public class OAuthService {
 		oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
 	}
 
-	private boolean isAccessTokenExpired() {
-		if (servletContext.getAttribute("OAuthTokenValidUntil") != null) {
-			LocalDateTime oauthValidDateTime = (LocalDateTime) servletContext.getAttribute("OAuthTokenValidUntil");
-			logger.info("OAuthTokenValidUntil attribute value is " + oauthValidDateTime);
-			return LocalDateTime.now().isAfter(oauthValidDateTime);
-		}
-		logger.info("OAuthTokenValidUntil attribute not found in servletContext.");
-		return true;
-	}
-
 	public void validateAccessToken(String token, String refreshToken, Boolean force) {
-		if (isAccessTokenExpired()) {
+		if (isAccessTokenExpiredOrAbsent()) {
 			String errorMessage = "Access token expired or not present in servlet context, "
 					+ "Actual time: " + LocalDateTime.now()
 					+ ", Token valid till: " + servletContext.getAttribute("OAuthTokenValidUntil");
@@ -94,7 +84,7 @@ public class OAuthService {
 		}
 	}
 
-	public ResponseEntity<JsonNode> getOAuthToken() {
+	ResponseEntity<JsonNode> getOAuthToken() {
 		return getOAuthToken(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
 	}
 
@@ -103,7 +93,7 @@ public class OAuthService {
 		String methodName = "getOAuthToken()";
 
 		ResponseEntity<JsonNode> response = null;
-		if (isAccessTokenExpired()) {
+		if (isAccessTokenExpiredOrAbsent()) {
 
 			int retryCounter = 0;
 			while (retryCounter <= 3) {
@@ -113,7 +103,6 @@ public class OAuthService {
 
 				ObjectMapper objectMapper = new ObjectMapper();
 				MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper, username, password);
-
 				HttpHeaders headers = new HttpHeaders();
 				headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 				headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -140,7 +129,6 @@ public class OAuthService {
 							e.getResponseBodyAsString(), e);
 					return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
-
 				logger.info(String.format(
 						"API call from %s method, Endpoint=[%s] HttpStatus=[%s], retryCounter=%s",
 						methodName, url, response.getStatusCodeValue(), retryCounter));
@@ -149,7 +137,6 @@ public class OAuthService {
 					logger.info(String.format(
 							"API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s], retryCount=%s",
 							methodName, url, response.getStatusCodeValue(), retryCounter));
-
 					// minus 10 seconds to prevent access_token expire error while calling the API
 					int seconds = response.getBody().get("expires_in").asInt() - 10;
 					LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
@@ -180,20 +167,10 @@ public class OAuthService {
 		return oauthResponse;
 	}
 
-
-	//TODO remove method below with Controller refactoring
-	public HttpHeaders getOAuthHeaders(ResponseEntity<JsonNode> oauthResponse, MediaType mediaType) {
-		JsonNode authBody = oauthResponse.getBody();
-		return getOAuthHeaders(authBody.get("access_token").asText(), mediaType);
-	}
-
 	HttpHeaders getOAuthHeaders(String oauthAccessToken, MediaType mediaType) {
 		HttpHeaders headers = new HttpHeaders();
-//		JsonNode authBody = oauthResponse.getBody();
-//		headers.set("Authorization", authBody.get("access_token").asText());
 		headers.set("Authorization", oauthAccessToken);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
 		if (mediaType != null) {
 			headers.setContentType(mediaType);
 		} else {
@@ -210,6 +187,16 @@ public class OAuthService {
 		channelContext.set("authorizationDetails", authorizationDetails);
 		headers.set("ChannelContext", channelContext.toString());
 		return headers;
+	}
+
+	private boolean isAccessTokenExpiredOrAbsent() {
+		if (servletContext.getAttribute("OAuthTokenValidUntil") != null) {
+			LocalDateTime oauthValidDateTime = (LocalDateTime) servletContext.getAttribute("OAuthTokenValidUntil");
+			logger.info("OAuthTokenValidUntil attribute value is " + oauthValidDateTime);
+			return LocalDateTime.now().isAfter(oauthValidDateTime);
+		}
+		logger.info("OAuthTokenValidUntil attribute not found in servletContext.");
+		return true;
 	}
 
 	private MultiValueMap<String, String> buildOAuthRequest(ObjectMapper objectMapper, String username, String password) {
