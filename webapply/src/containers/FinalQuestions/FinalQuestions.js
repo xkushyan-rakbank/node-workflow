@@ -9,7 +9,7 @@ import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FINAL_QUESTIONS_COMPANY_ID } from "./components/CompanySummaryCard/constants";
 import { finalQuestionsSteps } from "./components/CompanySummaryCard/constants";
-import { useCompletedStep } from "../../components/StepComponent/utils/useCompletedSteps";
+import { useCompletedStep } from "../../hooks/useCompletedSteps";
 import { getCompletedSignatoriesSteps } from "../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";

@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
-import { useReduxStep } from "../../components/StepComponent/useReduxStep";
+import { useReduxStep } from "../../hooks/useReduxStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
@@ -33,10 +33,8 @@ export const CompanyInfoPage = ({
   isRegisteredInUAE
 }) => {
   const classes = useStyles();
-  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
-    STEP_1,
-    COMPANY_INFO_PAGE_ID
-  );
+  const [completedSteps, handleSetStep, handleSetNextStep] = useReduxStep(COMPANY_INFO_PAGE_ID);
+  const activeStep = completedSteps.find(step => step.isActive) || { id: null };
 
   const handleContinue = () =>
     sendProspectToAPI().then(
@@ -44,7 +42,7 @@ export const CompanyInfoPage = ({
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);
         }
-        handleSetNextStep();
+        handleSetNextStep(activeStep.id, activeStep.id !== companyInfoSteps.length);
       },
       () => {}
     );
@@ -64,7 +62,9 @@ export const CompanyInfoPage = ({
       <FormCard
         content={
           <>
-            <div className={classes.title}>{step !== STEP_1 ? companyName : "Company Name"}</div>
+            <div className={classes.title}>
+              {activeStep.id !== STEP_1 ? companyName : "Company Name"}
+            </div>
             {loading && <StatusLoader />}
           </>
         }
@@ -75,7 +75,7 @@ export const CompanyInfoPage = ({
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}
-            isActiveStep={step === item.step}
+            isActiveStep={activeStep.id === item.step}
             isFilled={completedSteps.some(step => step.id === item.step && step.isCompleted)}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue}

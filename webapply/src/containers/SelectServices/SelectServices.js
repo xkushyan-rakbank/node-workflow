@@ -7,7 +7,7 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
 import { accountNames } from "../../constants";
-import { useReduxStep } from "../../components/StepComponent/useReduxStep";
+import { useReduxStep } from "../../hooks/useReduxStep";
 
 import { useStyles } from "./styled";
 

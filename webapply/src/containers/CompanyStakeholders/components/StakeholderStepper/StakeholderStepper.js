@@ -19,7 +19,7 @@ import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
 import { quantityErrorSelector } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
-import { useReduxStep } from "../../../../components/StepComponent/useReduxStep";
+import { useReduxStep } from "../../../../hooks/useReduxStep";
 
 const timeInterval = 5000;
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
-import { useReduxStep } from "../../../../components/StepComponent/useReduxStep";
+import { useReduxStep } from "../../../../hooks/useReduxStep";
 
 export const FinalQuestionStepComponent = ({
   index = null,
