@@ -6,8 +6,17 @@ import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
 
-export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
+export const ApplicationList = ({
+  getProspectInfo,
+  applicantInfo = [],
+  displayScreenBasedOnViewId
+}) => {
   const classes = useStyles();
+
+  const handleProceedClick = app => {
+    getProspectInfo(app.prospectId);
+    displayScreenBasedOnViewId();
+  };
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
@@ -32,7 +41,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
               <WhiteContainedButton
                 disabled={app.status.reasonCode === STATUS_LOCKED}
                 label={ctaStatuses[app.status.statusNotes]}
-                handleClick={() => getProspectInfo(app.prospectId)}
+                handleClick={() => handleProceedClick(app)}
               />
             ) : (
               <span>{notCtaStatuses[app.status.statusNotes]}</span>

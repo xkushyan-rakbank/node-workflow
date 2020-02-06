@@ -9,8 +9,17 @@ import { useStyles } from "./styled";
 
 import { ReactComponent as WavesBG } from "../../../assets/images/waves_bg.svg";
 
-export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
+export const ApplicationGrid = ({
+  getProspectInfo,
+  applicantInfo = [],
+  displayScreenBasedOnViewId
+}) => {
   const classes = useStyles();
+
+  const handleProceedClick = app => {
+    getProspectInfo(app.prospectId);
+    displayScreenBasedOnViewId();
+  };
 
   return applicantInfo.map(app => (
     <div className={classes.gridContainer} key={app.prospectId}>
@@ -45,7 +54,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
                   <WhiteContainedButton
                     disabled={app.status.reasonCode === STATUS_LOCKED}
                     label={ctaStatuses[app.status.statusNotes]}
-                    handleClick={() => getProspectInfo(app.prospectId)}
+                    handleClick={() => handleProceedClick(app)}
                   />
                 ) : (
                   <span>{notCtaStatuses[app.status.statusNotes]}</span>
@@ -55,12 +64,6 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
           : [
               <div key="status" className={classes.status}>
                 Incomplete
-              </div>,
-              <div key="action" className={classes.blockAction}>
-                <WhiteContainedButton
-                  label="Finish Application"
-                  handleClick={() => getProspectInfo(app.prospectId)}
-                />
               </div>
             ]}
       </div>
