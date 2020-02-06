@@ -50,9 +50,11 @@ const BaseButton = ({
   component = "button",
   withRightArrow,
   classes,
-  name
+  name,
+  style
 }) => (
   <Button
+    style={style}
     variant={variant}
     component={component}
     color={color}

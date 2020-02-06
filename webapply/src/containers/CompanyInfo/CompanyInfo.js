@@ -73,6 +73,7 @@ export const CompanyInfoPage = ({
 
       <div className="linkContainer">
         <ContainedButton
+          style={{ padding: "0 32px", borderRadius: "28px" }}
           justify="flex-end"
           label="Next Step"
           disabled={step <= STEP_3}
