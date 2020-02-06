@@ -36,7 +36,9 @@ const licenseInformationSchema = Yup.object({
   countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
   licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
   dateOfIncorporation: Yup.date().required(getRequiredMessage("Date of incorporation")),
-  yearsInBusiness: Yup.number().integer(getInvalidMessage("Years in business"))
+  yearsInBusiness: Yup.number()
+    .min(0, "Must be more than 0")
+    .integer(getInvalidMessage("Years in business"))
 });
 
 const changeDateProspectHandler = (_, value, path) =>
