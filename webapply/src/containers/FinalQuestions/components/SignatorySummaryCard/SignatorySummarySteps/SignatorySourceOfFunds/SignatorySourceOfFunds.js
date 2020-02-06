@@ -68,6 +68,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   contextualHelpProps={{ isDisableHoverListener: false }}
                   component={CustomSelect}
                   inputProps={{ tabIndex: 0 }}
+                  isSearchable
                 />
                 <InfoTitle
                   classes={{

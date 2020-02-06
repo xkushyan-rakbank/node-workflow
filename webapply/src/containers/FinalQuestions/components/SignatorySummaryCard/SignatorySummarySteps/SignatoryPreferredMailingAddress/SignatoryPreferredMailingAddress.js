@@ -130,7 +130,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   disabled={values.sameAsCompanyAddress}
                   datalistId="emirateCity"
                   label="Emirate/ City"
-                  isSearchable={false}
+                  isSearchable
                   component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />
