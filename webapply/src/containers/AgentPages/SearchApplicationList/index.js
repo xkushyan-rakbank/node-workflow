@@ -12,13 +12,13 @@ export const SearchApplicationList = ({ currentApplications }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
-        <div className={classes.headingWrapper}>
+        <div className={classes.column}>
           <div className={classes.heading}>Applicant{"'"}s Detail</div>
         </div>
-        <div className={classes.headingWrapper}>
+        <div className={classes.column}>
           <div className={classes.heading}>Company Detail</div>
         </div>
-        <div className={classes.headingWrapper}>
+        <div className={classes.column}>
           <div className={classes.heading}>Status</div>
         </div>
       </div>
@@ -28,7 +28,7 @@ export const SearchApplicationList = ({ currentApplications }) => {
           key={application.prospectId}
           to={generatePath(routes.SearchedAppInfo, { id: application.prospectId })}
         >
-          <div className={classes.headingWrapper}>
+          <div className={classes.column}>
             <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
             <div className={classes.account}>{application.applicantInfo.email}</div>
             <span className={classes.account}>
@@ -40,13 +40,13 @@ export const SearchApplicationList = ({ currentApplications }) => {
               {`Lead No. - ${application.organizationInfo.leadNumber}`}
             </span>
           </div>
-          <div className={classes.headingWrapper}>
+          <div className={classes.column}>
             <div className={classes.companyName}>{application.organizationInfo.companyName}</div>
             <div className={classes.account}>
               {`TL No. - ${application.organizationInfo.licenseNumber || ""}`}
             </div>
           </div>
-          <div className={classes.headingWrapper}>
+          <div className={classes.column}>
             {application.status ? (
               <div className={classes.status}>{application.status.statusNotes}</div>
             ) : (

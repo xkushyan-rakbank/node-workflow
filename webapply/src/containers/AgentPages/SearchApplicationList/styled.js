@@ -52,7 +52,7 @@ export const useStyles = makeStyles({
     textAlign: "center",
     color: "#b5b5bb"
   },
-  headingWrapper: {
+  column: {
     width: "40%",
     "&:last-child": {
       width: "20%"
