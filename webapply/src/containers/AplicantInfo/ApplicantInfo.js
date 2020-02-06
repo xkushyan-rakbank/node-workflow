@@ -43,14 +43,21 @@ const aplicantInfoSchema = Yup.object({
     .required(getRequiredMessage("Your Mobile Number"))
     .when("countryCode", {
       is: countryCode => countryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "This is not a valid phone"),
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Your Mobile Number")),
       otherwise: Yup.string()
         .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
-        .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
-        .test("length validation", "This is not a valid phone (max length exceeded)", function() {
-          const { countryCode = "", mobileNo = "" } = this.parent;
-          return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-        })
+        .min(
+          MIN_NON_UAE_PHONE_LENGTH,
+          `${getInvalidMessage("Your Mobile Number")} (min length is not reached)`
+        )
+        .test(
+          "length validation",
+          `${getInvalidMessage("Your Mobile Number")} (max length exceeded)`,
+          function() {
+            const { countryCode = "", mobileNo = "" } = this.parent;
+            return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+          }
+        )
     })
 });
 
@@ -89,7 +96,7 @@ const ApplicantInfoPage = ({
           setIsLoading(false);
         });
     },
-    [submit]
+    [submit, history]
   );
   const handleReCaptchaVerify = useCallback(
     token => {

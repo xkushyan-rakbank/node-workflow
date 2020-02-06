@@ -7,11 +7,11 @@ export const accountTypesDescription = [
   {
     name: accountNames.starter,
     icon: startups_ic,
-    title: "For Startups and Entrepreneurs",
+    title: "For Startups \nand Entrepreneurs",
     description: [
       "Zero balance account",
       "Free remittances & preferential forex rates",
-      "Free accounting package & business insurance"
+      "Free accounting \npackage & business insurance"
     ],
     buttonText: accountNames.starter
   },

@@ -17,8 +17,8 @@ export const loginInfoFormSuccess = payload => {
   return { type: LOGIN_INFO_FORM_SUCCESS, payload };
 };
 
-export const loginInfoFormError = payload => {
-  return { type: LOGIN_INFO_FORM_SUCCESS, payload };
+export const loginInfoFormError = error => {
+  return { type: LOGIN_INFO_FORM_ERROR, error };
 };
 
 export const logout = () => {

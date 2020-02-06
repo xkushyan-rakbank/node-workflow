@@ -37,10 +37,13 @@ const preferredContactInformationSchema = Yup.object().shape({
       then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Mobile number")),
       otherwise: Yup.string()
         .matches(NUMBER_REGEX, getInvalidMessage("Mobile number"))
-        .min(MIN_NON_UAE_PHONE_LENGTH, "Field Mobile number is invalid (min length is not reached)")
+        .min(
+          MIN_NON_UAE_PHONE_LENGTH,
+          `${getInvalidMessage("Mobile number")} (min length is not reached)`
+        )
         .test(
           "length validation",
-          "Field Mobile number is invalid (max length exceeded)",
+          `${getInvalidMessage("Mobile number")} (max length exceeded)`,
           function() {
             const { primaryMobCountryCode = "", primaryMobileNo = "" } = this.parent;
             return (
@@ -51,13 +54,16 @@ const preferredContactInformationSchema = Yup.object().shape({
     }),
   primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
     is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
-    then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, "Field Landline number is invalid"),
+    then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, getInvalidMessage("Landline number")),
     otherwise: Yup.string()
       .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
-      .min(MIN_NON_UAE_PHONE_LENGTH, "Field Landline number is invalid (min length is not reached)")
+      .min(
+        MIN_NON_UAE_PHONE_LENGTH,
+        `${getInvalidMessage("Landline number")} (min length is not reached)`
+      )
       .test(
         "length validation",
-        "Field Landline number is invalid (max length exceeded)",
+        `${getInvalidMessage("Landline number")} (max length exceeded)`,
         function() {
           const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
           return primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH;

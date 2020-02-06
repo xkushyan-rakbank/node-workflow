@@ -36,11 +36,20 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
       then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Mobile number")),
       otherwise: Yup.string()
         .matches(NUMBER_REGEX, getInvalidMessage("Mobile number"))
-        .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
-        .test("length validation", "This is not a valid phone (max length exceeded)", function() {
-          const { primaryMobCountryCode = "", primaryMobileNo = "" } = this.parent;
-          return primaryMobCountryCode.length + primaryMobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-        })
+        .min(
+          MIN_NON_UAE_PHONE_LENGTH,
+          `${getInvalidMessage("Mobile number")} (min length is not reached)`
+        )
+        .test(
+          "length validation",
+          `${getInvalidMessage("Mobile number")} (max length exceeded)`,
+          function() {
+            const { primaryMobCountryCode = "", primaryMobileNo = "" } = this.parent;
+            return (
+              primaryMobCountryCode.length + primaryMobileNo.length <= MAX_NON_UAE_PHONE_LENGTH
+            );
+          }
+        )
     }),
   primaryEmail: Yup.string()
     .required(getRequiredMessage("Primary e-mail address"))
@@ -51,11 +60,18 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
     then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, getInvalidMessage("Landline number")),
     otherwise: Yup.string()
       .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
-      .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
-      .test("length validation", "This is not a valid phone (max length exceeded)", function() {
-        const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
-        return primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-      })
+      .min(
+        MIN_NON_UAE_PHONE_LENGTH,
+        `${getInvalidMessage("Landline number")} (min length is not reached)`
+      )
+      .test(
+        "length validation",
+        `${getInvalidMessage("Landline number")} (max length exceeded)`,
+        function() {
+          const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
+          return primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+        }
+      )
   })
 });
 

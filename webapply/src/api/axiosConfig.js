@@ -116,8 +116,11 @@ instance.interceptors.response.use(
     } else {
       log(jsonData);
       console.log("jsonData.debugMessage");
-      console.log(jsonData.debugMessage);
-      NotificationsManager.add && NotificationsManager.add({ message: jsonData.message });
+      console.log(jsonData);
+      NotificationsManager.add &&
+        NotificationsManager.add({
+          message: jsonData && jsonData.status ? `${jsonData.status} ${jsonData.message}` : null
+        });
     }
 
     return Promise.reject(error);

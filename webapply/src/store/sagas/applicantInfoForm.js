@@ -19,13 +19,13 @@ import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/app
 import { NEXT, SAVE } from "../../constants";
 import { GA_EVENTS } from "../../utils/ga";
 
-function* applicantInfoFormSaga(action) {
+function* applicantInfoFormSaga({ payload }) {
   try {
     const state = yield select();
 
     let prospectUpdated = {
       ...state.appConfig.prospect,
-      applicantInfo: action.data
+      applicantInfo: payload
     };
     yield put(updateProspect({ prospect: prospectUpdated }));
     if (getIsRecaptchaEnable(state)) {

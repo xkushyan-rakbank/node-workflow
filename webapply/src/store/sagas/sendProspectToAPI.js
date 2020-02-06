@@ -13,6 +13,7 @@ import {
   flush
 } from "redux-saga/effects";
 import get from "lodash/get";
+import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 
 import {
   SEND_PROSPECT_TO_API,
@@ -25,7 +26,13 @@ import {
   setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
-import { getProspect, getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
+import {
+  getProspect,
+  getProspectId,
+  getAuthorizationHeader,
+  getAccountType,
+  getIsIslamicBanking
+} from "../selectors/appConfig";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
@@ -61,8 +68,18 @@ function* setScreeningResults({ preScreening }) {
   );
 
   if (screenError) {
-    screenError.text = currScreeningType.reasonNotes;
-    yield put(setScreeningError(screenError));
+    const state = yield select();
+    const accountType = getAccountType(state);
+    const isIslamicBanking = getIsIslamicBanking(state);
+    const { screeningType } = screenError;
+
+    yield put(
+      setScreeningError({
+        ...screenError,
+        text: currScreeningType.reasonNotes,
+        icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType)
+      })
+    );
   } else {
     yield put(setScreeningError(screeningStatusDefault));
   }
@@ -125,7 +142,7 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     }
   } catch (error) {
     log({ error });
-    yield put(sendProspectToAPIFail());
+    yield put(sendProspectToAPIFail(error));
   }
 }
 

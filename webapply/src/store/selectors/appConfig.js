@@ -1,4 +1,5 @@
 import get from "lodash/get";
+import { UAE } from "../../constants";
 
 export const getDatalist = state => state.appConfig.datalist || {};
 
@@ -51,6 +52,9 @@ export const getAccountSubmittedInfo = state => state.appConfig.prospect.account
 export const getReCaptchaSiteKey = state => state.appConfig.reCaptchaSiteKey;
 
 export const getServicePricingGuideUrl = state => state.appConfig.servicePricingGuideUrl;
+
+export const getIsRegisteredInUAE = state =>
+  get(getProspect(state), "organizationInfo.countryOfIncorporation") === UAE;
 
 export const getUrlsReadMore = state => ({
   rakValuePlusReadMoreUrl: state.appConfig.rakValuePlusReadMoreUrl,
