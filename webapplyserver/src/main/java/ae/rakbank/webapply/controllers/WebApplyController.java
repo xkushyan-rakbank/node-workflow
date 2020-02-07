@@ -468,9 +468,7 @@ public class WebApplyController {
                 "authenticateUserUri", MediaType.APPLICATION_JSON, null, null);
         if (loginResponse.getBody() instanceof JsonNode) {
             ((ObjectNode) loginResponse.getBody()).put(AuthConstants.JWT_TOKEN_KEY, jwtToken);
-
         }
-        ((ObjectNode) loginResponse.getBody()).put(AuthConstants.JWT_TOKEN_KEY, jwtToken);
         return loginResponse;
     }
 
@@ -600,6 +598,12 @@ public class WebApplyController {
         } else {
             logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
                     operationId, url, response.getStatusCodeValue()));
+
+            String errorMessage = String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+                    operationId, url, response.getStatusCodeValue());
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage,
+                    response.getBody().toString());
+            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity<>(response.getBody(), headers, response.getStatusCode());
