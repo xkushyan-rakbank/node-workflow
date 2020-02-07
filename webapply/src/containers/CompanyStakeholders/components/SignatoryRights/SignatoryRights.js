@@ -66,7 +66,7 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
             name="authorityType"
             path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
             disabled={!values.isSignatory}
-            isSearchable={false}
+            isSearchable
             component={SelectAutocomplete}
             label="Authority Type"
             datalistId="authorityType"

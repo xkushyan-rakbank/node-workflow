@@ -76,6 +76,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                isSearchable
               />
             </Grid>
           </Grid>

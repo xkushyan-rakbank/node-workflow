@@ -89,7 +89,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 label="License issuing authority"
                 path="prospect.organizationInfo.licenseIssuingAuthority"
                 datalistId="licenseIssuingAuthority"
-                isSearchable={false}
+                isSearchable
                 component={SelectAutocomplete}
                 inputProps={{ tabIndex: 0 }}
                 otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
