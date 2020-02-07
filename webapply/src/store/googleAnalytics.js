@@ -2,9 +2,11 @@ import get from "lodash/get";
 import { GA } from "../utils/ga";
 
 export const googleAnalyticsMiddleware = ({ eventType }) => GA.triggerEvent(eventType);
-const handleAction = (store, next, action) => {
-  if (get(action, "meta.analytics")) {
-    const { eventType } = action.meta.analytics;
+const handleAction = (_, next, action) => {
+  const analytics = get(action, "meta.analytics");
+  if (analytics) {
+    const { eventType } = analytics;
+
     googleAnalyticsMiddleware({ eventType });
   }
 
