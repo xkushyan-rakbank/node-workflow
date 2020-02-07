@@ -20,7 +20,7 @@ export const MyApplications = () => {
   return (
     <BaseComponent
       searchResults={searchResults}
-      getProspectInfo={prospectId => dispatch(getProspectInfo(prospectId))}
+      getProspectInfo={prospectId => dispatch(getProspectInfo(prospectId, true))}
     />
   );
 };
