@@ -603,7 +603,7 @@ public class WebApplyController {
                     operationId, url, response.getStatusCodeValue());
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage,
                     response.getBody().toString());
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(error, response.getHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity<>(response.getBody(), headers, response.getStatusCode());
