@@ -12,16 +12,34 @@ export const SET_SCREENING_ERROR = "SET_SCREENING_ERROR";
 export const RESET_SCREENING_ERROR = "RESET_SCREENING_ERROR";
 export const SEND_PROSPECT_REQUEST = "SEND_PROSPECT_REQUEST";
 
-export const sendProspectToAPI = () => {
-  return { type: SEND_PROSPECT_TO_API };
+const appendGaEventToAction = (action, gaEvent = null) => {
+  if (gaEvent) {
+    action.meta = {
+      analytics: {
+        eventType: gaEvent
+      }
+    };
+  }
+
+  return action;
 };
 
-export const sendProspectToAPIPromisify = (saveType = NEXT) => ({
-  type: SEND_PROSPECT_TO_API,
-  [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
-  [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
-  payload: { saveType }
-});
+export const sendProspectToAPI = (gaEvent = null) => {
+  const action = { type: SEND_PROSPECT_TO_API };
+
+  return appendGaEventToAction(action, gaEvent);
+};
+
+export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null) => {
+  const action = {
+    type: SEND_PROSPECT_TO_API,
+    [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
+    [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+    payload: { saveType }
+  };
+
+  return appendGaEventToAction(action, gaEvent);
+};
 
 export const sendProspectToAPISuccess = prospectCopy => {
   return { type: SEND_PROSPECT_TO_API_SUCCESS, prospectCopy };
