@@ -107,7 +107,6 @@ export const UploadDocuments = ({
         onClick={fileUploadClick}
         ref={inputEl}
       />
-      {console.log(document)}
       {(selectedFile || isUploaded) && <FileIcon width="20" height="26" alt="companyIconSvg" />}
       <div className={classes.ContentBox}>
         <p className={classes.uploadedFileName}>
