@@ -6,11 +6,10 @@ import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics"
 import { ContainedButton } from "../Buttons/ContainedButton";
 import { MobileNotification } from "../Modals/index";
 
-import { accountsInfo } from "./constants";
+import { accountsInfo, gaEventsMap } from "./constants";
 import routes from "../../routes";
 
 import { useStyles } from "./styled";
-import { GA_EVENTS } from "../../utils/ga";
 
 export const AccountInfo = ({ accountType, islamicBanking }) => {
   const classes = useStyles();
@@ -19,18 +18,8 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
   const { location: { pathname } = {} } = history;
   const handleClick = useCallback(
     path => () => {
-      switch (path) {
-        case routes.applicationOverview:
-          dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_APPLY));
-          break;
-        case routes.applicantInfo:
-          dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.PRODUCT_START));
-          break;
-        default:
-          dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.COMEBACK_START));
-          break;
-      }
-      return history.push(path);
+      dispatch(sendGoogleAnalyticsMetrics(gaEventsMap[path]));
+      history.push(path);
     },
     [dispatch, history]
   );

@@ -1,4 +1,6 @@
 import { accountNames } from "../../constants";
+import routes from "../../routes";
+import { GA_EVENTS } from "../../utils/ga";
 
 export const accountsInfo = {
   [accountNames.starter]: {
@@ -22,4 +24,10 @@ export const accountsInfo = {
   comeBackVerification: {
     title: "Confirm that it's you"
   }
+};
+
+export const gaEventsMap = {
+  [routes.applicationOverview]: GA_EVENTS.PRODUCT_APPLY,
+  [routes.applicantInfo]: GA_EVENTS.PRODUCT_START,
+  [routes.comeBackLogin]: GA_EVENTS.COMEBACK_START
 };
