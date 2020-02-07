@@ -602,7 +602,7 @@ public class WebApplyController {
             String errorMessage = String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
                     operationId, url, response.getStatusCodeValue());
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage,
-                    response.getBody().toString());
+                    errorMessage);
 
             //TODO check this behaviour - if need to throw an Exception?
 
