@@ -27,7 +27,6 @@ import {
 import routes from "../../routes";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
-import { HAS_SIGNATORIES_ERROR } from "./constants";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -53,8 +52,6 @@ const CompanyStakeholdersComponent = ({
     !stakeholdersIds.every(stakeholder => stakeholder.done) ||
     isLowPercentage ||
     !hasSignatories;
-  const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
-  or edit the shareholding % for the added stakeholders.`;
 
   const goToFinalQuestions = () => history.push(routes.finalQuestions);
 
@@ -133,7 +130,9 @@ const CompanyStakeholdersComponent = ({
         })}
       </div>
 
-      {stakeholders.length > 0 && !hasSignatories && <ErrorMessage error={HAS_SIGNATORIES_ERROR} />}
+      {stakeholders.length > 0 && !hasSignatories && (
+        <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
+      )}
 
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
@@ -141,7 +140,12 @@ const CompanyStakeholdersComponent = ({
         </div>
       )}
 
-      {!!stakeholders.length && isLowPercentage && <ErrorMessage error={errorMessage} />}
+      {!!stakeholders.length && isLowPercentage && (
+        <ErrorMessage
+          error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
+  or edit the shareholding % for the added stakeholders.`}
+        />
+      )}
 
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
