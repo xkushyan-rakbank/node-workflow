@@ -34,7 +34,8 @@ const styles = {
     lineHeight: "24px",
     textAlign: "left",
     color: "#ffffff",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    textTransform: "none"
   }
 };
 
@@ -49,7 +50,8 @@ const BaseButton = ({
   component = "button",
   withRightArrow,
   classes,
-  name
+  name,
+  ...props
 }) => (
   <Button
     variant={variant}
@@ -63,6 +65,7 @@ const BaseButton = ({
     disabled={disabled}
     onClick={handleClick}
     name={name}
+    {...props}
   >
     {label}
     {withRightArrow && <ArrowIcon alt="rightArrowWhite" />}

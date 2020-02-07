@@ -24,12 +24,12 @@ import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
 import { useStyles } from "./styled";
+export const MAX_LENGTH_EMAIL = 50;
 
 const comebackSchema = Yup.object({
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
-    .email(getInvalidMessage("Your E-mail Address"))
-    .max(50, "Maximum 50 characters allowed"),
+    .email(getInvalidMessage("Your E-mail Address")),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
@@ -119,7 +119,7 @@ const ComeBackLoginComponent = ({
                 component={Input}
                 isLoadDefaultValueFromStore={false}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { maxLength: MAX_LENGTH_EMAIL, tabIndex: 0 }
                 }}
               />
 
