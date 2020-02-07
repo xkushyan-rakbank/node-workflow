@@ -28,11 +28,13 @@ function* getProspectIdInfo({ payload }) {
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
-    const response = yield call(prospect.get, payload, headers);
+    const response = yield call(prospect.get, payload.prospectId, headers);
     const config = { prospect: response.data };
 
     yield put(setConfig(config));
-    yield put(displayScreenBasedOnViewId());
+    if (payload.isUpdateView) {
+      yield put(displayScreenBasedOnViewId());
+    }
   } catch (error) {
     log(error);
   }

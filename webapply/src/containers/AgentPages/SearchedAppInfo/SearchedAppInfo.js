@@ -31,7 +31,7 @@ export const SearchedAppInfoComponent = ({
   useEffect(() => {
     updateProspectId(match.params.id);
     retrieveDocDetails();
-    getProspectInfo(match.params.id);
+    getProspectInfo(match.params.id, false);
   }, [updateProspectId, retrieveDocDetails, match.params.id]);
 
   const redirectUserPage = useCallback(() => {

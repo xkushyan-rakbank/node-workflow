@@ -13,6 +13,7 @@ import {
   ALPHANUMERIC_REGEX,
   UAE_MOBILE_PHONE_REGEX
 } from "../../../utils/validation";
+import { MAX_EMAIL_LENGTH } from "./constants";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { SearchResult } from "../SearchResult";
 import { UAE_CODE } from "../../../constants";
@@ -126,7 +127,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   contextualHelpText="This should be the email id of the person who has registered for WebApply and initiated the application on behalf of the company."
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { maxLength: MAX_EMAIL_LENGTH, tabIndex: 0 }
                   }}
                 />
               </Grid>

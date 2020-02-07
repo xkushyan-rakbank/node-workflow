@@ -10,6 +10,12 @@ export const retrieveApplicantInfoSuccess = payload => {
   return { type: RETRIEVE_APPLICANT_INFO_SUCCESS, payload };
 };
 
-export const getProspectInfo = payload => {
-  return { type: GET_PROSPECT_INFO, payload };
+export const getProspectInfo = (prospectId, isUpdateView = false) => {
+  return {
+    type: GET_PROSPECT_INFO,
+    payload: {
+      prospectId,
+      isUpdateView
+    }
+  };
 };
