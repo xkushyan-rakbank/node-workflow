@@ -1,12 +1,11 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
-import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
-import { ContainedButton } from "../Buttons/ContainedButton";
-import { MobileNotification } from "../Modals/index";
 
-import { accountsInfo, gaEventsMap } from "./constants";
+import { ContainedButton } from "../Buttons/ContainedButton";
+import { MobileNotification } from "../Modals";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { accountsInfo } from "./constants";
 import routes from "../../routes";
 
 import { useStyles } from "./styled";
@@ -14,15 +13,9 @@ import { useStyles } from "./styled";
 export const AccountInfo = ({ accountType, islamicBanking }) => {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
+  const pushHistory = useTrackingHistory();
   const { location: { pathname } = {} } = history;
-  const handleClick = useCallback(
-    path => () => {
-      dispatch(sendGoogleAnalyticsMetrics(gaEventsMap[path]));
-      history.push(path);
-    },
-    [dispatch, history]
-  );
+  const handleClick = path => () => pushHistory(path);
 
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;
