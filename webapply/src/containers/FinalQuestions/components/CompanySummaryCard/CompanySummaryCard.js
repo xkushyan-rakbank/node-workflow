@@ -5,7 +5,7 @@ import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
-import { finalQuestionsSteps, STEP_1, FINAL_QUESTIONS_COMPANY_ID } from "./constants";
+import { finalQuestionsSteps, FINAL_QUESTIONS_COMPANY_ID } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -26,7 +26,7 @@ export const CompanySummaryCardComponent = ({
     if (switchExpandedMargin) {
       switchExpandedMargin();
     }
-  }, [switchExpandedMargin]);
+  }, [switchExpandedMargin, setIsCompanyExpanded]);
 
   const handleExpandNextBlock = () => setIsCompanyExpanded(false);
 
@@ -54,7 +54,6 @@ export const CompanySummaryCardComponent = ({
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
           page={FINAL_QUESTIONS_COMPANY_ID}
-          initialStep={!isCompanyStepsCompleted && STEP_1}
         />
       </div>
     </CompanyCard>

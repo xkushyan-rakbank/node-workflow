@@ -7,10 +7,11 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { FINAL_QUESTIONS_COMPANY_ID } from "./components/CompanySummaryCard/constants";
 import { finalQuestionsSteps } from "./components/CompanySummaryCard/constants";
-import { useCompletedStep } from "../../hooks/useCompletedSteps";
-import { getCompletedSignatoriesSteps } from "../../store/selectors/appConfig";
+import {
+  getCompletedSignatoriesSteps,
+  getCompletedCompanySteps
+} from "../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
 import { signatoriesSteps } from "./components/SignatorySummaryCard/constants";
@@ -21,7 +22,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isCompanyExpanded, setIsCompanyExpanded] = useState(false);
   const classes = useStyles();
 
-  const completedCompanySteps = useCompletedStep(FINAL_QUESTIONS_COMPANY_ID).steps;
+  const completedCompanySteps = useSelector(getCompletedCompanySteps).steps;
   const completedSignatoriesSteps = useSelector(getCompletedSignatoriesSteps);
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
