@@ -21,6 +21,7 @@ import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import {
   stakeholdersSelector,
   stakeholdersState,
+  checkIsHasSignatories,
   percentageSelector
 } from "../../store/selectors/stakeholder";
 import routes from "../../routes";
@@ -37,6 +38,7 @@ const CompanyStakeholdersComponent = ({
   history,
   resetProspect,
   stakeholdersIds,
+  hasSignatories,
   datalist
 }) => {
   const classes = useStyles();
@@ -48,9 +50,8 @@ const CompanyStakeholdersComponent = ({
   const isDisableNextStep =
     stakeholders.length < 1 ||
     !stakeholdersIds.every(stakeholder => stakeholder.done) ||
-    isLowPercentage;
-  const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
-  or edit the shareholding % for the added stakeholders.`;
+    isLowPercentage ||
+    !hasSignatories;
 
   const goToFinalQuestions = () => history.push(routes.finalQuestions);
 
@@ -129,13 +130,22 @@ const CompanyStakeholdersComponent = ({
         })}
       </div>
 
+      {stakeholders.length > 0 && !hasSignatories && (
+        <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
+      )}
+
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
       )}
 
-      {!!stakeholders.length && isLowPercentage && <ErrorMessage error={errorMessage} />}
+      {!!stakeholders.length && isLowPercentage && (
+        <ErrorMessage
+          error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
+  or edit the shareholding % for the added stakeholders.`}
+        />
+      )}
 
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
@@ -165,6 +175,7 @@ const mapStateToProps = state => {
     stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
     percentage: percentageSelector(state),
+    hasSignatories: checkIsHasSignatories(state),
     ...getSendProspectToAPIInfo(state)
   };
 };

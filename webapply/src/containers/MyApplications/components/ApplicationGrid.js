@@ -54,7 +54,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
             ]
           : [
               <div key="status" className={classes.status}>
-                pending
+                Incomplete
               </div>,
               <div key="action" className={classes.blockAction}>
                 <WhiteContainedButton

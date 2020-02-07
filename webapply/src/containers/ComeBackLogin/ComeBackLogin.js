@@ -24,25 +24,32 @@ import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
 import { useStyles } from "./styled";
+export const MAX_LENGTH_EMAIL = 50;
 
 const comebackSchema = Yup.object({
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
-    .email(getInvalidMessage("Your E-mail Address"))
-    .max(50, "Maximum 50 characters allowed"),
+    .email(getInvalidMessage("Your E-mail Address")),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
     .when("countryCode", {
       is: countryCode => countryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, "Field Mobile number is invalid"),
+      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Your Mobile Number")),
       otherwise: Yup.string()
         .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
-        .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
-        .test("length validation", "This is not a valid phone (max length exceeded)", function() {
-          const { countryCode = "", mobileNo = "" } = this.parent;
-          return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-        })
+        .min(
+          MIN_NON_UAE_PHONE_LENGTH,
+          `${getInvalidMessage("Your Mobile Number")} (min length is not reached)`
+        )
+        .test(
+          "length validation",
+          `${getInvalidMessage("Your Mobile Number")}  (max length exceeded)`,
+          function() {
+            const { countryCode = "", mobileNo = "" } = this.parent;
+            return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
+          }
+        )
     })
 });
 
@@ -112,7 +119,7 @@ const ComeBackLoginComponent = ({
                 component={Input}
                 isLoadDefaultValueFromStore={false}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { maxLength: MAX_LENGTH_EMAIL, tabIndex: 0 }
                 }}
               />
 

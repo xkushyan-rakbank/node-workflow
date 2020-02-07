@@ -152,6 +152,8 @@ class BackgroundVideoPlayer extends React.Component {
           onEnded={this.onEndedVideoPLay}
           onLoadedData={this.onLoadedDataVideo}
           poster={playedVideos && playedVideos.includes(mp4) ? poster : ""}
+          autoPlay
+          playsInline
         >
           <source src={webm} type="video/webm" />
           <source src={mp4} type="video/mp4" />

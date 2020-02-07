@@ -52,7 +52,7 @@ const appConfigReducer = (state = initialState, action) => {
     case LOGIN_INFO_FORM_SUCCESS:
       return {
         ...state,
-        authorizationToken: action.payload.access_token
+        authorizationToken: get(action, "payload.access_token", state.authorizationToken)
       };
     case RECEIVE_APPCONFIG_FAIL:
       return {

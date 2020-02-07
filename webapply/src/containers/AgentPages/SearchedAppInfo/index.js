@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { updateProspectId } from "../../../store/actions/appConfig";
+import { updateProspectId, displayScreenBasedOnViewId } from "../../../store/actions/appConfig";
 import { getProspectInfo } from "../../../store/actions/retrieveApplicantInfo";
 import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
 import { getSearchResult } from "../../../store/selectors/searchProspect";
@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   retrieveDocDetails,
   getProspectInfo,
-  updateProspectId
+  updateProspectId,
+  displayScreenBasedOnViewId
 };
 
 export default connect(
