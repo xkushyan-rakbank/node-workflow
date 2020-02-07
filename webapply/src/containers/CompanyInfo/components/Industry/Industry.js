@@ -18,7 +18,7 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
 import { useStyles } from "../../styled";
 
-import { SubIndustryHelperText } from "../../constants";
+import { SUB_INDUSTRY_HELPER_TEXT } from "../../constants";
 
 const initialIndustry = {
   industry: "",
@@ -170,7 +170,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                             inputProps: { tabIndex: 0 }
                           }}
                           otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
-                          contextualHelpText={SubIndustryHelperText}
+                          contextualHelpText={SUB_INDUSTRY_HELPER_TEXT}
                         />
                       </Grid>
                       <Grid item md={isHaveIndustryAndSubCategory ? 2 : false} sm={12}>
