@@ -25,3 +25,6 @@ export const companyInfoSteps = [
   },
   { step: STEP_3, title: "License Information", component: LicenseInformation }
 ];
+
+export const SubIndustryHelperText =
+  "This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. \n\n Example: \nIf business / commercial / licensed activity is 'E Commerce', please select industry as 'Services' & sub-industry as 'Computer & IT Industry'";
