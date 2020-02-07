@@ -468,7 +468,9 @@ public class WebApplyController {
                 "authenticateUserUri", MediaType.APPLICATION_JSON, null, null);
         if (loginResponse.getBody() instanceof JsonNode) {
             ((ObjectNode) loginResponse.getBody()).put(AuthConstants.JWT_TOKEN_KEY, jwtToken);
+
         }
+        ((ObjectNode) loginResponse.getBody()).put(AuthConstants.JWT_TOKEN_KEY, jwtToken);
         return loginResponse;
     }
 
