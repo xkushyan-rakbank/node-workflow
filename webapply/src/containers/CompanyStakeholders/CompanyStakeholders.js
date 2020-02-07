@@ -21,11 +21,13 @@ import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import {
   stakeholdersSelector,
   stakeholdersState,
+  checkIsHasSignatories,
   percentageSelector
 } from "../../store/selectors/stakeholder";
 import routes from "../../routes";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
+import { HAS_SIGNATORIES_ERROR } from "./constants";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -37,6 +39,7 @@ const CompanyStakeholdersComponent = ({
   history,
   resetProspect,
   stakeholdersIds,
+  hasSignatories,
   datalist
 }) => {
   const classes = useStyles();
@@ -48,7 +51,8 @@ const CompanyStakeholdersComponent = ({
   const isDisableNextStep =
     stakeholders.length < 1 ||
     !stakeholdersIds.every(stakeholder => stakeholder.done) ||
-    isLowPercentage;
+    isLowPercentage ||
+    !hasSignatories;
   const errorMessage = `Shareholders ${percentage}% is less than 100%, either add a new stakeholder
   or edit the shareholding % for the added stakeholders.`;
 
@@ -129,6 +133,8 @@ const CompanyStakeholdersComponent = ({
         })}
       </div>
 
+      {stakeholders.length > 0 && !hasSignatories && <ErrorMessage error={HAS_SIGNATORIES_ERROR} />}
+
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={addNewStakeholder} />
@@ -165,6 +171,7 @@ const mapStateToProps = state => {
     stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
     percentage: percentageSelector(state),
+    hasSignatories: checkIsHasSignatories(state),
     ...getSendProspectToAPIInfo(state)
   };
 };
