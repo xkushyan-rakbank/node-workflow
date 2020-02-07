@@ -33,7 +33,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
                   <WhiteContainedButton
                     disabled={app.status.reasonCode === STATUS_LOCKED}
                     label={ctaStatuses[app.status.statusNotes]}
-                    handleClick={() => getProspectInfo(app)}
+                    handleClick={() => getProspectInfo(app.prospectId)}
                   />
                 ) : (
                   <span>{notCtaStatuses[app.status.statusNotes]}</span>
@@ -47,7 +47,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 <WhiteContainedButton
                   label="Finish Application"
-                  handleClick={() => getProspectInfo(app)}
+                  handleClick={() => getProspectInfo(app.prospectId)}
                 />
               </div>
             ]}
