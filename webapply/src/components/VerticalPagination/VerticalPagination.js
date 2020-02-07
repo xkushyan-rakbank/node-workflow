@@ -1,16 +1,9 @@
 import React, { useState, useRef } from "react";
-import { createGlobalStyle } from "styled-components";
 import cx from "classnames";
 
 import VideoBackground from "../BackgroundVideoPlayer";
 import { useStyles, transitionDuration } from "./styled";
-
-const PreventOverscrolling = createGlobalStyle`
-body {
-  @media (min-width: 956px) and (min-height: 741px) {
-      overflow: hidden;
-    }
-}`;
+import { getAverage } from "./utils";
 
 export const VerticalPaginationContext = React.createContext({});
 
@@ -20,8 +13,8 @@ export const VerticalPaginationComponent = ({
   scrollToSecondSection,
   video
 }) => {
-  const classes = useStyles();
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const classes = useStyles({ currentSectionIndex });
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
   const scrollings = useRef([]);
@@ -59,14 +52,6 @@ export const VerticalPaginationComponent = ({
     }
   };
 
-  const getAverage = (elements, number) => {
-    let sum = 0;
-    const lastElements = elements.slice(Math.max(elements.length - number, 1));
-    lastElements.map(element => (sum = sum + element));
-
-    return Math.ceil(sum / number);
-  };
-
   const scrollToSection = sectionIndex => {
     isCanScroll.current = false;
 
@@ -89,7 +74,6 @@ export const VerticalPaginationComponent = ({
         scrollToSection
       }}
     >
-      <PreventOverscrolling />
       <div className={classes.paginationWrapper} onWheel={handleWheel}>
         {poster && (
           <VideoBackground
@@ -101,10 +85,7 @@ export const VerticalPaginationComponent = ({
             handleClickMobile={scrollToSecondSection}
           />
         )}
-        <div
-          className={classes.paginationContent}
-          style={{ transform: `translateY(-${100 * currentSectionIndex}vh)` }}
-        >
+        <div className={classes.paginationContent}>
           {React.Children.map(children, child => (
             <div
               className={cx(classes.childWrapper, {
@@ -118,7 +99,7 @@ export const VerticalPaginationComponent = ({
       </div>
       {(poster && currentSectionIndex === 0) || (
         <div className={classes.paginationDots}>
-          {children.map((_, i) => (
+          {React.Children.toArray(children).map((_, i) => (
             <button
               key={i}
               className={cx(classes.paginationDot, {

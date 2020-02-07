@@ -3,6 +3,13 @@ import { mobileResolution, normalScrollHeight, tabletResolution } from "../../co
 export const transitionDuration = 400;
 
 export const useStyles = makeStyles({
+  "@global": {
+    body: {
+      "@media (min-width: 956px) and (min-height: 741px)": {
+        overflow: "hidden"
+      }
+    }
+  },
   paginationWrapper: {
     [`@media only screen and (min-width: ${mobileResolution + 1}px) 
     and (min-height: ${normalScrollHeight + 1}px)`]: {
@@ -11,10 +18,11 @@ export const useStyles = makeStyles({
       overflowY: "hidden"
     }
   },
-  paginationContent: {
+  paginationContent: props => ({
     position: "absolute",
     left: 0,
     width: "100%",
+    transform: `translateY(-${100 * props.currentSectionIndex}vh)`,
     transition: `transform ${transitionDuration}ms`,
     [`@media only screen and (max-width: ${mobileResolution}px), 
     (max-height: ${normalScrollHeight}px)`]: {
@@ -22,7 +30,7 @@ export const useStyles = makeStyles({
       top: "0!important",
       paddingBottom: 15
     }
-  },
+  }),
   childWrapper: {
     display: "flex",
     flexDirection: "column",
