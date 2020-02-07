@@ -1,19 +1,28 @@
 import { connect } from "react-redux";
 
-import { updateProspectId } from "../../../store/actions/appConfig";
+import { updateProspectId, displayScreenBasedOnViewId } from "../../../store/actions/appConfig";
 import { getProspectInfo } from "../../../store/actions/retrieveApplicantInfo";
 import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
-import { getSearchResult } from "../../../store/selectors/searchProspect";
+import {
+  getIsEditableStatusSearchInfo,
+  getSearchResult
+} from "../../../store/selectors/searchProspect";
+import { getProspect } from "../../../store/selectors/appConfig";
 import { SearchedAppInfoComponent } from "./SearchedAppInfo";
+import { setIsApplyEditApplication } from "../../../store/actions/searchProspect";
 
 const mapStateToProps = state => ({
-  searchResults: getSearchResult(state)
+  searchResults: getSearchResult(state),
+  isApplyEditApplication: getIsEditableStatusSearchInfo(state),
+  prospectInfo: getProspect(state)
 });
 
 const mapDispatchToProps = {
   retrieveDocDetails,
   getProspectInfo,
-  updateProspectId
+  updateProspectId,
+  setIsApplyEditApplication,
+  displayScreenBasedOnViewId
 };
 
 export default connect(
