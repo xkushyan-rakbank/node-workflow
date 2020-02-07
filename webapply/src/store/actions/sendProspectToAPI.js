@@ -1,6 +1,7 @@
 import { WAIT_FOR_ACTION, ERROR_ACTION } from "redux-wait-for-action";
 
 import { NEXT } from "../../constants";
+import { appendGaEventToAction } from "./googleAnalytics";
 
 export const SEND_PROSPECT_TO_API = "SEND_PROSPECT_TO_API";
 export const SEND_PROSPECT_TO_API_SUCCESS = "SEND_PROSPECT_TO_API_SUCCESS";
@@ -11,18 +12,6 @@ export const START_PROSPECT_AUTO_SAVE = "START_PROSPECT_AUTO_SAVE";
 export const SET_SCREENING_ERROR = "SET_SCREENING_ERROR";
 export const RESET_SCREENING_ERROR = "RESET_SCREENING_ERROR";
 export const SEND_PROSPECT_REQUEST = "SEND_PROSPECT_REQUEST";
-
-const appendGaEventToAction = (action, gaEvent = null) => {
-  if (gaEvent) {
-    action.meta = {
-      analytics: {
-        eventType: gaEvent
-      }
-    };
-  }
-
-  return action;
-};
 
 export const sendProspectToAPI = (gaEvent = null) => {
   const action = { type: SEND_PROSPECT_TO_API };
