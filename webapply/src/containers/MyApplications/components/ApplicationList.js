@@ -6,17 +6,8 @@ import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
 
-export const ApplicationList = ({
-  getProspectInfo,
-  applicantInfo = [],
-  displayScreenBasedOnViewId
-}) => {
+export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
-
-  const handleProceedClick = app => {
-    getProspectInfo(app.prospectId);
-    displayScreenBasedOnViewId();
-  };
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
@@ -42,7 +33,7 @@ export const ApplicationList = ({
                   <WhiteContainedButton
                     disabled={app.status.reasonCode === STATUS_LOCKED}
                     label={ctaStatuses[app.status.statusNotes]}
-                    handleClick={() => handleProceedClick(app)}
+                    handleClick={() => getProspectInfo(app)}
                   />
                 ) : (
                   <span>{notCtaStatuses[app.status.statusNotes]}</span>
@@ -56,7 +47,7 @@ export const ApplicationList = ({
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 <WhiteContainedButton
                   label="Finish Application"
-                  handleClick={() => handleProceedClick(app)}
+                  handleClick={() => getProspectInfo(app)}
                 />
               </div>
             ]}
