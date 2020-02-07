@@ -10,8 +10,6 @@ export const StepComponent = ({
   isFilled = false,
   isActiveStep,
   index,
-  page,
-  step,
   handleClick,
   stepForm: Form,
   ...props
