@@ -18,11 +18,11 @@ export const useStyles = makeStyles({
       overflowY: "hidden"
     }
   },
-  paginationContent: props => ({
+  paginationContent: ({ currentSectionIndex }) => ({
     position: "absolute",
     left: 0,
     width: "100%",
-    transform: `translateY(-${100 * props.currentSectionIndex}vh)`,
+    transform: `translateY(-${100 * currentSectionIndex}vh)`,
     transition: `transform ${transitionDuration}ms`,
     [`@media only screen and (max-width: ${mobileResolution}px), 
     (max-height: ${normalScrollHeight}px)`]: {
