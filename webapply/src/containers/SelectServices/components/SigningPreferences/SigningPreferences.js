@@ -72,11 +72,11 @@ const signingPreferencesSchema = Yup.object({
                 .matches(NUMBER_REGEX, getInvalidMessage("Code"))
                 .min(
                   MIN_NON_UAE_PHONE_LENGTH,
-                  "This is not a valid phone (min length is not reached)"
+                  `${getInvalidMessage("Primary mobile number")} (min length is not reached)`
                 )
                 .test(
                   "length validation",
-                  "This is not a valid phone (max length exceeded)",
+                  `${getInvalidMessage("Primary mobile number")} (max length exceeded)`,
                   function(mobilePhone) {
                     return (
                       mobilePhone &&
@@ -96,13 +96,20 @@ const signingPreferencesSchema = Yup.object({
         then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, getInvalidMessage("Landline number")),
         otherwise: Yup.string()
           .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
-          .min(MIN_NON_UAE_PHONE_LENGTH, "This is not a valid phone (min length is not reached)")
-          .test("length validation", "This is not a valid phone (max length exceeded)", function() {
-            const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
-            return (
-              primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH
-            );
-          })
+          .min(
+            MIN_NON_UAE_PHONE_LENGTH,
+            `${getInvalidMessage("Landline number")} (min length is not reached)`
+          )
+          .test(
+            "length validation",
+            `${getInvalidMessage("Landline number")} (max length exceeded)`,
+            function() {
+              const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
+              return (
+                primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH
+              );
+            }
+          )
       })
     })
   )

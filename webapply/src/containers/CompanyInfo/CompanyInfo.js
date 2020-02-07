@@ -7,12 +7,17 @@ import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
-import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+import {
+  sendProspectToAPIPromisify,
+  setScreeningError
+} from "../../store/actions/sendProspectToAPI";
+import { screeningStatusNotRegistered } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
   getOrganizationInfo,
-  getSendProspectToAPIInfo
+  getSendProspectToAPIInfo,
+  getIsRegisteredInUAE
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
@@ -23,7 +28,9 @@ export const CompanyInfoPage = ({
   history,
   loading,
   fullName,
-  organizationInfo: { companyName }
+  organizationInfo: { companyName },
+  setScreeningError,
+  isRegisteredInUAE
 }) => {
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
@@ -31,6 +38,9 @@ export const CompanyInfoPage = ({
   const handleContinue = () =>
     sendProspectToAPI().then(
       () => {
+        if (!isRegisteredInUAE) {
+          return setScreeningError(screeningStatusNotRegistered);
+        }
         handleSetNextStep();
       },
       () => {}
@@ -73,6 +83,7 @@ export const CompanyInfoPage = ({
 
       <div className="linkContainer">
         <ContainedButton
+          style={{ padding: "0 32px", borderRadius: "28px" }}
           justify="flex-end"
           label="Next Step"
           disabled={step <= STEP_3}
@@ -87,11 +98,13 @@ export const CompanyInfoPage = ({
 const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
   fullName: getApplicantInfo(state).fullName,
-  organizationInfo: getOrganizationInfo(state)
+  organizationInfo: getOrganizationInfo(state),
+  isRegisteredInUAE: getIsRegisteredInUAE(state)
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI: sendProspectToAPIPromisify
+  sendProspectToAPI: sendProspectToAPIPromisify,
+  setScreeningError
 };
 
 export const CompanyInfo = connect(

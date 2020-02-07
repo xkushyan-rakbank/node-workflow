@@ -9,8 +9,7 @@ export const useStyles = makeStyles({
   },
   applicationRow: {
     borderBottom: "1px solid #e6e6e6",
-    display: "grid",
-    gridTemplateColumns: "2fr 2fr 1fr",
+    display: "flex",
     alignItems: "center",
     padding: "24px 20px 19px 30px"
   },
@@ -52,6 +51,12 @@ export const useStyles = makeStyles({
     lineHeight: 1.14,
     textAlign: "center",
     color: "#b5b5bb"
+  },
+  column: {
+    width: "40%",
+    "&:last-child": {
+      width: "20%"
+    }
   },
   heading: {
     fontSize: "18px",
