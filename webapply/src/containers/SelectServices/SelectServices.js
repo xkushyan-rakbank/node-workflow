@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
+import get from "lodash/get";
 
-import { STEP_3, STEP_1, STEP_4, SELECT_SERVICES_PAGE_ID } from "./constants";
+import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
@@ -20,24 +21,24 @@ export const SelectServicesComponent = ({
   const [isSubmit, setIsSubmit] = useState(false);
   const classes = useStyles();
 
-  const [step, handleSetStep, completedSteps, handleSetNextStep] = useReduxStep(
-    STEP_1,
-    SELECT_SERVICES_PAGE_ID
-  );
+  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(SELECT_SERVICES_PAGE_ID);
+  const activeStep = get(availableSteps.find(step => step.isActive), "id", null);
 
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
       history.push(routes.SubmitApplication);
       return;
     }
-    if (completedSteps.length < STEP_4) {
-      handleSetNextStep();
-    }
+
+    handleSetNextStep(activeStep, activeStep !== servicesSteps.length);
     setIsSubmit(true);
   }, [history, isSubmit, setIsSubmit, handleSetNextStep]);
 
   const setNextStep = useCallback(() => {
-    sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+    sendProspectToAPI().then(
+      () => handleSetNextStep(activeStep, activeStep !== servicesSteps.length),
+      () => {}
+    );
   }, [sendProspectToAPI, handleSetNextStep]);
 
   const createSetStepHandler = nextStep => () => {
@@ -53,8 +54,8 @@ export const SelectServicesComponent = ({
       />
 
       <ServicesSteps
-        activeStep={step}
-        completedSteps={completedSteps}
+        activeStep={activeStep}
+        completedSteps={availableSteps}
         isSubmit={isSubmit}
         clickHandler={createSetStepHandler}
         handleContinue={setNextStep}
@@ -68,7 +69,7 @@ export const SelectServicesComponent = ({
           label={isSubmit ? "Go to submit" : "Next Step"}
           justify="flex-end"
           disabled={
-            completedSteps.length < STEP_3 ||
+            availableSteps.length < STEP_3 ||
             (accountType === accountNames.starter && !rakValuePackage)
           }
         />
