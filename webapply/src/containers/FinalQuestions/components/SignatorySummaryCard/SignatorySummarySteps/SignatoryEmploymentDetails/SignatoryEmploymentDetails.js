@@ -169,12 +169,9 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
                     onSelect={() => {
-                      const employerName = values.isWorkAtTheCompany ? "" : companyName;
-                      if (values.employerName) {
-                        setFieldValue("employerName", "");
-                      } else {
-                        setFieldValue("employerName", employerName);
-                      }
+                      const employerName =
+                        values.isWorkAtTheCompany || values.employerName ? "" : companyName;
+                      setFieldValue("employerName", employerName);
                     }}
                     inputProps={{ tabIndex: 0 }}
                   />
