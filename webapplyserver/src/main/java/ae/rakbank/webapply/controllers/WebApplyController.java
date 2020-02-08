@@ -182,19 +182,18 @@ public class WebApplyController {
         */
 
         String jwtToken = authorizationService.getJwtToken();
-        String accessToken = authorizationService.getOauthAccessToken(jwtToken);
 
-        ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment, accessToken);
+        ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);
 
         JsonNode datalistJSON;
-        if (datalistResponse != null && datalistResponse.getStatusCode().is2xxSuccessful()) {
+        if (datalistResponse.getStatusCode().is2xxSuccessful()) {
             datalistJSON = datalistResponse.getBody();
         } else {
             return datalistResponse;
         }
 
         JsonNode webApplyConfig;
-        webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON, accessToken);
+        webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON, jwtToken);
 
         return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
     }
@@ -232,7 +231,7 @@ public class WebApplyController {
             return new ResponseEntity<>(cachedJson, headers, HttpStatus.OK);
         }
 
-        ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment, httpRequest.getHeader("Authorization"));
+        ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);
 
         JsonNode dataListJSON;
         if (datalistResponse != null && datalistResponse.getStatusCode().is2xxSuccessful()) {
@@ -567,11 +566,8 @@ public class WebApplyController {
             List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
 
             String errorMessage;
-            if (channelContext == null) {
-                errorMessage = e.getResponseBodyAsString();
-            } else {
-                errorMessage = channelContext.get(0);
-            }
+            errorMessage = channelContext.get(0);
+
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, errorMessage, e.getResponseBodyAsString(), e);
             throw new ApiException(error, responseHeaders, HttpStatus.BAD_REQUEST);
         } catch (HttpServerErrorException e) {
@@ -590,24 +586,10 @@ public class WebApplyController {
         logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
                 url, response.getStatusCodeValue(), response.getBody()));
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-                    operationId, url, response.getStatusCodeValue()));
+        logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
+                operationId, url, response.getStatusCodeValue()));
 
-            csrfTokenHelper.createCSRFToken(httpRequest, headers);
-        } else {
-            logger.error(String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-                    operationId, url, response.getStatusCodeValue()));
-
-            String errorMessage = String.format("API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-                    operationId, url, response.getStatusCodeValue());
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage,
-                    errorMessage);
-
-            //TODO check this behaviour - if need to throw an Exception?
-
-            throw new ApiException(error, headers, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        csrfTokenHelper.createCSRFToken(httpRequest, headers);
 
         return new ResponseEntity<>(response.getBody(), headers, response.getStatusCode());
     }
@@ -633,12 +615,12 @@ public class WebApplyController {
     }
 
     private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist,
-                                          String authToken) {
-        return buildAppInitialState(segment, product, role, device, datalist, authToken, true);
+                                          String jwtToken) {
+        return buildAppInitialState(segment, product, role, device, datalist, jwtToken, true);
     }
 
     private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist,
-                                          String authToken, boolean includeUiConfig) {
+                                          String jwtToken, boolean includeUiConfig) {
         logger.info("Begin buildAppInitialState() method");
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode initStateJSON = objectMapper.createObjectNode();
@@ -650,7 +632,7 @@ public class WebApplyController {
         String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
         JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
         initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
-        initStateJSON.put("authorizationToken", authToken);
+        initStateJSON.put("authorizationToken", jwtToken);
         initStateJSON.put("datalist", datalist);
         initStateJSON.put("recaptchaEnable", recaptchaEnable);
         initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
@@ -839,10 +821,6 @@ public class WebApplyController {
     }
 
     private ResponseEntity<JsonNode> getDatalistJSON(String segment) {
-        return getDatalistJSON(segment, null);
-    }
-
-    private ResponseEntity<JsonNode> getDatalistJSON(String segment, String oauthToken) {
         logger.info("Begin getDatalistJSON() method, segment=" + segment);
 
         if (StringUtils.isBlank(segment)) {
@@ -867,7 +845,7 @@ public class WebApplyController {
         logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
         logger.info(String.format("Endpoint=[%s], request=%s", url, request.toString()));
 
-        ResponseEntity<JsonNode> response = null;
+        ResponseEntity<JsonNode> response;
 
         try {
             response = restTemplate.exchange(url, HttpMethod.GET, request, JsonNode.class);
