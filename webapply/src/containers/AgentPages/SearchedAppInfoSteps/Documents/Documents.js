@@ -78,7 +78,7 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo, endpointsUrl }) =>
                   <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
                 </div>
               </div>
-              {(docs.stakeholdersDocuments[`${index}_${user.fullName}`].documents || []).map(
+              {get(docs, `stakeholdersDocuments[${index}_${user.fullName}].documents`, []).map(
                 (doc, index) => (
                   <div className={classes.applicationRow} key={doc.documentType}>
                     <div>
