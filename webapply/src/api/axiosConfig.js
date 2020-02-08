@@ -1,5 +1,4 @@
 import axios from "axios";
-import get from "lodash/get";
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
@@ -101,6 +100,8 @@ instance.interceptors.response.use(
       }
     }
 
+    if (!jsonData) return;
+
     if (status === 400 && jsonData.errorType === "ReCaptchaError") {
       store.dispatch(setError(data.errors));
       NotificationsManager.add &&
@@ -116,19 +117,19 @@ instance.interceptors.response.use(
       }
     } else {
       log(jsonData);
-      console.log("jsonData.debugMessage");
-      console.log(jsonData);
-      const errorMessages = [];
-      if (jsonData.debugMessage) {
+      try {
         const { errors } = JSON.parse(jsonData.debugMessage);
-        errors.forEach(({ message }) => errorMessages.push(message));
+        const errorMessages = errors.map(({ message }) => message);
+
+        if (jsonData.status) {
+          NotificationsManager.add &&
+            NotificationsManager.add({
+              message: `${errorMessages.join(", ")}`
+            });
+        }
+      } catch (e) {
+        log(e);
       }
-      NotificationsManager.add &&
-        NotificationsManager.add({
-          message: get(jsonData, "status")
-            ? `${jsonData.status} ${jsonData.message} ${errorMessages.join(", ")}`
-            : null
-        });
     }
 
     return Promise.reject(error);
