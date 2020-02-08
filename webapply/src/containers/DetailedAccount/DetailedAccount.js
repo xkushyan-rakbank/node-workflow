@@ -2,7 +2,7 @@ import React from "react";
 import cx from "classnames";
 import { useSelector } from "react-redux";
 
-import VerticalPaginationWrapper from "../../components/VerticalPaginationWrapper";
+import { VerticalPagination } from "../../components/VerticalPagination";
 import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher/IslamicBankingSwitcher";
 import { AccountBenefits } from "./AccountBenefits";
 import { AccountingSoftware } from "./AccountingSoftware";
@@ -21,11 +21,11 @@ export const DetailedAccount = () => {
       <div className="hide-on-mobile">
         <IslamicBankingSwitcher />
       </div>
-      <VerticalPaginationWrapper video={getVideoByAccountType(accountType, isIslamicBaning)}>
+      <VerticalPagination video={getVideoByAccountType(accountType, isIslamicBaning)}>
         <div className={cx("hide-on-mobile", classes.videoWrapper)} />
         <AccountBenefits />
         <AccountingSoftware />
-      </VerticalPaginationWrapper>
+      </VerticalPagination>
     </>
   );
 };
