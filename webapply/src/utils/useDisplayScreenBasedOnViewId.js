@@ -11,7 +11,6 @@ const prefix = "/sme";
 export const useDisplayScreenBasedOnViewId = () => {
   const history = useHistory();
   const { applicationInfo, isROScreens } = useSelector(state => ({
-    state,
     applicationInfo: getApplicationInfo(state),
     isROScreens: getIsEditableStatusSearchInfo(state)
   }));
