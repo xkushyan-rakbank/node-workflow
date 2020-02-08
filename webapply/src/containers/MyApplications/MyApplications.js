@@ -13,7 +13,7 @@ export const MyApplications = () => {
   const searchResults = useSelector(getSearchResult);
   const inputParam = useSelector(getApplicantInfo);
   const dispatch = useDispatch();
-  const { onDisplayScreen } = useDisplayScreenBasedOnViewId();
+  const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   useEffect(() => {
     dispatch(searchApplications(inputParam));
@@ -22,7 +22,9 @@ export const MyApplications = () => {
   return (
     <BaseComponent
       searchResults={searchResults}
-      getProspectInfo={prospectId => dispatch(getProspectInfo(prospectId, true, onDisplayScreen))}
+      getProspectInfo={prospectId => {
+        dispatch(getProspectInfo(prospectId)).then(pushDisplayScreenToHistory, () => {});
+      }}
     />
   );
 };

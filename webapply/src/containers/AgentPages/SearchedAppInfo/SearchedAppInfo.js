@@ -39,12 +39,12 @@ export const SearchedAppInfoComponent = ({
     setIsDisplayConfirmDialog(true);
   }, [setIsDisplayConfirmDialog]);
 
-  const { onDisplayScreen } = useDisplayScreenBasedOnViewId();
+  const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   const confirmHandler = useCallback(() => {
     setIsApplyEditApplication({ isApplyEditApplication: true });
-    onDisplayScreen();
-  }, [setIsApplyEditApplication]);
+    pushDisplayScreenToHistory();
+  }, [setIsApplyEditApplication, pushDisplayScreenToHistory]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);

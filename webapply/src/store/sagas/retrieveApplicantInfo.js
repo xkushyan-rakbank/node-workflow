@@ -32,15 +32,15 @@ function* getProspectIdInfo({ payload }) {
     const config = { prospect: response.data };
 
     yield put(setConfig(config));
-    if (payload.isUpdateView && typeof payload.onUpdateView === "function") {
-      yield call(payload.onUpdateView);
-    }
   } catch (error) {
     log(error);
+    yield put(actions.getProspectInfoFail());
+  } finally {
+    yield put(actions.getProspectInfoSuccess());
   }
 }
 
 export default function* retrieveApplicantSaga() {
   yield all([takeLatest(actions.RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga)]);
-  yield all([takeLatest(actions.GET_PROSPECT_INFO, getProspectIdInfo)]);
+  yield all([takeLatest(actions.GET_PROSPECT_INFO_REQUEST, getProspectIdInfo)]);
 }

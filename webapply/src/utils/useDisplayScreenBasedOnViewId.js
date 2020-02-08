@@ -7,6 +7,14 @@ import { getIsEditableStatusSearchInfo } from "../store/selectors/searchProspect
 import routes from "../routes";
 
 const prefix = "/sme";
+const VIEW_IDS = {
+  ApplicationSubmitted: "/ApplicationSubmitted",
+  SearchProspect: "/SearchProspect",
+  CompanyInfo: "/CompanyInfo"
+};
+const ACTION_TYPES = {
+  submit: "submit"
+};
 
 export const useDisplayScreenBasedOnViewId = () => {
   const history = useHistory();
@@ -15,13 +23,13 @@ export const useDisplayScreenBasedOnViewId = () => {
     isROScreens: getIsEditableStatusSearchInfo(state)
   }));
 
-  const onDisplayScreen = useCallback(() => {
+  const pushDisplayScreenToHistory = useCallback(() => {
     const viewId = applicationInfo.viewId;
-    const isSubmit = applicationInfo.actionType === "submit";
+    const isSubmit = applicationInfo.actionType === ACTION_TYPES.submit;
     const isRetrieveMode = applicationInfo.retrieveMode;
     const isApplicationSubmitted =
-      viewId === "/ApplicationSubmitted" && viewId !== "/SearchProspect";
-    const pathTo = isApplicationSubmitted ? "/CompanyInfo" : viewId;
+      viewId === VIEW_IDS.ApplicationSubmitted && viewId !== VIEW_IDS.SearchProspect;
+    const pathTo = isApplicationSubmitted ? VIEW_IDS.CompanyInfo : viewId;
 
     if (!isROScreens) {
       if (isSubmit && isRetrieveMode) {
@@ -37,6 +45,6 @@ export const useDisplayScreenBasedOnViewId = () => {
   }, [applicationInfo, isROScreens]);
 
   return {
-    onDisplayScreen
+    pushDisplayScreenToHistory
   };
 };
