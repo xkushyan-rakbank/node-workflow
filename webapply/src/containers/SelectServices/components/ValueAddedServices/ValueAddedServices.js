@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import cx from "classnames";
 import { useDispatch } from "react-redux";
-import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 import {
   ExpandedDetailedOptionsCard,
   rakValuePackagePlusName
@@ -53,8 +52,12 @@ export const ValueAddedServicesComponent = ({
         rakValuePackage === selectedService && accountType !== accountNames.starter
           ? ""
           : selectedService;
-      updateProspect({ [RAK_VALUE_PACKAGE_PATH]: serviceName });
-      dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE));
+      updateProspect(
+        {
+          [RAK_VALUE_PACKAGE_PATH]: serviceName
+        },
+        GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
+      );
     },
     [rakValuePackage, accountType, updateProspect, dispatch]
   );

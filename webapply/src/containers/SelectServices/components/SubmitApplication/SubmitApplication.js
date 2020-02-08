@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 import routes from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
@@ -10,7 +9,6 @@ import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { SUBMIT, NEXT } from "../../../../constants";
-import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { GA_EVENTS } from "../../../../utils/ga";
 
@@ -27,14 +25,12 @@ export const SubmitApplicationComponent = ({
 }) => {
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const dispatch = useDispatch();
   const handleSubmit = () => {
     setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
-    sendProspectToAPI()
+    sendProspectToAPI(GA_EVENTS.FORM_SUBMITTED)
       .then(() => {
-        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.FORM_SUBMITTED));
         history.push(routes.ApplicationSubmitted);
       })
       .finally(() => setIsSubmitting(false));

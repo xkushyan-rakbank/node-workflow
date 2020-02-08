@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import cx from "classnames";
 
 import { useStep } from "../../components/StepComponent/useStep";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
@@ -13,7 +14,6 @@ import {
 } from "../../store/actions/sendProspectToAPI";
 import { screeningStatusNotRegistered } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
-import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 import {
   getApplicantInfo,
   getOrganizationInfo,
@@ -23,24 +23,22 @@ import {
 import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
-import { GA_EVENTS } from "../../utils/ga";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
-  history,
   loading,
   fullName,
-  sendGoogleAnalyticsMetrics,
   organizationInfo: { companyName },
   setScreeningError,
   isRegisteredInUAE
 }) => {
+  const pushHistory = useTrackingHistory();
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
   const handleContinue = useCallback(
     event => () => {
-      sendProspectToAPI().then(
+      sendProspectToAPI(event).then(
         () => {
           if (!isRegisteredInUAE) {
             return setScreeningError(screeningStatusNotRegistered);
@@ -49,7 +47,6 @@ export const CompanyInfoPage = ({
         },
         () => {}
       );
-      sendGoogleAnalyticsMetrics(event);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -58,9 +55,8 @@ export const CompanyInfoPage = ({
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    sendGoogleAnalyticsMetrics(GA_EVENTS.COMPANY_INFORMATION_SUBMITTED);
-    history.push(routes.stakeholdersInfo);
-  }, [history, sendGoogleAnalyticsMetrics]);
+    pushHistory(routes.stakeholdersInfo);
+  }, [pushHistory]);
 
   return (
     <>
@@ -116,7 +112,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
-  sendGoogleAnalyticsMetrics,
   setScreeningError
 };
 

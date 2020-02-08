@@ -19,7 +19,6 @@ import {
 import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
 import { quantityErrorSelector } from "../../../../store/selectors/stakeholder";
-import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 
 const timeInterval = 5000;
 
@@ -47,7 +46,7 @@ const StakeholderStepperComponent = ({
 
   const handleContinue = useCallback(
     event => () => {
-      sendProspectToAPI().then(
+      sendProspectToAPI(event).then(
         () => {
           if (isTooManyStakeholders) {
             setScreeningError(stakeholderScreeningStatus);
@@ -60,7 +59,6 @@ const StakeholderStepperComponent = ({
         },
         () => {}
       );
-      sendGoogleAnalyticsMetrics(event);
     },
     [
       handleSetNextStep,
@@ -147,8 +145,7 @@ const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
   changeEditableStakeholder,
   setFillStakeholder,
-  setScreeningError,
-  sendGoogleAnalyticsMetrics
+  setScreeningError
 };
 
 export const StakeholderStepper = connect(

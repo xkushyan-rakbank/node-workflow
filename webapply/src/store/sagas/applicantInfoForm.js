@@ -12,12 +12,10 @@ import {
 } from "../actions/appConfig";
 import { resetInputsErrors } from "./../actions/serverValidation";
 import { generateCodeSuccess } from "../actions/otp";
-import { sendGoogleAnalyticsMetrics } from "../actions/googleAnalytics";
 import { prospect } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
 import { NEXT, SAVE } from "../../constants";
-import { GA_EVENTS } from "../../utils/ga";
 
 function* applicantInfoFormSaga({ payload }) {
   try {
@@ -43,7 +41,6 @@ function* applicantInfoFormSaga({ payload }) {
 
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
-    yield call(sendGoogleAnalyticsMetrics, GA_EVENTS.PRODUCT_BASIC_INFORMATION);
     yield put(updateActionType(SAVE));
     yield put(updateSaveType(NEXT));
     yield put(resetInputsErrors());

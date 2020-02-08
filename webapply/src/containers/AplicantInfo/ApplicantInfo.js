@@ -29,6 +29,7 @@ import { setToken } from "../../store/actions/reCaptcha";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
+import { GA_EVENTS } from "../../utils/ga";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -88,7 +89,7 @@ const ApplicantInfoPage = ({
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
-      submit(values)
+      submit(values, GA_EVENTS.PRODUCT_BASIC_INFORMATION)
         .then(() => {
           history.push(routes.verifyOtp);
         })

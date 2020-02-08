@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
 
 import { GO_TO_SUBMIT_STEP, STEP_1, STEP_3 } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -8,31 +7,23 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
 import { accountNames } from "../../constants";
-import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 
 import { useStyles } from "./styled";
-import { GA_EVENTS } from "../../utils/ga";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
-export const SelectServicesComponent = ({
-  accountType,
-  rakValuePackage,
-  sendProspectToAPI,
-  history
-}) => {
+export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const pushHistory = useTrackingHistory();
   const [step, setStep] = useState(STEP_1);
 
   const setNextStep = useCallback(
     event => {
       if (step === GO_TO_SUBMIT_STEP) {
-        dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.SELECT_SERVICE_SUBMITTED));
-        return history.push("SubmitApplication");
+        return pushHistory(routes.SubmitApplication);
       }
-      sendProspectToAPI().then(() => setStep(step + 1), () => {});
-      dispatch(sendGoogleAnalyticsMetrics(event));
+      sendProspectToAPI(event).then(() => setStep(step + 1), () => {});
     },
-    [sendProspectToAPI, step, history, dispatch]
+    [sendProspectToAPI, step]
   );
 
   const createSetStepHandler = nextStep => () => {

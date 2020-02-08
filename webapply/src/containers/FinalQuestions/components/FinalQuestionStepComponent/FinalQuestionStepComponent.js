@@ -1,9 +1,7 @@
 import React, { useEffect, useCallback } from "react";
-import { useDispatch } from "react-redux";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
 import { useStep } from "../../../../components/StepComponent/useStep";
-import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 
 export const FinalQuestionStepComponent = ({
   index = null,
@@ -14,11 +12,9 @@ export const FinalQuestionStepComponent = ({
   initialStep
 }) => {
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(initialStep);
-  const dispatch = useDispatch();
   const handleContinue = useCallback(
     eventName => () => {
-      dispatch(sendGoogleAnalyticsMetrics(eventName));
-      sendProspectToAPI().then(() => handleSetNextStep(), () => {});
+      sendProspectToAPI(eventName).then(() => handleSetNextStep(), () => {});
     },
     [sendProspectToAPI, handleSetNextStep]
   );

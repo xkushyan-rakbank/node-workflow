@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import { connect } from "react-redux";
-import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
@@ -30,6 +29,7 @@ import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
 import { GA_EVENTS } from "../../utils/ga";
 import { STEP_1 } from "../FinalQuestions/components/CompanySummaryCard/constants";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -38,13 +38,13 @@ const CompanyStakeholdersComponent = ({
   editableStakeholder,
   stakeholders,
   percentage,
-  history,
   resetProspect,
   stakeholdersIds,
   hasSignatories,
   datalist,
   sendGoogleAnalyticsMetrics
 }) => {
+  const pushHistory = useTrackingHistory();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isNewStakeholder, setIsNewStakeholder] = useState(false);
@@ -58,9 +58,8 @@ const CompanyStakeholdersComponent = ({
     !hasSignatories;
 
   const goToFinalQuestions = useCallback(() => {
-    sendGoogleAnalyticsMetrics(GA_EVENTS.COMPANY_STAKEHOLDER_SUBMITTED);
-    history.push(routes.finalQuestions);
-  }, [sendGoogleAnalyticsMetrics, history]);
+    pushHistory(routes.finalQuestions);
+  }, [pushHistory, routes.finalQuestions]);
 
   const handleDeleteStakeholder = useCallback(id => deleteHandler(id), [deleteHandler]);
 
@@ -82,6 +81,7 @@ const CompanyStakeholdersComponent = ({
       setIsNewStakeholder(true);
       createNewStakeholder();
     }
+    sendGoogleAnalyticsMetrics(GA_EVENTS.COMPANY_STAKEHOLDER_ADD_NEW_CONTINUE);
   };
 
   const handleClose = () => setOpen(false);
@@ -144,10 +144,7 @@ const CompanyStakeholdersComponent = ({
 
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
-          <AddStakeholderButton
-            handleClick={addNewStakeholder}
-            handleContinue={sendGoogleAnalyticsMetrics}
-          />
+          <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
       )}
 
@@ -196,8 +193,7 @@ const mapDispatchToProps = {
   sendProspectToAPI,
   createNewStakeholder,
   changeEditableStakeholder,
-  resetProspect,
-  sendGoogleAnalyticsMetrics
+  resetProspect
 };
 
 export const CompanyStakeholders = connect(
