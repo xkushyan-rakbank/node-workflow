@@ -41,8 +41,7 @@ const CompanyStakeholdersComponent = ({
   resetProspect,
   stakeholdersIds,
   hasSignatories,
-  datalist,
-  sendGoogleAnalyticsMetrics
+  datalist
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
@@ -79,9 +78,8 @@ const CompanyStakeholdersComponent = ({
       setOpen(true);
     } else {
       setIsNewStakeholder(true);
-      createNewStakeholder();
+      createNewStakeholder(GA_EVENTS.COMPANY_STAKEHOLDER_ADD_NEW_CONTINUE);
     }
-    sendGoogleAnalyticsMetrics(GA_EVENTS.COMPANY_STAKEHOLDER_ADD_NEW_CONTINUE);
   };
 
   const handleClose = () => setOpen(false);
