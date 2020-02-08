@@ -100,6 +100,8 @@ instance.interceptors.response.use(
       }
     }
 
+    if (!jsonData) return;
+
     if (status === 400 && jsonData.errorType === "ReCaptchaError") {
       store.dispatch(setError(data.errors));
       NotificationsManager.add &&
@@ -115,12 +117,19 @@ instance.interceptors.response.use(
       }
     } else {
       log(jsonData);
-      console.log("jsonData.debugMessage");
-      console.log(jsonData);
-      NotificationsManager.add &&
-        NotificationsManager.add({
-          message: jsonData && jsonData.status ? `${jsonData.status} ${jsonData.message}` : null
-        });
+      try {
+        const { errors } = JSON.parse(jsonData.debugMessage);
+        const errorMessages = errors.map(({ message }) => message);
+
+        if (jsonData.status) {
+          NotificationsManager.add &&
+            NotificationsManager.add({
+              message: `${errorMessages.join(", ")}`
+            });
+        }
+      } catch (e) {
+        log(e);
+      }
     }
 
     return Promise.reject(error);
