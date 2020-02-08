@@ -71,7 +71,7 @@ export const FormNavigationComponent = ({
       ) : (
         pathname !== routes.login && (
           <ul>
-            {(pathname.indexOf(agentBaseName) !== -1 && !isApplyEditApplication
+            {(pathname.startsWith(agentBaseName) && !isApplyEditApplication
               ? searchProspectStepper
               : formStepper
             ).map(currentStep => (
