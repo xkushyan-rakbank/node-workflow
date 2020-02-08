@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { FormNavigationStep } from "../FormNavigationStep";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
-import routes from "../../routes";
+import routes, { agentBaseName } from "../../routes";
 import { accountNames, formStepper, searchProspectStepper } from "../../constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
@@ -30,15 +30,17 @@ export const FormNavigationComponent = ({
 
   const classes = useStyles();
   const isAccountsComparison = routes.accountsComparison === pathname;
-  const isChatVisible = ![
-    routes.accountsComparison,
-    routes.detailedAccount,
-    routes.applicationOverview,
-    routes.applicantInfo,
-    routes.verifyOtp,
-    routes.comeBackLogin,
-    routes.comeBackLoginVerification
-  ].includes(pathname);
+  const isChatVisible =
+    pathname.indexOf(agentBaseName) === -1 &&
+    ![
+      routes.accountsComparison,
+      routes.detailedAccount,
+      routes.applicationOverview,
+      routes.applicantInfo,
+      routes.verifyOtp,
+      routes.comeBackLogin,
+      routes.comeBackLoginVerification
+    ].includes(pathname);
 
   const bgTypeClass = cx({
     brown: !isAccountsComparison && accountType === accountNames.elite,

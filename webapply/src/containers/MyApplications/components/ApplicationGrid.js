@@ -45,7 +45,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
                   <WhiteContainedButton
                     disabled={app.status.reasonCode === STATUS_LOCKED}
                     label={ctaStatuses[app.status.statusNotes]}
-                    handleClick={() => getProspectInfo(app)}
+                    handleClick={() => getProspectInfo(app.prospectId)}
                   />
                 ) : (
                   <span>{notCtaStatuses[app.status.statusNotes]}</span>
@@ -59,7 +59,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
               <div key="action" className={classes.blockAction}>
                 <WhiteContainedButton
                   label="Finish Application"
-                  handleClick={() => getProspectInfo(app)}
+                  handleClick={() => getProspectInfo(app.prospectId)}
                 />
               </div>
             ]}
