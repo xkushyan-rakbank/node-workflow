@@ -1,4 +1,5 @@
 import axios from "axios";
+import get from "lodash/get";
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
@@ -117,9 +118,16 @@ instance.interceptors.response.use(
       log(jsonData);
       console.log("jsonData.debugMessage");
       console.log(jsonData);
+      const errorMessages = [];
+      if (jsonData.debugMessage) {
+        const { errors } = JSON.parse(jsonData.debugMessage);
+        errors.forEach(({ message }) => errorMessages.push(message));
+      }
       NotificationsManager.add &&
         NotificationsManager.add({
-          message: jsonData && jsonData.status ? `${jsonData.status} ${jsonData.message}` : null
+          message: get(jsonData, "status")
+            ? `${jsonData.status} ${jsonData.message} ${errorMessages.join(", ")}`
+            : null
         });
     }
 
