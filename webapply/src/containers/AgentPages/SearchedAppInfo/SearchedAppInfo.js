@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import get from "lodash/get";
 
 import { FormCard } from "../../../components/FormCard/FormCard";
@@ -48,9 +48,8 @@ export const SearchedAppInfoComponent = ({
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
 
-  const searchResult = useMemo(
-    (searchResults.searchResult || []).find(item => item.prospectId === match.params.id),
-    [searchResults.searchResult]
+  const searchResult = (searchResults.searchResult || []).find(
+    item => item.prospectId === match.params.id
   );
 
   const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED;
