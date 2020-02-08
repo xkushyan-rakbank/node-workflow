@@ -76,7 +76,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 datalistId="branchCity"
                 path="prospect.organizationInfo.branchCity"
                 label="Emirate / City"
-                isSearchable={false}
+                isSearchable
                 component={SelectAutocomplete}
                 onChange={id => {
                   setFieldValue("branchCity", id);
@@ -104,7 +104,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 placeholder="Branch"
                 disabled={!values.branchCity}
                 inputProps={{ tabIndex: 0 }}
-                isSearchable={false}
+                isSearchable
                 component={SelectAutocomplete}
               />
             </Grid>

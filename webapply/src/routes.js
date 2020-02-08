@@ -1,5 +1,5 @@
 const smeBaseName = "/sme";
-const agentBaseName = "/agent";
+export const agentBaseName = "/agent";
 
 export default {
   ApplicationSubmitted: `${smeBaseName}/ApplicationSubmitted`,

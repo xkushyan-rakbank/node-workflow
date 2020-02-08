@@ -189,7 +189,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   path={`prospect.orgKYCDetails.entitiesInUAE[${index}].emirate`}
                                   datalistId="emirateCity"
                                   label="Emirate/ City"
-                                  isSearchable={false}
+                                  isSearchable
                                   component={SelectAutocomplete}
                                   inputProps={{ tabIndex: 0 }}
                                 />

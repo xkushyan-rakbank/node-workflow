@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import * as actions from "../actions/retrieveApplicantInfo";
-import { setConfig } from "../actions/appConfig";
+import { displayScreenBasedOnViewId, setConfig } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "./../selectors/appConfig";
@@ -28,10 +28,13 @@ function* getProspectIdInfo({ payload }) {
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
-    const response = yield call(prospect.get, payload, headers);
+    const response = yield call(prospect.get, payload.prospectId, headers);
     const config = { prospect: response.data };
 
     yield put(setConfig(config));
+    if (payload.isUpdateView) {
+      yield put(displayScreenBasedOnViewId());
+    }
   } catch (error) {
     log(error);
   }

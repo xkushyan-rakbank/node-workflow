@@ -168,9 +168,13 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                             inputProps: { tabIndex: 0 }
                           }}
                           otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
+                          contextualHelpText={
+                            // eslint-disable-next-line max-len
+                            "This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. \n\n Example: \nIf business / commercial / licensed activity is 'E Commerce', please select industry as 'Services' & sub-industry as 'Computer & IT Industry'"
+                          }
                         />
                       </Grid>
-                      <Grid item md={isHaveIndustryAndSubCategory ? 2 : 0} sm={12}>
+                      <Grid item md={isHaveIndustryAndSubCategory ? 2 : false} sm={12}>
                         {isHaveIndustryAndSubCategory && (
                           <LinkButton
                             className={classes.deleteButton}

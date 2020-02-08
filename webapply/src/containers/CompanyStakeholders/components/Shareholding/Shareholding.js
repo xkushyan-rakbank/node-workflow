@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import * as Yup from "yup";
 import get from "lodash/get";
+import round from "lodash/round";
 import { Form, Formik } from "formik";
 
 import {
@@ -29,7 +30,7 @@ const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
     shareHoldingPercentage: Yup.number()
       .min(0, "Shareholders can't hold less than 0% of shares in total")
       .max(
-        100 - totalPercentageWithoutCurrentStakeholder,
+        round(100 - totalPercentageWithoutCurrentStakeholder, 2),
         "Shareholders can't hold more than 100% of shares in total"
       )
       .required(getRequiredMessage("Percentage"))
