@@ -566,8 +566,11 @@ public class WebApplyController {
             List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
 
             String errorMessage;
-            errorMessage = channelContext.get(0);
-
+            if (channelContext == null) {
+                errorMessage = e.getResponseBodyAsString();
+            } else {
+                errorMessage = channelContext.get(0);
+            }
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, errorMessage, e.getResponseBodyAsString(), e);
             throw new ApiException(error, responseHeaders, HttpStatus.BAD_REQUEST);
         } catch (HttpServerErrorException e) {
@@ -626,7 +629,7 @@ public class WebApplyController {
         ObjectNode initStateJSON = objectMapper.createObjectNode();
 
         setWebApplyEndpoints(objectMapper, initStateJSON, role);
-        initStateJSON.set("prospect", getProspect(segment, product));
+        initStateJSON.set("prospect", getProspect(segment));
 
         boolean recaptchaEnable = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaEnable").asText("N").equals("Y");
         String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
@@ -794,7 +797,7 @@ public class WebApplyController {
         return roleMatched && segmentMatched && productMatched && deviceMatched;
     }
 
-    private JsonNode getProspect(String segment, String product) {
+    private JsonNode getProspect(String segment) {
         if ("sme".equalsIgnoreCase(segment)) {
             return smeProspectJSON;
         }
