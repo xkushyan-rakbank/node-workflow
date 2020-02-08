@@ -107,13 +107,15 @@ export const UploadDocuments = ({
         onClick={fileUploadClick}
         ref={inputEl}
       />
+
       {(selectedFile || isUploaded) && <FileIcon width="20" height="26" alt="companyIconSvg" />}
+
       <div className={classes.ContentBox}>
         <p className={classes.uploadedFileName}>
           {isUploading
             ? `Uploading ${document.documentTitle}`
-            : isUploaded
-            ? document.fileName
+            : isUploaded && selectedFile
+            ? `${selectedFile.name}`
             : document.documentTitle}
 
           {selectedFile && (
