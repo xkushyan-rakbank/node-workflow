@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { updateProspectId, displayScreenBasedOnViewId } from "../../../store/actions/appConfig";
+import { updateProspectId } from "../../../store/actions/appConfig";
 import { getProspectInfo } from "../../../store/actions/retrieveApplicantInfo";
 import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
 import {
@@ -21,8 +21,7 @@ const mapDispatchToProps = {
   retrieveDocDetails,
   getProspectInfo,
   updateProspectId,
-  setIsApplyEditApplication,
-  displayScreenBasedOnViewId
+  setIsApplyEditApplication
 };
 
 export default connect(

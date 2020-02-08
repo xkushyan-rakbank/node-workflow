@@ -52,10 +52,6 @@ export const updateViewId = viewId => {
   return { type: UPDATE_VIEW_ID, viewId };
 };
 
-export const displayScreenBasedOnViewId = () => {
-  return { type: DISPLAY_SCREEN_BASED_ON_VIEW_ID };
-};
-
 export const updateSaveType = saveType => {
   return { type: UPDATE_SAVE_TYPE, saveType };
 };

@@ -7,11 +7,13 @@ import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getSearchResult } from "./../../store/selectors/searchProspect";
 
 import { MyApplications as BaseComponent } from "./components/MyApplications";
+import { useDisplayScreenBasedOnViewId } from "../../utils/useDisplayScreenBasedOnViewId";
 
 export const MyApplications = () => {
   const searchResults = useSelector(getSearchResult);
   const inputParam = useSelector(getApplicantInfo);
   const dispatch = useDispatch();
+  const { onDisplayScreen } = useDisplayScreenBasedOnViewId();
 
   useEffect(() => {
     dispatch(searchApplications(inputParam));
@@ -20,7 +22,7 @@ export const MyApplications = () => {
   return (
     <BaseComponent
       searchResults={searchResults}
-      getProspectInfo={prospectId => dispatch(getProspectInfo(prospectId, true))}
+      getProspectInfo={prospectId => dispatch(getProspectInfo(prospectId, true, onDisplayScreen))}
     />
   );
 };

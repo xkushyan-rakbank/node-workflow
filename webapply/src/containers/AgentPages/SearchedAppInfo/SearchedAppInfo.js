@@ -11,6 +11,7 @@ import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./
 import { useStep } from "../../../components/StepComponent/useStep";
 
 import { useStyles } from "./styled";
+import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
 
 export const SearchedAppInfoComponent = ({
   searchResults,
@@ -19,7 +20,6 @@ export const SearchedAppInfoComponent = ({
   retrieveDocDetails,
   getProspectInfo,
   setIsApplyEditApplication,
-  displayScreenBasedOnViewId,
   prospectInfo
 }) => {
   const classes = useStyles();
@@ -39,10 +39,12 @@ export const SearchedAppInfoComponent = ({
     setIsDisplayConfirmDialog(true);
   }, [setIsDisplayConfirmDialog]);
 
+  const { onDisplayScreen } = useDisplayScreenBasedOnViewId();
+
   const confirmHandler = useCallback(() => {
     setIsApplyEditApplication({ isApplyEditApplication: true });
-    displayScreenBasedOnViewId();
-  }, [setIsApplyEditApplication, displayScreenBasedOnViewId]);
+    onDisplayScreen();
+  }, [setIsApplyEditApplication]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
