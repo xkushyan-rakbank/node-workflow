@@ -16,3 +16,16 @@ export const checkIsShowSmallBg = pathname =>
   [routes.accountsComparison, routes.comeBackLogin, routes.comeBackLoginVerification].includes(
     pathname
   );
+
+export const checkIsShow = pathname =>
+  [
+    routes.accountsComparison,
+    routes.companyInfo,
+    routes.stakeholdersInfo,
+    routes.finalQuestions,
+    routes.comeBackLogin,
+    routes.comeBackLoginVerification,
+    routes.reUploadDocuments,
+    routes.ApplicationSubmitted,
+    routes.uploadDocuments
+  ].includes(pathname);

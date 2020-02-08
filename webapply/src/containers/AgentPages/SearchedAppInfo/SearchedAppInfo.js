@@ -18,7 +18,9 @@ export const SearchedAppInfoComponent = ({
   updateProspectId,
   retrieveDocDetails,
   getProspectInfo,
-  displayScreenBasedOnViewId
+  setIsApplyEditApplication,
+  displayScreenBasedOnViewId,
+  prospectInfo
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
@@ -30,8 +32,7 @@ export const SearchedAppInfoComponent = ({
 
   useEffect(() => {
     updateProspectId(match.params.id);
-    retrieveDocDetails();
-    getProspectInfo(match.params.id, false);
+    getProspectInfo(match.params.id);
   }, [updateProspectId, retrieveDocDetails, match.params.id]);
 
   const redirectUserPage = useCallback(() => {
@@ -39,23 +40,20 @@ export const SearchedAppInfoComponent = ({
   }, [setIsDisplayConfirmDialog]);
 
   const confirmHandler = useCallback(() => {
+    setIsApplyEditApplication({ isApplyEditApplication: true });
     displayScreenBasedOnViewId();
-  }, [displayScreenBasedOnViewId]);
+  }, [setIsApplyEditApplication, displayScreenBasedOnViewId]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
 
-  const prospectInfo = (searchResults.searchResult || []).find(
+  const searchResult = (searchResults.searchResult || []).find(
     item => item.prospectId === match.params.id
   );
 
-  if (!prospectInfo) {
-    return null;
-  }
-
-  const isDisabled = get(prospectInfo, "status.reasonCode") === STATUS_LOCKED;
-  const fullName = get(prospectInfo, "applicantInfo.fullName", "");
+  const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED;
+  const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
   return (

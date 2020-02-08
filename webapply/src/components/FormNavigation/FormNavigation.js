@@ -8,13 +8,17 @@ import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicB
 import { AccountInfo } from "./AccountInfo";
 import routes, { agentBaseName } from "../../routes";
 import { accountNames, formStepper, searchProspectStepper } from "../../constants";
-import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
+import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShow } from "./utils";
 
 import { useStyles } from "./styled";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
-export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }) => {
+export const FormNavigationComponent = ({
+  islamicBanking,
+  accountType,
+  isApplyEditApplication
+}) => {
   const {
     location: { pathname }
   } = useHistory();
@@ -67,7 +71,10 @@ export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }
       ) : (
         pathname !== routes.login && (
           <ul>
-            {(isLogin ? searchProspectStepper : formStepper).map(currentStep => (
+            {(!checkIsShow(pathname) && !isApplyEditApplication
+              ? searchProspectStepper
+              : formStepper
+            ).map(currentStep => (
               <FormNavigationStep
                 key={currentStep.step}
                 title={currentStep.title}

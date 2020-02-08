@@ -29,6 +29,14 @@ export const useStyles = makeStyles({
     color: "#263d4c",
     marginTop: "-23px"
   },
+  notFound: {
+    fontSize: "18px",
+    fontWeight: 400,
+    lineHeight: 1,
+    color: "#263d4c",
+    textAlign: "center",
+    width: "100%"
+  },
   account: {
     fontSize: "14px",
     color: "#86868b",
