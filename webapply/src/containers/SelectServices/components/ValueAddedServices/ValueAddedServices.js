@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
 import cx from "classnames";
-import { useDispatch } from "react-redux";
 import {
   ExpandedDetailedOptionsCard,
   rakValuePackagePlusName
@@ -42,7 +41,6 @@ export const ValueAddedServicesComponent = ({
   rakValuePackage,
   accountCurrencies
 }) => {
-  const dispatch = useDispatch();
   const { isSelectOnlyForeignCurrency } = accountCurrencies;
   const classes = useStyles();
 
@@ -59,7 +57,7 @@ export const ValueAddedServicesComponent = ({
         GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
       );
     },
-    [rakValuePackage, accountType, updateProspect, dispatch]
+    [rakValuePackage, accountType, updateProspect]
   );
 
   useEffect(() => {

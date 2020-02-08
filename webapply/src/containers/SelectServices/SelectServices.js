@@ -23,7 +23,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
       }
       sendProspectToAPI(event).then(() => setStep(step + 1), () => {});
     },
-    [sendProspectToAPI, step]
+    [sendProspectToAPI, step, pushHistory]
   );
 
   const createSetStepHandler = nextStep => () => {

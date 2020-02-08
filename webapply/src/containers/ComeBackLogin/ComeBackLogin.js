@@ -91,7 +91,7 @@ const ComeBackLoginComponent = ({
     if (isOtpGenerated) {
       pushHistory(routes.comeBackLoginVerification);
     }
-  }, [history, isOtpGenerated]);
+  }, [pushHistory, isOtpGenerated]);
 
   return (
     <div className={classes.centeredContainer}>

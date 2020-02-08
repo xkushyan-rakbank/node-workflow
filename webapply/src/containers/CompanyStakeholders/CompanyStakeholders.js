@@ -59,7 +59,7 @@ const CompanyStakeholdersComponent = ({
 
   const goToFinalQuestions = useCallback(() => {
     pushHistory(routes.finalQuestions);
-  }, [pushHistory, routes.finalQuestions]);
+  }, [pushHistory]);
 
   const handleDeleteStakeholder = useCallback(id => deleteHandler(id), [deleteHandler]);
 
