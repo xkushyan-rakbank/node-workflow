@@ -4,7 +4,7 @@ import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   searchResults: [],
-  isApplyEditApplication: false
+  isApplyEditApplication: null
 };
 
 export default handleActions(
@@ -13,9 +13,9 @@ export default handleActions(
       ...state,
       searchResults: payload
     }),
-    [IS_APPLY_EDIT_APPLICATION]: state => ({
+    [IS_APPLY_EDIT_APPLICATION]: (state, { payload }) => ({
       ...state,
-      isApplyEditApplication: true
+      isApplyEditApplication: payload
     }),
     [LOGOUT]: () => initialState
   },

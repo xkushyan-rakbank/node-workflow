@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import get from "lodash/get";
 import { FormCard } from "../../../components/FormCard/FormCard";
 import { StepComponent } from "../../../components/StepComponent/StepComponent";
@@ -39,16 +39,17 @@ export const SearchedAppInfoComponent = ({
   }, [setIsDisplayConfirmDialog]);
 
   const confirmHandler = useCallback(() => {
-    setIsApplyEditApplication();
+    setIsApplyEditApplication({ isApplyEditApplication: true });
     displayScreenBasedOnViewId();
-  }, [setIsApplyEditApplication]);
+  }, [setIsApplyEditApplication, displayScreenBasedOnViewId]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
 
-  const searchResult = (searchResults.searchResult || []).find(
-    item => item.prospectId === match.params.id
+  const searchResult = useMemo(
+    (searchResults.searchResult || []).find(item => item.prospectId === match.params.id),
+    [searchResults.searchResult]
   );
 
   const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED;

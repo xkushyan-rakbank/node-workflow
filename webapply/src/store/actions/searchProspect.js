@@ -16,6 +16,6 @@ export const formatSearchList = () => {
   return { type: FORMAT_SEARCH_LIST };
 };
 
-export const setIsApplyEditApplication = () => {
-  return { type: IS_APPLY_EDIT_APPLICATION };
+export const setIsApplyEditApplication = payload => {
+  return { type: IS_APPLY_EDIT_APPLICATION, payload };
 };

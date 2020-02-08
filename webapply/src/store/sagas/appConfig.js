@@ -112,7 +112,7 @@ function* displayScreenBasedOnViewIdSaga() {
   const isApplicationSubmitted =
     applicationInfo.viewId === "/ApplicationSubmitted" &&
     applicationInfo.viewId !== "/SearchProspect";
-  const VIEW_ID = isApplicationSubmitted ? "/CompanyInfo" : "/CompanyInfo"; //TODO: change to real applicationInfo.viewId
+  const VIEW_ID = isApplicationSubmitted ? "/CompanyInfo" : applicationInfo.viewId;
 
   if (applicationInfo.actionType === "submit" && applicationInfo.retrieveMode && !isROScreens) {
     yield call(history.push, prefix + routes.ApplicationSubmitted);
