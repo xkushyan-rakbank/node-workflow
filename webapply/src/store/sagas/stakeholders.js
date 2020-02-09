@@ -7,7 +7,8 @@ import {
   DELETE_STAKEHOLDER,
   changeEditableStakeholder,
   updateStakeholdersIds,
-  SET_FILL_STAKEHOLDER
+  SET_FILL_STAKEHOLDER,
+  SET_EDIT_STAKEHOLDER
 } from "../actions/stakeholders";
 import { addSignatory, removeSignatory } from "../actions/completedSteps";
 import { setConfig } from "../actions/appConfig";
@@ -60,10 +61,27 @@ function* setFillStakeholderSaga({ payload }) {
   yield put(updateStakeholdersIds(stakeholdersIds));
 }
 
+function* setEditStakeholderSaga({ payload }) {
+  const state = yield select();
+  const stakeholdersIds = state.stakeholders.stakeholdersIds.reduce(
+    (previousValue, currentValue, index) => [
+      ...previousValue,
+      {
+        ...currentValue,
+        isEditting: payload.index === index ? payload.isEditting : currentValue.isEditting
+      }
+    ],
+    []
+  );
+
+  yield put(updateStakeholdersIds(stakeholdersIds));
+}
+
 export default function* appConfigSaga() {
   yield all([
     takeEvery(CREATE_NEW_STAKEHOLDER, createNewStakeholderSaga),
     takeEvery(DELETE_STAKEHOLDER, deleteStakeholderSaga),
-    takeEvery(SET_FILL_STAKEHOLDER, setFillStakeholderSaga)
+    takeEvery(SET_FILL_STAKEHOLDER, setFillStakeholderSaga),
+    takeEvery(SET_EDIT_STAKEHOLDER, setEditStakeholderSaga)
   ]);
 }

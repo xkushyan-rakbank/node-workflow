@@ -13,7 +13,8 @@ import { Icon, ICONS } from "../../components/Icons";
 import {
   changeEditableStakeholder,
   createNewStakeholder,
-  deleteStakeholder
+  deleteStakeholder,
+  setEditStakeholder
 } from "../../store/actions/stakeholders";
 import { resetProspect } from "../../store/actions/appConfig";
 import { getSendProspectToAPIInfo, getDatalist } from "../../store/selectors/appConfig";
@@ -39,7 +40,8 @@ const CompanyStakeholdersComponent = ({
   resetProspect,
   stakeholdersIds,
   hasSignatories,
-  datalist
+  datalist,
+  setEditStakeholder
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -85,11 +87,18 @@ const CompanyStakeholdersComponent = ({
       }
       changeEditableStakeholder(index);
       setIsNewStakeholder(false);
+      setEditStakeholder(index, true);
     },
-    [changeEditableStakeholder, editableStakeholder, resetProspect]
+    [
+      changeEditableStakeholder,
+      editableStakeholder,
+      resetProspect,
+      setEditStakeholder,
+      setIsNewStakeholder
+    ]
   );
 
-  const addNewStakeholder = () => {
+  const addNewStakeholder = useCallback(() => {
     setIsShowingAddButton(false);
     if (editableStakeholder) {
       setOpen(true);
@@ -97,7 +106,14 @@ const CompanyStakeholdersComponent = ({
       setIsNewStakeholder(true);
       createNewStakeholder();
     }
-  };
+  }, [
+    setIsShowingAddButton,
+    editableStakeholder,
+    setOpen,
+    setIsNewStakeholder,
+    createNewStakeholder
+  ]);
+
   const handleClose = () => setOpen(false);
 
   const handleConfirm = () => {
@@ -130,15 +146,20 @@ const CompanyStakeholdersComponent = ({
 
       <div>
         {stakeholders.map((item, index) => {
+          const isEditInProgress = stakeholdersIds.find(stakeholder => stakeholder.id === item.id)
+            .isEditting;
           return editableStakeholder === index ? (
             <StakeholderStepper
               showAddButton={handleShowAddButton}
               {...item}
               key={item.id}
               index={editableStakeholder}
-              deleteStakeholder={handleDeleteStakeholder}
+              deleteStakeholder={
+                stakeholders.length !== 1 || isEditInProgress ? handleDeleteStakeholder : null
+              }
               isNewStakeholder={isNewStakeholder}
               orderIndex={index}
+              isEditInProgress={isEditInProgress}
             />
           ) : (
             <FilledStakeholderCard
@@ -152,15 +173,13 @@ const CompanyStakeholdersComponent = ({
           );
         })}
       </div>
-
-      {stakeholders.length > 0 && !hasSignatories && (
-        <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
-      )}
-
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
+      )}
+      {stakeholders.length > 0 && !hasSignatories && (
+        <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
       )}
       {stakeholders.length && isLowPercentage ? (
         <ErrorMessage
@@ -206,6 +225,7 @@ const mapDispatchToProps = {
   sendProspectToAPI,
   createNewStakeholder,
   changeEditableStakeholder,
+  setEditStakeholder,
   resetProspect
 };
 
