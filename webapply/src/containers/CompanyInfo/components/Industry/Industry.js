@@ -125,6 +125,16 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                             inputProps: { tabIndex: 0 }
                           }}
                           otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
+                          contextualHelpText={
+                            <>
+                              This should be selected as per the most relevant business / commercial
+                              / licensed activity mentioned in the trade license
+                              <br />
+                              Example
+                              <br />
+                              If business / commercial / licensed
+                            </>
+                          }
                         />
                       </Grid>
                       <Grid item md={isHaveIndustryAndSubCategory ? 5 : 6} sm={12}>
