@@ -8,7 +8,7 @@ import routes from "../routes";
 
 const prefix = "/sme";
 const VIEW_IDS = {
-  ApplicationSubmitted: "/ApplicationSubmitted",
+  SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
   CompanyInfo: "/CompanyInfo"
 };
@@ -28,7 +28,7 @@ export const useDisplayScreenBasedOnViewId = () => {
     const isSubmit = applicationInfo.actionType === ACTION_TYPES.submit;
     const isRetrieveMode = applicationInfo.retrieveMode;
     const isApplicationSubmitted =
-      viewId === VIEW_IDS.ApplicationSubmitted && viewId !== VIEW_IDS.SearchProspect;
+      viewId === VIEW_IDS.SubmitApplication && viewId !== VIEW_IDS.SearchProspect;
     const pathTo = isApplicationSubmitted ? VIEW_IDS.CompanyInfo : viewId;
 
     if (!isROScreens) {
