@@ -23,8 +23,8 @@ import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
   fname: Yup.string()
-    .matches(NAME_REGEX, getInvalidMessage("Applicant Name"))
-    .max(30, "Maximum 30 characters allowed"),
+    .max(30, "Maximum 30 characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
   mobileNo: Yup.string().when("countryCode", {
     is: countryCode => countryCode === UAE_CODE,
     then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, `${getInvalidMessage("Mobile Number")}`),

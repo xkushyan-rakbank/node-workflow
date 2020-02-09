@@ -35,16 +35,16 @@ const personalInformationSchema = Yup.object().shape({
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
       .required(getRequiredMessage("First name"))
-      .matches(NAME_REGEX, getInvalidMessage("First name"))
       .max(30, "Maximum 30 characters allowed")
+      .matches(NAME_REGEX, getInvalidMessage("First name"))
   }),
   middleName: Yup.string().matches(NAME_REGEX, getInvalidMessage("Middle name")),
   lastName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
       .required(getRequiredMessage("Last name"))
-      .matches(NAME_REGEX, getInvalidMessage("Last name"))
       .max(30, "Maximum 30 characters allowed")
+      .matches(NAME_REGEX, getInvalidMessage("Last name"))
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
