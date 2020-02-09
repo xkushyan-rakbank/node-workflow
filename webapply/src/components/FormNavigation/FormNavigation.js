@@ -71,17 +71,16 @@ export const FormNavigationComponent = ({
       ) : (
         pathname !== routes.login && (
           <ul>
-            {(pathname.startsWith(agentBaseName) && !isApplyEditApplication
-              ? searchProspectStepper
-              : formStepper
-            ).map(currentStep => (
-              <FormNavigationStep
-                key={currentStep.step}
-                title={currentStep.title}
-                activeStep={pathname === currentStep.path || pathname === currentStep.relatedPath}
-                filled={(getRouteConfig() || {}).step > currentStep.step}
-              />
-            ))}
+            {(pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper).map(
+              currentStep => (
+                <FormNavigationStep
+                  key={currentStep.step}
+                  title={currentStep.title}
+                  activeStep={pathname === currentStep.path || pathname === currentStep.relatedPath}
+                  filled={(getRouteConfig() || {}).step > currentStep.step}
+                />
+              )
+            )}
           </ul>
         )
       )}

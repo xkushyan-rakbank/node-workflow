@@ -110,8 +110,7 @@ function* displayScreenBasedOnViewIdSaga() {
   const isROScreens = getIsEditableStatusSearchInfo(state);
   const prefix = "/sme";
   const isApplicationSubmitted =
-    applicationInfo.viewId === "/ApplicationSubmitted" &&
-    applicationInfo.viewId !== "/SearchProspect";
+    applicationInfo.viewId === "/SubmitApplication" && applicationInfo.viewId !== "/SearchProspect";
   const VIEW_ID = isApplicationSubmitted ? "/CompanyInfo" : applicationInfo.viewId;
 
   if (applicationInfo.actionType === "submit" && applicationInfo.retrieveMode && !isROScreens) {
