@@ -33,7 +33,8 @@ import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidation
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required(getRequiredMessage("Your Name"))
-    .matches(FULL_NAME_REGEX, getInvalidMessage("Your Name")),
+    .matches(FULL_NAME_REGEX, getInvalidMessage("Your Name"))
+    .max(77, "Maximum 77 characters allowed"),
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
     .email(getInvalidMessage("Your E-mail Address"))

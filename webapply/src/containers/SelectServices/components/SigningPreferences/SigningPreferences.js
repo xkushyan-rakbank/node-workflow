@@ -54,8 +54,9 @@ const signingPreferencesSchema = Yup.object({
   signatories: Yup.array().of(
     Yup.object().shape({
       TxnReconfirmingfullname: Yup.string()
+        .required(getRequiredMessage("Full name"))
         .matches(FULL_NAME_REGEX, getInvalidMessage("Full name"))
-        .required(getRequiredMessage("Full name")),
+        .max(77, "Maximum 77 characters allowed"),
       primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
       primaryMobileNo: Yup.string()
         .when("TxnReconfirmingfullname", {
