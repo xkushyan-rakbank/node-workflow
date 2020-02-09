@@ -59,7 +59,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
       isIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
     }
 
-    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+    const segment = pathname.substring(1, pathname.lastIndexOf("/") || pathname.length);
 
     receiveAppConfig(segment, accountType, isIslamicBanking);
     prospectAutoSave();

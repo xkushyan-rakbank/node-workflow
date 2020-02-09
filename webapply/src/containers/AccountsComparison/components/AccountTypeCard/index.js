@@ -1,3 +1,1 @@
-import { AccountTypeCardComponent } from "./AccountTypeCard";
-
-export const AccountTypeCard = AccountTypeCardComponent;
+export { AccountTypeCardComponent as AccountTypeCard } from "./AccountTypeCard";

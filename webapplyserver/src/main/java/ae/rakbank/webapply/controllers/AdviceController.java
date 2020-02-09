@@ -22,14 +22,13 @@ public class AdviceController extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleApiException(ApiException apiException) {
 
         HttpHeaders headers;
-        if (apiException.getHeaders() == null) {
-            headers = new HttpHeaders();
-            headers.set("Exception", apiException.getClass().getSimpleName());
-        } else {
-            headers = apiException.getHeaders();
-            headers.set("Exception", apiException.getClass().getSimpleName());
+        headers = new HttpHeaders();
+        headers.set("Exception", apiException.getClass().getSimpleName());
+        if (apiException.getHeaders() != null) {
+            headers.putAll(apiException.getHeaders());
         }
         headers.set(HttpHeaders.CONTENT_TYPE, "application/json");
+        headers.remove(HttpHeaders.CONTENT_LENGTH);
 
         HttpStatus status;
         if (apiException.getStatus() == null) {

@@ -14,7 +14,11 @@ import { useStyles } from "./styled";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
-export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }) => {
+export const FormNavigationComponent = ({
+  islamicBanking,
+  accountType,
+  isApplyEditApplication
+}) => {
   const {
     location: { pathname }
   } = useHistory();
@@ -67,7 +71,10 @@ export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }
       ) : (
         pathname !== routes.login && (
           <ul>
-            {(isLogin ? searchProspectStepper : formStepper).map(currentStep => (
+            {(pathname.startsWith(agentBaseName) && !isApplyEditApplication
+              ? searchProspectStepper
+              : formStepper
+            ).map(currentStep => (
               <FormNavigationStep
                 key={currentStep.step}
                 title={currentStep.title}

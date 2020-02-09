@@ -16,7 +16,7 @@ const styles = {
     bottom: 0,
     left: 0,
     right: 0,
-    transition: "top 400ms",
+    transition: "transform 400ms",
     overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 11,
@@ -140,7 +140,7 @@ class BackgroundVideoPlayer extends React.Component {
 
     const video = (
       <div
-        style={{ top: `-${100 * nextElementPosition}vh` }}
+        style={{ transform: `translateY(-${100 * nextElementPosition}vh)` }}
         className={cx(classes.container, videoWrapperClass)}
       >
         <video
