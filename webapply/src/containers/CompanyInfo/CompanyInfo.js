@@ -36,21 +36,17 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
-  const handleContinue = useCallback(
-    event => () => {
-      sendProspectToAPI(event).then(
-        () => {
-          if (!isRegisteredInUAE) {
-            return setScreeningError(screeningStatusNotRegistered);
-          }
-          handleSetNextStep();
-        },
-        () => {}
-      );
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  const handleContinue = () => event => {
+    sendProspectToAPI(event).then(
+      () => {
+        if (!isRegisteredInUAE) {
+          return setScreeningError(screeningStatusNotRegistered);
+        }
+        handleSetNextStep();
+      },
+      () => {}
+    );
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
