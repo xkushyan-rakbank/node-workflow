@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
-import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
+import { SIGNATORY_INITIAL_INDEX, STEP_1 } from "../SignatorySummaryCard/constants";
 import { useReduxStep } from "../../../../hooks/useReduxStep";
 
 export const FinalQuestionStepComponent = ({
@@ -11,7 +11,7 @@ export const FinalQuestionStepComponent = ({
   stepsArray,
   page
 }) => {
-  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(page);
+  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(page, STEP_1);
   const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleContinue = () =>

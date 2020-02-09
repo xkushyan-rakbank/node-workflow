@@ -2,9 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setStep, setInitialStep, addStep, setStepIsActive } from "../store/actions/completedSteps";
 
-const INITIAL_INDEX = 1;
-
-export const useReduxStep = flowId => {
+export const useReduxStep = (flowId, initialStep) => {
   const dispatch = useDispatch();
 
   const availableSteps = useSelector(
@@ -14,7 +12,7 @@ export const useReduxStep = flowId => {
   if (!availableSteps.length) {
     dispatch(
       setInitialStep(flowId, {
-        id: INITIAL_INDEX,
+        id: initialStep,
         isActive: true,
         isAvailable: false,
         isCompleted: false

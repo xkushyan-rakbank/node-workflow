@@ -33,7 +33,10 @@ export const CompanyInfoPage = ({
   isRegisteredInUAE
 }) => {
   const classes = useStyles();
-  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(COMPANY_INFO_PAGE_ID);
+  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+    COMPANY_INFO_PAGE_ID,
+    STEP_1
+  );
   const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleContinue = () =>

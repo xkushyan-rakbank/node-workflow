@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 
-import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
+import { STEP_1, STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
@@ -20,7 +20,10 @@ export const SelectServicesComponent = ({
   const [isSubmit, setIsSubmit] = useState(false);
   const classes = useStyles();
 
-  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(SELECT_SERVICES_PAGE_ID);
+  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+    SELECT_SERVICES_PAGE_ID,
+    STEP_1
+  );
   const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleClickNextStep = useCallback(() => {
