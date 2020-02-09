@@ -8,7 +8,7 @@ import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicB
 import { AccountInfo } from "./AccountInfo";
 import routes, { agentBaseName } from "../../routes";
 import { accountNames, formStepper, searchProspectStepper } from "../../constants";
-import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShow } from "./utils";
+import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
 
@@ -71,7 +71,7 @@ export const FormNavigationComponent = ({
       ) : (
         pathname !== routes.login && (
           <ul>
-            {(!checkIsShow(pathname) && !isApplyEditApplication
+            {(pathname.startsWith(agentBaseName) && !isApplyEditApplication
               ? searchProspectStepper
               : formStepper
             ).map(currentStep => (
