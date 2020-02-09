@@ -17,6 +17,7 @@ export const CustomRadioButton = ({
   label,
   onSelect = () => {},
   classes: extendedClasses,
+  disabled,
   ...rest
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -26,6 +27,7 @@ export const CustomRadioButton = ({
       classes={{ label: classes.label, root: classes.root }}
       control={
         <Radio
+          disabled={disabled}
           onClick={onSelect}
           icon={<Icon name={ICONS.unCheckedRadio} alt="select icon" />}
           checkedIcon={<Icon name={ICONS.checkedRadio} alt="selected icon" />}

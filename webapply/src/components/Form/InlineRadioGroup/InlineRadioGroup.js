@@ -17,7 +17,8 @@ export const InlineRadioGroup = ({
   onChange,
   contextualHelpText,
   contextualHelpProps = {},
-  onSelect = () => {}
+  onSelect = () => {},
+  disabled
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
@@ -44,6 +45,7 @@ export const InlineRadioGroup = ({
           <div className={classes.inlineFormRadioWrapper}>
             {options.map(item => (
               <Radio
+                disabled={disabled}
                 color="secondary"
                 key={item.key}
                 value={item.value}
