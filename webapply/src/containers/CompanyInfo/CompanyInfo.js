@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
-import get from "lodash/get";
 
 import { useReduxStep } from "../../hooks/useReduxStep";
 import { FormCard } from "../../components/FormCard/FormCard";
@@ -35,7 +34,7 @@ export const CompanyInfoPage = ({
 }) => {
   const classes = useStyles();
   const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(COMPANY_INFO_PAGE_ID);
-  const activeStep = get(availableSteps.find(step => step.isActive), "id", null);
+  const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleContinue = () =>
     sendProspectToAPI().then(

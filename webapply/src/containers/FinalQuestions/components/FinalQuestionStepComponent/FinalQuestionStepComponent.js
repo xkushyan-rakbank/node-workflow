@@ -1,5 +1,4 @@
 import React from "react";
-import get from "lodash/get";
 
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
@@ -13,7 +12,7 @@ export const FinalQuestionStepComponent = ({
   page
 }) => {
   const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(page);
-  const activeStep = get(availableSteps.find(step => step.isActive), "id", null);
+  const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleContinue = () =>
     sendProspectToAPI().then(

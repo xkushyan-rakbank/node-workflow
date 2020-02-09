@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
-import get from "lodash/get";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
@@ -48,7 +47,7 @@ const StakeholderStepperComponent = ({
   const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
     `${COMPANY_STAKEHOLDER_ID}${stakeholdersIds[index].id}`
   );
-  const activeStep = get(availableSteps.find(step => step.isActive), "id", null);
+  const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleContinue = () =>
     sendProspectToAPI().then(

@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-import get from "lodash/get";
 
 import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -22,7 +21,7 @@ export const SelectServicesComponent = ({
   const classes = useStyles();
 
   const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(SELECT_SERVICES_PAGE_ID);
-  const activeStep = get(availableSteps.find(step => step.isActive), "id", null);
+  const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
