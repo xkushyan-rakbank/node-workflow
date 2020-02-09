@@ -38,7 +38,7 @@ import {
   getAccountType
 } from "../selectors/appConfig";
 import { getIsEditableStatusSearchInfo } from "../selectors/searchProspect";
-import routes, { agentBaseName, smeBaseName } from "./../../routes";
+import routes from "./../../routes";
 
 function* receiveAppConfigSaga({ payload }) {
   try {
@@ -145,21 +145,9 @@ function* resetProspectSaga() {
   }
 }
 
-function* updateViewIdSaga({ viewId }) {
-  yield put(
-    updateProspect({
-      "prospect.applicationInfo.viewId": viewId.replace(smeBaseName, "").replace(agentBaseName, "")
-    })
-  );
-  if (
-    [
-      routes.stakeholdersInfo,
-      routes.finalQuestions,
-      routes.uploadDocuments,
-      routes.selectServices,
-      routes.SubmitApplication
-    ].includes(viewId)
-  ) {
+function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
+  yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
+  if (isSendToApi) {
     yield put(sendProspectToAPIPromisify());
   }
 }
