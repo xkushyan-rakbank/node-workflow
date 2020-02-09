@@ -20,17 +20,18 @@ export const SubmitApplicationComponent = ({
   organizationInfo: { companyName },
   sendProspectToAPI,
   updateActionType,
-  updateSaveType
+  updateSaveType,
+  isApplyEditApplication
 }) => {
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const pathname = isApplyEditApplication ? routes.companyInfo : routes.ApplicationSubmitted;
   const handleSubmit = () => {
     setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
     sendProspectToAPI()
-      .then(() => history.push(routes.ApplicationSubmitted))
+      .then(() => history.push(pathname))
       .finally(() => setIsSubmitting(false));
   };
 
