@@ -19,7 +19,7 @@ import {
   saveProspectModel
 } from "../actions/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
-import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
+import { sendProspectToAPIPromisify, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 
 import { config } from "../../api/apiClient";
 import { history } from "./..";
@@ -38,7 +38,7 @@ import {
   getAccountType
 } from "../selectors/appConfig";
 import { getIsEditableStatusSearchInfo } from "../selectors/searchProspect";
-import routes from "./../../routes";
+import routes, { agentBaseName, smeBaseName } from "./../../routes";
 
 function* receiveAppConfigSaga({ payload }) {
   try {
@@ -148,9 +148,20 @@ function* resetProspectSaga() {
 function* updateViewIdSaga({ viewId }) {
   yield put(
     updateProspect({
-      "prospect.applicationInfo.viewId": viewId.replace("/sme", "").replace("/agent", "")
+      "prospect.applicationInfo.viewId": viewId.replace(smeBaseName, "").replace(agentBaseName, "")
     })
   );
+  if (
+    [
+      routes.stakeholdersInfo,
+      routes.finalQuestions,
+      routes.uploadDocuments,
+      routes.selectServices,
+      routes.SubmitApplication
+    ].includes(viewId)
+  ) {
+    yield put(sendProspectToAPIPromisify());
+  }
 }
 
 function* updateSaveTypeSaga({ saveType }) {
