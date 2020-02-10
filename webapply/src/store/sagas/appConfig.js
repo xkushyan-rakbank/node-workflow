@@ -19,7 +19,7 @@ import {
   saveProspectModel
 } from "../actions/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
-import { sendProspectToAPIPromisify, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
+import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 
 import { config } from "../../api/apiClient";
 import { history } from "./..";
@@ -148,7 +148,7 @@ function* resetProspectSaga() {
 function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
   if (isSendToApi) {
-    yield put(sendProspectToAPIPromisify());
+    yield put(sendProspectToAPI());
   }
 }
 

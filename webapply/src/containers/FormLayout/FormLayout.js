@@ -30,16 +30,16 @@ export const FormLayoutComponent = ({
   });
 
   useEffect(() => {
-    updateViewId(
-      pathname.replace(smeBaseName, "").replace(agentBaseName, ""),
-      [
-        routes.stakeholdersInfo,
-        routes.finalQuestions,
-        routes.uploadDocuments,
-        routes.selectServices,
-        routes.SubmitApplication
-      ].includes(pathname)
-    );
+    const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
+    const isSendToApi = [
+      routes.stakeholdersInfo,
+      routes.finalQuestions,
+      routes.uploadDocuments,
+      routes.selectServices,
+      routes.SubmitApplication
+    ].includes(pathname);
+
+    updateViewId(viewId, isSendToApi);
     resetScreeningError();
   }, [key, pathname, updateViewId, resetScreeningError]);
 
