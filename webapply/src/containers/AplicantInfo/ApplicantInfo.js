@@ -5,11 +5,11 @@ import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
 import {
-  NAME_REGEX,
   NUMBER_REGEX,
   UAE_MOBILE_PHONE_REGEX,
   MAX_NON_UAE_PHONE_LENGTH,
-  MIN_NON_UAE_PHONE_LENGTH
+  MIN_NON_UAE_PHONE_LENGTH,
+  FULL_NAME_REGEX
 } from "./../../utils/validation";
 import {
   Input,
@@ -33,11 +33,12 @@ import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidation
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required(getRequiredMessage("Your Name"))
-    .matches(NAME_REGEX, getInvalidMessage("Your Name")),
+    .max(77, "Maximum 77 characters allowed")
+    .matches(FULL_NAME_REGEX, getInvalidMessage("Your Name")),
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
-    .email(getInvalidMessage("Your E-mail Address"))
-    .max(50, "Maximum 50 characters allowed"),
+    .max(50, "Maximum 50 characters allowed")
+    .email(getInvalidMessage("Your E-mail Address")),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
