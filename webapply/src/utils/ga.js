@@ -1,7 +1,5 @@
 export const GA = {
   triggerEvent: ({ event, accountType }) => {
-    console.log(event);
-    console.log(accountType);
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event, ProductName: accountType });
   }
