@@ -58,15 +58,15 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.wealthType`}
                   datalistId="wealthType"
                   label="Source of funds"
-                  onChange={e => {
+                  onChange={selectedValue => {
                     if (
-                      e.target.value !== OTHER_SOURCE_OF_WEALTH &&
+                      selectedValue !== OTHER_SOURCE_OF_WEALTH &&
                       values.wealthType === OTHER_SOURCE_OF_WEALTH
                     ) {
                       setFieldValue("others", "");
                       setFieldTouched("others", false);
                     }
-                    setFieldValue("wealthType", e.target.value);
+                    setFieldValue("wealthType", selectedValue);
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
