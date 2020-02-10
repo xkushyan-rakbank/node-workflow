@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { searchApplications } from "../../store/actions/searchProspect";
@@ -19,12 +19,10 @@ export const MyApplications = () => {
     dispatch(searchApplications(inputParam));
   }, [inputParam, dispatch]);
 
-  return (
-    <BaseComponent
-      searchResults={searchResults}
-      getProspectInfo={prospectId => {
-        dispatch(getProspectInfo(prospectId)).then(pushDisplayScreenToHistory, () => {});
-      }}
-    />
+  const onGetProspectInfo = useCallback(
+    prospectId => dispatch(getProspectInfo(prospectId)).then(pushDisplayScreenToHistory, () => {}),
+    [pushDisplayScreenToHistory]
   );
+
+  return <BaseComponent searchResults={searchResults} getProspectInfo={onGetProspectInfo} />;
 };

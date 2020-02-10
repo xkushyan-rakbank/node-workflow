@@ -5,16 +5,9 @@ import { useHistory } from "react-router-dom";
 import { getApplicationInfo } from "../store/selectors/appConfig";
 import { getIsEditableStatusSearchInfo } from "../store/selectors/searchProspect";
 import routes from "../routes";
+import { ACTION_TYPES, VIEW_IDS } from "../constants";
 
 const prefix = "/sme";
-const VIEW_IDS = {
-  SubmitApplication: "/SubmitApplication",
-  SearchProspect: "/SearchProspect",
-  CompanyInfo: "/CompanyInfo"
-};
-const ACTION_TYPES = {
-  submit: "submit"
-};
 
 export const useDisplayScreenBasedOnViewId = () => {
   const history = useHistory();
