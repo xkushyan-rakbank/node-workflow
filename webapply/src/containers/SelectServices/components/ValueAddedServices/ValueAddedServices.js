@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
 import cx from "classnames";
-
 import {
   ExpandedDetailedOptionsCard,
   rakValuePackagePlusName
@@ -10,6 +9,7 @@ import { accountNames } from "../../../../constants/index";
 import { RAK_VALUE_PACKAGE_PATH } from "./constants";
 
 import { useStyles } from "./styled";
+import { GA_EVENTS } from "../../../../utils/ga";
 
 const getButtonText = ({ _id, options, accountCurrencies, rakValuePackage, accountType }) => {
   const { isSelectOnlyForeignCurrency } = accountCurrencies;
@@ -50,7 +50,12 @@ export const ValueAddedServicesComponent = ({
         rakValuePackage === selectedService && accountType !== accountNames.starter
           ? ""
           : selectedService;
-      updateProspect({ [RAK_VALUE_PACKAGE_PATH]: serviceName });
+      updateProspect(
+        {
+          [RAK_VALUE_PACKAGE_PATH]: serviceName
+        },
+        GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
+      );
     },
     [rakValuePackage, accountType, updateProspect]
   );

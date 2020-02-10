@@ -15,7 +15,7 @@ import {
 import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { yesNoOptions } from "../../../../constants/options";
-import { UAE } from "../../../../constants";
+import { UAE, SOLE_PROPRIETOR } from "../../../../constants";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 const signatoryRightsSchema = Yup.object().shape({
@@ -26,61 +26,73 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => (
-  <Formik
-    initialValues={{
-      authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
-      isSignatory: ""
-    }}
-    onSubmit={handleContinue}
-    validationSchema={signatoryRightsSchema}
-    validateOnChange={false}
-  >
-    {withCompanyStakeholder(index, ({ values, setFieldValue, setFieldTouched }) => (
-      <Form>
-        <Grid container>
-          <Field
-            name="isSignatory"
-            path={`prospect.signatoryInfo[${index}].kycDetails.isSignatory`}
-            component={InlineRadioGroup}
-            options={yesNoOptions}
-            label="Is this person a signatory?"
-            changeProspect={prospect => ({
-              ...prospect,
-              [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
-            })}
-            onSelect={() => {
-              if (values.isSignatory) {
-                setFieldValue("authorityType", "");
-                updateProspect({
-                  [`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`]: ""
-                });
-                setFieldTouched("authorityType", false);
-              }
-            }}
-            InputProps={{
-              inputProps: { tabIndex: 0 }
-            }}
-          />
-          <Field
-            name="authorityType"
-            path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
-            disabled={!values.isSignatory}
-            isSearchable={false}
-            component={SelectAutocomplete}
-            label="Authority Type"
-            datalistId="authorityType"
-            contextualHelpProps={{ isDisableHoverListener: false }}
-            contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
-            inputProps={{ tabIndex: 0 }}
-          />
-        </Grid>
+const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => {
+  return (
+    <Formik
+      initialValues={{
+        authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
+        isSignatory: ""
+      }}
+      onSubmit={handleContinue}
+      validationSchema={signatoryRightsSchema}
+      validateOnChange={false}
+    >
+      {withCompanyStakeholder(index, ({ values, setFieldValue, setFieldTouched }) => (
+        <Form>
+          <Grid container>
+            <Field
+              name="isSignatory"
+              path={`prospect.signatoryInfo[${index}].kycDetails.isSignatory`}
+              component={InlineRadioGroup}
+              options={yesNoOptions}
+              label="Is this person a signatory?"
+              changeProspect={prospect => ({
+                ...prospect,
+                [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
+              })}
+              onSelect={() => {
+                if (values.isSignatory) {
+                  setFieldValue("authorityType", "");
+                  updateProspect({
+                    [`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`]: ""
+                  });
+                  setFieldTouched("authorityType", false);
+                }
+              }}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
+            />
+            <Field
+              name="authorityType"
+              path={`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`}
+              disabled={!values.isSignatory}
+              isSearchable
+              component={SelectAutocomplete}
+              label="Authority Type"
+              datalistId="authorityType"
+              contextualHelpProps={{ isDisableHoverListener: false }}
+              contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
+              inputProps={{ tabIndex: 0 }}
+              changeProspect={(prospect, value) => {
+                if (value === SOLE_PROPRIETOR) {
+                  return {
+                    ...prospect,
+                    [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]: true,
+                    [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]: 100
+                  };
+                }
+                return prospect;
+              }}
+            />
+          </Grid>
 
-        <SubmitButton />
-      </Form>
-    ))}
-  </Formik>
-);
+          <SubmitButton />
+        </Form>
+      ))}
+    </Formik>
+  );
+};
 
 const mapStateToProps = state => ({
   stakeholders: stakeholdersSelector(state)

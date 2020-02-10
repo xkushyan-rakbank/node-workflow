@@ -56,7 +56,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                   path={`prospect.signatoryInfo[${index}].maritalStatus`}
                   datalistId="maritalStatus"
                   label="Marital Status"
-                  isSearchable={false}
+                  isSearchable
                   component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />

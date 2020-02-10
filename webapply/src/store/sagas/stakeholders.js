@@ -7,7 +7,8 @@ import {
   DELETE_STAKEHOLDER,
   changeEditableStakeholder,
   updateStakeholdersIds,
-  SET_FILL_STAKEHOLDER
+  SET_FILL_STAKEHOLDER,
+  SET_EDIT_STAKEHOLDER
 } from "../actions/stakeholders";
 import { addSignatory, removeSignatory } from "../actions/completedSteps";
 import { setConfig } from "../actions/appConfig";
@@ -35,12 +36,14 @@ function* deleteStakeholderSaga(action) {
   const state = yield select();
   const config = cloneDeep(state.appConfig);
   const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
-  const stakeholderIndex = stakeholdersIds.indexOf(action.stakeholderId);
+  const removedIndex = stakeholdersIds.indexOf(
+    stakeholdersIds.find(item => item.id === action.stakeholderId)
+  );
 
-  config.prospect.signatoryInfo.splice(stakeholderIndex, 1);
+  config.prospect.signatoryInfo.splice(removedIndex, 1);
   yield put(setConfig(config));
 
-  stakeholdersIds.splice(stakeholderIndex, 1);
+  stakeholdersIds.splice(removedIndex, 1);
   yield put(updateStakeholdersIds(stakeholdersIds));
   yield put(removeSignatory(action.stakeholderId));
   yield put(changeEditableStakeholder());
@@ -62,10 +65,27 @@ function* setFillStakeholderSaga({ payload }) {
   yield put(updateStakeholdersIds(stakeholdersIds));
 }
 
+function* setEditStakeholderSaga({ payload }) {
+  const state = yield select();
+  const stakeholdersIds = state.stakeholders.stakeholdersIds.reduce(
+    (previousValue, currentValue, index) => [
+      ...previousValue,
+      {
+        ...currentValue,
+        isEditting: payload.index === index ? payload.isEditting : currentValue.isEditting
+      }
+    ],
+    []
+  );
+
+  yield put(updateStakeholdersIds(stakeholdersIds));
+}
+
 export default function* appConfigSaga() {
   yield all([
     takeEvery(CREATE_NEW_STAKEHOLDER, createNewStakeholderSaga),
     takeEvery(DELETE_STAKEHOLDER, deleteStakeholderSaga),
-    takeEvery(SET_FILL_STAKEHOLDER, setFillStakeholderSaga)
+    takeEvery(SET_FILL_STAKEHOLDER, setFillStakeholderSaga),
+    takeEvery(SET_EDIT_STAKEHOLDER, setEditStakeholderSaga)
   ]);
 }

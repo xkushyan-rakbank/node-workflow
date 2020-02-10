@@ -13,6 +13,7 @@ import {
   ALPHANUMERIC_REGEX,
   UAE_MOBILE_PHONE_REGEX
 } from "../../../utils/validation";
+import { MAX_EMAIL_LENGTH } from "./constants";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { SearchResult } from "../SearchResult";
 import { UAE_CODE } from "../../../constants";
@@ -21,7 +22,9 @@ import { getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
-  fname: Yup.string().matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
+  fname: Yup.string()
+    .max(30, "Maximum 30 characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
   mobileNo: Yup.string().when("countryCode", {
     is: countryCode => countryCode === UAE_CODE,
     then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, `${getInvalidMessage("Mobile Number")}`),
@@ -126,7 +129,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
                   contextualHelpText="This should be the email id of the person who has registered for WebApply and initiated the application on behalf of the company."
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { maxLength: MAX_EMAIL_LENGTH, tabIndex: 0 }
                   }}
                 />
               </Grid>

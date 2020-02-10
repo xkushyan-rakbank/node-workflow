@@ -10,15 +10,12 @@ import { accountNames } from "../../constants";
 import { useReduxStep } from "../../hooks/useReduxStep";
 
 import { useStyles } from "./styled";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
-export const SelectServicesComponent = ({
-  accountType,
-  rakValuePackage,
-  sendProspectToAPI,
-  history
-}) => {
-  const [isSubmit, setIsSubmit] = useState(false);
+export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const classes = useStyles();
+  const [isSubmit, setIsSubmit] = useState(false);
+  const pushHistory = useTrackingHistory();
 
   const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
     SELECT_SERVICES_PAGE_ID,
@@ -28,20 +25,23 @@ export const SelectServicesComponent = ({
 
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
-      history.push(routes.SubmitApplication);
+      pushHistory(routes.SubmitApplication);
       return;
     }
 
     handleSetNextStep(activeStep, activeStep !== servicesSteps.length);
     setIsSubmit(true);
-  }, [history, isSubmit, setIsSubmit, handleSetNextStep]);
+  }, [pushHistory, isSubmit, setIsSubmit, handleSetNextStep]);
 
-  const setNextStep = useCallback(() => {
-    sendProspectToAPI().then(
-      () => handleSetNextStep(activeStep, activeStep !== servicesSteps.length),
-      () => {}
-    );
-  }, [sendProspectToAPI, handleSetNextStep]);
+  const setNextStep = useCallback(
+    event => {
+      sendProspectToAPI(null, event).then(
+        () => handleSetNextStep(activeStep, activeStep !== servicesSteps.length),
+        () => {}
+      );
+    },
+    [sendProspectToAPI, activeStep, pushHistory]
+  );
 
   const createSetStepHandler = nextStep => () => {
     setIsSubmit(false);

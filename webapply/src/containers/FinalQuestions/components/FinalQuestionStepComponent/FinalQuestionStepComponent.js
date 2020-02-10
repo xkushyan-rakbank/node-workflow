@@ -1,7 +1,6 @@
-import React from "react";
-
+import React, { useCallback } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
-import { SIGNATORY_INITIAL_INDEX, STEP_1 } from "../SignatorySummaryCard/constants";
+import { SIGNATORY_INITIAL_INDEX, NEXT, STEP_1 } from "../SignatorySummaryCard/constants";
 import { useReduxStep } from "../../../../hooks/useReduxStep";
 
 export const FinalQuestionStepComponent = ({
@@ -14,17 +13,21 @@ export const FinalQuestionStepComponent = ({
   const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(page, STEP_1);
   const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
-  const handleContinue = () =>
-    sendProspectToAPI().then(
-      () => {
-        handleSetNextStep(activeStep, activeStep !== stepsArray.length);
-        if (activeStep === stepsArray.length) {
-          const completedIndex = index !== null ? index + 1 : SIGNATORY_INITIAL_INDEX;
-          handleFinalStepContinue(completedIndex, index);
-        }
-      },
-      () => {}
-    );
+  const handleContinue = useCallback(
+    eventName => () => {
+      sendProspectToAPI(NEXT, eventName).then(
+        () => {
+          handleSetNextStep(activeStep, activeStep !== stepsArray.length);
+          if (activeStep === stepsArray.length) {
+            const completedIndex = index !== null ? index + 1 : SIGNATORY_INITIAL_INDEX;
+            handleFinalStepContinue(completedIndex, index);
+          }
+        },
+        () => {}
+      );
+    },
+    [sendProspectToAPI, handleSetNextStep]
+  );
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
@@ -40,7 +43,7 @@ export const FinalQuestionStepComponent = ({
       isActiveStep={activeStep === item.step}
       isFilled={availableSteps.some(step => step.id === item.step && step.isCompleted)}
       handleClick={createSetStepHandler(item.step)}
-      handleContinue={handleContinue}
+      handleContinue={handleContinue(item.eventName)}
       stepForm={item.component}
     />
   ));

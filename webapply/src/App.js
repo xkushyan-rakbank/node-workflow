@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import routes from "./routes";
+import routes, { agentBaseName } from "./routes";
 import { history } from "./store";
 
 import { FormLayout } from "./containers/FormLayout";
@@ -59,7 +59,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
       isIslamicBanking = searchParams.get(queryParams.IS_ISLAMIC);
     }
 
-    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+    const segment = pathname.substring(1, pathname.lastIndexOf("/") || pathname.length);
 
     receiveAppConfig(segment, accountType, isIslamicBanking);
     prospectAutoSave();
@@ -138,7 +138,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.SubmitApplication}
                   component={SubmitApplication}
                 />
-                <Route path="/agent" component={Agents} />
+                <Route path={agentBaseName} component={Agents} />
                 <Redirect to={routes.accountsComparison} />
               </Switch>
             </Suspense>

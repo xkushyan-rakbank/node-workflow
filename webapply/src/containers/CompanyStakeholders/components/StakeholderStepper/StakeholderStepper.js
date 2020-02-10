@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { connect, useSelector } from "react-redux";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
+import { stakeHoldersSteps, STEP_1, STEP_6, NEXT } from "./../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import {
   sendProspectToAPIPromisify,
@@ -13,7 +13,8 @@ import {
 } from "../../../../store/actions/sendProspectToAPI";
 import {
   changeEditableStakeholder,
-  setFillStakeholder
+  setFillStakeholder,
+  setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
@@ -26,7 +27,6 @@ const timeInterval = 5000;
 const StakeholderStepperComponent = ({
   id,
   index,
-  isNewStakeholder,
   firstName,
   middleName,
   lastName,
@@ -37,8 +37,11 @@ const StakeholderStepperComponent = ({
   loading: isStatusLoading,
   changeEditableStakeholder,
   setFillStakeholder,
+  setEditStakeholder,
   isTooManyStakeholders,
-  setScreeningError
+  setScreeningError,
+  showAddButton,
+  isEditInProgress
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
@@ -50,8 +53,8 @@ const StakeholderStepperComponent = ({
   );
   const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
-  const handleContinue = () =>
-    sendProspectToAPI().then(
+  const handleContinue = event => () =>
+    sendProspectToAPI(NEXT, event).then(
       () => {
         if (isTooManyStakeholders) {
           setScreeningError(stakeholderScreeningStatus);
@@ -59,8 +62,11 @@ const StakeholderStepperComponent = ({
 
         if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
+          showAddButton();
         }
-        handleSetNextStep(activeStep, activeStep !== stakeHoldersSteps.length);
+        isEditInProgress
+          ? handleSetStep()
+          : handleSetNextStep(activeStep, activeStep !== stakeHoldersSteps.length);
       },
       () => {}
     );
@@ -76,13 +82,21 @@ const StakeholderStepperComponent = ({
     return () => clearInterval(interval);
   }, [activeStep, changeEditableStakeholder]);
 
-  const handleDeleteStakeholder = () => {
+  const handleDeleteStakeholder = useCallback(() => {
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);
-  };
+  }, [setIsDisplayConfirmation, deleteStakeholder, id]);
 
-  const deleteHandler = () =>
-    isDisplayConfirmation ? handleDeleteStakeholder() : setIsDisplayConfirmation(true);
+  const deleteHandler = useCallback(
+    () => (isDisplayConfirmation ? handleDeleteStakeholder() : setIsDisplayConfirmation(true)),
+    [isDisplayConfirmation, handleDeleteStakeholder, setIsDisplayConfirmation]
+  );
+
+  const editHandler = useCallback(() => {
+    showAddButton();
+    changeEditableStakeholder("");
+    setEditStakeholder(index, false);
+  }, [showAddButton, changeEditableStakeholder, setEditStakeholder, index]);
 
   if (isDisplayFinalScreen) {
     return <SuccessFilledStakeholder name={fullName} />;
@@ -90,12 +104,14 @@ const StakeholderStepperComponent = ({
 
   return (
     <CompanyStakeholderCard
-      isStatusShown={activeStep !== STEP_1}
+      isStatusShown={!isEditInProgress ? activeStep !== STEP_1 : isStatusLoading}
       firstName={firstName}
       lastName={lastName}
       middleName={middleName}
       isStatusLoading={isStatusLoading}
       index={orderIndex}
+      isEditInProgress={isEditInProgress}
+      editHandler={editHandler}
     >
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => (
@@ -107,13 +123,13 @@ const StakeholderStepperComponent = ({
             isActiveStep={activeStep === item.step}
             isFilled={availableSteps.some(step => step.id === item.step && step.isCompleted)}
             clickHandler={createSetStepHandler(item.step)}
-            handleContinue={handleContinue}
+            handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
           />
         ))}
       </div>
 
-      {!isNewStakeholder && deleteStakeholder && (
+      {deleteStakeholder && (
         <div className={classes.footerPart}>
           <LinkButton
             title={
@@ -138,6 +154,7 @@ const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
   changeEditableStakeholder,
   setFillStakeholder,
+  setEditStakeholder,
   setScreeningError
 };
 

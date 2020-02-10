@@ -10,6 +10,7 @@ import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { SUBMIT, NEXT } from "../../../../constants";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
+import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -20,17 +21,19 @@ export const SubmitApplicationComponent = ({
   organizationInfo: { companyName },
   sendProspectToAPI,
   updateActionType,
-  updateSaveType
+  updateSaveType,
+  isApplyEditApplication
 }) => {
+  const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const pathname = isApplyEditApplication ? routes.companyInfo : routes.ApplicationSubmitted;
   const handleSubmit = () => {
     setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
     sendProspectToAPI()
-      .then(() => history.push(routes.ApplicationSubmitted))
+      .then(() => pushHistory(pathname), () => {})
       .finally(() => setIsSubmitting(false));
   };
 

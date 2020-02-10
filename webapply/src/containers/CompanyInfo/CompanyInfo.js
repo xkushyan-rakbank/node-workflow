@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useReduxStep } from "../../hooks/useReduxStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
@@ -19,19 +20,19 @@ import {
   getSendProspectToAPIInfo,
   getIsRegisteredInUAE
 } from "../../store/selectors/appConfig";
-import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
+import { companyInfoSteps, NEXT, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
-  history,
   loading,
   fullName,
   organizationInfo: { companyName },
   setScreeningError,
   isRegisteredInUAE
 }) => {
+  const pushHistory = useTrackingHistory();
   const classes = useStyles();
   const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
     COMPANY_INFO_PAGE_ID,
@@ -39,8 +40,8 @@ export const CompanyInfoPage = ({
   );
   const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
-  const handleContinue = () =>
-    sendProspectToAPI().then(
+  const handleContinue = event => () => {
+    sendProspectToAPI(NEXT, event).then(
       () => {
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);
@@ -49,10 +50,13 @@ export const CompanyInfoPage = ({
       },
       () => {}
     );
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
-  const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
+  const handleClickNextStep = useCallback(() => {
+    pushHistory(routes.stakeholdersInfo);
+  }, [pushHistory]);
 
   return (
     <>
@@ -81,7 +85,7 @@ export const CompanyInfoPage = ({
             isActiveStep={activeStep === item.step}
             isFilled={availableSteps.some(step => step.id === item.step && step.isCompleted)}
             handleClick={createSetStepHandler(item.step)}
-            handleContinue={handleContinue}
+            handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
           />
         ))}

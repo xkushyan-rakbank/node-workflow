@@ -29,9 +29,7 @@ import {
 import { useStyles } from "./styled";
 
 const signatoryPreferredMailingAddressSchema = Yup.object().shape({
-  addressLine2: Yup.string()
-    .matches(ADDRESS_REGEX, getInvalidMessage("Street / Location"))
-    .max(50, "Maximum 50 characters allowed"),
+  addressLine2: Yup.string().matches(ADDRESS_REGEX, getInvalidMessage("Street / Location")),
   addressLine1: Yup.string()
     .required(getRequiredMessage("Flat / Villa / Building"))
     .matches(ADDRESS_NUMBER_REGEX, getInvalidMessage("Flat / Villa / Building")),
@@ -94,7 +92,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 );
                 setFieldValue("poBox", !values.sameAsCompanyAddress ? organisationPoBox : "");
               }}
-              inputProps={{ tabIndex: 0 }}
+              inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
             />
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item sm={12}>
@@ -129,7 +127,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   disabled={values.sameAsCompanyAddress}
                   datalistId="emirateCity"
                   label="Emirate/ City"
-                  isSearchable={false}
+                  isSearchable
                   component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                 />

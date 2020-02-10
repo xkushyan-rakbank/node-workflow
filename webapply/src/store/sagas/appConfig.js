@@ -37,6 +37,7 @@ import {
   getIsIslamicBanking,
   getAccountType
 } from "../selectors/appConfig";
+import { getIsEditableStatusSearchInfo } from "../selectors/searchProspect";
 import routes from "./../../routes";
 
 function* receiveAppConfigSaga({ payload }) {
@@ -106,15 +107,24 @@ function* updateProspectSaga(action) {
 function* displayScreenBasedOnViewIdSaga() {
   const state = yield select();
   const applicationInfo = getApplicationInfo(state);
-
+  const isROScreens = getIsEditableStatusSearchInfo(state);
   const prefix = "/sme";
+  const isApplicationSubmitted =
+    applicationInfo.viewId === "/SubmitApplication" && applicationInfo.viewId !== "/SearchProspect";
+  const VIEW_ID = isApplicationSubmitted ? "/CompanyInfo" : applicationInfo.viewId;
 
-  if (applicationInfo.actionType === "submit" && applicationInfo.retrieveMode) {
+  if (applicationInfo.actionType === "submit" && applicationInfo.retrieveMode && !isROScreens) {
     yield call(history.push, prefix + routes.ApplicationSubmitted);
-  } else if (applicationInfo.actionType === "submit" && !applicationInfo.retrieveMode) {
+  } else if (
+    applicationInfo.actionType === "submit" &&
+    !applicationInfo.retrieveMode &&
+    !isROScreens
+  ) {
     yield call(history.push, prefix + applicationInfo.reUploadDocuments);
-  } else if (applicationInfo.viewId) {
+  } else if (applicationInfo.viewId && !isROScreens && !isApplicationSubmitted) {
     yield call(history.push, prefix + applicationInfo.viewId);
+  } else if (isROScreens) {
+    yield call(history.push, prefix + VIEW_ID);
   }
 }
 

@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { FormNavigationStep } from "../FormNavigationStep";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
-import routes from "../../routes";
+import routes, { agentBaseName } from "../../routes";
 import { accountNames, formStepper, searchProspectStepper } from "../../constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
@@ -14,7 +14,11 @@ import { useStyles } from "./styled";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
-export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }) => {
+export const FormNavigationComponent = ({
+  islamicBanking,
+  accountType,
+  isApplyEditApplication
+}) => {
   const {
     location: { pathname }
   } = useHistory();
@@ -26,15 +30,17 @@ export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }
 
   const classes = useStyles();
   const isAccountsComparison = routes.accountsComparison === pathname;
-  const isChatVisible = ![
-    routes.accountsComparison,
-    routes.detailedAccount,
-    routes.applicationOverview,
-    routes.applicantInfo,
-    routes.verifyOtp,
-    routes.comeBackLogin,
-    routes.comeBackLoginVerification
-  ].includes(pathname);
+  const isChatVisible =
+    pathname.indexOf(agentBaseName) === -1 &&
+    ![
+      routes.accountsComparison,
+      routes.detailedAccount,
+      routes.applicationOverview,
+      routes.applicantInfo,
+      routes.verifyOtp,
+      routes.comeBackLogin,
+      routes.comeBackLoginVerification
+    ].includes(pathname);
 
   const bgTypeClass = cx({
     brown: !isAccountsComparison && accountType === accountNames.elite,
@@ -65,14 +71,16 @@ export const FormNavigationComponent = ({ islamicBanking, accountType, isLogin }
       ) : (
         pathname !== routes.login && (
           <ul>
-            {(isLogin ? searchProspectStepper : formStepper).map(currentStep => (
-              <FormNavigationStep
-                key={currentStep.step}
-                title={currentStep.title}
-                activeStep={pathname === currentStep.path || pathname === currentStep.relatedPath}
-                filled={(getRouteConfig() || {}).step > currentStep.step}
-              />
-            ))}
+            {(pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper).map(
+              currentStep => (
+                <FormNavigationStep
+                  key={currentStep.step}
+                  title={currentStep.title}
+                  activeStep={pathname === currentStep.path || pathname === currentStep.relatedPath}
+                  filled={(getRouteConfig() || {}).step > currentStep.step}
+                />
+              )
+            )}
           </ul>
         )
       )}
