@@ -25,7 +25,6 @@ export const CompanyCard = ({
   const isOnlineBankingApplied = get(account, "eStatements");
 
   const accountSignInType = get(signatoryInfo[0], "accountSigningInfo.accountSigningType");
-  const accountSignInMsg = signingInfo[accountSignInType];
 
   return (
     <div className={classes.card}>
@@ -52,7 +51,7 @@ export const CompanyCard = ({
       <div className={classes.secondaryTitle}>Services selected</div>
       <div className={classes.grayText}>{currencies}</div>
 
-      <div className={classes.grayText}>{accountSignInMsg}</div>
+      <div className={classes.grayText}>{signingInfo[accountSignInType]}</div>
       {isDebitCardApplied && (
         <div className={classes.grayText}>Business debit cards for all signatories</div>
       )}
