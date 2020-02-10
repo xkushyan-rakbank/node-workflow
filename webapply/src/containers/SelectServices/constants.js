@@ -4,6 +4,7 @@ import { SigningPreferences } from "./SigningPreferences";
 import { Channels } from "./Channels";
 import { ValueAddedServices } from "./ValueAddedServices";
 import { GA_EVENTS } from "../../utils/ga";
+import { SIGNING_TRANSACTIONS_TYPE } from "../../constants";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
@@ -13,10 +14,10 @@ export const GO_TO_SUBMIT_STEP = 5;
 
 export const INITIAL_INDEX = 0;
 
-// TODO get this data from datalist
 export const signingInfo = {
-  "100": "Any of us can sign",
-  "101": "All of us must sign"
+  [SIGNING_TRANSACTIONS_TYPE.ANY]: "Any of us can sign",
+  [SIGNING_TRANSACTIONS_TYPE.ALL]: "All of us must sign",
+  [SIGNING_TRANSACTIONS_TYPE.OTHER]: "Other"
 };
 
 export const servicesSteps = [
