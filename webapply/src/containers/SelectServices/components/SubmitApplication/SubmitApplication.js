@@ -10,7 +10,7 @@ import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { SUBMIT, NEXT } from "../../../../constants";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
-import { GA_EVENTS } from "../../../../utils/ga";
+import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 
 export const SubmitApplicationComponent = ({
   history,
@@ -24,6 +24,7 @@ export const SubmitApplicationComponent = ({
   updateSaveType,
   isApplyEditApplication
 }) => {
+  const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const pathname = isApplyEditApplication ? routes.companyInfo : routes.ApplicationSubmitted;
@@ -31,11 +32,8 @@ export const SubmitApplicationComponent = ({
     setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
-    sendProspectToAPI(GA_EVENTS.FORM_SUBMITTED).then(() => {
-      history.push(routes.ApplicationSubmitted);
-    });
     sendProspectToAPI()
-      .then(() => history.push(pathname))
+      .then(() => pushHistory(pathname))
       .finally(() => setIsSubmitting(false));
   };
 

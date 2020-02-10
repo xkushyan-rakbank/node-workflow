@@ -36,8 +36,8 @@ export const CompanyInfoPage = ({
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
-  const handleContinue = () => event => {
-    sendProspectToAPI(event).then(
+  const handleContinue = event => () => {
+    sendProspectToAPI(undefined, event).then(
       () => {
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);
@@ -79,7 +79,7 @@ export const CompanyInfoPage = ({
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
             handleClick={createSetStepHandler(item.step)}
-            handleContinue={handleContinue(item.event_name)}
+            handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
           />
         ))}

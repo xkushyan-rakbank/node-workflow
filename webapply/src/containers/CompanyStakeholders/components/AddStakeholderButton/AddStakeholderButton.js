@@ -7,7 +7,6 @@ import { ICONS, Icon } from "../../../../components/Icons";
 export const AddStakeholderButton = ({
   label = "Add Another Stakeholder",
   handleClick,
-  handleContinue,
   ...rest
 }) => {
   const classes = useStyles();

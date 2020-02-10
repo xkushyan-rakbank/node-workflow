@@ -14,7 +14,7 @@ export const FinalQuestionStepComponent = ({
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(initialStep);
   const handleContinue = useCallback(
     eventName => () => {
-      sendProspectToAPI(eventName).then(() => handleSetNextStep(), () => {});
+      sendProspectToAPI(undefined, eventName).then(() => handleSetNextStep(), () => {});
     },
     [sendProspectToAPI, handleSetNextStep]
   );
@@ -40,7 +40,7 @@ export const FinalQuestionStepComponent = ({
       isActiveStep={step === item.step}
       isFilled={availableSteps.includes(item.step)}
       handleClick={createSetStepHandler(item.step)}
-      handleContinue={handleContinue(item.event_name)}
+      handleContinue={handleContinue(item.eventName)}
       stepForm={item.component}
     />
   ));

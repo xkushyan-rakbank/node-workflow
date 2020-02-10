@@ -21,7 +21,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
       if (step === GO_TO_SUBMIT_STEP) {
         return pushHistory(routes.SubmitApplication);
       }
-      sendProspectToAPI(event).then(() => setStep(step + 1), () => {});
+      sendProspectToAPI(null, event).then(() => setStep(step + 1), () => {});
     },
     [sendProspectToAPI, step, pushHistory]
   );

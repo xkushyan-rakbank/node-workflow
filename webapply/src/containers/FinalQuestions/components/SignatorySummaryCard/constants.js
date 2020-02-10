@@ -21,24 +21,24 @@ export const signatoriesSteps = [
     step: STEP_1,
     title: "Personal Information",
     component: SignatoryPersonalInformation,
-    event_name: GA_EVENTS.FINAL_QUESTION_PERSONAL_INFORMATION_CONTINUE
+    eventName: GA_EVENTS.FINAL_QUESTION_PERSONAL_INFORMATION_CONTINUE
   },
   {
     step: STEP_2,
     title: "Employment details",
     component: SignatoryEmploymentDetails,
-    event_name: GA_EVENTS.FINAL_QUESTION_EMPLOYMENT_CONTINUE
+    eventName: GA_EVENTS.FINAL_QUESTION_EMPLOYMENT_CONTINUE
   },
   {
     step: STEP_3,
     title: "Source of funds",
     component: SignatorySourceOfFunds,
-    event_name: GA_EVENTS.FINAL_QUESTION_SOURCE_OF_FUND_CONTINUE
+    eventName: GA_EVENTS.FINAL_QUESTION_SOURCE_OF_FUND_CONTINUE
   },
   {
     step: STEP_4,
     title: "Preferred mailing address",
     component: SignatoryPreferredMailingAddress,
-    event_name: GA_EVENTS.FINAL_QUESTION_PREFERRED_MAILING_ADDRESS_CONTINUE
+    eventName: GA_EVENTS.FINAL_QUESTION_PREFERRED_MAILING_ADDRESS_CONTINUE
   }
 ];

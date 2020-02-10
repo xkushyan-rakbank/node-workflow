@@ -28,7 +28,6 @@ import {
 import routes from "../../routes";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
-import { GA_EVENTS } from "../../utils/ga";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 const CompanyStakeholdersComponent = ({
@@ -108,7 +107,7 @@ const CompanyStakeholdersComponent = ({
       setOpen(true);
     } else {
       setIsNewStakeholder(true);
-      createNewStakeholder(GA_EVENTS.COMPANY_STAKEHOLDER_ADD_NEW_CONTINUE);
+      createNewStakeholder();
     }
   }, [
     setIsShowingAddButton,

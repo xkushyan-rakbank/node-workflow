@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 
@@ -15,7 +15,7 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
   const history = useHistory();
   const pushHistory = useTrackingHistory();
   const { location: { pathname } = {} } = history;
-  const handleClick = path => () => pushHistory(path);
+  const handleClick = useCallback(path => () => pushHistory(path), [pushHistory]);
 
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;

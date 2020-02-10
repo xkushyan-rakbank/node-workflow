@@ -51,8 +51,8 @@ const StakeholderStepperComponent = ({
     isEditInProgress ? initialAvailableSteps : [STEP_1]
   );
 
-  const handleContinue = () => event => () =>
-    sendProspectToAPI(event).then(
+  const handleContinue = event => () =>
+    sendProspectToAPI(undefined, event).then(
       () => {
         if (isTooManyStakeholders) {
           setScreeningError(stakeholderScreeningStatus);
@@ -119,7 +119,7 @@ const StakeholderStepperComponent = ({
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
             clickHandler={createSetStepHandler(item.step)}
-            handleContinue={handleContinue(item.event_name)}
+            handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
           />
         ))}

@@ -29,7 +29,7 @@ import { setToken } from "../../store/actions/reCaptcha";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
-import { GA_EVENTS } from "../../utils/ga";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -80,6 +80,7 @@ const ApplicantInfoPage = ({
   history
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const pushHistory = useTrackingHistory();
   useEffect(() => {
     const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
     const segment = pathname.substring(1, pathname.lastIndexOf("/"));
@@ -90,9 +91,9 @@ const ApplicantInfoPage = ({
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
-      submit(values, GA_EVENTS.PRODUCT_BASIC_INFORMATION)
+      submit(values)
         .then(() => {
-          history.push(routes.verifyOtp);
+          pushHistory(routes.verifyOtp);
         })
         .finally(() => {
           setIsLoading(false);
