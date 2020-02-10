@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 
 import { ContainedButton } from "../Buttons/ContainedButton";
-import { MobileNotification } from "../Modals/index";
-
+import { MobileNotification } from "../Modals";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { accountsInfo } from "./constants";
 import routes from "../../routes";
 
@@ -13,9 +13,9 @@ import { useStyles } from "./styled";
 export const AccountInfo = ({ accountType, islamicBanking }) => {
   const classes = useStyles();
   const history = useHistory();
+  const pushHistory = useTrackingHistory();
   const { location: { pathname } = {} } = history;
-
-  const handleClick = path => () => history.push(path);
+  const handleClick = useCallback(path => () => pushHistory(path), [pushHistory]);
 
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;
