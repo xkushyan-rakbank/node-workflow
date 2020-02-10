@@ -30,14 +30,21 @@ export const FormNavigationComponent = ({
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
 
   const isAccountsComparison = routes.accountsComparison === pathname;
+  function getBlobColor() {
+    if (isAccountsComparison) {
+      return "red";
+    }
+    if (accountType === accountNames.elite) {
+      return "brown";
+    }
+    if (islamicBanking) {
+      return "green";
+    }
+    return "red";
+  }
 
   const classes = useStyles({
-    color:
-      !isAccountsComparison && accountType === accountNames.elite
-        ? "brown"
-        : !isAccountsComparison && islamicBanking
-        ? "green"
-        : "red",
+    color: getBlobColor(),
     isSmallBg: checkIsShowSmallBg(pathname),
     isOpen: isSwitcherShow,
     hasVideo: routes.accountsComparison === pathname

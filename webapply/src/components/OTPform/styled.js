@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     width: "100%",
     height: "100%",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginTop: "50px",
       padding: "0 16px",
       boxSizing: "border-box"
@@ -45,7 +45,7 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     marginTop: "40px",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginTop: "0"
     }
   },

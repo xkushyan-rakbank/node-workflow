@@ -6,32 +6,28 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    height: "100%",
     width: "100%",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginTop: "50px",
       padding: "0 16px",
       boxSizing: "border-box"
     }
   },
   form: {
-    height: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    [theme.breakpoints.only("sm")]: {
+    paddingBottom: 15,
+    [theme.breakpoints.only("xs")]: {
       marginTop: "30px"
-    },
-    [theme.breakpoints.only("sm")]: {
-      height: "auto"
     }
   },
   btnWrapper: {
     marginBottom: "80px",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginLeft: "auto"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginBottom: 0
     }
   }

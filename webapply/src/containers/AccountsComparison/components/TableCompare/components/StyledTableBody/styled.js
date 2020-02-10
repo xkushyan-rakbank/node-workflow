@@ -17,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     maxWidth: "180px",
     paddingLeft: "5px",
     paddingRight: "0",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       width: "75%"
     }
   },
@@ -27,7 +27,7 @@ export const useStyles = makeStyles(theme => ({
     top: "-15px",
     height: "calc(100% + 30px)",
     transition: "left .25s ease",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       height: "calc(100% + 30px)"
     },
     borderRadius: "8px",

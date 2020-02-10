@@ -9,13 +9,13 @@ export const useStyles = makeStyles(theme => ({
   },
   tableContainer: {
     position: "relative",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       display: "none"
     }
   },
   tableMobileContainer: {
     display: "none",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       display: "block"
     }
   },
@@ -25,7 +25,7 @@ export const useStyles = makeStyles(theme => ({
     top: "-15px",
     height: "calc(100% + 30px)",
     transition: "left .25s ease",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       height: "calc(100% + 30px)"
     },
     borderRadius: "8px",
@@ -60,7 +60,7 @@ export const useStyles = makeStyles(theme => ({
     "& th:first-child, & td:first-child": {
       paddingLeft: "0",
       width: "200px",
-      [theme.breakpoints.only("sm")]: {
+      [theme.breakpoints.only("xs")]: {
         width: "auto"
       }
     }

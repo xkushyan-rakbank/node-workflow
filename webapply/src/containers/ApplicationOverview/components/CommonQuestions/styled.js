@@ -17,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     "&$expanded": {
       margin: "auto"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       minWidth: "100%"
     }
   },
@@ -27,7 +27,7 @@ export const useStyles = makeStyles(theme => ({
     "&$expanded": {
       minHeight: 60
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       padding: "8px 16px"
     }
   },
@@ -57,7 +57,7 @@ export const useStyles = makeStyles(theme => ({
   text: {
     paddingBottom: "5px",
     fontSize: "16px",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       paddingBottom: 0
     }
   },
@@ -65,7 +65,7 @@ export const useStyles = makeStyles(theme => ({
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       whiteSpace: "normal",
       "& svg": {
         display: "none"
@@ -74,7 +74,7 @@ export const useStyles = makeStyles(theme => ({
   },
   info: {
     paddingLeft: 10,
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       paddingLeft: 0
     }
   }

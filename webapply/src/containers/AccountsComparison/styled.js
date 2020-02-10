@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
   },
   videoWrapper: {
     height: "calc(100vh - 260px)",
-    [`${theme.breakpoints.up("md")} and (max-height: ${normalScrollHeight}px)`]: {
+    [`${theme.breakpoints.up("sm")} and (max-height: ${normalScrollHeight}px)`]: {
       height: "100vh"
     }
   }

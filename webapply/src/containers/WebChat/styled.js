@@ -10,7 +10,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("md")]: {
       left: "15px"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       position: "fixed"
     }
   },
@@ -18,7 +18,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     cursor: "pointer",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       flexDirection: "column"
     },
     "& span": {
@@ -50,7 +50,7 @@ export const useStyles = makeStyles(theme => ({
       width: "30px",
       height: "30px"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       display: "none",
       "& span": {
         width: "48px",

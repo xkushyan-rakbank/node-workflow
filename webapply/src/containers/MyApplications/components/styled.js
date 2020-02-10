@@ -34,7 +34,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     marginTop: "40px",
     borderRadius: "8px",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       boxShadow: "none",
       marginTop: 0
     }
@@ -52,7 +52,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     width: "100%",
     marginTop: "174px",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginTop: "80px"
     }
   }, //grid css start
@@ -113,11 +113,11 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     "&:not(:last-child)": {
       borderBottom: "1px solid #e6e6e6",
-      [theme.breakpoints.only("sm")]: {
+      [theme.breakpoints.only("xs")]: {
         borderBottom: "none"
       }
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       borderBottom: "none"
     }
   },
@@ -130,7 +130,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "row",
     alignItems: "center",
     padding: "24px 20px 19px 30px",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       height: "180px",
       flexDirection: "column",
       justifyContent: "space-between",
@@ -142,7 +142,7 @@ export const useStyles = makeStyles(theme => ({
   },
   oneThirdWidth: {
     width: "33%",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       width: "auto"
     }
   },

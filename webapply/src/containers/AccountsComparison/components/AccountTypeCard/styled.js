@@ -16,7 +16,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    [theme.breakpoints.only("md")]: {
+    [theme.breakpoints.only("sm")]: {
       minWidth: "200px",
       maxWidth: "210px",
       "& button": {

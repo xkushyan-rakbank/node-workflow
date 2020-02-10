@@ -70,7 +70,7 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: "#f7f8f9",
         display: "block",
         top: "-1px",
-        [theme.breakpoints.only("sm")]: {
+        [theme.breakpoints.only("xs")]: {
           content: "''"
         }
       }

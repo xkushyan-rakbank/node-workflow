@@ -23,7 +23,7 @@ export const useStyles = makeStyles(theme => ({
   },
   styleInfoNotes: {
     margin: "0 auto",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("sm")]: {
       position: "absolute",
       bottom: 65,
       left: 0,

@@ -18,7 +18,7 @@ export const Button = styled("button")(({ theme }) => ({
   "&[disabled]": {
     opacity: "0.5"
   },
-  [theme.breakpoints.only("sm")]: {
+  [theme.breakpoints.only("xs")]: {
     top: "80px",
     right: "12px"
   }

@@ -17,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     height: "300px",
     width: "100%",
     display: "flex",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       height: "auto",
       flexWrap: "wrap"
     },
@@ -33,7 +33,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "12px",
     textAlign: "center",
     color: "#888888",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginBottom: "15px"
     }
   },

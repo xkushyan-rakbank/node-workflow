@@ -36,7 +36,7 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     "& div + div": {
       marginTop: "20px",
-      [theme.breakpoints.only("sm")]: {
+      [theme.breakpoints.only("xs")]: {
         marginTop: "10px"
       }
     }
@@ -46,7 +46,7 @@ export const useStyles = makeStyles(theme => ({
     flexWrap: "wrap",
     alignItems: "center",
     "& div + div": {
-      [theme.breakpoints.only("sm")]: {
+      [theme.breakpoints.only("xs")]: {
         marginTop: "10px"
       }
     }
@@ -60,11 +60,11 @@ export const useStyles = makeStyles(theme => ({
     boxSizing: "border-box",
     position: "relative",
     overflow: "hidden",
-    [theme.breakpoints.only("md")]: {
+    [theme.breakpoints.only("sm")]: {
       width: "320px",
       padding: "20px 30px"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       width: "100%",
       padding: "15px 30px"
     },
@@ -95,7 +95,7 @@ export const useStyles = makeStyles(theme => ({
     zIndex: "-1"
   },
   accountNumberColumn: {
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       padding: "5px 30px",
       "& .number": {
         fontSize: "20px"
@@ -103,7 +103,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   accountNumberRow: {
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       padding: "5px 30px",
       "& .number": {
         fontSize: "20px"

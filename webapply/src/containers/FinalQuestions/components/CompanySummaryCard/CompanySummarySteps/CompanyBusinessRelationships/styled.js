@@ -29,20 +29,20 @@ export const useStyles = makeStyles(theme => ({
     position: "relative"
   },
   tablet: {
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginBottom: "20px"
     }
   },
   container: {
     top: "15px",
     right: "-100px",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       top: "70px",
       right: "12px"
     }
   },
   marginBottom: {
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginBottom: "45px"
     }
   },

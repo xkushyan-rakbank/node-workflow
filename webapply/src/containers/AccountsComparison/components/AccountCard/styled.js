@@ -11,14 +11,14 @@ export const useStyles = makeStyles(theme => ({
     [portraitOrientationQueryIPads]: {
       flexDirection: "column"
     },
-    [theme.breakpoints.only("md")]: {
+    [theme.breakpoints.only("sm")]: {
       marginLeft: 0,
       marginRight: 0,
       paddingLeft: 0,
       paddingRight: 0,
       justifyContent: "space-around"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginLeft: -16,
       marginRight: -16,
       paddingLeft: 0,
@@ -29,10 +29,10 @@ export const useStyles = makeStyles(theme => ({
   cardsContainerItem: {
     padding: "0 10px",
     width: "33.333%",
-    [theme.breakpoints.only("md")]: {
+    [theme.breakpoints.only("sm")]: {
       padding: "0 8px"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       minWidth: "min-content",
       "&:first-child": {
         paddingLeft: 16

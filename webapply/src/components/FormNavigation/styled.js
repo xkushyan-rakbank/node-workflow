@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { sideNavWidthLG, sideNavWidthXL } from "../../constants/styles";
+import { sideNavWidthSM, sideNavWidthLG } from "../../constants/styles";
 
 const blobImages = {
   red: require("../../assets/images/bg-blobs/bg-blob-red.svg"),
@@ -25,18 +25,29 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: 16,
     paddingRight: 16,
     transition: "all .3s",
-    height: isOpen ? "calc(100vh - 50px)" : isSmallBg ? 190 : 290,
+    height: () => {
+      if (isOpen) {
+        return "calc(100vh - 50px)";
+      }
+      if (isSmallBg) {
+        return 190;
+      }
+      return 290;
+    },
     marginBottom: isOpen && hasVideo ? "calc(-100vh + 220px)" : 0,
-    [theme.breakpoints.up("md")]: {
-      paddingTop: "18vh",
+    [theme.breakpoints.up("sm")]: {
       height: "100vh",
+      paddingTop: "18vh",
+      paddingLeft: 42,
+      paddingRight: 0,
       boxSizing: "border-box",
       position: "fixed",
       top: 0,
-      width: sideNavWidthLG
+      width: sideNavWidthSM
     },
-    [theme.breakpoints.up("xl")]: {
-      width: sideNavWidthXL
+    [theme.breakpoints.up("lg")]: {
+      width: sideNavWidthLG,
+      paddingLeft: 80
     },
     "& ul": {
       margin: "0",
@@ -45,8 +56,9 @@ export const useStyles = makeStyles(theme => ({
       height: "271px",
       overflowY: "auto",
       direction: "rtl",
-      [theme.breakpoints.up("xl")]: {
-        marginLeft: "40px"
+      [theme.breakpoints.up("sm")]: {
+        marginLeft: 0,
+        paddingLeft: 15
       },
       "&::-webkit-scrollbar": {
         width: "2px",
@@ -66,13 +78,13 @@ export const useStyles = makeStyles(theme => ({
     }
   }),
   formNavBg: {
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       backgroundImage: ({ color, isSmallBg }) =>
-        `url(${blobImages[color + (isSmallBg ? "S" : "M")]})`,
+        `url(${blobImages[`${color}${isSmallBg ? "S" : "M"}`]})`,
       backgroundSize: "cover",
       backgroundPosition: "center bottom"
     },
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("sm")]: {
       backgroundImage: ({ color }) => `url(${blobImages[color]})`,
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
@@ -83,11 +95,8 @@ export const useStyles = makeStyles(theme => ({
     margin: 0,
     width: "100%",
     maxWidth: 340,
-    [theme.breakpoints.up("lg")]: {
-      marginLeft: 40
-    },
     [theme.breakpoints.up("xl")]: {
-      marginLeft: 80,
+      maxWidth: "auto",
       width: "auto",
       paddingRight: "25px"
     }
@@ -100,7 +109,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     fontFamily: "Open Sans",
     marginBottom: "20px",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       fontSize: 32,
       lineHeight: "36px"
     }
@@ -115,7 +124,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: "normal",
     fontFamily: "Open Sans",
     whiteSpace: "pre-wrap",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginBottom: 30
     }
   }

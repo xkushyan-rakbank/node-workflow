@@ -16,7 +16,7 @@ const style = theme => ({
     color: "#373737",
     textAlign: "center",
     boxSizing: "border-box",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       margin: "5px auto",
       width: "100%"
     }

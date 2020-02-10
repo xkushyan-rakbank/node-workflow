@@ -225,7 +225,7 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     flexWrap: "nowrap",
     justifyContent: "center",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       justifyContent: "flex-start",
       overflowX: "auto",
       paddingBottom: "15px"

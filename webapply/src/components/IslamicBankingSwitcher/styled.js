@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
     zIndex: 21,
     borderRadius: "6px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.08)",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       padding: "30px 16px",
       left: 0,
       top: "100vh",
@@ -32,7 +32,7 @@ export const useStyles = makeStyles(theme => ({
     "& svg": {
       display: "none"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       width: "100%",
       borderRadius: "8px!important",
       border: "0!important",

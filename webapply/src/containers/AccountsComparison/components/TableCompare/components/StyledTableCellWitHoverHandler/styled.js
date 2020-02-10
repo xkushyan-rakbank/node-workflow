@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
     "& span + span": {
       fontSize: "12px",
       color: "#888",
-      [theme.breakpoints.only("sm")]: {
+      [theme.breakpoints.only("xs")]: {
         fontSize: 10
       }
     },

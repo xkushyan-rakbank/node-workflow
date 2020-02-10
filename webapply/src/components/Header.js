@@ -28,7 +28,7 @@ const styles = theme => ({
     "& a": {
       display: "flex"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       position: "absolute",
       margin: 0,
       padding: 0,

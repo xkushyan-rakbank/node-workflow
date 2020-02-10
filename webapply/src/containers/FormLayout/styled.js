@@ -1,13 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { routerToAddPaddingInSlider, sideNavWidthLG, sideNavWidthXL } from "../../constants/styles";
+import { routerToAddPaddingInSlider, sideNavWidthSM, sideNavWidthLG } from "../../constants/styles";
 
 export const useStyles = makeStyles(theme => ({
   formLayout: {
     position: "relative",
     display: "flex",
     height: "100%",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       flexWrap: "wrap"
     },
     [theme.breakpoints.up("xl")]: {
@@ -22,12 +22,16 @@ export const useStyles = makeStyles(theme => ({
         top: 0,
         width: "calc((100vw - 1920px) / 2 + 5px)",
         height: "100vh",
-        background: ({ color }) =>
-          color === "brown"
-            ? "linear-gradient(to bottom, #8E2141, #B55774)"
-            : color === "green"
-            ? "#417C35"
-            : "linear-gradient(to bottom, #E9320F, #EA1C44)"
+        background: ({ color }) => {
+          switch (color) {
+            case "brown":
+              return "linear-gradient(to bottom, #8E2141, #B55774)";
+            case "green":
+              return "#417C35";
+            default:
+              return "linear-gradient(to bottom, #E9320F, #EA1C44)";
+          }
+        }
       }
     }
   },
@@ -42,15 +46,15 @@ export const useStyles = makeStyles(theme => ({
       marginBottom: "20px",
       marginTop: "0",
       color: "#373737",
-      [theme.breakpoints.only("sm")]: {
+      [theme.breakpoints.only("xs")]: {
         fontSize: "27px"
       }
     },
-    [theme.breakpoints.up("md")]: {
-      paddingLeft: sideNavWidthLG
+    [theme.breakpoints.up("sm")]: {
+      paddingLeft: sideNavWidthSM
     },
-    [theme.breakpoints.up("xl")]: {
-      paddingLeft: sideNavWidthXL
+    [theme.breakpoints.up("lg")]: {
+      paddingLeft: sideNavWidthLG
     }
   },
   formInner: {
@@ -60,7 +64,7 @@ export const useStyles = makeStyles(theme => ({
     "& nextButton": {
       margin: "42px 0 0 !important"
     },
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("sm")]: {
       overflowY: "auto"
     }
   },

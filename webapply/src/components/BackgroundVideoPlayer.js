@@ -5,7 +5,7 @@ import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import expandMoreIcon from "../assets/icons/arrowDown.svg";
-import { sideNavWidthXL, sideNavWidthLG } from "../constants/styles";
+import { sideNavWidthLG, sideNavWidthSM } from "../constants/styles";
 import { normalScrollHeight } from "../constants";
 const appRootEl = document.getElementById("root");
 
@@ -20,7 +20,7 @@ const styles = theme => ({
     overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 11,
-    [`${theme.breakpoints.only("sm")}, (max-height: ${normalScrollHeight}px)`]: {
+    [`${theme.breakpoints.only("xs")}, (max-height: ${normalScrollHeight}px)`]: {
       transform: "none!important"
     }
   },
@@ -35,25 +35,25 @@ const styles = theme => ({
     width: "auto",
     height: "auto",
     overflow: "hidden",
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       paddingTop: "130px",
       height: "min-content"
     }
   },
   buttonContainer: {
     position: "absolute",
-    left: sideNavWidthXL,
+    left: 0,
     right: 0,
     bottom: 40,
     zIndex: 15,
     display: "flex",
     justifyContent: "center",
-    [theme.breakpoints.down("lg")]: {
-      left: sideNavWidthLG
+    textAlign: "center",
+    [theme.breakpoints.up("sm")]: {
+      left: sideNavWidthSM
     },
-    [theme.breakpoints.only("sm")]: {
-      left: 0,
-      textAlign: "center"
+    [theme.breakpoints.up("lg")]: {
+      left: sideNavWidthLG
     }
   },
   scrollButton: {
