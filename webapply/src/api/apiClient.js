@@ -6,8 +6,8 @@ export const OTP_ACTION_VERIFY = "verify";
 export const SEGMENT = "sme";
 
 export const config = {
-  load: product => {
-    const query = getQueryString(product, SEGMENT);
+  load: (product, segment = SEGMENT) => {
+    const query = getQueryString(product, segment);
     return httpClient.request({
       method: "GET",
       url: `webapply/api/v1/config${query}`
