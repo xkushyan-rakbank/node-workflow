@@ -46,19 +46,18 @@ function* receiveAppConfigSaga({ payload }) {
 
     const endpoints = getEndpoints(state);
     let response = null;
-    const SEGMENT = "sme";
 
     const accountType = Object.values(accountNames).includes(payload.accountType)
       ? payload.accountType
       : getAccountType(state);
 
     if (!isEmpty(endpoints)) {
-      response = yield call(config.load, accountType, SEGMENT);
+      response = yield call(config.load, accountType);
     } else {
       if (process.env.NODE_ENV === "development") {
-        response = yield call(config.load, accountNames.starter, SEGMENT);
+        response = yield call(config.load, accountNames.starter);
       } else {
-        response = yield call(config.load, null, SEGMENT);
+        response = yield call(config.load, null);
       }
     }
 

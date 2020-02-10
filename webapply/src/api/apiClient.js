@@ -3,10 +3,11 @@ import { buildURI, getQueryString } from "./../utils/buildURI";
 
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
+export const SEGMENT = "sme";
 
 export const config = {
-  load: (product, segment) => {
-    const query = getQueryString(product, segment);
+  load: product => {
+    const query = getQueryString(product, SEGMENT);
     return httpClient.request({
       method: "GET",
       url: `webapply/api/v1/config${query}`
