@@ -5,7 +5,13 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
-import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "./../../components/Form";
+import {
+  Input,
+  CustomSelect,
+  InputGroup,
+  AutoSaveField as Field,
+  SkeletonLoader
+} from "./../../components/Form";
 import {
   UAE_MOBILE_PHONE_REGEX,
   NUMBER_REGEX,
@@ -60,7 +66,8 @@ const ComeBackLoginComponent = ({
   setToken,
   recaptchaToken,
   isRecaptchaEnable,
-  isGenerating
+  isGenerating,
+  isConfigLoading
 }) => {
   const classes = useStyles();
   const submitForm = useCallback(
@@ -111,42 +118,50 @@ const ComeBackLoginComponent = ({
         {({ values }) => (
           <Form className={classes.form}>
             <div>
-              <Field
-                name="email"
-                path="prospect.applicantInfo.email"
-                label="Your E-mail Address"
-                placeholder="Email"
-                component={Input}
-                isLoadDefaultValueFromStore={false}
-                InputProps={{
-                  inputProps: { maxLength: MAX_LENGTH_EMAIL, tabIndex: 0 }
-                }}
-              />
-
-              <InputGroup>
+              {isConfigLoading ? (
+                <SkeletonLoader />
+              ) : (
                 <Field
-                  name="countryCode"
-                  path="prospect.applicantInfo.countryCode"
-                  required
-                  datalistId="countryCode"
-                  extractLabel={item => item.displayText}
-                  component={CustomSelect}
-                  shrink={false}
-                  inputProps={{ tabIndex: 0 }}
-                />
-
-                <Field
-                  name="mobileNo"
-                  path="prospect.applicantInfo.mobileNo"
-                  label="Your Mobile Number"
-                  placeholder="Mobile Number"
+                  name="email"
+                  path="prospect.applicantInfo.email"
+                  label="Your E-mail Address"
+                  placeholder="Email"
                   component={Input}
                   isLoadDefaultValueFromStore={false}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { maxLength: MAX_LENGTH_EMAIL, tabIndex: 0 }
                   }}
                 />
-              </InputGroup>
+              )}
+
+              {isConfigLoading ? (
+                <SkeletonLoader />
+              ) : (
+                <InputGroup>
+                  <Field
+                    name="countryCode"
+                    path="prospect.applicantInfo.countryCode"
+                    required
+                    datalistId="countryCode"
+                    extractLabel={item => item.displayText}
+                    component={CustomSelect}
+                    shrink={false}
+                    inputProps={{ tabIndex: 0 }}
+                  />
+
+                  <Field
+                    name="mobileNo"
+                    path="prospect.applicantInfo.mobileNo"
+                    label="Your Mobile Number"
+                    placeholder="Mobile Number"
+                    component={Input}
+                    isLoadDefaultValueFromStore={false}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
+                  />
+                </InputGroup>
+              )}
               <Grid container direction="row" justify="flex-start" alignItems="center">
                 {isRecaptchaEnable && (
                   <ErrorBoundaryForReCaptcha>
@@ -184,7 +199,8 @@ const mapStateToProps = state => ({
   recaptchaToken: state.reCaptcha.token,
   isOtpGenerated: isOtpGenerated(state),
   isRecaptchaEnable: getIsRecaptchaEnable(state),
-  isGenerating: getIsGenerating(state)
+  isGenerating: getIsGenerating(state),
+  isConfigLoading: state.appConfig.loading
 });
 
 const mapDispatchToProps = {
