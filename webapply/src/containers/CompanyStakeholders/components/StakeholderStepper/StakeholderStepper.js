@@ -5,7 +5,7 @@ import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStake
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
+import { stakeHoldersSteps, STEP_1, STEP_6, NEXT } from "./../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import {
   sendProspectToAPIPromisify,
@@ -51,8 +51,8 @@ const StakeholderStepperComponent = ({
     isEditInProgress ? initialAvailableSteps : [STEP_1]
   );
 
-  const handleContinue = () =>
-    sendProspectToAPI().then(
+  const handleContinue = event => () =>
+    sendProspectToAPI(NEXT, event).then(
       () => {
         if (isTooManyStakeholders) {
           setScreeningError(stakeholderScreeningStatus);
@@ -119,7 +119,7 @@ const StakeholderStepperComponent = ({
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
             clickHandler={createSetStepHandler(item.step)}
-            handleContinue={handleContinue}
+            handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
           />
         ))}

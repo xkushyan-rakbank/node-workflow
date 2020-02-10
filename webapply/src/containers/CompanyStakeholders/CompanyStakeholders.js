@@ -28,6 +28,7 @@ import {
 import routes from "../../routes";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -36,13 +37,13 @@ const CompanyStakeholdersComponent = ({
   editableStakeholder,
   stakeholders,
   percentage,
-  history,
   resetProspect,
   stakeholdersIds,
   hasSignatories,
   datalist,
   setEditStakeholder
 }) => {
+  const pushHistory = useTrackingHistory();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isShowingAddButton, setIsShowingAddButton] = useState(
@@ -69,7 +70,9 @@ const CompanyStakeholdersComponent = ({
     isLowPercentage ||
     !hasSignatories;
 
-  const goToFinalQuestions = () => history.push(routes.finalQuestions);
+  const goToFinalQuestions = useCallback(() => {
+    pushHistory(routes.finalQuestions);
+  }, [pushHistory]);
 
   const handleDeleteStakeholder = useCallback(
     id => {
