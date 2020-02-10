@@ -82,6 +82,7 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
                     [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]: 100
                   };
                 }
+                return prospect;
               }}
             />
           </Grid>
