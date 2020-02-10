@@ -22,8 +22,12 @@ export const useStyles = makeStyles(theme => ({
         top: 0,
         width: "calc((100vw - 1920px) / 2 + 5px)",
         height: "100vh",
-        backgroundColor: ({ color }) =>
-          color === "brown" ? "#b36446" : color === "green" ? "#407b35" : "#eb2f16"
+        background: ({ color }) =>
+          color === "brown"
+            ? "linear-gradient(to bottom, #8E2141, #B55774)"
+            : color === "green"
+            ? "#417C35"
+            : "linear-gradient(to bottom, #E9320F, #EA1C44)"
       }
     }
   },

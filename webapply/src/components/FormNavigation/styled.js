@@ -35,9 +35,6 @@ export const useStyles = makeStyles(theme => ({
       top: 0,
       width: sideNavWidthLG
     },
-    [theme.breakpoints.up("lg")]: {
-      width: sideNavWidthLG
-    },
     [theme.breakpoints.up("xl")]: {
       width: sideNavWidthXL
     },
