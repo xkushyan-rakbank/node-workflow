@@ -37,6 +37,11 @@ const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
       .required(getRequiredMessage("Percentage"))
   });
 
+const initialValues = {
+  isShareholderACompany: "",
+  shareHoldingPercentage: ""
+};
+
 const ShareholdingStep = ({
   handleContinue,
   totalPercentageWithoutCurrentStakeholder,
@@ -53,7 +58,7 @@ const ShareholdingStep = ({
 
   return (
     <Formik
-      initialValues={{ isShareholderACompany: "", shareHoldingPercentage: "" }}
+      initialValues={initialValues}
       onSubmit={handleContinue}
       validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
       validateOnChange={false}
@@ -64,7 +69,7 @@ const ShareholdingStep = ({
           <Form>
             <Grid container>
               <Field
-                disabled={isSoleProprietor}
+                isDisabled={isSoleProprietor}
                 name="isShareholderACompany"
                 component={InlineRadioGroup}
                 path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}
