@@ -6,7 +6,11 @@ import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../../../components/Notifications";
-import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
+import {
+  SelectAutocomplete,
+  Input,
+  AutoSaveField as Field
+} from "../../../../../../components/Form";
 import { WEALTH_TYPE__REGEX } from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
@@ -66,7 +70,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
-                  component={CustomSelect}
+                  component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                   isSearchable
                 />

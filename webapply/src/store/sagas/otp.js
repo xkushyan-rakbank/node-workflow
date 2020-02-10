@@ -8,7 +8,7 @@ function* generateOtp(action) {
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
-    yield call(otp.generate, action.payload, headers);
+    yield call(otp.generate, { ...action.payload, prospectId: getProspectId(state) }, headers);
 
     yield put(otpActions.generateCodeSuccess());
   } catch (error) {

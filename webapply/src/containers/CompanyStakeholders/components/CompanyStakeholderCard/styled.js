@@ -1,4 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@material-ui/styles";
+
+export const EditButton = styled("button")({
+  border: "none",
+  backgroundColor: "#ffffff",
+  cursor: "pointer",
+  padding: "0",
+  outline: "none"
+});
 
 export const useStyles = makeStyles({
   wrapper: {
@@ -19,7 +28,8 @@ export const useStyles = makeStyles({
   },
   userInfo: {
     display: "flex",
-    flex: 1
+    flex: 1,
+    justifyContent: "space-between"
   },
   nameField: {
     display: "flex",
@@ -27,5 +37,10 @@ export const useStyles = makeStyles({
     fontSize: "20px",
     fontWeight: "600",
     marginLeft: "20px"
+  },
+  arrow: {
+    width: "32px",
+    height: "32px",
+    transform: "rotate(180deg)"
   }
 });

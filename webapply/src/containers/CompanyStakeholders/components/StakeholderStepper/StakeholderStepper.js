@@ -14,7 +14,8 @@ import {
 import { useStep } from "../../../../components/StepComponent/useStep";
 import {
   changeEditableStakeholder,
-  setFillStakeholder
+  setFillStakeholder,
+  setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
@@ -25,7 +26,6 @@ const timeInterval = 5000;
 const StakeholderStepperComponent = ({
   id,
   index,
-  isNewStakeholder,
   firstName,
   middleName,
   lastName,
@@ -36,41 +36,36 @@ const StakeholderStepperComponent = ({
   loading: isStatusLoading,
   changeEditableStakeholder,
   setFillStakeholder,
+  setEditStakeholder,
   isTooManyStakeholders,
-  setScreeningError
+  setScreeningError,
+  showAddButton,
+  isEditInProgress
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
-
-  const handleContinue = useCallback(
-    event => () => {
-      sendProspectToAPI(event).then(
-        () => {
-          if (isTooManyStakeholders) {
-            setScreeningError(stakeholderScreeningStatus);
-          }
-
-          if (step === STEP_6) {
-            setFillStakeholder(index, true);
-          }
-          handleSetNextStep();
-        },
-        () => {}
-      );
-    },
-    [
-      handleSetNextStep,
-      setFillStakeholder,
-      setScreeningError,
-      sendProspectToAPI,
-      isTooManyStakeholders,
-      step,
-      index
-    ]
+  const initialAvailableSteps = stakeHoldersSteps.map(item => item.step);
+  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(
+    isEditInProgress ? null : STEP_1,
+    isEditInProgress ? initialAvailableSteps : [STEP_1]
   );
 
+  const handleContinue = () => event => () =>
+    sendProspectToAPI(event).then(
+      () => {
+        if (isTooManyStakeholders) {
+          setScreeningError(stakeholderScreeningStatus);
+        }
+
+        if (step === STEP_6) {
+          setFillStakeholder(index, true);
+          showAddButton();
+        }
+        isEditInProgress ? handleSetStep() : handleSetNextStep();
+      },
+      () => {}
+    );
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   useEffect(() => {
@@ -83,13 +78,21 @@ const StakeholderStepperComponent = ({
     return () => clearInterval(interval);
   }, [step, changeEditableStakeholder]);
 
-  const handleDeleteStakeholder = () => {
+  const handleDeleteStakeholder = useCallback(() => {
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);
-  };
+  }, [setIsDisplayConfirmation, deleteStakeholder, id]);
 
-  const deleteHandler = () =>
-    isDisplayConfirmation ? handleDeleteStakeholder() : setIsDisplayConfirmation(true);
+  const deleteHandler = useCallback(
+    () => (isDisplayConfirmation ? handleDeleteStakeholder() : setIsDisplayConfirmation(true)),
+    [isDisplayConfirmation, handleDeleteStakeholder, setIsDisplayConfirmation]
+  );
+
+  const editHandler = useCallback(() => {
+    showAddButton();
+    changeEditableStakeholder("");
+    setEditStakeholder(index, false);
+  }, [showAddButton, changeEditableStakeholder, setEditStakeholder, index]);
 
   if (isDisplayFinalScreen) {
     return <SuccessFilledStakeholder name={fullName} />;
@@ -97,12 +100,14 @@ const StakeholderStepperComponent = ({
 
   return (
     <CompanyStakeholderCard
-      isStatusShown={step !== STEP_1}
+      isStatusShown={!isEditInProgress ? step !== STEP_1 : isStatusLoading}
       firstName={firstName}
       lastName={lastName}
       middleName={middleName}
       isStatusLoading={isStatusLoading}
       index={orderIndex}
+      isEditInProgress={isEditInProgress}
+      editHandler={editHandler}
     >
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => (
@@ -120,7 +125,7 @@ const StakeholderStepperComponent = ({
         ))}
       </div>
 
-      {!isNewStakeholder && deleteStakeholder && (
+      {deleteStakeholder && (
         <div className={classes.footerPart}>
           <LinkButton
             title={
@@ -145,6 +150,7 @@ const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
   changeEditableStakeholder,
   setFillStakeholder,
+  setEditStakeholder,
   setScreeningError
 };
 
