@@ -30,6 +30,7 @@ import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
 import { useStyles } from "./styled";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 export const MAX_LENGTH_EMAIL = 50;
 
 const comebackSchema = Yup.object({
@@ -69,6 +70,7 @@ const ComeBackLoginComponent = ({
   isGenerating,
   isConfigLoading
 }) => {
+  const pushHistory = useTrackingHistory();
   const classes = useStyles();
   const submitForm = useCallback(
     values => {
@@ -94,9 +96,9 @@ const ComeBackLoginComponent = ({
 
   useEffect(() => {
     if (isOtpGenerated) {
-      history.push(routes.comeBackLoginVerification);
+      pushHistory(routes.comeBackLoginVerification);
     }
-  }, [history, isOtpGenerated]);
+  }, [pushHistory, isOtpGenerated]);
 
   return (
     <div className={classes.centeredContainer}>

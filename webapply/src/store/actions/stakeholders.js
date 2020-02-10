@@ -1,3 +1,6 @@
+import { appendGaEventToAction } from "./googleAnalytics";
+import { GA_EVENTS } from "../../utils/ga";
+
 export const CREATE_NEW_STAKEHOLDER = "CREATE_NEW_STAKEHOLDER";
 export const DELETE_STAKEHOLDER = "DELETE_STAKEHOLDER";
 
@@ -7,7 +10,10 @@ export const SET_FILL_STAKEHOLDER = "SET_FILL_STAKEHOLDER";
 export const SET_EDIT_STAKEHOLDER = "SET_EDIT_STAKEHOLDER";
 
 export const createNewStakeholder = () => {
-  return { type: CREATE_NEW_STAKEHOLDER };
+  const action = { type: CREATE_NEW_STAKEHOLDER };
+  const gaEvent = GA_EVENTS.COMPANY_STAKEHOLDER_ADD_NEW_CONTINUE;
+
+  return appendGaEventToAction(action, gaEvent);
 };
 
 export const deleteStakeholder = stakeholderId => {
