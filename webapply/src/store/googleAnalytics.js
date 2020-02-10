@@ -1,13 +1,17 @@
 import get from "lodash/get";
+import pick from "lodash/pick";
 import { GA } from "../utils/ga";
+import { store } from "../store";
 
-export const googleAnalyticsMiddleware = ({ eventType }) => GA.triggerEvent(eventType);
+export const googleAnalyticsMiddleware = data => GA.triggerEvent(data);
 const handleAction = (_, next, action) => {
+  const applicationInfo = store.getState().appConfig.prospect.applicationInfo;
+  const { accountType } = pick(applicationInfo, ["accountType", "islamicBanking"]);
   const analytics = get(action, "meta.analytics");
   if (analytics) {
-    const { eventType } = analytics;
+    const { event } = analytics;
 
-    googleAnalyticsMiddleware({ eventType });
+    googleAnalyticsMiddleware({ event, accountType });
   }
 
   return next(action);

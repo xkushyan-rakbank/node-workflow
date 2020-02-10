@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
@@ -59,9 +59,7 @@ export const ChannelsComponent = ({
   accountCurrencies: selectedCurrency
 }) => {
   const classes = useStyles();
-  const goToNextGA = useCallback(() => {
-    goToNext();
-  }, [goToNext]);
+
   const isChequeBookApplied = checkIsChequeBookApplied(primaryMobCountryCode, selectedCurrency);
   const isDebitCardApplied = checkIsDebitCardApplied(
     stakeholders[0].accountSigningInfo,
@@ -89,7 +87,7 @@ export const ChannelsComponent = ({
       }}
       validationSchema={channelsSchema}
       validateOnChange={false}
-      onSubmit={goToNextGA}
+      onSubmit={goToNext}
     >
       {({ values, setFieldValue }) => (
         <Form>

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -34,10 +34,6 @@ const accountDetailsSchema = Yup.object({
 export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspect }) => {
   const classes = useStyles();
 
-  const goToNextGA = useCallback(() => {
-    goToNext();
-  }, [goToNext]);
-
   return (
     <Formik
       initialValues={{
@@ -48,7 +44,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
       }}
       validationSchema={accountDetailsSchema}
       validateOnChange={false}
-      onSubmit={goToNextGA}
+      onSubmit={goToNext}
     >
       {({ values, setFieldValue }) => (
         <Form>

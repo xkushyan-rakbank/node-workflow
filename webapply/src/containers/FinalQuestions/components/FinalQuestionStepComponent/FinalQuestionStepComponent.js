@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
-import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
+import { SIGNATORY_INITIAL_INDEX, NEXT } from "../SignatorySummaryCard/constants";
 import { useStep } from "../../../../components/StepComponent/useStep";
 
 export const FinalQuestionStepComponent = ({
@@ -14,7 +14,7 @@ export const FinalQuestionStepComponent = ({
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(initialStep);
   const handleContinue = useCallback(
     eventName => () => {
-      sendProspectToAPI(undefined, eventName).then(() => handleSetNextStep(), () => {});
+      sendProspectToAPI(NEXT, eventName).then(() => handleSetNextStep(), () => {});
     },
     [sendProspectToAPI, handleSetNextStep]
   );

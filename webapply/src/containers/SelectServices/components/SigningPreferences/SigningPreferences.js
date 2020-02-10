@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import get from "lodash/get";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
@@ -121,10 +121,6 @@ const pathSignatoryInfo = `prospect.signatoryInfo[${INITIAL_INDEX}].accountSigni
 export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
   const classes = useStyles();
 
-  const goToNextGA = useCallback(() => {
-    goToNext();
-  }, [goToNext]);
-
   return (
     <Formik
       initialValues={{
@@ -142,7 +138,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
       }}
       validationSchema={signingPreferencesSchema}
       validateOnChange={false}
-      onSubmit={goToNextGA}
+      onSubmit={goToNext}
     >
       {({
         values: { accountSigningInstn, accountSigningType, signatories },

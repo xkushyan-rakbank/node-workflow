@@ -20,7 +20,7 @@ import {
   getSendProspectToAPIInfo,
   getIsRegisteredInUAE
 } from "../../store/selectors/appConfig";
-import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
+import { companyInfoSteps, STEP_1, STEP_3, NEXT } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
@@ -37,7 +37,7 @@ export const CompanyInfoPage = ({
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
   const handleContinue = event => () => {
-    sendProspectToAPI(undefined, event).then(
+    sendProspectToAPI(NEXT, event).then(
       () => {
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);

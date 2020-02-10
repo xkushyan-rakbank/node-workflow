@@ -33,7 +33,7 @@ export const SubmitApplicationComponent = ({
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
     sendProspectToAPI()
-      .then(() => pushHistory(pathname))
+      .then(() => pushHistory(pathname), () => {})
       .finally(() => setIsSubmitting(false));
   };
 

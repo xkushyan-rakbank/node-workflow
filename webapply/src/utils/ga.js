@@ -1,12 +1,9 @@
-import pick from "lodash/pick";
-import { store } from "../store";
-
 export const GA = {
-  triggerEvent: (event = "") => {
-    const applicationInfo = store.getState().appConfig.prospect.applicationInfo;
-    const account = pick(applicationInfo, ["accountType", "islamicBanking"]);
+  triggerEvent: ({ event, accountType }) => {
+    console.log(event);
+    console.log(accountType);
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event, ProductName: account.accountType });
+    window.dataLayer.push({ event, ProductName: accountType });
   }
 };
 
