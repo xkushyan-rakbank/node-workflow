@@ -26,13 +26,7 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-const SignatoryRightsComponent = ({
-  handleContinue,
-  index,
-  stakeholders,
-  updateProspect,
-  isSoleProprietor
-}) => {
+const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => {
   return (
     <Formik
       initialValues={{
