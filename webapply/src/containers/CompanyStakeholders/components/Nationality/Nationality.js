@@ -119,7 +119,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           <Field
                             name={`passportDetails[${passportIndex}].hasAnotherCitizenship`}
                             path={`${passportDetails}.hasAnotherCitizenship`}
-                            label="This person has a second citizenship"
+                            label="This person has another citizenship"
                             component={Checkbox}
                             onChange={createAddCitizenshipHandler(
                               values,
