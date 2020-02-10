@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../constants";
 
 export const useStyles = makeStyles(theme => ({
   centeredContainer: {
@@ -8,13 +7,10 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     width: "100%",
     height: "100%",
-    [theme.breakpoints.down("sm")]: {
-      marginTop: "80px",
+    [theme.breakpoints.only("sm")]: {
+      marginTop: "50px",
       padding: "0 16px",
       boxSizing: "border-box"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      marginTop: 0
     }
   },
   form: {
@@ -47,11 +43,10 @@ export const useStyles = makeStyles(theme => ({
     width: "auto",
     margin: 0
   },
-
   title: {
-    marginTop: "174px",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      marginTop: "80px"
+    marginTop: "40px",
+    [theme.breakpoints.only("sm")]: {
+      marginTop: "0"
     }
   },
   submitButton: {

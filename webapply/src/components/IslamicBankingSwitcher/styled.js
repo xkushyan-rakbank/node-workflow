@@ -1,16 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 
-import { mobileResolution } from "../../constants";
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   root: {
     position: "absolute",
     top: "30px",
     right: "40px",
-    zIndex: 21, // 20 still not visible
+    zIndex: 21,
     borderRadius: "6px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.08)",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       padding: "30px 16px",
       left: 0,
       top: "100vh",
@@ -34,7 +32,7 @@ export const useStyles = makeStyles({
     "& svg": {
       display: "none"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.down("sm")]: {
       width: "100%",
       borderRadius: "8px!important",
       border: "0!important",
@@ -67,4 +65,4 @@ export const useStyles = makeStyles({
     textAlign: "center",
     color: "#ffffff"
   }
-});
+}));

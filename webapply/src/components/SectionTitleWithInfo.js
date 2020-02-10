@@ -1,8 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../constants";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   title: {
     fontSize: "24px",
     fontWeight: 600,
@@ -15,11 +14,11 @@ const useStyles = makeStyles({
     color: "#373737",
     display: "block",
     marginTop: "10px",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.down("md")]: {
       fontSize: "14px"
     }
   }
-});
+}));
 
 export const SectionTitleWithInfo = ({ className, title, info, classes: extendedClasses }) => {
   const classes = useStyles({ classes: extendedClasses });

@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   indent: {
     marginBottom: "20px"
   },
@@ -15,20 +14,20 @@ export const useStyles = makeStyles({
     position: "absolute"
   },
   icon: {
-    width: "64px",
-    height: "64px",
-    "@media only screen and (max-width: 1300px)": {
-      width: "56px",
-      height: "56px"
+    width: "56px",
+    height: "56px",
+    [theme.breakpoints.up("lg")]: {
+      width: "64px",
+      height: "64px"
     }
   },
   styleInfoNotes: {
     margin: "0 auto",
-    [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
+    [theme.breakpoints.up("md")]: {
       position: "absolute",
       bottom: 65,
       left: 0,
       right: 0
     }
   }
-});
+}));

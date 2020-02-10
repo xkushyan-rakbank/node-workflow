@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { FormNavigationStep } from "../FormNavigationStep";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
+import Header from "../Header";
 import routes, { agentBaseName } from "../../routes";
 import { accountNames, formStepper, searchProspectStepper } from "../../constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
@@ -28,8 +29,21 @@ export const FormNavigationComponent = ({
 
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
 
-  const classes = useStyles();
   const isAccountsComparison = routes.accountsComparison === pathname;
+  const color =
+    !isAccountsComparison && accountType === accountNames.elite
+      ? "brown"
+      : !isAccountsComparison && islamicBanking
+      ? "green"
+      : "red";
+  console.log(color);
+  const classes = useStyles({
+    color,
+    isSmallBg: checkIsShowSmallBg(pathname),
+    isOpen: isSwitcherShow,
+    hasVideo: routes.accountsComparison === pathname
+  });
+
   const isChatVisible =
     pathname.indexOf(agentBaseName) === -1 &&
     ![
@@ -42,23 +56,13 @@ export const FormNavigationComponent = ({
       routes.comeBackLoginVerification
     ].includes(pathname);
 
-  const bgTypeClass = cx({
-    brown: !isAccountsComparison && accountType === accountNames.elite,
-    green: !isAccountsComparison && islamicBanking && accountType !== accountNames.elite
-  });
-
   const toggleSwitcherShow = () => setIsSwitcherShow(!isSwitcherShow);
 
   return (
-    <div
-      className={cx(classes.formNav, classes.formNavBg, bgTypeClass, {
-        "small-bg": checkIsShowSmallBg(pathname),
-        open: isSwitcherShow,
-        "has-video": routes.accountsComparison === pathname
-      })}
-    >
+    <div className={cx(classes.formNav, classes.formNavBg)}>
+      <Header />
       <IslamicBankingSwitcherMobile
-        className={cx(classes.formNavBg, bgTypeClass)}
+        className={classes.formNavBg}
         isSwitcherShow={isSwitcherShow}
         toggleSwitcherShow={toggleSwitcherShow}
       >

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   tableHead: {
     backgroundColor: "#f7f8f9"
   },
@@ -16,10 +16,9 @@ export const useStyles = makeStyles({
     height: "60px",
     padding: 0,
     borderBottom: "none",
-    width: "190px",
-    maxWidth: "190px",
-    "@media only screen and (max-width: 1360px)": {
-      width: "150px"
+    width: "150px",
+    [theme.breakpoints.up("lg")]: {
+      width: "190px"
     }
   },
   tableCellActive: {
@@ -43,4 +42,4 @@ export const useStyles = makeStyles({
   relative: {
     position: "relative"
   }
-});
+}));

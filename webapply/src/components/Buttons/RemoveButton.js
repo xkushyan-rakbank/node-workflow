@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@material-ui/styles";
 
-export const Button = styled("button")({
+export const Button = styled("button")(({ theme }) => ({
   position: "absolute",
   top: "30px",
   right: "-90px",
@@ -18,11 +18,11 @@ export const Button = styled("button")({
   "&[disabled]": {
     opacity: "0.5"
   },
-  "@media only screen and (max-width: 959px)": {
+  [theme.breakpoints.only("sm")]: {
     top: "80px",
     right: "12px"
   }
-});
+}));
 
 export const Text = styled("span")({
   fontSize: "16px",

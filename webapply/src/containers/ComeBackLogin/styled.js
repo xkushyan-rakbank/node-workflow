@@ -1,27 +1,17 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../constants";
 
 export const useStyles = makeStyles(theme => ({
   centeredContainer: {
+    marginTop: "174px",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     height: "100%",
     width: "100%",
     [theme.breakpoints.down("sm")]: {
-      marginTop: "80px",
+      marginTop: "50px",
       padding: "0 16px",
       boxSizing: "border-box"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      height: "auto",
-      marginTop: 0
-    }
-  },
-  title: {
-    marginTop: "174px",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      marginTop: "80px"
     }
   },
   form: {
@@ -32,7 +22,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       marginTop: "30px"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       height: "auto"
     }
   },
@@ -41,7 +31,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       marginLeft: "auto"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       marginBottom: 0
     }
   }

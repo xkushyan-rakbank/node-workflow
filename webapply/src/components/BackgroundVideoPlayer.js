@@ -5,11 +5,11 @@ import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import expandMoreIcon from "../assets/icons/arrowDown.svg";
-import { sideNavWidthXL, sideNavWidthLG, sideNavWidthMD } from "../constants/styles";
-import { mobileResolution, normalScrollHeight } from "../constants";
+import { sideNavWidthXL, sideNavWidthLG } from "../constants/styles";
+import { normalScrollHeight } from "../constants";
 const appRootEl = document.getElementById("root");
 
-const styles = {
+const styles = theme => ({
   container: {
     position: "absolute",
     top: 0,
@@ -20,9 +20,8 @@ const styles = {
     overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 11,
-    [`@media only screen and (max-width: ${mobileResolution}px), 
-    (max-height: ${normalScrollHeight}px)`]: {
-      top: "0!important"
+    [`${theme.breakpoints.only("sm")}, (max-height: ${normalScrollHeight}px)`]: {
+      transform: "none!important"
     }
   },
   video: {
@@ -36,10 +35,8 @@ const styles = {
     width: "auto",
     height: "auto",
     overflow: "hidden",
-    [`@media only screen and (max-width: ${mobileResolution}px) and (max-height: 750px)`]: {
-      paddingTop: "130px"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
+      paddingTop: "130px",
       height: "min-content"
     }
   },
@@ -51,13 +48,10 @@ const styles = {
     zIndex: 15,
     display: "flex",
     justifyContent: "center",
-    "@media only screen and (max-width: 1420px)": {
+    [theme.breakpoints.down("lg")]: {
       left: sideNavWidthLG
     },
-    "@media only screen and (max-width: 1300px)": {
-      left: `${sideNavWidthMD}px`
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       left: 0,
       textAlign: "center"
     }
@@ -73,7 +67,7 @@ const styles = {
     letterSpacing: "normal",
     padding: "12px 30px",
     height: "auto",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.down("md")]: {
       minHeight: "48px"
     }
   },
@@ -82,7 +76,7 @@ const styles = {
     marginLeft: 18,
     pointerEvents: "none"
   }
-};
+});
 
 class BackgroundVideoPlayer extends React.Component {
   constructor(props) {

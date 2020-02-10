@@ -1,8 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { mobileResolution } from "../../../../constants";
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   root: {
     minWidth: "550px",
     border: "none",
@@ -19,7 +17,7 @@ export const useStyles = makeStyles({
     "&$expanded": {
       margin: "auto"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       minWidth: "100%"
     }
   },
@@ -29,7 +27,7 @@ export const useStyles = makeStyles({
     "&$expanded": {
       minHeight: 60
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       padding: "8px 16px"
     }
   },
@@ -59,7 +57,7 @@ export const useStyles = makeStyles({
   text: {
     paddingBottom: "5px",
     fontSize: "16px",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       paddingBottom: 0
     }
   },
@@ -67,7 +65,7 @@ export const useStyles = makeStyles({
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       whiteSpace: "normal",
       "& svg": {
         display: "none"
@@ -76,8 +74,8 @@ export const useStyles = makeStyles({
   },
   info: {
     paddingLeft: 10,
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       paddingLeft: 0
     }
   }
-});
+}));

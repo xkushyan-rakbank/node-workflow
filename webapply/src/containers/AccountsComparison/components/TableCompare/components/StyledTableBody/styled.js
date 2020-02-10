@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   paperRoot: {
     marginTop: "5px",
     boxSizing: "border-box",
@@ -17,7 +17,7 @@ export const useStyles = makeStyles({
     maxWidth: "180px",
     paddingLeft: "5px",
     paddingRight: "0",
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("sm")]: {
       width: "75%"
     }
   },
@@ -27,7 +27,7 @@ export const useStyles = makeStyles({
     top: "-15px",
     height: "calc(100% + 30px)",
     transition: "left .25s ease",
-    "@media only screen and (max-height: 900px)": {
+    [theme.breakpoints.only("sm")]: {
       height: "calc(100% + 30px)"
     },
     borderRadius: "8px",
@@ -86,10 +86,9 @@ export const useStyles = makeStyles({
     height: "60px",
     padding: 0,
     borderBottom: "none",
-    width: "190px",
-    maxWidth: "190px",
-    "@media only screen and (max-width: 1360px)": {
-      width: "150px"
+    width: "150px",
+    [theme.breakpoints.up("lg")]: {
+      width: "190px"
     }
   },
   tableCellRoot: {
@@ -169,4 +168,4 @@ export const useStyles = makeStyles({
   relative: {
     position: "relative"
   }
-});
+}));

@@ -65,10 +65,6 @@ export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
 
-export const mobileResolutionMD = 850;
-export const mobileResolution = 955;
-export const tabletResolution = 1200;
-export const desktopResolution = 1300;
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";

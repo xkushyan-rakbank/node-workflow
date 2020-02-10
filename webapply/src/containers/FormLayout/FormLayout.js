@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 import { FormNavigation } from "../../components/FormNavigation";
-import Header from "../../components/Header";
 import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications, NotificationsProvider } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
@@ -37,7 +36,6 @@ export const FormLayoutComponent = ({
   return (
     <NotificationsProvider>
       <div className={classes.formLayout}>
-        <Header />
         <FormNavigation />
         <div className={classes.formWrapper}>
           <div className={classes.formInner}>

@@ -1,61 +1,60 @@
 import { makeStyles } from "@material-ui/core";
-import { mobileResolution, normalScrollHeight, tabletResolution } from "../../constants";
+import { normalScrollHeight } from "../../constants";
 export const transitionDuration = 400;
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
-      "@media (min-width: 956px) and (min-height: 741px)": {
+      [`${theme.breakpoints.up("md")} and (min-height: ${normalScrollHeight + 1}px)`]: {
         overflow: "hidden"
       }
     }
   },
   paginationWrapper: {
-    [`@media only screen and (min-width: ${mobileResolution + 1}px) 
-    and (min-height: ${normalScrollHeight + 1}px)`]: {
+    [`${theme.breakpoints.up("md")} and (min-height: ${normalScrollHeight + 1}px)`]: {
       position: "relative",
       height: "100vh",
       overflowY: "hidden"
     }
   },
-  paginationContent: ({ currentSectionIndex }) => ({
-    position: "absolute",
-    left: 0,
-    width: "100%",
-    transform: `translateY(-${100 * currentSectionIndex}vh)`,
-    transition: `transform ${transitionDuration}ms`,
-    [`@media only screen and (max-width: ${mobileResolution}px), 
-    (max-height: ${normalScrollHeight}px)`]: {
-      position: "static",
-      top: "0!important",
-      paddingBottom: 15
+  paginationContent: {
+    [`${theme.breakpoints.up("md")} and (min-height: ${normalScrollHeight + 1}px)`]: {
+      position: "absolute",
+      left: 0,
+      width: "100%",
+      transform: ({ currentSectionIndex }) => `translateY(-${100 * currentSectionIndex}vh)`,
+      transition: `transform ${transitionDuration}ms`
     }
-  }),
+  },
   childWrapper: {
     display: "flex",
     flexDirection: "column",
-    height: "100vh",
+    justifyContent: "center",
     position: "relative",
     boxSizing: "border-box",
-    padding: "0 26px",
-    [`@media only screen and
-     (max-width: ${tabletResolution}px)
-      and (min-width: ${mobileResolution}px)`]: {
+    paddingLeft: 26,
+    paddingRight: 26,
+    "&:last-of-type": {
+      marginBottom: 0
+    },
+    [theme.breakpoints.up("md")]: {
+      minHeight: "100vh"
+    },
+    [theme.breakpoints.between("xl", "lg")]: {
       padding: "18vh 20px"
     },
-    "@media only screen and (max-height: 900px)": {
-      justifyContent: "center",
-      paddingTop: "0px"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px), 
-    (max-height: ${normalScrollHeight}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       height: "auto",
-      padding: "40px 16px 0"
+      paddingLeft: 16,
+      paddingRight: 16
+    },
+    [`${theme.breakpoints.only("sm")}, (max-height: ${normalScrollHeight}px)`]: {
+      marginBottom: 40
     }
   },
   childWrapperWithHeader: {
     paddingTop: "35px",
-    "@media only screen and (max-height: 900px)": {
+    [theme.breakpoints.down("md")]: {
       justifyContent: "flex-start"
     }
   },
@@ -66,11 +65,10 @@ export const useStyles = makeStyles({
     width: "10px",
     zIndex: 2,
     transform: "translateY(-50%)",
-    "@media only screen and (max-width: 1360px)": {
+    [theme.breakpoints.only("md")]: {
       right: "15px"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px), 
-    (max-height: ${normalScrollHeight}px)`]: {
+    [`${theme.breakpoints.only("sm")}, (max-height: ${normalScrollHeight}px)`]: {
       display: "none"
     }
   },
@@ -93,4 +91,4 @@ export const useStyles = makeStyles({
     backgroundColor: "#020f21",
     cursor: "auto"
   }
-});
+}));

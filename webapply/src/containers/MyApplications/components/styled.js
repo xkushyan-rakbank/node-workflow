@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   rootTitle: {
     color: "#373737",
     fontWeight: "600",
@@ -35,7 +34,7 @@ export const useStyles = makeStyles({
     flexDirection: "column",
     marginTop: "40px",
     borderRadius: "8px",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       boxShadow: "none",
       marginTop: 0
     }
@@ -53,7 +52,7 @@ export const useStyles = makeStyles({
     flexDirection: "column",
     width: "100%",
     marginTop: "174px",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       marginTop: "80px"
     }
   }, //grid css start
@@ -114,11 +113,11 @@ export const useStyles = makeStyles({
     width: "100%",
     "&:not(:last-child)": {
       borderBottom: "1px solid #e6e6e6",
-      [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      [theme.breakpoints.only("sm")]: {
         borderBottom: "none"
       }
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       borderBottom: "none"
     }
   },
@@ -131,7 +130,7 @@ export const useStyles = makeStyles({
     flexDirection: "row",
     alignItems: "center",
     padding: "24px 20px 19px 30px",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       height: "180px",
       flexDirection: "column",
       justifyContent: "space-between",
@@ -143,7 +142,7 @@ export const useStyles = makeStyles({
   },
   oneThirdWidth: {
     width: "33%",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       width: "auto"
     }
   },
@@ -177,4 +176,4 @@ export const useStyles = makeStyles({
     textAlign: "center",
     color: "#b5b5bb"
   }
-});
+}));

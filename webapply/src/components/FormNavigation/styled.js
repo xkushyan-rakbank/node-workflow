@@ -1,15 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  portraitOrientationQueryIPads,
-  sideNavWidthLG,
-  sideNavWidthMD,
-  sideNavWidthSM,
-  sideNavWidthXL,
-  sideNavWidthXS
-} from "../../constants/styles";
-
-import { mobileResolution } from "../../constants";
+import { sideNavWidthLG, sideNavWidthXL } from "../../constants/styles";
 
 const blobImages = {
   red: require("../../assets/images/bg-blobs/bg-blob-red.svg"),
@@ -23,69 +14,42 @@ const blobImages = {
   greenM: require("../../assets/images/bg-blobs/bg-blob-m-green.svg")
 };
 
-export const useStyles = makeStyles({
-  formNav: {
-    flex: `0 0 ${(sideNavWidthMD / 1220) * 100}%`,
-    minWidth: `${sideNavWidthXL}px`,
+export const useStyles = makeStyles(theme => ({
+  formNav: ({ isSmallBg, isOpen, hasVideo }) => ({
     position: "relative",
-    paddingTop: "18vh",
     zIndex: "11",
-    [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    paddingTop: 70,
+    paddingLeft: 16,
+    paddingRight: 16,
+    transition: "all .3s",
+    height: isOpen ? "calc(100vh - 50px)" : isSmallBg ? 190 : 290,
+    marginBottom: isOpen && hasVideo ? "calc(-100vh + 220px)" : 0,
+    [theme.breakpoints.up("md")]: {
+      paddingTop: "18vh",
       height: "100vh",
       boxSizing: "border-box",
       position: "fixed",
-      top: 0
+      top: 0,
+      width: sideNavWidthLG
     },
-    [portraitOrientationQueryIPads]: {
-      paddingTop: "270px"
+    [theme.breakpoints.up("lg")]: {
+      width: sideNavWidthLG
     },
-    [`@media only screen and (min-width: ${mobileResolution}px) and (max-width: 1420px)`]: {
-      minWidth: `${sideNavWidthLG}px`,
-      maxWidth: `${sideNavWidthLG}px`
+    [theme.breakpoints.up("xl")]: {
+      width: sideNavWidthXL
     },
-    [`@media only screen and (min-width: ${mobileResolution}px) and (max-width: 1300px)`]: {
-      minWidth: `${sideNavWidthMD}px`,
-      maxWidth: `${sideNavWidthMD}px`
-    },
-    [`@media only screen and (min-width: ${mobileResolution}px) and (max-width: 1220px)`]: {
-      minWidth: `${sideNavWidthSM}px`,
-      maxWidth: `${sideNavWidthSM}px`
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      display: "flex",
-      overflow: "hidden",
-      flexDirection: "column",
-      transition: "all .3s",
-      minWidth: `${sideNavWidthXS}px`,
-      flex: "0 0 100%",
-      height: "290px",
-      paddingTop: "70px",
-      marginBottom: -40,
-      "&.small-bg": {
-        height: "190px"
-      },
-      "&.open": {
-        height: "calc(100vh - 50px)",
-        "&.has-video": {
-          marginBottom: "calc(-100vh + 220px)"
-        }
-      }
-    },
-
-    "@media only screen and (min-width: 1920px)": {
-      //Added that value to fill the black gap in DetailedAccount video while zooming out
-      minWidth: "19vw"
-    },
-
     "& ul": {
       margin: "0",
       padding: "5px 0 0 25px",
-      marginLeft: "40px",
+      marginLeft: "20px",
       height: "271px",
       overflowY: "auto",
       direction: "rtl",
-      "@media only screen and (max-width: 1250px)": {
-        marginLeft: "20px"
+      [theme.breakpoints.up("xl")]: {
+        marginLeft: "40px"
       },
       "&::-webkit-scrollbar": {
         width: "2px",
@@ -103,77 +67,45 @@ export const useStyles = makeStyles({
         direction: "ltr"
       }
     }
-  },
+  }),
   formNavBg: {
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "right center",
-    backgroundImage: `url(${blobImages.red})`,
-    "&.brown": {
-      backgroundImage: `url(${blobImages.brown})`
-    },
-    "&.green": {
-      backgroundImage: `url(${blobImages.green})`
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
+      backgroundImage: ({ color, isSmallBg }) =>
+        `url(${blobImages[color + (isSmallBg ? "S" : "M")]})`,
       backgroundSize: "cover",
-      backgroundPosition: "center bottom",
-      backgroundImage: `url(${blobImages.redM})`,
-      "&.brown": {
-        backgroundImage: `url(${blobImages.brownM})`
-      },
-      "&.green": {
-        backgroundImage: `url(${blobImages.greenM})`
-      },
-      "&.small-bg": {
-        backgroundImage: `url(${blobImages.redS})`,
-        "&.brown": {
-          backgroundImage: `url(${blobImages.brownS})`
-        },
-        "&.green": {
-          backgroundImage: `url(${blobImages.greenS})`
-        }
-      }
+      backgroundPosition: "center bottom"
+    },
+    [theme.breakpoints.up("md")]: {
+      backgroundImage: ({ color }) => `url(${blobImages[color]})`,
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "right center"
     }
   },
   contentContainer: {
-    width: 340,
-    marginLeft: 80,
-    "@media only screen and (max-width: 1300px)": {
-      marginLeft: 40,
+    margin: 0,
+    width: "100%",
+    maxWidth: 340,
+    [theme.breakpoints.up("lg")]: {
+      marginLeft: 40
+    },
+    [theme.breakpoints.up("xl")]: {
+      marginLeft: 80,
       width: "auto",
       paddingRight: "25px"
-    },
-    "@media only screen and (max-width: 1220px)": {
-      marginLeft: 20
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      margin: 0,
-      padding: "0 16px"
     }
   },
   sectionTitle: {
+    maxWidth: 340,
     color: "#fff",
     fontSize: "48px",
     lineHeight: "1.17",
     fontWeight: 600,
     fontFamily: "Open Sans",
     marginBottom: "20px",
-    "@media only screen and (max-width: 1300px)": {
-      paddingRight: "16px",
-      fontSize: "40px"
-    },
-    "@media only screen and (max-width: 1220px)": {
-      fontSize: "32px"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      margin: "0 0 30px",
-      padding: 0,
-      maxWidth: "500px",
-      paddingTop: "20px"
-    },
-    "@media only screen and (max-width: 374px)": {
-      fontSize: "28px"
+    [theme.breakpoints.only("sm")]: {
+      fontSize: 32,
+      lineHeight: "36px"
     }
   },
   sectionSubtitle: {
@@ -186,12 +118,8 @@ export const useStyles = makeStyles({
     fontWeight: "normal",
     fontFamily: "Open Sans",
     whiteSpace: "pre-wrap",
-    "@media only screen and (max-width: 1220px)": {
-      paddingRight: "25px"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      fontSize: "14px",
-      margin: "-20px 0 30px"
+    [theme.breakpoints.only("sm")]: {
+      marginBottom: 30
     }
   }
-});
+}));

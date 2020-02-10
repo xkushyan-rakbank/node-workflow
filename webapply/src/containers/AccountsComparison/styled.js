@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution, normalScrollHeight } from "../../constants";
+import { normalScrollHeight } from "../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
     flexDirection: "column"
@@ -11,12 +11,9 @@ export const useStyles = makeStyles({
     textDecoration: "underline"
   },
   videoWrapper: {
-    [`@media only screen and (min-width: ${mobileResolution +
-      1}px), (max-height: ${normalScrollHeight}px)`]: {
+    height: "calc(100vh - 260px)",
+    [`${theme.breakpoints.up("md")} and (max-height: ${normalScrollHeight}px)`]: {
       height: "100vh"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      height: "calc(100vh - 260px)"
     }
   }
-});
+}));

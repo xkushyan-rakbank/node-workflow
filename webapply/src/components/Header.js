@@ -8,17 +8,17 @@ import cx from "classnames";
 import { getAccountType, getIsIslamicBanking } from "../store/selectors/appConfig";
 import { isOtpVerified } from "../store/selectors/otp";
 import routes from "./../routes";
-import { accountNames, mobileResolution } from "../constants";
+import { accountNames } from "../constants";
 import logo from "../assets/images/rakbankLogo.svg";
 
-const styles = {
+const styles = theme => ({
   header: {
-    position: "fixed",
+    position: "absolute",
     top: "30px",
     left: "40px",
     display: "flex",
     zIndex: 12,
-    "@media only screen and (max-width: 1300px)": {
+    [theme.breakpoints.down("lg")]: {
       maxWidth: "270px"
     },
     "& img": {
@@ -28,7 +28,7 @@ const styles = {
     "& a": {
       display: "flex"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.down("md")]: {
       position: "absolute",
       margin: 0,
       padding: 0,
@@ -63,7 +63,7 @@ const styles = {
   disabled: {
     pointerEvents: "none"
   }
-};
+});
 
 const Header = ({
   classes,

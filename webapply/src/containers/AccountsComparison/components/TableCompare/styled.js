@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution, tabletResolution } from "../../../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   paperRoot: {
     marginTop: "5px",
     boxSizing: "border-box",
@@ -10,13 +9,13 @@ export const useStyles = makeStyles({
   },
   tableContainer: {
     position: "relative",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       display: "none"
     }
   },
   tableMobileContainer: {
     display: "none",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       display: "block"
     }
   },
@@ -26,7 +25,7 @@ export const useStyles = makeStyles({
     top: "-15px",
     height: "calc(100% + 30px)",
     transition: "left .25s ease",
-    "@media only screen and (max-height: 900px)": {
+    [theme.breakpoints.only("sm")]: {
       height: "calc(100% + 30px)"
     },
     borderRadius: "8px",
@@ -61,9 +60,9 @@ export const useStyles = makeStyles({
     "& th:first-child, & td:first-child": {
       paddingLeft: "0",
       width: "200px",
-      [`@media only screen and (max-width: ${tabletResolution}px)`]: {
+      [theme.breakpoints.only("sm")]: {
         width: "auto"
       }
     }
   }
-});
+}));

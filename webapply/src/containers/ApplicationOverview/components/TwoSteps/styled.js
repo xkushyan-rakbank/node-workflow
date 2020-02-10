@@ -1,8 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { mobileResolution } from "../../../../constants";
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   icon: {
     fontSize: "55px",
     color: "green"
@@ -19,15 +17,15 @@ export const useStyles = makeStyles({
     height: "300px",
     width: "100%",
     display: "flex",
+    [theme.breakpoints.only("sm")]: {
+      height: "auto",
+      flexWrap: "wrap"
+    },
     "& span": {
       maxWidth: "380px"
     },
     "& img": {
       maxWidth: "100%"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      height: "auto",
-      flexWrap: "wrap"
     }
   },
   note: {
@@ -35,7 +33,7 @@ export const useStyles = makeStyles({
     fontSize: "12px",
     textAlign: "center",
     color: "#888888",
-    "@media only screen and (max-height: 800px)": {
+    [theme.breakpoints.only("sm")]: {
       marginBottom: "15px"
     }
   },
@@ -49,4 +47,4 @@ export const useStyles = makeStyles({
     color: "#373737",
     fontSize: 18
   }
-});
+}));

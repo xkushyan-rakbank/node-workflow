@@ -1,6 +1,15 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
 export const theme = createMuiTheme({
+  breakpoints: {
+    keys: ["sm", "md", "lg", "xl"],
+    values: {
+      sm: 0,
+      md: 1024,
+      lg: 1280,
+      xl: 1920
+    }
+  },
   typography: {
     useNextVariants: true
   },

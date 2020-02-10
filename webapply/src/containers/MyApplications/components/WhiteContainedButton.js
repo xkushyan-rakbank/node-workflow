@@ -2,7 +2,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { ContainedButton } from "../../../components/Buttons/ContainedButton";
 
-export const WhiteContainedButton = withStyles(() => ({
+export const WhiteContainedButton = withStyles(theme => ({
   buttonStyle: {
     boxShadow: "none",
     border: "solid 1px #373737",
@@ -10,7 +10,7 @@ export const WhiteContainedButton = withStyles(() => ({
     width: 160,
     height: 32,
     padding: "0 10px",
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("sm")]: {
       width: "130px"
     },
     "&:hover": {
@@ -24,7 +24,7 @@ export const WhiteContainedButton = withStyles(() => ({
     color: "#373737",
     fontSize: 14,
     justifyContent: "center",
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("sm")]: {
       fontSize: 12
     }
   }

@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolutionMD, desktopResolution, mobileResolution } from "../../../../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   root: {
     position: "relative",
     display: "flex",
@@ -16,14 +15,8 @@ export const useStyles = makeStyles({
     marginRight: "20px",
     flex: "0 0 calc(50% - 10px)",
     boxSizing: "border-box",
-    [`@media only screen and (max-width: ${mobileResolutionMD}px)`]: {
-      margin: 20
-    },
     "&:last-child": {
-      marginRight: 0,
-      [`@media only screen and (max-width: ${mobileResolutionMD}px)`]: {
-        margin: 20
-      }
+      marginRight: 0
     }
   },
   title: {
@@ -117,7 +110,6 @@ export const useStyles = makeStyles({
       justifyContent: "center"
     }
   },
-
   cardRoot: {
     position: "relative",
     display: "flex",
@@ -136,19 +128,12 @@ export const useStyles = makeStyles({
     },
     "&:hover $closeButton": {
       display: "block"
-    },
-    [`@media only screen and (max-width: ${desktopResolution}px)`]: {
-      maxHeight: "220px",
-      padding: "10px 20px 10px 20px"
     }
   },
   cardTitle: {
     fontSize: "20px",
     borderBottom: "solid 1px #e8e8e8",
-    paddingBottom: "20px",
-    [`@media only screen and (max-width: ${desktopResolution}px)`]: {
-      paddingBottom: "10px"
-    }
+    paddingBottom: "20px"
   },
   cardName: {
     fontWeight: 600,
@@ -189,17 +174,8 @@ export const useStyles = makeStyles({
   cardOptions: {
     paddingLeft: "20px",
     fontSize: "20px",
-    [`@media only screen and (max-width: ${desktopResolution}px)`]: {
-      "& li": {
-        fontSize: "16px"
-      },
-      margin: "5px 0"
-    },
     "& li:not(:last-child)": {
-      marginBottom: "20px",
-      [`@media only screen and (max-width: ${desktopResolution}px)`]: {
-        marginBottom: "5px"
-      }
+      marginBottom: "20px"
     }
   },
   cardLink: {
@@ -208,10 +184,7 @@ export const useStyles = makeStyles({
     textDecoration: "underline"
   },
   cardLinkWrapper: {
-    marginBottom: "40px",
-    [`@media only screen and (max-width: ${desktopResolution}px)`]: {
-      marginBottom: "10px"
-    }
+    marginBottom: "40px"
   },
   included: {
     fontSize: "16px",
@@ -252,32 +225,10 @@ export const useStyles = makeStyles({
     width: "100%",
     flexWrap: "nowrap",
     justifyContent: "center",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       justifyContent: "flex-start",
       overflowX: "auto",
       paddingBottom: "15px"
     }
   }
-});
-
-export const ContainedButtonStyles = {
-  buttonStyle: {
-    height: "auto",
-    padding: "3px 0",
-    border: "1px solid #373737",
-    boxShadow: "none",
-    backgroundColor: "#fff",
-    "&:hover": {
-      backgroundColor: "#000",
-      "& span": {
-        color: "#fff"
-      }
-    }
-  },
-  labelStyle: {
-    display: "block",
-    color: "#373737",
-    fontSize: "14px",
-    textAlign: "center"
-  }
-};
+}));
