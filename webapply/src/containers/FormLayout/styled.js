@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     position: "relative",
     display: "flex",
     height: "100%",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.only("sm")]: {
       flexWrap: "wrap"
     },
     [theme.breakpoints.up("xl")]: {

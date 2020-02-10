@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: "600"
       }
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.only("sm")]: {
       display: "none"
     }
   },

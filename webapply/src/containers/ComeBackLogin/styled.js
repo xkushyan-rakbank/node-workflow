@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     height: "100%",
     width: "100%",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.only("sm")]: {
       marginTop: "50px",
       padding: "0 16px",
       boxSizing: "border-box"
@@ -19,7 +19,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.only("sm")]: {
       marginTop: "30px"
     },
     [theme.breakpoints.only("sm")]: {
@@ -28,7 +28,7 @@ export const useStyles = makeStyles(theme => ({
   },
   btnWrapper: {
     marginBottom: "80px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.only("sm")]: {
       marginLeft: "auto"
     },
     [theme.breakpoints.only("sm")]: {

@@ -16,7 +16,7 @@ const style = theme => ({
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
     textAlign: "center",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.only("sm")]: {
       padding: "15px",
       margin: "5px"
     }

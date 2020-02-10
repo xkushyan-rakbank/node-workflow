@@ -32,7 +32,7 @@ export const useStyles = makeStyles(theme => ({
     "& svg": {
       display: "none"
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.only("sm")]: {
       width: "100%",
       borderRadius: "8px!important",
       border: "0!important",

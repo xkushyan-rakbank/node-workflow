@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { portraitOrientationQueryIPads } from "../../../../constants/styles";
 
 export const useStyles = makeStyles(theme => ({
   cardsContainer: {
@@ -7,6 +8,9 @@ export const useStyles = makeStyles(theme => ({
     overflow: "hidden",
     margin: "20px -26px -25px",
     padding: "0 16px 25px",
+    [portraitOrientationQueryIPads]: {
+      flexDirection: "column"
+    },
     [theme.breakpoints.only("md")]: {
       marginLeft: 0,
       marginRight: 0,

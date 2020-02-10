@@ -30,15 +30,14 @@ export const FormNavigationComponent = ({
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
 
   const isAccountsComparison = routes.accountsComparison === pathname;
-  const color =
-    !isAccountsComparison && accountType === accountNames.elite
-      ? "brown"
-      : !isAccountsComparison && islamicBanking
-      ? "green"
-      : "red";
-  console.log(color);
+
   const classes = useStyles({
-    color,
+    color:
+      !isAccountsComparison && accountType === accountNames.elite
+        ? "brown"
+        : !isAccountsComparison && islamicBanking
+        ? "green"
+        : "red",
     isSmallBg: checkIsShowSmallBg(pathname),
     isOpen: isSwitcherShow,
     hasVideo: routes.accountsComparison === pathname

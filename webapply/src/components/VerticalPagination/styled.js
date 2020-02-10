@@ -54,7 +54,7 @@ export const useStyles = makeStyles(theme => ({
   },
   childWrapperWithHeader: {
     paddingTop: "35px",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.only("sm")]: {
       justifyContent: "flex-start"
     }
   },

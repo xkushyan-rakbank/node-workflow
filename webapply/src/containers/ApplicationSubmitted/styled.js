@@ -10,7 +10,7 @@ export const useStyles = makeStyles(theme => ({
       width: 85,
       height: "auto",
       marginBottom: 20,
-      [theme.breakpoints.up("md")]: {
+      [theme.breakpoints.up("lg")]: {
         width: 120,
         height: 126,
         marginBottom: 40
