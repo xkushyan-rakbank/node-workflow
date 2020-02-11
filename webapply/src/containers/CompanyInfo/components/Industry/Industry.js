@@ -126,8 +126,16 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           }}
                           otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
-                            // eslint-disable-next-line max-len
-                            "This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. \n\n Example: \nIf business / commercial / licensed activity is 'E Commerce', please select industry as 'Services' & sub-industry as 'Computer & IT Industry'"
+                            <>
+                              This should be selected as per the most relevant business / commercial
+                              / licensed activity mentioned in the trade license
+                              <br />
+                              Example:
+                              <br />
+                              {`If business / commercial / licensed activity is 'E Commerce', please
+                              select industry as 'Services' & sub-industry as 'Computer & IT
+                              Industry'`}
+                            </>
                           }
                         />
                       </Grid>
@@ -173,8 +181,16 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           }}
                           otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
-                            // eslint-disable-next-line max-len
-                            "This should be selected as per the most relevant business / commercial / licensed activity mentioned in the trade license. \n\n Example: \nIf business / commercial / licensed activity is 'E Commerce', please select industry as 'Services' & sub-industry as 'Computer & IT Industry'"
+                            <>
+                              This should be selected as per the most relevant business / commercial
+                              / licensed activity mentioned in the trade license
+                              <br />
+                              Example:
+                              <br />
+                              {`If business / commercial / licensed activity is 'E Commerce', please
+                              select industry as 'Services' & sub-industry as 'Computer & IT
+                              Industry'`}
+                            </>
                           }
                         />
                       </Grid>
