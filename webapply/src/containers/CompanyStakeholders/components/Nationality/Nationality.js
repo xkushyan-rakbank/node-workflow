@@ -128,10 +128,6 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               setFieldValue
                             )}
                             changeProspect={prospect => {
-                              if (passportIndex > 0) {
-                                return prospect;
-                              }
-
                               return {
                                 ...prospect,
                                 // eslint-disable-next-line max-len
