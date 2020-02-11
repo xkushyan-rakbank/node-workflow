@@ -8,8 +8,8 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 
-// Temporary disabled encryption
-const ENCRYPT_METHODS = ["post", "put"];
+// For enable encrypt replace next line: const ENCRYPT_METHODS = ["post", "put"]
+const ENCRYPT_METHODS = [];
 const SYM_KEY_HEADER = "x-sym-key";
 
 const getBaseURL = () =>
