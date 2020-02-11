@@ -124,8 +124,9 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     }}
                     contextualHelpText={
                       <>
-                        Starting with the most resent enter jobwise list of experience From
-                        Month-Year, To Month-Year, Company Name, Company Country, Position &
+                        Starting with the most resent enter jobwise list of experience:
+                        <br />
+                        From Month-Year, To Month-Year, Company Name, Company Country, Position &
                         Employment Type (Salaried / Self Employed)
                         <br />
                         <br />
