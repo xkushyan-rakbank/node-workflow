@@ -2,7 +2,6 @@ import React from "react";
 import get from "lodash/get";
 
 import { signingInfo } from "../../../constants";
-import { SIGNING_TRANSACTIONS_TYPE } from "../../../../../constants";
 
 import { Divider } from "../../Divider";
 
@@ -26,10 +25,6 @@ export const CompanyCard = ({
   const isOnlineBankingApplied = get(account, "eStatements");
 
   const accountSignInType = get(signatoryInfo[0], "accountSigningInfo.accountSigningType");
-  let accountSignInMsg;
-  if (accountSignInType !== SIGNING_TRANSACTIONS_TYPE.OTHER) {
-    accountSignInMsg = signingInfo[accountSignInType];
-  }
 
   return (
     <div className={classes.card}>
@@ -56,7 +51,7 @@ export const CompanyCard = ({
       <div className={classes.secondaryTitle}>Services selected</div>
       <div className={classes.grayText}>{currencies}</div>
 
-      <div className={classes.grayText}>{accountSignInMsg}</div>
+      <div className={classes.grayText}>{signingInfo[accountSignInType]}</div>
       {isDebitCardApplied && (
         <div className={classes.grayText}>Business debit cards for all signatories</div>
       )}

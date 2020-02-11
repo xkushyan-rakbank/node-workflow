@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
-import { useHistory } from "react-router-dom";
 
 import { UAE_CODE, digitRegExp } from "../../constants";
 
@@ -12,6 +11,7 @@ import { OtpVerification } from "../../components/OtpVerification";
 import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
 
 import { useStyles } from "./styled";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 export const MAX_ATTEMPT_ALLOWED = 3;
 export const MAX_NUMBER_VALIDATION_ERRORS = 4;
@@ -25,7 +25,7 @@ export const OTPformComponent = ({
   generateOtpCode,
   classes: extendetClasses
 }) => {
-  const history = useHistory();
+  const pushHistory = useTrackingHistory();
   const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
   const [code, setCode] = useState(Array(6).fill(""));
   const [loginAttempt, setLoginAttempt] = useState(0);
@@ -33,10 +33,9 @@ export const OTPformComponent = ({
 
   useEffect(() => {
     if (isVerified) {
-      history.push(redirectRoute);
+      pushHistory(redirectRoute);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVerified]);
+  }, [isVerified, pushHistory, redirectRoute]);
 
   useEffect(() => {
     if (verificationError) {

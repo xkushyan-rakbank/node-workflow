@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import cx from "classnames";
 
 import { useStep } from "../../components/StepComponent/useStep";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import StatusLoader from "../../components/StatusLoader";
@@ -19,24 +20,24 @@ import {
   getSendProspectToAPIInfo,
   getIsRegisteredInUAE
 } from "../../store/selectors/appConfig";
-import { companyInfoSteps, STEP_1, STEP_3 } from "./constants";
+import { companyInfoSteps, STEP_1, STEP_3, NEXT } from "./constants";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
-  history,
   loading,
   fullName,
   organizationInfo: { companyName },
   setScreeningError,
   isRegisteredInUAE
 }) => {
+  const pushHistory = useTrackingHistory();
   const classes = useStyles();
   const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
 
-  const handleContinue = () =>
-    sendProspectToAPI().then(
+  const handleContinue = event => () => {
+    sendProspectToAPI(NEXT, event).then(
       () => {
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);
@@ -45,10 +46,13 @@ export const CompanyInfoPage = ({
       },
       () => {}
     );
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
-  const handleClickNextStep = useCallback(() => history.push(routes.stakeholdersInfo), [history]);
+  const handleClickNextStep = useCallback(() => {
+    pushHistory(routes.stakeholdersInfo);
+  }, [pushHistory]);
 
   return (
     <>
@@ -75,7 +79,7 @@ export const CompanyInfoPage = ({
             isActiveStep={step === item.step}
             isFilled={availableSteps.includes(item.step)}
             handleClick={createSetStepHandler(item.step)}
-            handleContinue={handleContinue}
+            handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
           />
         ))}

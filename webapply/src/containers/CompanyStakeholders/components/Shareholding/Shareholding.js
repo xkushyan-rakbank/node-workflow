@@ -19,6 +19,7 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 import { yesNoOptions } from "../../../../constants/options";
 import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
+import { SOLE_PROPRIETOR } from "../../../../constants";
 
 const PercentageInput = props => <NumberFormat decimalSeparator="." decimalScale={2} {...props} />;
 
@@ -36,16 +37,17 @@ const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
       .required(getRequiredMessage("Percentage"))
   });
 
+const initialValues = {
+  isShareholderACompany: "",
+  shareHoldingPercentage: ""
+};
+
 const ShareholdingStep = ({
   handleContinue,
   totalPercentageWithoutCurrentStakeholder,
   isSoleProprietor,
   index
 }) => {
-  const initialValues = isSoleProprietor
-    ? { isShareholderACompany: true, shareHoldingPercentage: 100 }
-    : { isShareholderACompany: "", shareHoldingPercentage: "" };
-
   const createShareholderHandler = ({ values, setFieldValue }) => event => {
     const value = JSON.parse(event.target.value);
     setFieldValue("isShareholderACompany", value);
@@ -67,6 +69,7 @@ const ShareholdingStep = ({
           <Form>
             <Grid container>
               <Field
+                isDisabled={isSoleProprietor}
                 name="isShareholderACompany"
                 component={InlineRadioGroup}
                 path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}
@@ -85,7 +88,7 @@ const ShareholdingStep = ({
                   path={`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`}
                   label="Percentage"
                   placeholder={values.isShareholderACompany ? "33.33" : "Percentage"}
-                  disabled={!values.isShareholderACompany}
+                  disabled={!values.isShareholderACompany || isSoleProprietor}
                   component={Input}
                   InputProps={{
                     inputComponent: PercentageInput,
@@ -112,7 +115,7 @@ const mapStateToProps = (state, { index }) => {
   );
   return {
     isSoleProprietor:
-      get(getSignatories(state)[index], "accountSigningInfo.authorityType", "") === "SP",
+      get(getSignatories(state)[index], "accountSigningInfo.authorityType", "") === SOLE_PROPRIETOR,
     totalPercentageWithoutCurrentStakeholder
   };
 };
