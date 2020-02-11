@@ -16,11 +16,7 @@ import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
-export const FormNavigationComponent = ({
-  islamicBanking,
-  accountType,
-  isApplyEditApplication
-}) => {
+export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   const {
     location: { pathname }
   } = useHistory();
@@ -65,7 +61,7 @@ export const FormNavigationComponent = ({
         </Typography>
       </IslamicBankingSwitcherMobile>
       {checkIsShowAccountInfo(pathname) ? (
-        <AccountInfo accountType={accountType} islamicBanking={islamicBanking} />
+        <AccountInfo />
       ) : (
         pathname !== routes.login && (
           <ul>

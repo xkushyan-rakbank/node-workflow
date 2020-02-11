@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 
 import { ContainedButton } from "../Buttons/ContainedButton";
@@ -9,10 +10,13 @@ import { accountsInfo } from "./constants";
 import routes from "../../routes";
 
 import { useStyles } from "./styled";
+import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 
-export const AccountInfo = ({ accountType, islamicBanking }) => {
+export const AccountInfo = () => {
   const classes = useStyles();
   const history = useHistory();
+  const accountType = useSelector(getAccountType);
+  const isIslamicBanking = useSelector(getIsIslamicBanking);
   const { location: { pathname } = {} } = history;
 
   const handleClick = path => () => history.push(path);
@@ -53,7 +57,7 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
             component="span"
             classes={{ root: classes.sectionSubtitle }}
           >
-            {islamicBanking
+            {isIslamicBanking
               ? accountsInfo[accountType].islamicSubtitle
               : accountsInfo[accountType].subtitle}
           </Typography>
