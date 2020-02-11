@@ -42,7 +42,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public String getJwtToken(String username, String password) {
-        ResponseEntity<JsonNode> oAuthToken = oAuthService.getOAuthToken(username, password);
+        ResponseEntity<JsonNode> oAuthToken = oAuthService.getOrUpdateOAuthToken(username, password);
 
         return jwtService.encrypt(JwtPayload.builder()
                 .oauthAccessToken(oAuthToken.getBody().get("access_token").asText())
