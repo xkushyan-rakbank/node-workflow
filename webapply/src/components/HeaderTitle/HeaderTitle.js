@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 
 import { getAgentName, checkLoginStatus } from "../../store/selectors/loginSelector";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
-import { logout, formatLogin } from "../../store/actions/loginForm";
-import { formatSearchList } from "../../store/actions/searchProspect";
+import { logout } from "../../store/actions/loginForm";
 import { getAccountType } from "../../store/selectors/appConfig";
 import { getIsIslamicBanking } from "../../store/selectors/appConfig";
 
@@ -22,7 +21,7 @@ const HeaderTitleComponent = ({
   getAgentName,
   withMargin,
   withoutMarginBottom,
-  ...props
+  logout
 }) => {
   const classes = useStyles();
   const { pathname } = useLocation();
@@ -51,11 +50,9 @@ const HeaderTitleComponent = ({
   ];
 
   const agentLogout = useCallback(() => {
-    props.logout();
-    props.formatLogin();
-    props.formatSearchList();
+    logout();
     history.push(routes.login);
-  }, []);
+  }, [logout, history]);
 
   return (
     <div
@@ -79,11 +76,11 @@ const HeaderTitleComponent = ({
           ) : (
             <>
               {selectedAccountTypeName} {islamicBanking && "Islamic"} application{" "}
-              {!isHideCompanyName && companyName ? (
+              {!isHideCompanyName && companyName && (
                 <>
                   for <span>{companyName}</span>
                 </>
-              ) : null}
+              )}
             </>
           )}
         </span>
@@ -101,9 +98,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  logout,
-  formatLogin,
-  formatSearchList
+  logout
 };
 
 export const HeaderTitle = connect(
