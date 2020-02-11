@@ -74,7 +74,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
   return (
     <Formik
       initialValues={{
-        gender: "",
+        salutation: "",
         firstName: "",
         middleName: "",
         lastName: "",
@@ -117,8 +117,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             <Grid item md={6} sm={12}>
               <InputGroup>
                 <Field
-                  name="gender"
-                  path={`prospect.signatoryInfo[${index}].gender`}
+                  name="salutation"
+                  path={`prospect.signatoryInfo[${index}].salutation`}
                   disabled={!!values.isShareholderACompany}
                   component={CustomSelect}
                   shrink={false}
