@@ -1,7 +1,9 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 
+import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 import { ContainedButton } from "../Buttons/ContainedButton";
 import { MobileNotification } from "../Modals";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
@@ -10,9 +12,11 @@ import routes from "../../routes";
 
 import { useStyles } from "./styled";
 
-export const AccountInfo = ({ accountType, islamicBanking }) => {
+export const AccountInfo = () => {
   const classes = useStyles();
   const history = useHistory();
+  const accountType = useSelector(getAccountType);
+  const isIslamicBanking = useSelector(getIsIslamicBanking);
   const pushHistory = useTrackingHistory();
   const { location: { pathname } = {} } = history;
   const handleClick = useCallback(path => () => pushHistory(path), [pushHistory]);
@@ -53,7 +57,7 @@ export const AccountInfo = ({ accountType, islamicBanking }) => {
             component="span"
             classes={{ root: classes.sectionSubtitle }}
           >
-            {islamicBanking
+            {isIslamicBanking
               ? accountsInfo[accountType].islamicSubtitle
               : accountsInfo[accountType].subtitle}
           </Typography>

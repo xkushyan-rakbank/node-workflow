@@ -1,23 +1,39 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  routerToAddPaddingInSlider,
-  sideNavWidthLG,
-  sideNavWidthMD,
-  sideNavWidthSM
-} from "../../constants/styles";
-import { mobileResolution } from "../../constants";
+import { routerToAddPaddingInSlider, sideNavWidthSM, sideNavWidthLG } from "../../constants/styles";
+import { ELITE, ISLAMIC } from "../../utils/useBlobColor/constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   formLayout: {
     position: "relative",
     display: "flex",
     height: "100%",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("xs")]: {
       flexWrap: "wrap"
     },
-    "@media only screen and (min-width: 1920px)": {
-      maxWidth: "1920px"
+    [theme.breakpoints.up("xl")]: {
+      marginLeft: "auto",
+      marginRight: "auto",
+      maxWidth: "1920px",
+      "&:before": {
+        content: "''",
+        position: "fixed",
+        zIndex: 11,
+        left: 0,
+        top: 0,
+        width: "calc((100vw - 1920px) / 2 + 5px)",
+        height: "100vh",
+        background: ({ color }) => {
+          switch (color) {
+            case ELITE:
+              return "linear-gradient(to bottom, #8E2141, #B55774)";
+            case ISLAMIC:
+              return "#417C35";
+            default:
+              return "linear-gradient(to bottom, #E9320F, #EA1C44)";
+          }
+        }
+      }
     }
   },
   formWrapper: {
@@ -25,29 +41,21 @@ export const useStyles = makeStyles({
     flex: "1 1 auto",
     minHeight: "0px",
     minWidth: "1px",
-    paddingLeft: `${sideNavWidthLG}px`,
     "& h2": {
       fontSize: "46px",
       fontWeight: "600",
       marginBottom: "20px",
       marginTop: "0",
       color: "#373737",
-      "@media only screen and (max-width: 1100px)": {
+      [theme.breakpoints.only("xs")]: {
         fontSize: "27px"
       }
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      paddingBottom: 40,
-      paddingLeft: 0
+    [theme.breakpoints.up("sm")]: {
+      paddingLeft: sideNavWidthSM
     },
-    [`@media only screen and (max-width: 1420px) and (min-width: ${mobileResolution + 1}px)`]: {
-      paddingLeft: `${sideNavWidthLG}px`
-    },
-    [`@media only screen and (max-width: 1300px) and (min-width: ${mobileResolution + 1}px)`]: {
-      paddingLeft: `${sideNavWidthMD}px`
-    },
-    [`@media only screen and (max-width: 1220px) and (min-width: ${mobileResolution + 1}px)`]: {
-      paddingLeft: `${sideNavWidthSM}px`
+    [theme.breakpoints.up("lg")]: {
+      paddingLeft: sideNavWidthLG
     }
   },
   formInner: {
@@ -57,7 +65,7 @@ export const useStyles = makeStyles({
     "& nextButton": {
       margin: "42px 0 0 !important"
     },
-    [`@media only screen and (min-width: ${mobileResolution + 1}px)`]: {
+    [theme.breakpoints.up("sm")]: {
       overflowY: "auto"
     }
   },
@@ -68,11 +76,11 @@ export const useStyles = makeStyles({
     margin: "0 auto",
     padding: ({ pathname }) => (routerToAddPaddingInSlider.includes(pathname) ? "0" : "35px 0 0"),
     paddingTop: "35px",
-    "@media only screen and (min-width: 1920px)": {
+    [theme.breakpoints.up("xl")]: {
       minWidth: "auto"
     }
   },
   mainContainerFullHeight: {
     padding: "0 50px 0"
   }
-});
+}));

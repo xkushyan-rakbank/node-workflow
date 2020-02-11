@@ -1,4 +1,4 @@
-const smeBaseName = "/sme";
+export const smeBaseName = "/sme";
 export const agentBaseName = "/agent";
 
 export default {

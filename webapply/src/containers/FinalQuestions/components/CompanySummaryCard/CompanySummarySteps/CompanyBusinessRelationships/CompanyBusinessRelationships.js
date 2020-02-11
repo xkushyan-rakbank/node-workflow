@@ -88,6 +88,10 @@ export const CompanyBusinessRelationshipsComponent = ({
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
+  const isDontHaveSuppliersYet =
+    topSuppliers.length === 1 && !topSuppliers[0].name && !topSuppliers[0].country;
+  const isDontTradeGoodsYet =
+    topOriginGoodsCountries.length === 1 && !topOriginGoodsCountries[0].length;
 
   const handleSubmit = useCallback(() => {
     handleContinue();
@@ -98,13 +102,13 @@ export const CompanyBusinessRelationshipsComponent = ({
       <Formik
         initialValues={{
           topCustomers: topCustomers.map(item => ({ ...item, id: uniqueId() })),
-          isDontHaveSuppliersYet: false,
+          isDontHaveSuppliersYet,
           topSuppliers: topSuppliers.map(item => ({ ...item, id: uniqueId() })),
           topOriginGoodsCountries: topOriginGoodsCountries.map(item => ({
             country: item,
             id: uniqueId()
           })),
-          isDontTradeGoodsYet: false,
+          isDontTradeGoodsYet,
           otherBankingRelationshipsInfo: {
             otherBankingRelationshipsExist: false,
             otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))

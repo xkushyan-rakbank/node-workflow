@@ -1,8 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import { mobileResolution } from "../../constants";
 
-const style = {
+const style = theme => ({
   iconCardWrapper: {
     display: "flex",
     flexDirection: "column",
@@ -17,7 +16,7 @@ const style = {
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     color: "#373737",
     textAlign: "center",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("xs")]: {
       padding: "15px",
       margin: "5px"
     }
@@ -42,7 +41,7 @@ const style = {
       width: 60
     }
   }
-};
+});
 
 const IconCardItem = ({ classes, children, title, text }) => (
   <div className={classes.iconCardWrapper}>

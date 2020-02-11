@@ -39,7 +39,7 @@ export const accountsDataRows = [
     elite: { ic: checkIc }
   },
   {
-    info: ["RAKvalue Package ", "(PLUS and MAX)"],
+    info: ["RAKvalue Package ", "(PLUS & MAX)"],
     starter: { text: "Mandatory", info: "(PLUS - AED 49)" },
     currentAccount: { text: "Optional" },
     elite: { text: "Optional" }

@@ -9,10 +9,6 @@ export const useStyles = makeStyles({
   },
   container: {
     top: "30px",
-    right: "-110px",
-    "@media only screen and (max-width: 959px)": {
-      top: "85px",
-      right: "12px"
-    }
+    right: "-110px"
   }
 });

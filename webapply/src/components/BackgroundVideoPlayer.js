@@ -5,11 +5,11 @@ import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import expandMoreIcon from "../assets/icons/arrowDown.svg";
-import { sideNavWidthXL, sideNavWidthLG, sideNavWidthMD } from "../constants/styles";
-import { mobileResolution, normalScrollHeight } from "../constants";
+import { sideNavWidthLG, sideNavWidthSM } from "../constants/styles";
+import { normalScrollHeight } from "../constants";
 const appRootEl = document.getElementById("root");
 
-const styles = {
+const styles = theme => ({
   container: {
     position: "absolute",
     top: 0,
@@ -20,9 +20,8 @@ const styles = {
     overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 11,
-    [`@media only screen and (max-width: ${mobileResolution}px), 
-    (max-height: ${normalScrollHeight}px)`]: {
-      top: "0!important"
+    [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
+      transform: ({ nextElementPosition }) => `translateY(-${100 * nextElementPosition}vh)`
     }
   },
   video: {
@@ -36,30 +35,25 @@ const styles = {
     width: "auto",
     height: "auto",
     overflow: "hidden",
-    [`@media only screen and (max-width: ${mobileResolution}px) and (max-height: 750px)`]: {
-      paddingTop: "130px"
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("xs")]: {
+      paddingTop: "130px",
       height: "min-content"
     }
   },
   buttonContainer: {
     position: "absolute",
-    left: sideNavWidthXL,
+    left: 0,
     right: 0,
     bottom: 40,
     zIndex: 15,
     display: "flex",
     justifyContent: "center",
-    "@media only screen and (max-width: 1420px)": {
+    textAlign: "center",
+    [theme.breakpoints.up("sm")]: {
+      left: sideNavWidthSM
+    },
+    [theme.breakpoints.up("lg")]: {
       left: sideNavWidthLG
-    },
-    "@media only screen and (max-width: 1300px)": {
-      left: `${sideNavWidthMD}px`
-    },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      left: 0,
-      textAlign: "center"
     }
   },
   scrollButton: {
@@ -73,7 +67,7 @@ const styles = {
     letterSpacing: "normal",
     padding: "12px 30px",
     height: "auto",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("xs")]: {
       minHeight: "48px"
     }
   },
@@ -82,7 +76,7 @@ const styles = {
     marginLeft: 18,
     pointerEvents: "none"
   }
-};
+});
 
 class BackgroundVideoPlayer extends React.Component {
   constructor(props) {
@@ -131,7 +125,6 @@ class BackgroundVideoPlayer extends React.Component {
     const playedVideos = this.getPlayedVideos();
     const {
       classes,
-      nextElementPosition,
       handleClick,
       handleClickMobile,
       videoWrapperClass,
@@ -139,10 +132,7 @@ class BackgroundVideoPlayer extends React.Component {
     } = this.props;
 
     const video = (
-      <div
-        style={{ transform: `translateY(-${100 * nextElementPosition}vh)` }}
-        className={cx(classes.container, videoWrapperClass)}
-      >
+      <div className={cx(classes.container, videoWrapperClass)}>
         <video
           muted
           id="video-background"
