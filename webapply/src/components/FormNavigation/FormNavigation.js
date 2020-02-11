@@ -35,6 +35,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   });
 
   const isChatVisible =
+    !isApplyEditApplication &&
     pathname.indexOf(agentBaseName) === -1 &&
     ![
       routes.accountsComparison,
