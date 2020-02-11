@@ -160,4 +160,16 @@ export const queryParams = {
 export const ISLAMIC_BANK = "RAKislamic";
 export const CONVENTIONAL_BANK = "Conventional";
 export const BYTES_IN_MEGABYTE = 1048576;
+
+export const VIEW_IDS = {
+  SubmitApplication: "/SubmitApplication",
+  SearchProspect: "/SearchProspect",
+  CompanyInfo: "/CompanyInfo"
+};
+
+export const ACTION_TYPES = {
+  save: "save",
+  submit: "submit"
+};
+
 export const SOLE_PROPRIETOR = "1";

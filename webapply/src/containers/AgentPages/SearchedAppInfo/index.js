@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
-import { updateProspectId, displayScreenBasedOnViewId } from "../../../store/actions/appConfig";
-import { getProspectInfo } from "../../../store/actions/retrieveApplicantInfo";
+import { updateProspectId } from "../../../store/actions/appConfig";
+import { getProspectInfoPromisify } from "../../../store/actions/retrieveApplicantInfo";
 import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
 import {
   getIsEditableStatusSearchInfo,
@@ -19,10 +19,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   retrieveDocDetails,
-  getProspectInfo,
+  getProspectInfoPromisify,
   updateProspectId,
-  setIsApplyEditApplication,
-  displayScreenBasedOnViewId
+  setIsApplyEditApplication
 };
 
 export default connect(
