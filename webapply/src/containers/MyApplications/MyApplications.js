@@ -22,7 +22,7 @@ export const MyApplications = () => {
   const onGetProspectInfo = useCallback(
     prospectId =>
       dispatch(getProspectInfoPromisify(prospectId)).then(pushDisplayScreenToHistory, () => {}),
-    [pushDisplayScreenToHistory]
+    [pushDisplayScreenToHistory, dispatch]
   );
 
   return <BaseComponent searchResults={searchResults} getProspectInfo={onGetProspectInfo} />;

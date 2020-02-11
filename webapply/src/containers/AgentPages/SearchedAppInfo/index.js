@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   retrieveDocDetails,
-  getProspectInfoPromisify,
+  getProspectInfo: getProspectInfoPromisify,
   updateProspectId,
   setIsApplyEditApplication
 };

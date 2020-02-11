@@ -35,7 +35,7 @@ export const useDisplayScreenBasedOnViewId = () => {
     } else {
       history.push(`${prefix}${pathTo}`);
     }
-  }, [applicationInfo, isROScreens]);
+  }, [applicationInfo, isROScreens, history]);
 
   return {
     pushDisplayScreenToHistory
