@@ -165,3 +165,9 @@ export const ISLAMIC_BANK = "RAKislamic";
 export const CONVENTIONAL_BANK = "Conventional";
 export const BYTES_IN_MEGABYTE = 1048576;
 export const SOLE_PROPRIETOR = "1";
+
+export const STEP_STATUS = {
+  ACTIVE: "ACTIVE",
+  AVAILABLE: "AVAILABLE",
+  COMPLETED: "COMPLETED"
+};

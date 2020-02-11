@@ -1,67 +1,31 @@
 import {
-  SET_STEP,
-  SET_STEP_IS_ACTIVE,
-  SET_INITIAL_STEP,
-  ADD_STEP,
+  SET_STEP_STATUS,
+  SET_INITIAL_STEPS,
   ADD_SIGNATORY,
   REMOVE_SIGNATORY
 } from "../actions/completedSteps";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 import { COMPANY_SIGNATORY_ID } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
+import { STEP_STATUS } from "../../constants";
 
 export const initialState = [];
 
 const completedSteps = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_STEP:
-      return state.map(flow => {
-        if (flow.flowId === action.payload.flowId) {
-          return { flowId: action.payload.flowId, steps: [...flow.steps, action.payload.step] };
+    case SET_STEP_STATUS:
+      return state.map(step => {
+        if (step.flowId === action.payload.flowId) {
+          if (step.step === action.payload.step) {
+            return { ...step, status: action.payload.status };
+          }
+          return step.status === STEP_STATUS.ACTIVE
+            ? { ...step, status: STEP_STATUS.COMPLETED }
+            : step;
         }
-        return flow;
+        return step;
       });
-    case SET_STEP:
-      return state.map(flow => {
-        if (flow.flowId === action.payload.flowId) {
-          return {
-            flowId: action.payload.flowId,
-            steps: flow.steps.map(step => {
-              if (step.id === action.payload.stepIndex) {
-                return action.payload.step;
-              }
-              return step;
-            })
-          };
-        }
-        return flow;
-      });
-    case SET_INITIAL_STEP:
-      return state.some(flow => flow.flowId === action.payload.flowId)
-        ? state.map(flow => {
-            if (flow.flowId === action.payload.flowId) {
-              return {
-                flowId: action.payload.flowId,
-                steps: [action.payload.step]
-              };
-            }
-            return flow;
-          })
-        : [...state, { flowId: action.payload.flowId, steps: [action.payload.step] }];
-    case SET_STEP_IS_ACTIVE:
-      return state.map(flow => {
-        if (flow.flowId === action.payload.flowId) {
-          return {
-            flowId: flow.flowId,
-            steps: flow.steps.map(step => {
-              if (step.id === action.payload.stepIndex) {
-                return { ...step, isActive: true };
-              }
-              return { ...step, isActive: false };
-            })
-          };
-        }
-        return flow;
-      });
+    case SET_INITIAL_STEPS:
+      return [...state, ...action.payload.steps];
     case ADD_SIGNATORY:
       return [
         ...state,

@@ -12,7 +12,7 @@ import {
   sendProspectToAPIPromisify,
   setScreeningError
 } from "../../store/actions/sendProspectToAPI";
-import { screeningStatusNotRegistered } from "../../constants";
+import { screeningStatusNotRegistered, STEP_STATUS } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
@@ -34,11 +34,10 @@ export const CompanyInfoPage = ({
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
-  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
     COMPANY_INFO_PAGE_ID,
-    STEP_1
+    companyInfoSteps
   );
-  const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleContinue = event => () => {
     sendProspectToAPI(NEXT, event).then(
@@ -46,7 +45,7 @@ export const CompanyInfoPage = ({
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);
         }
-        handleSetNextStep(activeStep, activeStep !== companyInfoSteps.length);
+        handleSetNextStep(activeStep);
       },
       () => {}
     );
@@ -83,7 +82,9 @@ export const CompanyInfoPage = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={activeStep === item.step}
-            isFilled={availableSteps.some(step => step.id === item.step && step.isCompleted)}
+            isFilled={availableSteps.some(
+              step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
+            )}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
