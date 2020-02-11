@@ -18,7 +18,7 @@ export const SearchedAppInfoComponent = ({
   match,
   updateProspectId,
   retrieveDocDetails,
-  getProspectInfoPromisify,
+  getProspectInfo,
   setIsApplyEditApplication,
   prospectInfo
 }) => {
@@ -32,8 +32,8 @@ export const SearchedAppInfoComponent = ({
 
   useEffect(() => {
     updateProspectId(match.params.id);
-    getProspectInfoPromisify(match.params.id);
-  }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfoPromisify]);
+    getProspectInfo(match.params.id);
+  }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfo]);
 
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
