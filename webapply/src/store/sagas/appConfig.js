@@ -19,7 +19,7 @@ import {
   saveProspectModel
 } from "../actions/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
-import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
+import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 
 import { config } from "../../api/apiClient";
 import { history } from "./..";
@@ -138,12 +138,11 @@ function* resetProspectSaga() {
   }
 }
 
-function* updateViewIdSaga({ viewId }) {
-  yield put(
-    updateProspect({
-      "prospect.applicationInfo.viewId": viewId.replace("/sme", "").replace("/agent", "")
-    })
-  );
+function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
+  yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
+  if (isSendToApi) {
+    yield put(sendProspectToAPI());
+  }
 }
 
 function* updateSaveTypeSaga({ saveType }) {

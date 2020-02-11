@@ -13,7 +13,9 @@ export const SET_SCREENING_ERROR = "SET_SCREENING_ERROR";
 export const RESET_SCREENING_ERROR = "RESET_SCREENING_ERROR";
 export const SEND_PROSPECT_REQUEST = "SEND_PROSPECT_REQUEST";
 
-export const sendProspectToAPI = () => ({ type: SEND_PROSPECT_TO_API });
+export const sendProspectToAPI = (saveType = NEXT) => {
+  return { type: SEND_PROSPECT_TO_API, payload: { saveType } };
+};
 
 export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null) => {
   const action = {
