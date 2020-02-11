@@ -8,10 +8,11 @@ import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicB
 import { AccountInfo } from "./AccountInfo";
 import Header from "../Header";
 import routes, { agentBaseName } from "../../routes";
-import { accountNames, formStepper, searchProspectStepper } from "../../constants";
+import { formStepper, searchProspectStepper } from "../../constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
+import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
@@ -23,22 +24,15 @@ export const FormNavigationComponent = ({
   const {
     location: { pathname }
   } = useHistory();
+  const blobColor = useBlobColor();
 
   const getRouteConfig = () =>
     formStepper.find(step => [step.path, step.relatedPath].some(path => pathname === path));
 
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
 
-  const isAccountsComparison = routes.accountsComparison === pathname;
-  function getBlobColor() {
-    if (isAccountsComparison) return "red";
-    if (accountType === accountNames.elite) return "brown";
-    if (islamicBanking) return "green";
-    return "red";
-  }
-
   const classes = useStyles({
-    color: getBlobColor(),
+    color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),
     isOpen: isSwitcherShow,
     hasVideo: routes.accountsComparison === pathname

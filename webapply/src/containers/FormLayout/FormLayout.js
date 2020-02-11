@@ -5,27 +5,19 @@ import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications, NotificationsProvider } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { useStyles } from "./styled";
-import { accountNames } from "../../constants";
-import routes from "../../routes";
+import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},
   children,
   screeningResults: { screeningError },
   updateViewId,
-  resetScreeningError,
-  islamicBanking,
-  accountType
+  resetScreeningError
 }) => {
-  const isAccountsComparison = routes.accountsComparison === pathname;
+  const blobColor = useBlobColor();
   const classes = useStyles({
     pathname,
-    color:
-      !isAccountsComparison && accountType === accountNames.elite
-        ? "brown"
-        : !isAccountsComparison && islamicBanking && accountType !== accountNames.elite
-        ? "green"
-        : "red"
+    color: blobColor
   });
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 import { routerToAddPaddingInSlider, sideNavWidthSM, sideNavWidthLG } from "../../constants/styles";
+import { ELITE, ISLAMIC } from "../../utils/useBlobColor/constants";
 
 export const useStyles = makeStyles(theme => ({
   formLayout: {
@@ -24,9 +25,9 @@ export const useStyles = makeStyles(theme => ({
         height: "100vh",
         background: ({ color }) => {
           switch (color) {
-            case "brown":
+            case ELITE:
               return "linear-gradient(to bottom, #8E2141, #B55774)";
-            case "green":
+            case ISLAMIC:
               return "#417C35";
             default:
               return "linear-gradient(to bottom, #E9320F, #EA1C44)";
