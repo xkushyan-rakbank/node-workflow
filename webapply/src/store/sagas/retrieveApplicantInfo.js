@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import uniqueId from "lodash/uniqueId";
 import * as actions from "../actions/retrieveApplicantInfo";
-import { displayScreenBasedOnViewId, setConfig } from "../actions/appConfig";
+import { setConfig } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "../selectors/appConfig";
@@ -34,6 +34,7 @@ function* getProspectIdInfo({ payload }) {
     const config = { prospect: response.data };
 
     yield put(setConfig(config));
+
     const stakeholdersIds = config.prospect.signatoryInfo.map(info => ({
       id: uniqueId(),
       done: false,
@@ -41,15 +42,15 @@ function* getProspectIdInfo({ payload }) {
     }));
 
     yield put(updateStakeholdersIds(stakeholdersIds));
-    if (payload.isUpdateView) {
-      yield put(displayScreenBasedOnViewId());
-    }
   } catch (error) {
     log(error);
+    yield put(actions.getProspectInfoFail());
+  } finally {
+    yield put(actions.getProspectInfoSuccess());
   }
 }
 
 export default function* retrieveApplicantSaga() {
   yield all([takeLatest(actions.RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga)]);
-  yield all([takeLatest(actions.GET_PROSPECT_INFO, getProspectIdInfo)]);
+  yield all([takeLatest(actions.GET_PROSPECT_INFO_REQUEST, getProspectIdInfo)]);
 }

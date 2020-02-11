@@ -1,13 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { mobileResolution } from "../../../../constants";
-
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   answers: {
     marginTop: "40px",
     borderRadius: "8px",
     overflow: "auto",
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("xs")]: {
       overflow: "inherit"
     }
   },
@@ -17,7 +15,7 @@ export const useStyles = makeStyles({
     fontSize: "16px",
     fontWeight: "600",
     backgroundColor: "rgba(239, 242, 244, .5)",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("xs")]: {
       minWidth: "auto",
       padding: "20px 16px",
       borderRadius: "8px 8px 0 0"
@@ -29,8 +27,8 @@ export const useStyles = makeStyles({
   iconsWrapper: {
     flexWrap: "nowrap",
     margin: "0 -10px",
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("xs")]: {
       flexWrap: "wrap"
     }
   }
-});
+}));

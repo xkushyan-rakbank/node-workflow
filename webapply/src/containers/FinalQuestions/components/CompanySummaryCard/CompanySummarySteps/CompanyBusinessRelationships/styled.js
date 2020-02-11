@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   title: {
     fontSize: "16px"
   },
@@ -29,20 +29,20 @@ export const useStyles = makeStyles({
     position: "relative"
   },
   tablet: {
-    "@media only screen and (max-width: 959px)": {
+    [theme.breakpoints.only("xs")]: {
       marginBottom: "20px"
     }
   },
   container: {
     top: "15px",
     right: "-100px",
-    "@media only screen and (max-width: 959px)": {
+    [theme.breakpoints.only("xs")]: {
       top: "70px",
       right: "12px"
     }
   },
   marginBottom: {
-    "@media only screen and (max-width: 959px)": {
+    [theme.breakpoints.only("xs")]: {
       marginBottom: "45px"
     }
   },
@@ -52,4 +52,4 @@ export const useStyles = makeStyles({
     justifyContent: "flex-end",
     margin: "40px 0"
   }
-});
+}));

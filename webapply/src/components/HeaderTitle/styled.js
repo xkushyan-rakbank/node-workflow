@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
-import { mobileResolution } from "../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   headerTitle: {
     backgroundColor: "#fff",
     marginBottom: "115px",
@@ -13,7 +12,7 @@ export const useStyles = makeStyles({
         fontWeight: "600"
       }
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("xs")]: {
       display: "none"
     }
   },
@@ -34,4 +33,4 @@ export const useStyles = makeStyles({
     marginTop: "-20px",
     cursor: "pointer"
   }
-});
+}));

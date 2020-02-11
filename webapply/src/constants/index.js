@@ -65,10 +65,6 @@ export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
 export const REQUEST_FAILED = "error";
 
-export const mobileResolutionMD = 850;
-export const mobileResolution = 955;
-export const tabletResolution = 1200;
-export const desktopResolution = 1300;
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
@@ -164,4 +160,16 @@ export const queryParams = {
 export const ISLAMIC_BANK = "RAKislamic";
 export const CONVENTIONAL_BANK = "Conventional";
 export const BYTES_IN_MEGABYTE = 1048576;
+
+export const VIEW_IDS = {
+  SubmitApplication: "/SubmitApplication",
+  SearchProspect: "/SearchProspect",
+  CompanyInfo: "/CompanyInfo"
+};
+
+export const ACTION_TYPES = {
+  save: "save",
+  submit: "submit"
+};
+
 export const SOLE_PROPRIETOR = "1";

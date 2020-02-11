@@ -1,17 +1,16 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   chat: {
     position: "absolute",
     left: "77px",
     bottom: "40px",
     color: "#fff",
     fontSize: "18px",
-    "@media only screen and (max-width: 1220px)": {
+    [theme.breakpoints.down("sm")]: {
       left: "15px"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("xs")]: {
       position: "fixed"
     }
   },
@@ -19,7 +18,7 @@ export const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     cursor: "pointer",
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("xs")]: {
       flexDirection: "column"
     },
     "& span": {
@@ -51,7 +50,7 @@ export const useStyles = makeStyles({
       width: "30px",
       height: "30px"
     },
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("xs")]: {
       display: "none",
       "& span": {
         width: "48px",
@@ -93,4 +92,4 @@ export const useStyles = makeStyles({
   mimimized: {
     bottom: "-105%"
   }
-});
+}));

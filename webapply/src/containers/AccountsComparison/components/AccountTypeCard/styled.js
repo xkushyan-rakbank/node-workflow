@@ -1,8 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { portraitOrientationQueryIPads } from "../../../../constants/styles";
-import { mobileResolution, tabletResolution } from "../../../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   container: {
     border: "solid 1px #e8e8e8",
     minWidth: 247,
@@ -17,9 +16,7 @@ export const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    [`@media only screen 
-    and (max-width: ${tabletResolution}px)
-    and (min-width: ${mobileResolution}px)`]: {
+    [theme.breakpoints.only("sm")]: {
       minWidth: "200px",
       maxWidth: "210px",
       "& button": {
@@ -50,7 +47,7 @@ export const useStyles = makeStyles({
       width: "100%",
       whiteSpace: "pre-wrap"
     },
-    "@media only screen and (max-width: 1220px)": {
+    [theme.breakpoints.down("sm")]: {
       "& span": {
         margin: "13px"
       }
@@ -110,4 +107,4 @@ export const useStyles = makeStyles({
     fontWeight: "600",
     padding: "0 8px"
   }
-});
+}));

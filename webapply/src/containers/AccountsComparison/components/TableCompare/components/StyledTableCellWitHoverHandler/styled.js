@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../../../../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   tableCellRoot: {
     fontSize: "16px",
     color: "#373737",
@@ -12,7 +11,7 @@ export const useStyles = makeStyles({
     "& span + span": {
       fontSize: "12px",
       color: "#888",
-      [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+      [theme.breakpoints.only("xs")]: {
         fontSize: 10
       }
     },
@@ -43,4 +42,4 @@ export const useStyles = makeStyles({
       }
     }
   }
-});
+}));
