@@ -6,7 +6,11 @@ import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../../../components/Notifications";
-import { CustomSelect, Input, AutoSaveField as Field } from "../../../../../../components/Form";
+import {
+  SelectAutocomplete,
+  Input,
+  AutoSaveField as Field
+} from "../../../../../../components/Form";
 import { WEALTH_TYPE__REGEX } from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
@@ -54,19 +58,19 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.wealthType`}
                   datalistId="wealthType"
                   label="Source of funds"
-                  onChange={e => {
+                  onChange={selectedValue => {
                     if (
-                      e.target.value !== OTHER_SOURCE_OF_WEALTH &&
+                      selectedValue !== OTHER_SOURCE_OF_WEALTH &&
                       values.wealthType === OTHER_SOURCE_OF_WEALTH
                     ) {
                       setFieldValue("others", "");
                       setFieldTouched("others", false);
                     }
-                    setFieldValue("wealthType", e.target.value);
+                    setFieldValue("wealthType", selectedValue);
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
-                  component={CustomSelect}
+                  component={SelectAutocomplete}
                   inputProps={{ tabIndex: 0 }}
                   isSearchable
                 />

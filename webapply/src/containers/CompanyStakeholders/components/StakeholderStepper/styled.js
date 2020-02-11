@@ -19,6 +19,6 @@ export const useStyles = makeStyles({
   },
   button: {
     fontSize: "16px",
-    color: "#c00000"
+    color: "#c00000 !important"
   }
 });

@@ -1,4 +1,6 @@
 import axios from "axios";
+import get from "lodash/get";
+
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
@@ -7,8 +9,7 @@ import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 
 // Temporary disabled encryption
-// const ENCRYPT_METHODS = ["post", "put"];
-const ENCRYPT_METHODS = [];
+const ENCRYPT_METHODS = ["post", "put"];
 const SYM_KEY_HEADER = "x-sym-key";
 
 const getBaseURL = () =>
@@ -100,38 +101,35 @@ instance.interceptors.response.use(
       }
     }
 
-    if (!jsonData) return;
-
-    if (status === 400 && jsonData.errorType === "ReCaptchaError") {
-      store.dispatch(setError(data.errors));
-      NotificationsManager.add &&
-        NotificationsManager.add({ title: "ReCaptchaError", message: data.errors });
-    } else if (status === 400 && jsonData.errors) {
-      store.dispatch(setInputsErrors(data.errors));
-      if (jsonData.errorType === "FieldsValidation") {
-        NotificationsManager.add &&
-          NotificationsManager.add({
+    let notificationOptions = {};
+    if (jsonData) {
+      if (status === 400 && jsonData.errorType === "ReCaptchaError") {
+        store.dispatch(setError(data.errors));
+        notificationOptions = { title: "ReCaptchaError", message: data.errors };
+      } else if (status === 400 && jsonData.errors) {
+        store.dispatch(setInputsErrors(data.errors));
+        if (jsonData.errorType === "FieldsValidation") {
+          notificationOptions = {
             title: "Validation Error On Server",
-            message: jsonData.errors[0] ? jsonData.errors[0].message : "Validation Error"
-          });
-      }
-    } else {
-      log(jsonData);
-      try {
-        const { errors } = JSON.parse(jsonData.debugMessage);
-        const errorMessages = errors.map(({ message }) => message);
-
-        if (jsonData.status) {
-          NotificationsManager.add &&
-            NotificationsManager.add({
-              message: `${errorMessages.join(", ")}`
-            });
+            message: get(jsonData, "errors[0].message", "Validation Error")
+          };
         }
-      } catch (e) {
-        log(e);
+      } else {
+        log(jsonData);
+        try {
+          const { errors } = JSON.parse(jsonData.debugMessage);
+          const errorMessages = errors.map(({ message }) => message);
+
+          if (jsonData.status) {
+            notificationOptions = { message: errorMessages.join(", ") };
+          }
+        } catch (e) {
+          log(e);
+        }
       }
     }
 
+    NotificationsManager.add && NotificationsManager.add(notificationOptions);
     return Promise.reject(error);
   }
 );

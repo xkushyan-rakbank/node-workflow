@@ -56,9 +56,9 @@ public class CSRFTokenHelper {
 		logger.info("End scheduleFixedRateTaskAsync()");
 	}
 
-	public void createCSRFToken(HttpServletRequest httpRequest, HttpHeaders headers) {
+	public void createOrUpdateCsrfToken(HttpServletRequest httpRequest, HttpHeaders headers) {
 		String csrfToken = RandomStringUtils.randomAlphanumeric(12);
-		ObjectNode csrfTokens = null;
+		ObjectNode csrfTokens;
 		if (httpRequest.getServletContext().getAttribute("CSRFTokens") != null) {
 			csrfTokens = (ObjectNode) httpRequest.getServletContext().getAttribute("CSRFTokens");
 		} else {
@@ -71,5 +71,4 @@ public class CSRFTokenHelper {
 		httpRequest.getServletContext().setAttribute("CSRFTokens", csrfTokens);
 		headers.add("X-Csrf-Token", csrfToken);
 	}
-
 }

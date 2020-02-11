@@ -18,6 +18,7 @@ const MessageWrapper = styled.div`
   flex-direction: column;
   align-items: ${({ incoming }) => (incoming ? "flex-start" : "flex-end")};
   margin: 0 10px;
+  max-width: 240px;
 `;
 
 const MessageStyled = styled.div`

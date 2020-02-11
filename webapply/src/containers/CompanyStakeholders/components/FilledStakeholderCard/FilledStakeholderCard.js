@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import cx from "classnames";
 import get from "lodash/get";
 
@@ -15,11 +15,16 @@ export const FilledStakeholderCard = ({
   changeEditableStep,
   index,
   kycDetails: { shareHoldingPercentage } = {},
-  datalist
+  datalist,
+  editDisabled
 }) => {
   const classes = useStyles();
 
-  const editStakeholder = () => changeEditableStep(index);
+  const editStakeholder = useCallback(() => !editDisabled && changeEditableStep(index), [
+    index,
+    editDisabled,
+    changeEditableStep
+  ]);
   const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");
   const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
 
@@ -38,7 +43,11 @@ export const FilledStakeholderCard = ({
           >{`Shareholding ${shareHoldingPercentage}%`}</div>
         </div>
 
-        <LinkButton clickHandler={editStakeholder} />
+        <LinkButton
+          clickHandler={editStakeholder}
+          editDisabled={editDisabled}
+          contextualHelpText="Delete or finish current stakeholder to edit"
+        />
       </div>
     </div>
   );

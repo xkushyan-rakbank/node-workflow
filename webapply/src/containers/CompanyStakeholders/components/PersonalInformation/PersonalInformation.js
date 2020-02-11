@@ -35,6 +35,7 @@ const personalInformationSchema = Yup.object().shape({
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
       .required(getRequiredMessage("First name"))
+      .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("First name"))
   }),
   middleName: Yup.string().matches(NAME_REGEX, getInvalidMessage("Middle name")),
@@ -42,6 +43,7 @@ const personalInformationSchema = Yup.object().shape({
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
       .required(getRequiredMessage("Last name"))
+      .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("Last name"))
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
@@ -72,7 +74,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
   return (
     <Formik
       initialValues={{
-        gender: "",
+        salutation: "",
         firstName: "",
         middleName: "",
         lastName: "",
@@ -115,8 +117,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             <Grid item md={6} sm={12}>
               <InputGroup>
                 <Field
-                  name="gender"
-                  path={`prospect.signatoryInfo[${index}].gender`}
+                  name="salutation"
+                  path={`prospect.signatoryInfo[${index}].salutation`}
                   disabled={!!values.isShareholderACompany}
                   component={CustomSelect}
                   shrink={false}

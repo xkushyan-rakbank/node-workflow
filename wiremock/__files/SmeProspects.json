@@ -1,67 +1,206 @@
 {
-    "applicantInfo": {
-      "fullName": "David Sachin Miller",
-      "email": "dulkar@gmail.com",
-      "countryCode": "971",
-      "mobileNo": "5641283944",
-      "applyOnbehalf": true
+  "applicantInfo": {
+    "fullName": "David Sachin Miller",
+    "email": "dulkar@gmail.com",
+    "countryCode": "971",
+    "mobileNo": "5641283944",
+    "applyOnbehalf": true
+  },
+  "generalInfo": {
+    "prospectId": "",
+    "_links": {
+      "self": {
+        "href": ""
+      }
     },
-    "generalInfo": {
-      "prospectId": "",
-      "_links": {
-        "self": {
-          "href": ""
+    "cifId": 0,
+    "customerType": "",
+    "dsaId": "",
+    "groupId": "",
+    "groupName": "",
+    "rmCode": "",
+    "accountManagerId": "",
+    "isPoliticallyExposed": "N"
+  },
+  "applicationInfo": {
+    "segment": "",
+    "viewId": "",
+    "islamicBanking": true,
+    "accountType": "RAKStarter",
+    "rakValuePackage": "RAKvalue PLUS",
+    "leadNumber": "",
+    "riskScore": "",
+    "srNumber": "",
+    "channelId": "Bank to confirm on the LOVs",
+    "channelType": "Mobile",
+    "createdDate": "",
+    "lastModifiedDate": "",
+    "createdBy": "",
+    "lastModifiedBy": "",
+    "actionType": "Save",
+    "saveType": "auto",
+    "tncAgreed": false,
+    "declaration": true
+  },
+  "accountInfo": [
+    {
+      "branchId": "",
+      "accountType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
+      "accountSubType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
+      "accountNo": "",
+      "accountCurrencies": [""],
+      "accountCurrency": "AED",
+      "accountPurpose": "Bank to confirm on the LOVs",
+      "debitCardApplied": true,
+      "chequeBookApplied": true,
+      "eStatements": true,
+      "mailStatements": false,
+      "receiveInterest": true,
+      "deliverByCourier": true
+    }
+  ],
+  "organizationInfo": {
+    "screeningInfo": {
+      "statusOverAll": "proceed",
+      "screeningResults": [
+        {
+          "screeningType": "",
+          "screeningStatus": "",
+          "screeningFlag": "",
+          "screeningNotes": "",
+          "screeningReason": "",
+          "reasonNotes": "",
+          "reasonCode": "",
+          "reasonStatus": ""
         }
-      },
-      "cifId": 0,
-      "customerType": "",
-      "dsaId": "",
-      "groupId": "",
-      "groupName": "",
-      "rmCode": "",
-      "accountManagerId": "",
-      "isPoliticallyExposed": "N"
+      ]
     },
-    "applicationInfo": {
-      "segment": "",
-      "viewId": "",
-      "islamicBanking": true,
-      "accountType": "RAKStarter",
-      "rakValuePackage": "RAKvalue PLUS",
-      "leadNumber": "",
-      "riskScore": "",
-      "srNumber": "",
-      "channelId": "Bank to confirm on the LOVs",
-      "channelType": "Mobile",
-      "createdDate": "",
-      "lastModifiedDate": "",
-      "createdBy": "",
-      "lastModifiedBy": "",
-      "actionType": "Save",
-      "saveType": "auto",
-      "tncAgreed": false,
-      "declaration": true
-    },
-    "accountInfo": [
+    "branchCity": "LOVs to be confirmed by Bank",
+    "branchID": "LOVs to be confirmed by Bank",
+    "countryOfIncorporation": "AE",
+    "companyName": "ABC COM",
+    "shortName": "ABC",
+    "dateOfIncorporation": "2019-10-23",
+    "numberOfEmployees": 0,
+    "licenseType": "Trade License",
+    "licenseTypeOther": "",
+    "licenseIssuingAuthority": "LOVs to be confirmed by Bank",
+    "licenseNumber": "23456789",
+    "licenseIssueDate": "2019-10-23",
+    "licenseExpiryDate": "2019-10-23",
+    "vatRegistrationNumber": "230234542953282",
+    "addressInfo": [
       {
-        "branchId": "",
-        "accountType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
-        "accountSubType": "Segment of the user to be checked with Vartika, coz based upon that account scheme code wil vary",
-        "accountNo": "",
-        "accountCurrencies": [
-          ""
-        ],
-        "accountCurrency": "AED",
-        "accountPurpose": "Bank to confirm on the LOVs",
-        "debitCardApplied": true,
-        "chequeBookApplied": true,
-        "eStatements": true,
-        "mailStatements": false,
-        "receiveInterest": true,
-        "deliverByCourier": true
+        "typeOfAddress": "Registered Address/Head office",
+        "officeAddressDifferent": "No",
+        "addressDetails": [
+          {
+            "addressFieldDesc": "Registered Address/Head office",
+            "preferredAddress": "Yes",
+            "addressLine1": "RAK Operations Centre",
+            "addressLine2": "Emirates Road",
+            "addressLine3": "Ras Al Khaimah",
+            "addressLine4": "U.A.E",
+            "poBox": "5300",
+            "emirateCity": "Ras Al Khaimah",
+            "country": "U.A.E",
+            "typeOfSpaceOccupied": {
+              "spaceType": "Office",
+              "others": ""
+            }
+          }
+        ]
       }
     ],
-    "organizationInfo": {
+    "contactDetails": {
+      "primaryMobileNo": "5641283944",
+      "primaryMobCountryCode": "971",
+      "primaryEmail": "dulkar@gmail.com",
+      "primaryPhoneNo": "97172064444",
+      "primaryPhoneCountryCode": "971",
+      "fax": "9712435454",
+      "faxCountryCode": "971",
+      "secondaryPhoneNo": "97172064455",
+      "secondaryPhoneCountryCode": "971",
+      "secondaryMobileNo": "5641283955",
+      "secondaryMobileCountryCode": "971",
+      "secondaryEmail": "dulkar10@gmail.com",
+      "website": ""
+    },
+    "contactDetailsForTxnReconfirming": [
+      {
+        "primaryMobileNo": "5641283944",
+        "primaryMobCountryCode": "971",
+        "primaryPhoneNo": "97172064444",
+        "primaryPhoneCountryCode": "971"
+      }
+    ]
+  },
+  "orgKYCDetails": {
+    "businessUnit": "PBD",
+    "constitutionType": "Proprietorship",
+    "companyCategory": "Charitable Trust",
+    "annualFinTurnoverAmtInAED": "",
+    "yearsInBusiness": 0,
+    "topCustomers": [
+      {
+        "name": "RAKBANK",
+        "country": ""
+      }
+    ],
+    "topSuppliers": [
+      {
+        "name": "ABC COM",
+        "country": ""
+      }
+    ],
+    "topOriginGoodsCountries": [""],
+    "industryMultiSelect": [
+      {
+        "industry": [""],
+        "subCategory": [""]
+      }
+    ],
+    "anticipatedTransactionsDetails": {
+      "totalMonthlyCashCreditsAED": {
+        "amountInFigures": "50000",
+        "inPercent": 0
+      },
+      "totalMonthlyNonCashCreditsAED": {
+        "amountInFigures": "58000",
+        "inPercent": 0
+      },
+      "totalMonthlyCreditsAED": "10000",
+      "maxAmtSingleTxnCashAED": "8000",
+      "maxAmtSingleTxnNonCashAED": "3000"
+    },
+    "otherBankingRelationshipsInfo": {
+      "otherBankingRelationshipsExist": false,
+      "otherBankDetails": [
+        {
+          "bankName": "RAKBANK"
+        }
+      ]
+    },
+    "otherEntitiesInUAE": false,
+    "entitiesInUAE": [
+      {
+        "companyName": "ABC COM",
+        "emirate": "",
+        "tradeLicenseNo": "23456789"
+      }
+    ],
+    "otherEntitiesOutsideUAE": false,
+    "entitiesOutsideUAE": [
+      {
+        "companyName": "ABC COM",
+        "country": ""
+      }
+    ],
+    "isShareholderACompany": false
+  },
+  "signatoryInfo": [
+    {
       "screeningInfo": {
         "statusOverAll": "proceed",
         "screeningResults": [
@@ -77,43 +216,58 @@
           }
         ]
       },
-      "branchCity": "LOVs to be confirmed by Bank",
-      "branchID": "LOVs to be confirmed by Bank",
-      "countryOfIncorporation": "AE",
-      "companyName": "ABC COM",
-      "shortName": "ABC",
-      "dateOfIncorporation": "2019-10-23",
-      "numberOfEmployees": 0,
-      "licenseType": "Trade License",
-      "licenseTypeOther": "",
-      "licenseIssuingAuthority": "LOVs to be confirmed by Bank",
-      "licenseNumber": "23456789",
-      "licenseIssueDate": "2019-10-23",
-      "licenseExpiryDate": "2019-10-23",
-      "vatRegistrationNumber": "230234542953282",
-      "addressInfo": [
-        {
-          "typeOfAddress": "Registered Address/Head office",
-          "officeAddressDifferent": "No",
-          "addressDetails": [
-            {
-              "addressFieldDesc": "Registered Address/Head office",
-              "preferredAddress": "Yes",
-              "addressLine1": "RAK Operations Centre",
-              "addressLine2": "Emirates Road",
-              "addressLine3": "Ras Al Khaimah",
-              "addressLine4": "U.A.E",
-              "poBox": "5300",
-              "emirateCity": "Ras Al Khaimah",
-              "country": "U.A.E",
-              "typeOfSpaceOccupied": {
-                "spaceType": "Office",
-                "others": ""
-              }
-            }
-          ]
+      "salutation": "Mr.",
+      "signatoryId": "",
+      "firstName": "David",
+      "middleName": "Sachin",
+      "lastName": "Miller",
+      "shortName": "sachin",
+      "fullName": "David Sachin Miller",
+      "gender": "Male",
+      "maritalStatus": "Married",
+      "maritalStatusOthers": "Married",
+      "occupation": "SoftwareEngineer",
+      "mothersMaidenName": "pothamsetti",
+      "numberOfDependants": 0,
+      "highestEducationAttained": "M.Tech",
+      "employmentStatus": "active",
+      "kycVerified": false,
+      "kycDetails": {
+        "salutation": "Mr.",
+        "shareholderPOASignatoryName": "",
+        "isShareholderACompany": false,
+        "isSignatory": false,
+        "isShareholder": false,
+        "shareHoldingPercentage": 0,
+        "dateOfBirth": "2019-10-23",
+        "nationality": "",
+        "dualCitizenship": false,
+        "dualCitizenshipCountry": [""],
+        "residenceCountry": "AE",
+        "isUAEResident": false,
+        "passportDetails": [
+          {
+            "passportNumber": "R7864901",
+            "country": "U.A.E",
+            "passportExpiryDate": "2019-10-23",
+            "diplomatPassport": false,
+            "hasAnotherCitizenship": false
+          }
+        ],
+        "emirateIdDetails": {
+          "eidNumber": "23456789234678",
+          "eidExpiryDt": "2019-10-23"
+        },
+        "selfGovtPosition": "Currently hold",
+        "relativeGovtPosition": "Currently hold",
+        "isPEP": false,
+        "qualification": "Under Graduate",
+        "experienceInYrs": "",
+        "sourceOfWealth": {
+          "wealthType": "Personal Savings",
+          "others": ""
         }
-      ],
+      },
       "contactDetails": {
         "primaryMobileNo": "5641283944",
         "primaryMobCountryCode": "971",
@@ -129,299 +283,135 @@
         "secondaryEmail": "dulkar10@gmail.com",
         "website": ""
       },
-      "contactDetailsForTxnReconfirming": [
+      "employmentDetails": {
+        "employmentType": "Salaried",
+        "otherEmploymentType": "",
+        "designation": "Manager",
+        "empNo": "2000356",
+        "department": "Digital",
+        "employerName": "David",
+        "occupation": "",
+        "totalExperienceYrs": 0,
+        "employmentStartDate": "2019-10-23"
+      },
+      "sameAsCompanyAddress": false,
+      "addressInfo": [
         {
-          "primaryMobileNo": "5641283944",
-          "primaryMobCountryCode": "971",
-          "primaryPhoneNo": "97172064444",
-          "primaryPhoneCountryCode": "971"
-        }
-      ]
-    },
-    "orgKYCDetails": {
-      "businessUnit": "PBD",
-      "constitutionType": "Proprietorship",
-      "companyCategory": "Charitable Trust",
-      "annualFinTurnoverAmtInAED": "",
-      "yearsInBusiness": 0,
-      "topCustomers": [
-        {
-          "name": "RAKBANK",
-          "country": ""
-        }
-      ],
-      "topSuppliers": [
-        {
-          "name": "ABC COM",
-          "country": ""
-        }
-      ],
-      "topOriginGoodsCountries": [
-        ""
-      ],
-      "industryMultiSelect": [
-        {
-          "industry": [
-            ""
-          ],
-          "subCategory": [
-            ""
+          "typeOfAddress": "Residence Address",
+          "addressDetails": [
+            {
+              "addressFieldDesc": "Residence Address",
+              "preferredAddress": "Yes",
+              "addressLine1": "RAK Operations Centre",
+              "addressLine2": "Emirates Road",
+              "addressLine3": "Ras Al Khaimah",
+              "addressLine4": "U.A.E",
+              "poBox": "5300",
+              "emirateCity": "Ras Al Khaimah",
+              "country": "U.A.E"
+            }
           ]
         }
       ],
-      "anticipatedTransactionsDetails": {
-        "totalMonthlyCashCreditsAED": {
-          "amountInFigures": "50000",
-          "inPercent": 0
-        },
-        "totalMonthlyNonCashCreditsAED": {
-          "amountInFigures": "58000",
-          "inPercent": 0
-        },
-        "totalMonthlyCreditsAED": "10000",
-        "maxAmtSingleTxnCashAED": "8000",
-        "maxAmtSingleTxnNonCashAED": "3000"
+      "accountSigningInfo": {
+        "accountSigningType": "Any of us",
+        "accountSigningInstn": "",
+        "authorityType": "SP - Sole Proprietor"
       },
-      "otherBankingRelationshipsInfo": {
-        "otherBankingRelationshipsExist": false,
-        "otherBankDetails": [
-          {
-            "bankName": "RAKBANK"
-          }
-        ]
-      },
-      "otherEntitiesInUAE": false,
-      "entitiesInUAE": [
-        {
-          "companyName": "ABC COM",
-          "emirate": "",
-          "tradeLicenseNo": "23456789"
+      "debitCardInfo": {
+        "issueDebitCard": true,
+        "authSignatoryDetails": {
+          "fullNameOnPassport": "David Sachin Miller",
+          "nameOnDebitCard": "D.V.Miller"
         }
-      ],
-      "otherEntitiesOutsideUAE": false,
-      "entitiesOutsideUAE": [
-        {
-          "companyName": "ABC COM",
-          "country": ""
-        }
-      ],
-      "isShareholderACompany": false
-    },
-    "signatoryInfo": [
+      }
+    }
+  ],
+  "channelServicesInfo": {
+    "mobileInstructions": false,
+    "marketingSMS": false,
+    "doNotDisturbHours": "",
+    "weeklyBalanceNotification": "Sunday",
+    "monthlyBalanceNotification": 0
+  },
+  "documents": {
+    "companyDocuments": [
       {
-        "screeningInfo": {
-          "statusOverAll": "proceed",
-          "screeningResults": [
-            {
-              "screeningType": "",
-              "screeningStatus": "",
-              "screeningFlag": "",
-              "screeningNotes": "",
-              "screeningReason": "",
-              "reasonNotes": "",
-              "reasonCode": "",
-              "reasonStatus": ""
-            }
-          ]
-        },
-        "salutation": "Mr.",
+        "documentType": "Passport",
         "signatoryId": "",
-        "firstName": "David",
-        "middleName": "Sachin",
-        "lastName": "Miller",
-        "shortName": "sachin",
-        "fullName": "David Sachin Miller",
-        "gender": "Male",
-        "maritalStatus": "Married",
-        "maritalStatusOthers": "Married",
-        "occupation": "SoftwareEngineer",
-        "mothersMaidenName": "pothamsetti",
-        "numberOfDependants": 0,
-        "highestEducationAttained": "M.Tech",
-        "employmentStatus": "active",
-        "kycVerified": false,
-        "kycDetails": {
-          "salutation": "Mr.",
-          "shareholderPOASignatoryName": "",
-          "isShareholderACompany": false,
-          "isSignatory": false,
-          "isShareholder": false,
-          "shareHoldingPercentage": 0,
-          "dateOfBirth": "2019-10-23",
-          "nationality": "",
-          "dualCitizenship": false,
-          "dualCitizenshipCountry": [
-            ""
-          ],
-          "residenceCountry": "AE",
-          "isUAEResident": false,
-          "passportDetails": [
-            {
-              "passportNumber": "R7864901",
-              "country": "U.A.E",
-              "passportExpiryDate": "2019-10-23",
-              "diplomatPassport": false,
-              "hasAnotherCitizenship": false
-            }
-          ],
-          "emirateIdDetails": {
-            "eidNumber": "23456789234678",
-            "eidExpiryDt": "2019-10-23"
-          },
-          "selfGovtPosition": "Currently hold",
-          "relativeGovtPosition": "Currently hold",
-          "isPEP": false,
-          "qualification": "Under Graduate",
-          "experienceInYrs": "",
-          "sourceOfWealth": {
-            "wealthType": "Personal Savings",
-            "others": ""
-          }
-        },
-        "contactDetails": {
-          "primaryMobileNo": "5641283944",
-          "primaryMobCountryCode": "971",
-          "primaryEmail": "dulkar@gmail.com",
-          "primaryPhoneNo": "97172064444",
-          "primaryPhoneCountryCode": "971",
-          "fax": "9712435454",
-          "faxCountryCode": "971",
-          "secondaryPhoneNo": "97172064455",
-          "secondaryPhoneCountryCode": "971",
-          "secondaryMobileNo": "5641283955",
-          "secondaryMobileCountryCode": "971",
-          "secondaryEmail": "dulkar10@gmail.com",
-          "website": ""
-        },
-        "employmentDetails": {
-          "employmentType": "Salaried",
-          "otherEmploymentType": "",
-          "designation": "Manager",
-          "empNo": "2000356",
-          "department": "Digital",
-          "employerName": "David",
-          "occupation": "",
-          "totalExperienceYrs": 0,
-          "employmentStartDate": "2019-10-23"
-        },
-        "sameAsCompanyAddress": false,
-        "addressInfo": [
-          {
-            "typeOfAddress": "Residence Address",
-            "addressDetails": [
-              {
-                "addressFieldDesc": "Residence Address",
-                "preferredAddress": "Yes",
-                "addressLine1": "RAK Operations Centre",
-                "addressLine2": "Emirates Road",
-                "addressLine3": "Ras Al Khaimah",
-                "addressLine4": "U.A.E",
-                "poBox": "5300",
-                "emirateCity": "Ras Al Khaimah",
-                "country": "U.A.E"
-              }
-            ]
-          }
-        ],
-        "accountSigningInfo": {
-          "accountSigningType": "Any of us",
-          "accountSigningInstn": "",
-          "authorityType": "SP - Sole Proprietor"
-        },
-        "debitCardInfo": {
-          "issueDebitCard": true,
-          "authSignatoryDetails": {
-            "fullNameOnPassport": "David Sachin Miller",
-            "nameOnDebitCard": "D.V.Miller"
-          }
-        }
+        "signatoryName": "",
+        "documentTitle": "",
+        "documentKey": "",
+        "fileName": "",
+        "filePath": "",
+        "url": "",
+        "fileData": "",
+        "fileFormat": "application/pdf",
+        "fileSize": 0,
+        "fileDescription": "",
+        "submittedBy": "",
+        "submittedDt": "",
+        "updatedBy": "",
+        "updatedDt": "",
+        "avsCheckDt": "",
+        "avsCheck": false,
+        "verified": false,
+        "verifiedBy": "",
+        "isEncrypted": false,
+        "required": true,
+        "encryptionDetails": "",
+        "uploadStatus": "NotUploaded"
       }
     ],
-    "channelServicesInfo": {
-      "mobileInstructions": false,
-      "marketingSMS": false,
-      "doNotDisturbHours": "",
-      "weeklyBalanceNotification": "Sunday",
-      "monthlyBalanceNotification": 0
-    },
-    "documents": {
-      "companyDocuments": [
-        {
-          "documentType": "Passport",
-          "signatoryId": "",
-          "signatoryName": "",
-          "documentTitle": "",
-          "documentKey": "",
-          "fileName": "",
-          "filePath": "",
-          "url": "",
-          "fileData": "",
-          "fileFormat": "application/pdf",
-          "fileSize": 0,
-          "fileDescription": "",
-          "submittedBy": "",
-          "submittedDt": "",
-          "updatedBy": "",
-          "updatedDt": "",
-          "avsCheckDt": "",
-          "avsCheck": false,
-          "verified": false,
-          "verifiedBy": "",
-          "isEncrypted": false,
-          "required": true,
-          "encryptionDetails": "",
-          "uploadStatus": "NotUploaded"
-        }
-      ],
-      "stakeholdersDocuments": {
-        "index_stakeholderName": {
-          "documents": [
-            {
-              "documentType": "Passport",
-              "signatoryId": "",
-              "signatoryName": "",
-              "documentTitle": "",
-              "documentKey": "",
-              "fileName": "",
-              "filePath": "",
-              "url": "",
-              "fileData": "",
-              "fileFormat": "application/pdf",
-              "fileSize": 0,
-              "fileDescription": "",
-              "submittedBy": "",
-              "submittedDt": "",
-              "updatedBy": "",
-              "updatedDt": "",
-              "avsCheckDt": "",
-              "avsCheck": false,
-              "verified": false,
-              "verifiedBy": "",
-              "isEncrypted": false,
-              "required": true,
-              "encryptionDetails": "",
-              "uploadStatus": "NotUploaded"
-            }
-          ]
-        }
+    "stakeholdersDocuments": {
+      "0_Abhi": {
+        "documents": [
+          {
+            "documentType": "Passport",
+            "signatoryId": "",
+            "signatoryName": "",
+            "documentTitle": "",
+            "documentKey": "",
+            "fileName": "",
+            "filePath": "",
+            "url": "",
+            "fileData": "",
+            "fileFormat": "application/pdf",
+            "fileSize": 0,
+            "fileDescription": "",
+            "submittedBy": "",
+            "submittedDt": "",
+            "updatedBy": "",
+            "updatedDt": "",
+            "avsCheckDt": "",
+            "avsCheck": false,
+            "verified": false,
+            "verifiedBy": "",
+            "isEncrypted": false,
+            "required": true,
+            "encryptionDetails": "",
+            "uploadStatus": "NotUploaded"
+          }
+        ]
       }
-    },
-    "prospectStatusInfo": {
-      "statusType": "",
-      "statusCode": "",
-      "statusFlag": "",
-      "statusNotes": "",
-      "statusReason": "",
-      "statusOverAll": "",
-      "reasonNotes": "",
-      "reasonCode": "",
-      "reasonStatus": ""
-    },
-    "freeFieldsInfo": {
-      "freeField1": "",
-      "freeField2": "",
-      "freeField3": "",
-      "freeField4": "",
-      "freeField5": ""
     }
+  },
+  "prospectStatusInfo": {
+    "statusType": "",
+    "statusCode": "",
+    "statusFlag": "",
+    "statusNotes": "",
+    "statusReason": "",
+    "statusOverAll": "",
+    "reasonNotes": "",
+    "reasonCode": "",
+    "reasonStatus": ""
+  },
+  "freeFieldsInfo": {
+    "freeField1": "",
+    "freeField2": "",
+    "freeField3": "",
+    "freeField4": "",
+    "freeField5": ""
   }
+}

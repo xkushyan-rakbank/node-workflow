@@ -6,6 +6,7 @@ import { Notifications, NotificationsProvider } from "../../components/Notificat
 import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
+import routes, { agentBaseName, smeBaseName } from "../../routes";
 
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},
@@ -21,7 +22,16 @@ export const FormLayoutComponent = ({
   });
 
   useEffect(() => {
-    updateViewId(pathname);
+    const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
+    const isSendToApi = [
+      routes.stakeholdersInfo,
+      routes.finalQuestions,
+      routes.uploadDocuments,
+      routes.selectServices,
+      routes.SubmitApplication
+    ].includes(pathname);
+
+    updateViewId(viewId, isSendToApi);
     resetScreeningError();
   }, [key, pathname, updateViewId, resetScreeningError]);
 

@@ -19,7 +19,7 @@ import {
   saveProspectModel
 } from "../actions/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
-import { sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
+import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 
 import { config } from "../../api/apiClient";
 import { history } from "./..";
@@ -46,24 +46,18 @@ function* receiveAppConfigSaga({ payload }) {
 
     const endpoints = getEndpoints(state);
     let response = null;
-    const segment =
-      payload.segment === "agent"
-        ? state.login.loginStatus
-          ? state.appConfig.searchInfo.segment
-          : ""
-        : payload.segment;
 
     const accountType = Object.values(accountNames).includes(payload.accountType)
       ? payload.accountType
       : getAccountType(state);
 
     if (!isEmpty(endpoints)) {
-      response = yield call(config.load, accountType, segment);
+      response = yield call(config.load, accountType);
     } else {
       if (process.env.NODE_ENV === "development") {
-        response = yield call(config.load, accountNames.starter, segment);
+        response = yield call(config.load, accountNames.starter);
       } else {
-        response = yield call(config.load, null, segment);
+        response = yield call(config.load, null);
       }
     }
 
@@ -110,8 +104,7 @@ function* displayScreenBasedOnViewIdSaga() {
   const isROScreens = getIsEditableStatusSearchInfo(state);
   const prefix = "/sme";
   const isApplicationSubmitted =
-    applicationInfo.viewId === "/ApplicationSubmitted" &&
-    applicationInfo.viewId !== "/SearchProspect";
+    applicationInfo.viewId === "/SubmitApplication" && applicationInfo.viewId !== "/SearchProspect";
   const VIEW_ID = isApplicationSubmitted ? "/CompanyInfo" : applicationInfo.viewId;
 
   if (applicationInfo.actionType === "submit" && applicationInfo.retrieveMode && !isROScreens) {
@@ -145,12 +138,11 @@ function* resetProspectSaga() {
   }
 }
 
-function* updateViewIdSaga({ viewId }) {
-  yield put(
-    updateProspect({
-      "prospect.applicationInfo.viewId": viewId.replace("/sme", "").replace("/agent", "")
-    })
-  );
+function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
+  yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
+  if (isSendToApi) {
+    yield put(sendProspectToAPI());
+  }
 }
 
 function* updateSaveTypeSaga({ saveType }) {

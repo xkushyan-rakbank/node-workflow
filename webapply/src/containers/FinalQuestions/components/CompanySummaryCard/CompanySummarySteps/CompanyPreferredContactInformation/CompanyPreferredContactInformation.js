@@ -82,7 +82,6 @@ export const CompanyPreferredContactInformationComponent = ({
   handleContinue
 }) => {
   const classes = useStyles();
-
   const handleSubmit = useCallback(() => {
     handleContinue();
   }, [handleContinue]);
