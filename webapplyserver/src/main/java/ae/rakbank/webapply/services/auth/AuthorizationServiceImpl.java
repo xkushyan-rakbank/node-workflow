@@ -2,6 +2,7 @@ package ae.rakbank.webapply.services.auth;
 
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.dto.JwtPayload;
+import ae.rakbank.webapply.dto.UserRole;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.AuthorizationService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -51,6 +52,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
+    public String createJwtToken(String phoneNumber) {
+        return jwtService.encrypt(JwtPayload.builder()
+                .phoneNumber(phoneNumber)
+                .role(UserRole.VIRTUAL_USER)
+                .build());
+    }
+
+    @Override
     public String getOauthAccessToken(String jwtToken) {
         return jwtService.decrypt(jwtToken).getOauthAccessToken();
     }
@@ -58,5 +67,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public HttpHeaders getOAuthHeaders(String oauthAccessToken, MediaType mediaType) {
         return oAuthService.getOAuthHeaders(oauthAccessToken, mediaType);
+    }
+
+    @Override
+    public String getAndUpdateContextOauthToken() {
+        return oAuthService.getAndUpdateContextOauthToken();
     }
 }

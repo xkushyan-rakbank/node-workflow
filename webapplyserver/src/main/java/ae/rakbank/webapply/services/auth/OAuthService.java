@@ -31,6 +31,9 @@ import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.FileHelper;
 
+import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_ACCESS_TOKEN_KEY;
+import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_CONTEXT_OBJECT_KEY;
+
 @Component
 @RequiredArgsConstructor
 class OAuthService {
@@ -51,6 +54,71 @@ class OAuthService {
 		oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
 	}
 
+	String getAndUpdateContextOauthToken() {
+		ResponseEntity<JsonNode> oAuthContextTokenResponse =
+				//TODO check this (..)x  operation
+				(ResponseEntity<JsonNode>) servletContext.getAttribute(OAUTH_CONTEXT_OBJECT_KEY);
+
+		if (oAuthContextTokenResponse == null || !oAuthContextTokenResponse.getStatusCode().is2xxSuccessful()
+				|| isContextAccessTokenExpired(oAuthContextTokenResponse)) {
+			oAuthContextTokenResponse = getNewOauthObject();
+			servletContext.setAttribute(OAUTH_CONTEXT_OBJECT_KEY, oAuthContextTokenResponse);
+		}
+
+		return oAuthContextTokenResponse.getBody().get(OAUTH_ACCESS_TOKEN_KEY).asText();
+	}
+
+	private ResponseEntity<JsonNode> getNewOauthObject() {
+
+		String virtualUserName = oAuthConfigs.get("OAuthUsername").asText();
+		String virtualUserPassword = oAuthConfigs.get("OAuthPassword").asText();
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper, virtualUserName, virtualUserPassword);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
+		String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
+		logger.info(String.format("Invoke API: Endpoint=[%s], request=[%s] ",url, request.getBody().toString()));
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<JsonNode> oauthObjectResponse;
+		try {
+
+			return restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+
+		} catch (HttpClientErrorException e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+					e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e.getResponseBodyAsString(),
+					e.getResponseBodyAsString(), e);
+			return new ResponseEntity<>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (HttpServerErrorException e) {
+			logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+					e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+					e.getResponseBodyAsString(), e);
+			return new ResponseEntity<>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	private boolean isContextAccessTokenExpired(ResponseEntity<JsonNode> oAuthContextTokenResponse) {
+
+		// minus 10 seconds to prevent access_token expire error while calling the API
+		int seconds = oAuthContextTokenResponse.getBody().get("expires_in").asInt() - 10;
+		LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
+		return LocalDateTime.now().isAfter(tokenExpiryDateTime);
+	}
+
+
+
+
+
+
+
 	void validateAccessToken(String accessToken, String refreshToken, Boolean force) {
 		if (isContextAccessTokenExpiredOrAbsent()) {
 			String errorMessage = "Access token in servlet context expired or absent, "
@@ -62,7 +130,7 @@ class OAuthService {
 		}
 		else {
 			ResponseEntity<JsonNode> oauthResponse =
-					(ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
+					(ResponseEntity<JsonNode>) servletContext.getAttribute(OAUTH_CONTEXT_OBJECT_KEY);
 			if (oauthResponse != null && oauthResponse.getBody().get("access_token").asText().equals(accessToken)) {
 				logger.info("Access token is valid");
 			}
@@ -71,7 +139,7 @@ class OAuthService {
 				logger.warn("Access token is invalid, try to get new one with valid refresh token..");
 
 				getOrUpdateOAuthToken();
-				logger.info("Access token was updated successfully with refresh token.");
+				logger.info("Access token was updated in context successfully with refresh token.");
 			}
 			else {
 				logger.error("OauthAccess token and/or refresh token is invalid, " +
@@ -98,59 +166,43 @@ class OAuthService {
 		ResponseEntity<JsonNode> response;
 		if (isContextAccessTokenExpiredOrAbsent()) {
 
-			int retryCounter = 0;
-			while (retryCounter <= 3) {
-				retryCounter++;
-				logger.info("access token not found or expired. Call /OAuth/token to get new access_token, retry# "
-						+ retryCounter);
+			logger.info("access token not found or expired. Call /OAuth/token to get new OAuth Object");
 
-				ObjectMapper objectMapper = new ObjectMapper();
-				MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper, username, password);
-				HttpHeaders headers = new HttpHeaders();
-				headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-				headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-				HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
-				String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
-				logger.info(String.format("Invoke API from %s method, Endpoint=[%s], retryCount=%s, request=[%s] ",
-						methodName, url, retryCounter, request.getBody().toString()));
+			ObjectMapper objectMapper = new ObjectMapper();
+			MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper, username, password);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
+			String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
+			logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request=[%s] ",
+					methodName, url, request.getBody().toString()));
 
-				RestTemplate restTemplate = new RestTemplate();
-				try {
+			RestTemplate restTemplate = new RestTemplate();
+			try {
 
-					response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+				response = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 
-				} catch (HttpClientErrorException e) {
-					logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
-							e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-					ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
-							e.getResponseBodyAsString(), e);
-					return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
-				} catch (HttpServerErrorException e) {
-					logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
-							e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-					ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-							e.getResponseBodyAsString(), e);
-					return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
-				}
-				logger.info(String.format(
-						"API call from %s method, Endpoint=[%s] HttpStatus=[%s], retryCounter=%s",
-						methodName, url, response.getStatusCodeValue(), retryCounter));
+			} catch (HttpClientErrorException e) {
+				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+						e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+				ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
+						e.getResponseBodyAsString(), e);
+				return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
+			} catch (HttpServerErrorException e) {
+				logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+						e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+				ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+						e.getResponseBodyAsString(), e);
+				return new ResponseEntity<JsonNode>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s]",
+					methodName, url, response.getStatusCodeValue()));
 
-				if (response.getStatusCode().is2xxSuccessful()) {
-					logger.info(String.format(
-							"API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s], retryCount=%s",
-							methodName, url, response.getStatusCodeValue(), retryCounter));
-
-					updateOauthInContext(response);
-					break;
-				} else {
-					logger.error(String.format(
-							"API call from %s method is UNSUCCESSFUL, Endpoint=[%s] HttpStatus=[%s], retryCount=%s",
-							methodName, url, response.getStatusCodeValue(), retryCounter));
-				}
-			} // end while
+			updateOauthInContext(response);
 		}
-		ResponseEntity<JsonNode> oauthInContext = (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
+
+		ResponseEntity<JsonNode> oauthInContext = (ResponseEntity<JsonNode>) servletContext.getAttribute(OAUTH_CONTEXT_OBJECT_KEY);
 
 		if (oauthInContext == null) {
 			throw new ApiException("The response from OAuth service is null");
@@ -170,7 +222,7 @@ class OAuthService {
 		LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
 
 		servletContext.setAttribute("OAuthTokenValidUntil", tokenExpiryDateTime);
-		servletContext.setAttribute("OAuthTokenResponse", response);
+		servletContext.setAttribute(OAUTH_CONTEXT_OBJECT_KEY, response);
 
 		logger.info("New access_token expires on " + tokenExpiryDateTime.toString());
 	}

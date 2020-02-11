@@ -10,7 +10,11 @@ public interface AuthorizationService {
 
     String getJwtToken(String username, String password);
 
+    String createJwtToken(String phoneNumber);
+
     String getOauthAccessToken(String jwtToken);
 
     HttpHeaders getOAuthHeaders(String oauthAccessToken, MediaType mediaType);
+
+    String getAndUpdateContextOauthToken();
 }

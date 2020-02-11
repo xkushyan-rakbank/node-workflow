@@ -45,6 +45,10 @@ import ae.rakbank.webapply.helpers.CSRFTokenHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.RecaptchaService;
 
+import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
+import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_CONTEXT_OBJECT_KEY;
+import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUEST_KEY;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
@@ -108,6 +112,34 @@ public class WebApplyController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/config", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<JsonNode> getWebApplyConfig(HttpServletRequest httpRequest,
+                                                      @RequestParam String role,
+                                                      @RequestParam(required = false, defaultValue = "") String segment,
+                                                      @RequestParam(required = false, defaultValue = "") String product,
+                                                      @RequestParam(required = false, defaultValue = "desktop") String device) {
+
+        logger.info("Begin getWebApplyConfig() method");
+        validateCriteriaParams(segment, product, role, device);
+
+        ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);
+
+        JsonNode datalistJSON;
+        if (datalistResponse.getStatusCode().is2xxSuccessful()) {
+            datalistJSON = datalistResponse.getBody();
+        } else {
+            return datalistResponse;
+        }
+
+        JsonNode webApplyConfig;
+//        webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON, jwtToken);
+        webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON, null);
+
+        HttpHeaders headers = new HttpHeaders();
+
+        return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/config/reload", produces = "application/json")
     @ResponseBody
@@ -150,55 +182,6 @@ public class WebApplyController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
-
-    @GetMapping(value = "/config", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<JsonNode> getWebApplyConfig(HttpServletRequest httpRequest,
-                                                      @RequestParam String role,
-                                                      @RequestParam(required = false, defaultValue = "") String segment,
-                                                      @RequestParam(required = false, defaultValue = "") String product,
-                                                      @RequestParam(required = false, defaultValue = "desktop") String device) {
-
-        logger.info("Begin getWebApplyConfig() method");
-        String invalidCriteriaError = validateCriteriaParams(segment, product, role, device);
-        if (StringUtils.isNotBlank(invalidCriteriaError)) {
-            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid segment, product or role.",
-                    invalidCriteriaError);
-            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
-
-        /*
-        String cacheKey = getCacheKey(segment, product, role, device);
-        String cachedValue = getCache(cacheKey);
-        if (StringUtils.isNotBlank(cachedValue)) {
-            logger.info("cached data found for key - " + cacheKey);
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode cachedJson = mapper.readTree(cachedValue);
-            return new ResponseEntity<JsonNode>(cachedJson, headers, HttpStatus.OK);
-        }
-        */
-
-        //Init new JWT Token
-        String jwtToken = authorizationService.getJwtToken();
-
-        ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);
-
-        JsonNode datalistJSON;
-        if (datalistResponse.getStatusCode().is2xxSuccessful()) {
-            datalistJSON = datalistResponse.getBody();
-        } else {
-            return datalistResponse;
-        }
-
-        JsonNode webApplyConfig;
-        webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON, jwtToken);
-
-        return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
-    }
-
     @GetMapping(value = "/config/reduced", produces = "application/json")
     @ResponseBody
     public ResponseEntity<JsonNode> getWebApplyConfigReduced(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
@@ -208,12 +191,7 @@ public class WebApplyController {
                                                              @RequestParam(required = false, defaultValue = "desktop") String device) {
         logger.info("Begin getDatalist() method!");
 
-        String invalidCriteriaError = validateCriteriaParams(segment, product, role, device);
-        if (StringUtils.isNotBlank(invalidCriteriaError)) {
-            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid segment, product or role.",
-                    invalidCriteriaError);
-            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
-        }
+        validateCriteriaParams(segment, product, role, device);
 
         HttpHeaders headers = new HttpHeaders();
         csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
@@ -257,55 +235,64 @@ public class WebApplyController {
         logger.info("Begin createSMEProspect() method");
         logger.info(String.format("createSMEProspect() method args, RequestBody=[%s], segment=[%s]", requestBodyJSON.toString(), segment));
 
-        String token = getTokenFromAuthorizationHeader(authorization);
-        authorizationService.validateJwtToken(token, true);
-        ResponseEntity<JsonNode> oauthFromContext = getOauthFromContext();
-
-        if (EnvUtil.isCheckRecaptcha() && requestBodyJSON.has("recaptchaToken")) {
-            ResponseEntity<?> captchaResponse = validateReCaptcha(requestBodyJSON, httpRequest);
-            if (captchaResponse != null) return captchaResponse;
+        if (requestBodyJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY)) {
+            validateReCaptcha(requestBodyJSON, httpRequest);
         } else if (EnvUtil.isRecaptchaEnable()) {
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
                     "recaptchaToken is required");
             return new ResponseEntity<>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
         }
 
-        HttpEntity<JsonNode> request = getHttpEntityRequest(
-                requestBodyJSON,
-                oauthFromContext.getBody().get(AuthConstants.OAUTH_ACCESS_TOKEN_KEY).asText(),
-                MediaType.APPLICATION_JSON);
+        String oauthContextToken = authorizationService.getAndUpdateContextOauthToken();
+        HttpEntity<JsonNode> request =
+                getHttpEntityRequest(requestBodyJSON, oauthContextToken, MediaType.APPLICATION_JSON);
         String url = dehBaseUrl + dehURIs.get("createProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
 
         logger.info("Call createProspect endpoint: " + uriComponents.toString());
 
-        ResponseEntity<?> createProspectResponse;
-        createProspectResponse = invokeApiEndpoint(httpRequest, httpResponse,
-                uriComponents.toString(), HttpMethod.POST, request, "createSMEProspect()", "createProspectUri",
-                MediaType.APPLICATION_JSON, segment, null);
+        ResponseEntity<?> createProspectResponse =
+                invokeApiEndpoint(httpRequest, httpResponse, uriComponents.toString(),
+                        HttpMethod.POST, request, "createSMEProspect()", "createProspectUri",
+                        MediaType.APPLICATION_JSON, segment, null);
 
         if (createProspectResponse.getStatusCode().is2xxSuccessful()) {
             String prospectId = ((JsonNode) createProspectResponse.getBody()).get("prospectId").asText();
+
             logger.info("Send OTP for prospectId:" + prospectId);
-            ObjectMapper objectMapper = new ObjectMapper();
-            ObjectNode otpRequest = objectMapper.createObjectNode();
-            otpRequest.put("prospectId", prospectId);
-            otpRequest.put("countryCode", requestBodyJSON.get("applicantInfo").get("countryCode").asText());
-            otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
-            otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
-            otpRequest.put("action", "generate");
+            ObjectNode otpRequest = createOtpRequest(requestBodyJSON, prospectId);
 
             ResponseEntity<?> otpResponse =
                     generateVerifyOTP(httpRequest, httpResponse, authorization, otpRequest, true);
 
             if (otpResponse.getStatusCode().is2xxSuccessful()) {
-                return createProspectResponse;
+
+                HttpHeaders headers = new HttpHeaders();
+
+                csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
+                String jwtToken = authorizationService
+                        .createJwtToken(requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
+                headers.add(JWT_TOKEN_KEY, jwtToken);
+                headers.putAll(createProspectResponse.getHeaders());
+
+                return new ResponseEntity<>(createProspectResponse.getBody(), headers, createProspectResponse.getStatusCode());
             } else {
                 return otpResponse;
             }
         } else {
             return createProspectResponse;
         }
+    }
+
+    private ObjectNode createOtpRequest(@RequestBody JsonNode requestBodyJSON, String prospectId) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode otpRequest = objectMapper.createObjectNode();
+        otpRequest.put("prospectId", prospectId);
+        otpRequest.put("countryCode", requestBodyJSON.get("applicantInfo").get("countryCode").asText());
+        otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
+        otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
+        otpRequest.put("action", "generate");
+        return otpRequest;
     }
 
     @PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
@@ -453,13 +440,12 @@ public class WebApplyController {
                 authorizationService.getJwtToken(requestBodyJSON.get("username").asText(), requestBodyJSON.get("password").asText());
         String oauthToken = authorizationService.getOauthAccessToken(jwtToken);
 
-        if (requestBodyJSON.has("recaptchaToken")) {
-            ResponseEntity<?> captchaResponse = validateReCaptcha(requestBodyJSON, httpRequest);
-            if (captchaResponse != null) return captchaResponse;
+        if (requestBodyJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY)) {
+            validateReCaptcha(requestBodyJSON, httpRequest);
         } else if (EnvUtil.isRecaptchaEnable()) {
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
-                    "reCAPTCHA Token is required");
-            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
+                    "recaptchaToken is required");
+            return new ResponseEntity<>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
         }
 
         HttpEntity<JsonNode> request = getHttpEntityRequest(requestBodyJSON, oauthToken, MediaType.APPLICATION_JSON);
@@ -468,7 +454,7 @@ public class WebApplyController {
                 url, HttpMethod.POST, request, "login()", "authenticateUserUri",
                 MediaType.APPLICATION_JSON, null, null);
         if (loginResponse.getBody() instanceof JsonNode) {
-            ((ObjectNode) loginResponse.getBody()).put(AuthConstants.JWT_TOKEN_KEY, jwtToken);
+            ((ObjectNode) loginResponse.getBody()).put(JWT_TOKEN_KEY, jwtToken);
         }
         return loginResponse;
     }
@@ -480,55 +466,35 @@ public class WebApplyController {
                                                @RequestBody JsonNode requestJSON,
                                                boolean captchaVerified) {
         String action = requestJSON.get("action").asText();
-        Boolean recaptchaToken = requestJSON.has("recaptchaToken");
+        Boolean recaptchaToken = requestJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY);
         logger.info(
                 String.format("Begin generateVerifyOTP() method, action=[%s], captchaVerified=%s, hasRecaptchaToken=%s",
                         action, captchaVerified, recaptchaToken));
 
         logger.debug(String.format("generateVerifyOTP() method args, RequestBody=[%s], ", requestJSON.toString()));
 
-        String token = getTokenFromAuthorizationHeader(authorization);
-        authorizationService.validateJwtToken(token, false);
-        ResponseEntity<JsonNode> oauthResponse = getOauthFromContext();
+//        String token = getTokenFromAuthorizationHeader(authorization);
+//        authorizationService.validateJwtToken(token, false);
 
-        //TODO should we verify recaptcha?
-        if (requestJSON.has("recaptchaToken")) {
-            ((ObjectNode) requestJSON).remove("recaptchaToken");
+        String contextOauthToken = authorizationService.getAndUpdateContextOauthToken();
+        if (requestJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY)) {
+            ((ObjectNode) requestJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
         }
 
-        HttpEntity<JsonNode> request = getHttpEntityRequest(
-                requestJSON,
-                oauthResponse.getBody().get(AuthConstants.OAUTH_ACCESS_TOKEN_KEY).asText(),
-                MediaType.APPLICATION_JSON);
+        HttpEntity<JsonNode> request = getHttpEntityRequest(requestJSON, contextOauthToken, MediaType.APPLICATION_JSON);
         String url = dehBaseUrl + dehURIs.get("otpUri").asText();
 
         return invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request,
                 "generateVerifyOTP()", "otpUri", MediaType.APPLICATION_JSON, null, null);
     }
 
-    //TODO move method to recapcha service
-    private ResponseEntity<?> validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest httpRequest) {
+    private void validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest httpRequest) {
         logger.info("Validate reCAPTCHA before saving applicant info.");
-        String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
+        String recaptchaInRequest = requestBodyJSON.get(RECAPTCHA_TOKEN_REQUEST_KEY).asText();
         String ip = httpRequest.getRemoteAddr();
-        ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
 
-        if (captchaResponse.getStatusCode().is2xxSuccessful()) {
-            logger.debug("reCAPTCHA verify API response: " + captchaResponse.getBody());
-        } else {
-            logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
-                    captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
-        }
-
-        logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
-                captchaResponse.getStatusCodeValue(), ip));
-
-        if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
-            return captchaResponse;
-        }
-
-        ((ObjectNode) requestBodyJSON).remove("recaptchaToken");
-        return null;
+        captchaService.verifyRecaptcha(ip, recaptchaInRequest);
+        ((ObjectNode) requestBodyJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
     }
 
 
@@ -604,7 +570,7 @@ public class WebApplyController {
     private ResponseEntity<JsonNode> getOauthFromContext() {
         ResponseEntity<JsonNode> oAuthTokenResponse =
                 //TODO check this (..)x  operation
-                (ResponseEntity<JsonNode>) servletContext.getAttribute("OAuthTokenResponse");
+                (ResponseEntity<JsonNode>) servletContext.getAttribute(OAUTH_CONTEXT_OBJECT_KEY);
         if (oAuthTokenResponse == null || !oAuthTokenResponse.getStatusCode().is2xxSuccessful()) {
             logger.error("No OAuth object in Servlet Context");
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "OAuth related error",
@@ -636,7 +602,7 @@ public class WebApplyController {
         String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
         JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
         initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
-        initStateJSON.put("authorizationToken", jwtToken);
+//        initStateJSON.put("authorizationToken", jwtToken);
         initStateJSON.put("datalist", datalist);
         initStateJSON.put("recaptchaEnable", recaptchaEnable);
         initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
@@ -808,20 +774,29 @@ public class WebApplyController {
 
     // Datalist section
     //====================================================================================
-    private String validateCriteriaParams(String segment, String product, String role, String device) {
+    private void validateCriteriaParams(String segment, String product, String role, String device) {
+        String errorMessage = "";
         if (StringUtils.isNotBlank(segment) && !ArrayUtils.contains(segments, segment)) {
-            return String.format("'%s' is invalid, allowed values [%s]", segment, ArrayUtils.toString(segments));
+            errorMessage = errorMessage
+                    + String.format("'%s' is invalid, allowed values [%s] ", segment, ArrayUtils.toString(segments));
         }
         if (StringUtils.isNotBlank(product) && !ArrayUtils.contains(products, product)) {
-            return String.format("'%s' is invalid, allowed values [%s]", product, ArrayUtils.toString(products));
+            errorMessage = errorMessage
+                    + String.format("'%s' is invalid, allowed values [%s] ", product, ArrayUtils.toString(products));
         }
         if (StringUtils.isNotBlank(role) && !ArrayUtils.contains(roles, role)) {
-            return String.format("'%s' is invalid, allowed values [%s]", role, ArrayUtils.toString(roles));
+            errorMessage = errorMessage
+                    + String.format("'%s' is invalid, allowed values [%s] ", role, ArrayUtils.toString(roles));
         }
         if (StringUtils.isNotBlank(device) && !ArrayUtils.contains(devices, device)) {
-            return String.format("'%s' is invalid, allowed values [%s]", device, ArrayUtils.toString(devices));
+            errorMessage = errorMessage
+                    + String.format("'%s' is invalid, allowed values [%s] ", device, ArrayUtils.toString(devices));
         }
-        return null;
+
+        if (StringUtils.isNotBlank(errorMessage)) {
+            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, errorMessage, errorMessage);
+            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     private ResponseEntity<JsonNode> getDatalistJSON(String segment) {
@@ -833,7 +808,6 @@ public class WebApplyController {
         }
         String methodName = "getDatalistJSON()";
 
-        String jwtToken = authorizationService.getJwtToken();
         RestTemplate restTemplate = new RestTemplate();
 
         String dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
@@ -842,7 +816,7 @@ public class WebApplyController {
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
         url = uriComponents.toString();
         HttpHeaders headers = authorizationService
-                .getOAuthHeaders(authorizationService.getOauthAccessToken(jwtToken), MediaType.APPLICATION_JSON);
+                .getOAuthHeaders(authorizationService.getAndUpdateContextOauthToken(), MediaType.APPLICATION_JSON);
 
         HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 

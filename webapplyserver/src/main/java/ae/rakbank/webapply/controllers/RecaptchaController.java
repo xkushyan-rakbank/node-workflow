@@ -30,14 +30,8 @@ public class RecaptchaController {
 	public ResponseEntity<?> verify(@RequestBody Map<String, String> payload, HttpServletRequest request) {
 		logger.info("begin verify reCAPTCHA method");
 		logger.debug("payload: " + payload);
-		String recaptchaResponse = payload.get("recaptchaToken");
+		String reCaptchaResponse = payload.get("recaptchaToken");
 		String ip = request.getRemoteAddr();
-		ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
-
-		logger.info(String.format("reCAPTCHA Response: HttpStatus=[%s], message=[%s]",
-				captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
-
-		return captchaResponse;
+		return captchaService.invokeReCaptchaEndpoint(ip, reCaptchaResponse);
 	}
-
 }
