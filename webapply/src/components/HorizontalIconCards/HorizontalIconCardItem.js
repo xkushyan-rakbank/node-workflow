@@ -1,8 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import { mobileResolution } from "../../constants";
 
-const style = {
+const style = theme => ({
   iconCardWrapper: {
     display: "flex",
     justifyContent: "center",
@@ -17,10 +16,8 @@ const style = {
     color: "#373737",
     textAlign: "center",
     boxSizing: "border-box",
-    [`@media only screen and (max-width: ${mobileResolution}px)`]: {
-      margin: "5px auto"
-    },
-    "@media only screen and (max-width: 767px)": {
+    [theme.breakpoints.only("xs")]: {
+      margin: "5px auto",
       width: "100%"
     }
   },
@@ -36,7 +33,7 @@ const style = {
     height: "56px",
     minWidth: "96px"
   }
-};
+});
 
 const HorizontalIconCardItem = ({ classes, children, title, text }) => (
   <div className={classes.iconCardWrapper}>

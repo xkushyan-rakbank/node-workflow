@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { mobileResolution } from "../../../../../../constants";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   containedButton: {
     boxShadow: "none",
     backgroundColor: "#fff",
@@ -71,7 +70,7 @@ export const useStyles = makeStyles({
         backgroundColor: "#f7f8f9",
         display: "block",
         top: "-1px",
-        [`@media only screen and (max-width: ${mobileResolution}px)`]: {
+        [theme.breakpoints.only("xs")]: {
           content: "''"
         }
       }
@@ -103,4 +102,4 @@ export const useStyles = makeStyles({
   relative: {
     position: "relative"
   }
-});
+}));
