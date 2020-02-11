@@ -7,7 +7,7 @@ import cx from "classnames";
 import { format, isValid } from "date-fns";
 
 import { getApplicantInfo } from "../../../../store/selectors/appConfig";
-import { formatFullNameLength } from "./utils";
+import { checkFullNameLength } from "./utils";
 import { InfoTitle } from "../../../../components/InfoTitle";
 import {
   CustomSelect,
@@ -40,9 +40,9 @@ const personalInformationSchema = Yup.object().shape({
       .test(
         "length validation",
         "First, Middle and Last name combined have a limit of 77 characters",
-        function() {
-          const { firstName = "", middleName = "", lastName = "" } = this.parent;
-          return middleName.length + lastName.length + firstName.length <= 77;
+        function(firstName) {
+          const { middleName, lastName } = this.parent;
+          return checkFullNameLength(firstName, middleName, lastName);
         }
       )
   }),
@@ -52,9 +52,9 @@ const personalInformationSchema = Yup.object().shape({
     .test(
       "length validation",
       "First, Middle and Last name combined have a limit of 77 characters",
-      function() {
-        const { firstName = "", middleName = "", lastName = "" } = this.parent;
-        return middleName.length + lastName.length + firstName.length <= 77;
+      function(middleName) {
+        const { firstName, lastName } = this.parent;
+        return checkFullNameLength(firstName, middleName, lastName);
       }
     ),
   lastName: Yup.string().when("isShareholderACompany", {
@@ -66,9 +66,9 @@ const personalInformationSchema = Yup.object().shape({
       .test(
         "length validation",
         "First, Middle and Last name combined have a limit of 77 characters",
-        function() {
-          const { firstName = "", middleName = "", lastName = "" } = this.parent;
-          return middleName.length + lastName.length + firstName.length <= 77;
+        function(lastName) {
+          const { firstName, middleName } = this.parent;
+          return checkFullNameLength(firstName, middleName, lastName);
         }
       )
   }),
@@ -90,11 +90,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
-    [`prospect.signatoryInfo[${index}].fullName`]: formatFullNameLength(
-      values.isShareholderACompany
-        ? applicantInfo.fullName
-        : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
-    )
+    [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
+      ? applicantInfo.fullName
+      : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
   });
 
   return (
