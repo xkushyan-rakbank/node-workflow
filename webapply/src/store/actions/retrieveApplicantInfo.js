@@ -14,7 +14,7 @@ export const retrieveApplicantInfoSuccess = payload => {
   return { type: RETRIEVE_APPLICANT_INFO_SUCCESS, payload };
 };
 
-export const getProspectInfoPromisify = prospectId => {
+export const getProspectInfo = prospectId => {
   return {
     type: GET_PROSPECT_INFO_REQUEST,
     [WAIT_FOR_ACTION]: GET_PROSPECT_INFO_SUCCESS,

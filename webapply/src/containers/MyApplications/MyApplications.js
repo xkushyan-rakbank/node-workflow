@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { searchApplications } from "../../store/actions/searchProspect";
-import { getProspectInfoPromisify } from "./../../store/actions/retrieveApplicantInfo";
+import { getProspectInfo } from "./../../store/actions/retrieveApplicantInfo";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getSearchResult } from "./../../store/selectors/searchProspect";
 
@@ -20,8 +20,7 @@ export const MyApplications = () => {
   }, [inputParam, dispatch]);
 
   const onGetProspectInfo = useCallback(
-    prospectId =>
-      dispatch(getProspectInfoPromisify(prospectId)).then(pushDisplayScreenToHistory, () => {}),
+    prospectId => dispatch(getProspectInfo(prospectId)).then(pushDisplayScreenToHistory, () => {}),
     [pushDisplayScreenToHistory, dispatch]
   );
 
