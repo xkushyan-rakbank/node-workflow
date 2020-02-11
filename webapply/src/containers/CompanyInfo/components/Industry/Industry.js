@@ -187,9 +187,9 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                               <br />
                               Example:
                               <br />
-                              {`If business / commercial / licensed activity is 'E Commerce', please
-                              select industry as 'Services' & sub-industry as 'Computer & IT
-                              Industry'`}
+                              If business / commercial / licensed activity is {"'"}E Commerce{"'"},
+                              please select industry as {"'"}Services{"'"} & sub-industry as {"'"}
+                              Computer & IT Industry{"'"}
                             </>
                           }
                         />
