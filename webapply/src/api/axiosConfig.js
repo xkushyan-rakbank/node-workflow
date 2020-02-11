@@ -119,13 +119,13 @@ instance.interceptors.response.use(
       try {
         const { errors } = JSON.parse(jsonData.debugMessage);
         const errorMessages = errors.map(({ message }) => message);
+        let notificationOptions = {};
 
         if (jsonData.status) {
-          NotificationsManager.add &&
-            NotificationsManager.add({
-              message: `${errorMessages.join(", ")}`
-            });
+          notificationOptions = { message: errorMessages.join(", ") };
         }
+
+        NotificationsManager.add && NotificationsManager.add(notificationOptions);
       } catch (e) {
         log(e);
       }
