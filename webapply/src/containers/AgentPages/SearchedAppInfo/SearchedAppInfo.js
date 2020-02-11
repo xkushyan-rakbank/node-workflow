@@ -33,7 +33,7 @@ export const SearchedAppInfoComponent = ({
   useEffect(() => {
     updateProspectId(match.params.id);
     getProspectInfoPromisify(match.params.id);
-  }, [updateProspectId, retrieveDocDetails, match.params.id]);
+  }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfoPromisify]);
 
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
