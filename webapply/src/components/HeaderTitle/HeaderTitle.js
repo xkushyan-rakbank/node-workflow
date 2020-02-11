@@ -1,10 +1,10 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useCallback } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import cx from "classnames";
 import { connect } from "react-redux";
 
-import * as loginSelector from "../../store/selectors/loginSelector";
-import * as appConfigSelectors from "../../store/selectors/appConfig";
+import { getAgentName, checkLoginStatus } from "../../store/selectors/loginSelector";
+import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { logout, formatLogin } from "../../store/actions/loginForm";
 import { formatSearchList } from "../../store/actions/searchProspect";
 import { getAccountType } from "../../store/selectors/appConfig";
@@ -26,6 +26,7 @@ const HeaderTitleComponent = ({
 }) => {
   const classes = useStyles();
   const { pathname } = useLocation();
+  const history = useHistory();
 
   let selectedAccountTypeName = "";
   switch (accountType) {
@@ -41,27 +42,20 @@ const HeaderTitleComponent = ({
       break;
   }
 
-  const organizationName = companyName ? (
-    <>
-      for <span>{companyName}</span>
-    </>
-  ) : null;
   const isHideCompanyName = pathname === routes.applicationOverview;
 
-  let portalTitle = "";
-  const routesToShowPortalTitle = new Set([
+  const routesToShowPortalTitle = [
     routes.login,
     routes.comeBackLoginVerification,
     routes.MyApplications
-  ]);
-  if (routesToShowPortalTitle.has(pathname)) portalTitle = "RAK Application Portal";
+  ];
 
-  const agentLogout = () => {
+  const agentLogout = useCallback(() => {
     props.logout();
     props.formatLogin();
     props.formatSearchList();
-    props.history.push(routes.login);
-  };
+    history.push(routes.login);
+  }, []);
 
   return (
     <div
@@ -73,8 +67,8 @@ const HeaderTitleComponent = ({
     >
       <div className={classes.headerTitleIn}>
         <span>
-          {portalTitle.length ? (
-            portalTitle
+          {routesToShowPortalTitle.includes(pathname) ? (
+            "RAK Application Portal"
           ) : checkLoginStatus ? (
             <>
               <div>{getAgentName}</div>
@@ -85,7 +79,11 @@ const HeaderTitleComponent = ({
           ) : (
             <>
               {selectedAccountTypeName} {islamicBanking && "Islamic"} application{" "}
-              {!isHideCompanyName && organizationName}
+              {!isHideCompanyName && companyName ? (
+                <>
+                  for <span>{companyName}</span>
+                </>
+              ) : null}
             </>
           )}
         </span>
@@ -95,11 +93,11 @@ const HeaderTitleComponent = ({
 };
 
 const mapStateToProps = state => ({
-  checkLoginStatus: loginSelector.checkLoginStatus(state),
-  getAgentName: loginSelector.getAgentName(state),
+  checkLoginStatus: checkLoginStatus(state),
+  getAgentName: getAgentName(state),
   islamicBanking: getIsIslamicBanking(state),
   accountType: getAccountType(state),
-  organizationInfo: appConfigSelectors.getOrganizationInfo(state)
+  organizationInfo: getOrganizationInfo(state)
 });
 
 const mapDispatchToProps = {
