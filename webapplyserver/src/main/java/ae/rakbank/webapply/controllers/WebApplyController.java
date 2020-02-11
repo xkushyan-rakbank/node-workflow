@@ -168,7 +168,7 @@ public class WebApplyController {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        csrfTokenHelper.createCSRFToken(httpRequest, headers);
+        csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
 
         /*
         String cacheKey = getCacheKey(segment, product, role, device);
@@ -181,6 +181,7 @@ public class WebApplyController {
         }
         */
 
+        //Init new JWT Token
         String jwtToken = authorizationService.getJwtToken();
 
         ResponseEntity<JsonNode> datalistResponse = getDatalistJSON(segment);
@@ -215,7 +216,7 @@ public class WebApplyController {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        csrfTokenHelper.createCSRFToken(httpRequest, headers);
+        csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
 
         String cacheKey = getCacheKey(segment, product, role, device, "reduced");
         String cachedValue = getCache(cacheKey);
@@ -252,8 +253,7 @@ public class WebApplyController {
     public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
                                                @RequestHeader String authorization,
                                                @RequestBody JsonNode requestBodyJSON,
-                                               @PathVariable String segment,
-                                               HttpServletRequest servletRequest) {
+                                               @PathVariable String segment) {
         logger.info("Begin createSMEProspect() method");
         logger.info(String.format("createSMEProspect() method args, RequestBody=[%s], segment=[%s]", requestBodyJSON.toString(), segment));
 
@@ -262,10 +262,10 @@ public class WebApplyController {
         ResponseEntity<JsonNode> oauthFromContext = getOauthFromContext();
 
         if (EnvUtil.isCheckRecaptcha() && requestBodyJSON.has("recaptchaToken")) {
-            ResponseEntity<?> captchaResponse = validateReCaptcha(requestBodyJSON, servletRequest);
+            ResponseEntity<?> captchaResponse = validateReCaptcha(requestBodyJSON, httpRequest);
             if (captchaResponse != null) return captchaResponse;
         } else if (EnvUtil.isRecaptchaEnable()) {
-            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "recaptchaToken is required",
+            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
                     "recaptchaToken is required");
             return new ResponseEntity<>(error.toJsonNode(), null, HttpStatus.BAD_REQUEST);
         }
@@ -294,8 +294,9 @@ public class WebApplyController {
             otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
             otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
             otpRequest.put("action", "generate");
-            ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, httpResponse, authorization, otpRequest,
-                    servletRequest, true);
+
+            ResponseEntity<?> otpResponse =
+                    generateVerifyOTP(httpRequest, httpResponse, authorization, otpRequest, true);
 
             if (otpResponse.getStatusCode().is2xxSuccessful()) {
                 return createProspectResponse;
@@ -463,8 +464,9 @@ public class WebApplyController {
 
         HttpEntity<JsonNode> request = getHttpEntityRequest(requestBodyJSON, oauthToken, MediaType.APPLICATION_JSON);
         String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
-        ResponseEntity<?> loginResponse = invokeApiEndpoint(httpRequest, httpResponse, url, HttpMethod.POST, request, "login()",
-                "authenticateUserUri", MediaType.APPLICATION_JSON, null, null);
+        ResponseEntity<?> loginResponse = invokeApiEndpoint(httpRequest, httpResponse,
+                url, HttpMethod.POST, request, "login()", "authenticateUserUri",
+                MediaType.APPLICATION_JSON, null, null);
         if (loginResponse.getBody() instanceof JsonNode) {
             ((ObjectNode) loginResponse.getBody()).put(AuthConstants.JWT_TOKEN_KEY, jwtToken);
         }
@@ -476,7 +478,6 @@ public class WebApplyController {
     public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
                                                @RequestHeader String authorization,
                                                @RequestBody JsonNode requestJSON,
-                                               HttpServletRequest servletRequest,
                                                boolean captchaVerified) {
         String action = requestJSON.get("action").asText();
         Boolean recaptchaToken = requestJSON.has("recaptchaToken");
@@ -506,10 +507,10 @@ public class WebApplyController {
     }
 
     //TODO move method to recapcha service
-    private ResponseEntity<?> validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest servletRequest) {
+    private ResponseEntity<?> validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest httpRequest) {
         logger.info("Validate reCAPTCHA before saving applicant info.");
         String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
-        String ip = servletRequest.getRemoteAddr();
+        String ip = httpRequest.getRemoteAddr();
         ResponseEntity<?> captchaResponse = captchaService.verifyRecaptcha(ip, recaptchaResponse);
 
         if (captchaResponse.getStatusCode().is2xxSuccessful()) {
@@ -592,7 +593,7 @@ public class WebApplyController {
         logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
                 operationId, url, response.getStatusCodeValue()));
 
-        csrfTokenHelper.createCSRFToken(httpRequest, headers);
+        csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
 
         return new ResponseEntity<>(response.getBody(), headers, response.getStatusCode());
     }

@@ -1,3 +1,5 @@
+import { appendGaEventToAction } from "./googleAnalytics";
+
 export const RECEIVE_APPCONFIG = "RECEIVE_APPCONFIG";
 export const RECEIVE_APPCONFIG_SUCCESS = "RECEIVE_APPCONFIG_SUCCESS";
 export const RECEIVE_APPCONFIG_FAIL = "RECEIVE_APPCONFIG_FAIL";
@@ -24,8 +26,10 @@ export const receiveAppConfigFail = error => {
   return { type: RECEIVE_APPCONFIG_FAIL, error };
 };
 
-export const updateProspect = fields => {
-  return { type: UPDATE_PROSPECT, fields };
+export const updateProspect = (fields, gaEvent = null) => {
+  const action = { type: UPDATE_PROSPECT, fields };
+
+  return appendGaEventToAction(action, gaEvent);
 };
 
 export const setConfig = payload => {

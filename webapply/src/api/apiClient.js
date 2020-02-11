@@ -3,9 +3,10 @@ import { buildURI, getQueryString } from "./../utils/buildURI";
 
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
+export const SEGMENT = "sme";
 
 export const config = {
-  load: (product, segment) => {
+  load: (product, segment = SEGMENT) => {
     const query = getQueryString(product, segment);
     return httpClient.request({
       method: "GET",

@@ -9,22 +9,22 @@ import routes from "../../routes";
 import { accountNames } from "../../constants";
 
 import { useStyles } from "./styled";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
-export const SelectServicesComponent = ({
-  accountType,
-  rakValuePackage,
-  sendProspectToAPI,
-  history
-}) => {
+export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const classes = useStyles();
+  const pushHistory = useTrackingHistory();
   const [step, setStep] = useState(STEP_1);
 
-  const setNextStep = useCallback(() => {
-    if (step === GO_TO_SUBMIT_STEP) {
-      return history.push("SubmitApplication");
-    }
-    sendProspectToAPI().then(() => setStep(step + 1), () => {});
-  }, [sendProspectToAPI, step, history]);
+  const setNextStep = useCallback(
+    event => {
+      if (step === GO_TO_SUBMIT_STEP) {
+        return pushHistory(routes.SubmitApplication);
+      }
+      sendProspectToAPI(null, event).then(() => setStep(step + 1), () => {});
+    },
+    [sendProspectToAPI, step, pushHistory]
+  );
 
   const createSetStepHandler = nextStep => () => {
     if (step > nextStep) {

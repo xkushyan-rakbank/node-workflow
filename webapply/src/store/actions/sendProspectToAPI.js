@@ -1,6 +1,7 @@
 import { WAIT_FOR_ACTION, ERROR_ACTION } from "redux-wait-for-action";
 
 import { NEXT } from "../../constants";
+import { appendGaEventToAction } from "./googleAnalytics";
 
 export const SEND_PROSPECT_TO_API = "SEND_PROSPECT_TO_API";
 export const SEND_PROSPECT_TO_API_SUCCESS = "SEND_PROSPECT_TO_API_SUCCESS";
@@ -16,12 +17,16 @@ export const sendProspectToAPI = (saveType = NEXT) => {
   return { type: SEND_PROSPECT_TO_API, payload: { saveType } };
 };
 
-export const sendProspectToAPIPromisify = (saveType = NEXT) => ({
-  type: SEND_PROSPECT_TO_API,
-  [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
-  [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
-  payload: { saveType }
-});
+export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null) => {
+  const action = {
+    type: SEND_PROSPECT_TO_API,
+    [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
+    [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+    payload: { saveType }
+  };
+
+  return appendGaEventToAction(action, gaEvent);
+};
 
 export const sendProspectToAPISuccess = prospectCopy => {
   return { type: SEND_PROSPECT_TO_API_SUCCESS, prospectCopy };

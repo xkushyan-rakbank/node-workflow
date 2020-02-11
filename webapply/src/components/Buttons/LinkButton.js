@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@material-ui/styles";
 import { theme } from "../../theme";
+import { ContexualHelp } from "../Notifications/ContexualHelp/ContexualHelp";
 
 export const Button = styled("button")({
   fontFamily: "Open Sans, sans-serif",
@@ -8,15 +9,25 @@ export const Button = styled("button")({
   fontWeight: 600,
   border: "none",
   textDecoration: "underline",
-  cursor: "pointer"
+  cursor: "pointer",
+  outline: "none"
 });
 
 Button.defaultProps = {
   style: theme.palette.button
 };
 
-export const LinkButton = ({ clickHandler, title = "Edit", className = "", ...rest }) => (
-  <Button className={className} onClick={clickHandler} {...rest}>
-    {title}
-  </Button>
+export const LinkButton = ({
+  clickHandler,
+  title = "Edit",
+  className = "",
+  editDisabled,
+  contextualHelpText = "",
+  ...rest
+}) => (
+  <ContexualHelp title={contextualHelpText} isDisableHoverListener={!editDisabled}>
+    <Button className={className} onClick={clickHandler} {...rest}>
+      {title}
+    </Button>
+  </ContexualHelp>
 );

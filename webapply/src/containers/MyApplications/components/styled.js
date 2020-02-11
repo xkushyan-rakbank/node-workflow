@@ -34,6 +34,7 @@ export const useStyles = makeStyles({
     boxShadow: "0 1px 16px 0 rgba(0, 0, 0, 0.1)",
     flexDirection: "column",
     marginTop: "40px",
+    marginBottom: "40px",
     borderRadius: "8px",
     [`@media only screen and (max-width: ${mobileResolution}px)`]: {
       boxShadow: "none",
