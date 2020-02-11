@@ -1,4 +1,6 @@
 import axios from "axios";
+import get from "lodash/get";
+
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
@@ -107,13 +109,16 @@ instance.interceptors.response.use(
         NotificationsManager.add({ title: "ReCaptchaError", message: data.errors });
     } else if (status === 400 && jsonData.errors) {
       store.dispatch(setInputsErrors(data.errors));
+      let notificationOptions = {};
+
       if (jsonData.errorType === "FieldsValidation") {
-        NotificationsManager.add &&
-          NotificationsManager.add({
-            title: "Validation Error On Server",
-            message: jsonData.errors[0] ? jsonData.errors[0].message : "Validation Error"
-          });
+        notificationOptions = {
+          title: "Validation Error On Server",
+          message: get(jsonData, "errors[0].message", "Validation Error")
+        };
       }
+
+      NotificationsManager.add && NotificationsManager.add(notificationOptions);
     } else {
       log(jsonData);
       try {
