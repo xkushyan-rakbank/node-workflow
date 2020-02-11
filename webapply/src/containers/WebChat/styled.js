@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     bottom: "40px",
     color: "#fff",
     fontSize: "18px",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       left: "15px"
     },
     [theme.breakpoints.only("xs")]: {

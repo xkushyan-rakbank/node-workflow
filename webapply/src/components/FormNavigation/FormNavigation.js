@@ -31,15 +31,9 @@ export const FormNavigationComponent = ({
 
   const isAccountsComparison = routes.accountsComparison === pathname;
   function getBlobColor() {
-    if (isAccountsComparison) {
-      return "red";
-    }
-    if (accountType === accountNames.elite) {
-      return "brown";
-    }
-    if (islamicBanking) {
-      return "green";
-    }
+    if (isAccountsComparison) return "red";
+    if (accountType === accountNames.elite) return "brown";
+    if (islamicBanking) return "green";
     return "red";
   }
 

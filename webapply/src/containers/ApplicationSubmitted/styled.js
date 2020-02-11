@@ -21,7 +21,7 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "30px",
     display: "flex",
     justifyContent: "space-between",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
       alignItems: "center",
       marginTop: "10px",
@@ -118,7 +118,7 @@ export const useStyles = makeStyles(theme => ({
     height: "1px",
     backgroundColor: "rgba(230, 230, 230, 0.5)",
     margin: "60px 0",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       margin: "20px 0"
     }
   },

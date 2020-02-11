@@ -20,7 +20,7 @@ export const useStyles = makeStyles(theme => ({
       left: "20px",
       marginLeft: "0"
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       marginLeft: "-15px",
       paddingLeft: "40px",
       fontSize: "16px",

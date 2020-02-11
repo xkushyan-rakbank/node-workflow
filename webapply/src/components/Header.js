@@ -18,7 +18,7 @@ const styles = theme => ({
     left: "40px",
     display: "flex",
     zIndex: 12,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       maxWidth: "270px"
     },
     "& img": {

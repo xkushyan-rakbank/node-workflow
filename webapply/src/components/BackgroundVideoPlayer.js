@@ -67,7 +67,7 @@ const styles = theme => ({
     letterSpacing: "normal",
     padding: "12px 30px",
     height: "auto",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.only("xs")]: {
       minHeight: "48px"
     }
   },

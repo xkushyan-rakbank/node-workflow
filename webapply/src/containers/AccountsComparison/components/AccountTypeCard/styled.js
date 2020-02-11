@@ -47,7 +47,7 @@ export const useStyles = makeStyles(theme => ({
       width: "100%",
       whiteSpace: "pre-wrap"
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       "& span": {
         margin: "13px"
       }
