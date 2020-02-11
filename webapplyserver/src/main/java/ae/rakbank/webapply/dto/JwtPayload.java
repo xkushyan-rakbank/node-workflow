@@ -10,4 +10,5 @@ public class JwtPayload {
     private String oauthAccessToken;
     private String oauthRefreshToken;
     private String prospect;
+    private UserRole role;
 }
