@@ -106,19 +106,26 @@ function* displayScreenBasedOnViewIdSaga() {
   const isApplicationSubmitted =
     applicationInfo.viewId === "/SubmitApplication" && applicationInfo.viewId !== "/SearchProspect";
   const VIEW_ID = isApplicationSubmitted ? "/CompanyInfo" : applicationInfo.viewId;
+  const isEditRedirect = applicationInfo.viewId.includes("SearchedAppInfo");
 
-  if (applicationInfo.actionType === "submit" && applicationInfo.retrieveMode && !isROScreens) {
-    yield call(history.push, prefix + routes.ApplicationSubmitted);
-  } else if (
-    applicationInfo.actionType === "submit" &&
-    !applicationInfo.retrieveMode &&
-    !isROScreens
-  ) {
-    yield call(history.push, prefix + applicationInfo.reUploadDocuments);
-  } else if (applicationInfo.viewId && !isROScreens && !isApplicationSubmitted) {
-    yield call(history.push, prefix + applicationInfo.viewId);
-  } else if (isROScreens) {
-    yield call(history.push, prefix + VIEW_ID);
+  if (!isROScreens) {
+    if (applicationInfo.actionType === "submit") {
+      return yield call(
+        history.push,
+        applicationInfo.retrieveMode
+          ? routes.ApplicationSubmitted
+          : `${prefix}${applicationInfo.reUploadDocuments}`
+      );
+    }
+
+    if (applicationInfo.viewId && !isApplicationSubmitted) {
+      return yield call(history.push, `${prefix}${applicationInfo.viewId}`);
+    }
+  } else {
+    if (isEditRedirect) {
+      return yield call(history.push, routes.companyInfo);
+    }
+    return yield call(history.push, prefix + VIEW_ID);
   }
 }
 
