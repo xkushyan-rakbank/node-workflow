@@ -37,14 +37,40 @@ const personalInformationSchema = Yup.object().shape({
       .required(getRequiredMessage("First name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("First name"))
+      .test(
+        "length validation",
+        "First, Middle and Last name combined have a limit of 77 characters",
+        function() {
+          const { firstName = "", middleName = "", lastName = "" } = this.parent;
+          return middleName.length + lastName.length + firstName.length <= 77;
+        }
+      )
   }),
-  middleName: Yup.string().matches(NAME_REGEX, getInvalidMessage("Middle name")),
+  middleName: Yup.string()
+    .max(30, "Maximum 30 characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Middle name"))
+    .test(
+      "length validation",
+      "First, Middle and Last name combined have a limit of 77 characters",
+      function() {
+        const { firstName = "", middleName = "", lastName = "" } = this.parent;
+        return middleName.length + lastName.length + firstName.length <= 77;
+      }
+    ),
   lastName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
       .required(getRequiredMessage("Last name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("Last name"))
+      .test(
+        "length validation",
+        "First, Middle and Last name combined have a limit of 77 characters",
+        function() {
+          const { firstName = "", middleName = "", lastName = "" } = this.parent;
+          return middleName.length + lastName.length + firstName.length <= 77;
+        }
+      )
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
