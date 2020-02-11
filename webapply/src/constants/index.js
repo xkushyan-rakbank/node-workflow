@@ -175,4 +175,5 @@ export const ACTION_TYPES = {
   save: "save",
   submit: "submit"
 };
+
 export const SOLE_PROPRIETOR = "1";
