@@ -18,7 +18,7 @@ export const SearchedAppInfoComponent = ({
   match,
   updateProspectId,
   retrieveDocDetails,
-  getProspectInfo,
+  getProspectInfoPromisify,
   setIsApplyEditApplication,
   prospectInfo
 }) => {
@@ -32,7 +32,7 @@ export const SearchedAppInfoComponent = ({
 
   useEffect(() => {
     updateProspectId(match.params.id);
-    getProspectInfo(match.params.id);
+    getProspectInfoPromisify(match.params.id);
   }, [updateProspectId, retrieveDocDetails, match.params.id]);
 
   const redirectUserPage = useCallback(() => {

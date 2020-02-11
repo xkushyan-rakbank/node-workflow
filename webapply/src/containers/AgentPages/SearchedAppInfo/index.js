@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { updateProspectId } from "../../../store/actions/appConfig";
-import { getProspectInfo } from "../../../store/actions/retrieveApplicantInfo";
+import { getProspectInfoPromisify } from "../../../store/actions/retrieveApplicantInfo";
 import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
 import {
   getIsEditableStatusSearchInfo,
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   retrieveDocDetails,
-  getProspectInfo,
+  getProspectInfoPromisify,
   updateProspectId,
   setIsApplyEditApplication
 };
