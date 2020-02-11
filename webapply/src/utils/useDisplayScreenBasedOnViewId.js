@@ -23,6 +23,7 @@ export const useDisplayScreenBasedOnViewId = () => {
     const isApplicationSubmitted =
       viewId === VIEW_IDS.SubmitApplication && viewId !== VIEW_IDS.SearchProspect;
     const pathTo = isApplicationSubmitted ? VIEW_IDS.CompanyInfo : viewId;
+    const isEditRedirect = viewId.includes("SearchedAppInfo");
 
     if (!isROScreens) {
       if (isSubmit && isRetrieveMode) {
@@ -33,6 +34,9 @@ export const useDisplayScreenBasedOnViewId = () => {
         history.push(`${prefix}${pathTo}`);
       }
     } else {
+      if (isEditRedirect) {
+        history.push(routes.companyInfo);
+      }
       history.push(`${prefix}${pathTo}`);
     }
   }, [applicationInfo, isROScreens]);
