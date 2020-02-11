@@ -13,10 +13,8 @@ import { ServerRequestLoadingScreen } from "../../../../components/ServerRequest
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 
 export const SubmitApplicationComponent = ({
-  history,
   accountInfo: [account],
   signatoryInfo,
-  isAgentLoggedIn,
   applicationInfo,
   organizationInfo: { companyName },
   sendProspectToAPI,
@@ -28,6 +26,9 @@ export const SubmitApplicationComponent = ({
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const pathname = isApplyEditApplication ? routes.companyInfo : routes.ApplicationSubmitted;
+  const isDisabled = !isApplyEditApplication
+    ? !(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed) || isSubmitting
+    : !isApplyEditApplication;
   const handleSubmit = () => {
     setIsSubmitting(true);
     updateActionType(SUBMIT);
@@ -51,15 +52,12 @@ export const SubmitApplicationComponent = ({
         account={account}
       />
 
-      {!isAgentLoggedIn && <BlockConfirm setFormFields={setFormFields} />}
+      {!isApplyEditApplication && <BlockConfirm setFormFields={setFormFields} />}
 
       <div className="linkContainer">
         <BackLink path={routes.selectServices} />
         <SubmitButton
-          disabled={
-            !(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed) ||
-            isSubmitting
-          }
+          disabled={isDisabled}
           label="Submit"
           justify="flex-end"
           handleClick={handleSubmit}
