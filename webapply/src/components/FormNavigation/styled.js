@@ -25,15 +25,11 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: 16,
     paddingRight: 16,
     transition: "all .3s",
-    height: () => {
-      if (isOpen) {
-        return "calc(100vh - 50px)";
-      }
-      if (isSmallBg) {
-        return 190;
-      }
+    height: (() => {
+      if (isOpen) return "calc(100vh - 50px)";
+      if (isSmallBg) return 190;
       return 290;
-    },
+    })(),
     marginBottom: isOpen && hasVideo ? "calc(-100vh + 220px)" : 0,
     [theme.breakpoints.up("sm")]: {
       height: "100vh",

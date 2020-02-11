@@ -20,8 +20,8 @@ const styles = theme => ({
     overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 11,
-    [`${theme.breakpoints.only("xs")}, (max-height: ${normalScrollHeight}px)`]: {
-      transform: "none!important"
+    [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
+      transform: ({ nextElementPosition }) => `translateY(-${100 * nextElementPosition}vh)`
     }
   },
   video: {
@@ -125,7 +125,6 @@ class BackgroundVideoPlayer extends React.Component {
     const playedVideos = this.getPlayedVideos();
     const {
       classes,
-      nextElementPosition,
       handleClick,
       handleClickMobile,
       videoWrapperClass,
@@ -133,10 +132,7 @@ class BackgroundVideoPlayer extends React.Component {
     } = this.props;
 
     const video = (
-      <div
-        style={{ transform: `translateY(-${100 * nextElementPosition}vh)` }}
-        className={cx(classes.container, videoWrapperClass)}
-      >
+      <div className={cx(classes.container, videoWrapperClass)}>
         <video
           muted
           id="video-background"
