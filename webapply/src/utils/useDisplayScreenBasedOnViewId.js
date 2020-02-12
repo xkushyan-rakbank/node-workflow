@@ -16,31 +16,35 @@ export const useDisplayScreenBasedOnViewId = () => {
     isROScreens: getIsEditableStatusSearchInfo(state)
   }));
 
-  const pushDisplayScreenToHistory = useCallback(() => {
-    const viewId = applicationInfo.viewId;
-    const isSubmit = applicationInfo.actionType === ACTION_TYPES.submit;
-    const isRetrieveMode = applicationInfo.retrieveMode;
-    const isApplicationSubmitted =
-      viewId === VIEW_IDS.SubmitApplication && viewId !== VIEW_IDS.SearchProspect;
-    const pathTo = isApplicationSubmitted ? VIEW_IDS.CompanyInfo : viewId;
-    const isEditRedirect = viewId.includes(VIEW_IDS.SearchedAppInfo);
+  const pushDisplayScreenToHistory = useCallback(
+    prospect => {
+      const newApplicationInfo = prospect ? prospect.applicationInfo : applicationInfo;
+      const viewId = newApplicationInfo.viewId;
+      const isSubmit = newApplicationInfo.actionType === ACTION_TYPES.submit;
+      const isRetrieveMode = newApplicationInfo.retrieveMode;
+      const isApplicationSubmitted =
+        viewId === VIEW_IDS.SubmitApplication && viewId !== VIEW_IDS.SearchProspect;
+      const pathTo = isApplicationSubmitted ? VIEW_IDS.CompanyInfo : viewId;
+      const isEditRedirect = viewId.includes(VIEW_IDS.SearchedAppInfo);
 
-    if (!isROScreens) {
-      if (isSubmit && isRetrieveMode) {
-        history.push(`${prefix}${routes.ApplicationSubmitted}`);
-      } else if (isSubmit && !isRetrieveMode) {
-        history.push(`${prefix}${applicationInfo.reUploadDocuments}`);
-      } else if (viewId && !isApplicationSubmitted) {
-        history.push(`${prefix}${pathTo}`);
-      }
-    } else {
-      if (isEditRedirect) {
-        history.push(routes.companyInfo);
+      if (!isROScreens) {
+        if (isSubmit && isRetrieveMode) {
+          history.push(`${prefix}${routes.ApplicationSubmitted}`);
+        } else if (isSubmit && !isRetrieveMode) {
+          history.push(`${prefix}${newApplicationInfo.reUploadDocuments}`);
+        } else if (viewId && !isApplicationSubmitted) {
+          history.push(`${prefix}${pathTo}`);
+        }
       } else {
-        history.push(`${prefix}${pathTo}`);
+        if (isEditRedirect) {
+          history.push(routes.companyInfo);
+        } else {
+          history.push(`${prefix}${pathTo}`);
+        }
       }
-    }
-  }, [applicationInfo, isROScreens, history]);
+    },
+    [applicationInfo, isROScreens, history]
+  );
 
   return {
     pushDisplayScreenToHistory

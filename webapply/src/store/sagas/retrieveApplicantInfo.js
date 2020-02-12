@@ -2,7 +2,7 @@ import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import uniqueId from "lodash/uniqueId";
 import * as actions from "../actions/retrieveApplicantInfo";
 import { setConfig } from "../actions/appConfig";
-import { retrieveApplicantInfos, prospect } from "../../api/apiClient";
+import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
@@ -30,7 +30,7 @@ function* getProspectIdInfo({ payload }) {
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
-    const response = yield call(prospect.get, payload.prospectId, headers);
+    const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
 
     yield put(setConfig(config));
@@ -42,11 +42,10 @@ function* getProspectIdInfo({ payload }) {
     }));
 
     yield put(updateStakeholdersIds(stakeholdersIds));
+    yield put(actions.getProspectInfoSuccess(config.prospect));
   } catch (error) {
     log(error);
     yield put(actions.getProspectInfoFail());
-  } finally {
-    yield put(actions.getProspectInfoSuccess());
   }
 }
 
