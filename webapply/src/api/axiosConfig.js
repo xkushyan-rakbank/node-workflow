@@ -1,10 +1,12 @@
 import axios from "axios";
+import get from "lodash/get";
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
 import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
+import { setAccessToken } from "../store/actions/appConfig";
 
 // Temporary disabled encryption
 // const ENCRYPT_METHODS = ["post", "put"];
@@ -49,6 +51,9 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(
   response => {
     const { symKey } = response.config;
+    const accessToken = get(response, "headers.access_token");
+
+    if (accessToken) store.dispatch(setAccessToken(accessToken));
 
     if (symKey && response.data && typeof response.data === "string") {
       let payload;

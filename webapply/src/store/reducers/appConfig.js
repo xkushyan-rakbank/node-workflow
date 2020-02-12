@@ -8,7 +8,8 @@ import {
   UPDATE_PROSPECT_ID,
   SET_CONFIG,
   SET_PROSPECT,
-  SAVE_PROSPECT_MODEL
+  SAVE_PROSPECT_MODEL,
+  SET_ACCESS_TOKEN
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS } from "../actions/loginForm";
 
@@ -54,6 +55,14 @@ const appConfigReducer = (state = initialState, action) => {
         ...state,
         authorizationToken: get(action, "payload.access_token", state.authorizationToken)
       };
+    case SET_ACCESS_TOKEN: {
+      console.log("SET_ACCESS_TOKEN ", action.payload);
+      return {
+        ...state,
+        authorizationToken: action.payload || state.authorizationToken
+      };
+    }
+
     case RECEIVE_APPCONFIG_FAIL:
       return {
         ...state,

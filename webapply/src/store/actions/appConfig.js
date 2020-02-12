@@ -13,6 +13,7 @@ export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
 export const DISPLAY_SCREEN_BASED_ON_VIEW_ID = "DISPLAY_SCREEN_BASED_ON_VIEW_ID";
 export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
 export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
+export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 
 export const receiveAppConfig = (segment, accountType, isIslamicBanking) => {
   return { type: RECEIVE_APPCONFIG, payload: { accountType, isIslamicBanking, segment } };
@@ -67,3 +68,5 @@ export const updateSaveType = saveType => {
 export const saveProspectModel = prospectModel => {
   return { type: SAVE_PROSPECT_MODEL, prospectModel };
 };
+
+export const setAccessToken = accessToken => ({ type: SET_ACCESS_TOKEN, payload: accessToken });
