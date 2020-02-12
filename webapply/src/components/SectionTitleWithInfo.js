@@ -25,7 +25,7 @@ export const SectionTitleWithInfo = ({ className, title, info, classes: extended
   return (
     <div className={className}>
       <h3 className={classes.title}>{title}</h3>
-      <span className={classes.info}>{info}</span>
+      {info && <span className={classes.info}>{info}</span>}
     </div>
   );
 };

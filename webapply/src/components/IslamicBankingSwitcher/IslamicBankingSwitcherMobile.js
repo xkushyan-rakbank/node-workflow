@@ -37,7 +37,7 @@ const SwitcherWrapper = styled(({ isSwitcherShow, ...rest }) => <div {...rest} /
   bottom: 0,
   right: 0,
   left: 0,
-  padding: "70px 16px 0",
+  padding: "100px 16px 0",
   border: 0,
   cursor: "pointer",
   transition: "all .3s"

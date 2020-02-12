@@ -1,15 +1,18 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   note: {
-    fontSize: "12px",
+    fontSize: 12,
     textAlign: "center",
     color: "#888888",
-    marginTop: "25px",
-    display: "block"
+    display: "block",
+    [theme.breakpoints.only("xs")]: {
+      marginTop: 10,
+      fontSize: 10
+    }
   }
-});
+}));
 
 export const InfoNote = ({ text, ...props }) => {
   const classes = useStyles();
