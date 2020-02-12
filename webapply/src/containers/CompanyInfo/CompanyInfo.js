@@ -12,7 +12,7 @@ import {
   sendProspectToAPIPromisify,
   setScreeningError
 } from "../../store/actions/sendProspectToAPI";
-import { screeningStatusNotRegistered, STEP_STATUS } from "../../constants";
+import { screeningStatusNotRegistered } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
@@ -82,9 +82,7 @@ export const CompanyInfoPage = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={activeStep === item.step}
-            isFilled={availableSteps.some(
-              step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
-            )}
+            isFilled={availableSteps.some(step => step.step === item.step && step.isCompleted)}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}

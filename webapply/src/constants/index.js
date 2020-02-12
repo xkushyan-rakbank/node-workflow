@@ -173,9 +173,3 @@ export const ACTION_TYPES = {
 };
 
 export const SOLE_PROPRIETOR = "1";
-
-export const STEP_STATUS = {
-  ACTIVE: "ACTIVE",
-  AVAILABLE: "AVAILABLE",
-  COMPLETED: "COMPLETED"
-};

@@ -46,12 +46,11 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const stakeholdersIds = useSelector(getStakeholdersIds);
-  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
-    `${COMPANY_STAKEHOLDER_ID}${stakeholdersIds[index].id}`,
-    STEP_1
+  const stakeholderId = useSelector(getStakeholdersIds)[index].id;
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+    `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
+    stakeHoldersSteps
   );
-  const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   const handleContinue = event => () =>
     sendProspectToAPI(NEXT, event).then(
@@ -64,9 +63,7 @@ const StakeholderStepperComponent = ({
           setFillStakeholder(index, true);
           showAddButton();
         }
-        isEditInProgress
-          ? handleSetStep()
-          : handleSetNextStep(activeStep, activeStep !== stakeHoldersSteps.length);
+        isEditInProgress ? handleSetStep() : handleSetNextStep(activeStep);
       },
       () => {}
     );
@@ -121,7 +118,7 @@ const StakeholderStepperComponent = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={activeStep === item.step}
-            isFilled={availableSteps.some(step => step.id === item.step && step.isCompleted)}
+            isFilled={availableSteps.some(step => step.step === item.step && step.isCompleted)}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}

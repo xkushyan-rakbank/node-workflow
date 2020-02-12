@@ -6,7 +6,6 @@ import {
 } from "../actions/completedSteps";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 import { COMPANY_SIGNATORY_ID } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
-import { STEP_STATUS } from "../../constants";
 
 export const initialState = [];
 
@@ -16,11 +15,9 @@ const completedSteps = (state = initialState, action) => {
       return state.map(step => {
         if (step.flowId === action.payload.flowId) {
           if (step.step === action.payload.step) {
-            return { ...step, status: action.payload.status };
+            return { ...step, ...action.payload.status };
           }
-          return step.status === STEP_STATUS.ACTIVE
-            ? { ...step, status: STEP_STATUS.COMPLETED }
-            : step;
+          return step.isActive ? { ...step, isActive: false } : step;
         }
         return step;
       });

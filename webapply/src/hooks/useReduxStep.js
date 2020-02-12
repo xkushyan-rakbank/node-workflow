@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import { setStepStatus, setInitialSteps } from "../store/actions/completedSteps";
-import { STEP_STATUS } from "../constants";
 
 export const useReduxStep = (flowId, steps) => {
   const dispatch = useDispatch();
@@ -9,8 +8,7 @@ export const useReduxStep = (flowId, steps) => {
   const availableSteps = useSelector(state =>
     state.completedSteps.filter(item => item.flowId === flowId)
   );
-  const { step: activeStep = null } =
-    availableSteps.find(step => step.status === STEP_STATUS.ACTIVE) || {};
+  const { step: activeStep = null } = availableSteps.find(step => step.isActive) || {};
 
   if (!availableSteps.length) {
     dispatch(
@@ -20,10 +18,18 @@ export const useReduxStep = (flowId, steps) => {
             return {
               flowId,
               step: step.step,
-              status: STEP_STATUS.ACTIVE
+              isActive: true,
+              isCompleted: false,
+              isAvailable: false
             };
           }
-          return { flowId, step: step.step };
+          return {
+            flowId,
+            step: step.step,
+            isActive: true,
+            isCompleted: false,
+            isAvailable: false
+          };
         })
       )
     );
@@ -32,22 +38,20 @@ export const useReduxStep = (flowId, steps) => {
   const handleSetNextStep = step => {
     const nextStep = step + 1;
 
-    dispatch(setStepStatus(flowId, step, STEP_STATUS.COMPLETED));
+    dispatch(
+      setStepStatus(flowId, step, { isActive: false, isCompleted: true, isAvailable: true })
+    );
 
-    if (nextStep < steps.length) {
-      dispatch(setStepStatus(flowId, nextStep, STEP_STATUS.ACTIVE));
+    if (step < steps.length) {
+      dispatch(setStepStatus(flowId, nextStep, { isActive: true }));
     }
   };
 
   const handleSetStep = nextStep => {
     if (
-      availableSteps.some(
-        step =>
-          step.step === nextStep &&
-          (step.status === STEP_STATUS.COMPLETED || step.status === STEP_STATUS.AVAILABLE)
-      )
+      availableSteps.some(step => step.step === nextStep && (step.isCompleted || step.isAvailable))
     ) {
-      dispatch(setStepStatus(flowId, nextStep, STEP_STATUS.ACTIVE));
+      dispatch(setStepStatus(flowId, nextStep, { isActive: true }));
     }
   };
 
