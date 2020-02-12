@@ -47,8 +47,8 @@ const CustomCheckbox = props => (
   />
 );
 
-const pathDebitCardApplied = `prospect.accountInfo[${INITIAL_INDEX}].debitCardApplied`;
-const pathChequeBookApplied = `prospect.accountInfo[${INITIAL_INDEX}].chequeBookApplied`;
+const pathDebitCardApplied = "prospect.accountInfo[0].debitCardApplied";
+const pathChequeBookApplied = "prospect.accountInfo[0].chequeBookApplied";
 
 export const ChannelsComponent = ({
   isHasSignatories,
