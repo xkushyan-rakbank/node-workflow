@@ -17,11 +17,12 @@ const ChatOperationTypes = Object.freeze({
   ParticipantJoined: "ParticipantJoined",
   TypingStarted: "TypingStarted",
   TypingStopped: "TypingStopped",
-  ParticipantLeft: "ParticipantLeft"
+  ParticipantLeft: "ParticipantLeft",
+  UpdateData: "updateData"
 });
 
 export const agentEvents = Object.freeze({
-  LOGIN: "LOGIN"
+  "#ENABLE#AUTH#BUTTON#": "#ENABLE#AUTH#BUTTON#"
 });
 
 export const UserTypes = Object.freeze({
@@ -47,10 +48,43 @@ export class GenesysChat {
     this.userInfo = {};
     this.eventsCallback = "";
     this.messagesCallback = "";
+    this.connectedCallback = "";
 
     this.configureChat();
   }
 
+  get userData() {
+    const {
+      InitiatedCustomerName,
+      InitiatedCustomerMobile,
+      AuthenticatedCustomerName,
+      AuthenticatedCustomerMobile,
+      EmailAddress,
+      isAuth = false,
+      message,
+      CIF
+    } = this.userInfo;
+
+    return {
+      key1: "v1",
+      key2: "v2",
+      InitiatedCustomerName,
+      InitiatedCustomerMobile,
+      AuthenticatedCustomerName,
+      AuthenticatedCustomerMobile,
+      LastName: AuthenticatedCustomerName || InitiatedCustomerName,
+      PhoneNumber: AuthenticatedCustomerMobile || InitiatedCustomerMobile,
+      EmailAddress,
+      FinalAuthenticationStatus: isAuth ? "Successfully" : "Error",
+      message,
+      ProductCategory: "RBD-CON", // TODO Should be another for Islamic accounts
+      IsAuth: isAuth ? "Y" : "N",
+      ChannelID: "Digital 2.0",
+      OsType: "iOS",
+      CIF,
+      FinalAuthenticationDateTime: new Date()
+    };
+  }
   /**
    * Sets up basic cometD configuration parameters.
    */
@@ -70,34 +104,98 @@ export class GenesysChat {
    *  call back type is specified as any because response coming from the cometd plugin file.
    */
 
-  initChat = userInfo => {
+  initChat = (userInfo, callback) => {
     // Handshake with the server.
-    if (this.cometD.getStatus() !== connectedStatus) {
-      this.handshake = this.cometD.handshake(h => {
-        if (h.successful) {
-          this.subscribeToChannel();
-        } else {
-          console.warn("hanshake failure: ", h);
-        }
-      });
+    return new Promise((resolve, reject) => {
+      if (this.cometD.getStatus() !== connectedStatus) {
+        this.userInfo = userInfo;
+        this.connectedCallback = callback;
+        this.initiateHandshake();
+        resolve();
+      } else {
+        reject({ message: "Chat already created!" });
+      }
+    });
+  };
 
-      this.userInfo = userInfo;
-    }
+  initiateHandshake = () => {
+    return new Promise(
+      (resolve, reject) =>
+        (this.handshake = this.cometD.handshake(h => {
+          if (h.successful) {
+            this.subscribeToChannel();
+            resolve(h);
+          } else {
+            reject({ message: h.failure.reason });
+          }
+        }))
+    );
   };
 
   subscribeToChannel = () => {
-    this.subsctiption = this.cometD.subscribe(
-      chatChannel,
-      messages => {
-        if (messages.data.secureKey !== undefined) {
-          this.secureKey = messages.data.secureKey;
+    return new Promise((resolve, reject) => {
+      this.subsctiption = this.cometD.subscribe(
+        chatChannel,
+        messages => {
+          if (messages.data.secureKey !== undefined) {
+            this.secureKey = messages.data.secureKey;
+          }
+
+          if (has(messages, "errors")) {
+            reject(messages.errors);
+          } else {
+            this.onReceiveData(messages);
+            resolve(messages);
+          }
+        },
+        this.sendChatRequest
+      );
+    });
+  };
+
+  updateUserData = userData => {
+    this.userInfo = userData;
+    const updateChangeData = {
+      operation: ChatOperationTypes.UpdateData,
+      userData: this.userData,
+      secureKey: this.secureKey
+    };
+
+    return new Promise((resolve, reject) => {
+      this.cometD.publish(chatChannel, updateChangeData, publishResponse => {
+        if (publishResponse.successful) {
+          resolve(publishResponse);
+        } else {
+          reject(publishResponse);
         }
-        this.errorHandler(messages)
-          .then(this.onReceiveData)
-          .catch(error => console.warn("Error: ", error));
-      },
-      this.onSubscribeStatus
-    );
+      });
+    });
+  };
+
+  sendChatRequest = subscribeReply => {
+    const requestChatData = {
+      operation: ChatOperationTypes.RequestChat,
+      firstName: " ",
+      lastName: this.userInfo.AuthenticatedCustomerName || this.userInfo.InitiatedCustomerName,
+      subject: this.userInfo.selectedSubject,
+      userData: this.userData,
+      auth: {
+        username: "genesys",
+        password: "genesys"
+      }
+    };
+
+    return new Promise((resolve, reject) => {
+      if (subscribeReply.successful)
+        this.cometD.publish(chatChannel, requestChatData, response => {
+          if (response.successful) {
+            resolve(response);
+          } else {
+            reject(response);
+          }
+        });
+      else reject({ message: "Subscribe is unsuccessful" });
+    });
   };
 
   unSubscribe = () => {
@@ -118,14 +216,16 @@ export class GenesysChat {
       hour: "2-digit",
       minute: "2-digit"
     });
+    const name = from.nickname && from.nickname.replace(/^\s*/, "");
 
     const messageObject = {
       message,
       utcTime,
       type: from.type,
       id: index,
-      name: from.nickname
+      name
     };
+
     this.chatMessages.push(messageObject);
     callSafely(this.messagesCallback, [...this.chatMessages]);
   };
@@ -145,25 +245,34 @@ export class GenesysChat {
     this.lastPosition = dataFromServer.nextPosition;
     if (has(dataFromServer, "messages")) {
       dataFromServer.messages.forEach(message => {
-        if (has(agentEvents, message.text)) {
+        if (has(agentEvents, message.text) && message.from.type === UserTypes.Agent) {
           callSafely(this.eventsCallback, message.text);
         } else {
-          // eslint-disable-next-line default-case
           switch (message.type) {
             case ChatOperationTypes.IncomingMessage: {
               this.addMessage({ ...message });
               break;
             }
             case ChatOperationTypes.ParticipantJoined: {
-              if (
-                message.from.type === UserTypes.Agent ||
-                message.from.type === UserTypes.External
-              ) {
-                const updatedMessage = {
+              if (message.from.type === UserTypes.Agent) {
+                this.addMessage({
+                  ...message,
                   text: "Agent " + message.from.nickname + " joined the chat"
-                };
-
-                this.addMessage({ ...message, ...updatedMessage });
+                });
+              }
+              if (message.from.type === UserTypes.Client) {
+                this.addMessage({
+                  ...message,
+                  from: { type: UserTypes.External },
+                  text: message.from.nickname + " has joined the Chat"
+                });
+                this.addMessage({
+                  ...message,
+                  from: { type: UserTypes.External },
+                  index: 0,
+                  text: "Welcome to RAKBANK live chat!"
+                });
+                callSafely(this.connectedCallback);
               }
 
               break;
@@ -191,7 +300,6 @@ export class GenesysChat {
         }
       });
     } else {
-      // eslint-disable-next-line default-case
       switch (dataFromServer.operation) {
         case ChatOperationTypes.SendMessage:
         case ChatOperationTypes.RequestChat: {
@@ -201,27 +309,6 @@ export class GenesysChat {
         }
       }
     }
-  };
-
-  sendChatRequest = () => {
-    const requestChatData = {
-      operation: ChatOperationTypes.RequestChat,
-      firstName: this.userInfo.name,
-      lastName: this.userInfo.name,
-      subject: this.userInfo.selectedSubject,
-      userData: {
-        key1: "v1",
-        key2: "v2",
-        message: this.userInfo.message,
-        ChannelID: "WBA"
-      },
-      auth: {
-        username: "genesys",
-        password: "genesys"
-      }
-    };
-
-    this.cometD.publish(chatChannel, requestChatData);
   };
 
   /**
@@ -277,6 +364,8 @@ export class GenesysChat {
     };
     this.cometD.publish(chatChannel, disconnectData);
     this.unSubscribe();
+    this.cometD.disconnect();
+    GenesysChat.chatInstance = undefined;
   };
 
   requestNotifications = () => {
