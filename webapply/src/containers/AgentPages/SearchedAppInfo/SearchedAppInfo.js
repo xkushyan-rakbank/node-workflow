@@ -20,8 +20,7 @@ export const SearchedAppInfoComponent = ({
   retrieveDocDetails,
   getProspectInfo,
   setIsApplyEditApplication,
-  prospectInfo,
-  screeningResults: { screeningError }
+  prospectInfo
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
@@ -55,8 +54,7 @@ export const SearchedAppInfoComponent = ({
     item => item.prospectId === match.params.id
   );
 
-  const isDisabled =
-    get(searchResult, "status.reasonCode") === STATUS_LOCKED || screeningError.error;
+  const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
@@ -97,6 +95,7 @@ export const SearchedAppInfoComponent = ({
           disabled={isDisabled}
         />
       </div>
+
       <ConfirmDialog
         isOpen={isDisplayConfirmDialog}
         handleConfirm={confirmHandler}
