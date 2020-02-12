@@ -9,7 +9,7 @@ import chatIcon from "./../../assets/webchat/black.svg";
 
 import { useStyles } from "./styled";
 
-const WebChatComponent = lazy(() => import("./componets/WebChat"));
+const WebChatComponent = lazy(() => import("./components/WebChat"));
 
 const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
