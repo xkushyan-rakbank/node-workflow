@@ -4,6 +4,8 @@ import { Grid } from "@material-ui/core";
 import { Input, AutoSaveField as Field } from "../../../../../components/Form";
 import { InfoTitle } from "../../../../../components/InfoTitle";
 
+import { MAX_NAME_IN_BUSINESS_LENGTH } from "../../../../../utils/validation";
+
 import { useStyles } from "./styled";
 
 export const SignatoriesList = ({ stakeholders }) => {
@@ -36,6 +38,11 @@ export const SignatoriesList = ({ stakeholders }) => {
                       placeholder="Name on business debit card"
                       classes={{ formControlRoot: classes.rootInput }}
                       component={Input}
+                      InputProps={{
+                        inputProps: {
+                          maxLength: MAX_NAME_IN_BUSINESS_LENGTH
+                        }
+                      }}
                     />
                   </Grid>
                 </Grid>
