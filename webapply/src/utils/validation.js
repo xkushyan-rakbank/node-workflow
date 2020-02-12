@@ -7,6 +7,7 @@ export const UAE_MOBILE_PHONE_REGEX = /^[0-9]{9}$/;
 export const UAE_LANDLINE_PHONE_REGEX = /^[0-9]{8}$/;
 export const MIN_NON_UAE_PHONE_LENGTH = 4;
 export const MAX_NON_UAE_PHONE_LENGTH = 22;
+export const MAX_NAME_IN_BUSINESS_LENGTH = 19;
 
 export const NUMBER_REGEX = /^[0-9]*$/;
 
