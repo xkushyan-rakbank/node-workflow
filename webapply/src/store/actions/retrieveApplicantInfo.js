@@ -1,4 +1,4 @@
-import { WAIT_FOR_ACTION, ERROR_ACTION } from "redux-wait-for-action";
+import { WAIT_FOR_ACTION, ERROR_ACTION, CALLBACK_ARGUMENT } from "redux-wait-for-action";
 
 export const RETRIEVE_APPLICANT_INFO = "RETRIEVE_APPLICANT_INFO";
 export const RETRIEVE_APPLICANT_INFO_SUCCESS = "RETRIEVE_APPLICANT_INFO_SUCCESS";
@@ -19,14 +19,15 @@ export const getProspectInfoPromisify = prospectId => {
     type: GET_PROSPECT_INFO_REQUEST,
     [WAIT_FOR_ACTION]: GET_PROSPECT_INFO_SUCCESS,
     [ERROR_ACTION]: GET_PROSPECT_INFO_FAIL,
+    [CALLBACK_ARGUMENT]: ({ payload: { prospect } }) => prospect,
     payload: {
       prospectId
     }
   };
 };
 
-export const getProspectInfoSuccess = () => {
-  return { type: GET_PROSPECT_INFO_SUCCESS };
+export const getProspectInfoSuccess = prospect => {
+  return { type: GET_PROSPECT_INFO_SUCCESS, payload: { prospect } };
 };
 
 export const getProspectInfoFail = error => {

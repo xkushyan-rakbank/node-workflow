@@ -10,6 +10,7 @@ import {
   SET_PROSPECT,
   SAVE_PROSPECT_MODEL
 } from "../actions/appConfig";
+import { LOGOUT } from "../actions/loginForm";
 import { LOGIN_INFO_FORM_SUCCESS } from "../actions/loginForm";
 
 export const initialState = {
@@ -85,6 +86,24 @@ const appConfigReducer = (state = initialState, action) => {
       return {
         ...state,
         prospectModel: action.prospectModel
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        login: {
+          userName: "",
+          password: ""
+        },
+        searchInfo: {
+          ...state.searchInfo,
+          fname: "",
+          countryCode: "",
+          mobileNo: "",
+          leadNumber: "",
+          tradeLicenseNo: "",
+          email: ""
+        },
+        prospect: {}
       };
     default:
       return state;
