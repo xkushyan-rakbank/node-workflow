@@ -31,7 +31,7 @@ export const CompanyDetails = ({ prospectInfo = {} }) => {
         <div className={classes.errorMsg}>{errorMsgs.APPLICANT_DETAIL_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.RAKTRACK_LEAD_REFERENCE_TITLE}</h4>
-      {get(prospectInfo, "applicantInfo.leadNumber") ? (
+      {get(prospectInfo, "organizationInfo.leadNumber") ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>{prospectInfo.organizationInfo.leadNumber}</div>
