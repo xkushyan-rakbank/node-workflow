@@ -7,15 +7,14 @@ import {
   getIsEditableStatusSearchInfo,
   getSearchResult
 } from "../../../store/selectors/searchProspect";
-import { getProspect, getSendProspectToAPIInfo } from "../../../store/selectors/appConfig";
+import { getProspect } from "../../../store/selectors/appConfig";
 import { SearchedAppInfoComponent } from "./SearchedAppInfo";
 import { setIsApplyEditApplication } from "../../../store/actions/searchProspect";
 
 const mapStateToProps = state => ({
   searchResults: getSearchResult(state),
   isApplyEditApplication: getIsEditableStatusSearchInfo(state),
-  prospectInfo: getProspect(state),
-  screeningResults: getSendProspectToAPIInfo(state)
+  prospectInfo: getProspect(state)
 });
 
 const mapDispatchToProps = {
