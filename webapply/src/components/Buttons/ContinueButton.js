@@ -7,7 +7,7 @@ const styles = {
     width: "145px",
     height: "40px",
     borderRadius: "21px ",
-    backgroundColor: "#000",
+    backgroundColor: "#3b3a3a",
     fontFamily: "Open Sans, sans-serif",
     lineHeight: "normal",
     letterSpacing: "normal",

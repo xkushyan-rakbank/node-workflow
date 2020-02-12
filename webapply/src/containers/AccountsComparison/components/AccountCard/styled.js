@@ -19,6 +19,7 @@ export const useStyles = makeStyles(theme => ({
       justifyContent: "space-around"
     },
     [theme.breakpoints.only("xs")]: {
+      marginTop: 0,
       marginLeft: -16,
       marginRight: -16,
       paddingLeft: 0,

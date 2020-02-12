@@ -40,6 +40,9 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "8px",
     position: "relative",
     margin: "40px 0 30px 0",
+    [theme.breakpoints.only("xs")]: {
+      marginTop: 20
+    },
     "& th, & td": {
       borderBottom: "none",
       zIndex: "1"

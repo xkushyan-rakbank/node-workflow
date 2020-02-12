@@ -19,7 +19,7 @@ const styles = {
     fontSize: "18px",
     textTransform: "none",
     padding: "0 32px",
-    backgroundColor: "#000",
+    backgroundColor: "#3b3a3a",
     "& svg": {
       verticalAlign: "top",
       marginLeft: 18,
