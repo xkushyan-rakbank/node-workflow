@@ -7,9 +7,9 @@ const blobImages = {
   [STANDART]: require("../../assets/images/bg-blobs/bg-blob-red.svg"),
   [`${STANDART}S`]: require("../../assets/images/bg-blobs/bg-blob-s-red.svg"),
   [`${STANDART}M`]: require("../../assets/images/bg-blobs/bg-blob-m-red.svg"),
-  [ELITE]: require("../../assets/images/bg-blobs/bg-blob-brown.svg"),
-  [`${ELITE}S`]: require("../../assets/images/bg-blobs/bg-blob-s-brown.svg"),
-  [`${ELITE}M`]: require("../../assets/images/bg-blobs/bg-blob-m-brown.svg"),
+  [ELITE]: require("../../assets/images/bg-blobs/elite-web-blob.svg"),
+  [`${ELITE}S`]: require("../../assets/images/bg-blobs/elite-mobile-blob_small.svg"),
+  [`${ELITE}M`]: require("../../assets/images/bg-blobs/elite-mobile-blob_medium.svg"),
   [ISLAMIC]: require("../../assets/images/bg-blobs/bg-blob-green.svg"),
   [`${ISLAMIC}S`]: require("../../assets/images/bg-blobs/bg-blob-s-green.svg"),
   [`${ISLAMIC}M`]: require("../../assets/images/bg-blobs/bg-blob-m-green.svg")
