@@ -38,16 +38,15 @@
       window['adrum-start-time'] = new Date().getTime();
       (function(config, hostname) {
         config.appKey = 'EUM-AAD-CXF';
-        config.adrumExtUrlHttps = `https://${hostname}%PUBLIC_URL%/static/js`;
+        config.adrumExtUrlHttps = `https://${hostname}%PUBLIC_URL%/static/vendor`;
         config.beaconUrlHttps = 'https://conv.rakbankonline.ae:7002';
         config.xd = { enable: true };
         config.spa = {
           spa2: true,
         };
-        console.log({config});
       })(window['adrum-config'] || (window['adrum-config'] = {}), window.location.hostname);
     </script>
-    <script type="text/javascript" src="%PUBLIC_URL%/static/js/adrum.js" defer></script>
+    <script type="text/javascript" src="%PUBLIC_URL%/static/vendor/adrum.js" defer></script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
