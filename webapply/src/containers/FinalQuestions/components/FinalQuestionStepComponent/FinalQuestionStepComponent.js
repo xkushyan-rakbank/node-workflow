@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
-import { SIGNATORY_INITIAL_INDEX, NEXT, STEP_1 } from "../SignatorySummaryCard/constants";
+import { SIGNATORY_INITIAL_INDEX, NEXT } from "../SignatorySummaryCard/constants";
 import { useReduxStep } from "../../../../hooks/useReduxStep";
 
 export const FinalQuestionStepComponent = ({
@@ -10,14 +10,16 @@ export const FinalQuestionStepComponent = ({
   stepsArray,
   page
 }) => {
-  const [availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(page, STEP_1);
-  const { id: activeStep = null } = availableSteps.find(step => step.isActive) || {};
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+    page,
+    stepsArray
+  );
 
   const handleContinue = useCallback(
     eventName => () => {
       sendProspectToAPI(NEXT, eventName).then(
         () => {
-          handleSetNextStep(activeStep, activeStep !== stepsArray.length);
+          handleSetNextStep(activeStep);
           if (activeStep === stepsArray.length) {
             const completedIndex = index !== null ? index + 1 : SIGNATORY_INITIAL_INDEX;
             handleFinalStepContinue(completedIndex, index);
@@ -41,7 +43,7 @@ export const FinalQuestionStepComponent = ({
       title={item.title}
       infoTitle={item.infoTitle}
       isActiveStep={activeStep === item.step}
-      isFilled={availableSteps.some(step => step.id === item.step && step.isCompleted)}
+      isFilled={availableSteps.some(step => step.step === item.step && step.isCompleted)}
       handleClick={createSetStepHandler(item.step)}
       handleContinue={handleContinue(item.eventName)}
       stepForm={item.component}

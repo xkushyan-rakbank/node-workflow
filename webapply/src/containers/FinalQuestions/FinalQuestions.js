@@ -7,14 +7,9 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { finalQuestionsSteps } from "./components/CompanySummaryCard/constants";
-import {
-  getCompletedSignatoriesSteps,
-  getCompletedCompanySteps
-} from "../../store/selectors/appConfig";
+import { getSignatoriesSteps, getCompanySteps } from "../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
-import { signatoriesSteps } from "./components/SignatorySummaryCard/constants";
 
 export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
@@ -22,8 +17,8 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const [isCompanyExpanded, setIsCompanyExpanded] = useState(false);
   const classes = useStyles();
 
-  const completedCompanySteps = useSelector(getCompletedCompanySteps).steps;
-  const completedSignatoriesSteps = useSelector(getCompletedSignatoriesSteps);
+  const companySteps = useSelector(getCompanySteps);
+  const signatoriesSteps = useSelector(getSignatoriesSteps);
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
@@ -48,10 +43,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         <CompanySummaryCard
           switchExpandedMargin={switchExpandedMargin}
           handleFinalStepContinue={handleFinalStepContinue}
-          isCompanyStepsCompleted={
-            finalQuestionsSteps.length === completedCompanySteps.length &&
-            !completedCompanySteps.some(item => !item.isCompleted)
-          }
+          isCompanyStepsCompleted={!companySteps.some(item => !item.isCompleted)}
           isCompanyExpanded={isCompanyExpanded}
           setIsCompanyExpanded={setIsCompanyExpanded}
         />
@@ -65,7 +57,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
             index={index}
             setExpandedSignatoryIndex={setExpandedSignatoryIndex}
             handleFinalStepContinue={handleFinalStepContinue}
-            completedSignatoriesSteps={completedSignatoriesSteps}
+            allSignatoriesSteps={signatoriesSteps}
           />
         ))}
       </div>
@@ -73,13 +65,8 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         <BackLink path={routes.stakeholdersInfo} />
         <SubmitButton
           disabled={
-            finalQuestionsSteps.length !== completedCompanySteps.length ||
-            completedCompanySteps.some(item => !item.isCompleted) ||
-            completedSignatoriesSteps.some(
-              signatory =>
-                signatory.steps.length !== signatoriesSteps.length ||
-                signatory.steps.some(item => !item.isCompleted)
-            )
+            companySteps.some(step => !step.isCompleted) ||
+            signatoriesSteps.some(step => !step.isCompleted)
           }
           handleClick={goToUploadDocument}
           label="Next Step"

@@ -21,12 +21,12 @@ export const SignatorySummaryCardComponent = ({
   expandedSignatoryIndex,
   setExpandedSignatoryIndex,
   handleFinalStepContinue,
-  completedSignatoriesSteps
+  allSignatoriesSteps
 }) => {
   const stakeholdersIds = useSelector(getStakeholdersIds);
-  const completedSteps = completedSignatoriesSteps.find(item => {
-    return item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index].id;
-  }).steps;
+  const completedSteps = allSignatoriesSteps.filter(
+    item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index].id
+  );
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);

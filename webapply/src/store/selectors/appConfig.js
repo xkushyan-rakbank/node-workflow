@@ -34,12 +34,10 @@ export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBan
 
 export const getAccountType = state => getApplicationInfo(state).accountType;
 
-export const getCompletedCompanySteps = state =>
-  state.completedSteps.find(item => item.flowId.includes(FINAL_QUESTIONS_COMPANY_ID)) || {
-    steps: []
-  };
+export const getCompanySteps = state =>
+  state.completedSteps.filter(item => item.flowId === FINAL_QUESTIONS_COMPANY_ID) || [];
 
-export const getCompletedSignatoriesSteps = state =>
+export const getSignatoriesSteps = state =>
   state.completedSteps.filter(item => item.flowId.includes(COMPANY_SIGNATORY_ID)) || [];
 
 export const getProspectId = state => getGeneralInfo(state).prospectId;
