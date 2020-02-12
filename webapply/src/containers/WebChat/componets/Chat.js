@@ -28,14 +28,24 @@ class Chat extends PureComponent {
   };
 
   get userInfo() {
-    const { name = "", mobileNumber = "", email = "", subject, message } = this.props;
+    const {
+      InitiatedCustomerName = "",
+      InitiatedCustomerMobile = "",
+      EmailAddress = "",
+      isAuth,
+      CIF,
+      subject,
+      message
+    } = this.props;
 
     return {
-      name,
-      mobileNumber,
+      InitiatedCustomerName,
+      InitiatedCustomerMobile,
       selectedSubject: subject,
-      email,
-      message
+      EmailAddress,
+      message,
+      isAuth,
+      CIF
     };
   }
 
