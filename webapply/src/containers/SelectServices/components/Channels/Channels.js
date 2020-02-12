@@ -14,7 +14,6 @@ import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 import { ICONS, Icon } from "../../../../components/Icons/Icon";
 import { Divider } from "../Divider";
-import { INITIAL_INDEX } from "../../constants";
 import { ContexualHelp } from "../../../../components/Notifications";
 
 import { useStyles } from "./styled";
@@ -147,7 +146,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="eStatements"
-            path={`prospect.accountInfo[${INITIAL_INDEX}].eStatements`}
+            path={"prospect.accountInfo[0].eStatements"}
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
@@ -159,7 +158,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="mailStatements"
-            path={`prospect.accountInfo[${INITIAL_INDEX}].mailStatements`}
+            path={"prospect.accountInfo[0].mailStatements"}
             label="I want paper statements (monthly charges apply)"
             classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {
