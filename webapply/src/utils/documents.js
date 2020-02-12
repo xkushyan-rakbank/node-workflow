@@ -38,4 +38,4 @@ export const createDocumentMapper = (documentType, additionalProps) => doc => {
 };
 
 export const appendDocumentKey = docs =>
-  docs.map(doc => (doc.documentKey === null ? { ...doc, documentKey: nanoid() } : doc));
+  docs.map(doc => ({ ...doc, documentKey: doc.documentKey || nanoid() }));
