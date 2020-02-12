@@ -20,7 +20,8 @@ export const SearchedAppInfoComponent = ({
   retrieveDocDetails,
   getProspectInfo,
   setIsApplyEditApplication,
-  prospectInfo
+  prospectInfo,
+  screeningResults: { screeningError }
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
@@ -54,7 +55,8 @@ export const SearchedAppInfoComponent = ({
     item => item.prospectId === match.params.id
   );
 
-  const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED;
+  const isDisabled =
+    get(searchResult, "status.reasonCode") === STATUS_LOCKED || screeningError.error;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
