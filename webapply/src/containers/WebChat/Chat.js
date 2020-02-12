@@ -54,6 +54,7 @@ const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
             name={name}
             mobileNumber={`${countryCode}${mobileNo}`}
             email={email}
+            isAuth={false}
           />
         </Suspense>
       </div>
