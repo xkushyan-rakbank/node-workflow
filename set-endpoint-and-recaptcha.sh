@@ -11,7 +11,9 @@ VAR_ENCRYPTION=$2 # Create variable, equal to first script parameter
 if [ "$VAR_ENCRYPTION" == "Y" ]; # Check if parameter is empty - set default value
 then
 echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
+echo 'REACT_APP_ENCRYPTION_ENABLE=N' >> webapply/.env.production
 else
 echo 'REACT_APP_RECAPTCHA_ENABLE=N' >> webapply/.env.production
+echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production
 fi
 cat webapply/.env.production
