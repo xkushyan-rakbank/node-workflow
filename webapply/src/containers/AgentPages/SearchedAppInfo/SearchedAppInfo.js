@@ -82,6 +82,7 @@ export const SearchedAppInfoComponent = ({
                 hideContinue={true}
                 prospectInfo={prospectInfo}
                 stepForm={item.component}
+                searchResult={searchResult}
               />
             );
           })}
