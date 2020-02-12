@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import cx from "classnames";
 
 import { useStep } from "../../components/StepComponent/useStep";
+import { BackLink } from "../../components/Buttons/BackLink";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
+import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import {
@@ -30,7 +32,8 @@ export const CompanyInfoPage = ({
   fullName,
   organizationInfo: { companyName },
   setScreeningError,
-  isRegisteredInUAE
+  isRegisteredInUAE,
+  isComeFromROScreens
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
@@ -86,6 +89,7 @@ export const CompanyInfoPage = ({
       </FormCard>
 
       <div className="linkContainer">
+        {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
         <ContainedButton
           style={{ padding: "0 32px", borderRadius: "28px" }}
           justify="flex-end"
@@ -103,11 +107,13 @@ const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
   fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state),
-  isRegisteredInUAE: getIsRegisteredInUAE(state)
+  isRegisteredInUAE: getIsRegisteredInUAE(state),
+  isComeFromROScreens: getIsEditableStatusSearchInfo(state)
 });
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
+
   setScreeningError
 };
 
