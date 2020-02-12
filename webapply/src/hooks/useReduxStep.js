@@ -26,7 +26,7 @@ export const useReduxStep = (flowId, steps) => {
           return {
             flowId,
             step: step.step,
-            isActive: true,
+            isActive: false,
             isCompleted: false,
             isAvailable: false
           };

@@ -10,7 +10,7 @@ import {
   SET_FILL_STAKEHOLDER,
   SET_EDIT_STAKEHOLDER
 } from "../actions/stakeholders";
-import { addSignatory, removeSignatory } from "../actions/completedSteps";
+import { removeSignatory } from "../actions/completedSteps";
 import { setConfig } from "../actions/appConfig";
 
 function* createNewStakeholderSaga() {
@@ -27,7 +27,6 @@ function* createNewStakeholderSaga() {
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
 
   yield put(updateStakeholdersIds(stakeholdersIds));
-  yield put(addSignatory(stakeholderId));
   yield put(changeEditableStakeholder(editableStakeholder));
   yield put(setConfig(config));
 }

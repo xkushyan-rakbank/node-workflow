@@ -1,11 +1,4 @@
-import {
-  SET_STEP_STATUS,
-  SET_INITIAL_STEPS,
-  ADD_SIGNATORY,
-  REMOVE_SIGNATORY
-} from "../actions/completedSteps";
-import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
-import { COMPANY_SIGNATORY_ID } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
+import { SET_STEP_STATUS, SET_INITIAL_STEPS, REMOVE_SIGNATORY } from "../actions/completedSteps";
 
 export const initialState = [];
 
@@ -23,12 +16,6 @@ const completedSteps = (state = initialState, action) => {
       });
     case SET_INITIAL_STEPS:
       return [...state, ...action.payload.steps];
-    case ADD_SIGNATORY:
-      return [
-        ...state,
-        { flowId: `${COMPANY_SIGNATORY_ID}${action.signatoryId}`, steps: [] },
-        { flowId: `${COMPANY_STAKEHOLDER_ID}${action.signatoryId}`, steps: [] }
-      ];
     case REMOVE_SIGNATORY:
       return state.filter(flow => !flow.flowId.includes(action.signatoryId));
     default:
