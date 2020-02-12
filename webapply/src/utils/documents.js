@@ -1,5 +1,6 @@
 import differenceBy from "lodash/differenceBy";
 import omit from "lodash/omit";
+import nanoid from "nanoid";
 
 export const concatCompanyDocs = (existDocs, incomeDocs) => {
   const companyDocsDiff = differenceBy(incomeDocs, existDocs, "documentType");
@@ -35,3 +36,6 @@ export const createDocumentMapper = (documentType, additionalProps) => doc => {
 
   return doc;
 };
+
+export const appendDocumentKey = docs =>
+  docs.map(doc => (doc.documentKey === null ? { ...doc, documentKey: nanoid() } : doc));
