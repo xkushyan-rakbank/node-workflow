@@ -18,11 +18,7 @@ export const useStyles = makeStyles({
   },
   container: {
     top: "18px",
-    right: "-110px",
-    "@media only screen and (max-width: 959px)": {
-      top: "63px",
-      right: "12px"
-    }
+    right: "-110px"
   },
   infoTitle: {
     color: "#86868b"

@@ -11,6 +11,7 @@ import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./
 import { useStep } from "../../../components/StepComponent/useStep";
 
 import { useStyles } from "./styled";
+import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
 
 export const SearchedAppInfoComponent = ({
   searchResults,
@@ -19,7 +20,6 @@ export const SearchedAppInfoComponent = ({
   retrieveDocDetails,
   getProspectInfo,
   setIsApplyEditApplication,
-  displayScreenBasedOnViewId,
   prospectInfo
 }) => {
   const classes = useStyles();
@@ -33,16 +33,18 @@ export const SearchedAppInfoComponent = ({
   useEffect(() => {
     updateProspectId(match.params.id);
     getProspectInfo(match.params.id);
-  }, [updateProspectId, retrieveDocDetails, match.params.id]);
+  }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfo]);
 
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
   }, [setIsDisplayConfirmDialog]);
 
+  const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
+
   const confirmHandler = useCallback(() => {
     setIsApplyEditApplication({ isApplyEditApplication: true });
-    displayScreenBasedOnViewId();
-  }, [setIsApplyEditApplication, displayScreenBasedOnViewId]);
+    pushDisplayScreenToHistory();
+  }, [setIsApplyEditApplication, pushDisplayScreenToHistory]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
@@ -51,8 +53,9 @@ export const SearchedAppInfoComponent = ({
   const searchResult = (searchResults.searchResult || []).find(
     item => item.prospectId === match.params.id
   );
+  const isScreeningInfo = get(searchResult, "organizationInfo.screeningInfo");
 
-  const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED;
+  const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED || !isScreeningInfo;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
@@ -79,6 +82,7 @@ export const SearchedAppInfoComponent = ({
                 hideContinue={true}
                 prospectInfo={prospectInfo}
                 stepForm={item.component}
+                searchResult={searchResult}
               />
             );
           })}
@@ -93,6 +97,7 @@ export const SearchedAppInfoComponent = ({
           disabled={isDisabled}
         />
       </div>
+
       <ConfirmDialog
         isOpen={isDisplayConfirmDialog}
         handleConfirm={confirmHandler}

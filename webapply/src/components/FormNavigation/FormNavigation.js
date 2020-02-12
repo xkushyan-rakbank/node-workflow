@@ -6,31 +6,36 @@ import Typography from "@material-ui/core/Typography";
 import { FormNavigationStep } from "../FormNavigationStep";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
+import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
-import { accountNames, formStepper, searchProspectStepper } from "../../constants";
+import { formStepper, searchProspectStepper } from "../../constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
+import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
-export const FormNavigationComponent = ({
-  islamicBanking,
-  accountType,
-  isApplyEditApplication
-}) => {
+export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   const {
     location: { pathname }
   } = useHistory();
+  const blobColor = useBlobColor();
 
   const getRouteConfig = () =>
     formStepper.find(step => [step.path, step.relatedPath].some(path => pathname === path));
 
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
 
-  const classes = useStyles();
-  const isAccountsComparison = routes.accountsComparison === pathname;
+  const classes = useStyles({
+    color: blobColor,
+    isSmallBg: checkIsShowSmallBg(pathname),
+    isOpen: isSwitcherShow,
+    hasVideo: routes.accountsComparison === pathname
+  });
+
   const isChatVisible =
+    !isApplyEditApplication &&
     pathname.indexOf(agentBaseName) === -1 &&
     ![
       routes.accountsComparison,
@@ -42,23 +47,13 @@ export const FormNavigationComponent = ({
       routes.comeBackLoginVerification
     ].includes(pathname);
 
-  const bgTypeClass = cx({
-    brown: !isAccountsComparison && accountType === accountNames.elite,
-    green: !isAccountsComparison && islamicBanking && accountType !== accountNames.elite
-  });
-
   const toggleSwitcherShow = () => setIsSwitcherShow(!isSwitcherShow);
 
   return (
-    <div
-      className={cx(classes.formNav, classes.formNavBg, bgTypeClass, {
-        "small-bg": checkIsShowSmallBg(pathname),
-        open: isSwitcherShow,
-        "has-video": routes.accountsComparison === pathname
-      })}
-    >
+    <div className={cx(classes.formNav, classes.formNavBg)}>
+      <Header />
       <IslamicBankingSwitcherMobile
-        className={cx(classes.formNavBg, bgTypeClass)}
+        className={classes.formNavBg}
         isSwitcherShow={isSwitcherShow}
         toggleSwitcherShow={toggleSwitcherShow}
       >
@@ -67,7 +62,7 @@ export const FormNavigationComponent = ({
         </Typography>
       </IslamicBankingSwitcherMobile>
       {checkIsShowAccountInfo(pathname) ? (
-        <AccountInfo accountType={accountType} islamicBanking={islamicBanking} />
+        <AccountInfo />
       ) : (
         pathname !== routes.login && (
           <ul>

@@ -13,7 +13,7 @@ import { ReactComponent as emiratesIdConventional } from "../../assets/icons/con
 import { ReactComponent as bankingClockConventional } from "../../assets/icons/conventional/bankingClock.svg";
 import { ReactComponent as companyDocumentsConventional } from "../../assets/icons/conventional/company-documents.svg";
 import { ReactComponent as bankingConventional } from "../../assets/icons/conventional/banking.svg";
-import { ReactComponent as logoConventional } from "../../assets/images/rakbankLogo.svg";
+import { ReactComponent as logoConventional } from "../../assets/images/logo-standart.svg";
 import overviewConventoinal from "../../assets/gif/overview_reg.gif";
 import paperPlaneRegular from "../../assets/gif/paperplane_regular.gif";
 import submittedRegular from "../../assets/gif/submitted_regular.gif";
@@ -38,7 +38,7 @@ import { ReactComponent as passportIslamic } from "../../assets/icons/islamic/pa
 import { ReactComponent as emiratesIdIslamic } from "../../assets/icons/islamic/emirates-id.svg";
 import { ReactComponent as companyDocumentsIslamic } from "../../assets/icons/islamic/company-documents.svg";
 import { ReactComponent as bankingIslamic } from "../../assets/icons/islamic/banking.svg";
-import { ReactComponent as logoIslamic } from "../../assets/images/rakbankLogoIslamic.svg";
+import { ReactComponent as logoIslamic } from "../../assets/images/logo-islamic.svg";
 import { ReactComponent as bankingClockIslamic } from "../../assets/icons/islamic/bankingClockIslamic.svg";
 import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import paperPlaneIslamic from "../../assets/gif/paperplane_islamic.gif";
@@ -61,7 +61,7 @@ import { ReactComponent as passportElite } from "../../assets/icons/elite/passpo
 import { ReactComponent as emiratesIdElite } from "../../assets/icons/elite/emirates-id.svg";
 import { ReactComponent as companyDocumentsElite } from "../../assets/icons/elite/company-documents.svg";
 import { ReactComponent as bankingElite } from "../../assets/icons/elite/banking.svg";
-import { ReactComponent as logoElite } from "../../assets/images/rakbankLogoElite.svg";
+import { ReactComponent as logoElite } from "../../assets/images/logo-elite.svg";
 import { ReactComponent as bankingClockElite } from "../../assets/icons/elite/bankingClockElite.svg";
 import overviewElite from "../../assets/gif/overview_elite.gif";
 import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";

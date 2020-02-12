@@ -13,6 +13,9 @@ export const checkIsShowAccountInfo = pathname =>
   ].includes(pathname);
 
 export const checkIsShowSmallBg = pathname =>
-  [routes.accountsComparison, routes.comeBackLogin, routes.comeBackLoginVerification].includes(
-    pathname
-  );
+  [
+    routes.accountsComparison,
+    routes.comeBackLogin,
+    routes.comeBackLoginVerification,
+    routes.MyApplications
+  ].includes(pathname);

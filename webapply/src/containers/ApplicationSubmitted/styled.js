@@ -1,19 +1,19 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   title: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
     "& img": {
-      width: 120,
-      height: 126,
-      marginBottom: "40px",
-      "@media only screen and (max-width: 1300px)": {
-        width: "85px",
-        height: "auto",
-        marginBottom: "20px"
+      width: 85,
+      height: "auto",
+      marginBottom: 20,
+      [theme.breakpoints.up("lg")]: {
+        width: 120,
+        height: 126,
+        marginBottom: 40
       }
     }
   },
@@ -21,13 +21,11 @@ export const useStyles = makeStyles({
     marginTop: "30px",
     display: "flex",
     justifyContent: "space-between",
-    "@media only screen and (max-width: 1420px)": {
-      flexGrow: 1
-    },
-    "@media only screen and (max-width: 1300px)": {
+    [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
       alignItems: "center",
       marginTop: "10px",
+      flexGrow: 1,
       "& div + div": {
         marginTop: "20px"
       }
@@ -38,7 +36,7 @@ export const useStyles = makeStyles({
     alignItems: "center",
     "& div + div": {
       marginTop: "20px",
-      "@media only screen and (max-width: 991px)": {
+      [theme.breakpoints.only("xs")]: {
         marginTop: "10px"
       }
     }
@@ -48,7 +46,7 @@ export const useStyles = makeStyles({
     flexWrap: "wrap",
     alignItems: "center",
     "& div + div": {
-      "@media only screen and (max-width: 991px)": {
+      [theme.breakpoints.only("xs")]: {
         marginTop: "10px"
       }
     }
@@ -62,14 +60,11 @@ export const useStyles = makeStyles({
     boxSizing: "border-box",
     position: "relative",
     overflow: "hidden",
-    "@media only screen and (max-width: 1420px)": {
-      width: "calc(50% - 10px)"
-    },
-    "@media only screen and (max-width: 1300px)": {
+    [theme.breakpoints.only("sm")]: {
       width: "320px",
       padding: "20px 30px"
     },
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("xs")]: {
       width: "100%",
       padding: "15px 30px"
     },
@@ -100,7 +95,7 @@ export const useStyles = makeStyles({
     zIndex: "-1"
   },
   accountNumberColumn: {
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("xs")]: {
       padding: "5px 30px",
       "& .number": {
         fontSize: "20px"
@@ -108,7 +103,7 @@ export const useStyles = makeStyles({
     }
   },
   accountNumberRow: {
-    "@media only screen and (max-width: 991px)": {
+    [theme.breakpoints.only("xs")]: {
       padding: "5px 30px",
       "& .number": {
         fontSize: "20px"
@@ -123,7 +118,7 @@ export const useStyles = makeStyles({
     height: "1px",
     backgroundColor: "rgba(230, 230, 230, 0.5)",
     margin: "60px 0",
-    "@media only screen and (max-width: 1300px)": {
+    [theme.breakpoints.down("sm")]: {
       margin: "20px 0"
     }
   },
@@ -150,4 +145,4 @@ export const useStyles = makeStyles({
     width: 40,
     height: 48
   }
-});
+}));

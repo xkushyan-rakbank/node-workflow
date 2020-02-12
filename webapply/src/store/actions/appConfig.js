@@ -53,12 +53,8 @@ export const updateActionType = actionType => {
   return { type: UPDATE_ACTION_TYPE, actionType };
 };
 
-export const updateViewId = viewId => {
-  return { type: UPDATE_VIEW_ID, viewId };
-};
-
-export const displayScreenBasedOnViewId = () => {
-  return { type: DISPLAY_SCREEN_BASED_ON_VIEW_ID };
+export const updateViewId = (viewId, isSendToApi) => {
+  return { type: UPDATE_VIEW_ID, payload: { viewId, isSendToApi } };
 };
 
 export const updateSaveType = saveType => {

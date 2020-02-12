@@ -7,7 +7,7 @@ import cx from "classnames";
 import { format, isValid } from "date-fns";
 
 import { getApplicantInfo } from "../../../../store/selectors/appConfig";
-import { formatFullNameLength } from "./utils";
+import { checkFullNameLength } from "./utils";
 import { InfoTitle } from "../../../../components/InfoTitle";
 import {
   CustomSelect,
@@ -37,14 +37,40 @@ const personalInformationSchema = Yup.object().shape({
       .required(getRequiredMessage("First name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("First name"))
+      .test(
+        "length validation",
+        "First, Middle and Last name combined have a limit of 77 characters",
+        function(firstName) {
+          const { middleName, lastName } = this.parent;
+          return checkFullNameLength(firstName, middleName, lastName);
+        }
+      )
   }),
-  middleName: Yup.string().matches(NAME_REGEX, getInvalidMessage("Middle name")),
+  middleName: Yup.string()
+    .max(30, "Maximum 30 characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Middle name"))
+    .test(
+      "length validation",
+      "First, Middle and Last name combined have a limit of 77 characters",
+      function(middleName) {
+        const { firstName, lastName } = this.parent;
+        return checkFullNameLength(firstName, middleName, lastName);
+      }
+    ),
   lastName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
       .required(getRequiredMessage("Last name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("Last name"))
+      .test(
+        "length validation",
+        "First, Middle and Last name combined have a limit of 77 characters",
+        function(lastName) {
+          const { firstName, middleName } = this.parent;
+          return checkFullNameLength(firstName, middleName, lastName);
+        }
+      )
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
@@ -64,17 +90,15 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
-    [`prospect.signatoryInfo[${index}].fullName`]: formatFullNameLength(
-      values.isShareholderACompany
-        ? applicantInfo.fullName
-        : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
-    )
+    [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
+      ? applicantInfo.fullName
+      : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
   });
 
   return (
     <Formik
       initialValues={{
-        gender: "",
+        salutation: "",
         firstName: "",
         middleName: "",
         lastName: "",
@@ -117,8 +141,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             <Grid item md={6} sm={12}>
               <InputGroup>
                 <Field
-                  name="gender"
-                  path={`prospect.signatoryInfo[${index}].gender`}
+                  name="salutation"
+                  path={`prospect.signatoryInfo[${index}].salutation`}
                   disabled={!!values.isShareholderACompany}
                   component={CustomSelect}
                   shrink={false}

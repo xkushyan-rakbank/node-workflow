@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   stepItem: {
     position: "relative",
     color: "rgba(255,255,255,.5)",
@@ -20,7 +20,7 @@ export const useStyles = makeStyles({
       left: "20px",
       marginLeft: "0"
     },
-    "@media only screen and (max-width: 1300px)": {
+    [theme.breakpoints.down("sm")]: {
       marginLeft: "-15px",
       paddingLeft: "40px",
       fontSize: "16px",
@@ -85,4 +85,4 @@ export const useStyles = makeStyles({
   activeIcon: {
     width: "17px"
   }
-});
+}));

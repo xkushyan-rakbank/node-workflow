@@ -1,417 +1,409 @@
 {
   "applicantInfo": {
-      "fullName": "Anjali Kesarwani",
-      "countryCode": "+971",
-      "mobileNo": "45689679867",
-      "email": "akesarwani@abc.com",
-      "applyOnbehalf": null
+    "fullName": "Anjali Kesarwani",
+    "countryCode": "+971",
+    "mobileNo": "45689679867",
+    "email": "akesarwani@abc.com",
+    "applyOnbehalf": null
   },
   "generalInfo": {
-      "prospectId": "102",
-      "_links": {
-          "self": {
-              "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/102"
-          }
-      },
-      "cifId": 0,
-      "customerType": "",
-      "dsaId": "",
-      "groupId": "",
-      "groupName": "",
-      "rmCode": "",
-      "accountManagerId": "",
-      "isPoliticallyExposed": ""
+    "prospectId": "102",
+    "_links": {
+      "self": {
+        "href": "/webapply/api/v1/banks/RAK/usertypes/sme/prospects/102"
+      }
+    },
+    "cifId": 0,
+    "customerType": "",
+    "dsaId": "",
+    "groupId": "",
+    "groupName": "",
+    "rmCode": "",
+    "accountManagerId": "",
+    "isPoliticallyExposed": ""
   },
   "applicationInfo": {
-      "viewId": "/ApplicationSubmitted",
-      "islamicBanking": null,
-      "accountType": "",
-      "rakValuePackage": "",
-      "leadNumber": "",
-      "riskScore": "",
-      "srNumber": "",
-      "channelId": "",
-      "channelType": "",
-      "createdDate": "",
-      "lastModifiedDate": "",
-      "createdBy": "",
-      "lastModifiedBy": "",
-      "actionType": "",
-      "saveType": "",
-      "tncAgreed": null,
-      "declaration": null
+    "viewId": "/ApplicationSubmitted",
+    "islamicBanking": null,
+    "accountType": "",
+    "rakValuePackage": "",
+    "leadNumber": "",
+    "riskScore": "",
+    "srNumber": "",
+    "channelId": "",
+    "channelType": "",
+    "createdDate": "",
+    "lastModifiedDate": "",
+    "createdBy": "",
+    "lastModifiedBy": "",
+    "actionType": "",
+    "saveType": "",
+    "tncAgreed": null,
+    "declaration": null
   },
   "accountInfo": [
-      {
-          "branchId": "",
-          "accountType": "",
-          "accountSubType": "",
-          "accountNo": "",
-          "accountCurrencies": "",
-          "accountPurpose": "",
-          "debitCardApplied": null,
-          "chequeBookApplied": null,
-          "eStatements": null,
-          "mailStatements": null,
-          "receiveInterest": null,
-          "deliverByCourier": null
-      }
+    {
+      "branchId": "",
+      "accountType": "",
+      "accountSubType": "",
+      "accountNo": "",
+      "accountCurrencies": "",
+      "accountPurpose": "",
+      "debitCardApplied": null,
+      "chequeBookApplied": null,
+      "eStatements": null,
+      "mailStatements": null,
+      "receiveInterest": null,
+      "deliverByCourier": null
+    }
   ],
   "organizationInfo": {
-      "screeningInfo": {
-          "statusOverAll": "",
-          "screeningResults": [
-              {
-                  "screeningType": "",
-                  "screeningStatus": "",
-                  "screeningFlag": "",
-                  "screeningNotes": "",
-                  "screeningReason": "",
-                  "reasonNotes": "",
-                  "reasonCode": "",
-                  "reasonStatus": ""
-              }
-          ]
-      },
-      "branchCity": "",
-      "branchID": "",
-      "countryOfIncorporation": "",
-      "companyName": "",
-      "shortName": "",
-      "dateOfIncorporation": "",
-      "numberOfEmployees": 0,
-      "licenseType": "",
-      "licenseTypeOther": "",
-      "licenseIssuingAuthority": "",
-      "licenseNumber": "",
-      "licenseIssueDate": "",
-      "licenseExpiryDate": "",
-      "vatRegistrationNumber": "",
-      "addressInfo": [
-          {
-              "typeOfAddress": "",
-              "officeAddressDifferent": "",
-              "addressDetails": [
-                  {
-                      "addressFieldDesc": "",
-                      "preferredAddress": "",
-                      "addressLine1": "",
-                      "addressLine2": "",
-                      "addressLine3": "",
-                      "addressLine4": "",
-                      "poBox": "",
-                      "emirateCity": "",
-                      "country": "",
-                      "typeOfSpaceOccupied": {
-                          "spaceType": "",
-                          "others": ""
-                      }
-                  }
-              ]
-          }
-      ],
-      "contactDetails": {
-          "primaryMobileNo": "",
-          "primaryMobCountryCode": "",
-          "primaryEmail": "",
-          "primaryPhoneNo": "",
-          "primaryPhoneCountryCode": "",
-          "fax": "",
-          "faxCountryCode": "",
-          "secondaryPhoneNo": "",
-          "secondaryPhoneCountryCode": "",
-          "secondaryMobileNo": "",
-          "secondaryMobileCountryCode": "",
-          "secondaryEmail": "",
-          "website": ""
-      },
-      "contactDetailsForTxnReconfirming": [
-          {
-              "primaryMobileNo": "",
-              "primaryMobCountryCode": "",
-              "primaryPhoneNo": "",
-              "primaryPhoneCountryCode": ""
-          }
+    "screeningInfo": {
+      "statusOverAll": "",
+      "screeningResults": [
+        {
+          "screeningType": "",
+          "screeningStatus": "",
+          "screeningFlag": "",
+          "screeningNotes": "",
+          "screeningReason": "",
+          "reasonNotes": "",
+          "reasonCode": "",
+          "reasonStatus": ""
+        }
       ]
+    },
+    "branchCity": "",
+    "branchID": "",
+    "countryOfIncorporation": "",
+    "companyName": "",
+    "shortName": "",
+    "dateOfIncorporation": "",
+    "numberOfEmployees": 0,
+    "licenseType": "",
+    "licenseTypeOther": "",
+    "licenseIssuingAuthority": "",
+    "licenseNumber": "",
+    "licenseIssueDate": "",
+    "licenseExpiryDate": "",
+    "vatRegistrationNumber": "",
+    "addressInfo": [
+      {
+        "typeOfAddress": "",
+        "officeAddressDifferent": "",
+        "addressDetails": [
+          {
+            "addressFieldDesc": "",
+            "preferredAddress": "",
+            "addressLine1": "",
+            "addressLine2": "",
+            "addressLine3": "",
+            "addressLine4": "",
+            "poBox": "",
+            "emirateCity": "",
+            "country": "",
+            "typeOfSpaceOccupied": {
+              "spaceType": "",
+              "others": ""
+            }
+          }
+        ]
+      }
+    ],
+    "contactDetails": {
+      "primaryMobileNo": "",
+      "primaryMobCountryCode": "",
+      "primaryEmail": "",
+      "primaryPhoneNo": "",
+      "primaryPhoneCountryCode": "",
+      "fax": "",
+      "faxCountryCode": "",
+      "secondaryPhoneNo": "",
+      "secondaryPhoneCountryCode": "",
+      "secondaryMobileNo": "",
+      "secondaryMobileCountryCode": "",
+      "secondaryEmail": "",
+      "website": ""
+    },
+    "contactDetailsForTxnReconfirming": [
+      {
+        "primaryMobileNo": "",
+        "primaryMobCountryCode": "",
+        "primaryPhoneNo": "",
+        "primaryPhoneCountryCode": ""
+      }
+    ]
   },
   "orgKYCDetails": {
-      "businessUnit": "",
-      "constitutionType": "",
-      "companyCategory": "",
-      "annualFinTurnoverAmtInAED": "",
-      "yearsInBusiness": 0,
-      "topCustomers": [
-          {
-              "name": "",
-              "country": ""
-          }
-      ],
-      "topSuppliers": [
-          {
-              "name": "",
-              "country": ""
-          }
-      ],
-      "topOriginGoodsCountries": [
-          ""
-      ],
-      "industryMultiSelect": [
-          {
-              "industry": [
-                  ""
-              ],
-              "subCategory": [
-                  ""
-              ]
-          }
-      ],
-      "anticipatedTransactionsDetails": {
-          "totalMonthlyCashCreditsAED": {
-              "amountInFigures": "",
-              "inPercent": 0
-          },
-          "totalMonthlyNonCashCreditsAED": {
-              "amountInFigures": "",
-              "inPercent": 0
-          },
-          "totalMonthlyCreditsAED": "",
-          "maxAmtSingleTxnCashAED": "",
-          "maxAmtSingleTxnNonCashAED": ""
+    "businessUnit": "",
+    "constitutionType": "",
+    "companyCategory": "",
+    "annualFinTurnoverAmtInAED": "",
+    "yearsInBusiness": 0,
+    "topCustomers": [
+      {
+        "name": "",
+        "country": ""
+      }
+    ],
+    "topSuppliers": [
+      {
+        "name": "",
+        "country": ""
+      }
+    ],
+    "topOriginGoodsCountries": [""],
+    "industryMultiSelect": [
+      {
+        "industry": [""],
+        "subCategory": [""]
+      }
+    ],
+    "anticipatedTransactionsDetails": {
+      "totalMonthlyCashCreditsAED": {
+        "amountInFigures": "",
+        "inPercent": 0
       },
-      "otherBankingRelationshipsInfo": {
-          "otherBankingRelationshipsExist": null,
-          "otherBankDetails": [
-              {
-                  "bankName": ""
-              }
-          ]
+      "totalMonthlyNonCashCreditsAED": {
+        "amountInFigures": "",
+        "inPercent": 0
       },
-      "otherEntitiesInUAE": null,
-      "entitiesInUAE": [
-          {
-              "companyName": "",
-              "emirate": "",
-              "tradeLicenseNo": ""
-          }
-      ],
-      "otherEntitiesOutsideUAE": null,
-      "entitiesOutsideUAE": [
-          {
-              "companyName": "",
-              "country": ""
-          }
-      ],
-      "isShareholderACompany": null
+      "totalMonthlyCreditsAED": "",
+      "maxAmtSingleTxnCashAED": "",
+      "maxAmtSingleTxnNonCashAED": ""
+    },
+    "otherBankingRelationshipsInfo": {
+      "otherBankingRelationshipsExist": null,
+      "otherBankDetails": [
+        {
+          "bankName": ""
+        }
+      ]
+    },
+    "otherEntitiesInUAE": null,
+    "entitiesInUAE": [
+      {
+        "companyName": "",
+        "emirate": "",
+        "tradeLicenseNo": ""
+      }
+    ],
+    "otherEntitiesOutsideUAE": null,
+    "entitiesOutsideUAE": [
+      {
+        "companyName": "",
+        "country": ""
+      }
+    ],
+    "isShareholderACompany": null
   },
   "signatoryInfo": [
-      {
-          "screeningInfo": {
-              "statusOverAll": "",
-              "screeningResults": [
-                  {
-                      "screeningType": "",
-                      "screeningStatus": "",
-                      "screeningFlag": "",
-                      "screeningNotes": "",
-                      "screeningReason": "",
-                      "reasonNotes": "",
-                      "reasonCode": "",
-                      "reasonStatus": ""
-                  }
-              ]
-          },
-          "salutation": "",
-          "signatoryId": "",
-          "firstName": "",
-          "middleName": "",
-          "lastName": "",
-          "shortName": "",
-          "fullName": "",
-          "gender": "",
-          "maritalStatus": "",
-          "maritalStatusOthers": "",
-          "occupation": "",
-          "mothersMaidenName": "",
-          "numberOfDependants": 0,
-          "highestEducationAttained": "",
-          "employmentStatus": "",
-          "kycVerified": null,
-          "kycDetails": {
-              "salutation": "",
-              "shareholderPOASignatoryName": "",
-              "isSignatory": null,
-              "isShareholder": null,
-              "shareHoldingPercentage": 0,
-              "dateOfBirth": "",
-              "nationality": "",
-              "dualCitizenship": null,
-              "dualCitizenshipCountry": [
-                  ""
-              ],
-              "residenceCountry": "",
-              "isUAEResident": null,
-              "passportDetails": [
-                  {
-                      "passportNumber": "",
-                      "passportExpiryDate": "",
-                      "diplomatPassport": null
-                  }
-              ],
-              "emirateIdDetails": {
-                  "eidNumber": "",
-                  "eidExpiryDt": ""
-              },
-              "selfGovtPosition": "",
-              "relativeGovtPosition": "",
-              "qualification": "",
-              "experienceInYrs": "",
-              "sourceOfWealth": {
-                  "wealthType": "",
-                  "others": ""
-              }
-          },
-          "contactDetails": {
-              "primaryMobileNo": "",
-              "primaryMobCountryCode": "",
-              "primaryEmail": "",
-              "primaryPhoneNo": "",
-              "primaryPhoneCountryCode": "",
-              "fax": "",
-              "faxCountryCode": "",
-              "secondaryPhoneNo": "",
-              "secondaryPhoneCountryCode": "",
-              "secondaryMobileNo": "",
-              "secondaryMobileCountryCode": "",
-              "secondaryEmail": "",
-              "website": ""
-          },
-          "employmentDetails": {
-              "employmentType": "",
-              "otherEmploymentType": "",
-              "designation": "",
-              "empNo": "",
-              "department": "",
-              "employerName": "",
-              "occupation": "",
-              "totalExperienceYrs": 0,
-              "employmentStartDate": ""
-          },
-          "sameAsCompanyAddress": null,
-          "addressInfo": [
-              {
-                  "typeOfAddress": "",
-                  "addressDetails": [
-                      {
-                          "addressFieldDesc": "",
-                          "preferredAddress": "",
-                          "addressLine1": "",
-                          "addressLine2": "",
-                          "addressLine3": "",
-                          "addressLine4": "",
-                          "poBox": "",
-                          "emirateCity": "",
-                          "country": ""
-                      }
-                  ]
-              }
-          ],
-          "accountSigningInfo": {
-              "accountSigningType": "",
-              "accountSigningInstn": "",
-              "authorityType": ""
-          },
-          "debitCardInfo": {
-              "issueDebitCard": null,
-              "authSignatoryDetails": {
-                  "fullNameOnPassport": "",
-                  "nameOnDebitCard": ""
-              }
+    {
+      "screeningInfo": {
+        "statusOverAll": "",
+        "screeningResults": [
+          {
+            "screeningType": "",
+            "screeningStatus": "",
+            "screeningFlag": "",
+            "screeningNotes": "",
+            "screeningReason": "",
+            "reasonNotes": "",
+            "reasonCode": "",
+            "reasonStatus": ""
           }
+        ]
+      },
+      "salutation": "",
+      "signatoryId": "",
+      "firstName": "",
+      "middleName": "",
+      "lastName": "",
+      "shortName": "",
+      "fullName": "",
+      "gender": "",
+      "maritalStatus": "",
+      "maritalStatusOthers": "",
+      "occupation": "",
+      "mothersMaidenName": "",
+      "numberOfDependants": 0,
+      "highestEducationAttained": "",
+      "employmentStatus": "",
+      "kycVerified": null,
+      "kycDetails": {
+        "salutation": "",
+        "shareholderPOASignatoryName": "",
+        "isSignatory": null,
+        "isShareholder": null,
+        "shareHoldingPercentage": 0,
+        "dateOfBirth": "",
+        "nationality": "",
+        "dualCitizenship": null,
+        "dualCitizenshipCountry": [""],
+        "residenceCountry": "",
+        "isUAEResident": null,
+        "passportDetails": [
+          {
+            "passportNumber": "",
+            "passportExpiryDate": "",
+            "diplomatPassport": null
+          }
+        ],
+        "emirateIdDetails": {
+          "eidNumber": "",
+          "eidExpiryDt": ""
+        },
+        "selfGovtPosition": "",
+        "relativeGovtPosition": "",
+        "qualification": "",
+        "experienceInYrs": "",
+        "sourceOfWealth": {
+          "wealthType": "",
+          "others": ""
+        }
+      },
+      "contactDetails": {
+        "primaryMobileNo": "",
+        "primaryMobCountryCode": "",
+        "primaryEmail": "",
+        "primaryPhoneNo": "",
+        "primaryPhoneCountryCode": "",
+        "fax": "",
+        "faxCountryCode": "",
+        "secondaryPhoneNo": "",
+        "secondaryPhoneCountryCode": "",
+        "secondaryMobileNo": "",
+        "secondaryMobileCountryCode": "",
+        "secondaryEmail": "",
+        "website": ""
+      },
+      "employmentDetails": {
+        "employmentType": "",
+        "otherEmploymentType": "",
+        "designation": "",
+        "empNo": "",
+        "department": "",
+        "employerName": "",
+        "occupation": "",
+        "totalExperienceYrs": 0,
+        "employmentStartDate": ""
+      },
+      "sameAsCompanyAddress": null,
+      "addressInfo": [
+        {
+          "typeOfAddress": "",
+          "addressDetails": [
+            {
+              "addressFieldDesc": "",
+              "preferredAddress": "",
+              "addressLine1": "",
+              "addressLine2": "",
+              "addressLine3": "",
+              "addressLine4": "",
+              "poBox": "",
+              "emirateCity": "",
+              "country": ""
+            }
+          ]
+        }
+      ],
+      "accountSigningInfo": {
+        "accountSigningType": "",
+        "accountSigningInstn": "",
+        "authorityType": ""
+      },
+      "debitCardInfo": {
+        "issueDebitCard": null,
+        "authSignatoryDetails": {
+          "fullNameOnPassport": "",
+          "nameOnDebitCard": ""
+        }
       }
+    }
   ],
   "channelServicesInfo": {
-      "mobileInstructions": null,
-      "marketingSMS": null,
-      "doNotDisturbHours": "",
-      "weeklyBalanceNotification": "",
-      "monthlyBalanceNotification": 0
+    "mobileInstructions": null,
+    "marketingSMS": null,
+    "doNotDisturbHours": "",
+    "weeklyBalanceNotification": "",
+    "monthlyBalanceNotification": 0
   },
   "documents": {
-      "companyDocuments": [
-          {
-              "documentType": "",
-              "signatoryId": "",
-              "signatoryName": "",
-              "documentTitle": "",
-              "documentKey": "",
-              "fileName": "",
-              "filePath": "",
-              "url": "",
-              "fileData": "",
-              "fileFormat": "",
-              "fileSize": 0,
-              "fileDescription": "",
-              "submittedBy": "",
-              "submittedDt": "",
-              "updatedBy": "",
-              "updatedDt": "",
-              "avsCheckDt": "",
-              "avsCheck": null,
-              "verified": null,
-              "verifiedBy": "",
-              "isEncrypted": null,
-              "encryptionDetails": "",
-              "uploadStatus": ""
-          }
-      ],
-      "stakeholdersDocuments": {
-          "index_stakeholderName": {
-              "documents": [
-                  {
-                      "documentType": "",
-                      "signatoryId": "",
-                      "signatoryName": "",
-                      "documentTitle": "",
-                      "documentKey": "",
-                      "fileName": "",
-                      "filePath": "",
-                      "url": "",
-                      "fileData": "",
-                      "fileFormat": "",
-                      "fileSize": 0,
-                      "fileDescription": "",
-                      "submittedBy": "",
-                      "submittedDt": "",
-                      "updatedBy": "",
-                      "updatedDt": "",
-                      "avsCheckDt": "",
-                      "avsCheck": null,
-                      "verified": null,
-                      "verifiedBy": "",
-                      "isEncrypted": null,
-                      "encryptionDetails": "",
-                      "uploadStatus": ""
-                  }
-              ]
-          }
+    "companyDocuments": [
+      {
+        "documentType": "",
+        "signatoryId": "",
+        "signatoryName": "",
+        "documentTitle": "",
+        "documentKey": "",
+        "fileName": "",
+        "filePath": "",
+        "url": "",
+        "fileData": "",
+        "fileFormat": "",
+        "fileSize": 0,
+        "fileDescription": "",
+        "submittedBy": "",
+        "submittedDt": "",
+        "updatedBy": "",
+        "updatedDt": "",
+        "avsCheckDt": "",
+        "avsCheck": null,
+        "verified": null,
+        "verifiedBy": "",
+        "isEncrypted": null,
+        "encryptionDetails": "",
+        "uploadStatus": ""
       }
+    ],
+    "stakeholdersDocuments": {
+      "0_Abhi": {
+        "documents": [
+          {
+            "documentType": "",
+            "signatoryId": "",
+            "signatoryName": "",
+            "documentTitle": "",
+            "documentKey": "",
+            "fileName": "",
+            "filePath": "",
+            "url": "",
+            "fileData": "",
+            "fileFormat": "",
+            "fileSize": 0,
+            "fileDescription": "",
+            "submittedBy": "",
+            "submittedDt": "",
+            "updatedBy": "",
+            "updatedDt": "",
+            "avsCheckDt": "",
+            "avsCheck": null,
+            "verified": null,
+            "verifiedBy": "",
+            "isEncrypted": null,
+            "encryptionDetails": "",
+            "uploadStatus": ""
+          }
+        ]
+      }
+    }
   },
   "prospectStatusInfo": {
-      "statusType": "",
-      "statusCode": "",
-      "statusFlag": "",
-      "statusNotes": "",
-      "statusReason": "",
-      "statusOverAll": "",
-      "reasonNotes": "",
-      "reasonCode": "",
-      "reasonStatus": ""
+    "statusType": "",
+    "statusCode": "",
+    "statusFlag": "",
+    "statusNotes": "",
+    "statusReason": "",
+    "statusOverAll": "",
+    "reasonNotes": "",
+    "reasonCode": "",
+    "reasonStatus": ""
   },
   "freeFieldsInfo": {
-      "freeField1": "",
-      "freeField2": "",
-      "freeField3": "",
-      "freeField4": "",
-      "freeField5": ""
+    "freeField1": "",
+    "freeField2": "",
+    "freeField3": "",
+    "freeField4": "",
+    "freeField5": ""
   }
 }

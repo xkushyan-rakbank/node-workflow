@@ -127,19 +127,13 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               passportIndex,
                               setFieldValue
                             )}
-                            changeProspect={prospect => {
-                              if (passportIndex > 0) {
-                                return prospect;
-                              }
-
-                              return {
-                                ...prospect,
-                                // eslint-disable-next-line max-len
-                                [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: values.passportDetails.map(
-                                  ({ id, ...withoutId }) => withoutId
-                                )
-                              };
-                            }}
+                            changeProspect={prospect => ({
+                              ...prospect,
+                              // eslint-disable-next-line max-len
+                              [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: values.passportDetails.map(
+                                ({ id, ...withoutId }) => withoutId
+                              )
+                            })}
                             disabled={isAdditionalCitizenshipDisabled(
                               values,
                               passportIndex,

@@ -103,7 +103,6 @@ const ComeBackLoginComponent = ({
   return (
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
-        className={classes.title}
         title="Wondering about your application? You came to the right place."
         info="Please enter the login you used when you first applied"
       />

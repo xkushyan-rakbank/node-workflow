@@ -1,43 +1,43 @@
 import React, { useEffect } from "react";
 import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 import { FormNavigation } from "../../components/FormNavigation";
-import Header from "../../components/Header";
 import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications, NotificationsProvider } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { useStyles } from "./styled";
-import { accountNames } from "../../constants";
-import routes from "../../routes";
+import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
+import routes, { agentBaseName, smeBaseName } from "../../routes";
 
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},
   children,
   screeningResults: { screeningError },
   updateViewId,
-  resetScreeningError,
-  islamicBanking,
-  accountType
+  resetScreeningError
 }) => {
-  const isAccountsComparison = routes.accountsComparison === pathname;
+  const blobColor = useBlobColor();
   const classes = useStyles({
     pathname,
-    color:
-      !isAccountsComparison && accountType === accountNames.elite
-        ? "brown"
-        : !isAccountsComparison && islamicBanking && accountType !== accountNames.elite
-        ? "green"
-        : "red"
+    color: blobColor
   });
 
   useEffect(() => {
-    updateViewId(pathname);
+    const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
+    const isSendToApi = [
+      routes.stakeholdersInfo,
+      routes.finalQuestions,
+      routes.uploadDocuments,
+      routes.selectServices,
+      routes.SubmitApplication
+    ].includes(pathname);
+
+    updateViewId(viewId, isSendToApi);
     resetScreeningError();
   }, [key, pathname, updateViewId, resetScreeningError]);
 
   return (
     <NotificationsProvider>
       <div className={classes.formLayout}>
-        <Header />
         <FormNavigation />
         <div className={classes.formWrapper}>
           <div className={classes.formInner}>

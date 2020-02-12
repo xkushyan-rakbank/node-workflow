@@ -18,7 +18,6 @@ import {
 } from "../../store/actions/stakeholders";
 import { resetProspect } from "../../store/actions/appConfig";
 import { getSendProspectToAPIInfo, getDatalist } from "../../store/selectors/appConfig";
-import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import {
   stakeholdersSelector,
   stakeholdersState,
@@ -225,7 +224,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   deleteStakeholder,
-  sendProspectToAPI,
   createNewStakeholder,
   changeEditableStakeholder,
   setEditStakeholder,
