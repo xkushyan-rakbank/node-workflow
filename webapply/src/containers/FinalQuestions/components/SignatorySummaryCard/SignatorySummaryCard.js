@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
@@ -27,6 +27,9 @@ export const SignatorySummaryCardComponent = ({
   const completedSteps = allSignatoriesSteps.filter(
     item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index].id
   );
+  const isAllStepsCompleted = useMemo(() => !completedSteps.some(item => !item.isCompleted), [
+    completedSteps
+  ]);
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
@@ -48,15 +51,13 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {expandedSignatoryIndex !== index &&
-              completedSteps.length === signatoriesSteps.length &&
-              !completedSteps.some(step => !step.isCompleted) && (
-                <LinkButton
-                  clickHandler={() => {
-                    setExpandedSignatoryIndex(index);
-                  }}
-                />
-              )}
+            {expandedSignatoryIndex !== index && isAllStepsCompleted && (
+              <LinkButton
+                clickHandler={() => {
+                  setExpandedSignatoryIndex(index);
+                }}
+              />
+            )}
           </div>
         </div>
       }

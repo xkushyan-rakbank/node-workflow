@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import cx from "classnames";
 
@@ -18,14 +18,24 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const classes = useStyles();
 
   const companySteps = useSelector(getCompanySteps);
+  const isCompanyStepsCompleted = useMemo(() => !companySteps.some(step => !step.isCompleted), [
+    companySteps
+  ]);
   const signatoriesSteps = useSelector(getSignatoriesSteps);
+  const isSignatoriesStepsCompleted = useMemo(
+    () => !signatoriesSteps.some(step => !step.isCompleted),
+    [signatoriesSteps]
+  );
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 
-  const handleFinalStepContinue = nextIndex => {
-    setIsCompanyExpanded(false);
-    setExpandedSignatoryIndex(nextIndex);
-  };
+  const handleFinalStepContinue = useCallback(
+    nextIndex => {
+      setIsCompanyExpanded(false);
+      setExpandedSignatoryIndex(nextIndex);
+    },
+    [setIsCompanyExpanded, setExpandedSignatoryIndex]
+  );
 
   const switchExpandedMargin = useCallback(() => setIsExpandedMargin(!isExpandedMargin), [
     setIsExpandedMargin,
@@ -43,7 +53,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
         <CompanySummaryCard
           switchExpandedMargin={switchExpandedMargin}
           handleFinalStepContinue={handleFinalStepContinue}
-          isCompanyStepsCompleted={!companySteps.some(item => !item.isCompleted)}
+          isCompanyStepsCompleted={isCompanyStepsCompleted}
           isCompanyExpanded={isCompanyExpanded}
           setIsCompanyExpanded={setIsCompanyExpanded}
         />
@@ -64,10 +74,7 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
       <div className={classes.linkContainer}>
         <BackLink path={routes.stakeholdersInfo} />
         <SubmitButton
-          disabled={
-            companySteps.some(step => !step.isCompleted) ||
-            signatoriesSteps.some(step => !step.isCompleted)
-          }
+          disabled={!isCompanyStepsCompleted || !isSignatoriesStepsCompleted}
           handleClick={goToUploadDocument}
           label="Next Step"
         />

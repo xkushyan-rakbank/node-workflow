@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 
 import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -21,7 +21,10 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     SELECT_SERVICES_PAGE_ID,
     servicesSteps
   );
-
+  const isAllStepsCompleted = useMemo(
+    () => !availableSteps.some(step => step.step < STEP_3 && !step.isCompleted),
+    [availableSteps]
+  );
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
       pushHistory(routes.SubmitApplication);
@@ -30,13 +33,13 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
 
     handleSetNextStep(activeStep);
     setIsSubmit(true);
-  }, [pushHistory, isSubmit, setIsSubmit, handleSetNextStep]);
+  }, [pushHistory, isSubmit, setIsSubmit, handleSetNextStep, activeStep, pushHistory]);
 
   const setNextStep = useCallback(
     event => {
       sendProspectToAPI(null, event).then(() => handleSetNextStep(activeStep), () => {});
     },
-    [sendProspectToAPI, activeStep, pushHistory]
+    [sendProspectToAPI, activeStep, handleSetNextStep]
   );
 
   const createSetStepHandler = nextStep => () => {
@@ -67,8 +70,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
           label={isSubmit ? "Go to submit" : "Next Step"}
           justify="flex-end"
           disabled={
-            availableSteps.some(step => step.step < STEP_3 && !step.isCompleted) ||
-            (accountType === accountNames.starter && !rakValuePackage)
+            !isAllStepsCompleted || (accountType === accountNames.starter && !rakValuePackage)
           }
         />
       </div>

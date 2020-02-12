@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
@@ -41,6 +41,9 @@ export const CompanyInfoPage = ({
     COMPANY_INFO_PAGE_ID,
     companyInfoSteps
   );
+  const isAllStepsCompleted = useMemo(() => !availableSteps.some(item => !item.isCompleted), [
+    availableSteps
+  ]);
 
   const handleContinue = event => () => {
     sendProspectToAPI(NEXT, event).then(
@@ -99,10 +102,7 @@ export const CompanyInfoPage = ({
           style={{ padding: "0 32px", borderRadius: "28px" }}
           justify="flex-end"
           label="Next Step"
-          disabled={
-            availableSteps.length !== companyInfoSteps.length ||
-            availableSteps.some(item => !item.isCompleted)
-          }
+          disabled={!isAllStepsCompleted}
           handleClick={handleClickNextStep}
           withRightArrow
         />

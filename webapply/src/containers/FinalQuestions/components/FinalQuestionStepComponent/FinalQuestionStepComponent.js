@@ -28,7 +28,7 @@ export const FinalQuestionStepComponent = ({
         () => {}
       );
     },
-    [sendProspectToAPI, handleSetNextStep]
+    [sendProspectToAPI, handleSetNextStep, index, stepsArray, handleFinalStepContinue, activeStep]
   );
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);

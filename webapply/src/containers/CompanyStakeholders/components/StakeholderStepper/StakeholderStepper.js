@@ -46,7 +46,7 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const stakeholderId = useSelector(getStakeholdersIds)[index].id;
+  const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
   const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
     `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
     stakeHoldersSteps
