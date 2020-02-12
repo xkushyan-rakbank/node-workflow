@@ -22,7 +22,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    paddingTop: 70,
+    paddingTop: 100,
     paddingLeft: 16,
     paddingRight: 16,
     transition: "all .3s",
@@ -105,8 +105,9 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "1.17",
     fontWeight: 600,
     fontFamily: "Open Sans",
-    marginBottom: "20px",
+    marginBottom: 20,
     [theme.breakpoints.only("xs")]: {
+      marginBottom: 10,
       fontSize: 32,
       lineHeight: "36px"
     }
@@ -116,13 +117,13 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "1.5",
     color: "#fff",
     marginBottom: 60,
-    maxWidth: 289,
+    maxWidth: 300,
     display: "block",
     fontWeight: "normal",
     fontFamily: "Open Sans",
     whiteSpace: "pre-wrap",
     [theme.breakpoints.only("xs")]: {
-      marginBottom: 30
+      marginBottom: 57
     }
   }
 }));

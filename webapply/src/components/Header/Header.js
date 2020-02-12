@@ -21,9 +21,10 @@ const HeaderComponent = ({ isIslamicBanking, accountType, isOtpVerified }) => {
   const { logo: Logo } = useIconsByAccount();
 
   const renderLogo = () => {
-    if (routes.accountsComparison === pathname) return <StandartLogo />;
-    if (isIslamicBanking && accountType === accountNames.elite) return <EliteIslamicLogo />;
-    return <Logo />;
+    if (routes.accountsComparison === pathname) return <StandartLogo className={classes.logo} />;
+    if (isIslamicBanking && accountType === accountNames.elite)
+      return <EliteIslamicLogo className={classes.logo} />;
+    return <Logo className={classes.logo} />;
   };
 
   return (

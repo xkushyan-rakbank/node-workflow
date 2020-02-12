@@ -29,24 +29,11 @@ export const useStyles = makeStyles(theme => ({
       }
     }
   },
-  accountType: {
-    position: "relative",
-    fontFamily: "Open Sans",
-    fontSize: "12px",
-    marginLeft: "10px",
-    paddingLeft: "10px",
-    paddingTop: "4px",
-    color: "#fff",
-    fontWeight: "600",
-    "&::before": {
-      content: "''",
-      display: "block",
-      width: "2px",
-      height: "20px",
-      backgroundColor: "#fff",
-      position: "absolute",
-      left: "0",
-      top: "3px"
+  logo: {
+    height: 44,
+    width: "auto",
+    [theme.breakpoints.up("sm")]: {
+      height: 60
     }
   },
   disabled: {
