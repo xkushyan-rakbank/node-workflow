@@ -164,7 +164,8 @@ export const BYTES_IN_MEGABYTE = 1048576;
 export const VIEW_IDS = {
   SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
-  CompanyInfo: "/CompanyInfo"
+  CompanyInfo: "/CompanyInfo",
+  SearchedAppInfo: "/SearchedAppInfo"
 };
 
 export const ACTION_TYPES = {
