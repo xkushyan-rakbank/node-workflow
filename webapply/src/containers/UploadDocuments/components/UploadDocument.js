@@ -1,5 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
-import nanoid from "nanoid";
+import React, { useState, useRef, useCallback } from "react";
 import * as Yup from "yup";
 
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
@@ -34,11 +33,10 @@ export const UploadDocuments = ({
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
   const inputEl = useRef(null);
-  const documentKey = useMemo(() => nanoid(), []);
   const isUploaded = document.uploadStatus === "Uploaded";
   const isUploading = selectedFile && !isUploaded;
-  const isUploadError = uploadErrorMessage[documentKey];
-  const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
+  const isUploadError = uploadErrorMessage[document.documentKey];
+  const percentComplete = isUploaded ? 100 : progress[document.documentKey] || 0;
 
   const fileUploadClick = event => (event.target.value = null);
 
@@ -52,7 +50,7 @@ export const UploadDocuments = ({
     }
 
     const fileInfo = JSON.stringify({
-      documentKey,
+      documentKey: document.documentKey,
       documentType: document.documentType || ""
     });
     const docProps = {
@@ -70,13 +68,13 @@ export const UploadDocuments = ({
       docProps,
       docOwner,
       documentType: document.documentType,
-      documentKey,
+      documentKey: document.documentKey,
       index,
       stakeholderIndex
     });
     setErrorMessage(null);
     setSelectedFile(file);
-  }, [document, docOwner, docUpload, documentKey, index, stakeholderIndex]);
+  }, [document, docOwner, docUpload, index, stakeholderIndex]);
 
   const fileUploadCancel = useCallback(() => {
     if (docOwner === COMPANY_DOCUMENTS) {
@@ -88,9 +86,9 @@ export const UploadDocuments = ({
         [`prospect.documents[${STAKEHOLDER_DOCUMENTS}][${stakeholderIndex}].documents[${index}].uploadStatus`]: "NotUploaded"
       });
     }
-    cancelDocUpload(documentKey);
+    cancelDocUpload(document.documentKey);
     setSelectedFile(null);
-  }, [cancelDocUpload, docOwner, documentKey, index, stakeholderIndex, updateProspect]);
+  }, [cancelDocUpload, docOwner, document.documentKey, index, stakeholderIndex, updateProspect]);
 
   const reUploadHandler = useCallback(() => {
     inputEl.current.click();

@@ -34,8 +34,8 @@ export const concatStakeholdersDocs = (incomeDocs, { ...existDocs }) => {
   );
 };
 
-export const createDocumentMapper = (documentType, additionalProps) => doc => {
-  if (doc.documentType === documentType) {
+export const createDocumentMapper = (documentKey, additionalProps) => doc => {
+  if (doc.documentKey === documentKey) {
     return { ...doc, ...additionalProps };
   }
 
