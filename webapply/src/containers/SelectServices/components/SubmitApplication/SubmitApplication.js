@@ -26,9 +26,10 @@ export const SubmitApplicationComponent = ({
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const pathname = isApplyEditApplication ? routes.companyInfo : routes.ApplicationSubmitted;
-  const isDisabled = !isApplyEditApplication
-    ? !(formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed) || isSubmitting
-    : !isApplyEditApplication;
+  const isSubmitButtonEnable =
+    isApplyEditApplication &&
+    formFieldsValues.isInformationProvided &&
+    formFieldsValues.areTermsAgreed;
   const handleSubmit = () => {
     setIsSubmitting(true);
     updateActionType(SUBMIT);
@@ -57,7 +58,7 @@ export const SubmitApplicationComponent = ({
       <div className="linkContainer">
         <BackLink path={routes.selectServices} />
         <SubmitButton
-          disabled={isDisabled}
+          disabled={!isSubmitButtonEnable || isSubmitting}
           label="Submit"
           justify="flex-end"
           handleClick={handleSubmit}
