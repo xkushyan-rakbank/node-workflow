@@ -23,7 +23,7 @@ export const ServicesSteps = ({
           step={stepData}
           isEditAvailable={
             (activeStep !== stepData.step || isSubmit) &&
-            completedSteps.some(step => step.id === stepData.step && step.isCompleted)
+            completedSteps.some(step => step.step === stepData.step && step.isCompleted)
           }
           createClickHandler={clickHandler}
         />
