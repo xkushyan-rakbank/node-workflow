@@ -4,7 +4,7 @@ import * as actions from "../actions/retrieveApplicantInfo";
 import { setConfig } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
-import { getAuthorizationHeader, getProspect } from "../selectors/appConfig";
+import { getAuthorizationHeader } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 
 function* retrieveApplicantInfoSaga({ payload }) {
@@ -34,7 +34,6 @@ function* getProspectIdInfo({ payload }) {
     const config = { prospect: response.data };
 
     yield put(setConfig(config));
-    const prospect = yield select(getProspect);
 
     const stakeholdersIds = config.prospect.signatoryInfo.map(info => ({
       id: uniqueId(),
@@ -43,7 +42,7 @@ function* getProspectIdInfo({ payload }) {
     }));
 
     yield put(updateStakeholdersIds(stakeholdersIds));
-    yield put(actions.getProspectInfoSuccess(prospect));
+    yield put(actions.getProspectInfoSuccess(config.prospect));
   } catch (error) {
     log(error);
     yield put(actions.getProspectInfoFail());
