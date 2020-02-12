@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { connect, useSelector } from "react-redux";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
@@ -62,22 +62,18 @@ const StakeholderStepperComponent = ({
         if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
           showAddButton();
+          changeFinalScreenDisplay(true);
+          setTimeout(() => {
+            changeFinalScreenDisplay(false);
+            changeEditableStakeholder();
+          }, timeInterval);
         }
         isEditInProgress ? handleSetStep() : handleSetNextStep(activeStep);
       },
       () => {}
     );
-  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
-  useEffect(() => {
-    if (activeStep <= stakeHoldersSteps.length) return;
-    changeFinalScreenDisplay(true);
-    const interval = setInterval(() => {
-      changeFinalScreenDisplay(false);
-      changeEditableStakeholder();
-    }, timeInterval);
-    return () => clearInterval(interval);
-  }, [activeStep, changeEditableStakeholder]);
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleDeleteStakeholder = useCallback(() => {
     setIsDisplayConfirmation(false);
