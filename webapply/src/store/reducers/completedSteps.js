@@ -17,7 +17,7 @@ const completedSteps = (state = initialState, action) => {
     case SET_INITIAL_STEPS:
       return [...state, ...action.payload.steps];
     case REMOVE_SIGNATORY:
-      return state.filter(flow => !flow.flowId.includes(action.signatoryId));
+      return state.filter(step => !step.flowId.includes(action.signatoryId));
     default:
       return state;
   }
