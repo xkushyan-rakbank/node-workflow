@@ -27,7 +27,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
   if (!checkValidNumberFromString(annualFinancialTurnover)) {
     return 0;
   }
-  return Number((parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT).toFixed(2));
+  return Number((parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT).toFixed());
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
