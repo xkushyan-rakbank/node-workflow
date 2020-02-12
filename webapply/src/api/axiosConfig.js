@@ -8,9 +8,10 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 
-// For enable encrypt replace next line: const ENCRYPT_METHODS = ["post", "put"]
-const ENCRYPT_METHODS = [];
 const SYM_KEY_HEADER = "x-sym-key";
+const ENCRYPT_METHODS = ["post", "put"];
+const ENCRYPTION_ENABLE = process.env.REACT_APP_ENCRYPTION_ENABLE || "N";
+const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
 
 const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
@@ -26,7 +27,7 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
 
-  if (rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
+  if (encryptionEnabled && rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
     const [encryptedPayload, encryptedSymKey, symKey] = encrypt(
       rsaPublicKey,
       JSON.stringify(config.data)
