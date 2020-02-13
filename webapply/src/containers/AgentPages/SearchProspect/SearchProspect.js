@@ -61,7 +61,7 @@ const initialValues = {
   tradeLicenseNo: ""
 };
 
-export const SearchProspectComponent = ({ searchApplications, searchResults }) => {
+export const SearchProspectComponent = ({ searchApplications, searchResults, error }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(
@@ -171,7 +171,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
           </Form>
         )}
       </Formik>
-      {searchResults.searchResult && <SearchResult searchResults={searchResults.searchResult} />}
+      {searchResults.searchResult && (
+        <SearchResult searchResults={searchResults.searchResult} error={error} />
+      )}
     </div>
   );
 };
