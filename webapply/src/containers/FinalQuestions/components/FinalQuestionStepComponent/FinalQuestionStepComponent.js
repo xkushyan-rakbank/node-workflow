@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX, NEXT } from "../SignatorySummaryCard/constants";
 import { useStep } from "../../../../hooks/useStep";
+import { STEP_STATUS } from "../../../../constants";
 
 export const FinalQuestionStepComponent = ({
   index = null,
@@ -40,7 +41,9 @@ export const FinalQuestionStepComponent = ({
       title={item.title}
       infoTitle={item.infoTitle}
       isActiveStep={activeStep === item.step}
-      isFilled={availableSteps.some(step => step.step === item.step && step.isCompleted)}
+      isFilled={availableSteps.some(
+        step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
+      )}
       handleClick={createSetStepHandler(item.step)}
       handleContinue={handleContinue(item.eventName)}
       stepForm={item.component}

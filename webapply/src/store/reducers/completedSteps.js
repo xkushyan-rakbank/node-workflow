@@ -5,15 +5,11 @@ export const initialState = [];
 const completedSteps = (state = initialState, action) => {
   switch (action.type) {
     case SET_STEP_STATUS:
-      return state.map(step => {
-        if (step.flowId === action.payload.flowId) {
-          if (step.step === action.payload.step) {
-            return { ...step, ...action.payload.status };
-          }
-          return step.isActive ? { ...step, isActive: false } : step;
-        }
-        return step;
-      });
+      return state.map(step =>
+        step.flowId === action.payload.flowId && step.step === action.payload.step
+          ? { ...step, status: action.payload.status }
+          : step
+      );
     case SET_INITIAL_STEPS:
       return [...state, ...action.payload.steps];
     case REMOVE_SIGNATORY:

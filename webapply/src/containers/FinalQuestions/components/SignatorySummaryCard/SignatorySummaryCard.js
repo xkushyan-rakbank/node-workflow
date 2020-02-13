@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
@@ -11,6 +11,7 @@ import { signatoriesSteps } from "./constants";
 import { checkIsAccountInfoTypeNumber } from "./utils";
 import { COMPANY_SIGNATORY_ID } from "./constants";
 import { getStakeholdersIds } from "../../../../store/selectors/stakeholder";
+import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
@@ -27,9 +28,7 @@ export const SignatorySummaryCardComponent = ({
   const completedSteps = allSignatoriesSteps.filter(
     item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index].id
   );
-  const isAllStepsCompleted = useMemo(() => !completedSteps.some(item => !item.isCompleted), [
-    completedSteps
-  ]);
+  const isAllStepsCompleted = checkAllStepsCompleted(completedSteps);
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);

@@ -23,6 +23,8 @@ import {
   getIsRegisteredInUAE
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, NEXT, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
+import { STEP_STATUS } from "../../constants";
+import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
@@ -41,7 +43,7 @@ export const CompanyInfoPage = ({
     COMPANY_INFO_PAGE_ID,
     companyInfoSteps
   );
-  const isAllStepsCompleted = !availableSteps.some(item => !item.isCompleted);
+  const isAllStepsCompleted = checkAllStepsCompleted(availableSteps);
 
   const handleContinue = event => () => {
     sendProspectToAPI(NEXT, event).then(
@@ -86,7 +88,9 @@ export const CompanyInfoPage = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={activeStep === item.step}
-            isFilled={availableSteps.some(step => step.step === item.step && step.isCompleted)}
+            isFilled={availableSteps.some(
+              step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
+            )}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}

@@ -8,6 +8,7 @@ import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { getSignatoriesSteps, getCompanySteps } from "../../store/selectors/appConfig";
+import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 
 import { useStyles } from "./styled";
 
@@ -18,9 +19,9 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const classes = useStyles();
 
   const companySteps = useSelector(getCompanySteps);
-  const isCompanyStepsCompleted = !companySteps.some(step => !step.isCompleted);
+  const isCompanyStepsCompleted = checkAllStepsCompleted(companySteps);
   const signatoriesSteps = useSelector(getSignatoriesSteps);
-  const isSignatoriesStepsCompleted = !signatoriesSteps.some(step => !step.isCompleted);
+  const isSignatoriesStepsCompleted = checkAllStepsCompleted(signatoriesSteps);
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 

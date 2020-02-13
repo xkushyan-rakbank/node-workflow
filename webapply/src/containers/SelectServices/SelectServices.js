@@ -6,7 +6,7 @@ import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
-import { accountNames } from "../../constants";
+import { accountNames, STEP_STATUS } from "../../constants";
 import { useStep } from "../../hooks/useStep";
 
 import { useStyles } from "./styled";
@@ -21,7 +21,9 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     SELECT_SERVICES_PAGE_ID,
     servicesSteps
   );
-  const isAllStepsCompleted = !availableSteps.some(step => step.step < STEP_3 && !step.isCompleted);
+  const isAllStepsCompleted = !availableSteps.some(
+    step => step.step < STEP_3 && step.status !== STEP_STATUS.COMPLETED
+  );
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
       pushHistory(routes.SubmitApplication);

@@ -21,6 +21,7 @@ import { stakeholderScreeningStatus } from "../../../../constants";
 import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
+import { STEP_STATUS } from "../../../../constants";
 
 const timeInterval = 5000;
 
@@ -114,7 +115,9 @@ const StakeholderStepperComponent = ({
             title={item.title}
             subTitle={item.infoTitle}
             isActiveStep={activeStep === item.step}
-            isFilled={availableSteps.some(step => step.step === item.step && step.isCompleted)}
+            isFilled={availableSteps.some(
+              step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
+            )}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
