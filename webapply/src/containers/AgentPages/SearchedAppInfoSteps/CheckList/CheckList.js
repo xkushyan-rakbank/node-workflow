@@ -10,11 +10,15 @@ import { useStyles } from "./styled";
 export const CheckList = ({ searchResult = {} }) => {
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
-
+  const screeningResultsLength = get(
+    searchResult,
+    "organizationInfo.screeningInfo.screeningResults",
+    []
+  ).length;
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
-      {get(searchResult, "organizationInfo.screeningInfo.screeningResults", []).length ? (
+      {screeningResultsLength ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div>
@@ -66,7 +70,7 @@ export const CheckList = ({ searchResult = {} }) => {
                   <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
                 </div>
               </div>
-              {get(signatory, "screeningInfo.screeningResults", []).length ? (
+              {screeningResultsLength ? (
                 signatory.screeningInfo.screeningResults.map(application => (
                   <div className={classes.applicationRow} key={application.screeningType}>
                     <div>
