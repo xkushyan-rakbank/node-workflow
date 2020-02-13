@@ -7,14 +7,14 @@ import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
 
-export const CheckList = ({ searchResult = {} }) => {
+export const CheckList = ({ prospectInfo = {} }) => {
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
-  const screeningResult = get(searchResult, "signatoryInfo", []);
+
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
-      {screeningResult.length ? (
+      {get(prospectInfo, "organizationInfo.screeningInfo.screeningResults", []).length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div>
@@ -27,7 +27,7 @@ export const CheckList = ({ searchResult = {} }) => {
               <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
             </div>
           </div>
-          {screeningResult.map(application => (
+          {prospectInfo.organizationInfo.screeningInfo.screeningResults.map(application => (
             <div className={classes.applicationRow} key={application.screeningType}>
               <div>
                 <div className={classes.checkListData}>{application.screeningType}</div>
@@ -45,8 +45,8 @@ export const CheckList = ({ searchResult = {} }) => {
         <div className={classes.errorMsg}>{errorMsgs.COMPANY_CHECKLIST_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
-      {(screeningResult || []).length ? (
-        screeningResult.map((signatory, index) => (
+      {(prospectInfo.signatoryInfo || []).length ? (
+        prospectInfo.signatoryInfo.map((signatory, index) => (
           <div key={signatory.signatoryId}>
             <div className={classes.contentWrapper}>
               <Avatar fullName={signatory.fullName} index={index} />
@@ -66,8 +66,8 @@ export const CheckList = ({ searchResult = {} }) => {
                   <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
                 </div>
               </div>
-              {get(signatory, "screeningResults", []).length ? (
-                signatory.screeningResults.map(application => (
+              {get(signatory, "screeningInfo.screeningResults", []).length ? (
+                signatory.screeningInfo.screeningResults.map(application => (
                   <div className={classes.applicationRow} key={application.screeningType}>
                     <div>
                       <div className={classes.checkListData}>{application.screeningType}</div>
