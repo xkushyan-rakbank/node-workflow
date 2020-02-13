@@ -108,20 +108,18 @@ instance.interceptors.response.use(
       if (status === 400 && jsonData.errorType === "ReCaptchaError") {
         store.dispatch(setError(data.errors));
         notificationOptions = { title: "ReCaptchaError", message: data.errors };
-      } else if (
-        status === 400 &&
-        jsonData.errors &&
-        !IGNORE_ERROR_CODES.includes(jsonData.errors[0].errorCode)
-      ) {
-        store.dispatch(setInputsErrors(data.errors));
-        if (jsonData.errorType === "FieldsValidation") {
-          notificationOptions = {
-            title: "Validation Error On Server",
-            message: get(jsonData, "errors[0].message", "Validation Error")
-          };
+      } else if (status === 400 && jsonData.errors) {
+        if (IGNORE_ERROR_CODES.includes(jsonData.errors[0].errorCode)) {
+          notificationOptions = null;
+        } else {
+          store.dispatch(setInputsErrors(data.errors));
+          if (jsonData.errorType === "FieldsValidation") {
+            notificationOptions = {
+              title: "Validation Error On Server",
+              message: get(jsonData, "errors[0].message", "Validation Error")
+            };
+          }
         }
-      } else if (IGNORE_ERROR_CODES.includes(jsonData.errors[0].errorCode)) {
-        notificationOptions = null;
       } else {
         log(jsonData);
         try {

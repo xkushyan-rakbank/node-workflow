@@ -61,7 +61,7 @@ const initialValues = {
   tradeLicenseNo: ""
 };
 
-export const SearchProspectComponent = ({ searchApplications, searchResults, error }) => {
+export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(
@@ -165,15 +165,15 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, err
               <SubmitButton
                 justify="flex-end"
                 label="Search"
-                disabled={Object.keys(omit(values, ["countryCode"])).every(key => !values[key])}
+                disabled={
+                  isLoading || Object.keys(omit(values, ["countryCode"])).every(key => !values[key])
+                }
               />
             </div>
           </Form>
         )}
       </Formik>
-      {searchResults.searchResult && (
-        <SearchResult searchResults={searchResults.searchResult} error={error} />
-      )}
+      {searchResults.searchResult && <SearchResult searchResults={searchResults.searchResult} />}
     </div>
   );
 };
