@@ -25,13 +25,13 @@ export const concatStakeholdersDocs = (incomeDocs, { ...existDocs }) => {
     "documentType"
   );
 
-  stakeholdersDocsDiff.forEach(doc => {
-    existDocs[doc.key] = {
-      documents: [...get(existDocs, `[${doc.key}].documents`, []), omit(doc, "key")]
-    };
-  });
-
-  return existDocs;
+  return stakeholdersDocsDiff.reduce(
+    (acc, doc) => ({
+      ...acc,
+      [doc.key]: [...get(acc, `[${doc.key}].documents`, []), omit(doc, "key")]
+    }),
+    existDocs
+  );
 };
 
 export const createDocumentMapper = (documentType, additionalProps) => doc => {
