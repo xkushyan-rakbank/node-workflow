@@ -72,7 +72,7 @@ export const UploadDocuments = ({
     });
     setErrorMessage(null);
     setSelectedFile(file);
-  }, [document, docOwner, docUpload, index, stakeholderIndex]);
+  }, [documentKey, documentType, docOwner, docUpload, index, stakeholderIndex]);
 
   const fileUploadCancel = useCallback(() => {
     if (docOwner === COMPANY_DOCUMENTS) {
