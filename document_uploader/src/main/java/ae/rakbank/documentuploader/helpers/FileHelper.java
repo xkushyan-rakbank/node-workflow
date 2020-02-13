@@ -67,8 +67,8 @@ public class FileHelper {
 
 	public HttpHeaders configureHttpHeadersForFile(FileDto file) {
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.setContentType(MediaType.valueOf(file.getContentType()));
-		responseHeaders.add(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFileName());
+		responseHeaders.set("Content-Type", file.getContentType());
+		responseHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFileName());
 		return responseHeaders;
 	}
 
