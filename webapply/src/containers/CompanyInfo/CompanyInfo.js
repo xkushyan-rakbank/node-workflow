@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { useReduxStep } from "../../hooks/useReduxStep";
+import { useStep } from "../../hooks/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
@@ -37,13 +37,11 @@ export const CompanyInfoPage = ({
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
     COMPANY_INFO_PAGE_ID,
     companyInfoSteps
   );
-  const isAllStepsCompleted = useMemo(() => !availableSteps.some(item => !item.isCompleted), [
-    availableSteps
-  ]);
+  const isAllStepsCompleted = !availableSteps.some(item => !item.isCompleted);
 
   const handleContinue = event => () => {
     sendProspectToAPI(NEXT, event).then(

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 
 import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -7,7 +7,7 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
 import { accountNames } from "../../constants";
-import { useReduxStep } from "../../hooks/useReduxStep";
+import { useStep } from "../../hooks/useStep";
 
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
@@ -17,14 +17,11 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
   const [isSubmit, setIsSubmit] = useState(false);
   const pushHistory = useTrackingHistory();
 
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
     SELECT_SERVICES_PAGE_ID,
     servicesSteps
   );
-  const isAllStepsCompleted = useMemo(
-    () => !availableSteps.some(step => step.step < STEP_3 && !step.isCompleted),
-    [availableSteps]
-  );
+  const isAllStepsCompleted = !availableSteps.some(step => step.step < STEP_3 && !step.isCompleted);
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
       pushHistory(routes.SubmitApplication);

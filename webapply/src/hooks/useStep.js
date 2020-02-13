@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setStepStatus, setInitialSteps } from "../store/actions/completedSteps";
 
-export const useReduxStep = (flowId, steps) => {
+export const useStep = (flowId, steps) => {
   const dispatch = useDispatch();
 
   const availableSteps = useSelector(state =>

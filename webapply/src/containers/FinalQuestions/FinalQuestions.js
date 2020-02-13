@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import cx from "classnames";
 
@@ -18,14 +18,9 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const classes = useStyles();
 
   const companySteps = useSelector(getCompanySteps);
-  const isCompanyStepsCompleted = useMemo(() => !companySteps.some(step => !step.isCompleted), [
-    companySteps
-  ]);
+  const isCompanyStepsCompleted = !companySteps.some(step => !step.isCompleted);
   const signatoriesSteps = useSelector(getSignatoriesSteps);
-  const isSignatoriesStepsCompleted = useMemo(
-    () => !signatoriesSteps.some(step => !step.isCompleted),
-    [signatoriesSteps]
-  );
+  const isSignatoriesStepsCompleted = !signatoriesSteps.some(step => !step.isCompleted);
 
   const goToUploadDocument = () => history.push(routes.uploadDocuments);
 

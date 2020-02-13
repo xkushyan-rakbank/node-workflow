@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX, NEXT } from "../SignatorySummaryCard/constants";
-import { useReduxStep } from "../../../../hooks/useReduxStep";
+import { useStep } from "../../../../hooks/useStep";
 
 export const FinalQuestionStepComponent = ({
   index = null,
@@ -10,10 +10,7 @@ export const FinalQuestionStepComponent = ({
   stepsArray,
   page
 }) => {
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
-    page,
-    stepsArray
-  );
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(page, stepsArray);
 
   const handleContinue = useCallback(
     eventName => () => {

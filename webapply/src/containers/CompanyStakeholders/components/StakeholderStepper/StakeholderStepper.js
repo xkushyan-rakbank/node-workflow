@@ -20,7 +20,7 @@ import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
 import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
-import { useReduxStep } from "../../../../hooks/useReduxStep";
+import { useStep } from "../../../../hooks/useStep";
 
 const timeInterval = 5000;
 
@@ -47,7 +47,7 @@ const StakeholderStepperComponent = ({
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
   const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useReduxStep(
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
     `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
     stakeHoldersSteps
   );
