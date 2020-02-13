@@ -13,7 +13,6 @@ import {
   Input,
   NumberFormat
 } from "../../../../components/Form";
-import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { yesNoOptions } from "../../../../constants/options";
@@ -63,7 +62,7 @@ const ShareholdingStep = ({
       validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
       validateOnChange={false}
     >
-      {withCompanyStakeholder(index, ({ values, setFieldValue }) => {
+      {({ values, setFieldValue }) => {
         const shareholderHandler = createShareholderHandler({ values, setFieldValue });
         return (
           <Form>
@@ -103,7 +102,7 @@ const ShareholdingStep = ({
             <SubmitButton />
           </Form>
         );
-      })}
+      }}
     </Formik>
   );
 };
