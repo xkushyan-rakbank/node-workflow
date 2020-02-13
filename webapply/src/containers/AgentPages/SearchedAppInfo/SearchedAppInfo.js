@@ -8,7 +8,6 @@ import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
 import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./constants";
-import { useStep } from "../../../components/StepComponent/useStep";
 
 import { useStyles } from "./styled";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
@@ -24,7 +23,15 @@ export const SearchedAppInfoComponent = ({
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
-  const [step, handleSetStep] = useStep(STEP_1, initialAvailableSteps);
+  const [step, setStep] = useState(STEP_1);
+
+  const handleSetStep = nextStep => {
+    if (initialAvailableSteps.includes(nextStep)) {
+      setStep(nextStep);
+    } else if (!nextStep) {
+      setStep(null);
+    }
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
