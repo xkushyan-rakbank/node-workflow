@@ -53,9 +53,10 @@ export const SearchedAppInfoComponent = ({
   const searchResult = (searchResults.searchResult || []).find(
     item => item.prospectId === match.params.id
   );
-  const isScreeningInfo = get(searchResult, "organizationInfo.screeningInfo");
-
-  const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED || !isScreeningInfo;
+  const statusOverAll = get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll");
+  const isNotEnabledForAgent = ["stop"].includes(statusOverAll);
+  const isDisabled =
+    get(searchResult, "status.reasonCode") === STATUS_LOCKED || isNotEnabledForAgent;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
