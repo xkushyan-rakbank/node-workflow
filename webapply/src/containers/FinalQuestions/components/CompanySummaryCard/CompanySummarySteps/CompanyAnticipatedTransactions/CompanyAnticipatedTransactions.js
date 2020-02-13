@@ -24,10 +24,10 @@ import {
 const FormatDecimalNumberInput = props => <NumberFormat decimalScale={2} {...props} />;
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
-  const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
   if (!checkValidNumberFromString(annualFinancialTurnover)) {
     return 0;
   }
+  const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
   return calculation.toFixed(2);
 };
 
@@ -53,7 +53,7 @@ const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => 
 };
 
 const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
-  const monthTotal = getTotalMonthlyCreditsValue(yearTotal);
+  const monthTotal = Math.floor(getTotalMonthlyCreditsValue(yearTotal));
   if (checkValidNumberFromString(field) && checkValidNumberFromString(conditionalField)) {
     return Number(field) + Number(conditionalField) === monthTotal;
   }
