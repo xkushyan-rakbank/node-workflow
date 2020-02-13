@@ -18,7 +18,7 @@ const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => 
   return accountNumbers.length > 0 ? (
     <div className={classes.container}>
       <div className={classes.title}>
-        <img src={submitted} alt="checked" />
+        <img width={120} height={125} src={submitted} alt="checked" />
         <SectionTitleWithInfo
           title={`Meet the brand new accounts for ${organizationInfo.companyName}`}
         />
