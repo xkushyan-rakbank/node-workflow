@@ -23,7 +23,9 @@ export const concatStakeholdersDocs = (incomeDocs, { ...existDocs }) => {
   return stakeholdersDocsDiff.reduce(
     (acc, doc) => ({
       ...acc,
-      [doc.key]: [...get(acc, `[${doc.key}].documents`, []), omit(doc, "key")]
+      [doc.key]: {
+        documents: [...get(acc, `[${doc.key}].documents`, []), omit(doc, "key")]
+      }
     }),
     existDocs
   );
