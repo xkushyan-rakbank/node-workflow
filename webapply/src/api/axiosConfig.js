@@ -3,12 +3,11 @@ import get from "lodash/get";
 
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
-import { searchApplicationsFailure } from "../store/actions/searchProspect";
 import { setError } from "../store/actions/reCaptcha";
 import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
-import { ERROR_CODE_FOR_SEARCH_RESULTS } from "../constants";
+import { IGNORE_ERROR_CODES } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const ENCRYPT_METHODS = ["post", "put"];
@@ -109,11 +108,7 @@ instance.interceptors.response.use(
       if (status === 400 && jsonData.errorType === "ReCaptchaError") {
         store.dispatch(setError(data.errors));
         notificationOptions = { title: "ReCaptchaError", message: data.errors };
-      } else if (
-        status === 400 &&
-        jsonData.errors &&
-        get(jsonData, "errors[0].errorCode") !== ERROR_CODE_FOR_SEARCH_RESULTS
-      ) {
+      } else if (status === 400 && jsonData.errors) {
         store.dispatch(setInputsErrors(data.errors));
         if (jsonData.errorType === "FieldsValidation") {
           notificationOptions = {
@@ -121,6 +116,8 @@ instance.interceptors.response.use(
             message: get(jsonData, "errors[0].message", "Validation Error")
           };
         }
+      } else if (!IGNORE_ERROR_CODES.includes(jsonData.errors[0].errorCode)) {
+        notificationOptions = null;
       } else {
         log(jsonData);
         try {
@@ -129,16 +126,15 @@ instance.interceptors.response.use(
           if (jsonData.status) {
             notificationOptions = { message: errorMessages.join(", ") };
           }
-          if (get(jsonData, "errors[0].errorCode") === ERROR_CODE_FOR_SEARCH_RESULTS) {
-            store.dispatch(searchApplicationsFailure());
-          }
         } catch (e) {
           log(e);
         }
       }
     }
 
-    NotificationsManager.add && NotificationsManager.add(notificationOptions);
+    notificationOptions &&
+      NotificationsManager.add &&
+      NotificationsManager.add(notificationOptions);
     return Promise.reject(error);
   }
 );

@@ -1,25 +1,34 @@
 import {
   SEARCH_APPLICATIONS_SUCCESS,
   IS_APPLY_EDIT_APPLICATION,
-  SEARCH_APPLICATIONS_FAILURE
+  SEARCH_APPLICATIONS_FAILURE,
+  SEARCH_APPLICATIONS
 } from "../actions/searchProspect";
 import { LOGOUT } from "../actions/loginForm";
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   searchResults: [],
-  isApplyEditApplication: null
+  isApplyEditApplication: null,
+  isSearchLoading: false
 };
 
 export default handleActions(
   {
+    [SEARCH_APPLICATIONS]: state => ({
+      ...state,
+      searchResults: initialState.searchResults,
+      isSearchLoading: true
+    }),
     [SEARCH_APPLICATIONS_SUCCESS]: (state, { payload }) => ({
       ...state,
-      searchResults: payload
+      searchResults: payload,
+      isSearchLoading: false
     }),
     [SEARCH_APPLICATIONS_FAILURE]: state => ({
       ...state,
-      searchResultsError: initialState.searchResults
+      searchResults: initialState.searchResults,
+      isSearchLoading: false
     }),
     [IS_APPLY_EDIT_APPLICATION]: (state, { payload }) => ({
       ...state,
