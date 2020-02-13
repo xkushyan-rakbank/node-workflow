@@ -81,9 +81,11 @@ export const ChannelsComponent = ({
         chequeBookApplied: isChequeBookApplied,
         eStatements: true,
         mailStatements: false,
-        signatory: (isHasSignatories ? stakeholders : []).map(({ firstName, lastName }) => ({
-          nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
-        }))
+        signatory: (isHasSignatories && isDebitCardApplied ? stakeholders : []).map(
+          ({ firstName, lastName }) => ({
+            nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
+          })
+        )
       }}
       validationSchema={channelsSchema}
       validateOnChange={false}
