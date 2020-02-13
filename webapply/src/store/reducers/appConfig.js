@@ -57,10 +57,9 @@ const appConfigReducer = (state = initialState, action) => {
         authorizationToken: get(action, "payload.access_token", state.authorizationToken)
       };
     case SET_ACCESS_TOKEN: {
-      console.log("SET_ACCESS_TOKEN ", action.payload);
       return {
         ...state,
-        authorizationToken: action.payload || state.authorizationToken
+        authorizationToken: action.payload
       };
     }
 

@@ -4,10 +4,10 @@ import get from "lodash/get";
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
+import { setAccessToken } from "../store/actions/appConfig";
 import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
-import { setAccessToken } from "../store/actions/appConfig";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const ENCRYPT_METHODS = ["post", "put"];
