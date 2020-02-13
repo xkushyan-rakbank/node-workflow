@@ -7,14 +7,14 @@ import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
 
-export const CheckList = ({ prospectInfo = {} }) => {
+export const CheckList = ({ searchResult = {} }) => {
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
-      {get(prospectInfo, "organizationInfo.screeningInfo.screeningResults", []).length ? (
+      {get(searchResult, "organizationInfo.screeningInfo.screeningResults", []).length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div>
@@ -27,7 +27,7 @@ export const CheckList = ({ prospectInfo = {} }) => {
               <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
             </div>
           </div>
-          {prospectInfo.organizationInfo.screeningInfo.screeningResults.map(application => (
+          {searchResult.organizationInfo.screeningInfo.screeningResults.map(application => (
             <div className={classes.applicationRow} key={application.screeningType}>
               <div>
                 <div className={classes.checkListData}>{application.screeningType}</div>
@@ -45,8 +45,8 @@ export const CheckList = ({ prospectInfo = {} }) => {
         <div className={classes.errorMsg}>{errorMsgs.COMPANY_CHECKLIST_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
-      {(prospectInfo.signatoryInfo || []).length ? (
-        prospectInfo.signatoryInfo.map((signatory, index) => (
+      {(searchResult.signatoryInfo || []).length ? (
+        searchResult.signatoryInfo.map((signatory, index) => (
           <div key={signatory.signatoryId}>
             <div className={classes.contentWrapper}>
               <Avatar fullName={signatory.fullName} index={index} />
