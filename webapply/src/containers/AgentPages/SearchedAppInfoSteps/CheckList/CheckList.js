@@ -66,24 +66,20 @@ export const CheckList = ({ searchResult = {} }) => {
                   <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
                 </div>
               </div>
-              {screeningResult.length ? (
-                screeningResult.map(
-                  screen =>
-                    get(screen, "screeningResults", []).length &&
-                    screen.screeningResults.map(application => (
-                      <div className={classes.applicationRow} key={application.screeningType}>
-                        <div>
-                          <div className={classes.checkListData}>{application.screeningType}</div>
-                        </div>
-                        <div>
-                          <div className={classes.checkListData}>{application.screeningStatus}</div>
-                        </div>
-                        <div>
-                          <div className={classes.checkListData}>{application.screeningReason}</div>
-                        </div>
-                      </div>
-                    ))
-                )
+              {get(signatory, "screeningResults", []).length ? (
+                signatory.screeningResults.map(application => (
+                  <div className={classes.applicationRow} key={application.screeningType}>
+                    <div>
+                      <div className={classes.checkListData}>{application.screeningType}</div>
+                    </div>
+                    <div>
+                      <div className={classes.checkListData}>{application.screeningStatus}</div>
+                    </div>
+                    <div>
+                      <div className={classes.checkListData}>{application.screeningReason}</div>
+                    </div>
+                  </div>
+                ))
               ) : (
                 <div className={classes.errorMsgInsideTable}>{errorMsgs.STAKEHOLDER_ERROR}</div>
               )}
