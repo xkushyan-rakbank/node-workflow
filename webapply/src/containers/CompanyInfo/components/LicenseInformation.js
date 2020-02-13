@@ -61,7 +61,6 @@ export const LicenseInformation = ({ handleContinue }) => {
                 name="licenseNumber"
                 label="License number"
                 path="prospect.organizationInfo.licenseNumber"
-                contextualHelpText="Please enter only alphabets and numbers.Example CN1232018456"
                 component={Input}
                 InputProps={{
                   inputProps: { maxLength: MAX_LICENSE_NUMBER_LENGTH, tabIndex: 0 }

@@ -12,7 +12,6 @@ import {
   SelectAutocomplete,
   AutoSaveField as Field
 } from "../../../../components/Form";
-import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { yesNoOptions } from "../../../../constants/options";
 import { UAE, SOLE_PROPRIETOR } from "../../../../constants";
@@ -37,7 +36,7 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
       validationSchema={signatoryRightsSchema}
       validateOnChange={false}
     >
-      {withCompanyStakeholder(index, ({ values, setFieldValue, setFieldTouched }) => (
+      {({ values, setFieldValue, setFieldTouched }) => (
         <Form>
           <Grid container>
             <Field
@@ -89,7 +88,7 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
 
           <SubmitButton />
         </Form>
-      ))}
+      )}
     </Formik>
   );
 };

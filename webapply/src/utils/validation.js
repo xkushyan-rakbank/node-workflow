@@ -1,21 +1,23 @@
 export const USER_NAME_REGEX = /^([a-zA-Z0-9.]){1,65}$/;
 export const PASSWORD_REGEX = /^([a-zA-Z0-9#@_]){1,30}$/;
-export const FULL_NAME_REGEX = /^([a-zA-Z ]){1,77}$/;
+export const FULL_NAME_REGEX = /^([a-zA-Z ]){1,79}$/;
 export const NAME_REGEX = /^([a-zA-Z]){1,30}$/;
 
 export const UAE_MOBILE_PHONE_REGEX = /^[0-9]{9}$/;
 export const UAE_LANDLINE_PHONE_REGEX = /^[0-9]{8}$/;
 export const MIN_NON_UAE_PHONE_LENGTH = 4;
 export const MAX_NON_UAE_PHONE_LENGTH = 22;
+export const MAX_NAME_IN_BUSINESS_LENGTH = 19;
 
 export const NUMBER_REGEX = /^[0-9]*$/;
 
 export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9])*$/;
 
+export const COMPANY_NAME_SPEC_CHAR_REGEX = /^[A-Za-z0-9\s!@#$%^&*()_+=`~\\\][{}|';:/.,?><-]*$/;
 export const COMPANY_NAME_REGEX = /^([a-zA-Z '”`-]){1,30}$/;
 export const BANK_NAME_REGEX = /^([a-zA-Z. ]){1,50}$/;
 export const CURRENCY_REGEX = /^[0-9]*([.][0-9]{1,2})?$/;
-export const ADDRESS_NUMBER_REGEX = /^[a-zA-Z0-9\\@\\#\\%\\*\\(\\)]*$/;
+export const ADDRESS_NUMBER_REGEX = /^[A-Za-z0-9 !@#$%^&*()_+=`~{}[\]|';:/.,?><-]*$/;
 export const ADDRESS_REGEX = /^[a-zA-Z0-9 \\@\\#\\%\\*\\(\\)]{1,50}$/;
 export const MOTHERS_MAIDEN_NAME_REGEX = /^([a-zA-Z ]){1,30}$/;
 export const EMPLOYMENT_TYPE_REGEX = /^([a-zA-Z ]){1,50}$/;

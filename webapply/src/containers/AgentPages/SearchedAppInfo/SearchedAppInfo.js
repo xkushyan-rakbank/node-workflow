@@ -8,7 +8,7 @@ import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
 import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./constants";
-import { useStep } from "../../../components/StepComponent/useStep";
+import { APP_STOP_SCREEN_RESULT } from "../../../constants";
 
 import { useStyles } from "./styled";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
@@ -18,13 +18,21 @@ export const SearchedAppInfoComponent = ({
   match,
   updateProspectId,
   retrieveDocDetails,
-  getProspectInfoPromisify,
+  getProspectInfo,
   setIsApplyEditApplication,
   prospectInfo
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
-  const [step, handleSetStep] = useStep(STEP_1, initialAvailableSteps);
+  const [step, setStep] = useState(STEP_1);
+
+  const handleSetStep = nextStep => {
+    if (initialAvailableSteps.includes(nextStep)) {
+      setStep(nextStep);
+    } else if (!nextStep) {
+      setStep(null);
+    }
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
@@ -32,8 +40,8 @@ export const SearchedAppInfoComponent = ({
 
   useEffect(() => {
     updateProspectId(match.params.id);
-    getProspectInfoPromisify(match.params.id);
-  }, [updateProspectId, retrieveDocDetails, match.params.id]);
+    getProspectInfo(match.params.id);
+  }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfo]);
 
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
@@ -53,8 +61,10 @@ export const SearchedAppInfoComponent = ({
   const searchResult = (searchResults.searchResult || []).find(
     item => item.prospectId === match.params.id
   );
+  const isDisabled =
+    get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
+    get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT;
 
-  const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
@@ -81,6 +91,7 @@ export const SearchedAppInfoComponent = ({
                 hideContinue={true}
                 prospectInfo={prospectInfo}
                 stepForm={item.component}
+                searchResult={searchResult}
               />
             );
           })}
@@ -95,6 +106,7 @@ export const SearchedAppInfoComponent = ({
           disabled={isDisabled}
         />
       </div>
+
       <ConfirmDialog
         isOpen={isDisplayConfirmDialog}
         handleConfirm={confirmHandler}

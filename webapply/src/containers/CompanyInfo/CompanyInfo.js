@@ -2,10 +2,12 @@ import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
-import { useStep } from "../../components/StepComponent/useStep";
+import { BackLink } from "../../components/Buttons/BackLink";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { useStep } from "../../hooks/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
+import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
 import {
@@ -20,7 +22,9 @@ import {
   getSendProspectToAPIInfo,
   getIsRegisteredInUAE
 } from "../../store/selectors/appConfig";
-import { companyInfoSteps, STEP_1, STEP_3, NEXT } from "./constants";
+import { companyInfoSteps, NEXT, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
+import { STEP_STATUS } from "../../constants";
+import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
 
@@ -30,11 +34,16 @@ export const CompanyInfoPage = ({
   fullName,
   organizationInfo: { companyName },
   setScreeningError,
-  isRegisteredInUAE
+  isRegisteredInUAE,
+  isComeFromROScreens
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(STEP_1);
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
+    COMPANY_INFO_PAGE_ID,
+    companyInfoSteps
+  );
+  const isAllStepsCompleted = checkAllStepsCompleted(availableSteps);
 
   const handleContinue = event => () => {
     sendProspectToAPI(NEXT, event).then(
@@ -42,7 +51,7 @@ export const CompanyInfoPage = ({
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);
         }
-        handleSetNextStep();
+        handleSetNextStep(activeStep);
       },
       () => {}
     );
@@ -65,7 +74,9 @@ export const CompanyInfoPage = ({
       <FormCard
         content={
           <>
-            <div className={classes.title}>{step !== STEP_1 ? companyName : "Company Name"}</div>
+            <div className={classes.title}>
+              {activeStep !== STEP_1 ? companyName : "Company Name"}
+            </div>
             {loading && <StatusLoader />}
           </>
         }
@@ -76,8 +87,10 @@ export const CompanyInfoPage = ({
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}
-            isActiveStep={step === item.step}
-            isFilled={availableSteps.includes(item.step)}
+            isActiveStep={activeStep === item.step}
+            isFilled={availableSteps.some(
+              step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
+            )}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}
@@ -86,11 +99,12 @@ export const CompanyInfoPage = ({
       </FormCard>
 
       <div className="linkContainer">
+        {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
         <ContainedButton
           style={{ padding: "0 32px", borderRadius: "28px" }}
           justify="flex-end"
           label="Next Step"
-          disabled={step <= STEP_3}
+          disabled={!isAllStepsCompleted}
           handleClick={handleClickNextStep}
           withRightArrow
         />
@@ -103,11 +117,13 @@ const mapStateToProps = state => ({
   ...getSendProspectToAPIInfo(state),
   fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state),
-  isRegisteredInUAE: getIsRegisteredInUAE(state)
+  isRegisteredInUAE: getIsRegisteredInUAE(state),
+  isComeFromROScreens: getIsEditableStatusSearchInfo(state)
 });
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
+
   setScreeningError
 };
 

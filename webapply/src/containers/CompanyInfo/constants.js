@@ -34,3 +34,5 @@ export const companyInfoSteps = [
     eventName: GA_EVENTS.COMPANY_INFORMATION_LICENSE_CONTINUE
   }
 ];
+
+export const COMPANY_INFO_PAGE_ID = "companyInfo";

@@ -7,7 +7,7 @@ import cx from "classnames";
 import { format, isValid } from "date-fns";
 
 import { getApplicantInfo } from "../../../../store/selectors/appConfig";
-import { formatFullNameLength } from "./utils";
+import { checkFullNameLength } from "./utils";
 import { InfoTitle } from "../../../../components/InfoTitle";
 import {
   CustomSelect,
@@ -18,7 +18,6 @@ import {
   DatePicker,
   InlineRadioGroup
 } from "../../../../components/Form";
-import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { yesNoOptions } from "../../../../constants/options";
 import { DATE_FORMAT } from "../../../../constants";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
@@ -37,14 +36,40 @@ const personalInformationSchema = Yup.object().shape({
       .required(getRequiredMessage("First name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("First name"))
+      .test(
+        "length validation",
+        "First, Middle and Last name combined have a limit of 77 characters",
+        function(firstName) {
+          const { middleName, lastName } = this.parent;
+          return checkFullNameLength(firstName, middleName, lastName);
+        }
+      )
   }),
-  middleName: Yup.string().matches(NAME_REGEX, getInvalidMessage("Middle name")),
+  middleName: Yup.string()
+    .max(30, "Maximum 30 characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Middle name"))
+    .test(
+      "length validation",
+      "First, Middle and Last name combined have a limit of 77 characters",
+      function(middleName) {
+        const { firstName, lastName } = this.parent;
+        return checkFullNameLength(firstName, middleName, lastName);
+      }
+    ),
   lastName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
       .required(getRequiredMessage("Last name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("Last name"))
+      .test(
+        "length validation",
+        "First, Middle and Last name combined have a limit of 77 characters",
+        function(lastName) {
+          const { firstName, middleName } = this.parent;
+          return checkFullNameLength(firstName, middleName, lastName);
+        }
+      )
   }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
@@ -64,11 +89,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
-    [`prospect.signatoryInfo[${index}].fullName`]: formatFullNameLength(
-      values.isShareholderACompany
-        ? applicantInfo.fullName
-        : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
-    )
+    [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
+      ? applicantInfo.fullName
+      : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
   });
 
   return (
@@ -86,7 +109,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={false}
     >
-      {withCompanyStakeholder(index, ({ values, setFieldValue, resetForm }) => (
+      {({ values, setFieldValue, resetForm }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -206,7 +229,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
           <SubmitButton />
         </Form>
-      ))}
+      )}
     </Formik>
   );
 };

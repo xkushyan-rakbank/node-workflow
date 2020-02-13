@@ -12,7 +12,6 @@ import {
   Checkbox,
   Input
 } from "../../../../components/Form";
-import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { ALPHANUMERIC_REGEX } from "../../../../utils/validation";
@@ -74,7 +73,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
       validationSchema={nationalitySchema}
       validateOnChange={false}
     >
-      {withCompanyStakeholder(index, ({ values, setFieldValue, errors }) => (
+      {({ values, setFieldValue, errors }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -127,19 +126,13 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               passportIndex,
                               setFieldValue
                             )}
-                            changeProspect={prospect => {
-                              if (passportIndex > 0) {
-                                return prospect;
-                              }
-
-                              return {
-                                ...prospect,
-                                // eslint-disable-next-line max-len
-                                [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: values.passportDetails.map(
-                                  ({ id, ...withoutId }) => withoutId
-                                )
-                              };
-                            }}
+                            changeProspect={prospect => ({
+                              ...prospect,
+                              // eslint-disable-next-line max-len
+                              [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: values.passportDetails.map(
+                                ({ id, ...withoutId }) => withoutId
+                              )
+                            })}
                             disabled={isAdditionalCitizenshipDisabled(
                               values,
                               passportIndex,
@@ -177,7 +170,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
           </Grid>
           <SubmitButton />
         </Form>
-      ))}
+      )}
     </Formik>
   );
 };

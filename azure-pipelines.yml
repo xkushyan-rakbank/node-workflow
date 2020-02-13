@@ -179,7 +179,25 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
           ArtifactName: 'WebapplyServer'
-          
+      - bash: |
+          npm install slack-cli -g
+          echo "The new Onboarding build is available for testing: " > release-notes.txt
+          echo -e "\n" >> release-notes.txt
+          echo "  $BUILD_ID " >> release-notes.txt
+          echo -e "\n" >> release-notes.txt
+          echo -e "Changelog:" >> release-notes.txt
+          echo -e "\n" >> release-notes.txt
+          GITLOG=`git log --merges --since="1 week ago" --pretty="%h %s\n" `
+          echo -e $GITLOG >> release-notes.txt
+          echo -e "\n" >> release-notes.txt
+          git diff --stat $(git describe --tags --abbrev=0)..HEAD >> release-notes.txt
+          slackcli -h "co-releasenotes" -e :checkered_flag: -t $(SLACK_TOKEN) -u "Slackbot" -m "`cat release-notes.txt`"
+        env:
+          BUILD_NUMBER: $(Build.BuildNumber)
+          BUILD_ID: $(Build.BuildId)
+        displayName: 'Create release-notes notification'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        
     - job: document_uploader
       pool:
        name: Hosted macOS

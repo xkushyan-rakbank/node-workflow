@@ -17,7 +17,7 @@ const style = theme => ({
     textAlign: "center",
     boxSizing: "border-box",
     [theme.breakpoints.only("xs")]: {
-      margin: "5px auto",
+      margin: "0 auto 10px",
       width: "100%"
     }
   },

@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
 import { checkIsChequeBookApplied, checkIsDebitCardApplied } from "./utils";
-import { NAME_REGEX } from "../../../../utils/validation";
+import { FULL_NAME_REGEX } from "../../../../utils/validation";
 import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
@@ -14,7 +14,6 @@ import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 import { ICONS, Icon } from "../../../../components/Icons/Icon";
 import { Divider } from "../Divider";
-import { INITIAL_INDEX } from "../../constants";
 import { ContexualHelp } from "../../../../components/Notifications";
 
 import { useStyles } from "./styled";
@@ -31,7 +30,7 @@ const channelsSchema = Yup.object({
   signatory: Yup.array().of(
     Yup.object().shape({
       nameOnDebitCard: Yup.string()
-        .matches(NAME_REGEX, getInvalidMessage("Name on debit card"))
+        .matches(FULL_NAME_REGEX, getInvalidMessage("Name on debit card"))
         .max(19, "Max length is 19 symbols")
         .required(getRequiredMessage("Name on debit card"))
     })
@@ -47,8 +46,8 @@ const CustomCheckbox = props => (
   />
 );
 
-const pathDebitCardApplied = `prospect.accountInfo[${INITIAL_INDEX}].debitCardApplied`;
-const pathChequeBookApplied = `prospect.accountInfo[${INITIAL_INDEX}].chequeBookApplied`;
+const pathDebitCardApplied = "prospect.accountInfo[0].debitCardApplied";
+const pathChequeBookApplied = "prospect.accountInfo[0].chequeBookApplied";
 
 export const ChannelsComponent = ({
   isHasSignatories,
@@ -149,7 +148,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="eStatements"
-            path={`prospect.accountInfo[${INITIAL_INDEX}].eStatements`}
+            path={"prospect.accountInfo[0].eStatements"}
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
@@ -161,7 +160,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="mailStatements"
-            path={`prospect.accountInfo[${INITIAL_INDEX}].mailStatements`}
+            path={"prospect.accountInfo[0].mailStatements"}
             label="I want paper statements (monthly charges apply)"
             classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {

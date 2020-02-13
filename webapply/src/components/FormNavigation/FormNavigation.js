@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { FormNavigationStep } from "../FormNavigationStep";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
-import Header from "../Header";
+import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
 import { formStepper, searchProspectStepper } from "../../constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
@@ -35,6 +35,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   });
 
   const isChatVisible =
+    !isApplyEditApplication &&
     pathname.indexOf(agentBaseName) === -1 &&
     ![
       routes.accountsComparison,

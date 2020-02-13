@@ -15,6 +15,7 @@ export const AutoSaveField = ({
   datalistId,
   filterOptions = option => option,
   changeProspect = prospect => prospect,
+  initialValue = "",
   ...rest
 }) => {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ export const AutoSaveField = ({
   useEffect(() => {
     if (isLoadedDefaultValueFromStore && path && appConfig) {
       const newTimer = setTimeout(() => {
-        const oldValue = get(appConfig, path);
+        const oldValue = get(appConfig, path, initialValue);
 
         if (!isEqual(oldValue, value)) {
           const prospect = changeProspect({ [path]: value }, value, path);

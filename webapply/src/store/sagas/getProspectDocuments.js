@@ -14,6 +14,7 @@ import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
+import mapValues from "lodash/mapValues";
 import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
 import {
   getProspectId,
@@ -34,7 +35,8 @@ import { log } from "../../utils/loggger";
 import {
   concatCompanyDocs,
   concatStakeholdersDocs,
-  createDocumentMapper
+  createDocumentMapper,
+  appendDocumentKey
 } from "../../utils/documents";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 
@@ -80,40 +82,29 @@ function* getProspectDocumentsSaga() {
 
   try {
     const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID, headers);
+    const companyDocs = appendDocumentKey(data.companyDocuments);
+    const stakeHoldersDocs = mapValues(data.stakeholdersDocuments, stakeHolder => ({
+      ...stakeHolder,
+      documents: appendDocumentKey(stakeHolder.documents)
+    }));
 
-    if (isDocsUploaded) {
-      const companyDocuments = concatCompanyDocs(
-        existDocuments.companyDocuments,
-        data.companyDocuments
-      );
-      const stakeholdersDocuments = concatStakeholdersDocs(
-        data.stakeholdersDocuments,
-        existDocuments.stakeholdersDocuments
-      );
+    const companyDocuments = concatCompanyDocs(
+      isDocsUploaded ? existDocuments.companyDocuments : [],
+      companyDocs
+    );
+    const stakeholdersDocuments = concatStakeholdersDocs(
+      stakeHoldersDocs,
+      isDocsUploaded ? existDocuments.stakeholdersDocuments : {}
+    );
 
-      config.prospect.documents = {
-        companyDocuments,
-        stakeholdersDocuments
-      };
-    } else {
-      config.prospect.documents = data;
-    }
-
+    config.prospect.documents = { companyDocuments, stakeholdersDocuments };
     yield put(updateProspect(config));
   } catch (error) {
     log(error);
   }
 }
 
-function* uploadDocumentsBgSync({
-  data,
-  docProps,
-  docOwner,
-  documentType,
-  documentKey,
-  index,
-  stakeholderIndex
-}) {
+function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeholderIndex }) {
   const source = CancelToken.source();
 
   try {
@@ -134,14 +125,14 @@ function* uploadDocumentsBgSync({
 
     if (docOwner === COMPANY_DOCUMENTS) {
       const companyDocuments = documents[COMPANY_DOCUMENTS].map(
-        createDocumentMapper(documentType, additionalProps)
+        createDocumentMapper(documentKey, additionalProps)
       );
 
       documents[COMPANY_DOCUMENTS] = companyDocuments;
     } else {
       const stakeholdersDocuments = documents[STAKEHOLDER_DOCUMENTS][
         stakeholderIndex
-      ].documents.map(createDocumentMapper(documentType, additionalProps));
+      ].documents.map(createDocumentMapper(documentKey, additionalProps));
 
       documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].documents = stakeholdersDocuments;
     }

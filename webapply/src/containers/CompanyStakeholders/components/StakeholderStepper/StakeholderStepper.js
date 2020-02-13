@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { connect } from "react-redux";
+import React, { useState, useCallback } from "react";
+import { connect, useSelector } from "react-redux";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
@@ -11,7 +11,6 @@ import {
   sendProspectToAPIPromisify,
   setScreeningError
 } from "../../../../store/actions/sendProspectToAPI";
-import { useStep } from "../../../../components/StepComponent/useStep";
 import {
   changeEditableStakeholder,
   setFillStakeholder,
@@ -19,7 +18,10 @@ import {
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 import { stakeholderScreeningStatus } from "../../../../constants";
-import { quantityErrorSelector } from "../../../../store/selectors/stakeholder";
+import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
+import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
+import { useStep } from "../../../../hooks/useStep";
+import { STEP_STATUS } from "../../../../constants";
 
 const timeInterval = 5000;
 
@@ -45,10 +47,10 @@ const StakeholderStepperComponent = ({
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
-  const initialAvailableSteps = stakeHoldersSteps.map(item => item.step);
-  const [step, handleSetStep, availableSteps, handleSetNextStep] = useStep(
-    isEditInProgress ? null : STEP_1,
-    isEditInProgress ? initialAvailableSteps : [STEP_1]
+  const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
+    `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
+    stakeHoldersSteps
   );
 
   const handleContinue = event => () =>
@@ -58,25 +60,21 @@ const StakeholderStepperComponent = ({
           setScreeningError(stakeholderScreeningStatus);
         }
 
-        if (step === STEP_6) {
+        if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
           showAddButton();
+          changeFinalScreenDisplay(true);
+          setTimeout(() => {
+            changeFinalScreenDisplay(false);
+            changeEditableStakeholder();
+          }, timeInterval);
         }
-        isEditInProgress ? handleSetStep() : handleSetNextStep();
+        isEditInProgress ? handleSetStep() : handleSetNextStep(activeStep);
       },
       () => {}
     );
-  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
-  useEffect(() => {
-    if (step <= stakeHoldersSteps.length) return;
-    changeFinalScreenDisplay(true);
-    const interval = setInterval(() => {
-      changeFinalScreenDisplay(false);
-      changeEditableStakeholder();
-    }, timeInterval);
-    return () => clearInterval(interval);
-  }, [step, changeEditableStakeholder]);
+  const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleDeleteStakeholder = useCallback(() => {
     setIsDisplayConfirmation(false);
@@ -100,7 +98,7 @@ const StakeholderStepperComponent = ({
 
   return (
     <CompanyStakeholderCard
-      isStatusShown={!isEditInProgress ? step !== STEP_1 : isStatusLoading}
+      isStatusShown={!isEditInProgress ? activeStep !== STEP_1 : isStatusLoading}
       firstName={firstName}
       lastName={lastName}
       middleName={middleName}
@@ -116,8 +114,10 @@ const StakeholderStepperComponent = ({
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}
-            isActiveStep={step === item.step}
-            isFilled={availableSteps.includes(item.step)}
+            isActiveStep={activeStep === item.step}
+            isFilled={availableSteps.some(
+              step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
+            )}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}

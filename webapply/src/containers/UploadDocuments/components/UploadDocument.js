@@ -1,5 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
-import nanoid from "nanoid";
+import React, { useState, useRef, useCallback } from "react";
 import * as Yup from "yup";
 
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
@@ -34,7 +33,7 @@ export const UploadDocuments = ({
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
   const inputEl = useRef(null);
-  const documentKey = useMemo(() => nanoid(), []);
+  const { documentKey, documentType = "" } = document;
   const isUploaded = document.uploadStatus === "Uploaded";
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
@@ -51,10 +50,7 @@ export const UploadDocuments = ({
       return setErrorMessage(error.message);
     }
 
-    const fileInfo = JSON.stringify({
-      documentKey,
-      documentType: document.documentType || ""
-    });
+    const fileInfo = JSON.stringify({ documentKey, documentType });
     const docProps = {
       uploadStatus: "Uploaded",
       fileSize: file.size,
@@ -69,14 +65,14 @@ export const UploadDocuments = ({
       data,
       docProps,
       docOwner,
-      documentType: document.documentType,
+      documentType,
       documentKey,
       index,
       stakeholderIndex
     });
     setErrorMessage(null);
     setSelectedFile(file);
-  }, [document, docOwner, docUpload, documentKey, index, stakeholderIndex]);
+  }, [documentKey, documentType, docOwner, docUpload, index, stakeholderIndex]);
 
   const fileUploadCancel = useCallback(() => {
     if (docOwner === COMPANY_DOCUMENTS) {

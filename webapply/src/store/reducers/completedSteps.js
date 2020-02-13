@@ -1,58 +1,19 @@
-import {
-  SET_COMPANY_STEPS_COMPLETE,
-  SET_SIGNATORY_STEPS_COMPLETE,
-  ADD_SIGNATORY,
-  REMOVE_SIGNATORY
-} from "../actions/completedSteps";
+import { SET_STEP_STATUS, SET_INITIAL_STEPS, REMOVE_SIGNATORY } from "../actions/completedSteps";
 
-export const initialState = {
-  finalQuestions: {
-    companySteps: false,
-    signatorySteps: []
-  }
-};
+export const initialState = [];
 
 const completedSteps = (state = initialState, action) => {
   switch (action.type) {
-    case SET_COMPANY_STEPS_COMPLETE:
-      return {
-        ...state,
-        finalQuestions: {
-          ...state.finalQuestions,
-          companySteps: action.value
-        }
-      };
-    case SET_SIGNATORY_STEPS_COMPLETE:
-      return {
-        ...state,
-        finalQuestions: {
-          ...state.finalQuestions,
-          signatorySteps: state.finalQuestions.signatorySteps.map((signatory, index) => {
-            if (index === action.payload.index) {
-              return action.payload.value;
-            }
-            return signatory;
-          })
-        }
-      };
-    case ADD_SIGNATORY:
-      return {
-        ...state,
-        finalQuestions: {
-          ...state.finalQuestions,
-          signatorySteps: [...state.finalQuestions.signatorySteps, false]
-        }
-      };
+    case SET_STEP_STATUS:
+      return state.map(step =>
+        step.flowId === action.payload.flowId && step.step === action.payload.step
+          ? { ...step, status: action.payload.status }
+          : step
+      );
+    case SET_INITIAL_STEPS:
+      return [...state, ...action.payload.steps];
     case REMOVE_SIGNATORY:
-      return {
-        ...state,
-        finalQuestions: {
-          ...state.finalQuestions,
-          signatorySteps: state.finalQuestions.signatorySteps.filter(
-            (signatory, index) => index !== action.index
-          )
-        }
-      };
+      return state.filter(step => !step.flowId.includes(action.signatoryId));
     default:
       return state;
   }
