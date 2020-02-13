@@ -33,10 +33,11 @@ export const UploadDocuments = ({
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
   const inputEl = useRef(null);
+  const { documentKey, documentType = "" } = document;
   const isUploaded = document.uploadStatus === "Uploaded";
   const isUploading = selectedFile && !isUploaded;
-  const isUploadError = uploadErrorMessage[document.documentKey];
-  const percentComplete = isUploaded ? 100 : progress[document.documentKey] || 0;
+  const isUploadError = uploadErrorMessage[documentKey];
+  const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
 
   const fileUploadClick = event => (event.target.value = null);
 
@@ -49,10 +50,7 @@ export const UploadDocuments = ({
       return setErrorMessage(error.message);
     }
 
-    const fileInfo = JSON.stringify({
-      documentKey: document.documentKey,
-      documentType: document.documentType || ""
-    });
+    const fileInfo = JSON.stringify({ documentKey, documentType });
     const docProps = {
       uploadStatus: "Uploaded",
       fileSize: file.size,
@@ -67,8 +65,8 @@ export const UploadDocuments = ({
       data,
       docProps,
       docOwner,
-      documentType: document.documentType,
-      documentKey: document.documentKey,
+      documentType,
+      documentKey,
       index,
       stakeholderIndex
     });
@@ -86,9 +84,9 @@ export const UploadDocuments = ({
         [`prospect.documents[${STAKEHOLDER_DOCUMENTS}][${stakeholderIndex}].documents[${index}].uploadStatus`]: "NotUploaded"
       });
     }
-    cancelDocUpload(document.documentKey);
+    cancelDocUpload(documentKey);
     setSelectedFile(null);
-  }, [cancelDocUpload, docOwner, document.documentKey, index, stakeholderIndex, updateProspect]);
+  }, [cancelDocUpload, docOwner, documentKey, index, stakeholderIndex, updateProspect]);
 
   const reUploadHandler = useCallback(() => {
     inputEl.current.click();

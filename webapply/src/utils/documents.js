@@ -17,7 +17,7 @@ export const concatStakeholdersDocs = (incomeDocs, { ...existDocs }) => {
   const stakeholdersDocsDiff = differenceBy(
     mergeObjectToCollection(incomeDocs),
     mergeObjectToCollection(existDocs),
-    "documentType"
+    "documentKey"
   );
 
   return stakeholdersDocsDiff.reduce(
