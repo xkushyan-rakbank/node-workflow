@@ -7,7 +7,13 @@ import routes from "../../../routes";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
-import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./constants";
+import {
+  searchedAppInfoSteps,
+  CONFIRM_MESSAGE,
+  STEP_1,
+  STATUS_LOCKED,
+  APP_STOP_SCREEN_RESULT
+} from "./constants";
 import { useStep } from "../../../components/StepComponent/useStep";
 
 import { useStyles } from "./styled";
@@ -53,10 +59,11 @@ export const SearchedAppInfoComponent = ({
   const searchResult = (searchResults.searchResult || []).find(
     item => item.prospectId === match.params.id
   );
-  const statusOverAll = get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll");
-  const isNotEnabledForAgent = "stop" === statusOverAll;
+
   const isDisabled =
-    get(searchResult, "status.reasonCode") === STATUS_LOCKED || isNotEnabledForAgent;
+    get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
+    get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT;
+
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
