@@ -34,7 +34,7 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required(getRequiredMessage("Your Name"))
-    .max(77, "Maximum 77 characters allowed")
+    .max(79, "Maximum 79 characters allowed")
     .matches(FULL_NAME_REGEX, getInvalidMessage("Your Name")),
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
