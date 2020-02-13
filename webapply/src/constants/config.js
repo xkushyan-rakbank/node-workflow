@@ -334,34 +334,7 @@ export const prospect = {
     monthlyBalanceNotification: 0
   },
   documents: {
-    companyDocuments: [
-      {
-        documentType: "Passport",
-        signatoryId: "string",
-        signatoryName: "string",
-        documentTitle: "string",
-        documentKey: "string",
-        fileName: "string",
-        filePath: "string",
-        url: "string",
-        fileData: "string",
-        fileFormat: "application/pdf",
-        fileSize: 0,
-        fileDescription: "string",
-        submittedBy: "string",
-        submittedDt: "string",
-        updatedBy: "string",
-        updatedDt: "string",
-        avsCheckDt: "string",
-        avsCheck: false,
-        verified: false,
-        verifiedBy: "string",
-        isEncrypted: false,
-        required: true,
-        encryptionDetails: "string",
-        uploadStatus: "NotUploaded"
-      }
-    ],
+    companyDocuments: [],
     stakeholdersDocuments: null
   },
   prospectStatusInfo: {
