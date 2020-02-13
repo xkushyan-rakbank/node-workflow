@@ -10,15 +10,11 @@ import { useStyles } from "./styled";
 export const CheckList = ({ searchResult = {} }) => {
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
-  const screeningResultsLength = get(
-    searchResult,
-    "organizationInfo.screeningInfo.screeningResults",
-    []
-  ).length;
+  const screeningResults = get(searchResult, "organizationInfo.screeningInfo.screeningResults", []);
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
-      {screeningResultsLength ? (
+      {screeningResults.length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div>
@@ -31,7 +27,7 @@ export const CheckList = ({ searchResult = {} }) => {
               <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
             </div>
           </div>
-          {searchResult.organizationInfo.screeningInfo.screeningResults.map(application => (
+          {screeningResults.map(application => (
             <div className={classes.applicationRow} key={application.screeningType}>
               <div>
                 <div className={classes.checkListData}>{application.screeningType}</div>
@@ -70,8 +66,8 @@ export const CheckList = ({ searchResult = {} }) => {
                   <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
                 </div>
               </div>
-              {screeningResultsLength ? (
-                signatory.screeningInfo.screeningResults.map(application => (
+              {screeningResults.length ? (
+                screeningResults.map(application => (
                   <div className={classes.applicationRow} key={application.screeningType}>
                     <div>
                       <div className={classes.checkListData}>{application.screeningType}</div>
