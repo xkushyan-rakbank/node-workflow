@@ -13,7 +13,7 @@ export const NUMBER_REGEX = /^[0-9]*$/;
 
 export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9])*$/;
 
-export const COMPANY_NAME_SPEC_CHAR_REGEX = /^[A-Za-z0-9\s!@#$%^&*()_+=-`~\\\][{}|';:/.,?><]*$/;
+export const COMPANY_NAME_SPEC_CHAR_REGEX = /^[A-Za-z0-9\s!@#$%^&*()_+=`~\\\][{}|';:/.,?><-]*$/;
 export const COMPANY_NAME_REGEX = /^([a-zA-Z '”`-]){1,30}$/;
 export const BANK_NAME_REGEX = /^([a-zA-Z. ]){1,50}$/;
 export const CURRENCY_REGEX = /^[0-9]*([.][0-9]{1,2})?$/;
