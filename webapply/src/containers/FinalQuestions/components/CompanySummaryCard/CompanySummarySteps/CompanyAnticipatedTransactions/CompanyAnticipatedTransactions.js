@@ -26,11 +26,14 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
   if (!checkValidNumberFromString(annualFinancialTurnover)) {
     return 0;
   }
-  return Math.round(parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT);
+  const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
+  return Number(calculation.toFixed(2));
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
-  return monthlyCreditsValue ? `${monthlyCreditsValue} in Total Monthly Credits` : "9999999999.99";
+  return checkValidNumberFromString(monthlyCreditsValue)
+    ? `${monthlyCreditsValue} in Total Monthly Credits`
+    : "9999999999.99";
 };
 
 const checkValidNumberFromString = string => {

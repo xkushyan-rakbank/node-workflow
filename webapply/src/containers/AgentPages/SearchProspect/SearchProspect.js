@@ -61,7 +61,7 @@ const initialValues = {
   tradeLicenseNo: ""
 };
 
-export const SearchProspectComponent = ({ searchApplications, searchResults }) => {
+export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(
@@ -165,7 +165,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
               <SubmitButton
                 justify="flex-end"
                 label="Search"
-                disabled={Object.keys(omit(values, ["countryCode"])).every(key => !values[key])}
+                disabled={
+                  isLoading || Object.keys(omit(values, ["countryCode"])).every(key => !values[key])
+                }
               />
             </div>
           </Form>
