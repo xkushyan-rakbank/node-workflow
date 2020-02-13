@@ -6,11 +6,14 @@ import * as Yup from "yup";
 import get from "lodash/get";
 
 import { getSignatories } from "../../../../store/selectors/appConfig";
-import { AutoSaveField as Field, SelectAutocomplete, Input } from "../../../../components/Form";
+import {
+  AutoSaveField as Field,
+  SelectAutocomplete,
+  EmiratesID
+} from "../../../../components/Form";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
-import { MAX_EMIRATE_ID_LENGTH } from "./constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 
 const getCountryOfResidenceSchema = isSignatory =>
@@ -24,6 +27,7 @@ const getCountryOfResidenceSchema = isSignatory =>
       is: value => value === UAE,
       then: Yup.string()
         .required(getRequiredMessage("Emirates ID"))
+        .transform(value => value.replace(/-/g, ""))
         .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
     })
   });
@@ -35,7 +39,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
     <Formik
       initialValues={{
         residenceCountry: UAE,
-        eidNumber: "784"
+        eidNumber: ""
       }}
       onSubmit={handleContinue}
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
@@ -65,7 +69,11 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 label="Emirates ID"
                 placeholder="784-1950-1234567-8"
                 disabled={values.residenceCountry !== UAE}
-                component={Input}
+                component={EmiratesID}
+                changeProspect={(prospect, value) => ({
+                  ...prospect,
+                  [eidNumberPath]: value.replace(/-/g, "")
+                })}
                 contextualHelpText={
                   <>
                     If Emirates ID contains hyphen (-), spaces or any other special character please
@@ -76,9 +84,6 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                     784-1950-1234567-8 to be entered as 784195012345678
                   </>
                 }
-                InputProps={{
-                  inputProps: { maxLength: MAX_EMIRATE_ID_LENGTH, tabIndex: 0 }
-                }}
               />
             </Grid>
           </Grid>

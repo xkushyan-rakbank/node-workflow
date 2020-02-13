@@ -5,7 +5,8 @@ export const useStyles = makeStyles(theme => ({
     position: "absolute",
     top: "30px",
     left: "40px",
-    display: "flex",
+    display: "block",
+    width: "140px",
     zIndex: 12,
     [theme.breakpoints.down("sm")]: {
       maxWidth: "270px"
@@ -23,6 +24,7 @@ export const useStyles = makeStyles(theme => ({
       padding: 0,
       top: "20px",
       left: "16px",
+      width: "140px",
       "& img": {
         minWidth: "114px",
         width: "114px"
