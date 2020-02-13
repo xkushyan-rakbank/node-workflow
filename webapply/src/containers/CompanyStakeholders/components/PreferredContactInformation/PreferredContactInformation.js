@@ -12,7 +12,6 @@ import {
   Input,
   InputGroup
 } from "../../../../components/Form";
-import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import {
   UAE_MOBILE_PHONE_REGEX,
@@ -85,7 +84,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
     validationSchema={isSignatory && preferredContactInformationSchema}
     validateOnChange={false}
   >
-    {withCompanyStakeholder(index, () => (
+    {() => (
       <Form>
         <Grid container spacing={3}>
           <Grid item sm={12}>
@@ -157,7 +156,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
 
         <SubmitButton />
       </Form>
-    ))}
+    )}
   </Formik>
 );
 

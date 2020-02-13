@@ -13,7 +13,6 @@ import {
 } from "../../../../../../components/Form";
 import { WEALTH_TYPE__REGEX } from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
-import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -49,7 +48,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
         validationSchema={signatorySourceOfFundsSchema}
         validateOnChange={false}
       >
-        {withSignatoriesFinalQuestions(index, ({ values, setFieldValue, setFieldTouched }) => (
+        {({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item md={12} sm={12}>
@@ -105,7 +104,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
               <ContinueButton type="submit" />
             </div>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

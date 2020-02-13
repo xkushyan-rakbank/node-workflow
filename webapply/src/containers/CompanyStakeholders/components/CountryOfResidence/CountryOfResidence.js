@@ -11,7 +11,6 @@ import {
   SelectAutocomplete,
   EmiratesID
 } from "../../../../components/Form";
-import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
@@ -46,7 +45,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >
-      {withCompanyStakeholder(index, ({ values }) => (
+      {({ values }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
@@ -91,7 +90,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
 
           <SubmitButton />
         </Form>
-      ))}
+      )}
     </Formik>
   );
 };

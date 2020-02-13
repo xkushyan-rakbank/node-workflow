@@ -53,3 +53,5 @@ export const stakeHoldersSteps = [
     eventName: GA_EVENTS.COMPANY_STAKEHOLDER_PREFERRED_CONTACT_CONTINUE
   }
 ];
+
+export const COMPANY_STAKEHOLDER_ID = "companyStakeholder_";

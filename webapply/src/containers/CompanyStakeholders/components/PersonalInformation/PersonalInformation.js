@@ -18,7 +18,6 @@ import {
   DatePicker,
   InlineRadioGroup
 } from "../../../../components/Form";
-import { withCompanyStakeholder } from "../withCompanyStakeholder";
 import { yesNoOptions } from "../../../../constants/options";
 import { DATE_FORMAT } from "../../../../constants";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
@@ -110,7 +109,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={false}
     >
-      {withCompanyStakeholder(index, ({ values, setFieldValue, resetForm }) => (
+      {({ values, setFieldValue, resetForm }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -230,7 +229,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
           <SubmitButton />
         </Form>
-      ))}
+      )}
     </Formik>
   );
 };

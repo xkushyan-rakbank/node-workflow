@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import cx from "classnames";
 
 import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
-import { finalQuestionsSteps, COMPANY_FIELD_NAME, STEP_1 } from "./constants";
+import { finalQuestionsSteps, FINAL_QUESTIONS_COMPANY_ID } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -15,27 +15,28 @@ export const CompanySummaryCardComponent = ({
   companyName,
   handleFinalStepContinue,
   sendProspectToAPI,
-  isCompanyStepsCompleted
+  isCompanyStepsCompleted,
+  isCompanyExpanded,
+  setIsCompanyExpanded
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const classes = useStyles();
 
   const handleClickStartHere = useCallback(() => {
-    setIsExpanded(true);
+    setIsCompanyExpanded(true);
     if (switchExpandedMargin) {
       switchExpandedMargin();
     }
-  }, [switchExpandedMargin]);
+  }, [switchExpandedMargin, setIsCompanyExpanded]);
 
-  const handleExpandNextBlock = () => setIsExpanded(false);
+  const handleExpandNextBlock = () => setIsCompanyExpanded(false);
 
   return (
     <CompanyCard
       companyName={companyName}
       controls={
-        !isExpanded &&
+        !isCompanyExpanded &&
         (isCompanyStepsCompleted ? (
-          <LinkButton clickHandler={() => setIsExpanded(true)} />
+          <LinkButton clickHandler={() => setIsCompanyExpanded(true)} />
         ) : (
           <ContinueButton
             label="Start here"
@@ -45,15 +46,14 @@ export const CompanySummaryCardComponent = ({
         ))
       }
     >
-      <div className={cx({ hidden: !isExpanded })}>
+      <div className={cx({ hidden: !isCompanyExpanded })}>
         <FinalQuestionStepComponent
           index={index}
           stepsArray={finalQuestionsSteps}
           handleExpandNextBlock={handleExpandNextBlock}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
-          fieldName={COMPANY_FIELD_NAME}
-          initialStep={STEP_1}
+          page={FINAL_QUESTIONS_COMPANY_ID}
         />
       </div>
     </CompanyCard>

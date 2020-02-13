@@ -10,7 +10,6 @@ export const STEP_1 = 1;
 export const STEP_2 = 2;
 export const STEP_3 = 3;
 export const STEP_4 = 4;
-export const GO_TO_SUBMIT_STEP = 5;
 
 export const INITIAL_INDEX = 0;
 
@@ -82,3 +81,5 @@ export const DATA_CURRENCIES = [
     subGroup: null
   }
 ];
+
+export const SELECT_SERVICES_PAGE_ID = "selectServices";

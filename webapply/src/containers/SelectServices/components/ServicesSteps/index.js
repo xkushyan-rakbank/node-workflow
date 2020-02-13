@@ -1,13 +1,19 @@
 import React from "react";
 import cx from "classnames";
 
-import { GO_TO_SUBMIT_STEP, servicesSteps } from "../../constants";
-
+import { servicesSteps } from "../../constants";
+import { STEP_STATUS } from "../../../../constants";
 import { ServicesStepTitle } from "../ServicesStepTitle";
 
 import { useStyles } from "./styled";
 
-export const ServicesSteps = ({ step, clickHandler, handleContinue }) => {
+export const ServicesSteps = ({
+  activeStep,
+  clickHandler,
+  handleContinue,
+  isSubmit,
+  completedSteps
+}) => {
   const classes = useStyles();
 
   return servicesSteps.map(({ component: Component, ...stepData }) => (
@@ -15,16 +21,24 @@ export const ServicesSteps = ({ step, clickHandler, handleContinue }) => {
       <div className={classes.stepWrapper}>
         <ServicesStepTitle
           step={stepData}
-          isCompleteStep={step}
+          isEditAvailable={
+            (activeStep !== stepData.step || isSubmit) &&
+            completedSteps.some(
+              step => step.step === stepData.step && step.status === STEP_STATUS.COMPLETED
+            )
+          }
           createClickHandler={clickHandler}
         />
-        {step === stepData.step && (
+        {!isSubmit && activeStep === stepData.step && (
           <div
             className={cx(classes.formWrapper, {
-              [classes.valueAddedServices]: step === GO_TO_SUBMIT_STEP
+              [classes.valueAddedServices]: isSubmit
             })}
           >
-            <Component goToNext={() => handleContinue(stepData.eventName)} activeStep={step} />
+            <Component
+              goToNext={() => handleContinue(stepData.eventName)}
+              activeStep={activeStep}
+            />
           </div>
         )}
       </div>

@@ -21,7 +21,6 @@ import {
   MAX_STREET_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH
 } from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
-import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -71,7 +70,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
         validationSchema={signatoryPreferredMailingAddressSchema}
         validateOnChange={false}
       >
-        {withSignatoriesFinalQuestions(index, ({ values, setFieldValue }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <Field
               name="sameAsCompanyAddress"
@@ -162,7 +161,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
               <ContinueButton type="submit" />
             </div>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

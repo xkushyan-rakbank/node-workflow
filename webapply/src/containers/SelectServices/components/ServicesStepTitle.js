@@ -36,8 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ServicesStepTitle = ({ step, isCompleteStep, createClickHandler }) => {
-  const doneStep = step.step < isCompleteStep;
+export const ServicesStepTitle = ({ step, isEditAvailable, createClickHandler }) => {
   const classes = useStyles();
 
   return (
@@ -46,7 +45,7 @@ export const ServicesStepTitle = ({ step, isCompleteStep, createClickHandler }) 
         <Icon name={step.icon} alt={step.title} />
       </div>
       <div className={classes.title}>{step.title}</div>
-      {doneStep && (
+      {isEditAvailable && (
         <LinkButton className={classes.editButton} clickHandler={createClickHandler(step.step)} />
       )}
     </div>
