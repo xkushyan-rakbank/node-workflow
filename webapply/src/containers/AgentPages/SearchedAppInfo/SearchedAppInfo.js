@@ -8,6 +8,7 @@ import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
 import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./constants";
+import { APP_STOP_SCREEN_RESULT } from "../../../constants";
 
 import { useStyles } from "./styled";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
@@ -60,9 +61,10 @@ export const SearchedAppInfoComponent = ({
   const searchResult = (searchResults.searchResult || []).find(
     item => item.prospectId === match.params.id
   );
-  const isScreeningInfo = get(searchResult, "organizationInfo.screeningInfo");
+  const isDisabled =
+    get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
+    get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT;
 
-  const isDisabled = get(searchResult, "status.reasonCode") === STATUS_LOCKED || !isScreeningInfo;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
 
