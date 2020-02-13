@@ -10,11 +10,11 @@ import { useStyles } from "./styled";
 export const CheckList = ({ searchResult = {} }) => {
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
-  const screeningResults = get(searchResult, "organizationInfo.screeningInfo.screeningResults", []);
+  const screeningResult = get(searchResult, "signatoryInfo", []);
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
-      {screeningResults.length ? (
+      {screeningResult.length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div>
@@ -27,7 +27,7 @@ export const CheckList = ({ searchResult = {} }) => {
               <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
             </div>
           </div>
-          {screeningResults.map(application => (
+          {screeningResult.map(application => (
             <div className={classes.applicationRow} key={application.screeningType}>
               <div>
                 <div className={classes.checkListData}>{application.screeningType}</div>
@@ -45,8 +45,8 @@ export const CheckList = ({ searchResult = {} }) => {
         <div className={classes.errorMsg}>{errorMsgs.COMPANY_CHECKLIST_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
-      {(searchResult.signatoryInfo || []).length ? (
-        searchResult.signatoryInfo.map((signatory, index) => (
+      {(screeningResult || []).length ? (
+        screeningResult.map((signatory, index) => (
           <div key={signatory.signatoryId}>
             <div className={classes.contentWrapper}>
               <Avatar fullName={signatory.fullName} index={index} />
@@ -66,20 +66,24 @@ export const CheckList = ({ searchResult = {} }) => {
                   <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
                 </div>
               </div>
-              {screeningResults.length ? (
-                screeningResults.map(application => (
-                  <div className={classes.applicationRow} key={application.screeningType}>
-                    <div>
-                      <div className={classes.checkListData}>{application.screeningType}</div>
-                    </div>
-                    <div>
-                      <div className={classes.checkListData}>{application.screeningStatus}</div>
-                    </div>
-                    <div>
-                      <div className={classes.checkListData}>{application.screeningReason}</div>
-                    </div>
-                  </div>
-                ))
+              {screeningResult.length ? (
+                screeningResult.map(
+                  screen =>
+                    get(screen, "screeningResults", []).length &&
+                    screen.screeningResults.map(application => (
+                      <div className={classes.applicationRow} key={application.screeningType}>
+                        <div>
+                          <div className={classes.checkListData}>{application.screeningType}</div>
+                        </div>
+                        <div>
+                          <div className={classes.checkListData}>{application.screeningStatus}</div>
+                        </div>
+                        <div>
+                          <div className={classes.checkListData}>{application.screeningReason}</div>
+                        </div>
+                      </div>
+                    ))
+                )
               ) : (
                 <div className={classes.errorMsgInsideTable}>{errorMsgs.STAKEHOLDER_ERROR}</div>
               )}
