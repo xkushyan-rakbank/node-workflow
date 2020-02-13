@@ -124,7 +124,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
       initialValues={{
         accountSigningType: "",
         accountSigningInstn: "",
-        signatories: get(organizationInfo, "contactDetailsForTxnReconfirming", [])
+        signatories: organizationInfo.contactDetailsForTxnReconfirming || []
       }}
       validationSchema={signingPreferencesSchema}
       validateOnChange={false}
