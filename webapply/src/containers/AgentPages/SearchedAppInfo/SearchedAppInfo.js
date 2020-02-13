@@ -54,7 +54,7 @@ export const SearchedAppInfoComponent = ({
     item => item.prospectId === match.params.id
   );
   const statusOverAll = get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll");
-  const isNotEnabledForAgent = ["stop"].includes(statusOverAll);
+  const isNotEnabledForAgent = "stop" === statusOverAll;
   const isDisabled =
     get(searchResult, "status.reasonCode") === STATUS_LOCKED || isNotEnabledForAgent;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
