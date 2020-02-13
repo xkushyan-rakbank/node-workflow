@@ -1,5 +1,7 @@
 import differenceBy from "lodash/differenceBy";
 import omit from "lodash/omit";
+import get from "lodash/get";
+import flatMap from "lodash/flatMap";
 import nanoid from "nanoid";
 
 export const concatCompanyDocs = (existDocs, incomeDocs) => {
@@ -9,33 +11,33 @@ export const concatCompanyDocs = (existDocs, incomeDocs) => {
 };
 
 export const mergeObjectToCollection = obj =>
-  Object.keys(obj)
-    .map(key =>
-      Object.values(obj[key])
-        .flat()
-        .map(item => ({ ...item, key }))
-    )
-    .flat();
+  flatMap(obj, (o, key) => o.documents.map(doc => ({ ...doc, key })));
 
 export const concatStakeholdersDocs = (incomeDocs, { ...existDocs }) => {
   const stakeholdersDocsDiff = differenceBy(
     mergeObjectToCollection(incomeDocs),
     mergeObjectToCollection(existDocs),
-    "documentType"
+    "documentKey"
   );
 
-  stakeholdersDocsDiff.forEach(doc => existDocs[doc.key].documents.push(omit(doc, "key")));
-
-  return existDocs;
+  return stakeholdersDocsDiff.reduce(
+    (acc, doc) => ({
+      ...acc,
+      [doc.key]: {
+        documents: [...get(acc, `[${doc.key}].documents`, []), omit(doc, "key")]
+      }
+    }),
+    existDocs
+  );
 };
 
-export const createDocumentMapper = (documentType, additionalProps) => doc => {
-  if (doc.documentType === documentType) {
+export const createDocumentMapper = (documentKey, additionalProps) => doc => {
+  if (doc.documentKey === documentKey) {
     return { ...doc, ...additionalProps };
   }
 
   return doc;
 };
 
-export const appendDocumentKey = docs =>
+export const appendDocumentKey = (docs = []) =>
   docs.map(doc => ({ ...doc, documentKey: doc.documentKey || nanoid() }));

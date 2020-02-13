@@ -104,15 +104,7 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* uploadDocumentsBgSync({
-  data,
-  docProps,
-  docOwner,
-  documentType,
-  documentKey,
-  index,
-  stakeholderIndex
-}) {
+function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeholderIndex }) {
   const source = CancelToken.source();
 
   try {
@@ -133,14 +125,14 @@ function* uploadDocumentsBgSync({
 
     if (docOwner === COMPANY_DOCUMENTS) {
       const companyDocuments = documents[COMPANY_DOCUMENTS].map(
-        createDocumentMapper(documentType, additionalProps)
+        createDocumentMapper(documentKey, additionalProps)
       );
 
       documents[COMPANY_DOCUMENTS] = companyDocuments;
     } else {
       const stakeholdersDocuments = documents[STAKEHOLDER_DOCUMENTS][
         stakeholderIndex
-      ].documents.map(createDocumentMapper(documentType, additionalProps));
+      ].documents.map(createDocumentMapper(documentKey, additionalProps));
 
       documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].documents = stakeholdersDocuments;
     }
