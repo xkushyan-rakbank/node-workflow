@@ -1,9 +1,5 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
-import {
-  SEARCH_APPLICATIONS,
-  searchApplicationsSuccess,
-  searchApplicationsFailure
-} from "../actions/searchProspect";
+import { SEARCH_APPLICATIONS, searchApplicationsSuccess } from "../actions/searchProspect";
 import { search } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "../selectors/appConfig";
@@ -24,7 +20,6 @@ function* searchProspectFormSaga({ payload }) {
     const response = yield call(search.searchApplication, inputParam, headers);
     yield put(searchApplicationsSuccess(response.data));
   } catch (error) {
-    yield put(searchApplicationsFailure());
     log(error);
   }
 }

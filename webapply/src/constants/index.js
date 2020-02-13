@@ -68,6 +68,7 @@ export const REQUEST_FAILED = "error";
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
+export const ERROR_CODE_FOR_SEARCH_RESULTS = 12009;
 export const APP_COMPLETED_SCREENING_STATUS = "Completed";
 export const APP_DECLINE_SCREEN_REASON = "Decline";
 

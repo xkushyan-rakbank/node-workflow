@@ -11,10 +11,9 @@ export const searchApplicationsSuccess = payload => {
   return { type: SEARCH_APPLICATIONS_SUCCESS, payload };
 };
 
-export const searchApplicationsFailure = payload => {
+export const searchApplicationsFailure = () => {
   return {
-    type: SEARCH_APPLICATIONS_FAILURE,
-    searchResultsError: payload
+    type: SEARCH_APPLICATIONS_FAILURE
   };
 };
 
