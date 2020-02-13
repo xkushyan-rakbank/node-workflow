@@ -1,10 +1,8 @@
 package ae.rakbank.webapply.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import ae.rakbank.webapply.constants.AuthConstants;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.AuthorizationService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -67,7 +64,6 @@ public class WebApplyController {
     private JsonNode appConfigJSON = null;
     private JsonNode dehURIs = null;
     private String dehBaseUrl = null;
-    private JsonNode uiConfigJSON = null;
     private JsonNode smeProspectJSON = null;
     private String[] roles = {"customer", "agent"};
     private String[] products = {"RAKStarter", "Current Account", "RAKelite"};
@@ -81,7 +77,6 @@ public class WebApplyController {
         dehURIs = appConfigJSON.get("DehURIs");
         dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
 
-        uiConfigJSON = fileHelper.getUIConfigJSON();
         smeProspectJSON = fileHelper.getSMEProspectJSON();
         defaultDatalist = new ObjectMapper().createObjectNode();
         defaultDatalist.setAll((ObjectNode) fileHelper.getDatalistJSON());
@@ -243,7 +238,7 @@ public class WebApplyController {
 
         JsonNode webApplyConfig;
         webApplyConfig = buildAppInitialState(segment, product, role, device, dataListJSON,
-                httpRequest.getHeader("Authorization"), false);
+                httpRequest.getHeader("Authorization"));
 
         return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
     }
@@ -620,11 +615,6 @@ public class WebApplyController {
 
     private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist,
                                           String jwtToken) {
-        return buildAppInitialState(segment, product, role, device, datalist, jwtToken, true);
-    }
-
-    private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist,
-                                          String jwtToken, boolean includeUiConfig) {
         logger.info("Begin buildAppInitialState() method");
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode initStateJSON = objectMapper.createObjectNode();
@@ -652,37 +642,7 @@ public class WebApplyController {
             initStateJSON.put("rsaPublicKey", publicKey);
         }
 
-        // deep clone the json nodes
-        String uiConfig;
-        try {
-            uiConfig = objectMapper.writeValueAsString(uiConfigJSON);
-        } catch (JsonProcessingException e) {
-            String errorMessage = "Failed to process the uiConfigJSON";
-            logger.error(errorMessage);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, errorMessage, e);
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        JsonNode uiConfigNode;
-        try {
-            uiConfigNode = objectMapper.readTree(uiConfig);
-        } catch (IOException e) {
-            String errorMessage = String.format(
-                    "unable load/reload config for web apply for device=[%s] segment=[%s], product=[%s], role=[%s]",
-                    device, segment, product, role);
-            logger.error(errorMessage);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, errorMessage, e);
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
         String cacheKey = getCacheKey(segment, product, role, device);
-        if (includeUiConfig) {
-            ObjectNode uiFieldsObjNode = filterUIConfigFieldsByCriteria((ObjectNode) uiConfigNode, segment, product,
-                    role, device, datalist);
-            initStateJSON.set("uiConfig", uiFieldsObjNode);
-        } else {
-            cacheKey = cacheKey + "_REDUCED";
-        }
-
         String configJSON = initStateJSON.toString();
         setCache(cacheKey, configJSON);
 
@@ -711,91 +671,6 @@ public class WebApplyController {
 
         initStateJSON.set("endpoints", endpointsJSON);
         logger.info("End setWebApplyEndpoints() method");
-    }
-
-    private ObjectNode filterUIConfigFieldsByCriteria(ObjectNode uiConfigNode, String segment, String product,
-                                                      String role, String device, JsonNode datalist) {
-        logger.info("Begin filterUIConfigFieldsByCriteria() method");
-
-        Iterator<Map.Entry<String, JsonNode>> fields = uiConfigNode.fields();
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode uiFields = objectMapper.createObjectNode();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> entry = fields.next();
-            String uid = entry.getKey();
-
-            ObjectNode fieldConfig = (ObjectNode) entry.getValue();
-            boolean applicable = fieldConfig.has("label") && !fieldConfig.get("label").isNull()
-                    && matchCriteria(fieldConfig, segment, product, role, device);
-            if (applicable) {
-                fieldConfig.put("applicable", true);
-                fieldConfig.remove("criteria");
-                uiFields.set(uid, fieldConfig);
-
-                if (fieldConfig.has("datalistId")) {
-                    if (fieldConfig.get("datalistId").isNull()) {
-                        fieldConfig.remove("datalistId");
-                    } else if (datalist != null) {
-                        String groupId = fieldConfig.get("datalistId").asText();
-                        if (datalist.has(groupId)) {
-                            fieldConfig.set("datalist", datalist.get(groupId));
-                        } else {
-                            String label = fieldConfig.get("label").asText();
-                            logger.error(String.format(
-                                    "LOVs not found in getDatalist API response for datalistId=[%s], label=[%s]",
-                                    groupId, label));
-                        }
-                    }
-                }
-
-                if (fieldConfig.has("readonlyFor") && (fieldConfig.get("readonlyFor").isNull()
-                        || fieldConfig.get("readonlyFor").size() == 0)) {
-                    fieldConfig.remove("readonlyFor");
-                }
-                if (fieldConfig.has("shortKeyNames")) {
-                    fieldConfig.remove("shortKeyNames");
-                }
-                if (fieldConfig.has("description")) {
-                    fieldConfig.remove("description");
-                }
-            }
-        }
-        logger.info("End filterUIConfigFieldsByCriteria() method");
-        return uiFields;
-    }
-
-    private boolean matchCriteria(JsonNode fieldConfig, String segment, String product, String role, String device) {
-        if (!fieldConfig.has("criteria")) {
-            return true;
-        }
-
-        JsonNode criteria = fieldConfig.get("criteria");
-        boolean roleMatched = true;
-        boolean segmentMatched = true;
-        boolean productMatched = true;
-        boolean deviceMatched = true;
-
-        if (criteria.has("roles")) {
-            List<String> roles = new ArrayList<>();
-            criteria.get("roles").forEach(node -> roles.add(node.asText()));
-            roleMatched = roles.isEmpty() || (StringUtils.isNotBlank(role) && roles.contains(role));
-        }
-        if (criteria.has("segments")) {
-            List<String> segments = new ArrayList<>();
-            criteria.get("segments").forEach(node -> segments.add(node.asText()));
-            segmentMatched = segments.isEmpty() || (StringUtils.isNotBlank(segment) && segments.contains(segment));
-        }
-        if (criteria.has("products")) {
-            List<String> products = new ArrayList<>();
-            criteria.get("products").forEach(node -> products.add(node.asText()));
-            productMatched = products.isEmpty() || (StringUtils.isNotBlank(product) && products.contains(product));
-        }
-        if (criteria.has("devices")) {
-            List<String> devices = new ArrayList<>();
-            criteria.get("devices").forEach(node -> devices.add(node.asText()));
-            deviceMatched = devices.isEmpty() || (StringUtils.isNotBlank(device) && devices.contains(device));
-        }
-        return roleMatched && segmentMatched && productMatched && deviceMatched;
     }
 
     private JsonNode getProspect(String segment) {

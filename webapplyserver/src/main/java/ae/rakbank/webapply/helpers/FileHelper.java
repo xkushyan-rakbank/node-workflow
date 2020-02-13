@@ -60,10 +60,6 @@ public class FileHelper {
         return null;
     }
 
-    public JsonNode getUIConfigJSON() {
-        return loadJSONFile("uiConfig.json", false);
-    }
-
     public JsonNode getAppConfigJSON() {
         return loadJSONFile("appConfig.json", !EnvUtil.getEnv().equals("local"));
     }
