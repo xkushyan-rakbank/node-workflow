@@ -27,9 +27,8 @@ export const SubmitApplicationComponent = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const pathname = isApplyEditApplication ? routes.companyInfo : routes.ApplicationSubmitted;
   const isSubmitButtonEnable =
-    !isApplyEditApplication &&
-    formFieldsValues.isInformationProvided &&
-    formFieldsValues.areTermsAgreed;
+    isApplyEditApplication ||
+    (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
   const handleSubmit = () => {
     setIsSubmitting(true);
     updateActionType(SUBMIT);
