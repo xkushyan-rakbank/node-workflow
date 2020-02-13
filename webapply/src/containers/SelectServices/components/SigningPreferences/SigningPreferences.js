@@ -117,23 +117,14 @@ const signingPreferencesSchema = Yup.object({
 // eslint-disable-next-line max-len
 const pathSignatoryInfo = "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn";
 
-export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
+export const SigningPreferencesComponent = ({ goToNext, updateProspect, organizationInfo }) => {
   const classes = useStyles();
-
   return (
     <Formik
       initialValues={{
         accountSigningType: "",
         accountSigningInstn: "",
-        signatories: [
-          {
-            TxnReconfirmingfullname: "",
-            primaryMobCountryCode: UAE_CODE,
-            primaryMobileNo: "",
-            primaryPhoneCountryCode: UAE_CODE,
-            primaryPhoneNo: ""
-          }
-        ]
+        signatories: organizationInfo.contactDetailsForTxnReconfirming || []
       }}
       validationSchema={signingPreferencesSchema}
       validateOnChange={false}
@@ -312,7 +303,10 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect }) => {
                         });
                       }}
                       className={classes.addButton}
-                      disabled={!signatories[0].TxnReconfirmingfullname.length || signatoriesErrors}
+                      disabled={
+                        !get(signatories[0], "TxnReconfirmingfullname", "").length ||
+                        signatoriesErrors
+                      }
                     />
                   )}
                 </>
