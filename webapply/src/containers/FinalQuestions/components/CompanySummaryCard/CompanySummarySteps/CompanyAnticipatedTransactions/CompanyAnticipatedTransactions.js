@@ -28,7 +28,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
     return 0;
   }
   const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
-  return calculation.toFixed(2);
+  return Number(calculation.toFixed(2));
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
@@ -53,7 +53,7 @@ const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => 
 };
 
 const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
-  const monthTotal = Math.floor(getTotalMonthlyCreditsValue(yearTotal));
+  const monthTotal = getTotalMonthlyCreditsValue(yearTotal);
   if (checkValidNumberFromString(field) && checkValidNumberFromString(conditionalField)) {
     return Number(field) + Number(conditionalField) === monthTotal;
   }
