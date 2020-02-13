@@ -159,7 +159,8 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   label="Trade License Number"
                                   placeholder="Trade License Number"
                                   component={Input}
-                                  contextualHelpText="The Licence Number of the other company, branch or subsidiary should be as per their respective Trade License."
+                                  contextualHelpText="The Licence Number of the other company, branch or subsidiary
+                                  should be as per their respective Trade License."
                                   InputProps={{
                                     inputProps: { maxLength: MAX_TRADE_LICENSE_LENGTH, tabIndex: 0 }
                                   }}
