@@ -36,17 +36,14 @@
     <!-- End Google Tag Manager -->
     <script charset="UTF-8">
       window['adrum-start-time'] = new Date().getTime();
-      (function(config, hostname) {
+      (function(config) {
         config.appKey = 'EUM-AAD-CXF';
-        config.adrumExtUrlHttps = `https://${hostname}%PUBLIC_URL%/static/vendor`;
+        config.adrumExtUrlHttps = 'https://quickapplydev.rakbank.ae/static/vendor';
         config.beaconUrlHttps = 'https://conv.rakbankonline.ae:7002';
-        config.xd = { enable: true };
-        config.spa = {
-          spa2: true,
-        };
-      })(window['adrum-config'] || (window['adrum-config'] = {}), window.location.hostname);
+        config.xd = {enable: false};
+      })(window['adrum-config'] || (window['adrum-config'] = {}));
     </script>
-    <script type="text/javascript" src="%PUBLIC_URL%/static/vendor/adrum.js" defer></script>
+    <script type="text/javascript" src="/static/vendor/adrum.js"></script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
