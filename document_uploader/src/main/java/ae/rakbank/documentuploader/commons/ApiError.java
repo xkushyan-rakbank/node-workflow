@@ -28,6 +28,11 @@ public class ApiError {
 		this.status = status;
 	}
 
+	public ApiError(HttpStatus httpStatus, String message) {
+		status = httpStatus;
+		this.message = message;
+	}
+
 	public ApiError(HttpStatus status, Throwable ex) {
 		this();
 		this.status = status;

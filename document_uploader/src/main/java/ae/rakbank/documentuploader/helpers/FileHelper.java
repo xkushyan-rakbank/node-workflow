@@ -7,12 +7,15 @@ import java.nio.charset.StandardCharsets;
 import javax.annotation.PostConstruct;
 
 import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.services.FileDto;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -60,6 +63,13 @@ public class FileHelper {
 			logger.error("error loading " + filename, e);
 		}
 		return null;
+	}
+
+	public HttpHeaders configureHttpHeadersForFile(FileDto file) {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.setContentType(MediaType.valueOf(file.getContentType()));
+		responseHeaders.add(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFileName());
+		return responseHeaders;
 	}
 
 	@PostConstruct

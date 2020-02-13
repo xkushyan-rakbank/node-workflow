@@ -3,10 +3,11 @@ package ae.rakbank.documentuploader.controllers;
 import java.io.IOException;
 
 import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.helpers.FileHelper;
+import ae.rakbank.documentuploader.services.FileDto;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,12 +47,14 @@ public class DocumentUploadController {
 
 	private final DocumentUploadService docUploadService;
 
-	@Autowired
-	private EnvironmentUtil environmentUtil;
+	private final FileHelper fileHelper;
 
-	@Autowired
-	public DocumentUploadController(DocumentUploadService docUploadService) {
+	private final EnvironmentUtil environmentUtil;
+
+	public DocumentUploadController(DocumentUploadService docUploadService, FileHelper fileHelper, EnvironmentUtil environmentUtil) {
 		this.docUploadService = docUploadService;
+		this.fileHelper = fileHelper;
+		this.environmentUtil = environmentUtil;
 	}
 
 	@GetMapping(value = "/health", produces = "application/json")
@@ -97,6 +100,13 @@ public class DocumentUploadController {
 		}
 		return processUploadRequest(file, fileInfo, prospectId);
 
+	}
+
+	@GetMapping("/banks/RAK/prospects/{prospectId}/documents/{documentKey}")
+	public ResponseEntity<byte[]> downloadFile(@SuppressWarnings("unused") @PathVariable String prospectId, @PathVariable String documentKey) {
+		final FileDto file = docUploadService.findOneByDocumentKey(documentKey);
+		return ResponseEntity.ok().headers(fileHelper.configureHttpHeadersForFile(file))
+				.body(file.getContent());
 	}
 
 	private ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
