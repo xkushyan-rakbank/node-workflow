@@ -24,14 +24,17 @@ import {
 const FormatDecimalNumberInput = props => <NumberFormat decimalScale={2} {...props} />;
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
+  const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
   if (!checkValidNumberFromString(annualFinancialTurnover)) {
     return 0;
   }
-  return Math.round(parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT);
+  return calculation.toFixed(2);
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
-  return monthlyCreditsValue ? `${monthlyCreditsValue} in Total Monthly Credits` : "9999999999.99";
+  return checkValidNumberFromString(monthlyCreditsValue)
+    ? `${monthlyCreditsValue} in Total Monthly Credits`
+    : "9999999999.99";
 };
 
 const checkValidNumberFromString = string => {
