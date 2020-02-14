@@ -30,6 +30,7 @@ import {
   ISLAMIC_BANK
 } from "../../constants";
 import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
+import routes, { smeBaseName } from "../../routes";
 
 function* receiveAppConfigSaga({ payload }) {
   try {
@@ -55,6 +56,7 @@ function* receiveAppConfigSaga({ payload }) {
     const newConfig = cloneDeep(response.data);
     const prospectModel = cloneDeep(newConfig.prospect);
     if (newConfig.prospect) {
+      newConfig.prospect.applicationInfo.viewId = routes.companyInfo.replace(smeBaseName, "");
       newConfig.prospect.signatoryInfo = [];
       newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
       if (!newConfig.prospect.applicantInfo.countryCode) {
