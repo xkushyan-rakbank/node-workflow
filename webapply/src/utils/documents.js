@@ -1,7 +1,4 @@
 import differenceBy from "lodash/differenceBy";
-import omit from "lodash/omit";
-import get from "lodash/get";
-import flatMap from "lodash/flatMap";
 import nanoid from "nanoid";
 
 export const concatCompanyDocs = (existDocs, incomeDocs) => {
@@ -10,25 +7,25 @@ export const concatCompanyDocs = (existDocs, incomeDocs) => {
   return [...existDocs, ...companyDocsDiff];
 };
 
-export const mergeObjectToCollection = obj =>
-  flatMap(obj, (o, key) => o.documents.map(doc => ({ ...doc, key })));
-
-export const concatStakeholdersDocs = (incomeDocs, { ...existDocs }) => {
-  const stakeholdersDocsDiff = differenceBy(
-    mergeObjectToCollection(incomeDocs),
-    mergeObjectToCollection(existDocs),
-    "documentKey"
-  );
-
-  return stakeholdersDocsDiff.reduce(
-    (acc, doc) => ({
-      ...acc,
-      [doc.key]: {
-        documents: [...get(acc, `[${doc.key}].documents`, []), omit(doc, "key")]
-      }
-    }),
-    existDocs
-  );
+export const concatStakeholdersDocs = (neededDocs, { ...uploadedDocs }) => {
+  return Object.entries(neededDocs).reduce((acc, [signatoryId, { documents }]) => {
+    if (!uploadedDocs[signatoryId]) {
+      acc[signatoryId] = {
+        documents
+      };
+    } else {
+      acc[signatoryId] = {
+        documents: documents.map(neededDocument => {
+          return (
+            uploadedDocs[signatoryId].find(
+              uploadedDoc => uploadedDoc.documentTitle === neededDocument.documentTitle
+            ) || neededDocument
+          );
+        })
+      };
+    }
+    return acc;
+  }, {});
 };
 
 export const createDocumentMapper = (documentKey, additionalProps) => doc => {
