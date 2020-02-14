@@ -1,18 +1,11 @@
 package ae.rakbank.documentuploader.s3;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
-import javax.activation.MimetypesFileTypeMap;
-
 import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.dto.FileDto;
+import com.emc.object.s3.S3Client;
+import com.emc.object.s3.bean.GetObjectResult;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +14,19 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.emc.object.s3.S3Client;
+import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 /**
- * 
  * https://github.com/EMCECS/ecs-samples
- *
  */
 @Component
 @EnableAsync
@@ -114,4 +114,22 @@ public class S3FileUploader {
 			logger.error(String.format("Unable to move file from [%s] to [%s]", path, targetPath), e);
 		}
 	}
+
+    public Optional<FileDto> downloadFile(String documentKey) {
+        try {
+			final GetObjectResult<InputStream> object = ecsS3Factory.getS3Client().getObject(ecsS3Factory.getS3Bucket(), documentKey);
+			return Optional.of(object).map(obj -> mapS3ObjectToFileDto(object, documentKey));
+        } catch (URISyntaxException e) {
+            logger.info(e.getMessage(), e);
+            return Optional.empty();
+        }
+    }
+
+    private FileDto mapS3ObjectToFileDto(GetObjectResult<InputStream> s3Object, String key) {
+        try {
+            return new FileDto(s3Object.getObjectMetadata().getContentType(), key, IOUtils.toByteArray(s3Object.getObject()));
+        } catch (IOException e) {
+            throw new S3ReadFileException(key, e);
+        }
+    }
 }
