@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
-import get from "lodash/get";
 import * as Yup from "yup";
 import omit from "lodash/omit";
 
@@ -72,7 +71,6 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
     },
     [searchApplications]
   );
-
   return (
     <div className={classes.baseForm}>
       <h2>Search Applications</h2>
@@ -175,9 +173,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
           </Form>
         )}
       </Formik>
-      {isSearchLaunched && !isLoading && (
-        <SearchResult searchResults={get(searchResults, "searchResult", [])} />
-      )}
+      {isSearchLaunched && !isLoading && <SearchResult searchResults={searchResults} />}
     </div>
   );
 };
