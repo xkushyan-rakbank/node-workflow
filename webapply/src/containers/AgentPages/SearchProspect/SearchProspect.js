@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import get from "lodash/get";
@@ -14,7 +14,7 @@ import {
   ALPHANUMERIC_REGEX,
   UAE_MOBILE_PHONE_REGEX
 } from "../../../utils/validation";
-import { MAX_EMAIL_LENGTH } from "./constants";
+import { MAX_EMAIL_LENGTH, INITIAL_SEARCH_STATUS, SUBMITTED_SEARCH_STATUS } from "./constants";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { SearchResult } from "../SearchResult";
 import { UAE_CODE } from "../../../constants";
@@ -62,16 +62,13 @@ const initialValues = {
   tradeLicenseNo: ""
 };
 
-export const SearchProspectComponent = ({
-  searchApplications,
-  searchResults,
-  isLoading,
-  error
-}) => {
+export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
   const classes = useStyles();
+  const [searchStatus, setSearchStatus] = useState(INITIAL_SEARCH_STATUS);
 
   const handleSubmit = useCallback(
     values => {
+      setSearchStatus(SUBMITTED_SEARCH_STATUS);
       searchApplications(values);
     },
     [searchApplications]
@@ -180,7 +177,11 @@ export const SearchProspectComponent = ({
         )}
       </Formik>
       {get(searchResults, "searchResult", []) && (
-        <SearchResult searchResults={get(searchResults, "searchResult", [])} error={error} />
+        <SearchResult
+          searchResults={get(searchResults, "searchResult", [])}
+          searchStatus={searchStatus}
+          isLoading={isLoading}
+        />
       )}
     </div>
   );

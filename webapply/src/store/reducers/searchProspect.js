@@ -10,8 +10,7 @@ import { handleActions } from "../../utils/redux-utils";
 export const initialState = {
   searchResults: [],
   isApplyEditApplication: null,
-  isSearchLoading: false,
-  error: false
+  isSearchLoading: false
 };
 
 export default handleActions(
@@ -19,20 +18,17 @@ export default handleActions(
     [SEARCH_APPLICATIONS_REQUEST]: state => ({
       ...state,
       searchResults: initialState.searchResults,
-      isSearchLoading: true,
-      error: false
+      isSearchLoading: true
     }),
     [SEARCH_APPLICATIONS_SUCCESS]: (state, { payload }) => ({
       ...state,
       searchResults: payload,
-      isSearchLoading: false,
-      error: false
+      isSearchLoading: false
     }),
     [SEARCH_APPLICATIONS_FAILURE]: state => ({
       ...state,
       searchResults: initialState.searchResults,
-      isSearchLoading: false,
-      error: true
+      isSearchLoading: false
     }),
     [IS_APPLY_EDIT_APPLICATION]: (state, { payload }) => ({
       ...state,
