@@ -12,7 +12,9 @@ export const OTPProtectedRoute = ({ component: Component, render, ...rest }) => 
     <Route
       {...rest}
       render={props =>
-        isOtpVerified || process.env.NODE_ENV === "development" ? (
+        isOtpVerified ||
+        process.env.REACT_APP_OTP_ENABLE === "N" ||
+        process.env.NODE_ENV === "development" ? (
           Component ? (
             <Component {...props} />
           ) : (
