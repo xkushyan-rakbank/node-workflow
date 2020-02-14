@@ -503,6 +503,8 @@ public class WebApplyController {
 
     //TODO move method to recapcha service
     private ResponseEntity<?> validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest httpRequest) {
+        // Tempary disable google captcha
+        /*
         logger.info("Validate reCAPTCHA before saving applicant info.");
         String recaptchaResponse = requestBodyJSON.get("recaptchaToken").asText();
         String ip = httpRequest.getRemoteAddr();
@@ -513,14 +515,12 @@ public class WebApplyController {
         } else {
             logger.error(String.format("reCAPTCHA verify API response: HttpStatus=[%s], message=[%s]",
                     captchaResponse.getStatusCodeValue(), captchaResponse.getBody()));
+            return captchaResponse;
         }
 
         logger.info(String.format("reCAPTCHA response, HttpStatus=[%s], ip=[%s]",
                 captchaResponse.getStatusCodeValue(), ip));
-
-        if (!captchaResponse.getStatusCode().is2xxSuccessful()) {
-            return captchaResponse;
-        }
+        */
 
         ((ObjectNode) requestBodyJSON).remove("recaptchaToken");
         return null;
