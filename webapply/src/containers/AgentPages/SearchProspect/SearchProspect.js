@@ -176,13 +176,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
           </Form>
         )}
       </Formik>
-      {isSearchLaunched && !isLoading && (
-        <SearchResult
-          searchResults={searchResult}
-          isSearchLaunched={isSearchLaunched}
-          isLoading={isLoading}
-        />
-      )}
+      {isSearchLaunched && !isLoading && <SearchResult searchResults={searchResult} />}
     </div>
   );
 };
