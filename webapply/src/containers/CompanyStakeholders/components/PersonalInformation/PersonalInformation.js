@@ -30,7 +30,10 @@ import { NAME_REGEX } from "../../../../utils/validation";
 import { useStyles } from "./styled";
 
 const personalInformationSchema = Yup.object().shape({
-  salutation: Yup.string().required(getRequiredMessage("Salutation")),
+  salutation: Yup.string().when("isShareholderACompany", {
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.string().required(getRequiredMessage("Salutation"))
+  }),
   firstName: Yup.string().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.string()
