@@ -4,12 +4,14 @@ import { searchApplications } from "../../../store/actions/searchProspect";
 import { SearchProspectComponent } from "./SearchProspect";
 import {
   getSearchResult,
-  getIsLoadingSearchProspects
+  getIsLoadingSearchProspects,
+  getIsErrorSearchProspects
 } from "../../../store/selectors/searchProspect";
 
 const mapStateToProps = state => ({
   searchResults: getSearchResult(state),
-  isLoading: getIsLoadingSearchProspects(state)
+  isLoading: getIsLoadingSearchProspects(state),
+  error: getIsErrorSearchProspects(state)
 });
 
 const mapDispatchToProps = {

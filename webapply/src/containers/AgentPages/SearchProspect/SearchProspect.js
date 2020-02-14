@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
+import get from "lodash/get";
 import * as Yup from "yup";
 import omit from "lodash/omit";
 
@@ -61,7 +62,12 @@ const initialValues = {
   tradeLicenseNo: ""
 };
 
-export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
+export const SearchProspectComponent = ({
+  searchApplications,
+  searchResults,
+  isLoading,
+  error
+}) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(
@@ -173,7 +179,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
           </Form>
         )}
       </Formik>
-      {searchResults.searchResult && <SearchResult searchResults={searchResults.searchResult} />}
+      {get(searchResults, "searchResult", []) && (
+        <SearchResult searchResults={get(searchResults, "searchResult", [])} error={error} />
+      )}
     </div>
   );
 };
