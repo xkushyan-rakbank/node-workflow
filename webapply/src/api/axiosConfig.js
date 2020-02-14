@@ -120,11 +120,11 @@ instance.interceptors.response.use(
         log(jsonData);
         try {
           const { errors } = JSON.parse(jsonData.debugMessage);
-          const errorMessages = errors.map(({ message }) => message);
           if (jsonData.status) {
             if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
               notificationOptions = null;
             } else {
+              const errorMessages = errors.map(({ message }) => message);
               notificationOptions = { message: errorMessages.join(", ") };
             }
           }
