@@ -2,6 +2,7 @@ package ae.rakbank.webapply.services.auth;
 
 import javax.annotation.PostConstruct;
 
+import ae.rakbank.webapply.dto.UserRole;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -48,10 +49,15 @@ class JwtService {
             Instant instantExpiredAt = LocalDateTime.now().plusHours(3).toInstant(ZoneOffset.UTC);
             Date expiredAt = Date.from(instantExpiredAt);
 
+            String role = null;
+            if (data.getRole() != null) {
+                role = data.getRole().toString();
+            }
+
             return JWT.create()
                     .withClaim("OAuthToken", data.getOauthAccessToken())
                     .withClaim("OAuthRefreshToken", data.getOauthRefreshToken())
-                    .withClaim("role", data.getRole().toString())
+                    .withClaim("role", role)
                     .withClaim("phoneNumber", data.getPhoneNumber())
                     .withExpiresAt(expiredAt)
                     .sign(algorithm);
@@ -73,6 +79,8 @@ class JwtService {
             return JwtPayload.builder()
                     .oauthAccessToken(jwt.getClaim("OAuthToken").asString())
                     .oauthRefreshToken(jwt.getClaim("OAuthRefreshToken").asString())
+                    .role(UserRole.valueOf(jwt.getClaim("role").asString()))
+                    .phoneNumber(jwt.getClaim("phoneNumber").asString())
                     .build();
         } catch (JWTVerificationException e) {
             logger.error("Failed verify jwt token", e);
