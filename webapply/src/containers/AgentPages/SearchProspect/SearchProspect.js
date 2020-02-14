@@ -14,7 +14,7 @@ import {
   ALPHANUMERIC_REGEX,
   UAE_MOBILE_PHONE_REGEX
 } from "../../../utils/validation";
-import { MAX_EMAIL_LENGTH, INITIAL_SEARCH_STATUS, SUBMITTED_SEARCH_STATUS } from "./constants";
+import { MAX_EMAIL_LENGTH } from "./constants";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { SearchResult } from "../SearchResult";
 import { UAE_CODE } from "../../../constants";
@@ -64,11 +64,11 @@ const initialValues = {
 
 export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
   const classes = useStyles();
-  const [searchStatus, setSearchStatus] = useState(INITIAL_SEARCH_STATUS);
+  const [isSearchLaunched, setSearchStatus] = useState(false);
   const searchResult = get(searchResults, "searchResult", []);
   const handleSubmit = useCallback(
     values => {
-      setSearchStatus(SUBMITTED_SEARCH_STATUS);
+      setSearchStatus(true);
       searchApplications(values);
     },
     [searchApplications]
@@ -176,10 +176,10 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
           </Form>
         )}
       </Formik>
-      {searchResult && (
+      {isSearchLaunched && !isLoading && (
         <SearchResult
           searchResults={searchResult}
-          searchStatus={searchStatus}
+          isSearchLaunched={isSearchLaunched}
           isLoading={isLoading}
         />
       )}
