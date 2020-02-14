@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -63,14 +63,14 @@ const initialValues = {
 
 export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
   const classes = useStyles();
-
+  const [isSearchLaunched, setSearchStatus] = useState(false);
   const handleSubmit = useCallback(
     values => {
+      setSearchStatus(true);
       searchApplications(values);
     },
     [searchApplications]
   );
-
   return (
     <div className={classes.baseForm}>
       <h2>Search Applications</h2>
@@ -173,7 +173,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
           </Form>
         )}
       </Formik>
-      {searchResults.searchResult && <SearchResult searchResults={searchResults.searchResult} />}
+      {isSearchLaunched && !isLoading && <SearchResult searchResults={searchResults} />}
     </div>
   );
 };

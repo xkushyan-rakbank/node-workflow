@@ -1,14 +1,13 @@
 import { connect } from "react-redux";
-
 import { searchApplications } from "../../../store/actions/searchProspect";
 import { SearchProspectComponent } from "./SearchProspect";
 import {
-  getSearchResult,
+  getSearchResults,
   getIsLoadingSearchProspects
 } from "../../../store/selectors/searchProspect";
 
 const mapStateToProps = state => ({
-  searchResults: getSearchResult(state),
+  searchResults: getSearchResults(state),
   isLoading: getIsLoadingSearchProspects(state)
 });
 
