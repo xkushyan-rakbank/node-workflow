@@ -2,6 +2,7 @@ package ae.rakbank.documentuploader.services;
 
 import ae.rakbank.documentuploader.commons.DocumentUploadException;
 import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.dto.FileDto;
 import ae.rakbank.documentuploader.s3.S3FileUploader;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.io.FilenameUtils;
@@ -20,7 +21,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
 @Service
-public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.services.DocumentUploadService {
+public class DocumentUploadServiceImpl implements DocumentUploadService {
 
     private static final Logger logger = LoggerFactory.getLogger(DocumentUploadServiceImpl.class);
 

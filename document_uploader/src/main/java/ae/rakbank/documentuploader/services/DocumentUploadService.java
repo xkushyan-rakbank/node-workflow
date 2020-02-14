@@ -1,6 +1,7 @@
 package ae.rakbank.documentuploader.services;
 
 import ae.rakbank.documentuploader.commons.DocumentUploadException;
+import ae.rakbank.documentuploader.dto.FileDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.multipart.MultipartFile;
 

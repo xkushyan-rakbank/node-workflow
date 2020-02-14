@@ -1,7 +1,7 @@
 package ae.rakbank.documentuploader.s3;
 
 import ae.rakbank.documentuploader.commons.EnvironmentUtil;
-import ae.rakbank.documentuploader.services.FileDto;
+import ae.rakbank.documentuploader.dto.FileDto;
 import com.emc.object.s3.S3Client;
 import com.emc.object.s3.bean.GetObjectResult;
 import org.apache.commons.io.FileUtils;

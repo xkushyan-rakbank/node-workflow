@@ -1,10 +1,13 @@
 package ae.rakbank.documentuploader.controllers;
 
-import java.io.IOException;
-
+import ae.rakbank.documentuploader.commons.ApiError;
+import ae.rakbank.documentuploader.commons.DocumentUploadException;
 import ae.rakbank.documentuploader.commons.EnvironmentUtil;
-import ae.rakbank.documentuploader.helpers.FileHelper;
-import ae.rakbank.documentuploader.services.FileDto;
+import ae.rakbank.documentuploader.services.DocumentUploadService;
+import ae.rakbank.documentuploader.dto.FileDto;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import ae.rakbank.documentuploader.commons.ApiError;
-import ae.rakbank.documentuploader.commons.DocumentUploadException;
-import ae.rakbank.documentuploader.services.DocumentUploadService;
+import java.io.IOException;
 
 @CrossOrigin
 @RestController
@@ -47,13 +44,10 @@ public class DocumentUploadController {
 
 	private final DocumentUploadService docUploadService;
 
-	private final FileHelper fileHelper;
-
 	private final EnvironmentUtil environmentUtil;
 
-	public DocumentUploadController(DocumentUploadService docUploadService, FileHelper fileHelper, EnvironmentUtil environmentUtil) {
+	public DocumentUploadController(DocumentUploadService docUploadService, EnvironmentUtil environmentUtil) {
 		this.docUploadService = docUploadService;
-		this.fileHelper = fileHelper;
 		this.environmentUtil = environmentUtil;
 	}
 
@@ -105,8 +99,15 @@ public class DocumentUploadController {
 	@GetMapping("/banks/RAK/prospects/{prospectId}/documents/{documentKey}")
 	public ResponseEntity<byte[]> downloadFile(@SuppressWarnings("unused") @PathVariable String prospectId, @PathVariable String documentKey) {
 		final FileDto file = docUploadService.findOneByDocumentKey(documentKey);
-		return ResponseEntity.ok().headers(fileHelper.configureHttpHeadersForFile(file))
+		return ResponseEntity.ok().headers(configureHttpHeadersForFile(file))
 				.body(file.getContent());
+	}
+
+	private HttpHeaders configureHttpHeadersForFile(FileDto file) {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set(HttpHeaders.CONTENT_TYPE, file.getContentType());
+		responseHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFileName());
+		return responseHeaders;
 	}
 
 	private ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
