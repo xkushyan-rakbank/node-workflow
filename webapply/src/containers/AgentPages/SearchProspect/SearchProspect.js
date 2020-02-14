@@ -65,7 +65,7 @@ const initialValues = {
 export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
   const classes = useStyles();
   const [searchStatus, setSearchStatus] = useState(INITIAL_SEARCH_STATUS);
-
+  const searchResult = get(searchResults, "searchResult", []);
   const handleSubmit = useCallback(
     values => {
       setSearchStatus(SUBMITTED_SEARCH_STATUS);
@@ -176,9 +176,9 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
           </Form>
         )}
       </Formik>
-      {get(searchResults, "searchResult", []) && (
+      {searchResult && (
         <SearchResult
-          searchResults={get(searchResults, "searchResult", [])}
+          searchResults={searchResult}
           searchStatus={searchStatus}
           isLoading={isLoading}
         />
