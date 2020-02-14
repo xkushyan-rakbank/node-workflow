@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import {
-  SEARCH_APPLICATIONS,
+  SEARCH_APPLICATIONS_REQUEST,
   searchApplicationsSuccess,
   searchApplicationsFailure
 } from "../actions/searchProspect";
@@ -30,5 +30,5 @@ function* searchProspectFormSaga({ payload }) {
 }
 
 export default function* searchProspectSaga() {
-  yield all([takeLatest(SEARCH_APPLICATIONS, searchProspectFormSaga)]);
+  yield all([takeLatest(SEARCH_APPLICATIONS_REQUEST, searchProspectFormSaga)]);
 }
