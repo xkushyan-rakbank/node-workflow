@@ -1,36 +1,37 @@
 package ae.rakbank.documentuploader.services;
 
+import ae.rakbank.documentuploader.commons.DocumentUploadException;
+import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.dto.FileDto;
+import ae.rakbank.documentuploader.s3.S3FileUploader;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
 import java.util.Date;
 
-import ae.rakbank.documentuploader.commons.EnvironmentUtil;
-import org.apache.commons.io.FilenameUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.databind.JsonNode;
-
-import ae.rakbank.documentuploader.commons.DocumentUploadException;
-
 @Service
-public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.services.DocumentUploadService {
+public class DocumentUploadServiceImpl implements DocumentUploadService {
 
-	private static final Logger logger = LoggerFactory.getLogger(DocumentUploadServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DocumentUploadServiceImpl.class);
 
-	private Path uploadsDir;
+    private Path uploadsDir;
 
-	@Autowired
-	private EnvironmentUtil environmentUtil;
+    @Autowired
+    private S3FileUploader s3FileUploader;
+
+    @Autowired
+    private EnvironmentUtil environmentUtil;
 
     @Override
     public String store(MultipartFile file, JsonNode fileInfo, String prospectId) throws IOException, DocumentUploadException {
@@ -56,12 +57,17 @@ public class DocumentUploadServiceImpl implements ae.rakbank.documentuploader.se
             logger.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId, this.uploadsDir.resolve(documentKey)));
 
             return documentKey;
-        }
-        catch (Exception exc) {
+        } catch (Exception exc) {
             logger.error(exc.getMessage());
         }
 
         return "";
+    }
+
+    @Override
+    public FileDto findOneByDocumentKey(String documentKey) {
+        return s3FileUploader.downloadFile(documentKey)
+                .orElseThrow(() -> new AmazonS3FileNotFoundException(String.format("Document with key %s not found", documentKey)));
     }
 
     private String sanitizeFilename(String fileName) {
