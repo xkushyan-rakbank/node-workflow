@@ -1,4 +1,3 @@
-export const VERIFY_TOKEN = "RECAPTCHA/VERIFY_TOKEN";
 export const SET_TOKEN = "RECAPTCHA/SET_TOKEN";
 export const SET_ERROR = "RECAPTCHA/SET_ERROR";
 
