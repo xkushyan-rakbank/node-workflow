@@ -8,14 +8,14 @@ import { titles, errorMsgs } from "./constants";
 import { useStyles } from "./styled";
 import { buildURI } from "../../../../utils/buildURI";
 
-export const DocumentsComponent = ({ docs = {}, prospectInfo, headers }) => {
+export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
   const classes = useStyles();
   const signatoryInfo = prospectInfo.signatoryInfo;
   const prospectId = get(prospectInfo, "generalInfo.prospectId");
 
   const generateDocumentUri = useCallback(
     documentKey => buildURI("getDocumentByIdUri", prospectId, documentKey),
-    [prospectInfo, prospectId]
+    [prospectId]
   );
   const headingClassName = cx(classes.checkListData, classes.heading);
 
