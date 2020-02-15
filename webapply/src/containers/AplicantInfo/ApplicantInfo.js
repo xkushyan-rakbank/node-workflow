@@ -76,8 +76,7 @@ const ApplicantInfoPage = ({
   setToken,
   reCaptchaToken,
   isRecaptchaEnable,
-  isConfigLoading,
-  history
+  isConfigLoading
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
