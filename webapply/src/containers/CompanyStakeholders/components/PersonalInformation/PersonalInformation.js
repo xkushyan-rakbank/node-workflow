@@ -113,7 +113,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={false}
     >
-      {({ values, setFieldValue, resetForm }) => (
+      {({ values, setFieldValue, resetForm, errors, touched }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -142,7 +142,12 @@ export const PersonalInformation = ({ index, handleContinue }) => {
           </Grid>
           <Grid item container spacing={3}>
             <Grid item md={6} sm={12}>
-              <InputGroup>
+              <InputGroup
+                error={
+                  (touched.firstName && errors.firstName) ||
+                  (touched.salutation && errors.salutation)
+                }
+              >
                 <Field
                   name="salutation"
                   path={`prospect.signatoryInfo[${index}].salutation`}
@@ -151,6 +156,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   shrink={false}
                   datalistId="salutation"
                   inputProps={{ tabIndex: 0 }}
+                  isShowErrorText
                 />
 
                 <Field
@@ -165,6 +171,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                     inputProps: { maxLength: 30, tabIndex: 0 }
                   }}
                   contextualHelpText="Given Name of the stakeholder exactly the way it is mentioned in the passport"
+                  isShowErrorText
                 />
               </InputGroup>
             </Grid>
