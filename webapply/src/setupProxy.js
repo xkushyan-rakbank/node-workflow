@@ -22,7 +22,8 @@ module.exports = function(app) {
     "/docUploader",
     proxy({
       target: "https://uatrmtc.rakbankonline.ae",
-      changeOrigin: true
+      changeOrigin: true,
+      secure: false
     })
   );
 };
