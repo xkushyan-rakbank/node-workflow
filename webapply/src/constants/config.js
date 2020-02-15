@@ -10,7 +10,7 @@ export const endpoints = {
   uploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
   reuploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
   searchProspectUri: "/webapply/api/v1/usertypes/:userType/prospects/search",
-  getDocumentByIdUri: "/webapply/api/v1/prospects/:prospectId/documents/:documentKey",
+  getDocumentByIdUri: "/docUploader/api/v1/banks/RAK/prospects/:prospectId/documents/:documentKey",
   screenProspectUri: "/webapply/api/v1//prospects/:prospectId/screening",
   otpUri: "/webapply/api/v1/otp",
   authenticateUserUri: "/webapply/api/v1/users/authenticate",
