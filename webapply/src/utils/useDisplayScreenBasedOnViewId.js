@@ -7,7 +7,7 @@ import { getIsEditableStatusSearchInfo } from "../store/selectors/searchProspect
 import routes, { smeBaseName } from "../routes";
 import { ACTION_TYPES, VIEW_IDS } from "../constants";
 
-export const useDisplayScreenBasedOnViewId = () => {
+export const useDisplayScreenBasedOnViewId = (deps = []) => {
   const history = useHistory();
   const { applicationInfo, isROScreens } = useSelector(state => ({
     applicationInfo: getApplicationInfo(state),
@@ -41,7 +41,7 @@ export const useDisplayScreenBasedOnViewId = () => {
         }
       }
     },
-    [applicationInfo, isROScreens, history]
+    [applicationInfo, isROScreens, history, ...deps]
   );
 
   return {
