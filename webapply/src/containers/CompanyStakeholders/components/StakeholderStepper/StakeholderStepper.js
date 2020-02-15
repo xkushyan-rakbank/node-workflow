@@ -69,7 +69,7 @@ const StakeholderStepperComponent = ({
             changeEditableStakeholder();
           }, timeInterval);
         }
-        isEditInProgress ? handleSetStep() : handleSetNextStep(activeStep);
+        handleSetNextStep(activeStep);
       },
       () => {}
     );
