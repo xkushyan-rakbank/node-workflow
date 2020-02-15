@@ -7,23 +7,18 @@ export const concatCompanyDocs = (existDocs, incomeDocs) => {
   return [...existDocs, ...companyDocsDiff];
 };
 
-export const concatStakeholdersDocs = (neededDocs, { ...uploadedDocs }) => {
+export const concatStakeholdersDocs = (neededDocs, uploadedDocs) => {
   return Object.entries(neededDocs).reduce((acc, [signatoryId, { documents }]) => {
-    if (!uploadedDocs[signatoryId]) {
-      acc[signatoryId] = {
-        documents
-      };
-    } else {
-      acc[signatoryId] = {
-        documents: documents.map(neededDocument => {
-          return (
-            uploadedDocs[signatoryId].find(
-              uploadedDoc => uploadedDoc.documentTitle === neededDocument.documentTitle
-            ) || neededDocument
-          );
-        })
-      };
-    }
+    acc[signatoryId] = {
+      documents: !uploadedDocs[signatoryId]
+        ? documents
+        : documents.map(
+            neededDocument =>
+              uploadedDocs[signatoryId].find(
+                uploadedDoc => uploadedDoc.documentTitle === neededDocument.documentTitle
+              ) || neededDocument
+          )
+    };
     return acc;
   }, {});
 };
