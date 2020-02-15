@@ -1,12 +1,12 @@
 import React from "react";
+import get from "lodash/get";
 import cx from "classnames";
 
 import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
   const classes = useStyles();
-
-  return prospectInfo.applicationInfo ? (
+  return get(prospectInfo, "AuditTrailInfo[0]", {}) ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div>
@@ -19,16 +19,12 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
       <div className={classes.applicationRow}>
         <div>
           <div className={classes.checkListData}>
-            {prospectInfo.applicationInfo.lastModifiedBy !== ""
-              ? prospectInfo.applicationInfo.lastModifiedBy
-              : prospectInfo.applicationInfo.createdBy}
+            {get(prospectInfo, "AuditTrailInfo[0].modifiedBy", "")}
           </div>
         </div>
         <div>
           <div className={classes.checkListData}>
-            {prospectInfo.applicationInfo.lastModifiedDate !== ""
-              ? prospectInfo.applicationInfo.lastModifiedDate
-              : prospectInfo.applicationInfo.createdDate}
+            {get(prospectInfo, "AuditTrailInfo[0].modifiedDateTime", "")}
           </div>
         </div>
       </div>
