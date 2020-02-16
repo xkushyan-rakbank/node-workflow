@@ -32,6 +32,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     position: "relative",
     boxSizing: "border-box",
+    height: 1,
     "&:last-of-type": {
       marginBottom: 0
     },

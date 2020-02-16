@@ -72,7 +72,7 @@ function* uploadProgressWatcher(chan, documentKey) {
 function* getProspectDocumentsSaga() {
   const state = yield select();
   const headers = getAuthorizationHeader(state);
-  const prospectID = getProspectId(state) || "COSME0000000000000001";
+  const prospectID = getProspectId(state);
   const existDocuments = getDocuments(state);
   const config = cloneDeep(state.appConfig);
   const isDocsUploaded =

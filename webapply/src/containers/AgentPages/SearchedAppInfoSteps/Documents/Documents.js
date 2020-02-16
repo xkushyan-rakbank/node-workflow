@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import get from "lodash/get";
 import cx from "classnames";
 
@@ -6,11 +6,17 @@ import { Avatar } from "../../../../components/Avatar/Avatar";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
+import { buildURI } from "../../../../utils/buildURI";
 
-export const DocumentsComponent = ({ docs = {}, prospectInfo, endpointsUrl }) => {
+export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
   const classes = useStyles();
   const signatoryInfo = prospectInfo.signatoryInfo;
-  const documentBaseUrl = `${endpointsUrl.baseUrl || ""}${endpointsUrl.getDocumentByIdUri || ""}`;
+  const prospectId = get(prospectInfo, "generalInfo.prospectId");
+
+  const generateDocumentUri = useCallback(
+    documentKey => buildURI("getDocumentByIdUri", prospectId, documentKey),
+    [prospectId]
+  );
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (
@@ -32,7 +38,7 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo, endpointsUrl }) =>
           {docs.companyDocuments.map((application, index) => (
             <div className={classes.applicationRow} key={application.documentType}>
               <div>
-                <div className={classes.checkListData}>{application.documentType}</div>
+                <div className={classes.checkListData}>{application.documentTitle}</div>
               </div>
               <div>
                 <div className={classes.checkListData}>{application.uploadStatus}</div>
@@ -40,9 +46,7 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo, endpointsUrl }) =>
               <div>
                 <a
                   index={index}
-                  href={documentBaseUrl
-                    .replace("{prospectId}", prospectInfo.prospectId)
-                    .replace("{documentKey}", application.documentKey)}
+                  href={generateDocumentUri(application.fileName)}
                   className={classes.link}
                 >
                   {titles.PRINT_DOWNLOAD_TITLE}
@@ -82,7 +86,7 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo, endpointsUrl }) =>
                 (doc, index) => (
                   <div className={classes.applicationRow} key={doc.documentType}>
                     <div>
-                      <div className={classes.checkListData}>{doc.documentType}</div>
+                      <div className={classes.checkListData}>{doc.documentTitle}</div>
                     </div>
                     <div>
                       <div className={classes.checkListData}>{doc.uploadStatus}</div>
@@ -91,9 +95,7 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo, endpointsUrl }) =>
                       <div>
                         <a
                           index={index}
-                          href={documentBaseUrl
-                            .replace("{prospectId}", prospectInfo.prospectId)
-                            .replace("{documentKey}", doc.documentKey)}
+                          href={generateDocumentUri(doc.fileName)}
                           className={classes.link}
                         >
                           {titles.PRINT_DOWNLOAD_TITLE}

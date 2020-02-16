@@ -15,18 +15,16 @@ import {
   Input,
   Checkbox,
   AutoSaveField as Field,
-  NumberFormat,
   SelectAutocomplete
 } from "../../../../../../components/Form";
 import {
   EMPLOYMENT_TYPE_REGEX,
   COMPANY_NAME_REGEX,
   DESIGNATION_REGEX,
-  TOTAL_EXPERIENCE_YEARS,
-  NUMBER_REGEX
+  MAX_EXPERIENCE_YEARS_LENGTH,
+  EXPERIENCE_YEARS_REGEX
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
-import { withSignatoriesFinalQuestions } from "../../../withSignatoriesFinalQuestions";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -39,8 +37,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
   totalExperienceYrs: Yup.string()
     .required(getRequiredMessage("Number of years of experience"))
-    .matches(NUMBER_REGEX, getInvalidMessage("Number of years of experience"))
-    .matches(TOTAL_EXPERIENCE_YEARS, "Maximum 255 characters allowed"),
+    .matches(EXPERIENCE_YEARS_REGEX, getInvalidMessage("Number of years of experience")),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
@@ -69,7 +66,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
           qualification: "",
           employmentType: "",
           designation: "",
-          totalExperienceYrs: 0,
+          totalExperienceYrs: "",
           otherEmploymentType: "",
           isWorkAtTheCompany: false,
           employerName: ""
@@ -78,7 +75,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
         validationSchema={signatoryEmploymentDetailsSchema}
         validateOnChange={false}
       >
-        {withSignatoriesFinalQuestions(index, ({ values, setFieldValue }) => {
+        {({ values, setFieldValue }) => {
           const basePath = `prospect.signatoryInfo[${index}]`;
           return (
             <Form>
@@ -93,6 +90,8 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     component={SelectAutocomplete}
                     inputProps={{ tabIndex: 0 }}
                   />
+                </Grid>
+                <Grid item md={6} sm={12}>
                   <Field
                     name="employmentType"
                     path={`${basePath}.employmentDetails.employmentType`}
@@ -111,16 +110,28 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     inputProps={{ tabIndex: 0 }}
                   />
                 </Grid>
-                <Grid item md={6} sm={12}>
+                <Grid item md={12} sm={12}>
+                  <Field
+                    name="designation"
+                    path={`${basePath}.employmentDetails.designation`}
+                    label="Designation"
+                    placeholder="Designation"
+                    component={Input}
+                    contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
+                    InputProps={{
+                      inputProps: { maxLength: MAX_DESIGNATION_LENGTH, tabIndex: 0 }
+                    }}
+                  />
                   <Field
                     name="totalExperienceYrs"
                     path={`${basePath}.employmentDetails.totalExperienceYrs`}
                     label="Number of years of experience"
                     placeholder="Work Experience"
                     component={Input}
+                    multiline
+                    rows="4"
                     InputProps={{
-                      inputComponent: NumberFormat,
-                      inputProps: { tabIndex: 0 }
+                      inputProps: { maxLength: MAX_EXPERIENCE_YEARS_LENGTH, tabIndex: 0 }
                     }}
                     contextualHelpText={
                       <>
@@ -137,17 +148,6 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                         AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
                       </>
                     }
-                  />
-                  <Field
-                    name="designation"
-                    path={`${basePath}.employmentDetails.designation`}
-                    label="Designation"
-                    placeholder="Designation"
-                    component={Input}
-                    contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
-                    InputProps={{
-                      inputProps: { maxLength: MAX_DESIGNATION_LENGTH, tabIndex: 0 }
-                    }}
                   />
                 </Grid>
                 {values.employmentType === OTHER_OPTION_VALUE && (
@@ -196,7 +196,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
               </div>
             </Form>
           );
-        })}
+        }}
       </Formik>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -61,16 +61,16 @@ const initialValues = {
   tradeLicenseNo: ""
 };
 
-export const SearchProspectComponent = ({ searchApplications, searchResults }) => {
+export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
   const classes = useStyles();
-
+  const [isSearchLaunched, setSearchStatus] = useState(false);
   const handleSubmit = useCallback(
     values => {
+      setSearchStatus(true);
       searchApplications(values);
     },
     [searchApplications]
   );
-
   return (
     <div className={classes.baseForm}>
       <h2>Search Applications</h2>
@@ -165,13 +165,15 @@ export const SearchProspectComponent = ({ searchApplications, searchResults }) =
               <SubmitButton
                 justify="flex-end"
                 label="Search"
-                disabled={Object.keys(omit(values, ["countryCode"])).every(key => !values[key])}
+                disabled={
+                  isLoading || Object.keys(omit(values, ["countryCode"])).every(key => !values[key])
+                }
               />
             </div>
           </Form>
         )}
       </Formik>
-      {searchResults.searchResult && <SearchResult searchResults={searchResults.searchResult} />}
+      {isSearchLaunched && !isLoading && <SearchResult searchResults={searchResults} />}
     </div>
   );
 };

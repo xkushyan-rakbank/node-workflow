@@ -68,6 +68,7 @@ export const REQUEST_FAILED = "error";
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
+export const IGNORE_ERROR_CODES = ["12009"];
 export const APP_COMPLETED_SCREENING_STATUS = "Completed";
 export const APP_DECLINE_SCREEN_REASON = "Decline";
 
@@ -174,3 +175,9 @@ export const ACTION_TYPES = {
 };
 
 export const SOLE_PROPRIETOR = "1";
+
+export const STEP_STATUS = {
+  AVAILABLE: "AVAILABLE",
+  NOT_AVAILABLE: "NOT_AVAILABLE",
+  COMPLETED: "COMPLETED"
+};

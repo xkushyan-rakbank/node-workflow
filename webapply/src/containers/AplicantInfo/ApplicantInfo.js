@@ -76,8 +76,7 @@ const ApplicantInfoPage = ({
   setToken,
   reCaptchaToken,
   isRecaptchaEnable,
-  isConfigLoading,
-  history
+  isConfigLoading
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
@@ -93,7 +92,9 @@ const ApplicantInfoPage = ({
       setIsLoading(true);
       submit(values)
         .then(() => {
-          pushHistory(routes.verifyOtp);
+          pushHistory(
+            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp
+          );
         })
         .finally(() => {
           setIsLoading(false);

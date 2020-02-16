@@ -28,6 +28,11 @@ public class ApiError {
 		this.status = status;
 	}
 
+	public ApiError(HttpStatus httpStatus, String message) {
+		status = httpStatus;
+		this.message = message;
+	}
+
 	public ApiError(HttpStatus status, Throwable ex) {
 		this();
 		this.status = status;
@@ -51,39 +56,8 @@ public class ApiError {
 	}
 
 	private void setException(Throwable ex) {
-		//if (!EnvUtil.isWebApplyEnvProd()) {
-			this.exception = ex.getMessage();
-		//}
+		this.exception = ex.getMessage();
 	}
-
-//	ApiError(HttpStatus status, String message, Throwable ex) {
-//		this();
-//		this.status = status;
-//		this.message = message;
-//		setException(ex);
-//	}
-
-//	public String getDebugMessage() {
-//		if (!EnvUtil.isWebApplyEnvProd()) {
-//			return debugMessage;
-//		}
-//		return null;
-//	}
-//
-//	public String getMessage() {
-//		return message;
-//	}
-//
-//	public HttpStatus getStatus() {
-//		return status;
-//	}
-//
-//	public String getException() {
-//		if (!EnvUtil.isWebApplyEnvProd()) {
-//			return exception;
-//		}
-//		return null;
-//	}
 
 	public JsonNode toJson() {
 		ObjectMapper objectMapper = new ObjectMapper();

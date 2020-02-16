@@ -1,5 +1,4 @@
 import axios from "axios";
-import get from "lodash/get";
 
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
@@ -8,6 +7,7 @@ import { setAccessToken } from "../store/actions/appConfig";
 import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
+import { IGNORE_ERROR_CODES } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const ENCRYPT_METHODS = ["post", "put"];
@@ -84,7 +84,6 @@ instance.interceptors.response.use(
   },
   error => {
     const {
-      status,
       data,
       config: { symKey }
     } = error.response;
@@ -109,35 +108,60 @@ instance.interceptors.response.use(
       }
     }
 
-    let notificationOptions = {};
-    if (jsonData) {
-      if (status === 400 && jsonData.errorType === "ReCaptchaError") {
-        store.dispatch(setError(data.errors));
-        notificationOptions = { title: "ReCaptchaError", message: data.errors };
-      } else if (status === 400 && jsonData.errors) {
-        store.dispatch(setInputsErrors(data.errors));
-        if (jsonData.errorType === "FieldsValidation") {
-          notificationOptions = {
-            title: "Validation Error On Server",
-            message: get(jsonData, "errors[0].message", "Validation Error")
-          };
-        }
-      } else {
-        log(jsonData);
-        try {
-          const { errors } = JSON.parse(jsonData.debugMessage);
-          const errorMessages = errors.map(({ message }) => message);
+    const addErrorToNotification = options => {
+      NotificationsManager.add && NotificationsManager.add(options);
+    };
 
-          if (jsonData.status) {
-            notificationOptions = { message: errorMessages.join(", ") };
-          }
-        } catch (e) {
-          log(e);
+    if (jsonData) {
+      try {
+        const { errorType, errors } = JSON.parse(jsonData.debugMessage);
+        switch (errorType) {
+          case "FieldsValidation":
+            if (errors) {
+              store.dispatch(setInputsErrors(errors));
+              errors.forEach(error => {
+                addErrorToNotification({
+                  title: "Validation Error On Server",
+                  message: error.message || "Validation Error"
+                });
+              });
+            }
+            break;
+          case "OTP":
+            addErrorToNotification({
+              title: "OTP error",
+              message: "Something wrong with OTP"
+            });
+            break;
+          case "ReCaptchaError":
+            store.dispatch(setError(errors));
+            addErrorToNotification({
+              title: "ReCaptchaError",
+              message: data.errors
+            });
+            break;
+          case "Other":
+            if (errors) {
+              errors.forEach(error => {
+                if (!IGNORE_ERROR_CODES.includes(error.errorCode))
+                  addErrorToNotification({
+                    title: error.message,
+                    message: error.developerText
+                  });
+              });
+            }
+            break;
+          default:
+            addErrorToNotification({ title: errorType, message: errors });
         }
+      } catch (e) {
+        addErrorToNotification({
+          title: jsonData.status,
+          message: jsonData.debugMessage || jsonData.message || jsonData
+        });
       }
     }
 
-    NotificationsManager.add && NotificationsManager.add(notificationOptions);
     return Promise.reject(error);
   }
 );

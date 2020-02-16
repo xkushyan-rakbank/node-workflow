@@ -24,6 +24,7 @@ export const FormLayoutComponent = ({
   useEffect(() => {
     const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
     const isSendToApi = [
+      routes.companyInfo,
       routes.stakeholdersInfo,
       routes.finalQuestions,
       routes.uploadDocuments,

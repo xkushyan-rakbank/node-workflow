@@ -1,35 +1,49 @@
 import React, { useState, useCallback } from "react";
 
-import { GO_TO_SUBMIT_STEP, STEP_1, STEP_3 } from "./constants";
+import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
-import { accountNames } from "../../constants";
+import { accountNames, STEP_STATUS } from "../../constants";
+import { useStep } from "../../hooks/useStep";
 
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const classes = useStyles();
+  const [isSubmit, setIsSubmit] = useState(false);
   const pushHistory = useTrackingHistory();
-  const [step, setStep] = useState(STEP_1);
+
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
+    SELECT_SERVICES_PAGE_ID,
+    servicesSteps
+  );
+  const isAllStepsCompleted = !availableSteps.some(
+    step => step.step < STEP_3 && step.status !== STEP_STATUS.COMPLETED
+  );
+  const handleClickNextStep = useCallback(() => {
+    if (isSubmit) {
+      pushHistory(routes.SubmitApplication);
+      return;
+    }
+
+    handleSetNextStep(activeStep);
+    setIsSubmit(true);
+  }, [pushHistory, isSubmit, setIsSubmit, handleSetNextStep, activeStep, pushHistory]);
 
   const setNextStep = useCallback(
     event => {
-      if (step === GO_TO_SUBMIT_STEP) {
-        return pushHistory(routes.SubmitApplication);
-      }
-      sendProspectToAPI(null, event).then(() => setStep(step + 1), () => {});
+      sendProspectToAPI(null, event).then(() => handleSetNextStep(activeStep), () => {});
     },
-    [sendProspectToAPI, step, pushHistory]
+    [sendProspectToAPI, activeStep, handleSetNextStep]
   );
 
   const createSetStepHandler = nextStep => () => {
-    if (step > nextStep) {
-      setStep(nextStep);
-    }
+    setIsSubmit(false);
+    handleSetStep(nextStep);
   };
 
   return (
@@ -39,16 +53,24 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
         info="Enough of us asking. Now it’s your turn to say which services you want, whether it is currencies, bossiness debit cards or cheque books."
       />
 
-      <ServicesSteps step={step} clickHandler={createSetStepHandler} handleContinue={setNextStep} />
+      <ServicesSteps
+        activeStep={activeStep}
+        completedSteps={availableSteps}
+        isSubmit={isSubmit}
+        clickHandler={createSetStepHandler}
+        handleContinue={setNextStep}
+      />
 
       <div className={classes.linkContainer}>
         <BackLink path={routes.uploadDocuments} />
         <SubmitButton
           className={classes.submitButton}
-          handleClick={setNextStep}
-          label={step === GO_TO_SUBMIT_STEP ? "Go to submit" : "Next Step"}
+          handleClick={handleClickNextStep}
+          label={isSubmit ? "Go to submit" : "Next Step"}
           justify="flex-end"
-          disabled={step <= STEP_3 || (accountType === accountNames.starter && !rakValuePackage)}
+          disabled={
+            !isAllStepsCompleted || (accountType === accountNames.starter && !rakValuePackage)
+          }
         />
       </div>
     </>

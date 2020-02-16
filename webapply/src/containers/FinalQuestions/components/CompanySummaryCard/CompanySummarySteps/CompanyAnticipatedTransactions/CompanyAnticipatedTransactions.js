@@ -15,7 +15,6 @@ import { ContinueButton } from "../../../../../../components/Buttons/ContinueBut
 import { useStyles } from "./styled";
 import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
 import { CURRENCY_REGEX } from "../../../../../../utils/validation";
-import { withCompanyFinalQuestions } from "../../../withCompanyFinalQuestions";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -27,11 +26,14 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
   if (!checkValidNumberFromString(annualFinancialTurnover)) {
     return 0;
   }
-  return Math.round(parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT);
+  const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
+  return Number(calculation.toFixed(2));
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
-  return monthlyCreditsValue ? `${monthlyCreditsValue} in Total Monthly Credits` : "9999999999.99";
+  return checkValidNumberFromString(monthlyCreditsValue)
+    ? `${monthlyCreditsValue} in Total Monthly Credits`
+    : "9999999999.99";
 };
 
 const checkValidNumberFromString = string => {
@@ -148,7 +150,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
         validationSchema={companyAnticipatedTransactionsSchema}
         validateOnChange={false}
       >
-        {withCompanyFinalQuestions(({ values }) => (
+        {({ values }) => (
           <Form autoComplete="off">
             <h4 className={classes.groupLabel}>Annual turnover</h4>
             <Grid container spacing={3} className={classes.flexContainer}>
@@ -284,7 +286,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
               <ContinueButton type="submit" />
             </div>
           </Form>
-        ))}
+        )}
       </Formik>
     </div>
   );

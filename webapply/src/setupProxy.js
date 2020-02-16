@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     "/quickapply",
     proxy({
-      target: "http://localhost:8080",
+      target: "https://quickapplydev.rakbank.ae",
       changeOrigin: true,
       pathRewrite: {
         "^/quickapply/": "/"
@@ -14,15 +14,16 @@ module.exports = function(app) {
   app.use(
     "/webapply",
     proxy({
-      target: "http://localhost:8080",
+      target: "https://quickapplydev.rakbank.ae",
       changeOrigin: true
     })
   );
   app.use(
     "/docUploader",
     proxy({
-      target: "http://localhost:8080",
-      changeOrigin: true
+      target: "https://uatrmtc.rakbankonline.ae",
+      changeOrigin: true,
+      secure: false
     })
   );
 };

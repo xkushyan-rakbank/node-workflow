@@ -11,8 +11,8 @@ const useStyles = makeStyles({
   }
 });
 
-export const SkeletonLoader = () => {
+export const SkeletonLoader = props => {
   const clasess = useStyles();
 
-  return <Skeleton variant="rect" className={clasess.skeleton} />;
+  return <Skeleton variant="rect" className={clasess.skeleton} {...props} />;
 };

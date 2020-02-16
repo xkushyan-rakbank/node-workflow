@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
 
@@ -6,8 +7,11 @@ import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps, SIGNATORY_FIELD_NAME, STEP_1 } from "./constants";
+import { signatoriesSteps } from "./constants";
 import { checkIsAccountInfoTypeNumber } from "./utils";
+import { COMPANY_SIGNATORY_ID } from "./constants";
+import { getStakeholdersIds } from "../../../../store/selectors/stakeholder";
+import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
@@ -18,9 +22,13 @@ export const SignatorySummaryCardComponent = ({
   expandedSignatoryIndex,
   setExpandedSignatoryIndex,
   handleFinalStepContinue,
-  completedSignatoriesSteps
+  allSignatoriesSteps
 }) => {
-  const isSignatoryStepsCompleted = completedSignatoriesSteps[index];
+  const stakeholdersIds = useSelector(getStakeholdersIds);
+  const completedSteps = allSignatoriesSteps.filter(
+    item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index].id
+  );
+  const isAllStepsCompleted = checkAllStepsCompleted(completedSteps);
   const classes = useStyles();
 
   const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
@@ -42,7 +50,7 @@ export const SignatorySummaryCardComponent = ({
             </div>
           </div>
           <div className={classes.controlsBox}>
-            {expandedSignatoryIndex !== index && isSignatoryStepsCompleted && (
+            {expandedSignatoryIndex !== index && isAllStepsCompleted && (
               <LinkButton
                 clickHandler={() => {
                   setExpandedSignatoryIndex(index);
@@ -60,8 +68,7 @@ export const SignatorySummaryCardComponent = ({
           stepsArray={signatoriesSteps}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
-          fieldName={SIGNATORY_FIELD_NAME}
-          initialStep={STEP_1}
+          page={`${COMPANY_SIGNATORY_ID}${stakeholdersIds[index].id}`}
         />
       </div>
     </FormCard>

@@ -1,14 +1,15 @@
 package ae.rakbank.documentuploader.services;
 
-import java.io.IOException;
-
+import ae.rakbank.documentuploader.commons.DocumentUploadException;
+import ae.rakbank.documentuploader.dto.FileDto;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import ae.rakbank.documentuploader.commons.DocumentUploadException;
+import java.io.IOException;
 
 public interface DocumentUploadService {
 
-	String store(MultipartFile file, JsonNode requestBodyJSON, String prospectId) throws IOException, DocumentUploadException;
+    String store(MultipartFile file, JsonNode requestBodyJSON, String prospectId) throws IOException, DocumentUploadException;
+
+    FileDto findOneByDocumentKey(String documentKey);
 }

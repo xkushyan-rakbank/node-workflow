@@ -61,7 +61,6 @@ const comebackSchema = Yup.object({
 });
 
 const ComeBackLoginComponent = ({
-  history,
   generateOtpCode,
   isOtpGenerated,
   setToken,
@@ -96,7 +95,11 @@ const ComeBackLoginComponent = ({
 
   useEffect(() => {
     if (isOtpGenerated) {
-      pushHistory(routes.comeBackLoginVerification);
+      pushHistory(
+        process.env.REACT_APP_OTP_ENABLE === "N"
+          ? routes.MyApplications
+          : routes.comeBackLoginVerification
+      );
     }
   }, [pushHistory, isOtpGenerated]);
 

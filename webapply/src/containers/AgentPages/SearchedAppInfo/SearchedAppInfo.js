@@ -9,7 +9,6 @@ import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
 import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./constants";
 import { APP_STOP_SCREEN_RESULT } from "../../../constants";
-import { useStep } from "../../../components/StepComponent/useStep";
 
 import { useStyles } from "./styled";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
@@ -21,11 +20,20 @@ export const SearchedAppInfoComponent = ({
   retrieveDocDetails,
   getProspectInfo,
   setIsApplyEditApplication,
+  isApplyEditApplication,
   prospectInfo
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
-  const [step, handleSetStep] = useStep(STEP_1, initialAvailableSteps);
+  const [step, setStep] = useState(STEP_1);
+
+  const handleSetStep = nextStep => {
+    if (initialAvailableSteps.includes(nextStep)) {
+      setStep(nextStep);
+    } else if (!nextStep) {
+      setStep(null);
+    }
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
@@ -36,6 +44,12 @@ export const SearchedAppInfoComponent = ({
     getProspectInfo(match.params.id);
   }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfo]);
 
+  useEffect(() => {
+    if (isApplyEditApplication) {
+      pushDisplayScreenToHistory();
+    }
+  }, [isApplyEditApplication]);
+
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
   }, [setIsDisplayConfirmDialog]);
@@ -43,8 +57,7 @@ export const SearchedAppInfoComponent = ({
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   const confirmHandler = useCallback(() => {
-    setIsApplyEditApplication({ isApplyEditApplication: true });
-    pushDisplayScreenToHistory();
+    setIsApplyEditApplication(true);
   }, [setIsApplyEditApplication, pushDisplayScreenToHistory]);
 
   const confirmDialogHandler = useCallback(() => {
