@@ -41,7 +41,6 @@ export const useStyles = makeStyles(theme => ({
   },
   cost: {
     paddingTop: "25px",
-    paddingBottom: "15px",
     fontSize: "14px",
     fontWeight: 600,
     textAlign: "center",
@@ -87,7 +86,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: "600"
   },
   upgrade: {
-    paddingTop: "5px",
+    paddingTop: "4px",
     fontSize: "14px",
     fontStyle: "italic",
     textAlign: "center",
