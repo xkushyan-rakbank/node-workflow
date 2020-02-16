@@ -1,5 +1,5 @@
 import differenceBy from "lodash/differenceBy";
-import nanoid from "nanoid";
+import intersectionBy from "lodash/differenceBy";
 
 export const concatCompanyDocs = (existDocs, incomeDocs) => {
   const companyDocsDiff = differenceBy(incomeDocs, existDocs, "documentType");
@@ -12,12 +12,10 @@ export const concatStakeholdersDocs = (neededDocs, uploadedDocs) => {
     acc[signatoryId] = {
       documents: !uploadedDocs[signatoryId]
         ? documents
-        : documents.map(
-            neededDocument =>
-              uploadedDocs[signatoryId].find(
-                uploadedDoc => uploadedDoc.documentTitle === neededDocument.documentTitle
-              ) || neededDocument
-          )
+        : [
+            ...intersectionBy(uploadedDocs[signatoryId].documents, documents, "documentKey"),
+            ...differenceBy(documents, uploadedDocs[signatoryId].documents, "documentKey")
+          ]
     };
     return acc;
   }, {});
@@ -32,4 +30,4 @@ export const createDocumentMapper = (documentKey, additionalProps) => doc => {
 };
 
 export const appendDocumentKey = (docs = []) =>
-  docs.map(doc => ({ ...doc, documentKey: doc.documentKey || nanoid() }));
+  docs.map((doc, index) => ({ ...doc, documentKey: doc.documentType + index }));
