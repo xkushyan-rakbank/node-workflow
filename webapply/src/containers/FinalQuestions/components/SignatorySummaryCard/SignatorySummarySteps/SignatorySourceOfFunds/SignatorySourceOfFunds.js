@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
+import get from "lodash/get";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../../../components/Notifications";
@@ -30,7 +31,7 @@ export const signatorySourceOfFundsSchema = Yup.object().shape({
   })
 });
 
-export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
+export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signatories }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
@@ -41,8 +42,8 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          wealthType: "",
-          others: ""
+          wealthType: get(signatories, "kycDetails.sourceOfWealth.wealthType", []),
+          others: get(signatories, "kycDetails.sourceOfWealth.others", "")
         }}
         onSubmit={handleSubmit}
         validationSchema={signatorySourceOfFundsSchema}
@@ -59,8 +60,8 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   label="Source of funds"
                   onChange={selectedValue => {
                     if (
-                      selectedValue !== OTHER_SOURCE_OF_WEALTH &&
-                      values.wealthType === OTHER_SOURCE_OF_WEALTH
+                      !selectedValue.includes(OTHER_SOURCE_OF_WEALTH) &&
+                      values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                     ) {
                       setFieldValue("others", "");
                       setFieldTouched("others", false);
@@ -70,8 +71,8 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
                   component={SelectAutocomplete}
-                  inputProps={{ tabIndex: 0 }}
                   isSearchable
+                  multiple
                 />
                 <InfoTitle
                   classes={{
@@ -82,7 +83,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
               </Grid>
               <Grid
                 className={cx({
-                  hidden: values.wealthType !== OTHER_SOURCE_OF_WEALTH
+                  hidden: !values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                 })}
                 item
                 md={12}
