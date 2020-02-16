@@ -48,9 +48,11 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
                     handleClick={() => getProspectInfo(app.prospectId)}
                   />
                 ) : (
-                  <div className={classes.statusNotes}>
-                    {notCtaStatuses[app.status.statusNotes]}
-                  </div>
+                  !!app.status.statusNotes && (
+                    <div className={classes.statusNotes}>
+                      {notCtaStatuses[app.status.statusNotes]}
+                    </div>
+                  )
                 )}
               </div>
             ]
