@@ -181,17 +181,18 @@ jobs:
           ArtifactName: 'WebapplyServer'
       - bash: |
           npm install slack-cli -g
-          echo "The new Onboarding build is available for testing: " > release-notes.txt
+          echo "=====================The new Onboarding build is available for testing:=========== " > release-notes.txt
           echo -e "\n" >> release-notes.txt
           echo " Release (UAT) with the Build ID: $BUILD_ID " >> release-notes.txt
           echo -e "\n" >> release-notes.txt
           echo -e "Changelog:" >> release-notes.txt
           echo -e "\n" >> release-notes.txt
-          GITLOG=`git log --merges --since="1.days.ago" --pretty="Commit-id: %h - Author: %an, %ar : %s\n" `
+          GITLOG=`git log --merges --since="1.days.ago" --pretty="Commit-id: %h - By : %an, %ar : %s\n" `
           echo -e $GITLOG >> release-notes.txt
-          echo -e "\n" >> release-notes.txt
+          echo -e "The files are :\n" >> release-notes.txt
           git diff --stat $(git describe --tags --abbrev=0)..HEAD >> release-notes.txt
           slackcli -h "co-releasenotes" -e :checkered_flag: -t $(SLACK_TOKEN) -u "Slackbot" -m "`cat release-notes.txt`"
+          echo -e "================END===================\n" >> release-notes.txt
         env:
           BUILD_NUMBER: $(Build.BuildNumber)
           BUILD_ID: $(Build.BuildId)
