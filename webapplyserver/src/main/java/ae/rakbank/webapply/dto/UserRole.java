@@ -1,6 +1,6 @@
 package ae.rakbank.webapply.dto;
 
 public enum UserRole {
-    USER,
+    CUSTOMER,
     AGENT
 }

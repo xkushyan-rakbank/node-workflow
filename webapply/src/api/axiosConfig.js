@@ -3,6 +3,7 @@ import axios from "axios";
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
+import { setAccessToken } from "../store/actions/appConfig";
 import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
@@ -46,6 +47,12 @@ instance.interceptors.request.use(config => {
   }
 
   return config;
+});
+
+instance.interceptors.response.use(response => {
+  const accessToken = get(response, "headers.accesstoken") || get(response, "headers.AccessToken");
+  if (accessToken) store.dispatch(setAccessToken(accessToken));
+  return response;
 });
 
 instance.interceptors.response.use(

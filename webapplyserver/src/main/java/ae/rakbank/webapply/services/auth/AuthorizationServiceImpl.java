@@ -1,18 +1,24 @@
 package ae.rakbank.webapply.services.auth;
 
+import ae.rakbank.webapply.client.OauthClient;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.dto.JwtPayload;
+import ae.rakbank.webapply.dto.UserRole;
+import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.AuthorizationService;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthorizationServiceImpl implements AuthorizationService {
@@ -20,8 +26,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final FileHelper fileHelper;
     private final JwtService jwtService;
     private final OAuthService oAuthService;
+    private final OauthClient oauthClient;
 
-    private JsonNode oAuthConfigs = null;
+    private JsonNode oAuthConfigs;
 
     @PostConstruct
     public void init() {
@@ -30,33 +37,69 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public void validateJwtToken(String jwtToken, Boolean force) {
+    public String validateAndUpdateJwtToken(String jwtToken) {
         JwtPayload jwtPayload = jwtService.decrypt(jwtToken);
-        oAuthService.validateAccessToken(jwtPayload.getOauthAccessToken(), jwtPayload.getOauthRefreshToken(), force);
+        if (UserRole.AGENT.equals(jwtPayload.getRole())) {
+            validateAndUpdateAgentJwtPayload(jwtPayload);
+        } else if (UserRole.CUSTOMER.equals(jwtPayload.getRole())) {
+            validateAndUpdateCustomerJwtPayload(jwtPayload);
+        } else {
+            log.error("JwtToken is not valid, field role is required");
+            throw new ApiException("JwtToken is not valid, field role is required", HttpStatus.UNAUTHORIZED);
+        }
+        return jwtService.encrypt(jwtPayload);
+    }
+
+    private void validateAndUpdateCustomerJwtPayload(JwtPayload jwtPayload) {
+        if (StringUtils.isEmpty(jwtPayload.getPhoneNumber())) {
+            log.error("JwtToken is not valid, field phoneNumber is required for the Customer");
+            throw new ApiException("JwtToken is not valid, field phoneNumber is required for the Customer", HttpStatus.UNAUTHORIZED);
+        }
+        oAuthService.validateAndUpdateOauthToken(jwtPayload);
+    }
+
+    private void validateAndUpdateAgentJwtPayload(JwtPayload jwtPayload) {
+        oAuthService.validateAndUpdateOauthToken(jwtPayload);
     }
 
     @Override
-    public String getJwtToken() {
-        return getJwtToken(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
-    }
-
-    @Override
-    public String getJwtToken(String username, String password) {
-        ResponseEntity<JsonNode> oAuthToken = oAuthService.getOrUpdateOAuthToken(username, password);
+    public String createAgentJwtToken(String username, String password) {
+        ResponseEntity<JsonNode> oAuthObjectResponse = oauthClient.authorize(username, password);
 
         return jwtService.encrypt(JwtPayload.builder()
-                .oauthAccessToken(oAuthToken.getBody().get("access_token").asText())
-                .oauthRefreshToken(oAuthToken.getBody().get("refresh_token").asText())
+                .role(UserRole.AGENT)
+                .oauthAccessToken(oAuthObjectResponse.getBody().get("access_token").asText())
+                .oauthRefreshToken(oAuthObjectResponse.getBody().get("refresh_token").asText())
+                .oauthTokenExpiryTime(oAuthService.getExpireTime(oAuthObjectResponse))
                 .build());
     }
 
     @Override
-    public String getOauthAccessToken(String jwtToken) {
-        return jwtService.decrypt(jwtToken).getOauthAccessToken();
+    public String createCustomerJwtToken(String phoneNumber) {
+        ResponseEntity<JsonNode> oAuthObjectResponse =
+                oauthClient.authorize(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
+
+        return jwtService.encrypt(JwtPayload.builder()
+                .role(UserRole.CUSTOMER)
+                .phoneNumber(phoneNumber)
+                .oauthAccessToken(oAuthObjectResponse.getBody().get("access_token").asText())
+                .oauthRefreshToken(oAuthObjectResponse.getBody().get("refresh_token").asText())
+                .oauthTokenExpiryTime(oAuthService.getExpireTime(oAuthObjectResponse))
+                .build());
     }
 
     @Override
-    public HttpHeaders getOAuthHeaders(String oauthAccessToken, MediaType mediaType) {
-        return oAuthService.getOAuthHeaders(oauthAccessToken, mediaType);
+    public HttpHeaders getOAuthHeaders(String oauthAccessToken) {
+        return oAuthService.getOAuthHeaders(oauthAccessToken);
+    }
+
+    @Override
+    public String getAndUpdateContextOauthToken() {
+        return oAuthService.getAndUpdateContextOauthToken();
+    }
+
+    @Override
+    public String getOauthTokenFromJwt(String jwtToken) {
+        return jwtService.decrypt(jwtToken).getOauthAccessToken();
     }
 }
