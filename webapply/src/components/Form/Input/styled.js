@@ -88,6 +88,9 @@ export const useStyles = makeStyles({
     paddingRight: 16,
     "&::placeholder": {
       color: "#86868b"
+    },
+    "&.MuiOutlinedInput-inputMultiline": {
+      padding: 0
     }
   },
   iePlaceholder: {
