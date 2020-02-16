@@ -86,7 +86,6 @@ function* setScreeningResults({ preScreening }) {
 }
 
 function* sendProspectToAPISaga({ payload: { saveType } }) {
-  console.log(saveType);
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
