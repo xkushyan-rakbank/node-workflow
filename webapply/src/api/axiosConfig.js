@@ -49,12 +49,15 @@ instance.interceptors.request.use(config => {
   return config;
 });
 
+instance.interceptors.response.use(response => {
+  const accessToken = get(response, "headers.accesstoken") || get(response, "headers.AccessToken");
+  if (accessToken) store.dispatch(setAccessToken(accessToken));
+  return response;
+});
+
 instance.interceptors.response.use(
   response => {
     const { symKey } = response.config;
-    const accessToken = get(response, "headers.access_token");
-
-    if (accessToken) store.dispatch(setAccessToken(accessToken));
 
     if (symKey && response.data && typeof response.data === "string") {
       let payload;
