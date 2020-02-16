@@ -176,5 +176,9 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: 1.14,
     textAlign: "center",
     color: "#b5b5bb"
+  },
+  statusNotes: {
+    color: "#b5b5bb",
+    fontStyle: "italic"
   }
 }));
