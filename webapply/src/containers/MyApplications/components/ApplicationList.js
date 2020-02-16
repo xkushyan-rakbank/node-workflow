@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "classnames";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 
 import { ctaStatuses, notCtaStatuses } from "../constants";
 import { WhiteContainedButton } from "./WhiteContainedButton";
