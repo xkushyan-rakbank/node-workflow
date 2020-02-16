@@ -187,7 +187,7 @@ jobs:
           echo -e "\n" >> release-notes.txt
           echo -e "Changelog:" >> release-notes.txt
           echo -e "\n" >> release-notes.txt
-          GITLOG=`git log --merges --since="1.days.ago" --pretty="Commit-id: %h - Author name: %an, %ar : %s\n" `
+          GITLOG=`git log --merges --since="1.days.ago" --pretty="Commit-id: %h - Author: %an, %ar : %s\n" `
           echo -e $GITLOG >> release-notes.txt
           echo -e "\n" >> release-notes.txt
           git diff --stat $(git describe --tags --abbrev=0)..HEAD >> release-notes.txt
