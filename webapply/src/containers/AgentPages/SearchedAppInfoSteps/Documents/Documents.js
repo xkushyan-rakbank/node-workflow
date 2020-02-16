@@ -6,16 +6,15 @@ import { Avatar } from "../../../../components/Avatar/Avatar";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
-import { buildURI } from "../../../../utils/buildURI";
 
-export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
+export const DocumentsComponent = ({ docs = {}, prospectInfo, downloadDocumentFile }) => {
   const classes = useStyles();
   const signatoryInfo = prospectInfo.signatoryInfo;
   const prospectId = get(prospectInfo, "generalInfo.prospectId");
 
-  const generateDocumentUri = useCallback(
-    documentKey => buildURI("getDocumentByIdUri", prospectId, documentKey),
-    [prospectId]
+  const downloadDocument = useCallback(
+    (documentKey, fileName) => downloadDocumentFile(prospectId, documentKey, fileName),
+    [prospectId, downloadDocumentFile]
   );
   const headingClassName = cx(classes.checkListData, classes.heading);
 
@@ -46,7 +45,7 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
               <div>
                 <a
                   index={index}
-                  href={generateDocumentUri(application.fileName)}
+                  onClick={() => downloadDocument(application.fileName, application.fileName)}
                   className={classes.link}
                 >
                   {titles.PRINT_DOWNLOAD_TITLE}
@@ -95,7 +94,7 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
                       <div>
                         <a
                           index={index}
-                          href={generateDocumentUri(doc.fileName)}
+                          onClick={() => downloadDocument(doc.fileName, doc.fileName)}
                           className={classes.link}
                         >
                           {titles.PRINT_DOWNLOAD_TITLE}
