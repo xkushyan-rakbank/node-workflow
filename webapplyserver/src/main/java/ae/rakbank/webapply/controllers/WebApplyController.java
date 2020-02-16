@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.exception.ApiException;
@@ -106,8 +105,7 @@ public class WebApplyController {
 
     @GetMapping(value = "/config", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<JsonNode> getWebApplyConfig(HttpServletRequest httpRequest,
-                                                      @RequestParam String role,
+    public ResponseEntity<JsonNode> getWebApplyConfig(@RequestParam String role,
                                                       @RequestParam(required = false, defaultValue = "") String segment,
                                                       @RequestParam(required = false, defaultValue = "") String product,
                                                       @RequestParam(required = false, defaultValue = "desktop") String device) {
@@ -160,25 +158,16 @@ public class WebApplyController {
                 }
             }
         }
-
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode response = objectMapper.createObjectNode();
         response.put("message", "reload configs successful");
-
-
-        //TODO No auth in the start of this method!?? sould we set auth token?
-//        ResponseEntity<JsonNode> oauthFromContext = dehClient.getOauthFromContext();
-//        response.set("oauth", oauthFromContext.getBody());
-
-        //TODO No auth in the start of this method!?? sould we set auth token?
-        response.put("access_token", authorizationService.getAndUpdateContextOauthToken());
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @GetMapping(value = "/config/reduced", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<JsonNode> getWebApplyConfigReduced(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+    public ResponseEntity<JsonNode> getWebApplyConfigReduced(HttpServletRequest httpRequest,
                                                              @RequestParam String role,
                                                              @RequestParam(required = false, defaultValue = "") String segment,
                                                              @RequestParam(required = false, defaultValue = "") String product,
@@ -212,8 +201,7 @@ public class WebApplyController {
 
     @PostMapping(value = "/usertypes/{segment}/prospects", produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                                               @RequestHeader String authorization,
+    public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest,
                                                @RequestBody JsonNode requestBodyJSON,
                                                @PathVariable String segment) {
         logger.info("Begin createSMEProspect() method");
@@ -238,8 +226,7 @@ public class WebApplyController {
         logger.info("Send OTP for prospectId:" + prospectId);
         ObjectNode otpRequest = createOtpRequest(requestBodyJSON, prospectId);
 
-        ResponseEntity<?> otpResponse =
-                generateVerifyOTP(httpRequest, httpResponse, authorization, otpRequest, true);
+        ResponseEntity<?> otpResponse = generateVerifyOTP(httpRequest, otpRequest, true);
 
         if (! otpResponse.getStatusCode().is2xxSuccessful()) {
             return otpResponse;
@@ -268,8 +255,7 @@ public class WebApplyController {
 
     @PostMapping(value = "/otp", produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                                               @RequestHeader String authorization,
+    public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest,
                                                @RequestBody JsonNode requestJSON,
                                                boolean captchaVerified) {
         String action = requestJSON.get("action").asText();
@@ -291,7 +277,7 @@ public class WebApplyController {
 
     @PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseEntity<?> updateSMEProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+    public ResponseEntity<?> updateSMEProspect(HttpServletRequest httpRequest,
                                                @RequestHeader String authorization,
                                                @RequestBody JsonNode jsonNode,
                                                @PathVariable String prospectId,
@@ -301,7 +287,7 @@ public class WebApplyController {
                 jsonNode.toString(), segment, prospectId));
 
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
-        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken, false);
+        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
 
         String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
@@ -312,7 +298,7 @@ public class WebApplyController {
 
     @PostMapping(value = "/usertypes/{segment}/prospects/search", produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+    public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest,
                                             @RequestHeader String authorization,
                                             @RequestBody JsonNode jsonNode,
                                             @PathVariable String segment) {
@@ -320,8 +306,8 @@ public class WebApplyController {
         logger.debug(String.format("searchProspect() method args, RequestBody=[%s], segment=[%s]", jsonNode.toString(),
                 segment));
 
-        String token = getTokenFromAuthorizationHeader(authorization);
-        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(token, false);
+        String jwtToken = getTokenFromAuthorizationHeader(authorization);
+        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
 
         String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
@@ -332,7 +318,7 @@ public class WebApplyController {
 
     @GetMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+    public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest,
                                              @RequestHeader String authorization,
                                              @PathVariable String segment,
                                              @PathVariable String prospectId) {
@@ -341,7 +327,7 @@ public class WebApplyController {
                 String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
 
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
-        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken, false);
+        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
 
         String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
@@ -352,7 +338,7 @@ public class WebApplyController {
 
     @GetMapping(value = "/prospects/{prospectId}/documents/{documentId}")
     @ResponseBody
-    public ResponseEntity<?> getProspectDocumentById(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+    public ResponseEntity<?> getProspectDocumentById(HttpServletRequest httpRequest,
                                                      @RequestHeader String authorization,
                                                      @PathVariable String prospectId,
                                                      @PathVariable String documentId) {
@@ -361,7 +347,7 @@ public class WebApplyController {
                 prospectId, documentId));
 
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
-        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken, false);
+        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
 
         String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
@@ -372,14 +358,14 @@ public class WebApplyController {
 
     @GetMapping(value = "/prospects/{prospectId}/documents", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> getProspectDocuments(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+    public ResponseEntity<?> getProspectDocuments(HttpServletRequest httpRequest,
                                                   @RequestHeader String authorization,
                                                   @PathVariable String prospectId) {
         logger.info("Begin getProspectDocuments() method");
         logger.debug(String.format("getProspectDocuments() method args, prospectId=[%s]", prospectId));
 
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
-        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken, false);
+        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
 
         String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
@@ -390,7 +376,7 @@ public class WebApplyController {
 
     @PostMapping(value = "/users/authenticate", produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseEntity<?> login(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+    public ResponseEntity<?> login(HttpServletRequest httpRequest,
                                    @RequestBody JsonNode requestBodyJSON) {
 
         logger.info("Begin login() method");
@@ -402,14 +388,9 @@ public class WebApplyController {
         validateReCaptcha(requestBodyJSON, httpRequest);
 
         String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
-        ResponseEntity<?> loginResponse = dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST,
-                requestBodyJSON, "login()", MediaType.APPLICATION_JSON, newJwtToken);
 
-        //TODO should update frontend flow   !!!!
-//        if (loginResponse.getBody() instanceof JsonNode) {
-//            ((ObjectNode) loginResponse.getBody()).put(JWT_TOKEN_KEY, newJwtToken);
-//        }
-        return loginResponse;
+        return dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestBodyJSON,
+                "login()", MediaType.APPLICATION_JSON, newJwtToken);
     }
 
     private void validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest httpRequest) {

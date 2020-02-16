@@ -23,10 +23,7 @@ import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.helpers.FileHelper;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -46,8 +43,8 @@ class JwtService {
     String encrypt(JwtPayload data) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            Instant instantExpiredAt = LocalDateTime.now().plusHours(3).toInstant(ZoneOffset.UTC);
-            Date expiredAt = Date.from(instantExpiredAt);
+//            Instant instantExpiredAt = LocalDateTime.now().plusHours(3).toInstant(ZoneOffset.UTC);
+//            Date expiredAt = Date.from(instantExpiredAt);
 
             String role = null;
             if (data.getRole() != null) {
@@ -59,7 +56,8 @@ class JwtService {
                     .withClaim("OAuthRefreshToken", data.getOauthRefreshToken())
                     .withClaim("role", role)
                     .withClaim("phoneNumber", data.getPhoneNumber())
-                    .withExpiresAt(expiredAt)
+                    .withClaim("oauthTokenExpiryTime", data.getOauthTokenExpiryTime().toString())
+//                    .withExpiresAt(expiredAt)
                     .sign(algorithm);
         } catch (JWTCreationException e) {
             logger.error("Failed create jwt token", e);
@@ -81,6 +79,7 @@ class JwtService {
                     .oauthRefreshToken(jwt.getClaim("OAuthRefreshToken").asString())
                     .role(UserRole.valueOf(jwt.getClaim("role").asString()))
                     .phoneNumber(jwt.getClaim("phoneNumber").asString())
+                    .oauthTokenExpiryTime(LocalDateTime.parse(jwt.getClaim("oauthTokenExpiryTime").asString()))
                     .build();
         } catch (JWTVerificationException e) {
             logger.error("Failed verify jwt token", e);

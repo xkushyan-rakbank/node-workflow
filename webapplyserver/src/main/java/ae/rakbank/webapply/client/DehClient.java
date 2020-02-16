@@ -23,9 +23,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
@@ -56,7 +54,12 @@ public class DehClient {
         logger.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]", operationId, url,
                 requestBodyJSON.toString()));
 
-        HttpEntity<JsonNode> request = getHttpEntityRequest(requestBodyJSON, authorizationService.getAndUpdateContextOauthToken());
+        HttpEntity<JsonNode> request;
+        if (StringUtils.isEmpty(updatedJwtToken)) {
+            request = getHttpEntityRequest(requestBodyJSON, authorizationService.getAndUpdateContextOauthToken());
+        } else {
+            request = getHttpEntityRequest(requestBodyJSON, authorizationService.getOauthTokenFromJwt(updatedJwtToken));
+        }
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<?> response;

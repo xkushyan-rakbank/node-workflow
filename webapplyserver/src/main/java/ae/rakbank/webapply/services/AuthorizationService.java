@@ -4,7 +4,7 @@ import org.springframework.http.HttpHeaders;
 
 public interface AuthorizationService {
 
-    String validateAndUpdateJwtToken(String jwtToken, Boolean force);
+    String validateAndUpdateJwtToken(String jwtToken);
 
     String createAgentJwtToken(String username, String password);
 
@@ -13,4 +13,6 @@ public interface AuthorizationService {
     HttpHeaders getOAuthHeaders(String oauthAccessToken);
 
     String getAndUpdateContextOauthToken();
+
+    String getOauthTokenFromJwt(String jwtToken);
 }

@@ -7,8 +7,10 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
 import ae.rakbank.webapply.client.OauthClient;
+import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.exception.ApiException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -20,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -34,25 +37,27 @@ import ae.rakbank.webapply.helpers.FileHelper;
 
 import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_ACCESS_TOKEN_KEY;
 import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_CONTEXT_OBJECT_KEY;
+import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_REFRESH_TOKEN_KEY;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 class OAuthService {
-	private static final Logger logger = LoggerFactory.getLogger(OAuthService.class);
+//	private static final Logger logger = LoggerFactory.getLogger(OAuthService.class);
 
 	private final FileHelper fileHelper;
 	private final ServletContext servletContext;
 	private final OauthClient oauthClient;
 
-	private JsonNode oAuthUri;
-	private String oAuthBaseUrl;
+//	private JsonNode oAuthUri;
+//	private String oAuthBaseUrl;
 	private JsonNode oAuthConfigs;
 
 	@PostConstruct
 	public void init() {
 		JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
-		oAuthUri = appConfigJSON.get("OAuthURIs");
-		oAuthBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("OAuthBaseUrl").asText();
+//		oAuthUri = appConfigJSON.get("OAuthURIs");
+//		oAuthBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("OAuthBaseUrl").asText();
 		oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
 	}
 
@@ -67,6 +72,27 @@ class OAuthService {
 			servletContext.setAttribute(OAUTH_CONTEXT_OBJECT_KEY, oAuthContextTokenResponse);
 		}
 		return oAuthContextTokenResponse.getBody().get(OAUTH_ACCESS_TOKEN_KEY).asText();
+	}
+
+	void validateAndUpdateOauthToken(JwtPayload jwtPayload) {
+		if (StringUtils.isEmpty(jwtPayload.getOauthAccessToken()) || StringUtils.isEmpty(jwtPayload.getOauthRefreshToken())
+				|| StringUtils.isEmpty(jwtPayload.getOauthTokenExpiryTime())) {
+			log.error("Jwt token is invalid, not all OAuth details are present");
+			throw new ApiException("Jwt token is invalid, not all OAuth details are present", HttpStatus.UNAUTHORIZED);
+		}
+		if (LocalDateTime.now().isAfter(jwtPayload.getOauthTokenExpiryTime())) {
+			log.warn("Access token is invalid, try to get new one with valid refresh token..");
+			ResponseEntity<JsonNode> oauthResponse = oauthClient.refreshAccessToken(jwtPayload.getOauthRefreshToken());
+			jwtPayload.setOauthAccessToken(oauthResponse.getBody().get(OAUTH_ACCESS_TOKEN_KEY).asText());
+			jwtPayload.setOauthRefreshToken(oauthResponse.getBody().get(OAUTH_REFRESH_TOKEN_KEY).asText());
+			jwtPayload.setOauthTokenExpiryTime(getExpireTime(oauthResponse));
+		}
+	}
+
+	LocalDateTime getExpireTime(ResponseEntity<JsonNode> oAuthObjectResponse) {
+		// minus 10 seconds to prevent access_token expire error while calling the API
+		int seconds = oAuthObjectResponse.getBody().get("expires_in").asInt() - 10;
+		return LocalDateTime.now().plusSeconds(seconds);
 	}
 
 	private ResponseEntity<JsonNode> getNewVirtualUserOauthObject() {
@@ -84,6 +110,25 @@ class OAuthService {
 		return LocalDateTime.now().isAfter(tokenExpiryDateTime);
 	}
 
+	HttpHeaders getOAuthHeaders(String oauthAccessToken) {
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", oauthAccessToken);
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectNode channelContext = objectMapper.createObjectNode();
+		ObjectNode authorizationDetails = objectMapper.createObjectNode();
+		authorizationDetails.put("primaryAccessCode", oAuthConfigs.get("OAuthPassword").asText());
+		authorizationDetails.put("secondaryAccessCode", "");
+		authorizationDetails.put("userId", oAuthConfigs.get("OAuthUsername").asText());
+
+		channelContext.set("authorizationDetails", authorizationDetails);
+		headers.set("ChannelContext", channelContext.toString());
+		return headers;
+	}
+
 
 
 
@@ -94,7 +139,7 @@ class OAuthService {
 
 	//Old implementation
 
-	void validateAccessToken(String accessToken, String refreshToken, Boolean force) {
+	/*void validateAccessToken(String accessToken, String refreshToken, Boolean force) {
 		if (isContextAccessTokenExpiredOrAbsent()) {
 			String errorMessage = "Access token in servlet context expired or absent, "
 					+ "Actual time: " + LocalDateTime.now()
@@ -129,13 +174,13 @@ class OAuthService {
 			ApiError error = new ApiError(HttpStatus.UNAUTHORIZED, errorMessage, errorMessage);
 			throw new ApiException(error, null, HttpStatus.UNAUTHORIZED);
 		}
-	}
+	}*/
 
-	ResponseEntity<JsonNode> getOrUpdateOAuthToken() {
+	/*ResponseEntity<JsonNode> getOrUpdateOAuthToken() {
 		return getOrUpdateOAuthToken(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
-	}
+	}*/
 
-	ResponseEntity<JsonNode> getOrUpdateOAuthToken(String username, String password) {
+	/*ResponseEntity<JsonNode> getOrUpdateOAuthToken(String username, String password) {
 		logger.info("Begin getOrUpdateOAuthToken()");
 		String methodName = "getOrUpdateOAuthToken()";
 
@@ -190,9 +235,9 @@ class OAuthService {
 			throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return oauthInContext;
-	}
+	}*/
 
-	private void updateOauthInContext(ResponseEntity<JsonNode> response) {
+	/*private void updateOauthInContext(ResponseEntity<JsonNode> response) {
 		// minus 10 seconds to prevent access_token expire error while calling the API
 		int seconds = response.getBody().get("expires_in").asInt() - 10;
 		LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
@@ -201,28 +246,9 @@ class OAuthService {
 		servletContext.setAttribute(OAUTH_CONTEXT_OBJECT_KEY, response);
 
 		logger.info("New access_token expires on " + tokenExpiryDateTime.toString());
-	}
+	}*/
 
-	HttpHeaders getOAuthHeaders(String oauthAccessToken) {
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", oauthAccessToken);
-		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		ObjectNode channelContext = objectMapper.createObjectNode();
-		ObjectNode authorizationDetails = objectMapper.createObjectNode();
-		authorizationDetails.put("primaryAccessCode", oAuthConfigs.get("OAuthPassword").asText());
-		authorizationDetails.put("secondaryAccessCode", "");
-		authorizationDetails.put("userId", oAuthConfigs.get("OAuthUsername").asText());
-
-		channelContext.set("authorizationDetails", authorizationDetails);
-		headers.set("ChannelContext", channelContext.toString());
-		return headers;
-	}
-
-	private boolean isContextAccessTokenExpiredOrAbsent() {
+	/*private boolean isContextAccessTokenExpiredOrAbsent() {
 		if (servletContext.getAttribute("OAuthTokenValidUntil") != null) {
 			LocalDateTime oauthValidDateTime = (LocalDateTime) servletContext.getAttribute("OAuthTokenValidUntil");
 			logger.info("OAuthTokenValidUntil attribute value is " + oauthValidDateTime);
@@ -246,5 +272,5 @@ class OAuthService {
 		map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());
 		map.add("statemode", oAuthConfigs.get("OAuthStateMode").asText());
 		return map;
-	}
+	}*/
 }

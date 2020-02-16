@@ -2,9 +2,9 @@ package ae.rakbank.webapply.client;
 
 import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.helpers.FileHelper;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +38,19 @@ public class OauthClient {
         oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
     }
 
-    public ResponseEntity<JsonNode> authorize(String virtualUserName, String virtualUserPassword) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        MultiValueMap<String, String> requestMap = buildOAuthRequest(objectMapper, virtualUserName, virtualUserPassword);
+    public ResponseEntity<JsonNode> authorize(String userName, String password) {
+        MultiValueMap<String, String> requestMap = buildOAuthRequest(userName, password);
+        logger.debug("Start oauth authorize request..");
+        return sendOauthRequest(requestMap);
+    }
 
+    public ResponseEntity<JsonNode> refreshAccessToken(String refreshToken) {
+        MultiValueMap<String, String> requestMap = buildOAuthRefreshRequest(refreshToken);
+        logger.debug("Start refresh token request..");
+        return sendOauthRequest(requestMap);
+    }
+
+    private ResponseEntity<JsonNode> sendOauthRequest(MultiValueMap<String, String> requestMap) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -58,19 +67,19 @@ public class OauthClient {
         } catch (HttpClientErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, e.getResponseBodyAsString(),
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "failed to call to Oauth service",
                     e.getResponseBodyAsString(), e);
-            return new ResponseEntity<>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (HttpServerErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
+            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error in remote Oauth server",
                     e.getResponseBodyAsString(), e);
-            return new ResponseEntity<>(error.toJsonNode(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    private MultiValueMap<String, String> buildOAuthRequest(ObjectMapper objectMapper, String username, String password) {
+    private MultiValueMap<String, String> buildOAuthRequest(String username, String password) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("grant_type", oAuthConfigs.get("OAuthGrantType").asText());
         map.add("client_id", oAuthConfigs.get("OAuthClientId").asText());
@@ -83,6 +92,21 @@ public class OauthClient {
         map.add("login_flag", oAuthConfigs.get("OAuthLoginFlag").asText());
         map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());
         map.add("statemode", oAuthConfigs.get("OAuthStateMode").asText());
+        return map;
+    }
+
+    private MultiValueMap<String, String> buildOAuthRefreshRequest(String refreshToken) {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("grant_type", oAuthConfigs.get("OAuthRefreshGrantType").asText());
+        map.add("client_id", oAuthConfigs.get("OAuthClientId").asText());
+        map.add("client_secret", oAuthConfigs.get("OAuthClientSecret").asText());
+        map.add("bank_id", oAuthConfigs.get("OAuthBankId").asText());
+        map.add("channel_id", oAuthConfigs.get("OAuthChannelId").asText());
+        map.add("language_id", oAuthConfigs.get("OAuthLangId").asText());
+        map.add("login_flag", oAuthConfigs.get("OAuthLoginFlag").asText());
+        map.add("login_type", oAuthConfigs.get("OAuthLoginType").asText());
+        map.add("statemode", oAuthConfigs.get("OAuthStateMode").asText());
+        map.add("refresh_token", refreshToken);
         return map;
     }
 }
