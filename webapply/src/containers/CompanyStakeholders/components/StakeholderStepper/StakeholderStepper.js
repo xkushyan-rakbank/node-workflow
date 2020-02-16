@@ -5,7 +5,7 @@ import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStake
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import { stakeHoldersSteps, STEP_1, STEP_6, NEXT } from "./../../constants";
+import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
 import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
 import {
   sendProspectToAPIPromisify,
@@ -17,7 +17,7 @@ import {
   setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
-import { stakeholderScreeningStatus } from "../../../../constants";
+import { CONTINUE, stakeholderScreeningStatus } from "../../../../constants";
 import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
@@ -54,7 +54,7 @@ const StakeholderStepperComponent = ({
   );
 
   const handleContinue = event => () =>
-    sendProspectToAPI(NEXT, event).then(
+    sendProspectToAPI(CONTINUE, event).then(
       () => {
         if (isTooManyStakeholders) {
           setScreeningError(stakeholderScreeningStatus);

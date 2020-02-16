@@ -6,7 +6,7 @@ import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
-import { accountNames, STEP_STATUS } from "../../constants";
+import { accountNames, CONTINUE, STEP_STATUS } from "../../constants";
 import { useStep } from "../../hooks/useStep";
 
 import { useStyles } from "./styled";
@@ -36,7 +36,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
 
   const setNextStep = useCallback(
     event => {
-      sendProspectToAPI(null, event).then(() => handleSetNextStep(activeStep), () => {});
+      sendProspectToAPI(CONTINUE, event).then(() => handleSetNextStep(activeStep), () => {});
     },
     [sendProspectToAPI, activeStep, handleSetNextStep]
   );
