@@ -44,8 +44,8 @@ jobs:
         condition: and(succeeded(),ne(variables.Dev_Build, 'True'))
       - bash : |
           cd webapply
-          npm install
-          npm run build
+          yarn
+          yarn build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
