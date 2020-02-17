@@ -50,9 +50,12 @@ public class DehClient {
     public ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, String url, HttpMethod httpMethod,
                                                JsonNode requestBodyJSON, String operationId, MediaType mediaType,
                                                String updatedJwtToken) {
-
-        logger.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]", operationId, url,
-                requestBodyJSON.toString()));
+        if (requestBodyJSON != null) {
+            logger.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]", operationId, url,
+                    requestBodyJSON.toString()));
+        } else {
+            logger.info(String.format("Invoke API from %s method, Endpoint=[%s]", operationId, url));
+        }
 
         HttpEntity<JsonNode> request;
         if (StringUtils.isEmpty(updatedJwtToken)) {
