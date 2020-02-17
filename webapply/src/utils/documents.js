@@ -12,7 +12,7 @@ export const concatStakeholdersDocs = (neededDocs, uploadedDocs) => {
     acc[signatoryId] = {
       documents: documents.map(
         document =>
-          get(uploadedDocs, signatoryId, { documents: [] }).documents.find(
+          get(uploadedDocs, `${signatoryId}.documents`, []).find(
             uploadedDoc => uploadedDoc.documentKey === document.documentKey
           ) || document
       )
