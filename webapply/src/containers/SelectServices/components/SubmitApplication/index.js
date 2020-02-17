@@ -11,8 +11,11 @@ import {
 } from "../../../../store/selectors/appConfig";
 import { getIsEditableStatusSearchInfo } from "../../../../store/selectors/searchProspect";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
-import { updateActionType, updateSaveType } from "../../../../store/actions/appConfig";
-import { updateProspect } from "../../../../store/actions/appConfig";
+import {
+  updateActionType,
+  updateSaveType,
+  updateViewId
+} from "../../../../store/actions/appConfig";
 import { SubmitApplicationComponent } from "./SubmitApplication";
 
 const mapStateToProps = state => ({
@@ -28,7 +31,7 @@ const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
   updateActionType,
   updateSaveType,
-  updateProspect
+  updateViewId
 };
 
 export default compose(

@@ -21,7 +21,7 @@ export const SubmitApplicationComponent = ({
   updateActionType,
   updateSaveType,
   isApplyEditApplication,
-  updateProspect
+  updateViewId
 }) => {
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
@@ -31,10 +31,8 @@ export const SubmitApplicationComponent = ({
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
   const handleSubmit = () => {
-    if (isSubmitButtonEnable) {
-      updateProspect({
-        ["prospect.applicationInfo.viewId"]: routes.ApplicationSubmitted.replace(smeBaseName, "")
-      });
+    if (isApplyEditApplication) {
+      updateViewId(routes.ApplicationSubmitted.replace(smeBaseName, ""), false);
     }
     setIsSubmitting(true);
     updateActionType(SUBMIT);
