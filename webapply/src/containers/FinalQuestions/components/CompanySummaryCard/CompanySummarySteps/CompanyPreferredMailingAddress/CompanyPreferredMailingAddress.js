@@ -105,7 +105,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="Emirate / City"
                   isSearchable
                   component={SelectAutocomplete}
-                  inputProps={{ tabIndex: 3 }}
+                  tabIndex="3"
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -116,7 +116,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="Type of Space Occupied"
                   isSearchable
                   component={SelectAutocomplete}
-                  inputProps={{ tabIndex: 1 }}
+                  tabIndex="1"
                 />
                 {values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
                   <Field

@@ -88,7 +88,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Qualification"
                     isSearchable
                     component={SelectAutocomplete}
-                    inputProps={{ tabIndex: 0 }}
+                    tabIndex="0"
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -107,7 +107,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                         If unemployed, then select &apos;Other&apos;
                       </>
                     }
-                    inputProps={{ tabIndex: 0 }}
+                    tabIndex="0"
                   />
                 </Grid>
                 <Grid item md={12} sm={12}>
