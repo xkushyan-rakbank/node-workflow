@@ -34,5 +34,5 @@ export const appendDocumentKey = (docs = []) =>
     const docIndex = docs
       .slice(0, index)
       .filter(document => document.documentType === doc.documentType).length;
-    return { ...doc, documentKey: doc.documentType + docIndex };
+    return { ...doc, documentKey: `${doc.documentType}-${docIndex}` };
   });
