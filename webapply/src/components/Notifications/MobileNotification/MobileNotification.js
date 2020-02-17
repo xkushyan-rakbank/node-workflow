@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core";
 import { Icon, ICONS } from "../../Icons";
-import { style } from "./styled";
+import { useStyles } from "./styled";
 
-const MobileNotification = ({ classes }) => {
-  const [showModal, setShowModal] = useState(true);
+export const MobileNotification = () => {
+  const classes = useStyles();
+  const [isDisplayNotification, setDisplayNotification] = useState(true);
+
   return (
     <div className={classes.wrapper}>
       <div className="show-on-mobile">
-        {showModal && (
+        {isDisplayNotification && (
           <div className={classes.mobileNotification}>
             <p className={classes.paper}>
               Use the desktop to access all the services of Quick Apply
@@ -17,7 +18,7 @@ const MobileNotification = ({ classes }) => {
               <Icon
                 name={ICONS.closeWhite}
                 className={classes.closeIcon}
-                onClick={() => setShowModal(false)}
+                onClick={() => setDisplayNotification(false)}
               />
             </div>
           </div>
@@ -26,5 +27,3 @@ const MobileNotification = ({ classes }) => {
     </div>
   );
 };
-
-export default withStyles(style)(MobileNotification);

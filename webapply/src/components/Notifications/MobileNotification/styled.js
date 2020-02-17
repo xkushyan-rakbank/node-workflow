@@ -1,4 +1,6 @@
-export const style = () => ({
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles({
   mobileNotification: {
     height: "64px",
     display: "flex",

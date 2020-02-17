@@ -1,12 +1,11 @@
 import { makeStyles } from "@material-ui/core";
+import { LOGO_ELITE, LOGO_ELITE_ISLAMIC, LOGO_ISLAMIC, LOGO_STANDART } from "./constants";
 
 export const useStyles = makeStyles(theme => ({
   header: {
     position: "absolute",
     top: "30px",
     left: "40px",
-    display: "block",
-    width: "140px",
     zIndex: 12,
     [theme.breakpoints.down("sm")]: {
       maxWidth: "270px"
@@ -24,7 +23,6 @@ export const useStyles = makeStyles(theme => ({
       padding: 0,
       top: "20px",
       left: "16px",
-      width: "140px",
       "& img": {
         minWidth: "114px",
         width: "114px"
@@ -33,9 +31,30 @@ export const useStyles = makeStyles(theme => ({
   },
   logo: {
     height: 44,
-    width: "auto",
+    width: ({ logoType }) => {
+      switch (logoType) {
+        case LOGO_ISLAMIC:
+        case LOGO_ELITE_ISLAMIC:
+          return 247;
+        case LOGO_STANDART:
+        case LOGO_ELITE:
+        default:
+          return 114;
+      }
+    },
     [theme.breakpoints.up("sm")]: {
-      height: 60
+      height: 60,
+      width: ({ logoType }) => {
+        switch (logoType) {
+          case LOGO_ISLAMIC:
+          case LOGO_ELITE_ISLAMIC:
+            return 300;
+          case LOGO_STANDART:
+          case LOGO_ELITE:
+          default:
+            return 160;
+        }
+      }
     }
   },
   disabled: {

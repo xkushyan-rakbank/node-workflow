@@ -6,7 +6,6 @@ import { GA_EVENTS } from "../../utils/ga";
 export const STEP_1 = 1;
 export const STEP_2 = 2;
 export const STEP_3 = 3;
-export const NEXT = "next";
 
 export const MAX_COMPANY_NAME_LENGTH = 30;
 export const MAX_REGISTRATION_NUMBER_LENGTH = 15;
