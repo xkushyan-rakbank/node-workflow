@@ -24,7 +24,7 @@ export const Input = ({
   InputProps,
   onFocus,
   onBlur,
-  isShowErrorText = false,
+  isHideErrorText = false,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -66,7 +66,7 @@ export const Input = ({
         <mark className={classes.iePlaceholder}>{placeholder}</mark>
       )}
 
-      {!isShowErrorText && isError && <ErrorMessage error={errorMessage} />}
+      {!isHideErrorText && isError && <ErrorMessage error={errorMessage} />}
 
       {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>
