@@ -1,5 +1,5 @@
 import differenceBy from "lodash/differenceBy";
-import intersectionBy from "lodash/differenceBy";
+import get from "lodash/get";
 
 export const concatCompanyDocs = (existDocs, incomeDocs) => {
   const companyDocsDiff = differenceBy(incomeDocs, existDocs, "documentType");
@@ -10,12 +10,12 @@ export const concatCompanyDocs = (existDocs, incomeDocs) => {
 export const concatStakeholdersDocs = (neededDocs, uploadedDocs) => {
   return Object.entries(neededDocs).reduce((acc, [signatoryId, { documents }]) => {
     acc[signatoryId] = {
-      documents: !uploadedDocs[signatoryId]
-        ? documents
-        : [
-            ...intersectionBy(uploadedDocs[signatoryId].documents, documents, "documentKey"),
-            ...differenceBy(documents, uploadedDocs[signatoryId].documents, "documentKey")
-          ]
+      documents: documents.map(
+        document =>
+          get(uploadedDocs, signatoryId, { documents: [] }).documents.find(
+            uploadedDoc => uploadedDoc.documentKey === document.documentKey
+          ) || document
+      )
     };
     return acc;
   }, {});
