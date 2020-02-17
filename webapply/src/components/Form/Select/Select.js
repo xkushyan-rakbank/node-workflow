@@ -31,7 +31,7 @@ export const CustomSelect = ({
   shrink,
   contextualHelpText,
   contextualHelpProps = {},
-  ErrorComponent = ErrorMessage,
+  ErrorMessageComponent = ErrorMessage,
   ...rest
 }) => {
   const classes = useStyles();
@@ -96,7 +96,7 @@ export const CustomSelect = ({
         </Select>
       </ContexualHelp>
 
-      {!!ErrorComponent && isError && <ErrorComponent error={errorMessage} />}
+      {isError && <ErrorMessageComponent error={errorMessage} />}
 
       {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>

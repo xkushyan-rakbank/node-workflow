@@ -24,7 +24,7 @@ export const Input = ({
   InputProps,
   onFocus,
   onBlur,
-  ErrorComponent = ErrorMessage,
+  ErrorMessageComponent = ErrorMessage,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -66,7 +66,7 @@ export const Input = ({
         <mark className={classes.iePlaceholder}>{placeholder}</mark>
       )}
 
-      {!!ErrorComponent && isError && <ErrorComponent error={errorMessage} />}
+      {isError && <ErrorMessageComponent error={errorMessage} />}
 
       {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>
