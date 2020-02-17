@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -14,6 +14,7 @@ import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsS
 import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
 import { ProspectProtectedRoute } from "./components/Routers";
 import { AccountTypeProtectedRoute } from "./components/Routers/AccountTypeProtectedRoute";
+import { Route } from "./components/Routers/Route";
 
 import { getEndpoints } from "./store/selectors/appConfig";
 import { receiveAppConfig } from "./store/actions/appConfig";
