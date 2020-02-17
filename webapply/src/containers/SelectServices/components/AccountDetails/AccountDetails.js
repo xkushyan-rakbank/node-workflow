@@ -99,7 +99,6 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 label="Branch"
                 placeholder="Branch"
                 disabled={!values.branchCity}
-                inputProps={{ tabIndex: 0 }}
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"
