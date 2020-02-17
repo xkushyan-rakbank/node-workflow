@@ -8,9 +8,9 @@ export const useStep = (flowId, steps) => {
   const [activeStep, setActiveStep] = useState(null);
   const dispatch = useDispatch();
 
-  const availableSteps = useSelector(state =>
-    state.completedSteps.filter(item => item.flowId === flowId)
-  );
+  const availableSteps = useSelector(state => {
+    return state.completedSteps.filter(item => item.flowId === flowId);
+  });
 
   if (!availableSteps.length) {
     dispatch(
@@ -22,6 +22,8 @@ export const useStep = (flowId, steps) => {
         }))
       )
     );
+    setActiveStep(steps[0].step);
+  } else if (!activeStep) {
     setActiveStep(steps[0].step);
   }
 
