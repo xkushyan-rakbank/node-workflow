@@ -14,7 +14,7 @@ import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsS
 import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
 import { ProspectProtectedRoute } from "./components/Routers";
 import { AccountTypeProtectedRoute } from "./components/Routers/AccountTypeProtectedRoute";
-import { Route } from "./components/Routers/Route";
+import { ProtectedRoute } from "./components/Routers/ProtectedRoute";
 
 import { getEndpoints } from "./store/selectors/appConfig";
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -84,7 +84,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.ApplicationSubmitted}
                   component={ApplicationSubmitted}
                 />
-                <Route exact path={routes.accountsComparison} component={AccountsComparison} />
+                <ProtectedRoute
+                  exact
+                  path={routes.accountsComparison}
+                  component={AccountsComparison}
+                />
                 <AccountTypeProtectedRoute
                   exact
                   path={routes.applicantInfo}
@@ -127,8 +131,8 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.detailedAccount}
                   component={DetailedAccount}
                 />
-                <Route exact path={routes.comeBackLogin} component={ComeBackLogin} />
-                <Route
+                <ProtectedRoute exact path={routes.comeBackLogin} component={ComeBackLogin} />
+                <ProtectedRoute
                   exact
                   path={routes.comeBackLoginVerification}
                   component={ComeBackVerification}
@@ -139,7 +143,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                   path={routes.SubmitApplication}
                   component={SubmitApplication}
                 />
-                <Route path={agentBaseName} component={Agents} />
+                <ProtectedRoute path={agentBaseName} component={Agents} />
                 <Redirect to={routes.accountsComparison} />
               </Switch>
             </Suspense>
