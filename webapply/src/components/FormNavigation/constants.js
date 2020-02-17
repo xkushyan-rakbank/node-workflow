@@ -12,7 +12,7 @@ export const accountsInfo = {
     islamicSubtitle: "Our most flexible account for growing businesses."
   },
   [accountNames.elite]: {
-    title: "RAKelite Business Account",
+    title: "Business Elite Account",
     subtitle: "Our most exclusive account, for our most exclusive clients.",
     islamicSubtitle: "Our most exclusive account, for our most exclusive clients."
   },
