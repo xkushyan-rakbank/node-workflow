@@ -30,4 +30,9 @@ export const createDocumentMapper = (documentKey, additionalProps) => doc => {
 };
 
 export const appendDocumentKey = (docs = []) =>
-  docs.map((doc, index) => ({ ...doc, documentKey: doc.documentType + index }));
+  docs.map((doc, index) => {
+    const docIndex = docs
+      .slice(0, index)
+      .filter(document => document.documentType === doc.documentType).length;
+    return { ...doc, documentKey: doc.documentType + docIndex };
+  });
