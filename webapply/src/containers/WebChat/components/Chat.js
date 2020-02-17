@@ -53,8 +53,8 @@ class Chat extends PureComponent {
     return GenesysChat.getInstance();
   }
 
-  componentDidMount() {
-    this.chatInstance.initChat(this.userInfo);
+  async componentDidMount() {
+    await this.chatInstance.initChat(this.userInfo);
     this.chatInstance.messagesCallback = this.onNewMessageArrival;
     this.chatInstance.setOnTypingEventsHandler(this.agentTypingHandler);
     this.chatInstance.setOnAgentLeftEventHandler(this.agentLeftHandler);
