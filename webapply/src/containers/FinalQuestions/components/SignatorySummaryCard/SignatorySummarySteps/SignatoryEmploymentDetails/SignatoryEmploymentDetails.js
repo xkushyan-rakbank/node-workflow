@@ -19,7 +19,7 @@ import {
 } from "../../../../../../components/Form";
 import {
   EMPLOYMENT_TYPE_REGEX,
-  COMPANY_NAME_REGEX,
+  COMPANY_NAME_SPEC_CHAR_REGEX,
   DESIGNATION_REGEX,
   MAX_EXPERIENCE_YEARS_LENGTH,
   EXPERIENCE_YEARS_REGEX
@@ -46,7 +46,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   }),
   employerName: Yup.string()
     .required(getRequiredMessage("Employer name"))
-    .matches(COMPANY_NAME_REGEX, getInvalidMessage("Employer name")),
+    .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Employer name")),
   designation: Yup.string()
     .required(getRequiredMessage("Designation"))
     .matches(DESIGNATION_REGEX, getInvalidMessage("Designation"))
