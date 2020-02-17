@@ -156,7 +156,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   shrink={false}
                   datalistId="salutation"
                   inputProps={{ tabIndex: 0 }}
-                  isHideErrorText
+                  ErrorComponent={null}
                 />
 
                 <Field
@@ -171,7 +171,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                     inputProps: { maxLength: 30, tabIndex: 0 }
                   }}
                   contextualHelpText="Given Name of the stakeholder exactly the way it is mentioned in the passport"
-                  isHideErrorText
+                  ErrorComponent={null}
                 />
               </InputGroup>
             </Grid>
