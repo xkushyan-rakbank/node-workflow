@@ -50,10 +50,8 @@ function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
   while (true) {
     const actions = yield flush(chan);
-    console.log("watchRequest 1", actions);
     if (actions.length) {
       const action = actions.find(act => act.saveType === CONTINUE) || actions[0];
-      console.log("watchRequest 2", action);
       yield call(sendProspectToAPI, action);
     }
     yield delay(1000);
@@ -94,7 +92,6 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
 
     const state = yield select();
     const newProspect = getProspect(state);
-    console.log("sendProspectToApiSaga", saveType);
 
     yield put(sendProspectRequest(saveType, newProspect));
   } finally {
@@ -123,7 +120,6 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     const state = yield select();
     const prospectId = getProspectId(state);
     const headers = getAuthorizationHeader(state);
-    console.log("sendProspectToAPI", saveType);
 
     newProspect.applicationInfo.saveType = saveType;
     const { data } = yield call(prospect.update, prospectId, newProspect, headers);
