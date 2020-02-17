@@ -180,7 +180,7 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
           ArtifactName: 'WebapplyServer'
       - bash: |
-          npm install slack-cli -g
+          yarn global add slack-cli
           echo "=====================The new Onboarding build is available for testing:=========== " > release-notes.txt
           echo -e "\n" >> release-notes.txt
           echo " Release (UAT) with the Build ID: $BUILD_ID " >> release-notes.txt
