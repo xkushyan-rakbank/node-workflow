@@ -5,7 +5,7 @@ import { setStepStatus, setInitialSteps } from "../store/actions/completedSteps"
 import { STEP_STATUS } from "../constants";
 
 export const useStep = (flowId, steps) => {
-  const [activeStep, setActiveStep] = useState(null);
+  const [activeStep, setActiveStep] = useState(steps[0].step);
   const dispatch = useDispatch();
 
   const availableSteps = useSelector(state =>
