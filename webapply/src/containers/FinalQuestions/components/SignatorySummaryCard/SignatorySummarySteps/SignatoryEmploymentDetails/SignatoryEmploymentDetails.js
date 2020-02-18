@@ -154,7 +154,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                   <Field
                     name="employerName"
                     path={`${basePath}.employmentDetails.employerName`}
-                    label="Employer name"
+                    label="Employer name / Company name"
                     placeholder="Employer name"
                     component={Input}
                     disabled={values[`isWorkAtTheCompany${index}`]}
