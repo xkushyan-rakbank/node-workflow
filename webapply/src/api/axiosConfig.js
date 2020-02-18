@@ -1,15 +1,14 @@
 import axios from "axios";
-import get from "lodash/get";
 
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
+import { setAccessToken } from "../store/actions/appConfig";
 
 import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 import { IGNORE_ERROR_CODES } from "../constants";
-import { setAccessToken } from "../store/actions/appConfig";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const ENCRYPT_METHODS = ["post", "put"];
@@ -52,7 +51,7 @@ instance.interceptors.request.use(config => {
 });
 
 instance.interceptors.response.use(response => {
-  const accessToken = get(response, "headers.accesstoken") || get(response, "headers.AccessToken");
+  const accessToken = response.headers.accesstoken || response.headers.AccessToken;
   if (accessToken) store.dispatch(setAccessToken(accessToken));
   return response;
 });

@@ -32,7 +32,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
 
     handleSetNextStep(activeStep);
     setIsSubmit(true);
-  }, [pushHistory, isSubmit, setIsSubmit, handleSetNextStep, activeStep, pushHistory]);
+  }, [pushHistory, isSubmit, setIsSubmit, handleSetNextStep, activeStep]);
 
   const setNextStep = useCallback(
     event => {
