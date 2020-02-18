@@ -5,12 +5,12 @@ import { setStepStatus, setInitialSteps } from "../store/actions/completedSteps"
 import { STEP_STATUS } from "../constants";
 
 export const useStep = (flowId, steps) => {
-  const [activeStep, setActiveStep] = useState(null);
+  const [activeStep, setActiveStep] = useState(steps[0].step);
   const dispatch = useDispatch();
 
-  const availableSteps = useSelector(state => {
-    return state.completedSteps.filter(item => item.flowId === flowId);
-  });
+  const availableSteps = useSelector(state =>
+    state.completedSteps.filter(item => item.flowId === flowId)
+  );
 
   if (!availableSteps.length) {
     dispatch(
@@ -22,8 +22,6 @@ export const useStep = (flowId, steps) => {
         }))
       )
     );
-    setActiveStep(steps[0].step);
-  } else if (!activeStep) {
     setActiveStep(steps[0].step);
   }
 
