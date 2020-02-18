@@ -1,9 +1,10 @@
 import React from "react";
-import { useStyles } from "./styled";
 
 import { SkeletonLoader } from "../../../components/Form/SkeletonLoader";
 
-const range = (end, start = 0, length = end - start) => Array.from({ length }, (_, i) => start + i);
+import { useStyles } from "./styled";
+
+const range = (end, start = 0) => Array.from({ length: end - start }, (_, i) => start + i);
 
 export const ApplicationsSkeleton = ({ count = 4 }) => {
   const classes = useStyles();
