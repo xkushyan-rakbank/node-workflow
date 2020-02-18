@@ -6,7 +6,7 @@ import cx from "classnames";
 import routes from "../../../routes";
 
 import { useStyles } from "./styled";
-import { STATUS_ALLOWED_EDIT } from "../constants";
+import { ALLOWED_EDIT_STATUSES } from "../constants";
 
 export const SearchApplicationList = ({ currentApplications }) => {
   const classes = useStyles();
@@ -25,14 +25,13 @@ export const SearchApplicationList = ({ currentApplications }) => {
         </div>
       </div>
       {currentApplications.map(application => {
-        const isAllowedEdit =
-          application.status === null ||
-          STATUS_ALLOWED_EDIT.includes(application.status.statusNotes);
+        const isEditable =
+          !application.status || ALLOWED_EDIT_STATUSES.includes(application.status.statusNotes);
 
         return (
           <Link
             className={cx(classes.applicationRow, {
-              [classes.disabled]: !isAllowedEdit
+              [classes.disabled]: !isEditable
             })}
             key={application.prospectId}
             to={generatePath(routes.SearchedAppInfo, { id: application.prospectId })}

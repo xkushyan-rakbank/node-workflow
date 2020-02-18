@@ -135,7 +135,7 @@ function* sendProspectToAPI({ newProspect, saveType }) {
       );
     }
 
-    const preScreening = data.preScreening;
+    const { preScreening } = data;
     if (preScreening) {
       if (preScreening.statusOverAll === APP_STOP_SCREEN_RESULT) {
         yield fork(setScreeningResults, data);
