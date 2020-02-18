@@ -29,7 +29,7 @@ public class ApiError {
 	private String message;
 	private String debugMessage;
 	private String errorType;
-	private String errors;
+	private JsonNode errors;
 	private String exceptionClassName;
 	private StackTraceElement[] stackTrace;
 
