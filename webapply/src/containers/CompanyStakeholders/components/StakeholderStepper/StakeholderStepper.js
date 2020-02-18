@@ -17,7 +17,7 @@ import {
   setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
-import { CONTINUE, stakeholderScreeningStatus } from "../../../../constants";
+import { stakeholderScreeningStatus } from "../../../../constants";
 import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
@@ -54,7 +54,7 @@ const StakeholderStepperComponent = ({
   );
 
   const handleContinue = event => () =>
-    sendProspectToAPI(CONTINUE, event).then(
+    sendProspectToAPI(stakeHoldersSteps[activeStep].saveType, event).then(
       () => {
         if (isTooManyStakeholders) {
           setScreeningError(stakeholderScreeningStatus);
