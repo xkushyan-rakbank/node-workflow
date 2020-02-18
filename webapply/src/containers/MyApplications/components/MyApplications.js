@@ -9,6 +9,7 @@ import { ApplicationList } from "./ApplicationList";
 import { ApplicationGrid } from "./ApplicationGrid";
 import { ButtonWithIcon } from "./ButtonWithIcon";
 import { GRID_VIEW, LIST_VIEW } from "../constants";
+import { ApplicationsSkeleton } from "./ApplicationsSkeleton";
 
 import { useStyles } from "./styled";
 
@@ -49,17 +50,28 @@ export const MyApplications = ({ searchResults, getProspectInfo, isLoading }) =>
           })}
         >
           {selectedView === LIST_VIEW && (
-            <ApplicationList
-              applicantInfo={searchResults.searchResult}
-              getProspectInfo={getProspectInfo}
-              isLoading={isLoading}
-            />
+            <>
+              {isLoading ? (
+                <ApplicationsSkeleton />
+              ) : (
+                <ApplicationList
+                  applicantInfo={searchResults.searchResult}
+                  getProspectInfo={getProspectInfo}
+                />
+              )}
+            </>
           )}
           {selectedView === GRID_VIEW && (
-            <ApplicationGrid
-              applicantInfo={searchResults.searchResult}
-              getProspectInfo={getProspectInfo}
-            />
+            <>
+              {isLoading ? (
+                <ApplicationsSkeleton />
+              ) : (
+                <ApplicationGrid
+                  applicantInfo={searchResults.searchResult}
+                  getProspectInfo={getProspectInfo}
+                />
+              )}
+            </>
           )}
         </div>
       )}

@@ -5,14 +5,9 @@ import { ctaStatuses, notCtaStatuses } from "../constants";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
-import { ApplicationsSkeleton } from "./../../../components/Form";
 
-export const ApplicationList = ({ getProspectInfo, applicantInfo = [], isLoading }) => {
+export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
-
-  if (isLoading) {
-    return <ApplicationsSkeleton />;
-  }
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
