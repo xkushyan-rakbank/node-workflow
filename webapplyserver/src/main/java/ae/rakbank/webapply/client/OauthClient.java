@@ -69,29 +69,17 @@ public class OauthClient {
         } catch (HttpClientErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError apiError = ApiError.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(e.getMessage())
-                    .debugMessage(e.getResponseBodyAsString())
-                    .exceptionClassName(e.getClass().getSimpleName())
-                    .stackTrace(e.getStackTrace())
-                    .errorType(dehUtil.getErrorType(e))
-                    .errors(dehUtil.gerErrors(e))
-                    .build();
-            throw new ApiException(e, apiError, null, HttpStatus.BAD_REQUEST);
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError apiError = ApiError.builder()
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .message(e.getMessage())
-                    .debugMessage(e.getResponseBodyAsString())
-                    .exceptionClassName(e.getClass().getSimpleName())
-                    .stackTrace(e.getStackTrace())
-                    .errorType(dehUtil.getErrorType(e))
-                    .errors(dehUtil.gerErrors(e))
-                    .build();
-            throw new ApiException(e, apiError, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         }
     }
 

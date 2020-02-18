@@ -393,7 +393,7 @@ public class WebApplyController {
         if(EnvUtil.isRecaptchaEnable() && !requestBodyJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY)) {
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
                     "recaptchaToken is required");
-            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
+            throw new ApiException(error, HttpStatus.BAD_REQUEST);
         } else if (!EnvUtil.isRecaptchaEnable()) {
             return;
         }
@@ -540,7 +540,7 @@ public class WebApplyController {
 
         if (StringUtils.isNotBlank(errorMessage)) {
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, errorMessage, errorMessage);
-            throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
+            throw new ApiException(error, HttpStatus.BAD_REQUEST);
         }
     }
 
