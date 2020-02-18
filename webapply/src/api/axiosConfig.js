@@ -115,7 +115,7 @@ instance.interceptors.response.use(
 
     if (jsonData) {
       try {
-        const { errorType, errors } = JSON.parse(jsonData.debugMessage);
+        const { errorType, errors, message, status } = jsonData;
         switch (errorType) {
           case "FieldsValidation":
             if (errors) {
@@ -123,8 +123,13 @@ instance.interceptors.response.use(
               errors.forEach(error => {
                 addErrorToNotification({
                   title: "Validation Error On Server",
-                  message: error.message || "Validation Error"
+                  message: error.message || error.developerText || message || "Validation Error"
                 });
+              });
+            } else {
+              addErrorToNotification({
+                title: "Validation Error On Server",
+                message: message || "Validation Error"
               });
             }
             break;
@@ -135,11 +140,20 @@ instance.interceptors.response.use(
             });
             break;
           case "ReCaptchaError":
-            store.dispatch(setError(errors));
-            addErrorToNotification({
-              title: "ReCaptchaError",
-              message: data.errors
-            });
+            if (errors) {
+              store.dispatch(setError(errors));
+              errors.forEach(error => {
+                addErrorToNotification({
+                  title: "ReCaptchaError",
+                  message: error.message || error.developerText || message || "ReCaptcha Error"
+                });
+              });
+            } else {
+              addErrorToNotification({
+                title: "ReCaptchaError",
+                message: message || "ReCaptcha Error"
+              });
+            }
             break;
           case "Other":
             if (errors) {
@@ -147,19 +161,30 @@ instance.interceptors.response.use(
                 if (!IGNORE_ERROR_CODES.includes(error.errorCode))
                   addErrorToNotification({
                     title: error.message,
-                    message: error.developerText
+                    message: error.developerText || message
                   });
+              });
+            } else {
+              addErrorToNotification({
+                title: status,
+                message
               });
             }
             break;
           default:
-            addErrorToNotification({ title: errorType, message: errors });
+            if (errors) {
+              errors.forEach(error => {
+                addErrorToNotification({
+                  title: errorType || message,
+                  message: error.message || error.developerText || message
+                });
+              });
+            } else {
+              addErrorToNotification({ title: errorType, message });
+            }
         }
       } catch (e) {
-        addErrorToNotification({
-          title: jsonData.status,
-          message: jsonData.debugMessage || jsonData.message || jsonData
-        });
+        addErrorToNotification();
       }
     }
 
