@@ -97,8 +97,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                   const currentIndustry = `prospect.orgKYCDetails.industryMultiSelect[0].industry[${industryIndex}]`;
                   // eslint-disable-next-line max-len
                   const currentSubCategory = `prospect.orgKYCDetails.industryMultiSelect[0].subCategory[${industryIndex}]`;
-
-                  const isHaveIndustryAndSubCategory = item.industry && item.subCategory;
+                  const isHaveIndustryAndSubCategory =
+                    item.industry && item.subCategory && values.industries.length > 1;
 
                   return (
                     <React.Fragment key={item.id}>
