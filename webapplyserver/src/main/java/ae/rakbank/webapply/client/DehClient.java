@@ -79,15 +79,16 @@ public class DehClient {
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpHeaders responseHeaders = e.getResponseHeaders();
 
-            List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
+            /*List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
             String errorMessage;
             if (channelContext == null) {
                 errorMessage = e.getResponseBodyAsString();
             } else {
                 errorMessage = channelContext.get(0);
-            }
+            }*/
+
             HttpStatus status = HttpStatus.BAD_REQUEST;
-            ApiError apiError = dehUtil.initApiError(e, status, errorMessage);
+            ApiError apiError = dehUtil.initApiError(e, status);
 
             throw new ApiException(apiError, responseHeaders, status);
         } catch (HttpServerErrorException e) {
@@ -110,9 +111,6 @@ public class DehClient {
 
         logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
                 url, response.getStatusCodeValue(), response.getBody()));
-
-        logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-                operationId, url, response.getStatusCodeValue()));
 
         csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
 
