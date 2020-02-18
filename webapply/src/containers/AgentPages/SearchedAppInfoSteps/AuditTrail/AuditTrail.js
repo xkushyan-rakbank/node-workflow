@@ -19,10 +19,10 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
       </div>
       <div className={classes.applicationRow}>
         <div>
-          <div className={classes.checkListData}>{get(info, "modifiedBy", "")}</div>
+          <div className={classes.checkListData}>{info.modifiedBy || ""}</div>
         </div>
         <div>
-          <div className={classes.checkListData}>{get(info, "modifiedDateTime", "")}</div>
+          <div className={classes.checkListData}>{info.modifiedDateTime || ""}</div>
         </div>
       </div>
     </div>
