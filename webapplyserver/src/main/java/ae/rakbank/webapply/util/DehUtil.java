@@ -48,7 +48,7 @@ public class DehUtil {
 //            JsonNode jsonNode = mapper.readTree(e.getResponseBodyAsString());
 //            return jsonNode.get("errors").toString();
         } catch (Exception e1) {
-            log.warn("Can't parse errors from the response");
+            log.warn("Can't parse errors from the response", e1);
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class DehUtil {
             JsonNode jsonNode = mapper.readTree(e.getResponseBodyAsString());
             return jsonNode.get("errorType").asText();
         } catch (Exception e1) {
-            log.warn("Can't parse errorType from the response");
+            log.warn("Can't parse errorType from the response", e1);
             return "";
         }
     }
