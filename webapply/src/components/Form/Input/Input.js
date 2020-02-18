@@ -45,7 +45,10 @@ export const Input = ({
           placeholder={placeholder}
           disabled={disabled}
           error={!!isError}
-          InputProps={{ ...InputProps, classes: { input: classes.input } }}
+          InputProps={{
+            ...InputProps,
+            classes: { input: classes.input, inputMultiline: classes.inputMultiline }
+          }}
           InputLabelProps={{ shrink }}
           onFocus={event => {
             if (isIE) {
