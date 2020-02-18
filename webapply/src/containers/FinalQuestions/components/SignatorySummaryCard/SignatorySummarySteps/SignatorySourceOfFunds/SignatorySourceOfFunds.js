@@ -83,7 +83,7 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
               </Grid>
               <Grid
                 className={cx({
-                  hidden: !values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
+                  hidden: values.wealthType !== OTHER_SOURCE_OF_WEALTH
                 })}
                 item
                 md={12}

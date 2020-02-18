@@ -5,8 +5,9 @@ import cx from "classnames";
 import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
+  const info = get(prospectInfo, "AuditTrailInfo[0]");
   const classes = useStyles();
-  return get(prospectInfo, "AuditTrailInfo[0]", {}) ? (
+  return info ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div>
@@ -18,14 +19,10 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
       </div>
       <div className={classes.applicationRow}>
         <div>
-          <div className={classes.checkListData}>
-            {get(prospectInfo, "AuditTrailInfo[0].modifiedBy", "")}
-          </div>
+          <div className={classes.checkListData}>{info.modifiedBy || ""}</div>
         </div>
         <div>
-          <div className={classes.checkListData}>
-            {get(prospectInfo, "AuditTrailInfo[0].modifiedDateTime", "")}
-          </div>
+          <div className={classes.checkListData}>{info.modifiedDateTime || ""}</div>
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ import validationErrors from "./validationErrors";
 import uploadDocuments from "./getProspectDocuments";
 import completedSteps from "./completedSteps";
 import accountNumbers from "./accountNumbers";
+import video from "./video";
 
 const reducers = history =>
   combineReducers({
@@ -31,6 +32,7 @@ const reducers = history =>
     validationErrors,
     uploadDocuments,
     completedSteps,
+    video,
     accountNumbers
   });
 

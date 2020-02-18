@@ -8,29 +8,47 @@ import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appCo
 import { isOtpVerified } from "../../store/selectors/otp";
 import routes from "../../routes";
 import { useStyles } from "./styled";
-import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { accountNames } from "../../constants";
 import { ReactComponent as EliteIslamicLogo } from "../../assets/images/logo-elite-islamic.svg";
 import { ReactComponent as StandartLogo } from "../../assets/images/logo-standart.svg";
+import { ReactComponent as EliteLogo } from "../../assets/images/logo-elite.svg";
+import { ReactComponent as IslamicLogo } from "../../assets/images/logo-islamic.svg";
+import { LOGO_ELITE, LOGO_ELITE_ISLAMIC, LOGO_ISLAMIC, LOGO_STANDART } from "./constants";
 
 const HeaderComponent = ({ isIslamicBanking, accountType, isOtpVerified }) => {
-  const classes = useStyles();
   const {
     location: { pathname }
   } = useHistory();
-  const { logo: Logo } = useIconsByAccount();
 
-  const renderLogo = () => {
-    if (routes.accountsComparison === pathname) return <StandartLogo className={classes.logo} />;
-    if (isIslamicBanking && accountType === accountNames.elite)
-      return <EliteIslamicLogo className={classes.logo} />;
-    return <Logo className={classes.logo} />;
-  };
+  const logoType = (() => {
+    const isAccountsComparison = routes.accountsComparison === pathname;
+    if (!isAccountsComparison && accountType === accountNames.elite && isIslamicBanking)
+      return LOGO_ELITE_ISLAMIC;
+    if (!isAccountsComparison && accountType === accountNames.elite) return LOGO_ELITE;
+    if (!isAccountsComparison && isIslamicBanking) return LOGO_ISLAMIC;
+    return LOGO_STANDART;
+  })();
+
+  const classes = useStyles({
+    logoType
+  });
 
   return (
     <header className={classes.header}>
       <Link to={routes.accountsComparison} className={cx({ [classes.disabled]: isOtpVerified })}>
-        {renderLogo()}
+        {(() => {
+          switch (logoType) {
+            case LOGO_ELITE_ISLAMIC:
+              return <EliteIslamicLogo className={classes.logo} />;
+            case LOGO_ELITE:
+              return <EliteLogo className={classes.logo} />;
+            case LOGO_ISLAMIC:
+              return <IslamicLogo className={classes.logo} />;
+            case LOGO_STANDART:
+            default:
+              return <StandartLogo className={classes.logo} />;
+          }
+        })()}
       </Link>
     </header>
   );

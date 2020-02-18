@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import routes from "../../routes";
 import { getProspectId } from "../../store/selectors/appConfig";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 export const ProspectProtectedRoute = ({ component: Component, render, ...rest }) => {
   const prospectId = useSelector(getProspectId);
@@ -13,11 +14,7 @@ export const ProspectProtectedRoute = ({ component: Component, render, ...rest }
       {...rest}
       render={props =>
         prospectId || process.env.NODE_ENV === "development" ? (
-          Component ? (
-            <Component {...props} />
-          ) : (
-            render(props)
-          )
+          <ErrorBoundary>{Component ? <Component {...props} /> : render(props)}</ErrorBoundary>
         ) : (
           <Redirect to={routes.comeBackLogin} />
         )

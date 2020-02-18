@@ -173,9 +173,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               datalistId="country"
                               component={SelectAutocomplete}
                               shrink
-                              InputProps={{
-                                inputProps: { tabIndex: 0 }
-                              }}
+                              tabIndex="0"
                             />
                             {isTopCustomers && (
                               <ArrayRemoveButton
@@ -276,9 +274,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               component={SelectAutocomplete}
                               disabled={values.isDontHaveSuppliersYet}
                               shrink
-                              InputProps={{
-                                inputProps: { tabIndex: 0 }
-                              }}
+                              tabIndex="0"
                             />
                             {isTopSuppliers && (
                               <ArrayRemoveButton
@@ -354,9 +350,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               disabled={values.isDontTradeGoodsYet}
                               contextualHelpText="List down the top countries from where existing or future goods originate"
                               shrink
-                              InputProps={{
-                                inputProps: { tabIndex: 0 }
-                              }}
+                              tabIndex="0"
                             />
                             {isTopOriginGoodsCountries && (
                               <ArrayRemoveButton

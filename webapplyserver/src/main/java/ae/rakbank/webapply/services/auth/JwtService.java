@@ -2,6 +2,7 @@ package ae.rakbank.webapply.services.auth;
 
 import javax.annotation.PostConstruct;
 
+import ae.rakbank.webapply.dto.UserRole;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -22,6 +23,8 @@ import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.helpers.FileHelper;
 
+import java.time.LocalDateTime;
+
 @Component
 @RequiredArgsConstructor
 class JwtService {
@@ -40,10 +43,21 @@ class JwtService {
     String encrypt(JwtPayload data) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
+//            Instant instantExpiredAt = LocalDateTime.now().plusHours(3).toInstant(ZoneOffset.UTC);
+//            Date expiredAt = Date.from(instantExpiredAt);
+
+            String role = null;
+            if (data.getRole() != null) {
+                role = data.getRole().toString();
+            }
 
             return JWT.create()
                     .withClaim("OAuthToken", data.getOauthAccessToken())
                     .withClaim("OAuthRefreshToken", data.getOauthRefreshToken())
+                    .withClaim("role", role)
+                    .withClaim("phoneNumber", data.getPhoneNumber())
+                    .withClaim("oauthTokenExpiryTime", data.getOauthTokenExpiryTime().toString())
+//                    .withExpiresAt(expiredAt)
                     .sign(algorithm);
         } catch (JWTCreationException e) {
             logger.error("Failed create jwt token", e);
@@ -63,6 +77,9 @@ class JwtService {
             return JwtPayload.builder()
                     .oauthAccessToken(jwt.getClaim("OAuthToken").asString())
                     .oauthRefreshToken(jwt.getClaim("OAuthRefreshToken").asString())
+                    .role(UserRole.valueOf(jwt.getClaim("role").asString()))
+                    .phoneNumber(jwt.getClaim("phoneNumber").asString())
+                    .oauthTokenExpiryTime(LocalDateTime.parse(jwt.getClaim("oauthTokenExpiryTime").asString()))
                     .build();
         } catch (JWTVerificationException e) {
             logger.error("Failed verify jwt token", e);

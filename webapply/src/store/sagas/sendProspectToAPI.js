@@ -118,11 +118,11 @@ function* prospectAutoSave() {
 function* sendProspectToAPI({ newProspect, saveType }) {
   try {
     const state = yield select();
-    const prospectId = getProspectId(state) || "COSME0000000000000001";
+    const prospectId = getProspectId(state);
     const headers = getAuthorizationHeader(state);
 
-    const { data } = yield call(prospect.update, prospectId, newProspect, headers);
     newProspect.applicationInfo.saveType = saveType;
+    const { data } = yield call(prospect.update, prospectId, newProspect, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {
       yield put(updateAccountNumbers(data.accountInfo));

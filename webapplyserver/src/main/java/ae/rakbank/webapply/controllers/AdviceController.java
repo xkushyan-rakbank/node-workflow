@@ -42,7 +42,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
             apiError = getDefaultApiError(apiException, status, apiException.getTimestamp());
         } else {
             apiError = apiException.getApiError();
-            apiError.setStackTrace(apiException.getStackTrace());
+            apiError.setStackTrace(getReducedStackTrace(apiException.getStackTrace()));
             apiError.setExceptionClassName(apiException.getClass().getSimpleName());
         }
 
@@ -85,9 +85,13 @@ public class AdviceController extends ResponseEntityExceptionHandler {
                 .exceptionClassName(ex.getClass().getSimpleName())
                 .message(ex.getMessage())
                 .timestamp(actualTimestamp)
-                .stackTrace(ex.getStackTrace())
+                .stackTrace(getReducedStackTrace(ex.getStackTrace()))
                 .status(status)
                 .statusCode(status.value())
                 .build();
+    }
+
+    private StackTraceElement[] getReducedStackTrace(StackTraceElement[] stackTrace) {
+		return new StackTraceElement[]{stackTrace[0], stackTrace[1], stackTrace[2], stackTrace[3], stackTrace[4]};
     }
 }

@@ -37,7 +37,7 @@ export const SearchApplicationList = ({ currentApplications }) => {
             </span>
             <span className={classes.account}>
               <br />
-              {`Lead No. - ${application.organizationInfo.leadNumber}`}
+              {`Lead No. - ${application.organizationInfo.leadNumber || ""}`}
             </span>
           </div>
           <div className={classes.column}>

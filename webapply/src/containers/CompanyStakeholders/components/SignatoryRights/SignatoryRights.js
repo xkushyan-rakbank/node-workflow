@@ -72,7 +72,7 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
               datalistId="authorityType"
               contextualHelpProps={{ isDisableHoverListener: false }}
               contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
-              inputProps={{ tabIndex: 0 }}
+              tabIndex="0"
               changeProspect={(prospect, value) => {
                 if (value === SOLE_PROPRIETOR) {
                   return {

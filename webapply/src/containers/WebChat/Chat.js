@@ -51,9 +51,9 @@ const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
           <WebChatComponent
             onClose={closeWebChat}
             onMinimize={minimizeChat}
-            name={name}
-            mobileNumber={`${countryCode}${mobileNo}`}
-            email={email}
+            InitiatedCustomerName={name}
+            InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
+            EmailAddress={email}
             isAuth={false}
           />
         </Suspense>

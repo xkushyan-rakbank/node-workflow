@@ -19,10 +19,8 @@ public class LogFileService {
 
     @Value("${logging.dir}")
     private String logsDir;
-
     @Value("${logging.file.name}")
     private String defaultLogFileName;
-
     @Value("${default.web.apply.dir}")
     private String defaultWebApplyDir;
 
@@ -48,5 +46,4 @@ public class LogFileService {
         String webApplyDir = StringUtils.isNotBlank(EnvUtil.getWebApplyDir()) ? EnvUtil.getWebApplyDir() : defaultWebApplyDir;
         return webApplyDir + "/" + logsDir;
     }
-
 }

@@ -5,6 +5,7 @@ import { ReactComponent as ListGray } from "../../assets/icons/list_gray_ic.svg"
 import { ReactComponent as Grid } from "../../assets/icons/grid_grey_ic.svg";
 import { ReactComponent as Lock } from "../../assets/icons/lock.svg";
 import { ReactComponent as Close } from "../../assets/icons/close.svg";
+import { ReactComponent as CloseWhite } from "../../assets/icons/close-white.svg";
 import { ReactComponent as CheckedRadio } from "../../assets/icons/checked.svg";
 import { ReactComponent as UnCheckedRadio } from "../../assets/icons/unchecked.svg";
 import { ReactComponent as CheckOutline } from "../../assets/icons/check_outline_ic.svg";
@@ -31,6 +32,7 @@ export const iconComponents = {
   grid: Grid,
   lock: Lock,
   close: Close,
+  closeWhite: CloseWhite,
   checkedRadio: CheckedRadio,
   unCheckedRadio: UnCheckedRadio,
   checkOutline: CheckOutline,
@@ -58,6 +60,7 @@ export const ICONS = {
   grid: "grid",
   lock: "lock",
   close: "close",
+  closeWhite: "closeWhite",
   checkedRadio: "checkedRadio",
   unCheckedRadio: "unCheckedRadio",
   checkOutline: "checkOutline",

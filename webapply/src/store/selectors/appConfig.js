@@ -109,7 +109,7 @@ export const getAuthorizationHeader = state => {
   const authToken = getAuthToken(state);
 
   return {
-    headers: { Authorization: `Bearer ${authToken}` }
+    headers: authToken ? { Authorization: `Bearer ${authToken}` } : {}
   };
 };
 
