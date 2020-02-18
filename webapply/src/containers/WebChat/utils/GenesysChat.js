@@ -1,10 +1,8 @@
 import cometd from "cometd";
 import has from "lodash/has";
 import { callSafely } from "./GenericUtils";
+import { CHAT_URL, CHAT_CHANNEL, CONNECTED_STATUS, CHAT_CHANNEL_ID } from "../constants";
 
-const chatUrl = "https://uatrmt.rakbankonline.ae/RMTCHAT";
-const chatChannel = "/service/chatV2/digital-chat";
-const connectedStatus = "connected";
 const ChatOperationTypes = Object.freeze({
   RequestChat: "requestChat",
   SendMessage: "sendMessage",
@@ -79,7 +77,7 @@ export class GenesysChat {
       message,
       ProductCategory: "RBD-CON", // TODO Should be another for Islamic accounts
       IsAuth: isAuth ? "Y" : "N",
-      ChannelID: "Digital 2.0",
+      ChannelID: CHAT_CHANNEL_ID,
       OsType: "iOS",
       CIF,
       FinalAuthenticationDateTime: new Date()
@@ -90,7 +88,7 @@ export class GenesysChat {
    */
   configureChat = () => {
     this.cometD.configure({
-      url: chatUrl + "/cometd",
+      url: CHAT_URL + "/cometd",
       logLevel: "debug"
     });
     const TimeStampExtension = require("cometd/TimeStampExtension");
@@ -103,11 +101,10 @@ export class GenesysChat {
    * @param userInfo - chat window element
    *  call back type is specified as any because response coming from the cometd plugin file.
    */
-
   initChat = (userInfo, callback) => {
     // Handshake with the server.
     return new Promise((resolve, reject) => {
-      if (this.cometD.getStatus() !== connectedStatus) {
+      if (this.cometD.getStatus() !== CONNECTED_STATUS) {
         this.userInfo = userInfo;
         this.connectedCallback = callback;
         this.initiateHandshake();
@@ -135,7 +132,7 @@ export class GenesysChat {
   subscribeToChannel = () => {
     return new Promise((resolve, reject) => {
       this.subsctiption = this.cometD.subscribe(
-        chatChannel,
+        CHAT_CHANNEL,
         messages => {
           if (messages.data.secureKey !== undefined) {
             this.secureKey = messages.data.secureKey;
@@ -162,7 +159,7 @@ export class GenesysChat {
     };
 
     return new Promise((resolve, reject) => {
-      this.cometD.publish(chatChannel, updateChangeData, publishResponse => {
+      this.cometD.publish(CHAT_CHANNEL, updateChangeData, publishResponse => {
         if (publishResponse.successful) {
           resolve(publishResponse);
         } else {
@@ -187,7 +184,7 @@ export class GenesysChat {
 
     return new Promise((resolve, reject) => {
       if (subscribeReply.successful)
-        this.cometD.publish(chatChannel, requestChatData, response => {
+        this.cometD.publish(CHAT_CHANNEL, requestChatData, response => {
           if (response.successful) {
             resolve(response);
           } else {
@@ -324,7 +321,7 @@ export class GenesysChat {
         secureKey: this.secureKey
       };
 
-      this.cometD.publish(chatChannel, sendMessageData, publishResponse => {
+      this.cometD.publish(CHAT_CHANNEL, sendMessageData, publishResponse => {
         if (publishResponse.successful) {
           resolve(publishResponse);
         } else {
@@ -340,7 +337,7 @@ export class GenesysChat {
       message: userName + " started typing",
       secureKey: this.secureKey
     };
-    this.cometD.publish(chatChannel, sendMessageData);
+    this.cometD.publish(CHAT_CHANNEL, sendMessageData);
   };
 
   userStopedTyping = (userName = "User") => {
@@ -349,7 +346,7 @@ export class GenesysChat {
       message: userName + " stoped typing",
       secureKey: this.secureKey
     };
-    this.cometD.publish(chatChannel, sendMessageData);
+    this.cometD.publish(CHAT_CHANNEL, sendMessageData);
   };
 
   /**
@@ -362,7 +359,7 @@ export class GenesysChat {
       operation: ChatOperationTypes.ChatDisconnect,
       secureKey: this.secureKey
     };
-    this.cometD.publish(chatChannel, disconnectData);
+    this.cometD.publish(CHAT_CHANNEL, disconnectData);
     this.unSubscribe();
     this.cometD.disconnect();
     GenesysChat.chatInstance = undefined;
@@ -374,7 +371,7 @@ export class GenesysChat {
       secureKey: this.secureKey,
       transcriptPosition: parseInt(this.lastPosition)
     };
-    this.cometD.publish(chatChannel, requestNotificationData);
+    this.cometD.publish(CHAT_CHANNEL, requestNotificationData);
   };
 
   updateNickName = nickName => {
@@ -383,7 +380,7 @@ export class GenesysChat {
       nickname: nickName,
       secureKey: this.secureKey
     };
-    this.cometD.publish(chatChannel, updateNicknameData);
+    this.cometD.publish(CHAT_CHANNEL, updateNicknameData);
   };
 
   setOnTypingEventsHandler = handler => {

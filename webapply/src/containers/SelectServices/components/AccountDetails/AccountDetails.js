@@ -78,7 +78,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                   setFieldValue("branchCity", id);
                   setFieldValue("branchID", "");
                 }}
-                inputProps={{ tabIndex: 0 }}
+                tabIndex="0"
               />
             </Grid>
             <Grid item md={6} sm={12}>
@@ -99,9 +99,9 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 label="Branch"
                 placeholder="Branch"
                 disabled={!values.branchCity}
-                inputProps={{ tabIndex: 0 }}
                 isSearchable
                 component={SelectAutocomplete}
+                tabIndex="0"
               />
             </Grid>
           </Grid>

@@ -46,8 +46,8 @@ export const MobileNotification = () => {
             <h2>Almost there!</h2>
             <DesktopImg alt="interrogation" />
             <p>
-              Applying for your account is going to take a bit. Better do it when you’re not on the
-              go. So get comfy and use your desktop. See you at our website - rakbank.ae
+              Applying for your account is simply better when you’re not on the go. So get comfy and
+              use your desktop.
             </p>
             <ContainedButton label="Got it" handleClick={handleClose} />
           </div>

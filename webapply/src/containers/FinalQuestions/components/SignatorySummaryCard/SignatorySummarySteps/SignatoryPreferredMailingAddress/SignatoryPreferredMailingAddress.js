@@ -129,7 +129,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   label="Emirate/ City"
                   isSearchable
                   component={SelectAutocomplete}
-                  inputProps={{ tabIndex: 0 }}
+                  tabIndex="0"
                 />
               </Grid>
               <Grid item md={6} sm={12}>

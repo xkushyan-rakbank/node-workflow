@@ -395,6 +395,7 @@ public class WebApplyController {
                     "recaptchaToken is required");
             throw new ApiException(error, HttpStatus.BAD_REQUEST);
         } else if (!EnvUtil.isRecaptchaEnable()) {
+            ((ObjectNode) requestBodyJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
             return;
         }
 
