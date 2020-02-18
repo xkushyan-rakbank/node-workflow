@@ -111,7 +111,7 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeho
     const state = yield select();
     const config = cloneDeep(state.appConfig);
     const headers = getAuthorizationHeader(state);
-    const prospectId = getProspectId(state) || "COSME0017";
+    const prospectId = getProspectId(state);
 
     const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, headers);
 
