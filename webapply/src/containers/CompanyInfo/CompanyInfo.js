@@ -14,7 +14,7 @@ import {
   sendProspectToAPIPromisify,
   setScreeningError
 } from "../../store/actions/sendProspectToAPI";
-import { screeningStatusNotRegistered } from "../../constants";
+import { CONTINUE, screeningStatusNotRegistered } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
@@ -46,7 +46,8 @@ export const CompanyInfoPage = ({
   const isAllStepsCompleted = checkAllStepsCompleted(availableSteps);
 
   const handleContinue = event => () => {
-    sendProspectToAPI(companyInfoSteps[activeStep].saveType, event).then(
+    const saveType = companyInfoSteps.find(step => step.step === activeStep).saveType || CONTINUE;
+    sendProspectToAPI(saveType, event).then(
       () => {
         if (!isRegisteredInUAE) {
           return setScreeningError(screeningStatusNotRegistered);
