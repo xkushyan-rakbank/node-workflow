@@ -30,9 +30,9 @@ const channelsSchema = Yup.object({
   signatory: Yup.array().of(
     Yup.object().shape({
       nameOnDebitCard: Yup.string()
-        .matches(NAME_REGEX, getInvalidMessage("Name on debit card"))
-        .max(19, "Max length is 19 symbols")
         .required(getRequiredMessage("Name on debit card"))
+        .max(19, "Max length is 19 symbols")
+        .matches(NAME_REGEX, getInvalidMessage("Name on debit card"))
     })
   )
 });
