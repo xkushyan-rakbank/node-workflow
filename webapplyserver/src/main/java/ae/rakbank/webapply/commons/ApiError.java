@@ -28,6 +28,8 @@ public class ApiError {
 	private String timestamp;
 	private String message;
 	private String debugMessage;
+	private String errorType;
+	private String errors;
 	private String exceptionClassName;
 	private StackTraceElement[] stackTrace;
 

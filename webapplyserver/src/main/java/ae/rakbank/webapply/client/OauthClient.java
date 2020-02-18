@@ -4,6 +4,7 @@ import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.util.DehUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class OauthClient {
     private static final Logger logger = LoggerFactory.getLogger(OauthClient.class);
 
     private final FileHelper fileHelper;
+    private final DehUtil dehUtil;
 
     private JsonNode oAuthUri;
     private String oAuthBaseUrl;
@@ -67,15 +69,29 @@ public class OauthClient {
         } catch (HttpClientErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "failed to call to Oauth service",
-                    e.getResponseBodyAsString(), e);
-            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            ApiError apiError = ApiError.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message(e.getMessage())
+                    .debugMessage(e.getResponseBodyAsString())
+                    .exceptionClassName(e.getClass().getSimpleName())
+                    .stackTrace(e.getStackTrace())
+                    .errorType(dehUtil.getErrorType(e))
+                    .errors(dehUtil.gerErrors(e))
+                    .build();
+            throw new ApiException(e, apiError, null, HttpStatus.BAD_REQUEST);
         } catch (HttpServerErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error in remote Oauth server",
-                    e.getResponseBodyAsString(), e);
-            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            ApiError apiError = ApiError.builder()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .message(e.getMessage())
+                    .debugMessage(e.getResponseBodyAsString())
+                    .exceptionClassName(e.getClass().getSimpleName())
+                    .stackTrace(e.getStackTrace())
+                    .errorType(dehUtil.getErrorType(e))
+                    .errors(dehUtil.gerErrors(e))
+                    .build();
+            throw new ApiException(e, apiError, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
