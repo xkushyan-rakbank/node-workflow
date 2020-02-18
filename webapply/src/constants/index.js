@@ -166,7 +166,8 @@ export const VIEW_IDS = {
   SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
   CompanyInfo: "/CompanyInfo",
-  SearchedAppInfo: "/SearchedAppInfo"
+  SearchedAppInfo: "/SearchedAppInfo",
+  ApplicationSubmitted: "/ApplicationSubmitted"
 };
 
 export const ACTION_TYPES = {
