@@ -90,6 +90,9 @@ export const useStyles = makeStyles({
       color: "#86868b"
     }
   },
+  inputMultiline: {
+    padding: 0
+  },
   iePlaceholder: {
     position: "absolute",
     color: "#86868b",
