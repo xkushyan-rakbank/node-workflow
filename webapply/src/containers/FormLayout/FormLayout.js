@@ -30,7 +30,8 @@ export const FormLayoutComponent = ({
       routes.finalQuestions,
       routes.uploadDocuments,
       routes.selectServices,
-      routes.SubmitApplication
+      routes.SubmitApplication,
+      routes.ApplicationSubmitted
     ].includes(pathname);
 
     updateViewId(viewId, isSendToApi);
