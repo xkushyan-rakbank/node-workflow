@@ -46,7 +46,7 @@ export const CompanyInfoPage = ({
   const isAllStepsCompleted = checkAllStepsCompleted(availableSteps);
 
   const handleContinue = event => () => {
-    const saveType = companyInfoSteps.find(step => step.step === activeStep).saveType || CONTINUE;
+    const saveType = companyInfoSteps.find(({ step }) => step === activeStep).saveType || CONTINUE;
     sendProspectToAPI(saveType, event).then(
       () => {
         if (!isRegisteredInUAE) {

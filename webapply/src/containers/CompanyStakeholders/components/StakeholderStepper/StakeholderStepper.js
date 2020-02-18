@@ -54,7 +54,8 @@ const StakeholderStepperComponent = ({
   );
 
   const handleContinue = event => () => {
-    const saveType = stakeHoldersSteps.find(step => step.step === activeStep).saveType || CONTINUE;
+    const saveType =
+      stakeHoldersSteps.find(({ step }) => step.step === activeStep).saveType || CONTINUE;
     sendProspectToAPI(saveType, event).then(
       () => {
         if (isTooManyStakeholders) {
