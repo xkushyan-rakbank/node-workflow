@@ -1,4 +1,4 @@
-import { ADD_PLAYED_VIDEO } from "../actions/playedVideos";
+import { ADD_PLAYED_VIDEO } from "../actions/video";
 
 const initialState = [];
 

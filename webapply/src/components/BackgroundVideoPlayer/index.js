@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { BackgroundVideoPlayerComponent } from "./BackgroundVideoPlayer";
-import { addPlayedVideo } from "../../store/actions/playedVideos";
+import { addPlayedVideo } from "../../store/actions/video";
 
 const mapStateToProps = state => ({
-  playedVideos: state.playedVideos
+  playedVideos: state.video
 });
 
 const mapDispatchToProps = {
