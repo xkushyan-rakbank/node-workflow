@@ -49,29 +49,23 @@ export const MyApplications = ({ searchResults, getProspectInfo, isLoading }) =>
             [classes.veiwRow]: selectedView === GRID_VIEW
           })}
         >
-          {selectedView === LIST_VIEW && (
-            <>
-              {isLoading ? (
-                <ApplicationsSkeleton />
-              ) : (
+          {isLoading ? (
+            <ApplicationsSkeleton />
+          ) : (
+            [
+              selectedView === LIST_VIEW && (
                 <ApplicationList
                   applicantInfo={searchResults.searchResult}
                   getProspectInfo={getProspectInfo}
                 />
-              )}
-            </>
-          )}
-          {selectedView === GRID_VIEW && (
-            <>
-              {isLoading ? (
-                <ApplicationsSkeleton />
-              ) : (
+              ),
+              selectedView === GRID_VIEW && (
                 <ApplicationGrid
                   applicantInfo={searchResults.searchResult}
                   getProspectInfo={getProspectInfo}
                 />
-              )}
-            </>
+              )
+            ]
           )}
         </div>
       )}

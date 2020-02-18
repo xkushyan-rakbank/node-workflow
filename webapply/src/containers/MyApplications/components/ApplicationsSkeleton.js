@@ -3,11 +3,11 @@ import { useStyles } from "./styled";
 
 import { SkeletonLoader } from "../../../components/Form/SkeletonLoader";
 
-const range = (start, end, length = end - start) => Array.from({ length }, (_, i) => start + i);
+const range = (end, start = 0, length = end - start) => Array.from({ length }, (_, i) => start + i);
 
-export const ApplicationsSkeleton = ({ counts = 4 }) => {
+export const ApplicationsSkeleton = ({ count = 4 }) => {
   const classes = useStyles();
-  return range(0, counts).map((_, index) => (
+  return range(count).map((_, index) => (
     <div className={classes.wrapper} key={index}>
       <div className={classes.applicationRow}>
         <SkeletonLoader className={classes.companyNameSkeleton} />
