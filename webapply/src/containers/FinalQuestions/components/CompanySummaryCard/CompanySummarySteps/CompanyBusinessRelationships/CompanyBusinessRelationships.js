@@ -154,7 +154,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 </>
                               }
                               placeholder="Customer name"
-                              multiline
                               component={Input}
                               InputProps={{
                                 inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
@@ -255,7 +254,6 @@ export const CompanyBusinessRelationshipsComponent = ({
                                 </>
                               }
                               component={Input}
-                              multiline
                               disabled={values.isDontHaveSuppliersYet}
                               InputProps={{
                                 inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
