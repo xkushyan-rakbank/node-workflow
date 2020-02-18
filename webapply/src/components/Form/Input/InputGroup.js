@@ -6,11 +6,11 @@ import { ErrorMessage } from "../../Notifications";
 export const InputGroup = ({ error, children }) => {
   const classes = useStyles();
   return (
-    <>
+    <div className={classes.inputGroupWrapper}>
       <FormGroup row className={classes.selectCombined}>
         {children}
       </FormGroup>
       {error && <ErrorMessage error={error} />}
-    </>
+    </div>
   );
 };
