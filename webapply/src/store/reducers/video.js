@@ -1,12 +1,9 @@
 import { ADD_PLAYED_VIDEO } from "../actions/video";
+import { handleActions } from "../../utils/redux-utils";
 
-const initialState = [];
-
-export default (state = initialState, { type, payload }) => {
-  switch (type) {
-    case ADD_PLAYED_VIDEO:
-      return [...state, payload];
-    default:
-      return state;
-  }
-};
+export default handleActions(
+  {
+    [ADD_PLAYED_VIDEO]: (state, { payload }) => [...state, payload]
+  },
+  []
+);
