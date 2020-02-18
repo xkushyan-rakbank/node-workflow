@@ -180,10 +180,10 @@ const CompanyStakeholdersComponent = ({
           <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
       )}
-      {stakeholders.length > 0 && !hasSignatories && (
+      {stakeholders.length >= 1 && stakeholdersIds[0].done && !hasSignatories && (
         <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
       )}
-      {stakeholders.length && isLowPercentage ? (
+      {stakeholders.length >= 1 && stakeholdersIds[0].done && isLowPercentage ? (
         <ErrorMessage
           error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
           or edit the shareholding % for the added stakeholders.`}
