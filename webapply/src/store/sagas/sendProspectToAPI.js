@@ -12,7 +12,6 @@ import {
   actionChannel,
   flush
 } from "redux-saga/effects";
-import get from "lodash/get";
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 
 import {
@@ -45,6 +44,7 @@ import {
   AUTO,
   SUBMIT
 } from "../../constants";
+import { updateProspect } from "../actions/appConfig";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -135,11 +135,15 @@ function* sendProspectToAPI({ newProspect, saveType }) {
       );
     }
 
-    yield put(sendProspectToAPISuccess(newProspect));
-
-    if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
-      yield fork(setScreeningResults, data);
+    const { preScreening } = data;
+    if (preScreening) {
+      if (preScreening.statusOverAll === APP_STOP_SCREEN_RESULT) {
+        yield fork(setScreeningResults, data);
+      }
+      yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
     }
+
+    yield put(sendProspectToAPISuccess(newProspect));
   } catch (error) {
     log({ error });
     yield put(sendProspectToAPIFail(error));
