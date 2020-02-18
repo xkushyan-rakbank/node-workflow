@@ -304,7 +304,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                       }}
                       className={classes.addButton}
                       disabled={
-                        !get(signatories[0], "TxnReconfirmingfullname", null) || signatoriesErrors
+                        !get(signatories[0], "TxnReconfirmingfullname") || signatoriesErrors
                       }
                     />
                   )}
