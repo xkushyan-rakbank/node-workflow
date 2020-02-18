@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import cx from "classnames";
 
 import routes from "../../../routes";
+import { ALLOWED_EDIT_STATUSES } from "../constants";
 
 import { useStyles } from "./styled";
-import { ALLOWED_EDIT_STATUSES } from "../constants";
 
 export const SearchApplicationList = ({ currentApplications }) => {
   const classes = useStyles();
