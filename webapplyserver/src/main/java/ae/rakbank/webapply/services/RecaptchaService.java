@@ -101,7 +101,7 @@ public class RecaptchaService {
 
 			ApiError error = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, "The validation of reCaptcha is not succeed",
 					errorMessage);
-			throw new ApiException(error, null, HttpStatus.UNPROCESSABLE_ENTITY);
+			throw new ApiException(error, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
 }

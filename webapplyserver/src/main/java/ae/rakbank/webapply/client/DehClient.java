@@ -78,37 +78,27 @@ public class DehClient {
             logger.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpHeaders responseHeaders = e.getResponseHeaders();
-            List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
 
+            /*List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
             String errorMessage;
             if (channelContext == null) {
                 errorMessage = e.getResponseBodyAsString();
             } else {
                 errorMessage = channelContext.get(0);
-            }
-            ApiError apiError = ApiError.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(errorMessage)
-                    .debugMessage(e.getResponseBodyAsString())
-                    .exceptionClassName(e.getClass().getSimpleName())
-                    .stackTrace(e.getStackTrace())
-                    .errorType(dehUtil.getErrorType(e))
-                    .errors(dehUtil.gerErrors(e))
-                    .build();
-            throw new ApiException(apiError, responseHeaders, HttpStatus.BAD_REQUEST);
+            }*/
+
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(apiError, responseHeaders, status);
         } catch (HttpServerErrorException e) {
             logger.error(String.format("HttpServerErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError apiError = ApiError.builder()
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .message(e.getMessage())
-                    .debugMessage(e.getResponseBodyAsString())
-                    .exceptionClassName(e.getClass().getSimpleName())
-                    .stackTrace(e.getStackTrace())
-                    .errorType(dehUtil.getErrorType(e))
-                    .errors(dehUtil.gerErrors(e))
-                    .build();
-            throw new ApiException(apiError, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            HttpHeaders responseHeaders = e.getResponseHeaders();
+            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(apiError, responseHeaders, status);
         }
 
         // ResponseEntity headers is immutable, so create new HttpHeaders object
@@ -121,9 +111,6 @@ public class DehClient {
 
         logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
                 url, response.getStatusCodeValue(), response.getBody()));
-
-        logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-                operationId, url, response.getStatusCodeValue()));
 
         csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
 
@@ -161,29 +148,17 @@ public class DehClient {
         } catch (HttpClientErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
-            ApiError apiError = ApiError.builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(e.getMessage())
-                    .debugMessage(e.getResponseBodyAsString())
-                    .exceptionClassName(e.getClass().getSimpleName())
-                    .stackTrace(e.getStackTrace())
-                    .errorType(dehUtil.getErrorType(e))
-                    .errors(dehUtil.gerErrors(e))
-                    .build();
-            throw new ApiException(e, apiError, null, HttpStatus.BAD_REQUEST);
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
-            ApiError apiError = ApiError.builder()
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .message(e.getMessage())
-                    .debugMessage(e.getResponseBodyAsString())
-                    .exceptionClassName(e.getClass().getSimpleName())
-                    .stackTrace(e.getStackTrace())
-                    .errorType(dehUtil.getErrorType(e))
-                    .errors(dehUtil.gerErrors(e))
-                    .build();
-            throw new ApiException(e, apiError, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         }
 
         ObjectNode datalist = (ObjectNode) response.getBody();

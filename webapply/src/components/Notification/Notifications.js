@@ -24,7 +24,10 @@ const NotificationsProvider = ({ children }) => {
     (options = {}) => {
       const id = uniqueId("notification-");
       dispatch({ op: "add", notification: { ...options, id } });
-      setTimeout(() => remove(id), options.delay || 5000);
+
+      if (options.delay) {
+        setTimeout(() => remove(id), options.delay);
+      }
     },
     [dispatch, remove]
   );

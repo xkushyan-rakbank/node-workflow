@@ -29,7 +29,7 @@ public class ApiError {
 	private String message;
 	private String debugMessage;
 	private String errorType;
-	private String errors;
+	private JsonNode errors;
 	private String exceptionClassName;
 	private StackTraceElement[] stackTrace;
 
@@ -72,7 +72,7 @@ public class ApiError {
 		setException(ex);
 	}
 
-	private void initTimestamp() {
+	public void initTimestamp() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
 		timestamp = LocalDateTime.now().format(formatter);
 	}
