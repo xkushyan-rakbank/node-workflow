@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import routes from "../../../../routes";
+import routes, { smeBaseName } from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
 
 import { BackLink } from "../../../../components/Buttons/BackLink";
@@ -20,7 +20,8 @@ export const SubmitApplicationComponent = ({
   sendProspectToAPI,
   updateActionType,
   updateSaveType,
-  isApplyEditApplication
+  isApplyEditApplication,
+  updateViewId
 }) => {
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
@@ -30,6 +31,9 @@ export const SubmitApplicationComponent = ({
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
   const handleSubmit = () => {
+    if (isApplyEditApplication) {
+      updateViewId(routes.ApplicationSubmitted.replace(smeBaseName, ""), false);
+    }
     setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);

@@ -121,9 +121,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                             };
                           }}
                           shrink={true}
-                          InputProps={{
-                            inputProps: { tabIndex: 0 }
-                          }}
+                          tabIndex="0"
                           otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
                             <>
@@ -176,9 +174,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                               }, []);
                           }}
                           disabled={!item.industry}
-                          InputProps={{
-                            inputProps: { tabIndex: 0 }
-                          }}
+                          tabIndex="0"
                           otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
                             <>

@@ -230,9 +230,7 @@ public class WebApplyController {
 
         HttpHeaders headers = new HttpHeaders();
         csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
-        String jwtToken = authorizationService
-                .createCustomerJwtToken(requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
-        headers.add(JWT_TOKEN_KEY, jwtToken);
+        headers.putAll(otpResponse.getHeaders());
         headers.putAll(createdProspectResponse.getHeaders());
 
         return new ResponseEntity<>(createdProspectResponse.getBody(), headers, createdProspectResponse.getStatusCode());
@@ -265,10 +263,11 @@ public class WebApplyController {
             ((ObjectNode) requestJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
         }
 
+        String jwtToken = authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText());
         String url = dehBaseUrl + dehURIs.get("otpUri").asText();
 
         return dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestJSON,
-                "generateVerifyOTP()", MediaType.APPLICATION_JSON, null);
+                "generateVerifyOTP()", MediaType.APPLICATION_JSON, jwtToken);
     }
 
     @PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
@@ -396,6 +395,7 @@ public class WebApplyController {
                     "recaptchaToken is required");
             throw new ApiException(error, null, HttpStatus.BAD_REQUEST);
         } else if (!EnvUtil.isRecaptchaEnable()) {
+            ((ObjectNode) requestBodyJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
             return;
         }
 

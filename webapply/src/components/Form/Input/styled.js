@@ -13,8 +13,11 @@ export const useStyles = makeStyles({
   disabled: {
     backgroundColor: "rgba(242, 242, 242, 0.5)"
   },
+  inputGroupWrapper: {
+    margin: "12px 0 20px"
+  },
   selectCombined: {
-    margin: "12px 0 20px",
+    margin: "12px 0 0",
     position: "relative",
     "& > div": {
       width: "auto",

@@ -58,7 +58,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
                   label="Marital Status"
                   isSearchable
                   component={SelectAutocomplete}
-                  inputProps={{ tabIndex: 0 }}
+                  tabIndex="0"
                 />
               </Grid>
               <Grid item md={6} sm={12}>

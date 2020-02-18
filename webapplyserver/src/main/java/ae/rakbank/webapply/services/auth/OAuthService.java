@@ -35,9 +35,7 @@ import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.helpers.FileHelper;
 
-import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_ACCESS_TOKEN_KEY;
-import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_CONTEXT_OBJECT_KEY;
-import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_REFRESH_TOKEN_KEY;
+import static ae.rakbank.webapply.constants.AuthConstants.*;
 
 @Slf4j
 @Component
@@ -67,12 +65,15 @@ class OAuthService {
 				(ResponseEntity<JsonNode>) servletContext.getAttribute(OAUTH_CONTEXT_OBJECT_KEY);
 
 		if (oAuthContextTokenResponse == null || !oAuthContextTokenResponse.getStatusCode().is2xxSuccessful()
-				|| isContextAccessTokenExpired(oAuthContextTokenResponse)) {
+				|| isContextAccessTokenExpired()) {
 			oAuthContextTokenResponse = getNewVirtualUserOauthObject();
 			servletContext.setAttribute(OAUTH_CONTEXT_OBJECT_KEY, oAuthContextTokenResponse);
+			servletContext.setAttribute(OAUTH_CONTEXT_EXPIRED_TIME_KEY, getExpireTime(oAuthContextTokenResponse));
 		}
 		return oAuthContextTokenResponse.getBody().get(OAUTH_ACCESS_TOKEN_KEY).asText();
 	}
+
+
 
 	void validateAndUpdateOauthToken(JwtPayload jwtPayload) {
 		if (StringUtils.isEmpty(jwtPayload.getOauthAccessToken()) || StringUtils.isEmpty(jwtPayload.getOauthRefreshToken())
@@ -102,16 +103,12 @@ class OAuthService {
 		return oauthClient.authorize(virtualUserName, virtualUserPassword);
 	}
 
-	private boolean isContextAccessTokenExpired(ResponseEntity<JsonNode> oAuthContextTokenResponse) {
-
-		// minus 10 seconds to prevent access_token expire error while calling the API
-		int seconds = oAuthContextTokenResponse.getBody().get("expires_in").asInt() - 10;
-		LocalDateTime tokenExpiryDateTime = LocalDateTime.now().plusSeconds(seconds);
-		return LocalDateTime.now().isAfter(tokenExpiryDateTime);
+	private boolean isContextAccessTokenExpired() {
+		return LocalDateTime.now()
+				.isAfter(LocalDateTime.parse(servletContext.getAttribute(OAUTH_CONTEXT_EXPIRED_TIME_KEY).toString()));
 	}
 
 	HttpHeaders getOAuthHeaders(String oauthAccessToken) {
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", oauthAccessToken);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));

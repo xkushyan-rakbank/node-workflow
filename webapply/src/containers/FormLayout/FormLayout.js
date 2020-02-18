@@ -7,7 +7,7 @@ import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
-import MobileNotification from "../../components/Notifications/MobileNotification/MobileNotification";
+import { MobileNotification } from "../../components/Notifications";
 
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},

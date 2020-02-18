@@ -57,9 +57,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 disabled={isSignatory}
                 datalistId="country"
                 shrink
-                InputProps={{
-                  inputProps: { tabIndex: 0 }
-                }}
+                tabIndex="0"
               />
             </Grid>
             <Grid item md={6} sm={12}>
