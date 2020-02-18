@@ -12,7 +12,7 @@ import { GRID_VIEW, LIST_VIEW } from "../constants";
 
 import { useStyles } from "./styled";
 
-export const MyApplications = ({ searchResults, getProspectInfo }) => {
+export const MyApplications = ({ searchResults, getProspectInfo, isLoading }) => {
   const classes = useStyles();
 
   const [selectedView, setSelectedView] = useState(LIST_VIEW);
@@ -52,6 +52,7 @@ export const MyApplications = ({ searchResults, getProspectInfo }) => {
             <ApplicationList
               applicantInfo={searchResults.searchResult}
               getProspectInfo={getProspectInfo}
+              isLoading={isLoading}
             />
           )}
           {selectedView === GRID_VIEW && (
