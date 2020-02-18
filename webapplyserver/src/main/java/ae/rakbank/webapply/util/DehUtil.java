@@ -41,14 +41,15 @@ public class DehUtil {
         return apiError;
     }
 
-    private String gerErrors(HttpStatusCodeException e) {
+    private JsonNode gerErrors(HttpStatusCodeException e) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            JsonNode jsonNode = mapper.readTree(e.getResponseBodyAsString());
-            return jsonNode.get("errors").toString();
+            return mapper.readTree(e.getResponseBodyAsString()).get("errors");
+//            JsonNode jsonNode = mapper.readTree(e.getResponseBodyAsString());
+//            return jsonNode.get("errors").toString();
         } catch (IOException e1) {
             log.warn("Can't parse errors from the response");
-            return "";
+            return null;
         }
     }
 
