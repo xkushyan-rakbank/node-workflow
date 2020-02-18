@@ -25,7 +25,6 @@ export const SubmitApplicationComponent = ({
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const pathname = routes.ApplicationSubmitted;
   const isSubmitButtonEnable =
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
@@ -34,7 +33,7 @@ export const SubmitApplicationComponent = ({
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
     sendProspectToAPI()
-      .then(() => pushHistory(pathname), () => {})
+      .then(() => pushHistory(routes.ApplicationSubmitted), () => {})
       .finally(() => setIsSubmitting(false));
   };
 
