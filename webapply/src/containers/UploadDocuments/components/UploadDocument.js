@@ -1,12 +1,17 @@
 import React, { useState, useRef, useCallback } from "react";
+import { useSelector } from "react-redux";
+import cx from "classnames";
 import * as Yup from "yup";
 
+import { getSearchResultById } from "../utils";
+import { getSearchResults } from "../../../store/selectors/searchProspect";
+import { getProspectId } from "../../../store/selectors/appConfig";
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
-import { BYTES_IN_MEGABYTE } from "../../../constants";
+import { BYTES_IN_MEGABYTE, DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../../../constants";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -31,6 +36,9 @@ export const UploadDocuments = ({
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const prospectId = useSelector(getProspectId);
+  const searchResult = useSelector(getSearchResults);
+  const searchResultById = getSearchResultById(searchResult, prospectId);
   const classes = useStyles();
   const inputEl = useRef(null);
   const { documentKey, documentType = "" } = document;
@@ -38,9 +46,7 @@ export const UploadDocuments = ({
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
   const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
-
   const fileUploadClick = event => (event.target.value = null);
-
   const fileUploadChange = useCallback(() => {
     const file = inputEl.current.files[0];
 
@@ -92,9 +98,16 @@ export const UploadDocuments = ({
     inputEl.current.click();
     setSelectedFile(null);
   }, []);
-
+  const isDisabled =
+    searchResultById &&
+    searchResultById.status &&
+    DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(searchResultById.status.statusNotes);
   return (
-    <div className={classes.fileUploadPlaceholder}>
+    <div
+      className={cx(classes.fileUploadPlaceholder, {
+        [classes.disabled]: isDisabled
+      })}
+    >
       <input
         className={classes.defaultInput}
         name="file"
