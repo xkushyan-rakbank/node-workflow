@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { routerToAddPaddingInSlider, sideNavWidthSM, sideNavWidthLG } from "../../constants/styles";
+import {
+  routerToAddPaddingInSlider,
+  sideNavWidthSM,
+  sideNavWidthLG,
+  sideNavWidthCollapsed
+} from "../../constants/styles";
 import { ELITE, ISLAMIC } from "../../utils/useBlobColor/constants";
 
 export const useStyles = makeStyles(theme => ({
@@ -41,6 +46,7 @@ export const useStyles = makeStyles(theme => ({
     flex: "1 1 auto",
     minHeight: "0px",
     minWidth: "1px",
+    transition: theme.transitions.default,
     "& h2": {
       fontSize: "46px",
       fontWeight: "600",
@@ -52,6 +58,9 @@ export const useStyles = makeStyles(theme => ({
       }
     },
     [theme.breakpoints.up("sm")]: {
+      paddingLeft: sideNavWidthCollapsed
+    },
+    [theme.breakpoints.up("md")]: {
       paddingLeft: sideNavWidthSM
     },
     [theme.breakpoints.up("lg")]: {
@@ -70,7 +79,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   mainContainer: {
-    width: "832px",
+    width: "780px",
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
@@ -78,6 +87,9 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: "35px",
     [theme.breakpoints.up("xl")]: {
       minWidth: "auto"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "832px"
     }
   },
   mainContainerFullHeight: {

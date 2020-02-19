@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import { Providers } from "./Providers";
 import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 import { FormNavigation } from "../../components/FormNavigation";
 import { HeaderTitle } from "../../components/HeaderTitle";
-import { Notifications, NotificationsProvider } from "../../components/Notification";
+import { Notifications } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
@@ -39,7 +40,7 @@ export const FormLayoutComponent = ({
   }, [pathname, updateViewId, resetScreeningError]);
 
   return (
-    <NotificationsProvider>
+    <Providers>
       <MobileNotification />
       <div className={classes.formLayout}>
         <FormNavigation />
@@ -55,6 +56,6 @@ export const FormLayoutComponent = ({
           </div>
         </div>
       </div>
-    </NotificationsProvider>
+    </Providers>
   );
 };

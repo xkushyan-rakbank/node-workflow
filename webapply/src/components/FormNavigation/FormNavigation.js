@@ -1,9 +1,10 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, lazy, Suspense, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import { FormNavigationStep } from "../FormNavigationStep";
+import { VerticalPaginationContext } from "../VerticalPagination";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
@@ -20,6 +21,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   const {
     location: { pathname }
   } = useHistory();
+  const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
   const blobColor = useBlobColor();
 
   const getRouteConfig = () =>
@@ -50,7 +52,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   const toggleSwitcherShow = () => setIsSwitcherShow(!isSwitcherShow);
 
   return (
-    <div className={cx(classes.formNav, classes.formNavBg)}>
+    <div className={cx(classes.formNav, classes.formNavBg, { active: isCurrentSectionVideo })}>
       <Header />
       <IslamicBankingSwitcherMobile
         className={classes.formNavBg}

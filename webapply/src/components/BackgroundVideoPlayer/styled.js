@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { normalScrollHeight } from "../../constants";
-import { sideNavWidthLG, sideNavWidthSM } from "../../constants/styles";
+import { sideNavWidthCollapsed, sideNavWidthLG, sideNavWidthSM } from "../../constants/styles";
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -20,7 +20,8 @@ export const useStyles = makeStyles(theme => ({
   video: {
     position: "absolute",
     zIndex: 10,
-    left: 0,
+    left: "50%",
+    transform: "translateX(-50%)",
     top: 0,
     minWidth: "100%",
     minHeight: "100vh",
@@ -44,6 +45,9 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     textAlign: "center",
     [theme.breakpoints.up("sm")]: {
+      left: sideNavWidthCollapsed
+    },
+    [theme.breakpoints.up("md")]: {
       left: sideNavWidthSM
     },
     [theme.breakpoints.up("lg")]: {

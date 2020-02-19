@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { sideNavWidthSM, sideNavWidthLG } from "../../constants/styles";
+import { sideNavWidthSM, sideNavWidthLG, sideNavWidthCollapsed } from "../../constants/styles";
 import { ELITE, ISLAMIC, STANDART } from "../../utils/useBlobColor/constants";
 
 const blobImages = {
@@ -39,7 +39,15 @@ export const useStyles = makeStyles(theme => ({
       paddingRight: 0,
       boxSizing: "border-box",
       position: "fixed",
-      top: 0,
+      top: 0
+    },
+    [theme.breakpoints.only("sm")]: {
+      width: sideNavWidthCollapsed,
+      "&:hover, &.active": {
+        width: sideNavWidthSM
+      }
+    },
+    [theme.breakpoints.only("md")]: {
       width: sideNavWidthSM
     },
     [theme.breakpoints.up("lg")]: {
