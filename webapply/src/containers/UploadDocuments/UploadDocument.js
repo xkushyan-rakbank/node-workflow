@@ -5,6 +5,7 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanyDocuments } from "./components/CompanyDocuments";
 import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
 import { BackLink } from "../../components/Buttons/BackLink";
+import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
 
 export const UploadDocument = ({
@@ -19,6 +20,7 @@ export const UploadDocument = ({
   updateProspect,
   uploadedDocsCount,
   requiredDocsCount,
+  sendProspectToAPI,
   uploadErrorMessage
 }) => {
   const classes = useStyles();
@@ -27,7 +29,11 @@ export const UploadDocument = ({
     retrieveDocDetails();
   }, [retrieveDocDetails]);
 
-  const goToSelectService = () => history.push(routes.selectServices);
+  const goToSelectService = () => {
+    sendProspectToAPI(NEXT).then(() => {
+      history.push(routes.selectServices);
+    });
+  };
 
   return (
     <>

@@ -17,6 +17,7 @@ import {
 } from "../../store/actions/getProspectDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 
 const mapStateToProps = state => ({
   documents: getProspectDocuments(state),
@@ -34,6 +35,7 @@ const mapDispatchToProps = {
   retrieveDocDetails,
   docUpload,
   cancelDocUpload,
+  sendProspectToAPI: sendProspectToAPIPromisify,
   updateProspect
 };
 

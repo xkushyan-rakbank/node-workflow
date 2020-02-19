@@ -16,6 +16,7 @@ import {
   deleteStakeholder,
   setEditStakeholder
 } from "../../store/actions/stakeholders";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { resetProspect } from "../../store/actions/appConfig";
 import { getSendProspectToAPIInfo, getDatalist } from "../../store/selectors/appConfig";
 import {
@@ -25,6 +26,7 @@ import {
   percentageSelector
 } from "../../store/selectors/stakeholder";
 import routes from "../../routes";
+import { NEXT } from "../../constants";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
@@ -40,6 +42,7 @@ const CompanyStakeholdersComponent = ({
   stakeholdersIds,
   hasSignatories,
   datalist,
+  sendProspectToAPI,
   setEditStakeholder
 }) => {
   const pushHistory = useTrackingHistory();
@@ -70,7 +73,9 @@ const CompanyStakeholdersComponent = ({
     !hasSignatories;
 
   const goToFinalQuestions = useCallback(() => {
-    pushHistory(routes.finalQuestions);
+    sendProspectToAPI(NEXT).then(() => {
+      pushHistory(routes.finalQuestions);
+    });
   }, [pushHistory]);
 
   const handleDeleteStakeholder = useCallback(
@@ -227,6 +232,7 @@ const mapDispatchToProps = {
   createNewStakeholder,
   changeEditableStakeholder,
   setEditStakeholder,
+  sendProspectToAPI: sendProspectToAPIPromisify,
   resetProspect
 };
 

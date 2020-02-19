@@ -54,8 +54,7 @@ const StakeholderStepperComponent = ({
   );
 
   const handleContinue = event => () => {
-    const saveType = stakeHoldersSteps.find(({ step }) => step === activeStep).saveType || CONTINUE;
-    sendProspectToAPI(saveType, event).then(
+    sendProspectToAPI(CONTINUE, event).then(
       () => {
         if (isTooManyStakeholders) {
           setScreeningError(stakeholderScreeningStatus);

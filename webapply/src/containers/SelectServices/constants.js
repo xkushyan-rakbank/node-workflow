@@ -4,7 +4,7 @@ import { SigningPreferences } from "./SigningPreferences";
 import { Channels } from "./Channels";
 import { ValueAddedServices } from "./ValueAddedServices";
 import { GA_EVENTS } from "../../utils/ga";
-import { NEXT, SIGNING_TRANSACTIONS_TYPE } from "../../constants";
+import { SIGNING_TRANSACTIONS_TYPE } from "../../constants";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
@@ -47,7 +47,6 @@ export const servicesSteps = [
     title: "Value added services",
     component: ValueAddedServices,
     icon: ICONS.valueAddedServices,
-    saveType: NEXT,
     eventName: GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
   }
 ];
