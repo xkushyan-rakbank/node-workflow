@@ -270,11 +270,9 @@ public class WebApplyController {
 
         if ("verify".equalsIgnoreCase(action) && extractOtpVerificationResult(result)) {
             String jwtToken = authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText());
-            //TODO: maybe we should save it in response body with corresponds code?
             responseBuilder.header(JWT_TOKEN_KEY, jwtToken);
         }
 
-        //TODO: should we return whole result from DEH???
         return responseBuilder.body(result.getBody());
     }
 
