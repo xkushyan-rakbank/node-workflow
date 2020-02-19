@@ -281,7 +281,8 @@ jobs:
       condition:
        #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
         and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
-
+      pool:
+       name: Hosted macOS
       steps:
       #prepare the Sonarqube for executing the sonar 
       - task: SonarCloudPrepare@1
