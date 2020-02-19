@@ -15,7 +15,8 @@ export const FinalQuestionStepComponent = ({
 
   const handleContinue = useCallback(
     eventName => () => {
-      sendProspectToAPI(CONTINUE, eventName).then(
+      const saveType = stepsArray.find(({ step }) => step === activeStep).saveType || CONTINUE;
+      sendProspectToAPI(saveType, eventName).then(
         () => {
           handleSetNextStep(activeStep);
           if (activeStep === stepsArray.length) {

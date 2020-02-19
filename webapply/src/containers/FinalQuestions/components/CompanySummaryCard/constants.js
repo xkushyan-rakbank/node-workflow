@@ -4,6 +4,7 @@ import { CompanyPreferredContactInformation } from "./CompanySummarySteps/Compan
 import { CompanyBusinessRelationships } from "./CompanySummarySteps/CompanyBusinessRelationships";
 import { CompanyBranchesAndSubsidiaries } from "./CompanySummarySteps/CompanyBranchesAndSubsidiaries";
 import { GA_EVENTS } from "../../../../utils/ga";
+import { NEXT } from "../../../../constants";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
@@ -42,6 +43,7 @@ export const finalQuestionsSteps = [
     step: STEP_5,
     title: "Preferred contact information",
     component: CompanyPreferredContactInformation,
+    saveType: NEXT,
     eventName: GA_EVENTS.FINAL_QUESTION_PREFERRED_CONTACT_CONTINUE
   }
 ];
