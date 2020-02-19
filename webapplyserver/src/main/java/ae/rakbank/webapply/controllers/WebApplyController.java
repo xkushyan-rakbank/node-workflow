@@ -268,7 +268,7 @@ public class WebApplyController {
 
         ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(HttpStatus.OK).headers(result.getHeaders());
 
-        if (extractOtpVerificationResult(result) && "verify".equalsIgnoreCase(action)) {
+        if ("verify".equalsIgnoreCase(action) && extractOtpVerificationResult(result)) {
             String jwtToken = authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText());
             //TODO: maybe we should save it in response body with corresponds code?
             responseBuilder.header(JWT_TOKEN_KEY, jwtToken);
