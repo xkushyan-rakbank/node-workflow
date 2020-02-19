@@ -20,6 +20,7 @@ export const stakeHoldersSteps = [
     step: STEP_1,
     title: "Personal Information",
     component: PersonalInformation,
+    saveType: NEXT,
     eventName: GA_EVENTS.COMPANY_STAKEHOLDER_PERSONAL_INFORMATION_CONTINUE
   },
   {
@@ -38,19 +39,20 @@ export const stakeHoldersSteps = [
     step: STEP_4,
     title: "Nationality",
     component: Nationality,
+    saveType: NEXT,
     eventName: GA_EVENTS.COMPANY_STAKEHOLDER_NATIONALITY_CONTINUE
   },
   {
     step: STEP_5,
     title: "Country of residence",
     component: CountryOfResidence,
+    saveType: NEXT,
     eventName: GA_EVENTS.COMPANY_STAKEHOLDER_COUNTRY_OF_RESIDENCE_CONTINUE
   },
   {
     step: STEP_6,
     title: "Preferred contact information",
     component: PreferredContactInformation,
-    saveType: NEXT,
     eventName: GA_EVENTS.COMPANY_STAKEHOLDER_PREFERRED_CONTACT_CONTINUE
   }
 ];
