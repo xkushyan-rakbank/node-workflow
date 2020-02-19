@@ -1,10 +1,9 @@
 import axios from "axios";
+import get from "lodash/get";
 
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
-import { setAccessToken } from "../store/actions/appConfig";
-
 import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
@@ -17,6 +16,18 @@ const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
 
 const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
+
+const formatJsonData = ({ stackTrace = [], status }) => {
+  const stack = stackTrace.map(
+    ({ methodName, fileName, lineNumber }) =>
+      `Method: ${methodName}, file: ${fileName}, line: ${lineNumber}`
+  );
+
+  return {
+    status,
+    stackTrace: `StackTrace: ${stack.join(", ")}`
+  };
+};
 
 export const uploadClient = axios.create({
   baseURL: "https://uatrmtc.rakbankonline.ae"
@@ -50,12 +61,6 @@ instance.interceptors.request.use(config => {
   return config;
 });
 
-instance.interceptors.response.use(response => {
-  const accessToken = response.headers.accesstoken || response.headers.AccessToken;
-  if (accessToken) store.dispatch(setAccessToken(accessToken));
-  return response;
-});
-
 instance.interceptors.response.use(
   response => {
     const { symKey } = response.config;
@@ -85,6 +90,7 @@ instance.interceptors.response.use(
   },
   error => {
     const {
+      status,
       data,
       config: { symKey }
     } = error.response;
@@ -109,85 +115,44 @@ instance.interceptors.response.use(
       }
     }
 
-    const addErrorToNotification = options => {
-      NotificationsManager.add && NotificationsManager.add(options);
-    };
+    let notificationOptions = {};
+    let debugNotificationOptions = {};
 
     if (jsonData) {
-      try {
-        const { errorType, errors, message, status } = jsonData;
-        switch (errorType) {
-          case "FieldsValidation":
-            if (errors) {
-              store.dispatch(setInputsErrors(errors));
-              errors.forEach(error => {
-                addErrorToNotification({
-                  title: "Validation Error On Server",
-                  message: error.message || error.developerText || message || "Validation Error"
-                });
-              });
-            } else {
-              addErrorToNotification({
-                title: "Validation Error On Server",
-                message: message || "Validation Error"
-              });
-            }
-            break;
-          case "OTP":
-            addErrorToNotification({
-              title: "OTP error",
-              message: "Something wrong with OTP"
-            });
-            break;
-          case "ReCaptchaError":
-            if (errors) {
-              store.dispatch(setError(errors));
-              errors.forEach(error => {
-                addErrorToNotification({
-                  title: "ReCaptchaError",
-                  message: error.message || error.developerText || message || "ReCaptcha Error"
-                });
-              });
-            } else {
-              addErrorToNotification({
-                title: "ReCaptchaError",
-                message: message || "ReCaptcha Error"
-              });
-            }
-            break;
-          case "Other":
-            if (errors) {
-              errors.forEach(error => {
-                if (!IGNORE_ERROR_CODES.includes(error.errorCode))
-                  addErrorToNotification({
-                    title: error.message,
-                    message: error.developerText || message
-                  });
-              });
-            } else {
-              addErrorToNotification({
-                title: status,
-                message
-              });
-            }
-            break;
-          default:
-            if (errors) {
-              errors.forEach(error => {
-                addErrorToNotification({
-                  title: errorType || message,
-                  message: error.message || error.developerText || message
-                });
-              });
-            } else {
-              addErrorToNotification({ title: errorType, message });
-            }
+      const { errors, errorType } = jsonData;
+      debugNotificationOptions = formatJsonData(jsonData);
+      if (status === 400 && errorType === "ReCaptchaError") {
+        store.dispatch(setError(errors));
+        notificationOptions = { title: "ReCaptchaError", message: errors };
+      } else if (status === 400 && errors) {
+        store.dispatch(setInputsErrors(errors));
+        if (errorType === "FieldsValidation") {
+          notificationOptions = {
+            title: "Validation Error On Server",
+            message: get(jsonData, "errors[0].message", "Validation Error")
+          };
         }
-      } catch (e) {
-        addErrorToNotification();
+      } else {
+        log(jsonData);
+        try {
+          if (jsonData.status) {
+            if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+              notificationOptions = null;
+            } else {
+              const errorMessages = errors.map(({ message }) => message);
+              notificationOptions = { message: errorMessages.join(", ") };
+            }
+          }
+        } catch (e) {
+          log(e);
+        }
       }
     }
 
+    if (notificationOptions) {
+      NotificationsManager.add &&
+        NotificationsManager.add({ ...notificationOptions, ...debugNotificationOptions });
+    }
     return Promise.reject(error);
   }
 );
