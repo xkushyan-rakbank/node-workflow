@@ -9,6 +9,7 @@ export const getDatalist = state => state.appConfig.datalist || {};
 export const getEndpoints = state => state.appConfig.endpoints || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
+export const getProspectStatusInfo = state => state.appConfig.prospect.prospectStatusInfo || {};
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 

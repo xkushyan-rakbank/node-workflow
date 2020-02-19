@@ -1,11 +1,7 @@
 import React, { useState, useRef, useCallback } from "react";
-import { useSelector } from "react-redux";
 import cx from "classnames";
 import * as Yup from "yup";
 
-import { getSearchResultById } from "../utils";
-import { getSearchResults } from "../../../store/selectors/searchProspect";
-import { getProspectId } from "../../../store/selectors/appConfig";
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
@@ -32,13 +28,12 @@ export const UploadDocuments = ({
   uploadErrorMessage,
   progress,
   cancelDocUpload,
-  updateProspect
+  updateProspect,
+  prospectStatusInfo
 }) => {
+  console.log(prospectStatusInfo);
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const prospectId = useSelector(getProspectId);
-  const searchResult = useSelector(getSearchResults);
-  const searchResultById = getSearchResultById(searchResult, prospectId);
   const classes = useStyles();
   const inputEl = useRef(null);
   const { documentKey, documentType = "" } = document;
@@ -99,9 +94,8 @@ export const UploadDocuments = ({
     setSelectedFile(null);
   }, []);
   const isDisabled =
-    searchResultById &&
-    searchResultById.status &&
-    DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(searchResultById.status.statusNotes);
+    prospectStatusInfo &&
+    DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo.statusNotes);
   return (
     <div
       className={cx(classes.fileUploadPlaceholder, {
