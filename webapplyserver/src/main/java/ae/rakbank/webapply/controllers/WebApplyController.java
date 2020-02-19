@@ -40,7 +40,7 @@ import ae.rakbank.webapply.services.RecaptchaService;
 import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
 import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUEST_KEY;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor

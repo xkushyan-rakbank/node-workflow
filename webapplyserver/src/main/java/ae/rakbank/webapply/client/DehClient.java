@@ -105,7 +105,6 @@ public class DehClient {
         HttpHeaders headers = new HttpHeaders();
         headers.addAll(response.getHeaders());
         headers.remove(HttpHeaders.CONTENT_LENGTH);
-        headers.remove(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
 
         if (!StringUtils.isEmpty(updatedJwtToken)) {
             headers.add(JWT_TOKEN_KEY, updatedJwtToken);
