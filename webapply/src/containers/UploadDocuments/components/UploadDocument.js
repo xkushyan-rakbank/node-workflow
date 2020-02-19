@@ -1,11 +1,9 @@
 import React, { useState, useRef, useCallback } from "react";
-import { useSelector } from "react-redux";
 import cx from "classnames";
 import * as Yup from "yup";
 
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
-import { getProspectStatusInfo } from "./../../../store/selectors/appConfig";
-import { getIsEditableStatusSearchInfo } from "./../../../store/selectors/searchProspect";
+
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
@@ -31,12 +29,12 @@ export const UploadDocuments = ({
   uploadErrorMessage,
   progress,
   cancelDocUpload,
-  updateProspect
+  updateProspect,
+  prospectStatusInfo,
+  isApplyEditApplication
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const prospectStatusInfo = useSelector(getProspectStatusInfo);
-  const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
   const classes = useStyles();
   const inputEl = useRef(null);
   const { documentKey, documentType = "" } = document;
