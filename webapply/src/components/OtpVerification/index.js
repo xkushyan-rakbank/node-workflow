@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
@@ -13,8 +13,14 @@ const bindNodeRef = index => node => {
   inputRefs[index] = node;
 };
 
-export const OtpVerification = ({ onChange, code }) => {
+export const OtpVerification = ({ onChange, code, verificationError }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    if (verificationError) {
+      inputRefs[0].focus();
+    }
+  }, [verificationError]);
 
   const handleInputFocus = useCallback(event => {
     event.target.select();
