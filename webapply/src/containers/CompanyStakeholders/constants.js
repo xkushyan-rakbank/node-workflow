@@ -55,6 +55,7 @@ export const stakeHoldersSteps = [
     step: STEP_6,
     title: "Preferred contact information",
     component: PreferredContactInformation,
+    saveType: CONTINUE,
     eventName: GA_EVENTS.COMPANY_STAKEHOLDER_PREFERRED_CONTACT_CONTINUE
   }
 ];

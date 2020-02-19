@@ -12,7 +12,6 @@ import {
 } from "../actions/stakeholders";
 import { removeSignatory } from "../actions/completedSteps";
 import { setConfig } from "../actions/appConfig";
-import { sendProspectToAPI } from "../actions/sendProspectToAPI";
 
 function* createNewStakeholderSaga() {
   const state = yield select();
@@ -30,7 +29,6 @@ function* createNewStakeholderSaga() {
   yield put(updateStakeholdersIds(stakeholdersIds));
   yield put(changeEditableStakeholder(editableStakeholder));
   yield put(setConfig(config));
-  yield put(sendProspectToAPI());
 }
 
 function* deleteStakeholderSaga(action) {
