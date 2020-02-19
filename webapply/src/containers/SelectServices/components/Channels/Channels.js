@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
 import { checkIsChequeBookApplied, checkIsDebitCardApplied } from "./utils";
-import { FULL_NAME_REGEX } from "../../../../utils/validation";
+import { NAME_REGEX } from "../../../../utils/validation";
 import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
@@ -30,9 +30,9 @@ const channelsSchema = Yup.object({
   signatory: Yup.array().of(
     Yup.object().shape({
       nameOnDebitCard: Yup.string()
-        .matches(FULL_NAME_REGEX, getInvalidMessage("Name on debit card"))
-        .max(19, "Max length is 19 symbols")
         .required(getRequiredMessage("Name on debit card"))
+        .max(19, "Max length is 19 symbols")
+        .matches(NAME_REGEX, getInvalidMessage("Name on debit card"))
     })
   )
 });

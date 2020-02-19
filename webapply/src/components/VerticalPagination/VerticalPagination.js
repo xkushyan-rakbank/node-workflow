@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import cx from "classnames";
 
-import VideoBackground from "../BackgroundVideoPlayer";
+import { BackgroundVideoPlayer } from "../BackgroundVideoPlayer";
 import { useStyles, transitionDuration } from "./styled";
 import { getAverage } from "./utils";
 
@@ -75,17 +75,17 @@ export const VerticalPaginationComponent = ({
       }}
     >
       <div className={classes.paginationWrapper} onWheel={handleWheel}>
-        {poster && (
-          <VideoBackground
-            video={video}
-            nextElementPosition={currentSectionIndex}
-            videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
-            scrollToSection={scrollToSection}
-            handleClick={handleClick}
-            handleClickMobile={scrollToSecondSection}
-          />
-        )}
         <div className={classes.paginationContent}>
+          {poster && (
+            <BackgroundVideoPlayer
+              video={video}
+              videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
+              scrollToSection={scrollToSection}
+              handleClick={handleClick}
+              handleClickMobile={scrollToSecondSection}
+              currentSectionIndex={currentSectionIndex}
+            />
+          )}
           {React.Children.map(children, child => (
             <div
               className={cx(classes.childWrapper, {

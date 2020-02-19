@@ -97,12 +97,12 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                   const currentIndustry = `prospect.orgKYCDetails.industryMultiSelect[0].industry[${industryIndex}]`;
                   // eslint-disable-next-line max-len
                   const currentSubCategory = `prospect.orgKYCDetails.industryMultiSelect[0].subCategory[${industryIndex}]`;
-
-                  const isHaveIndustryAndSubCategory = item.industry && item.subCategory;
+                  const isDisplayDeleteButton =
+                    item.industry && item.subCategory && values.industries.length > 1;
 
                   return (
                     <React.Fragment key={item.id}>
-                      <Grid item md={isHaveIndustryAndSubCategory ? 5 : 6} sm={12}>
+                      <Grid item md={isDisplayDeleteButton ? 5 : 6} sm={12}>
                         <Field
                           name={`industries[${industryIndex}].industry`}
                           path={currentIndustry}
@@ -137,7 +137,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           }
                         />
                       </Grid>
-                      <Grid item md={isHaveIndustryAndSubCategory ? 5 : 6} sm={12}>
+                      <Grid item md={isDisplayDeleteButton ? 5 : 6} sm={12}>
                         <Field
                           name={`industries[${industryIndex}].subCategory`}
                           path={currentSubCategory}
@@ -190,8 +190,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           }
                         />
                       </Grid>
-                      <Grid item md={isHaveIndustryAndSubCategory ? 2 : false} sm={12}>
-                        {isHaveIndustryAndSubCategory && (
+                      <Grid item md={isDisplayDeleteButton ? 2 : false} sm={12}>
+                        {isDisplayDeleteButton && (
                           <LinkButton
                             className={classes.deleteButton}
                             clickHandler={() => handleDelete(industryIndex, values, setFieldValue)}

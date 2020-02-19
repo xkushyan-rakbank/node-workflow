@@ -4,6 +4,7 @@ import ae.rakbank.webapply.commons.ApiError;
 import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.util.DehUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class OauthClient {
     private static final Logger logger = LoggerFactory.getLogger(OauthClient.class);
 
     private final FileHelper fileHelper;
+    private final DehUtil dehUtil;
 
     private JsonNode oAuthUri;
     private String oAuthBaseUrl;
@@ -67,15 +69,17 @@ public class OauthClient {
         } catch (HttpClientErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "failed to call to Oauth service",
-                    e.getResponseBodyAsString(), e);
-            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error in remote Oauth server",
-                    e.getResponseBodyAsString(), e);
-            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         }
     }
 

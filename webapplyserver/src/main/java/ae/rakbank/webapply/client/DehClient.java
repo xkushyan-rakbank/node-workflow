@@ -6,6 +6,7 @@ import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.helpers.CSRFTokenHelper;
 import ae.rakbank.webapply.helpers.FileHelper;
 import ae.rakbank.webapply.services.AuthorizationService;
+import ae.rakbank.webapply.util.DehUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -36,6 +37,7 @@ public class DehClient {
     private final FileHelper fileHelper;
     private final CSRFTokenHelper csrfTokenHelper;
     private final AuthorizationService authorizationService;
+    private final DehUtil dehUtil;
 
     private ObjectNode defaultDatalist = null;
     private JsonNode appConfigJSON = null;
@@ -76,22 +78,27 @@ public class DehClient {
             logger.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpHeaders responseHeaders = e.getResponseHeaders();
-            List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
 
+            /*List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
             String errorMessage;
             if (channelContext == null) {
                 errorMessage = e.getResponseBodyAsString();
             } else {
                 errorMessage = channelContext.get(0);
-            }
-            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, errorMessage, e.getResponseBodyAsString(), e);
-            throw new ApiException(error, responseHeaders, HttpStatus.BAD_REQUEST);
+            }*/
+
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(apiError, responseHeaders, status);
         } catch (HttpServerErrorException e) {
             logger.error(String.format("HttpServerErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    e.getResponseBodyAsString(), e);
-            throw new ApiException(error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            HttpHeaders responseHeaders = e.getResponseHeaders();
+            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(apiError, responseHeaders, status);
         }
 
         // ResponseEntity headers is immutable, so create new HttpHeaders object
@@ -104,9 +111,6 @@ public class DehClient {
 
         logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
                 url, response.getStatusCodeValue(), response.getBody()));
-
-        logger.info(String.format("API call from %s method is SUCCESSFUL, Endpoint=[%s] HttpStatus=[%s]",
-                operationId, url, response.getStatusCodeValue()));
 
         csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
 
@@ -144,15 +148,17 @@ public class DehClient {
         } catch (HttpClientErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
-                    e.getResponseBodyAsString(), e);
-            throw new ApiException(e, error, null, HttpStatus.BAD_REQUEST);
+            HttpStatus status = HttpStatus.BAD_REQUEST;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
             logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
-            ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
-                    e.getResponseBodyAsString(), e);
-            throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+            ApiError apiError = dehUtil.initApiError(e, status);
+
+            throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         }
 
         ObjectNode datalist = (ObjectNode) response.getBody();
