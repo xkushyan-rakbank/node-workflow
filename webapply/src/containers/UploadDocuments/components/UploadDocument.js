@@ -5,6 +5,7 @@ import * as Yup from "yup";
 
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 import { getProspectStatusInfo } from "./../../../store/selectors/appConfig";
+import { getIsEditableStatusSearchInfo } from "./../../../store/selectors/searchProspect";
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
@@ -35,6 +36,7 @@ export const UploadDocuments = ({
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const prospectStatusInfo = useSelector(getProspectStatusInfo);
+  const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
   const classes = useStyles();
   const inputEl = useRef(null);
   const { documentKey, documentType = "" } = document;
@@ -94,9 +96,9 @@ export const UploadDocuments = ({
     inputEl.current.click();
     setSelectedFile(null);
   }, []);
-  const isDisabled = DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(
-    prospectStatusInfo.statusNotes
-  );
+  const isDisabled =
+    isApplyEditApplication &&
+    DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo.statusNotes);
   return (
     <div
       className={cx(classes.fileUploadPlaceholder, {
