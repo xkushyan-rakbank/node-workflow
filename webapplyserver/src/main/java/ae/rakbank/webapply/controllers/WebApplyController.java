@@ -252,22 +252,35 @@ public class WebApplyController {
     public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest,
                                                @RequestBody JsonNode requestJSON,
                                                boolean captchaVerified) {
-        String action = requestJSON.get("action").asText();
-        Boolean isRecaptchaTokenPresent = requestJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY);
-        logger.info(String.format("Begin generateVerifyOTP() method, action=[%s], captchaVerified=%s, hasRecaptchaToken=%s",
-                action, captchaVerified, isRecaptchaTokenPresent));
-
-        logger.debug(String.format("generateVerifyOTP() method args, RequestBody=[%s], ", requestJSON.toString()));
-
+        boolean isRecaptchaTokenPresent = requestJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY);
         if (isRecaptchaTokenPresent) {
             ((ObjectNode) requestJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
         }
 
-        String jwtToken = authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText());
-        String url = dehBaseUrl + dehURIs.get("otpUri").asText();
+        String action = requestJSON.get("action").asText();
+        logger.info("Begin generateVerifyOTP() method, action=[{}], captchaVerified={}, hasRecaptchaToken={}",
+                action, captchaVerified, isRecaptchaTokenPresent);
+        logger.debug("generateVerifyOTP() method args, RequestBody=[{}], ", requestJSON);
 
-        return dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestJSON,
-                "generateVerifyOTP()", MediaType.APPLICATION_JSON, jwtToken);
+        String url = dehBaseUrl + dehURIs.get("otpUri").asText();
+        final ResponseEntity<?> result = dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestJSON,
+                "generateVerifyOTP()", MediaType.APPLICATION_JSON, null);
+
+        ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(HttpStatus.OK).headers(result.getHeaders());
+
+        if (extractOtpVerificationResult(result) && "verify".equalsIgnoreCase(action)) {
+            String jwtToken = authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText());
+            //TODO: maybe we should save it in response body with corresponds code?
+            responseBuilder.header(JWT_TOKEN_KEY, jwtToken);
+        }
+
+        //TODO: should we return whole result from DEH???
+        return responseBuilder.body(result.getBody());
+    }
+
+    private boolean extractOtpVerificationResult(ResponseEntity<?> optValidationResponse) {
+        final JsonNode body = (JsonNode) optValidationResponse.getBody();
+        return body != null && body.has("verified") && body.get("verified").asBoolean();
     }
 
     @PutMapping(value = "/usertypes/{segment}/prospects/{prospectId}", produces = "application/json", consumes = "application/json")
