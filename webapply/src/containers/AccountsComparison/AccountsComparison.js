@@ -38,7 +38,10 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
       >
         <div className={classes.videoWrapper} />
         <div ref={secondSection}>
-          <SectionTitleWithInfo title="Business accounts for every business stage" />
+          <SectionTitleWithInfo
+            title="Business accounts for every business stage"
+            info="Available in both conventional and islamic variants"
+          />
           <AccountCard setAccountType={setAccountType} handleClickMobile={scrollToTable} />
           <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
         </div>

@@ -180,5 +180,25 @@ export const useStyles = makeStyles(theme => ({
   statusNotes: {
     color: "#b5b5bb",
     fontStyle: "italic"
+  },
+  companyNameSkeleton: {
+    width: "210px",
+    height: "50px",
+    marginBottom: "2px",
+    borderRadius: "8px"
+  },
+  listStatusSkeleton: {
+    width: "100px",
+    height: "30px",
+    marginBottom: "0px",
+    marginLeft: "200px",
+    borderRadius: "8px"
+  },
+  statusNotesSkeleton: {
+    width: "200px",
+    height: "40px",
+    marginBottom: "0px",
+    marginLeft: "50px",
+    borderRadius: "8px"
   }
 }));

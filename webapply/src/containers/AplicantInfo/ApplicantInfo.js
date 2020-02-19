@@ -9,7 +9,7 @@ import {
   UAE_MOBILE_PHONE_REGEX,
   MAX_NON_UAE_PHONE_LENGTH,
   MIN_NON_UAE_PHONE_LENGTH,
-  FULL_NAME_REGEX
+  NAME_REGEX
 } from "./../../utils/validation";
 import {
   Input,
@@ -35,7 +35,7 @@ const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required(getRequiredMessage("Your Name"))
     .max(79, "Maximum 79 characters allowed")
-    .matches(FULL_NAME_REGEX, getInvalidMessage("Your Name")),
+    .matches(NAME_REGEX, getInvalidMessage("Your Name")),
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
     .max(50, "Maximum 50 characters allowed")

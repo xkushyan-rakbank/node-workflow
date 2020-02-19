@@ -1,29 +1,13 @@
 import React from "react";
 import cx from "classnames";
-import isEmpty from "lodash/isEmpty";
 
 import { ctaStatuses, notCtaStatuses } from "../constants";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
-import { SkeletonLoader } from "./../../../components/Form";
 
 export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
-
-  if (isEmpty(applicantInfo)) {
-    return Array.from(new Array(4)).map((_, index) => {
-      return (
-        <div className={classes.wrapper} key={index}>
-          <div className={classes.applicationRow}>
-            <SkeletonLoader width={210} height={50} style={{ marginBottom: 2 }} />
-            <SkeletonLoader width={100} height={30} style={{ marginLeft: 200, marginBottom: 0 }} />
-            <SkeletonLoader width={200} height={40} style={{ marginLeft: 50, marginBottom: 0 }} />
-          </div>
-        </div>
-      );
-    });
-  }
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
