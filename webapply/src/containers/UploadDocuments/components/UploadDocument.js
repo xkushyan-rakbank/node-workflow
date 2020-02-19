@@ -8,7 +8,8 @@ import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
-import { BYTES_IN_MEGABYTE, DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../../../constants";
+import { BYTES_IN_MEGABYTE } from "../../../constants";
+import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../constants";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -97,6 +98,7 @@ export const UploadDocuments = ({
   const isDisabled =
     isApplyEditApplication &&
     DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo.statusNotes);
+
   return (
     <div
       className={cx(classes.fileUploadPlaceholder, {

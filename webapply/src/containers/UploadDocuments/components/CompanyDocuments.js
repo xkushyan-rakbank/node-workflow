@@ -3,17 +3,7 @@ import { UploadDocuments } from "./UploadDocument";
 import { ICONS, Icon } from "./../../../components/Icons";
 import { useStyles } from "./styled";
 
-export const CompanyDocuments = ({
-  documents,
-  companyName,
-  icon = "",
-  docUpload,
-  cancelDocUpload,
-  progress,
-  updateProspect,
-  uploadErrorMessage,
-  ...rest
-}) => {
+export const CompanyDocuments = ({ documents, companyName, icon = "", ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -30,11 +20,6 @@ export const CompanyDocuments = ({
           index={index}
           document={document}
           type="companyDocuments"
-          docUpload={docUpload}
-          cancelDocUpload={cancelDocUpload}
-          updateProspect={updateProspect}
-          progress={progress}
-          uploadErrorMessage={uploadErrorMessage}
           {...rest}
         />
       ))}

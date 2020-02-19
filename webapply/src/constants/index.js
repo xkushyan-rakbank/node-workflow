@@ -1,15 +1,7 @@
 import React from "react";
 import routes from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
-export const PROSPECT_STATUSES = {
-  ASSESSING: "Assessing",
-  DOCUMENTS_NEEDED: "Documents needed"
-};
 
-export const DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS = [
-  PROSPECT_STATUSES.ASSESSING,
-  PROSPECT_STATUSES.DOCUMENTS_NEEDED
-];
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
   { value: "AuthorityType2", label: "AuthorityType2" }
