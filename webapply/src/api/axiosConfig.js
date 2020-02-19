@@ -4,9 +4,12 @@ import get from "lodash/get";
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
+
 import { NotificationsManager } from "../components/Notification";
+
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
+import { formatJsonData } from "./formatJsonData";
 import { IGNORE_ERROR_CODES } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
@@ -16,18 +19,6 @@ const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
 
 const getBaseURL = () =>
   process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
-
-const formatJsonData = ({ stackTrace = [], status }) => {
-  const stack = stackTrace.map(
-    ({ methodName, fileName, lineNumber }) =>
-      `Method: ${methodName}, file: ${fileName}, line: ${lineNumber}`
-  );
-
-  return {
-    status,
-    stackTrace: `StackTrace: ${stack.join(", ")}`
-  };
-};
 
 export const uploadClient = axios.create({
   baseURL: "https://uatrmtc.rakbankonline.ae"
@@ -116,11 +107,9 @@ instance.interceptors.response.use(
     }
 
     let notificationOptions = {};
-    let debugNotificationOptions = {};
 
     if (jsonData) {
       const { errors, errorType } = jsonData;
-      debugNotificationOptions = formatJsonData(jsonData);
       if (status === 400 && errorType === "ReCaptchaError") {
         store.dispatch(setError(errors));
         notificationOptions = { title: "ReCaptchaError", message: errors };
@@ -140,7 +129,12 @@ instance.interceptors.response.use(
               notificationOptions = null;
             } else {
               const errorMessages = errors.map(({ message }) => message);
-              notificationOptions = { message: errorMessages.join(", ") };
+              const debugNotificationOptions = formatJsonData(jsonData);
+
+              notificationOptions = {
+                message: errorMessages.join(", "),
+                ...debugNotificationOptions
+              };
             }
           }
         } catch (e) {
@@ -150,8 +144,7 @@ instance.interceptors.response.use(
     }
 
     if (notificationOptions) {
-      NotificationsManager.add &&
-        NotificationsManager.add({ ...notificationOptions, ...debugNotificationOptions });
+      NotificationsManager.add && NotificationsManager.add(notificationOptions);
     }
     return Promise.reject(error);
   }
