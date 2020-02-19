@@ -130,6 +130,7 @@ export const prospect = {
     },
     contactDetailsForTxnReconfirming: [
       {
+        TxnReconfirmingfullname: "",
         primaryMobileNo: "",
         primaryMobCountryCode: "",
         primaryPhoneNo: "",
