@@ -31,7 +31,6 @@ export const UploadDocuments = ({
   updateProspect,
   prospectStatusInfo
 }) => {
-  console.log(prospectStatusInfo);
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
