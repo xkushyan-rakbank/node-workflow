@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import get from "lodash/get";
 import Typography from "@material-ui/core/Typography";
 
 import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
@@ -31,7 +32,7 @@ export const AccountInfo = () => {
         {(() => {
           switch (pathname) {
             case routes.detailedAccount:
-              return accountType ? accountsInfo[accountType].title : "";
+              return get(accountsInfo, [accountType, "title"], "");
             case routes.applicationOverview:
               return "Opening an account has never been this simple.";
             case routes.MyApplications:
