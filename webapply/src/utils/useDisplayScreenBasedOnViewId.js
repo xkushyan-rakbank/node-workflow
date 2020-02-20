@@ -22,7 +22,6 @@ export const useDisplayScreenBasedOnViewId = () => {
       const isRetrieveMode = newApplicationInfo.retrieveMode;
       const isApplicationSubmitted =
         viewId === VIEW_IDS.SubmitApplication && viewId !== VIEW_IDS.SearchProspect;
-      const pathTo = isApplicationSubmitted ? VIEW_IDS.CompanyInfo : viewId;
       const isEditRedirect = viewId.includes(VIEW_IDS.SearchedAppInfo);
 
       if (!isROScreens) {
@@ -31,13 +30,13 @@ export const useDisplayScreenBasedOnViewId = () => {
         } else if (isSubmit && !isRetrieveMode) {
           history.push(`${smeBaseName}${newApplicationInfo.reUploadDocuments}`);
         } else if (viewId && !isApplicationSubmitted) {
-          history.push(`${smeBaseName}${pathTo}`);
+          history.push(`${smeBaseName}${viewId}`);
         }
       } else {
-        if (isEditRedirect) {
+        if (isEditRedirect || viewId === VIEW_IDS.SubmitApplication) {
           history.push(routes.companyInfo);
         } else {
-          history.push(`${smeBaseName}${pathTo}`);
+          history.push(`${smeBaseName}${viewId}`);
         }
       }
     },

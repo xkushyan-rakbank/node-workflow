@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import routes, { smeBaseName } from "../../../../routes";
 import { submitApplication } from "../../../../constants/index";
+import { PROSPECT_STATUSES } from "../../../AgentPages/constants";
 
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import { FormTitle } from "../FormTitle";
@@ -21,25 +22,29 @@ export const SubmitApplicationComponent = ({
   updateActionType,
   updateSaveType,
   isApplyEditApplication,
-  updateViewId
+  updateViewId,
+  currentProspectStatus
 }) => {
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const pathname = isApplyEditApplication ? routes.companyInfo : routes.ApplicationSubmitted;
+  const isROSubmit =
+    isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
+  const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
+
   const isSubmitButtonEnable =
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
+
   const handleSubmit = () => {
-    if (isApplyEditApplication) {
-      updateViewId(routes.ApplicationSubmitted.replace(smeBaseName, ""), false);
-    }
+    updateViewId(pathname.replace(smeBaseName, ""), false);
     setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
-    sendProspectToAPI()
-      .then(() => pushHistory(pathname), () => {})
-      .finally(() => setIsSubmitting(false));
+    sendProspectToAPI().then(
+      () => pushHistory(routes.ApplicationSubmitted),
+      () => setIsSubmitting(false)
+    );
   };
 
   if (isSubmitting) {

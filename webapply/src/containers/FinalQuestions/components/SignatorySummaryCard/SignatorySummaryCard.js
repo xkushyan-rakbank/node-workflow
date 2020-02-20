@@ -31,7 +31,7 @@ export const SignatorySummaryCardComponent = ({
   const isAllStepsCompleted = checkAllStepsCompleted(completedSteps);
   const classes = useStyles();
 
-  const percentage = parseInt(get(signatory, "kycDetails.shareHoldingPercentage", 0), 10);
+  const percentage = Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
   const authorityTypeValueFromProspect = get(signatory, "accountSigningInfo.authorityType");
   const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
 

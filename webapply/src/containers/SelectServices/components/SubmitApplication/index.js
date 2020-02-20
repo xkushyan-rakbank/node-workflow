@@ -9,7 +9,10 @@ import {
   getOrganizationInfo,
   getIsAgentLoggedIn
 } from "../../../../store/selectors/appConfig";
-import { getIsEditableStatusSearchInfo } from "../../../../store/selectors/searchProspect";
+import {
+  getIsEditableStatusSearchInfo,
+  getProspectStatus
+} from "../../../../store/selectors/searchProspect";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import {
   updateActionType,
@@ -24,7 +27,8 @@ const mapStateToProps = state => ({
   signatoryInfo: getSignatories(state),
   organizationInfo: getOrganizationInfo(state),
   isAgentLoggedIn: getIsAgentLoggedIn(state),
-  isApplyEditApplication: getIsEditableStatusSearchInfo(state)
+  isApplyEditApplication: getIsEditableStatusSearchInfo(state),
+  currentProspectStatus: getProspectStatus(state)
 });
 
 const mapDispatchToProps = {

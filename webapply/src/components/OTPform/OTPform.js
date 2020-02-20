@@ -78,7 +78,11 @@ export const OTPformComponent = ({
           <Form className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification code={code} onChange={setCode} />
+                <OtpVerification
+                  code={code}
+                  onChange={setCode}
+                  verificationError={verificationError}
+                />
               </Grid>
 
               {!isDisplayMaxAttempError && verificationError && (

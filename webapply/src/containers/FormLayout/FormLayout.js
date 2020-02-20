@@ -35,7 +35,7 @@ export const FormLayoutComponent = ({
 
     updateViewId(viewId, isSendToApi);
     resetScreeningError();
-  }, [key, pathname, updateViewId, resetScreeningError]);
+  }, [pathname, updateViewId, resetScreeningError]);
 
   return (
     <NotificationsProvider>

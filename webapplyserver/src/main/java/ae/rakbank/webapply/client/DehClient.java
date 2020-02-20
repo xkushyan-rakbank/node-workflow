@@ -104,7 +104,9 @@ public class DehClient {
         // ResponseEntity headers is immutable, so create new HttpHeaders object
         HttpHeaders headers = new HttpHeaders();
         headers.addAll(response.getHeaders());
-        headers.remove("Content-Length");
+        headers.remove(HttpHeaders.CONTENT_LENGTH);
+        headers.remove(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
+
         if (!StringUtils.isEmpty(updatedJwtToken)) {
             headers.add(JWT_TOKEN_KEY, updatedJwtToken);
         }
@@ -137,8 +139,7 @@ public class DehClient {
 
         HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 
-        logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
-        logger.info(String.format("Endpoint=[%s], request=%s", url, request.toString()));
+        logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request=%s", methodName, url, request.toString()));
 
         ResponseEntity<JsonNode> response;
         try {
