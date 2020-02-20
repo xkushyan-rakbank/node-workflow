@@ -15,7 +15,7 @@ import { formatJsonData } from "./formatJsonData";
 import { IGNORE_ERROR_CODES } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
-const REQUEST_ID_HEADER = "X-Request-Id";
+const REQUEST_ID_HEADER = "x-request-id";
 const ENCRYPT_METHODS = ["post", "put"];
 const ENCRYPTION_ENABLE = process.env.REACT_APP_ENCRYPTION_ENABLE || "N";
 const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
