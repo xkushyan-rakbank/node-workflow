@@ -61,18 +61,17 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
                     [path]: value.map(val => ({ wealthType: val, others: values.others }))
                   })}
                   onChange={selectedValue => {
-                    const newValues = values;
+                    const saveValues = { wealthType: selectedValue };
+
                     if (
                       !selectedValue.includes(OTHER_SOURCE_OF_WEALTH) &&
                       values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                     ) {
                       setFieldTouched("others", false);
-                      newValues.others = "";
+                      saveValues.others = "";
                     }
-                    setValues({
-                      ...newValues,
-                      wealthType: selectedValue
-                    });
+
+                    setValues(saveValues);
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
