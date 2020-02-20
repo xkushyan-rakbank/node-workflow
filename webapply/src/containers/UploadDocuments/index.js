@@ -16,6 +16,7 @@ import {
   cancelDocUpload
 } from "../../store/actions/getProspectDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { getOrganizationInfo, getProspectStatusInfo } from "../../store/selectors/appConfig";
 import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 
@@ -37,6 +38,7 @@ const mapDispatchToProps = {
   retrieveDocDetails,
   docUpload,
   cancelDocUpload,
+  sendProspectToAPI: sendProspectToAPIPromisify,
   updateProspect
 };
 

@@ -53,7 +53,7 @@ const StakeholderStepperComponent = ({
     stakeHoldersSteps
   );
 
-  const handleContinue = event => () =>
+  const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event).then(
       () => {
         if (isTooManyStakeholders) {
@@ -73,6 +73,7 @@ const StakeholderStepperComponent = ({
       },
       () => {}
     );
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
