@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
     [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
       position: "relative",
       height: "100vh",
-      overflowY: "hidden"
+      overflow: "hidden"
     }
   },
   paginationContent: {
