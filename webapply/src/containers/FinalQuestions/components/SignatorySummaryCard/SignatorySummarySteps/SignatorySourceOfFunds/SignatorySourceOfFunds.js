@@ -32,10 +32,7 @@ export const signatorySourceOfFundsSchema = Yup.object().shape({
 
 export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signatories }) => {
   const classes = useStyles();
-
-  const handleSubmit = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
+  const path = `prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`;
 
   return (
     <div className={classes.formWrapper}>
@@ -46,7 +43,7 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
           ),
           others: getIn(signatories, `[${index}].kycDetails.sourceOfWealth[0].others`, "")
         }}
-        onSubmit={handleSubmit}
+        onSubmit={handleContinue}
         validationSchema={signatorySourceOfFundsSchema}
         validateOnChange={false}
       >
@@ -56,20 +53,18 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
               <Grid item md={12} sm={12}>
                 <Field
                   name="wealthType"
-                  path={`signatoryInfo[${index}].kycDetails.sourceOfWealth`}
+                  path={path}
                   datalistId="wealthType"
                   label="Source of funds"
                   isLoadDefaultValueFromStore={false}
-                  changeProspect={(prospect, selectedValue) => {
-                    if (!selectedValue.includes(OTHER_SOURCE_OF_WEALTH)) {
+                  changeProspect={(_, value) => {
+                    if (!value.includes(OTHER_SOURCE_OF_WEALTH)) {
                       setFieldValue("others", "");
                       setFieldTouched("others", false);
                     }
+
                     return {
-                      // eslint-disable-next-line max-len
-                      [`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`]: selectedValue.map(
-                        val => ({ wealthType: val, others: values.others })
-                      )
+                      [path]: value.map(val => ({ wealthType: val, others: values.others }))
                     };
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
@@ -95,19 +90,16 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
               >
                 <Field
                   name="others"
-                  path={`signatoryInfo[${index}].kycDetails.others`}
+                  path={path}
                   label="Other(Specify)"
                   placeholder="Other(Specify)"
                   component={Input}
                   isLoadDefaultValueFromStore={false}
-                  changeProspect={(prospect, value) => ({
-                    // eslint-disable-next-line max-len
-                    [`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`]: values.wealthType.map(
-                      wealthType => ({
-                        wealthType,
-                        others: value
-                      })
-                    )
+                  changeProspect={(_, value) => ({
+                    [path]: values.wealthType.map(wealthType => ({
+                      wealthType,
+                      others: value
+                    }))
                   })}
                   InputProps={{
                     inputProps: { tabIndex: 0 }
