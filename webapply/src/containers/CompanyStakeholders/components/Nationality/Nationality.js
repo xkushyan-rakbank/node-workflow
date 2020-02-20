@@ -110,9 +110,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                             };
                           }}
                           shrink={true}
-                          InputProps={{
-                            inputProps: { tabIndex: 0 }
-                          }}
+                          tabIndex={2 * passportIndex + 1}
                         />
                         {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
                           <Field
@@ -138,7 +136,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               passportIndex,
                               errors
                             )}
-                            inputProps={{ tabIndex: 0 }}
+                            inputProps={{ tabIndex: 2 * passportIndex + 2 }}
                           />
                         )}
                       </Grid>
@@ -151,7 +149,10 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
                             Example: 'P-123/1950/456 to be entered as P1231950456'"
                           InputProps={{
-                            inputProps: { maxLength: MAX_PASSPORT_NUMBER_LENGTH, tabIndex: 0 }
+                            inputProps: {
+                              maxLength: MAX_PASSPORT_NUMBER_LENGTH,
+                              tabIndex: 2 * passportIndex + 1
+                            }
                           }}
                         />
                         <Field
@@ -159,7 +160,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           path={`${passportDetails}.diplomatPassport`}
                           label="This is a diplomatic passport"
                           component={Checkbox}
-                          inputProps={{ tabIndex: 0 }}
+                          inputProps={{ tabIndex: 2 * passportIndex + 2 }}
                         />
                       </Grid>
                     </React.Fragment>
@@ -168,7 +169,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
               }
             />
           </Grid>
-          <SubmitButton />
+          <SubmitButton tabIndex={values.passportDetails.length * 2} />
         </Form>
       )}
     </Formik>

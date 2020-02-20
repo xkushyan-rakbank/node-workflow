@@ -9,7 +9,7 @@ import {
   UAE_MOBILE_PHONE_REGEX,
   MAX_NON_UAE_PHONE_LENGTH,
   MIN_NON_UAE_PHONE_LENGTH,
-  FULL_NAME_REGEX
+  NAME_REGEX
 } from "./../../utils/validation";
 import {
   Input,
@@ -35,7 +35,7 @@ const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required(getRequiredMessage("Your Name"))
     .max(79, "Maximum 79 characters allowed")
-    .matches(FULL_NAME_REGEX, getInvalidMessage("Your Name")),
+    .matches(NAME_REGEX, getInvalidMessage("Your Name")),
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
     .max(50, "Maximum 50 characters allowed")
@@ -76,8 +76,7 @@ const ApplicantInfoPage = ({
   setToken,
   reCaptchaToken,
   isRecaptchaEnable,
-  isConfigLoading,
-  history
+  isConfigLoading
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
@@ -91,15 +90,16 @@ const ApplicantInfoPage = ({
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
-      submit(values)
-        .then(() => {
+      submit(values).then(
+        () => {
           pushHistory(
             process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp
           );
-        })
-        .finally(() => {
+        },
+        () => {
           setIsLoading(false);
-        });
+        }
+      );
     },
     [submit, pushHistory]
   );

@@ -70,7 +70,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
                   component={SelectAutocomplete}
-                  inputProps={{ tabIndex: 0 }}
+                  tabIndex="0"
                   isSearchable
                 />
                 <InfoTitle

@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
 import {
-  FULL_NAME_REGEX,
+  NAME_REGEX,
   UAE_MOBILE_PHONE_REGEX,
   UAE_LANDLINE_PHONE_REGEX,
   NUMBER_REGEX,
@@ -54,8 +54,8 @@ const signingPreferencesSchema = Yup.object({
     Yup.object().shape({
       TxnReconfirmingfullname: Yup.string()
         .required(getRequiredMessage("Full name"))
-        .matches(FULL_NAME_REGEX, getInvalidMessage("Full name"))
-        .max(77, "Maximum 77 characters allowed"),
+        .max(77, "Maximum 77 characters allowed")
+        .matches(NAME_REGEX, getInvalidMessage("Full name")),
       primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
       primaryMobileNo: Yup.string()
         .when("TxnReconfirmingfullname", {
@@ -304,8 +304,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                       }}
                       className={classes.addButton}
                       disabled={
-                        !get(signatories[0], "TxnReconfirmingfullname", "").length ||
-                        signatoriesErrors
+                        !get(signatories[0], "TxnReconfirmingfullname") || signatoriesErrors
                       }
                     />
                   )}

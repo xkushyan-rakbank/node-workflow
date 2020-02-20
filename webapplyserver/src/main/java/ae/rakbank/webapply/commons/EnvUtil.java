@@ -55,8 +55,4 @@ public class EnvUtil {
 
     return !StringUtils.isEmpty(env) && env.equals("Y");
   }
-
-  public static boolean isCheckRecaptcha() {
-    return true;
-  }
 }

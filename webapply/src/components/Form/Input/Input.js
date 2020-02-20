@@ -24,6 +24,7 @@ export const Input = ({
   InputProps,
   onFocus,
   onBlur,
+  ErrorMessageComponent = ErrorMessage,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -45,7 +46,10 @@ export const Input = ({
           placeholder={placeholder}
           disabled={disabled}
           error={!!isError}
-          InputProps={{ ...InputProps, classes: { input: classes.input } }}
+          InputProps={{
+            ...InputProps,
+            classes: { input: classes.input, inputMultiline: classes.inputMultiline }
+          }}
           InputLabelProps={{ shrink }}
           onFocus={event => {
             if (isIE) {
@@ -61,11 +65,11 @@ export const Input = ({
           }}
         />
       </ContexualHelp>
-      {isIE && field.value.length === 0 && hasFocus && (
+      {isIE && !field.value && hasFocus && (
         <mark className={classes.iePlaceholder}>{placeholder}</mark>
       )}
 
-      {isError && <ErrorMessage error={errorMessage} />}
+      {isError && <ErrorMessageComponent error={errorMessage} />}
 
       {infoTitle && <InfoTitle title={infoTitle} />}
     </FormControl>

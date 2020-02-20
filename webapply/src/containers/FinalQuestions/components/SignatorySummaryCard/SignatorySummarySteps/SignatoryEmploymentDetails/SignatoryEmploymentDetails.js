@@ -15,15 +15,14 @@ import {
   Input,
   Checkbox,
   AutoSaveField as Field,
-  NumberFormat,
   SelectAutocomplete
 } from "../../../../../../components/Form";
 import {
   EMPLOYMENT_TYPE_REGEX,
-  COMPANY_NAME_REGEX,
+  COMPANY_NAME_SPEC_CHAR_REGEX,
   DESIGNATION_REGEX,
-  TOTAL_EXPERIENCE_YEARS,
-  NUMBER_REGEX
+  MAX_EXPERIENCE_YEARS_LENGTH,
+  EXPERIENCE_YEARS_REGEX
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import {
@@ -38,8 +37,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
   totalExperienceYrs: Yup.string()
     .required(getRequiredMessage("Number of years of experience"))
-    .matches(NUMBER_REGEX, getInvalidMessage("Number of years of experience"))
-    .matches(TOTAL_EXPERIENCE_YEARS, "Maximum 255 characters allowed"),
+    .matches(EXPERIENCE_YEARS_REGEX, getInvalidMessage("Number of years of experience")),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
@@ -48,7 +46,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   }),
   employerName: Yup.string()
     .required(getRequiredMessage("Employer name"))
-    .matches(COMPANY_NAME_REGEX, getInvalidMessage("Employer name")),
+    .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Employer name")),
   designation: Yup.string()
     .required(getRequiredMessage("Designation"))
     .matches(DESIGNATION_REGEX, getInvalidMessage("Designation"))
@@ -68,7 +66,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
           qualification: "",
           employmentType: "",
           designation: "",
-          totalExperienceYrs: 0,
+          totalExperienceYrs: "",
           otherEmploymentType: "",
           isWorkAtTheCompany: false,
           employerName: ""
@@ -90,8 +88,10 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Qualification"
                     isSearchable
                     component={SelectAutocomplete}
-                    inputProps={{ tabIndex: 0 }}
+                    tabIndex="0"
                   />
+                </Grid>
+                <Grid item md={6} sm={12}>
                   <Field
                     name="employmentType"
                     path={`${basePath}.employmentDetails.employmentType`}
@@ -107,36 +107,10 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                         If unemployed, then select &apos;Other&apos;
                       </>
                     }
-                    inputProps={{ tabIndex: 0 }}
+                    tabIndex="0"
                   />
                 </Grid>
-                <Grid item md={6} sm={12}>
-                  <Field
-                    name="totalExperienceYrs"
-                    path={`${basePath}.employmentDetails.totalExperienceYrs`}
-                    label="Number of years of experience"
-                    placeholder="Work Experience"
-                    component={Input}
-                    InputProps={{
-                      inputComponent: NumberFormat,
-                      inputProps: { tabIndex: 0 }
-                    }}
-                    contextualHelpText={
-                      <>
-                        Starting with the most resent enter jobwise list of experience:
-                        <br />
-                        From Month-Year, To Month-Year, Company Name, Company Country, Position &
-                        Employment Type (Salaried / Self Employed)
-                        <br />
-                        <br />
-                        Example
-                        <br />
-                        APR-16 to &apos;Date&apos;, Reliance Biz, UAE, Proprietor, Self-Employed
-                        <br />
-                        AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
-                      </>
-                    }
-                  />
+                <Grid item md={12} sm={12}>
                   <Field
                     name="designation"
                     path={`${basePath}.employmentDetails.designation`}
@@ -180,13 +154,40 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                   <Field
                     name="employerName"
                     path={`${basePath}.employmentDetails.employerName`}
-                    label="Employer name"
+                    label="Employer name / Company name"
                     placeholder="Employer name"
                     component={Input}
                     disabled={values[`isWorkAtTheCompany${index}`]}
                     InputProps={{
                       inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
                     }}
+                  />
+                  <Field
+                    name="totalExperienceYrs"
+                    path={`${basePath}.employmentDetails.totalExperienceYrs`}
+                    label="Number of years of experience (Maximum 255 characters)"
+                    placeholder="Work Experience"
+                    component={Input}
+                    multiline
+                    rows="4"
+                    InputProps={{
+                      inputProps: { maxLength: MAX_EXPERIENCE_YEARS_LENGTH, tabIndex: 0 }
+                    }}
+                    contextualHelpText={
+                      <>
+                        Starting with the most resent enter jobwise list of experience:
+                        <br />
+                        From Month-Year, To Month-Year, Company Name, Company Country, Position &
+                        Employment Type (Salaried / Self Employed)
+                        <br />
+                        <br />
+                        Example
+                        <br />
+                        APR-16 to &apos;Date&apos;, Reliance Biz, UAE, Proprietor, Self-Employed
+                        <br />
+                        AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
+                      </>
+                    }
                   />
                 </Grid>
               </Grid>

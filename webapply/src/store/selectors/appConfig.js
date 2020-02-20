@@ -9,6 +9,7 @@ export const getDatalist = state => state.appConfig.datalist || {};
 export const getEndpoints = state => state.appConfig.endpoints || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
+export const getProspectStatusInfo = state => state.appConfig.prospect.prospectStatusInfo || {};
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
@@ -19,6 +20,8 @@ export const getAccountNumbers = state => state.accountNumbers;
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || [];
 
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
+
+export const getIsCompanyStakeholder = state => getOrgKYCDetails(state).isShareholderACompany;
 
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
@@ -109,7 +112,7 @@ export const getAuthorizationHeader = state => {
   const authToken = getAuthToken(state);
 
   return {
-    headers: { Authorization: `Bearer ${authToken}` }
+    headers: authToken ? { Authorization: `Bearer ${authToken}` } : {}
   };
 };
 

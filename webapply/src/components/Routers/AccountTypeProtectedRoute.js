@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import routes from "../../routes";
 import { getAccountType } from "../../store/selectors/appConfig";
 import { queryParams } from "../../constants";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 export const AccountTypeProtectedRoute = ({ component: Component, render, ...rest }) => {
   const searchParams = new URLSearchParams(
@@ -18,7 +19,9 @@ export const AccountTypeProtectedRoute = ({ component: Component, render, ...res
       render={props => {
         if (!accountType) return <Redirect to={routes.accountsComparison} />;
 
-        return Component ? <Component {...props} /> : render(props);
+        return (
+          <ErrorBoundary>{Component ? <Component {...props} /> : render(props)}</ErrorBoundary>
+        );
       }}
     />
   );

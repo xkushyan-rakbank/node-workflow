@@ -1,0 +1,4 @@
+export const LOGO_STANDART = "LOGO_STANDART";
+export const LOGO_ISLAMIC = "LOGO_ISLAMIC";
+export const LOGO_ELITE = "LOGO_ELITE";
+export const LOGO_ELITE_ISLAMIC = "LOGO_ELITE_ISLAMIC";

@@ -3,7 +3,6 @@ import { SignatorySourceOfFunds } from "./SignatorySummarySteps/SignatorySourceO
 import { SignatoryPersonalInformation } from "./SignatorySummarySteps/SignatoryPersonalInformation";
 import { SignatoryPreferredMailingAddress } from "./SignatorySummarySteps/SignatoryPreferredMailingAddress";
 import { GA_EVENTS } from "../../../../utils/ga";
-export const NEXT = "next";
 export const SIGNATORY_INITIAL_INDEX = 0;
 
 export const STEP_1 = 1;

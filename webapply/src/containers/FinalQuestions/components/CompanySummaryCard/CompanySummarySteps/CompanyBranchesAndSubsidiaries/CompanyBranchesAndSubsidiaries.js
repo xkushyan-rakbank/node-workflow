@@ -178,7 +178,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   label="Emirate/ City"
                                   isSearchable
                                   component={SelectAutocomplete}
-                                  inputProps={{ tabIndex: 0 }}
+                                  tabIndex="0"
                                 />
                                 {isEntitiesInUAE && (
                                   <ArrayRemoveButton
@@ -279,9 +279,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   datalistId="countryOfIncorporation"
                                   label="Country"
                                   component={SelectAutocomplete}
-                                  InputProps={{
-                                    inputProps: { tabIndex: 0 }
-                                  }}
+                                  tabIndex="0"
                                 />
                                 {isEntitiesOutsideUAE && (
                                   <ArrayRemoveButton

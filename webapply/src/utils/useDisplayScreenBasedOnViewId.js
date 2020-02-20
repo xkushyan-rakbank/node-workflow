@@ -4,10 +4,8 @@ import { useHistory } from "react-router-dom";
 
 import { getApplicationInfo } from "../store/selectors/appConfig";
 import { getIsEditableStatusSearchInfo } from "../store/selectors/searchProspect";
-import routes from "../routes";
+import routes, { smeBaseName } from "../routes";
 import { ACTION_TYPES, VIEW_IDS } from "../constants";
-
-const prefix = "/sme";
 
 export const useDisplayScreenBasedOnViewId = () => {
   const history = useHistory();
@@ -19,27 +17,26 @@ export const useDisplayScreenBasedOnViewId = () => {
   const pushDisplayScreenToHistory = useCallback(
     prospect => {
       const newApplicationInfo = prospect ? prospect.applicationInfo : applicationInfo;
-      const viewId = newApplicationInfo.viewId;
+      const viewId = newApplicationInfo.viewId || routes.companyInfo.replace(smeBaseName, "");
       const isSubmit = newApplicationInfo.actionType === ACTION_TYPES.submit;
       const isRetrieveMode = newApplicationInfo.retrieveMode;
       const isApplicationSubmitted =
         viewId === VIEW_IDS.SubmitApplication && viewId !== VIEW_IDS.SearchProspect;
-      const pathTo = isApplicationSubmitted ? VIEW_IDS.CompanyInfo : viewId;
       const isEditRedirect = viewId.includes(VIEW_IDS.SearchedAppInfo);
 
       if (!isROScreens) {
         if (isSubmit && isRetrieveMode) {
-          history.push(`${prefix}${routes.ApplicationSubmitted}`);
+          history.push(`${smeBaseName}${routes.ApplicationSubmitted}`);
         } else if (isSubmit && !isRetrieveMode) {
-          history.push(`${prefix}${newApplicationInfo.reUploadDocuments}`);
+          history.push(`${smeBaseName}${newApplicationInfo.reUploadDocuments}`);
         } else if (viewId && !isApplicationSubmitted) {
-          history.push(`${prefix}${pathTo}`);
+          history.push(`${smeBaseName}${viewId}`);
         }
       } else {
-        if (isEditRedirect) {
+        if (isEditRedirect || viewId === VIEW_IDS.ApplicationSubmitted) {
           history.push(routes.companyInfo);
         } else {
-          history.push(`${prefix}${pathTo}`);
+          history.push(`${smeBaseName}${viewId}`);
         }
       }
     },

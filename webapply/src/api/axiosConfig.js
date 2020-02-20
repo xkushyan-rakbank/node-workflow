@@ -5,9 +5,13 @@ import nanoid from "nanoid";
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
 import { setError } from "../store/actions/reCaptcha";
+import { setAccessToken } from "../store/actions/appConfig";
+
 import { NotificationsManager } from "../components/Notification";
+
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
+import { formatJsonData } from "./formatJsonData";
 import { IGNORE_ERROR_CODES } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
@@ -57,6 +61,16 @@ instance.interceptors.request.use(config => {
   }
 
   return config;
+});
+
+instance.interceptors.response.use(response => {
+  const accessToken = response.headers.accesstoken || response.headers.AccessToken;
+
+  if (accessToken) {
+    store.dispatch(setAccessToken(accessToken));
+  }
+
+  return response;
 });
 
 instance.interceptors.response.use(
@@ -114,13 +128,15 @@ instance.interceptors.response.use(
     }
 
     let notificationOptions = {};
+
     if (jsonData) {
-      if (status === 400 && jsonData.errorType === "ReCaptchaError") {
-        store.dispatch(setError(data.errors));
-        notificationOptions = { title: "ReCaptchaError", message: data.errors };
-      } else if (status === 400 && jsonData.errors) {
-        store.dispatch(setInputsErrors(data.errors));
-        if (jsonData.errorType === "FieldsValidation") {
+      const { errors, errorType } = jsonData;
+      if (status === 400 && errorType === "ReCaptchaError") {
+        store.dispatch(setError(errors));
+        notificationOptions = { title: "ReCaptchaError", message: errors };
+      } else if (status === 400 && errors) {
+        store.dispatch(setInputsErrors(errors));
+        if (errorType === "FieldsValidation") {
           notificationOptions = {
             title: "Validation Error On Server",
             message: get(jsonData, "errors[0].message", "Validation Error")
@@ -129,13 +145,17 @@ instance.interceptors.response.use(
       } else {
         log(jsonData);
         try {
-          const { errors } = JSON.parse(jsonData.debugMessage);
           if (jsonData.status) {
             if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
               notificationOptions = null;
             } else {
               const errorMessages = errors.map(({ message }) => message);
-              notificationOptions = { message: errorMessages.join(", ") };
+              const debugNotificationOptions = formatJsonData(jsonData);
+
+              notificationOptions = {
+                message: errorMessages.join(", "),
+                ...debugNotificationOptions
+              };
             }
           }
         } catch (e) {
