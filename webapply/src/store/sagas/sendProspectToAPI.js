@@ -135,10 +135,10 @@ function* sendProspectToAPI({ newProspect, saveType }) {
       );
     }
 
-    yield put(sendProspectToAPISuccess(newProspect));
-
     if (get(data, "preScreening.statusOverAll") === APP_STOP_SCREEN_RESULT) {
       yield fork(setScreeningResults, data);
+    } else {
+      yield put(sendProspectToAPISuccess(newProspect));
     }
   } catch (error) {
     log({ error });
