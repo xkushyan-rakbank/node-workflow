@@ -41,9 +41,10 @@ export const SubmitApplicationComponent = ({
     setIsSubmitting(true);
     updateActionType(SUBMIT);
     updateSaveType(NEXT);
-    sendProspectToAPI()
-      .then(() => pushHistory(routes.ApplicationSubmitted), () => {})
-      .finally(() => setIsSubmitting(false));
+    sendProspectToAPI().then(
+      () => pushHistory(routes.ApplicationSubmitted),
+      () => setIsSubmitting(false)
+    );
   };
 
   if (isSubmitting) {
