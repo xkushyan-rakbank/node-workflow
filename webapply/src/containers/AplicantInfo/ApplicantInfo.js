@@ -90,15 +90,16 @@ const ApplicantInfoPage = ({
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
-      submit(values)
-        .then(() => {
+      submit(values).then(
+        () => {
           pushHistory(
             process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp
           );
-        })
-        .finally(() => {
+        },
+        () => {
           setIsLoading(false);
-        });
+        }
+      );
     },
     [submit, pushHistory]
   );
