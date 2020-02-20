@@ -45,6 +45,7 @@ const StakeholderStepperComponent = ({
   isTooManyStakeholders,
   setScreeningError,
   showAddButton,
+  isCompanyStakeHolder,
   isEditInProgress
 }) => {
   const classes = useStyles();
@@ -55,8 +56,6 @@ const StakeholderStepperComponent = ({
     `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
     stakeHoldersSteps
   );
-
-  const isCompanyStakeHolder = useSelector(state => getIsCompanyStakeholder(state));
 
   const handleContinue = event => () => {
     const saveType = activeStep === STEP_1 && isCompanyStakeHolder ? NEXT : CONTINUE;
@@ -151,6 +150,7 @@ const StakeholderStepperComponent = ({
 const mapStateToProps = state => ({
   isStatusShown: state.stakeholders.isStatusShown,
   isTooManyStakeholders: quantityErrorSelector(state),
+  isCompanyStakeHolder: getIsCompanyStakeholder(state),
   ...getSendProspectToAPIInfo(state)
 });
 
