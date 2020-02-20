@@ -9,7 +9,7 @@ import { useStyles } from "./styled";
 
 export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
-  const pathname = routes.ApplicationSubmitted.replace(smeBaseName, "");
+  const appSubmittedPath = routes.ApplicationSubmitted.replace(smeBaseName, "");
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
@@ -47,7 +47,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
                 <span className={classes.listStatus}>Incomplete</span>
               </div>,
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
-                {pathname === app.applicationInfo.viewId ? (
+                {appSubmittedPath === app.applicationInfo.viewId ? (
                   <span>{notCtaStatuses.NoStatusYet}</span>
                 ) : (
                   <WhiteContainedButton
