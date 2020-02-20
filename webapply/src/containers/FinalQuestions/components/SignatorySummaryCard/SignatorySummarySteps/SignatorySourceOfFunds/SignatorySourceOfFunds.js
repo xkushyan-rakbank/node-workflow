@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import React from "react";
 import * as Yup from "yup";
-import { Formik, Form } from "formik";
+import { Formik, Form, getIn } from "formik";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 
@@ -23,55 +23,61 @@ import { useStyles } from "./styled";
 export const signatorySourceOfFundsSchema = Yup.object().shape({
   wealthType: Yup.string().required(getRequiredMessage("Source of funds")),
   others: Yup.string().when("wealthType", {
-    is: value => value === OTHER_SOURCE_OF_WEALTH,
+    is: value => value.includes(OTHER_SOURCE_OF_WEALTH),
     then: Yup.string()
       .required(getRequiredMessage("Other"))
       .matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
   })
 });
 
-export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
+export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signatories }) => {
   const classes = useStyles();
-
-  const handleSubmit = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
+  const path = `prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`;
 
   return (
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          wealthType: "",
-          others: ""
+          wealthType: getIn(signatories, `[${index}]kycDetails.sourceOfWealth`, []).map(
+            ({ sourceOfWealth }) => sourceOfWealth
+          ),
+          others: getIn(signatories, `[${index}].kycDetails.sourceOfWealth[0].others`, "")
         }}
-        onSubmit={handleSubmit}
+        onSubmit={handleContinue}
         validationSchema={signatorySourceOfFundsSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue, setFieldTouched }) => (
+        {({ values, setFieldTouched, setValues }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item md={12} sm={12}>
                 <Field
                   name="wealthType"
-                  path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.wealthType`}
+                  path={path}
                   datalistId="wealthType"
                   label="Source of funds"
+                  isLoadDefaultValueFromStore={false}
+                  changeProspect={(_, value) => ({
+                    [path]: value.map(val => ({ wealthType: val, others: values.others }))
+                  })}
                   onChange={selectedValue => {
+                    const saveValues = { wealthType: selectedValue };
+
                     if (
-                      selectedValue !== OTHER_SOURCE_OF_WEALTH &&
-                      values.wealthType === OTHER_SOURCE_OF_WEALTH
+                      !selectedValue.includes(OTHER_SOURCE_OF_WEALTH) &&
+                      values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                     ) {
-                      setFieldValue("others", "");
                       setFieldTouched("others", false);
+                      saveValues.others = "";
                     }
-                    setFieldValue("wealthType", selectedValue);
+
+                    setValues(saveValues);
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
                   component={SelectAutocomplete}
-                  tabIndex="0"
                   isSearchable
+                  multiple
                 />
                 <InfoTitle
                   classes={{
@@ -82,7 +88,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
               </Grid>
               <Grid
                 className={cx({
-                  hidden: values.wealthType !== OTHER_SOURCE_OF_WEALTH
+                  hidden: !values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                 })}
                 item
                 md={12}
@@ -90,10 +96,17 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
               >
                 <Field
                   name="others"
-                  path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.others`}
+                  path={path}
                   label="Other(Specify)"
                   placeholder="Other(Specify)"
                   component={Input}
+                  isLoadDefaultValueFromStore={false}
+                  changeProspect={(_, value) => ({
+                    [path]: values.wealthType.map(wealthType => ({
+                      wealthType,
+                      others: value
+                    }))
+                  })}
                   InputProps={{
                     inputProps: { tabIndex: 0 }
                   }}
