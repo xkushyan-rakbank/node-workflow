@@ -1,3 +1,4 @@
+import get from "lodash/get";
 import { getProspectId } from "./appConfig";
 
 export const getSearchResult = state => state.searchProspect.searchResults || {};
@@ -10,4 +11,4 @@ export const getSearchResultById = state => {
   const prospectId = getProspectId(state);
   return (searchResults || []).find(item => item.prospectId === prospectId) || {};
 };
-export const getProspectStatus = state => (getSearchResultById(state).status || {}).statusNotes;
+export const getProspectStatus = state => get(getSearchResultById(state), "status.statusNotes");
