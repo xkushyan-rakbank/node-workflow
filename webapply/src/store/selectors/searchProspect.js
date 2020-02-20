@@ -1,5 +1,6 @@
 import get from "lodash/get";
 import { getProspectId } from "./appConfig";
+
 export const getSearchResult = state => state.searchProspect.searchResults || {};
 export const getSearchResults = state => getSearchResult(state).searchResult || [];
 export const getCurrentProspect = state => state.searchProspect.currentProspect || {};
