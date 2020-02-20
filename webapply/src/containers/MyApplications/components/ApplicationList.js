@@ -2,12 +2,14 @@ import React from "react";
 import cx from "classnames";
 
 import { ctaStatuses, notCtaStatuses } from "../constants";
+import routes, { smeBaseName } from "../../../routes";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
 
 export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
+  const appSubmittedPath = routes.ApplicationSubmitted.replace(smeBaseName, "");
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
@@ -45,10 +47,14 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
                 <span className={classes.listStatus}>Incomplete</span>
               </div>,
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
-                <WhiteContainedButton
-                  label="Finish Application"
-                  handleClick={() => getProspectInfo(app.prospectId)}
-                />
+                {appSubmittedPath === app.applicationInfo.viewId ? (
+                  <span>{notCtaStatuses.NoStatusYet}</span>
+                ) : (
+                  <WhiteContainedButton
+                    label="Finish Application"
+                    handleClick={() => getProspectInfo(app.prospectId)}
+                  />
+                )}
               </div>
             ]}
       </div>
