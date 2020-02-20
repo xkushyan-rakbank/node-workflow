@@ -59,16 +59,13 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
                   path={`signatoryInfo[${index}].kycDetails.sourceOfWealth`}
                   datalistId="wealthType"
                   label="Source of funds"
+                  isLoadDefaultValueFromStore={false}
                   changeProspect={(prospect, selectedValue) => {
-                    if (
-                      !selectedValue.includes(OTHER_SOURCE_OF_WEALTH) &&
-                      values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
-                    ) {
+                    if (!selectedValue.includes(OTHER_SOURCE_OF_WEALTH)) {
                       setFieldValue("others", "");
                       setFieldTouched("others", false);
                     }
                     return {
-                      ...prospect,
                       // eslint-disable-next-line max-len
                       [`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`]: selectedValue.map(
                         val => ({ wealthType: val, others: values.others })
@@ -98,12 +95,12 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
               >
                 <Field
                   name="others"
-                  path={`signatoryInfo.sourceOfFounds.signatoryInfo[${index}].kycDetails.others`}
+                  path={`signatoryInfo[${index}].kycDetails.others`}
                   label="Other(Specify)"
                   placeholder="Other(Specify)"
                   component={Input}
+                  isLoadDefaultValueFromStore={false}
                   changeProspect={(prospect, value) => ({
-                    ...prospect,
                     // eslint-disable-next-line max-len
                     [`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`]: values.wealthType.map(
                       wealthType => ({
