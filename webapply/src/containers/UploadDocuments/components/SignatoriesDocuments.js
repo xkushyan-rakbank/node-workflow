@@ -4,15 +4,7 @@ import { Avatar } from "./../../../components/Avatar/Avatar";
 import { UploadDocuments } from "./UploadDocument";
 import { useStyles } from "./styled";
 
-export const SignatoriesDocuments = ({
-  documents,
-  signatories,
-  docUpload,
-  cancelDocUpload,
-  progress,
-  updateProspect,
-  uploadErrorMessage
-}) => {
+export const SignatoriesDocuments = ({ documents, signatories, ...rest }) => {
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
@@ -41,11 +33,7 @@ export const SignatoriesDocuments = ({
               index={index}
               stakeholderIndex={stakeholderIndex}
               type="stakeholdersDocuments"
-              docUpload={docUpload}
-              cancelDocUpload={cancelDocUpload}
-              updateProspect={updateProspect}
-              progress={progress}
-              uploadErrorMessage={uploadErrorMessage}
+              {...rest}
             />
           ))}
         </div>
