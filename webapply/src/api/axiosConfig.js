@@ -1,5 +1,6 @@
 import axios from "axios";
 import get from "lodash/get";
+import nanoid from "nanoid";
 
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
@@ -14,6 +15,7 @@ import { formatJsonData } from "./formatJsonData";
 import { IGNORE_ERROR_CODES } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
+const REQUEST_ID_HEADER = "x-request-id";
 const ENCRYPT_METHODS = ["post", "put"];
 const ENCRYPTION_ENABLE = process.env.REACT_APP_ENCRYPTION_ENABLE || "N";
 const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
@@ -28,6 +30,14 @@ export const uploadClient = axios.create({
 const instance = axios.create({
   baseURL: getBaseURL()
 });
+
+instance.interceptors.request.use(config => ({
+  ...config,
+  headers: {
+    ...config.headers,
+    [REQUEST_ID_HEADER]: nanoid()
+  }
+}));
 
 instance.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
