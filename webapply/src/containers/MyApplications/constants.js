@@ -6,7 +6,8 @@ export const notCtaStatuses = {
   Assessing: "We will call you soon",
   "Account activated": "Ready for transaction",
   Declined: "Criteria not met",
-  Ineligible: "We will call you soon"
+  Ineligible: "We will call you soon",
+  NoStatusYet: "We will call you soon"
 };
 
 export const ctaStatuses = {
