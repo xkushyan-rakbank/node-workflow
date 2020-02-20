@@ -26,13 +26,13 @@ export const SubmitApplicationComponent = ({
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const pathname = isApplyEditApplication ? routes.companyInfo : routes.ApplicationSubmitted;
+  const pathname = routes.ApplicationSubmitted;
   const isSubmitButtonEnable =
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
   const handleSubmit = () => {
     if (isApplyEditApplication) {
-      updateViewId(routes.ApplicationSubmitted.replace(smeBaseName, ""), false);
+      updateViewId(pathname.replace(smeBaseName, ""), false);
     }
     setIsSubmitting(true);
     updateActionType(SUBMIT);

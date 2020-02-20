@@ -16,8 +16,9 @@ import {
   cancelDocUpload
 } from "../../store/actions/getProspectDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
-import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+import { getOrganizationInfo, getProspectStatusInfo } from "../../store/selectors/appConfig";
+import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 
 const mapStateToProps = state => ({
   documents: getProspectDocuments(state),
@@ -28,7 +29,9 @@ const mapStateToProps = state => ({
   uploadedDocsCount: getUploadedDocsCount(state),
   requiredDocsCount: getRequiredDocsCount(state),
   progress: state.uploadDocuments.progress,
-  uploadErrorMessage: state.uploadDocuments.uploadErrors
+  uploadErrorMessage: state.uploadDocuments.uploadErrors,
+  prospectStatusInfo: getProspectStatusInfo(state),
+  isApplyEditApplication: getIsEditableStatusSearchInfo(state)
 });
 
 const mapDispatchToProps = {
