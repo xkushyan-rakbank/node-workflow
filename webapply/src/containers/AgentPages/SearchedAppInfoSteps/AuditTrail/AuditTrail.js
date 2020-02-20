@@ -1,12 +1,11 @@
 import React from "react";
-import get from "lodash/get";
 import cx from "classnames";
 
 import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
   const classes = useStyles();
-  const info = get(prospectInfo, "AuditTrailInfo", []);
+  const info = prospectInfo.AuditTrailInfo;
 
   return info.length ? (
     <div className={classes.wrapper}>
@@ -18,11 +17,8 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
           <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
         </div>
       </div>
-      {info.map(auditTrailInfo => (
-        <div
-          className={classes.applicationRow}
-          key={`${auditTrailInfo.modifiedBy}${auditTrailInfo.modifiedDateTime}`}
-        >
+      {info.map((auditTrailInfo, index) => (
+        <div className={classes.applicationRow} key={index}>
           <div>
             <div className={classes.checkListData}>{auditTrailInfo.modifiedBy}</div>
           </div>
