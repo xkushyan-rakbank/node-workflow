@@ -6,9 +6,9 @@ import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
   const classes = useStyles();
-  const info = get(prospectInfo, "AuditTrailInfo[0]");
+  const info = get(prospectInfo, "AuditTrailInfo", []);
 
-  return info ? (
+  return info.length ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div>
@@ -18,14 +18,19 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
           <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
         </div>
       </div>
-      <div className={classes.applicationRow}>
-        <div>
-          <div className={classes.checkListData}>{info.modifiedBy}</div>
+      {info.map(auditTrailInfo => (
+        <div
+          className={classes.applicationRow}
+          key={`${auditTrailInfo.modifiedBy}${auditTrailInfo.modifiedDateTime}`}
+        >
+          <div>
+            <div className={classes.checkListData}>{auditTrailInfo.modifiedBy}</div>
+          </div>
+          <div>
+            <div className={classes.checkListData}>{auditTrailInfo.modifiedDateTime}</div>
+          </div>
         </div>
-        <div>
-          <div className={classes.checkListData}>{info.modifiedDateTime}</div>
-        </div>
-      </div>
+      ))}
     </div>
   ) : (
     <div className={classes.errorMsg}>Fields are not modified yet.</div>

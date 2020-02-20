@@ -21,6 +21,8 @@ export const getOrganizationInfo = state => getProspect(state).organizationInfo 
 
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
 
+export const getIsCompanyStakeholder = state => getOrgKYCDetails(state).isShareholderACompany;
+
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
