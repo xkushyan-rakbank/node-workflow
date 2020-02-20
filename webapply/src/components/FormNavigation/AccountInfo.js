@@ -32,7 +32,7 @@ export const AccountInfo = () => {
         {(() => {
           switch (pathname) {
             case routes.detailedAccount:
-              return get(accountsInfo, `[${accountType}].title`, "");
+              return get(accountsInfo, [accountType, "title"], "");
             case routes.applicationOverview:
               return "Opening an account has never been this simple.";
             case routes.MyApplications:
