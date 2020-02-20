@@ -5,9 +5,9 @@ import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
   const classes = useStyles();
-  const info = prospectInfo.AuditTrailInfo;
+  const auditTrailInfo = prospectInfo.AuditTrailInfo || [];
 
-  return info.length ? (
+  return auditTrailInfo.length ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div>
@@ -17,13 +17,13 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
           <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
         </div>
       </div>
-      {info.map((auditTrailInfo, index) => (
+      {auditTrailInfo.map((item, index) => (
         <div className={classes.applicationRow} key={index}>
           <div>
-            <div className={classes.checkListData}>{auditTrailInfo.modifiedBy}</div>
+            <div className={classes.checkListData}>{item.modifiedBy}</div>
           </div>
           <div>
-            <div className={classes.checkListData}>{auditTrailInfo.modifiedDateTime}</div>
+            <div className={classes.checkListData}>{item.modifiedDateTime}</div>
           </div>
         </div>
       ))}
