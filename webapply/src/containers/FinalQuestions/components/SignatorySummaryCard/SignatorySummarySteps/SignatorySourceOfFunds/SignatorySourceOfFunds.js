@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { Formik, Form, getIn } from "formik";
 import cx from "classnames";
@@ -47,7 +47,7 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
         validationSchema={signatorySourceOfFundsSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue, setFieldTouched }) => (
+        {({ values, setFieldTouched, setValues }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item md={12} sm={12}>
@@ -57,15 +57,22 @@ export const SignatorySourceOfFundsComponent = ({ index, handleContinue, signato
                   datalistId="wealthType"
                   label="Source of funds"
                   isLoadDefaultValueFromStore={false}
-                  changeProspect={(_, value) => {
-                    if (!value.includes(OTHER_SOURCE_OF_WEALTH)) {
-                      setFieldValue("others", "");
+                  changeProspect={(_, value) => ({
+                    [path]: value.map(val => ({ wealthType: val, others: values.others }))
+                  })}
+                  onChange={selectedValue => {
+                    const newValues = values;
+                    if (
+                      !selectedValue.includes(OTHER_SOURCE_OF_WEALTH) &&
+                      values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
+                    ) {
                       setFieldTouched("others", false);
+                      newValues.others = "";
                     }
-
-                    return {
-                      [path]: value.map(val => ({ wealthType: val, others: values.others }))
-                    };
+                    setValues({
+                      ...newValues,
+                      wealthType: selectedValue
+                    });
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
