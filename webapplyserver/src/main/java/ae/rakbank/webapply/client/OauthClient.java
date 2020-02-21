@@ -1,9 +1,9 @@
 package ae.rakbank.webapply.client;
 
-import ae.rakbank.webapply.commons.ApiError;
-import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.dto.ApiError;
+import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.util.FileUtil;
 import ae.rakbank.webapply.util.DehUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.Collections;
 public class OauthClient {
     private static final Logger logger = LoggerFactory.getLogger(OauthClient.class);
 
-    private final FileHelper fileHelper;
+    private final FileUtil fileUtil;
     private final DehUtil dehUtil;
 
     private JsonNode oAuthUri;
@@ -34,7 +34,7 @@ public class OauthClient {
 
     @PostConstruct
     public void init() {
-        JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
+        JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         oAuthUri = appConfigJSON.get("OAuthURIs");
         oAuthBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("OAuthBaseUrl").asText();
         oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());

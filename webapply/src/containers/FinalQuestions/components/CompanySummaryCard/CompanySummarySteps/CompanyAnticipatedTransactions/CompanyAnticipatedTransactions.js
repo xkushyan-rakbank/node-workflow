@@ -159,7 +159,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="annualFinTurnoverAmtInAED"
                   path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                   label="Annual Financial Turnover"
-                  autocomplete="none"
+                  autoComplete="none"
                   placeholder="9999999999.99"
                   InputProps={{
                     ...commonInputProps,

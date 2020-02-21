@@ -1,13 +1,15 @@
-package ae.rakbank.documentuploader.controllers;
+package ae.rakbank.documentuploader.controller;
 
-import ae.rakbank.documentuploader.commons.ApiError;
-import ae.rakbank.documentuploader.commons.DocumentUploadException;
-import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.dto.ApiError;
+import ae.rakbank.documentuploader.exception.DocumentUploadException;
+import ae.rakbank.documentuploader.services.AuthorizationService;
+import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 import ae.rakbank.documentuploader.dto.FileDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,15 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -32,24 +26,19 @@ import java.io.IOException;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class DocumentUploadController {
 
 	private static final Logger logger = LoggerFactory.getLogger(DocumentUploadController.class);
 
 	@Value("${build.date}")
 	private String buildDate;
-
 	@Value("${app.name}")
 	private String appName;
 
 	private final DocumentUploadService docUploadService;
-
 	private final EnvironmentUtil environmentUtil;
-
-	public DocumentUploadController(DocumentUploadService docUploadService, EnvironmentUtil environmentUtil) {
-		this.docUploadService = docUploadService;
-		this.environmentUtil = environmentUtil;
-	}
+	private final AuthorizationService authorizationService;
 
 	@GetMapping(value = "/health", produces = "application/json")
 	@ResponseBody
@@ -67,40 +56,50 @@ public class DocumentUploadController {
 
 	@PostMapping(value = "/banks/RAK/prospects/{prospectId}/documents", consumes = {
 			MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Object> handleUploadDocument(@RequestParam("file") MultipartFile file,
-			@RequestParam("fileInfo") String fileInfo, @PathVariable String prospectId) {
+	public ResponseEntity<Object> handleUploadDocument(@RequestHeader String authorization,
+													   @RequestParam("file") MultipartFile file,
+													   @RequestParam("fileInfo") String fileInfo,
+													   @PathVariable String prospectId) {
+
+		String jwtToken = getTokenFromAuthorizationHeader(authorization);
+		String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
 
 		return processUploadRequest(file, fileInfo, prospectId);
 
 	}
 
-	@PutMapping(value = "/banks/RAK/prospects/{prospectId}/documents", consumes = {
-			MediaType.MULTIPART_FORM_DATA_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Object> handleReUploadDocument(@RequestParam("file") MultipartFile file,
-			@RequestParam(name = "fileInfo", required = false) String fileInfo, @PathVariable String prospectId) {
+	@PutMapping(value = "/banks/RAK/prospects/{prospectId}/documents",
+			consumes = {MediaType.MULTIPART_FORM_DATA_VALUE },
+			produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Object> handleReUploadDocument(@RequestHeader String authorization,
+														 @RequestParam("file") MultipartFile file,
+														 @RequestParam(name = "fileInfo", required = false) String fileInfo,
+														 @PathVariable String prospectId) {
+		String jwtToken = getTokenFromAuthorizationHeader(authorization);
+		String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
 
 		if (StringUtils.isBlank(fileInfo)) {
-
-			logger.error(String.format(
-					"The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s", prospectId,
-					StringUtils.length(fileInfo)));
-
+			logger.error(String.format("The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s",
+					prospectId, StringUtils.length(fileInfo)));
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "The 'fileInfo' parameter must not be null or empty",
-					String.format(
-							"The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s",
+					String.format("The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s",
 							prospectId, StringUtils.length(fileInfo)));
 
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(error.toJsonString(), null, HttpStatus.BAD_REQUEST);
 		}
 		return processUploadRequest(file, fileInfo, prospectId);
-
 	}
 
 	@GetMapping("/banks/RAK/prospects/{prospectId}/documents/{documentKey}")
-	public ResponseEntity<byte[]> downloadFile(@SuppressWarnings("unused") @PathVariable String prospectId, @PathVariable String documentKey) {
+	public ResponseEntity<byte[]> downloadFile(@RequestHeader String authorization,
+											   @SuppressWarnings("unused") @PathVariable String prospectId,
+											   @PathVariable String documentKey) {
+
+		String jwtToken = getTokenFromAuthorizationHeader(authorization);
+		String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
+
 		final FileDto file = docUploadService.findOneByDocumentKey(documentKey);
-		return ResponseEntity.ok().headers(configureHttpHeadersForFile(file))
-				.body(file.getContent());
+		return ResponseEntity.ok().headers(configureHttpHeadersForFile(file)).body(file.getContent());
 	}
 
 	private HttpHeaders configureHttpHeadersForFile(FileDto file) {
@@ -124,7 +123,7 @@ public class DocumentUploadController {
 
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "fileInfo is not valid JSON string", e.getMessage(),
 					e);
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(error.toJsonString(), null, HttpStatus.BAD_REQUEST);
 		}
 		return saveUploadedFile(file, fileInfoJSON, prospectId);
 	}
@@ -147,7 +146,7 @@ public class DocumentUploadController {
 					prospectId, file.getOriginalFilename(), file.getSize()));
 
 			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getMessage(), e.getMessage(), e);
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(error.toJsonString(), null, HttpStatus.BAD_REQUEST);
 
 		} catch (IOException e) {
 
@@ -156,7 +155,7 @@ public class DocumentUploadController {
 					prospectId, file.getOriginalFilename(), file.getSize()));
 
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error", e.getMessage(), e);
-			return new ResponseEntity<Object>(error.toJson(), null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(error.toJsonString(), null, HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 
@@ -171,4 +170,7 @@ public class DocumentUploadController {
 		return new ResponseEntity<Object>(responseJSON, headers, HttpStatus.OK);
 	}
 
+	private String getTokenFromAuthorizationHeader(String authorizationString) {
+		return authorizationString.substring(7); // removes the "Bearer " prefix.
+	}
 }

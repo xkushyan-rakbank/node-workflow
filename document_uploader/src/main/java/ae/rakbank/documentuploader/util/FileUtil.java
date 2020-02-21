@@ -1,4 +1,4 @@
-package ae.rakbank.documentuploader.helpers;
+package ae.rakbank.documentuploader.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 
 import javax.annotation.PostConstruct;
 
-import ae.rakbank.documentuploader.commons.EnvironmentUtil;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +18,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
-public class FileHelper {
+public class FileUtil {
 
-	private static final Logger logger = LoggerFactory.getLogger(FileHelper.class);
+	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
 	@Autowired
 	private ResourceLoader resourceLoader;

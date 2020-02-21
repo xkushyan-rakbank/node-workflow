@@ -1,8 +1,9 @@
 package ae.rakbank.documentuploader.services;
 
-import ae.rakbank.documentuploader.commons.DocumentUploadException;
-import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.exception.DocumentUploadException;
+import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.dto.FileDto;
+import ae.rakbank.documentuploader.exception.AmazonS3FileNotFoundException;
 import ae.rakbank.documentuploader.s3.S3FileUploader;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.io.FilenameUtils;
@@ -43,7 +44,6 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         if (file.isEmpty()) {
             throw new DocumentUploadException("Failed to store empty file " + originalFilename);
         }
-
         if (originalFilename.contains("..")) {
             // This is a security check
             throw new DocumentUploadException(
@@ -60,7 +60,6 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         } catch (Exception exc) {
             logger.error(exc.getMessage());
         }
-
         return "";
     }
 
@@ -77,5 +76,4 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                 .replaceAll("[:\\\\/*?|<>]", "_")
                 .substring(0, maxLength);
     }
-
 }

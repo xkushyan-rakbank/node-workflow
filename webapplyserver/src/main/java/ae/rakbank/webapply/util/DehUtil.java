@@ -1,6 +1,6 @@
 package ae.rakbank.webapply.util;
 
-import ae.rakbank.webapply.commons.ApiError;
+import ae.rakbank.webapply.dto.ApiError;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

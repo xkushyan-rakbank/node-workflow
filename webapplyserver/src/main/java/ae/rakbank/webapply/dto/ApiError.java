@@ -1,4 +1,4 @@
-package ae.rakbank.webapply.commons;
+package ae.rakbank.webapply.dto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,20 +8,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
+@Slf4j
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 public class ApiError {
 
-    public static final String timestampPattern = "yyyy-MM-dd HH:mm:ss,SSS";
+    public static final String TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss,SSS";
 
 	private HttpStatus status;
 	private Integer statusCode;
@@ -39,14 +39,12 @@ public class ApiError {
 
 	public ApiError(HttpStatus status) {
 		this();
-		initTimestamp();
 		this.status = status;
 		this.statusCode = status.value();
 	}
 
 	public ApiError(HttpStatus status, Throwable ex) {
 		this();
-		initTimestamp();
 		this.status = status;
 		this.statusCode = status.value();
 		this.message = "Unexpected error";
@@ -55,7 +53,6 @@ public class ApiError {
 
 	public ApiError(HttpStatus status, String message, String debugMessage) {
 		this();
-		initTimestamp();
 		this.status = status;
 		this.statusCode = status.value();
 		this.message = message;
@@ -64,7 +61,6 @@ public class ApiError {
 
 	public ApiError(HttpStatus status, String message, String debugMessage, Throwable ex) {
 		this();
-		initTimestamp();
 		this.status = status;
 		this.statusCode = status.value();
 		this.message = message;
@@ -73,7 +69,7 @@ public class ApiError {
 	}
 
 	public void initTimestamp() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN);
 		timestamp = LocalDateTime.now().format(formatter);
 	}
 
@@ -83,14 +79,19 @@ public class ApiError {
 		this.stackTrace = ex.getStackTrace();
 	}
 
-	public String toJsonString() throws JsonProcessingException {
+	public String toJsonString() {
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(this);
+		try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			log.error("Failed to serialize ApiError object", e);
+			return "Failed to serialize ApiError object, " + e.getMessage();
+		}
 	}
 
 
 	//Legacy implementation, not all the fields used
-	public JsonNode toJsonNode() {
+	/*public JsonNode toJsonNode() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode errorResponse = objectMapper.createObjectNode();
 		errorResponse.put("errorType", status.name());
@@ -104,5 +105,5 @@ public class ApiError {
 		errors.add(error);
 		errorResponse.set("errors", errors);
 		return errorResponse;
-	}
+	}*/
 }
