@@ -31,15 +31,13 @@ const apiClient = axios.create({
   baseURL: getBaseURL()
 });
 
-[apiClient, uploadClient].forEach(instance => {
-  instance.interceptors.request.use(config => ({
-    ...config,
-    headers: {
-      ...config.headers,
-      [REQUEST_ID_HEADER]: nanoid()
-    }
-  }));
-});
+apiClient.interceptors.request.use(config => ({
+  ...config,
+  headers: {
+    ...config.headers,
+    [REQUEST_ID_HEADER]: nanoid()
+  }
+}));
 
 apiClient.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
