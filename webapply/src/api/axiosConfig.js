@@ -1,4 +1,6 @@
 import axios from "axios";
+import get from "lodash/get";
+import nanoid from "nanoid";
 
 import { store } from "../store";
 import { setInputsErrors } from "../store/actions/serverValidation";
@@ -6,11 +8,14 @@ import { setError } from "../store/actions/reCaptcha";
 import { setAccessToken } from "../store/actions/appConfig";
 
 import { NotificationsManager } from "../components/Notification";
+
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
+import { formatJsonData } from "./formatJsonData";
 import { IGNORE_ERROR_CODES } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
+const REQUEST_ID_HEADER = "x-request-id";
 const ENCRYPT_METHODS = ["post", "put"];
 const ENCRYPTION_ENABLE = process.env.REACT_APP_ENCRYPTION_ENABLE || "N";
 const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
@@ -22,11 +27,21 @@ export const uploadClient = axios.create({
   baseURL: "https://uatrmtc.rakbankonline.ae"
 });
 
-const instance = axios.create({
+const apiClient = axios.create({
   baseURL: getBaseURL()
 });
 
-instance.interceptors.request.use(config => {
+[apiClient, uploadClient].forEach(instance => {
+  instance.interceptors.request.use(config => ({
+    ...config,
+    headers: {
+      ...config.headers,
+      [REQUEST_ID_HEADER]: nanoid()
+    }
+  }));
+});
+
+apiClient.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
 
   if (encryptionEnabled && rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
@@ -50,13 +65,19 @@ instance.interceptors.request.use(config => {
   return config;
 });
 
-instance.interceptors.response.use(response => {
-  const accessToken = response.headers.accesstoken || response.headers.AccessToken;
-  if (accessToken) store.dispatch(setAccessToken(accessToken));
-  return response;
+[apiClient, uploadClient].forEach(instance => {
+  instance.interceptors.response.use(response => {
+    const accessToken = response.headers.accesstoken || response.headers.AccessToken;
+
+    if (accessToken) {
+      store.dispatch(setAccessToken(accessToken));
+    }
+
+    return response;
+  });
 });
 
-instance.interceptors.response.use(
+apiClient.interceptors.response.use(
   response => {
     const { symKey } = response.config;
 
@@ -85,6 +106,7 @@ instance.interceptors.response.use(
   },
   error => {
     const {
+      status,
       data,
       config: { symKey }
     } = error.response;
@@ -109,62 +131,48 @@ instance.interceptors.response.use(
       }
     }
 
-    const addErrorToNotification = options => {
-      NotificationsManager.add && NotificationsManager.add(options);
-    };
+    let notificationOptions = {};
 
     if (jsonData) {
-      try {
-        const { errorType, errors } = JSON.parse(jsonData.debugMessage);
-        switch (errorType) {
-          case "FieldsValidation":
-            if (errors) {
-              store.dispatch(setInputsErrors(errors));
-              errors.forEach(error => {
-                addErrorToNotification({
-                  title: "Validation Error On Server",
-                  message: error.message || "Validation Error"
-                });
-              });
-            }
-            break;
-          case "OTP":
-            addErrorToNotification({
-              title: "OTP error",
-              message: "Something wrong with OTP"
-            });
-            break;
-          case "ReCaptchaError":
-            store.dispatch(setError(errors));
-            addErrorToNotification({
-              title: "ReCaptchaError",
-              message: data.errors
-            });
-            break;
-          case "Other":
-            if (errors) {
-              errors.forEach(error => {
-                if (!IGNORE_ERROR_CODES.includes(error.errorCode))
-                  addErrorToNotification({
-                    title: error.message,
-                    message: error.developerText
-                  });
-              });
-            }
-            break;
-          default:
-            addErrorToNotification({ title: errorType, message: errors });
+      const { errors, errorType } = jsonData;
+      if (status === 400 && errorType === "ReCaptchaError") {
+        store.dispatch(setError(errors));
+        notificationOptions = { title: "ReCaptchaError", message: errors };
+      } else if (status === 400 && errors) {
+        store.dispatch(setInputsErrors(errors));
+        if (errorType === "FieldsValidation") {
+          notificationOptions = {
+            title: "Validation Error On Server",
+            message: get(jsonData, "errors[0].message", "Validation Error")
+          };
         }
-      } catch (e) {
-        addErrorToNotification({
-          title: jsonData.status,
-          message: jsonData.debugMessage || jsonData.message || jsonData
-        });
+      } else {
+        log(jsonData);
+        try {
+          if (jsonData.status) {
+            if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+              notificationOptions = null;
+            } else {
+              const errorMessages = errors.map(({ message }) => message);
+              const debugNotificationOptions = formatJsonData(jsonData);
+
+              notificationOptions = {
+                message: errorMessages.join(", "),
+                ...debugNotificationOptions
+              };
+            }
+          }
+        } catch (e) {
+          log(e);
+        }
       }
     }
 
+    if (notificationOptions) {
+      NotificationsManager.add && NotificationsManager.add(notificationOptions);
+    }
     return Promise.reject(error);
   }
 );
 
-export default instance;
+export default apiClient;

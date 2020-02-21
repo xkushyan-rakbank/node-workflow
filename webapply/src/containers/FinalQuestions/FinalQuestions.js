@@ -9,10 +9,11 @@ import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { getSignatoriesSteps, getCompanySteps } from "../../store/selectors/appConfig";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
+import { NEXT } from "../../constants";
 
 import { useStyles } from "./styled";
 
-export const FinalQuestionsComponent = ({ signatories, history }) => {
+export const FinalQuestionsComponent = ({ signatories, history, sendProspectToAPI }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
   const [expandedSignatoryIndex, setExpandedSignatoryIndex] = useState(null);
   const [isCompanyExpanded, setIsCompanyExpanded] = useState(false);
@@ -23,7 +24,11 @@ export const FinalQuestionsComponent = ({ signatories, history }) => {
   const signatoriesSteps = useSelector(getSignatoriesSteps);
   const isSignatoriesStepsCompleted = checkAllStepsCompleted(signatoriesSteps);
 
-  const goToUploadDocument = () => history.push(routes.uploadDocuments);
+  const goToUploadDocument = () => {
+    sendProspectToAPI(NEXT).then(() => {
+      history.push(routes.uploadDocuments);
+    });
+  };
 
   const handleFinalStepContinue = useCallback(
     nextIndex => {

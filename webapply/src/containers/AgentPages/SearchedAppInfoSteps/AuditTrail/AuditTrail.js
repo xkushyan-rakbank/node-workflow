@@ -1,14 +1,13 @@
 import React from "react";
-import get from "lodash/get";
 import cx from "classnames";
 
 import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
   const classes = useStyles();
-  const info = get(prospectInfo, "AuditTrailInfo[0]");
+  const auditTrailInfo = prospectInfo.AuditTrailInfo || [];
 
-  return info ? (
+  return auditTrailInfo.length ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div>
@@ -18,14 +17,16 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
           <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
         </div>
       </div>
-      <div className={classes.applicationRow}>
-        <div>
-          <div className={classes.checkListData}>{info.modifiedBy}</div>
+      {auditTrailInfo.map((item, index) => (
+        <div className={classes.applicationRow} key={index}>
+          <div>
+            <div className={classes.checkListData}>{item.modifiedBy}</div>
+          </div>
+          <div>
+            <div className={classes.checkListData}>{item.modifiedDateTime}</div>
+          </div>
         </div>
-        <div>
-          <div className={classes.checkListData}>{info.modifiedDateTime}</div>
-        </div>
-      </div>
+      ))}
     </div>
   ) : (
     <div className={classes.errorMsg}>Fields are not modified yet.</div>
