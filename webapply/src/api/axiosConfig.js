@@ -20,15 +20,12 @@ const ENCRYPT_METHODS = ["post", "put"];
 const ENCRYPTION_ENABLE = process.env.REACT_APP_ENCRYPTION_ENABLE || "N";
 const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
 
-const getBaseURL = () =>
-  process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
-
 export const uploadClient = axios.create({
-  baseURL: "https://uatrmtc.rakbankonline.ae"
+  baseURL: process.env.REACT_APP_UPLOAD_PATH || "https://uatrmtc.rakbankonline.ae"
 });
 
 const apiClient = axios.create({
-  baseURL: getBaseURL()
+  baseURL: process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply"
 });
 
 apiClient.interceptors.request.use(config => ({
