@@ -13,6 +13,16 @@ const Body = styled.div`
   flex-grow: 1;
 `;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 359px;
+  min-height: 450px;
+  border-radius: 8px;
+  box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.11);
+  background-color: #fff;
+`;
+
 const TypingLabel = styled.div`
   font-size: 12px;
   margin: 8px 16px;
@@ -90,27 +100,18 @@ class Chat extends PureComponent {
     this.setState({ agentLeft: flag });
   };
 
-  onPressBack = () => {
-    this.onClose();
-    this.props.onPressBack();
-  };
-
   render() {
     const { messages, agentTyping } = this.state;
 
     return (
-      <>
-        <Header
-          onPressBack={this.onPressBack}
-          onClose={this.onClose}
-          onMinimize={this.onMinimizeChat}
-        />
+      <Container>
+        <Header onClose={this.onClose} onMinimize={this.onMinimizeChat} />
         <Body>
           <MessagesList data={messages} />
           {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}
           <SendMessageInput placeholder="Type Message" chatInstance={GenesysChat} />
         </Body>
-      </>
+      </Container>
     );
   }
 }
@@ -123,4 +124,4 @@ Chat.propTypes = {
   message: PropTypes.string
 };
 
-export { Chat };
+export default Chat;
