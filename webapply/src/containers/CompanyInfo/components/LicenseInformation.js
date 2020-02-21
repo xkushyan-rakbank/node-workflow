@@ -21,10 +21,10 @@ import { LICENSE_NUMBER } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
-  licenseIssueDate: "",
+  licenseIssueDate: new Date(Date.now()),
   licenseIssuingAuthority: "",
   countryOfIncorporation: UAE,
-  dateOfIncorporation: "",
+  dateOfIncorporation: new Date(Date.now()),
   yearsInBusiness: ""
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -7,6 +7,7 @@ import { getIn } from "formik";
 import { InfoTitle } from "../../InfoTitle";
 import { ErrorMessage, ContexualHelp } from "../../Notifications";
 import { BaseDatePicker } from "./styled";
+import { PickerToolbar } from "./PickerToolbar/PickerToolbar";
 
 export const DatePicker = ({
   field,
@@ -25,6 +26,10 @@ export const DatePicker = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
+  const Toolbar = useMemo(() => {
+    return <PickerToolbar date={field.value} onChange={onChange} />;
+  }, [field.value, onChange]);
+
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl className="formControl">
@@ -39,6 +44,7 @@ export const DatePicker = ({
             margin="normal"
             format={format}
             inputVariant="outlined"
+            variant="inline"
             placeholder={placeholder}
             error={isError}
             invalidDateMessage={false}
@@ -52,6 +58,8 @@ export const DatePicker = ({
             onChange={onChange}
             {...datePickerProps}
             value={field.value === "" ? null : field.value}
+            ToolbarComponent={Toolbar}
+            views={["date"]}
           />
         </MuiPickersUtilsProvider>
         {infoTitle && <InfoTitle title={infoTitle} />}
