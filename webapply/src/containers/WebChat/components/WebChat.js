@@ -1,6 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Login } from "./Login";
 import { Chat } from "./Chat";
 
 const Container = styled.div`
@@ -13,33 +12,10 @@ const Container = styled.div`
   background-color: #fff;
 `;
 
-const WebChat = ({ onClose, onMinimize, ...props }) => {
-  const [chatReady, setChatReady] = useState(false);
-  const [message, setMessage] = useState("");
-  const [subject, setSubject] = useState("");
-
-  const onUserInfoSubmit = useCallback(({ message, subject }) => {
-    setMessage(message);
-    setSubject(subject.label);
-    setChatReady(true);
-  }, []);
-
-  return (
-    <Container>
-      {chatReady ? (
-        <Chat
-          onPressBack={() => setChatReady(false)}
-          message={message}
-          subject={subject}
-          onClose={onClose}
-          onMinimize={onMinimize}
-          {...props}
-        />
-      ) : (
-        <Login onSubmit={onUserInfoSubmit} {...props} onClose={onClose} onMinimize={onMinimize} />
-      )}
-    </Container>
-  );
-};
+const WebChat = ({ onClose, onMinimize, ...props }) => (
+  <Container>
+    <Chat onClose={onClose} onMinimize={onMinimize} {...props} />
+  </Container>
+);
 
 export default WebChat;

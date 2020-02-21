@@ -90,21 +90,12 @@ class Chat extends PureComponent {
     this.setState({ agentLeft: flag });
   };
 
-  onPressBack = () => {
-    this.onClose();
-    this.props.onPressBack();
-  };
-
   render() {
     const { messages, agentTyping } = this.state;
 
     return (
       <>
-        <Header
-          onPressBack={this.onPressBack}
-          onClose={this.onClose}
-          onMinimize={this.onMinimizeChat}
-        />
+        <Header onClose={this.onClose} onMinimize={this.onMinimizeChat} />
         <Body>
           <MessagesList data={messages} />
           {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}

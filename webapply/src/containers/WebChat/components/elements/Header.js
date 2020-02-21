@@ -1,35 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import ArrowBack from "../../../../assets/webchat/arrow_left.svg";
 import Close from "../../../../assets/webchat/close.svg";
 import Minimize from "../../../../assets/webchat/minimize.svg";
 
 const HeaderStyled = styled.div`
+  box-sizing: border-box;
+  width: 100%;
   font-size: 16px;
   display: flex;
   align-items: center;
-  position: relative
+  position: relative;
   justify-content: space-between;
-  padding: 15px;
+  padding: 16px;
   color: #373737;
   border-bottom: 1px solid #e9e9ed;
-`;
-
-const BackButton = styled.button`
-  background: no-repeat;
-  border: 0;
-  padding: 0;
-  outline: none;
-  position: absolute;
-  left: 25px;
-  top: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  :hover {
-    opacity: 0.6;
-  }
 `;
 
 const ActionButtons = styled.div`
@@ -42,19 +26,10 @@ const ActionButtons = styled.div`
   }
 `;
 
-const Title = styled.div`
-  margin: 0 auto;
-`;
-
-const Header = ({ onPressBack, onClose, onMinimize }) => {
+const Header = ({ onClose, onMinimize }) => {
   return (
     <HeaderStyled>
-      {onPressBack && (
-        <BackButton onClick={onPressBack}>
-          <img src={ArrowBack} alt="" />
-        </BackButton>
-      )}
-      <Title>Live Chat</Title>
+      <div>Chat with us</div>
       <ActionButtons>
         <img src={Minimize} alt="Minimize" onClick={onMinimize} />
         <img src={Close} alt="Close" onClick={onClose} />
