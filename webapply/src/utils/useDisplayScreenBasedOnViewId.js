@@ -33,7 +33,7 @@ export const useDisplayScreenBasedOnViewId = () => {
           history.push(`${smeBaseName}${viewId}`);
         }
       } else {
-        if (isEditRedirect || viewId === VIEW_IDS.ApplicationSubmitted) {
+        if (isEditRedirect || viewId === VIEW_IDS.SubmitApplication) {
           history.push(routes.companyInfo);
         } else {
           history.push(`${smeBaseName}${viewId}`);

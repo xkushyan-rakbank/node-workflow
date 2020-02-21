@@ -27,7 +27,8 @@ import {
   UAE,
   UAE_CURRENCY,
   CONVENTIONAL_BANK,
-  ISLAMIC_BANK
+  ISLAMIC_BANK,
+  CONTINUE
 } from "../../constants";
 import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
 
@@ -108,7 +109,7 @@ function* resetProspectSaga() {
 function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
   if (isSendToApi) {
-    yield put(sendProspectToAPI());
+    yield put(sendProspectToAPI(CONTINUE));
   }
 }
 

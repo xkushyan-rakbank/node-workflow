@@ -5,21 +5,17 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanyDocuments } from "./components/CompanyDocuments";
 import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
 import { BackLink } from "../../components/Buttons/BackLink";
+import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
 
 export const UploadDocument = ({
   retrieveDocDetails,
   documents,
-  docUpload,
-  cancelDocUpload,
-  companyName,
-  signatories,
   history,
-  progress,
-  updateProspect,
   uploadedDocsCount,
   requiredDocsCount,
-  uploadErrorMessage
+  sendProspectToAPI,
+  ...rest
 }) => {
   const classes = useStyles();
 
@@ -27,7 +23,11 @@ export const UploadDocument = ({
     retrieveDocDetails();
   }, [retrieveDocDetails]);
 
-  const goToSelectService = () => history.push(routes.selectServices);
+  const goToSelectService = () => {
+    sendProspectToAPI(NEXT).then(() => {
+      history.push(routes.selectServices);
+    });
+  };
 
   return (
     <>
@@ -39,28 +39,12 @@ export const UploadDocument = ({
         <>
           <div className={classes.sectionContainer}>
             <SectionTitle title="Company documents" className={classes.title} />
-            <CompanyDocuments
-              documents={documents.companyDocuments}
-              companyName={companyName}
-              docUpload={docUpload}
-              cancelDocUpload={cancelDocUpload}
-              updateProspect={updateProspect}
-              progress={progress}
-              uploadErrorMessage={uploadErrorMessage}
-            />
+            <CompanyDocuments documents={documents.companyDocuments} {...rest} />
           </div>
           {documents.stakeholdersDocuments && (
             <div className={classes.sectionContainer}>
               <SectionTitle title="Stakeholders documents" />
-              <SignatoriesDocuments
-                documents={documents.stakeholdersDocuments}
-                signatories={signatories}
-                docUpload={docUpload}
-                cancelDocUpload={cancelDocUpload}
-                updateProspect={updateProspect}
-                progress={progress}
-                uploadErrorMessage={uploadErrorMessage}
-              />
+              <SignatoriesDocuments documents={documents.stakeholdersDocuments} {...rest} />
             </div>
           )}
         </>

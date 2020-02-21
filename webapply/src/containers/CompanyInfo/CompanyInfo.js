@@ -14,7 +14,7 @@ import {
   sendProspectToAPIPromisify,
   setScreeningError
 } from "../../store/actions/sendProspectToAPI";
-import { CONTINUE, screeningStatusNotRegistered } from "../../constants";
+import { CONTINUE, NEXT, screeningStatusNotRegistered } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
@@ -60,7 +60,9 @@ export const CompanyInfoPage = ({
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    pushHistory(routes.stakeholdersInfo);
+    sendProspectToAPI(NEXT).then(() => {
+      pushHistory(routes.stakeholdersInfo);
+    });
   }, [pushHistory]);
 
   return (

@@ -6,7 +6,10 @@ import { StepComponent } from "./../StepComponent/StepComponent";
 import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
-import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
+import {
+  getSendProspectToAPIInfo,
+  getIsCompanyStakeholder
+} from "../../../../store/selectors/appConfig";
 import {
   sendProspectToAPIPromisify,
   setScreeningError
@@ -17,7 +20,7 @@ import {
   setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
-import { CONTINUE, stakeholderScreeningStatus } from "../../../../constants";
+import { CONTINUE, stakeholderScreeningStatus, NEXT } from "../../../../constants";
 import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
@@ -42,6 +45,7 @@ const StakeholderStepperComponent = ({
   isTooManyStakeholders,
   setScreeningError,
   showAddButton,
+  isCompanyStakeHolder,
   isEditInProgress
 }) => {
   const classes = useStyles();
@@ -53,8 +57,10 @@ const StakeholderStepperComponent = ({
     stakeHoldersSteps
   );
 
-  const handleContinue = event => () =>
-    sendProspectToAPI(CONTINUE, event).then(
+  const handleContinue = event => () => {
+    const saveType = activeStep === STEP_1 && isCompanyStakeHolder ? NEXT : CONTINUE;
+
+    sendProspectToAPI(saveType, event).then(
       () => {
         if (isTooManyStakeholders) {
           setScreeningError(stakeholderScreeningStatus);
@@ -73,6 +79,7 @@ const StakeholderStepperComponent = ({
       },
       () => {}
     );
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
@@ -143,6 +150,7 @@ const StakeholderStepperComponent = ({
 const mapStateToProps = state => ({
   isStatusShown: state.stakeholders.isStatusShown,
   isTooManyStakeholders: quantityErrorSelector(state),
+  isCompanyStakeHolder: getIsCompanyStakeholder(state),
   ...getSendProspectToAPIInfo(state)
 });
 
