@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +21,17 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import ae.rakbank.webapply.commons.ApiError;
-import ae.rakbank.webapply.commons.EnvUtil;
-import ae.rakbank.webapply.commons.RecaptchaUtil;
-import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.dto.ApiError;
+import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.util.RecaptchaUtil;
+import ae.rakbank.webapply.util.FileUtil;
 
 @Service
 @RequiredArgsConstructor
 public class RecaptchaService {
 	private static final Logger logger = LoggerFactory.getLogger(RecaptchaService.class);
 
-	private final FileHelper fileHelper;
+	private final FileUtil fileUtil;
 	private final RestTemplateBuilder restTemplateBuilder;
 
 	private String recaptchaSecret;
@@ -40,7 +39,7 @@ public class RecaptchaService {
 
 	@PostConstruct
 	public void init() {
-		JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
+		JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
 		recaptchaSecret = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSecret").asText();
 		recaptchaEndpoint = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("ReCaptchaUrl").asText()
 				+ appConfigJSON.get("ReCaptchaURIs").get("siteVerifyUri").asText();

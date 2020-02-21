@@ -1,4 +1,4 @@
-package ae.rakbank.webapply.controllers;
+package ae.rakbank.webapply.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,10 +31,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import ae.rakbank.webapply.commons.ApiError;
-import ae.rakbank.webapply.commons.EnvUtil;
-import ae.rakbank.webapply.helpers.CSRFTokenHelper;
-import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.dto.ApiError;
+import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.services.CSRFTokenService;
+import ae.rakbank.webapply.util.FileUtil;
 import ae.rakbank.webapply.services.RecaptchaService;
 
 import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
@@ -53,9 +53,9 @@ public class WebApplyController {
     @Value("${app.name}")
     private String appName;
 
-    private final FileHelper fileHelper;
+    private final FileUtil fileUtil;
     private final RecaptchaService captchaService;
-    private final CSRFTokenHelper csrfTokenHelper;
+    private final CSRFTokenService csrfTokenService;
     private final ServletContext servletContext;
     private final AuthorizationService authorizationService;
     private final DehClient dehClient;
@@ -71,11 +71,11 @@ public class WebApplyController {
 
     @PostConstruct
     public void init() {
-        appConfigJSON = fileHelper.getAppConfigJSON();
+        appConfigJSON = fileUtil.getAppConfigJSON();
         dehURIs = appConfigJSON.get("DehURIs");
         dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
 
-        smeProspectJSON = fileHelper.getSMEProspectJSON();
+        smeProspectJSON = fileUtil.getSMEProspectJSON();
 
         try {
             loadAppInitialState();
@@ -173,7 +173,7 @@ public class WebApplyController {
         validateCriteriaParams(segment, product, role, device);
 
         HttpHeaders headers = new HttpHeaders();
-        csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
+        csrfTokenService.createOrUpdateCsrfToken(httpRequest, headers);
 
         String cacheKey = getCacheKey(segment, product, role, device, "reduced");
         String cachedValue = getCache(cacheKey);
@@ -229,7 +229,7 @@ public class WebApplyController {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
+        csrfTokenService.createOrUpdateCsrfToken(httpRequest, headers);
         headers.putAll(otpResponse.getHeaders());
         headers.putAll(createdProspectResponse.getHeaders());
 
@@ -449,7 +449,7 @@ public class WebApplyController {
         initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
         initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
 
-        String publicKey = fileHelper.getRSAPublicKey();
+        String publicKey = fileUtil.getRSAPublicKey();
 
         if (publicKey != null) {
             initStateJSON.put("rsaPublicKey", publicKey);

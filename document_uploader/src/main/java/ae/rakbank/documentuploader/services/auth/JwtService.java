@@ -1,8 +1,12 @@
-package ae.rakbank.webapply.services.auth;
+package ae.rakbank.documentuploader.services.auth;
 
-import javax.annotation.PostConstruct;
-
-import ae.rakbank.webapply.dto.UserRole;
+import ae.rakbank.documentuploader.dto.ApiError;
+import ae.rakbank.documentuploader.dto.JwtPayload;
+import ae.rakbank.documentuploader.dto.UserRole;
+import ae.rakbank.documentuploader.exception.ApiException;
+import ae.rakbank.documentuploader.util.EnvUtil;
+import ae.rakbank.documentuploader.util.EnvironmentUtil;
+import ae.rakbank.documentuploader.util.FileUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -10,18 +14,12 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.JsonNode;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
-import ae.rakbank.webapply.dto.ApiError;
-import ae.rakbank.webapply.util.EnvUtil;
-import ae.rakbank.webapply.dto.JwtPayload;
-import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.util.FileUtil;
-
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -35,7 +33,7 @@ class JwtService {
 
     @PostConstruct
     public void init() {
-        JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
+        JsonNode appConfigJSON = fileUtil.getDocUploadConfigJson();
         secret = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("JwtSecret").asText();
     }
 

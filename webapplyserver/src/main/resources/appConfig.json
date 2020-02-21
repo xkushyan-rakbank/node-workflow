@@ -103,7 +103,8 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "6LcypLgUAAAAAMQvT4SqSDCbJ7JFYY7x0OGJTpTm",
       "ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R",
-      "RSAPublicKeyFilename": "RSAPublicKey.txt"
+      "RSAPublicKeyFilename": "RSAPublicKey.txt",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
     },
     "dev": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -121,7 +122,8 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
     },
     "uat": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -139,7 +141,8 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
     },
     "prod": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -157,7 +160,8 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
     }
   }
 }

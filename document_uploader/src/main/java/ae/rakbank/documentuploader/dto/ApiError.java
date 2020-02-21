@@ -1,4 +1,4 @@
-package ae.rakbank.webapply.commons;
+package ae.rakbank.documentuploader.dto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,20 +8,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
+@Slf4j
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 public class ApiError {
 
-    public static final String timestampPattern = "yyyy-MM-dd HH:mm:ss,SSS";
+	public static final String TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss,SSS";
 
 	private HttpStatus status;
 	private Integer statusCode;
@@ -73,7 +73,7 @@ public class ApiError {
 	}
 
 	public void initTimestamp() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timestampPattern);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN);
 		timestamp = LocalDateTime.now().format(formatter);
 	}
 
@@ -83,26 +83,67 @@ public class ApiError {
 		this.stackTrace = ex.getStackTrace();
 	}
 
-	public String toJsonString() throws JsonProcessingException {
+	public String toJsonString() {
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(this);
+		try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			log.error("Failed to serialize ApiError object", e);
+			return "Failed to serialize ApiError object " + e.getMessage();
+		}
 	}
 
 
-	//Legacy implementation, not all the fields used
-	public JsonNode toJsonNode() {
+
+	/*public ApiError(HttpStatus status) {
+		this();
+		this.status = status;
+	}
+
+	public ApiError(HttpStatus httpStatus, String message) {
+		status = httpStatus;
+		this.message = message;
+	}
+
+	public ApiError(HttpStatus status, Throwable ex) {
+		this();
+		this.status = status;
+		this.message = "Unexpected error";
+		setException(ex);
+	}
+
+	public ApiError(HttpStatus status, String message, String debugMessage) {
+		this();
+		this.status = status;
+		this.message = message;
+		this.debugMessage = debugMessage;
+	}
+
+	public ApiError(HttpStatus status, String message, String debugMessage, Throwable ex) {
+		this();
+		this.status = status;
+		this.message = message;
+		this.debugMessage = debugMessage;
+		setException(ex);
+	}
+
+	private void setException(Throwable ex) {
+		this.exception = ex.getMessage();
+	}
+
+	public JsonNode toJson() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode errorResponse = objectMapper.createObjectNode();
-		errorResponse.put("errorType", status.name());
-		errorResponse.put("httpStatus", status.toString());
+		errorResponse.put("errorType", "Internal Server Error");
 		ArrayNode errors = objectMapper.createArrayNode();
 		ObjectNode error = objectMapper.createObjectNode();
 		error.put("errorType", "Internal Server Error");
 		error.put("message", message);
 		error.put("developerText", debugMessage);
-		error.put("exceptionClassName", exceptionClassName);
+		error.put("exception", exception);
 		errors.add(error);
 		errorResponse.set("errors", errors);
 		return errorResponse;
-	}
+	}*/
+
 }
