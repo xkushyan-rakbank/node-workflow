@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -8,6 +8,8 @@ import { InfoTitle } from "../../InfoTitle";
 import { ErrorMessage, ContexualHelp } from "../../Notifications";
 import { BaseDatePicker } from "./styled";
 import { PickerToolbar } from "./PickerToolbar/PickerToolbar";
+
+const Toolbar = ({ date, onChange }) => <PickerToolbar date={date} onChange={onChange} />;
 
 export const DatePicker = ({
   field,
@@ -26,16 +28,11 @@ export const DatePicker = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
 
-  const Toolbar = useMemo(() => {
-    return <PickerToolbar date={field.value} onChange={onChange} />;
-  }, [field.value, onChange]);
-
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl className="formControl">
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <BaseDatePicker
-            autoOk
             autoComplete="off"
             label={label}
             minDate={minDate}
@@ -55,11 +52,11 @@ export const DatePicker = ({
               shrink: true
             }}
             {...field}
-            onChange={onChange}
             {...datePickerProps}
-            value={field.value === "" ? null : field.value}
+            value={field.value || null}
             ToolbarComponent={Toolbar}
             views={["date"]}
+            onChange={onChange}
           />
         </MuiPickersUtilsProvider>
         {infoTitle && <InfoTitle title={infoTitle} />}
