@@ -1,7 +1,8 @@
 import routes from "../routes";
 
 export const sideNavWidthLG = 530;
-export const sideNavWidthSM = 380;
+export const sideNavWidthMD = 380;
+export const sideNavWidthSM = 320;
 export const sideNavWidthCollapsed = 146;
 
 export const portraitOrientationQueryIPads =

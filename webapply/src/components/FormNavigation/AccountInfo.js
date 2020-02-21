@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { makeStyles } from "@material-ui/styles";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +11,50 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { accountsInfo } from "./constants";
 import routes from "../../routes";
 
-import { useStyles } from "./styled";
+export const useStyles = makeStyles(theme => ({
+  contentContainer: {
+    margin: 0,
+    width: "100%",
+    maxWidth: 340,
+    [theme.breakpoints.up("xl")]: {
+      maxWidth: "auto",
+      width: "auto",
+      paddingRight: "25px"
+    }
+  },
+  sectionTitle: {
+    maxWidth: 340,
+    color: "#fff",
+    fontSize: "48px",
+    lineHeight: "1.17",
+    fontWeight: 600,
+    fontFamily: "Open Sans",
+    marginBottom: 20,
+    whiteSpace: "pre-line",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 38
+    },
+    [theme.breakpoints.only("xs")]: {
+      marginBottom: 10,
+      fontSize: 32,
+      lineHeight: "36px"
+    }
+  },
+  sectionSubtitle: {
+    fontSize: "16px",
+    lineHeight: "1.5",
+    color: "#fff",
+    marginBottom: 60,
+    maxWidth: 300,
+    display: "block",
+    fontWeight: "normal",
+    fontFamily: "Open Sans",
+    whiteSpace: "pre-wrap",
+    [theme.breakpoints.only("xs")]: {
+      marginBottom: 57
+    }
+  }
+}));
 
 export const AccountInfo = () => {
   const classes = useStyles();

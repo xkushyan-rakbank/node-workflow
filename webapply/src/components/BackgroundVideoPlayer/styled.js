@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { normalScrollHeight } from "../../constants";
-import { sideNavWidthCollapsed, sideNavWidthLG, sideNavWidthSM } from "../../constants/styles";
+import { sideNavWidthCollapsed, sideNavWidthLG, sideNavWidthMD } from "../../constants/styles";
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -48,7 +48,7 @@ export const useStyles = makeStyles(theme => ({
       left: sideNavWidthCollapsed
     },
     [theme.breakpoints.up("md")]: {
-      left: sideNavWidthSM
+      left: sideNavWidthMD
     },
     [theme.breakpoints.up("lg")]: {
       left: sideNavWidthLG

@@ -10,6 +10,8 @@ import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
 import { formStepper, searchProspectStepper } from "../../constants";
+import { Blob } from "./Blob";
+import { ReactComponent as LogoSmall } from "../../assets/images/logo-small.svg";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
@@ -33,7 +35,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),
     isOpen: isSwitcherShow,
-    hasVideo: routes.accountsComparison === pathname
+    accountsComparisonPage: routes.accountsComparison === pathname
   });
 
   const isChatVisible =
@@ -49,43 +51,47 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
       routes.comeBackLoginVerification
     ].includes(pathname);
 
-  const toggleSwitcherShow = () => setIsSwitcherShow(!isSwitcherShow);
-
   return (
     <div className={cx(classes.formNav, classes.formNavBg, { active: isCurrentSectionVideo })}>
-      <Header />
-      <IslamicBankingSwitcherMobile
-        className={classes.formNavBg}
-        isSwitcherShow={isSwitcherShow}
-        toggleSwitcherShow={toggleSwitcherShow}
-      >
-        <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-          What banking option do you prefer?
-        </Typography>
-      </IslamicBankingSwitcherMobile>
-      {checkIsShowAccountInfo(pathname) ? (
-        <AccountInfo />
-      ) : (
-        pathname !== routes.login && (
-          <ul>
-            {(pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper).map(
-              currentStep => (
-                <FormNavigationStep
-                  key={currentStep.step}
-                  title={currentStep.title}
-                  activeStep={pathname === currentStep.path || pathname === currentStep.relatedPath}
-                  filled={(getRouteConfig() || {}).step > currentStep.step}
-                />
-              )
-            )}
-          </ul>
-        )
-      )}
-      {isChatVisible && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <Chat />
-        </Suspense>
-      )}
+      <Blob className={classes.blob} />
+      <LogoSmall className={classes.logoSmall} />
+      <div className={cx(classes.formNavContent, classes.disabled)}>
+        <Header />
+        <IslamicBankingSwitcherMobile
+          className={classes.formNavBg}
+          isSwitcherShow={isSwitcherShow}
+          toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
+        >
+          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+            What banking option do you prefer?
+          </Typography>
+        </IslamicBankingSwitcherMobile>
+        {checkIsShowAccountInfo(pathname) ? (
+          <AccountInfo />
+        ) : (
+          pathname !== routes.login && (
+            <ul>
+              {(pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper).map(
+                currentStep => (
+                  <FormNavigationStep
+                    key={currentStep.step}
+                    title={currentStep.title}
+                    activeStep={
+                      pathname === currentStep.path || pathname === currentStep.relatedPath
+                    }
+                    filled={(getRouteConfig() || {}).step > currentStep.step}
+                  />
+                )
+              )}
+            </ul>
+          )
+        )}
+        {isChatVisible && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Chat />
+          </Suspense>
+        )}
+      </div>
     </div>
   );
 };

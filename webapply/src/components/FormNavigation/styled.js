@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { sideNavWidthSM, sideNavWidthLG, sideNavWidthCollapsed } from "../../constants/styles";
+import {
+  sideNavWidthMD,
+  sideNavWidthLG,
+  sideNavWidthCollapsed,
+  sideNavWidthSM
+} from "../../constants/styles";
 import { ELITE, ISLAMIC, STANDART } from "../../utils/useBlobColor/constants";
 
 const blobImages = {
@@ -15,44 +20,151 @@ const blobImages = {
   [`${ISLAMIC}M`]: require("../../assets/images/bg-blobs/bg-blob-m-green.svg")
 };
 
+const blobGradient = {
+  [STANDART]: "standart",
+  [ELITE]: "elite",
+  [ISLAMIC]: "islamic"
+};
+
 export const useStyles = makeStyles(theme => ({
-  formNav: ({ isSmallBg, isOpen, hasVideo }) => ({
+  blob: {
+    position: "absolute",
+    top: "50%",
+    width: "calc(380/768*100vh)",
+    zIndex: -1,
+    right: 0,
+    minHeight: "100vh",
+    pointerEvents: "none",
+    [theme.breakpoints.only("xs")]: {
+      display: "none"
+    }
+  },
+  formNav: {
     position: "relative",
-    zIndex: "11",
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    paddingTop: 100,
-    paddingLeft: 16,
-    paddingRight: 16,
-    transition: "all .3s",
-    height: (() => {
-      if (isOpen) return "calc(100vh - 50px)";
-      if (isSmallBg) return 190;
-      return 290;
-    })(),
-    marginBottom: isOpen && hasVideo ? "calc(-100vh + 220px)" : 0,
-    [theme.breakpoints.up("sm")]: {
-      height: "100vh",
-      paddingTop: "18vh",
-      paddingLeft: 42,
-      paddingRight: 0,
-      boxSizing: "border-box",
-      position: "fixed",
-      top: 0
+    zIndex: 11,
+    transition: theme.transitions.default,
+    "& $formNavContent": {
+      display: "flex",
+      flexDirection: "column",
+      transition: theme.transitions.default
     },
-    [theme.breakpoints.only("sm")]: {
-      width: sideNavWidthCollapsed,
-      "&:hover, &.active": {
-        width: sideNavWidthSM
+    [theme.breakpoints.only("xs")]: {
+      marginBottom: ({ isOpen, accountsComparisonPage }) =>
+        isOpen && accountsComparisonPage ? "calc(-100vh + 220px)" : 0,
+      width: "100%",
+      paddingTop: 100,
+      height: ({ isOpen, isSmallBg }) => {
+        if (isOpen) return "calc(100vh - 50px)";
+        if (isSmallBg) return 190;
+        return 290;
+      },
+      "& $formNavContent": {
+        paddingLeft: 16,
+        paddingRight: 16
       }
     },
-    [theme.breakpoints.only("md")]: {
-      width: sideNavWidthSM
+    [theme.breakpoints.up("sm")]: {
+      width: sideNavWidthMD,
+      height: "100vh",
+      position: "fixed",
+      top: 0,
+      "& > svg:first-child": {
+        transition: theme.transitions.default,
+        transform: "translate(0, -50%)",
+        "& path": {
+          transition: theme.transitions.default,
+          "&:nth-child(1)": {
+            fill: ({ color }) => `url(#${blobGradient[color]}-3)`
+          },
+          "&:nth-child(2)": {
+            fill: ({ color }) => `url(#${blobGradient[color]}-1)`
+          },
+          "&:nth-child(3)": {
+            fill: ({ color }) => `url(#${blobGradient[color]}-2)`
+          },
+          "&:nth-child(4)": {
+            fill: ({ color }) => `url(#${blobGradient[color]}-3)`
+          }
+        }
+      },
+      "&:before": {
+        transition: theme.transitions.default,
+        content: "''",
+        position: "absolute",
+        zIndex: -1,
+        left: 0,
+        top: 0,
+        bottom: 0,
+        minWidth: 50,
+        width: `calc(${sideNavWidthMD}px - 380/768*100vh + 50px)`,
+        pointerEvents: "none",
+        background: ({ color }) => {
+          switch (color) {
+            case ELITE:
+              return "linear-gradient(to bottom, #8E2141, #B55774)";
+            case ISLAMIC:
+              return "#417C35";
+            default:
+              return "linear-gradient(to bottom, #E9320F, #EA1C44)";
+          }
+        }
+      },
+      "& $formNavContent": {
+        width: sideNavWidthMD,
+        paddingTop: 168,
+        paddingLeft: 40,
+        paddingRight: 40,
+        boxSizing: "border-box"
+      }
+    },
+    [theme.breakpoints.only("sm")]: {
+      width: ({ accountsComparisonPage }) =>
+        accountsComparisonPage ? sideNavWidthMD : sideNavWidthSM,
+      "& $formNavContent": {
+        width: ({ accountsComparisonPage }) =>
+          accountsComparisonPage ? sideNavWidthMD : sideNavWidthSM,
+        opacity: 1
+      },
+      "& $logoSmall": {
+        opacity: 0
+      },
+      "&:not(:hover):not(.active), &:not(.active):not(:hover)": {
+        width: ({ accountsComparisonPage }) =>
+          accountsComparisonPage ? sideNavWidthCollapsed : sideNavWidthSM,
+        "&:before": {
+          width: ({ accountsComparisonPage }) =>
+            accountsComparisonPage
+              ? `calc(${sideNavWidthCollapsed}px - 380/768*100vh*0.4 + 50px)`
+              : `calc(${sideNavWidthSM}px - 380/768*100vh*0.4 + 50px)`
+        },
+        "& > svg:first-child": {
+          transform: ({ accountsComparisonPage }) =>
+            accountsComparisonPage
+              ? "translate(30%, -50%) scaleX(0.4)"
+              : "translate(0, -50%) scaleX(1)",
+          "& path": {
+            "&:not(:first-child)": {
+              fillOpacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 0 : 1)
+            }
+          }
+        },
+        "& $formNavContent": {
+          opacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 0 : 1)
+        },
+        "& $logoSmall": {
+          opacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 1 : 0)
+        }
+      }
     },
     [theme.breakpoints.up("lg")]: {
       width: sideNavWidthLG,
-      paddingLeft: 80
+      "&:before": {
+        width: `calc(${sideNavWidthLG}px - 380/768*100vh + 50px)`
+      },
+      "& $formNavContent": {
+        width: sideNavWidthLG,
+        paddingLeft: 80
+      }
     },
     "& ul": {
       margin: "0",
@@ -81,19 +193,30 @@ export const useStyles = makeStyles(theme => ({
         direction: "ltr"
       }
     }
-  }),
+  },
+  formNavContent: {
+    [theme.breakpoints.only("sm")]: {
+      opacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 0 : 1)
+    }
+  },
+  logoSmall: {
+    opacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 1 : 0),
+    position: "absolute",
+    pointerEvents: "none",
+    top: 30,
+    left: 40,
+    transition: theme.transitions.default,
+    display: "none",
+    [theme.breakpoints.only("sm")]: {
+      display: "block"
+    }
+  },
   formNavBg: {
     [theme.breakpoints.only("xs")]: {
       backgroundImage: ({ color, isSmallBg }) =>
         `url(${blobImages[`${color}${isSmallBg ? "S" : "M"}`]})`,
       backgroundSize: "cover",
       backgroundPosition: "center bottom"
-    },
-    [theme.breakpoints.up("sm")]: {
-      backgroundImage: ({ color }) => `url(${blobImages[color]})`,
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "right center"
     }
   },
   contentContainer: {
@@ -115,6 +238,9 @@ export const useStyles = makeStyles(theme => ({
     fontFamily: "Open Sans",
     marginBottom: 20,
     whiteSpace: "pre-line",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 38
+    },
     [theme.breakpoints.only("xs")]: {
       marginBottom: 10,
       fontSize: 32,

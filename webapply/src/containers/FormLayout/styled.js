@@ -1,8 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
+import routes from "../../routes";
 
 import {
   routerToAddPaddingInSlider,
   sideNavWidthSM,
+  sideNavWidthMD,
   sideNavWidthLG,
   sideNavWidthCollapsed
 } from "../../constants/styles";
@@ -58,10 +60,11 @@ export const useStyles = makeStyles(theme => ({
       }
     },
     [theme.breakpoints.up("sm")]: {
-      paddingLeft: sideNavWidthCollapsed
+      paddingLeft: ({ pathname }) =>
+        pathname === routes.accountsComparison ? sideNavWidthCollapsed : sideNavWidthSM
     },
     [theme.breakpoints.up("md")]: {
-      paddingLeft: sideNavWidthSM
+      paddingLeft: sideNavWidthMD
     },
     [theme.breakpoints.up("lg")]: {
       paddingLeft: sideNavWidthLG
@@ -79,7 +82,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   mainContainer: {
-    width: "780px",
+    width: ({ pathname }) => (pathname === routes.accountsComparison ? 780 : 634),
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
