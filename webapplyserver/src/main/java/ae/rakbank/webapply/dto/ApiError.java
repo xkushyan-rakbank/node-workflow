@@ -39,14 +39,12 @@ public class ApiError {
 
 	public ApiError(HttpStatus status) {
 		this();
-		initTimestamp();
 		this.status = status;
 		this.statusCode = status.value();
 	}
 
 	public ApiError(HttpStatus status, Throwable ex) {
 		this();
-		initTimestamp();
 		this.status = status;
 		this.statusCode = status.value();
 		this.message = "Unexpected error";
@@ -55,7 +53,6 @@ public class ApiError {
 
 	public ApiError(HttpStatus status, String message, String debugMessage) {
 		this();
-		initTimestamp();
 		this.status = status;
 		this.statusCode = status.value();
 		this.message = message;
@@ -64,7 +61,6 @@ public class ApiError {
 
 	public ApiError(HttpStatus status, String message, String debugMessage, Throwable ex) {
 		this();
-		initTimestamp();
 		this.status = status;
 		this.statusCode = status.value();
 		this.message = message;
