@@ -27,19 +27,21 @@ export const uploadClient = axios.create({
   baseURL: "https://uatrmtc.rakbankonline.ae"
 });
 
-const instance = axios.create({
+const apiClient = axios.create({
   baseURL: getBaseURL()
 });
 
-instance.interceptors.request.use(config => ({
-  ...config,
-  headers: {
-    ...config.headers,
-    [REQUEST_ID_HEADER]: nanoid()
-  }
-}));
+[apiClient, uploadClient].forEach(instance => {
+  instance.interceptors.request.use(config => ({
+    ...config,
+    headers: {
+      ...config.headers,
+      [REQUEST_ID_HEADER]: nanoid()
+    }
+  }));
+});
 
-instance.interceptors.request.use(config => {
+apiClient.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
 
   if (encryptionEnabled && rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
@@ -63,17 +65,19 @@ instance.interceptors.request.use(config => {
   return config;
 });
 
-instance.interceptors.response.use(response => {
-  const accessToken = response.headers.accesstoken || response.headers.AccessToken;
+[apiClient, uploadClient].forEach(instance => {
+  instance.interceptors.response.use(response => {
+    const accessToken = response.headers.accesstoken || response.headers.AccessToken;
 
-  if (accessToken) {
-    store.dispatch(setAccessToken(accessToken));
-  }
+    if (accessToken) {
+      store.dispatch(setAccessToken(accessToken));
+    }
 
-  return response;
+    return response;
+  });
 });
 
-instance.interceptors.response.use(
+apiClient.interceptors.response.use(
   response => {
     const { symKey } = response.config;
 
@@ -135,28 +139,28 @@ instance.interceptors.response.use(
         store.dispatch(setError(errors));
         notificationOptions = { title: "ReCaptchaError", message: errors };
       } else if (status === 400 && errors) {
-        if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
-          notificationOptions = null;
-        } else {
-          store.dispatch(setInputsErrors(errors));
-          if (errorType === "FieldsValidation") {
-            notificationOptions = {
-              title: "Validation Error On Server",
-              message: get(jsonData, "errors[0].message", "Validation Error")
-            };
-          }
+        store.dispatch(setInputsErrors(errors));
+        if (errorType === "FieldsValidation") {
+          notificationOptions = {
+            title: "Validation Error On Server",
+            message: get(jsonData, "errors[0].message", "Validation Error")
+          };
         }
       } else {
         log(jsonData);
         try {
           if (jsonData.status) {
-            const errorMessages = errors.map(({ message }) => message);
-            const debugNotificationOptions = formatJsonData(jsonData);
+            if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+              notificationOptions = null;
+            } else {
+              const errorMessages = errors.map(({ message }) => message);
+              const debugNotificationOptions = formatJsonData(jsonData);
 
-            notificationOptions = {
-              message: errorMessages.join(", "),
-              ...debugNotificationOptions
-            };
+              notificationOptions = {
+                message: errorMessages.join(", "),
+                ...debugNotificationOptions
+              };
+            }
           }
         } catch (e) {
           log(e);
@@ -171,4 +175,4 @@ instance.interceptors.response.use(
   }
 );
 
-export default instance;
+export default apiClient;
