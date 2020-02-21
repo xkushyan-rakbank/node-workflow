@@ -110,19 +110,6 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     tabIndex="0"
                   />
                 </Grid>
-                <Grid item md={12} sm={12}>
-                  <Field
-                    name="designation"
-                    path={`${basePath}.employmentDetails.designation`}
-                    label="Designation"
-                    placeholder="Designation"
-                    component={Input}
-                    contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
-                    InputProps={{
-                      inputProps: { maxLength: MAX_DESIGNATION_LENGTH, tabIndex: 0 }
-                    }}
-                  />
-                </Grid>
                 {values.employmentType === OTHER_OPTION_VALUE && (
                   <Grid item md={12} sm={12}>
                     <Field
@@ -137,6 +124,19 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     />
                   </Grid>
                 )}
+                <Grid item md={12} sm={12}>
+                  <Field
+                    name="designation"
+                    path={`${basePath}.employmentDetails.designation`}
+                    label="Designation"
+                    placeholder="Designation"
+                    component={Input}
+                    contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
+                    InputProps={{
+                      inputProps: { maxLength: MAX_DESIGNATION_LENGTH, tabIndex: 0 }
+                    }}
+                  />
+                </Grid>
                 <Grid item sm={12}>
                   <FinalQuestionField
                     name={`isWorkAtTheCompany${index}`}
