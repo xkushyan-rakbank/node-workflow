@@ -13,7 +13,8 @@ export const useStyles = makeStyles(theme => ({
     "& + fieldset": {
       borderRadius: "8px ",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
-    }
+    },
+    backgroundColor: ({ disabled }) => (disabled ? "rgba(242, 242, 242, 0.5)" : "transparent")
   },
   valueContainer: {
     display: "flex",

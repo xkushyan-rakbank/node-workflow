@@ -293,6 +293,7 @@ export class GenesysChat {
               }
               break;
             }
+            default:
           }
         }
       });
@@ -304,6 +305,7 @@ export class GenesysChat {
           callSafely(callBack, [...this.chatMessages]);
           break;
         }
+        default:
       }
     }
   };

@@ -39,6 +39,8 @@ export const SearchedAppInfoComponent = ({
 
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
 
+  const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
+
   useEffect(() => {
     updateProspectId(match.params.id);
     getProspectInfo(match.params.id);
@@ -48,17 +50,15 @@ export const SearchedAppInfoComponent = ({
     if (isApplyEditApplication) {
       pushDisplayScreenToHistory();
     }
-  }, [isApplyEditApplication]);
+  }, [isApplyEditApplication, pushDisplayScreenToHistory]);
 
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
   }, [setIsDisplayConfirmDialog]);
 
-  const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
-
   const confirmHandler = useCallback(() => {
     setIsApplyEditApplication(true);
-  }, [setIsApplyEditApplication, pushDisplayScreenToHistory]);
+  }, [setIsApplyEditApplication]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);

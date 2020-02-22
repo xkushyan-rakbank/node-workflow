@@ -30,7 +30,7 @@ export const SelectAutocomplete = ({
   onChange = value => setFieldValue(field.name, value),
   ...props
 }) => {
-  const classes = useStyles(props);
+  const classes = useStyles({ disabled });
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const [hasFocus, setFocus] = useState(false);
