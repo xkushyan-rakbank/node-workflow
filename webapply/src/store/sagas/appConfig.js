@@ -30,7 +30,12 @@ import {
   ISLAMIC_BANK,
   CONTINUE
 } from "../../constants";
-import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
+import {
+  getEndpoints,
+  getIsIslamicBanking,
+  getAccountType,
+  getProspect
+} from "../selectors/appConfig";
 
 function* receiveAppConfigSaga({ payload }) {
   try {
@@ -74,7 +79,7 @@ function* receiveAppConfigSaga({ payload }) {
 
     yield put(saveProspectModel(prospectModel));
     yield put(receiveAppConfigSuccess(newConfig));
-    yield put(sendProspectToAPISuccess(newConfig.prospect));
+    yield put(sendProspectToAPISuccess());
   } catch (error) {
     yield put(receiveAppConfigFail(error));
   }
@@ -96,7 +101,7 @@ function* updateActionTypeSaga({ actionType }) {
 
 function* resetProspectSaga() {
   const state = yield select();
-  const prospect = state.sendProspectToAPI.prospectCopy;
+  const prospect = getProspect(state);
   const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
   yield put(setProspect(prospect));
 
