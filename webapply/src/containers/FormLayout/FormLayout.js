@@ -7,6 +7,7 @@ import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
+import { MobileNotification } from "../../components/Notifications";
 
 export const FormLayoutComponent = ({
   location: { key, pathname } = {},
@@ -34,10 +35,11 @@ export const FormLayoutComponent = ({
 
     updateViewId(viewId, isSendToApi);
     resetScreeningError();
-  }, [key, pathname, updateViewId, resetScreeningError]);
+  }, [pathname, updateViewId, resetScreeningError]);
 
   return (
     <NotificationsProvider>
+      <MobileNotification />
       <div className={classes.formLayout}>
         <FormNavigation />
         <div className={classes.formWrapper}>

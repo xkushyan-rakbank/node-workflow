@@ -88,6 +88,7 @@
   },
   "OtherConfigs": {
     "local": {
+      "OAuthRefreshGrantType": "refresh_token",
       "OAuthGrantType": "password",
       "OAuthClientId": "0e50fbe72ae115ae5812",
       "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
@@ -102,9 +103,11 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "6LcypLgUAAAAAMQvT4SqSDCbJ7JFYY7x0OGJTpTm",
       "ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R",
-      "RSAPublicKeyFilename": "RSAPublicKey.txt"
+      "RSAPublicKeyFilename": "RSAPublicKey.txt",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
     },
     "dev": {
+      "OAuthRefreshGrantType": "refresh_token",
       "OAuthGrantType": "password",
       "OAuthClientId": "0e50fbe72ae115ae5812",
       "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
@@ -119,9 +122,11 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
     },
     "uat": {
+      "OAuthRefreshGrantType": "refresh_token",
       "OAuthGrantType": "password",
       "OAuthClientId": "0e50fbe72ae115ae5812",
       "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
@@ -136,9 +141,11 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
     },
     "prod": {
+      "OAuthRefreshGrantType": "refresh_token",
       "OAuthGrantType": "password",
       "OAuthClientId": "0e50fbe72ae115ae5812",
       "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
@@ -153,7 +160,8 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
     }
   }
 }

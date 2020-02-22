@@ -9,7 +9,7 @@ import chatIcon from "./../../assets/webchat/black.svg";
 
 import { useStyles } from "./styled";
 
-const WebChatComponent = lazy(() => import("./components/WebChat"));
+const WebChatComponent = lazy(() => import("./components/Chat"));
 
 const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
@@ -51,9 +51,9 @@ const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
           <WebChatComponent
             onClose={closeWebChat}
             onMinimize={minimizeChat}
-            name={name}
-            mobileNumber={`${countryCode}${mobileNo}`}
-            email={email}
+            InitiatedCustomerName={name}
+            InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
+            EmailAddress={email}
             isAuth={false}
           />
         </Suspense>

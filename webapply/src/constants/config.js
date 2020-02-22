@@ -130,6 +130,7 @@ export const prospect = {
     },
     contactDetailsForTxnReconfirming: [
       {
+        TxnReconfirmingfullname: "",
         primaryMobileNo: "",
         primaryMobCountryCode: "",
         primaryPhoneNo: "",
@@ -290,7 +291,7 @@ export const prospect = {
         department: "",
         employerName: "",
         occupation: "",
-        totalExperienceYrs: 0,
+        totalExperienceYrs: "",
         employmentStartDate: ""
       },
       sameAsCompanyAddress: false,

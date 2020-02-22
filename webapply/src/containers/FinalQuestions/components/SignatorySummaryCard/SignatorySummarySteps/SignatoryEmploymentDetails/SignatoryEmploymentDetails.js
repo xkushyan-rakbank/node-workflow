@@ -19,7 +19,7 @@ import {
 } from "../../../../../../components/Form";
 import {
   EMPLOYMENT_TYPE_REGEX,
-  COMPANY_NAME_REGEX,
+  COMPANY_NAME_SPEC_CHAR_REGEX,
   DESIGNATION_REGEX,
   MAX_EXPERIENCE_YEARS_LENGTH,
   EXPERIENCE_YEARS_REGEX
@@ -46,7 +46,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   }),
   employerName: Yup.string()
     .required(getRequiredMessage("Employer name"))
-    .matches(COMPANY_NAME_REGEX, getInvalidMessage("Employer name")),
+    .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Employer name")),
   designation: Yup.string()
     .required(getRequiredMessage("Designation"))
     .matches(DESIGNATION_REGEX, getInvalidMessage("Designation"))
@@ -88,7 +88,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Qualification"
                     isSearchable
                     component={SelectAutocomplete}
-                    inputProps={{ tabIndex: 0 }}
+                    tabIndex="0"
                   />
                 </Grid>
                 <Grid item md={6} sm={12}>
@@ -107,9 +107,23 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                         If unemployed, then select &apos;Other&apos;
                       </>
                     }
-                    inputProps={{ tabIndex: 0 }}
+                    tabIndex="0"
                   />
                 </Grid>
+                {values.employmentType === OTHER_OPTION_VALUE && (
+                  <Grid item md={12} sm={12}>
+                    <Field
+                      name="otherEmploymentType"
+                      path={`${basePath}.employmentDetails.otherEmploymentType`}
+                      label="Other(Specify)"
+                      placeholder="Other(Specify)"
+                      component={Input}
+                      InputProps={{
+                        inputProps: { maxLength: MAX_EMPLOYMENT_TYPE_OTHER_LENGTH, tabIndex: 0 }
+                      }}
+                    />
+                  </Grid>
+                )}
                 <Grid item md={12} sm={12}>
                   <Field
                     name="designation"
@@ -122,10 +136,36 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                       inputProps: { maxLength: MAX_DESIGNATION_LENGTH, tabIndex: 0 }
                     }}
                   />
+                </Grid>
+                <Grid item sm={12}>
+                  <FinalQuestionField
+                    name={`isWorkAtTheCompany${index}`}
+                    label={`This Person works at ${companyName}`}
+                    component={Checkbox}
+                    onSelect={() => {
+                      const employerName =
+                        values.isWorkAtTheCompany || values.employerName ? "" : companyName;
+                      setFieldValue("employerName", employerName);
+                    }}
+                    inputProps={{ tabIndex: 0 }}
+                  />
+                </Grid>
+                <Grid item sm={12}>
+                  <Field
+                    name="employerName"
+                    path={`${basePath}.employmentDetails.employerName`}
+                    label="Employer name / Company name"
+                    placeholder="Employer name"
+                    component={Input}
+                    disabled={values[`isWorkAtTheCompany${index}`]}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
+                    }}
+                  />
                   <Field
                     name="totalExperienceYrs"
                     path={`${basePath}.employmentDetails.totalExperienceYrs`}
-                    label="Number of years of experience"
+                    label="Number of years of experience (Maximum 255 characters)"
                     placeholder="Work Experience"
                     component={Input}
                     multiline
@@ -148,46 +188,6 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                         AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
                       </>
                     }
-                  />
-                </Grid>
-                {values.employmentType === OTHER_OPTION_VALUE && (
-                  <Grid item md={12} sm={12}>
-                    <Field
-                      name="otherEmploymentType"
-                      path={`${basePath}.employmentDetails.otherEmploymentType`}
-                      label="Other(Specify)"
-                      placeholder="Other(Specify)"
-                      component={Input}
-                      InputProps={{
-                        inputProps: { maxLength: MAX_EMPLOYMENT_TYPE_OTHER_LENGTH, tabIndex: 0 }
-                      }}
-                    />
-                  </Grid>
-                )}
-                <Grid item sm={12}>
-                  <FinalQuestionField
-                    name={`isWorkAtTheCompany${index}`}
-                    label={`This Person works at ${companyName}`}
-                    component={Checkbox}
-                    onSelect={() => {
-                      const employerName =
-                        values.isWorkAtTheCompany || values.employerName ? "" : companyName;
-                      setFieldValue("employerName", employerName);
-                    }}
-                    inputProps={{ tabIndex: 0 }}
-                  />
-                </Grid>
-                <Grid item sm={12}>
-                  <Field
-                    name="employerName"
-                    path={`${basePath}.employmentDetails.employerName`}
-                    label="Employer name"
-                    placeholder="Employer name"
-                    component={Input}
-                    disabled={values[`isWorkAtTheCompany${index}`]}
-                    InputProps={{
-                      inputProps: { maxLength: MAX_COMPANY_NAME_LENGTH, tabIndex: 0 }
-                    }}
                   />
                 </Grid>
               </Grid>

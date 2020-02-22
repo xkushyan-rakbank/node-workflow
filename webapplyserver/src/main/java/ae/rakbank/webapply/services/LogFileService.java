@@ -1,6 +1,6 @@
 package ae.rakbank.webapply.services;
 
-import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.util.EnvUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +19,8 @@ public class LogFileService {
 
     @Value("${logging.dir}")
     private String logsDir;
-
     @Value("${logging.file.name}")
     private String defaultLogFileName;
-
     @Value("${default.web.apply.dir}")
     private String defaultWebApplyDir;
 
@@ -48,5 +46,4 @@ public class LogFileService {
         String webApplyDir = StringUtils.isNotBlank(EnvUtil.getWebApplyDir()) ? EnvUtil.getWebApplyDir() : defaultWebApplyDir;
         return webApplyDir + "/" + logsDir;
     }
-
 }

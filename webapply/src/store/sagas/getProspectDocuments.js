@@ -45,7 +45,7 @@ import {
 } from "../../utils/documents";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 
-function createUploader(prospectId, data, source, authToken) {
+function createUploader(prospectId, data, source, headers) {
   let emit;
   const chan = eventChannel(emitter => {
     emit = emitter;
@@ -62,7 +62,7 @@ function createUploader(prospectId, data, source, authToken) {
     data,
     source,
     onUploadProgress,
-    authToken
+    headers
   });
   return [uploadPromise, chan];
 }
@@ -77,7 +77,7 @@ function* uploadProgressWatcher(chan, documentKey) {
 function* getProspectDocumentsSaga() {
   const state = yield select();
   const headers = getAuthorizationHeader(state);
-  const prospectID = getProspectId(state) || "COSME0000000000000001";
+  const prospectID = getProspectId(state);
   const existDocuments = getDocuments(state);
   const config = cloneDeep(state.appConfig);
   const isDocsUploaded =
@@ -116,7 +116,7 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeho
     const state = yield select();
     const config = cloneDeep(state.appConfig);
     const headers = getAuthorizationHeader(state);
-    const prospectId = getProspectId(state) || "COSME0017";
+    const prospectId = getProspectId(state);
 
     const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, headers);
 

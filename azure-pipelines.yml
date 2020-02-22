@@ -44,8 +44,8 @@ jobs:
         condition: and(succeeded(),ne(variables.Dev_Build, 'True'))
       - bash : |
           cd webapply
-          npm install
-          npm run build
+          yarn
+          yarn build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
@@ -180,18 +180,19 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
           ArtifactName: 'WebapplyServer'
       - bash: |
-          npm install slack-cli -g
-          echo "The new Onboarding build is available for testing: " > release-notes.txt
+          yarn global add slack-cli
+          echo "=====================The new Onboarding build is available for testing:=========== " > release-notes.txt
           echo -e "\n" >> release-notes.txt
-          echo "  $BUILD_ID " >> release-notes.txt
+          echo " Release (UAT) with the Build ID: $BUILD_ID " >> release-notes.txt
           echo -e "\n" >> release-notes.txt
           echo -e "Changelog:" >> release-notes.txt
           echo -e "\n" >> release-notes.txt
-          GITLOG=`git log --merges --since="1 week ago" --pretty="%h %s\n" `
+          GITLOG=`git log --merges --since="1.days.ago" --pretty="Commit-id: %h - By : %an, %ar : %s\n" `
           echo -e $GITLOG >> release-notes.txt
-          echo -e "\n" >> release-notes.txt
+          echo -e "The files are :\n" >> release-notes.txt
           git diff --stat $(git describe --tags --abbrev=0)..HEAD >> release-notes.txt
           slackcli -h "co-releasenotes" -e :checkered_flag: -t $(SLACK_TOKEN) -u "Slackbot" -m "`cat release-notes.txt`"
+          echo -e "================END===================\n" >> release-notes.txt
         env:
           BUILD_NUMBER: $(Build.BuildNumber)
           BUILD_ID: $(Build.BuildId)
@@ -279,25 +280,20 @@ jobs:
        - Webapply
       condition:
        #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
-        and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+        and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
       pool:
        name: Hosted macOS
       steps:
       #prepare the Sonarqube for executing the sonar 
-      - task: SonarQubePrepare@4
+      - task: SonarCloudPrepare@1
         inputs:
-          SonarQube: 'sonarqube'
+          SonarCloud: 'RAKBANKSonarCloud'
+          organization: 'rakrepoadmin-github'
           scannerMode: 'CLI'
           configMode: 'file'
+
       #execute the sonar qube analyze in order to run the analyzes of the source code
-      - task: SonarQubeAnalyze@4
-      # publish the sonar report
-      - task: SonarQubePublish@4
+      - task: SonarCloudAnalyze@1
+      - task: SonarCloudPublish@1
         inputs:
           pollingTimeoutSec: '300'
-      - task: PowerShell@2
-        displayName: 'SonarQube Quality Gate status'
-        inputs:
-          filePath: 'webapply/get-sonarqube-quality-gate-status.ps1'
-          arguments: '-SonarServerName "http://104.211.240.147:9000/" -SonarProjectKey "onboarding_webapply" -SonarToken "d8c342584b463b68af3864c244f404440bdbfaf1"'
-        enabled: false

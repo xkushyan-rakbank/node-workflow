@@ -1,6 +1,7 @@
 package ae.rakbank.documentuploader.s3;
 
-import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.exception.S3ReadFileException;
+import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.dto.FileDto;
 import com.emc.object.s3.S3Client;
 import com.emc.object.s3.bean.GetObjectResult;
@@ -67,7 +68,6 @@ public class S3FileUploader {
 			}
 		}
 		logger.info("[End] uploadFilesToS3Bucket() method");
-
 	}
 
 	private void uploadToS3(S3Client s3) {
@@ -98,7 +98,6 @@ public class S3FileUploader {
 		} catch (IOException e) {
 			logger.error("Error occured while iterating files ", e);
 		}
-
 	}
 
 	private void moveFileFromScannedDocsToS3Object(Path path, File file) {

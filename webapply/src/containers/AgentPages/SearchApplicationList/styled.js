@@ -11,7 +11,13 @@ export const useStyles = makeStyles({
     borderBottom: "1px solid #e6e6e6",
     display: "flex",
     alignItems: "center",
-    padding: "24px 20px 19px 30px"
+    padding: "24px 20px 19px 30px",
+    color: "#263d4c"
+  },
+  disabled: {
+    opacity: "0.5",
+    pointerEvents: "none",
+    userSelect: "none"
   },
   fullName: {
     fontSize: "18px",

@@ -90,7 +90,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 datalistId="licenseIssuingAuthority"
                 isSearchable
                 component={SelectAutocomplete}
-                inputProps={{ tabIndex: 0 }}
+                tabIndex="0"
                 otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
               />
             </Grid>
@@ -104,7 +104,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 contextualHelpProps={{ isDisableHoverListener: false }}
                 isSearchable
                 component={SelectAutocomplete}
-                inputProps={{ tabIndex: 0 }}
+                tabIndex="0"
               />
             </Grid>
           </Grid>

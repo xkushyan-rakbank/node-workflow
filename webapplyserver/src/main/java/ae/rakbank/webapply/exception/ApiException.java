@@ -1,6 +1,6 @@
 package ae.rakbank.webapply.exception;
 
-import ae.rakbank.webapply.commons.ApiError;
+import ae.rakbank.webapply.dto.ApiError;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -44,6 +44,14 @@ public class ApiException extends RuntimeException {
         super(apiError.getMessage());
         initTimestamp();
         this.headers = headers;
+        this.status = status;
+        this.apiError = apiError;
+        log.error(API_EXCEPTION_MESSAGE);
+    }
+
+    public ApiException(ApiError apiError, HttpStatus status) {
+        super(apiError.getMessage());
+        initTimestamp();
         this.status = status;
         this.apiError = apiError;
         log.error(API_EXCEPTION_MESSAGE);

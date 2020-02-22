@@ -106,6 +106,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     fontFamily: "Open Sans",
     marginBottom: 20,
+    whiteSpace: "pre-line",
     [theme.breakpoints.only("xs")]: {
       marginBottom: 10,
       fontSize: 32,

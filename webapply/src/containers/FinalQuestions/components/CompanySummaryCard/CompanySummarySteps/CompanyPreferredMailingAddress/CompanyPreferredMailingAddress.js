@@ -83,7 +83,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
                   multiline
                   InputProps={{
-                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                    inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 1 }
                   }}
                   component={Input}
                 />
@@ -95,7 +95,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   component={Input}
                   multiline
                   InputProps={{
-                    inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
+                    inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 2 }
                   }}
                 />
                 <Field
@@ -105,7 +105,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="Emirate / City"
                   isSearchable
                   component={SelectAutocomplete}
-                  inputProps={{ tabIndex: 0 }}
+                  tabIndex="3"
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -116,7 +116,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="Type of Space Occupied"
                   isSearchable
                   component={SelectAutocomplete}
-                  inputProps={{ tabIndex: 0 }}
+                  tabIndex="1"
                 />
                 {values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE && (
                   <Field
@@ -126,7 +126,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                     placeholder="Other(Specify)"
                     component={Input}
                     InputProps={{
-                      inputProps: { maxLength: MAX_OTHER_FIELD_LENGTH, tabIndex: 0 }
+                      inputProps: { maxLength: MAX_OTHER_FIELD_LENGTH, tabIndex: 2 }
                     }}
                   />
                 )}
@@ -137,7 +137,10 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   placeholder="AB1234"
                   component={Input}
                   InputProps={{
-                    inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
+                    inputProps: {
+                      maxLength: MAX_PO_BOX_NUMBER_LENGTH,
+                      tabIndex: values.typeOfSpaceOccupied.spaceType === OTHER_OPTION_CODE ? 3 : 2
+                    }
                   }}
                 />
                 <Field name="country" disabled component={Input} />
