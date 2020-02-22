@@ -3,6 +3,7 @@ package ae.rakbank.documentuploader;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ae.rakbank.documentuploader.services.AuthorizationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +30,25 @@ public class DocumentUploaderTest {
 
 	@MockBean
 	private DocumentUploadService docUploadService;
+	@MockBean
+	private AuthorizationService authorizationService;
 
 	@Test
 	public void shouldSaveUploadedFile() throws Exception {
 		String uri = "/api/v1/banks/RAK/prospects/cosme0001/documents";
-		MockMultipartFile file = new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
+		MockMultipartFile file =
+				new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode fileInfo = objectMapper.createObjectNode();
 		fileInfo.put("documentKey", "SampleDocFromTestCase");
 
-		mockMvc.perform(MockMvcRequestBuilders.multipart(uri).file(file).param("fileInfo", fileInfo.toString()))
+		mockMvc.perform(MockMvcRequestBuilders.multipart(uri)
+				.file(file)
+				.header("authorization", "mock token")
+				.param("fileInfo", fileInfo.toString()))
 				.andExpect(status().is(200));
 
 		then(this.docUploadService).should().store(file, fileInfo, "cosme0001");
-
 	}
-
 }

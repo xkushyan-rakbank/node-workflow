@@ -62,7 +62,7 @@ public class DocumentUploadController {
 													   @PathVariable String prospectId) {
 
 		String jwtToken = getTokenFromAuthorizationHeader(authorization);
-		String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
+		authorizationService.validateAndUpdateJwtToken(jwtToken);
 
 		return processUploadRequest(file, fileInfo, prospectId);
 
@@ -76,7 +76,7 @@ public class DocumentUploadController {
 														 @RequestParam(name = "fileInfo", required = false) String fileInfo,
 														 @PathVariable String prospectId) {
 		String jwtToken = getTokenFromAuthorizationHeader(authorization);
-		String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
+		authorizationService.validateAndUpdateJwtToken(jwtToken);
 
 		if (StringUtils.isBlank(fileInfo)) {
 			logger.error(String.format("The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s",
@@ -96,7 +96,7 @@ public class DocumentUploadController {
 											   @PathVariable String documentKey) {
 
 		String jwtToken = getTokenFromAuthorizationHeader(authorization);
-		String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
+		authorizationService.validateAndUpdateJwtToken(jwtToken);
 
 		final FileDto file = docUploadService.findOneByDocumentKey(documentKey);
 		return ResponseEntity.ok().headers(configureHttpHeadersForFile(file)).body(file.getContent());
