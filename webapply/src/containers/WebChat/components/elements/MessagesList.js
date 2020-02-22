@@ -14,8 +14,14 @@ const MessagesListStyled = styled.div`
 `;
 
 const MessagesList = ({ data }) => {
-  const messages = data.map(({ message, utcTime, type, name }, index) => (
-    <Message key={index} body={message} date={utcTime} name={name} incoming={type !== "Client"} />
+  const messages = data.map(({ message, utcTime, type, name, id }) => (
+    <Message
+      key={`${id}${utcTime}`}
+      body={message}
+      date={utcTime}
+      name={name}
+      incoming={type !== "Client"}
+    />
   ));
 
   return <MessagesListStyled>{messages}</MessagesListStyled>;
