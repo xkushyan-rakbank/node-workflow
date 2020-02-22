@@ -88,22 +88,4 @@ public class ApiError {
 			return "Failed to serialize ApiError object, " + e.getMessage();
 		}
 	}
-
-
-	//Legacy implementation, not all the fields used
-	/*public JsonNode toJsonNode() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		ObjectNode errorResponse = objectMapper.createObjectNode();
-		errorResponse.put("errorType", status.name());
-		errorResponse.put("httpStatus", status.toString());
-		ArrayNode errors = objectMapper.createArrayNode();
-		ObjectNode error = objectMapper.createObjectNode();
-		error.put("errorType", "Internal Server Error");
-		error.put("message", message);
-		error.put("developerText", debugMessage);
-		error.put("exceptionClassName", exceptionClassName);
-		errors.add(error);
-		errorResponse.set("errors", errors);
-		return errorResponse;
-	}*/
 }

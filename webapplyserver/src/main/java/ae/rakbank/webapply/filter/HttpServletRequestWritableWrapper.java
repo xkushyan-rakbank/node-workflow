@@ -63,9 +63,7 @@ public class HttpServletRequestWritableWrapper extends HttpServletRequestWrapper
 
 			@Override
 			public void setReadListener(ReadListener listener) {
-
 			}
 		};
 	}
-
 }

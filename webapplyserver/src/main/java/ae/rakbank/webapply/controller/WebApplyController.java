@@ -1,10 +1,6 @@
 package ae.rakbank.webapply.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.AuthorizationService;
+import ae.rakbank.webapply.services.ConfigService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -40,7 +37,6 @@ import ae.rakbank.webapply.services.RecaptchaService;
 import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
 import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUEST_KEY;
 
-//@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -54,16 +50,16 @@ public class WebApplyController {
     private String appName;
 
     private final FileUtil fileUtil;
+    private final ServletContext servletContext;
+    private final DehClient dehClient;
     private final RecaptchaService captchaService;
     private final CSRFTokenService csrfTokenService;
-    private final ServletContext servletContext;
     private final AuthorizationService authorizationService;
-    private final DehClient dehClient;
+    private final ConfigService configService;
 
-    private JsonNode appConfigJSON = null;
     private JsonNode dehURIs = null;
     private String dehBaseUrl = null;
-    private JsonNode smeProspectJSON = null;
+
     private String[] roles = {"customer", "agent"};
     private String[] products = {"RAKStarter", "Current Account", "RAKelite"};
     private String[] segments = {"sme", "retail"};
@@ -71,18 +67,14 @@ public class WebApplyController {
 
     @PostConstruct
     public void init() {
-        appConfigJSON = fileUtil.getAppConfigJSON();
+        JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         dehURIs = appConfigJSON.get("DehURIs");
         dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
-
-        smeProspectJSON = fileUtil.getSMEProspectJSON();
 
         try {
             loadAppInitialState();
         } catch (Exception e) {
             logger.error("error in preparing the config json and put the values in ServletContext", e);
-
-            //TODO check if this ok?
         }
     }
 
@@ -116,7 +108,7 @@ public class WebApplyController {
             return datalistResponse;
         }
 
-        JsonNode webApplyConfig = buildAppInitialState(segment, product, role, device, datalistJSON);
+        JsonNode webApplyConfig = configService.buildAppInitialState(segment, product, role, device, datalistJSON);
         HttpHeaders headers = new HttpHeaders();
 
         return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
@@ -149,7 +141,7 @@ public class WebApplyController {
             for (String device : devices) {
                 for (String product : products) {
                     for (String role : roles) {
-                        buildAppInitialState(segment, product, role, device, datalistJSON);
+                        configService.buildAppInitialState(segment, product, role, device, datalistJSON);
                     }
                 }
             }
@@ -190,7 +182,7 @@ public class WebApplyController {
         }
 
         JsonNode webApplyConfig;
-        webApplyConfig = buildAppInitialState(segment, product, role, device, dataListJSON);
+        webApplyConfig = configService.buildAppInitialState(segment, product, role, device, dataListJSON);
 
         return new ResponseEntity<>(webApplyConfig, headers, HttpStatus.OK);
     }
@@ -203,7 +195,7 @@ public class WebApplyController {
         logger.info("Begin createSMEProspect() method");
         logger.info(String.format("createSMEProspect() method args, RequestBody=[%s], segment=[%s]", requestBodyJSON.toString(), segment));
 
-        validateReCaptcha(requestBodyJSON, httpRequest);
+        captchaService.validateReCaptcha(requestBodyJSON, httpRequest);
 
         String url = dehBaseUrl + dehURIs.get("createProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
@@ -391,32 +383,12 @@ public class WebApplyController {
         String newJwtToken = authorizationService.createAgentJwtToken(requestBodyJSON.get("username").asText(),
                         requestBodyJSON.get("password").asText());
 
-        validateReCaptcha(requestBodyJSON, httpRequest);
+        captchaService.validateReCaptcha(requestBodyJSON, httpRequest);
 
         String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
 
         return dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestBodyJSON,
                 "login()", MediaType.APPLICATION_JSON, newJwtToken);
-    }
-
-    private void validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest httpRequest) {
-
-        if(EnvUtil.isRecaptchaEnable() && !requestBodyJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY)) {
-            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
-                    "recaptchaToken is required");
-            throw new ApiException(error, HttpStatus.BAD_REQUEST);
-        } else if (!EnvUtil.isRecaptchaEnable()) {
-            ((ObjectNode) requestBodyJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
-            return;
-        }
-
-        logger.info("Validate reCAPTCHA before saving applicant info.");
-
-        String recaptchaInRequest = requestBodyJSON.get(RECAPTCHA_TOKEN_REQUEST_KEY).asText();
-        String ip = httpRequest.getRemoteAddr();
-
-        captchaService.verifyRecaptcha(ip, recaptchaInRequest);
-        ((ObjectNode) requestBodyJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
     }
 
 
@@ -427,106 +399,11 @@ public class WebApplyController {
         return authorizationString.substring(7); // removes the "Bearer " prefix.
     }
 
-    private JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist) {
-        logger.info("Begin buildAppInitialState() method");
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode initStateJSON = objectMapper.createObjectNode();
 
-        setWebApplyEndpoints(objectMapper, initStateJSON, role);
-        initStateJSON.set("prospect", getProspect(segment));
 
-        boolean recaptchaEnable = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaEnable").asText("N").equals("Y");
-        String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
-        JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
-        initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
-//        initStateJSON.put("authorizationToken", jwtToken);
-        initStateJSON.put("datalist", datalist);
-        initStateJSON.put("recaptchaEnable", recaptchaEnable);
-        initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
-        initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());
-        initStateJSON.put("rakValuePlusReadMoreUrl", baseUrls.get("RAKvaluePlusReadMoreUrl").asText());
-        initStateJSON.put("rakValueMaxReadMoreUrl", baseUrls.get("RAKvalueMaxReadMoreUrl").asText());
-        initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
-        initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
 
-        String publicKey = fileUtil.getRSAPublicKey();
 
-        if (publicKey != null) {
-            initStateJSON.put("rsaPublicKey", publicKey);
-        }
 
-        String cacheKey = getCacheKey(segment, product, role, device);
-
-        String configJSON = initStateJSON.toString();
-        setCache(cacheKey, configJSON);
-
-        logger.info("End buildAppInitialState() method");
-        return initStateJSON;
-    }
-
-    private void setWebApplyEndpoints(ObjectMapper objectMapper, ObjectNode initStateJSON, String role) {
-        logger.info("Begin setWebApplyEndpoints() method");
-        ObjectNode endpointsJSON = objectMapper.createObjectNode();
-        endpointsJSON.put("baseUrl", appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("WebApplyBaseUrl").asText());
-        JsonNode webApplyURIs = appConfigJSON.get("WebApplyURIs");
-        Iterator<String> uris = webApplyURIs.fieldNames();
-        while (uris.hasNext()) {
-            String uriName = uris.next();
-            endpointsJSON.set(uriName, webApplyURIs.get(uriName));
-        }
-
-        // remove agent specific URIs
-        String[] agentURIs = {"authenticateUserUri"};
-        if (StringUtils.isBlank(role) || StringUtils.equalsIgnoreCase("customer", role)) {
-            for (String uri : agentURIs) {
-                endpointsJSON.remove(uri);
-            }
-        }
-
-        initStateJSON.set("endpoints", endpointsJSON);
-        logger.info("End setWebApplyEndpoints() method");
-    }
-
-    private boolean matchCriteria(JsonNode fieldConfig, String segment, String product, String role, String device) {
-        if (!fieldConfig.has("criteria")) {
-            return true;
-        }
-
-        JsonNode criteria = fieldConfig.get("criteria");
-        boolean roleMatched = true;
-        boolean segmentMatched = true;
-        boolean productMatched = true;
-        boolean deviceMatched = true;
-
-        if (criteria.has("roles")) {
-            List<String> roles = new ArrayList<>();
-            criteria.get("roles").forEach(node -> roles.add(node.asText()));
-            roleMatched = roles.isEmpty() || (StringUtils.isNotBlank(role) && roles.contains(role));
-        }
-        if (criteria.has("segments")) {
-            List<String> segments = new ArrayList<>();
-            criteria.get("segments").forEach(node -> segments.add(node.asText()));
-            segmentMatched = segments.isEmpty() || (StringUtils.isNotBlank(segment) && segments.contains(segment));
-        }
-        if (criteria.has("products")) {
-            List<String> products = new ArrayList<>();
-            criteria.get("products").forEach(node -> products.add(node.asText()));
-            productMatched = products.isEmpty() || (StringUtils.isNotBlank(product) && products.contains(product));
-        }
-        if (criteria.has("devices")) {
-            List<String> devices = new ArrayList<>();
-            criteria.get("devices").forEach(node -> devices.add(node.asText()));
-            deviceMatched = devices.isEmpty() || (StringUtils.isNotBlank(device) && devices.contains(device));
-        }
-        return roleMatched && segmentMatched && productMatched && deviceMatched;
-    }
-
-    private JsonNode getProspect(String segment) {
-        if ("sme".equalsIgnoreCase(segment)) {
-            return smeProspectJSON;
-        }
-        return null;
-    }
 
 
     // Datalist section

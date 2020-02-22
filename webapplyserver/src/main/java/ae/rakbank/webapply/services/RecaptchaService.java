@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import ae.rakbank.webapply.exception.ApiException;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
@@ -25,6 +28,8 @@ import ae.rakbank.webapply.dto.ApiError;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.RecaptchaUtil;
 import ae.rakbank.webapply.util.FileUtil;
+
+import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUEST_KEY;
 
 @Service
 @RequiredArgsConstructor
@@ -45,12 +50,32 @@ public class RecaptchaService {
 				+ appConfigJSON.get("ReCaptchaURIs").get("siteVerifyUri").asText();
 	}
 
-	public void verifyRecaptcha(String ip, String recaptchaToken) {
+	public void validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest httpRequest) {
+
+		if(EnvUtil.isRecaptchaEnable() && !requestBodyJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY)) {
+			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "reCAPTCHA Token is required",
+					"recaptchaToken is required");
+			throw new ApiException(error, HttpStatus.BAD_REQUEST);
+		} else if (!EnvUtil.isRecaptchaEnable()) {
+			((ObjectNode) requestBodyJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
+			return;
+		}
+
+		logger.info("Validate reCAPTCHA before saving applicant info.");
+
+		String recaptchaInRequest = requestBodyJSON.get(RECAPTCHA_TOKEN_REQUEST_KEY).asText();
+		String ip = httpRequest.getRemoteAddr();
+
+		verifyRecaptcha(ip, recaptchaInRequest);
+		((ObjectNode) requestBodyJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
+	}
+
+	private void verifyRecaptcha(String ip, String recaptchaToken) {
 		ResponseEntity<Map> recaptchaResponse = invokeReCaptchaEndpoint(ip, recaptchaToken);
 		validateReCaptchaResponse(ip, recaptchaResponse);
 	}
 
-	public ResponseEntity<Map> invokeReCaptchaEndpoint(String ip, String recaptchaToken) {
+	private ResponseEntity<Map> invokeReCaptchaEndpoint(String ip, String recaptchaToken) {
 		ResponseEntity<Map> recaptchaResponse;
 		Map<String, String> recaptchaMapRequest = new HashMap<>();
 		recaptchaMapRequest.put("secret", recaptchaSecret);

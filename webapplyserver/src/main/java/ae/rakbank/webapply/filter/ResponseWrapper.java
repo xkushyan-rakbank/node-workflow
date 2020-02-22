@@ -54,7 +54,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 				}
 			};
 		}
-
 		return output;
 	}
 
@@ -63,11 +62,9 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 		if (output != null) {
 			throw new IllegalStateException("getOutputStream() has already been called on this response.");
 		}
-
 		if (writer == null) {
 			writer = new PrintWriter(new OutputStreamWriter(capture, getCharacterEncoding()));
 		}
-
 		return writer;
 	}
 
@@ -88,12 +85,10 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 		} else if (output != null) {
 			output.close();
 		}
-
 		return capture.toByteArray();
 	}
 
 	public String getCaptureAsString() throws IOException {
 		return new String(getCaptureAsBytes(), getCharacterEncoding());
 	}
-
 }
