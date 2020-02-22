@@ -355,13 +355,16 @@ export class GenesysChat {
    */
 
   triggerDisconnectEvent = () => {
-    const disconnectData = {
-      operation: ChatOperationTypes.ChatDisconnect,
-      secureKey: this.secureKey
-    };
-    this.cometD.publish(CHAT_CHANNEL, disconnectData);
-    this.unSubscribe();
-    this.cometD.disconnect();
+    if (this.cometD.getStatus() === CONNECTED_STATUS) {
+      const disconnectData = {
+        operation: ChatOperationTypes.ChatDisconnect,
+        secureKey: this.secureKey
+      };
+      this.cometD.publish(CHAT_CHANNEL, disconnectData);
+      this.unSubscribe();
+      this.cometD.disconnect();
+    }
+
     GenesysChat.chatInstance = undefined;
   };
 
