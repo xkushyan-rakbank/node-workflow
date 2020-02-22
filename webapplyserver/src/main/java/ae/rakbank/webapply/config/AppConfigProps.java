@@ -1,4 +1,4 @@
-package ae.rakbank.documentuploader.commons;
+package ae.rakbank.webapply.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

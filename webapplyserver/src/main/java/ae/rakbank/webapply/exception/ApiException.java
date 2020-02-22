@@ -1,6 +1,6 @@
 package ae.rakbank.webapply.exception;
 
-import ae.rakbank.webapply.commons.ApiError;
+import ae.rakbank.webapply.dto.ApiError;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;

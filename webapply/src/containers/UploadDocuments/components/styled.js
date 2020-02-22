@@ -134,6 +134,10 @@ export const useStyles = makeStyles({
     padding: "0 25px",
     borderTop: "solid 1px rgba(230, 230, 230, 0.5)"
   },
+  disabled: {
+    pointerEvents: "none",
+    opacity: "0.6"
+  },
   ContentBox: {
     alignItems: "center",
     flexGrow: "1",

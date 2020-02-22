@@ -1,4 +1,4 @@
-package ae.rakbank.documentuploader.commons;
+package ae.rakbank.documentuploader.exception;
 
 public class DocumentUploadException extends Exception {
 

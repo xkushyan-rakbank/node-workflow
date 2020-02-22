@@ -1,8 +1,7 @@
-package ae.rakbank.webapply.controllers;
+package ae.rakbank.webapply.controller;
 
-import ae.rakbank.webapply.commons.ApiError;
+import ae.rakbank.webapply.dto.ApiError;
 import ae.rakbank.webapply.exception.ApiException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,7 +45,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
             apiError.setExceptionClassName(apiException.getClass().getSimpleName());
         }
 
-        return sendResponse(apiException, headers, status, apiError);
+        return new ResponseEntity<>(apiError.toJsonString(), headers, status);
     }
 
     @ExceptionHandler({ Exception.class })
@@ -58,18 +57,8 @@ public class AdviceController extends ResponseEntityExceptionHandler {
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         ApiError apiError = getDefaultApiError(exception, status, null);
-        return sendResponse(exception, headers, status, apiError);
-    }
 
-    private ResponseEntity<Object> sendResponse(Exception apiException, HttpHeaders headers, HttpStatus status, ApiError apiError) {
-        try {
-            String jsonString = apiError.toJsonString();
-            log.error(jsonString, apiException);
-            return new ResponseEntity<>(jsonString, headers, status);
-        } catch (JsonProcessingException e) {
-            log.error(e.getMessage(), e);
-            return new ResponseEntity<>("Failed to convert ApiError object to json: " + e.getMessage(), headers, status);
-        }
+        return new ResponseEntity<>(apiError.toJsonString(), headers, status);
     }
 
     private ApiError getDefaultApiError(Exception ex, HttpStatus status, String timestamp) {
@@ -77,7 +66,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         if (timestamp != null) {
             actualTimestamp = timestamp;
         } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApiError.timestampPattern);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ApiError.TIMESTAMP_PATTERN);
             actualTimestamp = LocalDateTime.now().format(formatter);
         }
 

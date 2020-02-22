@@ -40,7 +40,7 @@ import {
 } from "../../utils/documents";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 
-function createUploader(prospectId, data, source, authToken) {
+function createUploader(prospectId, data, source, headers) {
   let emit;
   const chan = eventChannel(emitter => {
     emit = emitter;
@@ -57,7 +57,7 @@ function createUploader(prospectId, data, source, authToken) {
     data,
     source,
     onUploadProgress,
-    authToken
+    headers
   });
   return [uploadPromise, chan];
 }

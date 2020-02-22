@@ -1,10 +1,10 @@
 package ae.rakbank.webapply.client;
 
-import ae.rakbank.webapply.commons.ApiError;
-import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.dto.ApiError;
+import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.helpers.CSRFTokenHelper;
-import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.services.CSRFTokenService;
+import ae.rakbank.webapply.util.FileUtil;
 import ae.rakbank.webapply.services.AuthorizationService;
 import ae.rakbank.webapply.util.DehUtil;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,7 +25,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
 
@@ -34,8 +33,8 @@ import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
 public class DehClient {
     private static final Logger logger = LoggerFactory.getLogger(DehClient.class);
 
-    private final FileHelper fileHelper;
-    private final CSRFTokenHelper csrfTokenHelper;
+    private final FileUtil fileUtil;
+    private final CSRFTokenService csrfTokenService;
     private final AuthorizationService authorizationService;
     private final DehUtil dehUtil;
 
@@ -44,9 +43,9 @@ public class DehClient {
 
     @PostConstruct
     public void init() {
-        appConfigJSON = fileHelper.getAppConfigJSON();
+        appConfigJSON = fileUtil.getAppConfigJSON();
         defaultDatalist = new ObjectMapper().createObjectNode();
-        defaultDatalist.setAll((ObjectNode) fileHelper.getDatalistJSON());
+        defaultDatalist.setAll((ObjectNode) fileUtil.getDatalistJSON());
     }
 
     public ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, String url, HttpMethod httpMethod,
@@ -104,7 +103,8 @@ public class DehClient {
         // ResponseEntity headers is immutable, so create new HttpHeaders object
         HttpHeaders headers = new HttpHeaders();
         headers.addAll(response.getHeaders());
-        headers.remove("Content-Length");
+        headers.remove(HttpHeaders.CONTENT_LENGTH);
+
         if (!StringUtils.isEmpty(updatedJwtToken)) {
             headers.add(JWT_TOKEN_KEY, updatedJwtToken);
         }
@@ -112,7 +112,7 @@ public class DehClient {
         logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
                 url, response.getStatusCodeValue(), response.getBody()));
 
-        csrfTokenHelper.createOrUpdateCsrfToken(httpRequest, headers);
+        csrfTokenService.createOrUpdateCsrfToken(httpRequest, headers);
 
         return new ResponseEntity<>(response.getBody(), headers, response.getStatusCode());
     }
@@ -137,8 +137,7 @@ public class DehClient {
 
         HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 
-        logger.info(String.format("Invoke API from %s method, Endpoint=[%s] ", methodName, url));
-        logger.info(String.format("Endpoint=[%s], request=%s", url, request.toString()));
+        logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request=%s", methodName, url, request.toString()));
 
         ResponseEntity<JsonNode> response;
         try {
@@ -162,7 +161,7 @@ public class DehClient {
         }
 
         ObjectNode datalist = (ObjectNode) response.getBody();
-        datalist.setAll((ObjectNode) fileHelper.getDatalistJSON());
+        datalist.setAll((ObjectNode) fileUtil.getDatalistJSON());
         populateDefaultDatalist(datalist);
         logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s]",
                 methodName, url, response.getStatusCodeValue()));
