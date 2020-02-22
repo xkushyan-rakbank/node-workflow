@@ -18,7 +18,7 @@ import {
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { resetProspect } from "../../store/actions/appConfig";
-import { getSendProspectToAPIInfo, getDatalist } from "../../store/selectors/appConfig";
+import { getDatalist } from "../../store/selectors/appConfig";
 import {
   stakeholdersSelector,
   stakeholdersState,
@@ -222,8 +222,7 @@ const mapStateToProps = state => {
     stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
     percentage: percentageSelector(state),
-    hasSignatories: checkIsHasSignatories(state),
-    ...getSendProspectToAPIInfo(state)
+    hasSignatories: checkIsHasSignatories(state)
   };
 };
 

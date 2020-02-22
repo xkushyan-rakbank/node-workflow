@@ -31,6 +31,8 @@ export const getSendProspectToAPIInfo = state => state.sendProspectToAPI || {};
 
 export const getIsSendingProspect = state => getSendProspectToAPIInfo(state).loading;
 
+export const getScreeningError = state => getSendProspectToAPIInfo(state).screeningError;
+
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
 export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
@@ -48,8 +50,6 @@ export const getProspectId = state => getGeneralInfo(state).prospectId;
 export const getProceedStatus = state => state.applicationStatus.isProceed;
 
 export const getServerErrorStatus = state => state.applicationStatus.serverErorr;
-
-export const getScreeningResults = state => state.sendProspectToAPI.screeningResults;
 
 export const getLoginParam = state => state.appConfig.login;
 
