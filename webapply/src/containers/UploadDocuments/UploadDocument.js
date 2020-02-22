@@ -6,6 +6,7 @@ import { CompanyDocuments } from "./components/CompanyDocuments";
 import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useStyles } from "./styled";
+import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
 
 export const UploadDocument = ({
   retrieveDocDetails,
@@ -19,7 +20,8 @@ export const UploadDocument = ({
   updateProspect,
   uploadedDocsCount,
   requiredDocsCount,
-  uploadErrorMessage
+  uploadErrorMessage,
+  isLoading
 }) => {
   const classes = useStyles();
 
@@ -35,7 +37,9 @@ export const UploadDocument = ({
       <p className="formDescription">
         Remember we asked you to have the papers ready? Now it’s time to upload them.
       </p>
-      {documents && (
+      {!isLoading ? (
+        <DocumentsSkeleton />
+      ) : (
         <>
           <div className={classes.sectionContainer}>
             <SectionTitle title="Company documents" className={classes.title} />
@@ -49,20 +53,18 @@ export const UploadDocument = ({
               uploadErrorMessage={uploadErrorMessage}
             />
           </div>
-          {documents.stakeholdersDocuments && (
-            <div className={classes.sectionContainer}>
-              <SectionTitle title="Stakeholders documents" />
-              <SignatoriesDocuments
-                documents={documents.stakeholdersDocuments}
-                signatories={signatories}
-                docUpload={docUpload}
-                cancelDocUpload={cancelDocUpload}
-                updateProspect={updateProspect}
-                progress={progress}
-                uploadErrorMessage={uploadErrorMessage}
-              />
-            </div>
-          )}
+          <div className={classes.sectionContainer}>
+            <SectionTitle title="Stakeholders documents" />
+            <SignatoriesDocuments
+              documents={documents.stakeholdersDocuments}
+              signatories={signatories}
+              docUpload={docUpload}
+              cancelDocUpload={cancelDocUpload}
+              updateProspect={updateProspect}
+              progress={progress}
+              uploadErrorMessage={uploadErrorMessage}
+            />
+          </div>
         </>
       )}
 
