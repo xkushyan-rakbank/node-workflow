@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { setToken } from "../../../store/actions/reCaptcha";
 import { loginInfoFormPromisify } from "../../../store/actions/loginForm";
 import { getIsRecaptchaEnable } from "../../../store/selectors/appConfig";
+import { setIsApplyEditApplication } from "../../../store/actions/searchProspect";
 import { LoginComponent } from "./Login";
 
 const mapStateToProps = state => ({
@@ -12,7 +13,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   login: loginInfoFormPromisify,
-  setToken
+  setToken,
+  setIsApplyEditApplication
 };
 
 export default connect(

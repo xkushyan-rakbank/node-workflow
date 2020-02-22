@@ -24,20 +24,16 @@ export const useDisplayScreenBasedOnViewId = () => {
       const isRetrieveMode = newApplicationInfo.retrieveMode;
       const isEditRedirect = location.pathname.includes(VIEW_IDS.SearchedAppInfo);
 
-      switch (true) {
-        case !isROScreens && isSubmit && isRetrieveMode:
-          history.push(`${smeBaseName}${routes.ApplicationSubmitted}`);
-          break;
-        case !isROScreens && isSubmit && !isRetrieveMode:
-          history.push(`${smeBaseName}${newApplicationInfo.reUploadDocuments}`);
-          break;
-        case isROScreens && (isEditRedirect || viewId === VIEW_IDS.SubmitApplication):
-          history.push(routes.companyInfo);
-          break;
-        default:
-          history.push(`${smeBaseName}${viewId}`);
-          break;
+      let url = `${smeBaseName}${viewId}`;
+      if (!isROScreens && isSubmit) {
+        url = isRetrieveMode
+          ? routes.ApplicationSubmitted
+          : `${smeBaseName}${newApplicationInfo.reUploadDocuments}`;
+      } else if (isEditRedirect || viewId === VIEW_IDS.SubmitApplication) {
+        url = routes.companyInfo;
       }
+
+      history.push(url);
     },
     [applicationInfo, isROScreens, history, location]
   );

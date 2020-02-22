@@ -19,8 +19,6 @@ export const SearchedAppInfoComponent = ({
   updateProspectId,
   retrieveDocDetails,
   getProspectInfo,
-  setIsApplyEditApplication,
-  isApplyEditApplication,
   prospectInfo
 }) => {
   const classes = useStyles();
@@ -51,9 +49,8 @@ export const SearchedAppInfoComponent = ({
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   const confirmHandler = useCallback(() => {
-    setIsApplyEditApplication(true);
     pushDisplayScreenToHistory();
-  }, [setIsApplyEditApplication, pushDisplayScreenToHistory]);
+  }, [pushDisplayScreenToHistory]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
