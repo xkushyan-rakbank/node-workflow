@@ -114,9 +114,9 @@
 			{
 				"primaryMobileNo": "",
 				"primaryMobCountryCode": "971",
-				"primaryPhoneNo": "",
-				"primaryPhoneCountryCode": "971",
-                "TxnReconfirmingfullname": ""
+                "TxnReconfirmingfullname": "",
+                "primaryPhoneNo": "",
+				"primaryPhoneCountryCode": "971"
 			}
 		]
 	},
