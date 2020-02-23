@@ -35,7 +35,7 @@ export const OTPformComponent = ({
   const resetOtpForm = useCallback(() => {
     setCode(Array(6).fill(""));
     setIsResetFocus(true);
-  }, []);
+  }, [setCode, setIsResetFocus]);
 
   useEffect(() => {
     if (isVerified) {
