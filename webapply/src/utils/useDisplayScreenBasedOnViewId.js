@@ -19,7 +19,6 @@ export const useDisplayScreenBasedOnViewId = () => {
     prospect => {
       const newApplicationInfo = prospect ? prospect.applicationInfo : applicationInfo;
       const viewId = newApplicationInfo.viewId || routes.companyInfo.replace(smeBaseName, "");
-
       const isSubmit = newApplicationInfo.actionType === ACTION_TYPES.submit;
       const isRetrieveMode = newApplicationInfo.retrieveMode;
       const isEditRedirect = location.pathname.includes(VIEW_IDS.SearchedAppInfo);
