@@ -7,7 +7,6 @@ import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStake
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { ConfirmDialog } from "../../components/Modals";
 import { Icon, ICONS } from "../../components/Icons";
 
 import {
@@ -17,7 +16,6 @@ import {
   setEditStakeholder
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import { resetProspect } from "../../store/actions/appConfig";
 import { getDatalist } from "../../store/selectors/appConfig";
 import {
   stakeholdersSelector,
@@ -38,7 +36,6 @@ const CompanyStakeholdersComponent = ({
   editableStakeholder,
   stakeholders,
   percentage,
-  resetProspect,
   stakeholdersIds,
   hasSignatories,
   datalist,
@@ -47,7 +44,7 @@ const CompanyStakeholdersComponent = ({
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
@@ -63,7 +60,7 @@ const CompanyStakeholdersComponent = ({
       setIsNewStakeholder(true);
       createNewStakeholder();
     }
-  }, [setIsNewStakeholder, createNewStakeholder, stakeholders.length, isShowingAddButton]);
+  }, [setIsNewStakeholder, createNewStakeholder, stakeholders.length]);
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
@@ -89,45 +86,18 @@ const CompanyStakeholdersComponent = ({
 
   const editStakeholderHandler = useCallback(
     index => {
-      if (editableStakeholder) {
-        resetProspect();
-      }
       changeEditableStakeholder(index);
       setIsNewStakeholder(false);
       setEditStakeholder(index, true);
     },
-    [
-      changeEditableStakeholder,
-      editableStakeholder,
-      resetProspect,
-      setEditStakeholder,
-      setIsNewStakeholder
-    ]
+    [changeEditableStakeholder, setEditStakeholder, setIsNewStakeholder]
   );
 
   const addNewStakeholder = useCallback(() => {
     setIsShowingAddButton(false);
-    if (editableStakeholder) {
-      setOpen(true);
-    } else {
-      setIsNewStakeholder(true);
-      createNewStakeholder();
-    }
-  }, [
-    setIsShowingAddButton,
-    editableStakeholder,
-    setOpen,
-    setIsNewStakeholder,
-    createNewStakeholder
-  ]);
-
-  const handleClose = () => setOpen(false);
-
-  const handleConfirm = () => {
-    resetProspect();
+    setIsNewStakeholder(true);
     createNewStakeholder();
-    setOpen(false);
-  };
+  }, [setIsShowingAddButton, setIsNewStakeholder, createNewStakeholder]);
 
   return (
     <>
@@ -204,12 +174,6 @@ const CompanyStakeholdersComponent = ({
           disabled={isDisableNextStep}
         />
       </div>
-      <ConfirmDialog
-        isOpen={open}
-        handleConfirm={handleConfirm}
-        handleClose={handleClose}
-        id="Stakeholder.message"
-      />
     </>
   );
 };
@@ -231,8 +195,7 @@ const mapDispatchToProps = {
   createNewStakeholder,
   changeEditableStakeholder,
   setEditStakeholder,
-  sendProspectToAPI: sendProspectToAPIPromisify,
-  resetProspect
+  sendProspectToAPI: sendProspectToAPIPromisify
 };
 
 export const CompanyStakeholders = connect(

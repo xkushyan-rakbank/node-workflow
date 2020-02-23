@@ -8,16 +8,13 @@ import {
   receiveAppConfigSuccess,
   receiveAppConfigFail,
   UPDATE_PROSPECT,
-  RESET_PROSPECT,
   setConfig,
-  setProspect,
   updateProspect,
   UPDATE_ACTION_TYPE,
   UPDATE_VIEW_ID,
   UPDATE_SAVE_TYPE,
   saveProspectModel
 } from "../actions/appConfig";
-import { updateStakeholdersIds } from "../actions/stakeholders";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 
 import { config } from "../../api/apiClient";
@@ -30,12 +27,7 @@ import {
   ISLAMIC_BANK,
   CONTINUE
 } from "../../constants";
-import {
-  getEndpoints,
-  getIsIslamicBanking,
-  getAccountType,
-  getProspect
-} from "../selectors/appConfig";
+import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
 
 function* receiveAppConfigSaga({ payload }) {
   try {
@@ -99,18 +91,6 @@ function* updateActionTypeSaga({ actionType }) {
   yield put(updateProspect({ "prospect.applicationInfo.actionType": actionType }));
 }
 
-function* resetProspectSaga() {
-  const state = yield select();
-  const prospect = getProspect(state);
-  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
-  yield put(setProspect(prospect));
-
-  if (prospect.signatoryInfo.length !== stakeholdersIds.length) {
-    stakeholdersIds.pop();
-    yield put(updateStakeholdersIds(stakeholdersIds));
-  }
-}
-
 function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
   if (isSendToApi) {
@@ -128,7 +108,6 @@ export default function* appConfigSaga() {
     takeLatest(UPDATE_PROSPECT, updateProspectSaga),
     takeLatest(UPDATE_ACTION_TYPE, updateActionTypeSaga),
     takeLatest(UPDATE_VIEW_ID, updateViewIdSaga),
-    takeLatest(UPDATE_SAVE_TYPE, updateSaveTypeSaga),
-    takeLatest(RESET_PROSPECT, resetProspectSaga)
+    takeLatest(UPDATE_SAVE_TYPE, updateSaveTypeSaga)
   ]);
 }
