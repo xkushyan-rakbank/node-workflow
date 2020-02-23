@@ -1,4 +1,5 @@
 import cometd from "cometd";
+import nanoid from "nanoid";
 import has from "lodash/has";
 import { callSafely } from "./GenericUtils";
 import { CHAT_URL, CHAT_CHANNEL, CONNECTED_STATUS, CHAT_CHANNEL_ID } from "../constants";
@@ -219,7 +220,7 @@ export class GenesysChat {
       message,
       utcTime,
       type: from.type,
-      id: index,
+      id: nanoid(),
       name
     };
 
