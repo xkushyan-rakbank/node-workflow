@@ -6,6 +6,7 @@ export const CANCEL_DOC_UPLOAD = "CANCEL_DOC_UPLOAD";
 export const START_DOC_UPLOAD = "START_DOC_UPLOAD";
 export const UPLOAD_FILES_FAIL = "UPLOAD_FILES_FAIL";
 export const UPLOAD_FILES_PROGRESS = "UPLOAD_FILES_PROGRESS";
+export const GET_PROSPECT_DOCUMENTS_SUCCESS = "GET_PROSPECT_DOCUMENTS_SUCCESS";
 
 export const retrieveDocDetails = () => {
   return { type: RETRIEVE_DOC_UPLOADER };
@@ -34,3 +35,5 @@ export const uploadFilesProgress = progress => {
 export const uploadFilesFail = error => {
   return { type: UPLOAD_FILES_FAIL, error };
 };
+
+export const getProspectDocumentsSuccess = () => ({ type: GET_PROSPECT_DOCUMENTS_SUCCESS });

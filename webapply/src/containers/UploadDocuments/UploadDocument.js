@@ -37,7 +37,7 @@ export const UploadDocument = ({
       <p className="formDescription">
         Remember we asked you to have the papers ready? Now it’s time to upload them.
       </p>
-      {!isLoading ? (
+      {isLoading ? (
         <DocumentsSkeleton />
       ) : (
         <>
@@ -45,10 +45,12 @@ export const UploadDocument = ({
             <SectionTitle title="Company documents" className={classes.title} />
             <CompanyDocuments documents={documents.companyDocuments} {...rest} />
           </div>
-          <div className={classes.sectionContainer}>
-            <SectionTitle title="Stakeholders documents" />
-            <SignatoriesDocuments documents={documents.stakeholdersDocuments} {...rest} />
-          </div>
+          {documents.stakeholdersDocuments && (
+            <div className={classes.sectionContainer}>
+              <SectionTitle title="Stakeholders documents" />
+              <SignatoriesDocuments documents={documents.stakeholdersDocuments} {...rest} />
+            </div>
+          )}
         </>
       )}
 

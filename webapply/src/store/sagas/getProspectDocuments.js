@@ -28,7 +28,8 @@ import {
   DELETE_EXTRA_DOC_UPLOAD_SUCCESS,
   uploadFilesProgress,
   CANCEL_DOC_UPLOAD,
-  uploadFilesFail
+  uploadFilesFail,
+  getProspectDocumentsSuccess
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
@@ -99,6 +100,7 @@ function* getProspectDocumentsSaga() {
 
     config.prospect.documents = { companyDocuments, stakeholdersDocuments };
     yield put(updateProspect(config));
+    yield put(getProspectDocumentsSuccess());
   } catch (error) {
     log(error);
   }

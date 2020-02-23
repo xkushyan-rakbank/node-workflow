@@ -77,14 +77,7 @@ export const getUrlsReadMore = state => ({
 
 export const getProspectDocuments = state => state.appConfig.prospect.documents;
 
-export const isLoadingDocuments = state => {
-  const existDocuments = getProspectDocuments(state);
-  return (
-    existDocuments &&
-    existDocuments.companyDocuments.length > 0 &&
-    existDocuments.stakeholdersDocuments
-  );
-};
+export const isLoadingDocuments = state => state.uploadDocuments.isLoading;
 
 const createGetDocsCountSelector = (filterDocuments = () => true) => state => {
   const documents = getProspectDocuments(state);
