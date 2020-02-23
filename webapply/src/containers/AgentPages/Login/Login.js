@@ -39,14 +39,16 @@ export const LoginComponent = ({
         loginData.recaptchaToken = recaptchaToken;
       }
       setIsLoading(true);
-      login(loginData)
-        .then(() => {
+      login(loginData).then(
+        () => {
           setIsApplyEditApplication(true);
-          history.push(routes.searchProspect);
-        })
-        .finally(() => {
           setIsLoading(false);
-        });
+          history.push(routes.searchProspect);
+        },
+        () => {
+          setIsLoading(false);
+        }
+      );
     },
     [login, recaptchaToken, isRecaptchaEnable, history]
   );
