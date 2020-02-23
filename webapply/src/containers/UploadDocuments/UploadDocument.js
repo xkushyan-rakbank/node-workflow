@@ -17,13 +17,15 @@ export const UploadDocument = ({
   uploadedDocsCount,
   requiredDocsCount,
   sendProspectToAPI,
+  getProspectDocumentsRequest,
   ...rest
 }) => {
   const classes = useStyles();
 
   useEffect(() => {
     retrieveDocDetails();
-  }, [retrieveDocDetails]);
+    getProspectDocumentsRequest();
+  }, [retrieveDocDetails, getProspectDocumentsRequest]);
 
   const goToSelectService = () => {
     sendProspectToAPI(NEXT).then(() => {

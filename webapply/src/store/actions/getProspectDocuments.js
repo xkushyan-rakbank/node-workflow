@@ -7,6 +7,8 @@ export const START_DOC_UPLOAD = "START_DOC_UPLOAD";
 export const UPLOAD_FILES_FAIL = "UPLOAD_FILES_FAIL";
 export const UPLOAD_FILES_PROGRESS = "UPLOAD_FILES_PROGRESS";
 export const GET_PROSPECT_DOCUMENTS_SUCCESS = "GET_PROSPECT_DOCUMENTS_SUCCESS";
+export const GET_PROSPECT_DOCUMENTS_FAIL = "GET_PROSPECT_DOCUMENTS_FAIL";
+export const GET_PROSPECT_DOCUMENTS_REQUEST = "GET_PROSPECT_DOCUMENTS_REQUEST";
 
 export const retrieveDocDetails = () => {
   return { type: RETRIEVE_DOC_UPLOADER };
@@ -37,3 +39,7 @@ export const uploadFilesFail = error => {
 };
 
 export const getProspectDocumentsSuccess = () => ({ type: GET_PROSPECT_DOCUMENTS_SUCCESS });
+
+export const getProspectDocumentsFail = () => ({ type: GET_PROSPECT_DOCUMENTS_FAIL });
+
+export const getProspectDocumentsRequest = () => ({ type: GET_PROSPECT_DOCUMENTS_REQUEST });

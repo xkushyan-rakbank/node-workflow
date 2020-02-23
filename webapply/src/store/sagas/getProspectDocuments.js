@@ -29,7 +29,8 @@ import {
   uploadFilesProgress,
   CANCEL_DOC_UPLOAD,
   uploadFilesFail,
-  getProspectDocumentsSuccess
+  getProspectDocumentsSuccess,
+  getProspectDocumentsFail
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
@@ -102,6 +103,7 @@ function* getProspectDocumentsSaga() {
     yield put(updateProspect(config));
     yield put(getProspectDocumentsSuccess());
   } catch (error) {
+    yield put(getProspectDocumentsFail());
     log(error);
   }
 }
