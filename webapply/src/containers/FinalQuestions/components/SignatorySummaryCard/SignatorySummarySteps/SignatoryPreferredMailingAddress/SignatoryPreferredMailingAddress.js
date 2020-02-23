@@ -116,7 +116,6 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   label="Street / Location"
                   placeholder="Street / Location"
                   component={Input}
-                  multiline
                   InputProps={{
                     inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
                   }}
