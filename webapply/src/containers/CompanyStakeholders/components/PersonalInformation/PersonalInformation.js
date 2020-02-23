@@ -123,7 +123,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 label="This stakeholder is a company"
                 component={Checkbox}
                 onChange={() => {
-                  resetForm();
                   setFieldValue("isShareholderACompany", !values.isShareholderACompany);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
