@@ -11,59 +11,59 @@ import java.io.*;
 
 public class HttpServletRequestWritableWrapper extends HttpServletRequestWrapper {
 
-	private final ByteArrayInputStream decryptedDataBAIS;
+    private final ByteArrayInputStream decryptedDataBAIS;
 
-	public HttpServletRequestWritableWrapper(ServletRequest request, byte[] decryptedData) {
-		super((HttpServletRequest)request);
-		decryptedDataBAIS = new ByteArrayInputStream(decryptedData);
-	}
+    public HttpServletRequestWritableWrapper(ServletRequest request, byte[] decryptedData) {
+        super((HttpServletRequest) request);
+        decryptedDataBAIS = new ByteArrayInputStream(decryptedData);
+    }
 
-	@Override
-	public String getHeader(String headerName) {
-		String headerValue = super.getHeader(headerName);
-		if ("Accept".equalsIgnoreCase(headerName)) {
-			return headerValue.replaceAll(MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE);
-		} else if ("Content-Type".equalsIgnoreCase(headerName)) {
-			return headerValue.replaceAll(MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE);
-		}
-		return headerValue;
-	}
+    @Override
+    public String getHeader(String headerName) {
+        String headerValue = super.getHeader(headerName);
+        if ("Accept".equalsIgnoreCase(headerName)) {
+            return headerValue.replaceAll(MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE);
+        } else if ("Content-Type".equalsIgnoreCase(headerName)) {
+            return headerValue.replaceAll(MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE);
+        }
+        return headerValue;
+    }
 
-	@Override
-	public String getContentType() {
-		String contentTypeValue = super.getContentType();
-		if (MediaType.TEXT_PLAIN_VALUE.equalsIgnoreCase(contentTypeValue)) {
-			return MediaType.APPLICATION_JSON_VALUE;
-		}
-		return contentTypeValue;
-	}
+    @Override
+    public String getContentType() {
+        String contentTypeValue = super.getContentType();
+        if (MediaType.TEXT_PLAIN_VALUE.equalsIgnoreCase(contentTypeValue)) {
+            return MediaType.APPLICATION_JSON_VALUE;
+        }
+        return contentTypeValue;
+    }
 
-	@Override
-	public BufferedReader getReader() throws UnsupportedEncodingException {
-		return new BufferedReader(new InputStreamReader(decryptedDataBAIS, "UTF-8"));
-	}
+    @Override
+    public BufferedReader getReader() throws UnsupportedEncodingException {
+        return new BufferedReader(new InputStreamReader(decryptedDataBAIS, "UTF-8"));
+    }
 
-	@Override
-	public ServletInputStream getInputStream() throws IOException {
-		return new ServletInputStream() {
-			@Override
-			public int read() {
-				return decryptedDataBAIS.read();
-			}
+    @Override
+    public ServletInputStream getInputStream() throws IOException {
+        return new ServletInputStream() {
+            @Override
+            public int read() {
+                return decryptedDataBAIS.read();
+            }
 
-			@Override
-			public boolean isFinished() {
-				return false;
-			}
+            @Override
+            public boolean isFinished() {
+                return false;
+            }
 
-			@Override
-			public boolean isReady() {
-				return false;
-			}
+            @Override
+            public boolean isReady() {
+                return false;
+            }
 
-			@Override
-			public void setReadListener(ReadListener listener) {
-			}
-		};
-	}
+            @Override
+            public void setReadListener(ReadListener listener) {
+            }
+        };
+    }
 }

@@ -1,17 +1,22 @@
 package ae.rakbank.webapply.services;
 
+import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.util.Iterator;
 
 @Slf4j
@@ -20,6 +25,7 @@ import java.util.Iterator;
 public class ConfigService {
 
     private final FileUtil fileUtil;
+    private final ServletContext servletContext;
 
     private JsonNode smeProspectJSON = null;
     private JsonNode appConfigJSON = null;
@@ -28,19 +34,12 @@ public class ConfigService {
     public void init() {
         appConfigJSON = fileUtil.getAppConfigJSON();
         smeProspectJSON = fileUtil.getSMEProspectJSON();
-
-        try {
-            loadAppInitialState();
-        } catch (Exception e) {
-            logger.error("error in preparing the config json and put the values in ServletContext", e);
-        }
     }
 
     public JsonNode buildAppInitialState(String segment, String product, String role, String device, JsonNode datalist) {
         log.info("Begin buildAppInitialState() method");
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode initStateJSON = objectMapper.createObjectNode();
-
         setWebApplyEndpoints(objectMapper, initStateJSON, role);
         initStateJSON.set("prospect", getProspect(segment));
 
@@ -58,18 +57,50 @@ public class ConfigService {
         initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
 
         String publicKey = fileUtil.getRSAPublicKey();
-
         if (publicKey != null) {
             initStateJSON.put("rsaPublicKey", publicKey);
         }
-
         String cacheKey = getCacheKey(segment, product, role, device);
-
         String configJSON = initStateJSON.toString();
+
         setCache(cacheKey, configJSON);
 
         log.info("End buildAppInitialState() method");
         return initStateJSON;
+    }
+
+    public ResponseEntity<JsonNode> getCachedData(HttpHeaders headers, String cacheKey, String cachedValue) {
+        log.info("cached data found for key - " + cacheKey);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode cachedJson;
+        try {
+            cachedJson = mapper.readTree(cachedValue);
+        } catch (IOException e) {
+            throw new ApiException("Failed to parse cached data, the data: " + cachedValue, e);
+        }
+        return new ResponseEntity<>(cachedJson, headers, HttpStatus.OK);
+    }
+
+    public String getCacheKey(String segment, String product, String role, String device, String suffix) {
+        if (suffix != null) {
+            return String.join("_", segment, product, role, device, suffix).toUpperCase().replace(" ", "_");
+        } else {
+            return String.join("_", segment, product, role, device).toUpperCase().replace(" ", "_");
+        }
+    }
+
+    public String getCache(String key) {
+        log.info("retrieve data from cache for key - " + key);
+        return (String) servletContext.getAttribute(key);
+    }
+
+    private void setCache(String key, String data) {
+        log.info("adding data to cache key - " + key);
+        servletContext.setAttribute(key, data);
+    }
+
+    private String getCacheKey(String segment, String product, String role, String device) {
+        return getCacheKey(segment, product, role, device, null);
     }
 
     private void setWebApplyEndpoints(ObjectMapper objectMapper, ObjectNode initStateJSON, String role) {
