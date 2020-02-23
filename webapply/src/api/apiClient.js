@@ -139,7 +139,7 @@ export const uploadProspectDocument = {
 
 export const downloadProspectDocument = {
   get: (prospectId, documentKey, headers) => {
-    return httpClient.request({
+    return uploadClient.request({
       url: buildURI("getDocumentByIdUri", prospectId, documentKey),
       method: "GET",
       responseType: "blob",

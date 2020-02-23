@@ -15,6 +15,8 @@ import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import mapValues from "lodash/mapValues";
+import { saveAs } from "file-saver";
+
 import {
   getProspectDocuments,
   uploadProspectDocument,
@@ -178,28 +180,13 @@ function* deleteExtraProspectDocuments(action) {
   yield put(setConfig(config));
 }
 
-function revokeBlob(blobURL, tmpLink) {
-  document.body.removeChild(tmpLink);
-  window.URL.revokeObjectURL(blobURL);
-}
-
 function* downloadDocumentFileSaga({ payload }) {
   try {
     const { prospectId, documentKey, fileName } = payload;
     const headers = yield select(getAuthorizationHeader);
-
     const { data } = yield call(downloadProspectDocument.get, prospectId, documentKey, headers);
     const blob = new Blob([data], { type: data.type });
-    const url = window.URL.createObjectURL(blob);
-    const tmpLink = document.createElement("a");
-    tmpLink.style.display = "none";
-    tmpLink.href = url;
-    tmpLink.setAttribute("download", fileName);
-
-    document.body.appendChild(tmpLink);
-    tmpLink.click();
-
-    yield call(revokeBlob, blob, tmpLink);
+    yield call(saveAs, blob, fileName);
   } catch (error) {
     console.log(error);
     log(error);

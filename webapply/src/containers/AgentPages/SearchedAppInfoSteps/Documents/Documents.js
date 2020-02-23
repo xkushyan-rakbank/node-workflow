@@ -3,6 +3,7 @@ import get from "lodash/get";
 import cx from "classnames";
 
 import { Avatar } from "../../../../components/Avatar/Avatar";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
@@ -43,13 +44,11 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo, downloadDocumentFi
                 <div className={classes.checkListData}>{application.uploadStatus}</div>
               </div>
               <div>
-                <a
+                <LinkButton
                   index={index}
+                  title={titles.PRINT_DOWNLOAD_TITLE}
                   onClick={() => downloadDocument(application.fileName, application.fileName)}
-                  className={classes.link}
-                >
-                  {titles.PRINT_DOWNLOAD_TITLE}
-                </a>
+                />
               </div>
             </div>
           ))}
@@ -92,13 +91,11 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo, downloadDocumentFi
                     </div>
                     {doc.uploadStatus !== "NotUploaded" && (
                       <div>
-                        <a
+                        <LinkButton
                           index={index}
+                          title={titles.PRINT_DOWNLOAD_TITLE}
                           onClick={() => downloadDocument(doc.fileName, doc.fileName)}
-                          className={classes.link}
-                        >
-                          {titles.PRINT_DOWNLOAD_TITLE}
-                        </a>
+                        />
                       </div>
                     )}
                   </div>
