@@ -48,10 +48,6 @@ export const SearchedAppInfoComponent = ({
 
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
-  const confirmHandler = useCallback(() => {
-    pushDisplayScreenToHistory();
-  }, [pushDisplayScreenToHistory]);
-
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
@@ -107,7 +103,7 @@ export const SearchedAppInfoComponent = ({
 
       <ConfirmDialog
         isOpen={isDisplayConfirmDialog}
-        handleConfirm={confirmHandler}
+        handleConfirm={pushDisplayScreenToHistory}
         handleReject={confirmDialogHandler}
         handleClose={confirmDialogHandler}
         message={CONFIRM_MESSAGE}
