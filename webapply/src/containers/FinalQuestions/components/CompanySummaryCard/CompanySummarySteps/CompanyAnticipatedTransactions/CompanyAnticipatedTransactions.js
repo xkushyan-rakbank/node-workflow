@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import * as Yup from "yup";
-import isNumber from "lodash/isNumber";
-import isNaN from "lodash/isNaN";
+import isFinite from "lodash/isFinite";
 import cx from "classnames";
 
 import Grid from "@material-ui/core/Grid";
@@ -36,9 +35,7 @@ const getTotalMonthlyCreditsText = monthlyCreditsValue => {
     : "9999999.99";
 };
 
-const checkValidNumberFromString = string => {
-  return isNumber(Number(string)) && !isNaN(Number(string));
-};
+const checkValidNumberFromString = string => isFinite(Number(string));
 
 const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => {
   const isValidFieldAndYearTotalValue =
@@ -212,7 +209,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
                 />
               </Grid>
@@ -228,7 +225,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
                 />
                 <InfoTitle
@@ -254,7 +251,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in single transaction in Cash "
@@ -269,7 +266,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in single transaction in modes other than Cash"
