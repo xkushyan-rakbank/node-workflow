@@ -1,6 +1,6 @@
 package ae.rakbank.webapply.services;
 
-import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.util.EnvUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

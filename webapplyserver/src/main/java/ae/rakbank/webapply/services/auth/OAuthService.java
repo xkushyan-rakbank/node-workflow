@@ -11,29 +11,19 @@ import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import ae.rakbank.webapply.commons.ApiError;
-import ae.rakbank.webapply.commons.EnvUtil;
-import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.util.FileUtil;
 
 import static ae.rakbank.webapply.constants.AuthConstants.*;
 
@@ -43,7 +33,7 @@ import static ae.rakbank.webapply.constants.AuthConstants.*;
 class OAuthService {
 //	private static final Logger logger = LoggerFactory.getLogger(OAuthService.class);
 
-	private final FileHelper fileHelper;
+	private final FileUtil fileUtil;
 	private final ServletContext servletContext;
 	private final OauthClient oauthClient;
 
@@ -53,7 +43,7 @@ class OAuthService {
 
 	@PostConstruct
 	public void init() {
-		JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
+		JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
 //		oAuthUri = appConfigJSON.get("OAuthURIs");
 //		oAuthBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("OAuthBaseUrl").asText();
 		oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());

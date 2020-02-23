@@ -10,9 +10,9 @@ import routes, { agentBaseName, smeBaseName } from "../../routes";
 import { MobileNotification } from "../../components/Notifications";
 
 export const FormLayoutComponent = ({
-  location: { key, pathname } = {},
+  location: { pathname } = {},
   children,
-  screeningResults: { screeningError },
+  screeningError,
   updateViewId,
   resetScreeningError
 }) => {

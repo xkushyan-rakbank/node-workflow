@@ -96,8 +96,7 @@ export const UploadDocuments = ({
     setSelectedFile(null);
   }, []);
   const isDisabled =
-    isApplyEditApplication &&
-    DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo.statusNotes);
+    isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
 
   return (
     <div

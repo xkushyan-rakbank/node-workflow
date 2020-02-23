@@ -20,18 +20,15 @@ const ENCRYPT_METHODS = ["post", "put"];
 const ENCRYPTION_ENABLE = process.env.REACT_APP_ENCRYPTION_ENABLE || "N";
 const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
 
-const getBaseURL = () =>
-  process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply";
-
 export const uploadClient = axios.create({
-  baseURL: "https://uatrmtc.rakbankonline.ae"
+  baseURL: process.env.REACT_APP_UPLOAD_PATH || "https://uatrmtc.rakbankonline.ae"
 });
 
-const instance = axios.create({
-  baseURL: getBaseURL()
+const apiClient = axios.create({
+  baseURL: process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply"
 });
 
-instance.interceptors.request.use(config => ({
+apiClient.interceptors.request.use(config => ({
   ...config,
   headers: {
     ...config.headers,
@@ -39,7 +36,7 @@ instance.interceptors.request.use(config => ({
   }
 }));
 
-instance.interceptors.request.use(config => {
+apiClient.interceptors.request.use(config => {
   const { rsaPublicKey } = store.getState().appConfig;
 
   if (encryptionEnabled && rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
@@ -63,17 +60,19 @@ instance.interceptors.request.use(config => {
   return config;
 });
 
-instance.interceptors.response.use(response => {
-  const accessToken = response.headers.accesstoken || response.headers.AccessToken;
+[apiClient, uploadClient].forEach(instance => {
+  instance.interceptors.response.use(response => {
+    const accessToken = response.headers.accesstoken || response.headers.AccessToken;
 
-  if (accessToken) {
-    store.dispatch(setAccessToken(accessToken));
-  }
+    if (accessToken) {
+      store.dispatch(setAccessToken(accessToken));
+    }
 
-  return response;
+    return response;
+  });
 });
 
-instance.interceptors.response.use(
+apiClient.interceptors.response.use(
   response => {
     const { symKey } = response.config;
 
@@ -171,4 +170,4 @@ instance.interceptors.response.use(
   }
 );
 
-export default instance;
+export default apiClient;
