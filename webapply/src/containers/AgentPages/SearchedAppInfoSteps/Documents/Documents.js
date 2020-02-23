@@ -7,11 +7,12 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
+import { getProspectId } from "../../../../store/selectors/appConfig";
 
 export const DocumentsComponent = ({ docs = {}, prospectInfo, downloadDocumentFile }) => {
   const classes = useStyles();
   const signatoryInfo = prospectInfo.signatoryInfo;
-  const prospectId = get(prospectInfo, "generalInfo.prospectId");
+  const prospectId = getProspectId({ prospect: prospectInfo });
 
   const downloadDocument = useCallback(
     (documentKey, fileName) => downloadDocumentFile(prospectId, documentKey, fileName),
