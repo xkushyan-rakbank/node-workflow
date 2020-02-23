@@ -30,6 +30,12 @@ export const OTPformComponent = ({
   const [code, setCode] = useState(Array(6).fill(""));
   const [loginAttempt, setLoginAttempt] = useState(0);
   const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
+  const [isResetFocus, setIsResetFocus] = useState(false);
+
+  const resetOtpForm = useCallback(() => {
+    setCode(Array(6).fill(""));
+    setIsResetFocus(true);
+  }, []);
 
   useEffect(() => {
     if (isVerified) {
@@ -39,15 +45,15 @@ export const OTPformComponent = ({
 
   useEffect(() => {
     if (verificationError) {
-      setCode(Array(6).fill(""));
+      resetOtpForm();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [verificationError]);
+  }, [verificationError, resetOtpForm]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => verifyClearError(), []);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
+    resetOtpForm();
     if (isGenerating) return;
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(applicantInfo);
@@ -56,7 +62,7 @@ export const OTPformComponent = ({
       setIsDisplayMaxAttempError(true);
     }
     setLoginAttempt(loginAttempt + 1);
-  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, attempts]);
+  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, attempts, resetOtpForm]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
@@ -78,11 +84,7 @@ export const OTPformComponent = ({
           <Form className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification
-                  code={code}
-                  onChange={setCode}
-                  verificationError={verificationError}
-                />
+                <OtpVerification code={code} onChange={setCode} isResetFocus={isResetFocus} />
               </Grid>
 
               {!isDisplayMaxAttempError && verificationError && (

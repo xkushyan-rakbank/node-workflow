@@ -13,14 +13,14 @@ const bindNodeRef = index => node => {
   inputRefs[index] = node;
 };
 
-export const OtpVerification = ({ onChange, code, verificationError }) => {
+export const OtpVerification = ({ onChange, code, isResetFocus }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    if (verificationError) {
+    if (isResetFocus) {
       inputRefs[0].focus();
     }
-  }, [verificationError]);
+  }, [isResetFocus]);
 
   const handleInputFocus = useCallback(event => {
     event.target.select();
