@@ -124,6 +124,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                contextualHelpText="This number will be used as primary contact for any future communication"
               />
             </InputGroup>
           </Grid>
