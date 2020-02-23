@@ -1,3 +1,4 @@
+/* eslint-disable */
 import cometd from "cometd";
 import has from "lodash/has";
 import { callSafely } from "./GenericUtils";
@@ -293,7 +294,6 @@ export class GenesysChat {
               }
               break;
             }
-            default:
           }
         }
       });
@@ -305,7 +305,6 @@ export class GenesysChat {
           callSafely(callBack, [...this.chatMessages]);
           break;
         }
-        default:
       }
     }
   };
