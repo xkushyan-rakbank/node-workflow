@@ -3,7 +3,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
-const materialTheme = createMuiTheme({
+const keyboardDatePickerTheme = createMuiTheme({
   overrides: {
     MuiPickersBasePicker: {
       pickerView: {
@@ -12,6 +12,12 @@ const materialTheme = createMuiTheme({
         justifyContent: "start",
         paddingTop: "20px",
         minHeight: "179px"
+      },
+      containerLandscape: {
+        flexDirection: "column"
+      },
+      pickerViewLandscape: {
+        padding: "10px 0 0 0"
       }
     },
     MuiPickersCalendarHeader: {
@@ -66,7 +72,7 @@ const materialTheme = createMuiTheme({
 });
 
 export const BaseDatePicker = props => (
-  <ThemeProvider theme={materialTheme}>
+  <ThemeProvider theme={keyboardDatePickerTheme}>
     <KeyboardDatePicker {...props} />
   </ThemeProvider>
 );
