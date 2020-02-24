@@ -22,7 +22,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    paddingTop: 100,
+    paddingTop: 71,
     paddingLeft: 16,
     paddingRight: 16,
     transition: "all .3s",
