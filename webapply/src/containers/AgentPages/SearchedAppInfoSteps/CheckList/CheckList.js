@@ -23,17 +23,16 @@ export const CheckList = () => {
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   const companyChecks = useMemo(() => {
-    const initCheckNames = [
-      ...COMPANY_CHECK_NAMES,
+    return [
+      ...COMPANY_CHECK_NAMES.map(check => ({
+        ...check,
+        ...(screeningResults.find(s => s.screeningType === check.screeningType) || {})
+      })),
       {
         ...RISK_RATING,
         screeningReason: riskScore
       }
     ];
-    return initCheckNames.map(check => ({
-      ...check,
-      ...(screeningResults.find(s => s.screeningType === check.screeningType) || {})
-    }));
   }, [screeningResults, riskScore]);
 
   return (
