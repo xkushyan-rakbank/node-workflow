@@ -180,15 +180,13 @@ function* deleteExtraProspectDocuments(action) {
   yield put(setConfig(config));
 }
 
-function* downloadDocumentFileSaga({ payload }) {
+function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, fileName } }) {
   try {
-    const { prospectId, documentKey, fileName } = payload;
     const headers = yield select(getAuthorizationHeader);
     const { data } = yield call(downloadProspectDocument.get, prospectId, documentKey, headers);
     const blob = new Blob([data], { type: data.type });
     yield call(saveAs, blob, fileName);
   } catch (error) {
-    console.log(error);
     log(error);
   }
 }
