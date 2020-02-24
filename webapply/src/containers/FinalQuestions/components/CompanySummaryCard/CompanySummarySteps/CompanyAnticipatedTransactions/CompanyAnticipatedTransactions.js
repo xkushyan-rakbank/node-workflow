@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import * as Yup from "yup";
-import isFinite from "lodash/isFinite";
+import isNaN from "lodash/isNaN";
 import cx from "classnames";
 
 import Grid from "@material-ui/core/Grid";
@@ -35,7 +35,7 @@ const getTotalMonthlyCreditsText = monthlyCreditsValue => {
     : "9999999.99";
 };
 
-const checkValidNumberFromString = string => isFinite(Number(string));
+const checkValidNumberFromString = string => !isNaN(Number(string));
 
 const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => {
   const isValidFieldAndYearTotalValue =
