@@ -17,7 +17,7 @@ export const getYearOptions = () => {
   const years = [];
   const now = new Date(Date.now());
 
-  for (let i = 1950; i < now.getFullYear(); i++) {
+  for (let i = 1950; i <= now.getFullYear(); i++) {
     years.push({ value: i, label: i });
   }
   return years;

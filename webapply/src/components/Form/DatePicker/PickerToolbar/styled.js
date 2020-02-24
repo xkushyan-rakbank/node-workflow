@@ -4,10 +4,11 @@ export const useStyles = makeStyles({
   wrapper: {
     backgroundColor: "#3b3a3a",
     display: "flex",
-    width: "100%",
-    alignItems: "stretch"
+    alignItems: "stretch",
+    padding: "20px 12px",
+    justifyContent: "space-between"
   },
   column: {
-    width: "50%"
+    maxWidth: "110px"
   }
 });

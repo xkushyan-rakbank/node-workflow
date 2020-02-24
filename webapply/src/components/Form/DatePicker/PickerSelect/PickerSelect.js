@@ -2,17 +2,41 @@ import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import setMonth from "date-fns/setMonth";
 import setYear from "date-fns/setYear";
-
+import { withStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-//import { useStyles } from "./styled";
 import { MONTH_OPTIONS, getYearOptions } from "./constants";
 
-export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) => {
-  //const classes = useStyles();
+const StyledSelect = withStyles({
+  root: {
+    width: "110px",
+    borderRadius: "4px",
+    backgroundColor: "#fff",
+    maxWidth: "120px",
+    padding: "7px 27px 7px 15px",
+    fontSize: "12px",
+    boxSizing: "border-box",
+    "&:after": {
+      display: "none"
+    }
+  },
+  select: {
+    "&:focus": {
+      backgroundColor: "#fff"
+    }
+  },
+  icon: {
+    color: "#3b3a3a",
+    fontSize: "17px",
+    right: "12px",
+    top: "8px"
+  }
+})(Select);
 
+export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) => {
   const value = type === "month" ? date.getMonth() : date.getFullYear();
   const options = type === "month" ? MONTH_OPTIONS : getYearOptions();
 
@@ -25,14 +49,14 @@ export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) =>
   );
 
   return (
-    <FormControl>
-      <Select value={value} onChange={handleChange}>
+    <FormControl variant="filled">
+      <StyledSelect value={value} onChange={handleChange} IconComponent={KeyboardArrowDownIcon}>
         {options.map(({ value, label }) => (
           <MenuItem key={value} value={value}>
             {label}
           </MenuItem>
         ))}
-      </Select>
+      </StyledSelect>
     </FormControl>
   );
 };
