@@ -155,22 +155,25 @@ export const UploadDocuments = ({
         {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
       </div>
 
-      {!isApplyEditApplication && (selectedFile || isUploaded) && (
-        <Icon
-          name={ICONS.close}
-          className={classes.cancel}
-          onClick={fileUploadCancel}
-          alt="cancel upload"
-        />
-      )}
-      {!isApplyEditApplication && (!selectedFile || !isUploaded) && (
-        <p
-          className={classes.ControlsBox}
-          justify="flex-end"
-          onClick={() => inputEl.current.click()}
-        >
-          Upload
-        </p>
+      {!isApplyEditApplication && (
+        <>
+          {selectedFile || isUploaded ? (
+            <Icon
+              name={ICONS.close}
+              className={classes.cancel}
+              onClick={fileUploadCancel}
+              alt="cancel upload"
+            />
+          ) : (
+            <p
+              className={classes.ControlsBox}
+              justify="flex-end"
+              onClick={() => inputEl.current.click()}
+            >
+              Upload
+            </p>
+          )}
+        </>
       )}
     </div>
   );
