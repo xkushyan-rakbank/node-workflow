@@ -23,87 +23,69 @@ public class ApiError {
 
     public static final String TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss,SSS";
 
-	private HttpStatus status;
-	private Integer statusCode;
-	private String timestamp;
-	private String message;
-	private String debugMessage;
-	private String errorType;
-	private JsonNode errors;
-	private String exceptionClassName;
-	private StackTraceElement[] stackTrace;
+    private HttpStatus status;
+    private Integer statusCode;
+    private String timestamp;
+    private String message;
+    private String debugMessage;
+    private String errorType;
+    private JsonNode errors;
+    private String exceptionClassName;
+    private StackTraceElement[] stackTrace;
 
-	private ApiError() {
-		initTimestamp();
-	}
+    private ApiError() {
+        initTimestamp();
+    }
 
-	public ApiError(HttpStatus status) {
-		this();
-		this.status = status;
-		this.statusCode = status.value();
-	}
+    public ApiError(HttpStatus status) {
+        this();
+        this.status = status;
+        this.statusCode = status.value();
+    }
 
-	public ApiError(HttpStatus status, Throwable ex) {
-		this();
-		this.status = status;
-		this.statusCode = status.value();
-		this.message = "Unexpected error";
-		setException(ex);
-	}
+    public ApiError(HttpStatus status, Throwable ex) {
+        this();
+        this.status = status;
+        this.statusCode = status.value();
+        this.message = "Unexpected error";
+        setException(ex);
+    }
 
-	public ApiError(HttpStatus status, String message, String debugMessage) {
-		this();
-		this.status = status;
-		this.statusCode = status.value();
-		this.message = message;
-		this.debugMessage = debugMessage;
-	}
+    public ApiError(HttpStatus status, String message, String debugMessage) {
+        this();
+        this.status = status;
+        this.statusCode = status.value();
+        this.message = message;
+        this.debugMessage = debugMessage;
+    }
 
-	public ApiError(HttpStatus status, String message, String debugMessage, Throwable ex) {
-		this();
-		this.status = status;
-		this.statusCode = status.value();
-		this.message = message;
-		this.debugMessage = debugMessage;
-		setException(ex);
-	}
+    public ApiError(HttpStatus status, String message, String debugMessage, Throwable ex) {
+        this();
+        this.status = status;
+        this.statusCode = status.value();
+        this.message = message;
+        this.debugMessage = debugMessage;
+        setException(ex);
+    }
 
-	public void initTimestamp() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN);
-		timestamp = LocalDateTime.now().format(formatter);
-	}
+    public void initTimestamp() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN);
+        timestamp = LocalDateTime.now().format(formatter);
+    }
 
-	private void setException(Throwable ex) {
-		this.exceptionClassName = ex.getClass().getSimpleName();
-		this.message = ex.getMessage();
-		this.stackTrace = ex.getStackTrace();
-	}
+    private void setException(Throwable ex) {
+        this.exceptionClassName = ex.getClass().getSimpleName();
+        this.message = ex.getMessage();
+        this.stackTrace = ex.getStackTrace();
+    }
 
-	public String toJsonString() {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			log.error("Failed to serialize ApiError object", e);
-			return "Failed to serialize ApiError object, " + e.getMessage();
-		}
-	}
-
-
-	//Legacy implementation, not all the fields used
-	/*public JsonNode toJsonNode() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		ObjectNode errorResponse = objectMapper.createObjectNode();
-		errorResponse.put("errorType", status.name());
-		errorResponse.put("httpStatus", status.toString());
-		ArrayNode errors = objectMapper.createArrayNode();
-		ObjectNode error = objectMapper.createObjectNode();
-		error.put("errorType", "Internal Server Error");
-		error.put("message", message);
-		error.put("developerText", debugMessage);
-		error.put("exceptionClassName", exceptionClassName);
-		errors.add(error);
-		errorResponse.set("errors", errors);
-		return errorResponse;
-	}*/
+    public String toJsonString() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            log.error("Failed to serialize ApiError object", e);
+            return "Failed to serialize ApiError object, " + e.getMessage();
+        }
+    }
 }

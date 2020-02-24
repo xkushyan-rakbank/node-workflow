@@ -7,8 +7,7 @@ import ae.rakbank.webapply.util.FileUtil;
 import ae.rakbank.webapply.util.DehUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,10 +19,10 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import java.util.Collections;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OauthClient {
-    private static final Logger logger = LoggerFactory.getLogger(OauthClient.class);
 
     private final FileUtil fileUtil;
     private final DehUtil dehUtil;
@@ -42,13 +41,13 @@ public class OauthClient {
 
     public ResponseEntity<JsonNode> authorize(String userName, String password) {
         MultiValueMap<String, String> requestMap = buildOAuthRequest(userName, password);
-        logger.debug("Start oauth authorize request..");
+        log.debug("Start oauth authorize request..");
         return sendOauthRequest(requestMap);
     }
 
     public ResponseEntity<JsonNode> refreshAccessToken(String refreshToken) {
         MultiValueMap<String, String> requestMap = buildOAuthRefreshRequest(refreshToken);
-        logger.debug("Start refresh token request..");
+        log.debug("Start refresh token request..");
         return sendOauthRequest(requestMap);
     }
 
@@ -59,7 +58,7 @@ public class OauthClient {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
         String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
-        logger.info(String.format("Invoke API: Endpoint=[%s], request=[%s] ",url, request.getBody().toString()));
+        log.info(String.format("Invoke API: Endpoint=[%s], request=[%s] ", url, request.getBody().toString()));
 
         RestTemplate restTemplate = new RestTemplate();
         try {
@@ -67,14 +66,14 @@ public class OauthClient {
             return restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
 
         } catch (HttpClientErrorException e) {
-            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpStatus status = HttpStatus.BAD_REQUEST;
             ApiError apiError = dehUtil.initApiError(e, status);
 
             throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
-            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
             ApiError apiError = dehUtil.initApiError(e, status);
