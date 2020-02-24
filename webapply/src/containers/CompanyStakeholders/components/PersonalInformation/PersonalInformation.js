@@ -113,7 +113,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={false}
     >
-      {({ values, setFieldValue, resetForm, errors, touched }) => (
+      {({ values, setFieldValue, errors, touched }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -123,7 +123,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 label="This stakeholder is a company"
                 component={Checkbox}
                 onChange={() => {
-                  resetForm();
                   setFieldValue("isShareholderACompany", !values.isShareholderACompany);
                 }}
                 changeProspect={createChangeProspectHandler(values)}

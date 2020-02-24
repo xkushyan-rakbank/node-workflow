@@ -28,7 +28,10 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
               <div key="status" className={classes.oneThirdWidth}>
                 <span className={classes.listStatus}>{app.status.statusNotes}</span>
               </div>,
-              <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
+              <div
+                className={cx(classes.action, classes.oneThirdWidth, "hide-on-mobile")}
+                key="action"
+              >
                 {ctaStatuses[app.status.statusNotes] ? (
                   <WhiteContainedButton
                     disabled={app.status.reasonCode === STATUS_LOCKED}
@@ -44,7 +47,10 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
               <div key="status" className={classes.oneThirdWidth}>
                 <span className={classes.listStatus}>Incomplete</span>
               </div>,
-              <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
+              <div
+                className={cx(classes.action, classes.oneThirdWidth, "hide-on-mobile")}
+                key="action"
+              >
                 <WhiteContainedButton
                   label="Finish Application"
                   handleClick={() => getProspectInfo(app.prospectId)}
