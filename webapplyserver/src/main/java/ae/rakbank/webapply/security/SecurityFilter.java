@@ -26,15 +26,13 @@ public class SecurityFilter implements Filter {
     private static final Logger logger = LoggerFactory.getLogger(SecurityFilter.class);
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         logger.info("Filter initialized");
-        String result = null;
+
         if (skipEncryption((HttpServletRequest) request)) {
             logger.info("Encryption skipped");
             chain.doFilter(request, response);
-        }
-        else {
+        } else {
             logger.info("Encryption enabled");
             ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
             responseWrapper.setCharacterEncoding("UTF-8");
@@ -44,24 +42,23 @@ public class SecurityFilter implements Filter {
             SecretKeySpec spec = null;
 
             if (randomKey != null) {
-              spec = securityUtil.getSecretKeySpec(randomKey);
-              String dataToDecrypt = decrypt((HttpServletRequest) request);
-              decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));  
+                spec = securityUtil.getSecretKeySpec(randomKey);
+                String dataToDecrypt = decrypt((HttpServletRequest) request);
+                decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));
             }
 
+            String result;
             if (decryptedData == null) {
                 GenericResponse failed = GenericResponse.getFailedResponse(
                         "Error while reading request payload, encrypted payload should be passed", "");
                 ObjectMapper mapper = new ObjectMapper();
                 result = mapper.writeValueAsString(failed);
                 responseWrapper.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            }
-            else {
+            } else {
                 HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
                         decryptedData);
 
                 chain.doFilter(requestWrapper, responseWrapper);
-
                 result = encrypt(responseWrapper, spec);
             }
 
@@ -87,8 +84,7 @@ public class SecurityFilter implements Filter {
             while ((line = reader.readLine()) != null) {
                 buffer.append(line);
             }
-            String data = buffer.toString();
-            return data;
+            return buffer.toString();
         } catch (Exception e) {
             logger.error("error while decryption {}", e.getMessage());
         }
@@ -99,7 +95,7 @@ public class SecurityFilter implements Filter {
         return request.getHeader("x-sym-key") == null || request.getHeader("isForward") != null;
     }
 
-    private byte[] getKeyFromRequest(HttpServletRequest request){
+    private byte[] getKeyFromRequest(HttpServletRequest request) {
         String key = request.getHeader("x-sym-key");
         try {
             return securityUtil.decryptAsymmetric(key);
@@ -108,5 +104,4 @@ public class SecurityFilter implements Filter {
         }
         return null;
     }
-
 }
