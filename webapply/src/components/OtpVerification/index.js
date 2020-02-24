@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
 import { useStyles } from "./styled";
+import { isNumeric } from "../../utils/validation";
 
 const BACKSPACE_KEY = 8;
 const LEFT_ARROW_KEY = 37;
@@ -28,11 +29,13 @@ const OtpInput = ({ onChange, code }, ref) => {
     event => {
       const { value, name } = event.target;
       const newCodeIndex = parseInt(name, 10);
-      const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
+      if (isNumeric(value) || !value) {
+        const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
 
-      onChange(newCode);
-      if (value && inputRefs[newCodeIndex + 1]) {
-        inputRefs[newCodeIndex + 1].focus();
+        onChange(newCode);
+        if (value && inputRefs[newCodeIndex + 1]) {
+          inputRefs[newCodeIndex + 1].focus();
+        }
       }
     },
     [code, onChange]
