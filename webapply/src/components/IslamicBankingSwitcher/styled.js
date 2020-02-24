@@ -40,6 +40,9 @@ export const useStyles = makeStyles(theme => ({
       height: 72,
       marginTop: 10,
       padding: "2px 20px",
+      "&:hover": {
+        backgroundColor: "#000"
+      },
       "& svg": {
         display: "inline-block",
         verticalAlign: "inline-block",
