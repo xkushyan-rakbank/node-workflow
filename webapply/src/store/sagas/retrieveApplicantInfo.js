@@ -27,6 +27,7 @@ function* retrieveApplicantInfoSaga({ payload }) {
 }
 
 function* getProspectIdInfo({ payload }) {
+  console.log("TCL: function*getProspectIdInfo -> getProspectIdInfo");
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);

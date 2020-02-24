@@ -28,9 +28,12 @@ import {
   CONTINUE
 } from "../../constants";
 import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
+import { initAllStepsStatus } from "../actions/completedSteps";
+import { log } from "../../utils/loggger";
 
 function* receiveAppConfigSaga({ payload }) {
   try {
+    console.log("TCL: function*receiveAppConfigSaga -> payload", payload);
     const state = yield select();
 
     const endpoints = getEndpoints(state);
@@ -69,15 +72,29 @@ function* receiveAppConfigSaga({ payload }) {
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
 
+    console.log("TCL: freeField5", newConfig.prospect.freeFieldsInfo.freeField5);
+
+    let stepsStatus = [];
+
+    try {
+      stepsStatus = JSON.parse(newConfig.prospect.freeFieldsInfo.freeField5);
+      console.log("TCL: function*receiveAppConfigSaga -> stepsStatus", stepsStatus);
+    } catch (err) {
+      log(err);
+    }
+
     yield put(saveProspectModel(prospectModel));
     yield put(receiveAppConfigSuccess(newConfig));
+    yield put(initAllStepsStatus(stepsStatus));
     yield put(sendProspectToAPISuccess());
   } catch (error) {
+    log(error);
     yield put(receiveAppConfigFail(error));
   }
 }
 
 function* updateProspectSaga(action) {
+  console.log("TCL: function*updateProspectSaga -> updateProspectSaga");
   const state = yield select();
   const newConfig = cloneDeep(state.appConfig);
   for (let name in action.fields) {
