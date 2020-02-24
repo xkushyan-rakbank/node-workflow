@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import * as Yup from "yup";
 import cx from "classnames";
+import floor from "lodash/floor";
 
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
@@ -27,7 +28,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
     return 0;
   }
   const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
-  return Number(calculation.toFixed());
+  return floor(calculation);
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
