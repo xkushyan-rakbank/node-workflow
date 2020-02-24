@@ -19,7 +19,9 @@ import {
   getInvalidMessage
 } from "../../../../../../utils/getValidationMessage";
 
-const FormatDecimalNumberInput = props => <NumberFormat decimalScale={2} {...props} />;
+const FormatDecimalNumberInput = props => (
+  <NumberFormat allowNegative={false} decimalScale={0} {...props} />
+);
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
   if (!checkValidNumberFromString(annualFinancialTurnover)) {
@@ -156,7 +158,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="annualFinTurnoverAmtInAED"
                   path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                   label="Annual Financial Turnover"
-                  autocomplete="none"
+                  autoComplete="none"
                   placeholder="9999999999"
                   InputProps={{
                     ...commonInputProps,
