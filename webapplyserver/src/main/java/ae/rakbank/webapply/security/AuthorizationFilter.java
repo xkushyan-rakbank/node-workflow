@@ -1,4 +1,4 @@
-package ae.rakbank.webapply.filter;
+package ae.rakbank.webapply.security;
 
 import ae.rakbank.webapply.constants.AuthConstants;
 import ae.rakbank.webapply.dto.JwtPayload;
@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
-public class AuthorizationFilter extends GenericFilterBean {
+class AuthorizationFilter extends GenericFilterBean {
 
     public static final String BEARER_TOKEN_PREFIX = "Bearer ";
     private final AuthorizationService authorizationService;
