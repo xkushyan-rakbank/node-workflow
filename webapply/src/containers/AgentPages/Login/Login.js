@@ -50,7 +50,7 @@ export const LoginComponent = ({
         }
       );
     },
-    [login, recaptchaToken, isRecaptchaEnable, history]
+    [login, recaptchaToken, isRecaptchaEnable, history, setIsApplyEditApplication]
   );
   const handleReCaptchaVerify = useCallback(
     token => {

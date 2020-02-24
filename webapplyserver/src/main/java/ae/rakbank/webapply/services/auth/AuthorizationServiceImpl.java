@@ -102,4 +102,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public String getOauthTokenFromJwt(String jwtToken) {
         return jwtService.decrypt(jwtToken).getOauthAccessToken();
     }
+
+    @Override
+    public String getTokenFromAuthorizationHeader(String authorizationString) {
+        return authorizationString.substring(7); // removes the "Bearer " prefix.
+    }
 }

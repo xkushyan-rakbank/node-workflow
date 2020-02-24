@@ -73,7 +73,7 @@ const CompanyStakeholdersComponent = ({
     sendProspectToAPI(NEXT).then(() => {
       pushHistory(routes.finalQuestions);
     });
-  }, [pushHistory]);
+  }, [pushHistory, sendProspectToAPI]);
 
   const handleDeleteStakeholder = useCallback(
     id => {
