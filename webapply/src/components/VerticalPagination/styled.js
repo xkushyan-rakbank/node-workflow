@@ -90,7 +90,10 @@ export const useStyles = makeStyles(theme => ({
     cursor: "auto"
   },
   videoWrapper: ({ isMobileNotificationActive }) => ({
-    height: isMobileNotificationActive ? "calc(100vh - 280px)" : "calc(100vh - 216px)",
+    height: isMobileNotificationActive ? 444 : 380,
+    [theme.breakpoints.only("xs")]: {
+      marginBottom: 40
+    },
     [theme.breakpoints.up("sm")]: {
       height: "100vh"
     },
