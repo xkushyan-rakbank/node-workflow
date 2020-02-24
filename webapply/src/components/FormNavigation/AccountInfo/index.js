@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAccountType, getIsIslamicBanking } from "../../../store/selectors/appConfig";
-import { resetApplicantInfo } from "../../../store/actions/applicantInfoForm";
+import { resetApplicantInfo } from "../../../store/actions/appConfig";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import routes from "../../../routes";
 
