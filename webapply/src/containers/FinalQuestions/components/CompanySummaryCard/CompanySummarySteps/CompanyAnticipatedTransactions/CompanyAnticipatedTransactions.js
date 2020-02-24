@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import * as Yup from "yup";
-import isNaN from "lodash/isNaN";
 import cx from "classnames";
 
 import Grid from "@material-ui/core/Grid";
@@ -13,7 +12,7 @@ import { Input, AutoSaveField as Field, NumberFormat } from "../../../../../../c
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
 import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
-import { CURRENCY_REGEX } from "../../../../../../utils/validation";
+import { CURRENCY_REGEX, isNumeric } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -22,7 +21,7 @@ import {
 const FormatDecimalNumberInput = props => <NumberFormat decimalScale={2} {...props} />;
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
-  if (!checkValidNumberFromString(annualFinancialTurnover)) {
+  if (!isNumeric(annualFinancialTurnover)) {
     return 0;
   }
   const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
@@ -30,17 +29,14 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
-  return checkValidNumberFromString(monthlyCreditsValue)
+  return isNumeric(monthlyCreditsValue)
     ? `${monthlyCreditsValue} in Total Monthly Credits`
     : "9999999.99";
 };
 
-const checkValidNumberFromString = string => !isNaN(Number(string));
-
 const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => {
-  const isValidFieldAndYearTotalValue =
-    checkValidNumberFromString(field) && checkValidNumberFromString(yearTotal);
-  if (isValidFieldAndYearTotalValue && checkValidNumberFromString(conditionalField)) {
+  const isValidFieldAndYearTotalValue = isNumeric(field) && isNumeric(yearTotal);
+  if (isValidFieldAndYearTotalValue && isNumeric(conditionalField)) {
     return Number(field) + Number(conditionalField) <= Number(yearTotal);
   } else if (isValidFieldAndYearTotalValue) {
     return Number(field) <= Number(yearTotal);
@@ -50,7 +46,7 @@ const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => 
 
 const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
   const monthTotal = getTotalMonthlyCreditsValue(yearTotal);
-  if (checkValidNumberFromString(field) && checkValidNumberFromString(conditionalField)) {
+  if (isNumeric(field) && isNumeric(conditionalField)) {
     return Number(field) + Number(conditionalField) === monthTotal;
   }
   return true;
