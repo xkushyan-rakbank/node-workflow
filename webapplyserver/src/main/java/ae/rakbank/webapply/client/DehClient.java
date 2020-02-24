@@ -1,19 +1,23 @@
 package ae.rakbank.webapply.client;
 
 import ae.rakbank.webapply.dto.ApiError;
-import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.services.CSRFTokenService;
-import ae.rakbank.webapply.util.FileUtil;
 import ae.rakbank.webapply.services.AuthorizationService;
 import ae.rakbank.webapply.util.DehUtil;
+import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
@@ -33,7 +37,6 @@ import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
 public class DehClient {
 
     private final FileUtil fileUtil;
-    private final CSRFTokenService csrfTokenService;
     private final AuthorizationService authorizationService;
     private final DehUtil dehUtil;
 
@@ -49,7 +52,7 @@ public class DehClient {
 
     public ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, String url, HttpMethod httpMethod,
                                                JsonNode requestBodyJSON, String operationId, MediaType mediaType,
-                                               String updatedJwtToken) {
+                                               String oauthAccessToken) {
         if (requestBodyJSON != null) {
             log.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
                     operationId, url, requestBodyJSON.toString()));
@@ -58,10 +61,10 @@ public class DehClient {
         }
 
         HttpEntity<JsonNode> request;
-        if (StringUtils.isEmpty(updatedJwtToken)) {
+        if (StringUtils.isEmpty(oauthAccessToken)) {
             request = getHttpEntityRequest(requestBodyJSON, authorizationService.getAndUpdateContextOauthToken());
         } else {
-            request = getHttpEntityRequest(requestBodyJSON, authorizationService.getOauthTokenFromJwt(updatedJwtToken));
+            request = getHttpEntityRequest(requestBodyJSON, oauthAccessToken);
         }
 
         RestTemplate restTemplate = new RestTemplate();
@@ -90,20 +93,10 @@ public class DehClient {
             throw new ApiException(apiError, responseHeaders, status);
         }
 
-        // ResponseEntity headers is immutable, so create new HttpHeaders object
-        HttpHeaders headers = new HttpHeaders();
-        headers.addAll(response.getHeaders());
-        headers.remove(HttpHeaders.CONTENT_LENGTH);
-
-        if (!StringUtils.isEmpty(updatedJwtToken)) {
-            headers.add(JWT_TOKEN_KEY, updatedJwtToken);
-        }
-
         log.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]",
                 operationId, url, response.getStatusCodeValue(), response.getBody()));
-        csrfTokenService.createOrUpdateCsrfToken(httpRequest, headers);
 
-        return new ResponseEntity<>(response.getBody(), headers, response.getStatusCode());
+        return new ResponseEntity<>(response.getBody(), new HttpHeaders(), response.getStatusCode());
     }
 
     public ResponseEntity<JsonNode> getDatalistJSON(String segment) {
