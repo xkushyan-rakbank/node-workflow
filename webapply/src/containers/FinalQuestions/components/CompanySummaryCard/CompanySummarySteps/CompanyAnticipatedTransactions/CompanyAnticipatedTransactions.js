@@ -32,7 +32,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
   return checkValidNumberFromString(monthlyCreditsValue)
     ? `${monthlyCreditsValue} in Total Monthly Credits`
-    : "9999999.99";
+    : "9999999999";
 };
 
 const checkValidNumberFromString = string => !isNaN(Number(string));
@@ -157,7 +157,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                   label="Annual Financial Turnover"
                   autocomplete="none"
-                  placeholder="9999999.99"
+                  placeholder="9999999999"
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -208,7 +208,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="totalMonthlyCashAmountInFigures"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Cash"
-                  placeholder="9999999.99"
+                  placeholder="9999999999"
                   autoComplete="off"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
@@ -225,7 +225,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Non-Cash"
-                  placeholder="9999999.99"
+                  placeholder="9999999999"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
                   InputProps={{
@@ -253,7 +253,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   label="Maximum amount in Cash"
                   autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
-                  placeholder="9999999.99"
+                  placeholder="9999999999"
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -268,7 +268,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="maxAmtSingleTxnNonCashAED"
                   label="Maximum amount in Non-Cash"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
-                  placeholder="9999999.99"
+                  placeholder="9999999999"
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
