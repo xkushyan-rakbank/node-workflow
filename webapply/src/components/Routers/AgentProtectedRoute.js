@@ -13,7 +13,7 @@ export const AgentProtectedRoute = ({ component: Component, render, ...rest }) =
     <Route
       {...rest}
       render={props =>
-        isAuthenticated || process.env.NODE_ENV === "development" ? (
+        isAuthenticated ? (
           <ErrorBoundary>{Component ? <Component {...props} /> : render(props)}</ErrorBoundary>
         ) : (
           <Redirect to={routes.login} />

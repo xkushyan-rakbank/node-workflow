@@ -6,7 +6,6 @@ export const RECEIVE_APPCONFIG_FAIL = "RECEIVE_APPCONFIG_FAIL";
 export const UPDATE_PROSPECT = "UPDATE_PROSPECT";
 export const SET_CONFIG = "SET_CONFIG";
 export const SET_PROSPECT = "SET_PROSPECT";
-export const RESET_PROSPECT = "RESET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
 export const UPDATE_ACTION_TYPE = "UPDATE_ACTION_TYPE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
@@ -14,6 +13,7 @@ export const DISPLAY_SCREEN_BASED_ON_VIEW_ID = "DISPLAY_SCREEN_BASED_ON_VIEW_ID"
 export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
 export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
+export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
 
 export const receiveAppConfig = (segment, accountType, isIslamicBanking) => {
   return { type: RECEIVE_APPCONFIG, payload: { accountType, isIslamicBanking, segment } };
@@ -41,10 +41,6 @@ export const setProspect = prospect => {
   return { type: SET_PROSPECT, prospect };
 };
 
-export const resetProspect = () => {
-  return { type: RESET_PROSPECT };
-};
-
 export const updateProspectId = prospectId => {
   return { type: UPDATE_PROSPECT_ID, prospectId };
 };
@@ -66,3 +62,5 @@ export const saveProspectModel = prospectModel => {
 };
 
 export const setAccessToken = accessToken => ({ type: SET_ACCESS_TOKEN, payload: accessToken });
+
+export const resetApplicantInfo = () => ({ type: RESET_APPLICANT_INFO });

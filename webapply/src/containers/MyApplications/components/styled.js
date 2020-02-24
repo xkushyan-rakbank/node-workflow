@@ -200,5 +200,14 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "0px",
     marginLeft: "50px",
     borderRadius: "8px"
+  },
+  hint: {
+    fontSize: 14,
+    lineHeight: 1.14,
+    color: "#b5b5bb",
+    textAlign: "center",
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
   }
 }));

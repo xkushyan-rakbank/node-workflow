@@ -11,9 +11,9 @@ import routes, { agentBaseName, smeBaseName } from "../../routes";
 import { MobileNotification } from "../../components/Notifications";
 
 export const FormLayoutComponent = ({
-  location: { key, pathname } = {},
+  location: { pathname } = {},
   children,
-  screeningResults: { screeningError },
+  screeningError,
   updateViewId,
   resetScreeningError
 }) => {
@@ -32,8 +32,7 @@ export const FormLayoutComponent = ({
       routes.finalQuestions,
       routes.uploadDocuments,
       routes.selectServices,
-      routes.SubmitApplication,
-      routes.ApplicationSubmitted
+      routes.SubmitApplication
     ].includes(pathname);
 
     updateViewId(viewId, isSendToApi);
@@ -42,21 +41,22 @@ export const FormLayoutComponent = ({
 
   return (
     <Providers>
-      <MobileNotification />
-      <div className={classes.formLayout}>
-        <FormNavigation />
-        <div className={classes.formWrapper}>
-          <div className={classes.formInner}>
-            <div className={classes.mainContainer}>
-              {!routerToAddPaddingInSlider.includes(pathname) && <HeaderTitle />}
+      <MobileNotification>
+        <div className={classes.formLayout}>
+          <FormNavigation />
+          <div className={classes.formWrapper}>
+            <div className={classes.formInner}>
+              <div className={classes.mainContainer}>
+                {!routerToAddPaddingInSlider.includes(pathname) && <HeaderTitle />}
 
-              <Notifications />
+                <Notifications />
 
-              {screeningError.error ? <ApplicationStatus {...screeningError} /> : children}
+                {screeningError.error ? <ApplicationStatus {...screeningError} /> : children}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </MobileNotification>
     </Providers>
   );
 };

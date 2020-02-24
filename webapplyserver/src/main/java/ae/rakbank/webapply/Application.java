@@ -7,24 +7,24 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import ae.rakbank.webapply.commons.AppConfigProps;
+import ae.rakbank.webapply.config.AppConfigProps;
 
 @SpringBootApplication
 @EnableConfigurationProperties(AppConfigProps.class)
 @EnableScheduling
 public class Application extends SpringBootServletInitializer {
 
-  public Application(){
-    super();
-    setRegisterErrorPageFilter(false);
-  }
+    public Application() {
+        super();
+        setRegisterErrorPageFilter(false);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Application.class);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
 }

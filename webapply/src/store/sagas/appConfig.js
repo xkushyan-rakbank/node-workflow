@@ -8,16 +8,13 @@ import {
   receiveAppConfigSuccess,
   receiveAppConfigFail,
   UPDATE_PROSPECT,
-  RESET_PROSPECT,
   setConfig,
-  setProspect,
   updateProspect,
   UPDATE_ACTION_TYPE,
   UPDATE_VIEW_ID,
   UPDATE_SAVE_TYPE,
   saveProspectModel
 } from "../actions/appConfig";
-import { updateStakeholdersIds } from "../actions/stakeholders";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 
 import { config } from "../../api/apiClient";
@@ -27,7 +24,8 @@ import {
   UAE,
   UAE_CURRENCY,
   CONVENTIONAL_BANK,
-  ISLAMIC_BANK
+  ISLAMIC_BANK,
+  CONTINUE
 } from "../../constants";
 import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
 
@@ -73,7 +71,7 @@ function* receiveAppConfigSaga({ payload }) {
 
     yield put(saveProspectModel(prospectModel));
     yield put(receiveAppConfigSuccess(newConfig));
-    yield put(sendProspectToAPISuccess(newConfig.prospect));
+    yield put(sendProspectToAPISuccess());
   } catch (error) {
     yield put(receiveAppConfigFail(error));
   }
@@ -93,22 +91,10 @@ function* updateActionTypeSaga({ actionType }) {
   yield put(updateProspect({ "prospect.applicationInfo.actionType": actionType }));
 }
 
-function* resetProspectSaga() {
-  const state = yield select();
-  const prospect = state.sendProspectToAPI.prospectCopy;
-  const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
-  yield put(setProspect(prospect));
-
-  if (prospect.signatoryInfo.length !== stakeholdersIds.length) {
-    stakeholdersIds.pop();
-    yield put(updateStakeholdersIds(stakeholdersIds));
-  }
-}
-
 function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
   if (isSendToApi) {
-    yield put(sendProspectToAPI());
+    yield put(sendProspectToAPI(CONTINUE));
   }
 }
 
@@ -122,7 +108,6 @@ export default function* appConfigSaga() {
     takeLatest(UPDATE_PROSPECT, updateProspectSaga),
     takeLatest(UPDATE_ACTION_TYPE, updateActionTypeSaga),
     takeLatest(UPDATE_VIEW_ID, updateViewIdSaga),
-    takeLatest(UPDATE_SAVE_TYPE, updateSaveTypeSaga),
-    takeLatest(RESET_PROSPECT, resetProspectSaga)
+    takeLatest(UPDATE_SAVE_TYPE, updateSaveTypeSaga)
   ]);
 }

@@ -30,7 +30,7 @@ import com.emc.object.s3.S3Config;
 import com.emc.object.s3.jersey.S3JerseyClient;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import ae.rakbank.documentuploader.helpers.FileHelper;
+import ae.rakbank.documentuploader.util.FileUtil;
 
 /**
  * Factory class to create the ECS S3 client. The client will be used in the
@@ -41,7 +41,7 @@ public class ECSS3Factory {
 	private static final Logger logger = LoggerFactory.getLogger(ECSS3Factory.class);
 
 	@Autowired
-	FileHelper fileHelper;
+    private FileUtil fileUtil;
 
 	@Value("${webapply.dir}")
 	private String webApplyDir;
@@ -75,7 +75,7 @@ public class ECSS3Factory {
 		logger.info("WEBAPPLY_DIR = " + webApplyDir);
 		logger.info("WEBAPPLY_ENV = " + webApplyEnv);
 
-		JsonNode docUploadConfig = fileHelper.getDocUploadConfigJson();
+		JsonNode docUploadConfig = fileUtil.getDocUploadConfigJson();
 		JsonNode otherConfigs = docUploadConfig.get("OtherConfigs").get(webApplyEnv);
 		s3AccessKeyId = otherConfigs.get("s3AccessKeyId").asText();
 		s3SecretKey = otherConfigs.get("s3SecretKey").asText();
@@ -85,11 +85,6 @@ public class ECSS3Factory {
 	}
 
 	public S3Client getS3Client() throws URISyntaxException {
-		// for client-side load balancing
-		// S3Config config = new S3Config(Protocol.HTTPS, S3_HOST1, S3_HOST2);
-		// ditto with multiple VDCs
-		// S3Config config = new S3Config(Protocol.HTTPS, new Vdc(S3_V1_HOST), new
-		// Vdc(S3_V2_HOST));
 
 		S3Config config = new S3Config(new URI(s3Url));
 
@@ -103,5 +98,4 @@ public class ECSS3Factory {
 	public String getS3Bucket() {
 		return s3Bucket;
 	}
-
 }

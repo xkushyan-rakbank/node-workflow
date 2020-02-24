@@ -1,12 +1,13 @@
 import React, { useState, useRef, useCallback } from "react";
+import cx from "classnames";
 import * as Yup from "yup";
 
 import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
+
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
-import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
-import { BYTES_IN_MEGABYTE } from "../../../constants";
+import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, BYTES_IN_MEGABYTE } from "./../../../constants";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -27,7 +28,8 @@ export const UploadDocuments = ({
   uploadErrorMessage,
   progress,
   cancelDocUpload,
-  updateProspect
+  updateProspect,
+  isApplyEditApplication
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -38,9 +40,7 @@ export const UploadDocuments = ({
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
   const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
-
   const fileUploadClick = event => (event.target.value = null);
-
   const fileUploadChange = useCallback(() => {
     const file = inputEl.current.files[0];
 
@@ -94,7 +94,11 @@ export const UploadDocuments = ({
   }, []);
 
   return (
-    <div className={classes.fileUploadPlaceholder}>
+    <div
+      className={cx(classes.fileUploadPlaceholder, {
+        [classes.disabled]: isApplyEditApplication
+      })}
+    >
       <input
         className={classes.defaultInput}
         name="file"
@@ -149,21 +153,25 @@ export const UploadDocuments = ({
         {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
       </div>
 
-      {selectedFile || isUploaded ? (
-        <Icon
-          name={ICONS.close}
-          className={classes.cancel}
-          onClick={fileUploadCancel}
-          alt="cancel upload"
-        />
-      ) : (
-        <p
-          className={classes.ControlsBox}
-          justify="flex-end"
-          onClick={() => inputEl.current.click()}
-        >
-          Upload
-        </p>
+      {!isApplyEditApplication && (
+        <>
+          {selectedFile || isUploaded ? (
+            <Icon
+              name={ICONS.close}
+              className={classes.cancel}
+              onClick={fileUploadCancel}
+              alt="cancel upload"
+            />
+          ) : (
+            <p
+              className={classes.ControlsBox}
+              justify="flex-end"
+              onClick={() => inputEl.current.click()}
+            >
+              Upload
+            </p>
+          )}
+        </>
       )}
     </div>
   );

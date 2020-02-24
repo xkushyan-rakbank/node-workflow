@@ -50,7 +50,7 @@ export const useStyles = makeStyles(theme => ({
       marginBottom: ({ isOpen, accountsComparisonPage }) =>
         isOpen && accountsComparisonPage ? "calc(-100vh + 220px)" : 0,
       width: "100%",
-      paddingTop: 100,
+      paddingTop: 71,
       height: ({ isOpen, isSmallBg }) => {
         if (isOpen) return "calc(100vh - 50px)";
         if (isSmallBg) return 190;

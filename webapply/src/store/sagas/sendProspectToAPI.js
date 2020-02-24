@@ -136,14 +136,15 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     }
 
     const { preScreening } = data;
-    if (preScreening) {
-      if (preScreening.statusOverAll === APP_STOP_SCREEN_RESULT) {
-        yield fork(setScreeningResults, data);
-      }
-      yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
-    }
 
-    yield put(sendProspectToAPISuccess(newProspect));
+    if (preScreening && preScreening.statusOverAll === APP_STOP_SCREEN_RESULT) {
+      yield fork(setScreeningResults, data);
+    } else {
+      if (preScreening) {
+        yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
+      }
+      yield put(sendProspectToAPISuccess(newProspect));
+    }
   } catch (error) {
     log({ error });
     yield put(sendProspectToAPIFail(error));

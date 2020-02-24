@@ -90,15 +90,16 @@ const ApplicantInfoPage = ({
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
-      submit(values)
-        .then(() => {
+      submit(values).then(
+        () => {
           pushHistory(
             process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp
           );
-        })
-        .finally(() => {
+        },
+        () => {
           setIsLoading(false);
-        });
+        }
+      );
     },
     [submit, pushHistory]
   );
@@ -178,6 +179,7 @@ const ApplicantInfoPage = ({
                   label="Your Mobile Number"
                   placeholder="Mobile Number"
                   component={Input}
+                  contextualHelpText="This number should be unique for a Company"
                   InputProps={{
                     inputProps: { tabIndex: 0 }
                   }}

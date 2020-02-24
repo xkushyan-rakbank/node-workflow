@@ -9,6 +9,7 @@ export const getDatalist = state => state.appConfig.datalist || {};
 export const getEndpoints = state => state.appConfig.endpoints || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
+export const getProspectStatusInfo = state => state.appConfig.prospect.prospectStatusInfo || {};
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
@@ -16,9 +17,11 @@ export const getAccountInfo = state => getProspect(state).accountInfo || [];
 
 export const getAccountNumbers = state => state.accountNumbers;
 
-export const getOrganizationInfo = state => getProspect(state).organizationInfo || [];
+export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
 
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
+
+export const getIsCompanyStakeholder = state => getOrgKYCDetails(state).isShareholderACompany;
 
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
@@ -27,6 +30,8 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 export const getSendProspectToAPIInfo = state => state.sendProspectToAPI || {};
 
 export const getIsSendingProspect = state => getSendProspectToAPIInfo(state).loading;
+
+export const getScreeningError = state => getSendProspectToAPIInfo(state).screeningError;
 
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
@@ -45,8 +50,6 @@ export const getProspectId = state => getGeneralInfo(state).prospectId;
 export const getProceedStatus = state => state.applicationStatus.isProceed;
 
 export const getServerErrorStatus = state => state.applicationStatus.serverErorr;
-
-export const getScreeningResults = state => state.sendProspectToAPI.screeningResults;
 
 export const getLoginParam = state => state.appConfig.login;
 

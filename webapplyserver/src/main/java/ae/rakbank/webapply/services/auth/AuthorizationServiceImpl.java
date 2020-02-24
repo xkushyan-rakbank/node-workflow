@@ -1,11 +1,11 @@
 package ae.rakbank.webapply.services.auth;
 
 import ae.rakbank.webapply.client.OauthClient;
-import ae.rakbank.webapply.commons.EnvUtil;
+import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.dto.UserRole;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.helpers.FileHelper;
+import ae.rakbank.webapply.util.FileUtil;
 import ae.rakbank.webapply.services.AuthorizationService;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 public class AuthorizationServiceImpl implements AuthorizationService {
 
-    private final FileHelper fileHelper;
+    private final FileUtil fileUtil;
     private final JwtService jwtService;
     private final OAuthService oAuthService;
     private final OauthClient oauthClient;
@@ -32,7 +32,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @PostConstruct
     public void init() {
-        JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
+        JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
     }
 
@@ -101,5 +101,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public String getOauthTokenFromJwt(String jwtToken) {
         return jwtService.decrypt(jwtToken).getOauthAccessToken();
+    }
+
+    @Override
+    public String getTokenFromAuthorizationHeader(String authorizationString) {
+        return authorizationString.substring(7); // removes the "Bearer " prefix.
     }
 }

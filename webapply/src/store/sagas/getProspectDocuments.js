@@ -15,7 +15,13 @@ import { CancelToken } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import mapValues from "lodash/mapValues";
-import { getProspectDocuments, uploadProspectDocument } from "../../api/apiClient";
+import { saveAs } from "file-saver";
+
+import {
+  getProspectDocuments,
+  uploadProspectDocument,
+  downloadProspectDocument
+} from "../../api/apiClient";
 import {
   getProspectId,
   getProspectDocuments as getDocuments,
@@ -28,7 +34,8 @@ import {
   DELETE_EXTRA_DOC_UPLOAD_SUCCESS,
   uploadFilesProgress,
   CANCEL_DOC_UPLOAD,
-  uploadFilesFail
+  uploadFilesFail,
+  DOWNLOAD_DOCUMENT_FILE
 } from "../actions/getProspectDocuments";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
@@ -40,7 +47,7 @@ import {
 } from "../../utils/documents";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 
-function createUploader(prospectId, data, source, authToken) {
+function createUploader(prospectId, data, source, headers) {
   let emit;
   const chan = eventChannel(emitter => {
     emit = emitter;
@@ -57,7 +64,7 @@ function createUploader(prospectId, data, source, authToken) {
     data,
     source,
     onUploadProgress,
-    authToken
+    headers
   });
   return [uploadPromise, chan];
 }
@@ -173,11 +180,23 @@ function* deleteExtraProspectDocuments(action) {
   yield put(setConfig(config));
 }
 
+function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, fileName } }) {
+  try {
+    const headers = yield select(getAuthorizationHeader);
+    const { data } = yield call(downloadProspectDocument.get, prospectId, documentKey, headers);
+    const blob = new Blob([data], { type: data.type });
+    yield call(saveAs, blob, fileName);
+  } catch (error) {
+    log(error);
+  }
+}
+
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RETRIEVE_DOC_UPLOADER, getProspectDocumentsSaga),
     takeEvery(DOC_UPLOADER, uploadDocumentsFlowSaga),
     takeLatest(EXTRA_DOC_UPLOAD_SUCCESS, updateExtraProspectDocuments),
-    takeLatest(DELETE_EXTRA_DOC_UPLOAD_SUCCESS, deleteExtraProspectDocuments)
+    takeLatest(DELETE_EXTRA_DOC_UPLOAD_SUCCESS, deleteExtraProspectDocuments),
+    takeLatest(DOWNLOAD_DOCUMENT_FILE, downloadDocumentFileSaga)
   ]);
 }

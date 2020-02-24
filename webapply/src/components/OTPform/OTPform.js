@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
@@ -31,6 +31,13 @@ export const OTPformComponent = ({
   const [loginAttempt, setLoginAttempt] = useState(0);
   const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
 
+  const otpRef = useRef(null);
+
+  const resetOtpForm = useCallback(() => {
+    setCode(Array(6).fill(""));
+    otpRef.current.resetFocus();
+  }, [setCode]);
+
   useEffect(() => {
     if (isVerified) {
       pushHistory(redirectRoute);
@@ -39,15 +46,15 @@ export const OTPformComponent = ({
 
   useEffect(() => {
     if (verificationError) {
-      setCode(Array(6).fill(""));
+      resetOtpForm();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [verificationError]);
+  }, [verificationError, resetOtpForm]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => verifyClearError(), []);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
+    resetOtpForm();
     if (isGenerating) return;
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(applicantInfo);
@@ -56,7 +63,7 @@ export const OTPformComponent = ({
       setIsDisplayMaxAttempError(true);
     }
     setLoginAttempt(loginAttempt + 1);
-  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, attempts]);
+  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, attempts, resetOtpForm]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
@@ -78,7 +85,7 @@ export const OTPformComponent = ({
           <Form className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification code={code} onChange={setCode} />
+                <OtpVerification code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
               {!isDisplayMaxAttempError && verificationError && (

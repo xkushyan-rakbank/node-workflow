@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
     [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
       position: "relative",
       height: "100vh",
-      overflowY: "hidden"
+      overflow: "hidden"
     }
   },
   paginationContent: {
@@ -88,5 +88,11 @@ export const useStyles = makeStyles(theme => ({
   current: {
     backgroundColor: "#020f21",
     cursor: "auto"
-  }
+  },
+  videoWrapper: ({ isMobileNotificationActive }) => ({
+    height: isMobileNotificationActive ? "calc(100vh - 280px)" : "calc(100vh - 216px)",
+    [`${theme.breakpoints.up("sm")} and (max-height: ${normalScrollHeight}px)`]: {
+      height: "100vh"
+    }
+  })
 }));

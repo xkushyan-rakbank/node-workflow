@@ -5,6 +5,7 @@ import { BackgroundVideoPlayer } from "../BackgroundVideoPlayer";
 import { VerticalPaginationContext } from "./VerticalPaginationProvider";
 import { useStyles } from "./styled";
 import { getAverage } from "./utils";
+import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 
 export const VerticalPaginationComponent = ({
   children,
@@ -13,10 +14,11 @@ export const VerticalPaginationComponent = ({
   scrollToSecondSection,
   video
 }) => {
+  const isMobileNotificationActive = useContext(MobileNotificationContext);
   const { currentSectionIndex, scrollToSection, isCanScroll, setHasVideo } = useContext(
     VerticalPaginationContext
   );
-  const classes = useStyles({ currentSectionIndex });
+  const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
   const scrollings = useRef([]);
   const prevTime = useRef(new Date().getTime());
   const poster = (video && video.poster) || "";
@@ -65,14 +67,16 @@ export const VerticalPaginationComponent = ({
       <div className={classes.paginationWrapper} onWheel={handleWheel}>
         <div className={classes.paginationContent}>
           {poster && (
-            <BackgroundVideoPlayer
-              video={video}
-              videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
-              scrollToSection={scrollToSection}
-              handleClick={handleClick}
-              handleClickMobile={scrollToSecondSection}
-              currentSectionIndex={currentSectionIndex}
-            />
+            <div className={cx(classes.videoWrapper, { "hide-on-mobile": !showVideoOnMobile })}>
+              <BackgroundVideoPlayer
+                video={video}
+                videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
+                scrollToSection={scrollToSection}
+                handleClick={handleClick}
+                handleClickMobile={scrollToSecondSection}
+                currentSectionIndex={currentSectionIndex}
+              />
+            </div>
           )}
           {React.Children.map(children, child => (
             <div

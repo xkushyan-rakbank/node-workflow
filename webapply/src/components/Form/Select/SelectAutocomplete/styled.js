@@ -7,6 +7,7 @@ export const useStyles = makeStyles(theme => ({
     padding: 0,
     minHeight: "56px",
     height: "auto",
+    backgroundColor: ({ disabled }) => (disabled ? "rgba(242, 242, 242, 0.5)" : "transparent"),
     "& > *": {
       minHeight: "56px"
     },

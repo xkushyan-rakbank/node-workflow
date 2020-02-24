@@ -114,7 +114,8 @@
 			{
 				"primaryMobileNo": "",
 				"primaryMobCountryCode": "971",
-				"primaryPhoneNo": "",
+                "TxnReconfirmingfullname": "",
+                "primaryPhoneNo": "",
 				"primaryPhoneCountryCode": "971"
 			}
 		]
@@ -205,7 +206,7 @@
 					}
 				]
 			},
-			"salutation": "",
+			"salutation": "MR.",
 			"signatoryId": "",
 			"firstName": "",
 			"middleName": "",
