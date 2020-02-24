@@ -3,6 +3,7 @@ import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { getIn } from "formik";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { InfoTitle } from "../../InfoTitle";
 import { ErrorMessage, ContexualHelp } from "../../Notifications";
@@ -10,6 +11,20 @@ import { BaseDatePicker } from "./styled";
 import { PickerToolbar } from "./PickerToolbar/PickerToolbar";
 
 const Toolbar = ({ date, onChange }) => <PickerToolbar date={date} onChange={onChange} />;
+
+const useStyles = makeStyles({
+  root: {
+    "& label.Mui-focused": {
+      color: "#3b3a3a"
+    },
+    "& fieldset": {
+      borderColor: "rgba(194, 194, 194, 0.56)"
+    },
+    "& .Mui-focused fieldset": {
+      borderColor: "#373737 !important"
+    }
+  }
+});
 
 export const DatePicker = ({
   field,
@@ -27,6 +42,7 @@ export const DatePicker = ({
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
+  const classes = useStyles();
 
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
@@ -57,6 +73,9 @@ export const DatePicker = ({
             ToolbarComponent={Toolbar}
             views={["date"]}
             onChange={onChange}
+            classes={{
+              root: classes.root
+            }}
           />
         </MuiPickersUtilsProvider>
         {infoTitle && <InfoTitle title={infoTitle} />}

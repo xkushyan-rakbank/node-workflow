@@ -49,7 +49,7 @@ export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) =>
   );
 
   return (
-    <FormControl variant="filled">
+    <FormControl>
       <StyledSelect value={value} onChange={handleChange} IconComponent={KeyboardArrowDownIcon}>
         {options.map(({ value, label }) => (
           <MenuItem key={value} value={value}>
