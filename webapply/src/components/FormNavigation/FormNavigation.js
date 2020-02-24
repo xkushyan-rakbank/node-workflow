@@ -11,11 +11,11 @@ import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
 import { formStepper, searchProspectStepper } from "../../constants";
 import { Blob } from "./Blob";
-import { ReactComponent as LogoSmall } from "../../assets/images/logo-small.svg";
 import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
 
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
+import { routerToSmallMenu } from "../../constants/styles";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
@@ -35,7 +35,8 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),
     isOpen: isSwitcherShow,
-    accountsComparisonPage: routes.accountsComparison === pathname
+    accountsComparisonPage: routes.accountsComparison === pathname,
+    smallMenu: routerToSmallMenu.includes(pathname)
   });
 
   const isChatVisible =
@@ -54,8 +55,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   return (
     <div className={cx(classes.formNav, classes.formNavBg, { active: isCurrentSectionVideo })}>
       <Blob className={classes.blob} />
-      <LogoSmall className={classes.logoSmall} />
-      <div className={cx(classes.formNavContent, classes.disabled)}>
+      <div className={classes.formNavContent}>
         <Header />
         <IslamicBankingSwitcherMobile
           className={classes.formNavBg}
@@ -67,7 +67,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
           </Typography>
         </IslamicBankingSwitcherMobile>
         {checkIsShowAccountInfo(pathname) ? (
-          <AccountInfo />
+          <AccountInfo className="small-menu-hide" />
         ) : (
           pathname !== routes.login && (
             <ul>
@@ -87,9 +87,11 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
           )
         )}
         {isChatVisible && (
-          <Suspense fallback={<div>Loading...</div>}>
-            <Chat />
-          </Suspense>
+          <div className={classes.chatButton}>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Chat />
+            </Suspense>
+          </div>
         )}
       </div>
     </div>

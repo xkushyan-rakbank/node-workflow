@@ -14,8 +14,9 @@ import { ReactComponent as StandartLogo } from "../../assets/images/logo-standar
 import { ReactComponent as EliteLogo } from "../../assets/images/logo-elite.svg";
 import { ReactComponent as IslamicLogo } from "../../assets/images/logo-islamic.svg";
 import { LOGO_ELITE, LOGO_ELITE_ISLAMIC, LOGO_ISLAMIC, LOGO_STANDART } from "./constants";
+import { ReactComponent as LogoSmall } from "../../assets/images/logo-small.svg";
 
-const HeaderComponent = ({ isIslamicBanking, accountType, isOtpVerified }) => {
+const HeaderComponent = ({ className, isIslamicBanking, accountType, isOtpVerified }) => {
   const {
     location: { pathname }
   } = useHistory();
@@ -34,23 +35,28 @@ const HeaderComponent = ({ isIslamicBanking, accountType, isOtpVerified }) => {
   });
 
   return (
-    <header className={classes.header}>
-      <Link to={routes.accountsComparison} className={cx({ [classes.disabled]: isOtpVerified })}>
-        {(() => {
-          switch (logoType) {
-            case LOGO_ELITE_ISLAMIC:
-              return <EliteIslamicLogo className={classes.logo} />;
-            case LOGO_ELITE:
-              return <EliteLogo className={classes.logo} />;
-            case LOGO_ISLAMIC:
-              return <IslamicLogo className={classes.logo} />;
-            case LOGO_STANDART:
-            default:
-              return <StandartLogo className={classes.logo} />;
-          }
-        })()}
-      </Link>
-    </header>
+    <>
+      <header className={cx(classes.header, "small-menu-hide", className)}>
+        <Link to={routes.accountsComparison} className={cx({ [classes.disabled]: isOtpVerified })}>
+          {(() => {
+            switch (logoType) {
+              case LOGO_ELITE_ISLAMIC:
+                return <EliteIslamicLogo className={classes.logo} />;
+              case LOGO_ELITE:
+                return <EliteLogo className={classes.logo} />;
+              case LOGO_ISLAMIC:
+                return <IslamicLogo className={classes.logo} />;
+              case LOGO_STANDART:
+              default:
+                return <StandartLogo className={classes.logo} />;
+            }
+          })()}
+        </Link>
+      </header>
+      <header className={cx(classes.header, "small-menu-show", className)}>
+        <LogoSmall />
+      </header>
+    </>
   );
 };
 

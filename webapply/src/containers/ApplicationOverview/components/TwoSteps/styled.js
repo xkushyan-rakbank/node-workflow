@@ -17,15 +17,28 @@ export const useStyles = makeStyles(theme => ({
     height: "300px",
     width: "100%",
     display: "flex",
-    [theme.breakpoints.only("xs")]: {
-      height: "auto",
-      flexWrap: "wrap"
-    },
     "& span": {
       maxWidth: "380px"
     },
     "& img": {
-      maxWidth: "100%"
+      maxWidth: "100%",
+      [theme.breakpoints.only("sm")]: {
+        width: 440
+      }
+    },
+    [theme.breakpoints.only("xs")]: {
+      height: "auto",
+      flexWrap: "wrap",
+      "& img": {
+        margin: "20px auto 0"
+      }
+    }
+  },
+  secondGroupText: {
+    marginRight: -110,
+    zIndex: 1,
+    [theme.breakpoints.only("xs")]: {
+      marginRight: 0
     }
   },
   note: {

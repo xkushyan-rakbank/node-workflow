@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
@@ -31,6 +32,9 @@ export const useStyles = makeStyles(theme => ({
     fontFamily: "Open Sans",
     marginBottom: 20,
     whiteSpace: "pre-line",
+    "& + button": {
+      marginTop: 60
+    },
     [theme.breakpoints.down("sm")]: {
       fontSize: 38
     },
@@ -44,19 +48,21 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "16px",
     lineHeight: "1.5",
     color: "#fff",
-    marginBottom: 60,
     maxWidth: 300,
     display: "block",
     fontWeight: "normal",
     fontFamily: "Open Sans",
     whiteSpace: "pre-wrap",
-    [theme.breakpoints.only("xs")]: {
-      marginBottom: 57
+    "& + button": {
+      marginTop: 60
     }
+  },
+  sectionButton: {
+    marginTop: 60
   }
 }));
 
-export const AccountInfo = () => {
+export const AccountInfo = ({ className }) => {
   const classes = useStyles();
   const history = useHistory();
   const accountType = useSelector(getAccountType);
@@ -70,7 +76,7 @@ export const AccountInfo = () => {
   const isDetailedAccountPage = pathname === routes.detailedAccount;
 
   return (
-    <div className={classes.contentContainer}>
+    <div className={cx(classes.contentContainer, className)}>
       <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
         {(() => {
           switch (pathname) {
@@ -122,7 +128,7 @@ export const AccountInfo = () => {
         />
       )}
       {isApplicationOverview && (
-        <>
+        <div className={classes.sectionButton}>
           <div className="hide-on-mobile">
             <ContainedButton
               withRightArrow
@@ -134,7 +140,7 @@ export const AccountInfo = () => {
           <div className="show-on-mobile">
             <MobileNotification />
           </div>
-        </>
+        </div>
       )}
     </div>
   );

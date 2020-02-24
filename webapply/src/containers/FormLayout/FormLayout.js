@@ -4,7 +4,7 @@ import { ApplicationStatus } from "../../components/ApplicationStatus/Applicatio
 import { FormNavigation } from "../../components/FormNavigation";
 import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications } from "../../components/Notification";
-import { routerToAddPaddingInSlider } from "../../constants/styles";
+import { routerToAddPaddingInSlider, routerToSmallMenu } from "../../constants/styles";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
@@ -20,7 +20,8 @@ export const FormLayoutComponent = ({
   const blobColor = useBlobColor();
   const classes = useStyles({
     pathname,
-    color: blobColor
+    color: blobColor,
+    fullContentWidth: routerToSmallMenu.includes(pathname)
   });
 
   useEffect(() => {

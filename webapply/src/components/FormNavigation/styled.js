@@ -43,10 +43,8 @@ export const useStyles = makeStyles(theme => ({
     position: "relative",
     zIndex: 11,
     transition: theme.transitions.default,
-    "& $formNavContent": {
-      display: "flex",
-      flexDirection: "column",
-      transition: theme.transitions.default
+    "& .small-menu-show": {
+      display: "none"
     },
     [theme.breakpoints.only("xs")]: {
       marginBottom: ({ isOpen, accountsComparisonPage }) =>
@@ -57,10 +55,6 @@ export const useStyles = makeStyles(theme => ({
         if (isOpen) return "calc(100vh - 50px)";
         if (isSmallBg) return 190;
         return 290;
-      },
-      "& $formNavContent": {
-        paddingLeft: 16,
-        paddingRight: 16
       }
     },
     [theme.breakpoints.up("sm")]: {
@@ -108,51 +102,41 @@ export const useStyles = makeStyles(theme => ({
               return "linear-gradient(to bottom, #E9320F, #EA1C44)";
           }
         }
-      },
-      "& $formNavContent": {
-        width: sideNavWidthMD,
-        paddingTop: 168,
-        paddingLeft: 40,
-        paddingRight: 40,
-        boxSizing: "border-box"
       }
     },
     [theme.breakpoints.only("sm")]: {
-      width: ({ accountsComparisonPage }) =>
-        accountsComparisonPage ? sideNavWidthMD : sideNavWidthSM,
-      "& $formNavContent": {
-        width: ({ accountsComparisonPage }) =>
-          accountsComparisonPage ? sideNavWidthMD : sideNavWidthSM,
-        opacity: 1
+      "& .small-menu-hide": {
+        opacity: 1,
+        transition: theme.transitions.default
       },
-      "& $logoSmall": {
-        opacity: 0
+      "& .small-menu-show": {
+        display: ({ smallMenu }) => (smallMenu ? "block" : "none"),
+        opacity: 0,
+        transition: theme.transitions.default
       },
+      width: ({ smallMenu }) => (smallMenu ? sideNavWidthMD : sideNavWidthSM),
       "&:not(:hover):not(.active), &:not(.active):not(:hover)": {
-        width: ({ accountsComparisonPage }) =>
-          accountsComparisonPage ? sideNavWidthCollapsed : sideNavWidthSM,
+        width: ({ smallMenu }) => (smallMenu ? sideNavWidthCollapsed : sideNavWidthSM),
+        "& .small-menu-hide": {
+          opacity: ({ smallMenu }) => (smallMenu ? 0 : 1)
+        },
+        "& .small-menu-show": {
+          opacity: ({ smallMenu }) => (smallMenu ? 1 : 0)
+        },
         "&:before": {
-          width: ({ accountsComparisonPage }) =>
-            accountsComparisonPage
+          width: ({ smallMenu }) =>
+            smallMenu
               ? `calc(${sideNavWidthCollapsed}px - 380/768*100vh*0.4 + 50px)`
               : `calc(${sideNavWidthSM}px - 380/768*100vh*0.4 + 50px)`
         },
         "& > svg:first-child": {
-          transform: ({ accountsComparisonPage }) =>
-            accountsComparisonPage
-              ? "translate(30%, -50%) scaleX(0.4)"
-              : "translate(0, -50%) scaleX(1)",
+          transform: ({ smallMenu }) =>
+            smallMenu ? "translate(30%, -50%) scaleX(0.4)" : "translate(0, -50%) scaleX(1)",
           "& path": {
             "&:not(:first-child)": {
-              fillOpacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 0 : 1)
+              fillOpacity: ({ smallMenu }) => (smallMenu ? 0 : 1)
             }
           }
-        },
-        "& $formNavContent": {
-          opacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 0 : 1)
-        },
-        "& $logoSmall": {
-          opacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 1 : 0)
         }
       }
     },
@@ -160,18 +144,13 @@ export const useStyles = makeStyles(theme => ({
       width: sideNavWidthLG,
       "&:before": {
         width: `calc(${sideNavWidthLG}px - 380/768*100vh + 50px)`
-      },
-      "& $formNavContent": {
-        width: sideNavWidthLG,
-        paddingLeft: 80
       }
     },
     "& ul": {
-      margin: "0",
+      margin: 0,
+      paddingLeft: 0,
       padding: "5px 0 0 25px",
       marginLeft: "20px",
-      height: "271px",
-      overflowY: "auto",
       direction: "rtl",
       [theme.breakpoints.up("sm")]: {
         marginLeft: 0,
@@ -195,20 +174,28 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   formNavContent: {
+    display: "flex",
+    flexDirection: "column",
+    maxHeight: "100vh",
+    overflow: "auto",
+    [theme.breakpoints.only("xs")]: {
+      paddingLeft: 16,
+      paddingRight: 16
+    },
+    [theme.breakpoints.up("sm")]: {
+      width: sideNavWidthMD,
+      paddingTop: 168,
+      paddingLeft: 40,
+      paddingRight: 40,
+      padding: "168px 40px 20px",
+      boxSizing: "border-box"
+    },
     [theme.breakpoints.only("sm")]: {
-      opacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 0 : 1)
-    }
-  },
-  logoSmall: {
-    opacity: ({ accountsComparisonPage }) => (accountsComparisonPage ? 1 : 0),
-    position: "absolute",
-    pointerEvents: "none",
-    top: 30,
-    left: 40,
-    transition: theme.transitions.default,
-    display: "none",
-    [theme.breakpoints.only("sm")]: {
-      display: "block"
+      width: ({ smallMenu }) => (smallMenu ? sideNavWidthMD : sideNavWidthSM)
+    },
+    [theme.breakpoints.up("lg")]: {
+      width: sideNavWidthLG,
+      paddingLeft: 80
     }
   },
   formNavBg: {
@@ -219,46 +206,28 @@ export const useStyles = makeStyles(theme => ({
       backgroundPosition: "center bottom"
     }
   },
-  contentContainer: {
-    margin: 0,
-    width: "100%",
-    maxWidth: 340,
-    [theme.breakpoints.up("xl")]: {
-      maxWidth: "auto",
-      width: "auto",
-      paddingRight: "25px"
+  chatButton: {
+    minHeight: 66,
+    display: "flex",
+    alignItems: "center",
+    position: "absolute",
+    left: "77px",
+    bottom: "40px",
+    color: "#fff",
+    [theme.breakpoints.down("sm")]: {
+      left: 40
+    },
+    [theme.breakpoints.only("xs")]: {
+      position: "fixed",
+      left: "15px"
     }
   },
   sectionTitle: {
-    maxWidth: 340,
     color: "#fff",
-    fontSize: "48px",
-    lineHeight: "1.17",
+    fontSize: 32,
+    lineHeight: "36px",
     fontWeight: 600,
     fontFamily: "Open Sans",
-    marginBottom: 20,
-    whiteSpace: "pre-line",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: 38
-    },
-    [theme.breakpoints.only("xs")]: {
-      marginBottom: 10,
-      fontSize: 32,
-      lineHeight: "36px"
-    }
-  },
-  sectionSubtitle: {
-    fontSize: "16px",
-    lineHeight: "1.5",
-    color: "#fff",
-    marginBottom: 60,
-    maxWidth: 300,
-    display: "block",
-    fontWeight: "normal",
-    fontFamily: "Open Sans",
-    whiteSpace: "pre-wrap",
-    [theme.breakpoints.only("xs")]: {
-      marginBottom: 57
-    }
+    whiteSpace: "pre-line"
   }
 }));

@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import routes from "../../routes";
 
 import {
   routerToAddPaddingInSlider,
@@ -59,9 +58,9 @@ export const useStyles = makeStyles(theme => ({
         fontSize: "27px"
       }
     },
-    [theme.breakpoints.up("sm")]: {
-      paddingLeft: ({ pathname }) =>
-        pathname === routes.accountsComparison ? sideNavWidthCollapsed : sideNavWidthSM
+    [theme.breakpoints.only("sm")]: {
+      paddingLeft: ({ fullContentWidth }) =>
+        fullContentWidth ? sideNavWidthCollapsed : sideNavWidthSM
     },
     [theme.breakpoints.up("md")]: {
       paddingLeft: sideNavWidthMD
@@ -82,7 +81,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   mainContainer: {
-    width: ({ pathname }) => (pathname === routes.accountsComparison ? 780 : 634),
+    width: ({ fullContentWidth }) => (fullContentWidth ? 780 : 634),
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
