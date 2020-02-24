@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import { useSelector } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
 
@@ -8,15 +7,14 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
-import { getProspectId, getSignatories } from "../../../../store/selectors/appConfig";
 
-export const DocumentsComponent = ({ docs = {}, downloadDocumentFile }) => {
+export const DocumentsComponent = ({
+  docs = {},
+  downloadDocumentFile,
+  prospectId,
+  signatoryInfo
+}) => {
   const classes = useStyles();
-  const { prospectId, signatoryInfo } = useSelector(state => ({
-    prospectId: getProspectId(state),
-    signatoryInfo: getSignatories(state)
-  }));
-
   const downloadDocument = useCallback(
     (documentKey, fileName) => downloadDocumentFile(prospectId, documentKey, fileName),
     [prospectId, downloadDocumentFile]
