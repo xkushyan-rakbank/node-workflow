@@ -188,7 +188,7 @@ const ComeBackLoginComponent = ({
                     (isRecaptchaEnable && !recaptchaToken)
                   }
                   justify="flex-end"
-                  label="Next step"
+                  label="Next Step"
                 />
               </div>
             </Grid>
