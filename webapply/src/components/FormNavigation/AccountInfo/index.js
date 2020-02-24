@@ -36,7 +36,6 @@ export const AccountInfo = () => {
     <AccountInfoScreen
       title={getTitleByPathname(pathname, accountType)}
       subtitle={accountsInfo[accountType][isIslamicBanking ? "islamicSubtitle" : "subtitle"]}
-      resetApplicantInfo={resetApplicantInfo}
       isShowCheck={pathname === routes.ApplicationSubmitted}
       isShowStart={pathname === routes.applicationOverview}
       isShowApply={accountType && pathname === routes.detailedAccount}

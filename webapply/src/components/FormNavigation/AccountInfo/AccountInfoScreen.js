@@ -6,7 +6,6 @@ import { MobileNotification } from "../../Modals";
 import { useStyles } from "../styled";
 
 export const AccountInfoScreen = ({
-  resetApplicantInfo,
   isShowApply,
   isShowCheck,
   isShowStart,
