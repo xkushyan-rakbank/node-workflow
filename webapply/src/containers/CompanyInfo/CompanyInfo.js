@@ -63,7 +63,7 @@ export const CompanyInfoPage = ({
     sendProspectToAPI(NEXT).then(() => {
       pushHistory(routes.stakeholdersInfo);
     });
-  }, [pushHistory]);
+  }, [pushHistory, sendProspectToAPI]);
 
   return (
     <>

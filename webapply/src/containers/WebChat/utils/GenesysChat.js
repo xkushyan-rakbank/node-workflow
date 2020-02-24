@@ -1,3 +1,4 @@
+/* eslint-disable */
 import cometd from "cometd";
 import nanoid from "nanoid";
 import has from "lodash/has";
