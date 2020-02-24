@@ -7,8 +7,8 @@ import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessF
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
 import {
-  getSendProspectToAPIInfo,
-  getIsCompanyStakeholder
+  getIsCompanyStakeholder,
+  getIsSendingProspect
 } from "../../../../store/selectors/appConfig";
 import {
   sendProspectToAPIPromisify,
@@ -151,7 +151,7 @@ const mapStateToProps = state => ({
   isStatusShown: state.stakeholders.isStatusShown,
   isTooManyStakeholders: quantityErrorSelector(state),
   isCompanyStakeHolder: getIsCompanyStakeholder(state),
-  ...getSendProspectToAPIInfo(state)
+  loading: getIsSendingProspect(state)
 });
 
 const mapDispatchToProps = {

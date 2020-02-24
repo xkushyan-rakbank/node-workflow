@@ -22,7 +22,14 @@ const loginSchema = Yup.object({
     .matches(PASSWORD_REGEX, getInvalidMessage("Password"))
 });
 
-export const LoginComponent = ({ login, setToken, recaptchaToken, isRecaptchaEnable, history }) => {
+export const LoginComponent = ({
+  login,
+  setToken,
+  setIsApplyEditApplication,
+  recaptchaToken,
+  isRecaptchaEnable,
+  history
+}) => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const submitForm = useCallback(
@@ -32,15 +39,18 @@ export const LoginComponent = ({ login, setToken, recaptchaToken, isRecaptchaEna
         loginData.recaptchaToken = recaptchaToken;
       }
       setIsLoading(true);
-      login(loginData)
-        .then(() => {
-          history.push(routes.searchProspect);
-        })
-        .finally(() => {
+      login(loginData).then(
+        () => {
+          setIsApplyEditApplication(true);
           setIsLoading(false);
-        });
+          history.push(routes.searchProspect);
+        },
+        () => {
+          setIsLoading(false);
+        }
+      );
     },
-    [login, recaptchaToken, isRecaptchaEnable, history]
+    [login, recaptchaToken, isRecaptchaEnable, history, setIsApplyEditApplication]
   );
   const handleReCaptchaVerify = useCallback(
     token => {

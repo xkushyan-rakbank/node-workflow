@@ -15,4 +15,6 @@ public interface AuthorizationService {
     String getAndUpdateContextOauthToken();
 
     String getOauthTokenFromJwt(String jwtToken);
+
+    String getTokenFromAuthorizationHeader(String authorizationString);
 }

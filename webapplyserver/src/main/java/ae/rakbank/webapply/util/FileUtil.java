@@ -72,7 +72,6 @@ public class FileUtil {
         } catch (Exception e) {
             logger.error("error loading " + filename, e);
         }
-
         return null;
     }
 }
