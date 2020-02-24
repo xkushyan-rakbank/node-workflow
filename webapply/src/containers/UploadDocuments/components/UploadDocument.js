@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback } from "react";
+import { useSelector } from "react-redux";
 import cx from "classnames";
 import * as Yup from "yup";
 
@@ -6,10 +7,9 @@ import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
 
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
-import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
-import { BYTES_IN_MEGABYTE } from "../../../constants";
-import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../constants";
+import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, BYTES_IN_MEGABYTE } from "./../../../constants";
+import { getIsEditableStatusSearchInfo } from "../../../store/selectors/searchProspect";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -30,10 +30,9 @@ export const UploadDocuments = ({
   uploadErrorMessage,
   progress,
   cancelDocUpload,
-  updateProspect,
-  prospectStatusInfo,
-  isApplyEditApplication
+  updateProspect
 }) => {
+  const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
@@ -95,13 +94,11 @@ export const UploadDocuments = ({
     inputEl.current.click();
     setSelectedFile(null);
   }, []);
-  const isDisabled =
-    isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
 
   return (
     <div
       className={cx(classes.fileUploadPlaceholder, {
-        [classes.disabled]: isDisabled
+        [classes.disabled]: isApplyEditApplication
       })}
     >
       <input
@@ -158,14 +155,15 @@ export const UploadDocuments = ({
         {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
       </div>
 
-      {selectedFile || isUploaded ? (
+      {!isApplyEditApplication && (selectedFile || isUploaded) && (
         <Icon
           name={ICONS.close}
           className={classes.cancel}
           onClick={fileUploadCancel}
           alt="cancel upload"
         />
-      ) : (
+      )}
+      {!isApplyEditApplication && (!selectedFile || !isUploaded) && (
         <p
           className={classes.ControlsBox}
           justify="flex-end"
