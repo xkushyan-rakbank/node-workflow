@@ -1,13 +1,11 @@
-import React, { useMemo } from "react";
+import React from "react";
 import cx from "classnames";
 
 import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
   const classes = useStyles();
-  const revertedAuditTrailInfo = useMemo(() => [...(prospectInfo.AuditTrailInfo || [])].reverse(), [
-    prospectInfo
-  ]);
+  const revertedAuditTrailInfo = [...(prospectInfo.AuditTrailInfo || [])].reverse();
 
   return revertedAuditTrailInfo.length ? (
     <div className={classes.wrapper}>
