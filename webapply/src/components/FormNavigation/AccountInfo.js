@@ -1,10 +1,11 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import get from "lodash/get";
 import Typography from "@material-ui/core/Typography";
 
 import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
+import { resetApplicantInfo } from "../../store/actions/applicantInfoForm";
 import { ContainedButton } from "../Buttons/ContainedButton";
 import { MobileNotification } from "../Modals";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
@@ -16,11 +17,18 @@ import { useStyles } from "./styled";
 export const AccountInfo = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const accountType = useSelector(getAccountType);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
   const pushHistory = useTrackingHistory();
   const { location: { pathname } = {} } = history;
+
   const handleClick = useCallback(path => () => pushHistory(path), [pushHistory]);
+
+  const handleCheckStatus = useCallback(() => {
+    dispatch(resetApplicantInfo());
+    pushHistory(routes.comeBackLogin);
+  }, [pushHistory, dispatch, resetApplicantInfo]);
 
   const isApplicationOverview = pathname === routes.applicationOverview;
   const isApplicationSubmitted = pathname === routes.ApplicationSubmitted;
@@ -75,7 +83,7 @@ export const AccountInfo = () => {
           withRightArrow
           justify="flex-start"
           label="Check status"
-          handleClick={handleClick(routes.comeBackLogin)}
+          handleClick={handleCheckStatus}
         />
       )}
       {isApplicationOverview && (

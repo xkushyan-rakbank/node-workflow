@@ -1,6 +1,7 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import {
   APPLICANT_INFO_FORM,
+  RESET_APPLICANT_INFO,
   applicantInfoFormFail,
   applicantInfoFormSuccess
 } from "../actions/applicantInfoForm";
@@ -51,6 +52,27 @@ function* applicantInfoFormSaga({ payload }) {
   }
 }
 
+function* resetApplicantInfoSaga({ payload }) {
+  try {
+    const state = yield select();
+
+    let prospectUpdated = {
+      ...state.appConfig.prospect,
+      applicantInfo: {
+        fullName: "",
+        email: "",
+        countryCode: "971",
+        mobileNo: "",
+        applyOnbehalf: false
+      }
+    };
+    yield put(updateProspect({ prospect: prospectUpdated }));
+  } catch (error) {
+    log(error);
+  }
+}
+
 export default function* applicantInfoSaga() {
   yield all([takeLatest(APPLICANT_INFO_FORM, applicantInfoFormSaga)]);
+  yield all([takeLatest(RESET_APPLICANT_INFO, resetApplicantInfoSaga)]);
 }
