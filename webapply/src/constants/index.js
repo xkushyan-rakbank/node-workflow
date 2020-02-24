@@ -18,7 +18,12 @@ export const formStepper = [
   { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
   { step: 4, title: "Final Questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
-  { step: 6, title: "Select Services", path: routes.selectServices }
+  {
+    step: 6,
+    title: "Select Services",
+    path: routes.selectServices,
+    relatedPath: routes.SubmitApplication
+  }
 ];
 
 export const searchProspectStepper = [
@@ -44,7 +49,7 @@ export const submitApplication = {
   formInfo:
     "And just like that, we have reached the end! Here’s the overview of what you’re applying for.",
   trueNdCompleteAcknldgelabel: "I confirm that the information provided is true and complete",
-  needCommunicationLabel: "I want to receive marketing and promotional communication from RakBank"
+  needCommunicationLabel: "I want to receive marketing and promotional communication from RAKBANK"
 };
 
 export const accountNames = {
