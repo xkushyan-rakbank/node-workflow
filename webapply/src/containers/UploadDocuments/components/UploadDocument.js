@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback } from "react";
-import { useSelector } from "react-redux";
 import cx from "classnames";
 import * as Yup from "yup";
 
@@ -9,7 +8,6 @@ import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, BYTES_IN_MEGABYTE } from "./../../../constants";
-import { getIsEditableStatusSearchInfo } from "../../../store/selectors/searchProspect";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -30,9 +28,9 @@ export const UploadDocuments = ({
   uploadErrorMessage,
   progress,
   cancelDocUpload,
-  updateProspect
+  updateProspect,
+  isApplyEditApplication
 }) => {
-  const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
