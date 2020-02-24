@@ -23,7 +23,9 @@ const mapStateToProps = state => ({
     getOrgKYCDetails(state),
     "otherBankingRelationshipsInfo.otherBankDetails",
     initialOtherBankDetails
-  )
+  ),
+  isDontHaveSuppliersYet: get(getOrgKYCDetails(state), "isDontHaveSuppliersYet", false),
+  isDontTradeGoodsYet: get(getOrgKYCDetails(state), "isDontTradeGoodsYet", false)
 });
 
 const mapDispatchToProps = {

@@ -83,15 +83,13 @@ export const CompanyBusinessRelationshipsComponent = ({
   topSuppliers,
   topOriginGoodsCountries,
   otherBankDetails,
+  isDontTradeGoodsYet,
+  isDontHaveSuppliersYet,
   updateProspect
 }) => {
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
-  const isDontHaveSuppliersYet =
-    topSuppliers.length === 1 && !topSuppliers[0].name && !topSuppliers[0].country;
-  const isDontTradeGoodsYet =
-    topOriginGoodsCountries.length === 1 && !topOriginGoodsCountries[0].length;
 
   const handleSubmit = useCallback(() => {
     handleContinue();
@@ -209,9 +207,13 @@ export const CompanyBusinessRelationshipsComponent = ({
                     <h4 className={classes.groupLabel}>Top suppliers</h4>
                     <FinalQuestionField
                       name="isDontHaveSuppliersYet"
+                      path="prospect.orgKYCDetails.isDontHaveSuppliersYet"
                       label="I don't have any suppliers"
                       component={Checkbox}
                       onSelect={() => {
+                        updateProspect({
+                          "prospect.orgKYCDetails.isDontHaveSuppliersYet": !values.isDontHaveSuppliersYet
+                        });
                         if (!values.isDontHaveSuppliersYet) {
                           setFieldValue(
                             "topSuppliers",
@@ -313,9 +315,13 @@ export const CompanyBusinessRelationshipsComponent = ({
                     <h4 className={classes.groupLabel}>Top origin of goods</h4>
                     <FinalQuestionField
                       name="isDontTradeGoodsYet"
+                      path="prospect.orgKYCDetails.isDontTradeGoodsYet"
                       label="I don't trade with goods"
                       component={Checkbox}
                       onSelect={() => {
+                        updateProspect({
+                          "prospect.orgKYCDetails.isDontTradeGoodsYet": !values.isDontTradeGoodsYet
+                        });
                         if (!values.isDontTradeGoodsYet) {
                           setFieldValue(
                             "topOriginGoodsCountries",
