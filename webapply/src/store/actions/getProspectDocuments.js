@@ -6,6 +6,7 @@ export const CANCEL_DOC_UPLOAD = "CANCEL_DOC_UPLOAD";
 export const START_DOC_UPLOAD = "START_DOC_UPLOAD";
 export const UPLOAD_FILES_FAIL = "UPLOAD_FILES_FAIL";
 export const UPLOAD_FILES_PROGRESS = "UPLOAD_FILES_PROGRESS";
+export const DOWNLOAD_DOCUMENT_FILE = "DOWNLOAD_DOCUMENT_FILE";
 
 export const retrieveDocDetails = () => {
   return { type: RETRIEVE_DOC_UPLOADER };
@@ -33,4 +34,8 @@ export const uploadFilesProgress = progress => {
 
 export const uploadFilesFail = error => {
   return { type: UPLOAD_FILES_FAIL, error };
+};
+
+export const downloadDocumentFile = (prospectId, documentKey, fileName) => {
+  return { type: DOWNLOAD_DOCUMENT_FILE, payload: { prospectId, documentKey, fileName } };
 };
