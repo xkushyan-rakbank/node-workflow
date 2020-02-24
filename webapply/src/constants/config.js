@@ -41,7 +41,7 @@ export const prospect = {
     accountType: "",
     rakValuePackage: "",
     leadNumber: "",
-    riskScore: "",
+    riskScore: "0.0",
     srNumber: "",
     channelId: "",
     channelType: "",

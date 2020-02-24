@@ -1,20 +1,45 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
 
 import { Avatar } from "../../../../components/Avatar/Avatar";
-import { titles, errorMsgs } from "./constants";
+import { titles, errorMsgs, COMPANY_CHECK_NAMES, RISK_RATING } from "./constants";
+import {
+  getOrganizationScreeningResults,
+  getSignatories,
+  getProspectRiskScore
+} from "../../../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
 
-export const CheckList = ({ prospectInfo = {} }) => {
+export const CheckList = () => {
+  const { screeningResults, signatoryInfo, riskScore } = useSelector(state => ({
+    screeningResults: getOrganizationScreeningResults(state),
+    signatoryInfo: getSignatories(state),
+    riskScore: getProspectRiskScore(state)
+  }));
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
+
+  const companyChecks = useMemo(() => {
+    const initCheckNames = [
+      ...COMPANY_CHECK_NAMES,
+      {
+        ...RISK_RATING,
+        screeningReason: riskScore
+      }
+    ];
+    return initCheckNames.map(check => ({
+      ...check,
+      ...(screeningResults.find(s => s.screeningType === check.screeningType) || {})
+    }));
+  }, [screeningResults, riskScore]);
 
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
-      {get(prospectInfo, "organizationInfo.screeningInfo.screeningResults", []).length ? (
+      {companyChecks.length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div>
@@ -27,7 +52,7 @@ export const CheckList = ({ prospectInfo = {} }) => {
               <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
             </div>
           </div>
-          {prospectInfo.organizationInfo.screeningInfo.screeningResults.map(application => (
+          {companyChecks.map(application => (
             <div className={classes.applicationRow} key={application.screeningType}>
               <div>
                 <div className={classes.checkListData}>{application.screeningType}</div>
@@ -45,8 +70,8 @@ export const CheckList = ({ prospectInfo = {} }) => {
         <div className={classes.errorMsg}>{errorMsgs.COMPANY_CHECKLIST_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
-      {(prospectInfo.signatoryInfo || []).length ? (
-        prospectInfo.signatoryInfo.map((signatory, index) => (
+      {signatoryInfo.length ? (
+        signatoryInfo.map((signatory, index) => (
           <div key={signatory.signatoryId}>
             <div className={classes.contentWrapper}>
               <Avatar fullName={signatory.fullName} index={index} />

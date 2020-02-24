@@ -19,6 +19,9 @@ export const getAccountNumbers = state => state.accountNumbers;
 
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
 
+export const getOrganizationScreeningResults = state =>
+  get(getOrganizationInfo(state), "screeningInfo.screeningResults", []);
+
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
 
 export const getIsCompanyStakeholder = state => getOrgKYCDetails(state).isShareholderACompany;
@@ -48,6 +51,8 @@ export const getSignatoriesSteps = state =>
 export const getProspectId = state => getGeneralInfo(state).prospectId;
 
 export const getProceedStatus = state => state.applicationStatus.isProceed;
+
+export const getProspectRiskScore = state => getApplicationInfo(state).riskScore || "0.0";
 
 export const getServerErrorStatus = state => state.applicationStatus.serverErorr;
 
