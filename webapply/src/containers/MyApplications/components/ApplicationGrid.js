@@ -1,5 +1,6 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
+import cx from "classnames";
 
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { ctaStatuses, notCtaStatuses } from "../constants";
@@ -40,7 +41,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
               <div key="status" className={classes.status}>
                 {app.status.statusNotes}
               </div>,
-              <div key="action" className={classes.blockAction}>
+              <div key="action" className={cx(classes.blockAction, "hide-on-mobile")}>
                 {ctaStatuses[app.status.statusNotes] ? (
                   <WhiteContainedButton
                     disabled={app.status.reasonCode === STATUS_LOCKED}
@@ -60,7 +61,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
               <div key="status" className={classes.status}>
                 Incomplete
               </div>,
-              <div key="action" className={classes.blockAction}>
+              <div key="action" className={cx(classes.blockAction, "hide-on-mobile")}>
                 <WhiteContainedButton
                   label="Finish Application"
                   handleClick={() => getProspectInfo(app.prospectId)}
