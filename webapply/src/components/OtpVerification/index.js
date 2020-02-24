@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useImperativeHandle, forwardRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
@@ -13,14 +13,12 @@ const bindNodeRef = index => node => {
   inputRefs[index] = node;
 };
 
-export const OtpVerification = ({ onChange, code, isResetFocus }) => {
+const OtpInput = ({ onChange, code }, ref) => {
   const classes = useStyles();
 
-  useEffect(() => {
-    if (isResetFocus) {
-      inputRefs[0].focus();
-    }
-  }, [isResetFocus]);
+  useImperativeHandle(ref, () => ({
+    resetFocus: () => inputRefs[0].focus()
+  }));
 
   const handleInputFocus = useCallback(event => {
     event.target.select();
@@ -75,3 +73,5 @@ export const OtpVerification = ({ onChange, code, isResetFocus }) => {
     </Grid>
   ));
 };
+
+export const OtpVerification = forwardRef(OtpInput);

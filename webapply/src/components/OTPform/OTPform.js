@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
@@ -30,12 +30,13 @@ export const OTPformComponent = ({
   const [code, setCode] = useState(Array(6).fill(""));
   const [loginAttempt, setLoginAttempt] = useState(0);
   const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
-  const [isResetFocus, setIsResetFocus] = useState(false);
+
+  const otpRef = useRef(null);
 
   const resetOtpForm = useCallback(() => {
     setCode(Array(6).fill(""));
-    setIsResetFocus(true);
-  }, [setCode, setIsResetFocus]);
+    otpRef.current.resetFocus();
+  }, [setCode]);
 
   useEffect(() => {
     if (isVerified) {
@@ -84,7 +85,7 @@ export const OTPformComponent = ({
           <Form className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification code={code} onChange={setCode} isResetFocus={isResetFocus} />
+                <OtpVerification code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
               {!isDisplayMaxAttempError && verificationError && (
