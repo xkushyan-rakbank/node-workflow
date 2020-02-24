@@ -2,8 +2,9 @@ import React, { useCallback, useImperativeHandle, forwardRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
-import { useStyles } from "./styled";
 import { isNumeric } from "../../utils/validation";
+
+import { useStyles } from "./styled";
 
 const BACKSPACE_KEY = 8;
 const LEFT_ARROW_KEY = 37;
@@ -28,8 +29,8 @@ const OtpInput = ({ onChange, code }, ref) => {
   const handleChange = useCallback(
     event => {
       const { value, name } = event.target;
-      const newCodeIndex = parseInt(name, 10);
-      if (isNumeric(value) || !value) {
+      if (!value || isNumeric(value)) {
+        const newCodeIndex = parseInt(name, 10);
         const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
 
         onChange(newCode);
