@@ -4,7 +4,8 @@ import { ApplicationStatus } from "../../components/ApplicationStatus/Applicatio
 import { FormNavigation } from "../../components/FormNavigation";
 import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications } from "../../components/Notification";
-import { routerToAddPaddingInSlider, routerToSmallMenu } from "../../constants/styles";
+import { routerToAddPaddingInSlider } from "../../constants/styles";
+import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
@@ -21,7 +22,7 @@ export const FormLayoutComponent = ({
   const classes = useStyles({
     pathname,
     color: blobColor,
-    fullContentWidth: routerToSmallMenu.includes(pathname)
+    fullContentWidth: checkIsShowSmallMenu(pathname)
   });
 
   useEffect(() => {

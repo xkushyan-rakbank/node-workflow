@@ -11,11 +11,10 @@ import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
 import { formStepper, searchProspectStepper } from "../../constants";
 import { Blob } from "./Blob";
-import { checkIsShowAccountInfo, checkIsShowSmallBg } from "./utils";
+import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
 
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
-import { routerToSmallMenu } from "../../constants/styles";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
@@ -36,7 +35,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     isSmallBg: checkIsShowSmallBg(pathname),
     isOpen: isSwitcherShow,
     accountsComparisonPage: routes.accountsComparison === pathname,
-    smallMenu: routerToSmallMenu.includes(pathname)
+    smallMenu: checkIsShowSmallMenu(pathname)
   });
 
   const isChatVisible =

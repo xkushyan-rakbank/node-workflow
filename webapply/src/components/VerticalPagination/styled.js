@@ -91,7 +91,10 @@ export const useStyles = makeStyles(theme => ({
   },
   videoWrapper: ({ isMobileNotificationActive }) => ({
     height: isMobileNotificationActive ? "calc(100vh - 280px)" : "calc(100vh - 216px)",
-    [`${theme.breakpoints.up("sm")} and (max-height: ${normalScrollHeight}px)`]: {
+    [theme.breakpoints.up("sm")]: {
+      height: "100vh"
+    },
+    [`@media (max-height: ${normalScrollHeight}px)`]: {
       height: "100vh"
     }
   })

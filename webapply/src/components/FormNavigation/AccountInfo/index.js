@@ -11,7 +11,7 @@ import { AccountInfoScreen } from "./AccountInfoScreen";
 import { getTitleByPathname } from "./utils";
 import { accountsInfo } from "./constants";
 
-export const AccountInfo = () => {
+export const AccountInfo = ({ ...props }) => {
   const dispatch = useDispatch();
   const accountType = useSelector(getAccountType);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
@@ -43,6 +43,7 @@ export const AccountInfo = () => {
       handleCheckStatus={handleCheckStatus}
       handleStart={handleStart}
       handleApply={handleApply}
+      {...props}
     />
   );
 };

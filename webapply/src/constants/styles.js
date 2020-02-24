@@ -17,12 +17,3 @@ export const routerToAddPaddingInSlider = [
   routes.comeBackLoginVerification,
   routes.MyApplications
 ];
-
-export const routerToSmallMenu = [
-  routes.accountsComparison,
-  routes.applicantInfo,
-  routes.login,
-  routes.comeBackLogin,
-  routes.comeBackLoginVerification,
-  routes.MyApplications
-];
