@@ -10,11 +10,11 @@ import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
 import { formStepper, searchProspectStepper } from "../../constants";
-import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
 
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
+import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
@@ -66,7 +66,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
           </Typography>
         </IslamicBankingSwitcherMobile>
         {checkIsShowAccountInfo(pathname) ? (
-          <AccountInfo className="small-menu-hide" />
+          <AccountInfo />
         ) : (
           pathname !== routes.login && (
             <ul>

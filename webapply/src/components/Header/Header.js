@@ -13,8 +13,8 @@ import { ReactComponent as EliteIslamicLogo } from "../../assets/images/logo-eli
 import { ReactComponent as StandartLogo } from "../../assets/images/logo-standart.svg";
 import { ReactComponent as EliteLogo } from "../../assets/images/logo-elite.svg";
 import { ReactComponent as IslamicLogo } from "../../assets/images/logo-islamic.svg";
-import { LOGO_ELITE, LOGO_ELITE_ISLAMIC, LOGO_ISLAMIC, LOGO_STANDART } from "./constants";
 import { ReactComponent as LogoSmall } from "../../assets/images/logo-small.svg";
+import { LOGO_ELITE, LOGO_ELITE_ISLAMIC, LOGO_ISLAMIC, LOGO_STANDART } from "./constants";
 
 const HeaderComponent = ({ className, isIslamicBanking, accountType, isOtpVerified }) => {
   const {

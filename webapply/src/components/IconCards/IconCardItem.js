@@ -29,7 +29,7 @@ const style = theme => ({
         paddingBottom: 0,
         paddingRight: 16
       },
-      ["@media (max-width: 480px)"]: {
+      "@media (max-width: 480px)": {
         minWidth: "calc(100% - 20px)"
       }
     }

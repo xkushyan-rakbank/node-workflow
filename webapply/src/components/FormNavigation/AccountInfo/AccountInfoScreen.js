@@ -7,7 +7,6 @@ import { MobileNotification } from "../../Modals";
 import { useStyles } from "./styled";
 
 export const AccountInfoScreen = ({
-  className,
   isShowApply,
   isShowCheck,
   isShowStart,
@@ -20,7 +19,7 @@ export const AccountInfoScreen = ({
   const classes = useStyles();
 
   return (
-    <div className={cx(classes.contentContainer, className)}>
+    <div className={cx(classes.contentContainer, "small-menu-hide")}>
       <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
         {title}
       </Typography>
