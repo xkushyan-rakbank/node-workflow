@@ -37,7 +37,7 @@ export const LoginComponent = ({ login, setIsApplyEditApplication, history }) =>
         }
       );
     },
-    [login, history]
+    [login, history, setIsApplyEditApplication]
   );
 
   return (

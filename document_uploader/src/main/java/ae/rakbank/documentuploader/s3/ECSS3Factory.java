@@ -85,11 +85,6 @@ public class ECSS3Factory {
 	}
 
 	public S3Client getS3Client() throws URISyntaxException {
-		// for client-side load balancing
-		// S3Config config = new S3Config(Protocol.HTTPS, S3_HOST1, S3_HOST2);
-		// ditto with multiple VDCs
-		// S3Config config = new S3Config(Protocol.HTTPS, new Vdc(S3_V1_HOST), new
-		// Vdc(S3_V2_HOST));
 
 		S3Config config = new S3Config(new URI(s3Url));
 

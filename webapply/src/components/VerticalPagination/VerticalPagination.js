@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import cx from "classnames";
 
 import { BackgroundVideoPlayer } from "../BackgroundVideoPlayer";
 import { useStyles, transitionDuration } from "./styled";
 import { getAverage } from "./utils";
+import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 
 export const VerticalPaginationContext = React.createContext({});
 
@@ -13,19 +14,21 @@ export const VerticalPaginationComponent = ({
   scrollToSecondSection,
   video
 }) => {
+  const isMobileNotificationActive = useContext(MobileNotificationContext);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const classes = useStyles({ currentSectionIndex });
+  const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
   const scrollings = useRef([]);
   const prevTime = useRef(new Date().getTime());
   const poster = (video && video.poster) || "";
+  const childrenCount = children.length + (poster ? 1 : 0);
 
   const handleWheel = e => {
     const offset = e.deltaY < 0 ? -1 : 1;
     const nextSectionIndex = currentSectionIndex + offset;
 
-    if (nextSectionIndex < 0 || nextSectionIndex > children.length - 1) {
+    if (nextSectionIndex < 0 || nextSectionIndex > childrenCount - 1) {
       return;
     }
 
@@ -77,14 +80,16 @@ export const VerticalPaginationComponent = ({
       <div className={classes.paginationWrapper} onWheel={handleWheel}>
         <div className={classes.paginationContent}>
           {poster && (
-            <BackgroundVideoPlayer
-              video={video}
-              videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
-              scrollToSection={scrollToSection}
-              handleClick={handleClick}
-              handleClickMobile={scrollToSecondSection}
-              currentSectionIndex={currentSectionIndex}
-            />
+            <div className={cx(classes.videoWrapper, { "hide-on-mobile": !showVideoOnMobile })}>
+              <BackgroundVideoPlayer
+                video={video}
+                videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
+                scrollToSection={scrollToSection}
+                handleClick={handleClick}
+                handleClickMobile={scrollToSecondSection}
+                currentSectionIndex={currentSectionIndex}
+              />
+            </div>
           )}
           {React.Children.map(children, child => (
             <div
@@ -99,7 +104,7 @@ export const VerticalPaginationComponent = ({
       </div>
       {(poster && currentSectionIndex === 0) || (
         <div className={classes.paginationDots}>
-          {React.Children.toArray(children).map((_, i) => (
+          {new Array(childrenCount).fill(null).map((_, i) => (
             <button
               key={i}
               className={cx(classes.paginationDot, {
