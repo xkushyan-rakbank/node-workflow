@@ -38,7 +38,6 @@ export const AccountInfo = () => {
       subtitle={
         accountType && accountsInfo[accountType][isIslamicBanking ? "islamicSubtitle" : "subtitle"]
       }
-      resetApplicantInfo={resetApplicantInfo}
       isShowCheck={pathname === routes.ApplicationSubmitted}
       isShowStart={pathname === routes.applicationOverview}
       isShowApply={accountType && pathname === routes.detailedAccount}
