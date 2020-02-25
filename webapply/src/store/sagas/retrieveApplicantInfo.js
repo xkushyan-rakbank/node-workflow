@@ -34,14 +34,12 @@ function* getProspectIdInfo({ payload }) {
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
 
-    let stepsStatus = [];
-
     try {
-      stepsStatus = JSON.parse(config.prospect.freeFieldsInfo.freeField5);
+      const { completedSteps } = JSON.parse(config.prospect.freeFieldsInfo.freeField5);
+      yield put(initAllStepsStatus(completedSteps));
     } catch (err) {
       log(err);
     }
-    yield put(initAllStepsStatus(stepsStatus));
 
     yield put(setConfig(config));
 

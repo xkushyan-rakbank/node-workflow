@@ -5,10 +5,23 @@ import { updateProspect } from "../actions/appConfig";
 
 function* setStepSaga() {
   try {
-    const state = yield select();
+    const {
+      completedSteps,
+      appConfig: { prospect }
+    } = yield select();
+
+    let freeField5 = {};
+
+    try {
+      freeField5 = JSON.parse(prospect.freeFieldsInfo.freeField5);
+    } catch (err) {
+      log(err);
+    }
 
     yield put(
-      updateProspect({ "prospect.freeFieldsInfo.freeField5": JSON.stringify(state.completedSteps) })
+      updateProspect({
+        "prospect.freeFieldsInfo.freeField5": JSON.stringify({ ...freeField5, completedSteps })
+      })
     );
   } catch (error) {
     log(error);
