@@ -10,7 +10,7 @@ import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
 import { formStepper, searchProspectStepper } from "../../constants";
-import { Blob } from "./Blob";
+import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
 
 import { useStyles } from "./styled";
@@ -53,7 +53,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
 
   return (
     <div className={cx(classes.formNav, classes.formNavBg, { active: isCurrentSectionVideo })}>
-      <Blob className={classes.blob} />
+      <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />
         <IslamicBankingSwitcherMobile
