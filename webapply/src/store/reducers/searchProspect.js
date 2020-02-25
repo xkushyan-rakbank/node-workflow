@@ -22,7 +22,7 @@ export default handleActions(
     }),
     [SEARCH_APPLICATIONS_SUCCESS]: (state, { payload }) => ({
       ...state,
-      searchResults: payload,
+      searchResults: payload || [],
       isSearchLoading: false
     }),
     [SEARCH_APPLICATIONS_FAILURE]: state => ({

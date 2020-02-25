@@ -27,54 +27,54 @@ export const MyApplications = ({ getProspectInfo }) => {
 
   const [selectedView, setSelectedView] = useState(LIST_VIEW);
 
+  if (!isLoading && !searchResults.length) {
+    return (
+      <div className={classes.centeredContainer}>
+        <img className={classes.noRecordsIcon} src={declinedRegular} alt="No records" />
+        <p className={classes.noRecordsText}>
+          Sorry, no record was found for the details provided.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.centeredContainer}>
-      {isLoading || searchResults.length ? (
-        <>
-          <Grid
-            container
-            classes={{ root: "hide-on-mobile" }}
-            direction="row"
-            alignItems="center"
-            justify="space-between"
-          >
-            <SectionTitleWithInfo className={classes.title} title="My applications" />
-            <Box classes={{ root: classes.rootChangeViewContainer }}>
-              <ButtonWithIcon
-                icon={ICONS.listGray}
-                isSelected={selectedView === LIST_VIEW}
-                handleClick={() => setSelectedView(LIST_VIEW)}
-              />
-              <ButtonWithIcon
-                icon={ICONS.grid}
-                isSelected={selectedView === GRID_VIEW}
-                handleClick={() => setSelectedView(GRID_VIEW)}
-              />
-            </Box>
-          </Grid>
-          <div
-            className={cx({
-              [classes.viewColumn]: selectedView === LIST_VIEW,
-              [classes.veiwRow]: selectedView === GRID_VIEW
-            })}
-          >
-            {isLoading ? (
-              <ApplicationsSkeleton />
-            ) : selectedView === LIST_VIEW ? (
-              <ApplicationList applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
-            ) : (
-              <ApplicationGrid applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
-            )}
-          </div>
-        </>
-      ) : (
-        <>
-          <img className={classes.noRecordsIcon} src={declinedRegular} alt="No records" />
-          <p className={classes.noRecordsText}>
-            Sorry, no record was found for the details provided.
-          </p>
-        </>
-      )}
+      <Grid
+        container
+        classes={{ root: "hide-on-mobile" }}
+        direction="row"
+        alignItems="center"
+        justify="space-between"
+      >
+        <SectionTitleWithInfo className={classes.title} title="My applications" />
+        <Box classes={{ root: classes.rootChangeViewContainer }}>
+          <ButtonWithIcon
+            icon={ICONS.listGray}
+            isSelected={selectedView === LIST_VIEW}
+            handleClick={() => setSelectedView(LIST_VIEW)}
+          />
+          <ButtonWithIcon
+            icon={ICONS.grid}
+            isSelected={selectedView === GRID_VIEW}
+            handleClick={() => setSelectedView(GRID_VIEW)}
+          />
+        </Box>
+      </Grid>
+      <div
+        className={cx({
+          [classes.viewColumn]: selectedView === LIST_VIEW,
+          [classes.veiwRow]: selectedView === GRID_VIEW
+        })}
+      >
+        {isLoading ? (
+          <ApplicationsSkeleton />
+        ) : selectedView === LIST_VIEW ? (
+          <ApplicationList applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
+        ) : (
+          <ApplicationGrid applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
+        )}
+      </div>
     </div>
   );
 };
