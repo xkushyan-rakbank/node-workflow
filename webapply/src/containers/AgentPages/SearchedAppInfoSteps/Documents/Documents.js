@@ -3,19 +3,21 @@ import get from "lodash/get";
 import cx from "classnames";
 
 import { Avatar } from "../../../../components/Avatar/Avatar";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
-import { buildURI } from "../../../../utils/buildURI";
 
-export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
+export const DocumentsComponent = ({
+  docs = {},
+  downloadDocumentFile,
+  prospectId,
+  signatoryInfo
+}) => {
   const classes = useStyles();
-  const signatoryInfo = prospectInfo.signatoryInfo;
-  const prospectId = get(prospectInfo, "generalInfo.prospectId");
-
-  const generateDocumentUri = useCallback(
-    documentKey => buildURI("getDocumentByIdUri", prospectId, documentKey),
-    [prospectId]
+  const downloadDocument = useCallback(
+    (documentKey, fileName) => downloadDocumentFile(prospectId, documentKey, fileName),
+    [prospectId, downloadDocumentFile]
   );
   const headingClassName = cx(classes.checkListData, classes.heading);
 
@@ -44,13 +46,11 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
                 <div className={classes.checkListData}>{application.uploadStatus}</div>
               </div>
               <div>
-                <a
+                <LinkButton
                   index={index}
-                  href={generateDocumentUri(application.fileName)}
-                  className={classes.link}
-                >
-                  {titles.PRINT_DOWNLOAD_TITLE}
-                </a>
+                  title={titles.PRINT_DOWNLOAD_TITLE}
+                  onClick={() => downloadDocument(application.fileName, application.fileName)}
+                />
               </div>
             </div>
           ))}
@@ -93,13 +93,11 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
                     </div>
                     {doc.uploadStatus !== "NotUploaded" && (
                       <div>
-                        <a
+                        <LinkButton
                           index={index}
-                          href={generateDocumentUri(doc.fileName)}
-                          className={classes.link}
-                        >
-                          {titles.PRINT_DOWNLOAD_TITLE}
-                        </a>
+                          title={titles.PRINT_DOWNLOAD_TITLE}
+                          onClick={() => downloadDocument(doc.fileName, doc.fileName)}
+                        />
                       </div>
                     )}
                   </div>
