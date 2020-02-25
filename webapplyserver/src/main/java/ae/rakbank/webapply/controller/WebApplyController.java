@@ -1,13 +1,10 @@
 package ae.rakbank.webapply.controller;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.services.AuthorizationService;
-import ae.rakbank.webapply.services.RecaptchaService;
-import ae.rakbank.webapply.util.EnvUtil;
-import ae.rakbank.webapply.util.FileUtil;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,15 +13,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.util.FileUtil;
+import ae.rakbank.webapply.services.RecaptchaService;
 
 import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
 import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUEST_KEY;
@@ -32,7 +29,6 @@ import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUES
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
-@PreAuthorize("isAnonymous()")
 @RequiredArgsConstructor
 public class WebApplyController {
 
@@ -56,7 +52,6 @@ public class WebApplyController {
         dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
     }
 
-    @PreAuthorize("permitAll()")
     @GetMapping(value = "/health", produces = "application/json")
     public ResponseEntity<Object> health() {
         HttpHeaders headers = new HttpHeaders();
@@ -110,7 +105,7 @@ public class WebApplyController {
         log.debug(String.format("login() method args, RequestBody=[%s]", requestBodyJSON.toString()));
 
         String newJwtToken = authorizationService.createAgentJwtToken(requestBodyJSON.get("username").asText(),
-                requestBodyJSON.get("password").asText());
+                        requestBodyJSON.get("password").asText());
 
         captchaService.validateReCaptcha(requestBodyJSON, httpRequest);
 

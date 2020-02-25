@@ -1,6 +1,5 @@
 package ae.rakbank.webapply.services;
 
-import ae.rakbank.webapply.dto.JwtPayload;
 import org.springframework.http.HttpHeaders;
 
 public interface AuthorizationService {
@@ -18,6 +17,4 @@ public interface AuthorizationService {
     String getOauthTokenFromJwt(String jwtToken);
 
     String getTokenFromAuthorizationHeader(String authorizationString);
-
-    JwtPayload getPrincipal(String token);
 }

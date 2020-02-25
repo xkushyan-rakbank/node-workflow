@@ -2,6 +2,7 @@ package ae.rakbank.webapply.controller;
 
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.exception.ApiException;
+import ae.rakbank.webapply.services.CSRFTokenService;
 import ae.rakbank.webapply.services.ConfigService;
 import ae.rakbank.webapply.util.CriteriaParamsValidator;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ConfigController {
 
     private final DehClient dehClient;
+    private final CSRFTokenService csrfTokenService;
     private final ConfigService configService;
     private final CriteriaParamsValidator paramsValidator;
 
@@ -113,9 +115,11 @@ public class ConfigController {
 
         paramsValidator.validateCriteriaParams(segment, product, role, device);
 
+        HttpHeaders headers = new HttpHeaders();
+        csrfTokenService.createOrUpdateCsrfToken(httpRequest, headers);
+
         String cacheKey = configService.getCacheKey(segment, product, role, device, "reduced");
         String cachedValue = configService.getCache(cacheKey);
-        HttpHeaders headers = new HttpHeaders();
         if (StringUtils.isNotBlank(cachedValue)) {
             return configService.getCachedData(headers, cacheKey, cachedValue);
         }
