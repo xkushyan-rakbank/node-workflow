@@ -6,6 +6,7 @@ import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiCl
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
+import { initAllStepsStatus } from "../actions/completedSteps";
 
 function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -27,12 +28,20 @@ function* retrieveApplicantInfoSaga({ payload }) {
 }
 
 function* getProspectIdInfo({ payload }) {
-  console.log("TCL: function*getProspectIdInfo -> getProspectIdInfo");
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
+
+    let stepsStatus = [];
+
+    try {
+      stepsStatus = JSON.parse(config.prospect.freeFieldsInfo.freeField5);
+    } catch (err) {
+      log(err);
+    }
+    yield put(initAllStepsStatus(stepsStatus));
 
     yield put(setConfig(config));
 
