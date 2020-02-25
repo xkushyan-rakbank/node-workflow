@@ -16,7 +16,6 @@ import {
   saveProspectModel
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
-
 import { config } from "../../api/apiClient";
 import {
   accountNames,

@@ -4,28 +4,24 @@ import { log } from "../../utils/loggger";
 import { updateProspect } from "../actions/appConfig";
 
 function* setStepSaga() {
+  const {
+    completedSteps,
+    appConfig: { prospect }
+  } = yield select();
+
+  let freeField5 = {};
+
   try {
-    const {
-      completedSteps,
-      appConfig: { prospect }
-    } = yield select();
-
-    let freeField5 = {};
-
-    try {
-      freeField5 = JSON.parse(prospect.freeFieldsInfo.freeField5);
-    } catch (err) {
-      log(err);
-    }
-
-    yield put(
-      updateProspect({
-        "prospect.freeFieldsInfo.freeField5": JSON.stringify({ ...freeField5, completedSteps })
-      })
-    );
-  } catch (error) {
-    log(error);
+    freeField5 = JSON.parse(prospect.freeFieldsInfo.freeField5);
+  } catch (err) {
+    log(err);
   }
+
+  yield put(
+    updateProspect({
+      "prospect.freeFieldsInfo.freeField5": JSON.stringify({ ...freeField5, completedSteps })
+    })
+  );
 }
 
 export default function* completedStepsSaga() {

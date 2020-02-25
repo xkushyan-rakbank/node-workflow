@@ -1,10 +1,10 @@
-export const INIT_ALL_STEPS_STATUS = "INIT_ALL_STEPS_STATUS";
+export const RESTORE_STEPS = "RESTORE_STEPS";
 export const SET_STEP_STATUS = "SET_STEP_STATUS";
 export const SET_INITIAL_STEPS = "SET_INITIAL_STEPS";
 export const REMOVE_SIGNATORY = "REMOVE_SIGNATORY";
 
-export const initAllStepsStatus = steps => {
-  return { type: INIT_ALL_STEPS_STATUS, payload: { steps } };
+export const restoreSteps = steps => {
+  return { type: RESTORE_STEPS, payload: { steps } };
 };
 
 export const setStepStatus = (flowId, step, status) => {
@@ -16,5 +16,5 @@ export const setInitialSteps = steps => {
 };
 
 export const removeSignatory = signatoryId => {
-  return { type: REMOVE_SIGNATORY, signatoryId };
+  return { type: REMOVE_SIGNATORY, payload: { signatoryId } };
 };
