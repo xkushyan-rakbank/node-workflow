@@ -136,3 +136,14 @@ export const uploadProspectDocument = {
     });
   }
 };
+
+export const downloadProspectDocument = {
+  get: (prospectId, documentKey, headers) => {
+    return uploadClient.request({
+      url: buildURI("getDocumentByIdUri", prospectId, documentKey),
+      method: "GET",
+      responseType: "blob",
+      ...headers
+    });
+  }
+};

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button/Button";
 import { connect } from "react-redux";
@@ -9,9 +9,11 @@ import { ReactComponent as ConventionalIcon } from "../../assets/icons/conventio
 import { ReactComponent as IslamicIcon } from "../../assets/icons/islamic.svg";
 import * as appConfigSelectors from "../../store/selectors/appConfig";
 import { updateProspect } from "../../store/actions/appConfig";
+import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 
 const IslamicBankingSwitcher = ({ isIslamicBanking, updateProspect }) => {
-  const classes = useStyles();
+  const isMobileNotificationActive = useContext(MobileNotificationContext);
+  const classes = useStyles({ isMobileNotificationActive });
   const handleClick = islamicBanking => {
     updateProspect({ "prospect.applicationInfo.islamicBanking": islamicBanking });
   };

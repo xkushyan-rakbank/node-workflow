@@ -11,7 +11,8 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       padding: "30px 16px",
       left: 0,
-      top: "100vh",
+      top: ({ isMobileNotificationActive }) =>
+        isMobileNotificationActive ? "calc(100vh - 64px)" : "100vh",
       transform: "translateY(-100%)",
       boxShadow: "none",
       width: "100%",

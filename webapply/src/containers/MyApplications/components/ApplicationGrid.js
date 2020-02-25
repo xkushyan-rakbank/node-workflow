@@ -1,6 +1,5 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import cx from "classnames";
 
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { ctaStatuses, notCtaStatuses } from "../constants";
@@ -41,13 +40,18 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
               <div key="status" className={classes.status}>
                 {app.status.statusNotes}
               </div>,
-              <div key="action" className={cx(classes.blockAction, "hide-on-mobile")}>
+              <div key="action" className={classes.blockAction}>
                 {ctaStatuses[app.status.statusNotes] ? (
-                  <WhiteContainedButton
-                    disabled={app.status.reasonCode === STATUS_LOCKED}
-                    label={ctaStatuses[app.status.statusNotes]}
-                    handleClick={() => getProspectInfo(app.prospectId)}
-                  />
+                  <>
+                    <WhiteContainedButton
+                      disabled={app.status.reasonCode === STATUS_LOCKED}
+                      label={ctaStatuses[app.status.statusNotes].buttonText}
+                      handleClick={() => getProspectInfo(app.prospectId)}
+                    />
+                    <div className={classes.hint}>
+                      {ctaStatuses[app.status.statusNotes].mobileStatus}
+                    </div>
+                  </>
                 ) : (
                   notCtaStatuses[app.status.statusNotes] && (
                     <div className={classes.statusNotes}>
@@ -61,11 +65,14 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
               <div key="status" className={classes.status}>
                 Incomplete
               </div>,
-              <div key="action" className={cx(classes.blockAction, "hide-on-mobile")}>
+              <div key="action" className={classes.blockAction}>
                 <WhiteContainedButton
                   label="Finish Application"
                   handleClick={() => getProspectInfo(app.prospectId)}
                 />
+                <div className={classes.hint}>
+                  {ctaStatuses[app.status.statusNotes].mobileStatus}
+                </div>
               </div>
             ]}
       </div>
