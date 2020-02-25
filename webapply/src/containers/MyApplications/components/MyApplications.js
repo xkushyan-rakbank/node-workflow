@@ -55,13 +55,13 @@ export const MyApplications = ({ searchResults, getProspectInfo, isLoading }) =>
             [
               selectedView === LIST_VIEW && (
                 <ApplicationList
-                  applicantInfo={searchResults.searchResult}
+                  applicantInfo={searchResults.searchResult || []}
                   getProspectInfo={getProspectInfo}
                 />
               ),
               selectedView === GRID_VIEW && (
                 <ApplicationGrid
-                  applicantInfo={searchResults.searchResult}
+                  applicantInfo={searchResults.searchResult || []}
                   getProspectInfo={getProspectInfo}
                 />
               )
