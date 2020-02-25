@@ -10,8 +10,6 @@ import { ErrorMessage, ContexualHelp } from "../../Notifications";
 import { BaseDatePicker } from "./styled";
 import { PickerToolbar } from "./PickerToolbar/PickerToolbar";
 
-const Toolbar = ({ date, onChange }) => <PickerToolbar date={date} onChange={onChange} />;
-
 const useStyles = makeStyles({
   root: {
     "& label.Mui-focused": {
@@ -64,13 +62,10 @@ export const DatePicker = ({
             KeyboardButtonProps={{
               "aria-label": "change date"
             }}
-            InputLabelProps={{
-              shrink: true
-            }}
             {...field}
             {...datePickerProps}
             value={field.value || null}
-            ToolbarComponent={Toolbar}
+            ToolbarComponent={PickerToolbar}
             views={["date"]}
             onChange={onChange}
             classes={{
