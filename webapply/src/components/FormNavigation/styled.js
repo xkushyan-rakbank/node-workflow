@@ -108,6 +108,7 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: 20,
     whiteSpace: "pre-line",
     [theme.breakpoints.only("xs")]: {
+      width: 310,
       marginBottom: 10,
       fontSize: 32,
       lineHeight: "36px"
