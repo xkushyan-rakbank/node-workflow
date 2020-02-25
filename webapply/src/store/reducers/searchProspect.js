@@ -8,7 +8,7 @@ import { LOGOUT } from "../actions/loginForm";
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
-  searchResults: null,
+  searchResults: [],
   isApplyEditApplication: null,
   isSearchLoading: false
 };

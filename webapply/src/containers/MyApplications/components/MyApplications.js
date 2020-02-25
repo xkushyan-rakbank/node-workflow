@@ -29,7 +29,7 @@ export const MyApplications = ({ getProspectInfo }) => {
 
   return (
     <div className={classes.centeredContainer}>
-      {isLoading || searchResults ? (
+      {isLoading || searchResults.length ? (
         <>
           <Grid
             container
