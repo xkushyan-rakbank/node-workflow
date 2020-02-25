@@ -6,15 +6,14 @@ import cx from "classnames";
 import { Avatar } from "../../../../components/Avatar/Avatar";
 import { titles, errorMsgs } from "./constants";
 import { getSignatories } from "../../../../store/selectors/appConfig";
+import { getCompanyChecks } from "./selectors";
 
 import { useStyles } from "./styled";
-import { getCompanyChecksSelector } from "./selectors";
 
 export const CheckList = () => {
-  const { signatoryInfo, companyChecks } = useSelector(state => ({
-    signatoryInfo: getSignatories(state),
-    companyChecks: getCompanyChecksSelector(state)
-  }));
+  const signatoryInfo = useSelector(getSignatories);
+  const companyChecks = useSelector(getCompanyChecks);
+
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
 

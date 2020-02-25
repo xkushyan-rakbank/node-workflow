@@ -9,7 +9,7 @@ import {
 const screeningResults = state => getOrganizationScreeningResults(state);
 const riskScore = state => getProspectRiskScore(state);
 
-export const getCompanyChecksSelector = createSelector(
+export const getCompanyChecks = createSelector(
   screeningResults,
   riskScore,
   (screeningResults, riskScore) => [
