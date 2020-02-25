@@ -22,7 +22,7 @@ export const AccountInfo = () => {
   const handleCheckStatus = useCallback(() => {
     dispatch(resetApplicantInfo());
     pushHistory(routes.comeBackLogin);
-  }, [pushHistory, resetApplicantInfo]);
+  }, [pushHistory, dispatch]);
 
   const handleStart = useCallback(() => {
     pushHistory(routes.applicantInfo);
@@ -35,7 +35,9 @@ export const AccountInfo = () => {
   return (
     <AccountInfoScreen
       title={getTitleByPathname(pathname, accountType)}
-      subtitle={accountsInfo[accountType][isIslamicBanking ? "islamicSubtitle" : "subtitle"]}
+      subtitle={
+        accountType && accountsInfo[accountType][isIslamicBanking ? "islamicSubtitle" : "subtitle"]
+      }
       resetApplicantInfo={resetApplicantInfo}
       isShowCheck={pathname === routes.ApplicationSubmitted}
       isShowStart={pathname === routes.applicationOverview}
