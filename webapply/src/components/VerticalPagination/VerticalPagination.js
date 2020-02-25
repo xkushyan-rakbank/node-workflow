@@ -22,12 +22,13 @@ export const VerticalPaginationComponent = ({
   const scrollings = useRef([]);
   const prevTime = useRef(new Date().getTime());
   const poster = (video && video.poster) || "";
+  const childrenCount = children.length + (poster ? 1 : 0);
 
   const handleWheel = e => {
     const offset = e.deltaY < 0 ? -1 : 1;
     const nextSectionIndex = currentSectionIndex + offset;
 
-    if (nextSectionIndex < 0 || nextSectionIndex > children.length - 1) {
+    if (nextSectionIndex < 0 || nextSectionIndex > childrenCount - 1) {
       return;
     }
 
@@ -103,13 +104,21 @@ export const VerticalPaginationComponent = ({
       </div>
       {(poster && currentSectionIndex === 0) || (
         <div className={classes.paginationDots}>
+          {poster && (
+            <button
+              className={cx(classes.paginationDot, {
+                [classes.current]: currentSectionIndex === 0
+              })}
+              onClick={() => scrollToSection(0)}
+            />
+          )}
           {React.Children.toArray(children).map((_, i) => (
             <button
               key={i}
               className={cx(classes.paginationDot, {
-                [classes.current]: currentSectionIndex === i
+                [classes.current]: currentSectionIndex === i + (poster ? 1 : 0)
               })}
-              onClick={() => scrollToSection(i)}
+              onClick={() => scrollToSection(i + (poster ? 1 : 0))}
             />
           ))}
         </div>
