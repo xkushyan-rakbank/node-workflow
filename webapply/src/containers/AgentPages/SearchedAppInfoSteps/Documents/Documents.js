@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { Avatar } from "../../../../components/Avatar/Avatar";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
-import { titles, errorMsgs } from "./constants";
+import { titles, errorMsgs, STATUS_NOT_ELIGIBLE } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -91,7 +91,7 @@ export const DocumentsComponent = ({
                     <div>
                       <div className={classes.checkListData}>{doc.uploadStatus}</div>
                     </div>
-                    {doc.uploadStatus !== "NotUploaded" && (
+                    {STATUS_NOT_ELIGIBLE.includes(doc.uploadStatus) && (
                       <div>
                         <LinkButton
                           index={index}

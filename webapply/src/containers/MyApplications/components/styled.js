@@ -209,5 +209,19 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       display: "none"
     }
+  },
+  noRecordsIcon: {
+    marginBottom: "-55px",
+    width: "460px",
+    alignSelf: "center"
+  },
+  noRecordsText: {
+    alignSelf: "center",
+    boxSizing: "border-box",
+    maxWidth: "609px",
+    textAlign: "center",
+    color: "#373737",
+    fontSize: 20,
+    lineHeight: 1.5
   }
 }));
