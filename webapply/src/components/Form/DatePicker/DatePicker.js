@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -41,12 +41,22 @@ export const DatePicker = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const classes = useStyles();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
-      <FormControl className="formControl">
+      <FormControl
+        className="formControl"
+        onClick={e => {
+          if (e.target.name) {
+            setIsOpen(true);
+          }
+        }}
+      >
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <BaseDatePicker
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
             autoComplete="off"
             label={label}
             minDate={minDate}
