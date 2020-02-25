@@ -11,7 +11,7 @@ export const MAX_EXPERIENCE_YEARS_LENGTH = 255;
 
 export const NUMBER_REGEX = /^[0-9]*$/;
 
-export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9])*$/;
+export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9-])*$/;
 
 export const EXPERIENCE_YEARS_REGEX = /^([a-zA-Z0-9 '”`:;.,-])*$/m;
 export const COMPANY_NAME_SPEC_CHAR_REGEX = /^[A-Za-z0-9\s!@#$%^&*()_+=`~\][{}|';:/.,?><-]*$/;
