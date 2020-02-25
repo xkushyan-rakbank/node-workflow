@@ -3,6 +3,7 @@ package ae.rakbank.webapply.controller;
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.services.AuthorizationService;
 import ae.rakbank.webapply.services.RecaptchaService;
+import ae.rakbank.webapply.services.otp.OtpService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -45,15 +46,18 @@ public class WebApplyController {
     private final DehClient dehClient;
     private final RecaptchaService captchaService;
     private final AuthorizationService authorizationService;
+    private final OtpService optService;
 
     private JsonNode dehURIs = null;
     private String dehBaseUrl = null;
+    private Boolean optEnabled = true;
 
     @PostConstruct
     public void init() {
         JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         dehURIs = appConfigJSON.get("DehURIs");
         dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
+        optEnabled = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("OtpEnabled").asText().equals("Y");
     }
 
     @PreAuthorize("permitAll()")
@@ -83,23 +87,16 @@ public class WebApplyController {
                 action, captchaVerified, isRecaptchaTokenPresent);
         log.debug("generateVerifyOTP() method args, RequestBody=[{}], ", requestJSON);
 
-        String url = dehBaseUrl + dehURIs.get("otpUri").asText();
-        final ResponseEntity<?> result = dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestJSON,
-                "generateVerifyOTP()", MediaType.APPLICATION_JSON, null);
 
-        ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(HttpStatus.OK).headers(result.getHeaders());
+        ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(HttpStatus.OK);
 
-        if ("verify".equalsIgnoreCase(action) && extractOtpVerificationResult(result)) {
-            String jwtToken = authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText());
-            responseBuilder.header(JWT_TOKEN_KEY, jwtToken);
-        }
-
-        return responseBuilder.body(result.getBody());
+        return optService.verifyOrGenerate(httpRequest, requestJSON)
+                .ifVerifySuccessThen(() -> responseBuilder.header(JWT_TOKEN_KEY, issueJwtToken(requestJSON)))
+                .execute(response -> responseBuilder.body(response.getBody()));
     }
 
-    private boolean extractOtpVerificationResult(ResponseEntity<?> optValidationResponse) {
-        final JsonNode body = (JsonNode) optValidationResponse.getBody();
-        return body != null && body.has("verified") && body.get("verified").asBoolean();
+    private String issueJwtToken(JsonNode requestJSON) {
+        return authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText());
     }
 
     @PostMapping(value = "/users/authenticate", produces = "application/json", consumes = "application/json")
