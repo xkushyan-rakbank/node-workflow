@@ -35,7 +35,7 @@ export const CheckList = () => {
         {companyChecks.map(application => (
           <div className={classes.applicationRow} key={application.screeningType}>
             <div>
-              <div className={classes.checkListData}>{application.screeningType}</div>
+              <div className={classes.checkListData}>{application.screeningLabel}</div>
             </div>
             <div>
               <div className={classes.checkListData}>{application.screeningStatus}</div>

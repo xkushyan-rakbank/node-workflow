@@ -1,5 +1,5 @@
-import { createSelector } from "reselect";
 import get from "lodash/get";
+import { createSelector } from "reselect";
 import { getOrganizationInfo, getApplicationInfo } from "./appConfig";
 import { RISK_RATING, COMPANY_CHECK_NAMES } from "../../constants";
 
