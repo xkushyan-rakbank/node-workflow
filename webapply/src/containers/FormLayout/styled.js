@@ -65,6 +65,10 @@ export const useStyles = makeStyles(theme => ({
     "& nextButton": {
       margin: "42px 0 0 !important"
     },
+    [theme.breakpoints.only("xs")]: {
+      paddingRight: 16,
+      paddingLeft: 16
+    },
     [theme.breakpoints.up("sm")]: {
       overflowY: "auto"
     }
