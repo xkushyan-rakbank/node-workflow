@@ -8,7 +8,6 @@ import { useStyles } from "./styled";
 
 export const AccountInfoScreen = ({
   className,
-  resetApplicantInfo,
   isShowApply,
   isShowCheck,
   isShowStart,

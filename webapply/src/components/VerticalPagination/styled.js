@@ -90,15 +90,10 @@ export const useStyles = makeStyles(theme => ({
     cursor: "auto"
   },
   videoWrapper: ({ isMobileNotificationActive }) => ({
-    height: isMobileNotificationActive ? 444 : 380,
     [theme.breakpoints.only("xs")]: {
+      height: isMobileNotificationActive ? 444 : 380,
       marginBottom: 40
     },
-    [theme.breakpoints.up("sm")]: {
-      height: "100vh"
-    },
-    [`@media (max-height: ${normalScrollHeight}px)`]: {
-      height: "100vh"
-    }
+    height: "100vh"
   })
 }));
