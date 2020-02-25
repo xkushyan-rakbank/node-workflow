@@ -104,21 +104,13 @@ export const VerticalPaginationComponent = ({
       </div>
       {(poster && currentSectionIndex === 0) || (
         <div className={classes.paginationDots}>
-          {poster && (
-            <button
-              className={cx(classes.paginationDot, {
-                [classes.current]: currentSectionIndex === 0
-              })}
-              onClick={() => scrollToSection(0)}
-            />
-          )}
-          {React.Children.toArray(children).map((_, i) => (
+          {new Array(childrenCount).fill(null).map((_, i) => (
             <button
               key={i}
               className={cx(classes.paginationDot, {
-                [classes.current]: currentSectionIndex === i + (poster ? 1 : 0)
+                [classes.current]: currentSectionIndex === i
               })}
-              onClick={() => scrollToSection(i + (poster ? 1 : 0))}
+              onClick={() => scrollToSection(i)}
             />
           ))}
         </div>
