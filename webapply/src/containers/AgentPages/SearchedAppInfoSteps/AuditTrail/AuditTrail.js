@@ -5,7 +5,7 @@ import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
   const classes = useStyles();
-  const revertedAuditTrailInfo = (prospectInfo.AuditTrailInfo || []).reverse();
+  const revertedAuditTrailInfo = [...(prospectInfo.AuditTrailInfo || [])].reverse();
 
   return revertedAuditTrailInfo.length ? (
     <div className={classes.wrapper}>
