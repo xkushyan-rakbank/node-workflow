@@ -26,7 +26,8 @@ export const useStyles = makeStyles(theme => ({
       maxWidth: "380px"
     },
     "& img": {
-      maxWidth: "100%"
+      maxWidth: "100%",
+      objectFit: "contain"
     }
   },
   note: {
