@@ -34,7 +34,7 @@ export const useStyles = makeStyles(theme => ({
       left: "50%",
       top: "50%",
       transform: "translate(-50%, -50%)",
-      paddingTop: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 135 : 195),
+      paddingTop: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 130 : 195),
       height: "min-content",
       minWidth: "none"
     }
