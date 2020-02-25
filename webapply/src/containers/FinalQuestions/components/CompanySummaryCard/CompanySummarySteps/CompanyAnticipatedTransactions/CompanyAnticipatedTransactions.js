@@ -15,7 +15,7 @@ import {
   COMPANY_CURRENCY,
   YEAR_MONTH_COUNT,
   ANNUAL_TURNOVER_MAX_LENGTH,
-  WATER_TEXT
+  PLACEHOLDER
 } from "./constants";
 import { CURRENCY_REGEX, isNumeric } from "../../../../../../utils/validation";
 import {
@@ -38,7 +38,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
   return isNumeric(monthlyCreditsValue)
     ? `${monthlyCreditsValue} in Total Monthly Credits`
-    : WATER_TEXT;
+    : PLACEHOLDER;
 };
 
 const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => {
@@ -160,7 +160,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                   label="Annual Financial Turnover"
                   autoComplete="none"
-                  placeholder={WATER_TEXT}
+                  placeholder={PLACEHOLDER}
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -211,7 +211,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="totalMonthlyCashAmountInFigures"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Cash"
-                  placeholder={WATER_TEXT}
+                  placeholder={PLACEHOLDER}
                   autoComplete="off"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
@@ -228,7 +228,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Non-Cash"
-                  placeholder={WATER_TEXT}
+                  placeholder={PLACEHOLDER}
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
                   InputProps={{
@@ -256,7 +256,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   label="Maximum amount in Cash"
                   autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
-                  placeholder={WATER_TEXT}
+                  placeholder={PLACEHOLDER}
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -271,7 +271,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="maxAmtSingleTxnNonCashAED"
                   label="Maximum amount in Non-Cash"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
-                  placeholder={WATER_TEXT}
+                  placeholder={PLACEHOLDER}
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
