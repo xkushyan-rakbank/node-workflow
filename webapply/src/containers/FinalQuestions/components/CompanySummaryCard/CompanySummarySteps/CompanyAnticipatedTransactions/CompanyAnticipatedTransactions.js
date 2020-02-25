@@ -11,27 +11,34 @@ import { InfoTitle } from "../../../../../../components/Notifications";
 import { Input, AutoSaveField as Field, NumberFormat } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
-import { COMPANY_CURRENCY, YEAR_MONTH_COUNT, ANNUAL_TURNOVER_MAX_LENGTH } from "./constants";
+import {
+  COMPANY_CURRENCY,
+  YEAR_MONTH_COUNT,
+  ANNUAL_TURNOVER_MAX_LENGTH,
+  PLACEHOLDER
+} from "./constants";
 import { CURRENCY_REGEX, isNumeric } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
   getInvalidMessage
 } from "../../../../../../utils/getValidationMessage";
 
-const FormatDecimalNumberInput = props => <NumberFormat decimalScale={2} {...props} />;
+const FormatDecimalNumberInput = props => (
+  <NumberFormat allowNegative={false} decimalScale={0} {...props} />
+);
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
   if (!isNumeric(annualFinancialTurnover)) {
     return 0;
   }
   const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
-  return Number(calculation.toFixed());
+  return Math.floor(calculation);
 };
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
   return isNumeric(monthlyCreditsValue)
     ? `${monthlyCreditsValue} in Total Monthly Credits`
-    : "9999999.99";
+    : PLACEHOLDER;
 };
 
 const checkFieldSumNotExceedYearTotal = (field, conditionalField, yearTotal) => {
@@ -152,8 +159,8 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="annualFinTurnoverAmtInAED"
                   path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
                   label="Annual Financial Turnover"
-                  autocomplete="none"
-                  placeholder="9999999.99"
+                  autoComplete="none"
+                  placeholder={PLACEHOLDER}
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -204,7 +211,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="totalMonthlyCashAmountInFigures"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Cash"
-                  placeholder="9999999.99"
+                  placeholder={PLACEHOLDER}
                   autoComplete="off"
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
@@ -221,7 +228,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
                   label="Part of Monthly Total in Non-Cash"
-                  placeholder="9999999.99"
+                  placeholder={PLACEHOLDER}
                   component={Input}
                   contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
                   InputProps={{
@@ -249,7 +256,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   label="Maximum amount in Cash"
                   autoComplete="off"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
-                  placeholder="9999999.99"
+                  placeholder={PLACEHOLDER}
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -264,7 +271,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   name="maxAmtSingleTxnNonCashAED"
                   label="Maximum amount in Non-Cash"
                   path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
-                  placeholder="9999999.99"
+                  placeholder={PLACEHOLDER}
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
