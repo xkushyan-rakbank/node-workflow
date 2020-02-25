@@ -6,9 +6,9 @@ import cx from "classnames";
 import { Avatar } from "../../../../components/Avatar/Avatar";
 import { titles, errorMsgs } from "./constants";
 import { getSignatories } from "../../../../store/selectors/appConfig";
-import { getCompanyChecks } from "./selectors";
 
 import { useStyles } from "./styled";
+import { getCompanyChecks } from "../../../../store/selectors/screeningResults";
 
 export const CheckList = () => {
   const signatoryInfo = useSelector(getSignatories);

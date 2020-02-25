@@ -187,3 +187,27 @@ export const STEP_STATUS = {
   NOT_AVAILABLE: "NOT_AVAILABLE",
   COMPLETED: "COMPLETED"
 };
+
+// Company Check list
+export const DEDUPE_CHECK = {
+  screeningType: "Dedupe Check",
+  screeningStatus: "Completed",
+  screeningReason: "No Match"
+};
+export const BLACKLIST_CHECK = {
+  screeningType: "Blacklist Check",
+  screeningStatus: "Completed",
+  screeningReason: "No Match"
+};
+export const NEGATIVE_LIST_CHECK = {
+  screeningType: "Negative List Check",
+  screeningStatus: "Completed",
+  screeningReason: "No Match"
+};
+export const RISK_RATING = {
+  screeningType: "Risk Rating",
+  screeningStatus: "Completed",
+  screeningReason: "No Match"
+};
+
+export const COMPANY_CHECK_NAMES = [DEDUPE_CHECK, BLACKLIST_CHECK, NEGATIVE_LIST_CHECK];
