@@ -29,8 +29,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
-import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
-
 @Slf4j
 @Component
 @RequiredArgsConstructor

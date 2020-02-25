@@ -50,14 +50,12 @@ public class WebApplyController {
 
     private JsonNode dehURIs = null;
     private String dehBaseUrl = null;
-    private Boolean optEnabled = true;
 
     @PostConstruct
     public void init() {
         JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         dehURIs = appConfigJSON.get("DehURIs");
         dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
-        optEnabled = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("OtpEnabled").asText().equals("Y");
     }
 
     @PreAuthorize("permitAll()")
