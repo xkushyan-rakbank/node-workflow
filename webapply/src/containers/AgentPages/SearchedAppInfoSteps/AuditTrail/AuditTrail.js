@@ -5,9 +5,9 @@ import { useStyles } from "./styled";
 
 export const AuditTrail = ({ prospectInfo = {} }) => {
   const classes = useStyles();
-  const auditTrailInfo = prospectInfo.AuditTrailInfo || [];
+  const revertedAuditTrailInfo = [...(prospectInfo.AuditTrailInfo || [])].reverse();
 
-  return auditTrailInfo.length ? (
+  return revertedAuditTrailInfo.length ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div>
@@ -17,7 +17,7 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
           <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
         </div>
       </div>
-      {auditTrailInfo.map((item, index) => (
+      {revertedAuditTrailInfo.map((item, index) => (
         <div className={classes.applicationRow} key={index}>
           <div>
             <div className={classes.checkListData}>{item.modifiedBy}</div>
