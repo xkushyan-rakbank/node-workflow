@@ -1,0 +1,74 @@
+2020-02-25 11:18:38,527 INFO org.springframework.boot.StartupInfoLogger [main] Starting DocumentUploaderTest on MacBook-Pro-user-2.local with PID 12907 (started by user in /Users/user/IdeaProjects/Onboarding/document_uploader)
+2020-02-25 11:18:38,530 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-02-25 11:18:38,555 DEBUG org.springframework.context.support.AbstractApplicationContext [main] Refreshing org.springframework.web.context.support.GenericWebApplicationContext@6e535154
+2020-02-25 11:18:40,026 INFO ae.rakbank.documentuploader.util.EnvironmentUtil [main] WEBAPPLY_DIR = /var/webapply
+2020-02-25 11:18:40,026 INFO ae.rakbank.documentuploader.util.EnvironmentUtil [main] WEBAPPLY_ENV = dev
+2020-02-25 11:18:40,035 INFO ae.rakbank.documentuploader.util.FileUtil [main] loading DocUploadConfig.json
+2020-02-25 11:18:40,039 ERROR ae.rakbank.documentuploader.util.FileUtil [main] FileNotFoundException: Read JSON file from /var/webapply/config/DocUploadConfig.json
+2020-02-25 11:18:40,039 INFO ae.rakbank.documentuploader.util.FileUtil [main] Read JSON file from classpath:DocUploadConfig.json
+2020-02-25 11:18:40,069 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] Configuring initial state
+2020-02-25 11:18:40,069 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] WEBAPPLY_DIR = /var/webapply
+2020-02-25 11:18:40,071 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] WEBAPPLY_ENV = dev
+2020-02-25 11:18:40,490 DEBUG org.springframework.web.servlet.handler.SimpleUrlHandlerMapping [main] Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2020-02-25 11:18:40,710 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-25 11:18:40,738 DEBUG org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter [main] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2020-02-25 11:18:40,886 TRACE org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 
+	a.r.d.c.DocumentUploadController:
+	{GET /api/v1/health, produces [application/json]}: health()
+	{POST /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleUploadDocument(String,MultipartFile,String,String)
+	{PUT /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleReUploadDocument(String,MultipartFile,String,String)
+	{GET /api/v1/banks/RAK/prospects/{prospectId}/documents/{documentKey}}: downloadFile(String,String,String)
+2020-02-25 11:18:40,892 TRACE org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ /error}: error(HttpServletRequest)
+	{ /error, produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2020-02-25 11:18:40,896 DEBUG org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 6 mappings in 'requestMappingHandlerMapping'
+2020-02-25 11:18:40,926 DEBUG org.springframework.web.servlet.handler.SimpleUrlHandlerMapping [main] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2020-02-25 11:18:40,947 DEBUG org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [main] ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2020-02-25 11:18:41,098 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-02-25 11:18:41,163 INFO org.springframework.mock.web.MockServletContext [main] Initializing Spring TestDispatcherServlet ''
+2020-02-25 11:18:41,164 INFO org.springframework.web.servlet.FrameworkServlet [main] Initializing Servlet ''
+2020-02-25 11:18:41,187 INFO org.springframework.web.servlet.FrameworkServlet [main] Completed initialization in 22 ms
+2020-02-25 11:18:41,229 INFO org.springframework.boot.StartupInfoLogger [main] Started DocumentUploaderTest in 3.336 seconds (JVM running for 4.462)
+2020-02-25 11:18:41,290 TRACE org.springframework.web.servlet.handler.AbstractHandlerMapping [main] Mapped to public org.springframework.http.ResponseEntity<java.lang.Object> ae.rakbank.documentuploader.controller.DocumentUploadController.handleUploadDocument(java.lang.String,org.springframework.web.multipart.MultipartFile,java.lang.String,java.lang.String)
+2020-02-25 11:18:41,309 TRACE org.springframework.web.method.support.InvocableHandlerMethod [main] Arguments: [mock token, org.springframework.mock.web.MockMultipartFile@3c87e6b7, {"documentKey":"SampleDocFromTestCase"}, cosme0001]
+2020-02-25 11:18:41,346 DEBUG org.springframework.context.support.AbstractApplicationContext [Thread-3] Closing org.springframework.web.context.support.GenericWebApplicationContext@6e535154, started on Tue Feb 25 11:18:38 EET 2020
+2020-02-25 11:18:41,347 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-3] Shutting down ExecutorService 'taskScheduler'
+2020-02-25 11:18:41,348 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-3] Shutting down ExecutorService 'applicationTaskExecutor'
+2020-02-25 14:10:57,645 INFO org.springframework.boot.StartupInfoLogger [main] Starting DocumentUploaderTest on MacBook-Pro-user-2.local with PID 13254 (started by user in /Users/user/IdeaProjects/Onboarding/document_uploader)
+2020-02-25 14:10:57,647 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-02-25 14:10:57,703 DEBUG org.springframework.context.support.AbstractApplicationContext [main] Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4d15107f
+2020-02-25 14:10:58,902 INFO ae.rakbank.documentuploader.util.EnvironmentUtil [main] WEBAPPLY_DIR = /var/webapply
+2020-02-25 14:10:58,904 INFO ae.rakbank.documentuploader.util.EnvironmentUtil [main] WEBAPPLY_ENV = dev
+2020-02-25 14:10:58,912 INFO ae.rakbank.documentuploader.util.FileUtil [main] loading DocUploadConfig.json
+2020-02-25 14:10:58,916 ERROR ae.rakbank.documentuploader.util.FileUtil [main] FileNotFoundException: Read JSON file from /var/webapply/config/DocUploadConfig.json
+2020-02-25 14:10:58,916 INFO ae.rakbank.documentuploader.util.FileUtil [main] Read JSON file from classpath:DocUploadConfig.json
+2020-02-25 14:10:58,953 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] Configuring initial state
+2020-02-25 14:10:58,954 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] WEBAPPLY_DIR = /var/webapply
+2020-02-25 14:10:58,955 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] WEBAPPLY_ENV = dev
+2020-02-25 14:10:59,528 DEBUG org.springframework.web.servlet.handler.SimpleUrlHandlerMapping [main] Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2020-02-25 14:10:59,880 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-25 14:10:59,917 DEBUG org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter [main] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2020-02-25 14:11:00,028 TRACE org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 
+	a.r.d.c.DocumentUploadController:
+	{GET /api/v1/health, produces [application/json]}: health()
+	{POST /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleUploadDocument(String,MultipartFile,String,String)
+	{PUT /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleReUploadDocument(String,MultipartFile,String,String)
+	{GET /api/v1/banks/RAK/prospects/{prospectId}/documents/{documentKey}}: downloadFile(String,String,String)
+2020-02-25 14:11:00,034 TRACE org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ /error}: error(HttpServletRequest)
+	{ /error, produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2020-02-25 14:11:00,037 DEBUG org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 6 mappings in 'requestMappingHandlerMapping'
+2020-02-25 14:11:00,061 DEBUG org.springframework.web.servlet.handler.SimpleUrlHandlerMapping [main] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2020-02-25 14:11:00,074 DEBUG org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [main] ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2020-02-25 14:11:00,231 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-02-25 14:11:00,278 INFO org.springframework.mock.web.MockServletContext [main] Initializing Spring TestDispatcherServlet ''
+2020-02-25 14:11:00,278 INFO org.springframework.web.servlet.FrameworkServlet [main] Initializing Servlet ''
+2020-02-25 14:11:00,291 INFO org.springframework.web.servlet.FrameworkServlet [main] Completed initialization in 13 ms
+2020-02-25 14:11:00,322 INFO org.springframework.boot.StartupInfoLogger [main] Started DocumentUploaderTest in 3.04 seconds (JVM running for 3.822)
+2020-02-25 14:11:00,374 TRACE org.springframework.web.servlet.handler.AbstractHandlerMapping [main] Mapped to public org.springframework.http.ResponseEntity<java.lang.Object> ae.rakbank.documentuploader.controller.DocumentUploadController.handleUploadDocument(java.lang.String,org.springframework.web.multipart.MultipartFile,java.lang.String,java.lang.String)
+2020-02-25 14:11:00,392 TRACE org.springframework.web.method.support.InvocableHandlerMethod [main] Arguments: [mock token, org.springframework.mock.web.MockMultipartFile@5af8bb51, {"documentKey":"SampleDocFromTestCase"}, cosme0001]
+2020-02-25 14:11:00,464 DEBUG org.springframework.context.support.AbstractApplicationContext [Thread-3] Closing org.springframework.web.context.support.GenericWebApplicationContext@4d15107f, started on Tue Feb 25 14:10:57 EET 2020
+2020-02-25 14:11:00,466 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-3] Shutting down ExecutorService 'taskScheduler'
+2020-02-25 14:11:00,468 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-3] Shutting down ExecutorService 'applicationTaskExecutor'

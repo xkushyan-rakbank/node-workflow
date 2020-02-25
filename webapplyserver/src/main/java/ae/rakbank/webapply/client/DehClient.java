@@ -47,7 +47,7 @@ public class DehClient {
         defaultDatalist.setAll((ObjectNode) fileUtil.getDatalistJSON());
     }
 
-    public ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, String url, HttpMethod httpMethod,
+    public ResponseEntity<Object> invokeApiEndpoint(HttpServletRequest httpRequest, String url, HttpMethod httpMethod,
                                                JsonNode requestBodyJSON, String operationId, MediaType mediaType,
                                                String updatedJwtToken) {
         if (requestBodyJSON != null) {
@@ -134,15 +134,13 @@ public class DehClient {
             response = restTemplate.exchange(url, HttpMethod.GET, request, JsonNode.class);
 
         } catch (HttpClientErrorException e) {
-            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
-                    e.getResponseBodyAsString()), e);
+            log.error("Endpoint={}, HttpStatus={}, response={}", url, e.getRawStatusCode(), e.getResponseBodyAsString(), e);
             HttpStatus status = HttpStatus.BAD_REQUEST;
             ApiError apiError = dehUtil.initApiError(e, status);
 
             throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
-            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
-                    e.getResponseBodyAsString()), e);
+            log.error("Endpoint={}, HttpStatus={}, response={}", url, e.getRawStatusCode(), e.getResponseBodyAsString(), e);
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
             ApiError apiError = dehUtil.initApiError(e, status);
 

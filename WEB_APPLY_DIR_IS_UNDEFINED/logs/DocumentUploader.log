@@ -1,0 +1,78 @@
+2020-02-21 08:57:07,645 INFO org.springframework.boot.StartupInfoLogger [main] Starting Application on MacBook-Pro-user-2.local with PID 3489 (/Users/user/IdeaProjects/Onboarding/document_uploader/target/classes started by user in /Users/user/IdeaProjects/Onboarding)
+2020-02-21 08:57:07,649 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-02-21 08:57:08,734 INFO io.undertow.servlet.spec.ServletContextImpl [main] Initializing Spring embedded WebApplicationContext
+2020-02-21 08:57:08,735 DEBUG org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2020-02-21 08:57:08,738 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1024 ms
+2020-02-21 08:57:08,856 INFO ae.rakbank.documentuploader.util.EnvironmentUtil [main] WEBAPPLY_DIR = /var/webapply
+2020-02-21 08:57:08,856 INFO ae.rakbank.documentuploader.util.EnvironmentUtil [main] WEBAPPLY_ENV = dev
+2020-02-21 08:57:08,857 INFO ae.rakbank.documentuploader.util.FileUtil [main] loading DocUploadConfig.json
+2020-02-21 08:57:08,860 ERROR ae.rakbank.documentuploader.util.FileUtil [main] FileNotFoundException: Read JSON file from /var/webapply/config/DocUploadConfig.json
+2020-02-21 08:57:08,860 INFO ae.rakbank.documentuploader.util.FileUtil [main] Read JSON file from classpath:DocUploadConfig.json
+2020-02-21 08:57:08,890 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] Configuring initial state
+2020-02-21 08:57:08,890 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] WEBAPPLY_DIR = /var/webapply
+2020-02-21 08:57:08,890 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] WEBAPPLY_ENV = dev
+2020-02-21 08:57:08,918 ERROR ae.rakbank.documentuploader.util.EnvUtil [main] System property 'WEB_APPLY_DIR' not configured, load config files from classpath:
+2020-02-21 08:57:08,918 ERROR ae.rakbank.documentuploader.util.EnvUtil [main] System property 'WEB_APPLY_ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod
+2020-02-21 08:57:08,918 INFO ae.rakbank.documentuploader.util.EnvUtil [main] $WEB_APPLY_ENV=local, $WEB_APPLY_DIR=null
+2020-02-21 08:57:09,049 DEBUG org.springframework.web.servlet.handler.SimpleUrlHandlerMapping [main] Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2020-02-21 08:57:09,175 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-21 08:57:09,192 DEBUG org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter [main] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2020-02-21 08:57:09,240 TRACE org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 
+	a.r.d.c.DocumentUploadController:
+	{GET /api/v1/health, produces [application/json]}: health()
+	{POST /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleUploadDocument(String,MultipartFile,String,String)
+	{PUT /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleReUploadDocument(String,MultipartFile,String,String)
+	{GET /api/v1/banks/RAK/prospects/{prospectId}/documents/{documentKey}}: downloadFile(String,String,String)
+2020-02-21 08:57:09,245 TRACE org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ /error}: error(HttpServletRequest)
+	{ /error, produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2020-02-21 08:57:09,248 DEBUG org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 6 mappings in 'requestMappingHandlerMapping'
+2020-02-21 08:57:09,264 DEBUG org.springframework.web.servlet.handler.SimpleUrlHandlerMapping [main] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2020-02-21 08:57:09,278 DEBUG org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [main] ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2020-02-21 08:57:09,357 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-02-21 08:57:09,420 INFO org.xnio.Xnio [main] XNIO version 3.3.8.Final
+2020-02-21 08:57:09,432 INFO org.xnio.nio.NioXnio [main] XNIO NIO Implementation Version 3.3.8.Final
+2020-02-21 08:57:09,543 INFO org.springframework.boot.web.embedded.undertow.UndertowServletWebServer [main] Undertow started on port(s) 8080 (http) with context path '/docUploader'
+2020-02-21 08:57:09,547 INFO org.springframework.boot.StartupInfoLogger [main] Started Application in 2.573 seconds (JVM running for 3.811)
+2020-02-21 08:57:25,037 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-7] Shutting down ExecutorService 'taskScheduler'
+2020-02-21 08:57:25,038 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-7] Shutting down ExecutorService 'applicationTaskExecutor'
+2020-02-21 09:29:03,762 INFO org.springframework.boot.StartupInfoLogger [main] Starting Application on MacBook-Pro-user-2.local with PID 3772 (/Users/user/IdeaProjects/Onboarding/document_uploader/target/classes started by user in /Users/user/IdeaProjects/Onboarding)
+2020-02-21 09:29:03,767 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-02-21 09:29:04,764 INFO io.undertow.servlet.spec.ServletContextImpl [main] Initializing Spring embedded WebApplicationContext
+2020-02-21 09:29:04,765 DEBUG org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2020-02-21 09:29:04,765 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 940 ms
+2020-02-21 09:29:04,861 INFO ae.rakbank.documentuploader.util.EnvironmentUtil [main] WEBAPPLY_DIR = /var/webapply
+2020-02-21 09:29:04,862 INFO ae.rakbank.documentuploader.util.EnvironmentUtil [main] WEBAPPLY_ENV = dev
+2020-02-21 09:29:04,863 INFO ae.rakbank.documentuploader.util.FileUtil [main] loading DocUploadConfig.json
+2020-02-21 09:29:04,866 ERROR ae.rakbank.documentuploader.util.FileUtil [main] FileNotFoundException: Read JSON file from /var/webapply/config/DocUploadConfig.json
+2020-02-21 09:29:04,866 INFO ae.rakbank.documentuploader.util.FileUtil [main] Read JSON file from classpath:DocUploadConfig.json
+2020-02-21 09:29:04,891 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] Configuring initial state
+2020-02-21 09:29:04,891 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] WEBAPPLY_DIR = /var/webapply
+2020-02-21 09:29:04,891 INFO ae.rakbank.documentuploader.s3.ECSS3Factory [main] WEBAPPLY_ENV = dev
+2020-02-21 09:29:04,920 ERROR ae.rakbank.documentuploader.util.EnvUtil [main] System property 'WEB_APPLY_DIR' not configured, load config files from classpath:
+2020-02-21 09:29:04,921 ERROR ae.rakbank.documentuploader.util.EnvUtil [main] System property 'WEB_APPLY_ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod
+2020-02-21 09:29:04,921 INFO ae.rakbank.documentuploader.util.EnvUtil [main] $WEB_APPLY_ENV=local, $WEB_APPLY_DIR=null
+2020-02-21 09:29:05,028 DEBUG org.springframework.web.servlet.handler.SimpleUrlHandlerMapping [main] Patterns [/**/favicon.ico] in 'faviconHandlerMapping'
+2020-02-21 09:29:05,160 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-02-21 09:29:05,174 DEBUG org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter [main] ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2020-02-21 09:29:05,215 TRACE org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 
+	a.r.d.c.DocumentUploadController:
+	{GET /api/v1/health, produces [application/json]}: health()
+	{POST /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleUploadDocument(String,MultipartFile,String,String)
+	{PUT /api/v1/banks/RAK/prospects/{prospectId}/documents, consumes [multipart/form-data], produces [application/json]}: handleReUploadDocument(String,MultipartFile,String,String)
+	{GET /api/v1/banks/RAK/prospects/{prospectId}/documents/{documentKey}}: downloadFile(String,String,String)
+2020-02-21 09:29:05,221 TRACE org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 
+	o.s.b.a.w.s.e.BasicErrorController:
+	{ /error}: error(HttpServletRequest)
+	{ /error, produces [text/html]}: errorHtml(HttpServletRequest,HttpServletResponse)
+2020-02-21 09:29:05,223 DEBUG org.springframework.web.servlet.handler.AbstractHandlerMethodMapping [main] 6 mappings in 'requestMappingHandlerMapping'
+2020-02-21 09:29:05,236 DEBUG org.springframework.web.servlet.handler.SimpleUrlHandlerMapping [main] Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2020-02-21 09:29:05,246 DEBUG org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver [main] ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2020-02-21 09:29:05,311 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'taskScheduler'
+2020-02-21 09:29:05,361 INFO org.xnio.Xnio [main] XNIO version 3.3.8.Final
+2020-02-21 09:29:05,370 INFO org.xnio.nio.NioXnio [main] XNIO NIO Implementation Version 3.3.8.Final
+2020-02-21 09:29:05,460 INFO org.springframework.boot.web.embedded.undertow.UndertowServletWebServer [main] Undertow started on port(s) 8080 (http) with context path '/docUploader'
+2020-02-21 09:29:05,465 INFO org.springframework.boot.StartupInfoLogger [main] Started Application in 2.338 seconds (JVM running for 3.017)
+2020-02-21 09:29:13,449 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-7] Shutting down ExecutorService 'taskScheduler'
+2020-02-21 09:29:13,450 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-7] Shutting down ExecutorService 'applicationTaskExecutor'
