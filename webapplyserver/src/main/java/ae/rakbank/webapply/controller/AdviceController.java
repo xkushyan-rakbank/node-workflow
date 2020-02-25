@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -18,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 @RestControllerAdvice
 public class AdviceController extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ApiException.class})
+    @ExceptionHandler({ ApiException.class })
     public ResponseEntity<Object> handleApiException(ApiException apiException) {
 
         HttpHeaders headers;
@@ -49,12 +48,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError.toJsonString(), headers, status);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public void accessDeniedExceptionHandler(AccessDeniedException e) throws AccessDeniedException {
-        throw e;
-    }
-
-    @ExceptionHandler({Exception.class})
+    @ExceptionHandler({ Exception.class })
     public ResponseEntity<Object> handleException(Exception exception) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -87,6 +81,6 @@ public class AdviceController extends ResponseEntityExceptionHandler {
     }
 
     private StackTraceElement[] getReducedStackTrace(StackTraceElement[] stackTrace) {
-        return new StackTraceElement[]{stackTrace[0], stackTrace[1], stackTrace[2], stackTrace[3], stackTrace[4]};
+		return new StackTraceElement[]{stackTrace[0], stackTrace[1], stackTrace[2], stackTrace[3], stackTrace[4]};
     }
 }
