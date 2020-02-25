@@ -4,7 +4,7 @@ import { COMPANY_CHECK_NAMES, RISK_RATING } from "./constants";
 import {
   getOrganizationScreeningResults,
   getProspectRiskScore
-} from "../../../../store/selectors/appConfig";
+} from "../../../../store/selectors/screeningResults";
 
 const screeningResults = state => getOrganizationScreeningResults(state);
 const riskScore = state => getProspectRiskScore(state);
