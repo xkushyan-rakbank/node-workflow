@@ -91,6 +91,7 @@ export const DocumentsComponent = ({
                     <div>
                       <div className={classes.checkListData}>{doc.uploadStatus}</div>
                     </div>
+                    {doc.uploadStatus}
                     {STATUS_NOT_ELIGIBLE.includes(doc.uploadStatus) && (
                       <div>
                         <LinkButton
