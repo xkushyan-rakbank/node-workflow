@@ -21,6 +21,18 @@ export const useStyles = makeStyles(theme => ({
       boxSizing: "border-box"
     }
   },
+  grouped: {
+    [theme.breakpoints.only("xs")]: {
+      "&:not(:last-child)": {
+        borderRadius: "8px",
+        border: "0px"
+      },
+      "&:not(:first-child)": {
+        borderRadius: "8px",
+        border: "0px"
+      }
+    }
+  },
   buttonStyle: {
     minWidth: "133px",
     padding: "2px 15px",
@@ -35,8 +47,6 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.only("xs")]: {
       width: "100%",
-      borderRadius: "8px!important",
-      border: "0!important",
       height: 72,
       marginTop: 10,
       padding: "2px 20px",
