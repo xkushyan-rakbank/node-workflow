@@ -187,3 +187,69 @@ export const STEP_STATUS = {
   NOT_AVAILABLE: "NOT_AVAILABLE",
   COMPLETED: "COMPLETED"
 };
+
+// Company Check list
+export const NEGATIVE_LIST_CHECK = {
+  screeningType: "Negative List Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Negative List",
+  screeningReason: "No Match"
+};
+export const VIRTUAL_CURRENCY_CHECK = {
+  screeningType: "Virtual Currency Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Virtual Currency",
+  screeningReason: "No Match"
+};
+export const COUNTRYOFINCORPORATION_CHECK = {
+  screeningType: "CountryOfIncorporation Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Country of Incorporation",
+  screeningReason: "No Match"
+};
+export const RAKSTARTER_ACCOUNT_CHECK = {
+  screeningType: "RAKStarter Account Check",
+  screeningStatus: "Completed",
+  screeningLabel: "RAK-Starter Account Validation",
+  screeningReason: "No Match"
+};
+export const DEDUPE_CHECK = {
+  screeningType: "Dedupe Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Dedupe",
+  screeningReason: "No Match"
+};
+export const ISSHAREHOLDERACOMPANY_CHECK = {
+  screeningType: "IsShareHolderACompany Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Company is a Stakeholder",
+  screeningReason: "No Match"
+};
+export const SHAREHOLDERCOUNT_CHECK = {
+  screeningType: "ShareHolderCount Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Share Holder Count",
+  screeningReason: "No Match"
+};
+export const BLACKLIST_CHECK = {
+  screeningType: "Blacklist Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Blacklist",
+  screeningReason: "No Match"
+};
+export const RISK_RATING = {
+  screeningType: "Risk Rating",
+  screeningStatus: "Completed",
+  screeningLabel: "Risk Rating",
+  screeningReason: "No Match"
+};
+
+export const COMPANY_CHECK_NAMES = [
+  DEDUPE_CHECK,
+  BLACKLIST_CHECK,
+  NEGATIVE_LIST_CHECK,
+  COUNTRYOFINCORPORATION_CHECK,
+  VIRTUAL_CURRENCY_CHECK,
+  RAKSTARTER_ACCOUNT_CHECK,
+  ISSHAREHOLDERACOMPANY_CHECK
+];
