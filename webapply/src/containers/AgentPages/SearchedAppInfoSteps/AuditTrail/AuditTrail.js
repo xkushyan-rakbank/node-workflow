@@ -10,21 +10,13 @@ export const AuditTrail = ({ prospectInfo = {} }) => {
   return revertedAuditTrailInfo.length ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
-        <div>
-          <div className={cx(classes.checkListData, classes.heading)}>Modified By</div>
-        </div>
-        <div>
-          <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
-        </div>
+        <div className={cx(classes.checkListData, classes.heading)}>Modified By</div>
+        <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
       </div>
       {revertedAuditTrailInfo.map((item, index) => (
         <div className={classes.applicationRow} key={index}>
-          <div>
-            <div className={classes.checkListData}>{item.modifiedBy}</div>
-          </div>
-          <div>
-            <div className={classes.checkListData}>{item.modifiedDateTime}</div>
-          </div>
+          <div className={classes.checkListData}>{item.modifiedBy}</div>
+          <div className={classes.checkListData}>{item.modifiedDateTime}</div>
         </div>
       ))}
     </div>
