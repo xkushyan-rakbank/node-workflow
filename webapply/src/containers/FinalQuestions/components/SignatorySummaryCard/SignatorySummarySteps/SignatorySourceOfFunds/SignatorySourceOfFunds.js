@@ -21,12 +21,14 @@ import {
 import { useStyles } from "./styled";
 
 export const signatorySourceOfFundsSchema = Yup.object().shape({
-  sourceOfWealth: Yup.array().of(
-    Yup.object().shape({
-      wealthType: Yup.string().required(getRequiredMessage("Source of funds")),
-      others: Yup.string()
-    })
-  ),
+  sourceOfWealth: Yup.array()
+    .of(
+      Yup.object().shape({
+        wealthType: Yup.string(),
+        others: Yup.string()
+      })
+    )
+    .required(getRequiredMessage("Source of funds")),
   others: Yup.string().matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
 });
 
