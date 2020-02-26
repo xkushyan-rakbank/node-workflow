@@ -104,14 +104,20 @@ public class WebApplyController {
         log.info("Begin login() method");
         log.debug(String.format("login() method args, RequestBody=[%s]", requestBodyJSON.toString()));
 
-        String newJwtToken = authorizationService.createAgentJwtToken(requestBodyJSON.get("username").asText(),
-                requestBodyJSON.get("password").asText());
-
         captchaService.validateReCaptcha(requestBodyJSON, httpRequest);
 
         String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
 
-        return dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestBodyJSON,
-                "login()", MediaType.APPLICATION_JSON, newJwtToken);
+        final ResponseEntity<?> dehResponse = dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestBodyJSON,
+                "login()", MediaType.APPLICATION_JSON, null);
+
+        ResponseEntity.BodyBuilder response = ResponseEntity.status(dehResponse.getStatusCode());
+
+        if (dehResponse.getStatusCode() == HttpStatus.OK) {
+            response.header(JWT_TOKEN_KEY, authorizationService.createAgentJwtToken(requestBodyJSON.get("username").asText(),
+                requestBodyJSON.get("password").asText()));
+        }
+
+        return response.body(dehResponse.getBody());
     }
 }
