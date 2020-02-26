@@ -29,7 +29,6 @@ export const OTPformComponent = ({
   const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
   const [code, setCode] = useState(Array(6).fill(""));
   const [loginAttempt, setLoginAttempt] = useState(0);
-  const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
 
   const otpRef = useRef(null);
 
@@ -46,12 +45,9 @@ export const OTPformComponent = ({
 
   useEffect(() => {
     if (verificationError) {
-      if (attempts >= MAX_NUMBER_VALIDATION_ERRORS) {
-        setIsDisplayMaxAttempError(true);
-      }
       resetOtpForm();
     }
-  }, [verificationError, resetOtpForm, attempts]);
+  }, [verificationError, resetOtpForm]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => verifyClearError(), []);
@@ -69,6 +65,8 @@ export const OTPformComponent = ({
 
   const isValid = code.every(value => digitRegExp.test(value));
   const classes = useStyles({ classes: extendetClasses });
+  const isMaxAttemptError =
+    loginAttempt > MAX_ATTEMPT_ALLOWED || attempts >= MAX_NUMBER_VALIDATION_ERRORS;
 
   return (
     <div className={classes.centeredContainer}>
@@ -88,13 +86,13 @@ export const OTPformComponent = ({
                 <OtpVerification code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
-              {!isDisplayMaxAttempError && verificationError && (
+              {!isMaxAttemptError && verificationError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="Code verification failed."
                 />
               )}
-              {(loginAttempt > MAX_ATTEMPT_ALLOWED || isDisplayMaxAttempError) && (
+              {isMaxAttemptError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="You have exceeded your maximum attempt. Please come back later and try again."
@@ -106,8 +104,7 @@ export const OTPformComponent = ({
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]:
-                      loginAttempt >= MAX_ATTEMPT_ALLOWED || isDisplayMaxAttempError
+                    [classes.linkDisabled]: isMaxAttemptError
                   })}
                 >
                   Send a new code
