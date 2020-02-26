@@ -263,10 +263,12 @@ export const prospect = {
         isPEP: false,
         qualification: "",
         experienceInYrs: "",
-        sourceOfWealth: {
-          wealthType: "",
-          others: ""
-        }
+        sourceOfWealth: [
+          {
+            wealthType: "",
+            others: ""
+          }
+        ]
       },
       contactDetails: {
         primaryMobileNo: "",
