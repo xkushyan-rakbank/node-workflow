@@ -30,7 +30,9 @@ const keyboardDatePickerTheme = createMuiTheme({
         display: "none"
       },
       dayLabel: {
-        width: "26px"
+        width: "26px",
+        fontWeight: "600",
+        color: "#3b3a3a"
       }
     },
     MuiPickersCalendar: {
@@ -66,11 +68,16 @@ const keyboardDatePickerTheme = createMuiTheme({
       },
       current: {
         color: "#3b3a3a"
+      },
+      dayDisabled: {
+        opacity: "0",
+        visibility: "hidden"
       }
     },
     MuiTypography: {
       colorInherit: {
-        fontSize: "12px"
+        fontSize: "12px",
+        fontWeight: "600"
       }
     }
   }
