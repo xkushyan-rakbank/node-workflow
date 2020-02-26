@@ -95,7 +95,10 @@ export const PersonalInformation = ({ index, handleContinue }) => {
     ...prospect,
     [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
       ? applicantInfo.fullName
-      : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
+      : [values.firstName, values.middleName, values.lastName]
+          .filter(item => item)
+          .join(" ")
+          .trim()
   });
 
   return (

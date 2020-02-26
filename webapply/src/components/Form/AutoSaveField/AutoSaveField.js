@@ -61,7 +61,8 @@ export const AutoSaveField = ({
         const oldValue = get(appConfig, path, initialValue);
 
         if (!isEqual(oldValue, value)) {
-          const prospect = changeProspect({ [path]: value }, value, path);
+          const trimmedValue = typeof value === "string" ? value.trim() : value;
+          const prospect = changeProspect({ [path]: trimmedValue }, trimmedValue, path);
 
           validateForm().then(errors => {
             if (!getIn(errors, name)) {
