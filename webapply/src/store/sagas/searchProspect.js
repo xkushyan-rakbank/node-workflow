@@ -22,7 +22,7 @@ function* searchProspectFormSaga({ payload }) {
       eidNumber: ""
     };
     const response = yield call(search.searchApplication, inputParam, headers);
-    yield put(searchApplicationsSuccess(response.data));
+    yield put(searchApplicationsSuccess(response.data.searchResult));
   } catch (error) {
     yield put(searchApplicationsFailure());
     log(error);

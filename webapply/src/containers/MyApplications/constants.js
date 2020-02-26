@@ -11,7 +11,16 @@ export const notCtaStatuses = {
 };
 
 export const ctaStatuses = {
-  Incomplete: "Finish application",
-  "Documents needed": "Upload Document",
-  "Need Additional Information/Documents": "Upload Document"
+  Incomplete: {
+    buttonText: "Finish application",
+    mobileStatus: "You’re half way there! Please log in on a desktop to finish the application."
+  },
+  "Documents needed": {
+    buttonText: "Upload Document",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
+  "Need Additional Information/Documents": {
+    buttonText: "Upload Document",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  }
 };

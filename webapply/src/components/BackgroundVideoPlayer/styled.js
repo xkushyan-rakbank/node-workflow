@@ -15,6 +15,11 @@ export const useStyles = makeStyles(theme => ({
     zIndex: 10,
     [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
       transform: ({ currentSectionIndex }) => `translateY(-${100 * currentSectionIndex}vh)`
+    },
+    [theme.breakpoints.only("xs")]: {
+      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 64 : 0),
+      height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 704 : 640),
+      maxHeight: "none"
     }
   },
   video: {
@@ -29,7 +34,7 @@ export const useStyles = makeStyles(theme => ({
       left: "50%",
       top: "50%",
       transform: "translate(-50%, -50%)",
-      paddingTop: "130px",
+      paddingTop: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 130 : 195),
       height: "min-content",
       minWidth: "none"
     }

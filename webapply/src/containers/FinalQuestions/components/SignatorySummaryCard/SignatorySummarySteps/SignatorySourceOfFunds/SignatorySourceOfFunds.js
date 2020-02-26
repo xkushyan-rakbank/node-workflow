@@ -21,9 +21,9 @@ import {
 import { useStyles } from "./styled";
 
 export const signatorySourceOfFundsSchema = Yup.object().shape({
-  wealthType: Yup.string().required(getRequiredMessage("Source of funds")),
+  wealthType: Yup.array().required(getRequiredMessage("Source of funds")),
   others: Yup.string().when("wealthType", {
-    is: value => value === OTHER_SOURCE_OF_WEALTH,
+    is: value => value.includes(OTHER_SOURCE_OF_WEALTH),
     then: Yup.string()
       .required(getRequiredMessage("Other"))
       .matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
@@ -41,31 +41,34 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          wealthType: "",
+          wealthType: [],
           others: ""
         }}
         onSubmit={handleSubmit}
         validationSchema={signatorySourceOfFundsSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue, setFieldTouched }) => (
+        {({ values, setFieldTouched, setValues }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item md={12} sm={12}>
                 <Field
+                  multiple
                   name="wealthType"
                   path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.wealthType`}
                   datalistId="wealthType"
                   label="Source of funds"
                   onChange={selectedValue => {
+                    const saveValues = { wealthType: selectedValue };
+
                     if (
-                      selectedValue !== OTHER_SOURCE_OF_WEALTH &&
-                      values.wealthType === OTHER_SOURCE_OF_WEALTH
+                      !selectedValue.includes(OTHER_SOURCE_OF_WEALTH) &&
+                      values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                     ) {
-                      setFieldValue("others", "");
+                      saveValues.others = "";
                       setFieldTouched("others", false);
                     }
-                    setFieldValue("wealthType", selectedValue);
+                    setValues(saveValues);
                   }}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
@@ -82,7 +85,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
               </Grid>
               <Grid
                 className={cx({
-                  hidden: values.wealthType !== OTHER_SOURCE_OF_WEALTH
+                  hidden: !values.wealthType.includes(OTHER_SOURCE_OF_WEALTH)
                 })}
                 item
                 md={12}

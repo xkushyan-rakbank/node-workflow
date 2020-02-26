@@ -10,7 +10,9 @@ export const useStyles = makeStyles({
   link: {
     fontSize: "14px",
     lineHeight: 1.33,
-    height: "45px"
+    height: "45px",
+    cursor: "pointer",
+    color: "blue"
   },
   title: {
     marginTop: "0px",

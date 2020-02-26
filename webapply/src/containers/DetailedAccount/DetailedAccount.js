@@ -1,5 +1,4 @@
 import React from "react";
-import cx from "classnames";
 import { useSelector } from "react-redux";
 
 import { VerticalPagination } from "../../components/VerticalPagination";
@@ -9,12 +8,10 @@ import { AccountingSoftware } from "./AccountingSoftware";
 
 import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
-import { useStyles } from "./styled";
 
 export const DetailedAccount = () => {
   const isIslamicBaning = useSelector(getIsIslamicBanking);
   const accountType = useSelector(getAccountType);
-  const classes = useStyles();
 
   return (
     <>
@@ -22,7 +19,6 @@ export const DetailedAccount = () => {
         <IslamicBankingSwitcher />
       </div>
       <VerticalPagination video={getVideoByAccountType(accountType, isIslamicBaning)}>
-        <div className={cx("hide-on-mobile", classes.videoWrapper)} />
         <AccountBenefits />
         <AccountingSoftware />
       </VerticalPagination>
