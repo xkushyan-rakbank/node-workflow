@@ -30,7 +30,6 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
@@ -205,15 +204,12 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top suppliers</h4>
-                    <FinalQuestionField
+                    <Field
                       name="isDontHaveSuppliersYet"
                       path="prospect.orgKYCDetails.isDontHaveSuppliersYet"
                       label="I don't have any suppliers"
                       component={Checkbox}
                       onSelect={() => {
-                        updateProspect({
-                          "prospect.orgKYCDetails.isDontHaveSuppliersYet": !values.isDontHaveSuppliersYet
-                        });
                         if (!values.isDontHaveSuppliersYet) {
                           setFieldValue(
                             "topSuppliers",
@@ -313,15 +309,12 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top origin of goods</h4>
-                    <FinalQuestionField
+                    <Field
                       name="isDontTradeGoodsYet"
                       path="prospect.orgKYCDetails.isDontTradeGoodsYet"
                       label="I don't trade with goods"
                       component={Checkbox}
                       onSelect={() => {
-                        updateProspect({
-                          "prospect.orgKYCDetails.isDontTradeGoodsYet": !values.isDontTradeGoodsYet
-                        });
                         if (!values.isDontTradeGoodsYet) {
                           setFieldValue(
                             "topOriginGoodsCountries",
