@@ -34,14 +34,14 @@ function* getProspectIdInfo({ payload }) {
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
 
+    yield put(setConfig(config));
+
     try {
       const { completedSteps } = JSON.parse(config.prospect.freeFieldsInfo.freeField5);
       yield put(restoreSteps(completedSteps));
     } catch (err) {
       log(err);
     }
-
-    yield put(setConfig(config));
 
     const stakeholdersIds = config.prospect.signatoryInfo.map(info => ({
       id: uniqueId(),

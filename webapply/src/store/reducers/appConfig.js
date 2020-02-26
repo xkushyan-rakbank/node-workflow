@@ -1,4 +1,5 @@
 import get from "lodash/get";
+import cloneDeep from "lodash/cloneDeep";
 import { REHYDRATE } from "redux-persist";
 
 import {
@@ -10,9 +11,11 @@ import {
   SET_PROSPECT,
   SAVE_PROSPECT_MODEL,
   SET_ACCESS_TOKEN,
-  RESET_APPLICANT_INFO
+  RESET_APPLICANT_INFO,
+  UPDATE_FREE_FIELD_5
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
+import { log } from "../../utils/loggger";
 
 export const initialState = {
   loading: false,
@@ -127,6 +130,22 @@ const appConfigReducer = (state = initialState, action) => {
           }
         }
       };
+    case UPDATE_FREE_FIELD_5: {
+      let freeField5 = {};
+
+      try {
+        freeField5 = JSON.parse(state.prospect.freeFieldsInfo.freeField5);
+      } catch (err) {
+        log(err);
+      }
+
+      const newState = cloneDeep(state);
+      newState.prospect.freeFieldsInfo.freeField5 = JSON.stringify({
+        ...freeField5,
+        ...action.payload
+      });
+      return newState;
+    }
     default:
       return state;
   }

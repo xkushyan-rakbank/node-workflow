@@ -10,7 +10,7 @@ export const initialState = [];
 
 const completedSteps = handleActions(
   {
-    [RESTORE_STEPS]: (state, { payload: steps }) => steps,
+    [RESTORE_STEPS]: (state, { payload: { steps } }) => steps,
     [SET_STEP_STATUS]: (state, { payload }) =>
       state.map(item =>
         item.flowId === payload.flowId && item.step === payload.step

@@ -44,7 +44,7 @@ import {
   AUTO,
   SUBMIT
 } from "../../constants";
-import { updateProspect } from "../actions/appConfig";
+import { updateProspect, updateFreeField5 } from "../actions/appConfig";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -89,6 +89,9 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
+
+    const { completedSteps } = yield select();
+    yield put(updateFreeField5({ completedSteps }));
 
     const state = yield select();
     const newProspect = getProspect(state);
