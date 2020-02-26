@@ -5,6 +5,11 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 
 const keyboardDatePickerTheme = createMuiTheme({
   overrides: {
+    MuiPopover: {
+      paper: {
+        marginTop: "6px"
+      }
+    },
     MuiPickersBasePicker: {
       pickerView: {
         maxWidth: "257px",

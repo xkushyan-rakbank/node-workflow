@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import setMonth from "date-fns/setMonth";
 import setYear from "date-fns/setYear";
-import { withStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { FormControl } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
@@ -19,8 +19,8 @@ const StyledSelect = withStyles({
     padding: "7px 27px 7px 15px",
     fontSize: "12px",
     boxSizing: "border-box",
-    "&:after": {
-      display: "none"
+    "&:focus": {
+      borderRadius: "4px"
     }
   },
   select: {
@@ -36,9 +36,39 @@ const StyledSelect = withStyles({
   }
 })(Select);
 
+const useStyles = makeStyles({
+  paper: {
+    maxHeight: "246px"
+  },
+  listGutters: {
+    fontSize: "12px",
+    paddingLeft: "12px",
+    paddingRight: "8px"
+  },
+  listRoot: {
+    minHeight: "40px",
+    borderBottom: "1px solid #f3f3f3",
+    "&:hover": {
+      backgroundColor: "#f7f7f9"
+    }
+  },
+  listMenu: {
+    padding: "0"
+  },
+  root: {
+    ".Mui-focused fieldset": {
+      borderColor: "#373737 !important"
+    },
+    "& :after, & :before": {
+      display: "none"
+    }
+  }
+});
+
 export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) => {
   const value = type === "month" ? date.getMonth() : date.getFullYear();
   const options = type === "month" ? MONTH_OPTIONS : getYearOptions();
+  const classes = useStyles();
 
   const handleChange = useCallback(
     ({ target: { value } }) => {
@@ -49,10 +79,33 @@ export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) =>
   );
 
   return (
-    <FormControl>
-      <StyledSelect value={value} onChange={handleChange} IconComponent={KeyboardArrowDownIcon}>
+    <FormControl classes={{ root: classes.root }}>
+      <StyledSelect
+        value={value}
+        onChange={handleChange}
+        IconComponent={KeyboardArrowDownIcon}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left"
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: "left"
+          },
+          getContentAnchorEl: null,
+          classes: {
+            paper: classes.paper,
+            list: classes.listMenu
+          }
+        }}
+      >
         {options.map(({ value, label }) => (
-          <MenuItem key={value} value={value}>
+          <MenuItem
+            key={value}
+            value={value}
+            classes={{ gutters: classes.listGutters, root: classes.listRoot }}
+          >
             {label}
           </MenuItem>
         ))}

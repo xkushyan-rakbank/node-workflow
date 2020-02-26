@@ -81,6 +81,10 @@ export const DatePicker = ({
             classes={{
               root: classes.root
             }}
+            PopoverProps={{
+              anchorOrigin: { horizontal: "left", vertical: "bottom" },
+              transformOrigin: { horizontal: "left", vertical: "top" }
+            }}
           />
         </MuiPickersUtilsProvider>
         {infoTitle && <InfoTitle title={infoTitle} />}
