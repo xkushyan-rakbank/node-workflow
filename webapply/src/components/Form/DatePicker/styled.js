@@ -78,10 +78,6 @@ const keyboardDatePickerTheme = createMuiTheme({
       },
       current: {
         color: "#3b3a3a"
-      },
-      dayDisabled: {
-        opacity: "0",
-        visibility: "hidden"
       }
     },
     MuiTypography: {
