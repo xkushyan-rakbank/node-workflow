@@ -25,7 +25,7 @@ import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
-import { NAME_REGEX } from "../../../../utils/validation";
+import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
 
@@ -40,11 +40,7 @@ const personalInformationSchema = Yup.object().shape({
       .required(getRequiredMessage("First name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("First name"))
-      .test(
-        "space validation",
-        getInvalidMessage("First name"),
-        (firstName = "") => firstName.length === firstName.trim().length
-      )
+      .test("space validation", getInvalidMessage("First name"), checkIsTrimmed)
       .test(
         "length validation",
         "First, Middle and Last name combined have a limit of 77 characters",
@@ -57,11 +53,7 @@ const personalInformationSchema = Yup.object().shape({
   middleName: Yup.string()
     .max(30, "Maximum 30 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Middle name"))
-    .test(
-      "space validation",
-      getInvalidMessage("Middle name"),
-      (middleName = "") => middleName.length === middleName.trim().length
-    )
+    .test("space validation", getInvalidMessage("Middle name"), checkIsTrimmed)
     .test(
       "length validation",
       "First, Middle and Last name combined have a limit of 77 characters",
@@ -76,11 +68,7 @@ const personalInformationSchema = Yup.object().shape({
       .required(getRequiredMessage("Last name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("Last name"))
-      .test(
-        "space validation",
-        getInvalidMessage("Last name"),
-        (lastname = "") => lastname.length === lastname.trim().length
-      )
+      .test("space validation", getInvalidMessage("Last name"), checkIsTrimmed)
       .test(
         "length validation",
         "First, Middle and Last name combined have a limit of 77 characters",
