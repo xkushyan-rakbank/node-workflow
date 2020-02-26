@@ -1,5 +1,4 @@
 import React, { createContext, useState } from "react";
-import { checkDeviceIsMobile } from "../../../utils/checkDeviceIsMobile";
 
 import { Icon, ICONS } from "../../Icons";
 import { useStyles } from "./styled";
@@ -9,10 +8,6 @@ export const MobileNotificationContext = createContext({});
 export const MobileNotification = ({ children }) => {
   const classes = useStyles();
   const [isDisplayNotification, setDisplayNotification] = useState(true);
-
-  const isMobileDevice = checkDeviceIsMobile();
-
-  if (!isMobileDevice) return null;
 
   return (
     <MobileNotificationContext.Provider value={isDisplayNotification}>
