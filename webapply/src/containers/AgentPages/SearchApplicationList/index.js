@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import cx from "classnames";
 
 import routes from "../../../routes";
-import { ALLOWED_EDIT_STATUSES } from "../constants";
 
 import { useStyles } from "./styled";
 
@@ -25,14 +24,9 @@ export const SearchApplicationList = ({ currentApplications }) => {
         </div>
       </div>
       {currentApplications.map(application => {
-        const isEditable =
-          !application.status || ALLOWED_EDIT_STATUSES.includes(application.status.statusNotes);
-
         return (
           <Link
-            className={cx(classes.applicationRow, {
-              [classes.disabled]: !isEditable
-            })}
+            className={cx(classes.applicationRow)}
             key={application.prospectId}
             to={generatePath(routes.SearchedAppInfo, { id: application.prospectId })}
           >

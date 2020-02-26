@@ -124,6 +124,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                contextualHelpText="This number will be used as primary contact for any future communication"
               />
             </InputGroup>
           </Grid>
@@ -143,7 +144,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 name="primaryPhoneNo"
                 path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneNo`}
                 label="Landline number (optional)"
-                placeholder="Landline number (optional)"
+                placeholder="42xxxxxx"
                 component={Input}
                 disabled={!isSignatory}
                 InputProps={{

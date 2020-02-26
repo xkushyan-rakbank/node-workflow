@@ -20,11 +20,7 @@ export const FilledStakeholderCard = ({
 }) => {
   const classes = useStyles();
 
-  const editStakeholder = useCallback(() => !editDisabled && changeEditableStep(index), [
-    index,
-    editDisabled,
-    changeEditableStep
-  ]);
+  const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
   const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");
   const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
 

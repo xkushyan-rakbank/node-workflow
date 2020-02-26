@@ -179,6 +179,7 @@ const ApplicantInfoPage = ({
                   label="Your Mobile Number"
                   placeholder="Mobile Number"
                   component={Input}
+                  contextualHelpText="This number should be unique for a Company"
                   InputProps={{
                     inputProps: { tabIndex: 0 }
                   }}

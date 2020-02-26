@@ -2,14 +2,12 @@ import React from "react";
 import cx from "classnames";
 
 import { ctaStatuses, notCtaStatuses } from "../constants";
-import routes, { smeBaseName } from "../../../routes";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
 
 export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
-  const appSubmittedPath = routes.ApplicationSubmitted.replace(smeBaseName, "");
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
@@ -32,11 +30,16 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
               </div>,
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 {ctaStatuses[app.status.statusNotes] ? (
-                  <WhiteContainedButton
-                    disabled={app.status.reasonCode === STATUS_LOCKED}
-                    label={ctaStatuses[app.status.statusNotes]}
-                    handleClick={() => getProspectInfo(app.prospectId)}
-                  />
+                  <>
+                    <WhiteContainedButton
+                      disabled={app.status.reasonCode === STATUS_LOCKED}
+                      label={ctaStatuses[app.status.statusNotes].buttonText}
+                      handleClick={() => getProspectInfo(app.prospectId)}
+                    />
+                    <div className={classes.hint}>
+                      {ctaStatuses[app.status.statusNotes].mobileStatus}
+                    </div>
+                  </>
                 ) : (
                   <span>{notCtaStatuses[app.status.statusNotes]}</span>
                 )}
@@ -47,14 +50,13 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
                 <span className={classes.listStatus}>Incomplete</span>
               </div>,
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
-                {appSubmittedPath === app.applicationInfo.viewId ? (
-                  <span>{notCtaStatuses.NoStatusYet}</span>
-                ) : (
-                  <WhiteContainedButton
-                    label="Finish Application"
-                    handleClick={() => getProspectInfo(app.prospectId)}
-                  />
-                )}
+                <WhiteContainedButton
+                  label="Finish Application"
+                  handleClick={() => getProspectInfo(app.prospectId)}
+                />
+                <div className={classes.hint}>
+                  {ctaStatuses[app.status.statusNotes].mobileStatus}
+                </div>
               </div>
             ]}
       </div>

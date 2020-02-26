@@ -19,8 +19,8 @@ import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
   getOrganizationInfo,
-  getSendProspectToAPIInfo,
-  getIsRegisteredInUAE
+  getIsRegisteredInUAE,
+  getIsSendingProspect
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
 import { STEP_STATUS } from "../../constants";
@@ -63,7 +63,7 @@ export const CompanyInfoPage = ({
     sendProspectToAPI(NEXT).then(() => {
       pushHistory(routes.stakeholdersInfo);
     });
-  }, [pushHistory]);
+  }, [pushHistory, sendProspectToAPI]);
 
   return (
     <>
@@ -116,7 +116,7 @@ export const CompanyInfoPage = ({
 };
 
 const mapStateToProps = state => ({
-  ...getSendProspectToAPIInfo(state),
+  loading: getIsSendingProspect(state),
   fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state),
   isRegisteredInUAE: getIsRegisteredInUAE(state),

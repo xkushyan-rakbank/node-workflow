@@ -200,5 +200,28 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "0px",
     marginLeft: "50px",
     borderRadius: "8px"
+  },
+  hint: {
+    fontSize: 14,
+    lineHeight: 1.14,
+    color: "#b5b5bb",
+    textAlign: "center",
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
+  },
+  noRecordsIcon: {
+    marginBottom: "-55px",
+    width: "460px",
+    alignSelf: "center"
+  },
+  noRecordsText: {
+    alignSelf: "center",
+    boxSizing: "border-box",
+    maxWidth: "609px",
+    textAlign: "center",
+    color: "#373737",
+    fontSize: 20,
+    lineHeight: 1.5
   }
 }));

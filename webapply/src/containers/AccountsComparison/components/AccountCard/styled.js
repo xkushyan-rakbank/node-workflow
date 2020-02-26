@@ -22,6 +22,7 @@ export const useStyles = makeStyles(theme => ({
       marginTop: 0,
       marginLeft: -16,
       marginRight: -16,
+      marginBottom: -25,
       paddingLeft: 0,
       paddingRight: 0,
       overflowX: "auto"

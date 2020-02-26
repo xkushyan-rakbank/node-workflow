@@ -1,11 +1,26 @@
 import { connect } from "react-redux";
 
-import { getProspectDocuments, getEndpoints } from "../../../../store/selectors/appConfig";
+import {
+  getProspectDocuments,
+  getEndpoints,
+  getProspectId,
+  getSignatories
+} from "../../../../store/selectors/appConfig";
 import { DocumentsComponent } from "./Documents";
+import { downloadDocumentFile } from "../../../../store/actions/getProspectDocuments";
 
 const mapStateToProps = state => ({
   docs: getProspectDocuments(state),
-  endpointsUrl: getEndpoints(state)
+  endpointsUrl: getEndpoints(state),
+  prospectId: getProspectId(state),
+  signatoryInfo: getSignatories(state)
 });
 
-export const Documents = connect(mapStateToProps)(DocumentsComponent);
+const mapDispatchToProps = {
+  downloadDocumentFile
+};
+
+export const Documents = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DocumentsComponent);

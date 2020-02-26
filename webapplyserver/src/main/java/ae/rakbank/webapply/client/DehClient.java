@@ -1,20 +1,23 @@
 package ae.rakbank.webapply.client;
 
 import ae.rakbank.webapply.dto.ApiError;
-import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.services.CSRFTokenService;
-import ae.rakbank.webapply.util.FileUtil;
 import ae.rakbank.webapply.services.AuthorizationService;
 import ae.rakbank.webapply.util.DehUtil;
+import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
@@ -26,15 +29,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
-import static ae.rakbank.webapply.constants.AuthConstants.JWT_TOKEN_KEY;
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DehClient {
-    private static final Logger logger = LoggerFactory.getLogger(DehClient.class);
 
     private final FileUtil fileUtil;
-    private final CSRFTokenService csrfTokenService;
     private final AuthorizationService authorizationService;
     private final DehUtil dehUtil;
 
@@ -50,19 +50,19 @@ public class DehClient {
 
     public ResponseEntity<?> invokeApiEndpoint(HttpServletRequest httpRequest, String url, HttpMethod httpMethod,
                                                JsonNode requestBodyJSON, String operationId, MediaType mediaType,
-                                               String updatedJwtToken) {
+                                               String oauthAccessToken) {
         if (requestBodyJSON != null) {
-            logger.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]", operationId, url,
-                    requestBodyJSON.toString()));
+            log.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
+                    operationId, url, requestBodyJSON.toString()));
         } else {
-            logger.info(String.format("Invoke API from %s method, Endpoint=[%s]", operationId, url));
+            log.info(String.format("Invoke API from %s method, Endpoint=[%s]", operationId, url));
         }
 
         HttpEntity<JsonNode> request;
-        if (StringUtils.isEmpty(updatedJwtToken)) {
+        if (StringUtils.isEmpty(oauthAccessToken)) {
             request = getHttpEntityRequest(requestBodyJSON, authorizationService.getAndUpdateContextOauthToken());
         } else {
-            request = getHttpEntityRequest(requestBodyJSON, authorizationService.getOauthTokenFromJwt(updatedJwtToken));
+            request = getHttpEntityRequest(requestBodyJSON, oauthAccessToken);
         }
 
         RestTemplate restTemplate = new RestTemplate();
@@ -74,24 +74,15 @@ public class DehClient {
                 response = restTemplate.exchange(url, httpMethod, request, Resource.class);
             }
         } catch (HttpClientErrorException e) {
-            logger.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+            log.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpHeaders responseHeaders = e.getResponseHeaders();
-
-            /*List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
-            String errorMessage;
-            if (channelContext == null) {
-                errorMessage = e.getResponseBodyAsString();
-            } else {
-                errorMessage = channelContext.get(0);
-            }*/
-
             HttpStatus status = HttpStatus.BAD_REQUEST;
             ApiError apiError = dehUtil.initApiError(e, status);
 
             throw new ApiException(apiError, responseHeaders, status);
         } catch (HttpServerErrorException e) {
-            logger.error(String.format("HttpServerErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+            log.error(String.format("HttpServerErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpHeaders responseHeaders = e.getResponseHeaders();
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -100,28 +91,17 @@ public class DehClient {
             throw new ApiException(apiError, responseHeaders, status);
         }
 
-        // ResponseEntity headers is immutable, so create new HttpHeaders object
-        HttpHeaders headers = new HttpHeaders();
-        headers.addAll(response.getHeaders());
-        headers.remove(HttpHeaders.CONTENT_LENGTH);
+        log.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]",
+                operationId, url, response.getStatusCodeValue(), response.getBody()));
 
-        if (!StringUtils.isEmpty(updatedJwtToken)) {
-            headers.add(JWT_TOKEN_KEY, updatedJwtToken);
-        }
-
-        logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]", operationId,
-                url, response.getStatusCodeValue(), response.getBody()));
-
-        csrfTokenService.createOrUpdateCsrfToken(httpRequest, headers);
-
-        return new ResponseEntity<>(response.getBody(), headers, response.getStatusCode());
+        return new ResponseEntity<>(response.getBody(), new HttpHeaders(), response.getStatusCode());
     }
 
     public ResponseEntity<JsonNode> getDatalistJSON(String segment) {
-        logger.info("Begin getDatalistJSON() method, segment=" + segment);
+        log.info("Begin getDatalistJSON() method, segment=" + segment);
 
         if (StringUtils.isEmpty(segment)) {
-            logger.info("segment is null, return defaultDatalist");
+            log.info("segment is null, return defaultDatalist");
             return new ResponseEntity<>(defaultDatalist, null, HttpStatus.OK);
         }
         String methodName = "getDatalistJSON()";
@@ -137,7 +117,7 @@ public class DehClient {
 
         HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 
-        logger.info(String.format("Invoke API from %s method, Endpoint=[%s], request=%s", methodName, url, request.toString()));
+        log.info(String.format("Invoke API from %s method, Endpoint=[%s], request=%s", methodName, url, request.toString()));
 
         ResponseEntity<JsonNode> response;
         try {
@@ -145,14 +125,14 @@ public class DehClient {
             response = restTemplate.exchange(url, HttpMethod.GET, request, JsonNode.class);
 
         } catch (HttpClientErrorException e) {
-            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
+            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
             HttpStatus status = HttpStatus.BAD_REQUEST;
             ApiError apiError = dehUtil.initApiError(e, status);
 
             throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
-            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
+            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=", url, e.getRawStatusCode(),
                     e.getResponseBodyAsString()), e);
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
             ApiError apiError = dehUtil.initApiError(e, status);
@@ -163,7 +143,7 @@ public class DehClient {
         ObjectNode datalist = (ObjectNode) response.getBody();
         datalist.setAll((ObjectNode) fileUtil.getDatalistJSON());
         populateDefaultDatalist(datalist);
-        logger.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s]",
+        log.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s]",
                 methodName, url, response.getStatusCodeValue()));
 
         return new ResponseEntity<>(datalist, null, HttpStatus.OK);
@@ -173,7 +153,7 @@ public class DehClient {
         if (datalist != null) {
             defaultDatalist.set("countryCode", datalist.get("countryCode"));
         }
-        logger.info("defaultDatalist size = " + defaultDatalist.size());
+        log.info("defaultDatalist size = " + defaultDatalist.size());
     }
 
     private HttpEntity<JsonNode> getHttpEntityRequest(JsonNode requestBodyJSON, String oauthAccessToken) {

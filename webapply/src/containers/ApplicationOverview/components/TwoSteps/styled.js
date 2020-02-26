@@ -19,13 +19,15 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     [theme.breakpoints.only("xs")]: {
       height: "auto",
-      flexWrap: "wrap"
+      flexDirection: "column-reverse",
+      alignItems: "flex-start"
     },
     "& span": {
       maxWidth: "380px"
     },
     "& img": {
-      maxWidth: "100%"
+      maxWidth: "100%",
+      objectFit: "contain"
     }
   },
   note: {

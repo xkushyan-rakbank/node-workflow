@@ -18,7 +18,12 @@ export const formStepper = [
   { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
   { step: 4, title: "Final Questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
-  { step: 6, title: "Select Services", path: routes.selectServices }
+  {
+    step: 6,
+    title: "Select Services",
+    path: routes.selectServices,
+    relatedPath: routes.SubmitApplication
+  }
 ];
 
 export const searchProspectStepper = [
@@ -44,7 +49,7 @@ export const submitApplication = {
   formInfo:
     "And just like that, we have reached the end! Here’s the overview of what you’re applying for.",
   trueNdCompleteAcknldgelabel: "I confirm that the information provided is true and complete",
-  needCommunicationLabel: "I want to receive marketing and promotional communication from RakBank"
+  needCommunicationLabel: "I want to receive marketing and promotional communication from RAKBANK"
 };
 
 export const accountNames = {
@@ -182,3 +187,69 @@ export const STEP_STATUS = {
   NOT_AVAILABLE: "NOT_AVAILABLE",
   COMPLETED: "COMPLETED"
 };
+
+// Company Check list
+export const NEGATIVE_LIST_CHECK = {
+  screeningType: "Negative List Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Negative List",
+  screeningReason: "No Match"
+};
+export const VIRTUAL_CURRENCY_CHECK = {
+  screeningType: "Virtual Currency Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Virtual Currency",
+  screeningReason: "No Match"
+};
+export const COUNTRYOFINCORPORATION_CHECK = {
+  screeningType: "CountryOfIncorporation Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Country of Incorporation",
+  screeningReason: "No Match"
+};
+export const RAKSTARTER_ACCOUNT_CHECK = {
+  screeningType: "RAKStarter Account Check",
+  screeningStatus: "Completed",
+  screeningLabel: "RAK-Starter Account Validation",
+  screeningReason: "No Match"
+};
+export const DEDUPE_CHECK = {
+  screeningType: "Dedupe Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Dedupe",
+  screeningReason: "No Match"
+};
+export const ISSHAREHOLDERACOMPANY_CHECK = {
+  screeningType: "IsShareHolderACompany Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Company is a Stakeholder",
+  screeningReason: "No Match"
+};
+export const SHAREHOLDERCOUNT_CHECK = {
+  screeningType: "ShareHolderCount Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Share Holder Count",
+  screeningReason: "No Match"
+};
+export const BLACKLIST_CHECK = {
+  screeningType: "Blacklist Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Blacklist",
+  screeningReason: "No Match"
+};
+export const RISK_RATING = {
+  screeningType: "Risk Rating",
+  screeningStatus: "Completed",
+  screeningLabel: "Risk Rating",
+  screeningReason: "No Match"
+};
+
+export const COMPANY_CHECK_NAMES = [
+  DEDUPE_CHECK,
+  BLACKLIST_CHECK,
+  NEGATIVE_LIST_CHECK,
+  COUNTRYOFINCORPORATION_CHECK,
+  VIRTUAL_CURRENCY_CHECK,
+  RAKSTARTER_ACCOUNT_CHECK,
+  ISSHAREHOLDERACOMPANY_CHECK
+];
