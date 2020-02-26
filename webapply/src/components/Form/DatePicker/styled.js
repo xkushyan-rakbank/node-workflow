@@ -7,7 +7,9 @@ const keyboardDatePickerTheme = createMuiTheme({
   overrides: {
     MuiPopover: {
       paper: {
-        marginTop: "6px"
+        marginTop: "6px",
+        borderRadius: "8px",
+        boxShadow: "0 10px 18px 0 #00000019"
       }
     },
     MuiPickersBasePicker: {
@@ -16,7 +18,10 @@ const keyboardDatePickerTheme = createMuiTheme({
         minWidth: "257px",
         justifyContent: "start",
         paddingTop: "20px",
-        minHeight: "179px"
+        minHeight: "179px",
+        border: "solid 1px #c2c2c28f",
+        borderTop: "none",
+        borderRadius: "0 0 8px 8px"
       },
       containerLandscape: {
         flexDirection: "column"
@@ -33,6 +38,11 @@ const keyboardDatePickerTheme = createMuiTheme({
         width: "26px",
         fontWeight: "600",
         color: "#3b3a3a"
+      },
+      daysHeader: {
+        "& span:first-child": {
+          color: "#707070"
+        }
       }
     },
     MuiPickersCalendar: {

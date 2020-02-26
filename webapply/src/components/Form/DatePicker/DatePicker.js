@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import ruLocale from "date-fns/locale/ru";
 import { getIn } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -23,6 +24,12 @@ const useStyles = makeStyles({
     }
   }
 });
+
+class LocalizedUtils extends DateFnsUtils {
+  getWeekdays() {
+    return ["M", "T", "W", "T", "F", "S", "S"];
+  }
+}
 
 export const DatePicker = ({
   field,
@@ -53,7 +60,7 @@ export const DatePicker = ({
           }
         }}
       >
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <MuiPickersUtilsProvider utils={LocalizedUtils} locale={ruLocale}>
           <BaseDatePicker
             open={isOpen}
             onClose={() => setIsOpen(false)}
