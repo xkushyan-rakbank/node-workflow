@@ -22,27 +22,15 @@ export const CheckList = () => {
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
       <div className={classes.wrapper}>
         <div className={classes.applicationRow}>
-          <div>
-            <div className={headingClassName}>{titles.CHECK_NAME_TITLE}</div>
-          </div>
-          <div>
-            <div className={headingClassName}>{titles.STATUS_TITLE}</div>
-          </div>
-          <div>
-            <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
-          </div>
+          <div className={headingClassName}>{titles.CHECK_NAME_TITLE}</div>
+          <div className={headingClassName}>{titles.STATUS_TITLE}</div>
+          <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
         </div>
         {companyChecks.map(application => (
           <div className={classes.applicationRow} key={application.screeningType}>
-            <div>
-              <div className={classes.checkListData}>{application.screeningLabel}</div>
-            </div>
-            <div>
-              <div className={classes.checkListData}>{application.screeningStatus}</div>
-            </div>
-            <div>
-              <div className={classes.checkListData}>{application.screeningReason}</div>
-            </div>
+            <div className={classes.checkListData}>{application.screeningLabel}</div>
+            <div className={classes.checkListData}>{application.screeningStatus}</div>
+            <div className={classes.checkListData}>{application.screeningReason}</div>
           </div>
         ))}
       </div>
@@ -58,28 +46,16 @@ export const CheckList = () => {
             </div>
             <div className={classes.wrapper}>
               <div className={classes.applicationRow}>
-                <div>
-                  <div className={headingClassName}>{titles.CHECK_NAME_TITLE}</div>
-                </div>
-                <div>
-                  <div className={headingClassName}>{titles.STATUS_TITLE}</div>
-                </div>
-                <div>
-                  <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
-                </div>
+                <div className={headingClassName}>{titles.CHECK_NAME_TITLE}</div>
+                <div className={headingClassName}>{titles.STATUS_TITLE}</div>
+                <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
               </div>
               {get(signatory, "screeningInfo.screeningResults", []).length ? (
                 signatory.screeningInfo.screeningResults.map(application => (
                   <div className={classes.applicationRow} key={application.screeningType}>
-                    <div>
-                      <div className={classes.checkListData}>{application.screeningType}</div>
-                    </div>
-                    <div>
-                      <div className={classes.checkListData}>{application.screeningStatus}</div>
-                    </div>
-                    <div>
-                      <div className={classes.checkListData}>{application.screeningReason}</div>
-                    </div>
+                    <div className={classes.checkListData}>{application.screeningType}</div>
+                    <div className={classes.checkListData}>{application.screeningStatus}</div>
+                    <div className={classes.checkListData}>{application.screeningReason}</div>
                   </div>
                 ))
               ) : (
