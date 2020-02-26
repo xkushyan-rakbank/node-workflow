@@ -1,8 +1,7 @@
 package ae.rakbank.webapply.controller;
 
 import ae.rakbank.webapply.client.DehClient;
-import ae.rakbank.webapply.services.AuthorizationService;
-import ae.rakbank.webapply.services.CSRFTokenService;
+import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.services.RecaptchaService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
@@ -15,7 +14,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/api/v1/usertypes/{segment}/prospects")
 @RequiredArgsConstructor
 public class ProspectController {
@@ -31,8 +39,6 @@ public class ProspectController {
     private final FileUtil fileUtil;
     private final DehClient dehClient;
     private final RecaptchaService captchaService;
-    private final CSRFTokenService csrfTokenService;
-    private final AuthorizationService authorizationService;
     private final WebApplyController applyController;
 
     private JsonNode dehURIs = null;
@@ -45,6 +51,7 @@ public class ProspectController {
         dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
     }
 
+    @PreAuthorize("isAnonymous()")
     @PostMapping(value = "", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest,
                                                @RequestBody JsonNode requestBodyJSON,
@@ -68,12 +75,11 @@ public class ProspectController {
         log.info("Send OTP for prospectId:" + prospectId);
         ObjectNode otpRequest = createOtpRequest(requestBodyJSON, prospectId);
         ResponseEntity<?> otpResponse = applyController.generateVerifyOTP(httpRequest, otpRequest, true);
-        if (! otpResponse.getStatusCode().is2xxSuccessful()) {
+        if (!otpResponse.getStatusCode().is2xxSuccessful()) {
             return otpResponse;
         }
 
         HttpHeaders headers = new HttpHeaders();
-        csrfTokenService.createOrUpdateCsrfToken(httpRequest, headers);
         headers.putAll(otpResponse.getHeaders());
         headers.putAll(createdProspectResponse.getHeaders());
 
@@ -91,28 +97,27 @@ public class ProspectController {
         return otpRequest;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/{prospectId}", produces = "application/json")
     public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest,
-                                             @RequestHeader String authorization,
+                                             @AuthenticationPrincipal JwtPayload jwtPayload,
                                              @PathVariable String segment,
                                              @PathVariable String prospectId) {
         log.info("Begin getProspectById() method");
         log.debug(
                 String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
 
-        String jwtToken = authorizationService.getTokenFromAuthorizationHeader(authorization);
-        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
-
         String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
         return dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(), HttpMethod.GET, null,
-                "getProspectById()", MediaType.APPLICATION_JSON, updatedJwtToken);
+                "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping(value = "/{prospectId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> updateSMEProspect(HttpServletRequest httpRequest,
-                                               @RequestHeader String authorization,
+                                               @AuthenticationPrincipal JwtPayload jwtPayload,
                                                @RequestBody JsonNode jsonNode,
                                                @PathVariable String prospectId,
                                                @PathVariable String segment) {
@@ -120,32 +125,27 @@ public class ProspectController {
         log.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
                 jsonNode.toString(), segment, prospectId));
 
-        String jwtToken = authorizationService.getTokenFromAuthorizationHeader(authorization);
-        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
-
         String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
         return dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(), HttpMethod.PUT, jsonNode,
-                "updateSMEProspect()", MediaType.APPLICATION_JSON, updatedJwtToken);
+                "updateSMEProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/search", produces = "application/json", consumes = "application/json")
     public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest,
-                                            @RequestHeader String authorization,
+                                            @AuthenticationPrincipal JwtPayload jwtPayload,
                                             @RequestBody JsonNode jsonNode,
                                             @PathVariable String segment) {
         log.info("Begin searchProspect() method");
         log.debug(String.format("searchProspect() method args, RequestBody=[%s], segment=[%s]", jsonNode.toString(),
                 segment));
 
-        String jwtToken = authorizationService.getTokenFromAuthorizationHeader(authorization);
-        String updatedJwtToken = authorizationService.validateAndUpdateJwtToken(jwtToken);
-
         String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
 
         return dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(), HttpMethod.POST, jsonNode,
-                "searchProspect()", MediaType.APPLICATION_JSON, updatedJwtToken);
+                "searchProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
     }
 }

@@ -118,7 +118,7 @@ const appConfigReducer = (state = initialState, action) => {
       return {
         ...state,
         prospect: {
-          ...state.appConfig.prospect,
+          ...state.prospect,
           applicantInfo: {
             fullName: "",
             email: "",

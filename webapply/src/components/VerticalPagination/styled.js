@@ -33,9 +33,6 @@ export const useStyles = makeStyles(theme => ({
     position: "relative",
     boxSizing: "border-box",
     height: 1,
-    "&:last-of-type": {
-      marginBottom: 0
-    },
     [theme.breakpoints.up("sm")]: {
       minHeight: "100vh"
     },
@@ -85,11 +82,11 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: "#020f21",
     cursor: "auto"
   },
-  videoWrapper: ({ isMobileNotificationActive }) => ({
+  videoWrapper: {
+    height: "100vh",
     [theme.breakpoints.only("xs")]: {
-      height: isMobileNotificationActive ? 444 : 380,
+      height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 444 : 380),
       marginBottom: 40
-    },
-    height: "100vh"
-  })
+    }
+  }
 }));

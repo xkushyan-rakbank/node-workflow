@@ -23,7 +23,7 @@ const IslamicBankingSwitcher = ({ isIslamicBanking, updateProspect }) => {
       variant="contained"
       size="small"
       aria-label="small contained button group"
-      classes={{ root: classes.root }}
+      classes={{ root: classes.root, grouped: classes.grouped }}
     >
       <Button
         classes={{
