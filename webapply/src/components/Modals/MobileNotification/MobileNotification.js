@@ -4,6 +4,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 
 import { ContainedButton } from "../../Buttons/ContainedButton";
+import { checkDeviceIsMobile } from "../../../utils/checkDeviceIsMobile";
 
 import { ReactComponent as DesktopImg } from "../../../assets/images/desktop.svg";
 
@@ -20,6 +21,10 @@ export const MobileNotification = () => {
   const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
+
+  const isMobileDevice = checkDeviceIsMobile();
+
+  if (!isMobileDevice) return null;
 
   return (
     <>
