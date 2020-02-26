@@ -5,7 +5,7 @@
 	<property name="infoLogsDir" value="${WEB_APPLY_DIR:-${default.web.apply.dir}}/${logging.dir}/info" />
 	<property name="errorLogsDir" value="${WEB_APPLY_DIR:-${default.web.apply.dir}}/${logging.dir}/error" />
 	<property name="warnLogsDir" value="${WEB_APPLY_DIR:-${default.web.apply.dir}}/${logging.dir}/warn" />
-	<property name="outputPattern" value="%X{x-request-id} %black([%d{timestampPattern}]) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"/>
+	<property name="outputPattern" value="%X{x-request-id} %d{yyyy-MM-dd} | %d{HH:mm:ss.SSS} | %-20.20thread | %5p | %-25.25logger{25} | %12(ID: %8mdc{id}) | %m%n"/>
 
 	<appender name="Console"
 		class="ch.qos.logback.core.ConsoleAppender">
