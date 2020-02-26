@@ -1,16 +1,21 @@
 import { handleActions } from "../../utils/redux-utils";
-import {
-  SET_STEP_STATUS,
-  SET_INITIAL_STEPS,
-  REMOVE_SIGNATORY,
-  RESTORE_STEPS
-} from "../actions/completedSteps";
+import { SET_STEP_STATUS, SET_INITIAL_STEPS, REMOVE_SIGNATORY } from "../actions/completedSteps";
+import { GET_PROSPECT_INFO_SUCCESS } from "../actions/retrieveApplicantInfo";
+import { log } from "../../utils/loggger";
 
 export const initialState = [];
 
 const completedSteps = handleActions(
   {
-    [RESTORE_STEPS]: (state, { payload: { steps } }) => steps,
+    [GET_PROSPECT_INFO_SUCCESS]: (state, { payload: { prospect } }) => {
+      try {
+        const { completedSteps } = JSON.parse(prospect.freeFieldsInfo.freeField5);
+        return completedSteps;
+      } catch (err) {
+        log(err);
+      }
+      return state;
+    },
     [SET_STEP_STATUS]: (state, { payload }) =>
       state.map(item =>
         item.flowId === payload.flowId && item.step === payload.step

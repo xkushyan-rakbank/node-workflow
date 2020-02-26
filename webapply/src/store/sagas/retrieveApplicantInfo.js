@@ -6,7 +6,6 @@ import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiCl
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
-import { restoreSteps } from "../actions/completedSteps";
 
 function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -35,13 +34,6 @@ function* getProspectIdInfo({ payload }) {
     const config = { prospect: response.data };
 
     yield put(setConfig(config));
-
-    try {
-      const { completedSteps } = JSON.parse(config.prospect.freeFieldsInfo.freeField5);
-      yield put(restoreSteps(completedSteps));
-    } catch (err) {
-      log(err);
-    }
 
     const stakeholdersIds = config.prospect.signatoryInfo.map(info => ({
       id: uniqueId(),
