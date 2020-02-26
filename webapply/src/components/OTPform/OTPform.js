@@ -65,7 +65,7 @@ export const OTPformComponent = ({
 
   const isValid = code.every(value => digitRegExp.test(value));
   const classes = useStyles({ classes: extendetClasses });
-  const isMaxAttemptError =
+  const hasMaxAttemptsError =
     loginAttempt > MAX_ATTEMPT_ALLOWED || attempts >= MAX_NUMBER_VALIDATION_ERRORS;
 
   return (
@@ -86,13 +86,13 @@ export const OTPformComponent = ({
                 <OtpVerification code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
-              {!isMaxAttemptError && verificationError && (
+              {!hasMaxAttemptsError && verificationError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="Code verification failed."
                 />
               )}
-              {isMaxAttemptError && (
+              {hasMaxAttemptsError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="You have exceeded your maximum attempt. Please come back later and try again."
@@ -104,7 +104,7 @@ export const OTPformComponent = ({
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]: isMaxAttemptError
+                    [classes.linkDisabled]: hasMaxAttemptsError
                   })}
                 >
                   Send a new code
