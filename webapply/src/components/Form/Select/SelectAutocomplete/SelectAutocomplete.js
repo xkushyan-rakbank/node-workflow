@@ -51,7 +51,11 @@ export const SelectAutocomplete = ({
     : options.filter(option => field.value.includes(option.value));
 
   return (
-    <FormControl className="formControl" variant="outlined">
+    <FormControl
+      classes={{ root: classes.formControlRoot }}
+      className="formControl"
+      variant="outlined"
+    >
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
