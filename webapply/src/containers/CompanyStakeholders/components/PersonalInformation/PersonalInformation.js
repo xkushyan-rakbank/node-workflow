@@ -41,6 +41,11 @@ const personalInformationSchema = Yup.object().shape({
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("First name"))
       .test(
+        "space validation",
+        getInvalidMessage("First name"),
+        (firstName = "") => firstName.length === firstName.trim().length
+      )
+      .test(
         "length validation",
         "First, Middle and Last name combined have a limit of 77 characters",
         function(firstName) {
@@ -52,6 +57,11 @@ const personalInformationSchema = Yup.object().shape({
   middleName: Yup.string()
     .max(30, "Maximum 30 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Middle name"))
+    .test(
+      "space validation",
+      getInvalidMessage("Middle name"),
+      (middleName = "") => middleName.length === middleName.trim().length
+    )
     .test(
       "length validation",
       "First, Middle and Last name combined have a limit of 77 characters",
@@ -66,6 +76,11 @@ const personalInformationSchema = Yup.object().shape({
       .required(getRequiredMessage("Last name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("Last name"))
+      .test(
+        "space validation",
+        getInvalidMessage("Last name"),
+        (lastname = "") => lastname.length === lastname.trim().length
+      )
       .test(
         "length validation",
         "First, Middle and Last name combined have a limit of 77 characters",
