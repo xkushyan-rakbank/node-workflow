@@ -2,29 +2,35 @@
 <configuration>
     <property resource="application.properties"/>
 	<property name="timestampPattern" value="yyyy-MM-dd HH:mm:ss,SSS" />
-	<property name="logsDir" value="${WEB_APPLY_DIR:-${default.web.apply.dir}}/${logging.dir}/" />
+	<property name="infoLogsDir" value="${WEB_APPLY_DIR:-${default.web.apply.dir}}/${logging.dir}/info" />
+	<property name="errorLogsDir" value="${WEB_APPLY_DIR:-${default.web.apply.dir}}/${logging.dir}/error" />
+	<property name="warnLogsDir" value="${WEB_APPLY_DIR:-${default.web.apply.dir}}/${logging.dir}/warn" />
+	<property name="outputPattern" value="%X{x-request-id} %black([%d{timestampPattern}]) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"/>
 
 	<appender name="Console"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>
-				%X{x-request-id} %black([%d{timestampPattern}]) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
-			</Pattern>
+			<Pattern>${outputPattern}</Pattern>
 		</layout>
 	</appender>
 
-	<appender name="RollingFile"
+	<appender name="RollingFileInfo"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${logsDir}/${logging.file.name}.log</file>
+		<file>${infoLogsDir}/${logging.file.name}.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
 		<encoder
 			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+			<Pattern>${outputPattern}</Pattern>
 		</encoder>
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily and when the file reaches 100 MegaBytes -->
-			<fileNamePattern>${logsDir}/${logging.file.name}-%d{dd-MM-yyyy}.%i.log
+			<fileNamePattern>${infoLogsDir}/${logging.file.name}-%d{dd-MM-yyyy}.%i.log
 			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -33,9 +39,65 @@
 		</rollingPolicy>
 	</appender>
 
+	<appender name="RollingFileError"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${errorLogsDir}/${logging.file.name}.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder
+				class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>${outputPattern}</Pattern>
+		</encoder>
+
+		<rollingPolicy
+				class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily and when the file reaches 100 MegaBytes -->
+			<fileNamePattern>${errorLogsDir}/${logging.file.name}-%d{dd-MM-yyyy}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="RollingFileWarn"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${warnLogsDir}/${logging.file.name}.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder
+				class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>${outputPattern}</Pattern>
+		</encoder>
+
+		<rollingPolicy
+				class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily and when the file reaches 100 MegaBytes -->
+			<fileNamePattern>${warnLogsDir}/${logging.file.name}-%d{dd-MM-yyyy}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="ae.rakbank.webapply" additivity="false" level="ALL">
+		<appender-ref ref="Console"/>
+		<appender-ref ref="RollingFileInfo"/>
+		<appender-ref ref="RollingFileError"/>
+		<appender-ref ref="RollingFileWarn"/>
+	</logger>
+
 	<root level="info">
 		<appender-ref ref="Console" />
-		<appender-ref ref="RollingFile" />
 	</root>
 
 </configuration>
