@@ -90,7 +90,6 @@
 	</appender>
 
 	<logger name="ae.rakbank.webapply" additivity="false" level="ALL">
-		<appender-ref ref="Console"/>
 		<appender-ref ref="RollingFileInfo"/>
 		<appender-ref ref="RollingFileError"/>
 		<appender-ref ref="RollingFileWarn"/>
