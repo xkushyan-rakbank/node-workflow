@@ -46,9 +46,12 @@ export const OTPformComponent = ({
 
   useEffect(() => {
     if (verificationError) {
+      if (attempts >= MAX_NUMBER_VALIDATION_ERRORS) {
+        setIsDisplayMaxAttempError(true);
+      }
       resetOtpForm();
     }
-  }, [verificationError, resetOtpForm]);
+  }, [verificationError, resetOtpForm, attempts]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => verifyClearError(), []);
@@ -59,11 +62,8 @@ export const OTPformComponent = ({
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(applicantInfo);
     }
-    if (attempts >= MAX_NUMBER_VALIDATION_ERRORS) {
-      setIsDisplayMaxAttempError(true);
-    }
     setLoginAttempt(loginAttempt + 1);
-  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, attempts, resetOtpForm]);
+  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, resetOtpForm]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
@@ -107,8 +107,7 @@ export const OTPformComponent = ({
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
                     [classes.linkDisabled]:
-                      loginAttempt >= MAX_ATTEMPT_ALLOWED ||
-                      attempts >= MAX_NUMBER_VALIDATION_ERRORS
+                      loginAttempt >= MAX_ATTEMPT_ALLOWED || isDisplayMaxAttempError
                   })}
                 >
                   Send a new code
