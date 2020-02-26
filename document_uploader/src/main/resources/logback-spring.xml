@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+
     <property resource="application.properties"/>
     <property name="timestampPattern" value="yyyy-MM-dd HH:mm:ss,SSS" />
-    <property name="infoLogsDir" value="${WEB_APPLY_DIR}/logs/info" />
-    <property name="errorLogsDir" value="${WEB_APPLY_DIR}/logs/error" />
-    <property name="warnLogsDir" value="${WEB_APPLY_DIR}/logs/warn" />
-    <property name="outputPattern" value="%X{x-request-id} %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"/>
+    <property name="infoLogsDir" value="${WEB_APPLY_DIR}/logs" />
+    <property name="errorLogsDir" value="${WEB_APPLY_DIR}/logs" />
+    <property name="warnLogsDir" value="${WEB_APPLY_DIR}/logs" />
+    <property name="outputPattern" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"/>
 
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">
@@ -14,14 +20,9 @@
         </layout>
     </appender>
 
-    <appender name="RollingFileInfo"
+    <appender name="RollingFile"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${infoLogsDir}/${logging.file.name}.log</file>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
         <encoder
                 class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>${outputPattern}</Pattern>
@@ -39,9 +40,34 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="RollingFileInfo"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${infoLogsDir}/${logging.file.name.info}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${outputPattern}</Pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 100 MegaBytes -->
+            <fileNamePattern>${infoLogsDir}/${logging.file.name.info}-%d{dd-MM-yyyy}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
     <appender name="RollingFileError"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${errorLogsDir}/${logging.file.name}.log</file>
+        <file>${errorLogsDir}/${logging.file.name.error}.log</file>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
@@ -55,7 +81,7 @@
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily and when the file reaches 100 MegaBytes -->
-            <fileNamePattern>${errorLogsDir}/${logging.file.name}-%d{dd-MM-yyyy}.%i.log
+            <fileNamePattern>${errorLogsDir}/${logging.file.name.error}-%d{dd-MM-yyyy}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -66,7 +92,7 @@
 
     <appender name="RollingFileWarn"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${warnLogsDir}/${logging.file.name}.log</file>
+        <file>${warnLogsDir}/${logging.file.name.warn}.log</file>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>WARN</level>
             <onMatch>ACCEPT</onMatch>
@@ -80,7 +106,7 @@
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily and when the file reaches 100 MegaBytes -->
-            <fileNamePattern>${warnLogsDir}/${logging.file.name}-%d{dd-MM-yyyy}.%i.log
+            <fileNamePattern>${warnLogsDir}/${logging.file.name.warn}-%d{dd-MM-yyyy}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -90,6 +116,8 @@
     </appender>
 
     <logger name="ae.rakbank.documentuploader" additivity="false" level="ALL">
+        <appender-ref ref="Console" />
+        <appender-ref ref="RollingFile" />
         <appender-ref ref="RollingFileInfo"/>
         <appender-ref ref="RollingFileError"/>
         <appender-ref ref="RollingFileWarn"/>
