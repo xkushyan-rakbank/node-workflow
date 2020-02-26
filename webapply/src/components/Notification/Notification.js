@@ -6,8 +6,8 @@ import { useStyles } from "./styled";
 export const Notification = ({
   onClose,
   icon = ICONS.lock,
-  title = "Server error",
-  message = "Oops, something went wrong with our servers. Please wait a bit and try again.",
+  title = "Oops!",
+  message = "We are facing a glitch at the moment, please try again later.",
   status = "",
   stakTrace = ""
 }) => {
