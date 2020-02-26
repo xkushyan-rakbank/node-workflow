@@ -75,6 +75,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 component={SelectAutocomplete}
                 tabIndex="0"
                 isSearchable
+                otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
               />
             </Grid>
           </Grid>
