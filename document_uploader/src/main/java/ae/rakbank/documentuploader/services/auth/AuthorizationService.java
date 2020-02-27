@@ -1,4 +1,4 @@
-package ae.rakbank.documentuploader.services;
+package ae.rakbank.documentuploader.services.auth;
 
 public interface AuthorizationService {
 

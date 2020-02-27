@@ -2,7 +2,7 @@ package ae.rakbank.documentuploader.controller;
 
 import ae.rakbank.documentuploader.dto.ApiError;
 import ae.rakbank.documentuploader.exception.ApiException;
-import ae.rakbank.documentuploader.services.AuthorizationService;
+import ae.rakbank.documentuploader.services.auth.AuthorizationService;
 import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 import ae.rakbank.documentuploader.dto.FileDto;
@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-//@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")

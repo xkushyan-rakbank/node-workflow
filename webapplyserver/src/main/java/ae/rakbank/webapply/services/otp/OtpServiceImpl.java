@@ -1,7 +1,7 @@
 package ae.rakbank.webapply.services.otp;
 
 import ae.rakbank.webapply.client.DehClient;
-import ae.rakbank.webapply.services.AuthorizationService;
+import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @Service
@@ -34,14 +33,14 @@ class OtpServiceImpl implements OtpService {
     }
 
     @Override
-    public OtpVerifyGenerateResponse verifyOrGenerate(HttpServletRequest httpRequest, JsonNode requestJSON) {
+    public OtpVerifyGenerateResponse verifyOrGenerate(JsonNode requestJSON) {
         return optEnabled
-                ? verifyOrGenerateIfOptEnabled(httpRequest, requestJSON)
+                ? verifyOrGenerateIfOptEnabled(requestJSON)
                 : verifyOrGenerateIfOptDisabled();
     }
 
-    private OtpVerifyGenerateResponse verifyOrGenerateIfOptEnabled(HttpServletRequest httpRequest, JsonNode requestJSON) {
-        final ResponseEntity<?> result = dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestJSON,
+    private OtpVerifyGenerateResponse verifyOrGenerateIfOptEnabled(JsonNode requestJSON) {
+        final ResponseEntity<?> result = dehClient.invokeApiEndpoint(url, HttpMethod.POST, requestJSON,
                 "generateVerifyOTP()", MediaType.APPLICATION_JSON, null);
         String action = requestJSON.get("action").asText();
         boolean verifyResult = "verify".equalsIgnoreCase(action) && extractOtpVerificationResult(result);

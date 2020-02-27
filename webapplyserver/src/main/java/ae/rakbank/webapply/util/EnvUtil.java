@@ -1,15 +1,13 @@
 package ae.rakbank.webapply.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class EnvUtil {
 
     private EnvUtil() {
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(EnvUtil.class);
 
     private static String env = System.getenv("WEB_APPLY_ENV");
 
@@ -17,23 +15,22 @@ public class EnvUtil {
 
     static {
         if (StringUtils.isBlank(WEB_APPLY_DIR)) {
-            logger.error("System property 'WEB_APPLY_DIR' not configured, load config files from classpath:");
+            log.error("System property 'WEB_APPLY_DIR' not configured, load config files from classpath:");
         }
         if (StringUtils.isBlank(env)) {
             env = "local";
-            logger.error(
-                    "System property 'WEB_APPLY_ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod");
+            log.error("System property 'WEB_APPLY_ENV' not configured, defaulted to 'local'. Allowed values dev, uat, test or prod");
         } else {
             env = env.toLowerCase();
         }
-        logger.info(String.format("$WEB_APPLY_ENV=%s, $WEB_APPLY_DIR=%s", env, WEB_APPLY_DIR));
+        log.info("$WEB_APPLY_ENV={}, $WEB_APPLY_DIR={}", env, WEB_APPLY_DIR);
     }
 
     public static String getEnv() {
         return env;
     }
 
-    public static String getConfigDir() {
+    static String getConfigDir() {
         if (StringUtils.isNotBlank(WEB_APPLY_DIR)) {
             return WEB_APPLY_DIR + "/config/";
         }

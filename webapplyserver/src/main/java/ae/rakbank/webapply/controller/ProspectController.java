@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class ProspectController {
 
+    private static final String APPLICANT_INFO = "applicantInfo";
     private final FileUtil fileUtil;
     private final DehClient dehClient;
     private final RecaptchaService captchaService;
@@ -53,7 +54,7 @@ public class ProspectController {
 
     @PreAuthorize("isAnonymous()")
     @PostMapping(value = "", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<?> createSMEProspect(HttpServletRequest httpRequest,
+    public ResponseEntity<Object> createSMEProspect(HttpServletRequest httpRequest,
                                                @RequestBody JsonNode requestBodyJSON,
                                                @PathVariable String segment) {
         log.info("Begin createSMEProspect() method");
@@ -65,7 +66,7 @@ public class ProspectController {
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
         log.info("Call createProspect endpoint: " + uriComponents.toString());
 
-        ResponseEntity<?> createdProspectResponse = dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(),
+        ResponseEntity<Object> createdProspectResponse = dehClient.invokeApiEndpoint(uriComponents.toString(),
                 HttpMethod.POST, requestBodyJSON, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
         if (!createdProspectResponse.getStatusCode().is2xxSuccessful()) {
             return createdProspectResponse;
@@ -74,7 +75,7 @@ public class ProspectController {
         String prospectId = ((JsonNode) createdProspectResponse.getBody()).get("prospectId").asText();
         log.info("Send OTP for prospectId:" + prospectId);
         ObjectNode otpRequest = createOtpRequest(requestBodyJSON, prospectId);
-        ResponseEntity<?> otpResponse = applyController.generateVerifyOTP(httpRequest, otpRequest, true);
+        ResponseEntity<Object> otpResponse = applyController.generateVerifyOTP(httpRequest, otpRequest, true);
         if (!otpResponse.getStatusCode().is2xxSuccessful()) {
             return otpResponse;
         }
@@ -90,16 +91,16 @@ public class ProspectController {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode otpRequest = objectMapper.createObjectNode();
         otpRequest.put("prospectId", prospectId);
-        otpRequest.put("countryCode", requestBodyJSON.get("applicantInfo").get("countryCode").asText());
-        otpRequest.put("mobileNo", requestBodyJSON.get("applicantInfo").get("mobileNo").asText());
-        otpRequest.put("email", requestBodyJSON.get("applicantInfo").get("email").asText());
+        otpRequest.put("countryCode", requestBodyJSON.get(APPLICANT_INFO).get("countryCode").asText());
+        otpRequest.put("mobileNo", requestBodyJSON.get(APPLICANT_INFO).get("mobileNo").asText());
+        otpRequest.put("email", requestBodyJSON.get(APPLICANT_INFO).get("email").asText());
         otpRequest.put("action", "generate");
         return otpRequest;
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/{prospectId}", produces = "application/json")
-    public ResponseEntity<?> getProspectById(HttpServletRequest httpRequest,
+    public ResponseEntity<Object> getProspectById(HttpServletRequest httpRequest,
                                              @AuthenticationPrincipal JwtPayload jwtPayload,
                                              @PathVariable String segment,
                                              @PathVariable String prospectId) {
@@ -110,13 +111,13 @@ public class ProspectController {
         String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-        return dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(), HttpMethod.GET, null,
+        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
                 "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
     }
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping(value = "/{prospectId}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<?> updateSMEProspect(HttpServletRequest httpRequest,
+    public ResponseEntity<Object> updateSMEProspect(HttpServletRequest httpRequest,
                                                @AuthenticationPrincipal JwtPayload jwtPayload,
                                                @RequestBody JsonNode jsonNode,
                                                @PathVariable String prospectId,
@@ -128,13 +129,13 @@ public class ProspectController {
         String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-        return dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(), HttpMethod.PUT, jsonNode,
+        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT, jsonNode,
                 "updateSMEProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/search", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<?> searchProspect(HttpServletRequest httpRequest,
+    public ResponseEntity<Object> searchProspect(HttpServletRequest httpRequest,
                                             @AuthenticationPrincipal JwtPayload jwtPayload,
                                             @RequestBody JsonNode jsonNode,
                                             @PathVariable String segment) {
@@ -145,7 +146,7 @@ public class ProspectController {
         String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
 
-        return dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(), HttpMethod.POST, jsonNode,
+        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.POST, jsonNode,
                 "searchProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
     }
 }

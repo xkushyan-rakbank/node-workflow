@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import ae.rakbank.webapply.exception.ApiException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +30,10 @@ import ae.rakbank.webapply.util.FileUtil;
 
 import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUEST_KEY;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecaptchaService {
-    private static final Logger logger = LoggerFactory.getLogger(RecaptchaService.class);
 
     private final FileUtil fileUtil;
     private final RestTemplateBuilder restTemplateBuilder;
@@ -60,7 +59,7 @@ public class RecaptchaService {
             return;
         }
 
-        logger.info("Validate reCAPTCHA before saving applicant info.");
+        log.info("Validate reCAPTCHA before saving applicant info.");
 
         String recaptchaInRequest = requestBodyJSON.get(RECAPTCHA_TOKEN_REQUEST_KEY).asText();
         String ip = httpRequest.getRemoteAddr();
@@ -80,26 +79,24 @@ public class RecaptchaService {
         recaptchaMapRequest.put("secret", recaptchaSecret);
         recaptchaMapRequest.put("response", recaptchaToken);
         recaptchaMapRequest.put("remoteip", ip);
-        logger.debug("Request body for recaptcha: {}", recaptchaMapRequest);
+        log.debug("Request body for recaptcha: {}", recaptchaMapRequest);
 
         String url = recaptchaEndpoint + "?secret={secret}&response={response}&remoteip={remoteip}";
         try {
-            logger.info(String.format("Endpoint=[%s], Request=[%s]", url, recaptchaMapRequest));
+            log.info("Endpoint={}, Request={}", url, recaptchaMapRequest);
 
             recaptchaResponse = restTemplateBuilder.build().postForEntity(url, recaptchaMapRequest, Map.class, recaptchaMapRequest);
 
-            logger.info(String.format("Endpoint=[%s], HttpStatus=[%s], verified=[%s]", url,
-                    recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody().get("success")));
+            log.info("Endpoint={}, HttpStatus={}, verified={}",
+                    url, recaptchaResponse.getStatusCodeValue(), recaptchaResponse.getBody().get("success"));
 
         } catch (HttpClientErrorException e) {
-            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
-                    e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+            log.error("Endpoint={}, HttpStatus={}, response={}", url, e.getRawStatusCode(), e.getResponseBodyAsString(), e);
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getResponseBodyAsString(),
                     e.getResponseBodyAsString(), e);
             throw new ApiException(e, error, null, HttpStatus.BAD_REQUEST);
         } catch (HttpServerErrorException e) {
-            logger.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
-                    e.getRawStatusCode(), e.getResponseBodyAsString()), e);
+            log.error("Endpoint={}, HttpStatus={}, response={}", url, e.getRawStatusCode(), e.getResponseBodyAsString(), e);
             ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error",
                     e.getResponseBodyAsString(), e);
             throw new ApiException(e, error, null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -111,14 +108,14 @@ public class RecaptchaService {
         Map<String, Object> responseBody = recaptchaResponse.getBody();
         boolean recaptchaTokenVerified = (Boolean) responseBody.get("success");
 
-        logger.info(String.format("reCAPTCHA Response: IP=[%s] HttpStatus=[%s], tokenVerified=%s, response=[%s]", ip,
-                recaptchaResponse.getStatusCodeValue(), recaptchaTokenVerified, recaptchaResponse.getBody()));
+        log.info("reCAPTCHA Response: IP={} HttpStatus={}, tokenVerified={}, response={}",
+                ip, recaptchaResponse.getStatusCodeValue(), recaptchaTokenVerified, recaptchaResponse.getBody());
 
         if (!recaptchaTokenVerified) {
-            logger.error("ReCaptcha was not verified successfully, the verify result is: "
+            log.error("ReCaptcha was not verified successfully, the verify result is: "
                     + responseBody.get("error-codes").toString());
             List<String> errorCodes = (List) responseBody.get("error-codes");
-            String errorMessage = errorCodes.stream().map(s -> RecaptchaUtil.RECAPTCHA_ERROR_CODE.get(s))
+            String errorMessage = errorCodes.stream().map(RecaptchaUtil.RECAPTCHA_ERROR_CODE::get)
                     .collect(Collectors.joining(", "));
             errorMessage = StringUtils.defaultIfBlank(errorMessage, "The validation of reCaptcha is not succeed");
 

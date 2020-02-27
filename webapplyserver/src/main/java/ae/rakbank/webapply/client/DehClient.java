@@ -2,7 +2,7 @@ package ae.rakbank.webapply.client;
 
 import ae.rakbank.webapply.dto.ApiError;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.services.AuthorizationService;
+import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.util.DehUtil;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
@@ -27,7 +27,6 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @Component
@@ -48,9 +47,8 @@ public class DehClient {
         defaultDatalist.setAll((ObjectNode) fileUtil.getDatalistJSON());
     }
 
-    public ResponseEntity<Object> invokeApiEndpoint(HttpServletRequest httpRequest, String url, HttpMethod httpMethod,
-                                               JsonNode requestBodyJSON, String operationId, MediaType mediaType,
-                                               String oauthAccessToken) {
+    public ResponseEntity<Object> invokeApiEndpoint(String url, HttpMethod httpMethod, JsonNode requestBodyJSON,
+                                                    String operationId, MediaType mediaType, String oauthAccessToken) {
         if (requestBodyJSON != null) {
             log.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
                     operationId, url, requestBodyJSON.toString()));
