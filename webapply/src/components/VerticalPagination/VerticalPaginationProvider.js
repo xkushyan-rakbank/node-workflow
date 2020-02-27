@@ -7,7 +7,7 @@ export const VerticalPaginationContext = React.createContext({});
 
 export const VerticalPaginationProvider = ({ children }) => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const [hasVideo, setHasVideo] = useState(true);
+  const [hasVideo, setHasVideo] = useState(false);
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
 
