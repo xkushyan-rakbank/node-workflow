@@ -27,7 +27,7 @@ function* searchProspectFormSaga({ payload }) {
       mobileNo,
       leadNumber,
       tradeLicenseNo,
-      email: email.toLowerCase(),
+      email,
       eidNumber: ""
     };
     const response = yield call(search.searchApplication, inputParam, headers);
