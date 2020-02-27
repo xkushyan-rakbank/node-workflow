@@ -10,6 +10,7 @@ export const AccountInfoScreen = ({
   isShowApply,
   isShowCheck,
   isShowStart,
+  isApplyEditApplication,
   handleCheckStatus,
   handleStart,
   handleApply,
@@ -40,7 +41,7 @@ export const AccountInfoScreen = ({
           />
         </>
       )}
-      {isShowCheck && (
+      {isShowCheck && !isApplyEditApplication && (
         <ContainedButton
           withRightArrow
           justify="flex-start"
