@@ -29,7 +29,13 @@ export const signatorySourceOfFundsSchema = Yup.object().shape({
       })
     )
     .required(getRequiredMessage("Source of funds")),
-  others: Yup.string().matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
+  others: Yup.string()
+    .matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
+    .when("sourceOfWealth", {
+      is: sourceOfWealth =>
+        sourceOfWealth.map(value => value.wealthType).includes(OTHER_SOURCE_OF_WEALTH),
+      then: Yup.string().required()
+    })
 });
 
 export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
