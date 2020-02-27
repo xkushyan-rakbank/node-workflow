@@ -63,7 +63,6 @@ export const SearchedAppInfoComponent = ({
   }, [setIsDisplayConfirmDialog]);
 
   const searchResult = searchResults.find(item => item.prospectId === match.params.id);
-  console.log("TCL: STATUS", get(searchResult, "status"));
   const isDisabled =
     get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
     get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT ||
