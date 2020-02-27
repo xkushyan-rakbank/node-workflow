@@ -73,7 +73,9 @@ export const REQUEST_FAILED = "error";
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
-export const IGNORE_ERROR_CODES = ["12009"];
+export const IGNORE_ERROR_CODES = ["12009", "101"];
+export const RO_EDIT_APP_ERROR_MESSAGE =
+  "CONCURRENT MODIFICATION NOT ALLOWED-SALES AGENT IS UPDATING";
 export const APP_COMPLETED_SCREENING_STATUS = "Completed";
 export const APP_DECLINE_SCREEN_REASON = "Decline";
 

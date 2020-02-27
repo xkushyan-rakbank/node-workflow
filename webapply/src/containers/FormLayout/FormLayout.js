@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Providers } from "./Providers";
 import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 import { FormNavigation } from "../../components/FormNavigation";
@@ -10,13 +10,16 @@ import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
 import { MobileNotification } from "../../components/Notifications";
+import { ROEditNotification } from "../../components/Modals";
 
 export const FormLayoutComponent = ({
   location: { pathname } = {},
   children,
   screeningError,
   updateViewId,
-  resetScreeningError
+  resetScreeningError,
+  setLockStatusByROAgent,
+  isLockStatusByROAgent
 }) => {
   const blobColor = useBlobColor();
   const classes = useStyles({
@@ -24,6 +27,17 @@ export const FormLayoutComponent = ({
     color: blobColor,
     fullContentWidth: checkIsShowSmallMenu(pathname)
   });
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (isLockStatusByROAgent) {
+      setOpen(true);
+    }
+  }, [open, setOpen, isLockStatusByROAgent]);
+
+  const handleClose = useCallback(() => {
+    setLockStatusByROAgent(false);
+    setOpen(false);
+  }, [setOpen, setLockStatusByROAgent]);
 
   useEffect(() => {
     const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
@@ -53,6 +67,7 @@ export const FormLayoutComponent = ({
                 <Notifications />
 
                 {screeningError.error ? <ApplicationStatus {...screeningError} /> : children}
+                <ROEditNotification isOpen={open} handleClose={handleClose} />
               </div>
             </div>
           </div>
