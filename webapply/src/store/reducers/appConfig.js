@@ -134,7 +134,7 @@ const appConfigReducer = (state = initialState, action) => {
         prospect: {
           ...state.prospect,
           freeFieldsInfo: {
-            ...state.prospect.freeFieldsInfo,
+            ...(state.prospect.freeFieldsInfo || {}),
             freeField5: ""
           }
         }
