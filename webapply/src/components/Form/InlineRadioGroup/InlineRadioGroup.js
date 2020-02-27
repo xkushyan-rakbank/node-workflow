@@ -39,7 +39,11 @@ export const InlineRadioGroup = ({
           name={field.name}
           value={field.value}
           onChange={handleChange}
-          className={cx(classes.inlineFormControl, "smallText")}
+          className={cx(
+            classes.inlineFormControl,
+            "smallText",
+            isDisabled && classes.disabledLabel
+          )}
         >
           {label}
           <div className={classes.inlineFormRadioWrapper}>
