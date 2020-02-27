@@ -29,16 +29,16 @@ export const TwoSteps = () => {
 
         <div className={classes.cardsWrapper}>
           <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
-            <IconCardItem minWidth="100px" text="Trade License">
+            <IconCardItem horizontal text="Trade License">
               <License alt="trade-license" />
             </IconCardItem>
-            <IconCardItem minWidth="100px" text="Passport / visa of all signatories¹">
+            <IconCardItem horizontal text="Passport / visa of all signatories¹">
               <Passport alt="passport-visa" />
             </IconCardItem>
-            <IconCardItem minWidth="100px" text="Emirates ID of all signatories">
+            <IconCardItem horizontal text="Emirates ID of all signatories">
               <EmirateId alt="emirates-id" />
             </IconCardItem>
-            <IconCardItem minWidth="100px" text="Other company documents²">
+            <IconCardItem horizontal text="Other company documents²">
               <CompanyDocuments alt="company-documents" />
             </IconCardItem>
           </IconCardsContainer>
@@ -50,7 +50,7 @@ export const TwoSteps = () => {
         company.
       </div>
       <div className={classes.secondGroup}>
-        <div>
+        <div className={classes.secondGroupText}>
           <h3 className={classes.title}>Grab a cup of tea</h3>
           <span className={classes.info}>
             We need to spend some time getting to know you and your company

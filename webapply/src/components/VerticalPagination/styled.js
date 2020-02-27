@@ -32,7 +32,11 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     position: "relative",
     boxSizing: "border-box",
-    height: 1,
+    minHeight: 1,
+    padding: "15px 0",
+    "&:last-of-type": {
+      marginBottom: 0
+    },
     [theme.breakpoints.up("sm")]: {
       minHeight: "100vh"
     },
@@ -59,6 +63,9 @@ export const useStyles = makeStyles(theme => ({
     width: "10px",
     zIndex: 2,
     transform: "translateY(-50%)",
+    [theme.breakpoints.only("sm")]: {
+      right: 15
+    },
     [`${theme.breakpoints.only("xs")}, (max-height: ${normalScrollHeight}px)`]: {
       display: "none"
     }

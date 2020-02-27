@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
+import { Providers } from "./Providers";
 import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 import { FormNavigation } from "../../components/FormNavigation";
 import { HeaderTitle } from "../../components/HeaderTitle";
-import { Notifications, NotificationsProvider } from "../../components/Notification";
+import { Notifications } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
+import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
@@ -19,7 +21,8 @@ export const FormLayoutComponent = ({
   const blobColor = useBlobColor();
   const classes = useStyles({
     pathname,
-    color: blobColor
+    color: blobColor,
+    fullContentWidth: checkIsShowSmallMenu(pathname)
   });
 
   useEffect(() => {
@@ -38,7 +41,7 @@ export const FormLayoutComponent = ({
   }, [pathname, updateViewId, resetScreeningError]);
 
   return (
-    <NotificationsProvider>
+    <Providers>
       <MobileNotification>
         <div className={classes.formLayout}>
           <FormNavigation />
@@ -55,6 +58,6 @@ export const FormLayoutComponent = ({
           </div>
         </div>
       </MobileNotification>
-    </NotificationsProvider>
+    </Providers>
   );
 };
