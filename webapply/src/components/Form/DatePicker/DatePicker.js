@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -50,10 +50,38 @@ export const DatePicker = ({
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
 
+  const dateInputRef = useRef();
+  const datePickerRef = useRef();
+  const actionRef = useRef();
+
+  const scrollTo = top => {
+    window.scrollTo(0, top);
+  };
+
+  const scrollIntoView = () => {
+    const menuRect = datePickerRef.current
+      .querySelector("[role='document']")
+      .getBoundingClientRect();
+    const focusedRect = dateInputRef.current.getBoundingClientRect();
+    const overScroll = dateInputRef.current.offsetHeight / 3;
+    const { offsetTop, clientHeight } = dateInputRef.current;
+    const { offsetHeight } = datePickerRef.current;
+
+    if (focusedRect.bottom + overScroll > menuRect.bottom) {
+      const top = offsetTop + clientHeight - offsetHeight + overScroll;
+      scrollTo(Math.max(top, datePickerRef.current.scrollHeight));
+
+      setTimeout(() => {
+        actionRef.current && actionRef.current.updatePosition();
+      }, 330);
+    }
+  };
+
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl
         className="formControl"
+        ref={dateInputRef}
         onClick={e => {
           if (e.target.name) {
             setIsOpen(true);
@@ -90,7 +118,12 @@ export const DatePicker = ({
             }}
             PopoverProps={{
               anchorOrigin: { horizontal: "left", vertical: "bottom" },
-              transformOrigin: { horizontal: "left", vertical: "top" }
+              transformOrigin: { horizontal: "left", vertical: "top" },
+              ref: ref => {
+                datePickerRef.current = ref;
+                ref && scrollIntoView();
+              },
+              action: actionRef
             }}
           />
         </MuiPickersUtilsProvider>
