@@ -39,19 +39,21 @@ export const SelectAutocomplete = ({
   const [hasFocus, setFocus] = useState(false);
 
   const handleChange = selected => {
-    const value = multiple
-      ? (selected || []).map(item => extractValue(item))
-      : extractValue(selected);
+    const value = multiple ? (selected || []).map(item => item.value) : extractValue(selected);
 
     return onChange(value);
   };
 
   const renderValue = !multiple
     ? options.find(option => extractValue(option) === field.value)
-    : options.filter(option => field.value.includes(option.value));
+    : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
 
   return (
-    <FormControl className="formControl" variant="outlined">
+    <FormControl
+      classes={{ root: classes.formControlRoot }}
+      className="formControl"
+      variant="outlined"
+    >
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
