@@ -11,10 +11,11 @@ export const VerticalPaginationProvider = ({ children }) => {
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
 
-  // reset isIslamic params when location changes.
+  // reset scroll params when location changes.
   const location = useLocation();
   useLayoutEffect(() => {
     setCurrentSectionIndex(0);
+    setHasVideo(false);
   }, [location]);
 
   const isCurrentSectionVideo = useMemo(() => {
