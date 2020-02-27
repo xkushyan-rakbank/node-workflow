@@ -12,7 +12,7 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 import { formatJsonData } from "./formatJsonData";
-import { IGNORE_ERROR_CODES } from "../constants";
+import { IGNORE_ERROR_CODES, RO_EDIT_APP_ERROR_MESSAGE } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const REQUEST_ID_HEADER = "x-request-id";
@@ -135,7 +135,10 @@ apiClient.interceptors.response.use(
         store.dispatch(setError(errors));
         notificationOptions = { title: "ReCaptchaError", message: errors };
       } else if (status === 400 && errors) {
-        if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+        if (
+          IGNORE_ERROR_CODES.includes(errors[0].errorCode) ||
+          errors[0].message === RO_EDIT_APP_ERROR_MESSAGE
+        ) {
           lockByROAgentException = errors[0].message;
           notificationOptions = null;
         } else {
