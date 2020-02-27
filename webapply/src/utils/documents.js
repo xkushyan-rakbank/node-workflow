@@ -36,3 +36,5 @@ export const appendDocumentKey = (docs = []) =>
       .filter(document => document.documentType === doc.documentType).length;
     return { ...doc, documentKey: `${doc.documentType}-${docIndex}` };
   });
+
+export const range = (end, start = 0) => Array.from({ length: end - start }, (_, i) => start + i);
