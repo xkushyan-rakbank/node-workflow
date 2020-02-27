@@ -30,7 +30,7 @@ export const useDisplayScreenBasedOnViewId = () => {
         url = isRetrieveMode
           ? routes.ApplicationSubmitted
           : `${smeBaseName}${newApplicationInfo.reUploadDocuments}`;
-      } else if (isEditRedirect || viewId === VIEW_IDS.ApplicationSubmitted) {
+      } else if (isEditRedirect) {
         url = routes.companyInfo;
       }
 
