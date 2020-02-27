@@ -14,7 +14,6 @@ export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
 export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
-export const UPDATE_FREE_FIELD_5 = "UPDATE_FREE_FIELD_5";
 
 export const receiveAppConfig = (segment, accountType, isIslamicBanking) => {
   return { type: RECEIVE_APPCONFIG, payload: { accountType, isIslamicBanking, segment } };
@@ -65,8 +64,3 @@ export const saveProspectModel = prospectModel => {
 export const setAccessToken = accessToken => ({ type: SET_ACCESS_TOKEN, payload: accessToken });
 
 export const resetApplicantInfo = () => ({ type: RESET_APPLICANT_INFO });
-
-export const updateFreeField5 = (fieldData = {}) => ({
-  type: UPDATE_FREE_FIELD_5,
-  payload: fieldData
-});
