@@ -46,6 +46,8 @@ jobs:
           cd webapply
           yarn
           yarn build
+          #npm install
+          #npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'

@@ -21,7 +21,7 @@ export const accountsDataRows = [
     elite: { text: "Zero" }
   },
   {
-    info: ["Monthly Digital", "Banking fees"],
+    info: ["Monthly Digital ", "Banking fees"],
     starter: { text: "Zero" },
     currentAccount: { text: "AED 25" },
     elite: { text: "AED 25" }
@@ -39,7 +39,7 @@ export const accountsDataRows = [
     elite: { ic: checkIc }
   },
   {
-    info: ["RAKvalue Package ", "(PLUS & MAX)"],
+    info: ["RAKvalue package ", "(PLUS & MAX)"],
     starter: { text: "Mandatory", info: "(PLUS - AED 49)" },
     currentAccount: { text: "Optional" },
     elite: { text: "Optional" }
@@ -49,17 +49,20 @@ export const accountsDataRows = [
 export const accountTypes = {
   starter: {
     id: "starter",
+    accountName: accountNames.starter,
     name: accountNames.starter,
     position: 2
   },
   currentAccount: {
     id: "currentAccount",
+    accountName: accountNames.currentAccount,
     name: accountNames.currentAccount,
     position: 3
   },
   elite: {
     id: "elite",
-    name: accountNames.elite,
+    accountName: accountNames.elite,
+    name: "Business Elite",
     position: 4
   }
 };

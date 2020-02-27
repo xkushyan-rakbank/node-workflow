@@ -351,6 +351,14 @@ export const CompanyBusinessRelationshipsComponent = ({
                               contextualHelpText="List down the top countries from where existing or future goods originate"
                               shrink
                               tabIndex="0"
+                              filterOptions={options => {
+                                const countries = values.topOriginGoodsCountries
+                                  .filter(
+                                    (item, indexCountry) => item.country && indexCountry !== index
+                                  )
+                                  .map(item => item.country);
+                                return options.filter(item => !countries.includes(item.code));
+                              }}
                             />
                             {isTopOriginGoodsCountries && (
                               <ArrayRemoveButton

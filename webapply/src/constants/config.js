@@ -41,7 +41,7 @@ export const prospect = {
     accountType: "",
     rakValuePackage: "",
     leadNumber: "",
-    riskScore: "",
+    riskScore: "0.0",
     srNumber: "",
     channelId: "",
     channelType: "",
@@ -263,10 +263,12 @@ export const prospect = {
         isPEP: false,
         qualification: "",
         experienceInYrs: "",
-        sourceOfWealth: {
-          wealthType: "",
-          others: ""
-        }
+        sourceOfWealth: [
+          {
+            wealthType: "",
+            others: ""
+          }
+        ]
       },
       contactDetails: {
         primaryMobileNo: "",

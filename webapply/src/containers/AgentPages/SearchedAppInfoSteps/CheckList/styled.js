@@ -13,8 +13,7 @@ export const useStyles = makeStyles({
     "&:last-of-type": {
       border: "none"
     },
-    display: "grid",
-    gridTemplateColumns: "2fr 2fr 1fr",
+    display: "flex",
     alignItems: "center",
     padding: "24px 20px 19px 30px"
   },
@@ -23,11 +22,13 @@ export const useStyles = makeStyles({
     lineHeight: 1.33,
     color: "#86868b",
     marginTop: 5,
-    wordBreak: "break-word"
+    wordBreak: "break-word",
+    flex: "0 0 33%"
   },
   heading: {
     fontWeight: 600,
-    color: "#000"
+    color: "#000",
+    flex: "0 0 33%"
   },
   errorMsg: {
     fontWeight: 600,

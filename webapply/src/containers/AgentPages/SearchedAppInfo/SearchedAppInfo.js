@@ -56,9 +56,7 @@ export const SearchedAppInfoComponent = ({
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
 
-  const searchResult = (searchResults.searchResult || []).find(
-    item => item.prospectId === match.params.id
-  );
+  const searchResult = searchResults.find(item => item.prospectId === match.params.id);
   const isDisabled =
     get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
     get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT;
