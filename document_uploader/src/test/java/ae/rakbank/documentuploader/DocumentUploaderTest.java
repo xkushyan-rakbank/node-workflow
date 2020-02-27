@@ -49,6 +49,6 @@ public class DocumentUploaderTest {
 				.param("fileInfo", fileInfo.toString()))
 				.andExpect(status().is(200));
 
-		then(this.docUploadService).should().store(file, fileInfo, "cosme0001");
+		then(this.docUploadService).should().processUploadRequest(file, fileInfo.toString(), "cosme0001");
 	}
 }

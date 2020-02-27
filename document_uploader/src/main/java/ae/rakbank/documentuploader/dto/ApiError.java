@@ -68,7 +68,7 @@ public class ApiError {
 		setException(ex);
 	}
 
-	public void initTimestamp() {
+	private void initTimestamp() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN);
 		timestamp = LocalDateTime.now().format(formatter);
 	}

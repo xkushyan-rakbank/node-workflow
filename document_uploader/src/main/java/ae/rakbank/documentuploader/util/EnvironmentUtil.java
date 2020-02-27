@@ -1,17 +1,16 @@
 package ae.rakbank.documentuploader.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 
+@Slf4j
 @Component
 public class EnvironmentUtil {
-    private static final Logger logger = LoggerFactory.getLogger(EnvironmentUtil.class);
 
     @Value("${webapply.dir}")
     private String webApplyDir;
@@ -21,8 +20,8 @@ public class EnvironmentUtil {
 
     @PostConstruct
     public void initEnviromentUtilState() {
-        logger.info("WEBAPPLY_DIR = " + webApplyDir);
-        logger.info("WEBAPPLY_ENV = " + webApplyEnv);
+        log.info("WEBAPPLY_DIR = {}", webApplyDir);
+        log.info("WEBAPPLY_ENV = {}", webApplyEnv);
         createDirs();
     }
 
@@ -36,31 +35,31 @@ public class EnvironmentUtil {
 
     private void createDirs() {
         File configDirectory = new File(webApplyDir + "/config/");
-        if (! configDirectory.exists()){
+        if (!configDirectory.exists()) {
             configDirectory.mkdir();
         }
 
         File uploadsDirectory = new File(webApplyDir + "/uploads/");
-        if (! uploadsDirectory.exists()){
+        if (!uploadsDirectory.exists()) {
             uploadsDirectory.mkdir();
         }
 
         File scannedDocsDirectory = new File(webApplyDir + "/scanned_docs/");
-        if (!scannedDocsDirectory.exists()){
+        if (!scannedDocsDirectory.exists()) {
             scannedDocsDirectory.mkdir();
         }
 
         File s3ObjectsDirectory = new File(webApplyDir + "/s3_objects/");
-        if (!s3ObjectsDirectory.exists()){
+        if (!s3ObjectsDirectory.exists()) {
             s3ObjectsDirectory.mkdir();
         }
     }
 
-    public String getConfigDir() {
+    String getConfigDir() {
         if (StringUtils.isNotBlank(webApplyDir)) {
             return webApplyDir + "/config/";
         } else {
-            logger.error(webApplyDir + "/config/ not found.");
+            log.error("{}/config/ not found.", webApplyDir);
         }
         return "";
     }
@@ -69,7 +68,7 @@ public class EnvironmentUtil {
         if (StringUtils.isNotBlank(webApplyDir)) {
             return webApplyDir + "/uploads/";
         } else {
-            logger.error(webApplyDir + "/uploads/ not found.");
+            log.error("{}/uploads/ not found.", webApplyDir);
         }
         return "";
     }
@@ -78,7 +77,7 @@ public class EnvironmentUtil {
         if (StringUtils.isNotBlank(webApplyDir)) {
             return webApplyDir + "/scanned_docs/";
         } else {
-            logger.error(webApplyDir + "/scanned_docs/ not found.");
+            log.error("{}/scanned_docs/ not found.", webApplyDir);
         }
         return "";
     }
@@ -93,5 +92,4 @@ public class EnvironmentUtil {
     public boolean isWebApplyEnvProd() {
         return webApplyEnv.equalsIgnoreCase("prod");
     }
-
 }
