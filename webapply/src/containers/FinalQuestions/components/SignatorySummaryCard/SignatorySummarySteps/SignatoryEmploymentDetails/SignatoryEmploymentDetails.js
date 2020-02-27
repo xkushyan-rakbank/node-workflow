@@ -139,7 +139,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                 <Grid item sm={12}>
                   <Field
                     name={`isWorkAtTheCompany${index}`}
-                    path={`${basePath}.employmentDetails.isWorkAtTheCompany`}
+                    path={`${basePath}.employmentDetails.isPersonWorkAtCompany`}
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
                     onSelect={() => {

@@ -82,8 +82,6 @@ export const CompanyBusinessRelationshipsComponent = ({
   topSuppliers,
   topOriginGoodsCountries,
   otherBankDetails,
-  isDontTradeGoodsYet,
-  isDontHaveSuppliersYet,
   updateProspect
 }) => {
   const classes = useStyles();
@@ -99,13 +97,13 @@ export const CompanyBusinessRelationshipsComponent = ({
       <Formik
         initialValues={{
           topCustomers: topCustomers.map(item => ({ ...item, id: uniqueId() })),
-          isDontHaveSuppliersYet,
+          isDontHaveSuppliersYet: false,
           topSuppliers: topSuppliers.map(item => ({ ...item, id: uniqueId() })),
           topOriginGoodsCountries: topOriginGoodsCountries.map(item => ({
             country: item,
             id: uniqueId()
           })),
-          isDontTradeGoodsYet,
+          isDontTradeGoodsYet: false,
           otherBankingRelationshipsInfo: {
             otherBankingRelationshipsExist: false,
             otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
