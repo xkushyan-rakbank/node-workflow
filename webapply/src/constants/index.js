@@ -237,6 +237,12 @@ export const BLACKLIST_CHECK = {
   screeningLabel: "Blacklist",
   screeningReason: "No Match"
 };
+export const TOO_MANY_STAKEHOLDERS = {
+  screeningType: "Too many Stakeholders Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Too many Stakeholders",
+  screeningReason: "No Match"
+};
 export const RISK_RATING = {
   screeningType: "Risk Rating",
   screeningStatus: "Completed",
@@ -251,5 +257,6 @@ export const COMPANY_CHECK_NAMES = [
   COUNTRYOFINCORPORATION_CHECK,
   VIRTUAL_CURRENCY_CHECK,
   RAKSTARTER_ACCOUNT_CHECK,
-  ISSHAREHOLDERACOMPANY_CHECK
+  ISSHAREHOLDERACOMPANY_CHECK,
+  TOO_MANY_STAKEHOLDERS
 ];
