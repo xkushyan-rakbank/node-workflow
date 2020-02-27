@@ -163,7 +163,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopCustomers ? 5 : 6}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -263,7 +263,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopSuppliers ? 5 : 6}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -338,7 +338,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopOriginGoodsCountries ? 10 : 12}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
