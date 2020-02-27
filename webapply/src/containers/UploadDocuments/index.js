@@ -13,8 +13,7 @@ import { UploadDocument } from "./UploadDocument";
 import {
   retrieveDocDetails,
   docUpload,
-  cancelDocUpload,
-  getProspectDocumentsRequest
+  cancelDocUpload
 } from "../../store/actions/getProspectDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
@@ -44,8 +43,7 @@ const mapDispatchToProps = {
   docUpload,
   cancelDocUpload,
   sendProspectToAPI: sendProspectToAPIPromisify,
-  updateProspect,
-  getProspectDocumentsRequest
+  updateProspect
 };
 
 export default connect(

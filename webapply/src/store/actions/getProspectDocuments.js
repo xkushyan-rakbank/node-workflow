@@ -43,7 +43,6 @@ export const getProspectDocumentsSuccess = () => ({ type: GET_PROSPECT_DOCUMENTS
 
 export const getProspectDocumentsFail = () => ({ type: GET_PROSPECT_DOCUMENTS_FAIL });
 
-export const getProspectDocumentsRequest = () => ({ type: GET_PROSPECT_DOCUMENTS_REQUEST });
 export const downloadDocumentFile = (prospectId, documentKey, fileName) => {
   return { type: DOWNLOAD_DOCUMENT_FILE, payload: { prospectId, documentKey, fileName } };
 };

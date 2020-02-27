@@ -3,7 +3,7 @@ import {
   UPLOAD_FILES_FAIL,
   DOC_UPLOADER,
   GET_PROSPECT_DOCUMENTS_SUCCESS,
-  GET_PROSPECT_DOCUMENTS_REQUEST,
+  RETRIEVE_DOC_UPLOADER,
   GET_PROSPECT_DOCUMENTS_FAIL
 } from "../actions/getProspectDocuments";
 import { handleActions } from "../../utils/redux-utils";
@@ -28,7 +28,7 @@ export default handleActions(
       ...state,
       uploadErrors: { ...state.uploadErrors, ...error }
     }),
-    [GET_PROSPECT_DOCUMENTS_REQUEST]: state => ({
+    [RETRIEVE_DOC_UPLOADER]: state => ({
       ...state,
       isLoading: true
     }),
