@@ -13,6 +13,7 @@ import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 import { formatJsonData } from "./formatJsonData";
 import { IGNORE_ERROR_CODES, RO_EDIT_APP_ERROR_MESSAGE } from "../constants";
+import { ROError } from "./serverErrors";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const REQUEST_ID_HEADER = "x-request-id";
@@ -127,55 +128,58 @@ apiClient.interceptors.response.use(
     }
 
     let notificationOptions = {};
-    let lockByROAgentException = "";
 
-    if (jsonData) {
-      const { errors, errorType } = jsonData;
-      if (status === 400 && errorType === "ReCaptchaError") {
-        store.dispatch(setError(errors));
-        notificationOptions = { title: "ReCaptchaError", message: errors };
-      } else if (status === 400 && errors) {
-        if (
-          IGNORE_ERROR_CODES.includes(errors[0].errorCode) ||
-          errors[0].message === RO_EDIT_APP_ERROR_MESSAGE
-        ) {
-          lockByROAgentException = errors[0].message;
-          notificationOptions = null;
-        } else {
-          store.dispatch(setInputsErrors(errors));
-        }
-        if (errorType === "FieldsValidation") {
-          notificationOptions = {
-            title: "Validation Error On Server",
-            message: get(jsonData, "errors[0].message", "Validation Error")
-          };
-        }
-      } else {
-        log(jsonData);
-        try {
-          if (jsonData.status) {
-            if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
-              notificationOptions = null;
-            } else {
-              const errorMessages = errors.map(({ message }) => message);
-              const debugNotificationOptions = formatJsonData(jsonData);
-
-              notificationOptions = {
-                message: errorMessages.join(", "),
-                ...debugNotificationOptions
-              };
-            }
+    try {
+      if (jsonData) {
+        const { errors, errorType } = jsonData;
+        if (status === 400 && errorType === "ReCaptchaError") {
+          store.dispatch(setError(errors));
+          notificationOptions = { title: "ReCaptchaError", message: errors };
+        } else if (status === 400 && errors) {
+          if (
+            IGNORE_ERROR_CODES.includes(errors[0].errorCode) ||
+            errors[0].message === RO_EDIT_APP_ERROR_MESSAGE
+          ) {
+            notificationOptions = null;
+            throw new ROError(errors[0].message);
+          } else {
+            store.dispatch(setInputsErrors(errors));
           }
-        } catch (e) {
-          log(e);
+          if (errorType === "FieldsValidation") {
+            notificationOptions = {
+              title: "Validation Error On Server",
+              message: get(jsonData, "errors[0].message", "Validation Error")
+            };
+          }
+        } else {
+          log(jsonData);
+          try {
+            if (jsonData.status) {
+              if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+                notificationOptions = null;
+              } else {
+                const errorMessages = errors.map(({ message }) => message);
+                const debugNotificationOptions = formatJsonData(jsonData);
+
+                notificationOptions = {
+                  message: errorMessages.join(", "),
+                  ...debugNotificationOptions
+                };
+              }
+            }
+          } catch (e) {
+            log(e);
+          }
         }
       }
-    }
-    error.lockByROAgentException = lockByROAgentException;
 
-    if (notificationOptions) {
-      NotificationsManager.add && NotificationsManager.add(notificationOptions);
+      if (notificationOptions) {
+        NotificationsManager.add && NotificationsManager.add(notificationOptions);
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
+
     return Promise.reject(error);
   }
 );
