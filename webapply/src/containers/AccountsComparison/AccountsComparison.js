@@ -35,8 +35,8 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
         video={getVideoByAccountType()}
         scrollToSecondSection={scrollToSecondSection}
         showVideoOnMobile
+        hasVideo
       >
-        <div className={classes.videoWrapper} />
         <div ref={secondSection}>
           <SectionTitleWithInfo
             title="Business accounts for every business stage"

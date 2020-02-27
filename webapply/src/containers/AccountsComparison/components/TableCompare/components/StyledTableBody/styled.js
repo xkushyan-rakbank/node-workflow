@@ -103,7 +103,11 @@ export const useStyles = makeStyles(theme => ({
       color: "#888"
     },
     "& button": {
-      marginTop: "5px"
+      minWidth: "120px",
+      minHeight: "32px",
+      "& span:first-child": {
+        fontSize: "14px"
+      }
     }
   },
   tableRoot: {

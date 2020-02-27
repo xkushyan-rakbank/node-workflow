@@ -3,11 +3,10 @@ package ae.rakbank.webapply.util;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.util.StreamUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -15,16 +14,17 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class FileUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
+    private static final String LOCAL = "local";
 
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private final ResourceLoader resourceLoader;
 
     public JsonNode getAppConfigJSON() {
-        return loadJSONFile("appConfig.json", !EnvUtil.getEnv().equals("local"));
+        return loadJSONFile("appConfig.json", !EnvUtil.getEnv().equals(LOCAL));
     }
 
     public JsonNode getSMEProspectJSON() {
@@ -36,11 +36,11 @@ public class FileUtil {
     }
 
     public String getRSAPublicKey() {
-        return loadFileContents("public.key", !EnvUtil.getEnv().equals("local"));
+        return loadFileContents("public.key", !EnvUtil.getEnv().equals(LOCAL));
     }
 
-    public String getRSAPrivateKey() {
-        return loadFileContents("private.key", !EnvUtil.getEnv().equals("local"));
+    String getRSAPrivateKey() {
+        return loadFileContents("private.key", !EnvUtil.getEnv().equals(LOCAL));
     }
 
     private JsonNode loadJSONFile(String filename, boolean fromConfigDirectory) {
@@ -53,7 +53,7 @@ public class FileUtil {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readTree(fileContent);
         } catch (Exception e) {
-            logger.error("error loading " + filename, e);
+            log.error("error loading " + filename, e);
         }
         return null;
     }
@@ -70,9 +70,8 @@ public class FileUtil {
                 return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
-            logger.error("error loading " + filename, e);
+            log.error("error loading " + filename, e);
         }
-
         return null;
     }
 }

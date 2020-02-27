@@ -16,14 +16,11 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    [theme.breakpoints.only("sm")]: {
-      minWidth: "200px",
-      maxWidth: "210px",
-      "& button": {
-        height: "46px",
-        padding: "0 21px",
-        fontSize: "11px"
-      }
+    "& button": {
+      minHeight: "40px",
+      minWidth: "calc(100% - 16px)",
+      padding: "8px 20px",
+      "& span": { justifyContent: "center", textAlign: "center" }
     },
     [portraitOrientationQueryIPads]: {
       padding: "5px 24px 11px",
@@ -96,8 +93,7 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     minHeight: "40px",
     marginTop: "20px",
-    display: "flex",
-    justifyContent: "center",
+    textAlign: "center",
     "& span": {
       fontSize: "16px"
     }

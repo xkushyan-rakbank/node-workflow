@@ -1,31 +1,38 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import cx from "classnames";
 
 import { BackgroundVideoPlayer } from "../BackgroundVideoPlayer";
-import { useStyles, transitionDuration } from "./styled";
+import { VerticalPaginationContext } from "./VerticalPaginationProvider";
+import { useStyles } from "./styled";
 import { getAverage } from "./utils";
-
-export const VerticalPaginationContext = React.createContext({});
+import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 
 export const VerticalPaginationComponent = ({
   children,
   showVideoOnMobile = false,
+  hasVideo = false,
   scrollToSecondSection,
   video
 }) => {
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const classes = useStyles({ currentSectionIndex });
-  const isCanScroll = useRef(true);
-  const scrollTimeout = useRef(0);
+  const isMobileNotificationActive = useContext(MobileNotificationContext);
+  const { currentSectionIndex, scrollToSection, isCanScroll, setHasVideo } = useContext(
+    VerticalPaginationContext
+  );
+  const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
   const scrollings = useRef([]);
   const prevTime = useRef(new Date().getTime());
   const poster = (video && video.poster) || "";
+  const childrenCount = children.length + (poster ? 1 : 0);
+
+  useEffect(() => {
+    setHasVideo(hasVideo);
+  }, [setHasVideo, hasVideo]);
 
   const handleWheel = e => {
     const offset = e.deltaY < 0 ? -1 : 1;
     const nextSectionIndex = currentSectionIndex + offset;
 
-    if (nextSectionIndex < 0 || nextSectionIndex > children.length - 1) {
+    if (nextSectionIndex < 0 || nextSectionIndex > childrenCount - 1) {
       return;
     }
 
@@ -52,39 +59,25 @@ export const VerticalPaginationComponent = ({
     }
   };
 
-  const scrollToSection = sectionIndex => {
-    isCanScroll.current = false;
-
-    clearTimeout(scrollTimeout.current);
-    scrollTimeout.current = setTimeout(() => {
-      isCanScroll.current = true;
-    }, transitionDuration * 2);
-
-    setCurrentSectionIndex(sectionIndex);
-  };
-
   const handleClick = e => {
     scrollToSection(parseInt(e.currentTarget.name));
   };
 
   return (
-    <VerticalPaginationContext.Provider
-      value={{
-        currentSectionIndex,
-        scrollToSection
-      }}
-    >
+    <>
       <div className={classes.paginationWrapper} onWheel={handleWheel}>
         <div className={classes.paginationContent}>
           {poster && (
-            <BackgroundVideoPlayer
-              video={video}
-              videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
-              scrollToSection={scrollToSection}
-              handleClick={handleClick}
-              handleClickMobile={scrollToSecondSection}
-              currentSectionIndex={currentSectionIndex}
-            />
+            <div className={cx(classes.videoWrapper, { "hide-on-mobile": !showVideoOnMobile })}>
+              <BackgroundVideoPlayer
+                video={video}
+                videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
+                scrollToSection={scrollToSection}
+                handleClick={handleClick}
+                handleClickMobile={scrollToSecondSection}
+                currentSectionIndex={currentSectionIndex}
+              />
+            </div>
           )}
           {React.Children.map(children, child => (
             <div
@@ -99,7 +92,7 @@ export const VerticalPaginationComponent = ({
       </div>
       {(poster && currentSectionIndex === 0) || (
         <div className={classes.paginationDots}>
-          {React.Children.toArray(children).map((_, i) => (
+          {new Array(childrenCount).fill(null).map((_, i) => (
             <button
               key={i}
               className={cx(classes.paginationDot, {
@@ -110,6 +103,6 @@ export const VerticalPaginationComponent = ({
           ))}
         </div>
       )}
-    </VerticalPaginationContext.Provider>
+    </>
   );
 };

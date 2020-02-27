@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import get from "lodash/get";
 
 import {
   getProspectDocuments,
@@ -27,7 +26,7 @@ import {
 
 const mapStateToProps = state => ({
   documents: getProspectDocuments(state),
-  companyName: get(getOrganizationInfo(state), "companyName", ""),
+  companyName: getOrganizationInfo(state).companyName,
   signatories: getSignatories(state),
   uploadDocsEndpoints: getEndpoints(state),
   prospectID: getProspectId(state),

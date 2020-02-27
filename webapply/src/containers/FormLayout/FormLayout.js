@@ -1,25 +1,28 @@
 import React, { useEffect } from "react";
+import { Providers } from "./Providers";
 import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
 import { FormNavigation } from "../../components/FormNavigation";
 import { HeaderTitle } from "../../components/HeaderTitle";
-import { Notifications, NotificationsProvider } from "../../components/Notification";
+import { Notifications } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
+import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
 import { MobileNotification } from "../../components/Notifications";
 
 export const FormLayoutComponent = ({
-  location: { key, pathname } = {},
+  location: { pathname } = {},
   children,
-  screeningResults: { screeningError },
+  screeningError,
   updateViewId,
   resetScreeningError
 }) => {
   const blobColor = useBlobColor();
   const classes = useStyles({
     pathname,
-    color: blobColor
+    color: blobColor,
+    fullContentWidth: checkIsShowSmallMenu(pathname)
   });
 
   useEffect(() => {
@@ -38,22 +41,23 @@ export const FormLayoutComponent = ({
   }, [pathname, updateViewId, resetScreeningError]);
 
   return (
-    <NotificationsProvider>
-      <MobileNotification />
-      <div className={classes.formLayout}>
-        <FormNavigation />
-        <div className={classes.formWrapper}>
-          <div className={classes.formInner}>
-            <div className={classes.mainContainer}>
-              {!routerToAddPaddingInSlider.includes(pathname) && <HeaderTitle />}
+    <Providers>
+      <MobileNotification>
+        <div className={classes.formLayout}>
+          <FormNavigation />
+          <div className={classes.formWrapper}>
+            <div className={classes.formInner}>
+              <div className={classes.mainContainer}>
+                {!routerToAddPaddingInSlider.includes(pathname) && <HeaderTitle />}
 
-              <Notifications />
+                <Notifications />
 
-              {screeningError.error ? <ApplicationStatus {...screeningError} /> : children}
+                {screeningError.error ? <ApplicationStatus {...screeningError} /> : children}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </NotificationsProvider>
+      </MobileNotification>
+    </Providers>
   );
 };

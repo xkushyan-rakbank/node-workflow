@@ -3,19 +3,21 @@ import get from "lodash/get";
 import cx from "classnames";
 
 import { Avatar } from "../../../../components/Avatar/Avatar";
-import { titles, errorMsgs } from "./constants";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
+import { titles, errorMsgs, STATUS_NOT_ELIGIBLE } from "./constants";
 
 import { useStyles } from "./styled";
-import { buildURI } from "../../../../utils/buildURI";
 
-export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
+export const DocumentsComponent = ({
+  docs = {},
+  downloadDocumentFile,
+  prospectId,
+  signatoryInfo
+}) => {
   const classes = useStyles();
-  const signatoryInfo = prospectInfo.signatoryInfo;
-  const prospectId = get(prospectInfo, "generalInfo.prospectId");
-
-  const generateDocumentUri = useCallback(
-    documentKey => buildURI("getDocumentByIdUri", prospectId, documentKey),
-    [prospectId]
+  const downloadDocument = useCallback(
+    (documentKey, fileName) => downloadDocumentFile(prospectId, documentKey, fileName),
+    [prospectId, downloadDocumentFile]
   );
   const headingClassName = cx(classes.checkListData, classes.heading);
 
@@ -25,32 +27,20 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
       {get(docs, "companyDocuments", []).length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
-            <div>
-              <div className={headingClassName}>{titles.DOCUMENT_TITLE}</div>
-            </div>
-            <div>
-              <div className={headingClassName}>{titles.UPLOAD_STATUS_TITLE}</div>
-            </div>
-            <div>
-              <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
-            </div>
+            <div className={headingClassName}>{titles.DOCUMENT_TITLE}</div>
+            <div className={headingClassName}>{titles.UPLOAD_STATUS_TITLE}</div>
+            <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
           </div>
           {docs.companyDocuments.map((application, index) => (
             <div className={classes.applicationRow} key={application.documentType}>
-              <div>
-                <div className={classes.checkListData}>{application.documentTitle}</div>
-              </div>
-              <div>
-                <div className={classes.checkListData}>{application.uploadStatus}</div>
-              </div>
-              <div>
-                <a
+              <div className={classes.checkListData}>{application.documentTitle}</div>
+              <div className={classes.checkListData}>{application.uploadStatus}</div>
+              <div className={classes.checkListData}>
+                <LinkButton
                   index={index}
-                  href={generateDocumentUri(application.fileName)}
-                  className={classes.link}
-                >
-                  {titles.PRINT_DOWNLOAD_TITLE}
-                </a>
+                  title={titles.PRINT_DOWNLOAD_TITLE}
+                  onClick={() => downloadDocument(application.fileName, application.fileName)}
+                />
               </div>
             </div>
           ))}
@@ -72,34 +62,22 @@ export const DocumentsComponent = ({ docs = {}, prospectInfo }) => {
             </div>
             <div className={classes.wrapper}>
               <div className={classes.applicationRow}>
-                <div>
-                  <div className={headingClassName}>{titles.DOCUMENT_TITLE}</div>
-                </div>
-                <div>
-                  <div className={headingClassName}>{titles.UPLOAD_STATUS_TITLE}</div>
-                </div>
-                <div>
-                  <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
-                </div>
+                <div className={headingClassName}>{titles.DOCUMENT_TITLE}</div>
+                <div className={headingClassName}>{titles.UPLOAD_STATUS_TITLE}</div>
+                <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
               </div>
               {get(docs, `stakeholdersDocuments[${index}_${user.fullName}].documents`, []).map(
                 (doc, index) => (
                   <div className={classes.applicationRow} key={doc.documentType}>
-                    <div>
-                      <div className={classes.checkListData}>{doc.documentTitle}</div>
-                    </div>
-                    <div>
-                      <div className={classes.checkListData}>{doc.uploadStatus}</div>
-                    </div>
-                    {doc.uploadStatus !== "NotUploaded" && (
-                      <div>
-                        <a
+                    <div className={classes.checkListData}>{doc.documentTitle}</div>
+                    <div className={classes.checkListData}>{doc.uploadStatus}</div>
+                    {!STATUS_NOT_ELIGIBLE.includes(doc.uploadStatus) && (
+                      <div className={classes.checkListData}>
+                        <LinkButton
                           index={index}
-                          href={generateDocumentUri(doc.fileName)}
-                          className={classes.link}
-                        >
-                          {titles.PRINT_DOWNLOAD_TITLE}
-                        </a>
+                          title={titles.PRINT_DOWNLOAD_TITLE}
+                          onClick={() => downloadDocument(doc.fileName, doc.fileName)}
+                        />
                       </div>
                     )}
                   </div>

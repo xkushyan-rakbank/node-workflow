@@ -19,8 +19,6 @@ export const SearchedAppInfoComponent = ({
   updateProspectId,
   retrieveDocDetails,
   getProspectInfo,
-  setIsApplyEditApplication,
-  isApplyEditApplication,
   prospectInfo
 }) => {
   const classes = useStyles();
@@ -44,12 +42,6 @@ export const SearchedAppInfoComponent = ({
     getProspectInfo(match.params.id);
   }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfo]);
 
-  useEffect(() => {
-    if (isApplyEditApplication) {
-      pushDisplayScreenToHistory();
-    }
-  }, [isApplyEditApplication]);
-
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
   }, [setIsDisplayConfirmDialog]);
@@ -57,16 +49,14 @@ export const SearchedAppInfoComponent = ({
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   const confirmHandler = useCallback(() => {
-    setIsApplyEditApplication(true);
-  }, [setIsApplyEditApplication, pushDisplayScreenToHistory]);
+    pushDisplayScreenToHistory();
+  }, [pushDisplayScreenToHistory]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
 
-  const searchResult = (searchResults.searchResult || []).find(
-    item => item.prospectId === match.params.id
-  );
+  const searchResult = searchResults.find(item => item.prospectId === match.params.id);
   const isDisabled =
     get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
     get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT;

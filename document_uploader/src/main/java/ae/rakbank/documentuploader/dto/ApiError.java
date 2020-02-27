@@ -68,7 +68,7 @@ public class ApiError {
 		setException(ex);
 	}
 
-	public void initTimestamp() {
+	private void initTimestamp() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN);
 		timestamp = LocalDateTime.now().format(formatter);
 	}
@@ -88,58 +88,4 @@ public class ApiError {
 			return "Failed to serialize ApiError object " + e.getMessage();
 		}
 	}
-
-
-
-	/*public ApiError(HttpStatus status) {
-		this();
-		this.status = status;
-	}
-
-	public ApiError(HttpStatus httpStatus, String message) {
-		status = httpStatus;
-		this.message = message;
-	}
-
-	public ApiError(HttpStatus status, Throwable ex) {
-		this();
-		this.status = status;
-		this.message = "Unexpected error";
-		setException(ex);
-	}
-
-	public ApiError(HttpStatus status, String message, String debugMessage) {
-		this();
-		this.status = status;
-		this.message = message;
-		this.debugMessage = debugMessage;
-	}
-
-	public ApiError(HttpStatus status, String message, String debugMessage, Throwable ex) {
-		this();
-		this.status = status;
-		this.message = message;
-		this.debugMessage = debugMessage;
-		setException(ex);
-	}
-
-	private void setException(Throwable ex) {
-		this.exception = ex.getMessage();
-	}
-
-	public JsonNode toJson() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		ObjectNode errorResponse = objectMapper.createObjectNode();
-		errorResponse.put("errorType", "Internal Server Error");
-		ArrayNode errors = objectMapper.createArrayNode();
-		ObjectNode error = objectMapper.createObjectNode();
-		error.put("errorType", "Internal Server Error");
-		error.put("message", message);
-		error.put("developerText", debugMessage);
-		error.put("exception", exception);
-		errors.add(error);
-		errorResponse.set("errors", errors);
-		return errorResponse;
-	}*/
-
 }

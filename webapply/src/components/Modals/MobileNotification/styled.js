@@ -13,6 +13,9 @@ export const useStyles = makeStyles({
     borderRadius: 8,
     padding: "40px 20px 30px",
     textAlign: "center",
+    maxHeight: "calc(100vh - 60px)",
+    overflow: "auto",
+    margin: "30px 0",
     "&:focus": {
       outline: "none"
     },

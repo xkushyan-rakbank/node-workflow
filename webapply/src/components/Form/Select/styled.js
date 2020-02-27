@@ -35,7 +35,7 @@ export const useStyles = makeStyles({
       position: "absolute",
       right: "20px"
     },
-    "& div:first-child": {
+    "& > div:nth-of-type(1)": {
       paddingRight: "4px !important"
     }
   },

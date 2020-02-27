@@ -9,7 +9,8 @@ import {
   SET_CONFIG,
   SET_PROSPECT,
   SAVE_PROSPECT_MODEL,
-  SET_ACCESS_TOKEN
+  SET_ACCESS_TOKEN,
+  RESET_APPLICANT_INFO
 } from "../actions/appConfig";
 import { LOGOUT } from "../actions/loginForm";
 import { LOGIN_INFO_FORM_SUCCESS } from "../actions/loginForm";
@@ -112,6 +113,20 @@ const appConfigReducer = (state = initialState, action) => {
           email: ""
         },
         prospect: {}
+      };
+    case RESET_APPLICANT_INFO:
+      return {
+        ...state,
+        prospect: {
+          ...state.prospect,
+          applicantInfo: {
+            fullName: "",
+            email: "",
+            countryCode: "971",
+            mobileNo: "",
+            applyOnbehalf: false
+          }
+        }
       };
     default:
       return state;

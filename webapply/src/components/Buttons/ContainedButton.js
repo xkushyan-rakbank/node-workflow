@@ -13,12 +13,12 @@ const ArrowIcon = styled(Icon)({
 
 const styles = {
   buttonStyle: {
-    height: "56px",
+    minHeight: "56px",
     borderRadius: "28px",
     outline: "none ",
     fontSize: "18px",
     textTransform: "none",
-    padding: "0 32px",
+    padding: "12px 32px",
     backgroundColor: "#3b3a3a",
     "& svg": {
       verticalAlign: "top",

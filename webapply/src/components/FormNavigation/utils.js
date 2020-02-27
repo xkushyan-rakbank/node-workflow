@@ -19,3 +19,6 @@ export const checkIsShowSmallBg = pathname =>
     routes.comeBackLoginVerification,
     routes.MyApplications
   ].includes(pathname);
+
+export const checkIsShowSmallMenu = pathname =>
+  ![routes.login, routes.detailedAccount, routes.applicationOverview].includes(pathname);

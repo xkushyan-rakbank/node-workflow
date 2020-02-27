@@ -28,8 +28,8 @@ export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null) => {
   return appendGaEventToAction(action, gaEvent);
 };
 
-export const sendProspectToAPISuccess = prospectCopy => {
-  return { type: SEND_PROSPECT_TO_API_SUCCESS, prospectCopy };
+export const sendProspectToAPISuccess = () => {
+  return { type: SEND_PROSPECT_TO_API_SUCCESS };
 };
 
 export const sendProspectToAPIFail = error => {
