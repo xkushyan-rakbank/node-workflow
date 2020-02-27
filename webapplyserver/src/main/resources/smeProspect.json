@@ -253,10 +253,10 @@
 				"isPEP": false,
 				"qualification": "",
 				"experienceInYrs": "",
-				"sourceOfWealth": {
+				"sourceOfWealth": [{
 					"wealthType": "",
 					"others": ""
-				}
+				}]
 			},
 			"contactDetails": {
 				"primaryMobileNo": "",
