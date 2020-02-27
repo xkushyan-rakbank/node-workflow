@@ -13,7 +13,7 @@ export const NUMBER_REGEX = /^[0-9]*$/;
 
 export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9-])*$/;
 
-export const EXPERIENCE_YEARS_REGEX = /^([a-zA-Z0-9 '”`:;.,-])*$/m;
+export const EXPERIENCE_YEARS_REGEX = /^[A-Za-z0-9 !@#$%^&*()_+=`~{}[\]|';:/.,-?><\n\r\t]*$/;
 export const COMPANY_NAME_SPEC_CHAR_REGEX = /^[A-Za-z0-9\s!@#$%^&*()_+=`~\][{}|';:/.,?><-]*$/;
 export const COMPANY_NAME_REGEX = /^([a-zA-Z '”`-]){1,30}$/;
 export const BANK_NAME_REGEX = /^([a-zA-Z. ]){1,50}$/;
@@ -22,7 +22,7 @@ export const ADDRESS_NUMBER_REGEX = /^[A-Za-z0-9 !@#$%^&*()_+=`~{}[\]|';:/.,?><-
 export const ADDRESS_REGEX = /^[a-zA-Z0-9 @#%*()]{1,50}$/;
 export const MOTHERS_MAIDEN_NAME_REGEX = /^([a-zA-Z ]){1,30}$/;
 export const EMPLOYMENT_TYPE_REGEX = /^([a-zA-Z ]){1,50}$/;
-export const DESIGNATION_REGEX = /^([a-zA-Z- !@#$%^&*()_+=`~{}[\]|';:.,?><]){1,50}$/;
+export const DESIGNATION_REGEX = /^([a-zA-Z0-9- !@#$%^&*()_+=`~{}[\]|';:.,?><]){1,50}$/;
 export const WEALTH_TYPE__REGEX = /^([a-zA-Z ]){1,50}$/;
 export const EMIRATES_ID_REGEX = /^784\d{12}$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;

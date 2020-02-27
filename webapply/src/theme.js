@@ -10,6 +10,9 @@ export const theme = createMuiTheme({
       xl: 1920
     }
   },
+  transitions: {
+    default: "all 0.3s"
+  },
   typography: {
     useNextVariants: true
   },

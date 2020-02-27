@@ -18,20 +18,19 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final JwtService jwtService;
 
     @Override
-    public String validateAndUpdateJwtToken(String jwtToken) {
+    public void validateJwtToken(String jwtToken) {
         JwtPayload jwtPayload = jwtService.decrypt(jwtToken);
         if (UserRole.AGENT.equals(jwtPayload.getRole())) {
-            validateAndUpdateAgentJwtPayload(jwtPayload);
+            validateAgentJwtPayload(jwtPayload);
         } else if (UserRole.CUSTOMER.equals(jwtPayload.getRole())) {
-            validateAndUpdateCustomerJwtPayload(jwtPayload);
+            validateCustomerJwtPayload(jwtPayload);
         } else {
             log.error("JwtToken is not valid, field role is required");
             throw new ApiException("JwtToken is not valid, field role is required", HttpStatus.UNAUTHORIZED);
         }
-        return jwtService.encrypt(jwtPayload);
     }
 
-    private void validateAndUpdateCustomerJwtPayload(JwtPayload jwtPayload) {
+    private void validateCustomerJwtPayload(JwtPayload jwtPayload) {
         if (StringUtils.isEmpty(jwtPayload.getPhoneNumber())
                 || StringUtils.isEmpty(jwtPayload.getOauthAccessToken())
                 || StringUtils.isEmpty(jwtPayload.getOauthRefreshToken())
@@ -42,7 +41,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
     }
 
-    private void validateAndUpdateAgentJwtPayload(JwtPayload jwtPayload) {
+    private void validateAgentJwtPayload(JwtPayload jwtPayload) {
         if (StringUtils.isEmpty(jwtPayload.getOauthAccessToken())
                 || StringUtils.isEmpty(jwtPayload.getOauthRefreshToken())
                 || StringUtils.isEmpty(jwtPayload.getOauthTokenExpiryTime())) {

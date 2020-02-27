@@ -29,7 +29,7 @@ const FormatDecimalNumberInput = props => (
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
   if (!isNumeric(annualFinancialTurnover)) {
-    return 0;
+    return null;
   }
   const calculation = parseFloat(annualFinancialTurnover) / YEAR_MONTH_COUNT;
   return Math.floor(calculation);

@@ -29,7 +29,6 @@ export const OTPformComponent = ({
   const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
   const [code, setCode] = useState(Array(6).fill(""));
   const [loginAttempt, setLoginAttempt] = useState(0);
-  const [isDisplayMaxAttempError, setIsDisplayMaxAttempError] = useState(false);
 
   const otpRef = useRef(null);
 
@@ -59,16 +58,15 @@ export const OTPformComponent = ({
     if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
       generateOtpCode(applicantInfo);
     }
-    if (attempts >= MAX_NUMBER_VALIDATION_ERRORS) {
-      setIsDisplayMaxAttempError(true);
-    }
     setLoginAttempt(loginAttempt + 1);
-  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, attempts, resetOtpForm]);
+  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, resetOtpForm]);
 
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
   const isValid = code.every(value => digitRegExp.test(value));
   const classes = useStyles({ classes: extendetClasses });
+  const hasMaxAttemptsError =
+    loginAttempt > MAX_ATTEMPT_ALLOWED || attempts >= MAX_NUMBER_VALIDATION_ERRORS;
 
   return (
     <div className={classes.centeredContainer}>
@@ -88,13 +86,13 @@ export const OTPformComponent = ({
                 <OtpVerification code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
-              {!isDisplayMaxAttempError && verificationError && (
+              {!hasMaxAttemptsError && verificationError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="Code verification failed."
                 />
               )}
-              {(loginAttempt > MAX_ATTEMPT_ALLOWED || isDisplayMaxAttempError) && (
+              {hasMaxAttemptsError && (
                 <ErrorMessage
                   classes={{ error: classes.error }}
                   error="You have exceeded your maximum attempt. Please come back later and try again."
@@ -106,9 +104,7 @@ export const OTPformComponent = ({
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]:
-                      loginAttempt >= MAX_ATTEMPT_ALLOWED ||
-                      attempts >= MAX_NUMBER_VALIDATION_ERRORS
+                    [classes.linkDisabled]: hasMaxAttemptsError
                   })}
                 >
                   Send a new code

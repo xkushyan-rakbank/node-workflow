@@ -50,7 +50,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
         {({ values }) => (
           <Form>
             <Grid spacing={3} container className={classes.flexContainer}>
-              <Grid item md={6} sm={12}>
+              <Grid item md={6} xs={12}>
                 <Field
                   name="maritalStatus"
                   path={`prospect.signatoryInfo[${index}].maritalStatus`}

@@ -108,7 +108,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   }}
                 />
               </Grid>
-              <Grid item md={6} sm={12}>
+              <Grid item md={6} xs={12}>
                 <Field
                   name="addressLine2"
                   path={`${autoSavePathBase}.addressLine2`}

@@ -73,7 +73,9 @@ export const REQUEST_FAILED = "error";
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
-export const IGNORE_ERROR_CODES = ["12009"];
+export const IGNORE_ERROR_CODES = ["12009", "101"];
+export const RO_EDIT_APP_ERROR_MESSAGE =
+  "CONCURRENT MODIFICATION NOT ALLOWED-SALES AGENT IS UPDATING";
 export const APP_COMPLETED_SCREENING_STATUS = "Completed";
 export const APP_DECLINE_SCREEN_REASON = "Decline";
 
@@ -237,6 +239,12 @@ export const BLACKLIST_CHECK = {
   screeningLabel: "Blacklist",
   screeningReason: "No Match"
 };
+export const TOO_MANY_STAKEHOLDERS = {
+  screeningType: "Too many Stakeholders Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Too many Stakeholders",
+  screeningReason: "No Match"
+};
 export const RISK_RATING = {
   screeningType: "Risk Rating",
   screeningStatus: "Completed",
@@ -251,5 +259,6 @@ export const COMPANY_CHECK_NAMES = [
   COUNTRYOFINCORPORATION_CHECK,
   VIRTUAL_CURRENCY_CHECK,
   RAKSTARTER_ACCOUNT_CHECK,
-  ISSHAREHOLDERACOMPANY_CHECK
+  ISSHAREHOLDERACOMPANY_CHECK,
+  TOO_MANY_STAKEHOLDERS
 ];

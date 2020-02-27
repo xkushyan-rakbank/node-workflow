@@ -158,7 +158,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopCustomers ? 5 : 6}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -259,7 +259,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopSuppliers ? 5 : 6}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -335,7 +335,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopOriginGoodsCountries ? 10 : 12}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -348,6 +348,14 @@ export const CompanyBusinessRelationshipsComponent = ({
                               contextualHelpText="List down the top countries from where existing or future goods originate"
                               shrink
                               tabIndex="0"
+                              filterOptions={options => {
+                                const countries = values.topOriginGoodsCountries
+                                  .filter(
+                                    (item, indexCountry) => item.country && indexCountry !== index
+                                  )
+                                  .map(item => item.country);
+                                return options.filter(item => !countries.includes(item.code));
+                              }}
                             />
                             {isTopOriginGoodsCountries && (
                               <ArrayRemoveButton

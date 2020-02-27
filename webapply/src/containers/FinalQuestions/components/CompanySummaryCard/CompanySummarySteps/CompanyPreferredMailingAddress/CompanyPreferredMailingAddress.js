@@ -74,7 +74,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
         {({ values }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item md={6} sm={12}>
+              <Grid item md={6} xs={12}>
                 <Field
                   name="addressLine1"
                   path={`${BASE_PATH}.addressLine1`}
@@ -106,7 +106,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   tabIndex="3"
                 />
               </Grid>
-              <Grid item md={6} sm={12}>
+              <Grid item md={6} xs={12}>
                 <Field
                   name="typeOfSpaceOccupied.spaceType"
                   path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
