@@ -12,13 +12,22 @@ function* searchProspectFormSaga({ payload }) {
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
+    const {
+      fname = "",
+      countryCode = "",
+      mobileNo = "",
+      leadNumber = "",
+      tradeLicenseNo = "",
+      email = ""
+    } = payload;
+
     const inputParam = {
-      applicantName: payload.fname || "",
-      countryCode: payload.countryCode || "",
-      mobileNo: payload.mobileNo || "",
-      leadNumber: payload.leadNumber || "",
-      tradeLicenseNo: payload.tradeLicenseNo || "",
-      email: payload.email || "",
+      applicantName: fname.toUpperCase(),
+      countryCode,
+      mobileNo,
+      leadNumber,
+      tradeLicenseNo,
+      email: email.toLowerCase(),
       eidNumber: ""
     };
     const response = yield call(search.searchApplication, inputParam, headers);
