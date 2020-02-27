@@ -127,6 +127,7 @@ apiClient.interceptors.response.use(
     }
 
     let notificationOptions = {};
+    let lockByROAgentException = "";
 
     if (jsonData) {
       const { errors, errorType } = jsonData;
@@ -134,7 +135,12 @@ apiClient.interceptors.response.use(
         store.dispatch(setError(errors));
         notificationOptions = { title: "ReCaptchaError", message: errors };
       } else if (status === 400 && errors) {
-        store.dispatch(setInputsErrors(errors));
+        if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+          lockByROAgentException = errors[0].message;
+          notificationOptions = null;
+        } else {
+          store.dispatch(setInputsErrors(errors));
+        }
         if (errorType === "FieldsValidation") {
           notificationOptions = {
             title: "Validation Error On Server",
@@ -162,6 +168,7 @@ apiClient.interceptors.response.use(
         }
       }
     }
+    error.lockByROAgentException = lockByROAgentException;
 
     if (notificationOptions) {
       NotificationsManager.add && NotificationsManager.add(notificationOptions);
