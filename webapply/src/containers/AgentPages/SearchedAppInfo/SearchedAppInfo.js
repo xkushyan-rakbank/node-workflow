@@ -66,7 +66,7 @@ export const SearchedAppInfoComponent = ({
   const isDisabled =
     get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
     get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT ||
-    get(prospectInfo, "status.statusType") === STATUS_FORCE_STOP;
+    get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
 
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
