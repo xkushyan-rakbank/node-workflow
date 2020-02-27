@@ -5,8 +5,9 @@ import { ContainedButton } from "./ContainedButton";
 const styles = {
   buttonStyle: {
     width: "145px",
-    height: "40px",
-    borderRadius: "21px ",
+    minHeight: 40,
+    borderRadius: "21px",
+    padding: "8px 20px",
     backgroundColor: "#3b3a3a",
     fontFamily: "Open Sans, sans-serif",
     lineHeight: "normal",
