@@ -47,7 +47,8 @@ export const useStyles = makeStyles(theme => ({
     position: "relative",
     margin: "40px 0 30px 0",
     [theme.breakpoints.only("xs")]: {
-      marginTop: 20
+      marginTop: 20,
+      marginBottom: -15
     },
     "& th, & td": {
       borderBottom: "none",

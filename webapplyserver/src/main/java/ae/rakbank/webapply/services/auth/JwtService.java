@@ -63,6 +63,7 @@ class JwtService {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     JwtPayload decrypt(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);

@@ -19,7 +19,9 @@ export const useDisplayScreenBasedOnViewId = () => {
     prospect => {
       const newApplicationInfo = prospect ? prospect.applicationInfo : applicationInfo;
       const viewId = newApplicationInfo.viewId || routes.companyInfo.replace(smeBaseName, "");
-      const isSubmit = newApplicationInfo.actionType === ACTION_TYPES.submit;
+      const isSubmit =
+        newApplicationInfo.actionType === ACTION_TYPES.submit &&
+        newApplicationInfo.viewId === VIEW_IDS.SubmitApplication;
       const isRetrieveMode = newApplicationInfo.retrieveMode;
       const isEditRedirect = location.pathname.includes(VIEW_IDS.SearchedAppInfo);
 
@@ -28,7 +30,7 @@ export const useDisplayScreenBasedOnViewId = () => {
         url = isRetrieveMode
           ? routes.ApplicationSubmitted
           : `${smeBaseName}${newApplicationInfo.reUploadDocuments}`;
-      } else if (isEditRedirect || viewId === VIEW_IDS.SubmitApplication) {
+      } else if (isEditRedirect || viewId === VIEW_IDS.ApplicationSubmitted) {
         url = routes.companyInfo;
       }
 

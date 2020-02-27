@@ -27,6 +27,7 @@ export const useStyles = makeStyles(theme => ({
       fontSize: 38
     },
     [theme.breakpoints.only("xs")]: {
+      width: 310,
       marginBottom: 10,
       fontSize: 32,
       lineHeight: "36px"

@@ -2,6 +2,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
 
 export const useStyles = makeStyles(theme => ({
+  formControlRoot: {
+    zIndex: "unset"
+  },
   input: {
     display: "flex",
     padding: 0,

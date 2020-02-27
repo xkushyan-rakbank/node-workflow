@@ -22,13 +22,14 @@ export const useStyles = makeStyles(theme => ({
     },
     "& img": {
       maxWidth: "100%",
+      objectFit: "contain",
       [theme.breakpoints.only("sm")]: {
         width: 440
       }
     },
     [theme.breakpoints.only("xs")]: {
       height: "auto",
-      flexWrap: "wrap",
+      flexDirection: "column-reverse",
       "& img": {
         margin: "20px auto 0"
       }
