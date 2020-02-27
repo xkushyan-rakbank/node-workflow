@@ -15,7 +15,10 @@
 
 	<appender name="Console"
 		class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
+		<layout class="ae.rakbank.webapply.component.PatternMaskingLayout">
+			<maskPattern>${passwordLog}</maskPattern>
+			<maskPattern>${passwordJson}</maskPattern>
+			<maskPattern>${clientSecret}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 	</appender>
@@ -23,10 +26,13 @@
 	<appender name="RollingFile"
 			  class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${infoLogsDir}/${logging.file.name}.log</file>
-		<encoder
-				class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+		<layout
+				class="ae.rakbank.webapply.component.PatternMaskingLayout">
+			<maskPattern>${passwordLog}</maskPattern>
+			<maskPattern>${passwordJson}</maskPattern>
+			<maskPattern>${clientSecret}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
-		</encoder>
+		</layout>
 
 		<rollingPolicy
 				class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -48,10 +54,13 @@
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
-		<encoder
-			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+		<layout
+				class="ae.rakbank.webapply.component.PatternMaskingLayout">
+			<maskPattern>${passwordLog}</maskPattern>
+			<maskPattern>${passwordJson}</maskPattern>
+			<maskPattern>${clientSecret}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
-		</encoder>
+		</layout>
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -73,10 +82,13 @@
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
-		<encoder
-				class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+		<layout
+				class="ae.rakbank.webapply.component.PatternMaskingLayout">
+			<maskPattern>${passwordLog}</maskPattern>
+			<maskPattern>${passwordJson}</maskPattern>
+			<maskPattern>${clientSecret}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
-		</encoder>
+		</layout>
 
 		<rollingPolicy
 				class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -98,10 +110,13 @@
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
-		<encoder
-				class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+		<layout
+				class="ae.rakbank.webapply.component.PatternMaskingLayout">
+			<maskPattern>${passwordLog}</maskPattern>
+			<maskPattern>${passwordJson}</maskPattern>
+			<maskPattern>${clientSecret}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
-		</encoder>
+		</layout>
 
 		<rollingPolicy
 				class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
