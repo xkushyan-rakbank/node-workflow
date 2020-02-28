@@ -18,7 +18,8 @@ import java.time.format.DateTimeFormatter;
 @RestControllerAdvice
 public class AdviceController extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ApiException.class})
+    @SuppressWarnings("Duplicates")
+    @ExceptionHandler({ ApiException.class })
     public ResponseEntity<Object> handleApiException(ApiException apiException) {
 
         HttpHeaders headers;
@@ -54,6 +55,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         throw e;
     }
 
+    @SuppressWarnings("Duplicates")
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleException(Exception exception) {
 

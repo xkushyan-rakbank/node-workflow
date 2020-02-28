@@ -12,7 +12,7 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 import { formatJsonData } from "./formatJsonData";
-import { IGNORE_ERROR_CODES } from "../constants";
+import { IGNORE_ERROR_CODES, RO_EDIT_APP_ERROR_MESSAGE } from "../constants";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const REQUEST_ID_HEADER = "x-request-id";
@@ -127,6 +127,7 @@ apiClient.interceptors.response.use(
     }
 
     let notificationOptions = {};
+    let lockByROAgentException = "";
 
     if (jsonData) {
       const { errors, errorType } = jsonData;
@@ -134,7 +135,15 @@ apiClient.interceptors.response.use(
         store.dispatch(setError(errors));
         notificationOptions = { title: "ReCaptchaError", message: errors };
       } else if (status === 400 && errors) {
-        store.dispatch(setInputsErrors(errors));
+        if (
+          IGNORE_ERROR_CODES.includes(errors[0].errorCode) ||
+          errors[0].message === RO_EDIT_APP_ERROR_MESSAGE
+        ) {
+          lockByROAgentException = errors[0].message;
+          notificationOptions = null;
+        } else {
+          store.dispatch(setInputsErrors(errors));
+        }
         if (errorType === "FieldsValidation") {
           notificationOptions = {
             title: "Validation Error On Server",
@@ -162,6 +171,7 @@ apiClient.interceptors.response.use(
         }
       }
     }
+    error.lockByROAgentException = lockByROAgentException;
 
     if (notificationOptions) {
       NotificationsManager.add && NotificationsManager.add(notificationOptions);

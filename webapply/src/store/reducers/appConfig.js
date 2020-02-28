@@ -117,6 +117,7 @@ const appConfigReducer = (state = initialState, action) => {
     case RESET_APPLICANT_INFO:
       return {
         ...state,
+        authorizationToken: null,
         prospect: {
           ...state.prospect,
           applicantInfo: {

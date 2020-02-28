@@ -24,7 +24,6 @@ import {
   MAX_EXPERIENCE_YEARS_LENGTH,
   EXPERIENCE_YEARS_REGEX
 } from "../../../../../../utils/validation";
-import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -80,7 +79,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
           return (
             <Form>
               <Grid container spacing={3} className={classes.flexContainer}>
-                <Grid item md={6} sm={12}>
+                <Grid item md={6} xs={12}>
                   <Field
                     name="qualification"
                     path={`${basePath}.kycDetails.qualification`}
@@ -91,7 +90,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     tabIndex="0"
                   />
                 </Grid>
-                <Grid item md={6} sm={12}>
+                <Grid item md={6} xs={12}>
                   <Field
                     name="employmentType"
                     path={`${basePath}.employmentDetails.employmentType`}
@@ -138,8 +137,9 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                   />
                 </Grid>
                 <Grid item sm={12}>
-                  <FinalQuestionField
+                  <Field
                     name={`isWorkAtTheCompany${index}`}
+                    path={`${basePath}.employmentDetails.isPersonWorkAtCompany`}
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
                     onSelect={() => {

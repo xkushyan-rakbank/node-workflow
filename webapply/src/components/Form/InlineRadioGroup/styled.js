@@ -21,5 +21,8 @@ export const useStyles = makeStyles({
   },
   label: {
     marginRight: "42px"
+  },
+  disabledLabel: {
+    color: "#86868b"
   }
 });

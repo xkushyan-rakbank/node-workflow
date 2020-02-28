@@ -48,7 +48,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       {({ values }) => (
         <Form>
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="residenceCountry"
                 path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
@@ -60,7 +60,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 tabIndex="0"
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="eidNumber"
                 path={eidNumberPath}

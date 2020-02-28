@@ -33,6 +33,7 @@ import {
   getAccountType,
   getIsIslamicBanking
 } from "../selectors/appConfig";
+import { setLockStatusByROAgent } from "../actions/searchProspect";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
@@ -43,7 +44,8 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  SUBMIT
+  SUBMIT,
+  RO_EDIT_APP_ERROR_MESSAGE
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 
@@ -152,6 +154,10 @@ function* sendProspectToAPI({ newProspect, saveType }) {
       yield put(sendProspectToAPISuccess(newProspect));
     }
   } catch (error) {
+    const { lockByROAgentException } = error;
+    if (lockByROAgentException && lockByROAgentException === RO_EDIT_APP_ERROR_MESSAGE) {
+      yield put(setLockStatusByROAgent(true));
+    }
     log({ error });
     yield put(sendProspectToAPIFail(error));
   }

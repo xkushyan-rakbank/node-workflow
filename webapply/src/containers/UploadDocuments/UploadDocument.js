@@ -7,9 +7,11 @@ import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
+import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
 
 export const UploadDocument = ({
   retrieveDocDetails,
+  isLoading,
   documents,
   history,
   uploadedDocsCount,
@@ -35,7 +37,9 @@ export const UploadDocument = ({
       <p className="formDescription">
         Remember we asked you to have the papers ready? Now it’s time to upload them.
       </p>
-      {documents && (
+      {isLoading ? (
+        <DocumentsSkeleton />
+      ) : (
         <>
           <div className={classes.sectionContainer}>
             <SectionTitle title="Company documents" className={classes.title} />

@@ -29,7 +29,13 @@ export const signatorySourceOfFundsSchema = Yup.object().shape({
       })
     )
     .required(getRequiredMessage("Source of funds")),
-  others: Yup.string().matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
+  others: Yup.string()
+    .matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
+    .when("sourceOfWealth", {
+      is: sourceOfWealth =>
+        sourceOfWealth.map(value => value.wealthType).includes(OTHER_SOURCE_OF_WEALTH),
+      then: Yup.string().required()
+    })
 });
 
 export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
@@ -53,7 +59,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
         {({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item md={12} sm={12}>
+              <Grid item md={12} xs={12}>
                 <Field
                   multiple
                   name="sourceOfWealth"
