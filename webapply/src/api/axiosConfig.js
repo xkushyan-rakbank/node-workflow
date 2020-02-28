@@ -136,6 +136,7 @@ apiClient.interceptors.response.use(
       } else if (status === 400 && errors) {
         if (errors[0].errorCode === RO_LOCKED_ERROR_CODE) {
           serverError = new ROError(jsonData);
+          notificationOptions = null;
         } else if (errorType === "FieldsValidation") {
           serverError = new FieldsValidationError(jsonData);
           notificationOptions = {
