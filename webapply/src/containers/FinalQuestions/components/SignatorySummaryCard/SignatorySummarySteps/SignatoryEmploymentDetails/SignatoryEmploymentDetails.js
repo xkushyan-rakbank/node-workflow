@@ -20,7 +20,7 @@ import {
 import {
   EMPLOYMENT_TYPE_REGEX,
   COMPANY_NAME_SPEC_CHAR_REGEX,
-  DESIGNATION_REGEX,
+  ALPHA_NUMERIC_SPECIAL_REGEX,
   MAX_EXPERIENCE_YEARS_LENGTH,
   EXPERIENCE_YEARS_REGEX
 } from "../../../../../../utils/validation";
@@ -49,7 +49,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
     .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Employer name")),
   designation: Yup.string()
     .required(getRequiredMessage("Designation"))
-    .matches(DESIGNATION_REGEX, getInvalidMessage("Designation"))
+    .matches(ALPHA_NUMERIC_SPECIAL_REGEX, getInvalidMessage("Designation"))
 });
 
 export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handleContinue }) => {
