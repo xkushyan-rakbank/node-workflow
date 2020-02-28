@@ -73,7 +73,7 @@ export const REQUEST_FAILED = "error";
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
-export const RO_LOCKED_ERROR_CODE = "101";
+export const RO_LOCKED_ERROR_CODE = "12013";
 export const APPS_NOT_FOUND_ERROR_CODE = "12009";
 export const IGNORE_ERROR_CODES = [APPS_NOT_FOUND_ERROR_CODE, RO_LOCKED_ERROR_CODE];
 export const APP_COMPLETED_SCREENING_STATUS = "Completed";
