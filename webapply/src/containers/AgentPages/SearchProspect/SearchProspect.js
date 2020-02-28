@@ -44,7 +44,7 @@ const searchProspectSchema = Yup.object({
       )
   }),
   email: Yup.string().email(getInvalidMessage("Email")),
-  raktrackNumber: Yup.string()
+  leadNumber: Yup.string()
     .max(20, "Maximum 20 characters allowed")
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("RAKtrack Lead Reference Number")),
   tradeLicenseNo: Yup.string()
