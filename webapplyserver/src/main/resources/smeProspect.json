@@ -187,9 +187,7 @@
 				"country": ""
 			}
 		],
-		"isShareholderACompany": false,
-		"isDontHaveSuppliersYet": false,
-  		"isDontTradeGoodsYet": false
+		"isShareholderACompany": false
 	},
 	"signatoryInfo": [
 		{
@@ -284,8 +282,7 @@
 				"employerName": "",
 				"occupation": "",
 				"totalExperienceYrs": 0,
-				"employmentStartDate": "",
-				"isPersonWorkAtCompany": false
+				"employmentStartDate": ""
 			},
 			"sameAsCompanyAddress": false,
 			"addressInfo": [
