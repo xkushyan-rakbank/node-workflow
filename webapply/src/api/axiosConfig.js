@@ -3,8 +3,6 @@ import get from "lodash/get";
 import nanoid from "nanoid";
 
 import { store } from "../store";
-import { setInputsErrors } from "../store/actions/serverValidation";
-import { setError } from "../store/actions/reCaptcha";
 import { setAccessToken } from "../store/actions/appConfig";
 
 import { NotificationsManager } from "../components/Notification";
@@ -12,7 +10,8 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 import { formatJsonData } from "./formatJsonData";
-import { IGNORE_ERROR_CODES, RO_EDIT_APP_ERROR_MESSAGE } from "../constants";
+import { IGNORE_ERROR_CODES, RO_LOCKED_ERROR_CODE } from "../constants";
+import { ROError, ReCaptchaError, FieldsValidationError } from "./serverErrors";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const REQUEST_ID_HEADER = "x-request-id";
@@ -127,24 +126,19 @@ apiClient.interceptors.response.use(
     }
 
     let notificationOptions = {};
-    let lockByROAgentException = "";
+    let serverError = null;
 
     if (jsonData) {
       const { errors, errorType } = jsonData;
       if (status === 400 && errorType === "ReCaptchaError") {
-        store.dispatch(setError(errors));
+        serverError = new ReCaptchaError(jsonData);
         notificationOptions = { title: "ReCaptchaError", message: errors };
       } else if (status === 400 && errors) {
-        if (
-          IGNORE_ERROR_CODES.includes(errors[0].errorCode) ||
-          errors[0].message === RO_EDIT_APP_ERROR_MESSAGE
-        ) {
-          lockByROAgentException = errors[0].message;
+        if (errors[0].errorCode === RO_LOCKED_ERROR_CODE) {
+          serverError = new ROError(jsonData);
           notificationOptions = null;
-        } else {
-          store.dispatch(setInputsErrors(errors));
-        }
-        if (errorType === "FieldsValidation") {
+        } else if (errorType === "FieldsValidation") {
+          serverError = new FieldsValidationError(jsonData);
           notificationOptions = {
             title: "Validation Error On Server",
             message: get(jsonData, "errors[0].message", "Validation Error")
@@ -171,12 +165,12 @@ apiClient.interceptors.response.use(
         }
       }
     }
-    error.lockByROAgentException = lockByROAgentException;
 
-    if (notificationOptions) {
-      NotificationsManager.add && NotificationsManager.add(notificationOptions);
+    if (notificationOptions && NotificationsManager.add) {
+      NotificationsManager.add(notificationOptions);
     }
-    return Promise.reject(error);
+
+    return Promise.reject(serverError || error);
   }
 );
 

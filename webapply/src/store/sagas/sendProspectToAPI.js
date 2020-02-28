@@ -34,7 +34,7 @@ import {
   getIsIslamicBanking
 } from "../selectors/appConfig";
 import { setLockStatusByROAgent } from "../actions/searchProspect";
-import { resetInputsErrors } from "../actions/serverValidation";
+import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
 import {
@@ -44,10 +44,10 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  SUBMIT,
-  RO_EDIT_APP_ERROR_MESSAGE
+  SUBMIT
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
+import { ROError, FieldsValidationError } from "../../api/serverErrors";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -158,12 +158,14 @@ function* sendProspectToAPI({ newProspect, saveType }) {
       yield put(sendProspectToAPISuccess(newProspect));
     }
   } catch (error) {
-    const { lockByROAgentException } = error;
-    if (lockByROAgentException && lockByROAgentException === RO_EDIT_APP_ERROR_MESSAGE) {
+    if (error instanceof ROError) {
       yield put(setLockStatusByROAgent(true));
+    } else if (error instanceof FieldsValidationError) {
+      yield put(setInputsErrors(error.getInputsErrors()));
+    } else {
+      log({ error });
+      yield put(sendProspectToAPIFail(error));
     }
-    log({ error });
-    yield put(sendProspectToAPIFail(error));
   }
 }
 
