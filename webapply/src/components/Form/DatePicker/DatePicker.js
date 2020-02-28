@@ -54,22 +54,21 @@ export const DatePicker = ({
   const datePickerRef = useRef();
   const actionRef = useRef();
 
-  const scrollTo = top => {
-    window.scrollTo(0, top);
-  };
-
   const scrollIntoView = () => {
-    const menuRect = datePickerRef.current
-      .querySelector("[role='document']")
-      .getBoundingClientRect();
-    const focusedRect = dateInputRef.current.getBoundingClientRect();
-    const overScroll = dateInputRef.current.offsetHeight / 3;
-    const { offsetTop, clientHeight } = dateInputRef.current;
-    const { offsetHeight } = datePickerRef.current;
+    // const menuEl = datePickerRef.current;
+    const focusedEl = dateInputRef.current;
+    // const menuRect = menuEl.querySelector("[role='document']").getBoundingClientRect();
+    const focusedRect = focusedEl.getBoundingClientRect();
+    // const overScroll = focusedRect.offsetHeight / 3;
 
-    if (focusedRect.bottom + overScroll > menuRect.bottom) {
-      const top = offsetTop + clientHeight - offsetHeight + overScroll;
-      scrollTo(Math.max(top, datePickerRef.current.scrollHeight));
+    if (window.scrollY + focusedRect.bottom + 270 > window.scrollY + window.innerHeight) {
+      window.scrollTo(
+        0,
+        window.scrollY +
+          (window.scrollY + focusedRect.bottom + 270) -
+          (window.scrollY + window.innerHeight) +
+          20
+      ); //get diff
 
       setTimeout(() => {
         actionRef.current && actionRef.current.updatePosition();
