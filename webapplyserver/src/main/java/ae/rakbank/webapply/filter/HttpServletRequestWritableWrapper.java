@@ -21,9 +21,7 @@ public class HttpServletRequestWritableWrapper extends HttpServletRequestWrapper
     @Override
     public String getHeader(String headerName) {
         String headerValue = super.getHeader(headerName);
-        if ("Accept".equalsIgnoreCase(headerName)) {
-            return headerValue.replaceAll(MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE);
-        } else if ("Content-Type".equalsIgnoreCase(headerName)) {
+        if ("Accept".equalsIgnoreCase(headerName) || "Content-Type".equalsIgnoreCase(headerName)) {
             return headerValue.replaceAll(MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE);
         }
         return headerValue;
@@ -63,6 +61,7 @@ public class HttpServletRequestWritableWrapper extends HttpServletRequestWrapper
 
             @Override
             public void setReadListener(ReadListener listener) {
+                //not used
             }
         };
     }
