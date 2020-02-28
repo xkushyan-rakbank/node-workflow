@@ -30,7 +30,6 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
 const companyBusinessRelationshipsSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
@@ -88,10 +87,6 @@ export const CompanyBusinessRelationshipsComponent = ({
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
-  const isDontHaveSuppliersYet =
-    topSuppliers.length === 1 && !topSuppliers[0].name && !topSuppliers[0].country;
-  const isDontTradeGoodsYet =
-    topOriginGoodsCountries.length === 1 && !topOriginGoodsCountries[0].length;
 
   const handleSubmit = useCallback(() => {
     handleContinue();
@@ -102,13 +97,13 @@ export const CompanyBusinessRelationshipsComponent = ({
       <Formik
         initialValues={{
           topCustomers: topCustomers.map(item => ({ ...item, id: uniqueId() })),
-          isDontHaveSuppliersYet,
+          isDontHaveSuppliersYet: false,
           topSuppliers: topSuppliers.map(item => ({ ...item, id: uniqueId() })),
           topOriginGoodsCountries: topOriginGoodsCountries.map(item => ({
             country: item,
             id: uniqueId()
           })),
-          isDontTradeGoodsYet,
+          isDontTradeGoodsYet: false,
           otherBankingRelationshipsInfo: {
             otherBankingRelationshipsExist: false,
             otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
@@ -163,7 +158,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopCustomers ? 5 : 6}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -207,8 +202,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top suppliers</h4>
-                    <FinalQuestionField
+                    <Field
                       name="isDontHaveSuppliersYet"
+                      path="prospect.orgKYCDetails.isDontHaveSuppliersYet"
                       label="I don't have any suppliers"
                       component={Checkbox}
                       onSelect={() => {
@@ -263,7 +259,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopSuppliers ? 5 : 6}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -311,8 +307,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top origin of goods</h4>
-                    <FinalQuestionField
+                    <Field
                       name="isDontTradeGoodsYet"
+                      path="prospect.orgKYCDetails.isDontTradeGoodsYet"
                       label="I don't trade with goods"
                       component={Checkbox}
                       onSelect={() => {
@@ -338,7 +335,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopOriginGoodsCountries ? 10 : 12}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field

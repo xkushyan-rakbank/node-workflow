@@ -59,7 +59,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
         {({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item md={12} sm={12}>
+              <Grid item md={12} xs={12}>
                 <Field
                   multiple
                   name="sourceOfWealth"
