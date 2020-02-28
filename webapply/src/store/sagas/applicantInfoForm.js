@@ -48,7 +48,7 @@ function* applicantInfoFormSaga({ payload }) {
     yield put(applicantInfoFormSuccess());
   } catch (error) {
     if (error instanceof FieldsValidationError) {
-      yield put(setInputsErrors(error.getAxiosError()));
+      yield put(setInputsErrors(error.getInputsErrors()));
     } else {
       yield put(applicantInfoFormFail(error));
       log(error);

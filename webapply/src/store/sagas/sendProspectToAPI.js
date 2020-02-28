@@ -157,7 +157,7 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     if (error instanceof ROError) {
       yield put(setLockStatusByROAgent(true));
     } else if (error instanceof FieldsValidationError) {
-      yield put(setInputsErrors(error.getAxiosError()));
+      yield put(setInputsErrors(error.getInputsErrors()));
     } else {
       log({ error });
       yield put(sendProspectToAPIFail(error));

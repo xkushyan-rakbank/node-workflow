@@ -30,4 +30,3 @@ export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", 
 
 export const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n);
 export const checkIsTrimmed = (value = "") => value.length === value.trim().length;
-export const replaceDollarsAndDot = (str = "") => str.replace(/\$+ |\.$/g, "");

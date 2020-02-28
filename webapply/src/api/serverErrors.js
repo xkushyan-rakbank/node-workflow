@@ -4,7 +4,6 @@ export const ERROR_TYPES = {
   OTHER: "Other"
 };
 
-// util for easy construct error instances
 class CustomError extends Error {
   constructor(error) {
     super(error);
@@ -13,12 +12,11 @@ class CustomError extends Error {
     this.errorType = error.errorType;
     this.errors = error.errors;
   }
-  getAxiosError() {
+  getInputsErrors() {
     return this.errors;
   }
 }
 
 export class ReCaptchaError extends CustomError {}
 export class FieldsValidationError extends CustomError {}
-export class OtherError extends CustomError {}
 export class ROError extends CustomError {}
