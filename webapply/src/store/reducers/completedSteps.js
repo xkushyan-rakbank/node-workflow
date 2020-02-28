@@ -1,16 +1,13 @@
-import get from "lodash/get";
-
 import { handleActions } from "../../utils/redux-utils";
 import { SET_STEP_STATUS, SET_INITIAL_STEPS, REMOVE_SIGNATORY } from "../actions/completedSteps";
-import { GET_PROSPECT_INFO_SUCCESS } from "../actions/retrieveApplicantInfo";
+import { LOAD_META_DATA } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
 
 export const initialState = [];
 
 const completedSteps = handleActions(
   {
-    [GET_PROSPECT_INFO_SUCCESS]: (state, { payload: { prospect } }) => {
-      const json = get(prospect, "freeFieldsInfo.freeField5");
+    [LOAD_META_DATA]: (state, { payload: json }) => {
       if (!json) {
         return state;
       }

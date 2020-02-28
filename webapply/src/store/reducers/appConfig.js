@@ -13,7 +13,6 @@ import {
   RESET_APPLICANT_INFO
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
-import { GET_PROSPECT_INFO_SUCCESS } from "../actions/retrieveApplicantInfo";
 
 export const initialState = {
   loading: false,
@@ -129,18 +128,6 @@ const appConfigReducer = (state = initialState, action) => {
           }
         }
       };
-    case GET_PROSPECT_INFO_SUCCESS: {
-      return {
-        ...state,
-        prospect: {
-          ...state.prospect,
-          freeFieldsInfo: {
-            ...(state.prospect.freeFieldsInfo || {}),
-            freeField5: ""
-          }
-        }
-      };
-    }
     default:
       return state;
   }
