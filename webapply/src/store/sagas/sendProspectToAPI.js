@@ -97,9 +97,13 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
     const prospect = getProspect(state);
 
     const newProspect = cloneDeep(prospect);
-    newProspect.freeFieldsInfo.freeField5 = JSON.stringify({
-      completedSteps: state.completedSteps
-    });
+    // TODO: Waitnig DEH API changes
+    /*
+    newProspect.freeFieldsInfo = {
+      ...(newProspect.freeFieldsInfo || {}),
+      freeField5: JSON.stringify({ completedSteps: state.completedSteps })
+    };
+    */
 
     yield put(sendProspectRequest(saveType, newProspect));
   } finally {

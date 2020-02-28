@@ -35,7 +35,9 @@ function* getProspectIdInfo({ payload }) {
     const config = { prospect };
 
     yield put(setConfig(config));
-    yield put(loadMetaData(freeFieldsInfo));
+    if (freeFieldsInfo) {
+      yield put(loadMetaData(freeFieldsInfo));
+    }
 
     const stakeholdersIds = config.prospect.signatoryInfo.map(() => ({
       id: uniqueId(),
