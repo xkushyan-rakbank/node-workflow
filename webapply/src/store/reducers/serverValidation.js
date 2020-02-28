@@ -1,5 +1,6 @@
 import * as actions from "../actions/serverValidation";
 import routes from "./../../routes";
+import { replaceDollarsAndDot } from "../../utils/validation";
 
 export const initialState = {
   inputs: {}
@@ -11,7 +12,10 @@ const serverErrorsReducer = (state = initialState, action) => {
       return {
         ...state,
         inputs: action.payload.reduce((acc, item) => {
-          acc[composeInputKeyFromValidationData(item)] = item;
+          acc[composeInputKeyFromValidationData(item)] = {
+            ...item,
+            message: replaceDollarsAndDot(item.message)
+          };
           return acc;
         }, {})
       };

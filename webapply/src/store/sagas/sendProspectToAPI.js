@@ -33,7 +33,7 @@ import {
   getIsIslamicBanking
 } from "../selectors/appConfig";
 import { setLockStatusByROAgent } from "../actions/searchProspect";
-import { resetInputsErrors } from "../actions/serverValidation";
+import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
 import {
@@ -46,7 +46,7 @@ import {
   SUBMIT
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
-import { ROError } from "../../api/serverErrors";
+import { ROError, FieldsValidationError } from "../../api/serverErrors";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -150,9 +150,12 @@ function* sendProspectToAPI({ newProspect, saveType }) {
   } catch (error) {
     if (error instanceof ROError) {
       yield put(setLockStatusByROAgent(true));
+    } else if (error instanceof FieldsValidationError) {
+      yield put(setInputsErrors(error.getAxiosError()));
+    } else {
+      log({ error });
+      yield put(sendProspectToAPIFail(error));
     }
-    log({ error });
-    yield put(sendProspectToAPIFail(error));
   }
 }
 

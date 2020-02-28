@@ -3,8 +3,6 @@ import get from "lodash/get";
 import nanoid from "nanoid";
 
 import { store } from "../store";
-import { setInputsErrors } from "../store/actions/serverValidation";
-import { setError } from "../store/actions/reCaptcha";
 import { setAccessToken } from "../store/actions/appConfig";
 
 import { NotificationsManager } from "../components/Notification";
@@ -13,7 +11,14 @@ import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 import { formatJsonData } from "./formatJsonData";
 import { IGNORE_ERROR_CODES, RO_EDIT_APP_ERROR_MESSAGE } from "../constants";
-import { ROError } from "./serverErrors";
+import {
+  ROError,
+  ReCaptchaError,
+  FieldsValidationError,
+  ERROR_TYPES,
+  OtherError
+} from "./serverErrors";
+import { replaceDollarsAndDot } from "../utils/validation";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const REQUEST_ID_HEADER = "x-request-id";
@@ -128,59 +133,62 @@ apiClient.interceptors.response.use(
     }
 
     let notificationOptions = {};
+    let serverError = null;
 
-    try {
-      if (jsonData) {
-        const { errors, errorType } = jsonData;
-        if (status === 400 && errorType === "ReCaptchaError") {
-          store.dispatch(setError(errors));
-          notificationOptions = { title: "ReCaptchaError", message: errors };
-        } else if (status === 400 && errors) {
-          if (
-            IGNORE_ERROR_CODES.includes(errors[0].errorCode) ||
-            errors[0].message === RO_EDIT_APP_ERROR_MESSAGE
-          ) {
-            notificationOptions = null;
-            throw new ROError(errors[0].message);
-          } else {
-            store.dispatch(setInputsErrors(errors));
-          }
-          if (errorType === "FieldsValidation") {
+    if (jsonData) {
+      const { errors, errorType } = jsonData;
+      const errorMessage = get(errors, "[0].message", "");
+      const errorCode = get(errors, "[0].errorCode", "");
+      const isLockStatusByROAgent =
+        IGNORE_ERROR_CODES.includes(errorCode) || errorMessage === RO_EDIT_APP_ERROR_MESSAGE;
+
+      if (IGNORE_ERROR_CODES.includes(errorCode)) {
+        notificationOptions = null;
+      } else if (status === 400) {
+        switch (errorType) {
+          case ERROR_TYPES.RECAPTCHA:
+            serverError = new ReCaptchaError(jsonData);
+            notificationOptions = { title: "ReCaptchaError", message: errorMessage || errors };
+            break;
+          case ERROR_TYPES.VALIDATION:
+            serverError = new FieldsValidationError(jsonData);
             notificationOptions = {
               title: "Validation Error On Server",
-              message: get(jsonData, "errors[0].message", "Validation Error")
+              message: replaceDollarsAndDot(errorMessage) || "Validation Error"
             };
-          }
-        } else {
-          log(jsonData);
-          try {
-            if (jsonData.status) {
-              if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
-                notificationOptions = null;
-              } else {
-                const errorMessages = errors.map(({ message }) => message);
-                const debugNotificationOptions = formatJsonData(jsonData);
-
-                notificationOptions = {
-                  message: errorMessages.join(", "),
-                  ...debugNotificationOptions
-                };
-              }
+            break;
+          case ERROR_TYPES.OTHER:
+            if (isLockStatusByROAgent) {
+              serverError = new ROError(jsonData);
+              notificationOptions = null;
+            } else {
+              serverError = new OtherError(jsonData);
             }
-          } catch (e) {
-            log(e);
-          }
+            break;
+          default:
+            break;
+        }
+      } else {
+        log(jsonData);
+        try {
+          const errorMessages = errors.map(({ message }) => message);
+          const debugNotificationOptions = formatJsonData(jsonData);
+
+          notificationOptions = {
+            message: errorMessages.join(", "),
+            ...debugNotificationOptions
+          };
+        } catch (e) {
+          log(e);
         }
       }
-
-      if (notificationOptions) {
-        NotificationsManager.add && NotificationsManager.add(notificationOptions);
-      }
-    } catch (e) {
-      return Promise.reject(e);
     }
 
-    return Promise.reject(error);
+    if (notificationOptions) {
+      NotificationsManager.add && NotificationsManager.add(notificationOptions);
+    }
+
+    return Promise.reject(serverError || error);
   }
 );
 
