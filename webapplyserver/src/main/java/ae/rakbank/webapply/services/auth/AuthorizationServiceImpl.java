@@ -4,7 +4,6 @@ import ae.rakbank.webapply.client.OauthClient;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.dto.UserRole;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.services.AuthorizationService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -96,16 +95,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public String getAndUpdateContextOauthToken() {
         return oAuthService.getAndUpdateContextOauthToken();
-    }
-
-    @Override
-    public String getOauthTokenFromJwt(String jwtToken) {
-        return jwtService.decrypt(jwtToken).getOauthAccessToken();
-    }
-
-    @Override
-    public String getTokenFromAuthorizationHeader(String authorizationString) {
-        return authorizationString.substring(7); // removes the "Bearer " prefix.
     }
 
     @Override
