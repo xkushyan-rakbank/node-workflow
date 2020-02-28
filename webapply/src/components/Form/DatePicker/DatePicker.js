@@ -69,7 +69,7 @@ export const DatePicker = ({
         0,
         scrollY + (scrollY + bottom + offsetHeight) - (scrollY + innerHeight) + INTENT_BOTTOM_PX
       );
-      actionRef.current.updatePosition();
+      actionRef.current && actionRef.current.updatePosition();
     }
   };
 
