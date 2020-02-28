@@ -8,16 +8,14 @@ export const initialState = [];
 const completedSteps = handleActions(
   {
     [LOAD_META_DATA]: (state, { payload: json }) => {
-      if (!json) {
-        return state;
-      }
+      if (json) {
+        try {
+          const { completedSteps } = JSON.parse(json);
 
-      try {
-        const { completedSteps } = JSON.parse(json);
-
-        return completedSteps;
-      } catch (err) {
-        log(err);
+          return completedSteps;
+        } catch (err) {
+          log(err);
+        }
       }
 
       return state;
