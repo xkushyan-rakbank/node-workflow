@@ -21,8 +21,7 @@ import {
   EMPLOYMENT_TYPE_REGEX,
   COMPANY_NAME_SPEC_CHAR_REGEX,
   DESIGNATION_REGEX,
-  MAX_EXPERIENCE_YEARS_LENGTH,
-  EXPERIENCE_YEARS_REGEX
+  MAX_EXPERIENCE_YEARS_LENGTH
 } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
@@ -34,9 +33,7 @@ import { useStyles } from "./styled";
 export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   qualification: Yup.string().required(getRequiredMessage("Qualification")),
   employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
-  totalExperienceYrs: Yup.string()
-    .required(getRequiredMessage("Number of years of experience"))
-    .matches(EXPERIENCE_YEARS_REGEX, getInvalidMessage("Number of years of experience")),
+  totalExperienceYrs: Yup.string().required(getRequiredMessage("Number of years of experience")),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
