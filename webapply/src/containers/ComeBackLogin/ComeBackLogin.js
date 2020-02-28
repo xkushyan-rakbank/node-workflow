@@ -49,13 +49,9 @@ const comebackSchema = Yup.object({
           MIN_NON_UAE_PHONE_LENGTH,
           `${getInvalidMessage("Your Mobile Number")} (min length is not reached)`
         )
-        .test(
-          "length validation",
-          `${getInvalidMessage("Your Mobile Number")}  (max length exceeded)`,
-          function() {
-            const { countryCode = "", mobileNo = "" } = this.parent;
-            return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-          }
+        .max(
+          MAX_NON_UAE_PHONE_LENGTH,
+          `${getInvalidMessage("Your Mobile Number")} (max length exceeded)`
         )
     })
 });

@@ -34,14 +34,7 @@ const searchProspectSchema = Yup.object({
         MIN_NON_UAE_PHONE_LENGTH,
         `${getInvalidMessage("Mobile Number")} (min length is not reached)`
       )
-      .test(
-        "length validation",
-        `${getInvalidMessage("Mobile Number")} (max length exceeded)`,
-        function() {
-          const { countryCode = "", mobileNo = "" } = this.parent;
-          return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-        }
-      )
+      .max(MAX_NON_UAE_PHONE_LENGTH, `${getInvalidMessage("Mobile Number")} (max length exceeded)`)
   }),
   email: Yup.string().email(getInvalidMessage("Email")),
   raktrackNumber: Yup.string()

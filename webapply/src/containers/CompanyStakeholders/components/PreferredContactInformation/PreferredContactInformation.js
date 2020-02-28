@@ -40,15 +40,9 @@ const preferredContactInformationSchema = Yup.object().shape({
           MIN_NON_UAE_PHONE_LENGTH,
           `${getInvalidMessage("Mobile number")} (min length is not reached)`
         )
-        .test(
-          "length validation",
-          `${getInvalidMessage("Mobile number")} (max length exceeded)`,
-          function() {
-            const { primaryMobCountryCode = "", primaryMobileNo = "" } = this.parent;
-            return (
-              primaryMobCountryCode.length + primaryMobileNo.length <= MAX_NON_UAE_PHONE_LENGTH
-            );
-          }
+        .max(
+          MAX_NON_UAE_PHONE_LENGTH,
+          `${getInvalidMessage("Mobile number")} (max length exceeded)`
         )
     }),
   primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
@@ -60,13 +54,9 @@ const preferredContactInformationSchema = Yup.object().shape({
         MIN_NON_UAE_PHONE_LENGTH,
         `${getInvalidMessage("Landline number")} (min length is not reached)`
       )
-      .test(
-        "length validation",
-        `${getInvalidMessage("Landline number")} (max length exceeded)`,
-        function() {
-          const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
-          return primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-        }
+      .max(
+        MAX_NON_UAE_PHONE_LENGTH,
+        `${getInvalidMessage("Landline number")} (max length exceeded)`
       )
   })
 });

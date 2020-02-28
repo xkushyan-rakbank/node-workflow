@@ -6,7 +6,7 @@ export const ALPHA_NUMERIC_SPECIAL_REGEX = /^([a-zA-Z0-9- !@#$%^&*()_+=`~{}[\]|'
 export const UAE_MOBILE_PHONE_REGEX = /^[0-9]{9}$/;
 export const UAE_LANDLINE_PHONE_REGEX = /^[0-9]{8}$/;
 export const MIN_NON_UAE_PHONE_LENGTH = 4;
-export const MAX_NON_UAE_PHONE_LENGTH = 22;
+export const MAX_NON_UAE_PHONE_LENGTH = 15;
 export const MAX_NAME_IN_BUSINESS_LENGTH = 19;
 export const MAX_EXPERIENCE_YEARS_LENGTH = 255;
 

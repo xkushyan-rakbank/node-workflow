@@ -100,15 +100,9 @@ const signingPreferencesSchema = Yup.object({
             MIN_NON_UAE_PHONE_LENGTH,
             `${getInvalidMessage("Landline number")} (min length is not reached)`
           )
-          .test(
-            "length validation",
-            `${getInvalidMessage("Landline number")} (max length exceeded)`,
-            function() {
-              const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
-              return (
-                primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH
-              );
-            }
+          .max(
+            MAX_NON_UAE_PHONE_LENGTH,
+            `${getInvalidMessage("Landline number")} (max length exceeded)`
           )
       })
     })
