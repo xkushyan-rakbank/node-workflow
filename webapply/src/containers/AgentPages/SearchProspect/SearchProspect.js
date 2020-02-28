@@ -137,7 +137,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
             <Grid container spacing={3}>
               <Grid item md={6} sm={12}>
                 <Field
-                  name="raktrackNumber"
+                  name="leadNumber"
                   path="searchInfo.raktrackNumber"
                   label="RAKtrack Lead Reference Number"
                   placeholder="RAKtrack Lead Reference Number"
