@@ -11,5 +11,5 @@ export const setInitialSteps = steps => {
 };
 
 export const removeSignatory = signatoryId => {
-  return { type: REMOVE_SIGNATORY, signatoryId };
+  return { type: REMOVE_SIGNATORY, payload: { signatoryId } };
 };

@@ -12,8 +12,9 @@ import {
   actionChannel,
   flush
 } from "redux-saga/effects";
-import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
+import cloneDeep from "lodash/cloneDeep";
 
+import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -93,7 +94,12 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
     yield put(resetFormStep({ resetStep: true }));
 
     const state = yield select();
-    const newProspect = getProspect(state);
+    const prospect = getProspect(state);
+
+    const newProspect = cloneDeep(prospect);
+    newProspect.freeFieldsInfo.freeField5 = JSON.stringify({
+      completedSteps: state.completedSteps
+    });
 
     yield put(sendProspectRequest(saveType, newProspect));
   } finally {
