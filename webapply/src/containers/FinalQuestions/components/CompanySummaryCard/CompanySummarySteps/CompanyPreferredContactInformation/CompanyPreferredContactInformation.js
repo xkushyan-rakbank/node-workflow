@@ -39,7 +39,7 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
           MIN_NON_UAE_PHONE_LENGTH,
           `${getInvalidMessage("Mobile number")} (min length is not reached)`
         )
-        .test(
+        .max(
           MAX_NON_UAE_PHONE_LENGTH,
           `${getInvalidMessage("Mobile number")} (max length exceeded)`
         )
