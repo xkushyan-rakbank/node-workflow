@@ -40,6 +40,7 @@ const CompanyStakeholdersComponent = ({
   hasSignatories,
   datalist,
   sendProspectToAPI,
+  isLoading,
   setEditStakeholder
 }) => {
   const pushHistory = useTrackingHistory();
@@ -150,7 +151,7 @@ const CompanyStakeholdersComponent = ({
           );
         })}
       </div>
-      {isShowingAddButton && (
+      {isShowingAddButton && !isLoading && (
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
@@ -180,7 +181,9 @@ const CompanyStakeholdersComponent = ({
 
 const mapStateToProps = state => {
   const { editableStakeholder, stakeholdersIds } = stakeholdersState(state);
+
   return {
+    isLoading: state.sendProspectToAPI.loading,
     datalist: getDatalist(state),
     editableStakeholder,
     stakeholdersIds,
