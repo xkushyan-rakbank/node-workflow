@@ -31,6 +31,8 @@ class LocalizedUtils extends DateFnsUtils {
   }
 }
 
+const INTENT_BOTTOM_PX = 20;
+
 export const DatePicker = ({
   field,
   label,
@@ -55,24 +57,19 @@ export const DatePicker = ({
   const actionRef = useRef();
 
   const scrollIntoView = () => {
-    // const menuEl = datePickerRef.current;
+    const menuEl = datePickerRef.current;
     const focusedEl = dateInputRef.current;
-    // const menuRect = menuEl.querySelector("[role='document']").getBoundingClientRect();
-    const focusedRect = focusedEl.getBoundingClientRect();
-    // const overScroll = focusedRect.offsetHeight / 3;
 
-    if (window.scrollY + focusedRect.bottom + 270 > window.scrollY + window.innerHeight) {
+    const { offsetHeight } = menuEl.querySelector("[role='document']");
+    const { bottom } = focusedEl.getBoundingClientRect();
+    const { scrollY, innerHeight } = window;
+
+    if (scrollY + bottom + offsetHeight > scrollY + innerHeight) {
       window.scrollTo(
         0,
-        window.scrollY +
-          (window.scrollY + focusedRect.bottom + 270) -
-          (window.scrollY + window.innerHeight) +
-          20
-      ); //get diff
-
-      setTimeout(() => {
-        actionRef.current && actionRef.current.updatePosition();
-      }, 330);
+        scrollY + (scrollY + bottom + offsetHeight) - (scrollY + innerHeight) + INTENT_BOTTOM_PX
+      );
+      actionRef.current.updatePosition();
     }
   };
 
