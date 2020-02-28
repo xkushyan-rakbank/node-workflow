@@ -1,7 +1,7 @@
 package ae.rakbank.webapply.controller;
 
 import ae.rakbank.webapply.client.DehClient;
-import ae.rakbank.webapply.services.AuthorizationService;
+import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.services.RecaptchaService;
 import ae.rakbank.webapply.services.otp.OtpService;
 import ae.rakbank.webapply.util.EnvUtil;
@@ -72,7 +72,7 @@ public class WebApplyController {
     }
 
     @PostMapping(value = "/otp", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<?> generateVerifyOTP(HttpServletRequest httpRequest,
+    public ResponseEntity<Object> generateVerifyOTP(HttpServletRequest httpRequest,
                                                @RequestBody JsonNode requestJSON,
                                                boolean captchaVerified) {
         boolean isRecaptchaTokenPresent = requestJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY);
@@ -88,7 +88,7 @@ public class WebApplyController {
 
         ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(HttpStatus.OK);
 
-        return optService.verifyOrGenerate(httpRequest, requestJSON)
+        return optService.verifyOrGenerate(requestJSON)
                 .ifVerifySuccessThen(() -> responseBuilder.header(JWT_TOKEN_KEY, issueJwtToken(requestJSON)))
                 .execute(response -> responseBuilder.body(response.getBody()));
     }
@@ -98,7 +98,7 @@ public class WebApplyController {
     }
 
     @PostMapping(value = "/users/authenticate", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<?> login(HttpServletRequest httpRequest,
+    public ResponseEntity<Object> login(HttpServletRequest httpRequest,
                                    @RequestBody JsonNode requestBodyJSON) {
 
         log.info("Begin login() method");
@@ -108,7 +108,7 @@ public class WebApplyController {
 
         String url = dehBaseUrl + dehURIs.get("authenticateUserUri").asText();
 
-        final ResponseEntity<?> dehResponse = dehClient.invokeApiEndpoint(httpRequest, url, HttpMethod.POST, requestBodyJSON,
+        final ResponseEntity<?> dehResponse = dehClient.invokeApiEndpoint(url, HttpMethod.POST, requestBodyJSON,
                 "login()", MediaType.APPLICATION_JSON, null);
 
         ResponseEntity.BodyBuilder response = ResponseEntity.status(dehResponse.getStatusCode());

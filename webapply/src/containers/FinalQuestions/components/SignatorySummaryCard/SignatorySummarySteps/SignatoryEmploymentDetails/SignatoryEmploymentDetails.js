@@ -20,10 +20,10 @@ import {
 import {
   EMPLOYMENT_TYPE_REGEX,
   COMPANY_NAME_SPEC_CHAR_REGEX,
-  DESIGNATION_REGEX,
-  MAX_EXPERIENCE_YEARS_LENGTH,
-  EXPERIENCE_YEARS_REGEX
+  ALPHA_NUMERIC_SPECIAL_REGEX,
+  MAX_EXPERIENCE_YEARS_LENGTH
 } from "../../../../../../utils/validation";
+import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -36,7 +36,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
   totalExperienceYrs: Yup.string()
     .required(getRequiredMessage("Number of years of experience"))
-    .matches(EXPERIENCE_YEARS_REGEX, getInvalidMessage("Number of years of experience")),
+    .matches(ALPHA_NUMERIC_SPECIAL_REGEX, getInvalidMessage("Number of years of experience")),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
@@ -48,7 +48,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
     .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Employer name")),
   designation: Yup.string()
     .required(getRequiredMessage("Designation"))
-    .matches(DESIGNATION_REGEX, getInvalidMessage("Designation"))
+    .matches(ALPHA_NUMERIC_SPECIAL_REGEX, getInvalidMessage("Designation"))
 });
 
 export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handleContinue }) => {
@@ -137,9 +137,8 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                   />
                 </Grid>
                 <Grid item sm={12}>
-                  <Field
+                  <FinalQuestionField
                     name={`isWorkAtTheCompany${index}`}
-                    path={`${basePath}.employmentDetails.isPersonWorkAtCompany`}
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
                     onSelect={() => {

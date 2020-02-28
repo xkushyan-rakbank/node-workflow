@@ -8,6 +8,7 @@ public class AuthConstants {
     public static final String OAUTH_CONTEXT_EXPIRED_TIME_KEY = "context_expired_time";
     public static final String JWT_TOKEN_KEY = "AccessToken";
     public static final String RECAPTCHA_TOKEN_REQUEST_KEY = "recaptchaToken";
+    public static final String BEARER_TOKEN_PREFIX = "Bearer ";
 
     private AuthConstants() {
     }
