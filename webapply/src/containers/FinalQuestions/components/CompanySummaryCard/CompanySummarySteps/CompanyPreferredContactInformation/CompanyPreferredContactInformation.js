@@ -33,7 +33,8 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
     .email(getInvalidMessage("Primary e-mail address")),
   primaryPhoneNo: Yup.string().phoneNo({
     codeFieldName: "primaryPhoneCountryCode",
-    fieldName: "Landline number"
+    fieldName: "Landline number",
+    isLandline: true
   })
 });
 

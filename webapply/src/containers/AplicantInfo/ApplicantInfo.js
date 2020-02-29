@@ -36,7 +36,7 @@ const aplicantInfoSchema = Yup.object({
     .email(getInvalidMessage("Your E-mail Address")),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
-    .required("Your Mobile Number")
+    .required(getRequiredMessage("Your Mobile Number"))
     .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
 });
 
