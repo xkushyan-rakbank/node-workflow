@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form, FieldArray, getIn } from "formik";
@@ -40,33 +40,42 @@ const nationalitySchema = Yup.object().shape({
   )
 });
 
+const createAddCitizenshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => () => {
+  const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
+  const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
+
+  if (!value) {
+    arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
+  } else {
+    values.passportDetails.forEach((el, index) => index >= passportIndex && arrayHelper.pop());
+  }
+  setFieldValue(name, !value);
+};
+
+const isAdditionalCitizenshipDisabled = (values, passportIndex, errors) => {
+  return (
+    !(
+      getIn(values, `passportDetails[${passportIndex}].country`, false) &&
+      getIn(values, `passportDetails[${passportIndex}].passportNumber`, false)
+    ) || !!getIn(errors, `passportDetails[${passportIndex}].passportNumber`, false)
+  );
+};
+
 export const NationalityStep = ({ index, passportDetails, handleContinue, updateProspect }) => {
   const classes = useStyles();
 
-  const createAddCitizenshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => () => {
-    const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
-    const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
+  const kycDetailsPath = `prospect.signatoryInfo[${index}].kycDetails`;
 
-    if (!value) {
-      arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
-    } else {
-      values.passportDetails.forEach((el, index) => index >= passportIndex && arrayHelper.pop());
-    }
-    setFieldValue(name, !value);
-  };
-
-  const isAdditionalCitizenshipDisabled = (values, passportIndex, errors) => {
-    return (
-      !(
-        getIn(values, `passportDetails[${passportIndex}].country`, false) &&
-        getIn(values, `passportDetails[${passportIndex}].passportNumber`, false)
-      ) || !!getIn(errors, `passportDetails[${passportIndex}].passportNumber`, false)
-    );
-  };
+  const submitForm = useCallback(() => {
+    updateProspect({
+      [`${kycDetailsPath}.dualCitizenshipCountry`]: passportDetails.map(p => p.country).slice(1)
+    });
+    handleContinue();
+  }, [handleContinue, updateProspect, index, passportDetails]);
 
   return (
     <Formik
-      onSubmit={handleContinue}
+      onSubmit={submitForm}
       initialValues={{
         passportDetails: passportDetails.map(item => ({ ...item, id: uniqueId() }))
       }}
@@ -81,14 +90,14 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
               render={arrayHelper =>
                 values.passportDetails.map((item, passportIndex) => {
                   // eslint-disable-next-line max-len
-                  const passportDetails = `prospect.signatoryInfo[${index}].kycDetails.passportDetails[${passportIndex}]`;
+                  const passportDetailsPath = `${kycDetailsPath}.passportDetails[${passportIndex}]`;
                   return (
                     <React.Fragment key={item.id}>
                       {!!passportIndex && <Grid item sm={12} className={classes.divider} />}
                       <Grid item md={6} sm={12}>
                         <Field
                           name={`passportDetails[${passportIndex}].country`}
-                          path={`${passportDetails}.country`}
+                          path={`${passportDetailsPath}.country`}
                           label="Nationality"
                           component={SelectAutocomplete}
                           datalistId="country"
@@ -106,7 +115,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
 
                             return {
                               ...prospect,
-                              [`prospect.signatoryInfo[${index}].kycDetails.nationality`]: value
+                              [`${kycDetailsPath}.nationality`]: value
                             };
                           }}
                           shrink={true}
@@ -115,7 +124,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                         {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
                           <Field
                             name={`passportDetails[${passportIndex}].hasAnotherCitizenship`}
-                            path={`${passportDetails}.hasAnotherCitizenship`}
+                            path={`${passportDetailsPath}.hasAnotherCitizenship`}
                             label="This person has another citizenship"
                             component={Checkbox}
                             onChange={createAddCitizenshipHandler(
@@ -126,10 +135,10 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                             )}
                             changeProspect={prospect => ({
                               ...prospect,
-                              // eslint-disable-next-line max-len
-                              [`prospect.signatoryInfo[${index}].kycDetails.passportDetails`]: values.passportDetails.map(
+                              [`${kycDetailsPath}.passportDetails`]: values.passportDetails.map(
                                 ({ id, ...withoutId }) => withoutId
-                              )
+                              ),
+                              [`${kycDetailsPath}.dualCitizenship`]: !!passportIndex
                             })}
                             disabled={isAdditionalCitizenshipDisabled(
                               values,
@@ -143,7 +152,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                       <Grid item md={6} sm={12}>
                         <Field
                           name={`passportDetails[${passportIndex}].passportNumber`}
-                          path={`${passportDetails}.passportNumber`}
+                          path={`${passportDetailsPath}.passportNumber`}
                           label="Passport number"
                           component={Input}
                           contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
@@ -157,7 +166,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                         />
                         <Field
                           name={`passportDetails[${passportIndex}].diplomatPassport`}
-                          path={`${passportDetails}.diplomatPassport`}
+                          path={`${passportDetailsPath}.diplomatPassport`}
                           label="This is a diplomatic passport"
                           component={Checkbox}
                           inputProps={{ tabIndex: 2 * passportIndex + 2 }}
