@@ -9,7 +9,6 @@ import {
   getScreeningError
 } from "../../store/selectors/appConfig";
 import { updateViewId } from "../../store/actions/appConfig";
-import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
 import { setLockStatusByROAgent } from "../../store/actions/searchProspect";
 import { FormLayoutComponent } from "./FormLayout";
 
@@ -22,7 +21,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   updateViewId,
-  resetScreeningError,
   setLockStatusByROAgent
 };
 
