@@ -46,7 +46,7 @@ function* getProspectIdInfo({ payload }) {
     }));
 
     yield put(updateStakeholdersIds(stakeholdersIds));
-    yield put(actions.getProspectInfoSuccess(config));
+    yield put(actions.getProspectInfoSuccess(config.prospect));
   } catch (error) {
     log(error);
     yield put(actions.getProspectInfoFail());

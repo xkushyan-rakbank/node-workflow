@@ -27,7 +27,7 @@ export const getProspectInfoPromisify = prospectId => {
 };
 
 export const getProspectInfoSuccess = prospect => {
-  return { type: GET_PROSPECT_INFO_SUCCESS, payload: prospect };
+  return { type: GET_PROSPECT_INFO_SUCCESS, payload: { prospect } };
 };
 
 export const getProspectInfoFail = error => {
