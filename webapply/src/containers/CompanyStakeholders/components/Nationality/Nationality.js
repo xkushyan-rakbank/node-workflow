@@ -71,7 +71,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
       [`${kycDetailsPath}.dualCitizenshipCountry`]: passportDetails.map(p => p.country).slice(1)
     });
     handleContinue();
-  }, [handleContinue, updateProspect, index, passportDetails]);
+  }, [handleContinue, updateProspect, passportDetails, kycDetailsPath]);
 
   return (
     <Formik
