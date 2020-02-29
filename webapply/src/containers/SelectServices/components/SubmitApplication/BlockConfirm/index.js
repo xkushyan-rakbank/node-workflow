@@ -78,6 +78,7 @@ export const BlockConfirm = ({ setFormFields }) => {
 
             <Field
               name="needCommunication"
+              path="prospect.channelServicesInfo.marketingSMS"
               label={needCommunicationLabel}
               component={Checkbox}
               inputProps={{ tabIndex: 0 }}
