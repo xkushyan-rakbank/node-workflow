@@ -9,7 +9,7 @@ export const ERRORS_TYPE = {
   DEDUPE: "Dedupe Check",
   VIRTUAL_CURRENCIES: "Virtual Currency Check",
   NOT_ELIGIBLE: "RAKStarter Account Check",
-  NOT_REGISTERED: "CountryOfIncorporation Check",
+  NOT_REGISTERED: "Country Of Incorporation Check",
   BIG_COMPANY: "ShareHolderCount Check",
   BLACKLIST: "Blacklist Check",
   COMPANY_AS_STAKEHOLDER: "IsShareHolderACompany Check"

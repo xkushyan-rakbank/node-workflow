@@ -40,7 +40,6 @@ import { prospect } from "../../api/apiClient";
 import {
   APP_STOP_SCREEN_RESULT,
   screeningStatus,
-  APP_COMPLETED_SCREENING_STATUS,
   screeningStatusDefault,
   CONTINUE,
   AUTO,
@@ -62,8 +61,8 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const currScreeningType = preScreening.screeningResults.find(
-    screeningResult => screeningResult.screeningStatus !== APP_COMPLETED_SCREENING_STATUS
+  const currScreeningType = preScreening.screeningResults.find(screeningResult =>
+    ["Decline", "Match"].includes(screeningResult.screeningReason)
   );
 
   const screenError = screeningStatus.find(
