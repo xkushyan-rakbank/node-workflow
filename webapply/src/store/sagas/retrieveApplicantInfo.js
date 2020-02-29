@@ -31,8 +31,8 @@ function* getProspectIdInfo({ payload }) {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
-    const { freeFieldsInfo, ...prospect } = response.data;
-    const config = { prospect };
+    const config = { prospect: response.data };
+    const freeFieldsInfo = config.prospect.freeFieldsInfo;
 
     yield put(setConfig(config));
     if (freeFieldsInfo) {
