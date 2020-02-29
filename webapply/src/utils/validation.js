@@ -1,3 +1,7 @@
+import * as Yup from "yup";
+import { getInvalidMessage } from "./getValidationMessage";
+import { UAE_CODE } from "../constants";
+
 export const USER_NAME_REGEX = /^([a-zA-Z0-9.]){1,65}$/;
 export const PASSWORD_REGEX = /^([a-zA-Z0-9#@_]){1,30}$/;
 export const NAME_REGEX = /^([a-zA-Z ])+$/;
@@ -30,3 +34,26 @@ export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", 
 
 export const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n);
 export const checkIsTrimmed = (value = "") => value.length === value.trim().length;
+
+export const addPhoneNoValidationToYup = () => {
+  Yup.addMethod(Yup.string, "phoneNo", function({
+    fieldName = "Mobile Number",
+    codeFieldName = "countryCode",
+    isLandline = false
+  }) {
+    return this.when(codeFieldName, {
+      is: countryCode => countryCode === UAE_CODE,
+      then: Yup.string().matches(
+        isLandline ? UAE_LANDLINE_PHONE_REGEX : UAE_MOBILE_PHONE_REGEX,
+        getInvalidMessage(fieldName)
+      ),
+      otherwise: Yup.string()
+        .matches(NUMBER_REGEX, getInvalidMessage(fieldName))
+        .min(
+          MIN_NON_UAE_PHONE_LENGTH,
+          `${getInvalidMessage(fieldName)} (min length is not reached)`
+        )
+        .max(MAX_NON_UAE_PHONE_LENGTH, `${getInvalidMessage(fieldName)} (max length exceeded)`)
+    });
+  });
+};

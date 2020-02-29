@@ -5,14 +5,7 @@ import * as Yup from "yup";
 import omit from "lodash/omit";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "../../../components/Form";
-import {
-  NUMBER_REGEX,
-  MIN_NON_UAE_PHONE_LENGTH,
-  MAX_NON_UAE_PHONE_LENGTH,
-  NAME_REGEX,
-  ALPHANUMERIC_REGEX,
-  UAE_MOBILE_PHONE_REGEX
-} from "../../../utils/validation";
+import { NAME_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_EMAIL_LENGTH } from "./constants";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { SearchResult } from "../SearchResult";
@@ -25,17 +18,7 @@ const searchProspectSchema = Yup.object({
   fname: Yup.string()
     .max(30, "Maximum 30 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
-  mobileNo: Yup.string().when("countryCode", {
-    is: countryCode => countryCode === UAE_CODE,
-    then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, `${getInvalidMessage("Mobile Number")}`),
-    otherwise: Yup.string()
-      .matches(NUMBER_REGEX, `${getInvalidMessage("Mobile Number")} (wrong characters)`)
-      .min(
-        MIN_NON_UAE_PHONE_LENGTH,
-        `${getInvalidMessage("Mobile Number")} (min length is not reached)`
-      )
-      .max(MAX_NON_UAE_PHONE_LENGTH, `${getInvalidMessage("Mobile Number")} (max length exceeded)`)
-  }),
+  mobileNo: Yup.string().phoneNo({ codeFieldName: "countryCode", fieldName: "Mobile Number" }),
   email: Yup.string().email(getInvalidMessage("Email")),
   raktrackNumber: Yup.string()
     .max(20, "Maximum 20 characters allowed")

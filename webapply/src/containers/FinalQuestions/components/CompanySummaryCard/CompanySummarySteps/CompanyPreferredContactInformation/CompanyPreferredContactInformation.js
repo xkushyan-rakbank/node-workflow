@@ -11,13 +11,7 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { InfoTitle } from "../../../../../../components/InfoTitle";
-import {
-  UAE_MOBILE_PHONE_REGEX,
-  UAE_LANDLINE_PHONE_REGEX,
-  NUMBER_REGEX,
-  MIN_NON_UAE_PHONE_LENGTH,
-  MAX_NON_UAE_PHONE_LENGTH
-} from "../../../../../../utils/validation";
+import { addPhoneNoValidationToYup } from "../../../../../../utils/validation";
 import { UAE_CODE } from "../../../../../../constants";
 import {
   getRequiredMessage,
@@ -26,41 +20,20 @@ import {
 
 import { useStyles } from "./styled";
 
+addPhoneNoValidationToYup();
+
 const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
   primaryMobileNo: Yup.string()
     .required(getRequiredMessage("Mobile number"))
-    .when("primaryMobCountryCode", {
-      is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Mobile number")),
-      otherwise: Yup.string()
-        .matches(NUMBER_REGEX, getInvalidMessage("Mobile number"))
-        .min(
-          MIN_NON_UAE_PHONE_LENGTH,
-          `${getInvalidMessage("Mobile number")} (min length is not reached)`
-        )
-        .max(
-          MAX_NON_UAE_PHONE_LENGTH,
-          `${getInvalidMessage("Mobile number")} (max length exceeded)`
-        )
-    }),
+    .phoneNo({ codeFieldName: "primaryMobCountryCode", fieldName: "Mobile number" }),
   primaryEmail: Yup.string()
     .required(getRequiredMessage("Primary e-mail address"))
     .max(50, "Maximum 50 characters allowed")
     .email(getInvalidMessage("Primary e-mail address")),
-  primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
-    is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
-    then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, getInvalidMessage("Landline number")),
-    otherwise: Yup.string()
-      .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
-      .min(
-        MIN_NON_UAE_PHONE_LENGTH,
-        `${getInvalidMessage("Landline number")} (min length is not reached)`
-      )
-      .max(
-        MAX_NON_UAE_PHONE_LENGTH,
-        `${getInvalidMessage("Landline number")} (max length exceeded)`
-      )
+  primaryPhoneNo: Yup.string().phoneNo({
+    codeFieldName: "primaryPhoneCountryCode",
+    fieldName: "Landline number"
   })
 });
 

@@ -12,12 +12,6 @@ import {
   AutoSaveField as Field,
   SkeletonLoader
 } from "./../../components/Form";
-import {
-  UAE_MOBILE_PHONE_REGEX,
-  NUMBER_REGEX,
-  MIN_NON_UAE_PHONE_LENGTH,
-  MAX_NON_UAE_PHONE_LENGTH
-} from "./../../utils/validation";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
@@ -40,20 +34,7 @@ const comebackSchema = Yup.object({
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
-    .when("countryCode", {
-      is: countryCode => countryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Your Mobile Number")),
-      otherwise: Yup.string()
-        .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
-        .min(
-          MIN_NON_UAE_PHONE_LENGTH,
-          `${getInvalidMessage("Your Mobile Number")} (min length is not reached)`
-        )
-        .max(
-          MAX_NON_UAE_PHONE_LENGTH,
-          `${getInvalidMessage("Your Mobile Number")} (max length exceeded)`
-        )
-    })
+    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
 });
 
 const ComeBackLoginComponent = ({

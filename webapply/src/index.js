@@ -1,6 +1,5 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
-
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -11,8 +10,10 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { persistor, store } from "./store";
 import { tagManagerArgs } from "./constants/gtm";
+import { addPhoneNoValidationToYup } from "./utils/validation";
 
 TagManager.initialize(tagManagerArgs);
+addPhoneNoValidationToYup();
 
 ReactDOM.render(
   <Provider store={store}>
