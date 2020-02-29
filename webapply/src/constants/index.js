@@ -113,7 +113,7 @@ export const screeningStatus = [
   },
   {
     error: "Not Registered In UAE",
-    screeningType: "CountryOfIncorporation Check"
+    screeningType: "Country Of Incorporation Check"
   },
   {
     error: "Big Company",
@@ -204,7 +204,7 @@ export const VIRTUAL_CURRENCY_CHECK = {
   screeningReason: "No Match"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
-  screeningType: "CountryOfIncorporation Check",
+  screeningType: "Country Of Incorporation Check",
   screeningStatus: "Completed",
   screeningLabel: "Country of Incorporation",
   screeningReason: "No Match"
