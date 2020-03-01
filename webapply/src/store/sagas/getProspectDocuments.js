@@ -116,7 +116,14 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeholderIndex }) {
+function* uploadDocumentsBgSync({
+  data,
+  docProps,
+  docOwner,
+  documentKey,
+  stakeholderIndex,
+  userFileName
+}) {
   const source = CancelToken.source();
 
   try {
@@ -133,7 +140,7 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeho
 
     const documents = config.prospect.documents;
     const fileName = get(response, "data.fileName", "");
-    const additionalProps = { ...docProps, fileName };
+    const additionalProps = { ...docProps, fileName, fileDescription: userFileName };
 
     if (docOwner === COMPANY_DOCUMENTS) {
       const companyDocuments = documents[COMPANY_DOCUMENTS].map(

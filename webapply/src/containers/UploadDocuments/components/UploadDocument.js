@@ -73,6 +73,7 @@ export const UploadDocuments = ({
       documentType,
       documentKey,
       index,
+      userFileName: file.name,
       stakeholderIndex
     });
     setErrorMessage(null);
@@ -130,6 +131,8 @@ export const UploadDocuments = ({
             ? `Uploading ${document.documentTitle}`
             : isUploaded && selectedFile
             ? `${selectedFile.name}`
+            : isUploaded
+            ? document.fileDescription
             : document.documentTitle}
 
           {selectedFile && (
