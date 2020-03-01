@@ -15,7 +15,8 @@ export const MyApplications = () => {
 
   useEffect(() => {
     dispatch(searchApplications(inputParam));
-  }, [inputParam, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onGetProspectInfo = useCallback(
     prospectId =>
