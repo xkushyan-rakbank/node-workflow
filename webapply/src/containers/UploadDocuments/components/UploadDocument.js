@@ -92,7 +92,15 @@ export const UploadDocuments = ({
     cancelDocUpload(documentKey);
     setSelectedFile(null);
     sendProspectToAPI();
-  }, [cancelDocUpload, docOwner, documentKey, index, stakeholderIndex, updateProspect]);
+  }, [
+    cancelDocUpload,
+    docOwner,
+    documentKey,
+    index,
+    stakeholderIndex,
+    updateProspect,
+    sendProspectToAPI
+  ]);
 
   const reUploadHandler = useCallback(() => {
     inputEl.current.click();
