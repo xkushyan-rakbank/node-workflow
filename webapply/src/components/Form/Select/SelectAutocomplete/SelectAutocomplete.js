@@ -68,6 +68,7 @@ export const SelectAutocomplete = ({
           isMulti={multiple}
           isDisabled={disabled}
           closeMenuOnSelect={!multiple}
+          tabSelectsValue={!multiple}
           hideSelectedOptions={false}
           joinValues={true}
           delimiter=","
