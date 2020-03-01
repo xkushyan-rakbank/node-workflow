@@ -26,8 +26,8 @@ export const UploadDocument = ({
   }, [retrieveDocDetails]);
 
   const goToSelectService = () => {
-    sendProspectToAPI(NEXT).then(() => {
-      history.push(routes.selectServices);
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) history.push(routes.selectServices);
     });
   };
 

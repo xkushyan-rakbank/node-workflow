@@ -67,3 +67,9 @@ Open Issues / Refactor:
     * Add DocumentUploaderBaseUrl in `appConfig.json` under BaseURLs
     * Add docUploaderBaseUrl field in endpoints. Refer Line#281 in WebApplyController
     * Make the code change in Frontend to invoke the correct endpoint.
+
+## Logging settings:
+To enable masking for security sensitive data in log output add environment variable with name 
+_LOGGER_MASKING_FLAG_ with _true_ value, if you don't need mask data don't use this variable.
+
+example: `export LOGGER_MASKING_FLAG=true`

@@ -1,4 +1,4 @@
-import { WAIT_FOR_ACTION, ERROR_ACTION } from "redux-wait-for-action";
+import { WAIT_FOR_ACTION, ERROR_ACTION, CALLBACK_ARGUMENT } from "redux-wait-for-action";
 
 import { NEXT } from "../../constants";
 import { appendGaEventToAction } from "./googleAnalytics";
@@ -22,14 +22,15 @@ export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null) => {
     type: SEND_PROSPECT_TO_API,
     [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
     [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+    [CALLBACK_ARGUMENT]: action => action.payload,
     payload: { saveType }
   };
 
   return appendGaEventToAction(action, gaEvent);
 };
 
-export const sendProspectToAPISuccess = () => {
-  return { type: SEND_PROSPECT_TO_API_SUCCESS };
+export const sendProspectToAPISuccess = isScreeningError => {
+  return { type: SEND_PROSPECT_TO_API_SUCCESS, payload: isScreeningError };
 };
 
 export const sendProspectToAPIFail = error => {
