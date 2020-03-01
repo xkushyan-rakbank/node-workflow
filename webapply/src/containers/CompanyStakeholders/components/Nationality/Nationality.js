@@ -100,7 +100,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           path={`${passportDetailsPath}.country`}
                           label="Nationality"
                           component={SelectAutocomplete}
-                          datalistId="country"
+                          datalistId="nationality"
                           filterOptions={options => {
                             const nationalities = values.passportDetails
                               .filter((item, index) => item.country && index !== passportIndex)
