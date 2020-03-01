@@ -51,8 +51,8 @@ export const CompanyInfoPage = ({
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    sendProspectToAPI(NEXT).then(() => {
-      pushHistory(routes.stakeholdersInfo);
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.stakeholdersInfo);
     });
   }, [pushHistory, sendProspectToAPI]);
 

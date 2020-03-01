@@ -71,8 +71,8 @@ const CompanyStakeholdersComponent = ({
     !hasSignatories;
 
   const goToFinalQuestions = useCallback(() => {
-    sendProspectToAPI(NEXT).then(() => {
-      pushHistory(routes.finalQuestions);
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.finalQuestions);
     });
   }, [pushHistory, sendProspectToAPI]);
 

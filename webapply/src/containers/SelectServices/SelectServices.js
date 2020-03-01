@@ -26,8 +26,8 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
   );
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
-      sendProspectToAPI(NEXT).then(() => {
-        pushHistory(routes.SubmitApplication);
+      sendProspectToAPI(NEXT).then(isScreeningError => {
+        if (!isScreeningError) pushHistory(routes.SubmitApplication);
       });
       return;
     }
