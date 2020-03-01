@@ -39,6 +39,7 @@ import {
   getProspectDocumentsSuccess,
   getProspectDocumentsFail
 } from "../actions/getProspectDocuments";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
 import {
@@ -149,6 +150,7 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeho
     }
 
     yield put(setConfig(config));
+    yield put(sendProspectToAPIPromisify());
   } catch (error) {
     yield put(uploadFilesFail({ [documentKey]: { error } }));
   } finally {

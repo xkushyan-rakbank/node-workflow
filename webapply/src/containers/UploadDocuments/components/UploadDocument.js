@@ -31,7 +31,8 @@ export const UploadDocuments = ({
   cancelDocUpload,
   updateProspect,
   isApplyEditApplication,
-  prospectStatusInfo
+  prospectStatusInfo,
+  sendProspectToAPI
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -90,6 +91,7 @@ export const UploadDocuments = ({
     }
     cancelDocUpload(documentKey);
     setSelectedFile(null);
+    sendProspectToAPI();
   }, [cancelDocUpload, docOwner, documentKey, index, stakeholderIndex, updateProspect]);
 
   const reUploadHandler = useCallback(() => {
