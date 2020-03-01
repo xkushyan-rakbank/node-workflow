@@ -76,7 +76,7 @@ public class ApiError {
     private void setException(Throwable ex) {
         this.exceptionClassName = ex.getClass().getSimpleName();
         this.message = ex.getMessage();
-        this.stackTrace = ex.getStackTrace();
+        this.stackTrace = getReducedStackTrace(ex.getStackTrace());
     }
 
     public String toJsonString() {
@@ -87,5 +87,9 @@ public class ApiError {
             log.error("Failed to serialize ApiError object", e);
             return "Failed to serialize ApiError object, " + e.getMessage();
         }
+    }
+
+    private StackTraceElement[] getReducedStackTrace(StackTraceElement[] stackTrace) {
+        return new StackTraceElement[]{stackTrace[0], stackTrace[1], stackTrace[2], stackTrace[3], stackTrace[4]};
     }
 }
