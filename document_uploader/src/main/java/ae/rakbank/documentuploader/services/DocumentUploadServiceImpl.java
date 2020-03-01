@@ -6,6 +6,7 @@ import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.dto.FileDto;
 import ae.rakbank.documentuploader.exception.AmazonS3FileNotFoundException;
 import ae.rakbank.documentuploader.s3.S3FileUploader;
+import ae.rakbank.documentuploader.util.FileValidator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -32,6 +33,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
     private final S3FileUploader s3FileUploader;
     private final EnvironmentUtil environmentUtil;
+    private final FileValidator fileValidator;
 
     @Override
     public FileDto findOneByDocumentKey(String documentKey) {
@@ -43,6 +45,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     public ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
         log.info("[Begin] processUploadRequest() method, prospectId=%s, originalFilename={}, filesize={}, fileInfo= {}",
                 prospectId, file.getOriginalFilename(), file.getSize(), fileInfo);
+
+        fileValidator.validate(file);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode fileInfoJSON;
