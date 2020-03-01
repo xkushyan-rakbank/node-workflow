@@ -148,14 +148,16 @@ function* sendProspectToAPI({ newProspect, saveType }) {
 
     const { preScreening } = data;
 
-    if (preScreening && preScreening.statusOverAll === APP_STOP_SCREEN_RESULT) {
+    const isScreeningError = preScreening && preScreening.statusOverAll === APP_STOP_SCREEN_RESULT;
+
+    if (isScreeningError) {
       yield fork(setScreeningResults, data);
     } else {
       if (preScreening) {
         yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
       }
-      yield put(sendProspectToAPISuccess(newProspect));
     }
+    yield put(sendProspectToAPISuccess(isScreeningError));
   } catch (error) {
     if (error instanceof ROError) {
       yield put(setLockStatusByROAgent(true));
