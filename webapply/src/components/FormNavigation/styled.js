@@ -114,6 +114,9 @@ export const useStyles = makeStyles(theme => ({
         opacity: 0,
         transition: theme.transitions.default
       },
+      "& $formNavContent": {
+        pointerEvents: "auto"
+      },
       width: ({ smallMenu }) => (smallMenu ? sideNavWidthMD : sideNavWidthSM),
       "&:not(:hover):not(.active), &:not(.active):not(:hover)": {
         width: ({ smallMenu }) => (smallMenu ? sideNavWidthCollapsed : sideNavWidthSM),
@@ -122,6 +125,9 @@ export const useStyles = makeStyles(theme => ({
         },
         "& .small-menu-show": {
           opacity: ({ smallMenu }) => (smallMenu ? 1 : 0)
+        },
+        "& $formNavContent": {
+          pointerEvents: ({ smallMenu }) => (smallMenu ? "none" : "auto")
         },
         "&:before": {
           width: ({ smallMenu }) =>

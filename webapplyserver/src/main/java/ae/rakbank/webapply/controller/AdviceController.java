@@ -51,7 +51,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public void accessDeniedExceptionHandler(AccessDeniedException e) throws AccessDeniedException {
+    public void accessDeniedExceptionHandler(AccessDeniedException e) {
         throw e;
     }
 

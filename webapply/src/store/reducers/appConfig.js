@@ -12,8 +12,7 @@ import {
   SET_ACCESS_TOKEN,
   RESET_APPLICANT_INFO
 } from "../actions/appConfig";
-import { LOGOUT } from "../actions/loginForm";
-import { LOGIN_INFO_FORM_SUCCESS } from "../actions/loginForm";
+import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 
 export const initialState = {
   loading: false,
@@ -117,6 +116,7 @@ const appConfigReducer = (state = initialState, action) => {
     case RESET_APPLICANT_INFO:
       return {
         ...state,
+        authorizationToken: null,
         prospect: {
           ...state.prospect,
           applicantInfo: {

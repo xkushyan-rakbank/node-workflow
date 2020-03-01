@@ -8,9 +8,8 @@ import routes, { agentBaseName } from "./routes";
 import { history } from "./store";
 
 import { FormLayout } from "./containers/FormLayout";
-import { ServerRequestLoadingScreen } from "./components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
-
+import { ServerRequestLoadingScreen } from "./components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
 import { ProspectProtectedRoute } from "./components/Routers";
 import { AccountTypeProtectedRoute } from "./components/Routers/AccountTypeProtectedRoute";
