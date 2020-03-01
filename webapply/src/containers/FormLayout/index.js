@@ -15,7 +15,7 @@ import { FormLayoutComponent } from "./FormLayout";
 const mapStateToProps = state => ({
   screeningError: getScreeningError(state),
   accountType: getAccountType(state),
-  islamicBanking: getIsIslamicBanking(state),
+  isIslamicBanking: getIsIslamicBanking(state),
   isLockStatusByROAgent: getIsUserInformedROEditStatus(state)
 });
 
