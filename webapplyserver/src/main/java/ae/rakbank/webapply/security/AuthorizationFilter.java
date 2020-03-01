@@ -2,6 +2,8 @@ package ae.rakbank.webapply.security;
 
 import ae.rakbank.webapply.constants.AuthConstants;
 import ae.rakbank.webapply.dto.JwtPayload;
+import ae.rakbank.webapply.services.auth.AuthorizationService;
+import lombok.RequiredArgsConstructor;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.AuthorizationService;
 import org.apache.commons.lang3.StringUtils;
@@ -26,10 +28,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static ae.rakbank.webapply.constants.AuthConstants.BEARER_TOKEN_PREFIX;
+
+@RequiredArgsConstructor
 @Component
 class AuthorizationFilter extends GenericFilterBean {
 
-    public static final String BEARER_TOKEN_PREFIX = "Bearer ";
     private final AuthorizationService authorizationService;
     private final List<String> authorizationExcludedUrls;
 

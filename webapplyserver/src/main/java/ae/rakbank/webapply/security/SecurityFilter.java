@@ -5,9 +5,8 @@ import ae.rakbank.webapply.filter.ResponseWrapper;
 import ae.rakbank.webapply.response.GenericResponse;
 import ae.rakbank.webapply.util.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -17,23 +16,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class SecurityFilter implements Filter {
 
-    @Autowired
-    private SecurityUtil securityUtil;
-
-    private static final Logger logger = LoggerFactory.getLogger(SecurityFilter.class);
+    private final SecurityUtil securityUtil;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        logger.info("Filter initialized");
+        log.info("Filter initialized");
 
         if (skipEncryption((HttpServletRequest) request)) {
-            logger.info("Encryption skipped");
+            log.info("Encryption skipped");
             chain.doFilter(request, response);
         } else {
-            logger.info("Encryption enabled");
+            log.info("Encryption enabled");
             ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
             responseWrapper.setCharacterEncoding("UTF-8");
 
@@ -41,14 +39,14 @@ public class SecurityFilter implements Filter {
             byte[] decryptedData = null;
             SecretKeySpec spec = null;
 
-            if (randomKey != null) {
+            if (randomKey != null && randomKey.length > 0) {
                 spec = securityUtil.getSecretKeySpec(randomKey);
-                String dataToDecrypt = decrypt((HttpServletRequest) request);
+                String dataToDecrypt = decrypt(request);
                 decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));
             }
 
             String result;
-            if (decryptedData == null) {
+            if (decryptedData == null || decryptedData.length == 0) {
                 GenericResponse failed = GenericResponse.getFailedResponse(
                         "Error while reading request payload, encrypted payload should be passed", "");
                 ObjectMapper mapper = new ObjectMapper();
@@ -62,8 +60,10 @@ public class SecurityFilter implements Filter {
                 result = encrypt(responseWrapper, spec);
             }
 
-            response.setContentLength(result.length());
-            response.getWriter().write(result);
+            if (result != null) {
+                response.setContentLength(result.length());
+                response.getWriter().write(result);
+            }
         }
     }
 
@@ -71,7 +71,7 @@ public class SecurityFilter implements Filter {
         try {
             return securityUtil.encryptSymmetric(responseWrapper.getCaptureAsString(), spec);
         } catch (Exception e) {
-            logger.error("error while encryption {}", e.getMessage());
+            log.error("error while encryption {}", e.getMessage());
         }
         return null;
     }
@@ -86,7 +86,7 @@ public class SecurityFilter implements Filter {
             }
             return buffer.toString();
         } catch (Exception e) {
-            logger.error("error while decryption {}", e.getMessage());
+            log.error("error while decryption {}", e.getMessage());
         }
         return null;
     }
@@ -100,8 +100,8 @@ public class SecurityFilter implements Filter {
         try {
             return securityUtil.decryptAsymmetric(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
-        return null;
+        return new byte[0];
     }
 }

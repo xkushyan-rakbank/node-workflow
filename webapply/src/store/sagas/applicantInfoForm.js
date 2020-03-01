@@ -10,12 +10,13 @@ import {
   updateSaveType,
   updateActionType
 } from "../actions/appConfig";
-import { resetInputsErrors } from "./../actions/serverValidation";
+import { resetInputsErrors, setInputsErrors } from "./../actions/serverValidation";
 import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
 import { NEXT, SAVE } from "../../constants";
+import { FieldsValidationError } from "../../api/serverErrors";
 
 function* applicantInfoFormSaga({ payload }) {
   try {
@@ -46,8 +47,12 @@ function* applicantInfoFormSaga({ payload }) {
     yield put(resetInputsErrors());
     yield put(applicantInfoFormSuccess());
   } catch (error) {
-    yield put(applicantInfoFormFail(error));
-    log(error);
+    if (error instanceof FieldsValidationError) {
+      yield put(setInputsErrors(error.getInputsErrors()));
+    } else {
+      yield put(applicantInfoFormFail(error));
+      log(error);
+    }
   }
 }
 

@@ -10,3 +10,4 @@ export const getSearchResultById = state => {
   return (searchResults || []).find(item => item.prospectId === prospectId) || {};
 };
 export const getProspectStatus = state => get(getSearchResultById(state), "status.statusNotes");
+export const getIsUserInformedROEditStatus = state => state.searchProspect.isLockStatusByROAgent;

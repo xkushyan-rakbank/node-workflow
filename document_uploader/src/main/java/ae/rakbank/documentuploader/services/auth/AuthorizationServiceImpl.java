@@ -3,7 +3,6 @@ package ae.rakbank.documentuploader.services.auth;
 import ae.rakbank.documentuploader.dto.JwtPayload;
 import ae.rakbank.documentuploader.dto.UserRole;
 import ae.rakbank.documentuploader.exception.ApiException;
-import ae.rakbank.documentuploader.services.AuthorizationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

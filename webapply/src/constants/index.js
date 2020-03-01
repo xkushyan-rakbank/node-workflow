@@ -73,9 +73,9 @@ export const REQUEST_FAILED = "error";
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
-export const IGNORE_ERROR_CODES = ["12009"];
-export const APP_COMPLETED_SCREENING_STATUS = "Completed";
-export const APP_DECLINE_SCREEN_REASON = "Decline";
+export const RO_LOCKED_ERROR_CODE = "12013";
+export const APPS_NOT_FOUND_ERROR_CODE = "12009";
+export const IGNORE_ERROR_CODES = [APPS_NOT_FOUND_ERROR_CODE, RO_LOCKED_ERROR_CODE];
 
 export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
@@ -111,7 +111,7 @@ export const screeningStatus = [
   },
   {
     error: "Not Registered In UAE",
-    screeningType: "CountryOfIncorporation Check"
+    screeningType: "Country Of Incorporation Check"
   },
   {
     error: "Big Company",
@@ -202,7 +202,7 @@ export const VIRTUAL_CURRENCY_CHECK = {
   screeningReason: "No Match"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
-  screeningType: "CountryOfIncorporation Check",
+  screeningType: "Country Of Incorporation Check",
   screeningStatus: "Completed",
   screeningLabel: "Country of Incorporation",
   screeningReason: "No Match"

@@ -82,7 +82,7 @@ export const LicenseInformation = ({ handleContinue }) => {
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="licenseIssuingAuthority"
                 label="License issuing authority"
@@ -94,7 +94,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
               />
             </Grid>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="countryOfIncorporation"
                 label="Country of incorporation"

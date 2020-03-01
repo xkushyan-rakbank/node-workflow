@@ -5,23 +5,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class RsaKeyPairGenerator {
-    public static KeyPair generateKeyPair() throws Exception {
+
+    private RsaKeyPairGenerator() {
+    }
+
+    public static KeyPair generateKeyPair() throws NoSuchAlgorithmException {
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
         generator.initialize(2048, new SecureRandom());
-        KeyPair pair = generator.generateKeyPair();
-        return pair;
+        return generator.generateKeyPair();
     }
 
     public static void writeToFile(String path, byte[] key) throws IOException {
         File f = new File(path);
         f.getParentFile().mkdirs();
 
-        FileOutputStream fos = new FileOutputStream(f);
-        fos.write(key);
-        fos.flush();
-        fos.close();
+        try (FileOutputStream fos = new FileOutputStream(f)) {
+            fos.write(key);
+            fos.flush();
+        }
     }
 }
