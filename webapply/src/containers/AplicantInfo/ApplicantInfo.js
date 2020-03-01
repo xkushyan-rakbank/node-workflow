@@ -144,6 +144,7 @@ const ApplicantInfoPage = ({
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                changeProspect={(_, value, path) => ({ [path]: value.toUpperCase() })}
               />
             )}
 
