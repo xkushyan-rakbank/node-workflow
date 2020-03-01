@@ -11,7 +11,7 @@ import { useStyles } from "./styled";
 
 const WebChatComponent = lazy(() => import("./components/Chat"));
 
-const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
+const ChatComponent = ({ className, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
   const [{ isOpened, isClosed, isMinimized }, dispatch] = useWebChatState();
 
@@ -35,7 +35,7 @@ const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
               <img src={chatIcon} alt="chat" />
             </span>
           </div>
-          <div className="hide-on-mobile"> Chat with Us</div>
+          <div className="hide-on-mobile small-menu-hide"> Chat with Us</div>
         </div>
       </div>
     ),

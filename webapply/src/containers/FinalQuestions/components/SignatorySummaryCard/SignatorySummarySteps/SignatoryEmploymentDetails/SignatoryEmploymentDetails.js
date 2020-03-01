@@ -20,9 +20,8 @@ import {
 import {
   EMPLOYMENT_TYPE_REGEX,
   COMPANY_NAME_SPEC_CHAR_REGEX,
-  DESIGNATION_REGEX,
-  MAX_EXPERIENCE_YEARS_LENGTH,
-  EXPERIENCE_YEARS_REGEX
+  ALPHA_NUMERIC_SPECIAL_REGEX,
+  MAX_EXPERIENCE_YEARS_LENGTH
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import {
@@ -37,7 +36,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
   totalExperienceYrs: Yup.string()
     .required(getRequiredMessage("Number of years of experience"))
-    .matches(EXPERIENCE_YEARS_REGEX, getInvalidMessage("Number of years of experience")),
+    .matches(ALPHA_NUMERIC_SPECIAL_REGEX, getInvalidMessage("Number of years of experience")),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
@@ -49,7 +48,7 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
     .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Employer name")),
   designation: Yup.string()
     .required(getRequiredMessage("Designation"))
-    .matches(DESIGNATION_REGEX, getInvalidMessage("Designation"))
+    .matches(ALPHA_NUMERIC_SPECIAL_REGEX, getInvalidMessage("Designation"))
 });
 
 export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handleContinue }) => {
@@ -80,7 +79,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
           return (
             <Form>
               <Grid container spacing={3} className={classes.flexContainer}>
-                <Grid item md={6} sm={12}>
+                <Grid item md={6} xs={12}>
                   <Field
                     name="qualification"
                     path={`${basePath}.kycDetails.qualification`}
@@ -91,7 +90,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     tabIndex="0"
                   />
                 </Grid>
-                <Grid item md={6} sm={12}>
+                <Grid item md={6} xs={12}>
                   <Field
                     name="employmentType"
                     path={`${basePath}.employmentDetails.employmentType`}

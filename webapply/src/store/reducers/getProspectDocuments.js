@@ -1,13 +1,17 @@
 import {
   UPLOAD_FILES_PROGRESS,
   UPLOAD_FILES_FAIL,
-  DOC_UPLOADER
+  DOC_UPLOADER,
+  GET_PROSPECT_DOCUMENTS_SUCCESS,
+  RETRIEVE_DOC_UPLOADER,
+  GET_PROSPECT_DOCUMENTS_FAIL
 } from "../actions/getProspectDocuments";
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   progress: {},
-  uploadErrors: {}
+  uploadErrors: {},
+  isLoading: true
 };
 
 export default handleActions(
@@ -23,6 +27,18 @@ export default handleActions(
     [UPLOAD_FILES_FAIL]: (state, error) => ({
       ...state,
       uploadErrors: { ...state.uploadErrors, ...error }
+    }),
+    [RETRIEVE_DOC_UPLOADER]: state => ({
+      ...state,
+      isLoading: true
+    }),
+    [GET_PROSPECT_DOCUMENTS_SUCCESS]: state => ({
+      ...state,
+      isLoading: false
+    }),
+    [GET_PROSPECT_DOCUMENTS_FAIL]: state => ({
+      ...state,
+      isLoading: true
     })
   },
   initialState

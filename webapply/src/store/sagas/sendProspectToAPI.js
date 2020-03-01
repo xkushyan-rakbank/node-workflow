@@ -12,8 +12,9 @@ import {
   actionChannel,
   flush
 } from "redux-saga/effects";
-import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
+import cloneDeep from "lodash/cloneDeep";
 
+import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -32,19 +33,20 @@ import {
   getAccountType,
   getIsIslamicBanking
 } from "../selectors/appConfig";
-import { resetInputsErrors } from "../actions/serverValidation";
+import { setLockStatusByROAgent } from "../actions/searchProspect";
+import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
 import {
   APP_STOP_SCREEN_RESULT,
   screeningStatus,
-  APP_COMPLETED_SCREENING_STATUS,
   screeningStatusDefault,
   CONTINUE,
   AUTO,
   SUBMIT
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
+import { ROError, FieldsValidationError } from "../../api/serverErrors";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -59,8 +61,8 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const currScreeningType = preScreening.screeningResults.find(
-    screeningResult => screeningResult.screeningStatus !== APP_COMPLETED_SCREENING_STATUS
+  const currScreeningType = preScreening.screeningResults.find(screeningResult =>
+    ["Decline", "Match"].includes(screeningResult.screeningReason)
   );
 
   const screenError = screeningStatus.find(
@@ -91,7 +93,16 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
     yield put(resetFormStep({ resetStep: true }));
 
     const state = yield select();
-    const newProspect = getProspect(state);
+    const prospect = getProspect(state);
+
+    const newProspect = cloneDeep(prospect);
+    // TODO: Waitnig DEH API changes
+    /*
+    newProspect.freeFieldsInfo = {
+      ...(newProspect.freeFieldsInfo || {}),
+      freeField5: JSON.stringify({ completedSteps: state.completedSteps })
+    };
+    */
 
     yield put(sendProspectRequest(saveType, newProspect));
   } finally {
@@ -137,17 +148,25 @@ function* sendProspectToAPI({ newProspect, saveType }) {
 
     const { preScreening } = data;
 
-    if (preScreening && preScreening.statusOverAll === APP_STOP_SCREEN_RESULT) {
+    const isScreeningError = preScreening && preScreening.statusOverAll === APP_STOP_SCREEN_RESULT;
+
+    if (isScreeningError) {
       yield fork(setScreeningResults, data);
     } else {
       if (preScreening) {
         yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
       }
-      yield put(sendProspectToAPISuccess(newProspect));
     }
+    yield put(sendProspectToAPISuccess(isScreeningError));
   } catch (error) {
-    log({ error });
-    yield put(sendProspectToAPIFail(error));
+    if (error instanceof ROError) {
+      yield put(setLockStatusByROAgent(true));
+    } else if (error instanceof FieldsValidationError) {
+      yield put(setInputsErrors(error.getInputsErrors()));
+    } else {
+      log({ error });
+      yield put(sendProspectToAPIFail(error));
+    }
   }
 }
 

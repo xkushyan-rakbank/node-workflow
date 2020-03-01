@@ -10,7 +10,6 @@ import searchProspect from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import stakeholders from "./stakeholders";
 import screenProspect from "./screenProspect";
-import validationErrors from "./validationErrors";
 import uploadDocuments from "./getProspectDocuments";
 import completedSteps from "./completedSteps";
 import accountNumbers from "./accountNumbers";
@@ -29,7 +28,6 @@ const reducers = history =>
     retrieveApplicantInfo,
     stakeholders,
     screenProspect,
-    validationErrors,
     uploadDocuments,
     completedSteps,
     video,

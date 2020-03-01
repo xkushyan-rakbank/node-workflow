@@ -4,29 +4,30 @@ import { LOGO_ELITE, LOGO_ELITE_ISLAMIC, LOGO_ISLAMIC, LOGO_STANDART } from "./c
 export const useStyles = makeStyles(theme => ({
   header: {
     position: "absolute",
-    top: "30px",
-    left: "40px",
+    top: 30,
     zIndex: 12,
-    [theme.breakpoints.down("sm")]: {
-      maxWidth: "270px"
-    },
-    "& img": {
-      minWidth: "140px",
-      width: "140px"
-    },
     "& a": {
       display: "flex"
     },
-    [theme.breakpoints.only("xs")]: {
-      position: "absolute",
-      margin: 0,
-      padding: 0,
-      top: "20px",
-      left: "16px",
-      "& img": {
-        minWidth: "114px",
-        width: "114px"
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "270px"
+    },
+    [theme.breakpoints.up("sm")]: {
+      left: ({ logoType }) => {
+        switch (logoType) {
+          case LOGO_ISLAMIC:
+          case LOGO_ELITE_ISLAMIC:
+            return 20;
+          case LOGO_STANDART:
+          case LOGO_ELITE:
+          default:
+            return 40;
+        }
       }
+    },
+    [theme.breakpoints.only("xs")]: {
+      top: "20px",
+      left: "16px"
     }
   },
   logo: {
@@ -48,7 +49,7 @@ export const useStyles = makeStyles(theme => ({
         switch (logoType) {
           case LOGO_ISLAMIC:
           case LOGO_ELITE_ISLAMIC:
-            return 300;
+            return 220;
           case LOGO_STANDART:
           case LOGO_ELITE:
           default:

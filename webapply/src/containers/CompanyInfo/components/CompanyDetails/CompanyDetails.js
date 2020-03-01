@@ -52,7 +52,7 @@ export const CompanyDetails = ({ handleContinue }) => {
       {() => (
         <Form>
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="companyName"
                 label="Company Name"
@@ -65,7 +65,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 }}
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="companyCategory"
                 label="Company Category"

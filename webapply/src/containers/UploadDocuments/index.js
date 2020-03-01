@@ -6,7 +6,8 @@ import {
   getEndpoints,
   getProspectId,
   getUploadedDocsCount,
-  getRequiredDocsCount
+  getRequiredDocsCount,
+  isLoadingDocuments
 } from "../../store/selectors/appConfig";
 import { UploadDocument } from "./UploadDocument";
 import {
@@ -32,6 +33,7 @@ const mapStateToProps = state => ({
   requiredDocsCount: getRequiredDocsCount(state),
   progress: state.uploadDocuments.progress,
   uploadErrorMessage: state.uploadDocuments.uploadErrors,
+  isLoading: isLoadingDocuments(state),
   prospectStatusInfo: getProspectStatus(state),
   isApplyEditApplication: getIsEditableStatusSearchInfo(state)
 });

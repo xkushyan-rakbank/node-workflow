@@ -2,7 +2,7 @@ package ae.rakbank.webapply.controller;
 
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.dto.JwtPayload;
-import ae.rakbank.webapply.services.AuthorizationService;
+import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -45,7 +45,7 @@ public class DocumentController {
     }
 
     @GetMapping(value = "", produces = "application/json")
-    public ResponseEntity<?> getProspectDocuments(HttpServletRequest httpRequest,
+    public ResponseEntity<Object> getProspectDocuments(HttpServletRequest httpRequest,
                                                   @AuthenticationPrincipal JwtPayload jwtPayload,
                                                   @PathVariable String prospectId) {
         log.info("Begin getProspectDocuments() method");
@@ -54,12 +54,12 @@ public class DocumentController {
         String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
 
-        return dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(), HttpMethod.GET, null,
+        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
                 "getProspectDocuments()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
     }
 
     @GetMapping(value = "/{documentId}")
-    public ResponseEntity<?> getProspectDocumentById(HttpServletRequest httpRequest,
+    public ResponseEntity<Object> getProspectDocumentById(HttpServletRequest httpRequest,
                                                      @AuthenticationPrincipal JwtPayload jwtPayload,
                                                      @PathVariable String prospectId,
                                                      @PathVariable String documentId) {
@@ -70,7 +70,7 @@ public class DocumentController {
         String url = dehBaseUrl + dehURIs.get("getProspectDocumentByIdUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId, documentId);
 
-        return dehClient.invokeApiEndpoint(httpRequest, uriComponents.toString(), HttpMethod.GET, null,
+        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
                 "getProspectDocumentById()", MediaType.APPLICATION_OCTET_STREAM, jwtPayload.getOauthAccessToken());
     }
 }

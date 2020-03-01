@@ -26,6 +26,7 @@ import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { setToken } from "../../store/actions/reCaptcha";
+import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
@@ -76,6 +77,7 @@ const ApplicantInfoPage = ({
   setToken,
   reCaptchaToken,
   isRecaptchaEnable,
+  resetScreeningError,
   isConfigLoading
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -85,7 +87,8 @@ const ApplicantInfoPage = ({
     const segment = pathname.substring(1, pathname.lastIndexOf("/"));
 
     receiveAppConfig(segment);
-  }, [receiveAppConfig]);
+    resetScreeningError();
+  }, [receiveAppConfig, resetScreeningError]);
 
   const onSubmit = useCallback(
     values => {
@@ -226,6 +229,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  resetScreeningError,
   receiveAppConfig,
   submit: applicantInfoFormPromisify,
   setToken
