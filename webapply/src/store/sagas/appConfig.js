@@ -16,7 +16,6 @@ import {
   saveProspectModel
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
-
 import { config } from "../../api/apiClient";
 import {
   accountNames,
@@ -28,6 +27,7 @@ import {
   CONTINUE
 } from "../../constants";
 import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
+import { log } from "../../utils/loggger";
 
 function* receiveAppConfigSaga({ payload }) {
   try {
@@ -73,6 +73,7 @@ function* receiveAppConfigSaga({ payload }) {
     yield put(receiveAppConfigSuccess(newConfig));
     yield put(sendProspectToAPISuccess());
   } catch (error) {
+    log(error);
     yield put(receiveAppConfigFail(error));
   }
 }

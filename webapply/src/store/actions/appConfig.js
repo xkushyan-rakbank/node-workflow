@@ -14,6 +14,11 @@ export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
 export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
+export const LOAD_META_DATA = "LOAD_META_DATA";
+
+export const loadMetaData = (meta = {}) => {
+  return { type: LOAD_META_DATA, payload: meta.freeField5 || "" };
+};
 
 export const receiveAppConfig = (segment, accountType, isIslamicBanking) => {
   return { type: RECEIVE_APPCONFIG, payload: { accountType, isIslamicBanking, segment } };

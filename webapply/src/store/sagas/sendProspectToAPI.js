@@ -12,8 +12,9 @@ import {
   actionChannel,
   flush
 } from "redux-saga/effects";
-import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
+import cloneDeep from "lodash/cloneDeep";
 
+import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
@@ -32,6 +33,7 @@ import {
   getAccountType,
   getIsIslamicBanking
 } from "../selectors/appConfig";
+import { setLockStatusByROAgent } from "../actions/searchProspect";
 import { resetInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
@@ -42,7 +44,8 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  SUBMIT
+  SUBMIT,
+  RO_EDIT_APP_ERROR_MESSAGE
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 
@@ -91,7 +94,12 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
     yield put(resetFormStep({ resetStep: true }));
 
     const state = yield select();
-    const newProspect = getProspect(state);
+    const prospect = getProspect(state);
+
+    const newProspect = cloneDeep(prospect);
+    newProspect.freeFieldsInfo.freeField5 = JSON.stringify({
+      completedSteps: state.completedSteps
+    });
 
     yield put(sendProspectRequest(saveType, newProspect));
   } finally {
@@ -146,6 +154,10 @@ function* sendProspectToAPI({ newProspect, saveType }) {
       yield put(sendProspectToAPISuccess(newProspect));
     }
   } catch (error) {
+    const { lockByROAgentException } = error;
+    if (lockByROAgentException && lockByROAgentException === RO_EDIT_APP_ERROR_MESSAGE) {
+      yield put(setLockStatusByROAgent(true));
+    }
     log({ error });
     yield put(sendProspectToAPIFail(error));
   }

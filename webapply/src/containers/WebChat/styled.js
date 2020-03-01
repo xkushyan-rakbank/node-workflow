@@ -2,22 +2,13 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
   chat: {
-    position: "absolute",
-    left: "77px",
-    bottom: "40px",
-    color: "#fff",
-    fontSize: "18px",
-    [theme.breakpoints.down("sm")]: {
-      left: "15px"
-    },
-    [theme.breakpoints.only("xs")]: {
-      position: "fixed"
-    }
+    fontSize: "18px"
   },
   chatInner: {
     display: "flex",
     alignItems: "center",
     cursor: "pointer",
+    whiteSpace: "nowrap",
     [theme.breakpoints.only("xs")]: {
       flexDirection: "column"
     },

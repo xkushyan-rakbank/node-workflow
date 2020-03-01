@@ -6,8 +6,9 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: "#fff",
     height: "auto",
     border: "1px solid #373737",
-    padding: "3px 0",
-    width: "120px",
+    padding: "3px 15px",
+    minWidth: 120,
+    minHeight: 32,
     fontFamily: "Open Sans",
     "&:hover": {
       backgroundColor: "#000",

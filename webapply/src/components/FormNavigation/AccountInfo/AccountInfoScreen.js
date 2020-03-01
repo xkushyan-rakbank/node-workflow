@@ -1,14 +1,16 @@
 import React from "react";
+import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import { ContainedButton } from "../../Buttons/ContainedButton";
 import { MobileNotification } from "../../Modals";
-import { useStyles } from "../styled";
+import { useStyles } from "./styled";
 
 export const AccountInfoScreen = ({
   isShowApply,
   isShowCheck,
   isShowStart,
+  isApplyEditApplication,
   handleCheckStatus,
   handleStart,
   handleApply,
@@ -18,7 +20,7 @@ export const AccountInfoScreen = ({
   const classes = useStyles();
 
   return (
-    <div className={classes.contentContainer}>
+    <div className={cx(classes.contentContainer, "small-menu-hide")}>
       <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
         {title}
       </Typography>
@@ -39,7 +41,7 @@ export const AccountInfoScreen = ({
           />
         </>
       )}
-      {isShowCheck && (
+      {isShowCheck && !isApplyEditApplication && (
         <ContainedButton
           withRightArrow
           justify="flex-start"
@@ -48,7 +50,7 @@ export const AccountInfoScreen = ({
         />
       )}
       {isShowStart && (
-        <>
+        <div className={classes.sectionButton}>
           <div className="hide-on-mobile">
             <ContainedButton
               withRightArrow
@@ -60,7 +62,7 @@ export const AccountInfoScreen = ({
           <div className="show-on-mobile">
             <MobileNotification />
           </div>
-        </>
+        </div>
       )}
     </div>
   );

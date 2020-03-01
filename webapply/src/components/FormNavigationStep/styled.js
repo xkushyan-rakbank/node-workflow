@@ -20,7 +20,7 @@ export const useStyles = makeStyles(theme => ({
       left: "20px",
       marginLeft: "0"
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.only("xs")]: {
       marginLeft: "-15px",
       paddingLeft: "40px",
       fontSize: "16px",
@@ -50,7 +50,7 @@ export const useStyles = makeStyles(theme => ({
       position: "absolute",
       left: "0",
       top: "0",
-      height: "50%",
+      height: "calc(100% - 20px)",
       width: "2px",
       backgroundColor: "#fff"
     }

@@ -8,6 +8,7 @@ import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, BYTES_IN_MEGABYTE } from "./../../../constants";
+import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../constants";
 
 const validationFileSchema = Yup.object().shape({
   file: Yup.mixed()
@@ -29,12 +30,15 @@ export const UploadDocuments = ({
   progress,
   cancelDocUpload,
   updateProspect,
-  isApplyEditApplication
+  isApplyEditApplication,
+  prospectStatusInfo
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
   const inputEl = useRef(null);
+  const isDisabledUploadForRO =
+    isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
   const { documentKey, documentType = "" } = document;
   const isUploaded = document.uploadStatus === "Uploaded";
   const isUploading = selectedFile && !isUploaded;
@@ -96,7 +100,7 @@ export const UploadDocuments = ({
   return (
     <div
       className={cx(classes.fileUploadPlaceholder, {
-        [classes.disabled]: isApplyEditApplication
+        [classes.disabled]: isDisabledUploadForRO
       })}
     >
       <input
@@ -153,7 +157,7 @@ export const UploadDocuments = ({
         {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
       </div>
 
-      {!isApplyEditApplication && (
+      {!isDisabledUploadForRO && (
         <>
           {selectedFile || isUploaded ? (
             <Icon

@@ -25,7 +25,7 @@ export const FormNavigationStep = ({ title, activeStep, filled }) => {
           ) : null}
         </span>
       )}
-      {title}
+      <div className="small-menu-hide">{title}</div>
     </li>
   );
 };

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 380 768" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient x1="58.2386577%" y1="0%" x2="50%" y2="100%" id="standart-1">
+            <stop stop-color="#BE171A" offset="0%"/>
+            <stop stop-color="#BF0545" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="standart-2">
+            <stop stop-color="#E22119" offset="0%"/>
+            <stop stop-color="#E30F44" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="54.8921116%" y1="0%" x2="44.1428913%" y2="104.865882%" id="standart-3">
+            <stop stop-color="#E93014" offset="0%"/>
+            <stop stop-color="#E91F3E" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="58.2262881%" y1="0.150141636%" x2="50.016526%" y2="99.7994088%" id="islamic-1">
+            <stop stop-color="#0B5E34" offset="0%"/>
+            <stop stop-color="#085A37" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="islamic-2">
+            <stop stop-color="#2F6B2C" offset="0%"/>
+            <stop stop-color="#2D6A2C" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="54.8921116%" y1="0%" x2="44.1428913%" y2="104.865882%" id="islamic-3">
+            <stop stop-color="#417C35" offset="0%"/>
+            <stop stop-color="#407C36" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="58.2262881%" y1="0.150141636%" x2="50.016526%" y2="99.7994088%" id="elite-1">
+            <stop stop-color="#6B0C27" offset="0%"/>
+            <stop stop-color="#8C3B54" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="55.6548357%" y1="2.96613147%" x2="45.7069954%" y2="100%" id="elite-2">
+            <stop stop-color="#730D2B" offset="0%"/>
+            <stop stop-color="#A04964" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="54.8921116%" y1="0%" x2="44.1428913%" y2="104.865882%" id="elite-3">
+            <stop stop-color="#811031" offset="0%"/>
+            <stop stop-color="#B45773" offset="100%"/>
+        </linearGradient>
+    </defs>
+    <g fill-rule="evenodd">
+        <path d="m-3.1513e-13 0h315.49c34.943 119.33 55.774 241.33 62.493 366s-6.7197 258.67-40.318 402h-337.67v-768z" fill="url(#standart-3)"/>
+        <path d="m-3.1513e-13 0h315.49c34.943 119.33 55.774 241.33 62.493 366s-6.7197 258.67-40.318 402h-337.67v-768z" fill="url(#standart-1)"/>
+        <path d="m0 0h276.18c32.255 136.67 36.958 274.67 14.111 414s-66.189 257.33-130.03 354h-160.27v-768z" fill="url(#standart-2)"/>
+        <path d="m-1.4324e-14 732v-732h239.89c21.503 140.67 10.416 274-33.263 400s-112.56 236.67-206.63 332z" fill="url(#standart-3)"/>
+    </g>
+</svg>

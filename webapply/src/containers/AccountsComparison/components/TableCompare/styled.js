@@ -32,7 +32,13 @@ export const useStyles = makeStyles(theme => ({
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
     border: "solid 1px #e8e8e8",
     backgroundColor: "#fff",
-    minWidth: "calc(25% - 10px)"
+    minWidth: "calc((100% - 217px)/3 - 12px)",
+    [theme.breakpoints.only("md")]: {
+      minWidth: "calc((100% - 256px)/3 - 12px)"
+    },
+    [theme.breakpoints.only("sm")]: {
+      minWidth: "calc((100% - 240px)/3 - 12px)"
+    }
   },
   tableRoot: {
     tableLayout: "fixed",

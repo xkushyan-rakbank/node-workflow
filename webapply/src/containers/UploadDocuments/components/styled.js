@@ -266,5 +266,24 @@ export const useStyles = makeStyles({
   progressStatus: {
     display: "inline-block",
     paddingLeft: "11px"
+  },
+  nameSkeleton: {
+    width: "210px",
+    height: "40px",
+    borderRadius: "8px",
+    marginLeft: "25px"
+  },
+  contentSkeleton: {
+    width: "400px",
+    height: "30px",
+    margin: "20px 0 20px 15px",
+    borderRadius: "8px"
+  },
+  buttonSkeleton: {
+    width: "140px",
+    height: "35px",
+    marginBottom: "0px",
+    marginLeft: "230px",
+    borderRadius: "28px"
   }
 });

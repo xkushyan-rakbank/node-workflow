@@ -101,7 +101,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
 
                   return (
                     <React.Fragment key={item.id}>
-                      <Grid item md={isDisplayDeleteButton ? 5 : 6} sm={12}>
+                      <Grid item md={isDisplayDeleteButton ? 5 : 6} xs={12}>
                         <Field
                           name={`industries[${industryIndex}].industry`}
                           path={currentIndustry}
@@ -136,7 +136,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           }
                         />
                       </Grid>
-                      <Grid item md={isDisplayDeleteButton ? 5 : 6} sm={12}>
+                      <Grid item md={isDisplayDeleteButton ? 5 : 6} xs={12}>
                         <Field
                           name={`industries[${industryIndex}].subCategory`}
                           path={currentSubCategory}
