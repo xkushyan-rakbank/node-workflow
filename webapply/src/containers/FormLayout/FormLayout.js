@@ -17,7 +17,6 @@ export const FormLayoutComponent = ({
   children,
   screeningError,
   updateViewId,
-  resetScreeningError,
   setLockStatusByROAgent,
   isLockStatusByROAgent
 }) => {
@@ -51,8 +50,16 @@ export const FormLayoutComponent = ({
     ].includes(pathname);
 
     updateViewId(viewId, isSendToApi);
-    resetScreeningError();
-  }, [pathname, updateViewId, resetScreeningError]);
+  }, [pathname, updateViewId]);
+
+  const isDisplayScreeningError = [
+    routes.companyInfo,
+    routes.stakeholdersInfo,
+    routes.finalQuestions,
+    routes.uploadDocuments,
+    routes.selectServices,
+    routes.SubmitApplication
+  ].includes(pathname);
 
   return (
     <Providers>
@@ -66,7 +73,11 @@ export const FormLayoutComponent = ({
 
                 <Notifications />
 
-                {screeningError.error ? <ApplicationStatus {...screeningError} /> : children}
+                {isDisplayScreeningError && screeningError.error ? (
+                  <ApplicationStatus {...screeningError} />
+                ) : (
+                  children
+                )}
                 <ROEditNotification isOpen={open} handleClose={handleClose} />
               </div>
             </div>

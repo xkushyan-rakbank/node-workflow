@@ -1,5 +1,4 @@
 import get from "lodash/get";
-import { UAE } from "../../constants";
 
 import { COMPANY_SIGNATORY_ID } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
 import { FINAL_QUESTIONS_COMPANY_ID } from "../../containers/FinalQuestions/components/CompanySummaryCard/constants";
@@ -9,7 +8,6 @@ export const getDatalist = state => state.appConfig.datalist || {};
 export const getEndpoints = state => state.appConfig.endpoints || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
-export const getProspectStatusInfo = state => state.appConfig.prospect.prospectStatusInfo || {};
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
@@ -47,26 +45,13 @@ export const getSignatoriesSteps = state =>
 
 export const getProspectId = state => getGeneralInfo(state).prospectId;
 
-export const getProceedStatus = state => state.applicationStatus.isProceed;
-
-export const getServerErrorStatus = state => state.applicationStatus.serverErorr;
-
-export const getLoginParam = state => state.appConfig.login;
-
 export const getAgentLogin = state => state.login;
 
 export const getIsAgentLoggedIn = state => getAgentLogin(state).loginStatus;
 
-export const getSearchInfo = state => state.appConfig.searchInfo || {};
-
-export const getAccountSubmittedInfo = state => state.appConfig.prospect.accountInfo;
-
 export const getReCaptchaSiteKey = state => state.appConfig.reCaptchaSiteKey;
 
 export const getServicePricingGuideUrl = state => state.appConfig.servicePricingGuideUrl;
-
-export const getIsRegisteredInUAE = state =>
-  get(getProspect(state), "organizationInfo.countryOfIncorporation") === UAE;
 
 export const getUrlsReadMore = state => ({
   rakValuePlusReadMoreUrl: state.appConfig.rakValuePlusReadMoreUrl,
@@ -103,10 +88,6 @@ export const getUploadedDocsCount = createGetDocsCountSelector(
 );
 
 export const getRequiredDocsCount = createGetDocsCountSelector();
-
-export const getProspectErrorMessage = state => state.appConfig.prospectError;
-
-export const getLoading = state => state.appConfig.loading;
 
 export const getAuthToken = state => state.appConfig.authorizationToken;
 

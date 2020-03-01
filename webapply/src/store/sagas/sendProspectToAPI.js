@@ -34,20 +34,19 @@ import {
   getIsIslamicBanking
 } from "../selectors/appConfig";
 import { setLockStatusByROAgent } from "../actions/searchProspect";
-import { resetInputsErrors } from "../actions/serverValidation";
+import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
 import {
   APP_STOP_SCREEN_RESULT,
   screeningStatus,
-  APP_COMPLETED_SCREENING_STATUS,
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  SUBMIT,
-  RO_EDIT_APP_ERROR_MESSAGE
+  SUBMIT
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
+import { ROError, FieldsValidationError } from "../../api/serverErrors";
 
 function* watchRequest() {
   const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
@@ -62,8 +61,8 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const currScreeningType = preScreening.screeningResults.find(
-    screeningResult => screeningResult.screeningStatus !== APP_COMPLETED_SCREENING_STATUS
+  const currScreeningType = preScreening.screeningResults.find(screeningResult =>
+    ["Decline", "Match"].includes(screeningResult.screeningReason)
   );
 
   const screenError = screeningStatus.find(
@@ -97,9 +96,13 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
     const prospect = getProspect(state);
 
     const newProspect = cloneDeep(prospect);
-    newProspect.freeFieldsInfo.freeField5 = JSON.stringify({
-      completedSteps: state.completedSteps
-    });
+    // TODO: Waitnig DEH API changes
+    /*
+    newProspect.freeFieldsInfo = {
+      ...(newProspect.freeFieldsInfo || {}),
+      freeField5: JSON.stringify({ completedSteps: state.completedSteps })
+    };
+    */
 
     yield put(sendProspectRequest(saveType, newProspect));
   } finally {
@@ -154,12 +157,14 @@ function* sendProspectToAPI({ newProspect, saveType }) {
       yield put(sendProspectToAPISuccess(newProspect));
     }
   } catch (error) {
-    const { lockByROAgentException } = error;
-    if (lockByROAgentException && lockByROAgentException === RO_EDIT_APP_ERROR_MESSAGE) {
+    if (error instanceof ROError) {
       yield put(setLockStatusByROAgent(true));
+    } else if (error instanceof FieldsValidationError) {
+      yield put(setInputsErrors(error.getInputsErrors()));
+    } else {
+      log({ error });
+      yield put(sendProspectToAPIFail(error));
     }
-    log({ error });
-    yield put(sendProspectToAPIFail(error));
   }
 }
 
