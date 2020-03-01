@@ -12,6 +12,7 @@ export const ERRORS_TYPE = {
   NOT_REGISTERED: "Country Of Incorporation Check",
   BIG_COMPANY: "ShareHolderCount Check",
   BLACKLIST: "Blacklist Check",
+  RO_EDITING: "RO_EDITING",
   COMPANY_AS_STAKEHOLDER: "IsShareHolderACompany Check"
 };
 export const regularErrorScreenGifIcon = {
@@ -21,6 +22,7 @@ export const regularErrorScreenGifIcon = {
   [ERRORS_TYPE.NOT_REGISTERED]: callbackRegular,
   [ERRORS_TYPE.BIG_COMPANY]: callbackRegular,
   [ERRORS_TYPE.BLACKLIST]: declinedIslamic,
+  [ERRORS_TYPE.RO_EDITING]: callbackRegular,
   [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackRegular
 };
 export const islamicErrorScreenGifIcon = {
@@ -30,6 +32,7 @@ export const islamicErrorScreenGifIcon = {
   [ERRORS_TYPE.NOT_REGISTERED]: callbackIslamic,
   [ERRORS_TYPE.BIG_COMPANY]: callbackIslamic,
   [ERRORS_TYPE.BLACKLIST]: declinedIslamic,
+  [ERRORS_TYPE.RO_EDITING]: callbackIslamic,
   [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackIslamic
 };
 export const eliteErrorScreenGifIcon = {
@@ -39,5 +42,6 @@ export const eliteErrorScreenGifIcon = {
   [ERRORS_TYPE.NOT_REGISTERED]: callbackElite,
   [ERRORS_TYPE.BIG_COMPANY]: callbackElite,
   [ERRORS_TYPE.BLACKLIST]: declinedElite,
+  [ERRORS_TYPE.RO_EDITING]: callbackElite,
   [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackElite
 };
