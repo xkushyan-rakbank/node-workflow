@@ -126,6 +126,7 @@ export const screeningStatus = [
 ];
 
 export const screeningStatusDefault = {
+  icon: callbackRegular,
   error: "Default",
   text:
     "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
