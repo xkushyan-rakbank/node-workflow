@@ -14,7 +14,7 @@ function* searchProspectFormSaga({ payload }) {
     const headers = getAuthorizationHeader(state);
     const inputParam = {
       applicantName: payload.fname || "",
-      countryCode: payload.countryCode || "",
+      countryCode: payload.mobileNo ? payload.countryCode : "",
       mobileNo: payload.mobileNo || "",
       leadNumber: payload.leadNumber || "",
       tradeLicenseNo: payload.tradeLicenseNo || "",
