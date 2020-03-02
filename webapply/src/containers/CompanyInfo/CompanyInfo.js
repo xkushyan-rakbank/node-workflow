@@ -10,16 +10,12 @@ import { StepComponent } from "../../components/StepComponent/StepComponent";
 import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 import StatusLoader from "../../components/StatusLoader";
 import { ContainedButton } from "./../../components/Buttons/ContainedButton";
-import {
-  sendProspectToAPIPromisify,
-  setScreeningError
-} from "../../store/actions/sendProspectToAPI";
-import { CONTINUE, NEXT, screeningStatusNotRegistered } from "../../constants";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+import { CONTINUE, NEXT } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
   getOrganizationInfo,
-  getIsRegisteredInUAE,
   getIsSendingProspect
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
@@ -33,8 +29,6 @@ export const CompanyInfoPage = ({
   loading,
   fullName,
   organizationInfo: { companyName },
-  setScreeningError,
-  isRegisteredInUAE,
   isComeFromROScreens
 }) => {
   const pushHistory = useTrackingHistory();
@@ -48,9 +42,6 @@ export const CompanyInfoPage = ({
   const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event).then(
       () => {
-        if (!isRegisteredInUAE) {
-          return setScreeningError(screeningStatusNotRegistered);
-        }
         handleSetNextStep(activeStep);
       },
       () => {}
@@ -60,8 +51,8 @@ export const CompanyInfoPage = ({
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    sendProspectToAPI(NEXT).then(() => {
-      pushHistory(routes.stakeholdersInfo);
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.stakeholdersInfo);
     });
   }, [pushHistory, sendProspectToAPI]);
 
@@ -119,13 +110,11 @@ const mapStateToProps = state => ({
   loading: getIsSendingProspect(state),
   fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state),
-  isRegisteredInUAE: getIsRegisteredInUAE(state),
   isComeFromROScreens: getIsEditableStatusSearchInfo(state)
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI: sendProspectToAPIPromisify,
-  setScreeningError
+  sendProspectToAPI: sendProspectToAPIPromisify
 };
 
 export const CompanyInfo = connect(

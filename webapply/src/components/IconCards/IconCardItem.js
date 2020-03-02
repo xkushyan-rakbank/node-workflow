@@ -22,15 +22,14 @@ const style = theme => ({
       margin: "5px"
     },
     "&$horizontal": {
-      textAlign: "left",
-      flexDirection: "row",
       minWidth: "calc(50% - 20px)",
       "& $iconCardImg": {
         paddingBottom: 0,
         paddingRight: 16
       },
-      "@media (max-width: 480px)": {
-        minWidth: "calc(100% - 20px)"
+      "@media (min-width: 480px)": {
+        textAlign: "left",
+        flexDirection: "row"
       }
     }
   },
@@ -46,7 +45,10 @@ const style = theme => ({
   iconCardText: {
     fontSize: "16px",
     display: "block",
-    width: "100%"
+    width: "100%",
+    "@media (max-width: 480px)": {
+      marginTop: "10px"
+    }
   },
   iconCardImg: {
     paddingBottom: 20,

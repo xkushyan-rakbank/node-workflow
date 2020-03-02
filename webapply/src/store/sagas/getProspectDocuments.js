@@ -39,6 +39,7 @@ import {
   getProspectDocumentsSuccess,
   getProspectDocumentsFail
 } from "../actions/getProspectDocuments";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
 import {
@@ -115,7 +116,14 @@ function* getProspectDocumentsSaga() {
   }
 }
 
-function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeholderIndex }) {
+function* uploadDocumentsBgSync({
+  data,
+  docProps,
+  docOwner,
+  documentKey,
+  stakeholderIndex,
+  userFileName
+}) {
   const source = CancelToken.source();
 
   try {
@@ -132,7 +140,7 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeho
 
     const documents = config.prospect.documents;
     const fileName = get(response, "data.fileName", "");
-    const additionalProps = { ...docProps, fileName };
+    const additionalProps = { ...docProps, fileName, fileDescription: userFileName };
 
     if (docOwner === COMPANY_DOCUMENTS) {
       const companyDocuments = documents[COMPANY_DOCUMENTS].map(
@@ -149,6 +157,7 @@ function* uploadDocumentsBgSync({ data, docProps, docOwner, documentKey, stakeho
     }
 
     yield put(setConfig(config));
+    yield put(sendProspectToAPIPromisify());
   } catch (error) {
     yield put(uploadFilesFail({ [documentKey]: { error } }));
   } finally {

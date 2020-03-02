@@ -7,12 +7,7 @@ import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form
 
 import { useStyles } from "./styled";
 
-const {
-  termConditionUrl,
-  termOfEnrolmentUrl,
-  trueNdCompleteAcknldgelabel,
-  needCommunicationLabel
-} = submitApplication;
+const { termConditionUrl, termOfEnrolmentUrl } = submitApplication;
 
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
@@ -62,7 +57,7 @@ export const BlockConfirm = ({ setFormFields }) => {
           <Form>
             <Field
               name="isInformationProvided"
-              label={trueNdCompleteAcknldgelabel}
+              label="I confirm that the information provided is true and complete"
               onChange={e => setFieldsValue(e, setFieldValue, values)}
               component={Checkbox}
               inputProps={{ tabIndex: 0 }}
@@ -78,7 +73,8 @@ export const BlockConfirm = ({ setFormFields }) => {
 
             <Field
               name="needCommunication"
-              label={needCommunicationLabel}
+              path="prospect.channelServicesInfo.marketingSMS"
+              label="I want to receive marketing and promotional communication from RAKBANK"
               component={Checkbox}
               inputProps={{ tabIndex: 0 }}
             />

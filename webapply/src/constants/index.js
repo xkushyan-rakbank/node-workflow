@@ -47,9 +47,7 @@ export const submitApplication = {
     "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
   formTitle: "Submit application",
   formInfo:
-    "And just like that, we have reached the end! Here’s the overview of what you’re applying for.",
-  trueNdCompleteAcknldgelabel: "I confirm that the information provided is true and complete",
-  needCommunicationLabel: "I want to receive marketing and promotional communication from RAKBANK"
+    "And just like that, we have reached the end! Here’s the overview of what you’re applying for."
 };
 
 export const accountNames = {
@@ -73,11 +71,9 @@ export const REQUEST_FAILED = "error";
 export const normalScrollHeight = 740;
 
 export const APP_STOP_SCREEN_RESULT = "stop";
-export const IGNORE_ERROR_CODES = ["12009", "101"];
-export const RO_EDIT_APP_ERROR_MESSAGE =
-  "CONCURRENT MODIFICATION NOT ALLOWED-SALES AGENT IS UPDATING";
-export const APP_COMPLETED_SCREENING_STATUS = "Completed";
-export const APP_DECLINE_SCREEN_REASON = "Decline";
+export const RO_LOCKED_ERROR_CODE = "12013";
+export const APPS_NOT_FOUND_ERROR_CODE = "12009";
+export const IGNORE_ERROR_CODES = [APPS_NOT_FOUND_ERROR_CODE, RO_LOCKED_ERROR_CODE];
 
 export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
@@ -113,7 +109,7 @@ export const screeningStatus = [
   },
   {
     error: "Not Registered In UAE",
-    screeningType: "CountryOfIncorporation Check"
+    screeningType: "Country Of Incorporation Check"
   },
   {
     error: "Big Company",
@@ -130,6 +126,7 @@ export const screeningStatus = [
 ];
 
 export const screeningStatusDefault = {
+  icon: callbackRegular,
   error: "Default",
   text:
     "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
@@ -207,7 +204,7 @@ export const VIRTUAL_CURRENCY_CHECK = {
   screeningReason: "No Match"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
-  screeningType: "CountryOfIncorporation Check",
+  screeningType: "Country Of Incorporation Check",
   screeningStatus: "Completed",
   screeningLabel: "Country of Incorporation",
   screeningReason: "No Match"

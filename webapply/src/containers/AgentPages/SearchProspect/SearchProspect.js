@@ -20,7 +20,7 @@ const searchProspectSchema = Yup.object({
     .matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
   mobileNo: Yup.string().phoneNo({ codeFieldName: "countryCode", fieldName: "Mobile Number" }),
   email: Yup.string().email(getInvalidMessage("Email")),
-  raktrackNumber: Yup.string()
+  leadNumber: Yup.string()
     .max(20, "Maximum 20 characters allowed")
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("RAKtrack Lead Reference Number")),
   tradeLicenseNo: Yup.string()
@@ -33,7 +33,7 @@ const initialValues = {
   countryCode: UAE_CODE,
   mobileNo: "",
   email: "",
-  raktrackNumber: "",
+  leadNumber: "",
   tradeLicenseNo: ""
 };
 
@@ -113,7 +113,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
             <Grid container spacing={3}>
               <Grid item md={6} sm={12}>
                 <Field
-                  name="raktrackNumber"
+                  name="leadNumber"
                   path="searchInfo.raktrackNumber"
                   label="RAKtrack Lead Reference Number"
                   placeholder="RAKtrack Lead Reference Number"

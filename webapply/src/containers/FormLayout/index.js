@@ -9,20 +9,18 @@ import {
   getScreeningError
 } from "../../store/selectors/appConfig";
 import { updateViewId } from "../../store/actions/appConfig";
-import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
 import { setLockStatusByROAgent } from "../../store/actions/searchProspect";
 import { FormLayoutComponent } from "./FormLayout";
 
 const mapStateToProps = state => ({
   screeningError: getScreeningError(state),
   accountType: getAccountType(state),
-  islamicBanking: getIsIslamicBanking(state),
+  isIslamicBanking: getIsIslamicBanking(state),
   isLockStatusByROAgent: getIsUserInformedROEditStatus(state)
 });
 
 const mapDispatchToProps = {
   updateViewId,
-  resetScreeningError,
   setLockStatusByROAgent
 };
 

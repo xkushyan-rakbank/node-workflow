@@ -25,8 +25,8 @@ export const FinalQuestionsComponent = ({ signatories, history, sendProspectToAP
   const isSignatoriesStepsCompleted = checkAllStepsCompleted(signatoriesSteps);
 
   const goToUploadDocument = () => {
-    sendProspectToAPI(NEXT).then(() => {
-      history.push(routes.uploadDocuments);
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) history.push(routes.uploadDocuments);
     });
   };
 
