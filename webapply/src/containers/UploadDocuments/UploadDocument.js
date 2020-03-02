@@ -16,7 +16,6 @@ export const UploadDocument = ({
   history,
   uploadedDocsCount,
   requiredDocsCount,
-  sendProspectToAPI,
   ...rest
 }) => {
   const classes = useStyles();
@@ -26,7 +25,7 @@ export const UploadDocument = ({
   }, [retrieveDocDetails]);
 
   const goToSelectService = () => {
-    sendProspectToAPI(NEXT).then(isScreeningError => {
+    rest.sendProspectToAPI(NEXT).then(isScreeningError => {
       if (!isScreeningError) history.push(routes.selectServices);
     });
   };

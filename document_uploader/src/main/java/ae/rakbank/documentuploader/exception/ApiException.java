@@ -30,6 +30,15 @@ public class ApiException extends RuntimeException {
         log.error(API_EXCEPTION_MESSAGE);
     }
 
+    public ApiException(String errorMessage, Exception e) {
+        super(errorMessage, e);
+        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN));
+        this.headers = null;
+        this.status = null;
+        this.apiError = null;
+        log.error(API_EXCEPTION_MESSAGE);
+    }
+
     public ApiException(ApiError apiError, HttpStatus status) {
         super(apiError.getMessage());
         this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN));
