@@ -11,7 +11,6 @@ import {
   AutoSaveField as Field
 } from "../../../../../../components/Form";
 import { InfoTitle } from "../../../../../../components/InfoTitle";
-import { addPhoneNoValidationToYup } from "../../../../../../utils/validation";
 import { UAE_CODE } from "../../../../../../constants";
 import {
   getRequiredMessage,
@@ -19,8 +18,6 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-
-addPhoneNoValidationToYup();
 
 const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),

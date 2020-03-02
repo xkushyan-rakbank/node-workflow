@@ -184,6 +184,9 @@ export const ACTION_TYPES = {
 
 export const SOLE_PROPRIETOR = "1";
 
+export const FINAL_QUESTIONS_COMPANY_ID = "finalQuestionsCompany";
+export const COMPANY_SIGNATORY_ID = "companySignatory_";
+
 export const STEP_STATUS = {
   AVAILABLE: "AVAILABLE",
   NOT_AVAILABLE: "NOT_AVAILABLE",

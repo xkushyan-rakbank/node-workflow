@@ -9,9 +9,9 @@ import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
 import { signatoriesSteps } from "./constants";
 import { checkIsAccountInfoTypeNumber } from "./utils";
-import { COMPANY_SIGNATORY_ID } from "./constants";
 import { getStakeholdersIds } from "../../../../store/selectors/stakeholder";
 import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
+import { COMPANY_SIGNATORY_ID } from "../../../../constants";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
