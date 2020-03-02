@@ -154,7 +154,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                             );
 
                             return options
-                              .filter(({ value }) => item.industry.includes(value))
+                              .filter(({ value }) => item.industry === value)
                               .reduce((acc, curr) => {
                                 // All subCategories for selected industry
                                 const allSubCategories = curr.subGroup;
