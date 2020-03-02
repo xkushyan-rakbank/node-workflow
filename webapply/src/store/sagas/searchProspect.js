@@ -13,7 +13,7 @@ function* searchProspectFormSaga({ payload }) {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
     const {
-      fname: applicantName = "",
+      fullName: applicantName = "",
       countryCode = "",
       mobileNo = "",
       leadNumber = "",

@@ -22,7 +22,7 @@ import { getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
-  fname: Yup.string()
+  fullName: Yup.string()
     .max(30, "Maximum 30 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
   mobileNo: Yup.string().when("countryCode", {
@@ -53,7 +53,7 @@ const searchProspectSchema = Yup.object({
 });
 
 const initialValues = {
-  applicantName: "",
+  fullName: "",
   countryCode: UAE_CODE,
   mobileNo: "",
   email: "",
@@ -85,7 +85,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
           <Form>
             <Field
               name="applicantName"
-              path="searchInfo.fname"
+              path="searchInfo.fullName"
               label="Applicant Name"
               placeholder="Applicant Name"
               contextualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."

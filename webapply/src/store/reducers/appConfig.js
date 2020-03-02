@@ -105,7 +105,7 @@ const appConfigReducer = (state = initialState, action) => {
         },
         searchInfo: {
           ...state.searchInfo,
-          fname: "",
+          fullName: "",
           countryCode: UAE_CODE,
           mobileNo: "",
           leadNumber: "",
