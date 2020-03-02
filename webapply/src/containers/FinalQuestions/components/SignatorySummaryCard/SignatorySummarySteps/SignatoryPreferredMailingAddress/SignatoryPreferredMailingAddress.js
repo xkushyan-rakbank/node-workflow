@@ -4,11 +4,7 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import {
-  ADDRESS_NUMBER_REGEX,
-  ADDRESS_REGEX,
-  ALPHANUMERIC_REGEX
-} from "../../../../../../utils/validation";
+import { ALPHANUMERIC_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import {
   Input,
   AutoSaveField as Field,
@@ -28,17 +24,20 @@ import {
 
 import { useStyles } from "./styled";
 
-const signatoryPreferredMailingAddressSchema = Yup.object().shape({
-  addressLine2: Yup.string().matches(ADDRESS_REGEX, getInvalidMessage("Street / Location")),
-  addressLine1: Yup.string()
-    .required(getRequiredMessage("Flat / Villa / Building"))
-    .max(10, "Maximum 10 characters allowed")
-    .matches(ADDRESS_NUMBER_REGEX, getInvalidMessage("Flat / Villa / Building")),
-  poBox: Yup.string()
-    .required(getRequiredMessage("PO Box Number"))
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
-  emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City"))
-});
+const signatoryPreferredMailingAddressSchema = () =>
+  Yup.object().shape({
+    addressLine2: Yup.string()
+      .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
+    addressLine1: Yup.string()
+      .required(getRequiredMessage("Flat / Villa / Building"))
+      .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
+    poBox: Yup.string()
+      .required(getRequiredMessage("PO Box Number"))
+      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
+    emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City"))
+  });
 
 export const SignatoryPreferredMailingAddressComponent = ({
   index,
