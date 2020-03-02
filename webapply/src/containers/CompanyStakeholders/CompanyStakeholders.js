@@ -5,7 +5,7 @@ import { FilledStakeholderCard } from "./components/FilledStakeholderCard/Filled
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { Icon, ICONS } from "../../components/Icons";
 
@@ -168,12 +168,11 @@ const CompanyStakeholdersComponent = ({
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
 
-        <SubmitButton
+        <NextStepButton
           handleClick={goToFinalQuestions}
           label="Next Step"
           justify="flex-end"
           disabled={isDisableNextStep}
-          className={classes.submitButton}
         />
       </div>
     </>

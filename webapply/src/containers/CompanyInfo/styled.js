@@ -36,6 +36,5 @@ export const useStyles = makeStyles(theme => ({
     height: "100%",
     paddingBottom: "20px",
     outline: "none"
-  },
-  submitButton: theme.submitButton
+  }
 }));

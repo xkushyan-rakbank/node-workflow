@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles({
   buttonStyle: {
     width: "346px",
     height: "56px",
@@ -32,6 +32,5 @@ export const useStyles = makeStyles(theme => ({
   iconSize: {
     width: "24px",
     height: "24px"
-  },
-  submitButton: theme.submitButton
-}));
+  }
+});

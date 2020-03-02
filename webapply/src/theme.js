@@ -32,10 +32,6 @@ export const theme = createMuiTheme({
     },
     text: {
       color: "#373737"
-    },
-    submitButton: {
-      padding: "15px 32px",
-      borderRadius: "28px"
     }
   }
 });

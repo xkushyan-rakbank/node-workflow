@@ -9,7 +9,7 @@ import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
 import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 import StatusLoader from "../../components/StatusLoader";
-import { ContainedButton } from "./../../components/Buttons/ContainedButton";
+import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { CONTINUE, NEXT } from "../../constants";
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
@@ -93,8 +93,7 @@ export const CompanyInfoPage = ({
 
       <div className="linkContainer">
         {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
-        <ContainedButton
-          className={classes.submitButton}
+        <NextStepButton
           justify="flex-end"
           label="Next Step"
           disabled={!isAllStepsCompleted}
