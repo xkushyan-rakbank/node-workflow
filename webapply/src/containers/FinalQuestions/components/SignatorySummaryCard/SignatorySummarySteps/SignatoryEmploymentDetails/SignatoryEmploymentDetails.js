@@ -21,7 +21,8 @@ import {
     EMPLOYMENT_TYPE_REGEX,
     COMPANY_NAME_SPEC_CHAR_REGEX,
     ALPHA_NUMERIC_SPECIAL_REGEX,
-    MAX_EXPERIENCE_YEARS_LENGTH, MAX_EXPERIENCE_YEARS_LENGTH_SPECIAL_REGEX
+    MAX_EXPERIENCE_YEARS_LENGTH,
+    MAX_EXPERIENCE_YEARS_LENGTH_SPECIAL_REGEX
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import {
@@ -36,7 +37,8 @@ export const signatoryEmploymentDetailsSchema = Yup.object().shape({
   employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
   totalExperienceYrs: Yup.string()
     .required(getRequiredMessage("Number of years of experience"))
-    .matches(MAX_EXPERIENCE_YEARS_LENGTH_SPECIAL_REGEX, getInvalidMessage("Number of years of experience")),
+    .matches(MAX_EXPERIENCE_YEARS_LENGTH_SPECIAL_REGEX, getInvalidMessage("Number of years of experience"))
+    .max(255, 'Number of years of experience must be up to 255 digits'),
   otherEmploymentType: Yup.string().when("employmentType", {
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
