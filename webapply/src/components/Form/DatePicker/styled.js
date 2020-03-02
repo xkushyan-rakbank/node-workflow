@@ -18,7 +18,7 @@ const keyboardDatePickerTheme = createMuiTheme({
         minWidth: "257px",
         justifyContent: "start",
         paddingTop: "20px",
-        minHeight: "179px",
+        minHeight: "204px",
         border: "solid 1px #c2c2c28f",
         borderTop: "none",
         borderRadius: "0 0 8px 8px"

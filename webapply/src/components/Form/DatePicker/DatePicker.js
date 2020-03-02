@@ -112,6 +112,7 @@ export const DatePicker = ({
             classes={{
               root: classes.root
             }}
+            keyboardIcon={null}
             PopoverProps={{
               anchorOrigin: { horizontal: "left", vertical: "bottom" },
               transformOrigin: { horizontal: "left", vertical: "top" },

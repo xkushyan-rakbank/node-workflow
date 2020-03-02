@@ -38,7 +38,8 @@ const StyledSelect = withStyles({
 
 const useStyles = makeStyles({
   paper: {
-    maxHeight: "246px"
+    maxHeight: "246px",
+    borderRadius: "0px"
   },
   listGutters: {
     fontSize: "12px",
