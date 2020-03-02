@@ -125,6 +125,8 @@ export const screeningStatus = [
   }
 ];
 
+export const SCREENING_FAIL_REASONS = ["Decline", "Match"];
+
 export const screeningStatusDefault = {
   icon: callbackRegular,
   error: "Default",

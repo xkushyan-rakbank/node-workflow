@@ -18,11 +18,11 @@ import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorSc
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
-  SEND_PROSPECT_TO_API_SUCCESS,
   sendProspectToAPIFail,
   resetFormStep,
   PROSPECT_AUTO_SAVE,
   sendProspectRequest,
+  SEND_PROSPECT_REQUEST,
   setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
@@ -47,9 +47,10 @@ import {
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { ROError, FieldsValidationError } from "../../api/serverErrors";
+import { SCREENING_FAIL_REASONS } from "../../constants";
 
 function* watchRequest() {
-  const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
+  const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
   while (true) {
     const actions = yield flush(chan);
     if (actions.length) {
@@ -62,7 +63,7 @@ function* watchRequest() {
 
 function* setScreeningResults({ preScreening }) {
   const currScreeningType = preScreening.screeningResults.find(screeningResult =>
-    ["Decline", "Match"].includes(screeningResult.screeningReason)
+    SCREENING_FAIL_REASONS.includes(screeningResult.screeningReason)
   );
 
   const screenError = screeningStatus.find(
@@ -112,16 +113,22 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
 
 function* prospectAutoSave() {
   try {
-    while (yield take(SEND_PROSPECT_TO_API_SUCCESS)) {
+    while (true) {
+      yield delay(40000);
+
       const state = yield select();
       const newProspect = getProspect(state);
 
-      yield put(sendProspectRequest(AUTO, newProspect));
-      yield delay(40000);
+      const prospectId = newProspect.generalInfo.prospectId;
+      const actionType = newProspect.applicationInfo.actionType;
+
+      if (prospectId && actionType !== SUBMIT) {
+        yield put(sendProspectRequest(AUTO, newProspect));
+      }
     }
   } finally {
     if (yield cancelled()) {
-      log("cancel");
+      log("refresh auto save interval");
     }
   }
 }
@@ -171,13 +178,12 @@ function* sendProspectToAPI({ newProspect, saveType }) {
 }
 
 function* prospectAutoSaveFlowSaga() {
-  while (yield take("START_PROSPECT_AUTO_SAVE")) {
+  while (true) {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
-    const { actionType } = yield take("UPDATE_ACTION_TYPE");
 
-    if (actionType === SUBMIT) {
-      yield cancel(bgSyncAutoSave);
-    }
+    yield take(SEND_PROSPECT_REQUEST);
+
+    yield cancel(bgSyncAutoSave);
   }
 }
 
