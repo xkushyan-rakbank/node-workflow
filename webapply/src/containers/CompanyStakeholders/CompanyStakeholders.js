@@ -173,6 +173,7 @@ const CompanyStakeholdersComponent = ({
           label="Next Step"
           justify="flex-end"
           disabled={isDisableNextStep}
+          className={classes.submitButton}
         />
       </div>
     </>

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   sectionContainer: {
     marginBottom: "20px"
   },
@@ -27,5 +27,6 @@ export const useStyles = makeStyles({
       width: "auto",
       margin: "0"
     }
-  }
-});
+  },
+  submitButton: theme.submitButton
+}));

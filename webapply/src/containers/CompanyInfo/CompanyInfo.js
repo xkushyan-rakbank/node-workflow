@@ -94,7 +94,7 @@ export const CompanyInfoPage = ({
       <div className="linkContainer">
         {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
         <ContainedButton
-          style={{ padding: "0 32px", borderRadius: "28px" }}
+          className={classes.submitButton}
           justify="flex-end"
           label="Next Step"
           disabled={!isAllStepsCompleted}

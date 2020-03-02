@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   linkContainer: {
     display: "flex",
     alignItems: "center",
@@ -12,7 +12,5 @@ export const useStyles = makeStyles({
       margin: "0"
     }
   },
-  submitButton: {
-    padding: "0 24px"
-  }
-});
+  submitButton: theme.submitButton
+}));

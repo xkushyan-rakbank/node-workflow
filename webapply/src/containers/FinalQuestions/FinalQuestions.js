@@ -78,6 +78,7 @@ export const FinalQuestionsComponent = ({ signatories, history, sendProspectToAP
           disabled={!isCompanyStepsCompleted || !isSignatoriesStepsCompleted}
           handleClick={goToUploadDocument}
           label="Next Step"
+          className={classes.submitButton}
         />
       </div>
     </>
