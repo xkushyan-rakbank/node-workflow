@@ -1,7 +1,7 @@
 export const USER_NAME_REGEX = /^([a-zA-Z0-9.]){1,65}$/;
 export const PASSWORD_REGEX = /^([a-zA-Z0-9#@_]){1,30}$/;
 export const NAME_REGEX = /^([a-zA-Z ])+$/;
-export const ALPHA_NUMERIC_SPECIAL_REGEX = /^([a-zA-Z0-9- !@#$%^&*()_+=`~{}[\]|';:.,?><]){1,255}$/;
+export const ALPHA_NUMERIC_SPECIAL_REGEX = /^([a-zA-Z0-9- !@#$%^&*()_+=`~{}[\]|';:.,?><]){1,50}$/;
 
 export const UAE_MOBILE_PHONE_REGEX = /^[0-9]{9}$/;
 export const UAE_LANDLINE_PHONE_REGEX = /^[0-9]{8}$/;
