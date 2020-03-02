@@ -53,7 +53,7 @@ const searchProspectSchema = Yup.object({
 });
 
 const initialValues = {
-  fname: "",
+  applicantName: "",
   countryCode: UAE_CODE,
   mobileNo: "",
   email: "",
@@ -81,15 +81,16 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
         validateOnChange={false}
         onSubmit={handleSubmit}
       >
-        {({ values }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <Field
-              name="fname"
+              name="applicantName"
               path="searchInfo.fname"
               label="Applicant Name"
               placeholder="Applicant Name"
               contextualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."
               component={Input}
+              onChange={e => setFieldValue("applicantName", e.target.value.toUpperCase())}
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
