@@ -2,13 +2,14 @@ import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import setMonth from "date-fns/setMonth";
 import setYear from "date-fns/setYear";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { FormControl } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 import { MONTH_OPTIONS, getYearOptions } from "./constants";
+import { useStyles } from "./styled";
 
 const StyledSelect = withStyles({
   root: {
@@ -36,36 +37,6 @@ const StyledSelect = withStyles({
   }
 })(Select);
 
-const useStyles = makeStyles({
-  paper: {
-    maxHeight: "246px",
-    borderRadius: "0px"
-  },
-  listGutters: {
-    fontSize: "12px",
-    paddingLeft: "12px",
-    paddingRight: "8px"
-  },
-  listRoot: {
-    minHeight: "40px",
-    borderBottom: "1px solid #f3f3f3",
-    "&:hover": {
-      backgroundColor: "#f7f7f9"
-    }
-  },
-  listMenu: {
-    padding: "0"
-  },
-  root: {
-    ".Mui-focused fieldset": {
-      borderColor: "#373737 !important"
-    },
-    "& :after, & :before": {
-      display: "none"
-    }
-  }
-});
-
 export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) => {
   const value = type === "month" ? date.getMonth() : date.getFullYear();
   const options = type === "month" ? MONTH_OPTIONS : getYearOptions();
@@ -76,7 +47,7 @@ export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) =>
       const changeDate = type === "month" ? setMonth : setYear;
       onChange(changeDate(date, value));
     },
-    [date, type]
+    [date, type, onChange]
   );
 
   return (
@@ -96,7 +67,7 @@ export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) =>
           },
           getContentAnchorEl: null,
           classes: {
-            paper: classes.paper,
+            paper: classes.paperMenu,
             list: classes.listMenu
           }
         }}

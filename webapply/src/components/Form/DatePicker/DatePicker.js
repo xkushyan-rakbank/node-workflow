@@ -4,26 +4,12 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import ruLocale from "date-fns/locale/ru";
 import { getIn } from "formik";
-import { makeStyles } from "@material-ui/core/styles";
 
 import { InfoTitle } from "../../InfoTitle";
 import { ErrorMessage, ContexualHelp } from "../../Notifications";
-import { BaseDatePicker } from "./styled";
+import { StyledKeyboardDatePicker } from "./StyledKeyboadDatePicker";
 import { PickerToolbar } from "./PickerToolbar/PickerToolbar";
-
-const useStyles = makeStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "#3b3a3a"
-    },
-    "& fieldset": {
-      borderColor: "rgba(194, 194, 194, 0.56)"
-    },
-    "& .Mui-focused fieldset": {
-      borderColor: "#373737 !important"
-    }
-  }
-});
+import { useStyles } from "./styled";
 
 class LocalizedUtils extends DateFnsUtils {
   getWeekdays() {
@@ -31,7 +17,23 @@ class LocalizedUtils extends DateFnsUtils {
   }
 }
 
-const INTENT_BOTTOM_PX = 20;
+const INDENT_BOTTOM_PX = 20;
+const scrollIntoView = (datePickerRef, dateInputRef, actionRef) => {
+  const menuEl = datePickerRef.current;
+  const focusedEl = dateInputRef.current;
+
+  const { offsetHeight } = menuEl.querySelector("[role='document']");
+  const { bottom } = focusedEl.getBoundingClientRect();
+  const { scrollY, innerHeight } = window;
+
+  if (scrollY + bottom + offsetHeight > scrollY + innerHeight) {
+    window.scrollTo(
+      0,
+      scrollY + (scrollY + bottom + offsetHeight) - (scrollY + innerHeight) + INDENT_BOTTOM_PX
+    );
+    actionRef.current && actionRef.current.updatePosition();
+  }
+};
 
 export const DatePicker = ({
   field,
@@ -56,23 +58,6 @@ export const DatePicker = ({
   const datePickerRef = useRef();
   const actionRef = useRef();
 
-  const scrollIntoView = () => {
-    const menuEl = datePickerRef.current;
-    const focusedEl = dateInputRef.current;
-
-    const { offsetHeight } = menuEl.querySelector("[role='document']");
-    const { bottom } = focusedEl.getBoundingClientRect();
-    const { scrollY, innerHeight } = window;
-
-    if (scrollY + bottom + offsetHeight > scrollY + innerHeight) {
-      window.scrollTo(
-        0,
-        scrollY + (scrollY + bottom + offsetHeight) - (scrollY + innerHeight) + INTENT_BOTTOM_PX
-      );
-      actionRef.current && actionRef.current.updatePosition();
-    }
-  };
-
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl
@@ -85,7 +70,7 @@ export const DatePicker = ({
         }}
       >
         <MuiPickersUtilsProvider utils={LocalizedUtils} locale={ruLocale}>
-          <BaseDatePicker
+          <StyledKeyboardDatePicker
             open={isOpen}
             onClose={() => setIsOpen(false)}
             autoComplete="off"
@@ -118,7 +103,7 @@ export const DatePicker = ({
               transformOrigin: { horizontal: "left", vertical: "top" },
               ref: ref => {
                 datePickerRef.current = ref;
-                ref && scrollIntoView();
+                ref && scrollIntoView(datePickerRef, dateInputRef, actionRef);
               },
               action: actionRef
             }}
