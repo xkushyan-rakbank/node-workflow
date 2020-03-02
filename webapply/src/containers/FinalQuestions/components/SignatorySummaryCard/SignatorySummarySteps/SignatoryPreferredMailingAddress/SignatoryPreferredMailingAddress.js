@@ -32,6 +32,7 @@ const signatoryPreferredMailingAddressSchema = Yup.object().shape({
   addressLine2: Yup.string().matches(ADDRESS_REGEX, getInvalidMessage("Street / Location")),
   addressLine1: Yup.string()
     .required(getRequiredMessage("Flat / Villa / Building"))
+    .max(10, "Maximum 10 characters allowed")
     .matches(ADDRESS_NUMBER_REGEX, getInvalidMessage("Flat / Villa / Building")),
   poBox: Yup.string()
     .required(getRequiredMessage("PO Box Number"))

@@ -11,7 +11,7 @@ import {
   NumberFormat
 } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { COMPANY_NAME_SPEC_CHAR_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
+import { COMPANY_NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
 import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { useStyles } from "../../styled";
@@ -26,7 +26,8 @@ const initialValues = {
 const companyDetailsSchema = Yup.object({
   companyName: Yup.string()
     .required(getRequiredMessage("Company name"))
-    .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Company name")),
+    .max(30, "Maximum 30 characters allowed")
+    .matches(COMPANY_NAME_REGEX, getInvalidMessage("Company name")),
   vatRegistrationNumber: Yup.string().matches(
     NUMBER_REGEX,
     getInvalidMessage("Registration number")
