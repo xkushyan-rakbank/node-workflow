@@ -43,14 +43,16 @@ export const FormLayoutComponent = ({
     updateViewId(viewId, isSendToApi);
   }, [pathname, updateViewId]);
 
-  const isDisplayScreeningError = [
-    routes.companyInfo,
-    routes.stakeholdersInfo,
-    routes.finalQuestions,
-    routes.uploadDocuments,
-    routes.selectServices,
-    routes.SubmitApplication
-  ].includes(pathname);
+  const isDisplayScreeningError =
+    screeningError.error &&
+    [
+      routes.companyInfo,
+      routes.stakeholdersInfo,
+      routes.finalQuestions,
+      routes.uploadDocuments,
+      routes.selectServices,
+      routes.SubmitApplication
+    ].includes(pathname);
 
   return (
     <Providers>
@@ -64,7 +66,7 @@ export const FormLayoutComponent = ({
 
                 <Notifications />
 
-                {isDisplayScreeningError && screeningError.error ? (
+                {isDisplayScreeningError ? (
                   <ApplicationStatus {...screeningError} />
                 ) : isLockStatusByROAgent ? (
                   <ApplicationStatus
