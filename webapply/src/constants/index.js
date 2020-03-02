@@ -47,9 +47,7 @@ export const submitApplication = {
     "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
   formTitle: "Submit application",
   formInfo:
-    "And just like that, we have reached the end! Here’s the overview of what you’re applying for.",
-  trueNdCompleteAcknldgelabel: "I confirm that the information provided is true and complete",
-  needCommunicationLabel: "I want to receive marketing and promotional communication from RAKBANK"
+    "And just like that, we have reached the end! Here’s the overview of what you’re applying for."
 };
 
 export const accountNames = {
