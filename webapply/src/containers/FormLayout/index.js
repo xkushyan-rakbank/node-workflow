@@ -10,7 +10,6 @@ import {
 } from "../../store/selectors/appConfig";
 import { updateViewId } from "../../store/actions/appConfig";
 import { setLockStatusByROAgent } from "../../store/actions/searchProspect";
-import { updateActionType } from "../../store/actions/appConfig";
 import { FormLayoutComponent } from "./FormLayout";
 
 const mapStateToProps = state => ({
@@ -22,8 +21,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   updateViewId,
-  setLockStatusByROAgent,
-  updateActionType
+  setLockStatusByROAgent
 };
 
 export const FormLayout = compose(
