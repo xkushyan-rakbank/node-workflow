@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import cx from "classnames";
 
 import routes from "../../routes";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
 import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
@@ -74,7 +74,7 @@ export const FinalQuestionsComponent = ({ signatories, history, sendProspectToAP
       </div>
       <div className={classes.linkContainer}>
         <BackLink path={routes.stakeholdersInfo} />
-        <SubmitButton
+        <NextStepButton
           disabled={!isCompanyStepsCompleted || !isSignatoriesStepsCompleted}
           handleClick={goToUploadDocument}
           label="Next Step"

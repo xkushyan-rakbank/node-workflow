@@ -1,14 +1,10 @@
 package ae.rakbank.webapply.services;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-
+import ae.rakbank.webapply.dto.ApiError;
 import ae.rakbank.webapply.exception.ApiException;
+import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.util.FileUtil;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import ae.rakbank.webapply.dto.ApiError;
-import ae.rakbank.webapply.util.EnvUtil;
-import ae.rakbank.webapply.util.RecaptchaUtil;
-import ae.rakbank.webapply.util.FileUtil;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUEST_KEY;
 
@@ -41,12 +37,20 @@ public class RecaptchaService {
     private String recaptchaSecret;
     private String recaptchaEndpoint;
 
+    private final Map<String, String> recaptchaErrorCode = new HashMap<>();
+
     @PostConstruct
     public void init() {
         JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         recaptchaSecret = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSecret").asText();
         recaptchaEndpoint = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("ReCaptchaUrl").asText()
                 + appConfigJSON.get("ReCaptchaURIs").get("siteVerifyUri").asText();
+        recaptchaErrorCode.put("missing-input-secret", "The secret parameter is missing");
+        recaptchaErrorCode.put("invalid-input-secret", "The secret parameter is invalid or malformed");
+        recaptchaErrorCode.put("missing-input-response", "The response parameter is missing");
+        recaptchaErrorCode.put("invalid-input-response", "The response parameter is invalid or malformed");
+        recaptchaErrorCode.put("bad-request", "The request is invalid or malformed");
+        recaptchaErrorCode.put("timeout-or-duplicate", "The recaptcha token is time out or duplicate");
     }
 
     public void validateReCaptcha(@RequestBody JsonNode requestBodyJSON, HttpServletRequest httpRequest) {
@@ -115,7 +119,7 @@ public class RecaptchaService {
             log.error("ReCaptcha was not verified successfully, the verify result is: "
                     + responseBody.get("error-codes").toString());
             List<String> errorCodes = (List) responseBody.get("error-codes");
-            String errorMessage = errorCodes.stream().map(RecaptchaUtil.RECAPTCHA_ERROR_CODE::get)
+            String errorMessage = errorCodes.stream().map(recaptchaErrorCode::get)
                     .collect(Collectors.joining(", "));
             errorMessage = StringUtils.defaultIfBlank(errorMessage, "The validation of reCaptcha is not succeed");
 

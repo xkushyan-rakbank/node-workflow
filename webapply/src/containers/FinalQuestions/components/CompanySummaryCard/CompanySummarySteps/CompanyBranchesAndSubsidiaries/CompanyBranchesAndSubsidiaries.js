@@ -20,10 +20,7 @@ import {
   MAX_COMPANY_NAME_LENGTH,
   MAX_TRADE_LICENSE_LENGTH
 } from "../CompanyBusinessRelationships/constants";
-import {
-  ALPHANUMERIC_REGEX,
-  COMPANY_NAME_SPEC_CHAR_REGEX
-} from "../../../../../../utils/validation";
+import { ALPHANUMERIC_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -31,36 +28,39 @@ import {
 
 import { useStyles } from "./styled";
 
-const companyBranchesAndSubsidiariesSchema = Yup.object().shape({
-  otherEntitiesInUAE: Yup.boolean(),
-  entitiesInUAE: Yup.array().when("otherEntitiesInUAE", {
-    is: true,
-    then: Yup.array().of(
-      Yup.object().shape({
-        companyName: Yup.string()
-          .required(getRequiredMessage("Company name"))
-          .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Company name")),
-        emirate: Yup.string().required(getRequiredMessage("Emirate/ City")),
-        tradeLicenseNo: Yup.string()
-          .required(getRequiredMessage("Trade license number"))
-          .max(20, "Maximum 20 characters allowed")
-          .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade license number"))
-      })
-    )
-  }),
-  otherEntitiesOutsideUAE: Yup.boolean(),
-  entitiesOutsideUAE: Yup.array().when("otherEntitiesOutsideUAE", {
-    is: true,
-    then: Yup.array().of(
-      Yup.object().shape({
-        companyName: Yup.string()
-          .required(getRequiredMessage("Company name"))
-          .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Company name")),
-        country: Yup.string().required(getRequiredMessage("Country"))
-      })
-    )
-  })
-});
+const companyBranchesAndSubsidiariesSchema = () =>
+  Yup.object().shape({
+    otherEntitiesInUAE: Yup.boolean(),
+    entitiesInUAE: Yup.array().when("otherEntitiesInUAE", {
+      is: true,
+      then: Yup.array().of(
+        Yup.object().shape({
+          companyName: Yup.string()
+            .required(getRequiredMessage("Company name"))
+            .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
+          emirate: Yup.string().required(getRequiredMessage("Emirate/ City")),
+          tradeLicenseNo: Yup.string()
+            .required(getRequiredMessage("Trade license number"))
+            .max(20, "Maximum 20 characters allowed")
+            .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade license number"))
+        })
+      )
+    }),
+    otherEntitiesOutsideUAE: Yup.boolean(),
+    entitiesOutsideUAE: Yup.array().when("otherEntitiesOutsideUAE", {
+      is: true,
+      then: Yup.array().of(
+        Yup.object().shape({
+          companyName: Yup.string()
+            .required(getRequiredMessage("Company name"))
+            .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
+          country: Yup.string().required(getRequiredMessage("Country"))
+        })
+      )
+    })
+  });
 
 export const CompanyBranchesAndSubsidiariesComponent = ({
   handleContinue,

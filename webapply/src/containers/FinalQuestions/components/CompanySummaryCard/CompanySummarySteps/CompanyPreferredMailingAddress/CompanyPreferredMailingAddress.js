@@ -11,9 +11,8 @@ import {
 } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
-  ADDRESS_NUMBER_REGEX,
-  ADDRESS_REGEX,
-  ALPHANUMERIC_REGEX,
+  SPECIAL_CHARACTERS_REGEX,
+  POBOX_REGEX,
   SPACE_OCCUPIED_OTHER_REGEX
 } from "../../../../../../utils/validation";
 import {
@@ -31,20 +30,24 @@ import {
 
 import { useStyles } from "./styled";
 
-const companyPreferredMailingAddressSchema = Yup.object().shape({
-  addressLine1: Yup.string()
-    .required(getRequiredMessage("Office / Shop Number"))
-    .matches(ADDRESS_NUMBER_REGEX, getInvalidMessage("Office / Shop Number")),
-  addressLine2: Yup.string().matches(ADDRESS_REGEX, getInvalidMessage("Street / Location")),
-  poBox: Yup.string()
-    .required(getRequiredMessage("PO Box Number"))
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
-  emirateCity: Yup.string().required(getRequiredMessage("Emirate")),
-  typeOfSpaceOccupied: Yup.object().shape({
-    spaceType: Yup.string().required(getRequiredMessage("Type of Space Occupied")),
-    others: Yup.string().matches(SPACE_OCCUPIED_OTHER_REGEX, getInvalidMessage("Other"))
-  })
-});
+const companyPreferredMailingAddressSchema = () =>
+  Yup.object().shape({
+    addressLine1: Yup.string()
+      .required(getRequiredMessage("Office / Shop Number"))
+      .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Office / Shop Number")),
+    addressLine2: Yup.string()
+      .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
+    poBox: Yup.string()
+      .required(getRequiredMessage("PO Box Number"))
+      .matches(POBOX_REGEX, getInvalidMessage("PO Box Number")),
+    emirateCity: Yup.string().required(getRequiredMessage("Emirate")),
+    typeOfSpaceOccupied: Yup.object().shape({
+      spaceType: Yup.string().required(getRequiredMessage("Type of Space Occupied")),
+      others: Yup.string().matches(SPACE_OCCUPIED_OTHER_REGEX, getInvalidMessage("Other"))
+    })
+  });
 
 export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
   const classes = useStyles();

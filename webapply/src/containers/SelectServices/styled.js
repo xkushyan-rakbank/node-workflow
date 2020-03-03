@@ -13,6 +13,6 @@ export const useStyles = makeStyles({
     }
   },
   submitButton: {
-    padding: "0 24px"
+    padding: "15px 24px"
   }
 });
