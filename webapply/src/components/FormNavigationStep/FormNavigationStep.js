@@ -5,8 +5,8 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { useStyles } from "./styled";
 import { Icon, ICONS } from "../Icons";
 
-export const FormNavigationStep = ({ title, activeStep, filled }) => {
-  const classes = useStyles();
+export const FormNavigationStep = ({ title, activeStep, filled, hideProgress = false }) => {
+  const classes = useStyles({ hideProgress });
 
   return (
     <li

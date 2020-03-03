@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense, useContext } from "react";
+import React, { useState, lazy, Suspense, useContext, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
@@ -51,6 +51,11 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
       routes.comeBackLoginVerification
     ].includes(pathname);
 
+  const currentStepper = useMemo(
+    () => (pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper),
+    [pathname]
+  );
+
   return (
     <div className={cx(classes.formNav, classes.formNavBg, { active: isCurrentSectionVideo })}>
       <BgBlob className={classes.blob} />
@@ -70,18 +75,15 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
         ) : (
           pathname !== routes.login && (
             <ul>
-              {(pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper).map(
-                currentStep => (
-                  <FormNavigationStep
-                    key={currentStep.step}
-                    title={currentStep.title}
-                    activeStep={
-                      pathname === currentStep.path || pathname === currentStep.relatedPath
-                    }
-                    filled={(getRouteConfig() || {}).step > currentStep.step}
-                  />
-                )
-              )}
+              {currentStepper.map(currentStep => (
+                <FormNavigationStep
+                  key={currentStep.step}
+                  title={currentStep.title}
+                  activeStep={pathname === currentStep.path || pathname === currentStep.relatedPath}
+                  hideProgress={currentStepper.length === 1}
+                  filled={(getRouteConfig() || {}).step > currentStep.step}
+                />
+              ))}
             </ul>
           )
         )}
