@@ -246,8 +246,8 @@ export const useStyles = makeStyles({
     cursor: "pointer"
   },
   cancel: {
-    width: 24,
-    height: 24,
+    width: "24px",
+    height: "24px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
     cursor: "pointer"
   },
