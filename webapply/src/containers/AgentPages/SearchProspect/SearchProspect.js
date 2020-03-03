@@ -57,7 +57,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
         validateOnChange={false}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldValue }) => (
+        {({ values }) => (
           <Form>
             <Field
               name="fullName"
@@ -66,7 +66,6 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
               placeholder="Applicant Name"
               contextualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."
               component={Input}
-              onChange={e => setFieldValue("fullName", e.target.value.toUpperCase())}
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
