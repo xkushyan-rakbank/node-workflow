@@ -33,6 +33,7 @@ public class SecurityUtil {
             PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.decodeBase64(privateKeyContent));
             PrivateKey privKey = kf.generatePrivate(keySpecPKCS8);
 
+            @SuppressWarnings("squid:S5542")
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privKey);
             result = cipher.doFinal((Base64.decodeBase64(input)));
@@ -45,6 +46,7 @@ public class SecurityUtil {
 
     public byte[] decryptSymmetric(String strToDecrypt, SecretKeySpec secretKey) {
         try {
+            @SuppressWarnings("squid:S5542")
             Cipher cipher = Cipher.getInstance(AES_ECB_PKCS5_PADDING);
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return cipher.doFinal(Base64.decodeBase64(strToDecrypt));
@@ -56,6 +58,7 @@ public class SecurityUtil {
 
     public String encryptSymmetric(String strToEncrypt, SecretKeySpec secretKey) {
         try {
+            @SuppressWarnings("squid:S5542")
             Cipher cipher = Cipher.getInstance(AES_ECB_PKCS5_PADDING);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
