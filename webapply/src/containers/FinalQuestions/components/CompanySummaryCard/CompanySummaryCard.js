@@ -5,9 +5,10 @@ import { CompanyCard } from "../CompanyCard";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
-import { finalQuestionsSteps, FINAL_QUESTIONS_COMPANY_ID } from "./constants";
+import { finalQuestionsSteps } from "./constants";
 
 import { useStyles } from "./styled";
+import { FINAL_QUESTIONS_COMPANY_ID } from "../../../../constants";
 
 export const CompanySummaryCardComponent = ({
   index,
