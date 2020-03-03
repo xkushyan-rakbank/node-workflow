@@ -23,7 +23,7 @@ import {
   MAX_BANK_NAME_LENGTH,
   MAX_COMPANY_NAME_LENGTH
 } from "./constants";
-import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import {
   getInvalidMessage,
   getRequiredMessage
@@ -32,50 +32,54 @@ import {
 import { useStyles } from "./styled";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
-const companyBusinessRelationshipsSchema = Yup.object().shape({
-  topCustomers: Yup.array().of(
-    Yup.object().shape({
-      name: Yup.string()
-        .required(getRequiredMessage("Customer name"))
-        .matches(COMPANY_NAME_REGEX, getInvalidMessage("Customer name")),
-      country: Yup.string().required(getRequiredMessage("Country"))
-    })
-  ),
-  isDontHaveSuppliersYet: Yup.boolean(),
-  topSuppliers: Yup.array().when("isDontHaveSuppliersYet", {
-    is: false,
-    then: Yup.array().of(
+const companyBusinessRelationshipsSchema = () =>
+  Yup.object().shape({
+    topCustomers: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .required(getRequiredMessage("Supplier name"))
-          .matches(COMPANY_NAME_REGEX, getInvalidMessage("Supplier name")),
+          .required(getRequiredMessage("Customer name"))
+          .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
+          .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Customer name")),
         country: Yup.string().required(getRequiredMessage("Country"))
       })
-    )
-  }),
-  isDontTradeGoodsYet: Yup.bool(),
-  topOriginGoodsCountries: Yup.array().when("isDontTradeGoodsYet", {
-    is: false,
-    then: Yup.array().of(
-      Yup.object().shape({
-        country: Yup.string().required(getRequiredMessage("Country of origin"))
-      })
-    )
-  }),
-  otherBankingRelationshipsInfo: Yup.object().shape({
-    otherBankingRelationshipsExist: Yup.bool(),
-    otherBankDetails: Yup.array().when("otherBankingRelationshipsExist", {
-      is: true,
+    ),
+    isDontHaveSuppliersYet: Yup.boolean(),
+    topSuppliers: Yup.array().when("isDontHaveSuppliersYet", {
+      is: false,
       then: Yup.array().of(
         Yup.object().shape({
-          bankName: Yup.string()
-            .matches(BANK_NAME_REGEX, getInvalidMessage("Bank name"))
-            .required(getRequiredMessage("Bank name"))
+          name: Yup.string()
+            .required(getRequiredMessage("Supplier name"))
+            .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Supplier name")),
+          country: Yup.string().required(getRequiredMessage("Country"))
         })
       )
+    }),
+    isDontTradeGoodsYet: Yup.bool(),
+    topOriginGoodsCountries: Yup.array().when("isDontTradeGoodsYet", {
+      is: false,
+      then: Yup.array().of(
+        Yup.object().shape({
+          country: Yup.string().required(getRequiredMessage("Country of origin"))
+        })
+      )
+    }),
+    otherBankingRelationshipsInfo: Yup.object().shape({
+      otherBankingRelationshipsExist: Yup.bool(),
+      otherBankDetails: Yup.array().when("otherBankingRelationshipsExist", {
+        is: true,
+        then: Yup.array().of(
+          Yup.object().shape({
+            bankName: Yup.string()
+              .required(getRequiredMessage("Bank name"))
+              .max(MAX_BANK_NAME_LENGTH, "Maximum ${max} characters allowed")
+              .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Bank name"))
+          })
+        )
+      })
     })
-  })
-});
+  });
 
 export const CompanyBusinessRelationshipsComponent = ({
   handleContinue,

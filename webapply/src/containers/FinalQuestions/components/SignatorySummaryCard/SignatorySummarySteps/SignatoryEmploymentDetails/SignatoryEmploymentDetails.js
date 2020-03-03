@@ -18,10 +18,8 @@ import {
   SelectAutocomplete
 } from "../../../../../../components/Form";
 import {
-  EMPLOYMENT_TYPE_REGEX,
-  COMPANY_NAME_SPEC_CHAR_REGEX,
-  ALPHA_NUMERIC_SPECIAL_REGEX,
-  MAX_EXPERIENCE_YEARS_LENGTH
+  MAX_EXPERIENCE_YEARS_LENGTH,
+  SPECIAL_CHARACTERS_REGEX
 } from "../../../../../../utils/validation";
 import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import {
@@ -31,26 +29,28 @@ import {
 
 import { useStyles } from "./styled";
 
-export const signatoryEmploymentDetailsSchema = Yup.object().shape({
-  qualification: Yup.string().required(getRequiredMessage("Qualification")),
-  employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
-  totalExperienceYrs: Yup.string()
-    .required(getRequiredMessage("Number of years of experience"))
-    .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Number of years of experience"))
-    .max(255, "Number of years of experience must be up to 255 digits"),
-  otherEmploymentType: Yup.string().when("employmentType", {
-    is: value => value === OTHER_OPTION_CODE,
-    then: Yup.string()
-      .required(getRequiredMessage("Other"))
-      .matches(EMPLOYMENT_TYPE_REGEX, getInvalidMessage("Other"))
-  }),
-  employerName: Yup.string()
-    .required(getRequiredMessage("Employer name"))
-    .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Employer name")),
-  designation: Yup.string()
-    .required(getRequiredMessage("Designation"))
-    .matches(ALPHA_NUMERIC_SPECIAL_REGEX, getInvalidMessage("Designation"))
-});
+export const signatoryEmploymentDetailsSchema = () =>
+  Yup.object().shape({
+    qualification: Yup.string().required(getRequiredMessage("Qualification")),
+    employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
+    totalExperienceYrs: Yup.string()
+      .required(getRequiredMessage("Number of years of experience"))
+      .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Number of years of experience")),
+    otherEmploymentType: Yup.string().when("employmentType", {
+      is: value => value === OTHER_OPTION_CODE,
+      then: Yup.string()
+        .required(getRequiredMessage("Other"))
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
+    }),
+    employerName: Yup.string()
+      .required(getRequiredMessage("Employer name"))
+      .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Employer name")),
+    designation: Yup.string()
+      .required(getRequiredMessage("Designation"))
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Designation"))
+  });
 
 export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handleContinue }) => {
   const classes = useStyles();
