@@ -1,7 +1,5 @@
 import get from "lodash/get";
-
-import { COMPANY_SIGNATORY_ID } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
-import { FINAL_QUESTIONS_COMPANY_ID } from "../../containers/FinalQuestions/components/CompanySummaryCard/constants";
+import { COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
 
 export const getDatalist = state => state.appConfig.datalist || {};
 

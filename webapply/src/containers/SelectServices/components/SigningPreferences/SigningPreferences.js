@@ -4,15 +4,7 @@ import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
-import {
-  NAME_REGEX,
-  UAE_MOBILE_PHONE_REGEX,
-  UAE_LANDLINE_PHONE_REGEX,
-  NUMBER_REGEX,
-  MIN_NON_UAE_PHONE_LENGTH,
-  MAX_NON_UAE_PHONE_LENGTH,
-  SPECIAL_CHARACTERS_REGEX
-} from "../../../../utils/validation";
+import { NAME_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../utils/validation";
 import { SIGNING_TRANSACTIONS_TYPE } from "../../../../constants";
 import { UAE_CODE } from "../../../../constants";
 import { Subtitle } from "../../../../components/Subtitle";
@@ -62,59 +54,20 @@ const signingPreferencesSchema = Yup.object({
         .max(77, "Maximum 77 characters allowed")
         .matches(NAME_REGEX, getInvalidMessage("Full name")),
       primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
-      primaryMobileNo: Yup.string()
-        .when("TxnReconfirmingfullname", {
-          is: value => !!value,
-          then: Yup.string()
-            .required(getRequiredMessage("Primary mobile number"))
-            .when("primaryMobCountryCode", {
-              is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-              then: Yup.string().matches(
-                UAE_MOBILE_PHONE_REGEX,
-                getInvalidMessage("Primary mobile number")
-              ),
-              otherwise: Yup.string()
-                .matches(NUMBER_REGEX, getInvalidMessage("Code"))
-                .min(
-                  MIN_NON_UAE_PHONE_LENGTH,
-                  `${getInvalidMessage("Primary mobile number")} (min length is not reached)`
-                )
-                .test(
-                  "length validation",
-                  `${getInvalidMessage("Primary mobile number")} (max length exceeded)`,
-                  function(mobilePhone) {
-                    return (
-                      mobilePhone &&
-                      this.parent &&
-                      this.parent.primaryMobCountryCode &&
-                      this.parent.primaryMobCountryCode.length + mobilePhone.length <=
-                        MAX_NON_UAE_PHONE_LENGTH
-                    );
-                  }
-                )
-            })
-        })
-        .required(getRequiredMessage("Primary mobile number")),
+      primaryMobileNo: Yup.string().when("TxnReconfirmingfullname", {
+        is: value => !!value,
+        then: Yup.string()
+          .required(getRequiredMessage("Primary mobile number"))
+          .phoneNo({
+            fieldName: "Primary mobile number",
+            codeFieldName: "primaryMobCountryCode"
+          })
+      }),
       primaryPhoneCountryCode: Yup.string(),
-      primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
-        is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
-        then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, getInvalidMessage("Landline number")),
-        otherwise: Yup.string()
-          .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
-          .min(
-            MIN_NON_UAE_PHONE_LENGTH,
-            `${getInvalidMessage("Landline number")} (min length is not reached)`
-          )
-          .test(
-            "length validation",
-            `${getInvalidMessage("Landline number")} (max length exceeded)`,
-            function() {
-              const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
-              return (
-                primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH
-              );
-            }
-          )
+      primaryPhoneNo: Yup.string().phoneNo({
+        fieldName: "Landline number",
+        codeFieldName: "primaryPhoneCountryCode",
+        isLandline: true
       })
     })
   )
