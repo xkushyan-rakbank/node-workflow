@@ -111,7 +111,7 @@ const ApplicantInfoPage = ({
         validateOnChange={false}
         onSubmit={onSubmit}
       >
-        {({ values }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             {isConfigLoading ? (
               <SkeletonLoader />
@@ -122,6 +122,7 @@ const ApplicantInfoPage = ({
                 label="Your Name"
                 placeholder="Your Name"
                 component={Input}
+                onChange={e => setFieldValue("fullName", e.target.value.toUpperCase())}
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
