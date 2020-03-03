@@ -5,7 +5,6 @@ import { FormNavigation } from "../../components/FormNavigation";
 import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
-import { SAVE } from "../../constants";
 import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 import { useStyles } from "./styled";
 import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
@@ -21,8 +20,7 @@ export const FormLayoutComponent = ({
   updateViewId,
   accountType,
   isIslamicBanking,
-  isLockStatusByROAgent,
-  updateActionType
+  isLockStatusByROAgent
 }) => {
   const blobColor = useBlobColor();
   const classes = useStyles({
@@ -41,8 +39,6 @@ export const FormLayoutComponent = ({
       routes.selectServices,
       routes.SubmitApplication
     ].includes(pathname);
-
-    if (isSendToApi) updateActionType(SAVE);
 
     updateViewId(viewId, isSendToApi);
   }, [pathname, updateViewId]);
