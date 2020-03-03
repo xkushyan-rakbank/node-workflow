@@ -3,7 +3,8 @@ import { useLocation, useHistory } from "react-router-dom";
 import cx from "classnames";
 import { connect } from "react-redux";
 
-import { getAgentName, checkLoginStatus } from "../../store/selectors/loginSelector";
+import { checkLoginStatus } from "../../store/selectors/loginSelector";
+import { getAgentName } from "../../store/selectors/appConfig";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { logout } from "../../store/actions/loginForm";
 import { getAccountType } from "../../store/selectors/appConfig";
