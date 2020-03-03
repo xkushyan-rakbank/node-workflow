@@ -128,7 +128,7 @@ export const useStyles = makeStyles({
     color: "#373737"
   },
   fileUploadPlaceholder: {
-    minHeight: "50px",
+    height: "50px",
     display: "flex",
     alignItems: "center",
     padding: "0 25px",
@@ -247,6 +247,7 @@ export const useStyles = makeStyles({
   },
   cancel: {
     width: 24,
+    height: 24,
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
     cursor: "pointer"
   },
