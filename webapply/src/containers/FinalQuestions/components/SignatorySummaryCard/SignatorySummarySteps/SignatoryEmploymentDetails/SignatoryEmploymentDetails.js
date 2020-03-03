@@ -21,7 +21,6 @@ import {
   MAX_EXPERIENCE_YEARS_LENGTH,
   SPECIAL_CHARACTERS_REGEX
 } from "../../../../../../utils/validation";
-import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -138,8 +137,9 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                   />
                 </Grid>
                 <Grid item sm={12}>
-                  <FinalQuestionField
+                  <Field
                     name={`isWorkAtTheCompany${index}`}
+                    path={`${basePath}.employmentDetails.isPersonWorkAtCompany`}
                     label={`This Person works at ${companyName}`}
                     component={Checkbox}
                     onSelect={() => {
