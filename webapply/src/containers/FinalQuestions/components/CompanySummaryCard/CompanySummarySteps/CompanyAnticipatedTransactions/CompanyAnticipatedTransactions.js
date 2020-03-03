@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import cx from "classnames";
 
@@ -22,6 +23,8 @@ import {
   getRequiredMessage,
   getInvalidMessage
 } from "../../../../../../utils/getValidationMessage";
+import { updateProspect } from "../../../../../../store/actions/appConfig";
+import { getOrgKYCDetails } from "../../../../../../store/selectors/appConfig";
 
 const FormatDecimalNumberInput = props => (
   <NumberFormat allowNegative={false} decimalScale={0} {...props} />
@@ -57,6 +60,13 @@ const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
     return Number(field) + Number(conditionalField) === monthTotal;
   }
   return true;
+};
+
+const getPercentValue = (partValue, anotherPartPercent, fullValue) => {
+  if (!fullValue) {
+    return 0;
+  }
+  return anotherPartPercent ? 100 - anotherPartPercent : Math.round((partValue * 100) / fullValue);
 };
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
@@ -131,6 +141,45 @@ const commonInputProps = {
 
 export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const {
+    totalMonthlyCashCreditsAED: { amountInFigures: amountInCash, inPercent: percentInCash } = {},
+    totalMonthlyNonCashCreditsAED: {
+      amountInFigures: amountInNonCash,
+      inPercent: percentInNonCash
+    } = {},
+    totalMonthlyCreditsAED
+  } = useSelector(getOrgKYCDetails).anticipatedTransactionsDetails || {};
+
+  useEffect(() => {
+    if (totalMonthlyCreditsAED !== "") {
+      dispatch(
+        updateProspect({
+          "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.inPercent": getPercentValue(
+            amountInCash,
+            percentInNonCash,
+            totalMonthlyCreditsAED
+          )
+        })
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amountInCash]);
+
+  useEffect(() => {
+    if (totalMonthlyCreditsAED !== "") {
+      dispatch(
+        updateProspect({
+          "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.inPercent": getPercentValue(
+            amountInCash,
+            percentInCash,
+            totalMonthlyCreditsAED
+          )
+        })
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amountInNonCash]);
 
   const onSubmit = useCallback(() => {
     handleContinue();
