@@ -54,40 +54,45 @@ export const DocumentsComponent = ({
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
       {Object.keys(docs.stakeholdersDocuments || {}).length ? (
         (signatoryInfo || []).length &&
-        signatoryInfo.map((user, index) => (
-          <div key={user.signatoryId}>
-            <div className={classes.contentWrapper}>
-              <Avatar fullName={user.fullName} index={index} />
-              <div className={classes.userInfo}>
-                <div className={classes.nameField}>{user.fullName}</div>
-              </div>
-            </div>
-            <div className={classes.wrapper}>
-              <div className={classes.applicationRow}>
-                <div className={headingClassName}>{titles.DOCUMENT_TITLE}</div>
-                <div className={headingClassName}>{titles.UPLOAD_STATUS_TITLE}</div>
-                <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
-              </div>
-              {get(docs, `stakeholdersDocuments[${index}_${user.fullName}].documents`, []).map(
-                (doc, index) => (
-                  <div className={classes.applicationRow} key={doc.documentType}>
-                    <div className={classes.checkListData}>{doc.documentTitle}</div>
-                    <div className={classes.checkListData}>{doc.uploadStatus}</div>
-                    {!STATUS_NOT_ELIGIBLE.includes(doc.uploadStatus) && (
-                      <div className={classes.checkListData}>
-                        <LinkButton
-                          index={index}
-                          title={titles.PRINT_DOWNLOAD_TITLE}
-                          onClick={() => downloadDocument(doc.fileName, doc.fileName)}
-                        />
-                      </div>
-                    )}
+        signatoryInfo.map(
+          (user, index) =>
+            console.log(user) || (
+              <div key={index}>
+                <div className={classes.contentWrapper}>
+                  <Avatar fullName={user.fullName} index={index} />
+                  <div className={classes.userInfo}>
+                    <div className={classes.nameField}>{user.fullName}</div>
                   </div>
-                )
-              )}
-            </div>
-          </div>
-        ))
+                </div>
+                <div className={classes.wrapper}>
+                  <div className={classes.applicationRow}>
+                    <div className={headingClassName}>{titles.DOCUMENT_TITLE}</div>
+                    <div className={headingClassName}>{titles.UPLOAD_STATUS_TITLE}</div>
+                    <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
+                  </div>
+                  {get(docs, `stakeholdersDocuments[${index}_${user.fullName}].documents`, []).map(
+                    (doc, index) => (
+                      <div className={classes.applicationRow} key={`${doc.documentType}_${index}`}>
+                        <div className={classes.checkListData}>
+                          {doc.fileName || doc.documentTitle}
+                        </div>
+                        <div className={classes.checkListData}>{doc.uploadStatus}</div>
+                        {!STATUS_NOT_ELIGIBLE.includes(doc.uploadStatus) && (
+                          <div className={classes.checkListData}>
+                            <LinkButton
+                              index={index}
+                              title={titles.PRINT_DOWNLOAD_TITLE}
+                              onClick={() => downloadDocument(doc.fileName, doc.fileName)}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            )
+        )
       ) : (
         <div className={classes.errorMsg}>{errorMsgs.STAKEHOLDERS_DOCUMENT_ERROR}</div>
       )}
