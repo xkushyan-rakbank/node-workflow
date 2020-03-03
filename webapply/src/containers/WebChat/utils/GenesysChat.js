@@ -395,18 +395,4 @@ export class GenesysChat {
   setOnAgentLeftEventHandler = handler => {
     this.agentLeftEvent = handler;
   };
-
-  /**
-   * Trigger this function when we minimizes the chat.
-   */
-
-  minimizeChat = () => {
-    this.isChatMinimized = true;
-    if (this.cometD) {
-      this.cometD.disconnect();
-    }
-    if (this.intervalAPICall) {
-      this.intervalAPICall.unsubscribe();
-    }
-  };
 }
