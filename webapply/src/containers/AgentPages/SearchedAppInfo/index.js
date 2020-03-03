@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { updateActionType, updateProspectId } from "../../../store/actions/appConfig";
+import { updateProspectId } from "../../../store/actions/appConfig";
 import { getProspectInfoPromisify } from "../../../store/actions/retrieveApplicantInfo";
 import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
 import { getSearchResults } from "../../../store/selectors/searchProspect";
@@ -15,7 +15,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   retrieveDocDetails,
   getProspectInfo: getProspectInfoPromisify,
-  updateActionType,
   updateProspectId
 };
 

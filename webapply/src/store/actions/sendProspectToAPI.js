@@ -1,6 +1,6 @@
 import { WAIT_FOR_ACTION, ERROR_ACTION, CALLBACK_ARGUMENT } from "redux-wait-for-action";
 
-import { NEXT } from "../../constants";
+import { NEXT, SAVE } from "../../constants";
 import { appendGaEventToAction } from "./googleAnalytics";
 
 export const SEND_PROSPECT_TO_API = "SEND_PROSPECT_TO_API";
@@ -12,17 +12,17 @@ export const SET_SCREENING_ERROR = "SET_SCREENING_ERROR";
 export const RESET_SCREENING_ERROR = "RESET_SCREENING_ERROR";
 export const SEND_PROSPECT_REQUEST = "SEND_PROSPECT_REQUEST";
 
-export const sendProspectToAPI = (saveType = NEXT) => {
-  return { type: SEND_PROSPECT_TO_API, payload: { saveType } };
+export const sendProspectToAPI = (saveType = NEXT, actionType = SAVE) => {
+  return { type: SEND_PROSPECT_TO_API, payload: { saveType, actionType } };
 };
 
-export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null) => {
+export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null, actionType = SAVE) => {
   const action = {
     type: SEND_PROSPECT_TO_API,
     [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
     [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
     [CALLBACK_ARGUMENT]: action => action.payload,
-    payload: { saveType }
+    payload: { saveType, actionType }
   };
 
   return appendGaEventToAction(action, gaEvent);
@@ -52,6 +52,6 @@ export const resetScreeningError = () => {
   return { type: RESET_SCREENING_ERROR };
 };
 
-export const sendProspectRequest = (saveType, newProspect) => {
-  return { type: SEND_PROSPECT_REQUEST, saveType, newProspect };
+export const sendProspectRequest = (newProspect, saveType = NEXT, actionType = SAVE) => {
+  return { type: SEND_PROSPECT_REQUEST, payload: { saveType, actionType, newProspect } };
 };

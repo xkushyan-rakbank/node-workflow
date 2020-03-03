@@ -14,7 +14,7 @@ import {
   STATUS_LOCKED,
   STATUS_FORCE_STOP
 } from "./constants";
-import { APP_STOP_SCREEN_RESULT, SAVE } from "../../../constants";
+import { APP_STOP_SCREEN_RESULT } from "../../../constants";
 
 import { useStyles } from "./styled";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
@@ -25,7 +25,6 @@ export const SearchedAppInfoComponent = ({
   updateProspectId,
   retrieveDocDetails,
   getProspectInfo,
-  updateActionType,
   prospectInfo
 }) => {
   const classes = useStyles();
@@ -56,7 +55,6 @@ export const SearchedAppInfoComponent = ({
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   const confirmHandler = useCallback(() => {
-    updateActionType(SAVE);
     pushDisplayScreenToHistory();
   }, [pushDisplayScreenToHistory]);
 
