@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useFormikContext, FastField, getIn } from "formik";
+import { useFormikContext, Field, getIn } from "formik";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 
@@ -90,5 +90,5 @@ export const AutoSaveField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, datalistId, filterOptions]);
 
-  return <FastField name={name} options={options} {...rest} />;
+  return <Field name={name} options={options} {...rest} />;
 };

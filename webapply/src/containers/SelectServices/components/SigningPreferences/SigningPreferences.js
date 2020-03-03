@@ -10,7 +10,8 @@ import {
   UAE_LANDLINE_PHONE_REGEX,
   NUMBER_REGEX,
   MIN_NON_UAE_PHONE_LENGTH,
-  MAX_NON_UAE_PHONE_LENGTH
+  MAX_NON_UAE_PHONE_LENGTH,
+  SPECIAL_CHARACTERS_REGEX
 } from "../../../../utils/validation";
 import { SIGNING_TRANSACTIONS_TYPE } from "../../../../constants";
 import { UAE_CODE } from "../../../../constants";
@@ -47,8 +48,12 @@ const signingPreferencesSchema = Yup.object({
   accountSigningInstn: Yup.string().when("accountSigningType", {
     is: selectedAccountType => selectedAccountType === SIGNING_TRANSACTIONS_TYPE.OTHER,
     then: Yup.string()
-      .max(MAX_ACCOUNT_SIGNING_INSTN_LENGTH, "Max length is 50 symbols")
+      .max(
+        MAX_ACCOUNT_SIGNING_INSTN_LENGTH,
+        `Max length is ${MAX_ACCOUNT_SIGNING_INSTN_LENGTH} symbols`
+      )
       .required(getRequiredMessage("Others"))
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Others"))
   }),
   signatories: Yup.array().of(
     Yup.object().shape({

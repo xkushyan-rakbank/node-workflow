@@ -1,5 +1,6 @@
 package ae.rakbank.webapply.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ApiError {
+public class ApiError implements Serializable {
 
     public static final String TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss,SSS";
 
