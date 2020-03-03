@@ -7,6 +7,8 @@ export const getEndpoints = state => state.appConfig.endpoints || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
 
+export const getAgentName = state => state.appConfig.login.userName;
+
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
 export const getAccountInfo = state => getProspect(state).accountInfo || [];
