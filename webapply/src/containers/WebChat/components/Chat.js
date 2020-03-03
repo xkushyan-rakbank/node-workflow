@@ -75,11 +75,6 @@ class Chat extends PureComponent {
     this.props.onClose();
   };
 
-  onMinimizeChat = () => {
-    GenesysChat.getInstance().minimizeChat();
-    this.props.onMinimize();
-  };
-
   onNewMessageArrival = messages => {
     this.setState({ messages });
   };
@@ -102,10 +97,11 @@ class Chat extends PureComponent {
 
   render() {
     const { messages, agentTyping } = this.state;
+    const { onMinimize } = this.props;
 
     return (
       <Container>
-        <Header onClose={this.onClose} onMinimize={this.onMinimizeChat} />
+        <Header onClose={this.onClose} onMinimize={onMinimize} />
         <Body>
           <MessagesList data={messages} />
           {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}
