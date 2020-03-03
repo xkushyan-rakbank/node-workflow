@@ -61,7 +61,7 @@ export const getUrlsReadMore = state => ({
 });
 
 export const getProspectDocuments = state => state.appConfig.prospect.documents;
-
+export const getOtherDocuments = state => getProspectDocuments(state).otherDocuments || [];
 export const isLoadingDocuments = state => state.uploadDocuments.isLoading;
 
 const createGetDocsCountSelector = (filterDocuments = () => true) => state => {
