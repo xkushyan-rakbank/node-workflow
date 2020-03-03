@@ -32,7 +32,7 @@ export const DocumentsComponent = ({
             <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
           </div>
           {docs.companyDocuments.map((application, index) => (
-            <div className={classes.applicationRow} key={`${application.documentType}_${index}`}>
+            <div className={classes.applicationRow} key={index}>
               <div className={classes.checkListData}>
                 {application.fileDescription || application.documentTitle}
               </div>
@@ -70,7 +70,7 @@ export const DocumentsComponent = ({
               </div>
               {get(docs, `stakeholdersDocuments[${index}_${user.fullName}].documents`, []).map(
                 (doc, index) => (
-                  <div className={classes.applicationRow} key={`${doc.documentType}_${index}`}>
+                  <div className={classes.applicationRow} key={index}>
                     <div className={classes.checkListData}>
                       {doc.fileDescription || doc.documentTitle}
                     </div>
