@@ -32,8 +32,10 @@ export const DocumentsComponent = ({
             <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
           </div>
           {docs.companyDocuments.map((application, index) => (
-            <div className={classes.applicationRow} key={application.documentType}>
-              <div className={classes.checkListData}>{application.documentTitle}</div>
+            <div className={classes.applicationRow} key={`${application.documentType}_${index}`}>
+              <div className={classes.checkListData}>
+                {application.fileName || application.documentTitle}
+              </div>
               <div className={classes.checkListData}>{application.uploadStatus}</div>
               <div className={classes.checkListData}>
                 <LinkButton
