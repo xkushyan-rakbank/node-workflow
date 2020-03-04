@@ -13,8 +13,6 @@ export const STEP_4 = 4;
 export const MAX_MOTHERS_MAIDEN_NAME_LENGTH = 30;
 export const MAX_LENGTH_MARITAL_OTHERS_STATUS = 20;
 
-export const COMPANY_SIGNATORY_ID = "companySignatory_";
-
 export const signatoriesSteps = [
   {
     step: STEP_1,

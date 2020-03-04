@@ -1,13 +1,13 @@
 import get from "lodash/get";
-
-import { COMPANY_SIGNATORY_ID } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
-import { FINAL_QUESTIONS_COMPANY_ID } from "../../containers/FinalQuestions/components/CompanySummaryCard/constants";
+import { COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
 
 export const getDatalist = state => state.appConfig.datalist || {};
 
 export const getEndpoints = state => state.appConfig.endpoints || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
+
+export const getAgentName = state => state.appConfig.login.userName;
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 

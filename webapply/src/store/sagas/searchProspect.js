@@ -12,8 +12,9 @@ function* searchProspectFormSaga({ payload }) {
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
+
     const inputParam = {
-      applicantName: payload.fname || "",
+      applicantName: payload.fullName || "",
       countryCode: payload.countryCode || "",
       mobileNo: payload.mobileNo || "",
       leadNumber: payload.leadNumber || "",
@@ -21,6 +22,7 @@ function* searchProspectFormSaga({ payload }) {
       email: payload.email || "",
       eidNumber: ""
     };
+
     const response = yield call(search.searchApplication, inputParam, headers);
     yield put(searchApplicationsSuccess(response.data.searchResult));
   } catch (error) {

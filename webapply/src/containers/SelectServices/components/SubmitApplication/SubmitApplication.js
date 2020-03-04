@@ -9,9 +9,9 @@ import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
-import { SUBMIT, NEXT } from "../../../../constants";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
+import { NEXT, SUBMIT } from "../../../../constants";
 
 export const SubmitApplicationComponent = ({
   accountInfo: [account],
@@ -19,8 +19,6 @@ export const SubmitApplicationComponent = ({
   applicationInfo,
   organizationInfo: { companyName },
   sendProspectToAPI,
-  updateActionType,
-  updateSaveType,
   isApplyEditApplication,
   updateViewId,
   currentProspectStatus
@@ -39,9 +37,7 @@ export const SubmitApplicationComponent = ({
   const handleSubmit = () => {
     updateViewId(pathname.replace(smeBaseName, ""), false);
     setIsSubmitting(true);
-    updateActionType(SUBMIT);
-    updateSaveType(NEXT);
-    sendProspectToAPI().then(
+    sendProspectToAPI(NEXT, null, SUBMIT).then(
       () => pushHistory(routes.ApplicationSubmitted),
       () => setIsSubmitting(false)
     );

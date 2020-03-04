@@ -31,7 +31,8 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAccountType,
-  getIsIslamicBanking
+  getIsIslamicBanking,
+  getAuthToken
 } from "../selectors/appConfig";
 import { setLockStatusByROAgent } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
@@ -43,7 +44,7 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  SUBMIT
+  VIEW_IDS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { ROError, FieldsValidationError } from "../../api/serverErrors";
@@ -54,7 +55,7 @@ function* watchRequest() {
   while (true) {
     const actions = yield flush(chan);
     if (actions.length) {
-      const action = actions.find(act => act.saveType === CONTINUE) || actions[0];
+      const action = actions.find(act => act.payload.saveType === CONTINUE) || actions[0];
       yield call(sendProspectToAPI, action);
     }
     yield delay(1000);
@@ -88,7 +89,7 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga({ payload: { saveType } }) {
+function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
@@ -105,7 +106,7 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
     };
     */
 
-    yield put(sendProspectRequest(saveType, newProspect));
+    yield put(sendProspectRequest(newProspect, saveType, actionType));
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }
@@ -118,12 +119,17 @@ function* prospectAutoSave() {
 
       const state = yield select();
       const newProspect = getProspect(state);
+      const hasAuthToken = getAuthToken(state);
 
       const prospectId = newProspect.generalInfo.prospectId;
-      const actionType = newProspect.applicationInfo.actionType;
+      const viewId = newProspect.applicationInfo.viewId;
 
-      if (prospectId && actionType !== SUBMIT) {
-        yield put(sendProspectRequest(AUTO, newProspect));
+      if (
+        hasAuthToken &&
+        prospectId &&
+        ![VIEW_IDS.ApplicationSubmitted, VIEW_IDS.SubmitApplication].includes(viewId)
+      ) {
+        yield put(sendProspectRequest(newProspect, AUTO));
       }
     }
   } finally {
@@ -133,13 +139,14 @@ function* prospectAutoSave() {
   }
 }
 
-function* sendProspectToAPI({ newProspect, saveType }) {
+function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) {
   try {
     const state = yield select();
     const prospectId = getProspectId(state);
     const headers = getAuthorizationHeader(state);
 
     newProspect.applicationInfo.saveType = saveType;
+    newProspect.applicationInfo.actionType = actionType;
     const { data } = yield call(prospect.update, prospectId, newProspect, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {

@@ -1,4 +1,3 @@
-import React from "react";
 import routes from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 
@@ -122,6 +121,10 @@ export const screeningStatus = [
   {
     error: "Company as stakeholder",
     screeningType: "IsShareHolderACompany Check"
+  },
+  {
+    error: "Too many Stakeholders",
+    screeningType: "Too many Stakeholders Check"
   }
 ];
 
@@ -132,30 +135,6 @@ export const screeningStatusDefault = {
   error: "Default",
   text:
     "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
-};
-
-export const stakeholderScreeningStatus = {
-  error: "Big Company",
-  icon: callbackRegular,
-  text: (
-    <>
-      Wow, you’re a big company!
-      <br /> Let us save you time and have someone call you within 1 day to meet you in person and
-      help you out.
-    </>
-  )
-};
-
-export const screeningStatusNotRegistered = {
-  error: "Not Registered In UAE",
-  icon: callbackRegular,
-  text: (
-    <>
-      It looks like your company is not registered in the UAE. <br />
-      But no worries! Let’s have someone call you back within 1 day to <br />
-      meet you in person and help you out.
-    </>
-  )
 };
 
 export const DATE_FORMAT = "yyyy-MM-dd";
@@ -182,6 +161,9 @@ export const ACTION_TYPES = {
 };
 
 export const SOLE_PROPRIETOR = "1";
+
+export const FINAL_QUESTIONS_COMPANY_ID = "finalQuestionsCompany";
+export const COMPANY_SIGNATORY_ID = "companySignatory_";
 
 export const STEP_STATUS = {
   AVAILABLE: "AVAILABLE",

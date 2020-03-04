@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from "react";
+import cx from "classnames";
 
 import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
@@ -65,10 +66,10 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
 
       <div className={classes.linkContainer}>
         <BackLink path={routes.uploadDocuments} />
-        <SubmitButton
-          className={classes.submitButton}
+        <NextStepButton
           handleClick={handleClickNextStep}
           label={isSubmit ? "Go to submit" : "Next Step"}
+          className={cx({ [classes.submitButton]: isSubmit })}
           justify="flex-end"
           disabled={
             !isAllStepsCompleted || (accountType === accountNames.starter && !rakValuePackage)

@@ -8,7 +8,6 @@ import routes, { agentBaseName } from "./routes";
 import { history } from "./store";
 
 import { FormLayout } from "./containers/FormLayout";
-import { FinalQuestionsState } from "./containers/FinalQuestions/FinalQuestionsStateContext";
 import { ServerRequestLoadingScreen } from "./components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
 import { ProspectProtectedRoute } from "./components/Routers";
@@ -74,80 +73,78 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
   return (
     <MuiThemeProvider theme={theme}>
       <ConnectedRouter history={history}>
-        <FinalQuestionsState>
-          <FormLayout>
-            <Suspense fallback={ServerRequestLoadingScreen()}>
-              <Switch>
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.ApplicationSubmitted}
-                  component={ApplicationSubmitted}
-                />
-                <ProtectedRoute
-                  exact
-                  path={routes.accountsComparison}
-                  component={AccountsComparison}
-                />
-                <AccountTypeProtectedRoute
-                  exact
-                  path={routes.applicantInfo}
-                  component={ApplicantInfo}
-                />
-                <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
-                <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.stakeholdersInfo}
-                  component={CompanyStakeholders}
-                />
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.finalQuestions}
-                  component={FinalQuestions}
-                />
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.uploadDocuments}
-                  component={UploadDocuments}
-                />
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.reUploadDocuments}
-                  component={ReUploadDocuments}
-                />
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.selectServices}
-                  component={SelectServices}
-                />
-                <AccountTypeProtectedRoute
-                  exact
-                  path={routes.applicationOverview}
-                  component={ApplicationOverview}
-                />
-                <AccountTypeProtectedRoute
-                  exact
-                  path={routes.detailedAccount}
-                  component={DetailedAccount}
-                />
-                <ProtectedRoute exact path={routes.comeBackLogin} component={ComeBackLogin} />
-                <ProtectedRoute
-                  exact
-                  path={routes.comeBackLoginVerification}
-                  component={ComeBackVerification}
-                />
-                <OTPProtectedRoute exact path={routes.MyApplications} component={MyApplications} />
-                <ProspectProtectedRoute
-                  exact
-                  path={routes.SubmitApplication}
-                  component={SubmitApplication}
-                />
-                <ProtectedRoute path={agentBaseName} component={Agents} />
-                <Redirect to={routes.accountsComparison} />
-              </Switch>
-            </Suspense>
-          </FormLayout>
-        </FinalQuestionsState>
+        <FormLayout>
+          <Suspense fallback={ServerRequestLoadingScreen()}>
+            <Switch>
+              <ProspectProtectedRoute
+                exact
+                path={routes.ApplicationSubmitted}
+                component={ApplicationSubmitted}
+              />
+              <ProtectedRoute
+                exact
+                path={routes.accountsComparison}
+                component={AccountsComparison}
+              />
+              <AccountTypeProtectedRoute
+                exact
+                path={routes.applicantInfo}
+                component={ApplicantInfo}
+              />
+              <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
+              <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
+              <ProspectProtectedRoute
+                exact
+                path={routes.stakeholdersInfo}
+                component={CompanyStakeholders}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.finalQuestions}
+                component={FinalQuestions}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.uploadDocuments}
+                component={UploadDocuments}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.reUploadDocuments}
+                component={ReUploadDocuments}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.selectServices}
+                component={SelectServices}
+              />
+              <AccountTypeProtectedRoute
+                exact
+                path={routes.applicationOverview}
+                component={ApplicationOverview}
+              />
+              <AccountTypeProtectedRoute
+                exact
+                path={routes.detailedAccount}
+                component={DetailedAccount}
+              />
+              <ProtectedRoute exact path={routes.comeBackLogin} component={ComeBackLogin} />
+              <ProtectedRoute
+                exact
+                path={routes.comeBackLoginVerification}
+                component={ComeBackVerification}
+              />
+              <OTPProtectedRoute exact path={routes.MyApplications} component={MyApplications} />
+              <ProspectProtectedRoute
+                exact
+                path={routes.SubmitApplication}
+                component={SubmitApplication}
+              />
+              <ProtectedRoute path={agentBaseName} component={Agents} />
+              <Redirect to={routes.accountsComparison} />
+            </Switch>
+          </Suspense>
+        </FormLayout>
       </ConnectedRouter>
     </MuiThemeProvider>
   );
