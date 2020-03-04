@@ -15,7 +15,7 @@ function* searchProspectFormSaga({ payload }) {
 
     const inputParam = {
       applicantName: payload.fullName || "",
-      countryCode: payload.countryCode || "",
+      countryCode: payload.mobileNo ? payload.countryCode : "",
       mobileNo: payload.mobileNo || "",
       leadNumber: payload.leadNumber || "",
       tradeLicenseNo: payload.tradeLicenseNo || "",
