@@ -186,19 +186,19 @@ export const VIRTUAL_CURRENCY_CHECK = {
   screeningType: "Virtual Currency Check",
   screeningStatus: "Not completed",
   screeningLabel: "Virtual Currency",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
   screeningType: "Country Of Incorporation Check",
   screeningStatus: "Not completed",
   screeningLabel: "Country of Incorporation",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const RAKSTARTER_ACCOUNT_CHECK = {
   screeningType: "RAKStarter Account Check",
   screeningStatus: "Not completed",
   screeningLabel: "RAK-Starter Account Validation",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const DEDUPE_CHECK = {
   screeningType: "Dedupe Check",
@@ -210,13 +210,7 @@ export const ISSHAREHOLDERACOMPANY_CHECK = {
   screeningType: "IsShareHolderACompany Check",
   screeningStatus: "Not completed",
   screeningLabel: "Company is a Stakeholder",
-  screeningReason: "No Match"
-};
-export const SHAREHOLDERCOUNT_CHECK = {
-  screeningType: "ShareHolderCount Check",
-  screeningStatus: "Completed",
-  screeningLabel: "Share Holder Count",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const BLACKLIST_CHECK = {
   screeningType: "Blacklist Check",
@@ -228,13 +222,13 @@ export const TOO_MANY_STAKEHOLDERS = {
   screeningType: "Too many Stakeholders Check",
   screeningStatus: "Not completed",
   screeningLabel: "Too many Stakeholders",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const RISK_RATING = {
   screeningType: "Risk Rating",
   screeningStatus: "Not completed",
   screeningLabel: "Risk Rating",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 
 export const COMPANY_CHECK_NAMES = [
