@@ -10,7 +10,9 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     color: theme.palette.text.color
   },
-  root: {}
+  root: {
+    marginRight: "auto"
+  }
 }));
 
 export const CustomCheckbox = ({

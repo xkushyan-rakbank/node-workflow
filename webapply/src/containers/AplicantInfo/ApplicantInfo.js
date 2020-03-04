@@ -4,13 +4,7 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import {
-  NUMBER_REGEX,
-  UAE_MOBILE_PHONE_REGEX,
-  MAX_NON_UAE_PHONE_LENGTH,
-  MIN_NON_UAE_PHONE_LENGTH,
-  NAME_REGEX
-} from "./../../utils/validation";
+import { NAME_REGEX } from "./../../utils/validation";
 import {
   Input,
   CustomSelect,
@@ -44,24 +38,7 @@ const aplicantInfoSchema = Yup.object({
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
-    .when("countryCode", {
-      is: countryCode => countryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Your Mobile Number")),
-      otherwise: Yup.string()
-        .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
-        .min(
-          MIN_NON_UAE_PHONE_LENGTH,
-          `${getInvalidMessage("Your Mobile Number")} (min length is not reached)`
-        )
-        .test(
-          "length validation",
-          `${getInvalidMessage("Your Mobile Number")} (max length exceeded)`,
-          function() {
-            const { countryCode = "", mobileNo = "" } = this.parent;
-            return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-          }
-        )
-    })
+    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
 });
 
 const initialValues = {
@@ -82,13 +59,17 @@ const ApplicantInfoPage = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
+
   useEffect(() => {
     const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
     const segment = pathname.substring(1, pathname.lastIndexOf("/"));
 
     receiveAppConfig(segment);
+  }, [receiveAppConfig]);
+
+  useEffect(() => {
     resetScreeningError();
-  }, [receiveAppConfig, resetScreeningError]);
+  }, [resetScreeningError]);
 
   const onSubmit = useCallback(
     values => {

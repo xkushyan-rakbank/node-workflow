@@ -13,6 +13,7 @@ import {
   RESET_APPLICANT_INFO
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
+import { UAE_CODE } from "../../constants";
 
 export const initialState = {
   loading: false,
@@ -104,8 +105,8 @@ const appConfigReducer = (state = initialState, action) => {
         },
         searchInfo: {
           ...state.searchInfo,
-          fname: "",
-          countryCode: "",
+          fullName: "",
+          countryCode: UAE_CODE,
           mobileNo: "",
           leadNumber: "",
           tradeLicenseNo: "",
@@ -122,7 +123,7 @@ const appConfigReducer = (state = initialState, action) => {
           applicantInfo: {
             fullName: "",
             email: "",
-            countryCode: "971",
+            countryCode: UAE_CODE,
             mobileNo: "",
             applyOnbehalf: false
           }

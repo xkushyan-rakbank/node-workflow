@@ -51,16 +51,8 @@ export const updateProspectId = prospectId => {
   return { type: UPDATE_PROSPECT_ID, prospectId };
 };
 
-export const updateActionType = actionType => {
-  return { type: UPDATE_ACTION_TYPE, actionType };
-};
-
 export const updateViewId = (viewId, isSendToApi) => {
   return { type: UPDATE_VIEW_ID, payload: { viewId, isSendToApi } };
-};
-
-export const updateSaveType = saveType => {
-  return { type: UPDATE_SAVE_TYPE, saveType };
 };
 
 export const saveProspectModel = prospectModel => {

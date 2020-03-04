@@ -18,11 +18,11 @@ import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorSc
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
-  SEND_PROSPECT_TO_API_SUCCESS,
   sendProspectToAPIFail,
   resetFormStep,
   PROSPECT_AUTO_SAVE,
   sendProspectRequest,
+  SEND_PROSPECT_REQUEST,
   setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
@@ -31,7 +31,8 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAccountType,
-  getIsIslamicBanking
+  getIsIslamicBanking,
+  getAuthToken
 } from "../selectors/appConfig";
 import { setLockStatusByROAgent } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
@@ -43,17 +44,18 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  SUBMIT
+  VIEW_IDS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { ROError, FieldsValidationError } from "../../api/serverErrors";
+import { SCREENING_FAIL_REASONS } from "../../constants";
 
 function* watchRequest() {
-  const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
+  const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
   while (true) {
     const actions = yield flush(chan);
     if (actions.length) {
-      const action = actions.find(act => act.saveType === CONTINUE) || actions[0];
+      const action = actions.find(act => act.payload.saveType === CONTINUE) || actions[0];
       yield call(sendProspectToAPI, action);
     }
     yield delay(1000);
@@ -62,7 +64,7 @@ function* watchRequest() {
 
 function* setScreeningResults({ preScreening }) {
   const currScreeningType = preScreening.screeningResults.find(screeningResult =>
-    ["Decline", "Match"].includes(screeningResult.screeningReason)
+    SCREENING_FAIL_REASONS.includes(screeningResult.screeningReason)
   );
 
   const screenError = screeningStatus.find(
@@ -87,7 +89,7 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga({ payload: { saveType } }) {
+function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
@@ -104,7 +106,7 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
     };
     */
 
-    yield put(sendProspectRequest(saveType, newProspect));
+    yield put(sendProspectRequest(newProspect, saveType, actionType));
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }
@@ -112,27 +114,39 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
 
 function* prospectAutoSave() {
   try {
-    while (yield take(SEND_PROSPECT_TO_API_SUCCESS)) {
+    while (true) {
+      yield delay(40000);
+
       const state = yield select();
       const newProspect = getProspect(state);
+      const hasAuthToken = getAuthToken(state);
 
-      yield put(sendProspectRequest(AUTO, newProspect));
-      yield delay(40000);
+      const prospectId = newProspect.generalInfo.prospectId;
+      const viewId = newProspect.applicationInfo.viewId;
+
+      if (
+        hasAuthToken &&
+        prospectId &&
+        ![VIEW_IDS.ApplicationSubmitted, VIEW_IDS.SubmitApplication].includes(viewId)
+      ) {
+        yield put(sendProspectRequest(newProspect, AUTO));
+      }
     }
   } finally {
     if (yield cancelled()) {
-      log("cancel");
+      log("refresh auto save interval");
     }
   }
 }
 
-function* sendProspectToAPI({ newProspect, saveType }) {
+function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) {
   try {
     const state = yield select();
     const prospectId = getProspectId(state);
     const headers = getAuthorizationHeader(state);
 
     newProspect.applicationInfo.saveType = saveType;
+    newProspect.applicationInfo.actionType = actionType;
     const { data } = yield call(prospect.update, prospectId, newProspect, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {
@@ -171,13 +185,12 @@ function* sendProspectToAPI({ newProspect, saveType }) {
 }
 
 function* prospectAutoSaveFlowSaga() {
-  while (yield take("START_PROSPECT_AUTO_SAVE")) {
+  while (true) {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
-    const { actionType } = yield take("UPDATE_ACTION_TYPE");
 
-    if (actionType === SUBMIT) {
-      yield cancel(bgSyncAutoSave);
-    }
+    yield take(SEND_PROSPECT_REQUEST);
+
+    yield cancel(bgSyncAutoSave);
   }
 }
 
