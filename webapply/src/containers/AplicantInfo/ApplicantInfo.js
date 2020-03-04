@@ -147,7 +147,6 @@ const ApplicantInfoPage = ({
               <SkeletonLoader />
             ) : (
               <InputGroup>
-                {/*
                 <Field
                   name="countryCode"
                   path="prospect.applicantInfo.countryCode"
@@ -157,7 +156,6 @@ const ApplicantInfoPage = ({
                   shrink={false}
                   inputProps={{ tabIndex: 0 }}
                 />
-                */}
                 <Field
                   name="mobileNo"
                   path="prospect.applicantInfo.mobileNo"
