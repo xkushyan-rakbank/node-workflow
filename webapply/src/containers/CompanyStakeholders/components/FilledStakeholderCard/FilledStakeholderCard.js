@@ -38,12 +38,13 @@ export const FilledStakeholderCard = ({
             className={classes.shareholdingField}
           >{`Shareholding ${shareHoldingPercentage}%`}</div>
         </div>
-
-        <LinkButton
-          clickHandler={editStakeholder}
-          editDisabled={editDisabled}
-          contextualHelpText="Delete or finish current stakeholder to edit"
-        />
+        {!editDisabled && (
+          <LinkButton
+            clickHandler={editStakeholder}
+            editDisabled={editDisabled}
+            contextualHelpText="Delete or finish current stakeholder to edit"
+          />
+        )}
       </div>
     </div>
   );
