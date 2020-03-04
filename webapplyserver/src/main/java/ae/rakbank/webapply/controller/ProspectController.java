@@ -5,6 +5,7 @@ import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.services.RecaptchaService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
+import ae.rakbank.webapply.util.ProspectUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -41,6 +42,7 @@ public class ProspectController {
     private final DehClient dehClient;
     private final RecaptchaService captchaService;
     private final WebApplyController applyController;
+    private final ProspectUtil prospectUtil;
 
     private JsonNode dehURIs = null;
     private String dehBaseUrl = null;
@@ -55,8 +57,8 @@ public class ProspectController {
     @PreAuthorize("isAnonymous()")
     @PostMapping(value = "", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Object> createSMEProspect(HttpServletRequest httpRequest,
-                                               @RequestBody JsonNode requestBodyJSON,
-                                               @PathVariable String segment) {
+                                                    @RequestBody JsonNode requestBodyJSON,
+                                                    @PathVariable String segment) {
         log.info("Begin createSMEProspect() method");
         log.info(String.format("createSMEProspect() method args, RequestBody=[%s], segment=[%s]", requestBodyJSON.toString(), segment));
 
@@ -100,10 +102,9 @@ public class ProspectController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/{prospectId}", produces = "application/json")
-    public ResponseEntity<Object> getProspectById(HttpServletRequest httpRequest,
-                                             @AuthenticationPrincipal JwtPayload jwtPayload,
-                                             @PathVariable String segment,
-                                             @PathVariable String prospectId) {
+    public ResponseEntity<Object> getProspectById(@AuthenticationPrincipal JwtPayload jwtPayload,
+                                                  @PathVariable String segment,
+                                                  @PathVariable String prospectId) {
         log.info("Begin getProspectById() method");
         log.debug(
                 String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
@@ -117,11 +118,10 @@ public class ProspectController {
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping(value = "/{prospectId}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Object> updateSMEProspect(HttpServletRequest httpRequest,
-                                               @AuthenticationPrincipal JwtPayload jwtPayload,
-                                               @RequestBody JsonNode jsonNode,
-                                               @PathVariable String prospectId,
-                                               @PathVariable String segment) {
+    public ResponseEntity<Object> updateSMEProspect(@AuthenticationPrincipal JwtPayload jwtPayload,
+                                                    @RequestBody JsonNode jsonNode,
+                                                    @PathVariable String prospectId,
+                                                    @PathVariable String segment) {
         log.info("Begin updateSMEProspect() method");
         log.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
                 jsonNode.toString(), segment, prospectId));
@@ -135,10 +135,9 @@ public class ProspectController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/search", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Object> searchProspect(HttpServletRequest httpRequest,
-                                            @AuthenticationPrincipal JwtPayload jwtPayload,
-                                            @RequestBody JsonNode jsonNode,
-                                            @PathVariable String segment) {
+    public ResponseEntity<Object> searchProspect(@AuthenticationPrincipal JwtPayload jwtPayload,
+                                                 @RequestBody JsonNode jsonNode,
+                                                 @PathVariable String segment) {
         log.info("Begin searchProspect() method");
         log.debug(String.format("searchProspect() method args, RequestBody=[%s], segment=[%s]", jsonNode.toString(),
                 segment));
@@ -146,7 +145,10 @@ public class ProspectController {
         String url = dehBaseUrl + dehURIs.get("searchProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
 
-        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.POST, jsonNode,
+        ResponseEntity<Object> responseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.POST, jsonNode,
                 "searchProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
+
+        prospectUtil.filterAllowedProspects(responseEntity, jwtPayload);
+        return responseEntity;
     }
 }
