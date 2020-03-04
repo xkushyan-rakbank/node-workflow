@@ -148,9 +148,13 @@ export const CONVENTIONAL_BANK = "Conventional";
 export const BYTES_IN_MEGABYTE = 1048576;
 
 export const VIEW_IDS = {
+  CompanyInfo: "/CompanyInfo",
+  StakeholdersInfo: "/StakeholdersInfo",
+  FinalQuestions: "/FinalQuestions",
+  UploadDocuments: "/UploadDocuments",
+  SelectServices: "/SelectServices",
   SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
-  CompanyInfo: "/CompanyInfo",
   SearchedAppInfo: "/SearchedAppInfo",
   ApplicationSubmitted: "/ApplicationSubmitted"
 };

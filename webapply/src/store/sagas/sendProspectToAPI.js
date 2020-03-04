@@ -31,8 +31,7 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAccountType,
-  getIsIslamicBanking,
-  getAuthToken
+  getIsIslamicBanking
 } from "../selectors/appConfig";
 import { setLockStatusByROAgent } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
@@ -116,16 +115,18 @@ function* prospectAutoSave() {
 
       const state = yield select();
       const newProspect = getProspect(state);
-      const hasAuthToken = getAuthToken(state);
 
-      const prospectId = newProspect.generalInfo.prospectId;
       const viewId = newProspect.applicationInfo.viewId;
 
-      if (
-        hasAuthToken &&
-        prospectId &&
-        ![VIEW_IDS.ApplicationSubmitted, VIEW_IDS.SubmitApplication].includes(viewId)
-      ) {
+      const isAutoSaveEnabled = [
+        VIEW_IDS.CompanyInfo,
+        VIEW_IDS.StakeholdersInfo,
+        VIEW_IDS.FinalQuestions,
+        VIEW_IDS.UploadDocuments,
+        VIEW_IDS.SelectServices
+      ].includes(viewId);
+
+      if (isAutoSaveEnabled) {
         yield put(sendProspectRequest(newProspect, AUTO));
       }
     }
