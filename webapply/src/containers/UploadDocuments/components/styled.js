@@ -163,7 +163,6 @@ export const useStyles = makeStyles({
     fontStretch: "normal",
     lineHeight: ".6",
     letterSpacing: "normal",
-    margin: "10px 0 0 0",
     "& p": {
       margin: 0
     }
@@ -225,25 +224,6 @@ export const useStyles = makeStyles({
     textAlign: "right",
     color: "#373737",
     paddingLeft: "11px"
-  },
-  ErrorExplanation: {
-    display: "flex",
-    alignItems: "center",
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: ".6",
-    letterSpacing: "normal",
-    color: "#ea2925",
-    "& svg": {
-      marginRight: " 10px"
-    }
-  },
-  tryAgain: {
-    textDecoration: "underline",
-    marinLeft: "3px",
-    cursor: "pointer"
   },
   cancel: {
     width: "24px",
