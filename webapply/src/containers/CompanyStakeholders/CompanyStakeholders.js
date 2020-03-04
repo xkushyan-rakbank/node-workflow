@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useMemo } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
@@ -69,11 +69,6 @@ const CompanyStakeholdersComponent = ({
     !stakeholdersIds.every(stakeholder => stakeholder.done) ||
     isLowPercentage ||
     !hasSignatories;
-
-  const isSomeEditable = useMemo(
-    () => stakeholders.some((item, index) => editableStakeholder === index),
-    [editableStakeholder, stakeholders]
-  );
 
   const goToFinalQuestions = useCallback(() => {
     sendProspectToAPI(NEXT).then(isScreeningError => {
@@ -149,7 +144,7 @@ const CompanyStakeholdersComponent = ({
               {...item}
               key={item.id}
               index={index}
-              editDisabled={isSomeEditable}
+              editDisabled={editableStakeholder !== undefined}
               changeEditableStep={editStakeholderHandler}
               datalist={datalist}
             />

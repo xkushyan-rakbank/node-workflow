@@ -41,7 +41,6 @@ export const FilledStakeholderCard = ({
         {!editDisabled && (
           <LinkButton
             clickHandler={editStakeholder}
-            editDisabled={editDisabled}
             contextualHelpText="Delete or finish current stakeholder to edit"
           />
         )}
