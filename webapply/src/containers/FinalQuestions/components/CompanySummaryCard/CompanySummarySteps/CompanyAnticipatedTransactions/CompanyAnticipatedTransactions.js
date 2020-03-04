@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useCallback } from "react";
 import * as Yup from "yup";
 import cx from "classnames";
 
@@ -16,15 +15,14 @@ import {
   COMPANY_CURRENCY,
   YEAR_MONTH_COUNT,
   ANNUAL_TURNOVER_MAX_LENGTH,
-  PLACEHOLDER
+  PLACEHOLDER,
+  linkedFields
 } from "./constants";
 import { CURRENCY_REGEX, isNumeric } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
   getInvalidMessage
 } from "../../../../../../utils/getValidationMessage";
-import { updateProspect } from "../../../../../../store/actions/appConfig";
-import { getOrgKYCDetails } from "../../../../../../store/selectors/appConfig";
 
 const FormatDecimalNumberInput = props => (
   <NumberFormat allowNegative={false} decimalScale={0} {...props} />
@@ -62,11 +60,47 @@ const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
   return true;
 };
 
-const getPercentValue = (partValue, anotherPartPercent, fullValue) => {
-  if (!fullValue) {
-    return 0;
+const getPercentValue = (values, name, totalMonthlyCreditsAED) => {
+  const totalMonthlyCashAmountInPercent = Math.round(
+    (values.totalMonthlyCashAmountInFigures * 100) / totalMonthlyCreditsAED
+  );
+  return name === linkedFields.totalMonthlyCashAmountInPercent.name
+    ? totalMonthlyCashAmountInPercent
+    : 100 - totalMonthlyCashAmountInPercent;
+};
+
+const createChangeProspectHandler = (values, name) => prospect => {
+  const relatedFields = Object.values(linkedFields).filter(field => field.name !== name);
+  const isRelatedFieldsFilled = !relatedFields.some(
+    field => field.isFillByUser && values[field.name] === ""
+  );
+  const totalMonthlyCreditsAED = getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED);
+  const isValuesValid =
+    totalMonthlyCreditsAED ===
+    +values.totalMonthlyCashAmountInFigures + +values.totalMonthlyNonCashAmountInFigures;
+  const additionalFields =
+    isRelatedFieldsFilled && isValuesValid
+      ? relatedFields.reduce(
+          (resultObject, { path, name, isFillByUser }) => ({
+            ...resultObject,
+            [path]: isFillByUser
+              ? values[name]
+              : getPercentValue(values, name, totalMonthlyCreditsAED)
+          }),
+          {}
+        )
+      : {};
+
+  if (name === linkedFields.annualFinTurnoverAmtInAED.name) {
+    additionalFields[
+      "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCreditsAED"
+    ] = getTotalMonthlyCreditsValue(values[name]);
   }
-  return anotherPartPercent ? 100 - anotherPartPercent : Math.round((partValue * 100) / fullValue);
+
+  return {
+    ...prospect,
+    ...additionalFields
+  };
 };
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
@@ -141,45 +175,6 @@ const commonInputProps = {
 
 export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const {
-    totalMonthlyCashCreditsAED: { amountInFigures: amountInCash, inPercent: percentInCash } = {},
-    totalMonthlyNonCashCreditsAED: {
-      amountInFigures: amountInNonCash,
-      inPercent: percentInNonCash
-    } = {},
-    totalMonthlyCreditsAED
-  } = useSelector(getOrgKYCDetails).anticipatedTransactionsDetails || {};
-
-  useEffect(() => {
-    if (totalMonthlyCreditsAED !== "") {
-      dispatch(
-        updateProspect({
-          "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.inPercent": getPercentValue(
-            amountInCash,
-            percentInNonCash,
-            totalMonthlyCreditsAED
-          )
-        })
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amountInCash]);
-
-  useEffect(() => {
-    if (totalMonthlyCreditsAED !== "") {
-      dispatch(
-        updateProspect({
-          "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.inPercent": getPercentValue(
-            amountInCash,
-            percentInCash,
-            totalMonthlyCreditsAED
-          )
-        })
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amountInNonCash]);
 
   const onSubmit = useCallback(() => {
     handleContinue();
@@ -220,12 +215,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   }}
                   component={Input}
                   contextualHelpText="Mention the Turnover per annum of the company. For new companies, give the expected turnover per annum"
-                  changeProspect={(prospect, value) => ({
-                    ...prospect,
-                    "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCreditsAED": getTotalMonthlyCreditsValue(
-                      value
-                    )
-                  })}
+                  changeProspect={createChangeProspectHandler(values, "annualFinTurnoverAmtInAED")}
                 />
               </Grid>
             </Grid>
@@ -269,6 +259,10 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
+                  changeProspect={createChangeProspectHandler(
+                    values,
+                    "totalMonthlyCashAmountInFigures"
+                  )}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -285,6 +279,10 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
+                  changeProspect={createChangeProspectHandler(
+                    values,
+                    "totalMonthlyNonCashAmountInFigures"
+                  )}
                 />
                 <InfoTitle
                   classes={{
