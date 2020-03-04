@@ -5,6 +5,11 @@ import declinedElite from "../../assets/gif/declined_elite.gif";
 import declinedRegular from "../../assets/gif/declined_regular.gif";
 import declinedIslamic from "../../assets/gif/declined_islamic.gif";
 
+export const ERROR_MESSAGES = {
+  RO_EDITING:
+    "We noticed that your application is incomplete. Not to worry, our team is already working on it.",
+  CIF_EXIST: "We already have your application. Not to worry, our team is already working on it."
+};
 export const ERRORS_TYPE = {
   DEDUPE: "Dedupe Check",
   VIRTUAL_CURRENCIES: "Virtual Currency Check",
@@ -13,6 +18,7 @@ export const ERRORS_TYPE = {
   BIG_COMPANY: "ShareHolderCount Check",
   BLACKLIST: "Blacklist Check",
   RO_EDITING: "RO_EDITING",
+  BLOCK_EDITING: "BLOCK_EDITING",
   COMPANY_AS_STAKEHOLDER: "IsShareHolderACompany Check",
   TOO_MANY_STAKEHOLDERS: "Too many Stakeholders Check"
 };
@@ -24,6 +30,7 @@ export const regularErrorScreenGifIcon = {
   [ERRORS_TYPE.BIG_COMPANY]: callbackRegular,
   [ERRORS_TYPE.BLACKLIST]: declinedIslamic,
   [ERRORS_TYPE.RO_EDITING]: callbackRegular,
+  [ERRORS_TYPE.BLOCK_EDITING]: callbackRegular,
   [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackRegular,
   [ERRORS_TYPE.TOO_MANY_STAKEHOLDERS]: callbackRegular
 };

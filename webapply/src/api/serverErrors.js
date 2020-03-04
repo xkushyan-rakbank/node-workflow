@@ -20,3 +20,4 @@ class CustomError extends Error {
 export class ReCaptchaError extends CustomError {}
 export class FieldsValidationError extends CustomError {}
 export class ROError extends CustomError {}
+export class CIFExistError extends CustomError {}

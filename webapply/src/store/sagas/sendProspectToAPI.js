@@ -33,7 +33,7 @@ import {
   getAccountType,
   getIsIslamicBanking
 } from "../selectors/appConfig";
-import { setLockStatusByROAgent } from "../actions/searchProspect";
+import { setLockStatusByROAgent, setCIFAlreadyExistError } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
@@ -46,7 +46,7 @@ import {
   VIEW_IDS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
-import { ROError, FieldsValidationError } from "../../api/serverErrors";
+import { ROError, FieldsValidationError, CIFExistError } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
 
 function* watchRequest() {
@@ -172,6 +172,8 @@ function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) 
   } catch (error) {
     if (error instanceof ROError) {
       yield put(setLockStatusByROAgent(true));
+    } else if (error instanceof CIFExistError) {
+      yield put(setCIFAlreadyExistError(true));
     } else if (error instanceof FieldsValidationError) {
       yield put(setInputsErrors(error.getInputsErrors()));
     } else {
