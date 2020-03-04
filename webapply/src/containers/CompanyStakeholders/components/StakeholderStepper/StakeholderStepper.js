@@ -44,7 +44,8 @@ const StakeholderStepperComponent = ({
   setEditStakeholder,
   showAddButton,
   isCompanyStakeHolder,
-  isEditInProgress
+  isEditInProgress,
+  onFinalScreenEnd
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
@@ -66,7 +67,7 @@ const StakeholderStepperComponent = ({
           changeFinalScreenDisplay(true);
           setTimeout(() => {
             changeFinalScreenDisplay(false);
-            changeEditableStakeholder();
+            onFinalScreenEnd(index);
           }, timeInterval);
         }
         handleSetNextStep(activeStep);

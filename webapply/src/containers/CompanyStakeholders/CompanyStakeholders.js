@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
@@ -45,11 +45,12 @@ const CompanyStakeholdersComponent = ({
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
+  const editableStakeholderRef = useRef(editableStakeholder);
+  editableStakeholderRef.current = editableStakeholder;
 
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
-  const [isNewStakeholder, setIsNewStakeholder] = useState(false);
 
   // Used to show add button after add stakeholder(if it is not limit)
   const handleShowAddButton = useCallback(() => {
@@ -58,10 +59,9 @@ const CompanyStakeholdersComponent = ({
 
   useEffect(() => {
     if (!stakeholders.length) {
-      setIsNewStakeholder(true);
       createNewStakeholder();
     }
-  }, [setIsNewStakeholder, createNewStakeholder, stakeholders.length]);
+  }, [createNewStakeholder, stakeholders.length]);
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
@@ -88,17 +88,19 @@ const CompanyStakeholdersComponent = ({
   const editStakeholderHandler = useCallback(
     index => {
       changeEditableStakeholder(index);
-      setIsNewStakeholder(false);
       setEditStakeholder(index, true);
     },
-    [changeEditableStakeholder, setEditStakeholder, setIsNewStakeholder]
+    [changeEditableStakeholder, setEditStakeholder]
   );
 
   const addNewStakeholder = useCallback(() => {
     setIsShowingAddButton(false);
-    setIsNewStakeholder(true);
     createNewStakeholder();
-  }, [setIsShowingAddButton, setIsNewStakeholder, createNewStakeholder]);
+  }, [setIsShowingAddButton, createNewStakeholder]);
+
+  const handleFinalScreenEnd = index => {
+    if (index === editableStakeholderRef.current) changeEditableStakeholder();
+  };
 
   return (
     <>
@@ -131,13 +133,13 @@ const CompanyStakeholdersComponent = ({
               showAddButton={handleShowAddButton}
               {...item}
               key={item.id}
-              index={editableStakeholder}
+              index={index}
               deleteStakeholder={
                 stakeholders.length !== 1 || isEditInProgress ? handleDeleteStakeholder : null
               }
-              isNewStakeholder={isNewStakeholder}
               orderIndex={index}
               isEditInProgress={isEditInProgress}
+              onFinalScreenEnd={handleFinalScreenEnd}
             />
           ) : (
             <FilledStakeholderCard
