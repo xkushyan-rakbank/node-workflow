@@ -51,7 +51,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
       routes.comeBackLoginVerification
     ].includes(pathname);
 
-  const stepperNavList = pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper;
+  const navigationSteps = pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper;
 
   return (
     <div className={cx(classes.formNav, classes.formNavBg, { active: isCurrentSectionVideo })}>
@@ -72,12 +72,12 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
         ) : (
           pathname !== routes.login && (
             <ul>
-              {stepperNavList.map(currentStep => (
+              {navigationSteps.map(currentStep => (
                 <FormNavigationStep
                   key={currentStep.step}
                   title={currentStep.title}
                   activeStep={pathname === currentStep.path || pathname === currentStep.relatedPath}
-                  isDisplayProgress={stepperNavList.length > 1}
+                  isDisplayProgress={navigationSteps.length > 1}
                   filled={(getRouteConfig() || {}).step > currentStep.step}
                 />
               ))}
