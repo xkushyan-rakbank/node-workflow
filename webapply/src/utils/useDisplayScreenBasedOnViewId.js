@@ -34,7 +34,9 @@ export const useDisplayScreenBasedOnViewId = () => {
         } else if (isEditRedirect) {
           url = routes.companyInfo;
         }
-      } else if (viewId === VIEW_IDS.ApplicationSubmitted) {
+      }
+
+      if (isROScreens && viewId === VIEW_IDS.ApplicationSubmitted) {
         url = routes.companyInfo;
       }
 
