@@ -29,6 +29,7 @@ export const useStyles = makeStyles(theme => ({
       }
     },
     "&:before": {
+      display: props => (props.isDisplayProgress ? "inline" : "none"),
       content: "''",
       position: "absolute",
       left: "0",
@@ -46,6 +47,7 @@ export const useStyles = makeStyles(theme => ({
       height: "100%"
     },
     "&:after": {
+      display: props => (props.isDisplayProgress ? "inline" : "none"),
       content: "''",
       position: "absolute",
       left: "0",
