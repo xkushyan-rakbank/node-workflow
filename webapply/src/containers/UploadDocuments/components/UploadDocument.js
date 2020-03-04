@@ -1,24 +1,14 @@
 import React, { useState, useRef, useCallback } from "react";
 import cx from "classnames";
-import * as Yup from "yup";
 
-import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
+import { documentValidationSchema } from "./../../../utils/validation";
 
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, BYTES_IN_MEGABYTE } from "./../../../constants";
 import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../constants";
-
-const validationFileSchema = Yup.object().shape({
-  file: Yup.mixed()
-    .test("size", "File size exceeded (5Mb maximum)", value => value && value.size <= FILE_SIZE)
-    .test(
-      "type",
-      "Supported formats are PDF, JPG and PNG",
-      value => value && SUPPORTED_FORMATS.includes(value.type)
-    )
-});
+import { DocumentUploadError } from "../../../components/DocumentUploadError/DocumentUploadError";
 
 export const UploadDocuments = ({
   document,
@@ -50,7 +40,7 @@ export const UploadDocuments = ({
     const file = inputEl.current.files[0];
 
     try {
-      validationFileSchema.validateSync({ file }, { abortEarly: false });
+      documentValidationSchema.validateSync({ file }, { abortEarly: false });
     } catch (error) {
       return setErrorMessage(error.message);
     }
@@ -152,15 +142,7 @@ export const UploadDocuments = ({
             </div>
           )}
 
-          {isUploadError && (
-            <p className={classes.ErrorExplanation}>
-              <Icon name={ICONS.infoRed} alt="upload error" />
-              Oops! We couldn’t upload the document.
-              <span className={classes.tryAgain} onClick={reUploadHandler}>
-                Please try again.
-              </span>
-            </p>
-          )}
+          {isUploadError && <DocumentUploadError tryAgainHandler={reUploadHandler} />}
 
           {!selectedFile && !isUploaded && !errorMessage && (
             <p>Supported formats are PDF, JPG and PNG | 5MB maximum size</p>

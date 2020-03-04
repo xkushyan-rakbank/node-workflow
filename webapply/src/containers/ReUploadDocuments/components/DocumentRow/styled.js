@@ -65,20 +65,5 @@ export const useStyles = makeStyles({
   progressStatus: {
     fontSize: 14,
     lineHeight: "18px"
-  },
-  error: {
-    marginTop: 7,
-    display: "flex",
-    fontSize: 14,
-    lineHeight: "16px",
-    color: "#ea2925",
-    letterSpacing: "normal"
-  },
-  alertIcon: {
-    marginRight: 5
-  },
-  errorLink: {
-    marginLeft: 4,
-    textDecoration: "underline"
   }
 });

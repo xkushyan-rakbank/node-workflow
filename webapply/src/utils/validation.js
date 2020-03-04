@@ -51,3 +51,13 @@ export const addPhoneNoValidationToYup = () => {
     });
   });
 };
+
+export const documentValidationSchema = Yup.object().shape({
+  file: Yup.mixed()
+    .test("size", "File size exceeded (5Mb maximum)", value => value && value.size <= FILE_SIZE)
+    .test(
+      "type",
+      "Supported formats are PDF, JPG and PNG",
+      value => value && SUPPORTED_FORMATS.includes(value.type)
+    )
+});

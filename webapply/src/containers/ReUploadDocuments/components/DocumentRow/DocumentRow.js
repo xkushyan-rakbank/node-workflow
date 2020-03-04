@@ -1,33 +1,22 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  cancelDocUpload,
-  deleteOtherDocument
-} from "../../../../store/actions/getProspectDocuments";
-import { getProgress, getUploadErrors } from "../../../../store/selectors/getProspectDocuments";
 import { BYTES_IN_MEGABYTE } from "../../../../constants";
 import { useStyles } from "./styled";
 
 import { ReactComponent as FileIcon } from "../../../../assets/icons/file.svg";
 import { ReactComponent as CloseIcon } from "../../../../assets/icons/close.svg";
-import { ReactComponent as AlertIcon } from "../../../../assets/icons/alert.svg";
+import { DocumentUploadError } from "../../../../components/DocumentUploadError/DocumentUploadError";
 
-export const DocumentRow = ({ fileDescription, fileSize, documentKey, uploadStatus }) => {
+export const DocumentRow = ({
+  fileDescription,
+  fileSize,
+  uploadStatus,
+  error,
+  documentProgress,
+  removeDocument
+}) => {
   const isUploaded = uploadStatus === "Uploaded";
   const classes = useStyles({ isUploaded });
-  const dispatch = useDispatch();
-  const progress = useSelector(getProgress);
-  const uploadErrors = useSelector(getUploadErrors);
-  const error = uploadErrors[documentKey];
-  const percentComplete = progress[documentKey];
-  const isUploading = typeof percentComplete === "number" && percentComplete !== 100;
-
-  const removeFile = () => {
-    if (isUploading) {
-      dispatch(cancelDocUpload(documentKey));
-    }
-    dispatch(deleteOtherDocument(documentKey));
-  };
+  const isUploading = typeof documentProgress === "number" && !isUploaded;
 
   return (
     <div className={classes.uploadedFile}>
@@ -40,22 +29,14 @@ export const DocumentRow = ({ fileDescription, fileSize, documentKey, uploadStat
         {isUploading && (
           <div className={classes.progressContainer}>
             <div className={classes.progressBar}>
-              <div className={classes.progressInner} style={{ width: `${percentComplete}%` }} />
+              <div className={classes.progressInner} style={{ width: `${documentProgress}%` }} />
             </div>
-            <div className={classes.progressStatus}>{percentComplete}%</div>
+            <div className={classes.progressStatus}>{documentProgress}%</div>
           </div>
         )}
-        {error && (
-          <span className={classes.error}>
-            <AlertIcon className={classes.alertIcon} />
-            Oops! We couldn&apos;t upload the document. Please
-            <span className={classes.errorLink} onClick={removeFile}>
-              try again.
-            </span>
-          </span>
-        )}
+        {error && <DocumentUploadError tryAgainHandler={removeDocument} />}
       </div>
-      <CloseIcon width={24} height={24} className={classes.cancelIcon} onClick={removeFile} />
+      <CloseIcon width={24} height={24} className={classes.cancelIcon} onClick={removeDocument} />
     </div>
   );
 };
