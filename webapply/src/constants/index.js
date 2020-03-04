@@ -120,7 +120,7 @@ export const screeningStatus = [
   },
   {
     error: "Company as stakeholder",
-    screeningType: "IsShareHolderACompany Check"
+    screeningType: "Company is a Stakeholder Check"
   },
   {
     error: "Too many Stakeholders",
@@ -207,7 +207,7 @@ export const DEDUPE_CHECK = {
   screeningReason: "No Match"
 };
 export const ISSHAREHOLDERACOMPANY_CHECK = {
-  screeningType: "IsShareHolderACompany Check",
+  screeningType: "Company is a Stakeholder Check",
   screeningStatus: "Not completed",
   screeningLabel: "Company is a Stakeholder",
   screeningReason: "Proceed"
