@@ -3,8 +3,7 @@ import {
   IS_APPLY_EDIT_APPLICATION,
   SEARCH_APPLICATIONS_FAILURE,
   SEARCH_APPLICATIONS_REQUEST,
-  IS_LOCK_STATUS_BY_RO_AGENT,
-  SET_CIF_ALREADY_EXIST_ERROR
+  SET_ERROR_OCCURRED_WHILE_PERFORMING
 } from "../actions/searchProspect";
 import { LOGOUT } from "../actions/loginForm";
 import { handleActions } from "../../utils/redux-utils";
@@ -13,8 +12,8 @@ export const initialState = {
   searchResults: [],
   isApplyEditApplication: null,
   isSearchLoading: false,
-  isLockStatusByROAgent: false,
-  isCIFAlreadyExist: false
+  isErrorOccurredWhilePerforming: false,
+  errorCode: null
 };
 
 export default handleActions(
@@ -38,14 +37,14 @@ export default handleActions(
       ...state,
       isApplyEditApplication: payload
     }),
-    [IS_LOCK_STATUS_BY_RO_AGENT]: (state, { payload }) => ({
-      ...state,
-      isLockStatusByROAgent: payload
-    }),
-    [SET_CIF_ALREADY_EXIST_ERROR]: (state, { payload }) => ({
-      ...state,
-      isCIFAlreadyExist: payload
-    }),
+    [SET_ERROR_OCCURRED_WHILE_PERFORMING]: (state, { payload }) => {
+      console.log(payload);
+      return {
+        ...state,
+        errorCode: payload.errorCode,
+        isErrorOccurredWhilePerforming: payload.isErrorOccurredWhilePerforming
+      };
+    },
     [LOGOUT]: () => initialState
   },
   initialState

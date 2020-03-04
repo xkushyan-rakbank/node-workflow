@@ -10,12 +10,12 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 import { formatJsonData } from "./formatJsonData";
+import { IGNORE_ERROR_CODES } from "../constants";
 import {
-  IGNORE_ERROR_CODES,
-  RO_LOCKED_ERROR_CODE,
-  CIF_ALREADY_EXIST_ERROR_CODE
-} from "../constants";
-import { ROError, ReCaptchaError, FieldsValidationError, CIFExistError } from "./serverErrors";
+  ErrorOccurredWhilePerforming,
+  ReCaptchaError,
+  FieldsValidationError
+} from "./serverErrors";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const REQUEST_ID_HEADER = "x-request-id";
@@ -138,11 +138,8 @@ apiClient.interceptors.response.use(
         serverError = new ReCaptchaError(jsonData);
         notificationOptions = { title: "ReCaptchaError", message: errors };
       } else if (status === 400 && errors) {
-        if (errors[0].errorCode === RO_LOCKED_ERROR_CODE) {
-          serverError = new ROError(jsonData);
-          notificationOptions = null;
-        } else if (errors[0].errorCode === CIF_ALREADY_EXIST_ERROR_CODE) {
-          serverError = new CIFExistError(jsonData);
+        if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+          serverError = new ErrorOccurredWhilePerforming(jsonData);
           notificationOptions = null;
         } else if (errorType === "FieldsValidation") {
           serverError = new FieldsValidationError(jsonData);
