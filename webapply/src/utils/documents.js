@@ -13,7 +13,9 @@ export const concatStakeholdersDocs = (neededDocs, uploadedDocs) => {
       documents: documents.map(
         document =>
           get(uploadedDocs, `${signatoryId}.documents`, []).find(
-            uploadedDoc => uploadedDoc.documentKey === document.documentKey
+            uploadedDoc =>
+              uploadedDoc.documentKey === document.documentKey &&
+              uploadedDoc.documentTitle === document.documentTitle
           ) || document
       )
     };

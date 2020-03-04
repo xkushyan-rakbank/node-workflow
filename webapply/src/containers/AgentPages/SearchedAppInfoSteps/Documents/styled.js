@@ -42,12 +42,22 @@ export const useStyles = makeStyles({
     lineHeight: 1.33,
     color: "#86868b",
     marginTop: 5,
-    flex: "0 0 33%"
+    maxWidth: "50%",
+    width: "50%",
+    "&:first-child": {
+      wordBreak: "break-all",
+      paddingRight: "10px"
+    },
+    "&:nth-child(2)": {
+      width: "20%"
+    },
+    "&:last-child": {
+      width: "30%"
+    }
   },
   heading: {
     fontWeight: 600,
-    color: "#000",
-    flex: "0 0 33%"
+    color: "#000"
   },
   contentWrapper: {
     display: "flex",
