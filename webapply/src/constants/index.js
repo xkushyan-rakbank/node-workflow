@@ -65,7 +65,6 @@ export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
-export const REQUEST_FAILED = "error";
 
 export const normalScrollHeight = 740;
 
@@ -76,6 +75,7 @@ export const IGNORE_ERROR_CODES = [APPS_NOT_FOUND_ERROR_CODE, RO_LOCKED_ERROR_CO
 
 export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
+export const OTHER_DOCUMENTS = "otherDocuments";
 
 /* Action Types */
 export const SAVE = "save";
