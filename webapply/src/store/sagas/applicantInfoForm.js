@@ -4,19 +4,14 @@ import {
   applicantInfoFormFail,
   applicantInfoFormSuccess
 } from "../actions/applicantInfoForm";
-import {
-  updateProspectId,
-  updateProspect,
-  updateSaveType,
-  updateActionType
-} from "../actions/appConfig";
+import { updateProspectId, updateProspect } from "../actions/appConfig";
 import { resetInputsErrors, setInputsErrors } from "./../actions/serverValidation";
 import { generateCodeSuccess } from "../actions/otp";
 import { prospect } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
-import { NEXT, SAVE } from "../../constants";
 import { FieldsValidationError } from "../../api/serverErrors";
+import { NEXT, SAVE } from "../../constants";
 
 function* applicantInfoFormSaga({ payload }) {
   try {
@@ -26,6 +21,8 @@ function* applicantInfoFormSaga({ payload }) {
       ...state.appConfig.prospect,
       applicantInfo: payload
     };
+    prospectUpdated.applicationInfo.saveType = NEXT;
+    prospectUpdated.applicationInfo.actionType = SAVE;
     yield put(updateProspect({ prospect: prospectUpdated }));
     if (getIsRecaptchaEnable(state)) {
       prospectUpdated = {
@@ -42,8 +39,6 @@ function* applicantInfoFormSaga({ payload }) {
 
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
-    yield put(updateActionType(SAVE));
-    yield put(updateSaveType(NEXT));
     yield put(resetInputsErrors());
     yield put(applicantInfoFormSuccess());
   } catch (error) {

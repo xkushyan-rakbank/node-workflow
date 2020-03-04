@@ -20,8 +20,8 @@ import {
   setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
-import { CONTINUE, stakeholderScreeningStatus, NEXT } from "../../../../constants";
-import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
+import { CONTINUE, NEXT } from "../../../../constants";
+import { getStakeholdersIds } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
 import { STEP_STATUS } from "../../../../constants";
@@ -42,8 +42,6 @@ const StakeholderStepperComponent = ({
   changeEditableStakeholder,
   setFillStakeholder,
   setEditStakeholder,
-  isTooManyStakeholders,
-  setScreeningError,
   showAddButton,
   isCompanyStakeHolder,
   isEditInProgress
@@ -62,10 +60,6 @@ const StakeholderStepperComponent = ({
 
     sendProspectToAPI(saveType, event).then(
       () => {
-        if (isTooManyStakeholders) {
-          setScreeningError(stakeholderScreeningStatus);
-        }
-
         if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
           showAddButton();
@@ -149,7 +143,6 @@ const StakeholderStepperComponent = ({
 
 const mapStateToProps = state => ({
   isStatusShown: state.stakeholders.isStatusShown,
-  isTooManyStakeholders: quantityErrorSelector(state),
   isCompanyStakeHolder: getIsCompanyStakeholder(state),
   loading: getIsSendingProspect(state)
 });

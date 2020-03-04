@@ -11,7 +11,7 @@ import {
   Input,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { ALPHA_NUMERIC_SPECIAL_REGEX } from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import {
   getRequiredMessage,
@@ -30,7 +30,7 @@ export const signatorySourceOfFundsSchema = Yup.object().shape({
     )
     .required(getRequiredMessage("Source of funds")),
   others: Yup.string()
-    .matches(ALPHA_NUMERIC_SPECIAL_REGEX, getInvalidMessage("Other"))
+    .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
     .when("sourceOfWealth", {
       is: sourceOfWealth =>
         sourceOfWealth.map(value => value.wealthType).includes(OTHER_SOURCE_OF_WEALTH),

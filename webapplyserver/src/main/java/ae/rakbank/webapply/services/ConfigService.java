@@ -47,7 +47,7 @@ public class ConfigService {
         String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
         JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
         initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
-        initStateJSON.put("datalist", datalist);
+        initStateJSON.set("datalist", datalist);
         initStateJSON.put("recaptchaEnable", recaptchaEnable);
         initStateJSON.put("termsConditionsUrl", baseUrls.get("TermsConditionsUrl").asText());
         initStateJSON.put("servicePricingGuideUrl", baseUrls.get("ServicePricingGuideUrl").asText());

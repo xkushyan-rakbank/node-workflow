@@ -198,7 +198,9 @@ export const prospect = {
         companyName: "",
         country: ""
       }
-    ]
+    ],
+    isDontHaveSuppliersYet: false,
+    isDontTradeGoodsYet: false
   },
   signatoryInfo: [
     {
@@ -294,7 +296,8 @@ export const prospect = {
         employerName: "",
         occupation: "",
         totalExperienceYrs: "",
-        employmentStartDate: ""
+        employmentStartDate: "",
+        isPersonWorkAtCompany: false
       },
       sameAsCompanyAddress: false,
       addressInfo: [

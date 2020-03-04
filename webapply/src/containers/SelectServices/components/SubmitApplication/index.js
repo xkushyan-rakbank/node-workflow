@@ -14,11 +14,7 @@ import {
   getProspectStatus
 } from "../../../../store/selectors/searchProspect";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
-import {
-  updateActionType,
-  updateSaveType,
-  updateViewId
-} from "../../../../store/actions/appConfig";
+import { updateViewId } from "../../../../store/actions/appConfig";
 import { SubmitApplicationComponent } from "./SubmitApplication";
 
 const mapStateToProps = state => ({
@@ -33,8 +29,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
-  updateActionType,
-  updateSaveType,
   updateViewId
 };
 

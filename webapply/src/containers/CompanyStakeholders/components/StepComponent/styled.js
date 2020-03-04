@@ -17,7 +17,8 @@ export const useStyles = makeStyles({
   stepTitleWrapper: {
     padding: "13px 16px",
     borderTop: "1px solid rgba(230, 230, 230, 0.5)",
-    cursor: "pointer"
+    cursor: "pointer",
+    maxHeight: "52px"
   },
   linkTitle: {
     padding: 0
@@ -36,6 +37,7 @@ export const useStyles = makeStyles({
   },
   doneIcon: {
     width: "24px",
+    height: "22px",
     fill: "#39C4A5"
   }
 });

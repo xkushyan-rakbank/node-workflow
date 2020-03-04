@@ -17,7 +17,7 @@ import { MAX_LICENSE_NUMBER_LENGTH, MAX_YEARS_IN_BUSINESS_LENGTH } from "../cons
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "../styled";
-import { LICENSE_NUMBER } from "../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
@@ -28,18 +28,20 @@ const initialValues = {
   yearsInBusiness: ""
 };
 
-const licenseInformationSchema = Yup.object({
-  licenseNumber: Yup.string()
-    .required(getRequiredMessage("License number"))
-    .matches(LICENSE_NUMBER, getInvalidMessage("License number")),
-  licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
-  countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
-  licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
-  dateOfIncorporation: Yup.date().required(getRequiredMessage("Date of incorporation")),
-  yearsInBusiness: Yup.number()
-    .min(0, "Must be more than 0")
-    .integer(getInvalidMessage("Years in business"))
-});
+const licenseInformationSchema = () =>
+  Yup.object({
+    licenseNumber: Yup.string()
+      .required(getRequiredMessage("License number"))
+      .max(MAX_LICENSE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("License number")),
+    licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
+    countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
+    licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
+    dateOfIncorporation: Yup.date().required(getRequiredMessage("Date of incorporation")),
+    yearsInBusiness: Yup.number()
+      .min(0, "Must be more than 0")
+      .integer(getInvalidMessage("Years in business"))
+  });
 
 const changeDateProspectHandler = (_, value, path) =>
   isValid(value) && { [path]: format(value, DATE_FORMAT) };

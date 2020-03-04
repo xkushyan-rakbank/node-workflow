@@ -5,7 +5,7 @@ import { FilledStakeholderCard } from "./components/FilledStakeholderCard/Filled
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { Icon, ICONS } from "../../components/Icons";
 
@@ -93,6 +93,7 @@ const CompanyStakeholdersComponent = ({
     },
     [changeEditableStakeholder, setEditStakeholder, setIsNewStakeholder]
   );
+  console.log("editableStakeholder", editableStakeholder);
 
   const addNewStakeholder = useCallback(() => {
     setIsShowingAddButton(false);
@@ -144,7 +145,7 @@ const CompanyStakeholdersComponent = ({
               {...item}
               key={item.id}
               index={index}
-              editDisabled={editableStakeholder}
+              editDisabled={Number.isInteger(editableStakeholder)}
               changeEditableStep={editStakeholderHandler}
               datalist={datalist}
             />
@@ -168,7 +169,7 @@ const CompanyStakeholdersComponent = ({
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
 
-        <SubmitButton
+        <NextStepButton
           handleClick={goToFinalQuestions}
           label="Next Step"
           justify="flex-end"

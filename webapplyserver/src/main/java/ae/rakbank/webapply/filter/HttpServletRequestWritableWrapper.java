@@ -8,6 +8,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class HttpServletRequestWritableWrapper extends HttpServletRequestWrapper {
 
@@ -22,7 +23,7 @@ public class HttpServletRequestWritableWrapper extends HttpServletRequestWrapper
     public String getHeader(String headerName) {
         String headerValue = super.getHeader(headerName);
         if ("Accept".equalsIgnoreCase(headerName) || "Content-Type".equalsIgnoreCase(headerName)) {
-            return headerValue.replaceAll(MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE);
+            return headerValue.replace(MediaType.TEXT_PLAIN_VALUE, MediaType.APPLICATION_JSON_VALUE);
         }
         return headerValue;
     }
@@ -38,7 +39,7 @@ public class HttpServletRequestWritableWrapper extends HttpServletRequestWrapper
 
     @Override
     public BufferedReader getReader() throws UnsupportedEncodingException {
-        return new BufferedReader(new InputStreamReader(decryptedDataBAIS, "UTF-8"));
+        return new BufferedReader(new InputStreamReader(decryptedDataBAIS, StandardCharsets.UTF_8));
     }
 
     @Override
