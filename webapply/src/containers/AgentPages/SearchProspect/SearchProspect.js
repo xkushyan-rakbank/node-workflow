@@ -128,7 +128,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
                   name="tradeLicenseNo"
                   path="searchInfo.tradeLicenseNo"
                   label="Trade License Number"
-                  placeholder="Track License Number"
+                  placeholder="Trade License Number"
                   component={Input}
                   InputProps={{
                     inputProps: { tabIndex: 0 }

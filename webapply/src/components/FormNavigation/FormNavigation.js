@@ -25,9 +25,6 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
   const blobColor = useBlobColor();
 
-  const getRouteConfig = () =>
-    formStepper.find(step => [step.path, step.relatedPath].some(path => pathname === path));
-
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
 
   const classes = useStyles({
@@ -37,7 +34,6 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     accountsComparisonPage: routes.accountsComparison === pathname,
     smallMenu: checkIsShowSmallMenu(pathname)
   });
-
   const isChatVisible =
     !isApplyEditApplication &&
     pathname.indexOf(agentBaseName) === -1 &&
@@ -50,6 +46,11 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
       routes.comeBackLogin,
       routes.comeBackLoginVerification
     ].includes(pathname);
+  const navigationSteps = pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper;
+  const activeStep = navigationSteps.find(step =>
+    [step.path, step.relatedPath].some(path => pathname === path)
+  );
+  const activeStepIndex = (activeStep || {}).step;
 
   return (
     <div className={cx(classes.formNav, classes.formNavBg, { active: isCurrentSectionVideo })}>
@@ -70,18 +71,15 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
         ) : (
           pathname !== routes.login && (
             <ul>
-              {(pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper).map(
-                currentStep => (
-                  <FormNavigationStep
-                    key={currentStep.step}
-                    title={currentStep.title}
-                    activeStep={
-                      pathname === currentStep.path || pathname === currentStep.relatedPath
-                    }
-                    filled={(getRouteConfig() || {}).step > currentStep.step}
-                  />
-                )
-              )}
+              {navigationSteps.map(step => (
+                <FormNavigationStep
+                  key={step.step}
+                  title={step.title}
+                  activeStep={activeStepIndex === step.step}
+                  isDisplayProgress={navigationSteps.length > 1}
+                  filled={activeStepIndex > step.step}
+                />
+              ))}
             </ul>
           )
         )}

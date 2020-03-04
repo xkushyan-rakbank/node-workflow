@@ -34,6 +34,10 @@ export const useDisplayScreenBasedOnViewId = () => {
         }
       }
 
+      if (isROScreens && viewId === VIEW_IDS.ApplicationSubmitted) {
+        url = routes.companyInfo;
+      }
+
       history.push(url);
     },
     [applicationInfo, isROScreens, history, location]
