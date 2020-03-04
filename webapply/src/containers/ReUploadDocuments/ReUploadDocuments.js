@@ -18,7 +18,7 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { ReUploadSuccess } from "./components/ReUploadSuccess/ReUploadSuccess";
 
 import { MAX_OTHER_DOCUMENTS } from "./constants";
-import { NEXT, SUBMIT } from "../../constants";
+import { NEXT, OTHER_DOCUMENTS, SUBMIT } from "../../constants";
 import { FILE_SIZE, SUPPORTED_FORMATS } from "../../utils/validation";
 import routes from "../../routes";
 
@@ -96,7 +96,7 @@ export const ReUploadDocuments = () => {
       docUpload({
         data,
         docProps: successfulUploadProps,
-        docOwner: "otherDocuments",
+        docOwner: OTHER_DOCUMENTS,
         userFileName: file.name,
         documentType,
         documentKey
