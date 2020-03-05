@@ -47,8 +47,6 @@ export const getProspectId = state => getGeneralInfo(state).prospectId;
 
 export const getAgentLogin = state => state.login;
 
-export const getIsAgentLoggedIn = state => getAgentLogin(state).loginStatus;
-
 export const getReCaptchaSiteKey = state => state.appConfig.reCaptchaSiteKey;
 
 export const getServicePricingGuideUrl = state => state.appConfig.servicePricingGuideUrl;

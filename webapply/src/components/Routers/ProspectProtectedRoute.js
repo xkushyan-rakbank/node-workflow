@@ -8,7 +8,7 @@ import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 export const ProspectProtectedRoute = ({ component: Component, render, ...rest }) => {
-  const isAuthenticated = useSelector(checkLoginStatus);
+  const isAgent = useSelector(checkLoginStatus);
   const prospectId = useSelector(getProspectId);
 
   return (
@@ -17,7 +17,7 @@ export const ProspectProtectedRoute = ({ component: Component, render, ...rest }
       render={props =>
         prospectId || process.env.NODE_ENV === "development" ? (
           <ErrorBoundary>{Component ? <Component {...props} /> : render(props)}</ErrorBoundary>
-        ) : isAuthenticated ? (
+        ) : isAgent ? (
           <Redirect to={routes.login} />
         ) : (
           <Redirect to={routes.comeBackLogin} />
