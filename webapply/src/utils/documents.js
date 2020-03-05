@@ -1,6 +1,8 @@
 import differenceBy from "lodash/differenceBy";
 import get from "lodash/get";
 
+const UPLOADED_STATE = "Uploaded";
+
 export const concatCompanyDocs = (existDocs, incomeDocs) => {
   const companyDocsDiff = differenceBy(incomeDocs, existDocs, "documentType");
 
@@ -40,3 +42,8 @@ export const appendDocumentKey = (docs = []) =>
   });
 
 export const range = (end, start = 0) => Array.from({ length: end - start }, (_, i) => start + i);
+
+export const checkIfRequiredDocsUploaded = docs =>
+  Array.isArray(docs) && docs.length
+    ? docs.filter(doc => doc.required).every(doc => doc.uploadStatus === UPLOADED_STATE)
+    : false;
