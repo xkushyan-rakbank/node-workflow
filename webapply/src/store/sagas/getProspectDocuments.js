@@ -12,7 +12,6 @@ import {
 } from "redux-saga/effects";
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
-import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import mapValues from "lodash/mapValues";
 import { saveAs } from "file-saver";
@@ -84,7 +83,7 @@ function* getProspectDocumentsSaga() {
   const headers = getAuthorizationHeader(state);
   const prospectID = getProspectId(state);
   const existDocuments = getDocuments(state);
-  const config = cloneDeep(state.appConfig);
+  const config = { ...state.appConfig };
   const isDocsUploaded =
     existDocuments &&
     existDocuments.companyDocuments.length > 0 &&
@@ -129,7 +128,7 @@ function* uploadDocumentsBgSync({
 
   try {
     const state = yield select();
-    const config = cloneDeep(state.appConfig);
+    const config = { ...state.appConfig };
     const headers = getAuthorizationHeader(state);
     const prospectId = getProspectId(state);
 
@@ -178,7 +177,7 @@ function* uploadDocumentsFlowSaga({ payload }) {
 
 function* addOtherDocument({ payload }) {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const config = { ...state.appConfig };
 
   config.prospect.documents.otherDocuments.push(payload);
   yield put(setConfig(config));
@@ -186,7 +185,7 @@ function* addOtherDocument({ payload }) {
 
 function* deleteOtherDocument({ payload }) {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const config = { ...state.appConfig };
 
   config.prospect.documents.otherDocuments = config.prospect.documents.otherDocuments.filter(
     doc => doc.documentKey !== payload
