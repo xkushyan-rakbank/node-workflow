@@ -38,11 +38,9 @@ export default handleActions(
       isApplyEditApplication: payload
     }),
     [SET_ERROR_OCCURRED_WHILE_PERFORMING]: (state, { payload }) => {
-      console.log(payload);
       return {
         ...state,
-        errorCode: payload.errorCode,
-        isErrorOccurredWhilePerforming: payload.isErrorOccurredWhilePerforming
+        ...payload
       };
     },
     [LOGOUT]: () => initialState

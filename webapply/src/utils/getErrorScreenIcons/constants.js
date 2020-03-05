@@ -5,11 +5,6 @@ import declinedElite from "../../assets/gif/declined_elite.gif";
 import declinedRegular from "../../assets/gif/declined_regular.gif";
 import declinedIslamic from "../../assets/gif/declined_islamic.gif";
 
-export const ERROR_MESSAGES = {
-  RO_EDITING:
-    "We noticed that your application is incomplete. Not to worry, our team is already working on it.",
-  CIF_EXIST: "We already have your application. Not to worry, our team is already working on it."
-};
 export const ERRORS_TYPE = {
   DEDUPE: "Dedupe Check",
   VIRTUAL_CURRENCIES: "Virtual Currency Check",

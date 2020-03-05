@@ -10,7 +10,7 @@ import { NotificationsManager } from "../components/Notification";
 import { encrypt, decrypt } from "./crypto";
 import { log } from "../utils/loggger";
 import { formatJsonData } from "./formatJsonData";
-import { IGNORE_ERROR_CODES } from "../constants";
+import { IGNORE_ERROR_CODES, HANDLED_ERROR_CODES } from "../constants";
 import {
   ErrorOccurredWhilePerforming,
   ReCaptchaError,
@@ -138,7 +138,7 @@ apiClient.interceptors.response.use(
         serverError = new ReCaptchaError(jsonData);
         notificationOptions = { title: "ReCaptchaError", message: errors };
       } else if (status === 400 && errors) {
-        if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+        if (HANDLED_ERROR_CODES.includes(errors[0].errorCode)) {
           serverError = new ErrorOccurredWhilePerforming(jsonData);
           notificationOptions = null;
         } else if (errorType === "FieldsValidation") {

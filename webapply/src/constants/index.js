@@ -79,6 +79,9 @@ const NO_RECORDS_FETCHED_WHILE_RETRIEVING_CORD = "I001F/12000";
 const ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS = "EXP101";
 const COMMON_SERVER_ERROR = "INV0001";
 
+export const RO_LOCKED_ERROR_CODE = "12013";
+export const APPS_NOT_FOUND_ERROR_CODE = "12009";
+
 const RO_STOP =
   "We noticed that your application is incomplete. Not to worry, our team is already working on it.";
 const EXIST = "We already have your application. Not to worry, our team is already working on it.";
@@ -99,7 +102,7 @@ export const ERROR_MESSAGES = {
 };
 
 export const APP_STOP_SCREEN_RESULT = "stop";
-export const IGNORE_ERROR_CODES = [
+export const HANDLED_ERROR_CODES = [
   RO_EDITING,
   CIF_EXIST,
   INVALID_PROSPECT_ID,
@@ -111,6 +114,8 @@ export const IGNORE_ERROR_CODES = [
   ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS,
   COMMON_SERVER_ERROR
 ];
+
+export const IGNORE_ERROR_CODES = [NO_RESULT_FOUND, RO_EDITING];
 
 export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";

@@ -11,13 +11,14 @@ class CustomError extends Error {
     this.message = error.message;
     this.errorType = error.errorType;
     this.errors = error.errors;
-    this.errorCode = error.errors[0].errorCode;
   }
+
   getInputsErrors() {
     return this.errors;
   }
+
   getErrorCode() {
-    return this.errorCode;
+    return this.errors[0].errorCode;
   }
 }
 
