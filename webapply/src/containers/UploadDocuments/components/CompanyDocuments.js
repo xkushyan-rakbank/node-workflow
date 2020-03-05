@@ -3,14 +3,7 @@ import { UploadDocuments } from "./UploadDocument";
 import { ICONS, Icon } from "./../../../components/Icons";
 import { useStyles } from "./styled";
 
-export const CompanyDocuments = ({
-  documents,
-  companyName,
-  icon = "",
-  sendProspectToAPI,
-  isApplyEditApplication,
-  ...rest
-}) => {
+export const CompanyDocuments = ({ documents, companyName, icon = "", ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -27,8 +20,6 @@ export const CompanyDocuments = ({
           index={index}
           document={document}
           type="companyDocuments"
-          sendProspectToAPI={sendProspectToAPI}
-          isApplyEditApplication={isApplyEditApplication}
           {...rest}
         />
       ))}

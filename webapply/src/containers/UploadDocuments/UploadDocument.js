@@ -16,8 +16,6 @@ export const UploadDocument = ({
   history,
   uploadedDocsCount,
   requiredDocsCount,
-  sendProspectToAPI,
-  isApplyEditApplication,
   ...rest
 }) => {
   const classes = useStyles();
@@ -27,7 +25,7 @@ export const UploadDocument = ({
   }, [retrieveDocDetails]);
 
   const goToSelectService = () => {
-    sendProspectToAPI(NEXT).then(isScreeningError => {
+    rest.sendProspectToAPI(NEXT).then(isScreeningError => {
       if (!isScreeningError) history.push(routes.selectServices);
     });
   };
@@ -44,22 +42,12 @@ export const UploadDocument = ({
         <>
           <div className={classes.sectionContainer}>
             <SectionTitle title="Company documents" className={classes.title} />
-            <CompanyDocuments
-              documents={documents.companyDocuments}
-              sendProspectToAPI={sendProspectToAPI}
-              isApplyEditApplication={isApplyEditApplication}
-              {...rest}
-            />
+            <CompanyDocuments documents={documents.companyDocuments} {...rest} />
           </div>
           {documents.stakeholdersDocuments && (
             <div className={classes.sectionContainer}>
               <SectionTitle title="Stakeholders documents" />
-              <SignatoriesDocuments
-                documents={documents.stakeholdersDocuments}
-                sendProspectToAPI={sendProspectToAPI}
-                isApplyEditApplication={isApplyEditApplication}
-                {...rest}
-              />
+              <SignatoriesDocuments documents={documents.stakeholdersDocuments} {...rest} />
             </div>
           )}
         </>
@@ -68,7 +56,7 @@ export const UploadDocument = ({
       <div className="linkContainer">
         <BackLink path={routes.finalQuestions} />
         <SubmitButton
-          disabled={!isApplyEditApplication && requiredDocsCount > uploadedDocsCount}
+          disabled={!rest.isApplyEditApplication && requiredDocsCount > uploadedDocsCount}
           handleClick={goToSelectService}
           label="Next Step"
           justify="flex-end"

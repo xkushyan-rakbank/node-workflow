@@ -4,13 +4,7 @@ import { Avatar } from "./../../../components/Avatar/Avatar";
 import { UploadDocuments } from "./UploadDocument";
 import { useStyles } from "./styled";
 
-export const SignatoriesDocuments = ({
-  documents,
-  signatories,
-  sendProspectToAPI,
-  isApplyEditApplication,
-  ...rest
-}) => {
+export const SignatoriesDocuments = ({ documents, signatories, ...rest }) => {
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
@@ -39,8 +33,6 @@ export const SignatoriesDocuments = ({
               index={index}
               stakeholderIndex={stakeholderIndex}
               type="stakeholdersDocuments"
-              sendProspectToAPI={sendProspectToAPI}
-              isApplyEditApplication={isApplyEditApplication}
               {...rest}
             />
           ))}
