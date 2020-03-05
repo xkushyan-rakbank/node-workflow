@@ -209,7 +209,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   }}
                   component={Input}
                   contextualHelpText="Mention the Turnover per annum of the company. For new companies, give the expected turnover per annum"
-                  changeProspect={createChangeProspectHandler(values, "annualFinTurnoverAmtInAED")}
+                  changeProspect={createChangeProspectHandler(values)}
                 />
               </Grid>
             </Grid>
@@ -253,10 +253,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
-                  changeProspect={createChangeProspectHandler(
-                    values,
-                    "totalMonthlyCashAmountInFigures"
-                  )}
+                  changeProspect={createChangeProspectHandler(values)}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -273,10 +270,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
-                  changeProspect={createChangeProspectHandler(
-                    values,
-                    "totalMonthlyNonCashAmountInFigures"
-                  )}
+                  changeProspect={createChangeProspectHandler(values)}
                 />
                 <InfoTitle
                   classes={{
