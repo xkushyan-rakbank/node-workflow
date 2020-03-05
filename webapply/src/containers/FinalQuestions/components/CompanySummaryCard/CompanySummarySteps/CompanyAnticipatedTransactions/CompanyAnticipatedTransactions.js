@@ -15,7 +15,8 @@ import {
   COMPANY_CURRENCY,
   YEAR_MONTH_COUNT,
   ANNUAL_TURNOVER_MAX_LENGTH,
-  PLACEHOLDER
+  PLACEHOLDER,
+  linkedFields
 } from "./constants";
 import { CURRENCY_REGEX, isNumeric } from "../../../../../../utils/validation";
 import {
@@ -57,6 +58,39 @@ const checkFieldSumEqualMonthTotal = (field, conditionalField, yearTotal) => {
     return Number(field) + Number(conditionalField) === monthTotal;
   }
   return true;
+};
+
+const getPercentValue = (values, name, totalMonthlyCreditsAED) => {
+  const totalMonthlyCashAmountInPercent = Math.round(
+    (values.totalMonthlyCashAmountInFigures * 100) / totalMonthlyCreditsAED
+  );
+  return name === linkedFields.totalMonthlyCashAmountInPercent.name
+    ? totalMonthlyCashAmountInPercent
+    : 100 - totalMonthlyCashAmountInPercent;
+};
+
+const createChangeProspectHandler = values => (prospect, name, path, errors) => {
+  const isDataValid = !Object.values(linkedFields).some(
+    field => field.isFillByUser && (!values[field.name] || errors[field.name])
+  );
+
+  if (!isDataValid) {
+    return {};
+  }
+
+  const totalMonthlyCreditsAED = getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED);
+  const prospectFields = Object.values(linkedFields).reduce(
+    (resultObject, { path, name, isFillByUser }) => ({
+      ...resultObject,
+      [path]: isFillByUser ? values[name] : getPercentValue(values, name, totalMonthlyCreditsAED)
+    }),
+    {}
+  );
+
+  return {
+    ...prospectFields,
+    "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCreditsAED": totalMonthlyCreditsAED
+  };
 };
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
@@ -171,12 +205,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   }}
                   component={Input}
                   contextualHelpText="Mention the Turnover per annum of the company. For new companies, give the expected turnover per annum"
-                  changeProspect={(prospect, value) => ({
-                    ...prospect,
-                    "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCreditsAED": getTotalMonthlyCreditsValue(
-                      value
-                    )
-                  })}
+                  changeProspect={createChangeProspectHandler(values)}
                 />
               </Grid>
             </Grid>
@@ -220,6 +249,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
+                  changeProspect={createChangeProspectHandler(values)}
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -236,6 +266,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputComponent: FormatDecimalNumberInput,
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
+                  changeProspect={createChangeProspectHandler(values)}
                 />
                 <InfoTitle
                   classes={{
