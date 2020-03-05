@@ -1,19 +1,19 @@
 import { connect } from "react-redux";
 
+import { getEndpoints } from "../../../../store/selectors/appConfig";
 import {
-  getProspectDocuments,
-  getEndpoints,
-  getProspectId,
-  getSignatories
-} from "../../../../store/selectors/appConfig";
+  getOverviewDocuments,
+  getProspectOverviewId,
+  getOverviewSignatories
+} from "../../../../store/selectors/searchProspect";
 import { DocumentsComponent } from "./Documents";
 import { downloadDocumentFile } from "../../../../store/actions/getProspectDocuments";
 
 const mapStateToProps = state => ({
-  docs: getProspectDocuments(state),
   endpointsUrl: getEndpoints(state),
-  prospectId: getProspectId(state),
-  signatoryInfo: getSignatories(state)
+  docs: getOverviewDocuments(state),
+  prospectId: getProspectOverviewId(state),
+  signatoryInfo: getOverviewSignatories(state)
 });
 
 const mapDispatchToProps = {
