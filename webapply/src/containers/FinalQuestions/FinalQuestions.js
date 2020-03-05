@@ -10,10 +10,12 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { getSignatoriesSteps, getCompanySteps } from "../../store/selectors/appConfig";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { NEXT } from "../../constants";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { REPLACE } from "../../utils/useTrackingHistory/constants";
 
 import { useStyles } from "./styled";
 
-export const FinalQuestionsComponent = ({ signatories, history, sendProspectToAPI }) => {
+export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
   const [expandedSignatoryIndex, setExpandedSignatoryIndex] = useState(null);
   const [isCompanyExpanded, setIsCompanyExpanded] = useState(false);
@@ -23,10 +25,11 @@ export const FinalQuestionsComponent = ({ signatories, history, sendProspectToAP
   const isCompanyStepsCompleted = checkAllStepsCompleted(companySteps);
   const signatoriesSteps = useSelector(getSignatoriesSteps);
   const isSignatoriesStepsCompleted = checkAllStepsCompleted(signatoriesSteps);
+  const pushHistory = useTrackingHistory();
 
   const goToUploadDocument = () => {
     sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) history.push(routes.uploadDocuments);
+      if (!isScreeningError) pushHistory(routes.uploadDocuments, REPLACE);
     });
   };
 

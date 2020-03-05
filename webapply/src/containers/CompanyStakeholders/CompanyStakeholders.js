@@ -25,6 +25,7 @@ import { NEXT } from "../../constants";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { REPLACE } from "../../utils/useTrackingHistory/constants";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -64,7 +65,7 @@ const CompanyStakeholdersComponent = ({
 
   const goToFinalQuestions = useCallback(() => {
     sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) pushHistory(routes.finalQuestions);
+      if (!isScreeningError) pushHistory(routes.finalQuestions, REPLACE);
     });
   }, [pushHistory, sendProspectToAPI]);
 

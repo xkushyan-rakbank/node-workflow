@@ -4,6 +4,7 @@ import cx from "classnames";
 
 import { BackLink } from "../../components/Buttons/BackLink";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { REPLACE } from "../../utils/useTrackingHistory/constants";
 import { useStep } from "../../hooks/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
@@ -52,7 +53,7 @@ export const CompanyInfoPage = ({
 
   const handleClickNextStep = useCallback(() => {
     sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) pushHistory(routes.stakeholdersInfo);
+      if (!isScreeningError) pushHistory(routes.stakeholdersInfo, REPLACE);
     });
   }, [pushHistory, sendProspectToAPI]);
 

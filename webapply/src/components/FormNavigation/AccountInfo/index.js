@@ -6,6 +6,7 @@ import { getAccountType, getIsIslamicBanking } from "../../../store/selectors/ap
 import { getIsEditableStatusSearchInfo } from "../../../store/selectors/searchProspect";
 import { resetApplicantInfo } from "../../../store/actions/appConfig";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
+import { REPLACE } from "../../../utils/useTrackingHistory/constants";
 import routes from "../../../routes";
 
 import { AccountInfoScreen } from "./AccountInfoScreen";
@@ -23,7 +24,7 @@ export const AccountInfo = props => {
 
   const handleCheckStatus = useCallback(() => {
     dispatch(resetApplicantInfo());
-    pushHistory(routes.comeBackLogin);
+    pushHistory(routes.comeBackLogin, REPLACE);
   }, [pushHistory, dispatch]);
 
   const handleStart = useCallback(() => {

@@ -9,9 +9,10 @@ import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
 import { accountNames, CONTINUE, NEXT, STEP_STATUS } from "../../constants";
 import { useStep } from "../../hooks/useStep";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { REPLACE } from "../../utils/useTrackingHistory/constants";
 
 import { useStyles } from "./styled";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const classes = useStyles();
@@ -28,7 +29,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
       sendProspectToAPI(NEXT).then(isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.SubmitApplication);
+        if (!isScreeningError) pushHistory(routes.SubmitApplication, REPLACE);
       });
       return;
     }

@@ -25,6 +25,7 @@ import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { REPLACE } from "../../utils/useTrackingHistory/constants";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -77,7 +78,8 @@ const ApplicantInfoPage = ({
       submit(values).then(
         () => {
           pushHistory(
-            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp
+            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
+            REPLACE
           );
         },
         () => {

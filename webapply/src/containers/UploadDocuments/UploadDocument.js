@@ -8,17 +8,19 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
 import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { REPLACE } from "../../utils/useTrackingHistory/constants";
 
 export const UploadDocument = ({
   retrieveDocDetails,
   isLoading,
   documents,
-  history,
   uploadedDocsCount,
   requiredDocsCount,
   ...rest
 }) => {
   const classes = useStyles();
+  const pushHistory = useTrackingHistory();
 
   useEffect(() => {
     retrieveDocDetails();
@@ -26,7 +28,7 @@ export const UploadDocument = ({
 
   const goToSelectService = () => {
     rest.sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) history.push(routes.selectServices);
+      if (!isScreeningError) pushHistory(routes.selectServices, REPLACE);
     });
   };
 
