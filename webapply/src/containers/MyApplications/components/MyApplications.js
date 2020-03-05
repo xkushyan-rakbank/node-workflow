@@ -19,7 +19,7 @@ import {
 
 import { useStyles } from "./styled";
 
-export const MyApplications = ({ getProspectInfo }) => {
+export const MyApplications = ({ getProspectInfo, getProspectInfoWithoutStatus }) => {
   const isLoading = useSelector(getIsLoadingSearchProspects);
   const searchResults = useSelector(getSearchResults);
 
@@ -70,9 +70,17 @@ export const MyApplications = ({ getProspectInfo }) => {
         {isLoading ? (
           <ApplicationsSkeleton />
         ) : selectedView === LIST_VIEW ? (
-          <ApplicationList applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
+          <ApplicationList
+            applicantInfo={searchResults}
+            getProspectInfo={getProspectInfo}
+            getProspectInfoWithoutStatus={getProspectInfoWithoutStatus}
+          />
         ) : (
-          <ApplicationGrid applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
+          <ApplicationGrid
+            applicantInfo={searchResults}
+            getProspectInfo={getProspectInfo}
+            getProspectInfoWithoutStatus={getProspectInfoWithoutStatus}
+          />
         )}
       </div>
     </div>

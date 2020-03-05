@@ -11,7 +11,7 @@ import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
 import { ERROR_MESSAGES } from "../../constants";
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
-import routes, { agentBaseName, smeBaseName } from "../../routes";
+import routes, { agentBaseName, smeBaseName, reUploadDocumentsAddress } from "../../routes";
 import { MobileNotification } from "../../components/Notifications";
 
 export const FormLayoutComponent = ({
@@ -32,16 +32,18 @@ export const FormLayoutComponent = ({
 
   useEffect(() => {
     const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
-    const isSendToApi = [
-      routes.companyInfo,
-      routes.stakeholdersInfo,
-      routes.finalQuestions,
-      routes.uploadDocuments,
-      routes.selectServices,
-      routes.SubmitApplication
-    ].includes(pathname);
+    if (viewId !== reUploadDocumentsAddress) {
+      const isSendToApi = [
+        routes.companyInfo,
+        routes.stakeholdersInfo,
+        routes.finalQuestions,
+        routes.uploadDocuments,
+        routes.selectServices,
+        routes.SubmitApplication
+      ].includes(pathname);
 
-    updateViewId(viewId, isSendToApi);
+      updateViewId(viewId, isSendToApi);
+    }
   }, [pathname, updateViewId]);
 
   const isDisplayScreeningError =

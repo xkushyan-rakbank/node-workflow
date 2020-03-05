@@ -3,17 +3,24 @@ import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { getApplicationInfo } from "../store/selectors/appConfig";
-import { getIsEditableStatusSearchInfo } from "../store/selectors/searchProspect";
+import {
+  getIsEditableStatusSearchInfo,
+  getProspectStatus
+} from "../store/selectors/searchProspect";
 import routes, { smeBaseName } from "../routes";
 import { ACTION_TYPES, VIEW_IDS } from "../constants";
 
 export const useDisplayScreenBasedOnViewId = () => {
   const history = useHistory();
   const location = useLocation();
-  const { applicationInfo, isROScreens } = useSelector(state => ({
+  const { applicationInfo, isROScreens, status } = useSelector(state => ({
     applicationInfo: getApplicationInfo(state),
-    isROScreens: getIsEditableStatusSearchInfo(state)
+    isROScreens: getIsEditableStatusSearchInfo(state),
+    status: getProspectStatus(state)
   }));
+
+  const isReuploadDocumentsNeeded =
+    status && (status === "Need Additional Information/Documents" || status === "Documents needed");
 
   const pushDisplayScreenToHistory = useCallback(
     prospect => {
@@ -37,10 +44,13 @@ export const useDisplayScreenBasedOnViewId = () => {
       if (isROScreens && viewId === VIEW_IDS.ApplicationSubmitted) {
         url = routes.companyInfo;
       }
+      if (isReuploadDocumentsNeeded) {
+        url = routes.reUploadDocuments;
+      }
 
       history.push(url);
     },
-    [applicationInfo, isROScreens, history, location]
+    [applicationInfo, isROScreens, history, location, isReuploadDocumentsNeeded]
   );
 
   return {

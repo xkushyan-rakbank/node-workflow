@@ -9,7 +9,11 @@ import { useStyles } from "./styled";
 
 import { ReactComponent as WavesBG } from "../../../assets/images/waves_bg.svg";
 
-export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
+export const ApplicationGrid = ({
+  getProspectInfo,
+  getProspectInfoWithoutStatus,
+  applicantInfo = []
+}) => {
   const classes = useStyles();
 
   return applicantInfo.map(app => (
@@ -68,7 +72,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
               <div key="action" className={classes.blockAction}>
                 <WhiteContainedButton
                   label="Finish Application"
-                  handleClick={() => getProspectInfo(app.prospectId)}
+                  handleClick={() => getProspectInfoWithoutStatus(app.prospectId)}
                 />
                 <div className={classes.hint}>
                   {ctaStatuses[app.status.statusNotes].mobileStatus}

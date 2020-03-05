@@ -10,6 +10,7 @@ import {
   retrieveDocDetails
 } from "../../store/actions/getProspectDocuments";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+import { removeProspectId } from "../../store/actions/getProspectDocuments";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 import { DocumentRow } from "./components/DocumentRow/DocumentRow";
@@ -95,10 +96,17 @@ export const ReUploadDocuments = () => {
 
   const submitForm = useCallback(() => {
     dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(
-      () => pushHistory(routes.MyApplications),
+      () => {
+        handleRemoveProspectId();
+        pushHistory(routes.MyApplications);
+      },
       () => {}
     );
   }, [dispatch, pushHistory]);
+
+  const handleRemoveProspectId = useCallback(() => {
+    dispatch(removeProspectId());
+  }, [dispatch]);
 
   return (
     <div className={classes.root}>
@@ -119,7 +127,11 @@ export const ReUploadDocuments = () => {
         <UploadButton uploadDocument={uploadDocument} isFirstDocument={!otherDocuments.length} />
       )}
       <div className={classes.footer}>
-        <BackLink text="Back To Applications" path={routes.MyApplications} />
+        <BackLink
+          text="Back To Applications"
+          onClick={handleRemoveProspectId}
+          path={routes.MyApplications}
+        />
         <ContainedButton
           onClick={submitForm}
           type="submit"
