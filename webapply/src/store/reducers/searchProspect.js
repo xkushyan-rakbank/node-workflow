@@ -37,12 +37,10 @@ export default handleActions(
       ...state,
       isApplyEditApplication: payload
     }),
-    [SET_ERROR_OCCURRED_WHILE_PERFORMING]: (state, { payload }) => {
-      return {
-        ...state,
-        ...payload
-      };
-    },
+    [SET_ERROR_OCCURRED_WHILE_PERFORMING]: (state, { payload }) => ({
+      ...state,
+      ...payload
+    }),
     [LOGOUT]: () => initialState
   },
   initialState
