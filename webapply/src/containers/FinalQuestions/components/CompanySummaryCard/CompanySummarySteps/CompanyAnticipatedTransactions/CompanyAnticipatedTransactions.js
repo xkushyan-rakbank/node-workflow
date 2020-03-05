@@ -69,38 +69,32 @@ const getPercentValue = (values, name, totalMonthlyCreditsAED) => {
     : 100 - totalMonthlyCashAmountInPercent;
 };
 
-const createChangeProspectHandler = (values, name) => prospect => {
-  const relatedFields = Object.values(linkedFields).filter(field => field.name !== name);
-  const isRelatedFieldsFilled = !relatedFields.some(
-    field => field.isFillByUser && values[field.name] === ""
+const createChangeProspectHandler = values => (prospect, name, path, errors) => {
+  const isLinkedFieldsFilled = !Object.values(linkedFields).some(
+    field => field.isFillByUser && !values[field.name]
   );
-  const totalMonthlyCreditsAED = getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED);
   const isValuesValid =
-    totalMonthlyCreditsAED ===
-    +values.totalMonthlyCashAmountInFigures + +values.totalMonthlyNonCashAmountInFigures;
-  const additionalFields =
-    isRelatedFieldsFilled && isValuesValid
-      ? relatedFields.reduce(
-          (resultObject, { path, name, isFillByUser }) => ({
-            ...resultObject,
-            [path]: isFillByUser
-              ? values[name]
-              : getPercentValue(values, name, totalMonthlyCreditsAED)
-          }),
-          {}
-        )
-      : {};
+    !errors[linkedFields.totalMonthlyNonCashAmountInFigures.name] &&
+    !errors[linkedFields.totalMonthlyCashAmountInFigures.name];
 
-  if (name === linkedFields.annualFinTurnoverAmtInAED.name) {
-    additionalFields[
-      "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCreditsAED"
-    ] = getTotalMonthlyCreditsValue(values[name]);
+  if (!isLinkedFieldsFilled || !isValuesValid) {
+    return {};
   }
 
-  return {
-    ...prospect,
-    ...additionalFields
-  };
+  const totalMonthlyCreditsAED = getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED);
+  const additionalFields = Object.values(linkedFields).reduce(
+    (resultObject, { path, name, isFillByUser }) => ({
+      ...resultObject,
+      [path]: isFillByUser ? values[name] : getPercentValue(values, name, totalMonthlyCreditsAED)
+    }),
+    {}
+  );
+
+  additionalFields[
+    "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCreditsAED"
+  ] = totalMonthlyCreditsAED;
+
+  return additionalFields;
 };
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
