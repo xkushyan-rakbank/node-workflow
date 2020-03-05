@@ -4,14 +4,11 @@ import styled from "styled-components";
 import { Message } from "./Message";
 
 const MessagesListStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-  height: 0;
+  box-sizing: border-box;
+  height: 0px;
   padding: 0 16px 10px 16px;
   overflow-y: auto;
   min-height: 320px;
-  word-break: break-all;
 `;
 
 const MessagesList = ({ data }) => {
