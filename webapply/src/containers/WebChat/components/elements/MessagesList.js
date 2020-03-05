@@ -11,6 +11,7 @@ const MessagesListStyled = styled.div`
   padding: 0 16px 10px 16px;
   overflow-y: auto;
   min-height: 320px;
+  word-break: break-all;
 `;
 
 const MessagesList = ({ data }) => {

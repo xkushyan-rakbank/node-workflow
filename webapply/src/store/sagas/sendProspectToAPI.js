@@ -31,7 +31,8 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAccountType,
-  getIsIslamicBanking
+  getIsIslamicBanking,
+  getScreeningError
 } from "../selectors/appConfig";
 import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
@@ -97,13 +98,10 @@ function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
     const prospect = getProspect(state);
 
     const newProspect = cloneDeep(prospect);
-    // TODO: Waitnig DEH API changes
-    /*
     newProspect.freeFieldsInfo = {
       ...(newProspect.freeFieldsInfo || {}),
       freeField5: JSON.stringify({ completedSteps: state.completedSteps })
     };
-    */
 
     yield put(sendProspectRequest(newProspect, saveType, actionType));
   } finally {
@@ -116,16 +114,22 @@ function* prospectAutoSave() {
     while (true) {
       yield delay(40000);
 
-      const state = yield select();
-      const newProspect = getProspect(state);
-
-      const prospectId = newProspect.generalInfo.prospectId;
+      const newProspect = yield select(getProspect);
+      const screeningError = yield select(getScreeningError);
+      const isScreeningError = screeningError.error;
       const viewId = newProspect.applicationInfo.viewId;
 
-      if (
-        prospectId &&
-        ![VIEW_IDS.ApplicationSubmitted, VIEW_IDS.SubmitApplication].includes(viewId)
-      ) {
+      const isAutoSaveEnabled =
+        !isScreeningError &&
+        [
+          VIEW_IDS.CompanyInfo,
+          VIEW_IDS.StakeholdersInfo,
+          VIEW_IDS.FinalQuestions,
+          VIEW_IDS.UploadDocuments,
+          VIEW_IDS.SelectServices
+        ].includes(viewId);
+
+      if (isAutoSaveEnabled) {
         yield put(sendProspectRequest(newProspect, AUTO));
       }
     }

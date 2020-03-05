@@ -19,7 +19,7 @@ export const ERRORS_TYPE = {
   BLACKLIST: "Blacklist Check",
   RO_EDITING: "RO_EDITING",
   BLOCK_EDITING: "BLOCK_EDITING",
-  COMPANY_AS_STAKEHOLDER: "IsShareHolderACompany Check",
+  COMPANY_AS_STAKEHOLDER: "Company is a Stakeholder Check",
   TOO_MANY_STAKEHOLDERS: "Too many Stakeholders Check"
 };
 export const regularErrorScreenGifIcon = {

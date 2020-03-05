@@ -13,7 +13,7 @@ export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9-])*$/;
 export const UAE_MOBILE_PHONE_REGEX = /^[0-9]{9}$/;
 export const UAE_LANDLINE_PHONE_REGEX = /^[0-9]{8}$/;
 export const MIN_NON_UAE_PHONE_LENGTH = 4;
-export const MAX_NON_UAE_PHONE_LENGTH = 15;
+export const MAX_NON_UAE_PHONE_LENGTH = 10;
 export const MAX_NAME_IN_BUSINESS_LENGTH = 19;
 export const MAX_EXPERIENCE_YEARS_LENGTH = 255;
 
@@ -51,3 +51,13 @@ export const addPhoneNoValidationToYup = () => {
     });
   });
 };
+
+export const documentValidationSchema = Yup.object().shape({
+  file: Yup.mixed()
+    .test("size", "File size exceeded (5Mb maximum)", value => value && value.size <= FILE_SIZE)
+    .test(
+      "type",
+      "Supported formats are PDF, JPG and PNG",
+      value => value && SUPPORTED_FORMATS.includes(value.type)
+    )
+});

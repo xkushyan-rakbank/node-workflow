@@ -93,6 +93,7 @@ const CompanyStakeholdersComponent = ({
     },
     [changeEditableStakeholder, setEditStakeholder, setIsNewStakeholder]
   );
+  console.log("editableStakeholder", editableStakeholder);
 
   const addNewStakeholder = useCallback(() => {
     setIsShowingAddButton(false);
@@ -144,7 +145,7 @@ const CompanyStakeholdersComponent = ({
               {...item}
               key={item.id}
               index={index}
-              editDisabled={editableStakeholder}
+              editDisabled={Number.isInteger(editableStakeholder)}
               changeEditableStep={editStakeholderHandler}
               datalist={datalist}
             />

@@ -16,15 +16,15 @@ export const initialState = {
 
 export default handleActions(
   {
-    [DOC_UPLOADER]: (state, { docProps: documentKey }) => ({
+    [DOC_UPLOADER]: (state, { payload }) => ({
       ...state,
-      uploadErrors: { ...state.uploadErrors, [documentKey]: null }
+      uploadErrors: { ...state.uploadErrors, [payload.documentKey]: null }
     }),
     [UPLOAD_FILES_PROGRESS]: (state, { progress }) => ({
       ...state,
       progress: { ...state.progress, ...progress }
     }),
-    [UPLOAD_FILES_FAIL]: (state, error) => ({
+    [UPLOAD_FILES_FAIL]: (state, { error }) => ({
       ...state,
       uploadErrors: { ...state.uploadErrors, ...error }
     }),

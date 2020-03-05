@@ -65,7 +65,6 @@ export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
-export const REQUEST_FAILED = "error";
 
 export const normalScrollHeight = 740;
 
@@ -115,6 +114,7 @@ export const IGNORE_ERROR_CODES = [
 
 export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
+export const OTHER_DOCUMENTS = "otherDocuments";
 
 /* Action Types */
 export const SAVE = "save";
@@ -159,7 +159,7 @@ export const screeningStatus = [
   },
   {
     error: "Company as stakeholder",
-    screeningType: "IsShareHolderACompany Check"
+    screeningType: "Company is a Stakeholder Check"
   },
   {
     error: "Too many Stakeholders",
@@ -187,9 +187,13 @@ export const CONVENTIONAL_BANK = "Conventional";
 export const BYTES_IN_MEGABYTE = 1048576;
 
 export const VIEW_IDS = {
+  CompanyInfo: "/CompanyInfo",
+  StakeholdersInfo: "/StakeholdersInfo",
+  FinalQuestions: "/FinalQuestions",
+  UploadDocuments: "/UploadDocuments",
+  SelectServices: "/SelectServices",
   SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
-  CompanyInfo: "/CompanyInfo",
   SearchedAppInfo: "/SearchedAppInfo",
   ApplicationSubmitted: "/ApplicationSubmitted"
 };
@@ -221,19 +225,19 @@ export const VIRTUAL_CURRENCY_CHECK = {
   screeningType: "Virtual Currency Check",
   screeningStatus: "Not completed",
   screeningLabel: "Virtual Currency",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
   screeningType: "Country Of Incorporation Check",
   screeningStatus: "Not completed",
   screeningLabel: "Country of Incorporation",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const RAKSTARTER_ACCOUNT_CHECK = {
   screeningType: "RAKStarter Account Check",
   screeningStatus: "Not completed",
   screeningLabel: "RAK-Starter Account Validation",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const DEDUPE_CHECK = {
   screeningType: "Dedupe Check",
@@ -242,16 +246,10 @@ export const DEDUPE_CHECK = {
   screeningReason: "No Match"
 };
 export const ISSHAREHOLDERACOMPANY_CHECK = {
-  screeningType: "IsShareHolderACompany Check",
+  screeningType: "Company is a Stakeholder Check",
   screeningStatus: "Not completed",
   screeningLabel: "Company is a Stakeholder",
-  screeningReason: "No Match"
-};
-export const SHAREHOLDERCOUNT_CHECK = {
-  screeningType: "ShareHolderCount Check",
-  screeningStatus: "Completed",
-  screeningLabel: "Share Holder Count",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const BLACKLIST_CHECK = {
   screeningType: "Blacklist Check",
@@ -263,13 +261,13 @@ export const TOO_MANY_STAKEHOLDERS = {
   screeningType: "Too many Stakeholders Check",
   screeningStatus: "Not completed",
   screeningLabel: "Too many Stakeholders",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const RISK_RATING = {
   screeningType: "Risk Rating",
   screeningStatus: "Not completed",
   screeningLabel: "Risk Rating",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 
 export const COMPANY_CHECK_NAMES = [

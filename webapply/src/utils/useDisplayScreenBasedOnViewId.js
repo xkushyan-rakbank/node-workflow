@@ -28,12 +28,14 @@ export const useDisplayScreenBasedOnViewId = () => {
       let url = `${smeBaseName}${viewId}`;
       if (isSubmit) {
         if (!isROScreens) {
-          url = isRetrieveMode
-            ? routes.ApplicationSubmitted
-            : `${smeBaseName}${newApplicationInfo.reUploadDocuments}`;
+          url = isRetrieveMode ? routes.ApplicationSubmitted : routes.reUploadDocuments;
         } else if (isEditRedirect) {
           url = routes.companyInfo;
         }
+      }
+
+      if (isROScreens && viewId === VIEW_IDS.ApplicationSubmitted) {
+        url = routes.companyInfo;
       }
 
       history.push(url);

@@ -341,7 +341,8 @@ export const prospect = {
   },
   documents: {
     companyDocuments: [],
-    stakeholdersDocuments: null
+    stakeholdersDocuments: null,
+    otherDocuments: []
   },
   prospectStatusInfo: {
     statusType: "",
