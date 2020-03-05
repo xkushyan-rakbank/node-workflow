@@ -8,6 +8,7 @@ import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 import { useStyles } from "./styled";
 import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
+import { ERROR_MESSAGES } from "../../constants";
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
@@ -20,7 +21,7 @@ export const FormLayoutComponent = ({
   updateViewId,
   accountType,
   isIslamicBanking,
-  isLockStatusByROAgent
+  errorCode
 }) => {
   const blobColor = useBlobColor();
   const classes = useStyles({
@@ -68,14 +69,14 @@ export const FormLayoutComponent = ({
 
                 {isDisplayScreeningError ? (
                   <ApplicationStatus {...screeningError} />
-                ) : isLockStatusByROAgent ? (
+                ) : errorCode ? (
                   <ApplicationStatus
                     icon={getErrorScreensIcons(
                       accountType,
                       isIslamicBanking,
-                      ERRORS_TYPE.RO_EDITING
+                      ERRORS_TYPE.BLOCK_EDITING
                     )}
-                    text="We noticed that your application is incomplete. Not to worry, our team is already working on it."
+                    text={ERROR_MESSAGES[errorCode]}
                   />
                 ) : (
                   children

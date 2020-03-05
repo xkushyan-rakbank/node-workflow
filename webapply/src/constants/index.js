@@ -65,17 +65,60 @@ export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
-export const REQUEST_FAILED = "error";
 
 export const normalScrollHeight = 740;
 
-export const APP_STOP_SCREEN_RESULT = "stop";
+const RO_EDITING = "12013";
+const CIF_EXIST = "12012";
+const INVALID_PROSPECT_ID = "12002";
+const OCCURRED_WHILE_CREATING_CIF = "EXP101";
+const NO_RESULT_FOUND = "12009";
+const CLIENT_SIDE_VALIDATION_ERROR = "FATAL0001";
+const HAPPENED_WHILE_PERFORMING_AUDIT_WHILE_UPDATE_PROSPECT = "10004";
+const NO_RECORDS_FETCHED_WHILE_RETRIEVING_CORD = "I001F/12000";
+const ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS = "EXP101";
+const COMMON_SERVER_ERROR = "INV0001";
+
 export const RO_LOCKED_ERROR_CODE = "12013";
 export const APPS_NOT_FOUND_ERROR_CODE = "12009";
-export const IGNORE_ERROR_CODES = [APPS_NOT_FOUND_ERROR_CODE, RO_LOCKED_ERROR_CODE];
+
+const RO_STOP =
+  "We noticed that your application is incomplete. Not to worry, our team is already working on it.";
+const EXIST = "We already have your application. Not to worry, our team is already working on it.";
+const INVALID_ID = "Invalid Prospect ID";
+const COMMON_ERROR =
+  "We already have your application. Not to worry, our team is already working on it.";
+
+export const ERROR_MESSAGES = {
+  [RO_EDITING]: RO_STOP,
+  [CIF_EXIST]: EXIST,
+  [INVALID_PROSPECT_ID]: INVALID_ID,
+  [OCCURRED_WHILE_CREATING_CIF]: COMMON_ERROR,
+  [CLIENT_SIDE_VALIDATION_ERROR]: COMMON_ERROR,
+  [HAPPENED_WHILE_PERFORMING_AUDIT_WHILE_UPDATE_PROSPECT]: COMMON_ERROR,
+  [NO_RECORDS_FETCHED_WHILE_RETRIEVING_CORD]: COMMON_ERROR,
+  [ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS]: COMMON_ERROR,
+  [COMMON_SERVER_ERROR]: COMMON_ERROR
+};
+
+export const APP_STOP_SCREEN_RESULT = "stop";
+export const HANDLED_ERROR_CODES = [
+  RO_EDITING,
+  CIF_EXIST,
+  INVALID_PROSPECT_ID,
+  OCCURRED_WHILE_CREATING_CIF,
+  CLIENT_SIDE_VALIDATION_ERROR,
+  HAPPENED_WHILE_PERFORMING_AUDIT_WHILE_UPDATE_PROSPECT,
+  NO_RECORDS_FETCHED_WHILE_RETRIEVING_CORD,
+  ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS,
+  COMMON_SERVER_ERROR
+];
+
+export const IGNORE_ERROR_CODES = [NO_RESULT_FOUND, RO_EDITING];
 
 export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
+export const OTHER_DOCUMENTS = "otherDocuments";
 
 /* Action Types */
 export const SAVE = "save";
@@ -120,7 +163,7 @@ export const screeningStatus = [
   },
   {
     error: "Company as stakeholder",
-    screeningType: "IsShareHolderACompany Check"
+    screeningType: "Company is a Stakeholder Check"
   },
   {
     error: "Too many Stakeholders",
@@ -148,9 +191,13 @@ export const CONVENTIONAL_BANK = "Conventional";
 export const BYTES_IN_MEGABYTE = 1048576;
 
 export const VIEW_IDS = {
+  CompanyInfo: "/CompanyInfo",
+  StakeholdersInfo: "/StakeholdersInfo",
+  FinalQuestions: "/FinalQuestions",
+  UploadDocuments: "/UploadDocuments",
+  SelectServices: "/SelectServices",
   SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
-  CompanyInfo: "/CompanyInfo",
   SearchedAppInfo: "/SearchedAppInfo",
   ApplicationSubmitted: "/ApplicationSubmitted"
 };
@@ -182,19 +229,19 @@ export const VIRTUAL_CURRENCY_CHECK = {
   screeningType: "Virtual Currency Check",
   screeningStatus: "Not completed",
   screeningLabel: "Virtual Currency",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
   screeningType: "Country Of Incorporation Check",
   screeningStatus: "Not completed",
   screeningLabel: "Country of Incorporation",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const RAKSTARTER_ACCOUNT_CHECK = {
   screeningType: "RAKStarter Account Check",
   screeningStatus: "Not completed",
   screeningLabel: "RAK-Starter Account Validation",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const DEDUPE_CHECK = {
   screeningType: "Dedupe Check",
@@ -203,16 +250,10 @@ export const DEDUPE_CHECK = {
   screeningReason: "No Match"
 };
 export const ISSHAREHOLDERACOMPANY_CHECK = {
-  screeningType: "IsShareHolderACompany Check",
+  screeningType: "Company is a Stakeholder Check",
   screeningStatus: "Not completed",
   screeningLabel: "Company is a Stakeholder",
-  screeningReason: "No Match"
-};
-export const SHAREHOLDERCOUNT_CHECK = {
-  screeningType: "ShareHolderCount Check",
-  screeningStatus: "Completed",
-  screeningLabel: "Share Holder Count",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const BLACKLIST_CHECK = {
   screeningType: "Blacklist Check",
@@ -224,13 +265,13 @@ export const TOO_MANY_STAKEHOLDERS = {
   screeningType: "Too many Stakeholders Check",
   screeningStatus: "Not completed",
   screeningLabel: "Too many Stakeholders",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 export const RISK_RATING = {
   screeningType: "Risk Rating",
   screeningStatus: "Not completed",
   screeningLabel: "Risk Rating",
-  screeningReason: "No Match"
+  screeningReason: "Proceed"
 };
 
 export const COMPANY_CHECK_NAMES = [

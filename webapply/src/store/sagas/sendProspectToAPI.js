@@ -32,9 +32,9 @@ import {
   getAuthorizationHeader,
   getAccountType,
   getIsIslamicBanking,
-  getAuthToken
+  getScreeningError
 } from "../selectors/appConfig";
-import { setLockStatusByROAgent } from "../actions/searchProspect";
+import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
@@ -47,7 +47,7 @@ import {
   VIEW_IDS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
-import { ROError, FieldsValidationError } from "../../api/serverErrors";
+import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
 
 function* watchRequest() {
@@ -98,13 +98,10 @@ function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
     const prospect = getProspect(state);
 
     const newProspect = cloneDeep(prospect);
-    // TODO: Waitnig DEH API changes
-    /*
     newProspect.freeFieldsInfo = {
       ...(newProspect.freeFieldsInfo || {}),
       freeField5: JSON.stringify({ completedSteps: state.completedSteps })
     };
-    */
 
     yield put(sendProspectRequest(newProspect, saveType, actionType));
   } finally {
@@ -117,18 +114,22 @@ function* prospectAutoSave() {
     while (true) {
       yield delay(40000);
 
-      const state = yield select();
-      const newProspect = getProspect(state);
-      const hasAuthToken = getAuthToken(state);
-
-      const prospectId = newProspect.generalInfo.prospectId;
+      const newProspect = yield select(getProspect);
+      const screeningError = yield select(getScreeningError);
+      const isScreeningError = screeningError.error;
       const viewId = newProspect.applicationInfo.viewId;
 
-      if (
-        hasAuthToken &&
-        prospectId &&
-        ![VIEW_IDS.ApplicationSubmitted, VIEW_IDS.SubmitApplication].includes(viewId)
-      ) {
+      const isAutoSaveEnabled =
+        !isScreeningError &&
+        [
+          VIEW_IDS.CompanyInfo,
+          VIEW_IDS.StakeholdersInfo,
+          VIEW_IDS.FinalQuestions,
+          VIEW_IDS.UploadDocuments,
+          VIEW_IDS.SelectServices
+        ].includes(viewId);
+
+      if (isAutoSaveEnabled) {
         yield put(sendProspectRequest(newProspect, AUTO));
       }
     }
@@ -173,8 +174,12 @@ function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) 
     }
     yield put(sendProspectToAPISuccess(isScreeningError));
   } catch (error) {
-    if (error instanceof ROError) {
-      yield put(setLockStatusByROAgent(true));
+    if (error instanceof ErrorOccurredWhilePerforming) {
+      yield put(
+        setErrorOccurredWhilePerforming({
+          errorCode: error.getErrorCode()
+        })
+      );
     } else if (error instanceof FieldsValidationError) {
       yield put(setInputsErrors(error.getInputsErrors()));
     } else {

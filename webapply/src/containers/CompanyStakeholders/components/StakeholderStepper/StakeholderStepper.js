@@ -117,7 +117,7 @@ const StakeholderStepperComponent = ({
       <FilledStakeholderCard
         key={key}
         index={index}
-        editDisabled={editableStakeholder}
+        editDisabled={Number.isInteger(editableStakeholder)}
         changeEditableStep={handleEditCompleted}
         datalist={datalist}
         firstName={firstName}

@@ -1,3 +1,4 @@
+export const SET_ERROR_OCCURRED_WHILE_PERFORMING = "SET_ERROR_OCCURRED_WHILE_PERFORMING";
 export const SEARCH_APPLICATIONS_REQUEST = "SEARCH_APPLICATIONS";
 export const SEARCH_APPLICATIONS_SUCCESS = "SEARCH_APPLICATIONS_SUCCESS";
 export const SEARCH_APPLICATIONS_FAILURE = "SEARCH_APPLICATIONS_FAILURE";
@@ -24,4 +25,8 @@ export const setIsApplyEditApplication = payload => {
 
 export const setLockStatusByROAgent = payload => {
   return { type: IS_LOCK_STATUS_BY_RO_AGENT, payload };
+};
+
+export const setErrorOccurredWhilePerforming = payload => {
+  return { type: SET_ERROR_OCCURRED_WHILE_PERFORMING, payload };
 };
