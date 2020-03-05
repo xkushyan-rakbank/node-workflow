@@ -105,7 +105,7 @@ export const ReUploadDocuments = () => {
       </p>
       {otherDocuments.map(({ documentKey, ...rest }) => (
         <DocumentRow
-          key={document.documentKey}
+          key={documentKey}
           error={uploadErrors[documentKey]}
           documentProgress={progress[documentKey]}
           removeDocument={() => removeDocument(documentKey)}
