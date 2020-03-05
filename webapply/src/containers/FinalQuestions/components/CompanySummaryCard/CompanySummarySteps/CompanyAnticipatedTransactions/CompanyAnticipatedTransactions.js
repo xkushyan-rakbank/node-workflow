@@ -70,19 +70,16 @@ const getPercentValue = (values, name, totalMonthlyCreditsAED) => {
 };
 
 const createChangeProspectHandler = values => (prospect, name, path, errors) => {
-  const isLinkedFieldsFilled = !Object.values(linkedFields).some(
-    field => field.isFillByUser && !values[field.name]
+  const isDataValid = !Object.values(linkedFields).some(
+    field => field.isFillByUser && (!values[field.name] || errors[field.name])
   );
-  const isValuesValid =
-    !errors[linkedFields.totalMonthlyNonCashAmountInFigures.name] &&
-    !errors[linkedFields.totalMonthlyCashAmountInFigures.name];
 
-  if (!isLinkedFieldsFilled || !isValuesValid) {
+  if (!isDataValid) {
     return {};
   }
 
   const totalMonthlyCreditsAED = getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED);
-  const additionalFields = Object.values(linkedFields).reduce(
+  const prospectFields = Object.values(linkedFields).reduce(
     (resultObject, { path, name, isFillByUser }) => ({
       ...resultObject,
       [path]: isFillByUser ? values[name] : getPercentValue(values, name, totalMonthlyCreditsAED)
@@ -90,11 +87,10 @@ const createChangeProspectHandler = values => (prospect, name, path, errors) => 
     {}
   );
 
-  additionalFields[
-    "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCreditsAED"
-  ] = totalMonthlyCreditsAED;
-
-  return additionalFields;
+  return {
+    ...prospectFields,
+    "prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCreditsAED": totalMonthlyCreditsAED
+  };
 };
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
