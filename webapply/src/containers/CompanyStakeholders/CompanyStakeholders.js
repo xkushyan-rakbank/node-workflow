@@ -93,7 +93,6 @@ const CompanyStakeholdersComponent = ({
     },
     [changeEditableStakeholder, setEditStakeholder, setIsNewStakeholder]
   );
-  console.log("editableStakeholder", editableStakeholder);
 
   const addNewStakeholder = useCallback(() => {
     setIsShowingAddButton(false);
