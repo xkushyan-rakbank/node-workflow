@@ -18,7 +18,7 @@ export const getRequiredDocsUploadingStatus = state => {
   const documents = getProspectDocuments(state);
 
   if (!documents) return false;
-  const stakeholdersDocs = map(documents.stakeholdersDocuments, s => s.documents).flat();
+  const stakeholdersDocs = map(documents.stakeholdersDocuments, "documents").flat();
 
   const companyDocsStatus = checkIfRequiredDocsUploaded(documents.companyDocuments);
   const stakeholderDocsStatus = checkIfRequiredDocsUploaded(stakeholdersDocs);
