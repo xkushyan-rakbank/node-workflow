@@ -85,7 +85,7 @@ export const getUploadedDocsCount = createGetDocsCountSelector(
   doc => doc.uploadStatus === UPLOADED_STATE
 );
 
-export const getRequiredDocsCount = createGetDocsCountSelector();
+export const getRequiredDocsCount = createGetDocsCountSelector(doc => doc.required);
 
 export const getAuthToken = state => state.appConfig.authorizationToken;
 
