@@ -3,9 +3,9 @@ import cx from "classnames";
 
 import { useStyles } from "./styled";
 
-export const AuditTrail = ({ prospectInfo = {} }) => {
+export const AuditTrail = ({ prospectOverview = {} }) => {
   const classes = useStyles();
-  const revertedAuditTrailInfo = [...(prospectInfo.AuditTrailInfo || [])].reverse();
+  const revertedAuditTrailInfo = [...(prospectOverview.AuditTrailInfo || [])].reverse();
 
   return revertedAuditTrailInfo.length ? (
     <div className={classes.wrapper}>
