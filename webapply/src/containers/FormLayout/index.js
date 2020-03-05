@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 
-import { getIsUserInformedROEditStatus } from "../../store/selectors/searchProspect";
+import { getErrorCode } from "../../store/selectors/searchProspect";
 import {
   getAccountType,
   getIsIslamicBanking,
@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
   screeningError: getScreeningError(state),
   accountType: getAccountType(state),
   isIslamicBanking: getIsIslamicBanking(state),
-  isLockStatusByROAgent: getIsUserInformedROEditStatus(state)
+  errorCode: getErrorCode(state)
 });
 
 const mapDispatchToProps = {
