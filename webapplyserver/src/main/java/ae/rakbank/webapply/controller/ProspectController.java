@@ -112,8 +112,11 @@ public class ProspectController {
         String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
-                "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
+        ResponseEntity<Object> responseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET,
+                null, "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
+
+        prospectUtil.checkOneProspect(responseEntity, jwtPayload);
+        return responseEntity;
     }
 
     @PreAuthorize("isAuthenticated()")
