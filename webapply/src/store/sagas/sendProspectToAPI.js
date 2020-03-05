@@ -34,7 +34,7 @@ import {
   getIsIslamicBanking,
   getScreeningError
 } from "../selectors/appConfig";
-import { setLockStatusByROAgent } from "../actions/searchProspect";
+import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
@@ -47,7 +47,7 @@ import {
   VIEW_IDS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
-import { ROError, FieldsValidationError } from "../../api/serverErrors";
+import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
 
 function* watchRequest() {
@@ -174,8 +174,12 @@ function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) 
     }
     yield put(sendProspectToAPISuccess(isScreeningError));
   } catch (error) {
-    if (error instanceof ROError) {
-      yield put(setLockStatusByROAgent(true));
+    if (error instanceof ErrorOccurredWhilePerforming) {
+      yield put(
+        setErrorOccurredWhilePerforming({
+          errorCode: error.getErrorCode()
+        })
+      );
     } else if (error instanceof FieldsValidationError) {
       yield put(setInputsErrors(error.getInputsErrors()));
     } else {

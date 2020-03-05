@@ -10,6 +10,7 @@ import {
   SET_PROSPECT,
   SAVE_PROSPECT_MODEL,
   SET_ACCESS_TOKEN,
+  RESET_PROSPECT,
   RESET_APPLICANT_INFO
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
@@ -79,6 +80,11 @@ const appConfigReducer = (state = initialState, action) => {
       return {
         ...state,
         prospect: action.prospect
+      };
+    case RESET_PROSPECT:
+      return {
+        ...state,
+        prospect: initialState.prospect
       };
     case UPDATE_PROSPECT_ID:
       return {

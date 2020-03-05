@@ -13,6 +13,7 @@ export const ERRORS_TYPE = {
   BIG_COMPANY: "ShareHolderCount Check",
   BLACKLIST: "Blacklist Check",
   RO_EDITING: "RO_EDITING",
+  BLOCK_EDITING: "BLOCK_EDITING",
   COMPANY_AS_STAKEHOLDER: "Company is a Stakeholder Check",
   TOO_MANY_STAKEHOLDERS: "Too many Stakeholders Check"
 };
@@ -24,6 +25,7 @@ export const regularErrorScreenGifIcon = {
   [ERRORS_TYPE.BIG_COMPANY]: callbackRegular,
   [ERRORS_TYPE.BLACKLIST]: declinedIslamic,
   [ERRORS_TYPE.RO_EDITING]: callbackRegular,
+  [ERRORS_TYPE.BLOCK_EDITING]: callbackRegular,
   [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackRegular,
   [ERRORS_TYPE.TOO_MANY_STAKEHOLDERS]: callbackRegular
 };
@@ -35,6 +37,7 @@ export const islamicErrorScreenGifIcon = {
   [ERRORS_TYPE.BIG_COMPANY]: callbackIslamic,
   [ERRORS_TYPE.BLACKLIST]: declinedIslamic,
   [ERRORS_TYPE.RO_EDITING]: callbackIslamic,
+  [ERRORS_TYPE.BLOCK_EDITING]: callbackIslamic,
   [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackIslamic,
   [ERRORS_TYPE.TOO_MANY_STAKEHOLDERS]: callbackIslamic
 };
@@ -46,6 +49,7 @@ export const eliteErrorScreenGifIcon = {
   [ERRORS_TYPE.BIG_COMPANY]: callbackElite,
   [ERRORS_TYPE.BLACKLIST]: declinedElite,
   [ERRORS_TYPE.RO_EDITING]: callbackElite,
+  [ERRORS_TYPE.BLOCK_EDITING]: callbackElite,
   [ERRORS_TYPE.COMPANY_AS_STAKEHOLDER]: callbackElite,
   [ERRORS_TYPE.TOO_MANY_STAKEHOLDERS]: callbackElite
 };

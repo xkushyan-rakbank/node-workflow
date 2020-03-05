@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -37,9 +37,19 @@ const initialValues = {
   tradeLicenseNo: ""
 };
 
-export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
+export const SearchProspectComponent = ({
+  searchApplications,
+  searchResults,
+  isLoading,
+  resetProspect
+}) => {
   const classes = useStyles();
   const [isSearchLaunched, setSearchStatus] = useState(false);
+
+  useEffect(() => {
+    resetProspect();
+  }, []);
+
   const handleSubmit = useCallback(
     values => {
       setSearchStatus(true);
